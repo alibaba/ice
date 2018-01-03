@@ -1,0 +1,14 @@
+{
+  "name": "time-filter-table",
+  "description": "支持时间筛选的表格",
+  "type": "ice",
+  "repository": {
+    "type": "block",
+    "template": "@ali/ice-template-block",
+    "templateVersion": "0.2.1"
+  },
+  "options": {
+    "styleAutoMixin": true,
+    "themePackage": "@alife/dpl-ice-design"
+  }
+}

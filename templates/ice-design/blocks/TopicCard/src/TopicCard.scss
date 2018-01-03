@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.topic-card {
+  .topic-card-item {
+    display: flex;
+    flex-direction: row;
+    width: 165px;
+    margin: 10px 22px 10px 0;
+    &:nth-child(5n) {
+      margin-right: 0;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "@icedesign/simple-table-block",
+  "version": "0.1.0",
+  "description": "基础的表格",
+  "main": "lib/index.js",
+  "files": [
+    "src/",
+    "demo/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.1",
+    "@icedesign/data-binder": "^0.1.1",
+    "@icedesign/img": "^0.1.1",
+    "@icedesign/label": "^0.1.0",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "latest",
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-react": "^7.5.1",
+    "@icedesign/skin": "^0.1.3",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3"
+  },
+  "blockConfig": {
+    "name": "simple-table",
+    "description": "基础的表格",
+    "chinese": "基础表格",
+    "category": "table",
+    "snapshot": "https://img.alicdn.com/tfs/TB1dnoMib_I8KJjy1XaXXbsxpXa-1908-1496.png",
+    "sketchURL": "",
+    "icelandURL": "",
+    "themePackage": "@icedesign/skin"
+  },
+  "scripts": {
+    "lint": "eslint . --ext '.js,.jsx' --fix",
+    "prepublish": "npm run lint"
+  }
+}
