@@ -4,3 +4,4 @@ lerna-debug.log
 npm-debug.log
 mochawesome-report
 .happypack
+package-lock.json
