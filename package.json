@@ -2,11 +2,13 @@
   "name": "ice-workspace",
   "version": "0.0.1",
   "scripts": {
-    "publish": "def update @ali/builder-ice && git pull origin master && lerna publish"
+    "publish": "lerna publish",
+    "bootstrap": "lerna bootstrap",
+    "setup": "lerna setup"
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.alibaba-inc.com:ice/workspace-outside.git"
+    "url": "https://github.com/alibaba/ice"
   },
   "devDependencies": {
     "cz-conventional-changelog": "^2.1.0",

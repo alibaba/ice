@@ -16,7 +16,7 @@
     "type": "git",
     "url": "https://github.com/alibaba/ice"
   },
-  "license": "ISC",
+  "license": "MIT",
   "keywords": [
     "ice",
     "ice-block"

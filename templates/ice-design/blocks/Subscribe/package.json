@@ -2,7 +2,12 @@
   "name": "@icedesign/subscribe-block",
   "version": "0.1.0",
   "description": "订阅",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "scripts": {},
   "author": {
     "name": "ICE Team",
@@ -13,7 +18,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "prop-types": "^15.5.8",
@@ -39,8 +47,7 @@
     "description": "订阅",
     "chinese": "订阅",
     "category": "form",
-    "snapshot":
-      "https://gw.alicdn.com/tfs/TB1HFVejvDH8KJjy1XcXXcpdXXa-1832-382.png",
+    "snapshot": "https://gw.alicdn.com/tfs/TB1HFVejvDH8KJjy1XcXXcpdXXa-1832-382.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"
