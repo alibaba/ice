@@ -14,7 +14,7 @@
     "type": "git",
     "url": "https://gitlab.alibaba-inc.com/ice/workspace-outside/tree/master/templates/ice-design/blocks/time-filter-table.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "keywords": [
     "ice",
     "ice-block"
