@@ -1,0 +1,53 @@
+{
+  "name": "@ali/time-filter-table",
+  "version": "0.1.2",
+  "description": "支持时间筛选的表格",
+  "files": [
+    "src/",
+    "demo/"
+  ],
+  "author": {
+    "name": "浩睿",
+    "email": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.alibaba-inc.com/ice/workspace-outside/tree/master/templates/ice-design/blocks/time-filter-table.git"
+  },
+  "license": "ISC",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@ali/ice-card": "^0.1.1",
+    "@ali/ice-data-binder": "^0.5.0",
+    "@ali/ice-label": "^0.2.1",
+    "@alife/dpl-ice-design": "^1.3.1",
+    "@alife/next": "0.x",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@ali/ice-demo-layout": "latest",
+    "@alife/ice-skin": "^5.0.3",
+    "@ali/eslint-config-tbfed": "^0.6.1",
+    "@ali/eslint-plugin-tbfed": "^1.0.2",
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.19.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-react": "^6.10.3",
+    "@alife/dpl-ice-design": "^1.2.0"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npm.alibaba-inc.com"
+  },
+  "blockConfig": {
+    "name": "time-filter-table",
+    "description": "支持时间筛选的表格",
+    "chinese": "时间筛选表格",
+    "category": "table",
+    "snapshot": "https://img.alicdn.com/tfs/TB12iaMjcrI8KJjy0FhXXbfnpXa-1904-1004.png",
+    "sketchURL": "",
+    "icelandURL": ""
+  }
+}

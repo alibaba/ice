@@ -1,0 +1,20 @@
+{
+  "name": "ice-workspace",
+  "version": "0.0.1",
+  "scripts": {
+    "publish": "def update @ali/builder-ice && git pull origin master && lerna publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:ice/workspace-outside.git"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^2.1.0",
+    "lerna": "^2.5.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

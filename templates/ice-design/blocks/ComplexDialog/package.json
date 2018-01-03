@@ -1,0 +1,51 @@
+{
+  "name": "@icedesign/complex-dialog-block",
+  "version": "0.1.0",
+  "description": "复杂信息和自定义底部按钮的弹窗",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-react": "^7.5.1",
+    "@icedesign/demo-layout": "^0.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "@icedesign/skin": "^0.1.2"
+  },
+  "blockConfig": {
+    "name": "complex-dialog",
+    "description": "复杂信息和自定义底部按钮的弹窗",
+    "chinese": "复杂信息弹窗",
+    "category": "modal",
+    "snapshot": "https://img.alicdn.com/tfs/TB1Un_filfH8KJjy1XbXXbLdXXa-1270-650.png",
+    "sketchURL": "",
+    "icelandURL": "",
+    "themePackage": "@icedesign/skin"
+  },
+  "scripts": {}
+}

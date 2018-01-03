@@ -1,0 +1,14 @@
+{
+  "name": "basic-exception",
+  "description": "",
+  "type": "ice",
+  "repository": {
+    "type": "block",
+    "template": "@ali/ice-template-block",
+    "templateVersion": "0.1.3"
+  },
+  "options": {
+    "styleAutoMixin": true,
+    "themePackage": "@icedesign/skin"
+  }
+}

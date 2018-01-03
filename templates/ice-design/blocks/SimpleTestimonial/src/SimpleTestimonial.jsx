@@ -1,0 +1,62 @@
+
+
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import IceCard from '@icedesign/card';
+import './SimpleTestimonial.scss';
+
+export default class SimpleTestimonial extends Component {
+  static displayName = 'SimpleTestimonial';
+
+  static propTypes = {};
+
+  static defaultProps = {};
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  // ICE: React Component 的生命周期
+  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
+  componentWillMount() {}
+
+  componentDidMount() {}
+
+  componentWillReceiveProps(nextProps, nextContext) {}
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
+
+  componentWillUnmount() {}
+
+  render() {
+    return (
+      <div className="simple-testimonial" style={styles.simpleTestimonial}>
+        <IceCard>
+          <div style={styles.item}>
+            <p style={styles.description}>
+              “
+              随着个人用户对于互联网内容获取的要求和口味越来越特别，怎样提供更加精准个性化的资
+              讯订阅服务是提升用户体验的关键。虽然我们发现目前市面上有非常多的资讯类
+              app 都标榜自己能
+              够提供个人定制化的新闻阅读功能，但是本质上来说一般都是通过新闻源+兴趣点+智能推荐这样的组合实现的
+              ”
+            </p>
+            <div style={styles.infoBox}>
+              <img
+                style={styles.avatar}
+                src="https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png"
+              />
+              <h5 style={styles.name}>人物名</h5>
+              <p style={styles.company}>就职公司/职务</p>
+            </div>
+          </div>
+        </IceCard>
+      </div>
+    );
+  }
+}
+
+const styles = { item: { width: '80%', margin: '0 auto', textAlign: 'center' }, description: { lineHeight: '28px' }, infoBox: { display: 'flex', textAlign: 'center', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }, avatar: { width: '64px', height: '64px' }, name: { margin: '0 15px', fontSize: '15px', fontWeight: 'bold' }, company: { margin: 0 }, simpleTestimonial: {} };

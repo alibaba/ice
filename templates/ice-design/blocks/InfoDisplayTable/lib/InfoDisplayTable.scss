@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.info-display-table {
+  .next-table tr {
+    th {
+      border: 0;
+      border-bottom: 1px solid #EEEFF3;
+    }
+    th:first-child {
+      font-weight: bold;
+      color: #333;
+      font-size: 18px;
+    }
+  }
+  .next-table .next-table-cell.first {
+    font-weight: bold;
+  }
+}
