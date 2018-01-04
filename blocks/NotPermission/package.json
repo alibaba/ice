@@ -8,7 +8,6 @@
     "lib/",
     "mock/"
   ],
-  "scripts": {},
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -29,16 +28,10 @@
   },
   "devDependencies": {
     "@icedesign/skin": "^0.1.2",
-    "babel-eslint": "^8.0.3",
     "eslint-plugin-react": "^7.5.1",
     "react": "15.x",
     "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "15.x",
-    "eslint": "^4.13.1",
-    "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
     "@icedesign/demo-layout": "^0.1.0"
   },
   "blockConfig": {

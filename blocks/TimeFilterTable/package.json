@@ -2,21 +2,12 @@
   "name": "@icedesign/time-filter-table-block",
   "version": "0.1.0",
   "description": "支持时间筛选的表格",
-<<<<<<< HEAD
   "files": [
     "src/",
     "demo/",
     "lib/",
     "mock/"
   ],
-=======
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
->>>>>>> 6f8bbd33e4db62185bbe64c9db0ee6effd3c292f
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -38,14 +29,8 @@
     "@icedesign/label": "^0.1.0"
   },
   "devDependencies": {
-    "babel-eslint": "^8.0.3",
-    "eslint": "^4.13.1",
-    "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-react": "^7.5.1",
     "@icedesign/demo-layout": "^0.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
     "@icedesign/skin": "^0.1.4"
   },
   "blockConfig": {
@@ -57,6 +42,5 @@
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"
-  },
-  "scripts": {}
+  }
 }
