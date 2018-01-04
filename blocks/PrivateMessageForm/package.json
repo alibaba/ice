@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/private-message-form-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "私有消息表单",
   "files": [
     "src/",
@@ -46,7 +46,7 @@
     "description": "私有消息表单",
     "chinese": "私有消息表单",
     "category": "form",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1pz0tjr_I8KJjy1XaXXbsxpXa-996-682.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1H5Q1lhrI8KJjy0FpXXb5hVXa-1234-784.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"
