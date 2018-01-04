@@ -3,11 +3,7 @@
   "version": "0.1.0",
   "description": "首页介绍 Banner",
   "main": "lib/index.js",
-  "files": [
-    "src/",
-    "demo/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +13,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "prop-types": "^15.5.8",
     "react-router": "^3.0.5",
@@ -42,7 +35,8 @@
     "description": "首页介绍 Banner",
     "chinese": "首页介绍 Banner",
     "category": "info-display",
-    "snapshot": "https://img.alicdn.com/tfs/TB1Cn3Kif6H8KJjy0FjXXaXepXa-2222-998.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1zP8Flx6I8KJjy0FgXXXXzVXa-2524-1154.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"
