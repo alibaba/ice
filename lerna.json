@@ -2,7 +2,8 @@
   "lerna": "2.5.1",
   "packages": [
     "packages/*",
-    "templates/**"
+    "blocks/*",
+    "layouts/*"
   ],
   "version": "independent"
 }
