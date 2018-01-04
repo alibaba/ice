@@ -4,7 +4,7 @@
 
 消息列表
 
-![截图](https://gw.alicdn.com/tfs/TB1qZtrir_I8KJjy1XaXXbsxpXa-1882-1262.png)
+![截图](https://img.alicdn.com/tfs/TB1hbVYlsLJ8KJjy0FnXXcFDpXa-1900-1180.png)
 
 ## 更多
 
