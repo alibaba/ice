@@ -5,3 +5,4 @@ npm-debug.log
 mochawesome-report
 .happypack
 package-lock.json
+lib/
