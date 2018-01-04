@@ -116,7 +116,11 @@ export default class TimeFilterTable extends Component {
           </div>
           <div>
             <Search
+<<<<<<< HEAD
               style={styles.todo0}
+=======
+              style={styles.search}
+>>>>>>> 6f8bbd33e4db62185bbe64c9db0ee6effd3c292f
               type="normal"
               inputWidth={150}
               placeholder="搜索"

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/forget-password-form-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "忘记密码",
   "files": [
     "src/",
@@ -47,7 +47,7 @@
     "description": "忘记密码",
     "chinese": "忘记密码",
     "category": "form",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1YYOAg5qAXuNjy1XdXXaYcVXa-1012-424.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1TjBilvDH8KJjy1XcXXcpdXXa-1102-554.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"

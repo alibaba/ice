@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/landing-intro-banner-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "首页介绍 Banner",
   "main": "lib/index.js",
   "files": [
@@ -42,7 +42,7 @@
     "description": "首页介绍 Banner",
     "chinese": "首页介绍 Banner",
     "category": "info-display",
-    "snapshot": "https://img.alicdn.com/tfs/TB1Cn3Kif6H8KJjy0FjXXaXepXa-2222-998.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1zP8Flx6I8KJjy0FgXXXXzVXa-2524-1154.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"

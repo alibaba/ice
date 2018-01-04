@@ -2,12 +2,21 @@
   "name": "@icedesign/time-filter-table-block",
   "version": "0.1.0",
   "description": "支持时间筛选的表格",
+<<<<<<< HEAD
   "files": [
     "src/",
     "demo/",
     "lib/",
     "mock/"
   ],
+=======
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+>>>>>>> 6f8bbd33e4db62185bbe64c9db0ee6effd3c292f
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -22,7 +31,6 @@
     "ice-block"
   ],
   "dependencies": {
-    "@alife/dpl-ice-design": "^1.3.1",
     "prop-types": "^15.5.8",
     "@icedesign/base": "^0.1.0",
     "@icedesign/card": "^0.1.0",
@@ -38,14 +46,14 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "@icedesign/skin": "^0.1.2"
+    "@icedesign/skin": "^0.1.4"
   },
   "blockConfig": {
     "name": "time-filter-table",
     "description": "支持时间筛选的表格",
     "chinese": "时间筛选表格",
     "category": "table",
-    "snapshot": "https://img.alicdn.com/tfs/TB12iaMjcrI8KJjy0FhXXbfnpXa-1904-1004.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1.dqQi5qAXuNjy1XdXXaYcVXa-1902-1004.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"
