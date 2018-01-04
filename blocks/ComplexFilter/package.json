@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/complex-filter-block",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "复杂筛选",
   "files": [
     "src/",
@@ -42,7 +42,7 @@
     "description": "复杂筛选",
     "chinese": "复杂筛选",
     "category": "filter",
-    "snapshot": "https://img.alicdn.com/tfs/TB1mlUelb_I8KJjy1XaXXbsxpXa-1914-382.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1y4M2lgvD8KJjy0FlXXagBFXa-1908-232.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"
