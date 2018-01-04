@@ -2,7 +2,7 @@
 
 简介：首页介绍 Banner
 
-![截图](https://img.alicdn.com/tfs/TB1Cn3Kif6H8KJjy0FjXXaXepXa-2222-998.png)
+![截图](https://img.alicdn.com/tfs/TB1zP8Flx6I8KJjy0FgXXXXzVXa-2524-1154.png)
 
 ## 更多
 

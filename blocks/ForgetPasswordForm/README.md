@@ -4,7 +4,7 @@
 
 忘记密码
 
-![截图](https://gw.alicdn.com/tfs/TB1YYOAg5qAXuNjy1XdXXaYcVXa-1012-424.png)
+![截图](https://img.alicdn.com/tfs/TB1TjBilvDH8KJjy1XcXXcpdXXa-1102-554.png)
 
 ## 更多
 

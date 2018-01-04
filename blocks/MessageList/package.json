@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/message-list-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "消息列表",
   "files": [
     "src/",
@@ -42,7 +42,7 @@
     "description": "消息列表",
     "chinese": "消息列表",
     "category": "list",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1qZtrir_I8KJjy1XaXXbsxpXa-1882-1262.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1hbVYlsLJ8KJjy0FnXXcFDpXa-1900-1180.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"
