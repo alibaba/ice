@@ -1,0 +1,46 @@
+{
+  "name": "@icedesign/order-list-block",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "axios": "^0.17.1",
+    "prop-types": "^15.5.8",
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.5.1",
+    "@icedesign/demo-layout": "^0.1.0",
+    "@icedesign/skin": "^0.1.2"
+  },
+  "blockConfig": {
+    "name": "order-list",
+    "description": "订单型列表",
+    "chinese": "订单型列表",
+    "category": "list",
+    "snapshot": "https://img.alicdn.com/tfs/TB1QQY0fiqAXuNjy1XdXXaYcVXa-960-646.png",
+    "sketchURL": "",
+    "icelandURL": "",
+    "themePackage": "@icedesign/skin"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "status": "SUCCESS",
+  "message": "请求成功",
+  "data": {
+    "foo": [
+      0,
+      1,
+      2
+    ]
+  }
+}

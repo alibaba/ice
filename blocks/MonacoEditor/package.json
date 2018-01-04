@@ -1,0 +1,49 @@
+{
+  "name": "@icedesign/monaco-editor-block",
+  "version": "0.1.0",
+  "description": "Monaco 代码编辑器",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.0",
+    "prop-types": "^15.5.8",
+    "react-monaco-editor": "^0.13.0",
+    "regenerator-runtime": "^0.11.1"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/skin": "^0.1.2",
+    "eslint-plugin-react": "^7.5.1",
+    "react": "15.x",
+    "react-copy-to-clipboard": "^4.2.3",
+    "react-dom": "15.x"
+  },
+  "blockConfig": {
+    "name": "monaco-editor",
+    "description": "Monaco 代码编辑器",
+    "chinese": "Monaco 代码编辑器",
+    "category": "form",
+    "snapshot": "https://gw.alicdn.com/tfs/TB1bOKfjvDH8KJjy1XcXXcpdXXa-1886-1236.png",
+    "sketchURL": "",
+    "icelandURL": "",
+    "themePackage": "@icedesign/skin"
+  }
+}

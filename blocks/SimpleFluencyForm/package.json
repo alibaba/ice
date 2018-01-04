@@ -1,0 +1,48 @@
+{
+  "name": "@icedesign/simple-fluency-form-block",
+  "version": "0.1.0",
+  "description": "SimpleFluencyForm",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "prop-types": "^15.5.8",
+    "@icedesign/card": "^0.1.0",
+    "@icedesign/form-binder": "^0.1.0"
+  },
+  "devDependencies": {
+    "@icedesign/skin": "^0.1.2",
+    "eslint-plugin-react": "^7.5.1",
+    "react": "15.x",
+    "react-copy-to-clipboard": "^4.2.3",
+    "react-dom": "15.x",
+    "@icedesign/demo-layout": "^0.1.0"
+  },
+  "blockConfig": {
+    "name": "simple-fluency-form",
+    "description": "SimpleFluencyForm",
+    "chinese": "简单流畅型表单",
+    "category": "form",
+    "snapshot": "https://gw.alicdn.com/tfs/TB1emXIjDnI8KJjy0FfXXcdoVXa-1776-902.png",
+    "sketchURL": "",
+    "icelandURL": "",
+    "themePackage": "@icedesign/skin"
+  }
+}

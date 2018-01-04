@@ -1,0 +1,9 @@
+{
+  "lerna": "2.5.1",
+  "packages": [
+    "packages/*",
+    "blocks/*",
+    "layouts/*"
+  ],
+  "version": "independent"
+}
