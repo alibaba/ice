@@ -1,0 +1,19 @@
+// Filter style
+.filter-table {
+  .filter-col {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .filter-title {
+    width: 68px;
+    text-align: right;
+    margin-right: 12px;
+    font-size: 14px;
+  }
+
+  .filter-tool {
+    width: 200px;
+  }
+}

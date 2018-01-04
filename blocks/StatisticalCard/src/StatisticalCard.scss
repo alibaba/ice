@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+.statistical-card {
+
+  .statistical-card-list {
+    display: flex;
+    flex-direction: row;
+    height: 110px;
+    justify-content: center;
+  }
+  .statistical-card-item {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .circle-wrap {
+    background-color: #FFECB3;
+    width: 70px;
+    height: 70px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .statistical-card-desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .statistical-card-text {
+    color: #333333;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .statistical-card-number {
+    color: #333333;
+    font-size: 24px;
+  }
+}

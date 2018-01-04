@@ -1,0 +1,44 @@
+{
+  "name": "@icedesign/complex-filter-block",
+  "version": "0.1.3",
+  "description": "复杂筛选",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.5.1",
+    "@icedesign/demo-layout": "^0.1.0",
+    "@icedesign/skin": "^0.1.2"
+  },
+  "blockConfig": {
+    "name": "complex-filter",
+    "description": "复杂筛选",
+    "chinese": "复杂筛选",
+    "category": "filter",
+    "snapshot": "https://img.alicdn.com/tfs/TB1y4M2lgvD8KJjy0FlXXagBFXa-1908-232.png",
+    "sketchURL": "",
+    "icelandURL": "",
+    "themePackage": "@icedesign/skin"
+  }
+}

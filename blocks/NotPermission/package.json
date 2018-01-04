@@ -1,0 +1,47 @@
+{
+  "name": "@icedesign/not-permission-block",
+  "version": "0.1.0",
+  "description": "",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "prop-types": "^15.5.8",
+    "@icedesign/card": "^0.1.0"
+  },
+  "devDependencies": {
+    "@icedesign/skin": "^0.1.2",
+    "eslint-plugin-react": "^7.5.1",
+    "react": "15.x",
+    "react-copy-to-clipboard": "^4.2.3",
+    "react-dom": "15.x",
+    "@icedesign/demo-layout": "^0.1.0"
+  },
+  "blockConfig": {
+    "name": "not-permission",
+    "description": "",
+    "chinese": "无权限提示",
+    "category": "exception",
+    "snapshot": "https://img.alicdn.com/tfs/TB1XvlnjtfJ8KJjy0FeXXXKEXXa-1900-1072.png",
+    "sketchURL": "",
+    "icelandURL": "",
+    "themePackage": "@icedesign/skin"
+  }
+}

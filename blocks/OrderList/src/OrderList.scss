@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.order-list {
+  .next-table th,
+  .next-table td {
+    border: 0;
+  }
+
+  .order-list-head {
+    margin-bottom: 20px;
+    color: #666;
+  }
+  .order-detail-link {
+    text-decoration: none;
+  }
+
+  .order-img {
+    width: 60px;
+    height: 60px;
+    float: left;
+    margin-right: 10px;
+  }
+}

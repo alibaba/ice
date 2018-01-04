@@ -1,0 +1,46 @@
+{
+  "name": "@icedesign/download-card-block",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "axios": "^0.17.1",
+    "prop-types": "^15.5.8",
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.5.1",
+    "@icedesign/demo-layout": "^0.1.0",
+    "@icedesign/skin": "^0.1.2"
+  },
+  "blockConfig": {
+    "name": "download-card",
+    "description": "下载型信息卡片",
+    "chinese": "下载型信息卡片",
+    "category": "info-display,list",
+    "snapshot": "https://img.alicdn.com/tfs/TB1HLu1hLDH8KJjy1XcXXcpdXXa-938-688.png",
+    "sketchURL": "",
+    "icelandURL": "",
+    "themePackage": "@icedesign/skin"
+  }
+}

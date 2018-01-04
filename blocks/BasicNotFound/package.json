@@ -1,0 +1,46 @@
+{
+  "name": "@icedesign/basic-not-found-block",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "files": [
+    "src/",
+    "demo/",
+    "mock/",
+    "lib/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.0",
+    "prop-types": "^15.5.8",
+    "react-router": "^3.2.0"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/skin": "^0.1.2",
+    "eslint-plugin-react": "^7.5.1"
+  },
+  "blockConfig": {
+    "name": "basic-not-found",
+    "description": "404 报错提示",
+    "chinese": "404 报错提示",
+    "category": "exception",
+    "snapshot": "https://img.alicdn.com/tfs/TB1.HyVgyqAXuNjy1XdXXaYcVXa-1914-1066.png",
+    "sketchURL": "",
+    "icelandURL": "",
+    "themePackage": "@icedesign/skin"
+  }
+}
