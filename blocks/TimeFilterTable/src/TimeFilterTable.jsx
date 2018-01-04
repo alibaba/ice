@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import IceCard from '@ali/ice-card';
+import IceCard from '@icedesign/card';
 import './TimeFilterTable.scss';
-import { Table, Pagination, Tab, Radio, Search } from '@alife/next';
-import DataBinder from '@ali/ice-data-binder';
-import IceLabel from '@ali/ice-label';
+import { Table, Pagination, Tab, Radio, Search } from '@icedesign/base';
+import DataBinder from '@icedesign/data-binder';
+import IceLabel from '@icedesign/label';
 
 const { Group: RadioGroup } = Radio;
 
@@ -116,7 +116,7 @@ export default class TimeFilterTable extends Component {
           </div>
           <div>
             <Search
-              style={{ marginLeft: 10 }}
+              style={styles.search}
               type="normal"
               inputWidth={150}
               placeholder="搜索"
@@ -157,12 +157,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between'
   },
-  pagination: {
-    textAlign: 'right',
-    paddingTop: '20px',
-    paddingBottom: '10px'
-  },
-  tableCard: {
-    padding: 10
-  }
+  pagination: { textAlign: 'right', paddingTop: '20px', paddingBottom: '10px' },
+  tableCard: { padding: 10 },
+  search: { marginLeft: 10 }
 };
