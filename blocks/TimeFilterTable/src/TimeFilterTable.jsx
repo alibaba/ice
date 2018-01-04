@@ -1,12 +1,12 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import IceCard from '@ali/ice-card';
+import IceCard from '@icedesign/card';
 import './TimeFilterTable.scss';
-import { Table, Pagination, Tab, Radio, Search } from '@alife/next';
-import DataBinder from '@ali/ice-data-binder';
-import IceLabel from '@ali/ice-label';
+import { Table, Pagination, Tab, Radio, Search } from '@icedesign/base';
+import DataBinder from '@icedesign/data-binder';
+import IceLabel from '@icedesign/label';
 
 const { Group: RadioGroup } = Radio;
 
@@ -16,15 +16,15 @@ const { Group: RadioGroup } = Radio;
     // 详细请求配置请参见 https://github.com/axios/axios
     url: '/mock/time-filter-table.json',
     params: {
-      page: 1
+      page: 1,
     },
     defaultBindingData: {
       list: [],
       total: 100,
       pageSize: 10,
-      currentPage: 1
-    }
-  }
+      currentPage: 1,
+    },
+  },
 })
 export default class TimeFilterTable extends Component {
   static displayName = 'TimeFilterTable';
@@ -38,47 +38,47 @@ export default class TimeFilterTable extends Component {
 
     this.queryCache = {};
     this.state = {
-      timeRange: 'day'
+      timeRange: 'day',
     };
   }
 
   // ICE: React Component 的生命周期
   // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     this.queryCache.page = 1;
     this.fetchData();
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {}
+  componentWillReceiveProps(nextProps, nextContext) { }
 
   shouldComponentUpdate(nextProps, nextState) {
     return true;
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   fetchData = () => {
     this.props.updateBindingData('tableData', {
-      params: this.queryCache
+      params: this.queryCache,
     });
   };
 
-  changePage = currentPage => {
+  changePage = (currentPage) => {
     this.queryCache.page = currentPage;
     this.fetchData();
   };
 
-  onDateChange = date => {
+  onDateChange = (date) => {
     this.queryCache.timeRange = date;
     this.fetchData();
     this.setState({
-      timeRange: date
+      timeRange: date,
     });
   };
 
-  onSearch = value => {
+  onSearch = (value) => {
     this.queryCache.keywords = value.key;
     this.fetchData();
   };
@@ -91,7 +91,7 @@ export default class TimeFilterTable extends Component {
     const tableData = this.props.bindingData.tableData;
 
     return (
-      <div className="time-filter-table">
+      <div className="time-filter-table" style={styles.timeFilterTable}>
         <IceCard style={styles.filterCard}>
           <div>
             <span>选择活动日期范围：</span>
@@ -100,23 +100,23 @@ export default class TimeFilterTable extends Component {
               dataSource={[
                 {
                   label: '今天',
-                  value: 'day'
+                  value: 'day',
                 },
                 {
                   label: '本周',
-                  value: 'week'
+                  value: 'week',
                 },
                 {
                   label: '本月',
-                  value: 'month'
-                }
+                  value: 'month',
+                },
               ]}
               onChange={this.onDateChange}
             />
           </div>
           <div>
             <Search
-              style={{ marginLeft: 10 }}
+              style={styles.todo0}
               type="normal"
               inputWidth={150}
               placeholder="搜索"
@@ -155,14 +155,16 @@ const styles = {
   filterCard: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   pagination: {
     textAlign: 'right',
     paddingTop: '20px',
-    paddingBottom: '10px'
+    paddingBottom: '10px',
   },
   tableCard: {
-    padding: 10
-  }
+    padding: '10px'
+  },
+  timeFilterTable: {},
+  todo0: { marginLeft: '10px' },
 };
