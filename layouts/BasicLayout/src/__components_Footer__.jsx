@@ -8,7 +8,7 @@ export default () => {
       className="ice-admin-layout-footer"
       style={{
         textAlign: 'center',
-        lineHeight: '36px',
+        lineHeight: '36px'
       }}
     >
       <div className="ice-admin-layout-footer-body">
@@ -20,22 +20,12 @@ export default () => {
             color: '#999',
             lineHeight: 1.5,
             fontSize: 12,
-            textAlign: 'right',
+            textAlign: 'right'
           }}
         >
-          淘宝技术部 终端技术团队{' '}
-          <a href="##">
-            帮助支持
-          </a>{' '}
-          <a href="##">
-            提交反馈
-          </a>
+          阿里巴巴集团
           <br />
-          由{' '}
-          <a href="https://www.taobao.com" rel="noopener noreferrer" target="_blank">
-            ICE
-          </a>{' '}
-          提供技术支持
+          © 2018 版权所有
         </div>
       </div>
     </Layout.Footer>
