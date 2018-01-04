@@ -71,17 +71,42 @@ function hijectSerivce(request, database) {
 
 // controller list categories
 function handleListCategories(db) {
+  const blockCategoryMap = {};
+  db.template.blocks.forEach(item => {
+    if (Array.isArray(item.categories)) {
+      item.categories.forEach(cat => {
+        blockCategoryMap[cat.name] = blockCategoryMap[cat.name] || [];
+        blockCategoryMap[cat.name].push(item);
+      });
+    }
+  });
+
+  // 筛去 layout
   const data = {
-    list: [...db.template.categories],
+    list: [...db.template.categories].map(cat => {
+      return {
+        ...cat,
+        total: blockCategoryMap[cat.name].length,
+      };
+    }).filter((cat) => cat.name !== 'layout'),
     total: db.template.categories.length,
+    totalBlocks: db.template.blocks.length - blockCategoryMap.layout.length,
   };
+
   return { data };
 }
 
 // controller list blocks
 function handleListBlocks(category, db) {
   const data = {
-    list: db.template.blocks,
+    list: ([...db.template.blocks]).filter(item => {
+      if (Array.isArray(item.categories)) {
+        if (item.categories.some(cat => cat.name === 'layout')) {
+          return false;
+        }
+      }
+      return true;
+    }),
     page: 0,
     offset: 0,
     pageSize: 1000,
@@ -90,7 +115,7 @@ function handleListBlocks(category, db) {
   if (!category) {
     return { data };
   } else {
-    data.list = data.list.filter(item => {
+    data.list = ([...db.template.blocks]).filter(item => {
       return item.categories && item.categories.some((cat) => {
         return cat.name === category;
       });
