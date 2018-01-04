@@ -4,14 +4,23 @@
   "scripts": {
     "publish": "lerna publish",
     "bootstrap": "lerna bootstrap",
-    "setup": "lerna setup"
+    "setup": "lerna setup",
+    "lint": "npm run lint:nofix -- --fix",
+    "lint:nofix": "eslint --ext .js --ext .jsx ./"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/ice"
   },
   "devDependencies": {
+    "babel-eslint": "^8.1.2",
     "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
     "lerna": "^2.5.1"
   },
   "config": {
