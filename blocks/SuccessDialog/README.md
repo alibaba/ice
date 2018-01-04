@@ -2,7 +2,7 @@
 
 简介：提示框-成功
 
-![截图](https://img.alicdn.com/tfs/TB1J9cak4rI8KJjy0FpXXb5hVXa-1284-554.png)
+![截图](https://img.alicdn.com/tfs/TB1CMVpi5qAXuNjy1XdXXaYcVXa-1278-540.png)
 
 ## 更多
 
