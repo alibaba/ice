@@ -37,10 +37,10 @@
   },
   "blockConfig": {
     "name": "landing-layout",
-    "description": "登录页面 Layout",
-    "chinese": "登录页面 Layout",
+    "description": "通栏 + 导航悬浮布局",
+    "chinese": "通栏布局",
     "category": "layout",
-    "snapshot": "https://img.alicdn.com/tfs/TB1VoV7kBfH8KJjy1XbXXbLdXXa-640-400.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1l2avdC_I8KJjy0FoXXaFnVXa-76-78.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"

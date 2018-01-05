@@ -37,10 +37,10 @@
   },
   "blockConfig": {
     "name": "aside-layout",
-    "description": "附带侧边栏的 Layout",
-    "chinese": "附带侧边栏的 Layout",
+    "description": "侧边栏导航 + 内容居中布局",
+    "chinese": "侧边布局",
     "category": "layout",
-    "snapshot": "https://img.alicdn.com/tfs/TB130YAkr_I8KJjy1XaXXbsxpXa-640-400.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1ufavdC_I8KJjy0FoXXaFnVXa-78-78.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"
