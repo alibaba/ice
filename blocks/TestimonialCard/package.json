@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/testimonial-card-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "files": [
     "src/",
@@ -22,15 +22,15 @@
     "ice-block"
   ],
   "dependencies": {
-    "classnames": "^2.2.5",
-    "prop-types": "^15.5.8",
     "@icedesign/base": "^0.1.0",
-    "@icedesign/card": "^0.1.0"
+    "@icedesign/card": "^0.1.0",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "eslint-plugin-react": "^7.5.1",
     "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2"
+    "@icedesign/skin": "^0.1.2",
+    "eslint-plugin-react": "^7.5.1"
   },
   "blockConfig": {
     "name": "testimonial-card",

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/monaco-editor-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Monaco 代码编辑器",
   "files": [
     "src/",
