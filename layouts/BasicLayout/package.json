@@ -37,10 +37,10 @@
   },
   "blockConfig": {
     "name": "basic-layout",
-    "description": "基础 layout",
-    "chinese": "基础 layout",
+    "description": "内容居中布局",
+    "chinese": "居中布局",
     "category": "layout",
-    "snapshot": "https://img.alicdn.com/tfs/TB13JYAkr_I8KJjy1XaXXbsxpXa-640-400.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1jLavdC_I8KJjy0FoXXaFnVXa-78-78.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"

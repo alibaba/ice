@@ -57,7 +57,7 @@ export default ({ width }) => {
             <IceImg
               height={40}
               width={40}
-              src="https://img.alicdn.com/tfs/TB1Ix3tdY_I8KJjy1XaXXbsxpXa-80-80.png"
+              src="https://img.alicdn.com/tfs/TB1WdLAlr_I8KJjy1XaXXbsxpXa-220-220.png"
               style={{ marginRight: '12px', borderRadius: 8 }}
             />
             <span className="ice-admin-layout-header-username">淘小宝</span>

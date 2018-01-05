@@ -37,10 +37,10 @@
   },
   "blockConfig": {
     "name": "scalable-aside-layout",
-    "description": "侧边栏可伸缩 Layout",
-    "chinese": "侧边栏可伸缩 Layout",
+    "description": "通栏 + 侧边布局布局",
+    "chinese": "通栏侧边布局",
     "category": "layout",
-    "snapshot": "https://img.alicdn.com/tfs/TB120YAkr_I8KJjy1XaXXbsxpXa-640-400.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1uLavdC_I8KJjy0FoXXaFnVXa-76-78.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"
