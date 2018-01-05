@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/landing-layout",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "landing layout",
   "files": [
     "src/",
@@ -40,7 +40,7 @@
     "description": "通栏 + 导航悬浮布局",
     "chinese": "通栏布局",
     "category": "layout",
-    "snapshot": "https://img.alicdn.com/tfs/TB1l2avdC_I8KJjy0FoXXaFnVXa-76-78.png",
+    "snapshot": "https://gw.alicdn.com/tfs/TB1SvQmlsLJ8KJjy0FnXXcFDpXa-976-974.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"

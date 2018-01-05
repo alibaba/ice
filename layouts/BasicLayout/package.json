@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/basic-layout",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "basic layout",
   "files": [
     "src/",
@@ -40,7 +40,7 @@
     "description": "内容居中布局",
     "chinese": "居中布局",
     "category": "layout",
-    "snapshot": "https://img.alicdn.com/tfs/TB1jLavdC_I8KJjy0FoXXaFnVXa-78-78.png",
+    "snapshot": "https://gw.alicdn.com/tfs/TB1R2QmlsLJ8KJjy0FnXXcFDpXa-976-974.png",
     "sketchURL": "",
     "icelandURL": "",
     "themePackage": "@icedesign/skin"
