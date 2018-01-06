@@ -23,7 +23,6 @@
     "ice-block"
   ],
   "dependencies": {
-    "@alife/dpl-ice-design": "^1.0.1",
     "@icedesign/base": "^0.1.0",
     "@icedesign/card": "^0.1.0",
     "prop-types": "^15.5.8"
