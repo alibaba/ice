@@ -7,38 +7,49 @@ import ReactDOM from 'react-dom';
 const CreateFuncDialog = WrapperElement => {
   let instance = null;
   let container = null;
-
-  return {
-    // 创建并打开一个弹窗，并传入初始化的 props
-    show: props => {
-      // 如果已经有实例打开了，则不会继续打开
-      if (instance) {
-        return;
-      }
-
-      container = document.createElement('div');
-      document.body.appendChild(container);
-      instance = ReactDOM.render(
-        <WrapperElement {...props} visible={true} />,
-        container
-      );
-    },
-    // 隐藏并销毁弹窗
-    hide: () => {
-      if (instance) {
-        instance.setState(
-          {
-            visible: false
-          },
-          () => {
-            setTimeout(() => {
-              ReactDOM.unmountComponentAtNode(container);
-              instance = null;
-              container.parentNode.removeChild(container);
-            }, 1000);
-          }
+  let dialog = null;
+  return class HOCDialog extends React.Component {
+    static show = (props = {}) => {
+      if (dialog) {
+        dialog.setState({ visible: true });
+      } else if (!instance && !container) {
+        // 创建并打开一个弹窗，并传入初始化的 props
+        // 如果已经有实例打开了，则不会继续打开
+        container = document.createElement('div');
+        document.body.appendChild(container);
+        instance = ReactDOM.render(
+          <WrapperElement {...props} visible={true} />,
+          container
         );
       }
+    };
+
+    static hide = () => {
+      if (instance && container) {
+        instance.setState({ visible: false }, () => {
+          setTimeout(() => {
+            ReactDOM.unmountComponentAtNode(container);
+            container.parentNode.removeChild(container);
+            container = null;
+            instance = null;
+          }, 300);
+        });
+      }
+    };
+    handleClose = () => {
+      dialog.setState({ visible: false });
+    };
+    render() {
+      return (
+        <WrapperElement
+          ref={dialogRef => {
+            dialog = dialogRef;
+          }}
+          onClose={this.handleClose}
+          onCancel={this.handleClose}
+          {...this.props}
+        />
+      );
     }
   };
 };
