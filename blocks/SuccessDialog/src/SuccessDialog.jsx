@@ -17,10 +17,16 @@ class SuccessDialog extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      visible: nextProps.visible
+    });
+  }
+
   render() {
     return (
       <Dialog
-        className="success-dialog" style={styles.successDialog}
+        className="success-dialog"
         style={styles.dialog}
         autoFocus={false}
         footer={false}
@@ -41,6 +47,21 @@ class SuccessDialog extends Component {
   }
 }
 
-const styles = {"dialog":{"width":"640px"},"dialogContent":{"height":"200px","display":"flex","flexDirection":"column","alignItems":"center"},"icon":{"width":"52px","height":"52px","marginTop":"46px","marginBottom":"10px"},"text":{"fontSize":"16px;"},"successDialog":{}}
+const styles = {
+  dialog: { width: '640px' },
+  dialogContent: {
+    height: '200px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  icon: {
+    width: '52px',
+    height: '52px',
+    marginTop: '46px',
+    marginBottom: '10px'
+  },
+  text: { fontSize: '16px' }
+};
 
 export default CreateFuncDialog(SuccessDialog);
