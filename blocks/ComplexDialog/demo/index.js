@@ -7,23 +7,9 @@ import '@icedesign/base/lib/_components/@alife/next-core/lib/index.scss';
 import DemoLayout from '@icedesign/demo-layout';
 import Block from '../src';
 
-Block.show({
-  onClose: () => {
-    Block.hide();
-  },
-  onCancel: () => {
-    Block.hide();
-  },
-  text: '是否要删除当前文章？'
-});
-
-const props = {
-  // ...
-};
-
 render(
   <DemoLayout type="ice-design">
-    <div />
+    <Block visible={true} text={'是否要删除当前文章？'} />
   </DemoLayout>,
   document.querySelector('#mountNode')
 );

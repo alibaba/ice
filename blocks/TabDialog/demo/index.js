@@ -7,27 +7,17 @@ import '@icedesign/base/lib/_components/@alife/next-core/lib/index.scss';
 import DemoLayout from '@icedesign/demo-layout';
 import Block from '../src';
 
-Block.show({
-  onClose: () => {
-    Block.hide();
-  },
-  onCancel: () => {
-    Block.hide();
-  },
+const props = {
   onOk: selectedItems => {
     console.log('selectedItems', selectedItems);
-    Block.hide();
   },
-  selectedItems: ['231']
-});
-
-const props = {
-  // ...
+  selectedItems: ['231'],
+  visible: true,
 };
 
 render(
   <DemoLayout type="ice-design">
-    <div />
+    <Block {...props} />
   </DemoLayout>,
   document.querySelector('#mountNode')
 );

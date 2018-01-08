@@ -4,9 +4,7 @@ import React, { Component } from 'react';
 import { Dialog } from '@icedesign/base';
 import './ConfirmDialog.scss';
 
-import CreateFuncDialog from './CreateFuncDialog';
-
-class ConfirmDialog extends Component {
+export default class ConfirmDialog extends Component {
   static displayName = 'ConfirmDialog';
 
   constructor(props) {
@@ -58,5 +56,3 @@ const styles = {
   },
   text: { fontSize: '16px;' }
 };
-
-export default CreateFuncDialog(ConfirmDialog);
