@@ -1,0 +1,41 @@
+{
+  "name": "@icedesign/user-info-card",
+  "version": "0.1.0",
+  "description": "",
+  "files": ["src/", "demo/", "lib/", "mock/"],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": ["ice", "ice-block"],
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.1",
+    "@icedesign/demo-layout": "^0.1.2",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/skin": "latest",
+    "babel-eslint": "^8.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "react": "15.x",
+    "react-copy-to-clipboard": "^4.2.3",
+    "react-dom": "15.x"
+  },
+  "blockConfig": {
+    "name": "user-info-card",
+    "description": "",
+    "chinese": "用户信息展示",
+    "category": "info-display",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1.BZ1jyqAXuNjy1XdXXaYcVXa-708-582.png",
+    "sketchURL": "",
+    "icelandURL": "",
+    "themePackage": "@icedesign/skin"
+  }
+}
