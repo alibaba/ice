@@ -1,25 +1,3 @@
-
-
-// 用法：
-// import SimpleFormDialog from '...';
-//
-// SimpleFormDialog.show({
-//   onClose: () => {
-//     SimpleFormDialog.hide();
-//   },
-//   onCancel: () => {
-//     SimpleFormDialog.hide();
-//   },
-//   // 点击确认按钮之后，拿到表单数据
-//   onOk: value => {
-//     console.log('value', value);
-//   },
-//   // 回填数据
-//   value: {
-//     type: 'video'
-//   }
-// });
-
 import React, { Component } from 'react';
 import { Dialog, Grid, Input, Radio } from '@icedesign/base';
 import {
@@ -27,7 +5,6 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import CreateFuncDialog from './CreateFuncDialog';
 import './SimpleFormDialog.scss';
 
 const { Row, Col } = Grid;
@@ -39,7 +16,7 @@ const defaultValue = {
   content: '',
 };
 
-class SimpleFormDialog extends Component {
+export default class SimpleFormDialog extends Component {
   static displayName = 'SimpleFormDialog';
 
   constructor(props) {
@@ -164,6 +141,11 @@ class SimpleFormDialog extends Component {
   }
 }
 
-const styles = { dialog: { width: '640px' }, dialogContent: {}, formRow: { marginTop: 20 }, input: { width: '100%' }, formLabel: { lineHeight: '26px' }, simpleFormDialog: {} };
-
-export default CreateFuncDialog(SimpleFormDialog);
+const styles = { 
+  dialog: { width: '640px' }, 
+  dialogContent: {},
+  formRow: { marginTop: 20 }, 
+  input: { width: '100%' }, 
+  formLabel: { lineHeight: '26px' }, 
+  simpleFormDialog: {},
+};

@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 import { Dialog, Button, Icon } from '@icedesign/base';
 import './ComplexDialog.scss';
 
-import CreateFuncDialog from './CreateFuncDialog';
-
-class ComplexDialog extends Component {
+export default class ComplexDialog extends Component {
   static displayName = 'ComplexDialog';
 
   constructor(props) {
@@ -89,5 +87,3 @@ const styles = {
   authItemIcon: { color: '#2ECA9C' },
   footer: { marginTop: '10px', marginBottom: '10px', textAlign: 'center' }
 };
-
-export default CreateFuncDialog(ComplexDialog);

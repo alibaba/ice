@@ -2,25 +2,6 @@
 import React, { Component } from 'react';
 import { Dialog, Tab, Table } from '@icedesign/base';
 import './TabDialog.scss';
-import CreateFuncDialog from './CreateFuncDialog';
-
-// 使用方法：
-// import TabDialog from '...';
-// TabDialog.show({
-//   onClose: () => {
-//     TabDialog.hide();
-//   },
-//   onCancel: () => {
-//     TabDialog.hide();
-//   },
-//   // 点击确定按钮，可以拿到被选中的值
-//   onOk: selectedItems => {
-//     console.log('selectedItems', selectedItems);
-//     TabDialog.hide();
-//   },
-//   // 默认传递 selectedItems 可以回填数据
-//   selectedItems: ['231']
-// });
 
 const TabPane = Tab.TabPane;
 
@@ -43,7 +24,7 @@ const mockData = [
   },
 ];
 
-class TabDialog extends Component {
+export default class TabDialog extends Component {
   static displayName = 'TabDialog';
 
   constructor(props) {
@@ -137,4 +118,3 @@ const styles = {
   },
 };
 
-export default CreateFuncDialog(TabDialog);

@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 import { Dialog } from '@icedesign/base';
 import './SuccessDialog.scss';
 
-import CreateFuncDialog from './CreateFuncDialog';
-
-class SuccessDialog extends Component {
+export default class SuccessDialog extends Component {
   static displayName = 'SuccessDialog';
 
   constructor(props) {
@@ -41,6 +39,21 @@ class SuccessDialog extends Component {
   }
 }
 
-const styles = {"dialog":{"width":"640px"},"dialogContent":{"height":"200px","display":"flex","flexDirection":"column","alignItems":"center"},"icon":{"width":"52px","height":"52px","marginTop":"46px","marginBottom":"10px"},"text":{"fontSize":"16px;"},"successDialog":{}}
+const styles = {
+  dialog: { width: "640px" },
+  dialogContent: {
+    height: "200px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  icon: {
+    width: "52px",
+    height: "52px",
+    marginTop: "46px",
+    marginBottom: "10px"
+  },
+  text: { fontSize: "16px" },
+  successDialog: {},
+};
 
-export default CreateFuncDialog(SuccessDialog);
