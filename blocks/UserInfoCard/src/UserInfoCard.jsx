@@ -20,7 +20,7 @@ export default class UserInfoCard extends Component {
     return (
       <div className="user-info-card" style={styles.container}>
         <Balloon
-          trigger={<a href="javascript:;">更多信息</a>}
+          trigger={<a style={styles.triggerText}>更多信息</a>}
           closable={false}
           visible={true}
         >
@@ -32,9 +32,7 @@ export default class UserInfoCard extends Component {
               />
               <div style={styles.baseInfo}>
                 <h5 style={styles.name}>张三</h5>
-                <p style={styles.deptName}>
-                  搜索事业部-工程效率-技术质量-质量系统平台
-                </p>
+                <p style={styles.deptName}>销售部 - 内销平台 - 售后服务</p>
               </div>
             </div>
             <ul style={styles.body}>
@@ -43,7 +41,7 @@ export default class UserInfoCard extends Component {
               </li>
               <li style={styles.profileItem}>
                 <Icon type="discount" size="xs" style={styles.itemIcon} />
-                算法专家
+                销售专家
               </li>
               <li style={styles.profileItem}>
                 <Icon type="phone" size="xs" style={styles.itemIcon} />
@@ -54,8 +52,10 @@ export default class UserInfoCard extends Component {
                 13867894321
               </li>
               <li style={{ ...styles.profileItem, width: '100%' }}>
-                <Icon type="email" size="xs" style={styles.itemIcon} />
-                ice-admin@alibaba-inc.com
+                <a href="mailto:ice-admin@alibaba-inc.com">
+                  <Icon type="email" size="xs" style={styles.itemIcon} />
+                  ice-admin@alibaba-inc.com
+                </a>
               </li>
               <li style={{ ...styles.profileItem, width: '100%' }}>
                 <Icon type="account" size="xs" style={styles.itemIcon} />
@@ -110,5 +110,10 @@ const styles = {
   itemIcon: {
     color: '#8a9099',
     marginRight: '5px'
+  },
+  triggerText: {
+    color: '#108ee9',
+    borderBottom: '1px dashed #108ee9',
+    cursor: 'pointer'
   }
 };
