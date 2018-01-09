@@ -1,5 +1,5 @@
 {
-  "name": "@icedesign/user-info-card",
+  "name": "@icedesign/user-info-card-block",
   "version": "0.1.0",
   "description": "",
   "files": ["src/", "demo/", "lib/", "mock/"],
@@ -16,26 +16,20 @@
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/card": "^0.1.1",
-    "@icedesign/demo-layout": "^0.1.2",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
     "@icedesign/skin": "latest",
-    "babel-eslint": "^8.0.3",
-    "eslint-plugin-react": "^7.5.1",
-    "react": "15.x",
-    "react-copy-to-clipboard": "^4.2.3",
-    "react-dom": "15.x"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "user-info-card",
-    "description": "",
-    "chinese": "用户信息展示",
-    "category": "info-display",
     "snapshot":
       "https://img.alicdn.com/tfs/TB1NxO4l8fH8KJjy1XbXXbLdXXa-978-668.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "用户信息展示",
+    "categories": ["info-display"]
   }
 }
