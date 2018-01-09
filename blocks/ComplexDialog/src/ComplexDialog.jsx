@@ -66,15 +66,15 @@ export default class ComplexDialog extends Component {
             </div>
             <div style={styles.authList}>
               <div style={styles.authItem}>
-                <Icon style={styles.authItemIcon} size="xs" type="select" /> V
-                标头像
+                <Icon style={styles.authItemIcon} size="xs" type="select" /> 
+                V 标头像
               </div>
               <div style={styles.authItem}>
-                <Icon style={styles.authItemIcon} size="xs" type="select" />{' '}
+                <Icon style={styles.authItemIcon} size="xs" type="select" />
                 角色标志
               </div>
               <div style={styles.authItem}>
-                <Icon style={styles.authItemIcon} size="xs" type="select" />{' '}
+                <Icon style={styles.authItemIcon} size="xs" type="select" />
                 优先发表
               </div>
             </div>
@@ -100,6 +100,6 @@ const styles = {
   extraInfo: { marginTop: '12px', fontSize: '12px', color: '#999999' },
   authList: { marginTop: '10px', fontSize: '12px', color: '#999999' },
   authItem: { marginTop: '5px' },
-  authItemIcon: { color: '#2ECA9C' },
+  authItemIcon: { color: '#2ECA9C', marginRight: '5px', },
   footer: { marginTop: '10px', marginBottom: '10px', textAlign: 'center' }
 };
