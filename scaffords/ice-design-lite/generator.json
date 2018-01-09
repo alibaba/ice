@@ -1,0 +1,43 @@
+{
+  "layouts": [
+    {
+      "source": "@icedesign/basic-layout",
+      "alias": "BasicLayout",
+      "title": "居中布局"
+    },
+    {
+      "source": "@icedesign/aside-layout",
+      "alias": "AsideLayout",
+      "title": "侧边布局"
+    },
+    {
+      "source": "@icedesign/scalable-aside-layout",
+      "alias": "ScalableAsideLayout",
+      "title": "通栏侧边布局"
+    },
+    {
+      "source": "@icedesign/landing-layout",
+      "alias": "LandingLayout",
+      "title": "通栏布局"
+    }
+  ],
+  "components": [],
+  "routes": [
+    {
+      "page": "Home",
+      "path": "/",
+      "layout": "AsideLayout"
+    },
+    {
+      "page": "NotFound",
+      "path": "*",
+      "blocks": [
+        {
+          "npm": "",
+          "version": "latest"
+        }
+      ],
+      "layout": "BasicLayout"
+    }
+  ]
+}
