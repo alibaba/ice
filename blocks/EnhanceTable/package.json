@@ -33,16 +33,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "enhance-table",
-    "description": "附带简单表单筛选功能的增强筛选表单",
-    "chinese": "增强筛选表单",
-    "category": "table",
     "snapshot": "https://img.alicdn.com/tfs/TB1viRoixrI8KJjy0FpXXb5hVXa-1896-1134.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "增强筛选表单",
+    "categories": [
+      "table"
+    ]
   }
 }

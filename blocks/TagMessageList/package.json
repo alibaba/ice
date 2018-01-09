@@ -29,19 +29,17 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1",
-    "react": "15.x",
+    "react": "*",
     "react-copy-to-clipboard": "^4.2.3",
-    "react-dom": "15.x"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "tag-message-list",
-    "description": "标签消息列表",
-    "chinese": "标签消息列表",
-    "category": "list",
     "snapshot": "https://img.alicdn.com/tfs/TB1VfEejlfH8KJjy1XbXXbLdXXa-846-776.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "标签消息列表",
+    "categories": [
+      "list"
+    ]
   }
 }
