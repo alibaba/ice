@@ -29,16 +29,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "team-display",
-    "description": "",
-    "chinese": "团队展示",
-    "category": "info-display",
     "snapshot": "https://img.alicdn.com/tfs/TB1P1cBi3DD8KJjy0FdXXcjvXXa-1904-1554.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "团队展示",
+    "categories": [
+      "info-display"
+    ]
   }
 }

@@ -29,16 +29,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "tab-dialog",
-    "description": "标签内容弹窗",
-    "chinese": "标签内容弹窗",
-    "category": "modal",
     "snapshot": "https://img.alicdn.com/tfs/TB19AF4gOqAXuNjy1XdXXaYcVXa-1262-812.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "标签内容弹窗",
+    "categories": [
+      "modal"
+    ]
   }
 }

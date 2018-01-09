@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/product-info-block",
   "version": "0.1.1",
-  "description": "",
+  "description": "产品信息展示",
   "files": [
     "src/",
     "demo/",
@@ -29,16 +29,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "product-info",
-    "description": "产品信息展示",
-    "chinese": "产品信息展示",
-    "category": "info-display",
     "snapshot": "https://img.alicdn.com/tfs/TB1IQ9Fif6H8KJjy0FjXXaXepXa-955-528.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "产品信息展示",
+    "categories": [
+      "info-display"
+    ]
   }
 }
