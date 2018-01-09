@@ -86,7 +86,8 @@ const styles = {
   avatar: {
     width: '60px',
     height: '60px',
-    borderRadius: '50px'
+    borderRadius: '50px',
+    border: '1px solid #eee'
   },
   name: {
     padding: '0 10px',
@@ -104,8 +105,7 @@ const styles = {
   },
   profileItem: {
     width: '50%',
-    lineHeight: '26px',
-    fontSize: '13px'
+    lineHeight: '26px'
   },
   itemIcon: {
     color: '#8a9099',
