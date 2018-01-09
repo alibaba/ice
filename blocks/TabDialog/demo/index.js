@@ -8,11 +8,6 @@ import DemoLayout from '@icedesign/demo-layout';
 import Block from '../src';
 
 const props = {
-  onOk: selectedItems => {
-    console.log('selectedItems', selectedItems);
-  },
-  selectedItems: ['231'],
-  visible: true,
 };
 
 render(
