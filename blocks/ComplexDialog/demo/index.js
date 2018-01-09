@@ -9,7 +9,7 @@ import Block from '../src';
 
 render(
   <DemoLayout type="ice-design">
-    <Block visible={true} text={'是否要删除当前文章？'} />
+    <Block />
   </DemoLayout>,
   document.querySelector('#mountNode')
 );

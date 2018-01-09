@@ -4,8 +4,7 @@ import DemoLayout from '@icedesign/demo-layout';
 import Block from '../src';
 
 const props = {
-  text: '是否要删除当前文章？',
-  visible: true,
+
 };
 
 render(

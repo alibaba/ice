@@ -8,13 +8,7 @@ import DemoLayout from '@icedesign/demo-layout';
 import Block from '../src';
 
 const props = {
-  value: {
-    type: 'video'
-  },
-  visible: true,
-  onOk: value => {
-    console.log('value', value);
-  },
+  
 };
 
 render(
