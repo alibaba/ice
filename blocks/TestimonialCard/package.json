@@ -30,16 +30,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "testimonial-card",
-    "description": "",
-    "chinese": "客户评论卡片",
-    "category": "info-display",
     "snapshot": "https://img.alicdn.com/tfs/TB14w4EjBfH8KJjy1XbXXbLdXXa-2824-1110.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "客户评论卡片",
+    "categories": [
+      "info-display"
+    ]
   }
 }

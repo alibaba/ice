@@ -29,16 +29,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "message-list",
-    "description": "消息列表",
-    "chinese": "消息列表",
-    "category": "list",
     "snapshot": "https://img.alicdn.com/tfs/TB1hbVYlsLJ8KJjy0FnXXcFDpXa-1900-1180.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "消息列表",
+    "categories": [
+      "list"
+    ]
   }
 }

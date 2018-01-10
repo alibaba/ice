@@ -33,16 +33,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "complex-tab-table",
-    "description": "附带复杂的 Tab 多级筛选项的表格",
-    "chinese": "复杂 Tab 筛选表格",
-    "category": "table",
     "snapshot": "https://img.alicdn.com/tfs/TB1IZMeifDH8KJjy1XcXXcpdXXa-1892-1462.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "复杂 Tab 筛选表格",
+    "categories": [
+      "table"
+    ]
   }
 }
