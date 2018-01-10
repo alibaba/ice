@@ -31,16 +31,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "chart-box",
-    "description": "",
-    "chinese": "箱型图",
-    "category": "chart",
     "snapshot": "https://img.alicdn.com/tfs/TB1nR5Wf5qAXuNjy1XdXXaYcVXa-1902-1036.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "箱型图",
+    "categories": [
+      "chart"
+    ]
   }
 }

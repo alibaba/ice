@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/signup-form-block",
   "version": "0.1.1",
-  "description": "",
+  "description": "登录表单",
   "main": "lib/index.js",
   "files": [
     "src/",
@@ -30,16 +30,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "signup-form",
-    "description": "登录表单",
-    "chinese": "登录表单",
-    "category": "form",
     "snapshot": "https://img.alicdn.com/tfs/TB1wHA9ib_I8KJjy1XaXXbsxpXa-616-612.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "登录表单",
+    "categories": [
+      "form"
+    ]
   }
 }

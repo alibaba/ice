@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/area-stack-chart-block",
   "version": "0.1.0",
-  "description": "",
+  "description": "叠加面积图",
   "main": "src/index.js",
   "files": [
     "src/",
@@ -32,16 +32,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.3",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "area-stack-chart",
-    "description": "叠加面积图",
-    "chinese": "叠加面积图",
-    "category": "chart",
     "snapshot": "https://img.alicdn.com/tfs/TB13crWidfJ8KJjy0FeXXXKEXXa-1754-994.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "叠加面积图",
+    "categories": [
+      "chart"
+    ]
   }
 }

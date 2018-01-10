@@ -29,16 +29,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "tab-article",
-    "description": "tab和文章列表组合",
-    "chinese": "tab和文章列表组合",
-    "category": "list",
     "snapshot": "https://gw.alicdn.com/tfs/TB18xpkivDH8KJjy1XcXXcpdXXa-1706-1516.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "tab和文章列表组合",
+    "categories": [
+      "list"
+    ]
   }
 }

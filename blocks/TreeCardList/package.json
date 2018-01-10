@@ -29,19 +29,17 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.3",
-    "eslint-plugin-react": "^7.5.1",
-    "react": "15.x",
+    "react": "*",
     "react-copy-to-clipboard": "^4.2.3",
-    "react-dom": "15.x"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "tree-card-list",
-    "description": "树形卡片列表",
-    "chinese": "树形卡片列表",
-    "category": "list",
     "snapshot": "https://img.alicdn.com/tfs/TB1lJIelhTI8KJjSspiXXbM4FXa-1014-780.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "树形卡片列表",
+    "categories": [
+      "list"
+    ]
   }
 }
