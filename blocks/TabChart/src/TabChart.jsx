@@ -1,0 +1,47 @@
+'use strict';
+
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import IceCard from '@icedesign/card';
+import { Tab } from '@icedesign/base';
+import SeriesLine from './SeriesLine';
+import BasicLine from './BasicLine';
+import './TabChart.scss';
+
+export default class TabChart extends Component {
+  static displayName = 'TabChart';
+
+  static propTypes = {};
+
+  static defaultProps = {};
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  handleChange = key => {
+    console.log('change', key);
+  };
+
+  render() {
+    const TabPane = Tab.TabPane;
+
+    return (
+      <div className="tab-chart">
+        <IceCard style={{ marginBottom: 0, padding: '0 20px' }}>
+          <Tab onChange={this.handleChange}>
+            <TabPane key="1" tab="收益走势">
+              <SeriesLine />
+            </TabPane>
+            <TabPane key="2" tab="成交趋势">
+              <BasicLine />
+            </TabPane>
+          </Tab>
+        </IceCard>
+      </div>
+    );
+  }
+}
+
+const styles = {};
