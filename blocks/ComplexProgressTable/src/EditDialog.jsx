@@ -22,18 +22,18 @@ class EditDialog extends Component {
   }
 
   // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
 
-  componentDidMount() {}
+  componentWillMount() { }
 
-  componentWillReceiveProps() {}
+  componentDidMount() { }
+
+  componentWillReceiveProps() { }
 
   shouldComponentUpdate() {
     return true;
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   onOk = () => {
     this.refForm.validateAll((errors, values) => {
