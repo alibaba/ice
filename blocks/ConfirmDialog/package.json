@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/confirm-dialog-block",
   "version": "0.1.1",
-  "description": "",
+  "description": "确认类型的提示框",
   "main": "lib/index.js",
   "files": [
     "src/",
@@ -30,16 +30,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "confirm-dialog",
-    "description": "确认类型的提示框",
-    "chinese": "确认类型的提示框",
-    "category": "modal",
+    "title": "确认类型的提示框",
+    "categories": [
+      "modal"
+    ],
     "snapshot": "https://img.alicdn.com/tfs/TB1Zr3xigvD8KJjy0FlXXagBFXa-1272-620.png",
-    "sketchURL": "",
-    "icelandURL": "",
     "themePackage": "@icedesign/skin"
   }
 }
