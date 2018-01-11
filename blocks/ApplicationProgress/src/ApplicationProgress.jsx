@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component } from 'react';
 import { Button, Step, Grid, Icon } from '@icedesign/base';
 import IceCard from '@icedesign/card';
@@ -66,17 +64,17 @@ export default class ApplicationProgress extends Component {
 
   // ICE: React Component 的生命周期
   // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillReceiveProps(nextProps, nextContext) {}
+  componentWillReceiveProps(nextProps, nextContext) { }
 
   shouldComponentUpdate(nextProps, nextState) {
     return true;
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   render() {
     const data = dataSource();
@@ -96,7 +94,7 @@ export default class ApplicationProgress extends Component {
                   <Row>
                     <Col span={4}>
                       <div style={styles.imageWrap}>
-                        <img style={styles.image} src={item.url} />
+                        <img style={styles.image} src={item.url} alt="condition" />
                         <br />
                         <span>{item.condition}</span>
                       </div>
