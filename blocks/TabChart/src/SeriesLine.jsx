@@ -75,10 +75,17 @@ export default class SeriesLine extends Component {
             size={4}
             shape="circle"
             color="city"
-            style={{ stroke: '#fff', lineWidth: 1 }}
+            style={styles.point}
           />
         </Chart>
       </div>
     );
   }
 }
+
+const styles = {
+  point: {
+    stroke: '#fff',
+    lineWidth: 1
+  }
+};
