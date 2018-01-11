@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/basic-exception-block",
   "version": "0.1.1",
-  "description": "",
+  "description": "基础异常报错",
   "main": "lib/index.js",
   "files": [
     "src/",
@@ -31,16 +31,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "basic-exception",
-    "description": "基础异常报错",
-    "chinese": "基础异常报错",
-    "category": "exception",
     "snapshot": "https://img.alicdn.com/tfs/TB197z8if2H8KJjy0FcXXaDlFXa-1786-914.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "基础异常报错",
+    "categories": [
+      "exception"
+    ]
   }
 }

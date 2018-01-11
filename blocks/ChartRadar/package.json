@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/chart-radar-block",
   "version": "0.1.1",
-  "description": "",
+  "description": "雷达图",
   "files": [
     "src/",
     "demo/",
@@ -31,16 +31,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "chart-radar",
-    "description": "雷达图",
-    "chinese": "雷达图",
-    "category": "chart",
     "snapshot": "https://img.alicdn.com/tfs/TB1wNkNilfH8KJjy1XbXXbLdXXa-1876-958.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "雷达图",
+    "categories": [
+      "chart"
+    ]
   }
 }

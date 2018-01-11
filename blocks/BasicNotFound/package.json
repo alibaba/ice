@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/basic-not-found-block",
   "version": "0.1.1",
-  "description": "",
+  "description": "404 报错提示",
   "main": "lib/index.js",
   "files": [
     "src/",
@@ -31,16 +31,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "basic-not-found",
-    "description": "404 报错提示",
-    "chinese": "404 报错提示",
-    "category": "exception",
     "snapshot": "https://img.alicdn.com/tfs/TB1.HyVgyqAXuNjy1XdXXaYcVXa-1914-1066.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "404 报错提示",
+    "categories": [
+      "exception"
+    ]
   }
 }
