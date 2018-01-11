@@ -8,6 +8,8 @@ import SeriesLine from './SeriesLine';
 import BasicLine from './BasicLine';
 import './TabChart.scss';
 
+const TabPane = Tab.TabPane;
+
 export default class TabChart extends Component {
   static displayName = 'TabChart';
 
@@ -25,11 +27,9 @@ export default class TabChart extends Component {
   };
 
   render() {
-    const TabPane = Tab.TabPane;
-
     return (
       <div className="tab-chart">
-        <IceCard style={{ marginBottom: 0, padding: '0 20px' }}>
+        <IceCard style={styles.card}>
           <Tab onChange={this.handleChange}>
             <TabPane key="1" tab="收益走势">
               <SeriesLine />
@@ -44,4 +44,9 @@ export default class TabChart extends Component {
   }
 }
 
-const styles = {};
+const styles = {
+  card: {
+    marginBottom: '0',
+    padding: '0 20px'
+  }
+};

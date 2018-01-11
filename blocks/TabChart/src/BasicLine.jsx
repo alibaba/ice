@@ -52,10 +52,17 @@ export default class BasicLine extends Component {
             position="year*value"
             size={4}
             shape={'circle'}
-            style={{ stroke: '#fff', lineWidth: 1 }}
+            style={styles.point}
           />
         </Chart>
       </div>
     );
   }
 }
+
+const styles = {
+  point: {
+    stroke: '#fff',
+    lineWidth: 1
+  }
+};
