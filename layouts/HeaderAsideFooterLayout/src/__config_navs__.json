@@ -6,12 +6,12 @@
     },
     {
       "text": "反馈",
-      "to": "//ice.alibaba-inc.com/feedback",
+      "to": "https://github.com/alibaba/ice/issues/new",
       "newWindow": true
     },
     {
       "text": "帮助",
-      "to": "//ice.alibaba-inc.com/docs/about",
+      "to": "https://alibaba.github.io/ice",
       "newWindow": true
     }
   ],
@@ -82,7 +82,7 @@
     },
     {
       "text": "查看更多模块",
-      "to": "//ice.alibaba-inc.com/blocks",
+      "to": "https://alibaba.github.io/ice/#/template/block",
       "newWindow": true,
       "icon": "folder"
     }
