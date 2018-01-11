@@ -6,7 +6,6 @@ import DataBinder from '@icedesign/data-binder';
 import './ComplexProgressTable.scss';
 import EditDialog from './EditDialog';
 
-// 详细用法请参见 http://ice.alibaba-inc.com/modules/ice-data-binder
 @DataBinder({
   tableData: {
     // 详细请求配置请参见 https://github.com/axios/axios
