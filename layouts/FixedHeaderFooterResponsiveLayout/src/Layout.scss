@@ -1,0 +1,35 @@
+.fixed-header-footer-responsive-layout {
+  .fixed-header-footer-responsive-layout-header {
+    position: absolute;
+    z-index: 11;
+    left: 0;
+    right: 0;
+  }
+  .ice-admin-layout-header {
+    width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .ice-menu {
+      background: transparent;
+    }
+  }
+
+  .ice-admin-layout-footer-body {
+    width: 1200px;
+    margin: 45px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ice-admin-layout-header-username {
+    color: #fff;
+  }
+
+  .ice-layout-theme-light.ice-layout-header .ice-menu-item,
+  .ice-layout-theme-light.ice-layout-header .ice-menu-item > a {
+    color: #fff;
+  }
+}

@@ -31,16 +31,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.4",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "time-filter-table",
-    "description": "支持时间筛选的表格",
-    "chinese": "时间筛选表格",
-    "category": "table",
     "snapshot": "https://img.alicdn.com/tfs/TB1.dqQi5qAXuNjy1XdXXaYcVXa-1902-1004.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "时间筛选表格",
+    "categories": [
+      "table"
+    ]
   }
 }

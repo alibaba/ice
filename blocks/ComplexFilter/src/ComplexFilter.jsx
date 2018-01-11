@@ -27,18 +27,18 @@ export default class ComplexFilter extends Component {
   }
 
   // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
 
-  componentDidMount() {}
+  componentWillMount() { }
 
-  componentWillReceiveProps(nextProps, nextContext) {}
+  componentDidMount() { }
+
+  componentWillReceiveProps(nextProps, nextContext) { }
 
   shouldComponentUpdate(nextProps, nextState) {
     return true;
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   render() {
     const { currentFilterType, categories } = this.state;
@@ -63,7 +63,7 @@ export default class ComplexFilter extends Component {
               key={idx}
               className={`tab-filter-item ${
                 currentFilterType === item.type ? 'active' : ''
-              }`}
+                }`}
               onClick={() => {
                 this.setState({
                   currentFilterType: item.type
@@ -82,7 +82,7 @@ export default class ComplexFilter extends Component {
               <span
                 className={`filter-belonging-item ${
                   categories.indexOf(cat.type) > -1 ? 'active' : ''
-                }`}
+                  }`}
                 onClick={() => {
                   const isInCategory = categories.indexOf(cat.type) > -1;
                   if (isInCategory) {

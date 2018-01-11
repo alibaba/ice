@@ -34,16 +34,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "operation-table",
-    "description": "附带操作按钮的表格",
-    "chinese": "附带操作的表格",
-    "category": "table",
     "snapshot": "https://img.alicdn.com/tfs/TB17r2OilfH8KJjy1XbXXbLdXXa-1908-1482.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "附带操作的表格",
+    "categories": [
+      "table"
+    ]
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/chart-stock-block",
   "version": "0.1.1",
-  "description": "",
+  "description": "股票图",
   "files": [
     "src/",
     "demo/",
@@ -32,16 +32,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "chart-stock",
-    "description": "股票图",
-    "chinese": "股票图",
-    "category": "chart",
     "snapshot": "https://img.alicdn.com/tfs/TB1ZYAYigvD8KJjSsplXXaIEFXa-1886-974.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "股票图",
+    "categories": [
+      "chart"
+    ]
   }
 }

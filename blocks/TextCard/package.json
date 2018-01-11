@@ -29,16 +29,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "text-card",
-    "description": "纯文字展示型卡片",
-    "chinese": "纯文字展示型卡片",
-    "category": "data-display",
     "snapshot": "https://img.alicdn.com/tfs/TB14dP0h8fH8KJjy1XbXXbLdXXa-1896-238.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "纯文字展示型卡片",
+    "categories": [
+      "data-display"
+    ]
   }
 }

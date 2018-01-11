@@ -31,16 +31,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "chart-funnel",
-    "description": "",
-    "chinese": "漏斗图",
-    "category": "chart",
     "snapshot": "https://img.alicdn.com/tfs/TB14y8xiv6H8KJjy0FjXXaXepXa-1888-1038.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "漏斗图",
+    "categories": [
+      "chart"
+    ]
   }
 }
