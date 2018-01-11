@@ -31,16 +31,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "chart-facet",
-    "description": "",
-    "chinese": "分面图",
-    "category": "chart",
     "snapshot": "https://img.alicdn.com/tfs/TB1D80FivDH8KJjy1XcXXcpdXXa-1988-1236.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "分面图",
+    "categories": [
+      "chart"
+    ]
   }
 }

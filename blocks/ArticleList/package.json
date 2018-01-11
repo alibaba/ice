@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/article-list-block",
   "version": "0.1.0",
-  "description": "",
+  "description": "文章列表",
   "main": "lib/index.js",
   "files": [
     "src/",
@@ -30,16 +30,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "article-list",
-    "description": "文章列表",
-    "chinese": "文章列表",
-    "category": "info-display",
     "snapshot": "https://img.alicdn.com/tfs/TB1PXQAifDH8KJjy1XcXXcpdXXa-1906-996.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "文章列表",
+    "categories": [
+      "info-display"
+    ]
   }
 }

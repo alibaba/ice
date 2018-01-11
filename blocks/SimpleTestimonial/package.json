@@ -29,16 +29,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "simple-testimonial",
-    "description": "",
-    "chinese": "简单的客户评价",
-    "category": "info-display",
     "snapshot": "https://img.alicdn.com/tfs/TB1X6osi4rI8KJjy0FpXXb5hVXa-1906-474.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "简单的客户评价",
+    "categories": [
+      "info-display"
+    ]
   }
 }

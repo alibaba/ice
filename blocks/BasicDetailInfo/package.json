@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/basic-detail-info-block",
   "version": "0.1.0",
-  "description": "",
+  "description": "基础详情信息展示",
   "files": [
     "src/",
     "demo/",
@@ -29,16 +29,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "basic-detail-info",
-    "description": "基础详情信息展示",
-    "chinese": "基础详情信息展示",
-    "category": "info-display",
     "snapshot": "https://gw.alicdn.com/tfs/TB1JD2VifDH8KJjy1XcXXcpdXXa-1880-1004.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "基础详情信息展示",
+    "categories": [
+      "info-display"
+    ]
   }
 }
