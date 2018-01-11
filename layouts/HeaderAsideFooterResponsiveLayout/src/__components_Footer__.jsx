@@ -8,7 +8,7 @@ export default () => {
       className="ice-admin-layout-footer"
       style={{
         textAlign: 'center',
-        lineHeight: '36px'
+        lineHeight: '36px',
       }}
     >
       <div className="ice-admin-layout-footer-body">
@@ -20,7 +20,7 @@ export default () => {
             color: '#999',
             lineHeight: 1.5,
             fontSize: 12,
-            textAlign: 'right'
+            textAlign: 'right',
           }}
         >
           阿里巴巴集团

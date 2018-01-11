@@ -16,6 +16,7 @@ export default class HeaderAsideFooterLayout extends Component {
 
   // 当前点击的菜单项
   handleClick = (selectedKeys) => {
+    // eslint-disable-next-line
     console.log('selectedKeys:', selectedKeys);
   };
 
