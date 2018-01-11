@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/success-dialog-block",
   "version": "0.1.2",
-  "description": "",
+  "description": "提示框-成功",
   "main": "lib/index.js",
   "files": [
     "src/",
@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.1",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
@@ -34,11 +35,11 @@
   },
   "blockConfig": {
     "name": "success-dialog",
-    "snapshot": "https://img.alicdn.com/tfs/TB1CMVpi5qAXuNjy1XdXXaYcVXa-1278-540.png",
-    "themePackage": "@icedesign/skin",
-    "title": "提示框-成功",
+    "title": "成功提示框",
     "categories": [
       "modal"
-    ]
+    ],
+    "snapshot": "https://img.alicdn.com/tfs/TB1CMVpi5qAXuNjy1XdXXaYcVXa-1278-540.png",
+    "themePackage": "@icedesign/skin"
   }
 }
