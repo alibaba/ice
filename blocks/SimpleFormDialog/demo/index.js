@@ -7,28 +7,13 @@ import '@icedesign/base/lib/_components/@alife/next-core/lib/index.scss';
 import DemoLayout from '@icedesign/demo-layout';
 import Block from '../src';
 
-Block.show({
-  onClose: () => {
-    Block.hide();
-  },
-  onCancel: () => {
-    Block.hide();
-  },
-  onOk: value => {
-    console.log('value', value);
-  },
-  value: {
-    type: 'video'
-  }
-});
-
 const props = {
-  // ...
+  
 };
 
 render(
   <DemoLayout type="ice-design">
-    <div />
+    <Block {...props} />
   </DemoLayout>,
   document.querySelector('#mountNode')
 );

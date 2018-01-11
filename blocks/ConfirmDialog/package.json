@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.1",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
@@ -34,11 +35,11 @@
   },
   "blockConfig": {
     "name": "confirm-dialog",
-    "snapshot": "https://img.alicdn.com/tfs/TB1Zr3xigvD8KJjy0FlXXagBFXa-1272-620.png",
-    "themePackage": "@icedesign/skin",
     "title": "确认类型的提示框",
     "categories": [
       "modal"
-    ]
+    ],
+    "snapshot": "https://img.alicdn.com/tfs/TB1Zr3xigvD8KJjy0FlXXagBFXa-1272-620.png",
+    "themePackage": "@icedesign/skin"
   }
 }

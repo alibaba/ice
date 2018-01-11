@@ -35,11 +35,11 @@
   },
   "blockConfig": {
     "name": "simple-form-dialog",
-    "snapshot": "https://img.alicdn.com/tfs/TB1.65ri9_I8KJjy0FoXXaFnVXa-1270-628.png",
-    "themePackage": "@icedesign/skin",
     "title": "简单表单弹窗",
     "categories": [
       "modal"
-    ]
+    ],
+    "snapshot": "https://img.alicdn.com/tfs/TB1.65ri9_I8KJjy0FoXXaFnVXa-1270-628.png",
+    "themePackage": "@icedesign/skin"
   }
 }
