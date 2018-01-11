@@ -9,8 +9,7 @@ const props = {
 
 render(
   <Layout {...props}>
-    sdfdsfsfd
-    sdffsfsd
+    Hello World
   </Layout>,
   document.querySelector('#mountNode')
 );
