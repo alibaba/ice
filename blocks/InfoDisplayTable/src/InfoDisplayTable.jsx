@@ -51,7 +51,7 @@ export default class InfoDisplayTable extends Component {
   }
 
   // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
+
   componentWillMount() {
 
   }
@@ -86,4 +86,4 @@ export default class InfoDisplayTable extends Component {
   }
 }
 
-const styles = {"infoDisplayTable":{}}
+const styles = { "infoDisplayTable": {} }

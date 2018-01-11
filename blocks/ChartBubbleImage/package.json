@@ -31,16 +31,16 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "chart-bubble-image",
-    "description": "",
-    "chinese": "自定义气泡图",
-    "category": "chart",
     "snapshot": "https://img.alicdn.com/tfs/TB11w4FivDH8KJjy1XcXXcpdXXa-1902-1032.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "自定义气泡图",
+    "categories": [
+      "chart"
+    ]
   }
 }

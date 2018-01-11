@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/topic-card-block-block",
   "version": "0.1.1",
-  "description": "",
+  "description": "核心数据",
   "main": "lib/index.js",
   "files": [
     "src/",
@@ -31,16 +31,16 @@
     "@icedesign/demo-layout": "^0.1.2",
     "@icedesign/layout": "^0.1.0",
     "@icedesign/skin": "^0.1.2",
-    "eslint-plugin-react": "^7.5.1"
+    "react": "*",
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "topic-card",
-    "description": "核心数据",
-    "chinese": "核心数据",
-    "category": "data-display",
     "snapshot": "https://img.alicdn.com/tfs/TB1xH9df5qAXuNjy1XdXXaYcVXa-1796-290.png",
-    "sketchURL": "",
-    "icelandURL": "",
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/skin",
+    "title": "核心数据",
+    "categories": [
+      "data-display"
+    ]
   }
 }
