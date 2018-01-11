@@ -10,7 +10,6 @@ import IceLabel from '@icedesign/label';
 
 const { Group: RadioGroup } = Radio;
 
-// 详细用法请参见 http://ice.alibaba-inc.com/modules/ice-data-binder
 @DataBinder({
   tableData: {
     // 详细请求配置请参见 https://github.com/axios/axios
@@ -43,7 +42,7 @@ export default class TimeFilterTable extends Component {
   }
 
   // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
+
   componentWillMount() { }
 
   componentDidMount() {

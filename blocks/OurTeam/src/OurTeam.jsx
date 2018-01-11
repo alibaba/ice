@@ -29,7 +29,7 @@ export default class OurTeam extends Component {
   }
 
   // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
+
   componentWillMount() { }
 
   componentDidMount() { }

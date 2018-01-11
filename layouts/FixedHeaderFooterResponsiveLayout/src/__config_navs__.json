@@ -1,0 +1,90 @@
+{
+  "headerNavs": [
+    {
+      "text": "首页",
+      "to": "/dashboard/index"
+    },
+    {
+      "text": "反馈",
+      "to": "https://github.com/alibaba/ice/issues/new",
+      "newWindow": true
+    },
+    {
+      "text": "帮助",
+      "to": "https://alibaba.github.io/ice/",
+      "newWindow": true
+    }
+  ],
+  "asideNavs": [
+    {
+      "text": "Dashboard",
+      "to": "/dashboard",
+      "icon": "compass",
+      "children": [
+        {
+          "text": "首页",
+          "to": "/dashboard/index"
+        },
+        {
+          "text": "列表页",
+          "to": "/dashboard/list"
+        },
+        {
+          "text": "图表页",
+          "to": "/dashboard/chart"
+        }
+      ]
+    },
+    {
+      "text": "列表",
+      "to": "/list",
+      "icon": "nav-list",
+      "children": [
+        {
+          "text": "文章列表",
+          "to": "/list/article-list"
+        }
+      ]
+    },
+    {
+      "text": "表格",
+      "to": "/table",
+      "icon": "table",
+      "children": [
+        {
+          "text": "基础表格",
+          "to": "/table/basic-table"
+        },
+        {
+          "text": "进度条表格",
+          "to": "/table/progress-table"
+        }
+      ]
+    },
+    {
+      "text": "异常反馈",
+      "to": "/exception",
+      "icon": "warning",
+      "children": [
+        {
+          "text": "404",
+          "to": "/exception/404"
+        },
+        {
+          "text": "500",
+          "to": "/exception/500"
+        },
+        {
+          "text": "无边栏 layout 500",
+          "to": "/exception/500-with-basic-layout"
+        }
+      ]
+    },
+    {
+      "text": "查看更多模块",
+      "to": "https://alibaba.github.io/ice/#/template/block",
+      "newWindow": true,
+      "icon": "folder"
+    }
+  ]
+}
