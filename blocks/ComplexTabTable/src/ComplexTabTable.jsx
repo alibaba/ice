@@ -117,21 +117,21 @@ export default class ComplexTabTable extends Component {
   }
 
   // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
+
+  componentWillMount() { }
 
   componentDidMount() {
     this.queryCache.page = 1;
     this.fetchData();
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {}
+  componentWillReceiveProps(nextProps, nextContext) { }
 
   shouldComponentUpdate(nextProps, nextState) {
     return true;
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   fetchData = () => {
     this.props.updateBindingData('tableData', {
@@ -250,33 +250,33 @@ export default class ComplexTabTable extends Component {
           >
             {tabList && tabList.length > 0
               ? tabList.map((tab, idx) => {
-                  return (
-                    <Tab.TabPane
-                      key={tab.type}
-                      tab={
-                        <span>
-                          {tab.text}{' '}
-                          <span style={styles.tabCount}>{tab.count}</span>
-                        </span>
-                      }
-                    >
-                      {tab.subCategories && tab.subCategories.length > 0
-                        ? tab.subCategories.map((catItem, index) => {
-                            return (
-                              <SubCategoryItem
-                                {...catItem}
-                                isCurrent={
-                                  catItem.id === this.state.currentCategory
-                                }
-                                onItemClick={this.onSubCategoryClick}
-                                key={index}
-                              />
-                            );
-                          })
-                        : null}
-                    </Tab.TabPane>
-                  );
-                })
+                return (
+                  <Tab.TabPane
+                    key={tab.type}
+                    tab={
+                      <span>
+                        {tab.text}{' '}
+                        <span style={styles.tabCount}>{tab.count}</span>
+                      </span>
+                    }
+                  >
+                    {tab.subCategories && tab.subCategories.length > 0
+                      ? tab.subCategories.map((catItem, index) => {
+                        return (
+                          <SubCategoryItem
+                            {...catItem}
+                            isCurrent={
+                              catItem.id === this.state.currentCategory
+                            }
+                            onItemClick={this.onSubCategoryClick}
+                            key={index}
+                          />
+                        );
+                      })
+                      : null}
+                  </Tab.TabPane>
+                );
+              })
               : null}
           </Tab>
         </IceCard>

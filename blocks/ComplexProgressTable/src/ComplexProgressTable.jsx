@@ -12,18 +12,18 @@ import EditDialog from './EditDialog';
     // 详细请求配置请参见 https://github.com/axios/axios
     url: '/mock/complex-progress-table.json',
     params: {
-      page: 1
+      page: 1,
     },
     defaultBindingData: {
       list: [],
       total: 100,
       pageSize: 10,
-      currentPage: 1
-    }
+      currentPage: 1,
+    },
   },
   updateRow: {
-    url: '/your-update-api.json'
-  }
+    url: '/your-update-api.json',
+  },
 })
 export default class ComplexProgressTable extends Component {
   static displayName = 'ComplexProgressTable';
@@ -41,8 +41,8 @@ export default class ComplexProgressTable extends Component {
   }
 
   // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
+
+  componentWillMount() { }
 
   componentDidMount() {
     this.queryCache.page = 1;
@@ -51,7 +51,7 @@ export default class ComplexProgressTable extends Component {
 
   fetchData = () => {
     this.props.updateBindingData('tableData', {
-      data: this.queryCache
+      data: this.queryCache,
     });
   };
 
@@ -90,7 +90,7 @@ export default class ComplexProgressTable extends Component {
         console.log('value', value);
         EditDialog.hide();
       },
-      value: record
+      value: record,
     });
   };
 
@@ -175,5 +175,5 @@ const styles = {
   priority: { width: '70px', textAlign: 'center' },
   complexProgressTable: {},
   operations: { lineHeight: '28px' },
-  pagination: { textAlign: 'right', paddingTop: '26px' }
+  pagination: { textAlign: 'right', paddingTop: '26px' },
 };
