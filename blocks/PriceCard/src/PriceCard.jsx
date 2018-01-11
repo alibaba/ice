@@ -39,18 +39,18 @@ export default class PriceCard extends Component {
   }
 
   // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
 
-  componentDidMount() {}
+  componentWillMount() { }
 
-  componentWillReceiveProps(nextProps, nextContext) {}
+  componentDidMount() { }
+
+  componentWillReceiveProps(nextProps, nextContext) { }
 
   shouldComponentUpdate(nextProps, nextState) {
     return true;
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   render() {
     return (
@@ -88,4 +88,4 @@ export default class PriceCard extends Component {
   }
 }
 
-const styles = {"container":{"background":"url(https://img.alicdn.com/tfs/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png)","backgroundSize":"cover"},"items":{"display":"flex","flexWrap":"wrap","padding":"120px 0","width":"1080px","margin":"0 auto"},"item":{"width":"28%","marginRight":"8%","background":"#FAFAFA","borderRadius":"6px","paddingBottom":"50px"},"rowLastItem":{"marginRight":0},"head":{"padding":"30px 0","textAlign":"center","borderRadius":"6px 6px 0 0"},"title":{"margin":"0 0 5px","fontWeight":"bold","fontSize":"20px"},"price":{"margin":"0","fontWeight":"bold","fontSize":"22px"},"info":{"display":"flex","flexDirection":"column","alignItems":"center"},"description":{"margin":"20px auto","lineHeight":"22px","textAlign":"center","width":"60%","color":"#999"},"buyBtn":{"display":"flex","justifyContent":"center","marginTop":"20px"},"link":{"padding":"4px 15px","background":"#3080FE","borderRadius":"12px","color":"#fff"},"priceCard":{}}
+const styles = { "container": { "background": "url(https://img.alicdn.com/tfs/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png)", "backgroundSize": "cover" }, "items": { "display": "flex", "flexWrap": "wrap", "padding": "120px 0", "width": "1080px", "margin": "0 auto" }, "item": { "width": "28%", "marginRight": "8%", "background": "#FAFAFA", "borderRadius": "6px", "paddingBottom": "50px" }, "rowLastItem": { "marginRight": 0 }, "head": { "padding": "30px 0", "textAlign": "center", "borderRadius": "6px 6px 0 0" }, "title": { "margin": "0 0 5px", "fontWeight": "bold", "fontSize": "20px" }, "price": { "margin": "0", "fontWeight": "bold", "fontSize": "22px" }, "info": { "display": "flex", "flexDirection": "column", "alignItems": "center" }, "description": { "margin": "20px auto", "lineHeight": "22px", "textAlign": "center", "width": "60%", "color": "#999" }, "buyBtn": { "display": "flex", "justifyContent": "center", "marginTop": "20px" }, "link": { "padding": "4px 15px", "background": "#3080FE", "borderRadius": "12px", "color": "#fff" }, "priceCard": {} }

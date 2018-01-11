@@ -17,18 +17,18 @@ export default class DisplayCard extends Component {
   }
 
   // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
 
-  componentDidMount() {}
+  componentWillMount() { }
 
-  componentWillReceiveProps(nextProps, nextContext) {}
+  componentDidMount() { }
+
+  componentWillReceiveProps(nextProps, nextContext) { }
 
   shouldComponentUpdate(nextProps, nextState) {
     return true;
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   renderItem = (data, idx) => {
     return <div key={idx}>111</div>;
