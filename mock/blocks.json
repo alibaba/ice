@@ -1,0 +1,552 @@
+{
+  "data": {
+    "categories": [
+      {
+        "path": "layout",
+        "dataType": "layout",
+        "name": "布局"
+      },
+      {
+        "path": "dashboard",
+        "dataType": "dashboard",
+        "name": "主页"
+      },
+      {
+        "path": "table",
+        "dataType": "table",
+        "name": "表格"
+      },
+      {
+        "path": "form",
+        "dataType": "form",
+        "name": "表单"
+      },
+      {
+        "path": "charts",
+        "dataType": "charts",
+        "name": "图表"
+      },
+      {
+        "path": "lists",
+        "dataType": "lists",
+        "name": "列表"
+      },
+      {
+        "path": "modal",
+        "dataType": "modal",
+        "name": "模态框"
+      },
+      {
+        "path": "filter",
+        "dataType": "filter",
+        "name": "筛选"
+      },
+      {
+        "path": "feedback",
+        "dataType": "feedback",
+        "name": "反馈"
+      },
+      {
+        "path": "data-display",
+        "dataType": "dataDisplay",
+        "name": "数据展示"
+      },
+      {
+        "path": "info-display",
+        "dataType": "infoDisplay",
+        "name": "信息展示"
+      },
+      {
+        "path": "exception",
+        "dataType": "exception",
+        "name": "异常"
+      }
+    ],
+    "lists": {
+      "layout": [
+        {
+          "id": "1",
+          "block_name": "BasicLayout",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "只有顶部导航",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/layouts/BasicLayout",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://gw.alicdn.com/tfs/TB1nOq8eTnI8KJjy0FfXXcdoVXa-1209-760.png"
+        },
+        {
+          "id": "2",
+          "block_name": "AsideLayout",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "侧边固定导航",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/layouts/AsideLayout",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1mDm5eHYI8KJjy0FaXXbAiVXa-1236-672.png"
+        },
+        {
+          "id": "3",
+          "block_name": "ScalableAsideLayout",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "侧边吸附导航",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/layouts/ScalableAsideLayout",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1x_a4eTvI8KJjSspjXXcgjXXa-1091-806.png"
+        }
+      ],
+      "dashboard": [
+        {
+          "id": "1",
+          "block_name": "DynamicBanner",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "3D 动态展示图",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/DynamicBanner",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1MriJeRHH8KJjy0FbXXcqlpXa-532-265.png"
+        }
+      ],
+      "table": [
+        {
+          "id": "1",
+          "block_name": "BasicTable",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "图文表格",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/BasicTable",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1bne8eHYI8KJjy0FaXXbAiVXa-920-571.png"
+        },
+        {
+          "id": "2",
+          "block_name": "ProgressTable",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "进度条表格",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/ProgressTable",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1Es85byqAXuNjy1XdXXaYcVXa-887-522.png"
+        },
+        {
+          "id": "3",
+          "block_name": "FilterableTable",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "过滤型表格",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/FilterableTable",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1MI85byqAXuNjy1XdXXaYcVXa-925-813.png"
+        },
+        {
+          "id": "4",
+          "block_name": "SelectTable",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "增删改查型表格",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/SelectTable",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1HIeUeS_I8KJjy0FoXXaFnVXa-959-650.png"
+        }
+      ],
+      "form": [
+        {
+          "id": "1",
+          "block_name": "BasicSignup",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "登录页",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/BasicSignup",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1jK6deLDH8KJjy1XcXXcpdXXa-1134-729.png"
+        },
+        {
+          "id": "2",
+          "block_name": "BasicRegister",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "注册页",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/BasicRegister",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1f0d5byqAXuNjy1XdXXaYcVXa-1908-981.png"
+        },
+        {
+          "id": "3",
+          "block_name": "SignupForm",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "登录表单",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/SignupForm",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1FuKqgC_I8KJjy0FoXXaFnVXa-316-318.png"
+        },
+        {
+          "id": "4",
+          "block_name": "RegisterForm",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "注册表单",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/RegisterForm",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1tqyLgvDH8KJjy1XcXXcpdXXa-316-420.png"
+        }
+      ],
+      "charts": [
+        {
+          "id": "1",
+          "block_name": "PieDoughnutChart",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "环形图",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/PieDoughnutChart",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1ys85byqAXuNjy1XdXXaYcVXa-476-382.png"
+        },
+        {
+          "id": "2",
+          "block_name": "AreaStackChart",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "堆叠图",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/AreaStackChart",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB13g.Pa5qAXuNjy1XdXXaYcVXa-2048-888.png"
+        }
+      ],
+      "lists": [
+        {
+          "id": "1",
+          "block_name": "ArticleList",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "文章列表",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/ArticleList",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1dAupgC_I8KJjy0FoXXaFnVXa-954-649.png"
+        },
+        {
+          "id": "2",
+          "block_name": "SystemNoticeList",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "系统公告列表",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/SystemNoticeList",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1FUCpgC_I8KJjy0FoXXaFnVXa-957-350.png"
+        }
+      ],
+      "modal": [
+        {
+          "id": "1",
+          "block_name": "ConfirmDialog",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "确认提示",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/ConfirmDialog",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1Fim8eTnI8KJjy0FfXXcdoVXa-574-301.png"
+        },
+        {
+          "id": "2",
+          "block_name": "SuccessDialog",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "成功提示",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/SuccessDialog",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1xV5AeNTI8KJjSspiXXbM4FXa-570-297.png"
+        }
+      ],
+      "filter": [
+        {
+          "id": "1",
+          "block_name": "CompositeFilter",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "标签和搜索",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/CompositeFilter",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1F_i5eHYI8KJjy0FaXXbAiVXa-922-112.png"
+        },
+        {
+          "id": "2",
+          "block_name": "FilterList",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "列表搜索过滤",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/FilterList",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1H9DdeLDH8KJjy1XcXXcpdXXa-887-582.png"
+        },
+        {
+          "id": "3",
+          "block_name": "FormFilter",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "表单搜索",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/FormFilter",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1yhzieH_I8KJjy1XaXXbsxpXa-923-217.png"
+        },
+        {
+          "id": "4",
+          "block_name": "BasicTab",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "标签页过滤",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/BasicTab",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1H0MkciqAXuNjy1XdXXaYcVXa-887-56.png"
+        }
+      ],
+      "feedback": [
+
+      ],
+      "dataDisplay": [
+        {
+          "id": "1",
+          "block_name": "TopicCard",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "图文数据展示",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/TopicCard",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1anm5eHYI8KJjy0FaXXbAiVXa-886-146.png"
+        }
+      ],
+      "infoDisplay": [
+        {
+          "id": "1",
+          "block_name": "EntryCard",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "图文信息展示",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/EntryCard",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB17GGDeJfJ8KJjy0FeXXXKEXXa-916-126.png"
+        },
+        {
+          "id": "2",
+          "block_name": "BrandDisplay",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "品牌展示",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/BrandDisplay",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1gwP1d5qAXuNjy1XdXXaYcVXa-898-461.png"
+        }
+      ],
+      "exception": [
+        {
+          "id": "1",
+          "block_name": "BasicException",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "500错误提示",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/BasicException",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1Him8eTnI8KJjy0FfXXcdoVXa-921-484.png"
+        },
+        {
+          "id": "2",
+          "block_name": "BasicException",
+          "npm": "",
+          "version": "0.0.1",
+          "download": "0",
+          "author": "思忠",
+          "block_cn_name": "400错误提示",
+          "description": "",
+          "repo_url": "http://gitlab.alibaba-inc.com/ice/workspace/tree/templates/templates/blocks/BasicException",
+          "archive_url": "",
+          "preview_url": "",
+          "publish_time": "2017-12-03",
+          "latest_update_time": "2017-12-04",
+          "snapshoot":
+            "https://img.alicdn.com/tfs/TB1PU51eMvD8KJjy0FlXXagBFXa-922-484.png"
+        }
+      ]
+    }
+  }
+}
