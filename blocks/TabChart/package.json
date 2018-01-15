@@ -1,0 +1,37 @@
+{
+  "name": "@icedesign/tab-chart-block",
+  "version": "0.1.0",
+  "description": "标签页和图表组合使用",
+  "files": ["src/", "demo/", "lib/", "mock/"],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": ["ice", "ice-block"],
+  "dependencies": {
+    "@antv/data-set": "^0.8.3",
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.1",
+    "bizcharts": "^3.1.0",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/skin": "latest",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "tab-chart",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1OVMBmb_I8KJjy1XaXXbsxpXa-1920-764.png",
+    "title": "标签页图表组合",
+    "categories": ["chart", "data-display"],
+    "themePackage": "@icedesign/skin"
+  }
+}
