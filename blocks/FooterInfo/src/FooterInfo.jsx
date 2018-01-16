@@ -12,26 +12,9 @@ export default class FooterInfo extends Component {
     this.state = {};
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
   render() {
     return (
-      <div
-        className="footer-info"
-        style={styles.container}
-      >
+      <div className="footer-info" style={styles.container}>
         <div style={styles.items}>
           <div style={styles.item}>
             <h2 style={styles.itemTitle}>产品介绍</h2>
@@ -91,21 +74,21 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     width: '1080px',
-    margin: '0 auto'
+    margin: '0 auto',
   },
   item: {
     width: '30%',
     padding: '20px 30px 60px',
     marginRight: '5%',
     borderRadius: '6px',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   itemTitle: { margin: '20px 0', color: '#fff', fontSize: '24px' },
   navLink: {
     display: 'block',
     height: '32px',
     lineHeight: '32px',
-    color: '#E1EEFF'
+    color: '#E1EEFF',
   },
-  copyRight: { color: '#fff', textAlign: 'center' }
+  copyRight: { color: '#fff', textAlign: 'center' },
 };

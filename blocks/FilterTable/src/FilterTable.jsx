@@ -1,8 +1,5 @@
-'use strict';
-
+/* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
 import { Table, Pagination } from '@icedesign/base';
 
 import IceCard from '@icedesign/card';
@@ -17,23 +14,18 @@ import FilterForm from './Filter';
     // 详细请求配置请参见 https://github.com/axios/axios
     url: '/mock/filter-table-list.json',
     params: {
-      page: 1
+      page: 1,
     },
     defaultBindingData: {
       list: [],
       total: 100,
       pageSize: 10,
-      currentPage: 1
-    }
-  }
+      currentPage: 1,
+    },
+  },
 })
 export default class EnhanceTable extends Component {
   static displayName = 'EnhanceTable';
-
-  static propTypes = {
-    style: PropTypes.object,
-    className: PropTypes.string
-  };
 
   static defaultProps = {};
 
@@ -43,30 +35,18 @@ export default class EnhanceTable extends Component {
     // 请求参数缓存
     this.queryCache = {};
     this.state = {
-      filterFormValue: {}
+      filterFormValue: {},
     };
   }
-
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
 
   componentDidMount() {
     this.queryCache.page = 1;
     this.fetchData();
   }
 
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
   fetchData = () => {
     this.props.updateBindingData('tableData', {
-      data: this.queryCache
+      data: this.queryCache,
     });
   };
 
@@ -110,7 +90,7 @@ export default class EnhanceTable extends Component {
     );
   };
 
-  renderStatus = (value, index, record) => {
+  renderStatus = (value) => {
     return (
       <IceLabel inverse={false} status="default">
         {value}
@@ -118,15 +98,15 @@ export default class EnhanceTable extends Component {
     );
   };
 
-  changePage = currentPage => {
+  changePage = (currentPage) => {
     this.queryCache.page = currentPage;
 
     this.fetchData();
   };
 
-  filterFormChange = value => {
+  filterFormChange = (value) => {
     this.setState({
-      filterFormValue: value
+      filterFormValue: value,
     });
   };
 
@@ -134,14 +114,14 @@ export default class EnhanceTable extends Component {
     // 合并参数，请求数据
     this.queryCache = {
       ...this.queryCache,
-      ...this.state.filterFormValue
+      ...this.state.filterFormValue,
     };
     this.fetchData();
   };
 
   resetFilter = () => {
     this.setState({
-      filterFormValue: {}
+      filterFormValue: {},
     });
   };
 
@@ -167,9 +147,17 @@ export default class EnhanceTable extends Component {
             style={styles.basicTable}
             hasBorder={false}
           >
-            <Table.Column title="问题描述" cell={this.renderTitle} width={320} />
+            <Table.Column
+              title="问题描述"
+              cell={this.renderTitle}
+              width={320}
+            />
             <Table.Column title="问题分类" dataIndex="type" width={85} />
-            <Table.Column title="发布时间" dataIndex="publishTime" width={150} />
+            <Table.Column
+              title="发布时间"
+              dataIndex="publishTime"
+              width={150}
+            />
             <Table.Column
               title="状态"
               dataIndex="publishStatus"
@@ -201,7 +189,7 @@ const styles = {
   filterTableOperation: { lineHeight: '28px' },
   operationItem: {
     marginRight: '12px',
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
   titleWrapper: { display: 'flex', flexDirection: 'row' },
   title: { marginLeft: '10px', lineHeight: '20px' },
@@ -209,7 +197,7 @@ const styles = {
     minHeight: 0,
     marginBottom: 20,
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
-  todo4: { textAlign: 'right', paddingTop: '26px' }
+  todo4: { textAlign: 'right', paddingTop: '26px' },
 };

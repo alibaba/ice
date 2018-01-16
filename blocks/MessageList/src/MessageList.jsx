@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
 import { Pagination } from '@icedesign/base';
 import './MessageList.scss';
@@ -8,30 +7,30 @@ const dataSource = [
   {
     title: '消息标题',
     message: '这里是一条消息提醒详细说明。',
-    datetime: '07-07 18:36'
+    datetime: '07-07 18:36',
   },
   {
     title: '消息标题',
     message:
       '这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。',
-    datetime: '07-07 18:36'
+    datetime: '07-07 18:36',
   },
   {
     title: '消息标题',
     message:
       '这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。',
-    datetime: '07-07 18:36'
+    datetime: '07-07 18:36',
   },
   {
     title: '消息标题',
     message: '这里是一条比较长的消息提醒详细说明。',
-    datetime: '07-07 18:36'
+    datetime: '07-07 18:36',
   },
   {
     title: '消息标题',
     message: '这里是一条比较长的消息提醒详细说明。',
-    datetime: '07-07 18:36'
-  }
+    datetime: '07-07 18:36',
+  },
 ];
 
 export default class MessageList extends Component {
@@ -41,20 +40,6 @@ export default class MessageList extends Component {
     super(props);
     this.state = {};
   }
-
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
 
   renderItem = (item, idx) => {
     return (
@@ -88,26 +73,26 @@ const styles = {
     fontSize: '16px',
     color: '#444',
     marginBottom: '15px',
-    position: 'relative'
+    position: 'relative',
   },
   datetime: {
     position: 'absolute',
     right: '10px',
     paddingTop: '10px',
     fontSize: '12px',
-    color: '#666'
+    color: '#666',
   },
   message: {
     fontSize: '14px',
     color: '#666',
     marginBottom: '20px',
-    width: '790px'
+    width: '790px',
   },
   paginationWarp: {
     marginTop: '15px',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
-  messageList: {}
+  messageList: {},
 };

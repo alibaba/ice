@@ -1,40 +1,30 @@
-'use strict';
-
+/* eslint no-underscore-dangle:0 */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import './ComplexTabTable.scss';
-
 import { Table, Pagination, Tab, DatePicker, Search } from '@icedesign/base';
-
 import IceCard from '@icedesign/card';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
-
 import SubCategoryItem from './SubCategoryItem';
+import './ComplexTabTable.scss';
 
 @DataBinder({
   tableData: {
     // 详细请求配置请参见 https://github.com/axios/axios
     url: '/mock/complex-tab-table-list.json',
     params: {
-      page: 1
+      page: 1,
     },
     defaultBindingData: {
       list: [],
       total: 100,
       pageSize: 10,
-      currentPage: 1
-    }
-  }
+      currentPage: 1,
+    },
+  },
 })
 export default class ComplexTabTable extends Component {
   static displayName = 'ComplexTabTable';
-
-  static propTypes = {
-    style: PropTypes.object,
-    className: PropTypes.string
-  };
 
   static defaultProps = {};
 
@@ -53,29 +43,29 @@ export default class ComplexTabTable extends Component {
           subCategories: [
             {
               text: '申请账号失败',
-              id: '1'
+              id: '1',
             },
             {
               text: '粉丝数为0',
-              id: '2'
+              id: '2',
             },
             {
               text: '空间不足',
-              id: '3'
+              id: '3',
             },
             {
               text: '系统报错',
-              id: '4'
+              id: '4',
             },
             {
               text: '网络异常',
-              id: '5'
+              id: '5',
             },
             {
               text: '不在范围',
-              id: '6'
-            }
-          ]
+              id: '6',
+            },
+          ],
         },
         {
           text: '待解决',
@@ -84,13 +74,13 @@ export default class ComplexTabTable extends Component {
           subCategories: [
             {
               text: '网络异常',
-              id: '21'
+              id: '21',
             },
             {
               text: '空间不足',
-              id: '22'
-            }
-          ]
+              id: '22',
+            },
+          ],
         },
         {
           text: '待验证',
@@ -99,42 +89,30 @@ export default class ComplexTabTable extends Component {
           subCategories: [
             {
               text: '系统报错',
-              id: '34'
+              id: '34',
             },
             {
               text: '网络异常',
-              id: '35'
+              id: '35',
             },
             {
               text: '不在范围',
-              id: '36'
-            }
-          ]
-        }
-      ]
+              id: '36',
+            },
+          ],
+        },
+      ],
     };
   }
-
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
 
   componentDidMount() {
     this.queryCache.page = 1;
     this.fetchData();
   }
 
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
   fetchData = () => {
     this.props.updateBindingData('tableData', {
-      data: this.queryCache
+      data: this.queryCache,
     });
   };
 
@@ -173,7 +151,7 @@ export default class ComplexTabTable extends Component {
     );
   };
 
-  renderStatus = (value, index, record) => {
+  renderStatus = (value) => {
     return (
       <IceLabel inverse={false} status="default">
         {value}
@@ -194,7 +172,7 @@ export default class ComplexTabTable extends Component {
 
     this.setState({
       currentTab: tabKey,
-      currentCategory: firstTabCatId
+      currentCategory: firstTabCatId,
     });
     this.queryCache.catId = firstTabCatId;
     this.fetchData();
@@ -212,7 +190,7 @@ export default class ComplexTabTable extends Component {
 
   onSubCategoryClick = (catId) => {
     this.setState({
-      currentCategory: catId
+      currentCategory: catId,
     });
     this.queryCache.catId = catId;
     this.fetchData();
@@ -231,7 +209,7 @@ export default class ComplexTabTable extends Component {
             type="bar"
             currentTab={this.state.currentTab}
             contentStyle={{
-              padding: '4px 0 0 0'
+              padding: '4px 0 0 0',
             }}
             tabBarExtraContent={
               <div style={styles.tabExtra}>
@@ -248,34 +226,34 @@ export default class ComplexTabTable extends Component {
             }
           >
             {tabList && tabList.length > 0
-              ? tabList.map((tab, idx) => {
-                return (
-                  <Tab.TabPane
-                    key={tab.type}
-                    tab={
-                      <span>
-                        {tab.text}{' '}
-                        <span style={styles.tabCount}>{tab.count}</span>
-                      </span>
-                    }
-                  >
-                    {tab.subCategories && tab.subCategories.length > 0
-                      ? tab.subCategories.map((catItem, index) => {
-                        return (
-                          <SubCategoryItem
-                            {...catItem}
-                            isCurrent={
-                              catItem.id === this.state.currentCategory
-                            }
-                            onItemClick={this.onSubCategoryClick}
-                            key={index}
-                          />
-                        );
-                      })
-                      : null}
-                  </Tab.TabPane>
-                );
-              })
+              ? tabList.map((tab) => {
+                  return (
+                    <Tab.TabPane
+                      key={tab.type}
+                      tab={
+                        <span>
+                          {tab.text}{' '}
+                          <span style={styles.tabCount}>{tab.count}</span>
+                        </span>
+                      }
+                    >
+                      {tab.subCategories && tab.subCategories.length > 0
+                        ? tab.subCategories.map((catItem, index) => {
+                            return (
+                              <SubCategoryItem
+                                {...catItem}
+                                isCurrent={
+                                  catItem.id === this.state.currentCategory
+                                }
+                                onItemClick={this.onSubCategoryClick}
+                                key={index}
+                              />
+                            );
+                          })
+                        : null}
+                    </Tab.TabPane>
+                  );
+                })
               : null}
           </Tab>
         </IceCard>
@@ -332,5 +310,5 @@ const styles = {
   tabExtra: { display: 'flex', alignItems: 'center' },
   search: { marginLeft: 10 },
   tabCount: { color: '#3080FE' },
-  pagination: { textAlign: 'right', paddingTop: '26px' }
+  pagination: { textAlign: 'right', paddingTop: '26px' },
 };

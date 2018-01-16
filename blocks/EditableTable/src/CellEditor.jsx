@@ -1,9 +1,6 @@
-'use strict';
-
+/* eslint no-unused-expressions: 0 */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
-import { Table, Icon, Button, Input } from '@icedesign/base';
+import { Icon, Input } from '@icedesign/base';
 
 export default class CellEditor extends Component {
   static displayName = 'CellEditor';
@@ -14,14 +11,14 @@ export default class CellEditor extends Component {
     this.tempValue = '';
     this.state = {
       editMode: false,
-      value: props.value || ''
+      value: props.value || '',
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if ('value' in nextProps) {
       this.setState({
-        value: nextProps.value
+        value: nextProps.value,
       });
     }
   }
@@ -30,19 +27,19 @@ export default class CellEditor extends Component {
     // 缓存数据以便回滚
     this.tempValue = this.state.value;
     this.setState({
-      editMode: true
+      editMode: true,
     });
   };
 
-  onValueChange = value => {
+  onValueChange = (value) => {
     this.setState({
-      value
+      value,
     });
   };
 
   updateValue = () => {
     this.setState({
-      editMode: false
+      editMode: false,
     });
     const { index, valueKey } = this.props;
     const { value } = this.state;
@@ -52,7 +49,7 @@ export default class CellEditor extends Component {
   rollBackThisCell = () => {
     this.setState({
       value: this.tempValue,
-      editMode: false
+      editMode: false,
     });
     this.tempValue = '';
   };
@@ -84,31 +81,30 @@ export default class CellEditor extends Component {
           </span>
         </div>
       );
-    } else {
-      return (
-        <div className="celleditor">
-          <span>{value}</span>
-          <span
-            style={styles.operationIcon}
-            className="celleditor-trigger"
-            title="编辑"
-            onClick={this.editThisCell}
-          >
-            <Icon size="xs" type="edit" />
-          </span>
-        </div>
-      );
     }
+    return (
+      <div className="celleditor">
+        <span>{value}</span>
+        <span
+          style={styles.operationIcon}
+          className="celleditor-trigger"
+          title="编辑"
+          onClick={this.editThisCell}
+        >
+          <Icon size="xs" type="edit" />
+        </span>
+      </div>
+    );
   }
 }
 
 const styles = {
   cellInput: {
-    width: 'calc(100% - 44px)'
+    width: 'calc(100% - 44px)',
   },
   operationIcon: {
     marginLeft: '10px',
     color: '#999',
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 };

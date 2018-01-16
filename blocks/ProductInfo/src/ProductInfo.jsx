@@ -1,7 +1,4 @@
-
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
 import './ProductInfo.scss';
 
@@ -41,10 +38,7 @@ const dataSource = [
 export default class ProductInfo extends Component {
   static displayName = 'ProductInfo';
 
-  static propTypes = {
-    style: PropTypes.object,
-    className: PropTypes.string,
-  };
+  static propTypes = {};
 
   static defaultProps = {};
 
@@ -52,20 +46,6 @@ export default class ProductInfo extends Component {
     super(props);
     this.state = {};
   }
-
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
 
   render() {
     return (
@@ -75,7 +55,7 @@ export default class ProductInfo extends Component {
             {dataSource.map((item, index) => {
               return (
                 <div key={index} style={styles.item}>
-                  <img src={item.pic} style={styles.pic} />
+                  <img src={item.pic} style={styles.pic} alt="" />
                   <h3 style={styles.title}>{item.title}</h3>
                   <p style={styles.desc}>{item.desc}</p>
                 </div>
@@ -88,4 +68,26 @@ export default class ProductInfo extends Component {
   }
 }
 
-const styles = { items: { display: 'flex', flexWrap: 'wrap' }, item: { width: '33.3333%', textAlign: 'center', padding: '10px 22px', marginBottom: '20px' }, pic: { width: 100, height: 100 }, title: { fontWeight: 'bold' }, desc: { lineHeight: '22px' }, productInfo: {} };
+const styles = {
+  items: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  item: {
+    width: '33.3333%',
+    textAlign: 'center',
+    padding: '10px 22px',
+    marginBottom: '20px',
+  },
+  pic: {
+    width: 100,
+    height: 100,
+  },
+  title: {
+    fontWeight: 'bold',
+  },
+  desc: {
+    lineHeight: '22px',
+  },
+  productInfo: {},
+};

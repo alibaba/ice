@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import { Table, Button, Icon, Pagination } from '@icedesign/base';
 import IceCard from '@icedesign/card';
@@ -41,7 +39,7 @@ export default class SelectableTable extends Component {
     // 表格可以勾选配置项
     this.rowSelection = {
       // 表格发生勾选状态变化时触发
-      onChange: (ids, records) => {
+      onChange: (ids) => {
         console.log('ids', ids);
         this.setState({
           selectedRowKeys: ids,
@@ -90,11 +88,10 @@ export default class SelectableTable extends Component {
   renderOperator = (value, index, record) => {
     return (
       <div>
-        <a href="javascript: void(0);">编辑</a>
+        <a>编辑</a>
         <a
-          style={styles.todo0}
+          style={styles.removeBtn}
           onClick={this.deleteItem.bind(this, record)}
-          href="javascript: void(0);"
         >
           删除
         </a>
@@ -105,9 +102,7 @@ export default class SelectableTable extends Component {
   render() {
     return (
       <div className="selectable-table" style={styles.selectableTable}>
-        <IceCard
-          style={styles.todo1}
-        >
+        <IceCard style={styles.iceCard}>
           <div>
             <Button
               onClick={this.addMoreItem}
@@ -141,7 +136,7 @@ export default class SelectableTable extends Component {
             </a>
           </div>
         </IceCard>
-        <IceCard style={styles.todo2}>
+        <IceCard>
           <Table
             dataSource={this.state.dataSource}
             isLoading={this.state.isLoading}
@@ -165,9 +160,7 @@ export default class SelectableTable extends Component {
               width={120}
             />
           </Table>
-          <div
-            style={styles.todo3}
-          >
+          <div style={styles.pagination}>
             <Pagination onChange={this.change} />
           </div>
         </IceCard>
@@ -176,4 +169,24 @@ export default class SelectableTable extends Component {
   }
 }
 
-const styles = { selectableTable: {}, batchBtn: { marginRight: '10px' }, todo0: { marginLeft: 10 }, todo1: { marginBottom: '20px', minHeight: 'auto', display: 'flex', justifyContent: 'space-between' }, todo2: { width: '1026px' }, todo3: { textAlign: 'right', paddingTop: '26px' } };
+const styles = {
+  selectableTable: {
+    width: '960px',
+  },
+  batchBtn: {
+    marginRight: '10px',
+  },
+  iceCard: {
+    marginBottom: '20px',
+    minHeight: 'auto',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  removeBtn: {
+    marginLeft: 10,
+  },
+  pagination: {
+    textAlign: 'right',
+    paddingTop: '26px',
+  },
+};
