@@ -37,11 +37,11 @@
     "eslint-plugin-react": "^7.5.1"
   },
   "scripts": {
-    "prepublish": "ice block build",
-    "registry": "http://registry.npmjs.com"
+    "prepublish": "ice block build"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
   },
   "blockConfig": {
     "name": "header-aside-footer-responsive-layout",
