@@ -1,8 +1,4 @@
-
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import IceCard from '@icedesign/card';
 import './PriceInfo.scss';
 
 const data = [
@@ -44,20 +40,6 @@ export default class PriceInfo extends Component {
     this.state = {};
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
   render() {
     return (
       <div className="price-info" style={styles.priceInfo}>
@@ -69,14 +51,13 @@ export default class PriceInfo extends Component {
                 key={index}
                 style={{ ...styles.item, ...rowLastItem }}
                 className="item"
-                style={styles.item}
               >
                 <div style={styles.head}>
                   <h3 style={styles.title}>{item.title}</h3>
                   <p style={styles.price}>￥{item.price}</p>
                 </div>
                 <div style={styles.info}>
-                  <img style={styles.image} src={item.imgUrl} />
+                  <img style={styles.image} src={item.imgUrl} alt="" />
                   <h5 style={styles.type}>{item.type}</h5>
                   <p style={styles.description}>{item.description}</p>
                 </div>
@@ -94,4 +75,52 @@ export default class PriceInfo extends Component {
   }
 }
 
-const styles = { items: { display: 'flex', flexWrap: 'wrap', padding: '80px 0', width: '1080px', margin: '0 auto' }, item: { width: '28%', marginRight: '8%', background: '#FAFAFA', borderRadius: '6px', paddingBottom: '50px' }, rowLastItem: { marginRight: 0 }, head: { padding: '30px 0', background: '#3080FE', textAlign: 'center', color: '#fff', borderRadius: '6px 6px 0 0' }, title: { margin: '0 0 5px', fontWeight: 'bold', fontSize: '20px' }, price: { margin: '0', fontWeight: 'bold', fontSize: '18px' }, info: { display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '40px' }, image: { width: '52px', height: '52px' }, type: { margin: 0, fontSize: '15px', fontWeight: 'bold', marginTop: '10px' }, description: { margin: '20px 0', lineHeight: '22px', textAlign: 'center', width: '60%', color: '#999' }, buyBtn: { display: 'flex', justifyContent: 'center', marginTop: '20px' }, link: { padding: '4px 15px', background: '#3080FE', borderRadius: '12px', color: '#fff' }, priceInfo: {} };
+const styles = {
+  items: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    padding: '80px 0',
+    width: '1080px',
+    margin: '0 auto',
+  },
+  item: {
+    width: '28%',
+    marginRight: '8%',
+    background: '#FAFAFA',
+    borderRadius: '6px',
+    paddingBottom: '50px',
+  },
+  rowLastItem: { marginRight: 0 },
+  head: {
+    padding: '30px 0',
+    background: '#3080FE',
+    textAlign: 'center',
+    color: '#fff',
+    borderRadius: '6px 6px 0 0',
+  },
+  title: { margin: '0 0 5px', fontWeight: 'bold', fontSize: '20px' },
+  price: { margin: '0', fontWeight: 'bold', fontSize: '18px' },
+  info: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: '40px',
+  },
+  image: { width: '52px', height: '52px' },
+  type: { margin: 0, fontSize: '15px', fontWeight: 'bold', marginTop: '10px' },
+  description: {
+    margin: '20px 0',
+    lineHeight: '22px',
+    textAlign: 'center',
+    width: '60%',
+    color: '#999',
+  },
+  buyBtn: { display: 'flex', justifyContent: 'center', marginTop: '20px' },
+  link: {
+    padding: '4px 15px',
+    background: '#3080FE',
+    borderRadius: '12px',
+    color: '#fff',
+  },
+  priceInfo: {},
+};

@@ -1,3 +1,4 @@
+/* eslint no-mixed-operators:0 */
 import React, { Component } from 'react';
 import { Table, Progress, Pagination } from '@icedesign/base';
 import IceCard from '@icedesign/card';
@@ -9,7 +10,7 @@ const getTableData = () => {
       name: 'A旗舰店',
       total: Math.ceil(Math.random() * 1000000),
       count: 300 - index * 10,
-      progress: Math.ceil(Math.random() * 100),
+      progress: Math.ceil(Math.random() * 100)
     };
   });
 };
@@ -22,7 +23,7 @@ export default class ProgressTable extends Component {
 
     this.state = {
       dataSource: getTableData(),
-      current: 1,
+      current: 1
     };
   }
 
@@ -30,22 +31,16 @@ export default class ProgressTable extends Component {
     <Progress showInfo={false} percent={parseInt(value, 10)} />
   );
 
-  onPageChange = (pageNo) => {
+  onPageChange = pageNo => {
     this.setState({
-      current: pageNo,
+      current: pageNo
     });
   };
 
   render() {
     return (
       <div className="progress-table">
-        <IceCard
-          style={{
-            margin: '20px',
-          }}
-          className="tab-card"
-          title="本月最活跃金主"
-        >
+        <IceCard className="tab-card" title="本月最活跃金主">
           <Table
             hasBorder
             getRowClassName={(record, index) => {
@@ -79,6 +74,6 @@ const styles = {
   paginationWrapper: {
     display: 'flex',
     padding: '20px 0 0 0',
-    flexDirection: 'row-reverse',
-  },
+    flexDirection: 'row-reverse'
+  }
 };

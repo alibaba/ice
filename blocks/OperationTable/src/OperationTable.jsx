@@ -1,17 +1,13 @@
-
-
+/* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import './OperationTable.scss';
-
-import { Table, Pagination, Button, Icon } from '@icedesign/base';
-
+import { Table, Pagination, Icon } from '@icedesign/base';
 import IceCard from '@icedesign/card';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
 
 import EditorInfoDialog from './EditorInfoDialog';
+import './OperationTable.scss';
 
 @DataBinder({
   tableData: {
@@ -34,10 +30,7 @@ import EditorInfoDialog from './EditorInfoDialog';
 export default class OperationTable extends Component {
   static displayName = 'OperationTable';
 
-  static propTypes = {
-    style: PropTypes.object,
-    className: PropTypes.string,
-  };
+  static propTypes = {};
 
   static defaultProps = {};
 
@@ -46,23 +39,11 @@ export default class OperationTable extends Component {
     this.state = {};
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
   componentDidMount() {
     this.fetchData({
       page: 1,
     });
   }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
 
   fetchData = ({ page }) => {
     this.props.updateBindingData('tableData', {
@@ -74,17 +55,11 @@ export default class OperationTable extends Component {
 
   renderTitle = (value, index, record) => {
     return (
-      <div
-        style={styles.todo0}
-      >
+      <div style={styles.todo0}>
         <div>
           <IceImg src={record.cover} width={48} height={48} />
         </div>
-        <span
-          style={styles.todo1}
-        >
-          {record.title}
-        </span>
+        <span style={styles.todo1}>{record.title}</span>
       </div>
     );
   };
@@ -126,7 +101,10 @@ export default class OperationTable extends Component {
 
   renderOperations = (value, index, record) => {
     return (
-      <div className="operation-table-operation" style={styles.operationTableOperation}>
+      <div
+        className="operation-table-operation"
+        style={styles.operationTableOperation}
+      >
         <span
           onClick={this.editItem.bind(this, record)}
           title="编辑"
@@ -135,17 +113,25 @@ export default class OperationTable extends Component {
         >
           <Icon size="xs" type="edit" />
         </span>
-        <span title="删除" className="operation-table-operation-item" style={styles.operationTableOperationItem}>
+        <span
+          title="删除"
+          className="operation-table-operation-item"
+          style={styles.operationTableOperationItem}
+        >
           <Icon size="xs" type="close" />
         </span>
-        <span title="收藏" className="operation-table-operation-item" style={styles.operationTableOperationItem}>
+        <span
+          title="收藏"
+          className="operation-table-operation-item"
+          style={styles.operationTableOperationItem}
+        >
           <Icon size="xs" type="favorites-filling" />
         </span>
       </div>
     );
   };
 
-  renderStatus = (value, index, record) => {
+  renderStatus = (value) => {
     return (
       <IceLabel inverse={false} status="default">
         {value}
@@ -196,9 +182,7 @@ export default class OperationTable extends Component {
               cell={this.renderOperations}
             />
           </Table>
-          <div
-            style={styles.todo3}
-          >
+          <div style={styles.todo3}>
             <Pagination
               current={tableData.currentPage}
               pageSize={tableData.pageSize}
@@ -212,4 +196,24 @@ export default class OperationTable extends Component {
   }
 }
 
-const styles = { operationTableOperation: { 'a {MarginRight': '12px', textDecoration: 'none' }, operationTableOperationItem: { display: 'inline-block', width: '24px', height: '24px', borderRadius: '999px', color: '#929292', background: '#f2f2f2', textAlign: 'center', cursor: 'pointer', lineHeight: '24px', marginRight: '6px', transition: 'all ease 0' }, operationTable: {}, todo0: { display: 'flex', flexDirection: 'row' }, todo1: { marginLeft: '10px', lineHeight: '20px' }, todo2: { padding: '10px 10px 20px 10px' }, todo3: { textAlign: 'right', paddingTop: '26px' } };
+const styles = {
+  operationTableOperation: { 'a {MarginRight': '12px', textDecoration: 'none' },
+  operationTableOperationItem: {
+    display: 'inline-block',
+    width: '24px',
+    height: '24px',
+    borderRadius: '999px',
+    color: '#929292',
+    background: '#f2f2f2',
+    textAlign: 'center',
+    cursor: 'pointer',
+    lineHeight: '24px',
+    marginRight: '6px',
+    transition: 'all ease 0',
+  },
+  operationTable: {},
+  todo0: { display: 'flex', flexDirection: 'row' },
+  todo1: { marginLeft: '10px', lineHeight: '20px' },
+  todo2: { padding: '10px 10px 20px 10px' },
+  todo3: { textAlign: 'right', paddingTop: '26px' },
+};

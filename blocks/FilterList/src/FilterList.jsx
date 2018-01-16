@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 import { Button, Search } from '@icedesign/base';
@@ -12,49 +12,49 @@ const dataSource = [
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2O4nSnblmpuFjSZFlXXbdQXXa_!!120976213.jpg_240x240.jpg'
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2O4nSnblmpuFjSZFlXXbdQXXa_!!120976213.jpg_240x240.jpg',
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2GiVsdS0mpuFjSZPiXXbssVXa_!!120976213.jpg_240x240.jpg'
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2GiVsdS0mpuFjSZPiXXbssVXa_!!120976213.jpg_240x240.jpg',
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2bxHGtpXXXXXVXXXXXXXXXXXX_!!120976213.jpg_240x240.jpg'
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2bxHGtpXXXXXVXXXXXXXXXXXX_!!120976213.jpg_240x240.jpg',
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2bEcHnXXXXXbgXXXXXXXXXXXX_!!120976213.jpg_100x100.jpg'
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2bEcHnXXXXXbgXXXXXXXXXXXX_!!120976213.jpg_100x100.jpg',
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i2/TB11DjAIFXXXXaTXFXXXXXXXXXX_!!0-item_pic.jpg_100x100.jpg'
+      '//img.alicdn.com/bao/uploaded/i2/TB11DjAIFXXXXaTXFXXXXXXXXXX_!!0-item_pic.jpg_100x100.jpg',
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i4/TB1GiPSinJ_SKJjSZPiYXH3LpXa_M2.SS2_100x100.jpg'
-  }
+      '//img.alicdn.com/bao/uploaded/i4/TB1GiPSinJ_SKJjSZPiYXH3LpXa_M2.SS2_100x100.jpg',
+  },
 ];
 
 export default class FilterList extends Component {
   static displayName = 'FilterList';
 
-  renderItem = item => {
+  renderItem = (item) => {
     return <SingleItem {...item} />;
   };
   renderItemRow = () => {
@@ -64,7 +64,7 @@ export default class FilterList extends Component {
   render() {
     const cardStyle = {
       display: 'flex',
-      margin: '20px'
+      margin: '20px',
     };
 
     return (
@@ -129,14 +129,14 @@ const styles = {
   selectItem: {
     padding: '0 16px',
     borderRight: '1px solid #ddd',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   selectBtn: { marginRight: '10px' },
   todo0: {
     margin: '0 10px 10px 10px',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   filterListHeaderWrapper: { padding: '20px', flexDirection: 'column', position: 'relative' },
   searchWrapper: {
@@ -144,10 +144,10 @@ const styles = {
     right: '20px',
     top: '20px',
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   searchInput: { marginRight: '15px' },
   filterCategories: { display: 'flex', flexDirection: 'row', marginBottom: '25px' },
   filterCategoryChildren: {},
-  searchResultWrapper: { flexDirection: 'column', padding: '20px 0' }
+  searchResultWrapper: { flexDirection: 'column', padding: '20px 0' },
 };
