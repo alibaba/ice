@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/detail-table-block",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "展示详情信息的表格",
   "files": [
     "src/",
