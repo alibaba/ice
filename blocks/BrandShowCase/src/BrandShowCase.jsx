@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
 import './BrandShowCase.scss';
 
 const generatorData = (count) => {
-  return Array.from({ length: count }).map((item, index) => {
+  return Array.from({ length: count }).map(() => {
     return {
       imgUrl:
-        'https://img.alicdn.com/tfs/TB1rnNcjr_I8KJjy1XaXXbsxpXa-603-474.png'
+        'https://img.alicdn.com/tfs/TB1rnNcjr_I8KJjy1XaXXbsxpXa-603-474.png',
     };
   });
 };
@@ -24,20 +23,6 @@ export default class BrandShowCase extends Component {
     this.state = {};
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
   render() {
     const data = generatorData(12);
     return (
@@ -53,7 +38,7 @@ export default class BrandShowCase extends Component {
             {data.map((item, index) => {
               return (
                 <div style={styles.item} key={index}>
-                  <img src={item.imgUrl} style={styles.image} />
+                  <img src={item.imgUrl} style={styles.image} alt="" />
                 </div>
               );
             })}
@@ -70,5 +55,5 @@ const styles = {
   intro: { textAlign: 'center', color: '#999' },
   items: { display: 'flex', flexWrap: 'wrap', margin: '30px 0' },
   item: { width: '16.66%', margin: '10px 0', textAlign: 'center' },
-  image: { width: '100px', height: '80px' }
+  image: { width: '100px', height: '80px' },
 };

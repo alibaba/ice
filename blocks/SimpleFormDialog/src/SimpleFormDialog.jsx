@@ -41,7 +41,7 @@ export default class SimpleFormDialog extends Component {
   };
 
   onOk = () => {
-    this.refForm.validateAll((error, value) => {
+    this.refForm.validateAll((error) => {
       if (error) {
         // show validate error
         return;
@@ -75,7 +75,9 @@ export default class SimpleFormDialog extends Component {
           visible={this.state.visible}
         >
           <IceFormBinderWrapper
-            ref={(ref) => { this.refForm = ref; }}
+            ref={(ref) => {
+              this.refForm = ref;
+            }}
             value={this.state.value}
             onChange={this.onFormChange}
           >
@@ -139,16 +141,18 @@ export default class SimpleFormDialog extends Component {
             </div>
           </IceFormBinderWrapper>
         </Dialog>
-        <Button type="primary" onClick={this.showDialog}>显示 Dialog</Button>
+        <Button type="primary" onClick={this.showDialog}>
+          显示 Dialog
+        </Button>
       </IceCard>
     );
   }
 }
 
-const styles = { 
+const styles = {
   simpleFormDialog: { width: '640px' },
   dialogContent: {},
-  formRow: { marginTop: 20 }, 
-  input: { width: '100%' }, 
-  formLabel: { lineHeight: '26px' }, 
+  formRow: { marginTop: 20 },
+  input: { width: '100%' },
+  formLabel: { lineHeight: '26px' },
 };

@@ -13,20 +13,6 @@ export default class Footer extends Component {
     this.state = {};
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
   render() {
     return (
       <div className="footer" style={styles.footer}>
@@ -59,10 +45,12 @@ export default class Footer extends Component {
               <img
                 style={styles.shareIcon}
                 src="https://img.alicdn.com/tfs/TB1JkgmjnnI8KJjy0FfXXcdoVXa-60-48.png"
+                alt=""
               />
               <img
                 style={{ ...styles.shareIcon, ...styles.weChart }}
                 src="https://img.alicdn.com/tfs/TB1hEz2jf6H8KJjy0FjXXaXepXa-60-48.png"
+                alt=""
               />
             </div>
             <p style={styles.copyRight}> © 2017 Taobao FED</p>
@@ -78,13 +66,13 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     width: '1080px',
-    margin: '0 auto'
+    margin: '0 auto',
   },
   logo: {
     color: '#3080FE',
     fontWeight: 'bold',
     fontSize: '28px',
-    margin: '12px 0'
+    margin: '12px 0',
   },
   nav: { width: '400px', margin: '0 auto', display: 'flex' },
   navItem: { width: '25%', lineHeight: '54px', textAlign: 'center' },
@@ -97,6 +85,6 @@ const styles = {
     width: '100%',
     marginTop: '40px',
     justifyContent: 'center',
-    fontSize: '12px'
-  }
+    fontSize: '12px',
+  },
 };
