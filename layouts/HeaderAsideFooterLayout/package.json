@@ -40,7 +40,8 @@
     "prepublish": "ice block build"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
   },
   "blockConfig": {
     "name": "header-aside-footer-layout",

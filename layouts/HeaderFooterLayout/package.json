@@ -37,7 +37,8 @@
     "eslint-plugin-react": "^7.5.1"
   },
   "scripts": {
-    "prepublish": "ice block build"
+    "prepublish": "ice block build",
+    "registry": "http://registry.npmjs.com"
   },
   "publishConfig": {
     "access": "public"
