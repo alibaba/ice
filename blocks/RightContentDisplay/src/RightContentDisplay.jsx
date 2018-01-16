@@ -11,7 +11,7 @@ export default class RightContentDisplay extends Component {
 
   render() {
     return (
-      <div className="right-content-display" style={styles.rightContentDisplay} style={styles.container}>
+      <div className="right-content-display" style={styles.container}>
         <div style={styles.content}>
           <div style={styles.col}>
             <img
@@ -32,4 +32,32 @@ export default class RightContentDisplay extends Component {
   }
 }
 
-const styles = { container: { margin: '0 auto', width: '1080px' }, content: { display: 'flex', position: 'relative', alignItems: 'center', overflow: 'hidden', height: '600px' }, col: { width: '50%' }, title: { fontSize: '28px', fontWeight: 'bold' }, description: { color: '#666', lineHeight: '22px' }, image: { position: 'absolute', top: '20px', width: '40%' }, rightContentDisplay: {} };
+const styles = {
+  container: {
+    margin: '0 auto',
+    width: '1080px',
+  },
+  content: {
+    display: 'flex',
+    position: 'relative',
+    alignItems: 'center',
+    overflow: 'hidden',
+    height: '600px',
+  },
+  col: {
+    width: '50%',
+  },
+  title: {
+    fontSize: '28px',
+    fontWeight: 'bold',
+  },
+  description: {
+    color: '#666',
+    lineHeight: '22px',
+  },
+  image: {
+    position: 'absolute',
+    top: '20px',
+    width: '40%',
+  },
+};

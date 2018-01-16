@@ -1,7 +1,4 @@
-
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
 import './SimpleTestimonial.scss';
 
@@ -16,20 +13,6 @@ export default class SimpleTestimonial extends Component {
     super(props);
     this.state = {};
   }
-
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
 
   render() {
     return (
@@ -48,6 +31,7 @@ export default class SimpleTestimonial extends Component {
               <img
                 style={styles.avatar}
                 src="https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png"
+                alt="图像"
               />
               <h5 style={styles.name}>人物名</h5>
               <p style={styles.company}>就职公司/职务</p>
@@ -59,4 +43,18 @@ export default class SimpleTestimonial extends Component {
   }
 }
 
-const styles = { item: { width: '80%', margin: '0 auto', textAlign: 'center' }, description: { lineHeight: '28px' }, infoBox: { display: 'flex', textAlign: 'center', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }, avatar: { width: '64px', height: '64px' }, name: { margin: '0 15px', fontSize: '15px', fontWeight: 'bold' }, company: { margin: 0 }, simpleTestimonial: {} };
+const styles = {
+  item: { width: '80%', margin: '0 auto', textAlign: 'center' },
+  description: { lineHeight: '28px' },
+  infoBox: {
+    display: 'flex',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '40px',
+  },
+  avatar: { width: '64px', height: '64px' },
+  name: { margin: '0 15px', fontSize: '15px', fontWeight: 'bold' },
+  company: { margin: 0 },
+  simpleTestimonial: {},
+};

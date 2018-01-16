@@ -1,7 +1,4 @@
-'use strict';
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Search, Tab, Tag, DatePicker } from '@icedesign/base';
 import IceCard from '@icedesign/card';
 import './CompositeFilter.scss';
@@ -12,33 +9,30 @@ const TabPane = Tab.TabPane;
 const tagList = [
   {
     key: 'all',
-    name: '全部商品'
+    name: '全部商品',
   },
   {
     key: 'unclassified',
-    name: '未分类'
+    name: '未分类',
   },
   {
     key: 'invalid',
-    name: '已失效'
+    name: '已失效',
   },
   {
     key: 'haohuo',
-    name: '有好货专用'
+    name: '有好货专用',
   },
   {
     key: 'bimai',
-    name: '必买清单'
-  }
+    name: '必买清单',
+  },
 ];
 
 export default class CompositeFilter extends Component {
   static displayName = 'CompositeFilter';
 
-  static propTypes = {
-    style: PropTypes.object,
-    className: PropTypes.string
-  };
+  static propTypes = {};
 
   static defaultProps = {};
 
@@ -48,13 +42,11 @@ export default class CompositeFilter extends Component {
   }
 
   onTabChange = (key) => {
-    console.log('select tab is: ' + key);
+    console.log(`select tab is: ${key}`);
   };
 
   onTagChange = (key, selected) => {
-    console.log(
-      'Tag: ' + key + ' is ' + (selected ? 'selected' : 'unselected')
-    );
+    console.log(`Tag: ${key} is ${selected ? 'selected' : 'unselected'}`);
   };
 
   onDateChange = (value) => {
@@ -122,7 +114,7 @@ const styles = {
   extraFilter: {
     marginTop: '8px',
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
-  search: { marginLeft: '12px' }
+  search: { marginLeft: '12px' },
 };

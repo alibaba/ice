@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
 import { Search } from '@icedesign/base';
@@ -17,21 +15,8 @@ export default class FilterWithSearch extends Component {
     this.state = {};
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
-  selectFilter = type => {
+  selectFilter = (type) => {
+    console.log(type);
     // type can be 'all', 'process', 'pending'
     // handler
   };
@@ -87,7 +72,7 @@ const styles = {
   filterWithSearchContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   filterContainer: { display: 'flex', alignItems: 'center' },
   filterItem: {
@@ -96,6 +81,6 @@ const styles = {
     color: '#333',
     fontSize: '14px',
     cursor: 'pointer',
-    borderRight: '1px solid #D8D8D8'
-  }
+    borderRight: '1px solid #D8D8D8',
+  },
 };

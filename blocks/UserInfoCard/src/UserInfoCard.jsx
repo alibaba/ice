@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
-import { Button, Balloon, Icon } from '@icedesign/base';
+import { Balloon, Icon } from '@icedesign/base';
 import './UserInfoCard.scss';
 
 export default class UserInfoCard extends Component {
@@ -29,6 +28,7 @@ export default class UserInfoCard extends Component {
                 <img
                   src="https://img.alicdn.com/tfs/TB1nf.WjyqAXuNjy1XdXXaYcVXa-245-245.gif"
                   style={styles.avatar}
+                  alt="头像"
                 />
                 <div style={styles.baseInfo}>
                   <h5 style={styles.name}>张三</h5>
@@ -73,48 +73,48 @@ export default class UserInfoCard extends Component {
 const styles = {
   container: {
     padding: '20px 0',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   content: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   head: {
     display: 'flex',
     paddingBottom: '10px',
-    borderBottom: '1px dotted #eee'
+    borderBottom: '1px dotted #eee',
   },
   avatar: {
     width: '60px',
     height: '60px',
     borderRadius: '50px',
-    border: '1px solid #eee'
+    border: '1px solid #eee',
   },
   name: {
     padding: '0 10px',
-    margin: '0'
+    margin: '0',
   },
   deptName: {
     padding: '0 10px',
     margin: '0',
-    fontSize: '12px'
+    fontSize: '12px',
   },
   body: {
     display: 'flex',
     flexWrap: 'wrap',
-    paddingTop: '10px'
+    paddingTop: '10px',
   },
   profileItem: {
     width: '50%',
-    lineHeight: '26px'
+    lineHeight: '26px',
   },
   itemIcon: {
     color: '#8a9099',
-    marginRight: '5px'
+    marginRight: '5px',
   },
   triggerText: {
     color: '#108ee9',
     borderBottom: '1px dashed #108ee9',
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 };

@@ -1,15 +1,12 @@
-
-
+/* eslint no-unused-expressions: 0 */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
-import DialogDecorator from './DialogDecorator';
 import { Dialog, Input, Select, Grid } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
+import DialogDecorator from './DialogDecorator';
 
 const { Col, Row } = Grid;
 

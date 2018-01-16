@@ -1,7 +1,4 @@
-'use strict';
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
 import { Tab } from '@icedesign/base';
 import SeriesLine from './SeriesLine';
@@ -22,7 +19,7 @@ export default class TabChart extends Component {
     this.state = {};
   }
 
-  handleChange = key => {
+  handleChange = (key) => {
     console.log('change', key);
   };
 
@@ -47,6 +44,6 @@ export default class TabChart extends Component {
 const styles = {
   card: {
     marginBottom: '0',
-    padding: '0 20px'
-  }
+    padding: '0 20px',
+  },
 };
