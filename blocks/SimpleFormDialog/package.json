@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/simple-form-dialog-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "简单的表单弹窗",
   "files": [
     "src/",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
+    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "^0.1.2",
     "react": "*",
     "react-dom": "*"
@@ -41,5 +42,12 @@
     ],
     "snapshot": "https://img.alicdn.com/tfs/TB1.65ri9_I8KJjy0FoXXaFnVXa-1270-628.png",
     "themePackage": "@icedesign/skin"
+  },
+  "scripts": {
+    "prepublish": "ice block build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
   }
 }
