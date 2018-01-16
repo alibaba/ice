@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/data-display-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "files": [
     "src/",
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
+    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "^0.1.2",
     "react": "*",
     "react-copy-to-clipboard": "^4.2.3",
@@ -41,5 +42,12 @@
     "categories": [
       "data-display"
     ]
+  },
+  "scripts": {
+    "prepublish": "ice block build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
   }
 }
