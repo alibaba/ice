@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/confirm-dialog-block",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "确认类型的提示框",
   "main": "lib/index.js",
   "files": [

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/subscribe-block",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "订阅",
   "files": [
     "src/",
