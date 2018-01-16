@@ -1,38 +1,31 @@
-'use strict';
-
+/* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import './EnhanceTable.scss';
-
 import { Table, Pagination, Tab, DatePicker, Search } from '@icedesign/base';
-
 import IceCard from '@icedesign/card';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
+import './EnhanceTable.scss';
 
 @DataBinder({
   tableData: {
     // 详细请求配置请参见 https://github.com/axios/axios
     url: '/mock/enhance-table-list.json',
     params: {
-      page: 1
+      page: 1,
     },
     defaultBindingData: {
       list: [],
       total: 100,
       pageSize: 10,
-      currentPage: 1
-    }
-  }
+      currentPage: 1,
+    },
+  },
 })
 export default class EnhanceTable extends Component {
   static displayName = 'EnhanceTable';
 
-  static propTypes = {
-    style: PropTypes.object,
-    className: PropTypes.string
-  };
+  static propTypes = {};
 
   static defaultProps = {};
 
@@ -41,30 +34,18 @@ export default class EnhanceTable extends Component {
 
     this.queryCache = {};
     this.state = {
-      activeKey: 'solved'
+      activeKey: 'solved',
     };
   }
-
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
 
   componentDidMount() {
     this.queryCache.page = 1;
     this.fetchData();
   }
 
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
   fetchData = () => {
     this.props.updateBindingData('tableData', {
-      data: this.queryCache
+      data: this.queryCache,
     });
   };
 
@@ -103,7 +84,7 @@ export default class EnhanceTable extends Component {
     );
   };
 
-  renderStatus = (value, index, record) => {
+  renderStatus = (value) => {
     return (
       <IceLabel inverse={false} status="default">
         {value}
@@ -119,7 +100,7 @@ export default class EnhanceTable extends Component {
 
   onTabChange = (tabKey) => {
     this.setState({
-      activeKey: tabKey
+      activeKey: tabKey,
     });
     this.queryCache.activeKey = tabKey;
 
@@ -128,7 +109,7 @@ export default class EnhanceTable extends Component {
     } else if (tabKey === 'needFix') {
       this.fetchData();
     } else {
-      alert('你点击了 ' + tabKey);
+      console.log(`你点击了 ${tabKey}`);
     }
   };
 
@@ -241,19 +222,35 @@ export default class EnhanceTable extends Component {
 }
 
 const styles = {
-  enhanceTableOperation: { 'a {MarginRight': '12px', textDecoration: 'none' },
-  enhanceTable: {},
-  titleWrapper: { display: 'flex', flexDirection: 'row' },
-  title: { marginLeft: '10px', lineHeight: '20px' },
-  enhanceTableOperation: { lineHeight: '28px' },
+  titleWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  title: {
+    marginLeft: '10px',
+    lineHeight: '20px',
+  },
+  enhanceTableOperation: {
+    lineHeight: '28px',
+  },
   card: {
     minHeight: 0,
     marginBottom: 20,
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
-  tabCount: { color: '#3080FE' },
-  extraFilter: { display: 'flex', alignItems: 'center' },
-  search: { marginLeft: 10 },
-  pagination: { textAlign: 'right', paddingTop: '26px' }
+  tabCount: {
+    color: '#3080FE',
+  },
+  extraFilter: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  search: {
+    marginLeft: 10,
+  },
+  pagination: {
+    textAlign: 'right',
+    paddingTop: '26px',
+  },
 };

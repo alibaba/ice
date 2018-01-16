@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Chart, Axis, Geom, Tooltip } from 'bizcharts';
-import IceCard from '@icedesign/card';
 
 export default class BasicLine extends Component {
   static displayName = 'BasicLine';
@@ -26,12 +25,12 @@ export default class BasicLine extends Component {
       { year: '2016', value: 60 },
       { year: '2017', value: 70 },
       { year: '2018', value: 90 },
-      { year: '2019', value: 100 }
+      { year: '2019', value: 100 },
     ];
 
     const cols = {
       value: { min: 0 },
-      year: { range: [0, 1] }
+      year: { range: [0, 1] },
     };
 
     return (
@@ -51,7 +50,7 @@ export default class BasicLine extends Component {
             type="point"
             position="year*value"
             size={4}
-            shape={'circle'}
+            shape="circle"
             style={styles.point}
           />
         </Chart>
@@ -63,6 +62,6 @@ export default class BasicLine extends Component {
 const styles = {
   point: {
     stroke: '#fff',
-    lineWidth: 1
-  }
+    lineWidth: 1,
+  },
 };

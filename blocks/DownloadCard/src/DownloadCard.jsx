@@ -1,7 +1,4 @@
-'use strict';
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
 import axios from 'axios';
 import { Tab, Button, Icon } from '@icedesign/base';
@@ -12,17 +9,14 @@ const { TabPane } = Tab;
 export default class DownloadCard extends Component {
   static displayName = 'DownloadCard';
 
-  static propTypes = {
-    style: PropTypes.object,
-    className: PropTypes.string
-  };
+  static propTypes = {};
 
   static defaultProps = {};
 
   constructor(props) {
     super(props);
     this.state = {
-      tabData: {}
+      tabData: {},
     };
   }
 
@@ -34,7 +28,7 @@ export default class DownloadCard extends Component {
       .get('/mock/download-card.json')
       .then((response) => {
         this.setState({
-          tabData: response.data.data || {}
+          tabData: response.data.data || {},
         });
       })
       .catch((error) => {
@@ -56,7 +50,7 @@ export default class DownloadCard extends Component {
         >
           <div style={styles.cardBody}>
             <div style={styles.avatarWrapper}>
-              <img style={styles.img} src={item.img} />
+              <img style={styles.img} src={item.img} alt="头像" />
             </div>
             <p style={styles.title}>{item.title}</p>
             <p style={styles.desc}>{item.desc}</p>
@@ -135,19 +129,19 @@ const styles = {
     overflow: 'hidden',
     boxShadow:
       '0px 0px 2px 0px rgba(0, 0, 0, 0.1),0px 2px 2px 0px rgba(0, 0, 0, 0.1)',
-    background: '#fff'
+    background: '#fff',
   },
   cardBody: {
     textAlign: 'center',
     padding: '20px 0',
     marginBottom: '15px',
-    borderBottom: '1px solid #dedede'
+    borderBottom: '1px solid #dedede',
   },
   avatarWrapper: {
     width: '50px',
     height: '50px',
     overflow: 'hidden',
-    margin: '0 auto'
+    margin: '0 auto',
   },
   title: { fontSize: '20px', margin: '10px' },
   desc: { fontSize: '15px', color: '#999' },
@@ -160,14 +154,14 @@ const styles = {
     position: 'absolute',
     bottom: '0px',
     left: '0px',
-    right: '0px'
+    right: '0px',
   },
   bottomText: {
     marginLeft: '15px',
     fontSize: '13px',
     color: '#666',
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
   downloadCard: {},
-  img: { width: '100%' }
+  img: { width: '100%' },
 };

@@ -1,7 +1,4 @@
-'use strict';
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Img from '@icedesign/img';
 import './BrandDisplay.scss';
 
@@ -13,7 +10,7 @@ const dataSource = [
     headPic:
       'https://img.alicdn.com/tfs/TB1QMwlSXXXXXaUXXXXXXXXXXXX-122-122.png',
     pic: 'https://img.alicdn.com/tfs/TB1n6H_SXXXXXc3XpXXXXXXXXXX-616-348.png',
-    url: 'https://v.taobao.com/v/mission/case-detail?userId=38587850'
+    url: 'https://v.taobao.com/v/mission/case-detail?userId=38587850',
   },
   {
     title: '万家乐',
@@ -21,7 +18,7 @@ const dataSource = [
       '策划『生活改造家』主题全案，联合一线大咖制作图文、直播、短视频全域引流，助力品牌升级和高端人群种草，结合行业活动割草。',
     headPic: 'https://img.alicdn.com/tfs/TB1Z4CLSXXXXXcHXVXXXXXXXXXX-61-61.png',
     pic: 'https://img.alicdn.com/tfs/TB1bHO6SXXXXXaiXFXXXXXXXXXX-308-174.png',
-    url: 'https://v.taobao.com/v/mission/case-detail?userId=2738062192'
+    url: 'https://v.taobao.com/v/mission/case-detail?userId=2738062192',
   },
   {
     title: '职场游乐园',
@@ -29,7 +26,7 @@ const dataSource = [
     headPic:
       'https://img.alicdn.com/tfs/TB1kX62SXXXXXXJXVXXXXXXXXXX-122-122.png',
     pic: 'https://img.alicdn.com/tfs/TB17bzrSXXXXXbpaFXXXXXXXXXX-616-348.png',
-    url: 'https://v.taobao.com/v/mission/case-detail?userId=2894350953'
+    url: 'https://v.taobao.com/v/mission/case-detail?userId=2894350953',
   },
   {
     title: '品味百味人生',
@@ -38,19 +35,12 @@ const dataSource = [
     headPic:
       'https://img.alicdn.com/tfs/TB19C_9SXXXXXc1XpXXXXXXXXXX-122-122.png',
     pic: 'https://img.alicdn.com/tfs/TB1IkEjSXXXXXb1XXXXXXXXXXXX-616-348.png',
-    url: 'https://v.taobao.com/v/mission/case-detail?userId=2149813109'
-  }
+    url: 'https://v.taobao.com/v/mission/case-detail?userId=2149813109',
+  },
 ];
 
 export default class BrandDisplay extends Component {
   static displayName = 'BrandDisplay';
-
-  static propTypes = {
-    style: PropTypes.object,
-    className: PropTypes.string
-  };
-
-  static defaultProps = {};
 
   render() {
     return (
@@ -64,10 +54,20 @@ export default class BrandDisplay extends Component {
               return (
                 <li key={index} className="brand-item" style={styles.brandItem}>
                   <a href={item.url}>
-                    <Img width={194} height={175} src={item.pic} type="cover" />
+                    <Img
+                      width={194}
+                      height={175}
+                      src={item.pic}
+                      type="cover"
+                      alt="图片"
+                    />
                     <div style={styles.caseContent}>
                       <div style={styles.caseSubject}>
-                        <img src={item.headPic} style={styles.subjectImage} />
+                        <img
+                          src={item.headPic}
+                          style={styles.subjectImage}
+                          alt="图片"
+                        />
                         <span style={styles.subjectDesc}>{item.title}</span>
                       </div>
                       <p style={styles.caseDetail}>{item.subject}</p>
@@ -93,12 +93,12 @@ const styles = {
     verticalAlign: 'top',
     marginBottom: '30px',
     marginLeft: '15px',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   caseContent: {
     width: '250px',
     display: 'inline-block',
-    verticalAlign: 'top'
+    verticalAlign: 'top',
   },
   caseSubject: { margin: '20px 10px 0', lineHeight: '60px', height: '60px' },
   subjectImage: { width: '60px', height: '60px', borderRadius: '50%' },
@@ -107,12 +107,12 @@ const styles = {
     color: '#333333',
     height: '60px',
     verticalAlign: 'top',
-    marginLeft: '12px'
+    marginLeft: '12px',
   },
   caseDetail: {
     fontSize: '12px',
     color: '#666666',
     padding: '0 16px',
-    textAlign: 'left'
-  }
+    textAlign: 'left',
+  },
 };

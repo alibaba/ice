@@ -1,7 +1,4 @@
-
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
 import './OurTeam.scss';
 
@@ -28,20 +25,6 @@ export default class OurTeam extends Component {
     this.state = {};
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
   render() {
     const data = generatorData(4);
     return (
@@ -57,7 +40,7 @@ export default class OurTeam extends Component {
             {data.map((item, index) => {
               return (
                 <div style={styles.item} key={index}>
-                  <img src={item.imgUrl} style={styles.avatar} />
+                  <img src={item.imgUrl} style={styles.avatar} alt="" />
                   <div style={styles.baseInfo}>
                     <h5 style={styles.name}>{item.name}</h5>
                     <p style={styles.description}>{item.description}</p>
@@ -78,7 +61,12 @@ const styles = {
   intro: { textAlign: 'center' },
   items: { display: 'flex', flexWrap: 'wrap' },
   item: { display: 'flex', width: '50%', padding: '0 40px', margin: '40px 0' },
-  baseInfo: { display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '25px' },
+  baseInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    paddingLeft: '25px',
+  },
   name: {
     fontWeight: 'bold',
     margin: '0 0 10px',
