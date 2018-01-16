@@ -6,7 +6,6 @@ import IceCard from '@icedesign/card';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
-  FormError as IceFormError
 } from '@icedesign/form-binder';
 
 const { Row, Col } = Grid;
@@ -66,7 +65,11 @@ export default class Filter extends Component {
             <Col span="8" style={styles.filterCol}>
               <label style={styles.filterTitle}>尺寸</label>
               <IceFormBinder>
-                <Select name="size" placeholder="请选择" style={styles.filterTool}>
+                <Select
+                  name="size"
+                  placeholder="请选择"
+                  style={styles.filterTool}
+                >
                   <Option value="small">Small</Option>
                   <Option value="medium">Medium</Option>
                   <Option value="large">Large</Option>
@@ -108,7 +111,7 @@ export default class Filter extends Component {
           <div
             style={{
               textAlign: 'right',
-              marginRight: '28px'
+              marginRight: '28px',
             }}
           >
             <Button onClick={this.props.onReset} type="normal">
@@ -132,17 +135,17 @@ const styles = {
   filterCol: {
     display: 'flex',
     alignItems: 'center',
-    marginBottom: '20px'
+    marginBottom: '20px',
   },
 
   filterTitle: {
     width: '68px',
     textAlign: 'right',
     marginRight: '12px',
-    fontSize: '14px'
+    fontSize: '14px',
   },
 
   filterTool: {
-    width: '200px'
-  }
+    width: '200px',
+  },
 };

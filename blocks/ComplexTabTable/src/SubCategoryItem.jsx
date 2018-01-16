@@ -1,7 +1,5 @@
-'use strict';
-
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+/* eslint no-unused-expressions: 0 */
+import React from 'react';
 
 const categoryStyle = {
   display: 'inline-block',
@@ -13,17 +11,16 @@ const categoryStyle = {
   borderRadius: '100px',
   cursor: 'pointer',
   fontSize: '12px',
-  marginTop: '12px'
+  marginTop: '12px',
 };
 
 export default (props) => {
-
   return (
     <span
       style={{
         ...categoryStyle,
         color: props.isCurrent ? '#fff' : '#666',
-        backgroundColor: props.isCurrent ? '#3080FE' : '#f5f5f5'
+        backgroundColor: props.isCurrent ? '#3080FE' : '#f5f5f5',
       }}
       onClick={() => {
         props.onItemClick && props.onItemClick(props.id);
@@ -32,4 +29,4 @@ export default (props) => {
       {props.text}
     </span>
   );
-}
+};

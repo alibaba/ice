@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component } from 'react';
 import { Dialog, Button } from '@icedesign/base';
 import IceCard from '@icedesign/card';
@@ -46,31 +44,38 @@ export default class ConfirmDialog extends Component {
               style={styles.icon}
               src="//img.alicdn.com/tfs/TB1PTrfb_nI8KJjy0FfXXcdoVXa-52-52.png"
               srcSet="//img.alicdn.com/tfs/TB1c5feb46I8KJjy0FgXXXXzVXa-104-104.png"
+              alt=""
             />
             <p style={styles.text}>
               {this.props.text ? this.props.text : '你确定要删除此条内容吗？'}
             </p>
           </div>
         </Dialog>
-        <Button type="primary" onClick={this.showDialog}>显示 Dialog</Button>
+        <Button type="primary" onClick={this.showDialog}>
+          显示 Dialog
+        </Button>
       </IceCard>
     );
   }
 }
 
 const styles = {
-  dialog: { width: '640px' },
+  dialog: {
+    width: '640px',
+  },
   icon: {
     width: '52px',
     height: '52px',
     marginTop: '26px',
-    marginBottom: '10px'
+    marginBottom: '10px',
   },
   dialogContent: {
     height: '160px',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  text: { fontSize: '16px;' }
+  text: {
+    fontSize: '16px;',
+  },
 };

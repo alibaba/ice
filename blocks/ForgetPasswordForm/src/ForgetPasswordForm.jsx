@@ -4,7 +4,7 @@ import IceCard from '@icedesign/card';
 import {
   FormBinderWrapper,
   FormBinder,
-  FormError
+  FormError,
 } from '@icedesign/form-binder';
 
 export default class ForgetPasswordForm extends Component {
@@ -17,7 +17,7 @@ export default class ForgetPasswordForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ''
+      email: '',
     };
   }
 
@@ -29,7 +29,7 @@ export default class ForgetPasswordForm extends Component {
 
   componentWillUnmount() { }
 
-  emailChange = newValue => {
+  emailChange = (newValue) => {
     this.setState(newValue);
   };
 
@@ -48,11 +48,11 @@ export default class ForgetPasswordForm extends Component {
           <div style={styles.groupTitle}>邮箱地址：</div>
           <div style={styles.inputWrap}>
             <FormBinderWrapper
-              ref={form => {
+              ref={(form) => {
                 this.form = form;
               }}
               value={{
-                email: this.state.email
+                email: this.state.email,
               }}
               onChange={this.emailChange}
             >
@@ -88,10 +88,10 @@ const styles = {
     fontSize: '16px',
     marginBottom: '10px',
     color: '#000',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   subtitle: { color: '#000', fontSize: '14px', marginBottom: '30px' },
   groupTitle: { marginBottom: '10px' },
   input: { width: '332px' },
-  inputWrap: { marginBottom: '20px' }
+  inputWrap: { marginBottom: '20px' },
 };
