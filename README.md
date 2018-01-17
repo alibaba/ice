@@ -11,17 +11,6 @@
 
 ---
 
-<p align="center">
-Community
-</p>
-
-* <details>
-  <summary>钉钉群</summary>
-  <img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iLI8kxPI8KJjSspoXXX6MFXa-1242-1602.jpg" width="200">
-  </details>
-
----
-
 ICE 是一套通过沉淀海量高质量可复用物料，借助 GUI 工具快速赋能企业中后台建设的解决方案。
 
 :art: **ICE Design 设计语言:** 淘宝中后台通用的 [设计语言](https://alibaba.github.io/ice/design.html)
@@ -38,10 +27,16 @@ ICE 是一套通过沉淀海量高质量可复用物料，借助 GUI 工具快�
 
 我们欢迎开源社区参与到项目的建设中来，在开始前，请先查阅本项目的 [贡献指南](/alibaba/ice/blob/master/.github/CONTRIBUTING.md)
 
-### 发布流程
+### 开发及发布流程
 
 - `npm run bootstrap` 本地仓库链接
+- `npm start` 启动调试服务器
+- `npm run lint` 代码 Lint 风格检查
 - `npm run publish` 代码发布
 
-- `npm run lint` 代码 Lint 风格检查
+## 联系
 
+* <details>
+  <summary>钉钉群</summary>
+  <img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iLI8kxPI8KJjSspoXXX6MFXa-1242-1602.jpg" width="200">
+  </details>
