@@ -19,6 +19,11 @@
   ],
   "asideNavs": [
     {
+      "text": "首页",
+      "to": "/",
+      "icon": "store"
+    },
+    {
       "text": "一级目录示例",
       "to": "/example1",
       "icon": "nav-list"
