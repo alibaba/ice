@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
 import './FeatureDisplay.scss';
 
 const data = [
@@ -55,34 +54,50 @@ export default class FeatureDisplay extends Component {
 
   render() {
     return (
-      <div className="feature-display">
-        <IceCard>
-          <div style={styles.items}>
-            {data.map((item, index) => {
-              return (
-                <div key={index} style={styles.item}>
-                  <img src={item.imgUrl} style={styles.image} alt="" />
-                  <h3 style={styles.title}>{item.title}</h3>
-                  <p style={styles.description}>{item.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </IceCard>
+      <div className="feature-display" style={styles.container}>
+        <div style={styles.items}>
+          {data.map((item, index) => {
+            return (
+              <div key={index} style={styles.item}>
+                <img src={item.imgUrl} style={styles.image} alt="" />
+                <h3 style={styles.title}>{item.title}</h3>
+                <p style={styles.description}>{item.description}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
 }
 
 const styles = {
-  items: { display: 'flex', flexWrap: 'wrap' },
+  container: {
+    width: '1080px',
+    margin: '0 auto',
+    padding: '0 80px',
+  },
+  items: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
   item: {
     width: '33%',
     textAlign: 'center',
     padding: '0 30px',
     margin: '40px 0',
   },
-  title: { fontWeight: 'bold', fontSize: '20px' },
-  image: { width: '150px', height: '150px', borderRadius: '50%' },
-  description: { fontSize: '13px', lineHeight: '22px' },
+  title: {
+    fontWeight: 'bold',
+    fontSize: '20px',
+  },
+  image: {
+    width: '150px',
+    height: '150px',
+    borderRadius: '50%',
+  },
+  description: {
+    fontSize: '13px',
+    lineHeight: '22px',
+  },
 };

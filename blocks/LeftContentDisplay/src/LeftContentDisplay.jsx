@@ -34,8 +34,9 @@ export default class LeftContentDisplay extends Component {
 
 const styles = {
   container: {
-    margin: '0 auto',
     width: '1080px',
+    margin: '0 auto',
+    padding: '80px 0',
   },
   content: {
     display: 'flex',
