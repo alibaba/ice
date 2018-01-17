@@ -1,0 +1,45 @@
+{
+  "layouts": [
+    {
+      "source": "@icedesign/header-footer-layout",
+      "alias": "HeaderFooterLayout",
+      "title": "顶栏-底栏布局"
+    },
+    {
+      "source": "@icedesign/header-aside-footer-layout",
+      "alias": "HeaderAsideFooterLayout",
+      "title": "顶栏-侧栏-底栏-布局"
+    },
+    {
+      "source": "@icedesign/fixed-header-footer-responsive-layout",
+      "alias": "FixedHeaderFooterResponsiveLayout",
+      "title": "固定顶栏-底栏响应式布局"
+    },
+    {
+      "source": "@icedesign/fixed-header-footer-responsive-layout",
+      "alias": "FixedHeaderFooterResponsiveLayout",
+      "title": "固定顶栏-底栏响应式布局"
+    }
+  ],
+  "components": [],
+  "routes": [
+    {
+      "page": "Home",
+      "path": "/",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "NotFound",
+      "path": "*",
+      "blocks": [
+        {
+          "npm": "@icedesign/basic-not-found-block",
+          "name": "BasicNotFound",
+          "version": "latest",
+          "title": "404 报错提示"
+        }
+      ],
+      "layout": "HeaderFooterLayout"
+    }
+  ]
+}
