@@ -36,7 +36,8 @@ export default class AssetInfoDisplay extends Component {
             <div style={{
               ...styles.assetItem,
               borderRight: '0',
-            }}>
+            }}
+            >
               <div style={styles.price}>$46.24</div>
               <a href="##" style={styles.subItem}>信用额度 <Icon type="help" size="s" /></a>
             </div>
@@ -55,7 +56,8 @@ export default class AssetInfoDisplay extends Component {
               <div style={{
                 ...styles.assetItem,
                 borderRight: '0',
-              }}>
+              }}
+              >
                 <div style={styles.item}>$3000</div>
                 <div style={styles.subItem}>代金券</div>
               </div>
@@ -68,7 +70,8 @@ export default class AssetInfoDisplay extends Component {
           <div style={{
             ...styles.cardItem,
             borderBottom: '1px solid #eee',
-          }}>
+          }}
+          >
             <h1 style={styles.subTitle}>合同</h1>
             <div style={styles.assetsGroup}>
               <a href="##" style={styles.assetItem}>
