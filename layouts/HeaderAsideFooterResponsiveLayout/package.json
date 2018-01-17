@@ -45,7 +45,7 @@
   },
   "blockConfig": {
     "name": "header-aside-footer-responsive-layout",
-    "chinese": "顶栏-侧栏-底栏-响应式布局",
+    "title": "顶栏-侧栏-底栏-响应式布局",
     "categories": [
       "layout"
     ],
