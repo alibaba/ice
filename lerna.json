@@ -3,7 +3,8 @@
   "packages": [
     "packages/*",
     "blocks/*",
-    "layouts/*"
+    "layouts/*",
+    "scaffords/*"
   ],
   "version": "independent",
   "npmClient": "cnpm",

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './OurTeam.scss';
 
-const generatorData = count => {
+const generatorData = (count) => {
   return Array.from({ length: count }).map((item, index) => {
     return {
       name: `成员${index + 1}`,
       description: '成员的相关简介和描述',
       imgUrl:
-        'https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png'
+        'https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png',
     };
   });
 };
@@ -56,45 +56,45 @@ const styles = {
   container: {
     width: '1080px',
     margin: '0 auto',
-    padding: '80px 0'
+    padding: '80px 0',
   },
   head: {
     width: '50%',
-    margin: '0 auto'
+    margin: '0 auto',
   },
   title: {
     textAlign: 'center',
-    fontSize: '28px'
+    fontSize: '28px',
   },
   intro: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   items: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   item: {
     display: 'flex',
     width: '50%',
     padding: '0 40px',
-    margin: '40px 0'
+    margin: '40px 0',
   },
   baseInfo: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingLeft: '25px'
+    paddingLeft: '25px',
   },
   name: {
     fontWeight: 'bold',
     margin: '0 0 10px',
-    fontSize: '15px'
+    fontSize: '15px',
   },
   description: {
-    margin: 0
+    margin: 0,
   },
   avatar: {
     width: '150px',
-    height: '150px'
-  }
+    height: '150px',
+  },
 };
