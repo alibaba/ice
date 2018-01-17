@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './BrandShowCase.scss';
 
-const generatorData = count => {
+const generatorData = (count) => {
   return Array.from({ length: count }).map(() => {
     return {
       imgUrl:
-        'https://img.alicdn.com/tfs/TB1rnNcjr_I8KJjy1XaXXbsxpXa-603-474.png'
+        'https://img.alicdn.com/tfs/TB1rnNcjr_I8KJjy1XaXXbsxpXa-603-474.png',
     };
   });
 };
@@ -50,32 +50,32 @@ const styles = {
   container: {
     width: '1080px',
     margin: '0 auto',
-    padding: '80px 0'
+    padding: '80px 0',
   },
   head: {
     width: '50%',
-    margin: '0 auto'
+    margin: '0 auto',
   },
   title: {
     textAlign: 'center',
-    fontSize: '28px'
+    fontSize: '28px',
   },
   intro: {
     textAlign: 'center',
-    color: '#999'
+    color: '#999',
   },
   items: {
     display: 'flex',
     flexWrap: 'wrap',
-    margin: '30px 0'
+    margin: '30px 0',
   },
   item: {
     width: '16.66%',
     margin: '10px 0',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   image: {
     width: '100px',
-    height: '80px'
-  }
+    height: '80px',
+  },
 };
