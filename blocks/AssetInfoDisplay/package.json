@@ -21,6 +21,14 @@
     "ice",
     "ice-block"
   ],
+  "scripts": {
+    "start": "ice block dev",
+    "prepublish": "ice block build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/card": "^0.1.1",
@@ -28,6 +36,7 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/scripts": "^0.1.8",
     "@icedesign/skin": "latest",
     "react": "*",
     "react-dom": "*"
