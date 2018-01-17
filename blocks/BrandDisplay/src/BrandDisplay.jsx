@@ -10,7 +10,7 @@ const dataSource = [
     headPic:
       'https://img.alicdn.com/tfs/TB1QMwlSXXXXXaUXXXXXXXXXXXX-122-122.png',
     pic: 'https://img.alicdn.com/tfs/TB1n6H_SXXXXXc3XpXXXXXXXXXX-616-348.png',
-    url: 'https://alibaba.github.io/ice'
+    url: 'https://alibaba.github.io/ice',
   },
   {
     title: '万家乐',
@@ -18,7 +18,7 @@ const dataSource = [
       '策划『生活改造家』主题全案，联合一线大咖制作图文、直播、短视频全域引流，助力品牌升级和高端人群种草，结合行业活动割草。',
     headPic: 'https://img.alicdn.com/tfs/TB1Z4CLSXXXXXcHXVXXXXXXXXXX-61-61.png',
     pic: 'https://img.alicdn.com/tfs/TB1bHO6SXXXXXaiXFXXXXXXXXXX-308-174.png',
-    url: 'https://alibaba.github.io/ice'
+    url: 'https://alibaba.github.io/ice',
   },
   {
     title: '职场游乐园',
@@ -26,7 +26,7 @@ const dataSource = [
     headPic:
       'https://img.alicdn.com/tfs/TB1kX62SXXXXXXJXVXXXXXXXXXX-122-122.png',
     pic: 'https://img.alicdn.com/tfs/TB17bzrSXXXXXbpaFXXXXXXXXXX-616-348.png',
-    url: 'https://alibaba.github.io/ice'
+    url: 'https://alibaba.github.io/ice',
   },
   {
     title: '品味百味人生',
@@ -35,8 +35,8 @@ const dataSource = [
     headPic:
       'https://img.alicdn.com/tfs/TB19C_9SXXXXXc1XpXXXXXXXXXX-122-122.png',
     pic: 'https://img.alicdn.com/tfs/TB1IkEjSXXXXXb1XXXXXXXXXXXX-616-348.png',
-    url: 'https://alibaba.github.io/ice'
-  }
+    url: 'https://alibaba.github.io/ice',
+  },
 ];
 
 export default class BrandDisplay extends Component {
@@ -85,16 +85,16 @@ const styles = {
   container: {
     width: '1080px',
     margin: '0 auto',
-    padding: '80px 0'
+    padding: '80px 0',
   },
   brandHeader: {
     position: 'relative',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   brandTitle: {
     marginBottom: '40px',
     fontSize: '20px',
-    color: '#333333'
+    color: '#333333',
   },
   brandItem: {
     width: '50%',
@@ -103,34 +103,34 @@ const styles = {
     display: 'inline-block',
     verticalAlign: 'top',
     marginBottom: '30px',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   caseContent: {
     width: '250px',
     display: 'inline-block',
-    verticalAlign: 'top'
+    verticalAlign: 'top',
   },
   caseSubject: {
     margin: '20px 10px 0',
     lineHeight: '60px',
-    height: '60px'
+    height: '60px',
   },
   subjectImage: {
     width: '60px',
     height: '60px',
-    borderRadius: '50%'
+    borderRadius: '50%',
   },
   subjectDesc: {
     fontSize: '16px',
     color: '#333333',
     height: '60px',
     verticalAlign: 'top',
-    marginLeft: '12px'
+    marginLeft: '12px',
   },
   caseDetail: {
     fontSize: '12px',
     color: '#666666',
     padding: '0 16px',
-    textAlign: 'left'
-  }
+    textAlign: 'left',
+  },
 };
