@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
 import './TextCard.scss';
@@ -11,20 +9,6 @@ export default class TextCard extends Component {
     super(props);
     this.state = {};
   }
-
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
 
   render() {
     return (
@@ -69,8 +53,13 @@ export default class TextCard extends Component {
 }
 
 const styles = {
-  textCard: { color: '#333' },
-  textCardList: { display: 'flex', flexDirection: 'row' },
+  textCard: {
+    color: '#333',
+  },
+  textCardList: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
   textCardItem: {
     flex: '1',
     borderRight: '1px solid #F0F0F0',
@@ -79,9 +68,17 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  textCardSubtitle: { fontSize: '12px', marginBottom: '10px' },
-  textCardTitle: { fontSize: '16px' },
-  textCardNumber: { fontSize: '24px', fontWeight: 'bold' }
+  textCardSubtitle: {
+    fontSize: '12px',
+    marginBottom: '10px',
+  },
+  textCardTitle: {
+    fontSize: '16px',
+  },
+  textCardNumber: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+  },
 };

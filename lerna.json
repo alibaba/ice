@@ -6,5 +6,7 @@
     "layouts/*",
     "scaffords/*"
   ],
-  "version": "independent"
+  "version": "independent",
+  "npmClient": "cnpm",
+  "registry": "http://registry.npm.taobao.org"
 }

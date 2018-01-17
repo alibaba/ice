@@ -1,12 +1,9 @@
-
-
+/* eslint no-underscore-dangle:0 */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
-import './TimeFilterTable.scss';
-import { Table, Pagination, Tab, Radio, Search } from '@icedesign/base';
+import { Table, Pagination, Radio, Search } from '@icedesign/base';
 import DataBinder from '@icedesign/data-binder';
-import IceLabel from '@icedesign/label';
+import './TimeFilterTable.scss';
 
 const { Group: RadioGroup } = Radio;
 
@@ -41,22 +38,10 @@ export default class TimeFilterTable extends Component {
     };
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
   componentDidMount() {
     this.queryCache.page = 1;
     this.fetchData();
   }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
 
   fetchData = () => {
     this.props.updateBindingData('tableData', {
@@ -82,7 +67,7 @@ export default class TimeFilterTable extends Component {
     this.fetchData();
   };
 
-  renderOrder = (value, index, record) => {
+  renderOrder = (value, index) => {
     return <span>{index + 1}</span>;
   };
 
@@ -115,11 +100,7 @@ export default class TimeFilterTable extends Component {
           </div>
           <div>
             <Search
-<<<<<<< HEAD
-              style={styles.todo0}
-=======
               style={styles.search}
->>>>>>> 6f8bbd33e4db62185bbe64c9db0ee6effd3c292f
               type="normal"
               inputWidth={150}
               placeholder="搜索"
@@ -166,7 +147,7 @@ const styles = {
     paddingBottom: '10px',
   },
   tableCard: {
-    padding: '10px'
+    padding: '10px',
   },
   timeFilterTable: {},
   todo0: { marginLeft: '10px' },

@@ -11,7 +11,7 @@ export default class LeftContentDisplay extends Component {
 
   render() {
     return (
-      <div className="left-content-display" style={styles.leftContentDisplay} style={styles.container}>
+      <div className="left-content-display" style={styles.container}>
         <div style={styles.content}>
           <div style={styles.col}>
             <h2 style={styles.title}>功能描述</h2>
@@ -32,4 +32,33 @@ export default class LeftContentDisplay extends Component {
   }
 }
 
-const styles = {"container":{"margin":"0 auto","width":"1080px"},"content":{"display":"flex","position":"relative","alignItems":"center","overflow":"hidden","height":"600px"},"col":{"width":"50%"},"title":{"fontSize":"28px","fontWeight":"bold"},"description":{"color":"#666","lineHeight":"22px"},"image":{"position":"absolute","top":"20px","width":"40%"},"leftContentDisplay":{}}
+const styles = {
+  container: {
+    width: '1080px',
+    margin: '0 auto',
+    padding: '80px 0',
+  },
+  content: {
+    display: 'flex',
+    position: 'relative',
+    alignItems: 'center',
+    overflow: 'hidden',
+    height: '600px',
+  },
+  col: {
+    width: '50%',
+  },
+  title: {
+    fontSize: '28px',
+    fontWeight: 'bold',
+  },
+  description: {
+    color: '#666',
+    lineHeight: '22px',
+  },
+  image: {
+    position: 'absolute',
+    top: '20px',
+    width: '40%',
+  },
+};

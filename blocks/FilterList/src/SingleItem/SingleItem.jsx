@@ -13,7 +13,7 @@ export default class SingleItem extends Component {
       title,
       image,
       price,
-      extra
+      extra,
     } = this.props;
     return (
       <div
@@ -24,7 +24,7 @@ export default class SingleItem extends Component {
           height: '230px',
           cursor: 'pointer',
           borderRadius: '4px',
-          backgroundColor: active ? '#f4f4f4' : undefined
+          backgroundColor: active ? '#f4f4f4' : undefined,
         }}
       >
         <IceImg
@@ -41,7 +41,7 @@ export default class SingleItem extends Component {
             color: '#999',
             fontSize: '12px',
             lineHeight: '18px',
-            margin: '0 14px'
+            margin: '0 14px',
           }}
         >
           {title}
@@ -54,7 +54,7 @@ export default class SingleItem extends Component {
             color: '#999',
             lineHeight: '18px',
             fontSize: '12px',
-            margin: '0 14px'
+            margin: '0 14px',
           }}
         >
           {price}
@@ -67,7 +67,7 @@ export default class SingleItem extends Component {
             lineHeight: '18px',
             color: '#C0C0C0',
             fontSize: '12px',
-            margin: '0 14px'
+            margin: '0 14px',
           }}
         >
           {extra}

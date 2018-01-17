@@ -4,7 +4,7 @@ import { Input, Button } from '@icedesign/base';
 import {
   FormBinderWrapper,
   FormBinder,
-  FormError
+  FormError,
 } from '@icedesign/form-binder';
 
 import './Subscribe.scss';
@@ -20,14 +20,14 @@ export default class Subscribe extends Component {
     super(props);
     this.state = {
       formValue: {
-        email: ''
-      }
+        email: '',
+      },
     };
   }
 
-  formChange = newValue => {
+  formChange = (newValue) => {
     this.setState({
-      formValue: newValue
+      formValue: newValue,
     });
   };
 
@@ -43,7 +43,7 @@ export default class Subscribe extends Component {
         <IceCard style={styles.container}>
           <h1 style={styles.title}>订阅</h1>
           <FormBinderWrapper
-            ref={form => {
+            ref={(form) => {
               this.form = form;
             }}
             value={this.state.formValue}
@@ -76,27 +76,27 @@ export default class Subscribe extends Component {
 
 const styles = {
   container: {
-    padding: '48px 0'
+    padding: '48px 0',
   },
   title: {
     fontSize: '26px',
     color: '#000',
     textAlign: 'center',
-    margin: '0'
+    margin: '0',
   },
   input: {
     width: '400px',
-    marginRight: '15px'
+    marginRight: '15px',
   },
   center: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: '20px'
+    marginTop: '20px',
   },
   error: {
     paddingLeft: '240px',
-    marginTop: '5px'
+    marginTop: '5px',
   },
-  subscribe: {}
+  subscribe: {},
 };

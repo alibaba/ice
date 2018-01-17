@@ -1,5 +1,4 @@
-'use strict';
-
+/* eslint react/jsx-no-target-blank: 0 */
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
 import './DisplayCard.scss';
@@ -16,20 +15,6 @@ export default class DisplayCard extends Component {
     this.state = {};
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
   renderItem = (data, idx) => {
     return <div key={idx}>111</div>;
   };
@@ -39,12 +24,14 @@ export default class DisplayCard extends Component {
       <img
         src="https://gw.alicdn.com/tfs/TB1ReMsh3vD8KJjy0FlXXagBFXa-12-18.png"
         style={styles.down}
+        alt=""
       />
     );
     const up = (
       <img
         src="https://gw.alicdn.com/tfs/TB1Q1Msh3vD8KJjy0FlXXagBFXa-12-18.png"
         style={styles.up}
+        alt=""
       />
     );
     return (
@@ -55,12 +42,16 @@ export default class DisplayCard extends Component {
         >
           <div style={styles.displayCardItem}>
             <div style={styles.displayCardText}>
-              昨日内容浏览次数<a
+              昨日内容浏览次数
+              <a
                 href="http://taobao.com"
                 target="_blank"
                 style={styles.helpLink}
               >
-                <img src="https://gw.alicdn.com/tfs/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png" />
+                <img
+                  src="https://gw.alicdn.com/tfs/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png"
+                  alt=""
+                />
               </a>
             </div>
             <div style={styles.displayCardNumber}>46,657</div>
@@ -74,12 +65,16 @@ export default class DisplayCard extends Component {
           </div>
           <div style={styles.displayCardItem}>
             <div style={styles.displayCardText}>
-              昨日账号主页浏览人数<a
+              昨日账号主页浏览人数
+              <a
                 href="http://taobao.com"
                 target="_blank"
                 style={styles.helpLink}
               >
-                <img src="https://gw.alicdn.com/tfs/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png" />
+                <img
+                  src="https://gw.alicdn.com/tfs/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png"
+                  alt=""
+                />
               </a>
             </div>
             <div style={styles.displayCardNumber}>533</div>
@@ -93,12 +88,16 @@ export default class DisplayCard extends Component {
           </div>
           <div style={styles.displayCardItem}>
             <div style={styles.displayCardText}>
-              昨日活跃粉丝数<a
+              昨日活跃粉丝数
+              <a
                 href="http://taobao.com"
                 target="_blank"
                 style={styles.helpLink}
               >
-                <img src="https://gw.alicdn.com/tfs/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png" />
+                <img
+                  src="https://gw.alicdn.com/tfs/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png"
+                  alt=""
+                />
               </a>
             </div>
             <div style={styles.displayCardNumber}>2233</div>
@@ -112,12 +111,16 @@ export default class DisplayCard extends Component {
           </div>
           <div style={styles.displayCardItem}>
             <div style={styles.displayCardText}>
-              昨日粉丝数<a
+              昨日粉丝数
+              <a
                 href="http://taobao.com"
                 target="_blank"
                 style={styles.helpLink}
               >
-                <img src="https://gw.alicdn.com/tfs/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png" />
+                <img
+                  src="https://gw.alicdn.com/tfs/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png"
+                  alt=""
+                />
               </a>
             </div>
             <div style={styles.displayCardNumber}>23,333</div>
@@ -144,14 +147,14 @@ const styles = {
     backgroundPosition: 'center center',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   displayCardItem: {
     display: 'flex',
     height: '150px',
     width: '169',
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   displayCardText: { color: '#BEBEBE', fontSize: '12px', marginBottom: '5px' },
   helpLink: { marginLeft: '5px' },
@@ -159,9 +162,9 @@ const styles = {
     color: '#fff',
     fontSize: '24px',
     fontWeight: 'bold',
-    marginBottom: '3px'
+    marginBottom: '3px',
   },
   displayCardDesc: { color: '#BEBEBE', fontSize: '12px' },
   down: { width: '6px', height: '9px' },
-  up: { width: '6px', height: '9px' }
+  up: { width: '6px', height: '9px' },
 };

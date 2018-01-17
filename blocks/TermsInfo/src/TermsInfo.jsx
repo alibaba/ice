@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
@@ -64,24 +64,24 @@ export default class TermsInfo extends Component {
 const styles = {
   termsInfo: {
     padding: '30px',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   desc: {
     fontSize: '13px',
-    lineHeight: '28px'
+    lineHeight: '28px',
   },
   title: {
     textAlign: 'center',
     margin: '0',
     paddingBottom: '20px',
     fontSize: '20px',
-    borderBottom: '1px solid #dedede'
+    borderBottom: '1px solid #dedede',
   },
   content: {
     color: '#666',
     fontSize: '16px',
     padding: '20px 0',
-    borderBottom: '1px solid #dedede'
+    borderBottom: '1px solid #dedede',
   },
-  btn: { textAlign: 'center' }
+  btn: { textAlign: 'center' },
 };
