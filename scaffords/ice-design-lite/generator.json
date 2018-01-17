@@ -34,6 +34,7 @@
       "blocks": [
         {
           "npm": "@icedesign/basic-not-found-block",
+          "name": "BasicNotFound",
           "version": "latest",
           "title": "404 报错提示"
         }
