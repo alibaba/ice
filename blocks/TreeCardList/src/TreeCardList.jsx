@@ -12,7 +12,7 @@ const dataSource = [
   { tab: '下单页', url: '##', subTitle: '10W' },
   { tab: '猜你喜欢', url: '##', subTitle: '40W' },
   { tab: '欢迎页面', url: '##', subTitle: '10W' },
-  { tab: '项目管理页', url: '##', subTitle: '20W' }
+  { tab: '项目管理页', url: '##', subTitle: '20W' },
 ];
 
 export default class TreeCardList extends Component {
@@ -28,7 +28,7 @@ export default class TreeCardList extends Component {
   }
 
   // ICE: React Component 的生命周期
-  
+
   componentWillMount() {}
 
   componentDidMount() {}
@@ -74,7 +74,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: '10px'
+    marginBottom: '10px',
   },
   treeCardItem: {
     display: 'flex',
@@ -87,7 +87,7 @@ const styles = {
     color: '#000',
     cursor: 'pointer',
     padding: '0 10px',
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
-  treeCardList: { width: '240px' }
+  treeCardList: { width: '240px' },
 };

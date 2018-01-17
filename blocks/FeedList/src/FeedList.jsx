@@ -7,34 +7,34 @@ const dataSource = [
     nickName: '某某',
     datetime: '2分钟前',
     avatar: 'https://gw.alicdn.com/tfs/TB1h_tjbyqAXuNjy1XdXXaYcVXa-333-415.png',
-    message: '刚刚完成了智能化搭建课程的学习'
+    message: '刚刚完成了智能化搭建课程的学习',
   },
   {
     nickName: '某某',
     datetime: '3分钟前',
     avatar: 'https://gw.alicdn.com/tfs/TB1h_tjbyqAXuNjy1XdXXaYcVXa-333-415.png',
     message:
-      '这里展示状态的描述简介，最多可以展示两行的内容，超出的内容可以用省略号代替'
+      '这里展示状态的描述简介，最多可以展示两行的内容，超出的内容可以用省略号代替',
   },
   {
     nickName: '某某',
     datetime: '5分钟前',
     avatar: 'https://gw.alicdn.com/tfs/TB1h_tjbyqAXuNjy1XdXXaYcVXa-333-415.png',
-    message: '刚刚完成了智能化搭建课程的学习'
+    message: '刚刚完成了智能化搭建课程的学习',
   },
   {
     nickName: '某某',
     datetime: '1天前',
     avatar: 'https://gw.alicdn.com/tfs/TB1h_tjbyqAXuNjy1XdXXaYcVXa-333-415.png',
-    message: '刚刚完成了智能化搭建课程的学习'
+    message: '刚刚完成了智能化搭建课程的学习',
   },
   {
     nickName: '某某',
     datetime: '2天前',
     avatar: 'https://gw.alicdn.com/tfs/TB1h_tjbyqAXuNjy1XdXXaYcVXa-333-415.png',
     message:
-      '刚刚完成了Sketch图形设计课程的学习，课程内容包括组件绘制，画布编辑等'
-  }
+      '刚刚完成了Sketch图形设计课程的学习，课程内容包括组件绘制，画布编辑等',
+  },
 ];
 
 export default class FeedList extends Component {
@@ -96,31 +96,31 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: '15px'
+    marginBottom: '15px',
   },
   title: {
     color: '#000',
     fontSize: '14px',
     display: 'inline-flex',
-    lineHeight: '22px'
+    lineHeight: '22px',
   },
   status: { color: '#999', fontSize: '12px' },
   itemRow: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   avatar: {
     width: '24px',
     height: '24px',
     borderRadius: '50%',
-    marginRight: '10px'
+    marginRight: '10px',
   },
   item: {
     display: 'flex',
     flexDirection: 'column',
     paddingTop: '15px',
-    borderBottom: '1px solid #fafafa'
+    borderBottom: '1px solid #fafafa',
   },
   message: {
     color: '#666',
@@ -128,8 +128,8 @@ const styles = {
     paddingLeft: '34px',
     width: '320px',
     marginBottom: '15px',
-    lineHeight: '22px'
+    lineHeight: '22px',
   },
   allMessage: { textAlign: 'center', height: '50px', lineHeight: '50px' },
-  feedList: { width: '430px' }
+  feedList: { width: '430px' },
 };

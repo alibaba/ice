@@ -1,3 +1,4 @@
+/* eslint no-mixed-operators:0 */
 import React, { Component } from 'react';
 import { Table, Progress, Pagination } from '@icedesign/base';
 import IceCard from '@icedesign/card';
@@ -39,13 +40,7 @@ export default class ProgressTable extends Component {
   render() {
     return (
       <div className="progress-table">
-        <IceCard
-          style={{
-            margin: '20px',
-          }}
-          className="tab-card"
-          title="本月最活跃金主"
-        >
+        <IceCard className="tab-card" title="本月最活跃金主">
           <Table
             hasBorder
             getRowClassName={(record, index) => {

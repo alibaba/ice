@@ -1,18 +1,15 @@
-'use strict';
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
-import './EditableTable.scss';
-import { Table, Icon, Button, Input } from '@icedesign/base';
+import { Table, Button } from '@icedesign/base';
 import CellEditor from './CellEditor';
+import './EditableTable.scss';
 
 const generatorData = () => {
   return Array.from({ length: 5 }).map((item, index) => {
     return {
-      todo: '待办事项 ' + index,
-      memo: '备注说明文案 ' + index,
-      validity: '2017-12-12'
+      todo: `待办事项 ${index}`,
+      memo: `备注说明文案 ${index}`,
+      validity: '2017-12-12',
     };
   });
 };
@@ -27,36 +24,22 @@ export default class EditableTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: generatorData()
+      dataSource: generatorData(),
     };
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
-  renderOrder = (value, index, record) => {
+  renderOrder = (value, index) => {
     return <span>{index}</span>;
   };
 
   deleteItem = (index) => {
     this.state.dataSource.splice(index, 1);
     this.setState({
-      dataSource: this.state.dataSource
+      dataSource: this.state.dataSource,
     });
   };
 
-  renderOperation = (value, index, record) => {
+  renderOperation = (value, index) => {
     return (
       <Button onClick={this.deleteItem.bind(this, index)} shape="text">
         删除
@@ -68,7 +51,7 @@ export default class EditableTable extends Component {
     // todo 将修改后的表格数据发送接口，持久化
     this.state.dataSource[index][valueKey] = value;
     this.setState({
-      dataSource: this.state.dataSource
+      dataSource: this.state.dataSource,
     });
   };
 
@@ -87,10 +70,10 @@ export default class EditableTable extends Component {
     this.state.dataSource.push({
       todo: '暂无',
       memo: '暂无',
-      validity: '暂无'
+      validity: '暂无',
     });
     this.setState({
-      dataSource: this.state.dataSource
+      dataSource: this.state.dataSource,
     });
   };
 
@@ -133,6 +116,6 @@ const styles = {
     lineHeight: '32px',
     marginTop: 20,
     cursor: 'pointer',
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 };

@@ -1,7 +1,4 @@
-'use strict';
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Table } from '@icedesign/base';
 import IceCard from '@icedesign/card';
 import './InfoDisplayTable.scss';
@@ -17,19 +14,19 @@ const dataSource = () => {
     },
     {
       label: '性别',
-      value: '男'
+      value: '男',
     },
     {
       label: '年龄',
-      value: '25'
+      value: '25',
     },
     {
       label: '籍贯',
-      value: '杭州'
+      value: '杭州',
     },
     {
       label: '职业',
-      value: '程序员'
+      value: '程序员',
     },
   ];
 };
@@ -37,39 +34,13 @@ const dataSource = () => {
 export default class InfoDisplayTable extends Component {
   static displayName = 'InfoDisplayTable';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
-  }
-
-  // ICE: React Component 的生命周期
-
-  componentWillMount() {
-
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() {
-
+    this.state = {};
   }
 
   render() {
@@ -86,4 +57,4 @@ export default class InfoDisplayTable extends Component {
   }
 }
 
-const styles = { "infoDisplayTable": {} }
+const styles = { infoDisplayTable: {} };
