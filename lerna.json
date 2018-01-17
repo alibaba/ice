@@ -5,5 +5,7 @@
     "blocks/*",
     "layouts/*"
   ],
-  "version": "independent"
+  "version": "independent",
+  "npmClient": "cnpm",
+  "registry": "http://registry.npm.taobao.org"
 }
