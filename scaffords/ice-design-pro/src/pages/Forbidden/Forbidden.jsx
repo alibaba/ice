@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import NotPermission from './components/NotPermission';
-import './NotPermission.scss';
+import './Forbidden.scss';
 
-export default class NotPermissionPage extends Component {
-  static displayName = 'NotPermissionPage';
+export default class ForbiddenPage extends Component {
+  static displayName = 'ForbiddenPage';
 
   constructor(props) {
     super(props);
@@ -12,7 +12,7 @@ export default class NotPermissionPage extends Component {
 
   render() {
     return (
-      <div className="not-permission-page">
+      <div className="forbidden-page">
         <NotPermission />
       </div>
     );
