@@ -1,12 +1,9 @@
-'use strict';
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
-  FormError as IceFormError
+  FormError as IceFormError,
 } from '@icedesign/form-binder';
 import {
   Form,
@@ -16,7 +13,7 @@ import {
   Select,
   DatePicker,
   Switch,
-  Radio
+  Radio,
 } from '@icedesign/base';
 
 import './CreateActivityForm.scss';
@@ -27,26 +24,26 @@ import './CreateActivityForm.scss';
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 4
+    span: 4,
   },
   wrapperCol: {
-    span: 14
-  }
+    span: 14,
+  },
 };
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const { RangePicker } = DatePicker;
 
 // Switch 组件的选中等 props 是 checked 不符合表单规范的 value 在此做转换
-const SwitchForForm = props => {
+const SwitchForForm = (props) => {
   const checked = props.checked === undefined ? props.value : props.checked;
 
   return (
     <Switch
       {...props}
       checked={checked}
-      onChange={checked => {
-        props.onChange && props.onChange(checked);
+      onChange={(currentChecked) => {
+        if (props.onChange) props.onChange(currentChecked);
       }}
     />
   );
@@ -54,8 +51,6 @@ const SwitchForForm = props => {
 
 export default class CreateActivityForm extends Component {
   static displayName = 'CreateActivityForm';
-
-  static propTypes = {};
 
   static defaultProps = {};
 
@@ -69,14 +64,14 @@ export default class CreateActivityForm extends Component {
         delivery: false,
         type: ['地推活动'],
         resource: '线下场地免费',
-        extra: ''
-      }
+        extra: '',
+      },
     };
   }
 
-  onFormChange = value => {
+  onFormChange = (value) => {
     this.setState({
-      value
+      value,
     });
   };
 
@@ -89,17 +84,16 @@ export default class CreateActivityForm extends Component {
         delivery: false,
         type: ['地推活动'],
         resource: '线下场地免费',
-        extra: ''
-      }
+        extra: '',
+      },
     });
   };
 
   submit = () => {
-    this.refs.form.validateAll((errors, values) => {
+    this.formRef.validateAll((errors, values) => {
       console.log('errors', errors, 'values', values);
       if (errors) {
         // 处理表单报错
-        return;
       }
       // 提交当前填写的数据
     });
@@ -108,9 +102,11 @@ export default class CreateActivityForm extends Component {
   render() {
     return (
       <div className="create-activity-form">
-        <IceContainer title="活动发布">
+        <IceContainer title="活动发布" style={styles.container}>
           <IceFormBinderWrapper
-            ref="form"
+            ref={(formRef) => {
+              this.formRef = formRef;
+            }}
             value={this.state.value}
             onChange={this.onFormChange}
           >
@@ -127,7 +123,7 @@ export default class CreateActivityForm extends Component {
                     className="next-form-text-align"
                     dataSource={[
                       { label: '区域一', value: 'location1' },
-                      { label: '区域二', value: 'location2' }
+                      { label: '区域二', value: 'location2' },
                     ]}
                   />
                 </IceFormBinder>
@@ -139,7 +135,7 @@ export default class CreateActivityForm extends Component {
                   // 使用 RangePicker 组件输出的第二个参数字符串格式的日期
                   valueFormatter={(date, dateStr) => dateStr}
                 >
-                  <RangePicker showTime={true} />
+                  <RangePicker showTime />
                 </IceFormBinder>
               </FormItem>
               <FormItem label="即时配送：" {...formItemLayout}>
@@ -160,7 +156,7 @@ export default class CreateActivityForm extends Component {
                       { label: '美食线上活动', value: '美食线上活动' },
                       { label: '地推活动', value: '地推活动' },
                       { label: '线下主题活动', value: '线下主题活动' },
-                      { label: '单纯品牌曝光', value: '单纯品牌曝光' }
+                      { label: '单纯品牌曝光', value: '单纯品牌曝光' },
                     ]}
                   />
                 </IceFormBinder>
@@ -174,7 +170,7 @@ export default class CreateActivityForm extends Component {
                     className="next-form-text-align"
                     dataSource={[
                       { label: '线上品牌商赞助', value: '线上品牌商赞助' },
-                      { label: '线下场地免费', value: '线下场地免费' }
+                      { label: '线下场地免费', value: '线下场地免费' },
                     ]}
                   />
                 </IceFormBinder>
@@ -202,10 +198,13 @@ export default class CreateActivityForm extends Component {
 }
 
 const styles = {
+  container: {
+    paddingBottom: 0,
+  },
   label: {
-    textAlign: 'right'
+    textAlign: 'right',
   },
   resetBtn: {
-    marginLeft: 20
-  }
+    marginLeft: 20,
+  },
 };
