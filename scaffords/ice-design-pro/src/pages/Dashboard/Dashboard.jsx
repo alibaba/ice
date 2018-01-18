@@ -1,21 +1,11 @@
-
-
 import React, { Component } from 'react';
-
-import BasicTab from './components/basic-tab';
-
-import DataDisplay from './components/data-display';
-
-import TabChart from './components/tab-chart';
-
-import PieDoughnutChart from './components/pie-doughnut-chart';
-
-import ProgressTable from './components/progress-table';
-
-import EditableTable from './components/editable-table';
-
-import ChartBar from './components/chart-bar';
-
+import BasicTab from './components/BasicTab';
+import DataDisplay from './components/DataDisplay';
+import TabChart from './components/TabChart';
+import PieDoughnutChart from './components/PieDoughnutChart';
+import ProgressTable from './components/ProgressTable';
+import EditableTable from './components/EditableTable';
+import ChartBar from './components/ChartBar';
 import './Dashboard.scss';
 
 export default class Dashboard extends Component {

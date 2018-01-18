@@ -1,9 +1,5 @@
-
-
 import React, { Component } from 'react';
-
-import SuccessDetail from './components/success-detail';
-
+import SuccessDetail from './components/SuccessDetail';
 import './Result.scss';
 
 export default class Result extends Component {

@@ -1,13 +1,7 @@
-
-
 import React, { Component } from 'react';
-
-import SelectableTable from './components/selectable-table';
-
-import EditableTable from './components/editable-table';
-
-import SortableTable from './components/sortable-table';
-
+import SelectableTable from './components/SelectableTable';
+import EditableTable from './components/EditableTable';
+import SortableTable from './components/SortableTable';
 import './BasicTable.scss';
 
 export default class BasicTable extends Component {

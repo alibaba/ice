@@ -1,9 +1,5 @@
-
-
 import React, { Component } from 'react';
-
-import FilterList from './components/filter-list';
-
+import FilterList from './components/FilterList';
 import './PicturesList.scss';
 
 export default class PicturesList extends Component {

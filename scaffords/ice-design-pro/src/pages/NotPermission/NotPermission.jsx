@@ -1,9 +1,5 @@
-
-
 import React, { Component } from 'react';
-
-import NotPermission from './components/not-permission';
-
+import NotPermission from './components/NotPermission';
 import './NotPermission.scss';
 
 export default class NotPermissionPage extends Component {

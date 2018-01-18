@@ -1,21 +1,11 @@
-
-
 import React, { Component } from 'react';
-
-import PieDoughnutChart from './components/pie-doughnut-chart';
-
-import ChartBar from './components/chart-bar';
-
-import ChartArea from './components/chart-area';
-
-import ChartBubbleImage from './components/chart-bubble-image';
-
-import ChartBox from './components/chart-box';
-
-import ChartTypeLine from './components/chart-type-line';
-
-import ChartRadar from './components/chart-radar';
-
+import PieDoughnutChart from './components/PieDoughnutChart';
+import ChartBar from './components/ChartBar';
+import ChartArea from './components/ChartArea';
+import ChartBubbleImage from './components/ChartBubbleImage';
+import ChartBox from './components/ChartBox';
+import ChartTypeLine from './components/ChartTypeLine';
+import ChartRadar from './components/ChartRadar';
 import './Charts.scss';
 
 export default class Charts extends Component {
