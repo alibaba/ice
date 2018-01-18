@@ -75,3 +75,10 @@ ice-design-pro
 ├── package.json     // package.json
 └── README.md        // 项目说明
 ```
+
+## 使用
+
+```
+$ npm start      // 启动预览服务器
+$ npm run build  // 构建 dist
+```
