@@ -40,7 +40,7 @@ module.exports = function(args = {}) {
   });
 
   // webpack 打包工作流
-  gulp.task('webpack', ['install'], function(done) {
+  gulp.task('webpack', function(done) {
     // 指定构建的 entry
     // @TODO 可构建多页面
     const pacageData = require(paths.appPackageJson);
