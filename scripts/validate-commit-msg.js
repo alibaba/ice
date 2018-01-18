@@ -8,50 +8,49 @@
  * >> use ghooks, config in package.json
  */
 
-'use strict';
 
-var fs = require('fs');
-var util = require('util');
-var resolve = require('path').resolve;
-var findup = require('findup');
-var semverRegex = require('semver-regex');
+const fs = require('fs');
+const util = require('util');
+const resolve = require('path').resolve;
+const findup = require('findup');
+const semverRegex = require('semver-regex');
 
-var config = getConfig();
-var MAX_LENGTH = config.maxSubjectLength || 100;
-var IGNORED = new RegExp(util.format('(^WIP)|(^v)|(^%s$)', semverRegex().source));
+const config = getConfig();
+const MAX_LENGTH = config.maxSubjectLength || 100;
+const IGNORED = new RegExp(util.format('(^WIP)|(^v)|(^%s$)', semverRegex().source));
 
 // fixup! and squash! are part of Git, commits tagged with them are not intended to be merged, cf. https://git-scm.com/docs/git-commit
-var PATTERN = /^((fixup! |squash! )?(\w+)(?:\(([^\)\s]+)\))?: (.+))(?:\n|$)/;
-var MERGE_COMMIT_PATTERN = /^Merge /;
-var error = function () {
+const PATTERN = /^((fixup! |squash! )?(\w+)(?:\(([^\)\s]+)\))?: (.+))(?:\n|$)/;
+const MERGE_COMMIT_PATTERN = /^Merge /;
+const error = function () {
   // gitx does not display it
   // http://gitx.lighthouseapp.com/projects/17830/tickets/294-feature-display-hook-error-message-when-hook-fails
   // https://groups.google.com/group/gitx/browse_thread/thread/a03bcab60844b812
-  console[config.warnOnFail ? 'warn' : 'error']('Invalid commit message: ' + util.format.apply(null, arguments));
+  console[config.warnOnFail ? 'warn' : 'error'](`Invalid commit message: ${util.format.apply(null, arguments)}`);
   console.log('See our specific at:', 'https://github.com/alibaba/ice/.github/GIT_COMMIT_SPECIFIC.md');
 };
 
 
-var validateMessage = function (raw) {
-  var types = config.types = config.types || 'conventional-commit-types';
+const validateMessage = function (raw) {
+  let types = config.types = config.types || 'conventional-commit-types';
 
   // resolve types from a module
   if (typeof types === 'string' && types !== '*') {
     types = Object.keys(require(types).types);
   }
 
-  var messageWithBody = (raw || '').split('\n').filter(function (str) {
+  const messageWithBody = (raw || '').split('\n').filter((str) => {
     return str.indexOf('#') !== 0;
   }).join('\n');
 
-  var message = messageWithBody.split('\n').shift();
+  const message = messageWithBody.split('\n').shift();
 
   if (message === '') {
     console.log('Aborting commit due to empty commit message.');
     return false;
   }
 
-  var isValid = true;
+  let isValid = true;
 
   if (MERGE_COMMIT_PATTERN.test(message)) {
     console.log('Merge commit detected.');
@@ -63,20 +62,20 @@ var validateMessage = function (raw) {
     return true;
   }
 
-  var match = PATTERN.exec(message);
+  const match = PATTERN.exec(message);
 
   if (!match) {
     error('does not match "<type>(<scope>): <subject>" !');
     isValid = false;
   } else {
-    var firstLine = match[1];
-    var squashing = !!match[2];
-    var type = match[3];
-    var scope = match[4];
-    var subject = match[5];
+    const firstLine = match[1];
+    const squashing = !!match[2];
+    const type = match[3];
+    const scope = match[4];
+    const subject = match[5];
 
-    var SUBJECT_PATTERN = new RegExp(config.subjectPattern || '.+');
-    var SUBJECT_PATTERN_ERROR_MSG = config.subjectPatternErrorMsg || 'subject does not match subject pattern!';
+    const SUBJECT_PATTERN = new RegExp(config.subjectPattern || '.+');
+    const SUBJECT_PATTERN_ERROR_MSG = config.subjectPatternErrorMsg || 'subject does not match subject pattern!';
 
     if (firstLine.length > MAX_LENGTH && !squashing) {
       error('is longer than %d characters !', MAX_LENGTH);
@@ -110,7 +109,7 @@ var validateMessage = function (raw) {
     return true;
   }
 
-  var argInHelp = config.helpMessage && config.helpMessage.indexOf('%s') !== -1;
+  const argInHelp = config.helpMessage && config.helpMessage.indexOf('%s') !== -1;
 
   if (argInHelp) {
     console.log(config.helpMessage, messageWithBody);
@@ -134,18 +133,18 @@ exports.config = config;
 // hacky start if not run by mocha :-D
 // istanbul ignore next
 if (process.argv.join('').indexOf('mocha') === -1) {
-  var commitMsgFile = process.argv[2] || getGitFolder() + '/COMMIT_EDITMSG';
-  var incorrectLogFile = commitMsgFile.replace('COMMIT_EDITMSG', 'logs/incorrect-commit-msgs');
+  const commitMsgFile = process.argv[2] || `${getGitFolder()}/COMMIT_EDITMSG`;
+  const incorrectLogFile = commitMsgFile.replace('COMMIT_EDITMSG', 'logs/incorrect-commit-msgs');
 
-  var hasToString = function hasToString(x) {
+  const hasToString = function hasToString(x) {
     return x && typeof x.toString === 'function';
   };
 
-  fs.readFile(commitMsgFile, function (err, buffer) {
-    var msg = getCommitMessage(buffer);
+  fs.readFile(commitMsgFile, (err, buffer) => {
+    const msg = getCommitMessage(buffer);
 
     if (!validateMessage(msg)) {
-      fs.appendFile(incorrectLogFile, msg + '\n', function () {
+      fs.appendFile(incorrectLogFile, `${msg}\n`, () => {
         process.exit(1);
       });
     } else {
@@ -159,24 +158,24 @@ if (process.argv.join('').indexOf('mocha') === -1) {
 }
 
 function getConfig() {
-  var pkgFile = findup.sync(process.cwd(), 'package.json');
-  var pkg = JSON.parse(fs.readFileSync(resolve(pkgFile, 'package.json')));
+  const pkgFile = findup.sync(process.cwd(), 'package.json');
+  const pkg = JSON.parse(fs.readFileSync(resolve(pkgFile, 'package.json')));
   return pkg && pkg.config && pkg.config['validate-commit-msg'] || {};
 }
 
 function getGitFolder() {
-  var gitDirLocation = './.git';
+  let gitDirLocation = './.git';
   if (!fs.existsSync(gitDirLocation)) {
-    throw new Error('Cannot find file ' + gitDirLocation);
+    throw new Error(`Cannot find file ${gitDirLocation}`);
   }
 
   if (!fs.lstatSync(gitDirLocation).isDirectory()) {
-    var unparsedText = '' + fs.readFileSync(gitDirLocation);
+    const unparsedText = `${fs.readFileSync(gitDirLocation)}`;
     gitDirLocation = unparsedText.substring('gitdir: '.length).trim();
   }
 
   if (!fs.existsSync(gitDirLocation)) {
-    throw new Error('Cannot find file ' + gitDirLocation);
+    throw new Error(`Cannot find file ${gitDirLocation}`);
   }
 
   return gitDirLocation;
