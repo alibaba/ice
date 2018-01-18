@@ -2,7 +2,12 @@
   "name": "@icedesign/progress-data-list-block",
   "version": "0.1.0",
   "description": "进度条数据列表展示",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -16,7 +21,10 @@
     "prepublish": "ice block build"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.1",
@@ -24,17 +32,20 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "latest",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "progress-data-list",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1OUVDnwvD8KJjy0FlXXagBFXa-1900-338.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1OUVDnwvD8KJjy0FlXXagBFXa-1900-338.png",
     "title": "进度条数据列表",
-    "categories": ["chart", "list", "data-display"],
+    "categories": [
+      "chart",
+      "list",
+      "data-display"
+    ],
     "themePackage": "@icedesign/skin"
   },
   "publishConfig": {
