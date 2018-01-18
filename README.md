@@ -11,9 +11,11 @@
 
 ---
 
-:art: **ICE Design 设计语言:** 淘宝中后台通用的 [设计语言](https://alibaba.github.io/ice/design.html)
-:zap: **海量高质量物料:** 区块 + 模板满足你开发之所需，所见即所得
-:dart: **GUI 工具** 人类友好的交互界面，零配置的工程整合，物料一键复用，颠覆前端开发体验 [点击下载](https://alibaba.github.io/ice/#/iceworks)
+:art: **ICE Design 设计语言:** 淘宝中后台通用的 [设计语言](https://alibaba.github.io/ice/design.html)  
+
+:zap: **海量高质量物料:** 区块 + 模板满足你开发之所需，所见即所得  
+
+:dart: **GUI 工具** 人类友好的交互界面，零配置的工程整合，物料一键复用，颠覆前端开发体验 [点击下载](https://alibaba.github.io/ice/#/iceworks)  
 
 
 ## 开发及发布流程
