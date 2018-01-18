@@ -12,6 +12,8 @@
     "url": "https://github.com/alibaba/ice"
   },
   "scripts": {
+    "start": "ice block dev",
+    "prepublish": "ice block build",
     "lint": "eslint . --ext '.js,.jsx' --fix",
     "prepublish": "npm run lint"
   },
@@ -27,6 +29,7 @@
     "@icedesign/skin": "latest",
     "react": "*",
     "react-dom": "*",
+    "@icedesign/scripts": "^0.1.9",
     "babel-eslint": "^8.0.3",
     "eslint": "^4.13.1",
     "eslint-plugin-babel": "^4.1.1",
@@ -42,5 +45,9 @@
     "title": "进度条数据列表",
     "categories": ["chart", "list", "data-display"],
     "themePackage": "@icedesign/skin"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
   }
 }
