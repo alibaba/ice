@@ -11,6 +11,10 @@
     "type": "git",
     "url": "https://github.com/alibaba/ice"
   },
+  "scripts": {
+    "lint": "eslint . --ext '.js,.jsx' --fix",
+    "prepublish": "npm run lint"
+  },
   "license": "MIT",
   "keywords": ["ice", "ice-block"],
   "dependencies": {
@@ -22,7 +26,14 @@
     "@icedesign/demo-layout": "^0.1.2",
     "@icedesign/skin": "latest",
     "react": "*",
-    "react-dom": "*"
+    "react-dom": "*",
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3"
   },
   "blockConfig": {
     "name": "progress-data-list",

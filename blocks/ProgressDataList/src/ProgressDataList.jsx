@@ -1,15 +1,12 @@
 'use strict';
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import { Progress } from '@icedesign/base';
 import './ProgressDataList.scss';
 
 export default class ProgressDataList extends Component {
   static displayName = 'ProgressDataList';
-
-  static propTypes = {};
 
   static defaultProps = {};
 
