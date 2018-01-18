@@ -1,9 +1,5 @@
-
-
 import React, { Component } from 'react';
-
-import TermsInfo from './components/terms-info';
-
+import TermsInfo from './components/TermsInfo';
 import './Terms.scss';
 
 export default class Terms extends Component {
@@ -17,9 +13,7 @@ export default class Terms extends Component {
   render() {
     return (
       <div className="terms-page">
-
         <TermsInfo />
-
       </div>
     );
   }

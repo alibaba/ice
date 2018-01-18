@@ -1,9 +1,5 @@
-
-
 import React, { Component } from 'react';
-
-import EmptyContent from './components/empty-content';
-
+import EmptyContent from './components/EmptyContent';
 import './EmptyContentPage.scss';
 
 export default class EmptyContentPage extends Component {

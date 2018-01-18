@@ -1,13 +1,7 @@
-
-
 import React, { Component } from 'react';
-
-import ProgressTable from './components/progress-table';
-
-import InfoDisplayTable from './components/info-display-table';
-
-import DetailTable from './components/detail-table';
-
+import ProgressTable from './components/ProgressTable';
+import InfoDisplayTable from './components/InfoDisplayTable';
+import DetailTable from './components/DetailTable';
 import './TableDisplay.scss';
 
 export default class TableDisplay extends Component {
@@ -21,13 +15,9 @@ export default class TableDisplay extends Component {
   render() {
     return (
       <div className="table-display-page">
-
         <ProgressTable />
-
         <InfoDisplayTable />
-
         <DetailTable />
-
       </div>
     );
   }

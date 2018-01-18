@@ -1,11 +1,6 @@
-
-
 import React, { Component } from 'react';
-
-import TextCard from './components/text-card';
-
-import ApplicationProgress from './components/application-progress';
-
+import TextCard from './components/TextCard';
+import ApplicationProgress from './components/ApplicationProgress';
 import './ProgressInfo.scss';
 
 export default class ProgressInfo extends Component {

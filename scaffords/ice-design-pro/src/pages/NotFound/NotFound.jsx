@@ -1,9 +1,5 @@
-
-
 import React, { Component } from 'react';
-
-import BasicNotFound from './components/basic-not-found';
-
+import BasicNotFound from './components/BasicNotFound';
 import './NotFound.scss';
 
 export default class NotFound extends Component {

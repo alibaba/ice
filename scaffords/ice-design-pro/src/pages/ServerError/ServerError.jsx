@@ -1,9 +1,5 @@
-
-
 import React, { Component } from 'react';
-
-import BasicException from './components/basic-exception';
-
+import BasicException from './components/BasicException';
 import './ServerError.scss';
 
 export default class ServerError extends Component {

@@ -1,9 +1,5 @@
-
-
 import React, { Component } from 'react';
-
-import LandingIntroBanner from './components/landing-intro-banner';
-
+import LandingIntroBanner from './components/LandingIntroBanner';
 import './Landing.scss';
 
 export default class Landing extends Component {

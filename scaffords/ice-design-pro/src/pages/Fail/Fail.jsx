@@ -1,9 +1,5 @@
-
-
 import React, { Component } from 'react';
-
-import FailureDetail from './components/failure-detail';
-
+import FailureDetail from './components/FailureDetail';
 import './Fail.scss';
 
 export default class Fail extends Component {
