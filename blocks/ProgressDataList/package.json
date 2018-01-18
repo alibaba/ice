@@ -26,7 +26,8 @@
   },
   "blockConfig": {
     "name": "progress-data-list",
-    "snapshot": "",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1OUVDnwvD8KJjy0FlXXagBFXa-1900-338.png",
     "title": "进度条数据列表",
     "categories": ["chart", "list", "data-display"],
     "themePackage": "@icedesign/skin"
