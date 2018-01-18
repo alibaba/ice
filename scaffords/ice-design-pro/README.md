@@ -63,10 +63,9 @@ ice-design-pro
 │   ├── config      // 公共配置
 │   ├── layouts     // 通用布局
 │   ├── pages       // 页面
-│   ├── utils       // 页面
 │   ├── index.js    // 应用入口
 │   └── routes.jsx  // 路由入口
-├── tests  // 测试
+├── tests           // 测试
 ├── .editorconfig    // 代码风格配置
 ├── .eslintignore    // eslint 忽略目录配置
 ├── .eslintrc        // eslint 配置
