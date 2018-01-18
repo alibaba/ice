@@ -8,7 +8,6 @@ module.exports = ({ skipInstall = false } = {}) => {
   }
   return getNpm().then((npm) => {
     console.log('ice sdk npm bin:', npm);
-
     if (npm == 'tnpm' || npm == 'npm') {
       return runCmd(npm, ['install']);
     } else {
