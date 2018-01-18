@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
 import './DetailTable.scss';
 
@@ -14,20 +13,6 @@ export default class DetailTable extends Component {
     super(props);
     this.state = {};
   }
-
-  // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillReceiveProps(nextProps, nextContext) {}
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() {}
 
   render() {
     return (
@@ -73,14 +58,14 @@ const styles = {
   detailItem: {
     padding: '15px 0px',
     display: 'flex',
-    borderTop: '1px solid #EEEFF3'
+    borderTop: '1px solid #EEEFF3',
   },
   detailTitle: {
     marginRight: '30px',
     textAlign: 'right',
     width: '120px',
-    color: '#999999'
+    color: '#999999',
   },
   detailBody: { flex: 1 },
-  statusProcessing: { color: '#64D874' }
+  statusProcessing: { color: '#64D874' },
 };

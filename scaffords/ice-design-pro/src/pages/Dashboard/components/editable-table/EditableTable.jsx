@@ -1,3 +1,4 @@
+/* eslint react/jsx-no-bind: 0 */
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
 import { Table, Button } from '@icedesign/base';

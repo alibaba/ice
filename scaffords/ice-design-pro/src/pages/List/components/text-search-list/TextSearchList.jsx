@@ -61,6 +61,11 @@ const dataSource = [
 export default class TextSearchList extends Component {
   static displayName = 'TextSearchList';
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
       <div className="text-search-list">

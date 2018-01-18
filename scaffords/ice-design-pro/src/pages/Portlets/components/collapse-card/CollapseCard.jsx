@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
 import { Icon } from '@icedesign/base';
@@ -16,34 +14,20 @@ export default class CollapseCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapse: false
+      collapse: false,
     };
   }
-
-  // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillReceiveProps(nextProps, nextContext) {}
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() {}
 
   toggleCollapse = () => {
     const { collapse } = this.state;
     this.setState({
-      collapse: collapse ? false : true
+      collapse: !collapse,
     });
   };
 
   render() {
     const { collapse } = this.state;
-    const cls = classnames('base-info', { collapse: collapse });
+    const cls = classnames('base-info', { collapse });
     return (
       <div className="collapse-card">
         <IceCard>
@@ -51,6 +35,7 @@ export default class CollapseCard extends Component {
             <img
               style={styles.logo}
               src="https://img.alicdn.com/tfs/TB1EBQ.hZLJ8KJjy0FnXXcFDpXa-300-300.png"
+              alt=""
             />
             <div style={styles.infoIntro}>
               <h3 style={styles.infoTitle}>戴森</h3>
@@ -79,7 +64,6 @@ export default class CollapseCard extends Component {
           </ul>
           <div className="toggle-btn" style={styles.toggleBtn}>
             <a
-              href="javascript: void(0);"
               className="toggle-btn"
               style={styles.toggleBtn}
               onClick={this.toggleCollapse}
@@ -95,15 +79,28 @@ export default class CollapseCard extends Component {
 }
 
 const styles = {
-  summaryInfo: { display: 'flex', borderBottom: '1px solid #e7e7eb' },
-  logo: { width: '100px', height: '100px' },
-  infoIntro: { marginLeft: '20px', paddingBottom: '20px' },
-  infoTitle: { fontWeight: 'bold' },
-  infoDesc: { color: '#999' },
+  summaryInfo: {
+    display: 'flex',
+    borderBottom: '1px solid #e7e7eb',
+  },
+  logo: {
+    width: '100px',
+    height: '100px',
+  },
+  infoIntro: {
+    marginLeft: '20px',
+    paddingBottom: '20px',
+  },
+  infoTitle: {
+    fontWeight: 'bold',
+  },
+  infoDesc: {
+    color: '#999',
+  },
   toggleBtn: {
     marginTop: '20px',
     textAlign: 'center',
     color: '#999',
-    textDecoration: 'none'
-  }
+    textDecoration: 'none',
+  },
 };

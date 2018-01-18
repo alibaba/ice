@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 
@@ -19,11 +19,11 @@ export default class CardList extends Component {
   render() {
     return (
       <div className="card-list-page">
-        
+
         <DisplayCard />
-        
+
         <InfoDisplayTab />
-        
+
       </div>
     );
   }

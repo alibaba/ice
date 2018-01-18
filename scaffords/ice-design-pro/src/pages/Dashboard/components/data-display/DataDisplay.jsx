@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
 import './DataDisplay.scss';
 
 const data = [
   {
     count: 100,
-    title: '日活跃数'
+    title: '日活跃数',
   },
   {
     count: '3,000',
-    title: '月活跃数'
+    title: '月活跃数',
   },
   {
     count: '20,000',
-    title: '年活跃数'
-  }
+    title: '年活跃数',
+  },
 ];
 
 export default class DataDisplay extends Component {
@@ -29,20 +28,6 @@ export default class DataDisplay extends Component {
     super(props);
     this.state = {};
   }
-
-  // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillReceiveProps(nextProps, nextContext) {}
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() {}
 
   render() {
     return (
@@ -72,7 +57,7 @@ const styles = {
     margin: '12px 0',
     fontWeight: 'bold',
     fontSize: '32px',
-    color: '#15A0FF'
+    color: '#15A0FF',
   },
   title: { color: '#999' },
   splitLine: {
@@ -80,6 +65,6 @@ const styles = {
     margin: '0 auto',
     width: '24px',
     height: '1px',
-    background: '#9B9B9B'
-  }
+    background: '#9B9B9B',
+  },
 };

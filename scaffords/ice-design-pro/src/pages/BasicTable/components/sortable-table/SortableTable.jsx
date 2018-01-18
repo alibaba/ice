@@ -1,11 +1,7 @@
-
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
-import './SortableTable.scss';
-
 import { Table, Icon, Button } from '@icedesign/base';
+import './SortableTable.scss';
 
 const generatorData = () => {
   return Array.from({ length: 5 }).map((item, index) => {
@@ -32,20 +28,6 @@ export default class SortableTable extends Component {
     };
   }
 
-  // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() { }
-
-  componentDidMount() { }
-
-  componentWillReceiveProps(nextProps, nextContext) { }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() { }
-
   moveUp = (index) => {
     if (index > 0) {
       const dataSource = this.state.dataSource;
@@ -69,11 +51,11 @@ export default class SortableTable extends Component {
     }
   };
 
-  renderOrder = (value, index, record) => {
+  renderOrder = (value, index) => {
     return <span>{index}</span>;
   };
 
-  renderSortButton = (value, index, record) => {
+  renderSortButton = (value, index) => {
     return (
       <div>
         <Button
@@ -112,7 +94,6 @@ export default class SortableTable extends Component {
     );
   }
 }
-
 
 const styles = {
   sortableTable: {},

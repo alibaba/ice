@@ -1,3 +1,4 @@
+/* eslint no-plusplus: 0 */
 import React, { Component } from 'react';
 import { Table, Button, Icon, Pagination } from '@icedesign/base';
 import IceCard from '@icedesign/card';

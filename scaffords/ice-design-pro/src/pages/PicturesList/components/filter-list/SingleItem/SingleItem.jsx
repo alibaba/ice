@@ -5,6 +5,11 @@ import './SingleItem.scss';
 export default class SingleItem extends Component {
   static displayName = 'SingleItem';
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     const {
       style,
