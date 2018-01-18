@@ -21,6 +21,6 @@ module.exports = function getPaths(cwd) {
     appNodeModules: resolveApp('node_modules'),
     sdkNodeModules: resolveSDK('../../node_modules'),
     resolveApp,
-    appDirectory
+    appDirectory,
   };
 };

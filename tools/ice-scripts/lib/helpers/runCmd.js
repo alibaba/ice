@@ -5,10 +5,10 @@ module.exports = function runCmd(cmd, _args, callback) {
     const args = _args || [];
     const runner = require('child_process').spawn(cmd, args, {
       stdio: 'inherit',
-      env: getRunCmdEnv()
+      env: getRunCmdEnv(),
     });
 
-    runner.on('close', code => {
+    runner.on('close', (code) => {
       if (code === 0) {
         resolve(code);
       } else {
@@ -18,10 +18,10 @@ module.exports = function runCmd(cmd, _args, callback) {
   });
   if (typeof fn === 'funciton') {
     promise
-      .then(ok => {
+      .then((ok) => {
         callback.call(this, ok);
       })
-      .catch(ok => {
+      .catch((ok) => {
         callback.call(this, ok);
       });
   } else {

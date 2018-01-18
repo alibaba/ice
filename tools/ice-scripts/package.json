@@ -4,15 +4,12 @@
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
-    "ice": "./bin/ice.js",
-    "ice-build": "./bin/ice-build.js"
+    "ice": "./bin/ice.js"
   },
   "scripts": {
     "cover": "http-server ./ -o -c-1",
     "clear": "rm -rf test/fixtures/*/build/ && rm -rf test/fixtures/*/.happypack/",
     "webpack": "npm run clear && node ./test/compiler.js",
-    "lint": "def lint ./lib",
-    "prepublish": "npm run lint",
     "start": "http-server ./test/fixtures/ -o -c-1 -p 8081",
     "test": "npm run clear && istanbul cover _mocha ./test/*-test.js -- ",
     "test:update": "npm test -- --updateExpect",

@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = function getRunCmdEnv() {
   const env = {};
-  Object.keys(process.env).forEach(key => {
+  Object.keys(process.env).forEach((key) => {
     env[key] = process.env[key];
   });
   // make sure `antd-tools/node_modules/.bin` in the PATH env

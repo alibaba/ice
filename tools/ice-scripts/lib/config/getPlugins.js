@@ -13,11 +13,11 @@ module.exports = function(paths, options = {}) {
     new ExtractTextPlugin({
       filename: '[name].css',
       disable: false,
-      allChunks: true
+      allChunks: true,
     }),
     new SimpleProgressPlugin(),
     new CaseSensitivePathsPlugin(),
-    new AdditionalStyleWebpackPlugin()
+    new AdditionalStyleWebpackPlugin(),
   ];
 
   const themePackage = options.themePackage;
@@ -59,7 +59,7 @@ module.exports = function(paths, options = {}) {
           }
         }
         return false;
-      }
+      },
     };
     plugins.push(new AppendStyleWebpackPlugin(appendStylePluginOption));
   }
@@ -72,7 +72,7 @@ module.exports = function(paths, options = {}) {
         appendPosition: 'footer',
         type: 'sass',
         srcFile: skinOverridePath,
-        distMatch: /\.css/
+        distMatch: /\.css/,
       })
     );
   }
