@@ -1,6 +1,6 @@
 {
-  "name": "@icedesign/join-us-block-block",
-  "version": "0.1.2",
+  "name": "@icedesign/join-us-block",
+  "version": "0.1.3",
   "description": "",
   "files": [
     "src/",
