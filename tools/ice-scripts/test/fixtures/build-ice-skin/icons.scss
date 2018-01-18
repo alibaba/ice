@@ -1,0 +1,40 @@
+@import "./variables.scss";
+.next-icon-favorites::before {
+    content: $icon-content-favorites;
+}
+
+.next-icon-nav-more::before {
+    content: $icon-content-nav-more;
+}
+
+.next-icon-auto::before {
+    content: $icon-content-auto;
+}
+
+.next-icon-lights::before {
+    content: $icon-content-lights;
+}
+
+.next-icon-gifts::before {
+    content: $icon-content-gifts;
+}
+
+.next-icon-electronics::before {
+    content: $icon-content-electronics;
+}
+
+.next-icon-bags::before {
+    content: $icon-content-bags;
+}
+
+.next-icon-process::before {
+    content: $icon-content-process;
+}
+
+.next-icon-error-filling::before {
+    content: $icon-content-error-filling;
+}
+
+.next-icon-back::before {
+    content: $icon-content-back;
+}
