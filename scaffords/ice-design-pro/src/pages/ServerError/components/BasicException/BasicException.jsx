@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import './BasicException.scss';
 
 export default class BasicException extends Component {

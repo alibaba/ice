@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Chart, Axis, Geom, Tooltip } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import './ChartTypeLine.scss';
 
 export default class ChartTypeLine extends Component {

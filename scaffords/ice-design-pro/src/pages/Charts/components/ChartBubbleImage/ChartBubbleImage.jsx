@@ -1,7 +1,7 @@
 /* eslint no-mixed-operators: 0 */
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, Label, Shape } from 'bizcharts';
 import './ChartBubbleImage.scss';
 
