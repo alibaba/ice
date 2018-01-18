@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 
@@ -21,13 +21,13 @@ export default class Portlets extends Component {
   render() {
     return (
       <div className="portlets-page">
-        
+
         <BasicDetailInfo />
-        
+
         <CollapseCard />
-        
+
         <DetailTable />
-        
+
       </div>
     );
   }

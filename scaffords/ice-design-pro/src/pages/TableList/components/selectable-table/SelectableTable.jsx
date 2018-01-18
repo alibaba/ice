@@ -1,3 +1,4 @@
+/* eslint no-plusplus: 0 */
 import React, { Component } from 'react';
 import { Table, Button, Icon, Pagination } from '@icedesign/base';
 import IceCard from '@icedesign/card';
@@ -89,10 +90,7 @@ export default class SelectableTable extends Component {
     return (
       <div>
         <a>编辑</a>
-        <a
-          style={styles.removeBtn}
-          onClick={this.deleteItem.bind(this, record)}
-        >
+        <a style={styles.removeBtn} onClick={() => this.deleteItem(record)}>
           删除
         </a>
       </div>

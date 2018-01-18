@@ -6,6 +6,11 @@ import './BasicNotFound.scss';
 export default class BasicNotFound extends Component {
   static displayName = 'BasicNotFound';
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
       <div className="basic-not-found">

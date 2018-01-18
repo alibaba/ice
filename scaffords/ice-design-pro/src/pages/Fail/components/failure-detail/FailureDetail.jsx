@@ -1,8 +1,5 @@
-'use strict';
-
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
-import { Button } from '@icedesign/base';
 import './FailureDetail.scss';
 
 export default class FailureDetail extends Component {
@@ -17,20 +14,6 @@ export default class FailureDetail extends Component {
     this.state = {};
   }
 
-  // ICE: React Component 的生命周期
-  // http://ice.alibaba-inc.com/docs/guide/intro-react#React-组件的生命周期
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillReceiveProps(nextProps, nextContext) {}
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  componentWillUnmount() {}
-
   render() {
     return (
       <div className="failure-detail" style={styles.failureDetail}>
@@ -39,6 +22,7 @@ export default class FailureDetail extends Component {
             <img
               style={styles.img}
               src="https://img.alicdn.com/tfs/TB1LUMhhY_I8KJjy1XaXXbsxpXa-156-156.png"
+              alt=""
             />
             <h3 style={styles.title}>提交失败</h3>
           </div>
@@ -59,16 +43,16 @@ const styles = {
   failureDetail: { textAlign: 'center' },
   img: {
     width: '40px',
-    height: '40px'
+    height: '40px',
   },
   successDetailHead: {
-    position: 'relative'
+    position: 'relative',
   },
   title: { margin: '0', fontWeight: 'bold' },
   summary: {
     marginBottom: '40px',
     fontSize: '14px',
-    color: '#666'
+    color: '#666',
   },
   descrpiton: { fontSize: '14px', color: '#666' },
   backToLink: {
@@ -80,7 +64,7 @@ const styles = {
     lineHeight: '26px',
     color: '#fff',
     borderRadius: '50px',
-    backgroundColor: '#3080fe'
+    backgroundColor: '#3080fe',
   },
-  card: { padding: '80px 40px' }
+  card: { padding: '80px 40px' },
 };

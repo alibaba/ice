@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
 
 export default class Filter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
       <IceCard style={styles.container}>

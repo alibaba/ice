@@ -4,6 +4,11 @@ import IceCard from '@icedesign/card';
 import './BasicException.scss';
 
 export default class BasicException extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   static displayName = 'BasicException';
   render() {
     return (

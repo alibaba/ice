@@ -6,6 +6,11 @@ import './BasicTab.scss';
 export default class BasicTab extends Component {
   static displayName = 'BasicTab';
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     const tabs = [
       { tab: '订阅号概览', key: 'guide' },
