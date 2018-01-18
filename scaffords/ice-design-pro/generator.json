@@ -69,18 +69,13 @@
       "layout": "HeaderAsideFooterLayout"
     },
     {
-      "page": "NotFound",
-      "path": "exception/404",
-      "layout": "HeaderAsideFooterLayout"
-    },
-    {
       "page": "Forbidden",
       "path": "exception/403",
       "layout": "HeaderAsideFooterLayout"
     },
     {
       "page": "EmptyContent",
-      "path": "exception/empty",
+      "path": "exception/204",
       "layout": "HeaderAsideFooterLayout"
     },
     {
@@ -111,6 +106,11 @@
     {
       "page": "TableDisplay",
       "path": "table/table-display",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "NotFound",
+      "path": "exception/404",
       "layout": "HeaderAsideFooterLayout"
     }
   ]
