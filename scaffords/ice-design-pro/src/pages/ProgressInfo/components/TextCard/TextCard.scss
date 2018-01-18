@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.text-card-list {
+  .text-card-item {
+    &:last-child {
+      border-right: none !important;
+    }
+  }
+}
