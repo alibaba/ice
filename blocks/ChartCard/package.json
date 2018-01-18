@@ -2,7 +2,12 @@
   "name": "@icedesign/chart-card-block",
   "version": "0.1.0",
   "description": "",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "ant-design-pro": "^1.0.1",
@@ -25,14 +33,24 @@
     "@icedesign/demo-layout": "^0.1.2",
     "@icedesign/skin": "latest",
     "react": "*",
-    "react-dom": "*"
+    "react-dom": "*",
+    "@icedesign/scripts": "^0.1.9"
+  },
+  "scripts": {
+    "start": "ice block dev",
+    "prepublish": "ice block build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
   },
   "blockConfig": {
     "name": "chart-card",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1K03rnb_I8KJjy1XaXXbsxpXa-961-179.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1K03rnb_I8KJjy1XaXXbsxpXa-961-179.png",
     "title": "图表卡片",
-    "categories": ["chart"],
+    "categories": [
+      "chart"
+    ],
     "themePackage": "@icedesign/skin"
   }
 }
