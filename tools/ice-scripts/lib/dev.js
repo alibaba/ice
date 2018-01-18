@@ -17,6 +17,7 @@ const getPaths = require('./config/paths');
 const getEntries = require('./config/getEntry');
 const getWebpackConfigDev = require('./config/webpack.config.dev');
 const npmUpdate = require('./helpers/npmUpdate');
+const iceworksClient = require('./iceworksClient');
 
 /* eslint no-console:off */
 
@@ -25,8 +26,9 @@ module.exports = function(args, subprocess) {
   const HOST = args.host || '0.0.0.0';
   const PORT = args.port || 3333;
 
-  const hasSubprocess = typeof subprocess !== 'undefined';
+
   const send = function(data) {
+    iceworksClient.send(data);
     if (subprocess && typeof subprocess.send === 'function') {
       subprocess.send(data);
     }
@@ -46,7 +48,7 @@ module.exports = function(args, subprocess) {
 
       const webpackConfig = getWebpackConfigDev(entries, paths, pacageData.ice);
 
-      if (hasSubprocess) {
+      if (iceworksClient.available) {
         webpackConfig.plugins.push(
           new webpack.ProgressPlugin((percentage, msg) => {
             send({
