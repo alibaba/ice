@@ -90,9 +90,9 @@ export default class CreateActivityForm extends Component {
   };
 
   submit = () => {
-    this.formRef.validateAll((errors, values) => {
-      console.log('errors', errors, 'values', values);
-      if (errors) {
+    this.formRef.validateAll((error, value) => {
+      console.log('error', error, 'value', value);
+      if (error) {
         // 处理表单报错
       }
       // 提交当前填写的数据
