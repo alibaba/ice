@@ -13,9 +13,7 @@
   },
   "scripts": {
     "start": "ice block dev",
-    "prepublish": "ice block build",
-    "lint": "eslint . --ext '.js,.jsx' --fix",
-    "prepublish": "npm run lint"
+    "prepublish": "ice block build"
   },
   "license": "MIT",
   "keywords": ["ice", "ice-block"],
@@ -29,14 +27,7 @@
     "@icedesign/skin": "latest",
     "react": "*",
     "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9",
-    "babel-eslint": "^8.0.3",
-    "eslint": "^4.13.1",
-    "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-react": "^7.5.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3"
+    "@icedesign/scripts": "^0.1.9"
   },
   "blockConfig": {
     "name": "progress-data-list",
