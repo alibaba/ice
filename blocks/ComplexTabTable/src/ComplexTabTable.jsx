@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle:0 */
 import React, { Component } from 'react';
 import { Table, Pagination, Tab, DatePicker, Search } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
@@ -203,7 +203,7 @@ export default class ComplexTabTable extends Component {
 
     return (
       <div className="complex-tab-table">
-        <IceCard>
+        <IceContainer>
           <Tab
             onChange={this.onTabChange}
             type="bar"
@@ -227,37 +227,37 @@ export default class ComplexTabTable extends Component {
           >
             {tabList && tabList.length > 0
               ? tabList.map((tab) => {
-                  return (
-                    <Tab.TabPane
-                      key={tab.type}
-                      tab={
-                        <span>
-                          {tab.text}{' '}
-                          <span style={styles.tabCount}>{tab.count}</span>
-                        </span>
-                      }
-                    >
-                      {tab.subCategories && tab.subCategories.length > 0
-                        ? tab.subCategories.map((catItem, index) => {
-                            return (
-                              <SubCategoryItem
-                                {...catItem}
-                                isCurrent={
-                                  catItem.id === this.state.currentCategory
-                                }
-                                onItemClick={this.onSubCategoryClick}
-                                key={index}
-                              />
-                            );
-                          })
-                        : null}
-                    </Tab.TabPane>
-                  );
-                })
+                return (
+                  <Tab.TabPane
+                    key={tab.type}
+                    tab={
+                      <span>
+                        {tab.text}{' '}
+                        <span style={styles.tabCount}>{tab.count}</span>
+                      </span>
+                    }
+                  >
+                    {tab.subCategories && tab.subCategories.length > 0
+                      ? tab.subCategories.map((catItem, index) => {
+                        return (
+                          <SubCategoryItem
+                            {...catItem}
+                            isCurrent={
+                              catItem.id === this.state.currentCategory
+                            }
+                            onItemClick={this.onSubCategoryClick}
+                            key={index}
+                          />
+                        );
+                      })
+                      : null}
+                  </Tab.TabPane>
+                );
+              })
               : null}
           </Tab>
-        </IceCard>
-        <IceCard>
+        </IceContainer>
+        <IceContainer>
           <Table
             dataSource={tableData.list}
             isLoading={tableData.__loading}
@@ -297,7 +297,7 @@ export default class ComplexTabTable extends Component {
               onChange={this.changePage}
             />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 /* eslint no-mixed-operators: 0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Coord, Guide, Shape } from 'bizcharts';
 import './ChartGauge.scss';
 
@@ -65,7 +65,7 @@ export default class ChartGauge extends Component {
     };
     return (
       <div className="chart-gauge">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>仪表图</h4>
           <Chart
             height={400}
@@ -169,7 +169,7 @@ export default class ChartGauge extends Component {
               style={{ stroke: '#fff', lineWidth: 1 }}
             />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

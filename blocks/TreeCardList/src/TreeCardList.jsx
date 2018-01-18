@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Select } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './TreeCardList.scss';
 
 const { Option } = Select;
@@ -52,7 +52,7 @@ export default class TreeCardList extends Component {
   render() {
     return (
       <div className="tree-card-list" style={styles.treeCardList}>
-        <IceCard>
+        <IceContainer>
           <div style={styles.firstRow}>
             <span>站点列表</span>
             <Select size="small">
@@ -62,7 +62,7 @@ export default class TreeCardList extends Component {
             </Select>
           </div>
           {dataSource.map(this.renderItem)}
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

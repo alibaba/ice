@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { Button, Search } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import SingleItem from './SingleItem';
 import './FilterList.scss';
 
@@ -69,7 +69,7 @@ export default class FilterList extends Component {
 
     return (
       <div className="filter-list">
-        <IceCard style={{ ...styles.filterListHeaderWrapper, ...cardStyle }}>
+        <IceContainer style={{ ...styles.filterListHeaderWrapper, ...cardStyle }}>
           <div style={styles.searchWrapper}>
             <Search
               placeholder="标题"
@@ -110,15 +110,15 @@ export default class FilterList extends Component {
             </Button>
             <span />
           </div>
-        </IceCard>
+        </IceContainer>
 
-        <IceCard style={{ ...styles.searchResultWrapper, ...cardStyle }} className="">
+        <IceContainer style={{ ...styles.searchResultWrapper, ...cardStyle }} className="">
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

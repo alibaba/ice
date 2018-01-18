@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle:0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Table, Pagination, Radio, Search } from '@icedesign/base';
 import DataBinder from '@icedesign/data-binder';
 import './TimeFilterTable.scss';
@@ -76,7 +76,7 @@ export default class TimeFilterTable extends Component {
 
     return (
       <div className="time-filter-table" style={styles.timeFilterTable}>
-        <IceCard style={styles.filterCard}>
+        <IceContainer style={styles.filterCard}>
           <div>
             <span>选择活动日期范围：</span>
             <RadioGroup
@@ -108,8 +108,8 @@ export default class TimeFilterTable extends Component {
               onSearch={this.onSearch}
             />
           </div>
-        </IceCard>
-        <IceCard style={styles.tableCard}>
+        </IceContainer>
+        <IceContainer style={styles.tableCard}>
           <Table
             dataSource={tableData.list}
             isLoading={tableData.__loading}
@@ -129,7 +129,7 @@ export default class TimeFilterTable extends Component {
               onChange={this.changePage}
             />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

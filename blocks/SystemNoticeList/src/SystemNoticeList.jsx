@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Pagination } from '@icedesign/base';
 import './SystemNoticeList.scss';
 
@@ -62,7 +62,7 @@ export default class SystemNoticeList extends Component {
   render() {
     return (
       <div className="system-notice-list">
-        <IceCard>
+        <IceContainer>
           <div className="notice-list-content">
             <h2 style={styles.title}>系统公告</h2>
             <ul style={styles.noticeList}>
@@ -90,7 +90,7 @@ export default class SystemNoticeList extends Component {
               onChange={this.handleChange}
             />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './TopicCard.scss';
 
 const dataSource = [
@@ -49,7 +49,7 @@ export default class TopicCard extends Component {
 
   render() {
     return (
-      <IceCard style={styles.container} className="tab-card" title="数据概览">
+      <IceContainer style={styles.container} className="tab-card" title="数据概览">
         <div className="topic-card">
           <div style={styles.horizontalWraper}>
             {dataSource.map((item, idx) => {
@@ -77,7 +77,7 @@ export default class TopicCard extends Component {
             })}
           </div>
         </div>
-      </IceCard>
+      </IceContainer>
     );
   }
 }

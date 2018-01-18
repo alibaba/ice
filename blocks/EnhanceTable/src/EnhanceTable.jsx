@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
 import { Table, Pagination, Tab, DatePicker, Search } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
@@ -128,7 +128,7 @@ export default class EnhanceTable extends Component {
 
     return (
       <div className="enhance-table" style={styles.enhanceTable}>
-        <IceCard style={styles.card}>
+        <IceContainer style={styles.card}>
           <div>
             <Tab
               onChange={this.onTabChange}
@@ -174,8 +174,8 @@ export default class EnhanceTable extends Component {
               onSearch={this.onSearch}
             />
           </div>
-        </IceCard>
-        <IceCard>
+        </IceContainer>
+        <IceContainer>
           <Table
             dataSource={tableData.list}
             isLoading={tableData.__loading}
@@ -215,7 +215,7 @@ export default class EnhanceTable extends Component {
               onChange={this.changePage}
             />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

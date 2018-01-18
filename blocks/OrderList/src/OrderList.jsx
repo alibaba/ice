@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Table } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './OrderList.scss';
 
 export default class OrderList extends Component {
@@ -109,7 +109,7 @@ export default class OrderList extends Component {
 
     return (
       <div className="order-list" style={styles.orderList}>
-        <IceCard>
+        <IceContainer>
           <div className="order-list-head" style={styles.orderListHead}>
             订单列表
           </div>
@@ -136,7 +136,7 @@ export default class OrderList extends Component {
               width={100}
             />
           </Table>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

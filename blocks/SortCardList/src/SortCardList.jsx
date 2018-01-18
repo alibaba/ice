@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './SortCardList.scss';
 
 const stateBackgroundMap = {
@@ -134,7 +134,7 @@ export default class SortCardList extends Component {
     } = this.state;
     return (
       <div className="sort-card-list">
-        <IceCard style={styles.cardContainer}>
+        <IceContainer style={styles.cardContainer}>
           <div style={styles.cardList}>
             <div style={styles.title}>待办事项</div>
             <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
@@ -150,7 +150,7 @@ export default class SortCardList extends Component {
             <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
             {dones.map(this.renderItem)}
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

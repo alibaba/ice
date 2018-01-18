@@ -1,6 +1,6 @@
 /* eslint no-plusplus: 0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, Label } from 'bizcharts';
 import './ChartHeatMap.scss';
 
@@ -105,7 +105,7 @@ export default class ChartHeatMap extends Component {
 
     return (
       <div className="chart-heat-map">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>色块图</h4>
           <Chart
             height={500}
@@ -156,7 +156,7 @@ export default class ChartHeatMap extends Component {
               />
             </Geom>
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

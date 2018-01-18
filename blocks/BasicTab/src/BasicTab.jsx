@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Tab } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './BasicTab.scss';
 
 export default class BasicTab extends Component {
@@ -16,11 +16,11 @@ export default class BasicTab extends Component {
 
     return (
       <div className="basic-tab">
-        <IceCard style={styles.tabCardStyle}>
+        <IceContainer style={styles.tabCardStyle}>
           <Tab contentStyle={{ display: 'none' }}>
             {tabs.map(item => <Tab.TabPane key={item.key} tab={item.tab} />)}
           </Tab>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
