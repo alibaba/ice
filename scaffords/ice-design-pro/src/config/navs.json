@@ -1,0 +1,67 @@
+{
+  "headerNavs": [
+    {
+      "text": "首页",
+      "to": "/"
+    },
+    {
+      "text": "反馈",
+      "to": "https://github.com/alibaba/ice",
+      "external": true,
+      "newWindow": true
+    },
+    {
+      "text": "帮助",
+      "to": "https://alibaba.github.io/ice",
+      "external": true,
+      "newWindow": true
+    }
+  ],
+  "asideNavs": [
+    {
+      "text": "Dashboard",
+      "to": "/dashboard",
+      "icon": "nav-list"
+    },
+    {
+      "text": "图表页",
+      "to": "/charts",
+      "icon": "nav-list"
+    },
+    {
+      "text": "表格页",
+      "to": "/complex",
+      "icon": "nav-list"
+    },
+    {
+      "text": "列表页",
+      "to": "/list",
+      "icon": "nav-list"
+    },
+    {
+      "text": "内容页",
+      "to": "/portlets",
+      "icon": "nav-list"
+    },
+    {
+      "text": "结果页",
+      "to": "/result",
+      "icon": "nav-list",
+      "children": [
+        {
+          "text": "成功",
+          "to": "/result/success"
+        },
+        {
+          "text": "失败",
+          "to": "/result/fail"
+        }
+      ]
+    },
+    {
+      "text": "landing",
+      "to": "/landing",
+      "icon": "nav-list"
+    }
+  ]
+}
