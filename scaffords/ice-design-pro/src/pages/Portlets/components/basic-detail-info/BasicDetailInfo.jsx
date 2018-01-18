@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
@@ -22,8 +22,8 @@ const dataSoruce = {
     'https://img.alicdn.com/imgextra/i3/672246894/TB2ziLDdbsTMeJjSszdXXcEupXa_!!672246894-0-beehive-scenes.jpg_180x180xzq90.jpg_.webp',
     'https://img.alicdn.com/imgextra/i1/2645911918/TB2qQA9fk.HL1JjSZFuXXX8dXXa_!!2645911918-0-beehive-scenes.jpg_180x180xzq90.jpg_.webp',
     'https://img.alicdn.com/bao/uploaded/TB2obaBXeLyQeBjy1XaXXcexFXa_!!0-dgshop.jpg_180x180xzq90.jpg_.webp',
-    'https://img.alicdn.com/tps/i1/99136475/TB2Cc7saE1HTKJjSZFmXXXeYFXa_!!0-juitemmedia.jpg_180x180q90.jpg_.webp'
-  ]
+    'https://img.alicdn.com/tps/i1/99136475/TB2Cc7saE1HTKJjSZFmXXXeYFXa_!!0-juitemmedia.jpg_180x180q90.jpg_.webp',
+  ],
 };
 
 export default class BasicDetailInfo extends Component {
@@ -120,6 +120,6 @@ const styles = {
     width: '80px',
     height: '80px',
     border: '1px solid #eee',
-    marginRight: '10px'
-  }
+    marginRight: '10px',
+  },
 };

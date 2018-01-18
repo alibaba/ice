@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 
@@ -17,9 +17,9 @@ export default class Fail extends Component {
   render() {
     return (
       <div className="fail-page">
-        
+
         <FailureDetail />
-        
+
       </div>
     );
   }

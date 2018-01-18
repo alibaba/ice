@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 
@@ -25,17 +25,17 @@ export default class TableList extends Component {
   render() {
     return (
       <div className="table-list-page">
-        
+
         <SelectableTable />
-        
+
         <EditableTable />
-        
+
         <ProgressTable />
-        
+
         <InfoDisplayTable />
-        
+
         <SortableTable />
-        
+
       </div>
     );
   }

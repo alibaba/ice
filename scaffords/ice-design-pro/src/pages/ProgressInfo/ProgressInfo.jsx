@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 
@@ -19,11 +19,11 @@ export default class ProgressInfo extends Component {
   render() {
     return (
       <div className="progress-info-page">
-        
+
         <TextCard />
-        
+
         <ApplicationProgress />
-        
+
       </div>
     );
   }
