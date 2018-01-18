@@ -1,7 +1,6 @@
-'use strict';
+
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import {
@@ -10,7 +9,7 @@ import {
   Field,
   MiniArea,
   MiniBar,
-  MiniProgress
+  MiniProgress,
 } from 'ant-design-pro/lib/Charts';
 import Trend from 'ant-design-pro/lib/Trend';
 import { Row, Col, Icon, Tooltip } from 'antd';
@@ -38,7 +37,7 @@ export default class CustomChartCard extends Component {
       md: 12,
       lg: 12,
       xl: 6,
-      style: { marginBottom: 24 }
+      style: { marginBottom: 24 },
     };
 
     const visitData = [];
@@ -46,11 +45,12 @@ export default class CustomChartCard extends Component {
 
     const fakeY = [7, 5, 4, 2, 4, 7, 5, 6, 5, 9, 6, 3, 1, 5, 3, 6, 5];
     for (let i = 0; i < fakeY.length; i += 1) {
+      const lasting = 1000 * 60 * 60 * 24 * i;
       visitData.push({
-        x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format(
+        x: moment(new Date(beginDay + lasting)).format(
           'YYYY-MM-DD'
         ),
-        y: fakeY[i]
+        y: fakeY[i],
       });
     }
     return (
