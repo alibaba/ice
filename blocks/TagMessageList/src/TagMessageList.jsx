@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Tab } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './TagMessageList.scss';
 
 const dataSource = [
@@ -33,7 +33,7 @@ export default class TagMessageList extends Component {
   render() {
     return (
       <div className="tag-message-list">
-        <IceCard>
+        <IceContainer>
           <Tab>
             <Tab.TabPane key={0} tab="我的消息">
               {dataSource.map(this.renderItem)}
@@ -43,7 +43,7 @@ export default class TagMessageList extends Component {
             </Tab.TabPane>
             <Tab.TabPane key={1} tab="待我处理" />
           </Tab>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Pagination } from '@icedesign/base';
 import SingleItem from './SingleItem';
 import './PictureTextList.scss';
@@ -72,7 +72,7 @@ export default class PictureTextList extends Component {
   render() {
     return (
       <div className="picture-text-list">
-        <IceCard style={styles.card}>
+        <IceContainer style={styles.card}>
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
@@ -80,7 +80,7 @@ export default class PictureTextList extends Component {
           <div style={styles.paginationContainer}>
             <Pagination />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

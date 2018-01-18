@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Input, Button } from '@icedesign/base';
 import {
   FormBinderWrapper,
@@ -40,7 +40,7 @@ export default class Subscribe extends Component {
   render() {
     return (
       <div className="subscribe" style={styles.subscribe}>
-        <IceCard style={styles.container}>
+        <IceContainer style={styles.container}>
           <h1 style={styles.title}>订阅</h1>
           <FormBinderWrapper
             ref={(form) => {
@@ -68,7 +68,7 @@ export default class Subscribe extends Component {
               </div>
             </div>
           </FormBinderWrapper>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

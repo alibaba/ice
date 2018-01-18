@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Step, Grid, Input, Button } from '@icedesign/base';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
 import './SimpleFluencyForm.scss';
@@ -71,7 +71,7 @@ export default class SimpleFluencyForm extends Component {
         username, email, phone, address,
       };
       return (
-        <IceCard style={styles.form}>
+        <IceContainer style={styles.form}>
           <FormBinderWrapper
             ref={(form) => { this.form = form; }}
             value={initValue}
@@ -130,19 +130,19 @@ export default class SimpleFluencyForm extends Component {
               </Row>
             </div>
           </FormBinderWrapper>
-        </IceCard>
+        </IceContainer>
       );
     } else if (step === 1) {
       return (
-        <IceCard>
+        <IceContainer>
           <span>步骤二</span>
-        </IceCard>
+        </IceContainer>
       );
     } else if (step === 2) {
       return (
-        <IceCard>
+        <IceContainer>
           <span>步骤三</span>
-        </IceCard>
+        </IceContainer>
       );
     }
   };
@@ -150,13 +150,13 @@ export default class SimpleFluencyForm extends Component {
   render() {
     return (
       <div className="simple-fluency-form" style={styles.simpleFluencyForm}>
-        <IceCard>
+        <IceContainer>
           <Step current={this.state.step} type="dot">
             <Step.Item key={0} title="填写信息" />
             <Step.Item key={1} title="确认信息" />
             <Step.Item key={2} title="完成" />
           </Step>
-        </IceCard>
+        </IceContainer>
         {this.renderStep(this.state.step)}
       </div>
     );

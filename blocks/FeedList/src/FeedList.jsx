@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './FeedList.scss';
 
 const dataSource = [
@@ -76,7 +76,7 @@ export default class FeedList extends Component {
   render() {
     return (
       <div className="feed-list" style={styles.feedList}>
-        <IceCard>
+        <IceContainer>
           <div style={styles.titleRow}>
             <span style={styles.title}>朋友状态列表</span>
             <span style={styles.status}>共10条状态</span>
@@ -85,7 +85,7 @@ export default class FeedList extends Component {
           <div style={styles.allMessage}>
             <a href="##">查看全部消息</a>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

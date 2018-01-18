@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Pagination } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
@@ -117,7 +117,7 @@ export default class SimpleTable extends Component {
 
     return (
       <div className="simple-table">
-        <IceCard>
+        <IceContainer>
           <Table
             dataSource={tableData.list}
             isLoading={tableData.__loading} // eslint-disable-line
@@ -156,7 +156,7 @@ export default class SimpleTable extends Component {
               onChange={this.changePage}
             />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
