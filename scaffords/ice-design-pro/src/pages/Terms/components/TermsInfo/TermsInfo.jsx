@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
 import { Checkbox, Button } from '@icedesign/base';
@@ -27,7 +25,7 @@ export default class TermsInfo extends Component {
             </p>
             <p style={styles.desc}>
               我们尊重知识产权，反对并打击侵犯知识产权的行为。知识产权权利人若认为淘宝网内容（包括但不限于淘宝网用户发布的商品信息）
-              侵犯其合法权益的，可以通过阿里巴巴知识产权保护平台（https://ipp.alibabagroup.com/）进行投诉，我们将在收到知识
+              侵犯其合法权益的，可以通过阿里巴巴知识产权保护平台进行投诉，我们将在收到知识
               产权权利人合格通知后依据相应的法律法规以及平台规则及时处理。
             </p>
             <p style={styles.desc}>
@@ -64,24 +62,24 @@ export default class TermsInfo extends Component {
 const styles = {
   termsInfo: {
     padding: '30px',
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   desc: {
     fontSize: '13px',
-    lineHeight: '28px',
+    lineHeight: '28px'
   },
   title: {
     textAlign: 'center',
     margin: '0',
     paddingBottom: '20px',
     fontSize: '20px',
-    borderBottom: '1px solid #dedede',
+    borderBottom: '1px solid #dedede'
   },
   content: {
     color: '#666',
     fontSize: '16px',
     padding: '20px 0',
-    borderBottom: '1px solid #dedede',
+    borderBottom: '1px solid #dedede'
   },
-  btn: { textAlign: 'center' },
+  btn: { textAlign: 'center' }
 };
