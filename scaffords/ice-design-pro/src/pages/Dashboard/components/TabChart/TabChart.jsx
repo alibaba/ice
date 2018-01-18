@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import { Tab } from '@icedesign/base';
 import SeriesLine from './SeriesLine';
 import BasicLine from './BasicLine';

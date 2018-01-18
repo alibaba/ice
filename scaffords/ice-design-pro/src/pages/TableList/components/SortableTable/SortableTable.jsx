@@ -1,7 +1,7 @@
 /* eslint react/jsx-no-bind: 0 */
 import React, { Component } from 'react';
 import { Table, Icon, Button } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import './SortableTable.scss';
 
 const generatorData = () => {

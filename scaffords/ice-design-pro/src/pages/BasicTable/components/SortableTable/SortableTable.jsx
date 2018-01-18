@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import { Table, Icon, Button } from '@icedesign/base';
 import './SortableTable.scss';
 

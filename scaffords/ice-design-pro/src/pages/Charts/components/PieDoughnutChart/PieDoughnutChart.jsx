@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import { Chart, Coord, Geom, Tooltip, Axis, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
 import './PieDoughnutChart.scss';
