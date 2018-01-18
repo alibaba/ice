@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Step, Grid, Icon } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import './ApplicationProgress.scss';
 
 const dataSource = () => {

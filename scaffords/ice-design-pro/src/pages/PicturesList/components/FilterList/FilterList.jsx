@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { Button, Search } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import SingleItem from './SingleItem';
 import './FilterList.scss';
 

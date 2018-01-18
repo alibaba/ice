@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, View } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
 import './ChartBox.scss';

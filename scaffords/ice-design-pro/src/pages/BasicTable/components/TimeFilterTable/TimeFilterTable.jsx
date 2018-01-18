@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle:0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import { Table, Pagination, Radio, Search } from '@icedesign/base';
 import DataBinder from '@icedesign/data-binder';
 import './TimeFilterTable.scss';

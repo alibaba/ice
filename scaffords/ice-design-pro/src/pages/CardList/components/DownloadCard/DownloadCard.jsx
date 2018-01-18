@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import axios from 'axios';
 import { Tab, Button, Icon } from '@icedesign/base';
 import './DownloadCard.scss';

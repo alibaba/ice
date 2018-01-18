@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import { Tab, Button, Grid } from '@icedesign/base';
 import IceEllipsis from '@icedesign/ellipsis';
 import axios from 'axios';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import './FailureDetail.scss';
 
 export default class FailureDetail extends Component {

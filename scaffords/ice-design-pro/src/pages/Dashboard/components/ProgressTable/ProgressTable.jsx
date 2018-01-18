@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Progress, Pagination } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import './ProgressTable.scss';
 
 const getTableData = () => {
