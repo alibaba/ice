@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './TextCard.scss';
 
 export default class TextCard extends Component {
@@ -13,7 +13,7 @@ export default class TextCard extends Component {
   render() {
     return (
       <div className="text-card" style={styles.textCard}>
-        <IceCard className="text-card-list" style={styles.textCardList}>
+        <IceContainer className="text-card-list" style={styles.textCardList}>
           <div className="text-card-item" style={styles.textCardItem}>
             <div className="text-card-subtitle" style={styles.textCardSubtitle}>
               我的待办
@@ -46,7 +46,7 @@ export default class TextCard extends Component {
               </span>个任务
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

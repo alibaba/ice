@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, Coord, Legend } from 'bizcharts';
 import { DataView } from '@antv/data-set';
 import './ChartRadar.scss';
@@ -48,7 +48,7 @@ export default class ChartRadar extends Component {
 
     return (
       <div className="chart-radar">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>雷达图</h4>
           <Chart
             height={400}
@@ -98,7 +98,7 @@ export default class ChartRadar extends Component {
               }}
             />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

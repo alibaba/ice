@@ -24,7 +24,7 @@
   "dependencies": {
     "@antv/data-set": "^0.8.0",
     "@icedesign/base": "^0.1.0",
-    "@icedesign/card": "^0.1.0",
+    "@icedesign/container": "^0.1.0",
     "axios": "^0.17.1",
     "bizcharts": "^3.0.5",
     "prop-types": "^15.5.8"

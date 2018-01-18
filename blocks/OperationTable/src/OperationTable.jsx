@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
 import { Table, Pagination, Icon } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
@@ -150,7 +150,7 @@ export default class OperationTable extends Component {
 
     return (
       <div className="operation-table" style={styles.operationTable}>
-        <IceCard style={styles.todo2}>
+        <IceContainer style={styles.todo2}>
           <Table
             dataSource={tableData.list}
             isLoading={tableData.__loading}
@@ -190,7 +190,7 @@ export default class OperationTable extends Component {
               onChange={this.changePage}
             />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

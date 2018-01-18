@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './NotPermission.scss';
 
 export default class NotPermission extends Component {
@@ -13,7 +13,7 @@ export default class NotPermission extends Component {
   render() {
     return (
       <div className="not-permission" style={styles.notPermission}>
-        <IceCard>
+        <IceContainer>
           <div style={styles.content}>
             <img
               src="https://img.alicdn.com/tfs/TB1Gy4Yjv6H8KJjy0FjXXaXepXa-780-780.png"
@@ -25,7 +25,7 @@ export default class NotPermission extends Component {
               <p style={styles.description}>抱歉，您暂无权限，请看看其他页面</p>
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

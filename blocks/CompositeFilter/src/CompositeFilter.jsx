@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Search, Tab, Tag, DatePicker } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './CompositeFilter.scss';
 
 const TabPane = Tab.TabPane;
@@ -60,7 +60,7 @@ export default class CompositeFilter extends Component {
   render() {
     return (
       <div className="composite-filter">
-        <IceCard style={styles.filterCard}>
+        <IceContainer style={styles.filterCard}>
           <Tab
             type="text"
             onChange={this.onTabChange}
@@ -101,7 +101,7 @@ export default class CompositeFilter extends Component {
               );
             })}
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './BasicException.scss';
 
 export default class BasicException extends Component {
@@ -8,7 +8,7 @@ export default class BasicException extends Component {
   render() {
     return (
       <div className="basic-exception">
-        <IceCard>
+        <IceContainer>
           <div className="exception-content">
             <img
               src="https://img.alicdn.com/tfs/TB1w4M7bNrI8KJjy0FpXXb5hVXa-260-260.png"
@@ -22,7 +22,7 @@ export default class BasicException extends Component {
               </p>
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

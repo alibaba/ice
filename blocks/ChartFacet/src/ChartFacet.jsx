@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Chart, Tooltip, Facet, Legend, Coord } from 'bizcharts';
 import { DataView } from '@antv/data-set';
 import './ChartFacet.scss';
@@ -45,7 +45,7 @@ export default class ChartFacet extends Component {
 
     return (
       <div className="chart-facet">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>分面图</h4>
           <Chart
             data={data}
@@ -85,7 +85,7 @@ export default class ChartFacet extends Component {
               }}
             />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

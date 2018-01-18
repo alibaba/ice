@@ -6,3 +6,4 @@ mochawesome-report
 .happypack
 package-lock.json
 lib/
+.eslintcache

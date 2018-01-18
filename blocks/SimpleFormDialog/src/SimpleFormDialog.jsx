@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Dialog, Grid, Input, Radio, Button } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -60,7 +60,7 @@ export default class SimpleFormDialog extends Component {
 
   render() {
     return (
-      <IceCard>
+      <IceContainer>
         <Dialog
           className="simple-form-dialog"
           style={styles.simpleFormDialog}
@@ -144,7 +144,7 @@ export default class SimpleFormDialog extends Component {
         <Button type="primary" onClick={this.showDialog}>
           显示 Dialog
         </Button>
-      </IceCard>
+      </IceContainer>
     );
   }
 }

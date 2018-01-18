@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Dialog, Button } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './SuccessDialog.scss';
 
 export default class SuccessDialog extends Component {
@@ -27,7 +27,7 @@ export default class SuccessDialog extends Component {
 
   render() {
     return (
-      <IceCard>
+      <IceContainer>
         <Dialog
           className="success-dialog"
           style={styles.dialog}
@@ -51,7 +51,7 @@ export default class SuccessDialog extends Component {
         <Button type="primary" onClick={this.showDialog}>
           显示 Dialog
         </Button>
-      </IceCard>
+      </IceContainer>
     );
   }
 }
