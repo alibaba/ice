@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 
 // 载入默认全局样式 normalize 、.clearfix 和一些 mixin 方法等
