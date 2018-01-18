@@ -23,7 +23,7 @@ const babelConfig = require('./config/babelConfig');
 const cwd = process.cwd();
 
 // eslint-diable-next-line
-module.exports = function(args = {}) {
+module.exports = function (args = {}) {
   gulp.task('clean', () => {
     const lib = path.join(cwd, 'lib');
     return new Promise((resolve) => {
@@ -125,9 +125,7 @@ module.exports = function(args = {}) {
                       return;
                     }
                     // normal module
-                    const modulePath = require.resolve(dep, {
-                      paths: [path.join(cwd, 'node_modules')],
-                    });
+                    const modulePath = path.join(cwd, 'node_modules', dep, 'package.json');
                     if (!fs.existsSync(modulePath)) {
                       throw new Error('依赖检测错误: ' + dep);
                     }
