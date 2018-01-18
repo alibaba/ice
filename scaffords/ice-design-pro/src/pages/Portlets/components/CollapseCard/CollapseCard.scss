@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+.collapse-card {
+  .base-info {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    li {
+      width: 50%;
+      margin-bottom: 15px;
+      span {
+        &:first-child {
+          color: #999;
+        }
+      }
+    }
+  }
+
+  .collapse {
+    display: none;
+  }
+
+  i {
+    margin-left: 5px;
+    &.next-icon-medium:before {
+      width: 12px;
+      font-size: 12px;
+    }
+  }
+}
