@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import { Icon } from '@icedesign/base';
 import classnames from 'classnames';
 import './CollapseCard.scss';

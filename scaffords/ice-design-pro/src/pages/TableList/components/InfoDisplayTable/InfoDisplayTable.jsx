@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import './InfoDisplayTable.scss';
 
 /**

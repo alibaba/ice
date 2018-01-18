@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, Coord, Legend } from 'bizcharts';
 import { DataView } from '@antv/data-set';
 import './ChartRadar.scss';

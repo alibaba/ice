@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Tab } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import './BasicTab.scss';
 
 export default class BasicTab extends Component {

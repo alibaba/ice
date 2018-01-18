@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceCard from '@icedesign/container';
 import { Table, Button } from '@icedesign/base';
 import CellEditor from './CellEditor';
 import './EditableTable.scss';
