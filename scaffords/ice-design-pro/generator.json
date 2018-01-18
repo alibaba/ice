@@ -11,9 +11,9 @@
       "title": "顶栏-侧栏-底栏-布局"
     },
     {
-      "source": "@icedesign/fixed-header-footer-responsive-layout",
-      "alias": "FixedHeaderFooterResponsiveLayout",
-      "title": "固定顶栏-底栏响应式布局"
+      "source": "@icedesign/header-aside-footer-responsive-layout",
+      "alias": "HeaderAsideFooterResponsiveLayout",
+      "title": "顶栏-侧栏-底栏-响应式布局"
     },
     {
       "source": "@icedesign/fixed-header-footer-responsive-layout",
