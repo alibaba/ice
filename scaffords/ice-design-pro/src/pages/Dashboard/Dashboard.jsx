@@ -6,9 +6,13 @@ import BasicTab from './components/basic-tab';
 
 import DataDisplay from './components/data-display';
 
+import TabChart from './components/tab-chart';
+
 import PieDoughnutChart from './components/pie-doughnut-chart';
 
 import ProgressTable from './components/progress-table';
+
+import EditableTable from './components/editable-table';
 
 import ChartBar from './components/chart-bar';
 
@@ -30,9 +34,13 @@ export default class Dashboard extends Component {
         
         <DataDisplay />
         
+        <TabChart />
+        
         <PieDoughnutChart />
         
         <ProgressTable />
+        
+        <EditableTable />
         
         <ChartBar />
         

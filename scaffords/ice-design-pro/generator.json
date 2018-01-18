@@ -24,34 +24,28 @@
   "components": [],
   "routes": [
     {
-      "page": "Home",
-      "path": "/",
-      "layout": "HeaderAsideFooterLayout"
-    },
-    {
       "page": "Dashboard",
       "path": "dashboard",
       "layout": "HeaderAsideFooterLayout"
     },
     {
       "page": "Charts",
-      "path": "charts",
-      "layout": "HeaderAsideFooterLayout"
-    },
-    {
-      "page": "Table",
-      "path": "complex",
-      "layout": "HeaderAsideFooterLayout",
-      "builtIn": true
-    },
-    {
-      "page": "List",
-      "path": "list",
+      "path": "/chart/chart-list",
       "layout": "HeaderAsideFooterLayout"
     },
     {
       "page": "Portlets",
-      "path": "portlets",
+      "path": "portlets/base",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "Terms",
+      "path": "portlets/terms",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "ProgressInfo",
+      "path": "portlets/progress",
       "layout": "HeaderAsideFooterLayout"
     },
     {
@@ -66,8 +60,58 @@
     },
     {
       "page": "Landing",
-      "path": "landing",
+      "path": "/",
       "layout": "FixedHeaderFooterResponsiveLayout"
+    },
+    {
+      "page": "ServerError",
+      "path": "exception/500",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "NotFound",
+      "path": "exception/404",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "NotPermission",
+      "path": "exception/403",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "EmptyContent",
+      "path": "exception/empty",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "List",
+      "path": "list/article-list",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "CardList",
+      "path": "list/card-list",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "PicturesList",
+      "path": "list/picture-list",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "BasicTable",
+      "path": "table/basic-table",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "TableList",
+      "path": "table/table-list",
+      "layout": "HeaderAsideFooterLayout"
+    },
+    {
+      "page": "TableDisplay",
+      "path": "table/table-display",
+      "layout": "HeaderAsideFooterLayout"
     }
   ]
 }
