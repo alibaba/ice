@@ -23,6 +23,10 @@
     "build": "ice build",
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
   "ice": {
     "type": "project",
     "projectType": "spa",
