@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
@@ -97,19 +97,19 @@ export default class ProgressDataList extends Component {
 const styles = {
   dataList: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   dataItem: {
     width: 240,
     padding: '30px 30px',
-    position: 'relative'
+    position: 'relative',
   },
   dataTitle: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   dataIntro: {
     marginTop: 10,
-    color: '#999'
+    color: '#999',
   },
   dataValue: {
     fontSize: 22,
@@ -117,19 +117,19 @@ const styles = {
     position: 'absolute',
     top: 35,
     right: 30,
-    color: '#3080fe'
+    color: '#3080fe',
   },
   dataProgress: {
-    marginTop: 30
+    marginTop: 30,
   },
   dataExtra: {
     marginTop: 10,
     display: 'flex',
     justifyContent: 'space-between',
-    color: '#999'
+    color: '#999',
   },
   settingsLink: {
-    color: '#999'
+    color: '#999',
   },
   verticalLine: {
     position: 'absolute',
@@ -137,6 +137,6 @@ const styles = {
     bottom: 20,
     right: 0,
     width: 0,
-    borderLeft: '1px solid #eee'
-  }
+    borderLeft: '1px solid #eee',
+  },
 };
