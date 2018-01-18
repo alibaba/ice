@@ -12,7 +12,7 @@
 
 基于海量高质量可复用区块，通过 GUI 工具快速搭建的一套中后台模板。
 
-![ice-design-pro](https://img.alicdn.com/tfs/TB1r0iTnsLJ8KJjy0FnXXcFDpXa-7767-4508.png)
+![ice-design-pro](https://img.alicdn.com/tfs/TB1V5iGnDnI8KJjy0FfXXcdoVXa-8057-4508.png)
 
 ## 特性
 
