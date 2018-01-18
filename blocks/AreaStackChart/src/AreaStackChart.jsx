@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './AreaStackChart.scss';
 
 export default class AreaStackChart extends Component {
@@ -52,7 +52,7 @@ export default class AreaStackChart extends Component {
 
     return (
       <div className="area-stack-chart">
-        <IceCard>
+        <IceContainer>
           <Chart height={400} data={data} scale={cols} forceFit>
             <Axis name="year" />
             <Axis name="value" />
@@ -61,7 +61,7 @@ export default class AreaStackChart extends Component {
             <Geom type="area" position="year*value" color="country" />
             <Geom type="line" position="year*value" size={2} color="country" />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

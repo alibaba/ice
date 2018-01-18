@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import { DataView } from '@antv/data-set';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './ChartStock.scss';
 
 export default class ChartStock extends Component {
@@ -71,7 +71,7 @@ export default class ChartStock extends Component {
 
     return (
       <div className="chart-stock">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>面积图</h4>
           <Chart height={400} data={dv} scale={cols} forceFit>
             <Axis name="mean" visible={false} />
@@ -102,7 +102,7 @@ export default class ChartStock extends Component {
             />
             <Geom type="line" position="date*mean" color="#FACC14" />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

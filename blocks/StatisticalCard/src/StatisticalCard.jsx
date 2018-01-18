@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './StatisticalCard.scss';
 
 const dataSource = [
@@ -88,7 +88,7 @@ export default class StatisticalCard extends Component {
   render() {
     return (
       <div className="statistical-card">
-        <IceCard className="statistical-card-list">{this.renderItem()}</IceCard>
+        <IceContainer className="statistical-card-list">{this.renderItem()}</IceContainer>
       </div>
     );
   }

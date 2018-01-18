@@ -6,7 +6,7 @@
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
     "lint": "npm run lint:nofix -- --fix",
-    "lint:nofix": "eslint --ext .js --ext .jsx ./"
+    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
   },
   "repository": {
     "type": "git",

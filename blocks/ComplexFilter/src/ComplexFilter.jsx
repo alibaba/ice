@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Select } from '@icedesign/base';
 import './ComplexFilter.scss';
 
@@ -35,13 +35,13 @@ export default class ComplexFilter extends Component {
     ];
     return (
       <div className="complex-filter">
-        <IceCard style={styles.tabFilterContainer}>
+        <IceContainer style={styles.tabFilterContainer}>
           {FILTERS.map((item, idx) => (
             <div
               key={idx}
               className={`tab-filter-item ${
                 currentFilterType === item.type ? 'active' : ''
-              }`}
+                }`}
               onClick={() => {
                 this.setState({
                   currentFilterType: item.type,
@@ -51,16 +51,16 @@ export default class ComplexFilter extends Component {
               {item.text}
             </div>
           ))}
-        </IceCard>
+        </IceContainer>
 
-        <IceCard>
+        <IceContainer>
           <div style={styles.filterBelonging}>
             <span style={styles.filterBelongingLabel}>所属类目：</span>
             {CATEGORIES.map((cat, idx) => (
               <span
                 className={`filter-belonging-item ${
                   categories.indexOf(cat.type) > -1 ? 'active' : ''
-                }`}
+                  }`}
                 onClick={() => {
                   const isInCategory = categories.indexOf(cat.type) > -1;
                   if (isInCategory) {
@@ -111,7 +111,7 @@ export default class ComplexFilter extends Component {
               </Option>
             </Select>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

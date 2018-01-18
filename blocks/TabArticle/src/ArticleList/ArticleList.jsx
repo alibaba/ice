@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Pagination, Button } from '@icedesign/base';
 import './ArticleList.scss';
 
@@ -56,12 +56,12 @@ export default class ArticleList extends Component {
   render() {
     const { dataSource = [] } = this.props;
     return (
-      <IceCard className="article-list">
+      <IceContainer className="article-list">
         {dataSource.map(this.renderItem)}
         <div style={styles.paginationWrap}>
           <Pagination />
         </div>
-      </IceCard>
+      </IceContainer>
     );
   }
 }

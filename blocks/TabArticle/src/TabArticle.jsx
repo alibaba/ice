@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import ArticleList from './ArticleList';
 import './TabArticle.scss';
 
@@ -72,7 +72,7 @@ export default class TabArticle extends Component {
   render() {
     return (
       <div className="tab-article">
-        <IceCard style={styles.tabList}>
+        <IceContainer style={styles.tabList}>
           <div
             style={{
               ...styles.tab,
@@ -92,7 +92,7 @@ export default class TabArticle extends Component {
               alt="距离截稿日期最近"
             />
           </div>
-        </IceCard>
+        </IceContainer>
         <ArticleList dataSource={dataSource} />
       </div>
     );

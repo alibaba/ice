@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 
 export default class Footer extends Component {
   static displayName = 'Footer';
@@ -16,7 +16,7 @@ export default class Footer extends Component {
   render() {
     return (
       <div className="footer" style={styles.footer}>
-        <IceCard>
+        <IceContainer>
           <div style={styles.content}>
             <h2 style={styles.logo}>LOGO</h2>
             <ul style={styles.nav}>
@@ -55,7 +55,7 @@ export default class Footer extends Component {
             </div>
             <p style={styles.copyRight}> © 2017 Taobao FED</p>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
