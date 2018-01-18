@@ -42,41 +42,39 @@ export default class PriceInfo extends Component {
 
   render() {
     return (
-      <div className="price-info" style={styles.priceInfo}>
-        <div style={styles.items}>
-          {data.map((item, index) => {
-            const rowLastItem = (index + 1) % 3 === 0 ? styles.rowLastItem : {};
-            return (
-              <div
-                key={index}
-                style={{ ...styles.item, ...rowLastItem }}
-                className="item"
-              >
-                <div style={styles.head}>
-                  <h3 style={styles.title}>{item.title}</h3>
-                  <p style={styles.price}>￥{item.price}</p>
-                </div>
-                <div style={styles.info}>
-                  <img style={styles.image} src={item.imgUrl} alt="" />
-                  <h5 style={styles.type}>{item.type}</h5>
-                  <p style={styles.description}>{item.description}</p>
-                </div>
-                <div style={styles.buyBtn}>
-                  <a href="/" style={styles.link}>
-                    立即购买
-                  </a>
-                </div>
+      <div className="price-info" style={styles.container}>
+        {data.map((item, index) => {
+          const rowLastItem = (index + 1) % 3 === 0 ? styles.rowLastItem : {};
+          return (
+            <div
+              key={index}
+              style={{ ...styles.item, ...rowLastItem }}
+              className="item"
+            >
+              <div style={styles.head}>
+                <h3 style={styles.title}>{item.title}</h3>
+                <p style={styles.price}>￥{item.price}</p>
               </div>
-            );
-          })}
-        </div>
+              <div style={styles.info}>
+                <img style={styles.image} src={item.imgUrl} alt="" />
+                <h5 style={styles.type}>{item.type}</h5>
+                <p style={styles.description}>{item.description}</p>
+              </div>
+              <div style={styles.buyBtn}>
+                <a href="/" style={styles.link}>
+                  立即购买
+                </a>
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   }
 }
 
 const styles = {
-  items: {
+  container: {
     display: 'flex',
     flexWrap: 'wrap',
     padding: '80px 0',
@@ -90,7 +88,9 @@ const styles = {
     borderRadius: '6px',
     paddingBottom: '50px',
   },
-  rowLastItem: { marginRight: 0 },
+  rowLastItem: {
+    marginRight: 0,
+  },
   head: {
     padding: '30px 0',
     background: '#3080FE',
@@ -98,16 +98,32 @@ const styles = {
     color: '#fff',
     borderRadius: '6px 6px 0 0',
   },
-  title: { margin: '0 0 5px', fontWeight: 'bold', fontSize: '20px' },
-  price: { margin: '0', fontWeight: 'bold', fontSize: '18px' },
+  title: {
+    margin: '0 0 5px',
+    fontWeight: 'bold',
+    fontSize: '20px',
+  },
+  price: {
+    margin: '0',
+    fontWeight: 'bold',
+    fontSize: '18px',
+  },
   info: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     marginTop: '40px',
   },
-  image: { width: '52px', height: '52px' },
-  type: { margin: 0, fontSize: '15px', fontWeight: 'bold', marginTop: '10px' },
+  image: {
+    width: '52px',
+    height: '52px',
+  },
+  type: {
+    margin: 0,
+    fontSize: '15px',
+    fontWeight: 'bold',
+    marginTop: '10px',
+  },
   description: {
     margin: '20px 0',
     lineHeight: '22px',
@@ -115,12 +131,15 @@ const styles = {
     width: '60%',
     color: '#999',
   },
-  buyBtn: { display: 'flex', justifyContent: 'center', marginTop: '20px' },
+  buyBtn: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '20px',
+  },
   link: {
     padding: '4px 15px',
     background: '#3080FE',
     borderRadius: '12px',
     color: '#fff',
   },
-  priceInfo: {},
 };
