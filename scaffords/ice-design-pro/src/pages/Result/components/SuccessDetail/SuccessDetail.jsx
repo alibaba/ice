@@ -81,12 +81,6 @@ const styles = {
     marginBottom: '40px',
     fontSize: '14px',
     color: '#666',
-<<<<<<< HEAD
-  },
-  summary: {
-    marginBottom: '40px',
-=======
->>>>>>> 96e6527b867d00b5f5ac46241e8e90d76a61bdbb
   },
   nextStep: {
     margin: '80px 0',
