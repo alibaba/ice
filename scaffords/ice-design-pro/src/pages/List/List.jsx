@@ -1,9 +1,5 @@
-
-
 import React, { Component } from 'react';
-
-import TextSearchList from './components/text-search-list';
-
+import TextSearchList from './components/TextSearchList';
 import './List.scss';
 
 export default class List extends Component {
