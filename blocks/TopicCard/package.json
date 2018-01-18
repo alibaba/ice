@@ -1,5 +1,5 @@
 {
-  "name": "@icedesign/topic-card-block-block",
+  "name": "@icedesign/topic-card-block",
   "version": "0.1.2",
   "description": "核心数据",
   "main": "lib/index.js",
