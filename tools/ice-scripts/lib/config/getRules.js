@@ -26,19 +26,19 @@ module.exports = (paths, options) => {
     {
       loader: CSS_LOADER,
       options: {
-        sourceMap: true
-      }
+        sourceMap: true,
+      },
     },
     {
       loader: POSTCSS_LOADER,
-      options: Object.assign({ sourceMap: true }, postcssConfig)
+      options: Object.assign({ sourceMap: true }, postcssConfig),
     },
     {
       loader: SASS_LOADER,
       options: {
-        sourceMap: true
-      }
-    }
+        sourceMap: true,
+      },
+    },
   ];
   if (options.themePackage) {
     console.log(colors.cyan('Tip:'), '使用皮肤包', options.themePackage);
@@ -48,8 +48,8 @@ module.exports = (paths, options) => {
         themeFile: path.join(
           paths.appNodeModules,
           `${options.themePackage}/variables.scss`
-        )
-      }
+        ),
+      },
     });
   }
   return [
@@ -58,9 +58,9 @@ module.exports = (paths, options) => {
       use: withCssHotLoader(
         ExtractTextPlugin.extract({
           fallback: STYLE_LOADER,
-          use: sassLoaders
+          use: sassLoaders,
         })
-      )
+      ),
     },
     {
       test: /\.css$/,
@@ -71,16 +71,16 @@ module.exports = (paths, options) => {
             {
               loader: CSS_LOADER,
               options: {
-                sourceMap: true
-              }
+                sourceMap: true,
+              },
             },
             {
               loader: POSTCSS_LOADER,
-              options: Object.assign({ sourceMap: true }, postcssConfig)
-            }
-          ]
+              options: Object.assign({ sourceMap: true }, postcssConfig),
+            },
+          ],
         })
-      )
+      ),
     },
     {
       test: /\.less$/,
@@ -91,28 +91,28 @@ module.exports = (paths, options) => {
             {
               loader: CSS_LOADER,
               options: {
-                sourceMap: true
-              }
+                sourceMap: true,
+              },
             },
             {
               loader: POSTCSS_LOADER,
-              options: Object.assign({ sourceMap: true }, postcssConfig)
+              options: Object.assign({ sourceMap: true }, postcssConfig),
             },
             {
               loader: LESS_LOADER,
               options: {
-                sourceMap: true
-              }
-            }
-          ]
+                sourceMap: true,
+              },
+            },
+          ],
         })
-      )
+      ),
     },
     {
       test: /\.jsx?$/,
       exclude: /node_modules/,
       loader: BABEL_LOADER,
-      options: deepAssign({}, babelConfig, { cacheDirectory: true })
-    }
+      options: deepAssign({}, babelConfig, { cacheDirectory: true }),
+    },
   ];
 };

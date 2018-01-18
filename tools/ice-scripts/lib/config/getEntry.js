@@ -58,7 +58,7 @@ module.exports = function getEntry(cwd, isBuild = true) {
   // 需要区分项目类型，新版的项目直接返回 src/index.js
   if (packageData && packageData.ice && packageData.ice.entry) {
     entryObj = {
-      index: [path.resolve(appDirectory, packageData.ice.entry)]
+      index: [path.resolve(appDirectory, packageData.ice.entry)],
     };
 
     if (!isBuild) {

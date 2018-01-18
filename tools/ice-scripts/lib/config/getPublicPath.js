@@ -13,7 +13,7 @@ module.exports = function getPublicPath() {
         '//g.alicdn.com', // 不能判断环境正式发布代码是拷贝日常的代码发布
         process.env.BUILD_GIT_GROUP,
         process.env.BUILD_GIT_PROJECT,
-        process.env.BUILD_GIT_BRANCH.replace(branchRegex, (str, $1) => $1)
+        process.env.BUILD_GIT_BRANCH.replace(branchRegex, (str, $1) => $1),
       ].join('/') + '/';
   }
 

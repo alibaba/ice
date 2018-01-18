@@ -7,6 +7,6 @@ module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
   const baseConfig = getWebpackConfigBasic(entry, paths, options);
 
   return webpackMerge(baseConfig, {
-    devtool: 'none'
+    devtool: 'none',
   });
 };

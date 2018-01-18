@@ -2,7 +2,9 @@
 
 const fs = require('fs');
 const path = require('path');
-const NEXT_ADD_STYLE_LOADER = require.resolve('../loaders/next-add-style-loader');
+const NEXT_ADD_STYLE_LOADER = require.resolve(
+  '../loaders/next-add-style-loader'
+);
 
 const fileExistsCache = {};
 function fileExists(id) {
@@ -63,8 +65,10 @@ class AdditionalStyleWebpackPlugin {
     try {
       const pkg = require(pkgJSONPath);
       if (
-        (pkg.dependencies && '@alife/next' in pkg.dependencies || '@icedesign/base' in pkg.dependencies) ||
-        (pkg.peerDependencies && '@alife/next' in pkg.peerDependencies || '@icedesign/base' in pkg.peerDependencies)
+        (pkg.dependencies && '@alife/next' in pkg.dependencies) ||
+        '@icedesign/base' in pkg.dependencies ||
+        ((pkg.peerDependencies && '@alife/next' in pkg.peerDependencies) ||
+          '@icedesign/base' in pkg.peerDependencies)
       ) {
         return true;
       }
@@ -76,17 +80,25 @@ class AdditionalStyleWebpackPlugin {
   }
 
   apply(compiler) {
-    compiler.plugin('normal-module-factory', nmf => {
+    compiler.plugin('normal-module-factory', (nmf) => {
       nmf.plugin('after-resolve', (result, callback) => {
         if (!result) return callback();
 
         if (result.loaders) {
           if (/\.jsx?$/i.test(result.resource)) {
             if (this.needAdditionalStyle(result)) {
-              const stylePath = path.join(path.dirname(result.resource), 'style.js');
+              const stylePath = path.join(
+                path.dirname(result.resource),
+                'style.js'
+              );
 
-              if (stylePath === process.cwd() + '/src/style.js' || fileExists(stylePath)) {
-                result.loaders.push(NEXT_ADD_STYLE_LOADER + '?stylePath=' + stylePath);
+              if (
+                stylePath === process.cwd() + '/src/style.js' ||
+                fileExists(stylePath)
+              ) {
+                result.loaders.push(
+                  NEXT_ADD_STYLE_LOADER + '?stylePath=' + stylePath
+                );
               }
             }
           }

@@ -11,7 +11,7 @@ module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
     plugins: [
       new WatchMissingNodeModulesPlugin(paths.appNodeModules),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NamedModulesPlugin()
-    ]
+      new webpack.NamedModulesPlugin(),
+    ],
   });
 };

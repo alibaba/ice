@@ -26,7 +26,6 @@ module.exports = function(args, subprocess) {
   const HOST = args.host || '0.0.0.0';
   const PORT = args.port || 3333;
 
-
   const send = function(data) {
     iceworksClient.send(data);
     if (subprocess && typeof subprocess.send === 'function') {

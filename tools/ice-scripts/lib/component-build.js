@@ -23,7 +23,7 @@ const babelConfig = require('./config/babelConfig');
 const cwd = process.cwd();
 
 // eslint-diable-next-line
-module.exports = function (args = {}) {
+module.exports = function(args = {}) {
   gulp.task('clean', () => {
     const lib = path.join(cwd, 'lib');
     return new Promise((resolve) => {
@@ -45,7 +45,7 @@ module.exports = function (args = {}) {
       // 构建 index.scss 和 style.js
       const styleGenerator = new ComponentStyleGenerator({
         destPath: path.join(cwd, 'lib/'),
-        absoulte: false
+        absoulte: false,
       });
       const styleJSPath = styleGenerator.writeStyleJS();
       console.log(colors.green('style.js 生成完毕'));
@@ -66,16 +66,18 @@ module.exports = function (args = {}) {
       if (propsSchema) {
         // 确保文件夹存在
         mkdirp.sync(path.dirname(propsSchemaDist));
-        fs.writeFileSync(propsSchemaDist, JSON.stringify(propsSchema, null, 2) + '\n');
+        fs.writeFileSync(
+          propsSchemaDist,
+          JSON.stringify(propsSchema, null, 2) + '\n'
+        );
         console.log(colors.green('propsSchema 生成完毕'));
-        return dtsGenerator(propsSchema)
-          .then((dts) => {
-            const dtsDist = path.join(cwd, 'lib/index.d.ts');
-            if (dts !== null) {
-              fs.writeFileSync(dtsDist, dts.message);
-              console.log(colors.green('index.d.ts 生成完毕'));
-            }
-          });
+        return dtsGenerator(propsSchema).then((dts) => {
+          const dtsDist = path.join(cwd, 'lib/index.d.ts');
+          if (dts !== null) {
+            fs.writeFileSync(dtsDist, dts.message);
+            console.log(colors.green('index.d.ts 生成完毕'));
+          }
+        });
       } else {
         resolve();
       }
@@ -89,66 +91,83 @@ module.exports = function (args = {}) {
     const pkg = JSON.parse(fs.readFileSync(path.join(cwd, 'package.json')));
     const dependencies = pkg.dependencies || {};
     return new Promise((resolve, reject) => {
-      glob('**/*', {
-        nodir: true,
-        cwd: path.join(cwd, 'src'),
-      }, (err, files) => {
-        if (err) {
-          reject(err);
-        } else {
-          const result = [];
-          files.forEach((file) => {
-            const from = path.resolve(cwd, 'src', file);
-            const to = path.resolve(cwd, 'lib', file);
-            result.push(to);
+      glob(
+        '**/*',
+        {
+          nodir: true,
+          cwd: path.join(cwd, 'src'),
+        },
+        (err, files) => {
+          if (err) {
+            reject(err);
+          } else {
+            const result = [];
+            files.forEach((file) => {
+              const from = path.resolve(cwd, 'src', file);
+              const to = path.resolve(cwd, 'lib', file);
+              result.push(to);
 
-            mkdirp.sync(path.dirname(to));
-            switch (path.extname(file)) {
-              case '.jsx':
-              case '.js':
-                // 检测依赖 start
-                const depsInContents = matchRequire.findAll(fs.readFileSync(from, 'utf-8'));
-                (depsInContents || []).forEach((dep) => {
-                  // 本地依赖 忽略
-                  if (/^\./.test(dep)) {
-                    return;
-                  }
-                  // external 忽略
-                  if (['react', 'react-dom'].indexOf(dep) > -1) {
-                    return;
-                  }
-                  // normal module
-                  const modulePath = require.resolve(dep, {
-                    paths: [path.join(cwd, 'node_modules')]
+              mkdirp.sync(path.dirname(to));
+              switch (path.extname(file)) {
+                case '.jsx':
+                case '.js':
+                  // 检测依赖 start
+                  const depsInContents = matchRequire.findAll(
+                    fs.readFileSync(from, 'utf-8')
+                  );
+                  (depsInContents || []).forEach((dep) => {
+                    // 本地依赖 忽略
+                    if (/^\./.test(dep)) {
+                      return;
+                    }
+                    // external 忽略
+                    if (['react', 'react-dom'].indexOf(dep) > -1) {
+                      return;
+                    }
+                    // normal module
+                    const modulePath = require.resolve(dep, {
+                      paths: [path.join(cwd, 'node_modules')],
+                    });
+                    if (!fs.existsSync(modulePath)) {
+                      throw new Error('依赖检测错误: ' + dep);
+                    }
+                    if (!dep in dependencies) {
+                      throw new Error('依赖检测错误, dep 未添加: ' + dep);
+                    }
                   });
-                  if (!fs.existsSync(modulePath)) {
-                    throw new Error('依赖检测错误: ' + dep);
-                  }
-                  if (!dep in dependencies) {
-                    throw new Error('依赖检测错误, dep 未添加: ' + dep);
-                  }
-                });
-                const transformed = babel.transformFileSync(from, babelConfig);
-                fs.writeFileSync(to.replace(/\.jsx/, '.js'), transformed.code, 'utf-8');
-                console.log(`${path.relative(cwd, from)} ${colors.green('-babel->')} ${path.relative(cwd, to)}`);
-                // todo .map file
-                break;
-              default:
-                console.log(`${path.relative(cwd, from)} ${colors.green('-copy->')} ${path.relative(cwd, to)}`);
-                copy(from, to);
-            }
-          });
-          resolve(result);
+                  const transformed = babel.transformFileSync(
+                    from,
+                    babelConfig
+                  );
+                  fs.writeFileSync(
+                    to.replace(/\.jsx/, '.js'),
+                    transformed.code,
+                    'utf-8'
+                  );
+                  console.log(
+                    `${path.relative(cwd, from)} ${colors.green(
+                      '-babel->'
+                    )} ${path.relative(cwd, to)}`
+                  );
+                  // todo .map file
+                  break;
+                default:
+                  console.log(
+                    `${path.relative(cwd, from)} ${colors.green(
+                      '-copy->'
+                    )} ${path.relative(cwd, to)}`
+                  );
+                  copy(from, to);
+              }
+            });
+            resolve(result);
+          }
         }
-      });
+      );
     });
   });
 
-  gulp.start('build', [
-    'clean',
-    'generate-dts',
-    'generate-style',
-  ], () => {
+  gulp.start('build', ['clean', 'generate-dts', 'generate-style'], () => {
     console.log('编译完成');
   });
 };

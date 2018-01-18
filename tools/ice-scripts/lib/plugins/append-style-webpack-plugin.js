@@ -26,9 +26,7 @@ function compileSass(srcPath, variableFile) {
   }
   if (variableFile) {
     try {
-      const variableFileContent = fs.readFileSync(
-        variableFile, 'utf-8'
-      );
+      const variableFileContent = fs.readFileSync(variableFile, 'utf-8');
       if (variableFileContent) {
         scssContent = variableFileContent + scssContent;
       }
@@ -41,10 +39,13 @@ function compileSass(srcPath, variableFile) {
   try {
     cssResult = sass.renderSync({
       data: scssContent,
-      includePaths: [basePath]
+      includePaths: [basePath],
     });
   } catch (err) {
-    console.error('[WARNING]: 编译 Icon 出错，构建继续。错误详细信息：', err.stack);
+    console.error(
+      '[WARNING]: 编译 Icon 出错，构建继续。错误详细信息：',
+      err.stack
+    );
     return '';
   }
 
@@ -75,7 +76,7 @@ module.exports = class AppendStylePlugin {
     this.variableFile = options.variableFile; // scss 变量文件
     this.distMatch =
       options.distMatch instanceof RegExp // chunkName 去匹配的逻辑，正则或者函数
-        ? chunkName => options.distMatch.test(chunkName)
+        ? (chunkName) => options.distMatch.test(chunkName)
         : options.distMatch;
   }
 
@@ -92,9 +93,11 @@ module.exports = class AppendStylePlugin {
       'compilation',
       function(compilation) {
         compilation.plugin('optimize-chunk-assets', (chunks, done) => {
-          chunks.forEach(chunk => {
-            chunk.files.forEach(fileName => {
-              if (distMatch(fileName, compilerEntry, compilation.preparedChunks)) {
+          chunks.forEach((chunk) => {
+            chunk.files.forEach((fileName) => {
+              if (
+                distMatch(fileName, compilerEntry, compilation.preparedChunks)
+              ) {
                 const css = this.compileToCSS(srcFile, variableFile);
                 this.wrapFile(compilation, fileName, css);
               }

@@ -28,31 +28,44 @@ module.exports = function(args) {
     .then(() => {
       const isInteractive = false; // process.stdout.isTTY;
       const entries = {
-        demo: [
-          hotDevClientPath,
-          require.resolve(path.join(cwd, 'demo/index')),
-        ],
+        demo: [hotDevClientPath, require.resolve(path.join(cwd, 'demo/index'))],
       };
       const paths = getPaths(cwd);
       // block dev 的时候, demo 构建到 build 目录
       paths.devDistDir = '/build/';
-      const webpackConfig = getWebpackConfigDev(entries, paths, pkg.blockConfig || {});
+      const webpackConfig = getWebpackConfigDev(
+        entries,
+        paths,
+        pkg.blockConfig || {}
+      );
 
       let isFirstCompile = true;
       const compiler = webpack(webpackConfig);
-      const devServerConfig = require('./config/webpack.server.config')(paths, args);
+      const devServerConfig = require('./config/webpack.server.config')(
+        paths,
+        args
+      );
       const devServer = new WebpackDevServer(compiler, devServerConfig);
 
-      compiler.plugin('done', stats => {
+      compiler.plugin('done', (stats) => {
         if (isInteractive) {
           clearConsole();
         }
         if (isFirstCompile) {
           isFirstCompile = false;
           console.log(chalk.cyan('Starting the development server...'));
-          console.log('   ', chalk.yellow(`http://${HOST}:${PORT}/demo/index.html`));
-          console.log('   ', chalk.yellow(`http://127.0.0.1:${PORT}/demo/index.html`));
-          console.log('   ', chalk.yellow(`http://${LOCAL_IP}:${PORT}/demo/index.html`));
+          console.log(
+            '   ',
+            chalk.yellow(`http://${HOST}:${PORT}/demo/index.html`)
+          );
+          console.log(
+            '   ',
+            chalk.yellow(`http://127.0.0.1:${PORT}/demo/index.html`)
+          );
+          console.log(
+            '   ',
+            chalk.yellow(`http://${LOCAL_IP}:${PORT}/demo/index.html`)
+          );
         }
 
         console.log(
@@ -61,7 +74,7 @@ module.exports = function(args) {
             chunks: false,
             assets: true,
             children: false,
-            modules: false
+            modules: false,
           })
         );
 
@@ -91,7 +104,7 @@ module.exports = function(args) {
         } else if (messages.warnings.length) {
           console.log(chalk.yellow('Compiled with warnings.'));
           console.log();
-          messages.warnings.forEach(message => {
+          messages.warnings.forEach((message) => {
             console.log(message);
             console.log();
           });
@@ -129,7 +142,7 @@ module.exports = function(args) {
         next();
       });
 
-      devServer.listen(PORT, HOST, err => {
+      devServer.listen(PORT, HOST, (err) => {
         if (err) {
           return console.log(err);
         } else {
@@ -137,7 +150,7 @@ module.exports = function(args) {
         }
       });
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
     });
 };

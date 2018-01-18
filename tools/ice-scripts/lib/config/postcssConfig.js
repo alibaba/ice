@@ -9,8 +9,8 @@ module.exports = {
         '> 1%',
         'ie >= 9',
         'iOS >= 8',
-        'Android >= 4'
-      ]
-    })
-  ]
+        'Android >= 4',
+      ],
+    }),
+  ],
 };
