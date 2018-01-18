@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 
@@ -29,21 +29,21 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard-page">
-        
+
         <BasicTab />
-        
+
         <DataDisplay />
-        
+
         <TabChart />
-        
+
         <PieDoughnutChart />
-        
+
         <ProgressTable />
-        
+
         <EditableTable />
-        
+
         <ChartBar />
-        
+
       </div>
     );
   }

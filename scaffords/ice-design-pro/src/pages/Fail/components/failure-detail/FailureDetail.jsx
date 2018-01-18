@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
@@ -59,16 +59,16 @@ const styles = {
   failureDetail: { textAlign: 'center' },
   img: {
     width: '40px',
-    height: '40px'
+    height: '40px',
   },
   successDetailHead: {
-    position: 'relative'
+    position: 'relative',
   },
   title: { margin: '0', fontWeight: 'bold' },
   summary: {
     marginBottom: '40px',
     fontSize: '14px',
-    color: '#666'
+    color: '#666',
   },
   descrpiton: { fontSize: '14px', color: '#666' },
   backToLink: {
@@ -80,7 +80,7 @@ const styles = {
     lineHeight: '26px',
     color: '#fff',
     borderRadius: '50px',
-    backgroundColor: '#3080fe'
+    backgroundColor: '#3080fe',
   },
-  card: { padding: '80px 40px' }
+  card: { padding: '80px 40px' },
 };

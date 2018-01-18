@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 
@@ -29,21 +29,21 @@ export default class Charts extends Component {
   render() {
     return (
       <div className="charts-page">
-        
+
         <PieDoughnutChart />
-        
+
         <ChartBar />
-        
+
         <ChartArea />
-        
+
         <ChartBubbleImage />
-        
+
         <ChartBox />
-        
+
         <ChartTypeLine />
-        
+
         <ChartRadar />
-        
+
       </div>
     );
   }

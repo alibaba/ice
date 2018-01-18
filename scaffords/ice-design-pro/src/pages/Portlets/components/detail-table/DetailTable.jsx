@@ -73,14 +73,14 @@ const styles = {
   detailItem: {
     padding: '15px 0px',
     display: 'flex',
-    borderTop: '1px solid #EEEFF3'
+    borderTop: '1px solid #EEEFF3',
   },
   detailTitle: {
     marginRight: '30px',
     textAlign: 'right',
     width: '120px',
-    color: '#999999'
+    color: '#999999',
   },
   detailBody: { flex: 1 },
-  statusProcessing: { color: '#64D874' }
+  statusProcessing: { color: '#64D874' },
 };

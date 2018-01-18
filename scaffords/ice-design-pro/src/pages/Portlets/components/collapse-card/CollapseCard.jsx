@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 import IceCard from '@icedesign/card';
@@ -16,7 +16,7 @@ export default class CollapseCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapse: false
+      collapse: false,
     };
   }
 
@@ -37,13 +37,13 @@ export default class CollapseCard extends Component {
   toggleCollapse = () => {
     const { collapse } = this.state;
     this.setState({
-      collapse: collapse ? false : true
+      collapse: !collapse,
     });
   };
 
   render() {
     const { collapse } = this.state;
-    const cls = classnames('base-info', { collapse: collapse });
+    const cls = classnames('base-info', { collapse });
     return (
       <div className="collapse-card">
         <IceCard>
@@ -104,6 +104,6 @@ const styles = {
     marginTop: '20px',
     textAlign: 'center',
     color: '#999',
-    textDecoration: 'none'
-  }
+    textDecoration: 'none',
+  },
 };
