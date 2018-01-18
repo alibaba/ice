@@ -1,0 +1,44 @@
+{
+  "name": "@icedesign/progress-data-list-block",
+  "version": "0.1.0",
+  "description": "进度条数据列表展示",
+  "files": ["src/", "demo/", "lib/", "mock/"],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "scripts": {
+    "start": "ice block dev",
+    "prepublish": "ice block build"
+  },
+  "license": "MIT",
+  "keywords": ["ice", "ice-block"],
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/container": "^0.1.1",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/skin": "latest",
+    "react": "*",
+    "react-dom": "*",
+    "@icedesign/scripts": "^0.1.9"
+  },
+  "blockConfig": {
+    "name": "progress-data-list",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1OUVDnwvD8KJjy0FlXXagBFXa-1900-338.png",
+    "title": "进度条数据列表",
+    "categories": ["chart", "list", "data-display"],
+    "themePackage": "@icedesign/skin"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  }
+}

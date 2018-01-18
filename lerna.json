@@ -6,6 +6,11 @@
     "layouts/*",
     "scaffords/*"
   ],
+  "commands": {
+    "publish": {
+      "message": "chore(release): publish %s"
+    }
+  },
   "version": "independent",
   "npmClient": "cnpm",
   "registry": "http://registry.npm.taobao.org"

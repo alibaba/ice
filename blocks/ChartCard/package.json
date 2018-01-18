@@ -1,6 +1,6 @@
 {
-  "name": "@icedesign/brand-show-case-block",
-  "version": "0.1.5",
+  "name": "@icedesign/chart-card-block",
+  "version": "0.1.0",
   "description": "",
   "files": [
     "src/",
@@ -23,31 +23,34 @@
   ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
-    "@icedesign/card": "^0.1.0",
+    "ant-design-pro": "^1.0.1",
+    "antd": "^3.1.3",
+    "moment": "^2.20.1",
+    "numeral": "^2.0.6",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/skin": "latest",
     "react": "*",
-    "react-copy-to-clipboard": "^4.2.3",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "brand-show-case",
-    "snapshot": "https://img.alicdn.com/tfs/TB1DGFejr_I8KJjy1XaXXbsxpXa-1910-860.png",
-    "themePackage": "@icedesign/skin",
-    "title": "品牌展示",
-    "categories": [
-      "info-display"
-    ]
+    "react-dom": "*",
+    "@icedesign/scripts": "^0.1.9"
   },
   "scripts": {
+    "start": "ice block dev",
     "prepublish": "ice block build"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
+  },
+  "blockConfig": {
+    "name": "chart-card",
+    "snapshot": "https://img.alicdn.com/tfs/TB1K03rnb_I8KJjy1XaXXbsxpXa-961-179.png",
+    "title": "图表卡片",
+    "categories": [
+      "chart"
+    ],
+    "themePackage": "@icedesign/skin"
   }
 }

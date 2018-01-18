@@ -2,6 +2,11 @@
 
 > 使用文档
 
+命令行:
+
+- 启动调试服务: `npm start`
+- 构建 dist: `npm run build`
+
 基础设施:
 
 - react-router @3.x 默认采用 hashHistory 的单页应用
