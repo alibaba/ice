@@ -19,7 +19,7 @@
   ],
   "asideNavs": [
     {
-      "text": "Dashboard",
+      "text": "首页",
       "to": "/dashboard",
       "icon": "nav-list"
     },
@@ -112,6 +112,10 @@
       "icon": "nav-list",
       "children": [
         {
+          "text": "204",
+          "to": "/exception/204"
+        },
+        {
           "text": "403",
           "to": "/exception/403"
         },
@@ -122,10 +126,6 @@
         {
           "text": "500",
           "to": "/exception/500"
-        },
-        {
-          "text": "empty",
-          "to": "/exception/empty"
         }
       ]
     }
