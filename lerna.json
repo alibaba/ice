@@ -12,6 +12,6 @@
     }
   },
   "version": "independent",
-  "npmClient": "cnpm",
+  "npmClient": "npm",
   "registry": "http://registry.npm.taobao.org"
 }
