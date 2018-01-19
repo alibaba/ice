@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import { Button, Search } from '@icedesign/base';
 import IceCard from '@icedesign/container';
@@ -12,64 +10,53 @@ const dataSource = [
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2O4nSnblmpuFjSZFlXXbdQXXa_!!120976213.jpg_240x240.jpg',
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2O4nSnblmpuFjSZFlXXbdQXXa_!!120976213.jpg_240x240.jpg'
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2GiVsdS0mpuFjSZPiXXbssVXa_!!120976213.jpg_240x240.jpg',
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2GiVsdS0mpuFjSZPiXXbssVXa_!!120976213.jpg_240x240.jpg'
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2bxHGtpXXXXXVXXXXXXXXXXXX_!!120976213.jpg_240x240.jpg',
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2bxHGtpXXXXXVXXXXXXXXXXXX_!!120976213.jpg_240x240.jpg'
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2bEcHnXXXXXbgXXXXXXXXXXXX_!!120976213.jpg_100x100.jpg',
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2bEcHnXXXXXbgXXXXXXXXXXXX_!!120976213.jpg_100x100.jpg'
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i2/TB11DjAIFXXXXaTXFXXXXXXXXXX_!!0-item_pic.jpg_100x100.jpg',
-  },
-  {
-    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
-    extra: '预计佣金 ¥10',
-    price: '¥89',
-    image:
-      '//img.alicdn.com/bao/uploaded/i4/TB1GiPSinJ_SKJjSZPiYXH3LpXa_M2.SS2_100x100.jpg',
-  },
+      '//img.alicdn.com/bao/uploaded/i2/TB11DjAIFXXXXaTXFXXXXXXXXXX_!!0-item_pic.jpg_100x100.jpg'
+  }
 ];
 
 export default class FilterList extends Component {
   static displayName = 'FilterList';
 
-  renderItem = (item) => {
-    return <SingleItem {...item} />;
+  renderItem = (item, index) => {
+    return <SingleItem {...item} key={index} />;
   };
+
   renderItemRow = () => {
-    return <div style={styles.todo0}>{dataSource.map(this.renderItem)}</div>;
+    return <div style={styles.itemRow}>{dataSource.map(this.renderItem)}</div>;
   };
 
   render() {
-    const cardStyle = {
-      display: 'flex',
-      margin: '20px',
-    };
-
     return (
       <div className="filter-list">
-        <IceCard style={{ ...styles.filterListHeaderWrapper, ...cardStyle }}>
+        <IceCard style={{ ...styles.filterListHeaderWrapper }}>
           <div style={styles.searchWrapper}>
             <Search
               placeholder="标题"
@@ -112,7 +99,7 @@ export default class FilterList extends Component {
           </div>
         </IceCard>
 
-        <IceCard style={{ ...styles.searchResultWrapper, ...cardStyle }} className="">
+        <IceCard style={{ ...styles.searchResultWrapper }}>
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
@@ -129,25 +116,38 @@ const styles = {
   selectItem: {
     padding: '0 16px',
     borderRight: '1px solid #ddd',
-    cursor: 'pointer',
+    cursor: 'pointer'
   },
-  selectBtn: { marginRight: '10px' },
-  todo0: {
+  selectBtn: {
+    marginRight: '10px'
+  },
+  itemRow: {
     margin: '0 10px 10px 10px',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
-  filterListHeaderWrapper: { padding: '20px', flexDirection: 'column', position: 'relative' },
+  filterListHeaderWrapper: {
+    flexDirection: 'column',
+    position: 'relative'
+  },
   searchWrapper: {
     position: 'absolute',
     right: '20px',
     top: '20px',
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
-  searchInput: { marginRight: '15px' },
-  filterCategories: { display: 'flex', flexDirection: 'row', marginBottom: '25px' },
+  searchInput: {
+    marginRight: '15px'
+  },
+  filterCategories: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: '25px'
+  },
   filterCategoryChildren: {},
-  searchResultWrapper: { flexDirection: 'column', padding: '20px 0' },
+  searchResultWrapper: {
+    flexDirection: 'column'
+  }
 };

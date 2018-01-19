@@ -11,7 +11,7 @@ export default class Logo extends PureComponent {
           height: 32,
           color: '#f40',
           textAlign: 'left',
-          ...style,
+          ...style
         }}
       >
         <Link to="/">
@@ -20,7 +20,7 @@ export default class Logo extends PureComponent {
               fontSize: 36,
               color: '#3080FE',
               fontWeight: 'bold',
-              fontFamily: 'Helvetica, sans-serif',
+              fontFamily: 'Helvetica, sans-serif'
             }}
           >
             ICE
@@ -31,7 +31,7 @@ export default class Logo extends PureComponent {
               lineHeight: '14px',
               color: '#3080FE',
               fontSize: '13px',
-              marginLeft: 6,
+              marginLeft: 6
             }}
           >
             ICE
