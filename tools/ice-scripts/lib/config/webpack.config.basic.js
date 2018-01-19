@@ -1,14 +1,12 @@
-const getPublicPath = require('./getPublicPath');
-
 module.exports = function getWebpackConfigBasic(entry, paths, options = {}) {
   let webpackConfig = {
     devtool: 'cheap-module-source-map',
     context: paths.appDirectory,
     entry: entry,
     output: Object.assign({
-      path: paths.appBuild, // 云构建是 .package 目录
+      path: paths.appBuild,
       filename: '[name].js',
-      publicPath: getPublicPath() || '/dist/', // 云构建需要读取分支版本号
+      publicPath: '/dist/',
     }),
     resolve: {
       modules: [paths.appNodeModules, 'node_modules'],
