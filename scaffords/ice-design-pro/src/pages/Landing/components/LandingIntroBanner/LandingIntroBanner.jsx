@@ -22,7 +22,7 @@ export default class LandingIntroBanner extends Component {
         <div
           style={{
             ...styles.landingIntroBackground,
-            backgroundImage: `url(${backgroundImage})`,
+            backgroundImage: `url(${backgroundImage})`
           }}
         />
         <div
@@ -34,20 +34,20 @@ export default class LandingIntroBanner extends Component {
               更快，更优，更 Cool !<br />欢迎使用 ICE
             </h2>
             <div style={styles.buttons}>
-              <a href="//alibaba.github.io/ice/design.html">
+              <a href="https://alibaba.github.io/ice">
                 <Button
                   style={{
                     marginRight: 20,
                     height: 50,
                     padding: '0 58px',
                     fontSize: 16,
-                    color: '#fff',
+                    color: '#fff'
                   }}
                   type="primary"
                   size="large"
                   shape="ghost"
                 >
-                  查看帮助
+                  了解更多
                 </Button>
               </a>
               <Link to="/dashboard">
@@ -56,7 +56,7 @@ export default class LandingIntroBanner extends Component {
                   type="primary"
                   size="large"
                 >
-                  立即使用
+                  前往首页
                 </Button>
               </Link>
             </div>
@@ -70,7 +70,7 @@ export default class LandingIntroBanner extends Component {
 const styles = {
   landingIntro: {
     position: 'relative',
-    height: '100vh',
+    height: '100vh'
   },
   landingIntroBackground: {
     position: 'absolute',
@@ -78,7 +78,7 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundSize: 'cover',
+    backgroundSize: 'cover'
   },
   contentWrapper: {
     position: 'absolute',
@@ -88,14 +88,14 @@ const styles = {
     bottom: 0,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   title: {
     textAlign: 'center',
     color: '#fff',
     fontSize: '32px',
     letterSpacing: '1.94px',
-    lineHeight: '48px',
+    lineHeight: '48px'
   },
-  buttons: { textAlign: 'center', marginTop: 70 },
+  buttons: { textAlign: 'center', marginTop: 70 }
 };
