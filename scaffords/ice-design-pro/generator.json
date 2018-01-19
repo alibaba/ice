@@ -26,92 +26,110 @@
     {
       "page": "Dashboard",
       "path": "dashboard",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "Charts",
       "path": "/chart/chart-list",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "Portlets",
       "path": "portlets/base",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "Terms",
       "path": "portlets/terms",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "ProgressInfo",
       "path": "portlets/progress",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "Result",
       "path": "result/success",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "Fail",
       "path": "result/fail",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "Landing",
       "path": "/",
-      "layout": "FixedHeaderFooterResponsiveLayout"
+      "layout": "FixedHeaderFooterResponsiveLayout",
+      "builtIn": true
     },
     {
       "page": "ServerError",
       "path": "exception/500",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "Forbidden",
       "path": "exception/403",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "EmptyContent",
       "path": "exception/204",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "List",
       "path": "list/article-list",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "CardList",
       "path": "list/card-list",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "PicturesList",
       "path": "list/picture-list",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "BasicTable",
       "path": "table/basic-table",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "TableList",
       "path": "table/table-list",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "TableDisplay",
       "path": "table/table-display",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     },
     {
       "page": "NotFound",
       "path": "exception/404",
-      "layout": "HeaderAsideFooterLayout"
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true
     }
   ]
 }
