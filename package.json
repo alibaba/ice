@@ -13,6 +13,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "devDependencies": {
+    "@icedesign/scripts": "^0.2.0-1",
     "babel-eslint": "^8.1.2",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.14.0",
