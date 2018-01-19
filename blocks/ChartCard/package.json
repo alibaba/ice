@@ -31,14 +31,13 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "latest",
     "react": "*",
     "react-dom": "*"
   },
   "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
+    "start": "../../node_modules/.bin/ice block dev",
+    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",
