@@ -6,7 +6,7 @@
 <p align="center">海量可复用物料，通过 GUI 工具极速构建中后台应用</p>
 
 <p align="center">
-  <a href="https://github.com/alibaba/ice/blob/master/LICENSE"><img src="https://img.shields.io/badge/lisense-MIT-brightgreen.svg"></a>
+  <a href="https://github.com/alibaba/ice/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
 </p>
 
 ---
