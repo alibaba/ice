@@ -1,0 +1,53 @@
+{
+  "name": "@icedesign/create-activity-form-block",
+  "version": "0.1.1",
+  "description": "创建活动的表单",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "scripts": {
+    "start": "../../node_modules/.bin/ice block dev",
+    "prepublish": "../../node_modules/.bin/ice block build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/container": "^0.1.1",
+    "@icedesign/form-binder": "^0.1.2",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/skin": "latest",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "create-activity-form",
+    "snapshot": "https://img.alicdn.com/tfs/TB1o0ipnx6I8KJjy0FgXXXXzVXa-1720-1062.png",
+    "title": "创建活动表单",
+    "categories": [
+      "form"
+    ],
+    "themePackage": "@icedesign/skin"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/filter-table-block",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "附带筛选工具条的表格",
   "files": [
     "src/",
@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
-    "@icedesign/card": "^0.1.0",
+    "@icedesign/container": "^0.1.0",
     "@icedesign/data-binder": "^0.1.0",
     "@icedesign/form-binder": "^0.1.0",
     "@icedesign/img": "^0.1.0",
@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "^0.1.2",
     "react": "*",
     "react-dom": "*"
@@ -47,7 +46,8 @@
     ]
   },
   "scripts": {
-    "prepublish": "ice block build"
+    "start": "../../node_modules/.bin/ice block dev",
+    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

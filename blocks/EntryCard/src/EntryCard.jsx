@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './EntryCard.scss';
 
 const list = [
@@ -40,7 +40,7 @@ export default class EntryCard extends Component {
 
   render() {
     return (
-      <IceCard
+      <IceContainer
         className="entry-card"
         style={{
           display: 'flex',
@@ -58,7 +58,7 @@ export default class EntryCard extends Component {
             </div>
           );
         })}
-      </IceCard>
+      </IceContainer>
     );
   }
 }

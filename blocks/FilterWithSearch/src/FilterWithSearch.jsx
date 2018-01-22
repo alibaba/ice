@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Search } from '@icedesign/base';
 import './FilterWithSearch.scss';
 
@@ -28,7 +28,7 @@ export default class FilterWithSearch extends Component {
   render() {
     return (
       <div className="filter-with-search" style={styles.filterWithSearch}>
-        <IceCard
+        <IceContainer
           className="filter-with-search-container"
           style={styles.filterWithSearchContainer}
         >
@@ -62,7 +62,7 @@ export default class FilterWithSearch extends Component {
             placeholder="请输入要搜索的关键词或商品链接"
             onSearch={this.handleSearch}
           />
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

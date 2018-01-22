@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Chart, Axis, Geom, Tooltip, Legend } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
 import './ChartBar.scss';
@@ -53,7 +53,7 @@ export default class ChartBar extends Component {
 
     return (
       <div className="chart-bar">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>柱状图</h4>
           <Chart height={400} data={dv} forceFit>
             <Axis name="月份" />
@@ -67,7 +67,7 @@ export default class ChartBar extends Component {
               adjust={[{ type: 'dodge', marginRatio: 1 / 32 }]}
             />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

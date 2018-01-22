@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Icon } from '@icedesign/base';
 import './AssetInfoDisplay.scss';
 
@@ -22,7 +22,7 @@ export default class AssetInfoDisplay extends Component {
   render() {
     return (
       <div className="asset-info-display" style={styles.container}>
-        <IceCard style={styles.card}>
+        <IceContainer style={styles.card}>
           <div style={styles.title}>资产展示</div>
           <div style={styles.assets}>
             <div style={styles.assetItem}>
@@ -63,9 +63,9 @@ export default class AssetInfoDisplay extends Component {
               </div>
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
         <div style={styles.gap} />
-        <IceCard style={styles.card}>
+        <IceContainer style={styles.card}>
           <div style={styles.title}>合同发票</div>
           <div style={{
             ...styles.cardItem,
@@ -109,7 +109,7 @@ export default class AssetInfoDisplay extends Component {
               </a>
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

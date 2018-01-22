@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Chart, Geom, Tooltip, Coord, Label, Legend, Guide } from 'bizcharts';
 import { DataView } from '@antv/data-set';
 import './ChartFunnel.scss';
@@ -44,7 +44,7 @@ export default class ChartFunnel extends Component {
 
     return (
       <div className="chart-funnel">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>漏斗图</h4>
           <Chart
             height={400}
@@ -114,7 +114,7 @@ export default class ChartFunnel extends Component {
               />
             </Geom>
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

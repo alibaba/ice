@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Button } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import {
   FormBinderWrapper,
   FormBinder,
@@ -42,7 +42,7 @@ export default class ForgetPasswordForm extends Component {
   render() {
     return (
       <div className="private-message-form" style={styles.privateMessageForm}>
-        <IceCard style={styles.formCard}>
+        <IceContainer style={styles.formCard}>
           <div style={styles.title}>忘记密码</div>
           <div style={styles.subtitle}>填入您的邮箱，重置后的密码会发到您的邮箱</div>
           <div style={styles.groupTitle}>邮箱地址：</div>
@@ -76,7 +76,7 @@ export default class ForgetPasswordForm extends Component {
               发送新密码
             </Button>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

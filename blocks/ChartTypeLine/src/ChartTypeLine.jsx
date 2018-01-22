@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Chart, Axis, Geom, Tooltip } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './ChartTypeLine.scss';
 
 export default class ChartTypeLine extends Component {
@@ -53,7 +53,7 @@ export default class ChartTypeLine extends Component {
 
     return (
       <div className="chart-type-line">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>折线图</h4>
           <Chart height={400} data={dv} scale={cols} forceFit>
             <Axis name="month" />
@@ -75,7 +75,7 @@ export default class ChartTypeLine extends Component {
               style={{ stroke: '#fff', lineWidth: 1 }}
             />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Dialog, Button } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './ConfirmDialog.scss';
 
 export default class ConfirmDialog extends Component {
@@ -26,7 +26,7 @@ export default class ConfirmDialog extends Component {
 
   render() {
     return (
-      <IceCard>
+      <IceContainer>
         <Dialog
           className="confirm-dialog"
           style={styles.dialog}
@@ -54,7 +54,7 @@ export default class ConfirmDialog extends Component {
         <Button type="primary" onClick={this.showDialog}>
           显示 Dialog
         </Button>
-      </IceCard>
+      </IceContainer>
     );
   }
 }

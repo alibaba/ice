@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { Input, Button } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './PrivateMessageForm.scss';
 
 export default class PrivateMessageForm extends Component {
@@ -55,7 +55,7 @@ export default class PrivateMessageForm extends Component {
   render() {
     return (
       <div className="private-message-form" style={styles.privateMessageForm}>
-        <IceCard style={styles.formCard}>
+        <IceContainer style={styles.formCard}>
           <div style={styles.title}>私有消息</div>
           <div style={styles.subtitle}>给王明明发私有消息</div>
           <div style={styles.groupTitle}>标题</div>
@@ -80,7 +80,7 @@ export default class PrivateMessageForm extends Component {
           <div style={styles.btnWrap}>
             <Button type="primary" onClick={this.sendMessage}>发送消息</Button>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

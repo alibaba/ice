@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import Monaco from 'react-monaco-editor';
 import 'regenerator-runtime/runtime';
 import './MonacoEditor.scss';
@@ -90,7 +90,7 @@ function foo() {
 
     return (
       <div className="monaco-editor-container" style={styles.monacoEditorContainer}>
-        <IceCard style={styles.container}>
+        <IceContainer style={styles.container}>
           {
             monacoReady ? <Monaco
               height="600"
@@ -102,7 +102,7 @@ function foo() {
               editorDidMount={this.editorDidMount}
             /> : 'loading...'
           }
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

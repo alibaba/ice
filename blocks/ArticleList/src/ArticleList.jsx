@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Icon } from '@icedesign/base';
 import './ArticleList.scss';
 
@@ -29,7 +29,7 @@ export default class ArticleList extends Component {
     const dataSource = generatorData();
     return (
       <div className="article-list">
-        <IceCard style={styles.articleFilterCard}>
+        <IceContainer style={styles.articleFilterCard}>
           <ul className="article-sort" style={styles.articleSort}>
             <li>
               最新 <Icon type="arrow-down" />
@@ -44,8 +44,8 @@ export default class ArticleList extends Component {
               距离开始开启最近 <Icon type="arrow-down" />
             </li>
           </ul>
-        </IceCard>
-        <IceCard>
+        </IceContainer>
+        <IceContainer>
           {dataSource.map((item, index) => {
             return (
               <div key={index} style={styles.articleItem}>
@@ -89,7 +89,7 @@ export default class ArticleList extends Component {
               </div>
             );
           })}
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

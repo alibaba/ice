@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/area-stack-chart-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "叠加面积图",
   "main": "src/index.js",
   "files": [
@@ -24,14 +24,13 @@
   ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
-    "@icedesign/card": "^0.1.0",
+    "@icedesign/container": "^0.1.0",
     "bizcharts": "^3.0.5",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "^0.1.3",
     "react": "*",
     "react-dom": "*"
@@ -46,7 +45,8 @@
     ]
   },
   "scripts": {
-    "prepublish": "ice block build"
+    "start": "../../node_modules/.bin/ice block dev",
+    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

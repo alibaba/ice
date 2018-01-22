@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './Testimonial.scss';
 
 const generatorData = (count) => {
@@ -31,7 +31,7 @@ export default class Testimonial extends Component {
     const data = generatorData(3);
     return (
       <div className="testimonial">
-        <IceCard>
+        <IceContainer>
           <div style={styles.items}>
             {data.map((item, index) => {
               const rowLastItem =
@@ -62,7 +62,7 @@ export default class Testimonial extends Component {
               );
             })}
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

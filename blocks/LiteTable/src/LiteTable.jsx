@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Table } from '@icedesign/base';
 import './LiteTable.scss';
 
@@ -76,7 +76,7 @@ export default class LiteTable extends Component {
     const { tableData } = this.state;
     return (
       <div className="lite-table" style={styles.liteTable}>
-        <IceCard style={styles.tableCard}>
+        <IceContainer style={styles.tableCard}>
           <Table dataSource={tableData} hasBorder={false}>
             <Table.Column title="项目名称" dataIndex="project" width={160} />
             <Table.Column title="创建者" dataIndex="owner" width={65} />
@@ -87,7 +87,7 @@ export default class LiteTable extends Component {
               width={65}
             />
           </Table>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

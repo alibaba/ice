@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Grid, Select, Button, DatePicker } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 
 // form binder 详细用法请参见官方文档
 import {
@@ -20,7 +20,7 @@ export default class Filter extends Component {
         value={this.props.value}
         onChange={this.props.onChange}
       >
-        <IceCard title="内容筛选" style={{ marginBottom: '20px' }}>
+        <IceContainer title="内容筛选" style={{ marginBottom: '20px' }}>
           <Row>
             <Col span="8" style={styles.filterCol}>
               <label style={styles.filterTitle}>所属应用</label>
@@ -125,7 +125,7 @@ export default class Filter extends Component {
               确定
             </Button>
           </div>
-        </IceCard>
+        </IceContainer>
       </IceFormBinderWrapper>
     );
   }
