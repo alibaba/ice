@@ -40,14 +40,16 @@ module.exports = (paths, options) => {
       },
     },
   ];
-  if (options.themePackage) {
-    console.log(colors.cyan('Tip:'), '使用皮肤包', options.themePackage);
+
+  const theme = options.theme || options.themePackage
+  if (theme) {
+    console.log(colors.cyan('Tip:'), '使用皮肤包', theme);
     sassLoaders.push({
       loader: require.resolve('../../dependencies/ice-skin-loader'),
       options: {
         themeFile: path.join(
           paths.appNodeModules,
-          `${options.themePackage}/variables.scss`
+          `${theme}/variables.scss`
         ),
       },
     });

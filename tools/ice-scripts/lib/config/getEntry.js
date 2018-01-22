@@ -9,7 +9,7 @@ const hotDevClientPath = require.resolve('react-dev-utils/webpackHotDevClient');
 const walk = function walk(dir) {
   var results = [];
   var list = fs.readdirSync(dir);
-  list.forEach(function(file) {
+  list.forEach(function (file) {
     file = dir + '/' + file;
     var stat = fs.statSync(file);
     if (stat && stat.isDirectory()) results = results.concat(walk(file));
@@ -23,7 +23,7 @@ const walk = function walk(dir) {
  * @param  {Objecct} abcConfig abc.json 文件内容
  * @return {Object}           如果存在则返回  abc.webpack.entry
  */
-const getEntryByAbc = function(appDirectory) {
+const getEntryByAbc = function (appDirectory) {
   const abcFilePath = path.resolve(appDirectory, 'abc.json');
 
   try {
@@ -37,7 +37,7 @@ const getEntryByAbc = function(appDirectory) {
         return costomEntry;
       }
     }
-  } catch (e) {}
+  } catch (e) { }
 
   return null;
 };
@@ -56,9 +56,17 @@ module.exports = function getEntry(cwd, isBuild = true) {
   const packageFilePath = path.resolve(appDirectory, 'package.json');
   const packageData = require(packageFilePath);
   // 需要区分项目类型，新版的项目直接返回 src/index.js
-  if (packageData && packageData.ice && packageData.ice.entry) {
+  if (packageData) {
+    let entry = '';
+    if (packageData.ice && packageData.ice.entry) {
+      entry = packageData.ice.entry;
+    }
+    if (packageData.buildConfig && packageData.buildConfig.entry) {
+      entry = packageData.buildConfig.entry;
+    }
+
     entryObj = {
-      index: [path.resolve(appDirectory, packageData.ice.entry)],
+      index: [path.resolve(appDirectory, entry)],
     };
 
     if (!isBuild) {
@@ -80,7 +88,7 @@ module.exports = function getEntry(cwd, isBuild = true) {
   try {
     // 获取当前目录下所有文件
     var files = walk(entryDir);
-    files.forEach(function(filePath) {
+    files.forEach(function (filePath) {
       var fileExt = path.extname(filePath);
       var fileBasename = path.basename(filePath, fileExt);
       var pageFile = path.relative(entryDir, filePath);
