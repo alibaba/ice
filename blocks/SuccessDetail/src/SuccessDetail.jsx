@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Button, Step } from '@icedesign/base';
 import './SuccessDetail.scss';
 
@@ -23,7 +23,7 @@ export default class SuccessDetail extends Component {
     const { value, current, type } = this.state;
     return (
       <div className="success-detail" style={styles.successDetail}>
-        <IceCard style={styles.container}>
+        <IceContainer style={styles.container}>
           <div className="success-detail-head" style={styles.successDetailHead}>
             <img
               src="https://img.alicdn.com/tfs/TB1ya6gh0zJ8KJjSspkXXbF7VXa-156-156.png"
@@ -51,7 +51,7 @@ export default class SuccessDetail extends Component {
             </Button>
             <Button type="primary">查看更多</Button>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

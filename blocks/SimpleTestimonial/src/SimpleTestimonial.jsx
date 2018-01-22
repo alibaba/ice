@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './SimpleTestimonial.scss';
 
 export default class SimpleTestimonial extends Component {
@@ -17,7 +17,7 @@ export default class SimpleTestimonial extends Component {
   render() {
     return (
       <div className="simple-testimonial" style={styles.simpleTestimonial}>
-        <IceCard>
+        <IceContainer>
           <div style={styles.item}>
             <p style={styles.description}>
               “
@@ -37,7 +37,7 @@ export default class SimpleTestimonial extends Component {
               <p style={styles.company}>就职公司/职务</p>
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

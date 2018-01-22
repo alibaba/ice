@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Table, Pagination } from '@icedesign/base';
 
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
@@ -131,15 +131,15 @@ export default class EnhanceTable extends Component {
 
     return (
       <div className="filter-table">
-        <IceCard style={styles.cardWrapper}>
+        <IceContainer style={styles.cardWrapper}>
           <FilterForm
             value={filterFormValue}
             onChange={this.filterFormChange}
             onSubmit={this.filterTable}
             onReset={this.resetFilter}
           />
-        </IceCard>
-        <IceCard>
+        </IceContainer>
+        <IceContainer>
           <Table
             dataSource={tableData.list}
             isLoading={tableData.__loading}
@@ -179,7 +179,7 @@ export default class EnhanceTable extends Component {
               onChange={this.changePage}
             />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

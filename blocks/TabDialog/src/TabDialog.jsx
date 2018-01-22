@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 import React, { Component } from 'react';
 import { Dialog, Tab, Table, Button } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './TabDialog.scss';
 
 const TabPane = Tab.TabPane;
@@ -69,7 +69,7 @@ export default class TabDialog extends Component {
 
   render() {
     return (
-      <IceCard>
+      <IceContainer>
         <Dialog
           className="tab-dialog"
           style={styles.dialog}
@@ -118,7 +118,7 @@ export default class TabDialog extends Component {
           </div>
         </Dialog>
         <Button type="primary" onClick={this.showDialog}>显示 Dialog</Button>
-      </IceCard>
+      </IceContainer>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Dialog, Button, Icon } from '@icedesign/base';
 import './ComplexDialog.scss';
 
@@ -37,7 +37,7 @@ export default class ComplexDialog extends Component {
 
   render() {
     return (
-      <IceCard>
+      <IceContainer>
         <Dialog
           className="complex-dialog"
           style={styles.complexDialog}
@@ -82,7 +82,7 @@ export default class ComplexDialog extends Component {
         <Button type="primary" onClick={this.showDialog}>
           显示 Dialog
         </Button>
-      </IceCard>
+      </IceContainer>
     );
   }
 }

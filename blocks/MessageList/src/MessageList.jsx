@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Pagination } from '@icedesign/base';
 import './MessageList.scss';
 
@@ -56,12 +56,12 @@ export default class MessageList extends Component {
   render() {
     return (
       <div className="message-list" style={styles.messageList}>
-        <IceCard>
+        <IceContainer>
           {dataSource.map(this.renderItem)}
           <div style={styles.paginationWarp}>
             <Pagination />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

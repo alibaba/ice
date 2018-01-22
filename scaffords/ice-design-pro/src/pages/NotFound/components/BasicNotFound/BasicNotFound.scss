@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+.basic-not-found {
+  .not-found-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+  }
+  .img-notfound {
+    margin-right: 50px;
+  }
+  h3 {
+    color: #333;
+    font-size: 24px;
+    margin: 20px 0;
+  }
+  p {
+    color: #666;
+    font-size: 16px;
+  }
+}

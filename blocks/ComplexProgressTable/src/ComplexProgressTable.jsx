@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Table, Pagination, Progress, Button } from '@icedesign/base';
 import DataBinder from '@icedesign/data-binder';
 
@@ -119,7 +119,7 @@ export default class ComplexProgressTable extends Component {
 
     return (
       <div className="complex-progress-table">
-        <IceCard style={styles.tableCard}>
+        <IceContainer style={styles.tableCard}>
           <Table
             dataSource={tableData.list}
             isLoading={
@@ -160,7 +160,7 @@ export default class ComplexProgressTable extends Component {
               onChange={this.changePage}
             />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

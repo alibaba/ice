@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from '@icedesign/base';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import './InfoDisplayTable.scss';
 
 /**
@@ -46,12 +46,12 @@ export default class InfoDisplayTable extends Component {
   render() {
     return (
       <div className="info-display-table" style={styles.infoDisplayTable}>
-        <IceCard>
+        <IceContainer>
           <Table dataSource={dataSource()}>
             <Table.Column title="个人信息" dataIndex="label" />
             <Table.Column title="" dataIndex="value" />
           </Table>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

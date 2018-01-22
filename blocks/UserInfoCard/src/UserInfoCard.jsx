@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Balloon, Icon } from '@icedesign/base';
 import './UserInfoCard.scss';
 
@@ -17,7 +17,7 @@ export default class UserInfoCard extends Component {
 
   render() {
     return (
-      <IceCard>
+      <IceContainer>
         <div className="user-info-card" style={styles.container}>
           <Balloon
             trigger={<a style={styles.triggerText}>张三</a>}
@@ -65,7 +65,7 @@ export default class UserInfoCard extends Component {
             </div>
           </Balloon>
         </div>
-      </IceCard>
+      </IceContainer>
     );
   }
 }
