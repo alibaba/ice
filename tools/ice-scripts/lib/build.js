@@ -46,7 +46,7 @@ module.exports = function (args = {}) {
     const packageData = require(paths.appPackageJson);
     // get ice config by package.ice
 
-    const webpackConfig = getWebpackConfigProd(entries, paths, pacageData.buildConfig || pacageData.ice);
+    const webpackConfig = getWebpackConfigProd(entries, paths, packageData.buildConfig || packageData.ice);
 
     webpack(webpackConfig, function (error, stats) {
       console.log(
