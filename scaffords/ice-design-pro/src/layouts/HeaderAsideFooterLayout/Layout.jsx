@@ -6,7 +6,7 @@ import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { Link } from 'react-router';
 import Header from './../../components/Header';
 import Footer from './../../components/Footer';
-import { asideNavs } from './../../config/navs';
+import { asideNavs } from './../../navs';
 import './Layout.scss';
 
 export default class HeaderAsideFooterLayout extends Component {

@@ -4,7 +4,7 @@ import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
 import { Icon } from '@icedesign/base';
 import { Link } from 'react-router';
-import { headerNavs } from './../config/navs';
+import { headerNavs } from './../navs';
 import Logo from './Logo';
 
 export default ({ width }) => {
