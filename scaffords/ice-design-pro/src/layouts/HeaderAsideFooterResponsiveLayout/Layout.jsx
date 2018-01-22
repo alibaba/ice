@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import { Icon, Button } from '@icedesign/base';
 import Header from './../../components/Header';
 import Footer from './../../components/Footer';
-import { asideNavs } from './../../config/navs';
+import { asideNavs } from './../../navs';
 
 import './Layout.scss';
 
