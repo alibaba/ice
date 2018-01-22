@@ -1,5 +1,6 @@
 {
   "name": "@icedesign/scafford-lite",
+  "title": "ICE 项目脚手架 Lite",
   "version": "0.1.12",
   "dependencies": {
     "@icedesign/base": "^0.1.0",
@@ -27,11 +28,8 @@
     "registry": "http://registry.npmjs.com",
     "access": "public"
   },
-  "ice": {
-    "type": "project",
-    "projectType": "spa",
-    "entry": "src/index.js",
-    "themePackage": "@icedesign/skin",
-    "uuid": ""
+  "buildConfig": {
+    "theme": "@icedesign/skin",
+    "entry": "src/index.js"
   }
 }
