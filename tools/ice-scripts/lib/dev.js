@@ -21,12 +21,12 @@ const iceworksClient = require('./iceworksClient');
 
 /* eslint no-console:off */
 
-module.exports = function(args, subprocess) {
+module.exports = function (args, subprocess) {
   const cwd = process.cwd();
   const HOST = args.host || '0.0.0.0';
   const PORT = args.port || 3333;
 
-  const send = function(data) {
+  const send = function (data) {
     iceworksClient.send(data);
     if (subprocess && typeof subprocess.send === 'function') {
       subprocess.send(data);
@@ -39,10 +39,10 @@ module.exports = function(args, subprocess) {
   const entries = getEntries(cwd, false);
   const paths = getPaths(cwd);
 
-  const pacageData = require(paths.appPackageJson);
+  const packageData = require(paths.appPackageJson);
   // get ice config by package.ice
 
-  const webpackConfig = getWebpackConfigDev(entries, paths, pacageData.ice);
+  const webpackConfig = getWebpackConfigDev(entries, paths, packageData.buildConfig || packageData.ice);
 
   if (iceworksClient.available) {
     webpackConfig.plugins.push(
@@ -170,7 +170,7 @@ module.exports = function(args, subprocess) {
     });
   });
 
-  devServer.use(function(req, res, next) {
+  devServer.use(function (req, res, next) {
     console.log('Time:', Date.now());
     next();
   });
