@@ -1,5 +1,6 @@
 {
   "name": "@icedesign/scafford-pro",
+  "title": "ICE 项目脚手架 Pro",
   "version": "0.1.3",
   "dependencies": {
     "@antv/data-set": "^0.8.5",
@@ -39,12 +40,8 @@
     "registry": "http://registry.npmjs.com",
     "access": "public"
   },
-  "ice": {
-    "type": "project",
-    "projectType": "spa",
-    "entry": "src/index.js",
-    "themePackage": "@icedesign/skin",
-    "uuid": "",
-    "projectName": "ice_design_pro"
+  "buildConfig": {
+    "theme": "@icedesign/skin",
+    "entry": "src/index.js"
   }
 }
