@@ -13,8 +13,7 @@ var path = require('path');
 var prettyBytes = require('pretty-bytes');
 var prettyMs = require('pretty-ms');
 var rightPad = require('right-pad');
-
-var bin = path.join(__dirname, '../../node_modules/.bin/cleancss');
+const bin = require.resolve('clean-css/bin/cleancss');
 
 /**
  * 执行任务
@@ -26,11 +25,11 @@ var bin = path.join(__dirname, '../../node_modules/.bin/cleancss');
  *   parallel: option, number, 默认为系统内核数目
  *   params: option, object, cleancss 的参数
  */
-module.exports = function(options, callback) {
+module.exports = function (options, callback) {
 
   glob(options.pattern, {
     cwd: options.src
-  }, function(err, files) {
+  }, function (err, files) {
 
     debug('glob files', files);
 
@@ -43,7 +42,7 @@ module.exports = function(options, callback) {
     }
 
     var parallelNum = options.parallel || os.cpus().length;
-    var taskArgs = files.map(function(file) {
+    var taskArgs = files.map(function (file) {
       return {
         srcFilePath: path.join(options.src, file),
         destFilePath: path.resolve(process.cwd(), options.dest, file),
@@ -55,7 +54,7 @@ module.exports = function(options, callback) {
     var runned = 0;
     var total = files.length;
 
-    q.push(taskArgs, function(err) {
+    q.push(taskArgs, function (err) {
       // 内部抛出错误，避免外部未抛出，流程正常结束
       if (err) {
         throw err;
@@ -87,7 +86,7 @@ function singleTask(options, callback) {
   var params = options.params;
   var destFilePath = options.destFilePath;
 
-  mkdirp(path.dirname(options.destFilePath), function(err) {
+  mkdirp(path.dirname(options.destFilePath), function (err) {
     if (err) {
       return callback(err);
     }
@@ -102,7 +101,7 @@ function singleTask(options, callback) {
 
     var start = new Date();
 
-    ps.on('close', function(code) {
+    ps.on('close', function (code) {
       if (code !== 0) {
         callback(new Error(`压缩文件 ${srcFilePath} 错误, exit code: ${code}`));
       } else {
