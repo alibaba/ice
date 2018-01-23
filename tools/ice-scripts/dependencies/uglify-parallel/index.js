@@ -12,7 +12,7 @@ var path = require('path');
 var prettyBytes = require('pretty-bytes');
 var prettyMs = require('pretty-ms');
 var rightPad = require('right-pad');
-var uglifyBinPath = path.join(__dirname, '../../node_modules/.bin/uglifyjs');
+const uglifyBinPath = require.resolve('uglify-js/bin/uglifyjs');
 
 // uglify js in child_process
 function job(options, callback) {
@@ -33,7 +33,7 @@ function job(options, callback) {
     params.push('--comments=/^\\**!|@preserve|@license/');
   }
 
-  mkdirp(path.dirname(dest), function(mkdirPathError) {
+  mkdirp(path.dirname(dest), function (mkdirPathError) {
     if (mkdirPathError) {
       return callback(mkdirPathError);
     }
@@ -42,7 +42,7 @@ function job(options, callback) {
     if (options.sourceMap) {
       source_map_params = [
         '--source-map',
-         dest + '.map' ,
+        dest + '.map',
         '--source-map-url',
         path.basename(file) + '.map',
         '--in-source-map',
@@ -50,7 +50,7 @@ function job(options, callback) {
       ];
     }
 
-    
+
     var psParams = [file, '-o', dest].concat(params).concat(source_map_params);
     var stdoutPrint = '';
     var stderrPrint = '';
@@ -71,7 +71,7 @@ function job(options, callback) {
         stderrPrint += String(data);
       });
 
-    ps.on('close', function(code, sig) {
+    ps.on('close', function (code, sig) {
       if (code !== 0) {
         console.log(stdoutPrint);
         console.log(stderrPrint);
@@ -100,7 +100,7 @@ module.exports = function uglify(options, globOptions, callback) {
     globOptions.cwd = options.src;
   }
 
-  glob(options.pattern, globOptions, function(err, files) {
+  glob(options.pattern, globOptions, function (err, files) {
     if (err) {
       return callback(err);
     }
@@ -109,7 +109,7 @@ module.exports = function uglify(options, globOptions, callback) {
     }
 
     var parallelNum = options.parallel || os.cpus().length;
-    var tasks = files.map(function(f) {
+    var tasks = files.map(function (f) {
       return {
         file: path.join(options.src, f),
         dest: path.resolve(process.cwd(), options.dest, f),
@@ -121,7 +121,7 @@ module.exports = function uglify(options, globOptions, callback) {
     var runned = 0;
     var total = files.length;
 
-    q.push(tasks, function(error) {
+    q.push(tasks, function (error) {
       if (error) {
         return callback(error);
       }
