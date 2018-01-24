@@ -48,7 +48,7 @@ export default ({ width }) => {
             style={{
               marginLeft: 45,
               display: 'flex',
-              alignItems: 'center',
+              alignItems: 'center'
             }}
             href="https://www.taobao.com"
             target="_blank"
@@ -57,7 +57,7 @@ export default ({ width }) => {
             <IceImg
               height={40}
               width={40}
-              src="https://gw.alicdn.com/tfs/TB1t1kDmm_I8KJjy0FoXXaFnVXa-160-160.jpg"
+              src="https://gw.alicdn.com/tfs/TB13ENCnwDD8KJjy0FdXXcjvXXa-192-192.png"
               style={{ marginRight: '12px', borderRadius: 8 }}
             />
             <span className="ice-admin-layout-header-username">淘小宝</span>
