@@ -85,6 +85,7 @@ module.exports = class WebpackPluginImport {
   //   return false;
   // }
 
+  // eslint-disable-next-line
   needAdditionalStyle(result, opt) {
     // todo 需要处理一下
     return true;
