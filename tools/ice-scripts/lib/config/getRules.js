@@ -1,4 +1,4 @@
-const babelConfig = require('./babelConfig');
+const getBabelConfig = require('./getBabelConfig');
 const colors = require('chalk');
 const deepAssign = require('deep-assign');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -21,7 +21,8 @@ function withCssHotLoader(loaders) {
   return loaders;
 }
 
-module.exports = (paths, options) => {
+module.exports = (paths, buildConfig = {}) => {
+  const babelConfig = getBabelConfig(buildConfig);
   const sassLoaders = [
     {
       loader: CSS_LOADER,
@@ -41,7 +42,7 @@ module.exports = (paths, options) => {
     },
   ];
 
-  const theme = options.theme || options.themePackage
+  const theme = buildConfig.theme || buildConfig.themePackage;
   if (theme) {
     console.log(colors.cyan('Tip:'), '使用皮肤包', theme);
     sassLoaders.push({

@@ -18,17 +18,21 @@ const path = require('path');
 const propsSchemaGenerator = require('../dependencies/props-schema-generator');
 const dtsGenerator = require('../dependencies/typescript-definition-generator');
 const ComponentStyleGenerator = require('./utils/ComponentStyleGenerator');
-const babelConfig = require('./config/babelConfig');
+const getBabelConfig = require('./config/getBabelConfig');
 
 const cwd = process.cwd();
 
 // eslint-diable-next-line
 module.exports = function (args = {}) {
+  const pkgPath = path.join(cwd, 'package.json');
+  const pkg = JSON.parse(fs.readFileSync(pkgPath));
+  const babelConfig = getBabelConfig(pkg.buildConfig || {});
   gulp.task('clean', () => {
     const lib = path.join(cwd, 'lib');
     return new Promise((resolve) => {
       rimraf.sync(lib);
       console.log(`清理 ${lib} 完成`);
+      resolve();
     });
   });
 
@@ -41,7 +45,7 @@ module.exports = function (args = {}) {
       return;
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       // 构建 index.scss 和 style.js
       const styleGenerator = new ComponentStyleGenerator({
         destPath: path.join(cwd, 'lib/'),
@@ -59,7 +63,7 @@ module.exports = function (args = {}) {
       return;
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       // 生成 propsSchema && d.ts
       const propsSchema = propsSchemaGenerator('./src');
       const propsSchemaDist = path.join(cwd, 'lib/propsSchema.json');
@@ -68,7 +72,7 @@ module.exports = function (args = {}) {
         mkdirp.sync(path.dirname(propsSchemaDist));
         fs.writeFileSync(
           propsSchemaDist,
-          JSON.stringify(propsSchema, null, 2) + '\n'
+          `${JSON.stringify(propsSchema, null, 2)}\n`
         );
         console.log(colors.green('propsSchema 生成完毕'));
         return dtsGenerator(propsSchema).then((dts) => {
