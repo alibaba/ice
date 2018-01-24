@@ -8,6 +8,9 @@ module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
 
   return webpackMerge(baseConfig, {
     devtool: 'cheap-module-source-map',
+    output: {
+      publicPath: '/dist/',
+    },
     plugins: [
       new WatchMissingNodeModulesPlugin(paths.appNodeModules),
       new webpack.HotModuleReplacementPlugin(),

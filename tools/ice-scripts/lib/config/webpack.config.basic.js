@@ -1,5 +1,6 @@
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
+const paths = require('./paths');
 /**
  * 可以在 buildConfig 中覆盖的配置项:
  *  1. devtool: ''
@@ -16,7 +17,7 @@ module.exports = function getWebpackConfigBasic(entry, paths, buildConfig = {}) 
     output: Object.assign({
       path: paths.appBuild,
       filename: '[name].js',
-      publicPath: buildConfig.publicPath || '/dist/',
+      publicPath: paths.servedPath,
     }, buildConfig.output || {}),
     resolve: {
       modules: [paths.appNodeModules, 'node_modules'],
