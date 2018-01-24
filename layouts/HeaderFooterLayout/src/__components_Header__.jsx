@@ -48,7 +48,7 @@ export default ({ width }) => {
             style={{
               marginLeft: 45,
               display: 'flex',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
             href="https://www.taobao.com"
             target="_blank"
