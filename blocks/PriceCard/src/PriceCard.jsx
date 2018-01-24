@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './PrIceContainer.scss';
+import './PriceCard.scss';
 
 const data = [
   {
@@ -22,8 +22,8 @@ const data = [
   },
 ];
 
-export default class PrIceContainer extends Component {
-  static displayName = 'PrIceContainer';
+export default class PriceCard extends Component {
+  static displayName = 'PriceCard';
 
   static defaultProps = {};
 
@@ -34,7 +34,7 @@ export default class PrIceContainer extends Component {
 
   render() {
     return (
-      <div className="price-card" style={styles.prIceContainer}>
+      <div className="price-card" style={styles.priceCard}>
         <div style={styles.container}>
           <div style={styles.items}>
             {data.map((item, index) => {
@@ -129,5 +129,5 @@ const styles = {
     borderRadius: '12px',
     color: '#fff',
   },
-  prIceContainer: {},
+  priceCard: {},
 };
