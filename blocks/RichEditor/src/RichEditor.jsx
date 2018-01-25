@@ -1,7 +1,4 @@
-'use strict';
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
@@ -30,14 +27,14 @@ export default class RichEditor extends Component {
     };
   }
 
-  hasMark = type => {
+  hasMark = (type) => {
     const { value } = this.state;
-    return value.activeMarks.some(mark => mark.type == type);
+    return value.activeMarks.some(mark => mark.type === type);
   };
 
-  hasBlock = type => {
+  hasBlock = (type) => {
     const { value } = this.state;
-    return value.blocks.some(node => node.type == type);
+    return value.blocks.some(node => node.type === type);
   };
 
   onChange = ({ value }) => {
@@ -81,7 +78,7 @@ export default class RichEditor extends Component {
     const change = value.change();
     const { document } = value;
 
-    if (type != 'bulleted-list' && type != 'numbered-list') {
+    if (type !== 'bulleted-list' && type !== 'numbered-list') {
       const isActive = this.hasBlock(type);
       const isList = this.hasBlock('list-item');
 
@@ -95,8 +92,8 @@ export default class RichEditor extends Component {
       }
     } else {
       const isList = this.hasBlock('list-item');
-      const isType = value.blocks.some(block => {
-        return !!document.getClosest(block.key, parent => parent.type == type);
+      const isType = value.blocks.some((block) => {
+        return !!document.getClosest(block.key, parent => parent.type === type);
       });
 
       if (isList && isType) {
@@ -107,7 +104,7 @@ export default class RichEditor extends Component {
       } else if (isList) {
         change
           .unwrapBlock(
-            type == 'bulleted-list' ? 'numbered-list' : 'bulleted-list',
+            type === 'bulleted-list' ? 'numbered-list' : 'bulleted-list',
           )
           .wrapBlock(type);
       } else {
@@ -141,7 +138,7 @@ export default class RichEditor extends Component {
   };
 
   // 配置 block type 对应在富文本里面的渲染组件
-  renderNode = props => {
+  renderNode = (props) => {
     const { attributes, children, node } = props;
     switch (node.type) {
       case 'block-quote':
@@ -156,11 +153,13 @@ export default class RichEditor extends Component {
         return <li {...attributes}>{children}</li>;
       case 'numbered-list':
         return <ol {...attributes}>{children}</ol>;
+      default:
+        return <div />;
     }
   };
 
   // 配置 mark 对应在富文本里面的渲染组件
-  renderMark = props => {
+  renderMark = (props) => {
     const { children, mark } = props;
     switch (mark.type) {
       case 'bold':
@@ -171,6 +170,8 @@ export default class RichEditor extends Component {
         return <em>{children}</em>;
       case 'underlined':
         return <u>{children}</u>;
+      default:
+        return <div />;
     }
   };
 
@@ -207,5 +208,3 @@ export default class RichEditor extends Component {
     );
   }
 }
-
-const styles = {};
