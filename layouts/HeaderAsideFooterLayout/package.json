@@ -17,10 +17,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/img": "^0.1.0",
@@ -46,10 +43,9 @@
   "blockConfig": {
     "name": "header-aside-footer-layout",
     "title": "顶栏-侧栏-底栏-布局",
-    "categories": [
-      "layout"
-    ],
-    "snapshot": "https://gw.alicdn.com/tfs/TB172QmlsLJ8KJjy0FnXXcFDpXa-976-974.png",
+    "categories": ["layout"],
+    "snapshot":
+      "https://gw.alicdn.com/tfs/TB172QmlsLJ8KJjy0FnXXcFDpXa-976-974.png",
     "themePackage": "@icedesign/skin"
   }
 }
