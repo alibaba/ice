@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/scafford-pro",
   "title": "ICE 项目脚手架 Pro",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "dependencies": {
     "@antv/data-set": "^0.8.5",
     "@icedesign/base": "^0.1.0",
