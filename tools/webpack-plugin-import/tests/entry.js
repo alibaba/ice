@@ -1,4 +1,4 @@
 import { Button } from '@icedesign/base';
 import Container from '@icedesign/container';
 
-console.log(Container);
+console.log(Button, Container);

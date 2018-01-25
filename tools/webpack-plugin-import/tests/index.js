@@ -7,7 +7,10 @@ const config = {
   entry: require.resolve('./entry.js'),
   module: {
     rules: [
-      { test: /\.jsx?/i, use: 'babel-loader' },
+      {
+        test: /\.jsx?/i,
+        use: 'babel-loader',
+      },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
@@ -27,9 +30,16 @@ const config = {
   },
   plugins: [
     new ExtractTextPlugin('style.css'),
-    new WebpackPluginImport({
-
-    }),
+    new WebpackPluginImport([
+      {
+        libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /@icedesign\/.*/,
+        stylePath: 'style.js',
+      },
+    ]),
   ],
 };
 

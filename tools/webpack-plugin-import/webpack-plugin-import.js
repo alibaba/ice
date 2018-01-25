@@ -25,70 +25,17 @@ module.exports = class WebpackPluginImport {
     }
   }
 
-  // needAdditionalStyle(result, option) {
-  //   // 包含基础组件和业务组件
-
-  //   if (/@icedesign\/([\w|-]*)\/lib\/index\.js/i.test(result.rawRequest)) {
-  //     return true;
-  //   }
-
-  //   if (/@alife\/([\w|-]*)\/lib\/index\.js/i.test(result.rawRequest)) {
-  //     return true;
-  //   }
-
-  //   if (/@ali\/ice\-/i.test(result.rawRequest)) {
-  //     return true;
-  //   }
-
-  //   // 这种不在 node_modules 里的依赖一般是 link 过来的
-  //   // 直接检测 style.js 文件是否存在
-  //   if (
-  //     !/^\./.test(result.rawRequest) &&
-  //     !/node_modules/.test(result.resource) &&
-  //     /\.js$/i.test(result.resource)
-  //   ) {
-  //     if (/style\.js$/i.test(result.resource)) {
-  //       return false;
-  //     }
-
-  //     return fileExists(path.join(result.resource, '../style.js'));
-  //   }
-
-  //   // check peerDep or dep
-  //   const resourceSplit = result.resource.split('node_modules');
-  //   const resourceRelativePath = resourceSplit[resourceSplit.length - 1];
-  //   const sliceDeep = /^\/_?\@/.test(resourceRelativePath) ? 3 : 2;
-  //   // 带 @ 的是 spaced module, 需要多取一层路径
-  //   const moduleName = resourceRelativePath
-  //     .split('/')
-  //     .slice(0, sliceDeep)
-  //     .concat(['package.json'])
-  //     .join('/');
-  //   resourceSplit[resourceSplit.length - 1] = moduleName;
-
-  //   const pkgJSONPath = resourceSplit.join('node_modules');
-
-  //   try {
-  //     const pkg = require(pkgJSONPath);
-  //     if (
-  //       (pkg.dependencies && '@alife/next' in pkg.dependencies) ||
-  //       '@icedesign/base' in pkg.dependencies ||
-  //       ((pkg.peerDependencies && '@alife/next' in pkg.peerDependencies) ||
-  //         '@icedesign/base' in pkg.peerDependencies)
-  //     ) {
-  //       return true;
-  //     }
-  //   } catch (err) {
-  //     // ignore err
-  //   }
-
-  //   return false;
-  // }
-
   // eslint-disable-next-line
   needAdditionalStyle(result, opt) {
-    // todo 需要处理一下
-    return true;
+    if (opt.libraryName instanceof RegExp) {
+      return opt.libraryName.test(result.rawRequest);
+    }
+
+    if (result.rawRequest.match(opt.libraryName)) {
+      return true;
+    }
+
+    return false;
   }
 
   apply(compiler) {
@@ -104,7 +51,7 @@ module.exports = class WebpackPluginImport {
             if (this.needAdditionalStyle(result, opt)) {
               const modPath = path.join(
                 path.dirname(result.resource),
-                'style.js'
+                opt.stylePath || 'style.js'
               );
 
               if (fileExists(modPath)) {
