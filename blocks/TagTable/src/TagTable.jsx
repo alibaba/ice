@@ -1,10 +1,9 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
-import { Table, Input, Select, Button, Grid } from '@icedesign/base';
+import { Table, Input, Select, Grid } from '@icedesign/base';
 import {
   FormBinderWrapper,
   FormBinder,
-  FormError,
 } from '@icedesign/form-binder';
 import IceCard from '@icedesign/card';
 import './TagTable.scss';
