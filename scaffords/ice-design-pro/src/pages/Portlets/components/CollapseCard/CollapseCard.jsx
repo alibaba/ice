@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Icon } from '@icedesign/base';
 import classnames from 'classnames';
 import './CollapseCard.scss';
@@ -14,14 +14,14 @@ export default class CollapseCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapse: false,
+      collapse: false
     };
   }
 
   toggleCollapse = () => {
     const { collapse } = this.state;
     this.setState({
-      collapse: !collapse,
+      collapse: !collapse
     });
   };
 
@@ -30,7 +30,7 @@ export default class CollapseCard extends Component {
     const cls = classnames('base-info', { collapse });
     return (
       <div className="collapse-card">
-        <IceCard>
+        <IceContainer>
           <div style={styles.summaryInfo}>
             <img
               style={styles.logo}
@@ -72,7 +72,7 @@ export default class CollapseCard extends Component {
               <Icon type={collapse ? 'arrow-down' : 'arrow-up'} />
             </a>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -81,26 +81,26 @@ export default class CollapseCard extends Component {
 const styles = {
   summaryInfo: {
     display: 'flex',
-    borderBottom: '1px solid #e7e7eb',
+    borderBottom: '1px solid #e7e7eb'
   },
   logo: {
     width: '100px',
-    height: '100px',
+    height: '100px'
   },
   infoIntro: {
     marginLeft: '20px',
-    paddingBottom: '20px',
+    paddingBottom: '20px'
   },
   infoTitle: {
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   infoDesc: {
-    color: '#999',
+    color: '#999'
   },
   toggleBtn: {
     marginTop: '20px',
     textAlign: 'center',
     color: '#999',
-    textDecoration: 'none',
-  },
+    textDecoration: 'none'
+  }
 };

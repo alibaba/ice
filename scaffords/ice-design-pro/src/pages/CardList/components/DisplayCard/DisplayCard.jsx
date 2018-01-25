@@ -1,6 +1,6 @@
 /* eslint react/jsx-no-target-blank: 0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './DisplayCard.scss';
 
 export default class DisplayCard extends Component {
@@ -36,7 +36,7 @@ export default class DisplayCard extends Component {
     );
     return (
       <div className="display-card">
-        <IceCard
+        <IceContainer
           className="display-card-container"
           style={styles.displayCardContainer}
         >
@@ -132,7 +132,7 @@ export default class DisplayCard extends Component {
               +100
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -147,14 +147,14 @@ const styles = {
     backgroundPosition: 'center center',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   displayCardItem: {
     display: 'flex',
     height: '150px',
     width: '169',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   displayCardText: { color: '#BEBEBE', fontSize: '12px', marginBottom: '5px' },
   helpLink: { marginLeft: '5px' },
@@ -162,9 +162,9 @@ const styles = {
     color: '#fff',
     fontSize: '24px',
     fontWeight: 'bold',
-    marginBottom: '3px',
+    marginBottom: '3px'
   },
   displayCardDesc: { color: '#BEBEBE', fontSize: '12px' },
   down: { width: '6px', height: '9px' },
-  up: { width: '6px', height: '9px' },
+  up: { width: '6px', height: '9px' }
 };

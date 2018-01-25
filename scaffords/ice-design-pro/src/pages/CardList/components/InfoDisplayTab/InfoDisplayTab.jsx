@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Tab, Button, Grid } from '@icedesign/base';
 import IceEllipsis from '@icedesign/ellipsis';
 import axios from 'axios';
@@ -18,7 +18,7 @@ export default class InfoDisplayTab extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabData: {},
+      tabData: {}
     };
   }
 
@@ -28,12 +28,12 @@ export default class InfoDisplayTab extends Component {
   getData = () => {
     axios
       .get('/mock/info-display-tab.json')
-      .then((response) => {
+      .then(response => {
         this.setState({
-          tabData: response.data.data || {},
+          tabData: response.data.data || {}
         });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -42,7 +42,7 @@ export default class InfoDisplayTab extends Component {
     this.getData();
   }
 
-  renderContent = (data) => {
+  renderContent = data => {
     return data.map((item, index) => {
       return (
         <div key={index} className="column-card" style={styles.columnCard}>
@@ -83,7 +83,7 @@ export default class InfoDisplayTab extends Component {
     const { tabData } = this.state;
     return (
       <div className="info-display-tab" style={styles.infoDisplayTab}>
-        <IceCard>
+        <IceContainer>
           <Tab type="bar" onChange={this.callback}>
             <TabPane tab="全部频道" key="1">
               {tabData.all ? this.renderContent(tabData.all) : '暂无数据'}
@@ -97,7 +97,7 @@ export default class InfoDisplayTab extends Component {
                 : '暂无数据'}
             </TabPane>
           </Tab>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -108,7 +108,7 @@ const styles = {
     float: 'left',
     width: '284px',
     overflow: 'hidden',
-    boxShadow: '0px 0px 2px 0px rgba(0',
+    boxShadow: '0px 0px 2px 0px rgba(0'
   },
   columnCardDesc: {
     height: '144px',
@@ -116,9 +116,9 @@ const styles = {
     lineHeight: '24px',
     fontSize: '14px',
     color: '#666',
-    margin: '5px auto 0 auto',
+    margin: '5px auto 0 auto'
   },
   infoDisplayTab: {},
   todo0: { marginTop: '20px' },
-  todo1: { textAlign: 'center', marginTop: '15px' },
+  todo1: { textAlign: 'center', marginTop: '15px' }
 };
