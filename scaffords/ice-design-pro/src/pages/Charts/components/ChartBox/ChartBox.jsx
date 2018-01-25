@@ -26,7 +26,7 @@ export default class ChartBox extends Component {
         median: 27000,
         q3: 32000,
         high: 38000,
-        outliers: [50000, 52000]
+        outliers: [50000, 52000],
       },
       {
         x: '职业 B',
@@ -35,7 +35,7 @@ export default class ChartBox extends Component {
         median: 62000,
         q3: 73000,
         high: 88000,
-        outliers: [32000, 29000, 106000]
+        outliers: [32000, 29000, 106000],
       },
       {
         x: '职业 C',
@@ -44,7 +44,7 @@ export default class ChartBox extends Component {
         median: 65000,
         q3: 74000,
         high: 83000,
-        outliers: [91000]
+        outliers: [91000],
       },
       {
         x: '职业 D',
@@ -53,7 +53,7 @@ export default class ChartBox extends Component {
         median: 130000,
         q3: 170000,
         high: 200000,
-        outliers: [42000, 210000, 215000]
+        outliers: [42000, 210000, 215000],
       },
       {
         x: '职业 E',
@@ -62,7 +62,7 @@ export default class ChartBox extends Component {
         median: 32000,
         q3: 38000,
         high: 42000,
-        outliers: [48000]
+        outliers: [48000],
       },
       {
         x: '职业 F',
@@ -71,7 +71,7 @@ export default class ChartBox extends Component {
         median: 69000,
         q3: 85000,
         high: 100000,
-        outliers: [110000, 115000, 32000]
+        outliers: [110000, 115000, 32000],
       },
       {
         x: '职业 G',
@@ -80,7 +80,7 @@ export default class ChartBox extends Component {
         median: 83000,
         q3: 93000,
         high: 100000,
-        outliers: [110000]
+        outliers: [110000],
       },
       {
         x: '职业 H',
@@ -89,29 +89,29 @@ export default class ChartBox extends Component {
         median: 84000,
         q3: 95000,
         high: 110000,
-        outliers: [57000, 54000]
-      }
+        outliers: [57000, 54000],
+      },
     ];
 
     const { DataView } = DataSet;
     const dv = new DataView().source(data);
     dv.transform({
       type: 'map',
-      callback: obj => {
+      callback: (obj) => {
         obj.range = [obj.low, obj.q1, obj.median, obj.q3, obj.high];
         return obj;
-      }
+      },
     });
 
     const cols = {
       range: {
         min: 0,
-        max: 240000
+        max: 240000,
       },
       outliers: {
         min: 0,
-        max: 240000
-      }
+        max: 240000,
+      },
     };
 
     return (
@@ -131,7 +131,7 @@ export default class ChartBox extends Component {
               showTitle={false}
               crosshairs={{
                 type: 'rect',
-                style: { fill: '#E4E8F1', fillOpacity: 0.43 }
+                style: { fill: '#E4E8F1', fillOpacity: 0.43 },
               }}
               itemTpl="<li data-index={index} style=&quot;margin-bottom:4px;&quot;><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}<br/><span style=&quot;padding-left: 16px&quot;>最大值：{high}</span><br/><span style=&quot;padding-left: 16px&quot;>上四分位数：{q3}</span><br/><span style=&quot;padding-left: 16px&quot;>中位数：{median}</span><br/><span style=&quot;padding-left: 16px&quot;>下四分位数：{q1}</span><br/><span style=&quot;padding-left: 16px&quot;>最小值：{low}</span><br/></li>"
             />
@@ -149,14 +149,14 @@ export default class ChartBox extends Component {
                     q1,
                     median,
                     q3,
-                    high
+                    high,
                   };
-                }
+                },
               ]}
               style={{
                 stroke: 'rgba(0, 0, 0, 0.45)',
                 fill: '#1890FF',
-                fillOpacity: 0.3
+                fillOpacity: 0.3,
               }}
             />
             <View data={data}>
@@ -181,6 +181,6 @@ const styles = {
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee'
-  }
+    borderBottom: '1px solid #eee',
+  },
 };

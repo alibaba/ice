@@ -36,10 +36,10 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: '500px'
+    minHeight: '500px',
   },
   image: { width: '260px', height: '260px', marginRight: '50px' },
   title: { color: '#333', fontSize: '24px', margin: '20px 0' },
   description: { color: '#666' },
-  notPermission: {}
+  notPermission: {},
 };

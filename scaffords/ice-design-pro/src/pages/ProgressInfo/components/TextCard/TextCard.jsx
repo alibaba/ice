@@ -54,11 +54,11 @@ export default class TextCard extends Component {
 
 const styles = {
   textCard: {
-    color: '#333'
+    color: '#333',
   },
   textCardList: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   textCardItem: {
     flex: '1',
@@ -68,17 +68,17 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textCardSubtitle: {
     fontSize: '12px',
-    marginBottom: '10px'
+    marginBottom: '10px',
   },
   textCardTitle: {
-    fontSize: '16px'
+    fontSize: '16px',
   },
   textCardNumber: {
     fontSize: '24px',
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 };

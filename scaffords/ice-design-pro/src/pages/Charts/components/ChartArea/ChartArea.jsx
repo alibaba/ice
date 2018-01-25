@@ -38,7 +38,7 @@ export default class ChartArea extends Component {
       { year: '2012', north: 344, south: -132 },
       { year: '2013', north: 366, south: -146 },
       { year: '2014', north: 389, south: -169 },
-      { year: '2015', north: 334, south: -184 }
+      { year: '2015', north: 334, south: -184 },
     ];
 
     const dv = new DataView().source(data);
@@ -46,13 +46,13 @@ export default class ChartArea extends Component {
       type: 'fold',
       fields: ['north', 'south'], // 展开字段集
       key: 'type', // key字段
-      value: 'value' // value字段
+      value: 'value', // value字段
     });
 
     const cols = {
       year: {
-        range: [0, 1]
-      }
+        range: [0, 1],
+      },
     };
 
     return (
@@ -64,9 +64,9 @@ export default class ChartArea extends Component {
             <Axis
               name="value"
               label={{
-                formatter: val => {
+                formatter: (val) => {
                   return `${(val / 10000).toFixed(1)}k`;
-                }
+                },
               }}
             />
             <Legend />
@@ -86,6 +86,6 @@ const styles = {
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee'
-  }
+    borderBottom: '1px solid #eee',
+  },
 };

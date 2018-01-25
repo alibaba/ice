@@ -10,7 +10,7 @@ const generatorData = () => {
     return {
       todo: `待办事项 ${index}`,
       memo: `备注说明文案 ${index}`,
-      validity: '2017-12-12'
+      validity: '2017-12-12',
     };
   });
 };
@@ -25,29 +25,29 @@ export default class SortableTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: generatorData()
+      dataSource: generatorData(),
     };
   }
 
-  moveUp = index => {
+  moveUp = (index) => {
     if (index > 0) {
       const dataSource = this.state.dataSource;
       const prevItem = dataSource[index - 1];
       const currentItem = dataSource[index];
       dataSource.splice(index - 1, 2, currentItem, prevItem);
       this.setState({
-        dataSource
+        dataSource,
       });
     }
   };
-  moveDown = index => {
+  moveDown = (index) => {
     if (index < this.state.dataSource.length - 1) {
       const dataSource = this.state.dataSource;
       const currentItem = dataSource[index];
       const nextItem = dataSource[index + 1];
       dataSource.splice(index, 2, nextItem, currentItem);
       this.setState({
-        dataSource
+        dataSource,
       });
     }
   };
@@ -97,5 +97,5 @@ export default class SortableTable extends Component {
 }
 
 const styles = {
-  sortableTable: {}
+  sortableTable: {},
 };
