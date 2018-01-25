@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Button, Step } from '@icedesign/base';
 import './SuccessDetail.scss';
 
@@ -15,7 +15,7 @@ export default class SuccessDetail extends Component {
     this.state = {
       value: ['填写信息', '申请审核', '开通账号', '完成'], // 步骤条信息
       current: 1, // 当前步骤
-      type: 'dot', // 步骤的类型，可选值: 'circle', 'arrow', 'dot'
+      type: 'dot' // 步骤的类型，可选值: 'circle', 'arrow', 'dot'
     };
   }
 
@@ -23,7 +23,7 @@ export default class SuccessDetail extends Component {
     const { value, current, type } = this.state;
     return (
       <div className="success-detail" style={styles.successDetail}>
-        <IceCard style={styles.container}>
+        <IceContainer style={styles.container}>
           <div className="success-detail-head" style={styles.successDetailHead}>
             <img
               src="https://img.alicdn.com/tfs/TB1ya6gh0zJ8KJjSspkXXbF7VXa-156-156.png"
@@ -51,7 +51,7 @@ export default class SuccessDetail extends Component {
             </Button>
             <Button type="primary">查看更多</Button>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -59,30 +59,30 @@ export default class SuccessDetail extends Component {
 
 const styles = {
   container: {
-    padding: '80px 40px',
+    padding: '80px 40px'
   },
   btn: {
-    marginRight: '6px',
+    marginRight: '6px'
   },
   successDetail: {
-    textAlign: 'center',
+    textAlign: 'center'
   },
   successDetailHead: {
-    position: 'relative',
+    position: 'relative'
   },
   img: {
     Width: '40px',
-    height: '40px',
+    height: '40px'
   },
   title: {
-    margin: '0',
+    margin: '0'
   },
   summary: {
     marginBottom: '40px',
     fontSize: '14px',
-    color: '#666',
+    color: '#666'
   },
   nextStep: {
-    margin: '80px 0',
-  },
+    margin: '80px 0'
+  }
 };

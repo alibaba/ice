@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Chart, Coord, Geom, Tooltip, Axis, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
 import './PieDoughnutChart.scss';
@@ -20,7 +20,7 @@ export default class PieDoughnutChart extends Component {
     const data = [
       { genre: '男', sold: 500 },
       { genre: '女', sold: 200 },
-      { genre: '未知', sold: 200 },
+      { genre: '未知', sold: 200 }
     ];
 
     const data2 = [
@@ -28,7 +28,7 @@ export default class PieDoughnutChart extends Component {
       { genre: '20~30岁', sold: 200 },
       { genre: '40~50岁', sold: 100 },
       { genre: '60~70岁', sold: 40 },
-      { genre: '80~90岁', sold: 30 },
+      { genre: '80~90岁', sold: 30 }
     ];
     const dv = new DataView();
     const dv2 = new DataView();
@@ -36,30 +36,30 @@ export default class PieDoughnutChart extends Component {
       type: 'percent',
       field: 'sold',
       dimension: 'genre',
-      as: 'percent',
+      as: 'percent'
     });
 
     dv2.source(data2).transform({
       type: 'percent',
       field: 'sold',
       dimension: 'genre',
-      as: 'percent',
+      as: 'percent'
     });
 
     const cols = {
       percent: {
-        formatter: (val) => {
+        formatter: val => {
           val = `${(val * 100).toFixed(2)}%`;
           return val;
-        },
-      },
+        }
+      }
     };
 
     return (
       <div className="pie-doughnut-chart">
         <Row style={{ padding: 0 }}>
           <Col span="12">
-            <IceCard className="tab-card" title="性别占比">
+            <IceContainer className="tab-card" title="性别占比">
               <Chart
                 width={400}
                 height={300}
@@ -77,10 +77,10 @@ export default class PieDoughnutChart extends Component {
                 />
                 <Geom type="intervalStack" position="percent" color="genre" />
               </Chart>
-            </IceCard>
+            </IceContainer>
           </Col>
           <Col span="12">
-            <IceCard className="tab-card" title="年龄分布">
+            <IceContainer className="tab-card" title="年龄分布">
               <Chart
                 width={450}
                 height={300}
@@ -98,7 +98,7 @@ export default class PieDoughnutChart extends Component {
                 />
                 <Geom type="intervalStack" position="percent" color="genre" />
               </Chart>
-            </IceCard>
+            </IceContainer>
           </Col>
         </Row>
       </div>

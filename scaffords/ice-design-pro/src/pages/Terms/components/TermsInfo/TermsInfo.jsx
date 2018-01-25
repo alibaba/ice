@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Checkbox, Button } from '@icedesign/base';
 import './TermsInfo.scss';
 
@@ -14,7 +14,7 @@ export default class TermsInfo extends Component {
   render() {
     return (
       <div className="terms-info" style={styles.termsInfo}>
-        <IceCard>
+        <IceContainer>
           <h1 style={styles.title}>淘宝达人合作协议</h1>
 
           <div style={styles.content}>
@@ -53,7 +53,7 @@ export default class TermsInfo extends Component {
               确认开通
             </Button>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -62,24 +62,24 @@ export default class TermsInfo extends Component {
 const styles = {
   termsInfo: {
     padding: '30px',
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   desc: {
     fontSize: '13px',
-    lineHeight: '28px',
+    lineHeight: '28px'
   },
   title: {
     textAlign: 'center',
     margin: '0',
     paddingBottom: '20px',
     fontSize: '20px',
-    borderBottom: '1px solid #dedede',
+    borderBottom: '1px solid #dedede'
   },
   content: {
     color: '#666',
     fontSize: '16px',
     padding: '20px 0',
-    borderBottom: '1px solid #dedede',
+    borderBottom: '1px solid #dedede'
   },
-  btn: { textAlign: 'center' },
+  btn: { textAlign: 'center' }
 };

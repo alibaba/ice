@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Chart, Axis, Geom, Tooltip } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './ChartTypeLine.scss';
 
 export default class ChartTypeLine extends Component {
@@ -31,7 +31,7 @@ export default class ChartTypeLine extends Component {
       { month: 'Sep', Tokyo: 23.3, London: 14.2 },
       { month: 'Oct', Tokyo: 18.3, London: 10.3 },
       { month: 'Nov', Tokyo: 13.9, London: 6.6 },
-      { month: 'Dec', Tokyo: 9.6, London: 4.8 },
+      { month: 'Dec', Tokyo: 9.6, London: 4.8 }
     ];
 
     // DataSet https://github.com/alibaba/BizCharts/blob/master/doc/tutorial/dataset.md#dataset
@@ -41,19 +41,19 @@ export default class ChartTypeLine extends Component {
       type: 'fold',
       fields: ['Tokyo', 'London'],
       key: 'city',
-      value: 'temperature',
+      value: 'temperature'
     });
 
     // 定义度量
     const cols = {
       month: {
-        range: [0, 1],
-      },
+        range: [0, 1]
+      }
     };
 
     return (
       <div className="chart-type-line">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>折线图</h4>
           <Chart height={400} data={dv} scale={cols} forceFit>
             <Axis name="month" />
@@ -75,7 +75,7 @@ export default class ChartTypeLine extends Component {
               style={{ stroke: '#fff', lineWidth: 1 }}
             />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -87,6 +87,6 @@ const styles = {
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee',
-  },
+    borderBottom: '1px solid #eee'
+  }
 };

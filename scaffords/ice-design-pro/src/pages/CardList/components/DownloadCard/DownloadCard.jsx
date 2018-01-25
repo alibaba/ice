@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import axios from 'axios';
 import { Tab, Button, Icon } from '@icedesign/base';
 import './DownloadCard.scss';
@@ -16,7 +16,7 @@ export default class DownloadCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabData: {},
+      tabData: {}
     };
   }
 
@@ -26,12 +26,12 @@ export default class DownloadCard extends Component {
   getData = () => {
     axios
       .get('/mock/download-card.json')
-      .then((response) => {
+      .then(response => {
         this.setState({
-          tabData: response.data.data || {},
+          tabData: response.data.data || {}
         });
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -40,7 +40,7 @@ export default class DownloadCard extends Component {
     this.getData();
   }
 
-  renderContent = (data) => {
+  renderContent = data => {
     return data.map((item, index) => {
       return (
         <div
@@ -98,7 +98,7 @@ export default class DownloadCard extends Component {
     const { tabData } = this.state;
     return (
       <div style={styles.downloadCard}>
-        <IceCard>
+        <IceContainer>
           <Tab type="bar">
             <TabPane tab="客户端SDK" key="1">
               {tabData.clientSDK
@@ -111,7 +111,7 @@ export default class DownloadCard extends Component {
                 : '暂无数据'}
             </TabPane>
           </Tab>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -129,19 +129,19 @@ const styles = {
     overflow: 'hidden',
     boxShadow:
       '0px 0px 2px 0px rgba(0, 0, 0, 0.1),0px 2px 2px 0px rgba(0, 0, 0, 0.1)',
-    background: '#fff',
+    background: '#fff'
   },
   cardBody: {
     textAlign: 'center',
     padding: '20px 0',
     marginBottom: '15px',
-    borderBottom: '1px solid #dedede',
+    borderBottom: '1px solid #dedede'
   },
   avatarWrapper: {
     width: '50px',
     height: '50px',
     overflow: 'hidden',
-    margin: '0 auto',
+    margin: '0 auto'
   },
   title: { fontSize: '20px', margin: '10px' },
   desc: { fontSize: '15px', color: '#999' },
@@ -154,14 +154,14 @@ const styles = {
     position: 'absolute',
     bottom: '0px',
     left: '0px',
-    right: '0px',
+    right: '0px'
   },
   bottomText: {
     marginLeft: '15px',
     fontSize: '13px',
     color: '#666',
-    textDecoration: 'none',
+    textDecoration: 'none'
   },
   downloadCard: {},
-  img: { width: '100%' },
+  img: { width: '100%' }
 };

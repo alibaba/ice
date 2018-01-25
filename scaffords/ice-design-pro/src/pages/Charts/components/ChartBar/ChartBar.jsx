@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Chart, Axis, Geom, Tooltip, Legend } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
 import './ChartBar.scss';
@@ -27,7 +27,7 @@ export default class ChartBar extends Component {
         May: 47,
         'Jun.': 20.3,
         'Jul.': 24,
-        'Aug.': 35.6,
+        'Aug.': 35.6
       },
       {
         name: 'Berlin',
@@ -38,8 +38,8 @@ export default class ChartBar extends Component {
         May: 52.6,
         'Jun.': 35.5,
         'Jul.': 37.4,
-        'Aug.': 42.4,
-      },
+        'Aug.': 42.4
+      }
     ];
 
     const ds = new DataSet();
@@ -48,12 +48,12 @@ export default class ChartBar extends Component {
       type: 'fold',
       fields: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.'], // 展开字段集
       key: '月份', // key字段
-      value: '月均降雨量', // value字段
+      value: '月均降雨量' // value字段
     });
 
     return (
       <div className="chart-bar">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>柱状图</h4>
           <Chart height={400} data={dv} forceFit>
             <Axis name="月份" />
@@ -67,7 +67,7 @@ export default class ChartBar extends Component {
               adjust={[{ type: 'dodge', marginRatio: 1 / 32 }]}
             />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -79,6 +79,6 @@ const styles = {
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee',
-  },
+    borderBottom: '1px solid #eee'
+  }
 };
