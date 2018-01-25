@@ -1,37 +1,31 @@
-'use strict';
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IceCard from '@icedesign/card';
+
+import RichEditor from './RichEditor';
 import './ContentEditor.scss';
 
 export default class ContentEditor extends Component {
   static displayName = 'ContentEditor';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   render() {
     return (
       <div className="content-editor">
         <IceCard>
-          hello content-editor
+          <RichEditor />
         </IceCard>
       </div>
     );
   }
 }
 
-const styles = {
-
-}
+const styles = {};
