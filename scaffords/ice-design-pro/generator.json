@@ -67,7 +67,7 @@
     },
     {
       "page": "Landing",
-      "path": "/",
+      "path": "/landing",
       "layout": "FixedHeaderFooterResponsiveLayout",
       "builtIn": true
     },
