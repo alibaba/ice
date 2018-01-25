@@ -32,7 +32,12 @@
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/card": "^0.1.1",
-    "prop-types": "^15.5.8"
+    "immutable": "^3.8.2",
+    "is-hotkey": "^0.1.1",
+    "prop-types": "^15.5.8",
+    "slate": "^0.32.1",
+    "slate-plain-serializer": "^0.5.1",
+    "slate-react": "^0.11.1"
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
@@ -45,7 +50,8 @@
     "name": "content-editor",
     "snapshot": "",
     "title": "内容编辑器",
-    "categories": ["form"
+    "categories": [
+      "form"
     ],
     "themePackage": "@icedesign/skin"
   }
