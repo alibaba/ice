@@ -1,7 +1,6 @@
 const { realpathSync } = require('fs');
 const { resolve } = require('path');
 const url = require('url');
-const envPublicUrl = process.env.PUBLIC_URL;
 
 function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
@@ -10,10 +9,6 @@ function resolveSDK(relativePath) {
 // We use `PUBLIC_URL` environment variable or "buildConfig.publicURL" or
 // "homepage" field to infer "public path" at which the app is served.
 const getPublicUrl = appPackageJson => {
-  if (envPublicUrl) {
-    return envPublicUrl;
-  }
-
   const appPackage = require(appPackageJson);
   if (appPackage.buildConfig && appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl) {
     return appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl;
@@ -41,7 +36,7 @@ function ensureSlash(path, needsSlash) {
 // It requires a trailing slash, or the file assets will get an incorrect path.
 function getServedPath(appPackageJson) {
   const publicUrl = getPublicUrl(appPackageJson);
-  const servedUrl = envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/');
+  const servedUrl = (publicUrl ? url.parse(publicUrl).pathname : '/');
   return ensureSlash(servedUrl, true);
 }
 
