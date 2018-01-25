@@ -1,9 +1,10 @@
+const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WebpackPluginImport = require('..');
 
 const config = {
-  entry: './entry.js',
+  entry: require.resolve('./entry.js'),
   module: {
     rules: [
       { test: /\.jsx?/i, use: 'babel-loader' },
@@ -21,6 +22,7 @@ const config = {
     'react-dom': 'window.ReactDOM',
   },
   output: {
+    path: path.join(__dirname, 'build'),
     filename: 'dist.js',
   },
   plugins: [
@@ -34,5 +36,6 @@ const config = {
 webpack(config, (err, stats) => {
   console.log(stats.toString({
     colors: true,
+    modules: false,
   }));
 });
