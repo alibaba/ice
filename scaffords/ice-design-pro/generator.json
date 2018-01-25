@@ -25,7 +25,7 @@
   "routes": [
     {
       "page": "Dashboard",
-      "path": "dashboard",
+      "path": "/",
       "layout": "HeaderAsideFooterLayout",
       "builtIn": true
     },

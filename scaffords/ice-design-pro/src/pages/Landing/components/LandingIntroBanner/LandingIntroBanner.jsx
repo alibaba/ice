@@ -50,13 +50,13 @@ export default class LandingIntroBanner extends Component {
                   了解更多
                 </Button>
               </a>
-              <Link to="/dashboard">
+              <Link to="/">
                 <Button
                   style={{ height: 50, padding: '0 58px', fontSize: 16 }}
                   type="primary"
                   size="large"
                 >
-                  前往首页
+                  前往 Dashboard
                 </Button>
               </Link>
             </div>
