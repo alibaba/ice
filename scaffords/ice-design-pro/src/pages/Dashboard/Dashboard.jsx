@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import BasicTab from './components/BasicTab';
 import DataDisplay from './components/DataDisplay';
 import TabChart from './components/TabChart';
 import PieDoughnutChart from './components/PieDoughnutChart';
@@ -19,9 +18,6 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard-page">
-
-        <BasicTab />
-
         <DataDisplay />
 
         <TabChart />
@@ -33,7 +29,6 @@ export default class Dashboard extends Component {
         <EditableTable />
 
         <ChartBar />
-
       </div>
     );
   }
