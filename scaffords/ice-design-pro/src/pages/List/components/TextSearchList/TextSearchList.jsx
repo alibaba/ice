@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Search } from '@icedesign/base';
 import ArticleList from './ArticleList';
 import Filter from './Filter';
@@ -14,7 +14,7 @@ const dataSource = [
     datetime: '2017年12月12日 18:00',
     star: 130,
     like: 233,
-    comment: 123,
+    comment: 123
   },
   {
     title: '越夏越嗨皮-7月官方营销活动-技能提升方向',
@@ -24,7 +24,7 @@ const dataSource = [
     datetime: '2017年12月12日 18:00',
     star: 130,
     like: 233,
-    comment: 123,
+    comment: 123
   },
   {
     title: '越夏越嗨皮-7月官方营销活动-技能提升方向',
@@ -34,7 +34,7 @@ const dataSource = [
     datetime: '2017年12月12日 18:00',
     star: 130,
     like: 233,
-    comment: 123,
+    comment: 123
   },
   {
     title: '越夏越嗨皮-7月官方营销活动-技能提升方向',
@@ -44,7 +44,7 @@ const dataSource = [
     datetime: '2017年12月12日 18:00',
     star: 130,
     like: 233,
-    comment: 123,
+    comment: 123
   },
   {
     title: '越夏越嗨皮-7月官方营销活动-技能提升方向',
@@ -54,8 +54,8 @@ const dataSource = [
     datetime: '2017年12月12日 18:00',
     star: 130,
     like: 233,
-    comment: 123,
-  },
+    comment: 123
+  }
 ];
 
 export default class TextSearchList extends Component {
@@ -69,14 +69,14 @@ export default class TextSearchList extends Component {
   render() {
     return (
       <div className="text-search-list">
-        <IceCard style={styles.searchWrap}>
+        <IceContainer style={styles.searchWrap}>
           <Search
             size="large"
             inputWidth={500}
             searchText="搜索"
             placeholder="请输入要搜索的关键词或商品链接"
           />
-        </IceCard>
+        </IceContainer>
         <Filter />
         <ArticleList dataSource={dataSource} />
       </div>
@@ -89,6 +89,6 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '80px',
-  },
+    height: '80px'
+  }
 };

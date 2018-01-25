@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle:0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Table, Pagination, Radio, Search } from '@icedesign/base';
 import DataBinder from '@icedesign/data-binder';
 import './TimeFilterTable.scss';
@@ -12,15 +12,15 @@ const { Group: RadioGroup } = Radio;
     // 详细请求配置请参见 https://github.com/axios/axios
     url: '/mock/time-filter-table.json',
     params: {
-      page: 1,
+      page: 1
     },
     defaultBindingData: {
       list: [],
       total: 100,
       pageSize: 10,
-      currentPage: 1,
-    },
-  },
+      currentPage: 1
+    }
+  }
 })
 export default class TimeFilterTable extends Component {
   static displayName = 'TimeFilterTable';
@@ -34,7 +34,7 @@ export default class TimeFilterTable extends Component {
 
     this.queryCache = {};
     this.state = {
-      timeRange: 'day',
+      timeRange: 'day'
     };
   }
 
@@ -45,24 +45,24 @@ export default class TimeFilterTable extends Component {
 
   fetchData = () => {
     this.props.updateBindingData('tableData', {
-      params: this.queryCache,
+      params: this.queryCache
     });
   };
 
-  changePage = (currentPage) => {
+  changePage = currentPage => {
     this.queryCache.page = currentPage;
     this.fetchData();
   };
 
-  onDateChange = (date) => {
+  onDateChange = date => {
     this.queryCache.timeRange = date;
     this.fetchData();
     this.setState({
-      timeRange: date,
+      timeRange: date
     });
   };
 
-  onSearch = (value) => {
+  onSearch = value => {
     this.queryCache.keywords = value.key;
     this.fetchData();
   };
@@ -76,7 +76,7 @@ export default class TimeFilterTable extends Component {
 
     return (
       <div className="time-filter-table" style={styles.timeFilterTable}>
-        <IceCard style={styles.filterCard}>
+        <IceContainer style={styles.filterCard}>
           <div>
             <span>选择活动日期范围：</span>
             <RadioGroup
@@ -84,16 +84,16 @@ export default class TimeFilterTable extends Component {
               dataSource={[
                 {
                   label: '今天',
-                  value: 'day',
+                  value: 'day'
                 },
                 {
                   label: '本周',
-                  value: 'week',
+                  value: 'week'
                 },
                 {
                   label: '本月',
-                  value: 'month',
-                },
+                  value: 'month'
+                }
               ]}
               onChange={this.onDateChange}
             />
@@ -108,8 +108,8 @@ export default class TimeFilterTable extends Component {
               onSearch={this.onSearch}
             />
           </div>
-        </IceCard>
-        <IceCard style={styles.tableCard}>
+        </IceContainer>
+        <IceContainer style={styles.tableCard}>
           <Table
             dataSource={tableData.list}
             isLoading={tableData.__loading}
@@ -129,7 +129,7 @@ export default class TimeFilterTable extends Component {
               onChange={this.changePage}
             />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -139,16 +139,16 @@ const styles = {
   filterCard: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   pagination: {
     textAlign: 'right',
     paddingTop: '20px',
-    paddingBottom: '10px',
+    paddingBottom: '10px'
   },
   tableCard: {
-    padding: '10px',
+    padding: '10px'
   },
   timeFilterTable: {},
-  todo0: { marginLeft: '10px' },
+  todo0: { marginLeft: '10px' }
 };

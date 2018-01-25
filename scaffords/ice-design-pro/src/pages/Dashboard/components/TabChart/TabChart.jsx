@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Tab } from '@icedesign/base';
 import SeriesLine from './SeriesLine';
 import BasicLine from './BasicLine';
@@ -19,14 +19,14 @@ export default class TabChart extends Component {
     this.state = {};
   }
 
-  handleChange = (key) => {
+  handleChange = key => {
     console.log('change', key);
   };
 
   render() {
     return (
       <div className="tab-chart">
-        <IceCard style={styles.card}>
+        <IceContainer style={styles.card}>
           <Tab onChange={this.handleChange}>
             <TabPane key="1" tab="收益走势">
               <SeriesLine />
@@ -35,7 +35,7 @@ export default class TabChart extends Component {
               <BasicLine />
             </TabPane>
           </Tab>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -44,6 +44,6 @@ export default class TabChart extends Component {
 const styles = {
   card: {
     marginBottom: '0',
-    padding: '0 20px',
-  },
+    padding: '0 20px'
+  }
 };

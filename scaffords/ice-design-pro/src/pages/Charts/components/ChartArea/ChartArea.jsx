@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import { DataView } from '@antv/data-set';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './ChartArea.scss';
 
 export default class ChartArea extends Component {
@@ -38,7 +38,7 @@ export default class ChartArea extends Component {
       { year: '2012', north: 344, south: -132 },
       { year: '2013', north: 366, south: -146 },
       { year: '2014', north: 389, south: -169 },
-      { year: '2015', north: 334, south: -184 },
+      { year: '2015', north: 334, south: -184 }
     ];
 
     const dv = new DataView().source(data);
@@ -46,27 +46,27 @@ export default class ChartArea extends Component {
       type: 'fold',
       fields: ['north', 'south'], // 展开字段集
       key: 'type', // key字段
-      value: 'value', // value字段
+      value: 'value' // value字段
     });
 
     const cols = {
       year: {
-        range: [0, 1],
-      },
+        range: [0, 1]
+      }
     };
 
     return (
       <div className="chart-area">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>面积图</h4>
           <Chart height={400} data={dv} scale={cols} forceFit>
             <Axis name="year" />
             <Axis
               name="value"
               label={{
-                formatter: (val) => {
+                formatter: val => {
                   return `${(val / 10000).toFixed(1)}k`;
-                },
+                }
               }}
             />
             <Legend />
@@ -74,7 +74,7 @@ export default class ChartArea extends Component {
             <Geom type="area" position="year*value" color="type" />
             <Geom type="line" position="year*value" size={2} color="type" />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -86,6 +86,6 @@ const styles = {
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee',
-  },
+    borderBottom: '1px solid #eee'
+  }
 };

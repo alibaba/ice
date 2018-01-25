@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './DetailTable.scss';
 
 export default class DetailTable extends Component {
@@ -17,7 +17,7 @@ export default class DetailTable extends Component {
   render() {
     return (
       <div className="detail-table">
-        <IceCard title="任务详情">
+        <IceContainer title="任务详情">
           <ul style={styles.detailTable}>
             <li style={styles.detailItem}>
               <div style={styles.detailTitle}>任务标题：</div>
@@ -48,7 +48,7 @@ export default class DetailTable extends Component {
               </div>
             </li>
           </ul>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -58,14 +58,14 @@ const styles = {
   detailItem: {
     padding: '15px 0px',
     display: 'flex',
-    borderTop: '1px solid #EEEFF3',
+    borderTop: '1px solid #EEEFF3'
   },
   detailTitle: {
     marginRight: '30px',
     textAlign: 'right',
     width: '120px',
-    color: '#999999',
+    color: '#999999'
   },
   detailBody: { flex: 1 },
-  statusProcessing: { color: '#64D874' },
+  statusProcessing: { color: '#64D874' }
 };

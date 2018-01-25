@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './EmptyContent.scss';
 
 export default class EmptyContent extends Component {
@@ -13,7 +13,7 @@ export default class EmptyContent extends Component {
   render() {
     return (
       <div className="empty-content">
-        <IceCard>
+        <IceContainer>
           <div style={styles.content}>
             <img
               src="https://img.alicdn.com/tfs/TB1WNNxjBHH8KJjy0FbXXcqlpXa-780-780.png"
@@ -27,7 +27,7 @@ export default class EmptyContent extends Component {
               </p>
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -38,9 +38,9 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: '500px',
+    minHeight: '500px'
   },
   image: { width: '260px', height: '260px', marginRight: '50px' },
   title: { color: '#333', fontSize: '24px', margin: '20px 0' },
-  description: { color: '#666' },
+  description: { color: '#666' }
 };

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Search } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import SingleItem from './SingleItem';
 import './FilterList.scss';
 
@@ -10,36 +10,36 @@ const dataSource = [
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2O4nSnblmpuFjSZFlXXbdQXXa_!!120976213.jpg_240x240.jpg',
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2O4nSnblmpuFjSZFlXXbdQXXa_!!120976213.jpg_240x240.jpg'
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2GiVsdS0mpuFjSZPiXXbssVXa_!!120976213.jpg_240x240.jpg',
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2GiVsdS0mpuFjSZPiXXbssVXa_!!120976213.jpg_240x240.jpg'
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2bxHGtpXXXXXVXXXXXXXXXXXX_!!120976213.jpg_240x240.jpg',
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2bxHGtpXXXXXVXXXXXXXXXXXX_!!120976213.jpg_240x240.jpg'
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2bEcHnXXXXXbgXXXXXXXXXXXX_!!120976213.jpg_100x100.jpg',
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2bEcHnXXXXXbgXXXXXXXXXXXX_!!120976213.jpg_100x100.jpg'
   },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
     price: '¥89',
     image:
-      '//img.alicdn.com/bao/uploaded/i2/TB11DjAIFXXXXaTXFXXXXXXXXXX_!!0-item_pic.jpg_100x100.jpg',
-  },
+      '//img.alicdn.com/bao/uploaded/i2/TB11DjAIFXXXXaTXFXXXXXXXXXX_!!0-item_pic.jpg_100x100.jpg'
+  }
 ];
 
 export default class FilterList extends Component {
@@ -56,7 +56,7 @@ export default class FilterList extends Component {
   render() {
     return (
       <div className="filter-list">
-        <IceCard style={{ ...styles.filterListHeaderWrapper }}>
+        <IceContainer style={{ ...styles.filterListHeaderWrapper }}>
           <div style={styles.searchWrapper}>
             <Search
               placeholder="标题"
@@ -97,15 +97,15 @@ export default class FilterList extends Component {
             </Button>
             <span />
           </div>
-        </IceCard>
+        </IceContainer>
 
-        <IceCard style={{ ...styles.searchResultWrapper }}>
+        <IceContainer style={{ ...styles.searchResultWrapper }}>
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -116,38 +116,38 @@ const styles = {
   selectItem: {
     padding: '0 16px',
     borderRight: '1px solid #ddd',
-    cursor: 'pointer',
+    cursor: 'pointer'
   },
   selectBtn: {
-    marginRight: '10px',
+    marginRight: '10px'
   },
   itemRow: {
     margin: '0 10px 10px 10px',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   filterListHeaderWrapper: {
     flexDirection: 'column',
-    position: 'relative',
+    position: 'relative'
   },
   searchWrapper: {
     position: 'absolute',
     right: '20px',
     top: '20px',
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   searchInput: {
-    marginRight: '15px',
+    marginRight: '15px'
   },
   filterCategories: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: '25px',
+    marginBottom: '25px'
   },
   filterCategoryChildren: {},
   searchResultWrapper: {
-    flexDirection: 'column',
-  },
+    flexDirection: 'column'
+  }
 };

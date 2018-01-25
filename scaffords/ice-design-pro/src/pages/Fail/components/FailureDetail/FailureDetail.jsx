@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './FailureDetail.scss';
 
 export default class FailureDetail extends Component {
@@ -17,7 +17,7 @@ export default class FailureDetail extends Component {
   render() {
     return (
       <div className="failure-detail" style={styles.failureDetail}>
-        <IceCard style={styles.card}>
+        <IceContainer style={styles.card}>
           <div style={styles.successDetailHead}>
             <img
               style={styles.img}
@@ -33,7 +33,7 @@ export default class FailureDetail extends Component {
           <a href="/" style={styles.backToLink}>
             返回修改
           </a>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -43,16 +43,16 @@ const styles = {
   failureDetail: { textAlign: 'center' },
   img: {
     width: '40px',
-    height: '40px',
+    height: '40px'
   },
   successDetailHead: {
-    position: 'relative',
+    position: 'relative'
   },
   title: { margin: '0', fontWeight: 'bold' },
   summary: {
     marginBottom: '40px',
     fontSize: '14px',
-    color: '#666',
+    color: '#666'
   },
   descrpiton: { fontSize: '14px', color: '#666' },
   backToLink: {
@@ -64,7 +64,7 @@ const styles = {
     lineHeight: '26px',
     color: '#fff',
     borderRadius: '50px',
-    backgroundColor: '#3080fe',
+    backgroundColor: '#3080fe'
   },
-  card: { padding: '80px 40px' },
+  card: { padding: '80px 40px' }
 };
