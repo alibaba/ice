@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Step, Grid, Icon } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './ApplicationProgress.scss';
 
 const dataSource = () => {
@@ -11,7 +11,7 @@ const dataSource = () => {
       url: 'https://img.alicdn.com/tps/TB18NwoNFXXXXXoXXXXXXXXXXXX-132-132.png',
       operation: '查看',
       description:
-        '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案',
+        '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案'
     },
     {
       condition: '校验条件',
@@ -19,7 +19,7 @@ const dataSource = () => {
       url: 'https://img.alicdn.com/tps/TB1VyMkNFXXXXc8XXXXXXXXXXXX-134-134.png',
       operation: '解决方式链接',
       description:
-        '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案',
+        '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案'
     },
     {
       condition: '身份认证',
@@ -27,7 +27,7 @@ const dataSource = () => {
       url: 'https://img.alicdn.com/tps/TB1QCMfNFXXXXaOXpXXXXXXXXXX-136-136.png',
       operation: '查看',
       description:
-        '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案',
+        '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案'
     },
     {
       condition: '非卖家',
@@ -35,7 +35,7 @@ const dataSource = () => {
       url: 'https://img.alicdn.com/tps/TB1mGnSNFXXXXbMaXXXXXXXXXXX-134-136.png',
       operation: '解决方式链接',
       description:
-        '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案',
+        '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案'
     },
     {
       condition: '18岁以上',
@@ -43,8 +43,8 @@ const dataSource = () => {
       url: 'https://img.alicdn.com/tps/TB1xwQiNFXXXXcfXXXXXXXXXXXX-136-134.png',
       operation: '解决方式链接',
       description:
-        '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案',
-    },
+        '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案'
+    }
   ];
 };
 
@@ -66,7 +66,7 @@ export default class ApplicationProgress extends Component {
     const data = dataSource();
     return (
       <div className="application-progress">
-        <IceCard>
+        <IceContainer>
           <Step current={0}>
             <Step.Item title="检测账号" />
             <Step.Item title="选择入住类型" />
@@ -116,7 +116,7 @@ export default class ApplicationProgress extends Component {
               下一步
             </Button>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -129,7 +129,7 @@ const styles = {
     width: '64px',
     height: '64px',
     borderRadius: '50',
-    marginBottom: '12px',
+    marginBottom: '12px'
   },
   itemBody: { padding: '10px 50px 0' },
   itemDescription: { color: '#666', marginTop: '20px', width: '309px' },
@@ -138,5 +138,5 @@ const styles = {
   itemFooter: { textAlign: 'center', color: '#666', marginTop: '40px' },
   nextBtn: { marginTop: '40px' },
   itemStatus: { color: '#f33', fontSize: '16px' },
-  itemStatusText: { marginLeft: '10px' },
+  itemStatusText: { marginLeft: '10px' }
 };

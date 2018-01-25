@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './DataDisplay.scss';
 
 const data = [
   {
     count: 100,
-    title: '日活跃数',
+    title: '日活跃数'
   },
   {
     count: '3,000',
-    title: '月活跃数',
+    title: '月活跃数'
   },
   {
     count: '20,000',
-    title: '年活跃数',
-  },
+    title: '年活跃数'
+  }
 ];
 
 export default class DataDisplay extends Component {
@@ -32,7 +32,7 @@ export default class DataDisplay extends Component {
   render() {
     return (
       <div className="data-display">
-        <IceCard>
+        <IceContainer>
           <div style={styles.items}>
             {data.map((item, index) => {
               return (
@@ -44,7 +44,7 @@ export default class DataDisplay extends Component {
               );
             })}
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -57,7 +57,7 @@ const styles = {
     margin: '12px 0',
     fontWeight: 'bold',
     fontSize: '32px',
-    color: '#15A0FF',
+    color: '#15A0FF'
   },
   title: { color: '#999' },
   splitLine: {
@@ -65,6 +65,6 @@ const styles = {
     margin: '0 auto',
     width: '24px',
     height: '1px',
-    background: '#9B9B9B',
-  },
+    background: '#9B9B9B'
+  }
 };

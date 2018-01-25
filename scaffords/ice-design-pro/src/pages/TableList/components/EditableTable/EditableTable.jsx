@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Table, Button } from '@icedesign/base';
 import CellEditor from './CellEditor';
 import './EditableTable.scss';
@@ -9,7 +9,7 @@ const generatorData = () => {
     return {
       todo: `待办事项 ${index}`,
       memo: `备注说明文案 ${index}`,
-      validity: '2017-12-12',
+      validity: '2017-12-12'
     };
   });
 };
@@ -24,7 +24,7 @@ export default class EditableTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: generatorData(),
+      dataSource: generatorData()
     };
   }
 
@@ -32,10 +32,10 @@ export default class EditableTable extends Component {
     return <span>{index}</span>;
   };
 
-  deleteItem = (index) => {
+  deleteItem = index => {
     this.state.dataSource.splice(index, 1);
     this.setState({
-      dataSource: this.state.dataSource,
+      dataSource: this.state.dataSource
     });
   };
 
@@ -51,7 +51,7 @@ export default class EditableTable extends Component {
     // todo 将修改后的表格数据发送接口，持久化
     this.state.dataSource[index][valueKey] = value;
     this.setState({
-      dataSource: this.state.dataSource,
+      dataSource: this.state.dataSource
     });
   };
 
@@ -70,17 +70,17 @@ export default class EditableTable extends Component {
     this.state.dataSource.push({
       todo: '暂无',
       memo: '暂无',
-      validity: '暂无',
+      validity: '暂无'
     });
     this.setState({
-      dataSource: this.state.dataSource,
+      dataSource: this.state.dataSource
     });
   };
 
   render() {
     return (
       <div className="editable-table">
-        <IceCard>
+        <IceContainer>
           <Table dataSource={this.state.dataSource} hasBorder={false}>
             <Table.Column width={80} title="顺序" cell={this.renderOrder} />
             <Table.Column
@@ -103,7 +103,7 @@ export default class EditableTable extends Component {
           <div onClick={this.addNewItem} style={styles.addNewItem}>
             + 新增一行
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -116,6 +116,6 @@ const styles = {
     lineHeight: '32px',
     marginTop: 20,
     cursor: 'pointer',
-    textAlign: 'center',
-  },
+    textAlign: 'center'
+  }
 };

@@ -1,7 +1,7 @@
 /* eslint react/jsx-no-bind: 0 */
 import React, { Component } from 'react';
 import { Table, Icon, Button } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './SortableTable.scss';
 
 const generatorData = () => {
@@ -10,7 +10,7 @@ const generatorData = () => {
     return {
       todo: `待办事项 ${index}`,
       memo: `备注说明文案 ${index}`,
-      validity: '2017-12-12',
+      validity: '2017-12-12'
     };
   });
 };
@@ -25,29 +25,29 @@ export default class SortableTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: generatorData(),
+      dataSource: generatorData()
     };
   }
 
-  moveUp = (index) => {
+  moveUp = index => {
     if (index > 0) {
       const dataSource = this.state.dataSource;
       const prevItem = dataSource[index - 1];
       const currentItem = dataSource[index];
       dataSource.splice(index - 1, 2, currentItem, prevItem);
       this.setState({
-        dataSource,
+        dataSource
       });
     }
   };
-  moveDown = (index) => {
+  moveDown = index => {
     if (index < this.state.dataSource.length - 1) {
       const dataSource = this.state.dataSource;
       const currentItem = dataSource[index];
       const nextItem = dataSource[index + 1];
       dataSource.splice(index, 2, nextItem, currentItem);
       this.setState({
-        dataSource,
+        dataSource
       });
     }
   };
@@ -82,7 +82,7 @@ export default class SortableTable extends Component {
   render() {
     return (
       <div className="sortable-table" style={styles.sortableTable}>
-        <IceCard>
+        <IceContainer>
           <Table dataSource={this.state.dataSource} hasBorder={false}>
             <Table.Column width={80} title="顺序" cell={this.renderOrder} />
             <Table.Column width={280} title="待办事项" dataIndex="todo" />
@@ -90,12 +90,12 @@ export default class SortableTable extends Component {
             <Table.Column width={180} title="有效时间" dataIndex="validity" />
             <Table.Column title="排序" cell={this.renderSortButton} />
           </Table>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
 }
 
 const styles = {
-  sortableTable: {},
+  sortableTable: {}
 };

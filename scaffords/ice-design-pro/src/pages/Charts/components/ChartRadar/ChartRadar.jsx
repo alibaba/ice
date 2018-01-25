@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, Coord, Legend } from 'bizcharts';
 import { DataView } from '@antv/data-set';
 import './ChartRadar.scss';
@@ -28,7 +28,7 @@ export default class ChartRadar extends Component {
       { item: 'Technology', a: 50, b: 40 },
       { item: 'Support', a: 30, b: 40 },
       { item: 'Sales', a: 60, b: 40 },
-      { item: 'UX', a: 50, b: 60 },
+      { item: 'UX', a: 50, b: 60 }
     ];
 
     const dv = new DataView().source(data);
@@ -36,19 +36,19 @@ export default class ChartRadar extends Component {
       type: 'fold',
       fields: ['a', 'b'], // 展开字段集
       key: 'user', // key字段
-      value: 'score', // value字段
+      value: 'score' // value字段
     });
 
     const cols = {
       score: {
         min: 0,
-        max: 80,
-      },
+        max: 80
+      }
     };
 
     return (
       <div className="chart-radar">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>雷达图</h4>
           <Chart
             height={400}
@@ -64,9 +64,9 @@ export default class ChartRadar extends Component {
               tickLine={null}
               grid={{
                 lineStyle: {
-                  lineDash: null,
+                  lineDash: null
                 },
-                hideFirstLine: false,
+                hideFirstLine: false
               }}
             />
             <Tooltip />
@@ -77,9 +77,9 @@ export default class ChartRadar extends Component {
               grid={{
                 type: 'polygon',
                 lineStyle: {
-                  lineDash: null,
+                  lineDash: null
                 },
-                alternateColor: 'rgba(0, 0, 0, 0.04)',
+                alternateColor: 'rgba(0, 0, 0, 0.04)'
               }}
             />
             <Legend name="user" marker="circle" offset={30} />
@@ -94,11 +94,11 @@ export default class ChartRadar extends Component {
               style={{
                 stroke: '#fff',
                 lineWidth: 1,
-                fillOpacity: 1,
+                fillOpacity: 1
               }}
             />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -110,6 +110,6 @@ const styles = {
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee',
-  },
+    borderBottom: '1px solid #eee'
+  }
 };

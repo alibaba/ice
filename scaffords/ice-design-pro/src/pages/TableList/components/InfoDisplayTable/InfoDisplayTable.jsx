@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './InfoDisplayTable.scss';
 
 /**
@@ -10,24 +10,24 @@ const dataSource = () => {
   return [
     {
       label: '姓名',
-      value: '张三',
+      value: '张三'
     },
     {
       label: '性别',
-      value: '男',
+      value: '男'
     },
     {
       label: '年龄',
-      value: '25',
+      value: '25'
     },
     {
       label: '籍贯',
-      value: '杭州',
+      value: '杭州'
     },
     {
       label: '职业',
-      value: '程序员',
-    },
+      value: '程序员'
+    }
   ];
 };
 
@@ -46,12 +46,12 @@ export default class InfoDisplayTable extends Component {
   render() {
     return (
       <div className="info-display-table" style={styles.infoDisplayTable}>
-        <IceCard>
+        <IceContainer>
           <Table dataSource={dataSource()}>
             <Table.Column title="个人信息" dataIndex="label" />
             <Table.Column title="" dataIndex="value" />
           </Table>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

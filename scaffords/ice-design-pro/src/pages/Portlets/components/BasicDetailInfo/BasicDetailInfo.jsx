@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './BasicDetailInfo.scss';
 
 /**
@@ -20,8 +20,8 @@ const dataSoruce = {
     'https://img.alicdn.com/imgextra/i3/672246894/TB2ziLDdbsTMeJjSszdXXcEupXa_!!672246894-0-beehive-scenes.jpg_180x180xzq90.jpg_.webp',
     'https://img.alicdn.com/imgextra/i1/2645911918/TB2qQA9fk.HL1JjSZFuXXX8dXXa_!!2645911918-0-beehive-scenes.jpg_180x180xzq90.jpg_.webp',
     'https://img.alicdn.com/bao/uploaded/TB2obaBXeLyQeBjy1XaXXcexFXa_!!0-dgshop.jpg_180x180xzq90.jpg_.webp',
-    'https://img.alicdn.com/tps/i1/99136475/TB2Cc7saE1HTKJjSZFmXXXeYFXa_!!0-juitemmedia.jpg_180x180q90.jpg_.webp',
-  ],
+    'https://img.alicdn.com/tps/i1/99136475/TB2Cc7saE1HTKJjSZFmXXXeYFXa_!!0-juitemmedia.jpg_180x180q90.jpg_.webp'
+  ]
 };
 
 export default class BasicDetailInfo extends Component {
@@ -39,7 +39,7 @@ export default class BasicDetailInfo extends Component {
   render() {
     return (
       <div className="basic-detail-info">
-        <IceCard>
+        <IceContainer>
           <h2 style={styles.basicDetailTitle}>基础详情页</h2>
           <div className="info-item" style={styles.infoItem}>
             <h5 style={styles.infoItemTitle}>基本信息</h5>
@@ -108,7 +108,7 @@ export default class BasicDetailInfo extends Component {
               </li>
             </ul>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
@@ -116,22 +116,22 @@ export default class BasicDetailInfo extends Component {
 
 const styles = {
   basicDetailTitle: {
-    fontSize: '16px',
+    fontSize: '16px'
   },
   infoItem: {
-    marginLeft: '16px',
+    marginLeft: '16px'
   },
   infoItemTitle: {
     borderLeft: '3px solid #3080fe',
-    paddingLeft: '10px',
+    paddingLeft: '10px'
   },
   attachLabel: {
-    float: 'left',
+    float: 'left'
   },
   attachPics: {
     width: '80px',
     height: '80px',
     border: '1px solid #eee',
-    marginRight: '10px',
-  },
+    marginRight: '10px'
+  }
 };
