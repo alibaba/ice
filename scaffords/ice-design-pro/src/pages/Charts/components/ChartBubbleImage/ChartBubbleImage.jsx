@@ -32,8 +32,8 @@ export default class ChartBubbleImage extends Component {
             y2: coord.start.y,
             stroke: '#ccc',
             lineWidth: 1,
-            lineDash: [4, 2]
-          }
+            lineDash: [4, 2],
+          },
         });
         return container.addShape('image', {
           attrs: {
@@ -41,10 +41,10 @@ export default class ChartBubbleImage extends Component {
             y: cfg.points[0].y - 12 * cfg.size,
             width: 12 * cfg.size,
             height: 12 * cfg.size,
-            img: cfg.shape[1]
-          }
+            img: cfg.shape[1],
+          },
         });
-      }
+      },
     });
 
     const data = [
@@ -53,7 +53,7 @@ export default class ChartBubbleImage extends Component {
       { name: 'Firefox', value: 30 },
       { name: 'Safari', value: 24 },
       { name: 'Opera', value: 15 },
-      { name: 'Undetectable', value: 8 }
+      { name: 'Undetectable', value: 8 },
     ];
 
     const imageMap = {
@@ -68,15 +68,15 @@ export default class ChartBubbleImage extends Component {
       Opera:
         'https://gw.alipayobjects.com/zos/rmsportal/vXiGOWCGZNKuVVpVYQAw.png',
       Undetectable:
-        'https://gw.alipayobjects.com/zos/rmsportal/NjApYXminrnhBgOXyuaK.png'
+        'https://gw.alipayobjects.com/zos/rmsportal/NjApYXminrnhBgOXyuaK.png',
     };
 
     const cols = {
       value: {
         nice: false,
         max: 60,
-        min: 0
-      }
+        min: 0,
+      },
     };
 
     return (
@@ -99,22 +99,22 @@ export default class ChartBubbleImage extends Component {
               color="name"
               shape={[
                 'name',
-                name => {
+                (name) => {
                   return ['image', imageMap[name]]; // 根据具体的字段指定 shape
-                }
+                },
               ]}
               size="value"
               style={{
                 stroke: '#fff',
                 lineWidth: 1,
-                fillOpacity: 1
+                fillOpacity: 1,
               }}
             >
               <Label
                 content="value"
                 offset={-20}
                 textStyle={{
-                  fontSize: 16 // 文本大小
+                  fontSize: 16, // 文本大小
                 }}
               />
             </Geom>
@@ -131,6 +131,6 @@ const styles = {
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee'
-  }
+    borderBottom: '1px solid #eee',
+  },
 };

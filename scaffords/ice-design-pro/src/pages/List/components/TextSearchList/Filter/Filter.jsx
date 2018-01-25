@@ -35,17 +35,17 @@ const styles = {
   container: {},
   category: {
     padding: '0 10px 15px',
-    borderBottom: '1px solid #eee'
+    borderBottom: '1px solid #eee',
   },
   others: {
-    padding: '15px 10px 0'
+    padding: '15px 10px 0',
   },
   label: {
     color: '#333',
     fontSize: '14px',
-    marginRight: '10px'
+    marginRight: '10px',
   },
   item: {
-    marginRight: '10px'
-  }
+    marginRight: '10px',
+  },
 };

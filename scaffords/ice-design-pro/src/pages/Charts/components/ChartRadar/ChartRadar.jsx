@@ -28,7 +28,7 @@ export default class ChartRadar extends Component {
       { item: 'Technology', a: 50, b: 40 },
       { item: 'Support', a: 30, b: 40 },
       { item: 'Sales', a: 60, b: 40 },
-      { item: 'UX', a: 50, b: 60 }
+      { item: 'UX', a: 50, b: 60 },
     ];
 
     const dv = new DataView().source(data);
@@ -36,14 +36,14 @@ export default class ChartRadar extends Component {
       type: 'fold',
       fields: ['a', 'b'], // 展开字段集
       key: 'user', // key字段
-      value: 'score' // value字段
+      value: 'score', // value字段
     });
 
     const cols = {
       score: {
         min: 0,
-        max: 80
-      }
+        max: 80,
+      },
     };
 
     return (
@@ -64,9 +64,9 @@ export default class ChartRadar extends Component {
               tickLine={null}
               grid={{
                 lineStyle: {
-                  lineDash: null
+                  lineDash: null,
                 },
-                hideFirstLine: false
+                hideFirstLine: false,
               }}
             />
             <Tooltip />
@@ -77,9 +77,9 @@ export default class ChartRadar extends Component {
               grid={{
                 type: 'polygon',
                 lineStyle: {
-                  lineDash: null
+                  lineDash: null,
                 },
-                alternateColor: 'rgba(0, 0, 0, 0.04)'
+                alternateColor: 'rgba(0, 0, 0, 0.04)',
               }}
             />
             <Legend name="user" marker="circle" offset={30} />
@@ -94,7 +94,7 @@ export default class ChartRadar extends Component {
               style={{
                 stroke: '#fff',
                 lineWidth: 1,
-                fillOpacity: 1
+                fillOpacity: 1,
               }}
             />
           </Chart>
@@ -110,6 +110,6 @@ const styles = {
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee'
-  }
+    borderBottom: '1px solid #eee',
+  },
 };

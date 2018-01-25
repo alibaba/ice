@@ -31,7 +31,7 @@ export default class ChartTypeLine extends Component {
       { month: 'Sep', Tokyo: 23.3, London: 14.2 },
       { month: 'Oct', Tokyo: 18.3, London: 10.3 },
       { month: 'Nov', Tokyo: 13.9, London: 6.6 },
-      { month: 'Dec', Tokyo: 9.6, London: 4.8 }
+      { month: 'Dec', Tokyo: 9.6, London: 4.8 },
     ];
 
     // DataSet https://github.com/alibaba/BizCharts/blob/master/doc/tutorial/dataset.md#dataset
@@ -41,14 +41,14 @@ export default class ChartTypeLine extends Component {
       type: 'fold',
       fields: ['Tokyo', 'London'],
       key: 'city',
-      value: 'temperature'
+      value: 'temperature',
     });
 
     // 定义度量
     const cols = {
       month: {
-        range: [0, 1]
-      }
+        range: [0, 1],
+      },
     };
 
     return (
@@ -87,6 +87,6 @@ const styles = {
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee'
-  }
+    borderBottom: '1px solid #eee',
+  },
 };

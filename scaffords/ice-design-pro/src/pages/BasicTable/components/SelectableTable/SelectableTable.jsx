@@ -11,14 +11,14 @@ const getMockData = () => {
     result.push({
       id: 100306660940 + i,
       title: {
-        name: `Quotation for 1PCS Nano ${3 + i}.0 controller compatible`
+        name: `Quotation for 1PCS Nano ${3 + i}.0 controller compatible`,
       },
       type: 'demo示例',
       template: '参数字典列表',
       status: '已发布',
       publisher: '小马',
       rate: '5',
-      time: 2000 + i
+      time: 2000 + i,
     });
   }
   return result;
@@ -40,10 +40,10 @@ export default class SelectableTable extends Component {
     // 表格可以勾选配置项
     this.rowSelection = {
       // 表格发生勾选状态变化时触发
-      onChange: ids => {
+      onChange: (ids) => {
         console.log('ids', ids);
         this.setState({
-          selectedRowKeys: ids
+          selectedRowKeys: ids,
         });
       },
       // 全选表格时触发的回调
@@ -51,22 +51,22 @@ export default class SelectableTable extends Component {
         console.log('onSelectAll', selected, records);
       },
       // 支持针对特殊行进行定制
-      getProps: record => {
+      getProps: (record) => {
         return {
-          disabled: record.id === 100306660941
+          disabled: record.id === 100306660941,
         };
-      }
+      },
     };
 
     this.state = {
       selectedRowKeys: [],
-      dataSource: getMockData()
+      dataSource: getMockData(),
     };
   }
 
   clearSelectedKeys = () => {
     this.setState({
-      selectedRowKeys: []
+      selectedRowKeys: [],
     });
   };
 
@@ -80,7 +80,7 @@ export default class SelectableTable extends Component {
     console.log('delete keys', selectedRowKeys);
   };
 
-  deleteItem = record => {
+  deleteItem = (record) => {
     // todo remove this record
     const { id } = record;
     console.log('delete item', id);
@@ -143,7 +143,7 @@ export default class SelectableTable extends Component {
             isLoading={this.state.isLoading}
             rowSelection={{
               ...this.rowSelection,
-              selectedRowKeys: this.state.selectedRowKeys
+              selectedRowKeys: this.state.selectedRowKeys,
             }}
           >
             <Table.Column title="编码" dataIndex="id" lock width={120} />
@@ -172,22 +172,22 @@ export default class SelectableTable extends Component {
 
 const styles = {
   selectableTable: {
-    width: '960px'
+    width: '960px',
   },
   batchBtn: {
-    marginRight: '10px'
+    marginRight: '10px',
   },
   iceCard: {
     marginBottom: '20px',
     minHeight: 'auto',
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   removeBtn: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   pagination: {
     textAlign: 'right',
-    paddingTop: '26px'
-  }
+    paddingTop: '26px',
+  },
 };
