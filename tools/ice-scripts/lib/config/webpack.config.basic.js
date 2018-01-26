@@ -1,25 +1,36 @@
-module.exports = function getWebpackConfigBasic(entry, paths, options = {}) {
-  let webpackConfig = {
-    devtool: 'cheap-module-source-map',
+const getRules = require('./getRules');
+const getPlugins = require('./getPlugins');
+const paths = require('./paths');
+/**
+ * 可以在 buildConfig 中覆盖的配置项:
+ *  1. devtool: ''
+ *  2. output: {}
+ *  3. publicPath
+ *  4. externals
+ *  5. entry
+ */
+module.exports = function getWebpackConfigBasic(entry, paths, buildConfig = {}) {
+  const webpackConfig = {
+    devtool: buildConfig.devtool || 'cheap-module-source-map',
     context: paths.appDirectory,
-    entry: entry,
+    entry,
     output: Object.assign({
       path: paths.appBuild,
       filename: '[name].js',
-      publicPath: '/dist/',
-    }),
+      publicPath: paths.servedPath,
+    }, buildConfig.output || {}),
     resolve: {
       modules: [paths.appNodeModules, 'node_modules'],
       extensions: ['.js', '.jsx', '.json', '.html'],
     },
-    externals: {
+    externals: buildConfig.externals || {
       react: 'window.React',
       'react-dom': 'window.ReactDOM',
     },
     module: {
-      rules: require('./getRules')(paths, options),
+      rules: getRules(paths, buildConfig),
     },
-    plugins: require('./getPlugins')(paths, options),
+    plugins: getPlugins(paths, buildConfig),
   };
 
   return webpackConfig;
