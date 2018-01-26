@@ -29,8 +29,8 @@
   },
   "config": {
     "ghooks": {
-      "commit-msg": "./scripts/validate-commit-msg.js",
-      "pre-push": "npm run lint"
+      "pre-commit": "npm run lint",
+      "commit-msg": "./scripts/validate-commit-msg.js"
     },
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
