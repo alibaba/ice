@@ -60,7 +60,6 @@ ice-design-pro
 ├── public      // 静态资源
 ├── src
 │   ├── components  // 公共组件
-│   ├── config      // 公共配置
 │   ├── layouts     // 通用布局
 │   ├── pages       // 页面
 │   ├── index.js    // 应用入口
