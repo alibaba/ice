@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/fixed-header-footer-responsive-layout",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "固定的顶部导航 + 底部栏 + 自适应宽度内容区的布局, 通常用于项目介绍页, 首页。",
   "files": [
     "src/",
