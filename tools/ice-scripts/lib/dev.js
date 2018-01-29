@@ -23,7 +23,7 @@ const iceworksClient = require('./iceworksClient');
 
 module.exports = function (args, subprocess) {
   const cwd = process.cwd();
-  const HOST = args.host || '0.0.0.0';
+  const HOST = args.host || '127.0.0.1';
   const PORT = args.port || 3333;
 
   const send = function (data) {
@@ -80,7 +80,6 @@ module.exports = function (args, subprocess) {
       isFirstCompile = false;
       console.log(chalk.cyan('Starting the development server...'));
       console.log('   ', chalk.yellow(`http://${HOST}:${PORT}`));
-      console.log('   ', chalk.yellow(`http://127.0.0.1:${PORT}`));
       console.log('   ', chalk.yellow(`http://${LOCAL_IP}:${PORT}`));
     }
 
