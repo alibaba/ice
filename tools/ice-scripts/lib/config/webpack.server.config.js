@@ -1,4 +1,4 @@
-const DEV_DIST_DIR = '/dist/';
+const DEV_DIST_DIR = '/build/';
 
 module.exports = (paths, options = {}) => {
   const devType = options.devType;
@@ -18,7 +18,7 @@ module.exports = (paths, options = {}) => {
     proxy: {
       '/**': {
         // target: '/index.html', // default target
-        bypass: function(req, res, opt) {
+        bypass: function (req, res, opt) {
           // your custom code to check for any exceptions
           // console.log('bypass check', {req: req, res:res, opt: opt});
           if (devType === 'block') {

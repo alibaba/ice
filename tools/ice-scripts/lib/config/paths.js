@@ -48,7 +48,7 @@ module.exports = function getPaths(cwd) {
   }
 
   return {
-    appBuild: resolveApp('dist'),
+    appBuild: resolveApp('build'),
     appPublic: resolveApp('public'),
     appPackageJson: resolveApp('package.json'),
     appAbcJson: resolveApp('abc.json'),
