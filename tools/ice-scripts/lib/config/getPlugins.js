@@ -3,8 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
-
-const AdditionalStyleWebpackPlugin = require('../plugins/additional-style-webpack-plugin');
+const WebpackPluginImport = require('webpack-plugin-import');
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
 
@@ -17,7 +16,16 @@ module.exports = function (paths, options = {}) {
     }),
     new SimpleProgressPlugin(),
     new CaseSensitivePathsPlugin(),
-    new AdditionalStyleWebpackPlugin(),
+    new WebpackPluginImport([
+      {
+        libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /@icedesign\/.*/,
+        stylePath: 'style.js',
+      },
+    ]),
   ];
 
   const themePackage = options.theme || options.themePackage;
