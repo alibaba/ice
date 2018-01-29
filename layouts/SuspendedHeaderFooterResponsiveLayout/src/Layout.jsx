@@ -4,7 +4,8 @@ import Footer from './__components_Footer__';
 import './Layout.scss';
 
 // 自定义背景图
-const backgroundImage = 'https://img.alicdn.com/tfs/TB1j9kWgvDH8KJjy1XcXXcpdXXa-1680-870.jpg';
+const backgroundImage =
+  'https://img.alicdn.com/tfs/TB1j9kWgvDH8KJjy1XcXXcpdXXa-1680-870.jpg';
 
 export default class LandingLayout extends PureComponent {
   static propTypes = {};
@@ -13,14 +14,12 @@ export default class LandingLayout extends PureComponent {
 
   render() {
     return (
-      <div className="fixed-header-footer-responsive-layout">
-        <div className="fixed-header-footer-responsive-layout-header">
+      <div className="suspended-header-footer-responsive-layout">
+        <div className="suspended-header-footer-responsive-layout-header">
           <Header />
         </div>
         <div style={styles.introPicture} />
-        <div style={styles.main}>
-          {this.props.children}
-        </div>
+        <div style={styles.main}>{this.props.children}</div>
         <Footer />
       </div>
     );
