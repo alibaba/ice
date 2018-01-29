@@ -1,4 +1,4 @@
-const babelPluginIce = require.resolve('../../dependencies/babel-plugin-ice');
+const babelPluginImport = require('babel-plugin-import').default;
 /**
  * 编译设置
  * @param {Object} buildConfig 定义在 package.json 的字段
@@ -36,9 +36,7 @@ module.exports = (buildConfig = {}) => {
         regenerator: true,
         moduleName: 'babel-runtime',
       }],
-      [babelPluginIce, { libraryName: '@ali/ice' }],
-      [babelPluginIce, { libraryName: '@alife/next' }],
-      [babelPluginIce, { libraryName: '@icedesign/base' }],
+      [babelPluginImport, { libraryName: '@icedesign/base' }],
     ],
   };
 };
