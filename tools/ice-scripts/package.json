@@ -98,7 +98,8 @@
     "istanbul": "^0.4.5",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "webpack-bundle-analyzer": "^2.9.2"
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.com",
