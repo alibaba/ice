@@ -7,19 +7,27 @@ const getWebpackConfigBasic = require('./webpack.config.basic');
 module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
   const baseConfig = getWebpackConfigBasic(entry, paths, options);
 
+  const plugins = [
+    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+  ];
+
+  if (options.webpackBundleAnalyzer !== false) {
+    plugins.push(
+      new BundleAnalyzerPlugin({
+        // use a fixed port
+        // http://127.0.0.1:49123/report.html
+        analyzerPort: 49123,
+      })
+    );
+  }
+
   return webpackMerge(baseConfig, {
     devtool: 'cheap-module-source-map',
     output: {
       publicPath: '/build/',
     },
-    plugins: [
-      new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NamedModulesPlugin(),
-      new BundleAnalyzerPlugin({
-        analyzerPort: 49123,
-        // http://127.0.0.1:49123/report.html
-      }),
-    ],
+    plugins,
   });
 };
