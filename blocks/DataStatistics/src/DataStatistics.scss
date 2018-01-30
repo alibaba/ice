@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.data-statistics {
+  .item-box:nth-child(2n) {
+    justify-content: flex-end;
+  }
+  .icon {
+    &:before {
+      font-size: 31px;
+      width: 31px;
+    }
+  }
+}
