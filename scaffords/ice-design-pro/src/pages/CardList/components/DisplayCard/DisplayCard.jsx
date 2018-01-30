@@ -1,6 +1,6 @@
 /* eslint react/jsx-no-target-blank: 0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './DisplayCard.scss';
 
 export default class DisplayCard extends Component {
@@ -36,7 +36,7 @@ export default class DisplayCard extends Component {
     );
     return (
       <div className="display-card">
-        <IceCard
+        <IceContainer
           className="display-card-container"
           style={styles.displayCardContainer}
         >
@@ -132,7 +132,7 @@ export default class DisplayCard extends Component {
               +100
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

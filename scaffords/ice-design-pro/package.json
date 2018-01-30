@@ -1,7 +1,6 @@
 {
   "name": "@icedesign/scafford-pro",
-  "title": "ICE 项目脚手架 Pro",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "dependencies": {
     "@antv/data-set": "^0.8.5",
     "@icedesign/base": "^0.1.0",
@@ -43,5 +42,10 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js"
+  },
+  "scaffordConfig": {
+    "name": "ice-design-pro",
+    "title": "Ice Design Pro",
+    "snapshot": "https://gw.alicdn.com/tfs/TB1lkailOqAXuNjy1XdXXaYcVXa-2780-1608.png"
   }
 }
