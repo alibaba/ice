@@ -6,10 +6,6 @@ const autoGenAsideNavs = [];
 
 const customHeaderNavs = [
   {
-    text: '首页',
-    to: '/dashboard',
-  },
-  {
     text: '反馈',
     to: 'https://github.com/alibaba/ice/issues/new',
     external: true,
@@ -24,9 +20,14 @@ const customHeaderNavs = [
 ];
 const customAsideNavs = [
   {
-    text: '首页',
-    to: '/dashboard',
+    text: 'Dashboard',
+    to: '/',
     icon: 'nav-list',
+  },
+  {
+    text: '介绍页',
+    to: '/landing',
+    icon: 'process',
   },
   {
     text: '图表页',

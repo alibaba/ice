@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Step, Grid, Icon } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './ApplicationProgress.scss';
 
 const dataSource = () => {
@@ -66,7 +66,7 @@ export default class ApplicationProgress extends Component {
     const data = dataSource();
     return (
       <div className="application-progress">
-        <IceCard>
+        <IceContainer>
           <Step current={0}>
             <Step.Item title="检测账号" />
             <Step.Item title="选择入住类型" />
@@ -116,7 +116,7 @@ export default class ApplicationProgress extends Component {
               下一步
             </Button>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

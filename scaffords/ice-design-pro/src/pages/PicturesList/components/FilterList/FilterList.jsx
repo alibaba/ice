@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Search } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import SingleItem from './SingleItem';
 import './FilterList.scss';
 
@@ -56,7 +56,7 @@ export default class FilterList extends Component {
   render() {
     return (
       <div className="filter-list">
-        <IceCard style={{ ...styles.filterListHeaderWrapper }}>
+        <IceContainer style={{ ...styles.filterListHeaderWrapper }}>
           <div style={styles.searchWrapper}>
             <Search
               placeholder="标题"
@@ -97,15 +97,15 @@ export default class FilterList extends Component {
             </Button>
             <span />
           </div>
-        </IceCard>
+        </IceContainer>
 
-        <IceCard style={{ ...styles.searchResultWrapper }}>
+        <IceContainer style={{ ...styles.searchResultWrapper }}>
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

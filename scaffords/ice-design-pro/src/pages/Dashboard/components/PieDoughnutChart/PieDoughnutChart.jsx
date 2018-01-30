@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Chart, Coord, Geom, Tooltip, Axis, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
 import './PieDoughnutChart.scss';
@@ -59,7 +59,7 @@ export default class PieDoughnutChart extends Component {
       <div className="pie-doughnut-chart" style={{ marginTop: '20px' }}>
         <Row style={{ padding: 0 }}>
           <Col span="12">
-            <IceCard className="tab-card" title="性别占比">
+            <IceContainer className="tab-card" title="性别占比">
               <Chart
                 width={400}
                 height={300}
@@ -77,10 +77,10 @@ export default class PieDoughnutChart extends Component {
                 />
                 <Geom type="intervalStack" position="percent" color="genre" />
               </Chart>
-            </IceCard>
+            </IceContainer>
           </Col>
           <Col span="12">
-            <IceCard className="tab-card" title="年龄分布">
+            <IceContainer className="tab-card" title="年龄分布">
               <Chart
                 width={450}
                 height={300}
@@ -98,7 +98,7 @@ export default class PieDoughnutChart extends Component {
                 />
                 <Geom type="intervalStack" position="percent" color="genre" />
               </Chart>
-            </IceCard>
+            </IceContainer>
           </Col>
         </Row>
       </div>

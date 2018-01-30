@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './FailureDetail.scss';
 
 export default class FailureDetail extends Component {
@@ -17,7 +17,7 @@ export default class FailureDetail extends Component {
   render() {
     return (
       <div className="failure-detail" style={styles.failureDetail}>
-        <IceCard style={styles.card}>
+        <IceContainer style={styles.card}>
           <div style={styles.successDetailHead}>
             <img
               style={styles.img}
@@ -33,7 +33,7 @@ export default class FailureDetail extends Component {
           <a href="/" style={styles.backToLink}>
             返回修改
           </a>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
