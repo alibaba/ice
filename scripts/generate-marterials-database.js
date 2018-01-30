@@ -6,38 +6,9 @@ const rimraf = require('rimraf');
 const cp = require('child_process');
 const os = require('os');
 const uppercamelcase = require('uppercamelcase');
-
 const request = require('request-promise');
 const rp = require('request-promise');
 const depAnalyze = require('./helpers/dep-analyze');
-
-const TMPDIR = path.join(os.tmpdir(), 'iceblocks');
-rimraf.sync(TMPDIR);
-mkdirp.sync(TMPDIR);
-
-/**
- * 下载和解压
- */
-function downloadAndUntar() {
-  const tarballURL = 'https://github.com/alibaba/ice/archive/master.tar.gz';
-  console.log('Temp Dir Path:', TMPDIR);
-  return new Promise((resolve, reject) => {
-    console.log('Start downloading alibaba/ice@master.tgz...');
-    cp.spawnSync('wget', [tarballURL], {
-      cwd: TMPDIR,
-      // stdio: 'inherit',
-    });
-
-    console.log('Start untaring...');
-    cp.spawnSync('tar', ['xzvf', 'master.tar.gz'], {
-      cwd: TMPDIR,
-      // stdio: 'inherit',
-    });
-    resolve(
-      path.join(TMPDIR, 'ice-master')
-    );
-  });
-}
 
 /**
  * 生成 blocks 信息列表
@@ -111,6 +82,8 @@ function generateScaffords(files, SPACE) {
 
     return {
       ...pkg.scaffordConfig,
+      npm: pkg.name,
+      version: pkg.version,
       layouts: generatorJson.layouts || [],
       dependencies,
       devDependencies,
@@ -160,15 +133,35 @@ function gatherScaffords(pattern, SPACE) {
   })
 }
 
+function checkIsPublished(npm, version, registry) {
+  return rp({ uri: `${registry}${npm}/${version}`, json: true })
+    .then((body) => {
+      return true;
+    })
+    .catch((err) => {
+      throw new Error(`${npm}@${version} is not published at ${registry}`);
+    });
+}
+
 // entry and run
 function main() {
-  return downloadAndUntar()
+  return Promise.resolve(path.resolve(__dirname, '..'))
     .then((space) => {
       return Promise.all([
         gatherBlocksOrLayouts('blocks/*/package.json', space),
         gatherBlocksOrLayouts('layouts/*/package.json', space),
         gatherScaffords('scaffords/*/package.json', space),
       ]);
+    })
+    .then(([blocks, layouts, scaffords]) => {
+      // check version published
+      const registry = 'http://registry.npm.taobao.org/';
+
+      return Promise.all([
+        ...blocks.map(({ npm, version }) => checkIsPublished(npm, version, registry)),
+        ...layouts.map(({ npm, version }) => checkIsPublished(npm, version, registry)),
+        ...scaffords.map(({ npm, version }) => checkIsPublished(npm, version, registry))
+      ]).then(() => [blocks, layouts, scaffords]);
     })
     .then(([blocks, layouts, scaffords]) => {
       const distDir = path.resolve(__dirname, '../databases');
@@ -188,10 +181,10 @@ function main() {
         JSON.stringify(scaffords, null, 2) + '\n',
       );
 
-      console.log('done');
-      // console.log('blocks', blocks);
-      // console.log('layouts', layouts);
-      // console.log('scaffords', scaffords);
+      console.log('Database generated.');
+    })
+    .catch((err) => {
+      console.log('caught error:\n', err.message);
     });
 };
 Promise.resolve(main());
