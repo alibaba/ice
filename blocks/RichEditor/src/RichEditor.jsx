@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
@@ -27,12 +27,12 @@ export default class RichEditor extends Component {
     };
   }
 
-  hasMark = (type) => {
+  hasMark = type => {
     const { value } = this.state;
     return value.activeMarks.some(mark => mark.type === type);
   };
 
-  hasBlock = (type) => {
+  hasBlock = type => {
     const { value } = this.state;
     return value.blocks.some(node => node.type === type);
   };
@@ -92,7 +92,7 @@ export default class RichEditor extends Component {
       }
     } else {
       const isList = this.hasBlock('list-item');
-      const isType = value.blocks.some((block) => {
+      const isType = value.blocks.some(block => {
         return !!document.getClosest(block.key, parent => parent.type === type);
       });
 
@@ -138,7 +138,7 @@ export default class RichEditor extends Component {
   };
 
   // 配置 block type 对应在富文本里面的渲染组件
-  renderNode = (props) => {
+  renderNode = props => {
     const { attributes, children, node } = props;
     switch (node.type) {
       case 'block-quote':
@@ -159,7 +159,7 @@ export default class RichEditor extends Component {
   };
 
   // 配置 mark 对应在富文本里面的渲染组件
-  renderMark = (props) => {
+  renderMark = props => {
     const { children, mark } = props;
     switch (mark.type) {
       case 'bold':
@@ -178,7 +178,7 @@ export default class RichEditor extends Component {
   render() {
     return (
       <div className="rich-editor">
-        <IceCard>
+        <IceContainer>
           <div>
             <div className="rich-editor-menu rich-editor-toolbar-menu">
               {this.renderMarkButton('bold', 'format_bold')}
@@ -203,7 +203,7 @@ export default class RichEditor extends Component {
               />
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
