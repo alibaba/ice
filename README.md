@@ -15,7 +15,7 @@
 
 :dart: **GUI 工具：** 零配置的工程整合，物料可视化一键导入复用 [点击下载](https://alibaba.github.io/ice/#/iceworks)
 
-:art: **ICE Design 设计语言：** 淘宝中后台通用的 [设计语言](https://alibaba.github.io/ice/design.html)  
+:art: **ICE DESIGN 设计语言：** 淘宝中后台通用的 [设计语言](https://alibaba.github.io/ice/design.html)  
 
 ## 开发及发布流程
 

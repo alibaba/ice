@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './DataDisplay.scss';
 
 const data = [
@@ -32,7 +32,7 @@ export default class DataDisplay extends Component {
   render() {
     return (
       <div className="data-display">
-        <IceCard>
+        <IceContainer>
           <div style={styles.items}>
             {data.map((item, index) => {
               return (
@@ -44,7 +44,7 @@ export default class DataDisplay extends Component {
               );
             })}
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
