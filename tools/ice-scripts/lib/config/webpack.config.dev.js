@@ -3,6 +3,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
 const getWebpackConfigBasic = require('./webpack.config.basic');
+const env = process.env;
 
 module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
   const baseConfig = getWebpackConfigBasic(entry, paths, options);
@@ -13,12 +14,12 @@ module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
     new webpack.NamedModulesPlugin(),
   ];
 
-  if (options.webpackBundleAnalyzer !== false) {
+  if (options.webpackBundleAnalyzer !== false && env.ANALYZER_PORT) {
     plugins.push(
       new BundleAnalyzerPlugin({
         // use a fixed port
-        // http://127.0.0.1:49123/report.html
-        analyzerPort: 49123,
+        // http://127.0.0.1:$PORT/report.html
+        analyzerPort: env.ANALYZER_PORT,
       })
     );
   }
