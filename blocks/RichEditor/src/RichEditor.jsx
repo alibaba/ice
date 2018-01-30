@@ -154,7 +154,7 @@ export default class RichEditor extends Component {
       case 'numbered-list':
         return <ol {...attributes}>{children}</ol>;
       default:
-        return <div />;
+        return <div {...attributes}>{children}</div>;
     }
   };
 
@@ -171,7 +171,7 @@ export default class RichEditor extends Component {
       case 'underlined':
         return <u>{children}</u>;
       default:
-        return <div />;
+        return <span>{children}</span>;
     }
   };
 
