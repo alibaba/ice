@@ -1,7 +1,7 @@
 /* eslint no-mixed-operators: 0 */
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, Label, Shape } from 'bizcharts';
 import './ChartBubbleImage.scss';
 
@@ -81,7 +81,7 @@ export default class ChartBubbleImage extends Component {
 
     return (
       <div className="chart-bubble-image">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>自定义气泡图</h4>
           <Chart
             height={400}
@@ -119,7 +119,7 @@ export default class ChartBubbleImage extends Component {
               />
             </Geom>
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

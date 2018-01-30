@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import axios from 'axios';
 import { Tab, Button, Icon } from '@icedesign/base';
 import './DownloadCard.scss';
@@ -98,7 +98,7 @@ export default class DownloadCard extends Component {
     const { tabData } = this.state;
     return (
       <div style={styles.downloadCard}>
-        <IceCard>
+        <IceContainer>
           <Tab type="bar">
             <TabPane tab="客户端SDK" key="1">
               {tabData.clientSDK
@@ -111,7 +111,7 @@ export default class DownloadCard extends Component {
                 : '暂无数据'}
             </TabPane>
           </Tab>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

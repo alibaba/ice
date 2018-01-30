@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, View } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
 import './ChartBox.scss';
@@ -116,7 +116,7 @@ export default class ChartBox extends Component {
 
     return (
       <div className="chart-box">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>箱型图</h4>
           <Chart
             height={400}
@@ -169,7 +169,7 @@ export default class ChartBox extends Component {
               />
             </View>
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

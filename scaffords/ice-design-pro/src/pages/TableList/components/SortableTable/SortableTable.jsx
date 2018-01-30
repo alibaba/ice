@@ -1,7 +1,7 @@
 /* eslint react/jsx-no-bind: 0 */
 import React, { Component } from 'react';
 import { Table, Icon, Button } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './SortableTable.scss';
 
 const generatorData = () => {
@@ -82,7 +82,7 @@ export default class SortableTable extends Component {
   render() {
     return (
       <div className="sortable-table" style={styles.sortableTable}>
-        <IceCard>
+        <IceContainer>
           <Table dataSource={this.state.dataSource} hasBorder={false}>
             <Table.Column width={80} title="顺序" cell={this.renderOrder} />
             <Table.Column width={280} title="待办事项" dataIndex="todo" />
@@ -90,7 +90,7 @@ export default class SortableTable extends Component {
             <Table.Column width={180} title="有效时间" dataIndex="validity" />
             <Table.Column title="排序" cell={this.renderSortButton} />
           </Table>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Checkbox, Button } from '@icedesign/base';
 import './TermsInfo.scss';
 
@@ -14,7 +14,7 @@ export default class TermsInfo extends Component {
   render() {
     return (
       <div className="terms-info" style={styles.termsInfo}>
-        <IceCard>
+        <IceContainer>
           <h1 style={styles.title}>淘宝达人合作协议</h1>
 
           <div style={styles.content}>
@@ -53,7 +53,7 @@ export default class TermsInfo extends Component {
               确认开通
             </Button>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

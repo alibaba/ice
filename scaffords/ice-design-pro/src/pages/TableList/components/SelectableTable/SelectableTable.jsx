@@ -1,7 +1,7 @@
 /* eslint no-plusplus: 0 */
 import React, { Component } from 'react';
 import { Table, Button, Icon, Pagination } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 
 import './SelectableTable.scss';
 
@@ -100,7 +100,7 @@ export default class SelectableTable extends Component {
   render() {
     return (
       <div className="selectable-table" style={styles.selectableTable}>
-        <IceCard style={styles.iceCard}>
+        <IceContainer style={styles.iceCard}>
           <div>
             <Button
               onClick={this.addMoreItem}
@@ -133,8 +133,8 @@ export default class SelectableTable extends Component {
               <Icon size="small" type="download" /> 导出表格数据到 .csv 文件
             </a>
           </div>
-        </IceCard>
-        <IceCard>
+        </IceContainer>
+        <IceContainer>
           <Table
             dataSource={this.state.dataSource}
             isLoading={this.state.isLoading}
@@ -161,7 +161,7 @@ export default class SelectableTable extends Component {
           <div style={styles.pagination}>
             <Pagination onChange={this.change} />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

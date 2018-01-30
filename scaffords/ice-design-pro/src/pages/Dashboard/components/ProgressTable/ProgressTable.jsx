@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Progress, Pagination } from '@icedesign/base';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './ProgressTable.scss';
 
 const getTableData = () => {
@@ -39,7 +39,7 @@ export default class ProgressTable extends Component {
   render() {
     return (
       <div className="progress-table">
-        <IceCard className="tab-card" title="本月最活跃金主">
+        <IceContainer className="tab-card" title="本月最活跃金主">
           <Table
             hasBorder
             getRowClassName={(record, index) => {
@@ -63,7 +63,7 @@ export default class ProgressTable extends Component {
               shape="arrow-only"
             />
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

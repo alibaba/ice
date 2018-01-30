@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Icon } from '@icedesign/base';
 import classnames from 'classnames';
 import './CollapseCard.scss';
@@ -30,7 +30,7 @@ export default class CollapseCard extends Component {
     const cls = classnames('base-info', { collapse });
     return (
       <div className="collapse-card">
-        <IceCard>
+        <IceContainer>
           <div style={styles.summaryInfo}>
             <img
               style={styles.logo}
@@ -72,7 +72,7 @@ export default class CollapseCard extends Component {
               <Icon type={collapse ? 'arrow-down' : 'arrow-up'} />
             </a>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
