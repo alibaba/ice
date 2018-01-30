@@ -10,7 +10,8 @@
     }
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "mocha": true
   },
   "plugins": ["react", "babel"],
   "rules": {
