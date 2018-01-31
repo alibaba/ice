@@ -7,3 +7,4 @@ mochawesome-report
 package-lock.json
 lib/
 .eslintcache
+databases
