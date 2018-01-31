@@ -83,7 +83,7 @@ module.exports = function(args, subprocess) {
 
       isFirstCompile = false;
       console.log(chalk.cyan('Starting the development server...'));
-      console.log('   ', chalk.yellow(`http://${HOST}:${PORT}`));
+      console.log('   ', chalk.yellow(`http://localhost:${PORT}`));
       console.log('   ', chalk.yellow(`http://${LOCAL_IP}:${PORT}`));
     }
 
