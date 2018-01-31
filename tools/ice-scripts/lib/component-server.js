@@ -17,9 +17,9 @@ const npmUpdate = require('./helpers/npmUpdate');
 const hotDevClientPath = require.resolve('react-dev-utils/webpackHotDevClient');
 /* eslint no-console:off */
 
-module.exports = function (args) {
+module.exports = function(args) {
   const cwd = process.cwd();
-  const HOST = args.host || '127.0.0.1';
+  const HOST = args.host || '0.0.0.0';
   const PORT = args.port || 3333;
   const LOCAL_IP = address.ip();
   const pkg = require(path.join(cwd, 'package.json'));
@@ -133,7 +133,7 @@ module.exports = function (args) {
         console.log('Compiling...');
       });
 
-      devServer.use(function (req, res, next) {
+      devServer.use(function(req, res, next) {
         console.log('Time:', Date.now());
         next();
       });

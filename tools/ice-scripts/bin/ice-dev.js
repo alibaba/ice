@@ -18,9 +18,9 @@ const dev = require('../lib/dev');
 const { choosePort } = require('react-dev-utils/WebpackDevServerUtils');
 
 const DEFAULT_PORT = program.port || process.env.PORT || 3333;
-const HOST = program.host || process.env.HOST || '127.0.0.1';
+const HOST = program.host || process.env.HOST || '0.0.0.0';
 
-choosePort(HOST, parseInt(DEFAULT_PORT, 10)).then(port => {
+choosePort(HOST, parseInt(DEFAULT_PORT, 10)).then((port) => {
   if (port == null) {
     // We have not found a port.
     return;
