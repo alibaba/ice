@@ -1,24 +1,20 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import { Table, Input, Select, Grid } from '@icedesign/base';
-import {
-  FormBinderWrapper,
-  FormBinder,
-} from '@icedesign/form-binder';
+import { FormBinderWrapper, FormBinder } from '@icedesign/form-binder';
 import IceCard from '@icedesign/card';
 import './TagTable.scss';
 
 const { Combobox } = Select;
 const { Row, Col } = Grid;
 
-
 const dataSource = [
   {
     name: 'CVE-2016-1839',
     level: '高危',
     assets: {
-      needFix: 'bar',
-      unHandle: 'foo',
+      needFix: 'iceworks',
+      unHandle: 'ice grid',
     },
     time: '2018-01-25 15:55:06',
   },
@@ -26,8 +22,8 @@ const dataSource = [
     name: 'CVE-2018-6308',
     level: '低危',
     assets: {
-      needFix: 'bar',
-      unHandle: 'foo',
+      needFix: 'ice button',
+      unHandle: 'ice tag',
     },
     time: '2018-01-25 15:55:06',
   },
@@ -35,7 +31,7 @@ const dataSource = [
     name: 'CVE-2018-6309',
     level: '严重',
     assets: {
-      needFix: 'bar',
+      needFix: 'ice datepicker',
       unHandle: '',
     },
     time: '2018-01-25 15:55:06',
@@ -45,11 +41,9 @@ const dataSource = [
 export default class TagTable extends Component {
   static displayName = 'TagTable';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -66,17 +60,19 @@ export default class TagTable extends Component {
         return false;
       }
 
-      if (formValue.isHandle &&
-        ((formValue.isHandle === 'YES' && data.assets.unHandle)
-          || (formValue.isHandle === 'NO' && !data.assets.unHandle))
+      if (
+        formValue.isHandle &&
+        ((formValue.isHandle === 'YES' && data.assets.unHandle) ||
+          (formValue.isHandle === 'NO' && !data.assets.unHandle))
       ) {
         return false;
       }
 
-      if (formValue.levels &&
-        (!formValue.levels.some((l) => {
+      if (
+        formValue.levels &&
+        !formValue.levels.some((l) => {
           return l === data.level;
-        }))
+        })
       ) {
         return false;
       }
@@ -101,7 +97,9 @@ export default class TagTable extends Component {
           <FormBinderWrapper value={formValue} onChange={this.formChange}>
             <div style={{ marginBottom: '25px' }}>
               <Row style={styles.formRow}>
-                <Col span="4" style={styles.label}>漏洞搜索: </Col>
+                <Col span="2" style={styles.label}>
+                  漏洞搜索:{' '}
+                </Col>
                 <Col span="10">
                   <FormBinder>
                     <Input name="name" placeholder="请输入漏洞名称" />
@@ -109,10 +107,12 @@ export default class TagTable extends Component {
                 </Col>
               </Row>
               <Row style={styles.formRow}>
-                <Col span="4" style={styles.label}>是否已处理: </Col>
+                <Col span="2" style={styles.label}>
+                  处理状态:{' '}
+                </Col>
                 <Col span="10">
                   <FormBinder>
-                    <Select name="isHandle" placeholder="请选择" >
+                    <Select name="isHandle" placeholder="请选择">
                       <Select.Option value="">任意</Select.Option>
                       <Select.Option value="YES">已经处理</Select.Option>
                       <Select.Option value="NO">未处理</Select.Option>
@@ -121,7 +121,9 @@ export default class TagTable extends Component {
                 </Col>
               </Row>
               <Row style={styles.formRow}>
-                <Col span="4" style={styles.label}>漏洞等级: </Col>
+                <Col span="2" style={styles.label}>
+                  漏洞等级:{' '}
+                </Col>
                 <Col span="10">
                   <FormBinder>
                     <Combobox
@@ -130,9 +132,7 @@ export default class TagTable extends Component {
                       fillProps="label"
                       placeholder="请选择"
                       multiple
-                      dataSource={[
-                        '严重', '高危', '中危', '低危',
-                      ]}
+                      dataSource={['严重', '高危', '中危', '低危']}
                     />
                   </FormBinder>
                 </Col>
@@ -140,11 +140,20 @@ export default class TagTable extends Component {
             </div>
           </FormBinderWrapper>
 
-          <Table locale={{ empty: '没有查询到符合条件的记录' }} dataSource={this.getDataSource()}>
+          <Table
+            locale={{ empty: '没有查询到符合条件的记录' }}
+            dataSource={this.getDataSource()}
+          >
             <Table.Column title="漏洞名称" dataIndex="name" />
             <Table.Column title="漏洞等级" dataIndex="level" />
             <Table.Column title="需尽快修复资产" dataIndex="assets.needFix" />
-            <Table.Column title="当前未处理资产" dataIndex="assets.unHandle" cell={val => val || '无'} />
+            <Table.Column
+              title="当前未处理资产"
+              dataIndex="assets.unHandle"
+              cell={(val) => {
+                return val || '无';
+              }}
+            />
             <Table.Column title="最后发现时间" dataIndex="time" />
           </Table>
         </IceCard>
@@ -157,5 +166,5 @@ const styles = {
   formRow: {
     marginBottom: '18px',
   },
-  label: { textAlign: 'right', lineHeight: '28px', paddingRight: '10px' },
+  label: { lineHeight: '28px', paddingRight: '10px' },
 };
