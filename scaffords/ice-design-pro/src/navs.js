@@ -2,6 +2,7 @@
 const autoGenHeaderNavs = [];
 
 const autoGenAsideNavs = [];
+
 // <!-- auto generated navs end -->
 
 const customHeaderNavs = [
