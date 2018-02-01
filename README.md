@@ -11,7 +11,7 @@
 
 ---
 
-:zap: **海量高质量物料：** 区块 + 模板，海量物料满足你开发之所需 [点击查看](https://alibaba.github.io/ice/#/block)
+:zap: **海量高质量物料：** 区块 + 模板，每周有新增，海量物料满足你开发之所需 [点击查看](https://alibaba.github.io/ice/#/block)
 
 :dart: **GUI 工具：** 零配置的工程整合，物料可视化一键导入复用 [点击下载](https://alibaba.github.io/ice/#/iceworks)
 
@@ -23,7 +23,7 @@
 - `npm run lint` 代码 Lint 风格检查
 - `npm run publish` 代码发布
 
-## 联系
+## 社区
 
 * <details>
   <summary>钉钉群</summary>
