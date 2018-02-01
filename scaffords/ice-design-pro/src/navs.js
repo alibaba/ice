@@ -61,7 +61,7 @@ const customAsideNavs = [
   },
   {
     text: '列表页',
-    to: 'list',
+    to: '/list',
     icon: 'category',
     children: [
       {
