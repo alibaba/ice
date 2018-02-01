@@ -1,0 +1,55 @@
+{
+  "name": "@icedesign/data-statistics-block",
+  "version": "0.1.0",
+  "description": "",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "scripts": {
+    "start": "ice block dev",
+    "prepublish": "ice block build"
+  },
+  "dependencies": {
+    "@antv/data-set": "^0.8.5",
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/container": "^0.1.2",
+    "bizcharts": "^3.1.3-beta.1",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/scripts": "^0.1.9",
+    "@icedesign/skin": "latest",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "data-statistics",
+    "snapshot": "https://img.alicdn.com/tfs/TB1X7WapfDH8KJjy1XcXXcpdXXa-1912-736.png",
+    "title": "数据统计展示",
+    "categories": [
+      "data-display"
+    ],
+    "themePackage": "@icedesign/skin"
+  }
+}

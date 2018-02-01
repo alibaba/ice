@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/scafford-lite",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/skin": "^0.1.0",
@@ -34,6 +34,6 @@
   "scaffordConfig": {
     "name": "ice-design-lite",
     "title": "Ice Design Lite",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1YSc9nY_I8KJjy1XaXXbsxpXa-2778-1606.png"
+    "snapshot": "https://gw.alicdn.com/tfs/TB169cUlOqAXuNjy1XdXXaYcVXa-2862-1590.png"
   }
 }
