@@ -48,7 +48,7 @@ export default class PieDoughnutChart extends Component {
 
     const cols = {
       percent: {
-        formatter: val => {
+        formatter: (val) => {
           val = `${(val * 100).toFixed(2)}%`;
           return val;
         },
