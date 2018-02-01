@@ -7,51 +7,51 @@ const dataSource = {
   articles: [
     {
       title: '这里是文章的标题1',
-      time: '2018-03-31'
+      time: '2018-03-31',
     },
     {
       title: '这里是文章的标题2',
-      time: '2018-02-02'
+      time: '2018-02-02',
     },
     {
       title: '这里是文章的标题3',
-      time: '2018-01-22'
+      time: '2018-01-22',
     },
     {
       title: '这里是文章的标题4',
-      time: '2018-02-02'
+      time: '2018-02-02',
     },
     {
       title: '这里是文章的标题5',
-      time: '2018-01-22'
+      time: '2018-01-22',
     },
     {
       title: '这里是文章的标题6',
-      time: '2018-02-02'
-    }
+      time: '2018-02-02',
+    },
   ],
   comments: [
     {
       title: '这里是最新的评论1',
       time: '2018-02-26',
-      num: '18'
+      num: '18',
     },
     {
       title: '这里是最新的评论2',
       time: '2018-01-22',
-      num: '22'
+      num: '22',
     },
     {
       title: '这里是最新的评论3',
       time: '2018-01-18',
-      num: '36'
+      num: '36',
     },
     {
       title: '这里是最新的评论4',
       time: '2018-01-18',
-      num: '29'
-    }
-  ]
+      num: '29',
+    },
+  ],
 };
 
 const { Row, Col } = Grid;
@@ -133,49 +133,49 @@ export default class LatestNews extends Component {
 
 const styles = {
   cardContainer: {
-    height: 280
+    height: 280,
   },
   cardTitle: {
     position: 'relative',
     margin: '0 0 10px',
     fontSize: '16px',
     fontWeight: 'bold',
-    color: '#333'
+    color: '#333',
   },
   more: {
     position: 'absolute',
     right: 0,
     fontSize: '12px',
-    color: '#666'
+    color: '#666',
   },
   item: {
     position: 'relative',
-    display: 'block'
+    display: 'block',
   },
   itemTime: {
     position: 'absolute',
     right: 0,
     top: 6,
-    fontSize: '12px'
+    fontSize: '12px',
   },
   itemTitle: {
     height: '34px',
     lineHeight: '34px',
-    fontSize: '13px'
+    fontSize: '13px',
   },
   itemComment: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    marginBottom: '10px'
+    marginBottom: '10px',
   },
   commentTitle: {
     height: '28px',
     lineHeight: '28px',
-    fontSize: '13px'
+    fontSize: '13px',
   },
   commentTime: {
-    fontSize: '12px'
+    fontSize: '12px',
   },
   commentNum: {
     position: 'absolute',
@@ -188,6 +188,6 @@ const styles = {
     textAlign: 'center',
     borderRadius: '50px',
     background: '#FF2851',
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 };
