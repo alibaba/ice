@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PieDoughnutChart from './components/PieDoughnutChart';
 import ChartBar from './components/ChartBar';
 import ChartArea from './components/ChartArea';
 import ChartBubbleImage from './components/ChartBubbleImage';
@@ -19,9 +18,6 @@ export default class Charts extends Component {
   render() {
     return (
       <div className="charts-page">
-
-        <PieDoughnutChart />
-
         <ChartBar />
 
         <ChartArea />
@@ -33,7 +29,6 @@ export default class Charts extends Component {
         <ChartTypeLine />
 
         <ChartRadar />
-
       </div>
     );
   }

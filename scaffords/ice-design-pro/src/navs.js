@@ -36,7 +36,7 @@ const customAsideNavs = [
     icon: 'electronics',
     children: [
       {
-        text: '图表列表',
+        text: '常用图表',
         to: '/chart/chart-list',
       },
     ],
@@ -51,12 +51,8 @@ const customAsideNavs = [
         to: '/table/basic-table',
       },
       {
-        text: '展示型表格',
+        text: '常用竖向表格',
         to: '/table/table-display',
-      },
-      {
-        text: '表格列表',
-        to: '/table/table-list',
       },
     ],
   },
@@ -66,7 +62,7 @@ const customAsideNavs = [
     icon: 'category',
     children: [
       {
-        text: '文章列表',
+        text: '搜索列表',
         to: '/list/article-list',
       },
       {
@@ -74,7 +70,7 @@ const customAsideNavs = [
         to: '/list/card-list',
       },
       {
-        text: '图文列表',
+        text: '素材列表',
         to: '/list/picture-list',
       },
     ],
