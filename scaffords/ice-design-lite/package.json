@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/scafford-lite",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/skin": "^0.1.0",
