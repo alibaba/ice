@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/tag-table-block",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "标签表格组合",
   "files": [
     "src/",
@@ -38,7 +38,7 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
     "@icedesign/skin": "latest",
-    "ice-scripts": "^0.1.8",
+    "ice-scripts": "^0.1.9",
     "react": "*",
     "react-dom": "*"
   },
