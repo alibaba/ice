@@ -55,11 +55,11 @@ export default class OperationTable extends Component {
 
   renderTitle = (value, index, record) => {
     return (
-      <div style={styles.todo0}>
+      <div style={styles.titleCol}>
         <div>
           <IceImg src={record.cover} width={48} height={48} />
         </div>
-        <span style={styles.todo1}>{record.title}</span>
+        <span style={styles.titleText}>{record.title}</span>
       </div>
     );
   };
@@ -87,7 +87,7 @@ export default class OperationTable extends Component {
               },
             });
             EditorInfoDialog.hide();
-          }
+          },
         );
       },
       onClose: () => {
@@ -101,30 +101,18 @@ export default class OperationTable extends Component {
 
   renderOperations = (value, index, record) => {
     return (
-      <div
-        className="operation-table-operation"
-        style={styles.operationTableOperation}
-      >
+      <div className="operation-table-operation" style={styles.operationTable}>
         <span
           onClick={this.editItem.bind(this, record)}
           title="编辑"
-          className="operation-table-operation-item"
-          style={styles.operationTableOperationItem}
+          style={styles.operBtn}
         >
           <Icon size="xs" type="edit" />
         </span>
-        <span
-          title="删除"
-          className="operation-table-operation-item"
-          style={styles.operationTableOperationItem}
-        >
+        <span title="删除" style={styles.operBtn}>
           <Icon size="xs" type="close" />
         </span>
-        <span
-          title="收藏"
-          className="operation-table-operation-item"
-          style={styles.operationTableOperationItem}
-        >
+        <span title="收藏" style={styles.operBtn}>
           <Icon size="xs" type="favorites-filling" />
         </span>
       </div>
@@ -149,8 +137,8 @@ export default class OperationTable extends Component {
     const tableData = this.props.bindingData.tableData;
 
     return (
-      <div className="operation-table" style={styles.operationTable}>
-        <IceContainer style={styles.todo2}>
+      <div className="operation-table">
+        <IceContainer style={styles.cardContainer}>
           <Table
             dataSource={tableData.list}
             isLoading={tableData.__loading}
@@ -182,7 +170,7 @@ export default class OperationTable extends Component {
               cell={this.renderOperations}
             />
           </Table>
-          <div style={styles.todo3}>
+          <div style={styles.paginationContainer}>
             <Pagination
               current={tableData.currentPage}
               pageSize={tableData.pageSize}
@@ -197,8 +185,18 @@ export default class OperationTable extends Component {
 }
 
 const styles = {
-  operationTableOperation: { 'a {MarginRight': '12px', textDecoration: 'none' },
-  operationTableOperationItem: {
+  cardContainer: {
+    padding: '10px 10px 20px 10px',
+  },
+  titleCol: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  titleText: {
+    marginLeft: '10px',
+    lineHeight: '20px',
+  },
+  operBtn: {
     display: 'inline-block',
     width: '24px',
     height: '24px',
@@ -209,11 +207,9 @@ const styles = {
     cursor: 'pointer',
     lineHeight: '24px',
     marginRight: '6px',
-    transition: 'all ease 0',
   },
-  operationTable: {},
-  todo0: { display: 'flex', flexDirection: 'row' },
-  todo1: { marginLeft: '10px', lineHeight: '20px' },
-  todo2: { padding: '10px 10px 20px 10px' },
-  todo3: { textAlign: 'right', paddingTop: '26px' },
+  paginationContainer: {
+    textAlign: 'right',
+    paddingTop: '26px',
+  },
 };

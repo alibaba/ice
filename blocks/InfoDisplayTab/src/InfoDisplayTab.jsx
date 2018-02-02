@@ -54,14 +54,14 @@ export default class InfoDisplayTab extends Component {
               {item.title}
             </Col>
           </Row>
-          <Row style={styles.todo0}>
+          <Row style={styles.cardDescWrapper}>
             <Col>
-              <div className="column-card-desc" style={styles.columnCardDesc}>
+              <div className="column-card-desc" style={styles.cardDesc}>
                 <IceEllipsis lineLimit={6} text={item.desc} />
               </div>
             </Col>
           </Row>
-          <Row style={styles.todo1}>
+          <Row style={styles.cardBtnWrapper}>
             <Col>
               <Button
                 type="primary"
@@ -82,7 +82,7 @@ export default class InfoDisplayTab extends Component {
   render() {
     const { tabData } = this.state;
     return (
-      <div className="info-display-tab" style={styles.infoDisplayTab}>
+      <div className="info-display-tab">
         <IceContainer>
           <Tab type="bar" onChange={this.callback}>
             <TabPane tab="全部频道" key="1">
@@ -108,9 +108,12 @@ const styles = {
     float: 'left',
     width: '284px',
     overflow: 'hidden',
-    boxShadow: '0px 0px 2px 0px rgba(0',
+    boxShadow: '0px 0px 2px #eee',
   },
-  columnCardDesc: {
+  cardDescWrapper: {
+    marginTop: '20px',
+  },
+  cardDesc: {
     height: '144px',
     overflow: 'hidden',
     lineHeight: '24px',
@@ -118,7 +121,8 @@ const styles = {
     color: '#666',
     margin: '5px auto 0 auto',
   },
-  infoDisplayTab: {},
-  todo0: { marginTop: '20px' },
-  todo1: { textAlign: 'center', marginTop: '15px' },
+  cardBtnWrapper: {
+    textAlign: 'center',
+    marginTop: '15px',
+  },
 };
