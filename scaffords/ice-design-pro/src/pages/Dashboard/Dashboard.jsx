@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import DataDisplay from './components/DataDisplay';
 import TabChart from './components/TabChart';
 import PieDoughnutChart from './components/PieDoughnutChart';
+import DisplayCard from './components/DisplayCard';
 import ProgressTable from './components/ProgressTable';
 import EditableTable from './components/EditableTable';
 import ChartBar from './components/ChartBar';
@@ -18,7 +18,7 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard-page">
-        <DataDisplay />
+        <DisplayCard />
 
         <TabChart />
 
