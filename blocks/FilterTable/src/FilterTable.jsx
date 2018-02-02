@@ -171,7 +171,7 @@ export default class EnhanceTable extends Component {
               cell={this.renderOperations}
             />
           </Table>
-          <div style={styles.todo4}>
+          <div style={styles.paginationWrapper}>
             <Pagination
               current={tableData.currentPage}
               pageSize={tableData.pageSize}
@@ -186,18 +186,29 @@ export default class EnhanceTable extends Component {
 }
 
 const styles = {
-  filterTableOperation: { lineHeight: '28px' },
+  filterTableOperation: {
+    lineHeight: '28px',
+  },
   operationItem: {
     marginRight: '12px',
     textDecoration: 'none',
   },
-  titleWrapper: { display: 'flex', flexDirection: 'row' },
-  title: { marginLeft: '10px', lineHeight: '20px' },
+  titleWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  title: {
+    marginLeft: '10px',
+    lineHeight: '20px',
+  },
   cardWrapper: {
     minHeight: 0,
     marginBottom: 20,
     display: 'flex',
     justifyContent: 'space-between',
   },
-  todo4: { textAlign: 'right', paddingTop: '26px' },
+  paginationWrapper: {
+    textAlign: 'right',
+    paddingTop: '26px',
+  },
 };
