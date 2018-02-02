@@ -114,12 +114,6 @@
       "builtIn": true
     },
     {
-      "page": "TableList",
-      "path": "table/table-list",
-      "layout": "HeaderAsideFooterLayout",
-      "builtIn": true
-    },
-    {
       "page": "TableDisplay",
       "path": "table/table-display",
       "layout": "HeaderAsideFooterLayout",
