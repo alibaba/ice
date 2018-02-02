@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import { Button, Search } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
@@ -54,11 +52,11 @@ const dataSource = [
 export default class FilterList extends Component {
   static displayName = 'FilterList';
 
-  renderItem = (item) => {
-    return <SingleItem {...item} />;
+  renderItem = (item, index) => {
+    return <SingleItem key={index} {...item} />;
   };
   renderItemRow = () => {
-    return <div style={styles.todo0}>{dataSource.map(this.renderItem)}</div>;
+    return <div style={styles.itemRow}>{dataSource.map(this.renderItem)}</div>;
   };
 
   render() {
@@ -69,7 +67,9 @@ export default class FilterList extends Component {
 
     return (
       <div className="filter-list">
-        <IceContainer style={{ ...styles.filterListHeaderWrapper, ...cardStyle }}>
+        <IceContainer
+          style={{ ...styles.filterListHeaderWrapper, ...cardStyle }}
+        >
           <div style={styles.searchWrapper}>
             <Search
               placeholder="标题"
@@ -92,7 +92,7 @@ export default class FilterList extends Component {
             </div>
           </div>
 
-          <div style={styles.filterCategoryChildren}>
+          <div style={styles.filterCategory}>
             <Button className="select-btn" style={styles.selectBtn}>
               全部商品
             </Button>
@@ -112,7 +112,10 @@ export default class FilterList extends Component {
           </div>
         </IceContainer>
 
-        <IceContainer style={{ ...styles.searchResultWrapper, ...cardStyle }} className="">
+        <IceContainer
+          style={{ ...styles.searchResultWrapper, ...cardStyle }}
+          className=""
+        >
           {this.renderItemRow()}
           {this.renderItemRow()}
           {this.renderItemRow()}
@@ -125,20 +128,25 @@ export default class FilterList extends Component {
 }
 
 const styles = {
-  filterList: {},
   selectItem: {
     padding: '0 16px',
     borderRight: '1px solid #ddd',
     cursor: 'pointer',
   },
-  selectBtn: { marginRight: '10px' },
-  todo0: {
+  selectBtn: {
+    marginRight: '10px',
+  },
+  itemRow: {
     margin: '0 10px 10px 10px',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  filterListHeaderWrapper: { padding: '20px', flexDirection: 'column', position: 'relative' },
+  filterListHeaderWrapper: {
+    padding: '20px',
+    flexDirection: 'column',
+    position: 'relative',
+  },
   searchWrapper: {
     position: 'absolute',
     right: '20px',
@@ -146,8 +154,16 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
   },
-  searchInput: { marginRight: '15px' },
-  filterCategories: { display: 'flex', flexDirection: 'row', marginBottom: '25px' },
-  filterCategoryChildren: {},
-  searchResultWrapper: { flexDirection: 'column', padding: '20px 0' },
+  searchInput: {
+    marginRight: '15px',
+  },
+  filterCategories: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: '25px',
+  },
+  searchResultWrapper: {
+    flexDirection: 'column',
+    padding: '20px 0',
+  },
 };
