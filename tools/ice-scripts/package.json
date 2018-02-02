@@ -1,6 +1,6 @@
 {
   "name": "ice-scripts",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
@@ -8,15 +8,16 @@
   },
   "scripts": {
     "cover": "http-server ./ -o -c-1",
-    "clear":
-      "rm -rf test/fixtures/*/build/ && rm -rf test/fixtures/*/.happypack/",
+    "clear": "rm -rf test/fixtures/*/build/ && rm -rf test/fixtures/*/.happypack/",
     "webpack": "npm run clear && node ./test/compiler.js",
     "start": "http-server ./test/fixtures/ -o -c-1 -p 8081",
     "test": "npm run clear && istanbul cover _mocha ./test/*-test.js -- ",
     "test:update": "npm test -- --updateExpect",
     "test:watch": "npm test -- --watch "
   },
-  "keywords": ["ice"],
+  "keywords": [
+    "ice"
+  ],
   "author": "ICE Team",
   "license": "MIT",
   "dependencies": {
@@ -81,12 +82,12 @@
     "typescript-formatter": "^7.0.1",
     "uglify-js": "^2.8.22",
     "webpack": "^3.8.1",
+    "webpack-bundle-analyzer": "^2.9.2",
     "webpack-dev-server": "^2.9.4",
     "webpack-merge": "^4.1.1",
     "webpack-plugin-import": "^0.1.0",
     "webpack-simple-progress-plugin": "^0.0.3",
-    "webpack-sources": "^1.0.2",
-    "webpack-bundle-analyzer": "^2.9.2"
+    "webpack-sources": "^1.0.2"
   },
   "devDependencies": {
     "@icedesign/base": "^0.1.1",
