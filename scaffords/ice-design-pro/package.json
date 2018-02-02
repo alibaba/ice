@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/scafford-pro",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "dependencies": {
     "@antv/data-set": "^0.8.5",
     "@icedesign/base": "^0.1.0",
