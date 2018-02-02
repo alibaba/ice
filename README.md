@@ -33,6 +33,6 @@
 
 ## 社区
 
-扫码进入 ICE 公测钉钉群（加入钉钉群即可公测并反馈问题，正式版推出之后还会赠送纪念礼品）
+扫码进入 ICE 公测钉钉群（加入钉钉群即可公测并反馈问题）
 
 <img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iLI8kxPI8KJjSspoXXX6MFXa-1242-1602.jpg" width="200">
