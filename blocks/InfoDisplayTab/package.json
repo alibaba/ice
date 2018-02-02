@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/info-display-tab-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "标签页信息展示",
   "main": "lib/index.js",
   "files": [
