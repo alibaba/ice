@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/pie-doughnut-chart-block",
-  "version": "0.1.3",
+  "version": "0.1.7",
   "description": "饼图",
   "main": "lib/index.js",
   "files": [
@@ -37,7 +37,7 @@
   },
   "blockConfig": {
     "name": "pie-doughnut-chart",
-    "snapshot": "https://img.alicdn.com/tfs/TB1T_M6ih6I8KJjy0FgXXXXzVXa-1894-708.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1rom3XgmTBuNjy1XbXXaMrVXa-1902-702.png",
     "themePackage": "@icedesign/skin",
     "title": "饼图",
     "categories": [

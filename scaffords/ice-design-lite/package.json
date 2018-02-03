@@ -1,7 +1,6 @@
 {
   "name": "@icedesign/scafford-lite",
-  "title": "ICE 项目脚手架 Lite",
-  "version": "0.1.13",
+  "version": "0.1.21",
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/skin": "^0.1.0",
@@ -17,7 +16,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^0.1.0"
+    "ice-scripts": "^0.1.9"
   },
   "scripts": {
     "start": "ice dev",
@@ -31,5 +30,10 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js"
+  },
+  "scaffordConfig": {
+    "name": "ice-design-lite",
+    "title": "Ice Design Lite",
+    "snapshot": "https://gw.alicdn.com/tfs/TB169cUlOqAXuNjy1XdXXaYcVXa-2862-1590.png"
   }
 }

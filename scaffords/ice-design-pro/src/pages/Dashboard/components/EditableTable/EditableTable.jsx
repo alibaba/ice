@@ -1,6 +1,6 @@
 /* eslint react/jsx-no-bind: 0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Table, Button } from '@icedesign/base';
 import CellEditor from './CellEditor';
 import './EditableTable.scss';
@@ -81,7 +81,7 @@ export default class EditableTable extends Component {
   render() {
     return (
       <div className="editable-table">
-        <IceCard>
+        <IceContainer>
           <Table dataSource={this.state.dataSource} hasBorder={false}>
             <Table.Column width={80} title="顺序" cell={this.renderOrder} />
             <Table.Column
@@ -104,7 +104,7 @@ export default class EditableTable extends Component {
           <div onClick={this.addNewItem} style={styles.addNewItem}>
             + 新增一行
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

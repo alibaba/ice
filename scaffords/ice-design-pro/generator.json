@@ -25,7 +25,7 @@
   "routes": [
     {
       "page": "Dashboard",
-      "path": "dashboard",
+      "path": "/",
       "layout": "HeaderAsideFooterLayout",
       "builtIn": true
     },
@@ -67,7 +67,7 @@
     },
     {
       "page": "Landing",
-      "path": "/",
+      "path": "/landing",
       "layout": "FixedHeaderFooterResponsiveLayout",
       "builtIn": true
     },
@@ -110,12 +110,6 @@
     {
       "page": "BasicTable",
       "path": "table/basic-table",
-      "layout": "HeaderAsideFooterLayout",
-      "builtIn": true
-    },
-    {
-      "page": "TableList",
-      "path": "table/table-list",
       "layout": "HeaderAsideFooterLayout",
       "builtIn": true
     },

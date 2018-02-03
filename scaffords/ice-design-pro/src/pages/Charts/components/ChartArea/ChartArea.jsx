@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import { DataView } from '@antv/data-set';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './ChartArea.scss';
 
 export default class ChartArea extends Component {
@@ -57,7 +57,7 @@ export default class ChartArea extends Component {
 
     return (
       <div className="chart-area">
-        <IceCard>
+        <IceContainer>
           <h4 style={styles.title}>面积图</h4>
           <Chart height={400} data={dv} scale={cols} forceFit>
             <Axis name="year" />
@@ -74,7 +74,7 @@ export default class ChartArea extends Component {
             <Geom type="area" position="year*value" color="type" />
             <Geom type="line" position="year*value" size={2} color="type" />
           </Chart>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

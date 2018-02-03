@@ -2,7 +2,8 @@
 build/
 tests/
 demo/
-lib/
+layouts/**/lib/
+blocks/**/lib/
 node_modules/
 scripts/
 
@@ -12,3 +13,6 @@ coverage/
 # 忽略文件
 **/*-min.js
 **/*.min.js
+
+# templorarily ignore tools
+tools/

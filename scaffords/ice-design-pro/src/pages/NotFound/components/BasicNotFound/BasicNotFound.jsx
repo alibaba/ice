@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './BasicNotFound.scss';
 
 export default class BasicNotFound extends Component {
@@ -14,7 +14,7 @@ export default class BasicNotFound extends Component {
   render() {
     return (
       <div className="basic-not-found">
-        <IceCard>
+        <IceContainer>
           <div className="not-found-content">
             <img
               src="https://img.alicdn.com/tfs/TB1txw7bNrI8KJjy0FpXXb5hVXa-260-260.png"
@@ -28,7 +28,7 @@ export default class BasicNotFound extends Component {
               </p>
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

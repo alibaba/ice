@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import BasicTab from './components/BasicTab';
-import DataDisplay from './components/DataDisplay';
 import TabChart from './components/TabChart';
 import PieDoughnutChart from './components/PieDoughnutChart';
+import DisplayCard from './components/DisplayCard';
 import ProgressTable from './components/ProgressTable';
 import EditableTable from './components/EditableTable';
 import ChartBar from './components/ChartBar';
@@ -19,10 +18,7 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard-page">
-
-        <BasicTab />
-
-        <DataDisplay />
+        <DisplayCard />
 
         <TabChart />
 
@@ -33,7 +29,6 @@ export default class Dashboard extends Component {
         <EditableTable />
 
         <ChartBar />
-
       </div>
     );
   }

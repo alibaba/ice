@@ -2,13 +2,10 @@
 const autoGenHeaderNavs = [];
 
 const autoGenAsideNavs = [];
+
 // <!-- auto generated navs end -->
 
 const customHeaderNavs = [
-  {
-    text: '首页',
-    to: '/dashboard',
-  },
   {
     text: '反馈',
     to: 'https://github.com/alibaba/ice/issues/new',
@@ -24,9 +21,14 @@ const customHeaderNavs = [
 ];
 const customAsideNavs = [
   {
-    text: '首页',
-    to: '/dashboard',
+    text: 'Dashboard',
+    to: '/',
     icon: 'nav-list',
+  },
+  {
+    text: '介绍页',
+    to: '/landing',
+    icon: 'process',
   },
   {
     text: '图表页',
@@ -34,7 +36,7 @@ const customAsideNavs = [
     icon: 'electronics',
     children: [
       {
-        text: '图表列表',
+        text: '常用图表',
         to: '/chart/chart-list',
       },
     ],
@@ -49,22 +51,18 @@ const customAsideNavs = [
         to: '/table/basic-table',
       },
       {
-        text: '展示型表格',
+        text: '常用竖向表格',
         to: '/table/table-display',
-      },
-      {
-        text: '表格列表',
-        to: '/table/table-list',
       },
     ],
   },
   {
     text: '列表页',
-    to: 'list',
+    to: '/list',
     icon: 'category',
     children: [
       {
-        text: '文章列表',
+        text: '搜索列表',
         to: '/list/article-list',
       },
       {
@@ -72,7 +70,7 @@ const customAsideNavs = [
         to: '/list/card-list',
       },
       {
-        text: '图文列表',
+        text: '素材列表',
         to: '/list/picture-list',
       },
     ],
