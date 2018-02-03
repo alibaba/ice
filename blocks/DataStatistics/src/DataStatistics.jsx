@@ -19,34 +19,34 @@ const dataSource = {
     { month: '9 月', users: 68 },
     { month: '10 月', users: 88 },
     { month: '11 月', users: 98 },
-    { month: '12 月', users: 68 }
+    { month: '12 月', users: 68 },
   ],
   statisticData: [
     {
       name: '今日注册',
-      value: '12678'
+      value: '12678',
     },
     {
       name: '今日登录',
-      value: '22139'
+      value: '22139',
     },
     {
       name: '今日订阅',
-      value: '35623'
+      value: '35623',
     },
     {
       name: '今日评论',
-      value: '16826'
+      value: '16826',
     },
     {
       name: '七日新增',
-      value: '25%'
+      value: '25%',
     },
     {
       name: '七日活跃',
-      value: '68%'
-    }
-  ]
+      value: '68%',
+    },
+  ],
 };
 
 export default class DataStatistics extends Component {
@@ -63,7 +63,7 @@ export default class DataStatistics extends Component {
 
   render() {
     const cols = {
-      users: { tickInterval: 20 }
+      users: { tickInterval: 20 },
     };
 
     return (
@@ -115,38 +115,38 @@ export default class DataStatistics extends Component {
 
 const styles = {
   container: {
-    width: '100%'
+    width: '100%',
   },
   title: {
     margin: '0',
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee'
+    borderBottom: '1px solid #eee',
   },
   items: {
     display: 'flex',
     flexDeriction: 'row',
     flexWrap: 'wrap',
-    marginLeft: '30px'
+    marginLeft: '30px',
   },
   itemBox: {
     display: 'flex',
     flexDirection: 'row',
     width: '50%',
-    marginTop: '50px'
+    marginTop: '50px',
   },
   itemIcon: {
-    marginRight: '10px'
+    marginRight: '10px',
   },
   icon: {
-    color: '#3FA1FF'
+    color: '#3FA1FF',
   },
   value: {
     color: '#1F82FF',
-    fontSize: '20px'
+    fontSize: '20px',
   },
   name: {
-    fontSize: '12px'
-  }
+    fontSize: '12px',
+  },
 };

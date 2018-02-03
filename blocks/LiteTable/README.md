@@ -4,9 +4,4 @@
 
 简单的附带状态的表格
 
-![截图](https://img.alicdn.com/tfs/TB1_Oy4jcrI8KJjy0FhXXbfnpXa-840-956.png)
-
-
-
-
-
+![截图](https://img.alicdn.com/tfs/TB1ftZiXgmTBuNjy1XbXXaMrVXa-1910-994.png)

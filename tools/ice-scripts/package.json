@@ -1,6 +1,6 @@
 {
   "name": "ice-scripts",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
@@ -83,6 +83,7 @@
     "typescript-formatter": "^7.0.1",
     "uglify-js": "^2.8.22",
     "webpack": "^3.8.1",
+    "webpack-bundle-analyzer": "^2.9.2",
     "webpack-dev-server": "^2.9.4",
     "webpack-merge": "^4.1.1",
     "webpack-plugin-import": "^0.1.0",
@@ -99,8 +100,7 @@
     "istanbul": "^0.4.5",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "mocha": "^4.0.1",
-    "webpack-bundle-analyzer": "^2.9.2"
+    "mocha": "^4.0.1"
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.com",

@@ -1,0 +1,56 @@
+{
+  "name": "@icedesign/tag-table-block",
+  "version": "0.1.6",
+  "description": "标签表格组合",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "scripts": {
+    "start": "ice block dev",
+    "prepublish": "ice block build"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/card": "^0.1.1",
+    "@icedesign/form-binder": "^0.1.2",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/skin": "latest",
+    "ice-scripts": "^0.1.9",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "tag-table",
+    "snapshot": "https://img.alicdn.com/tfs/TB1aEQDXmBYBeNjy0FeXXbnmFXa-945-351.png",
+    "title": "标签表格组合",
+    "categories": [
+      "table",
+      "filter",
+      "data-display"
+    ],
+    "themePackage": "@icedesign/skin"
+  }
+}

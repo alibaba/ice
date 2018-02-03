@@ -23,7 +23,7 @@ const getBabelConfig = require('./config/getBabelConfig');
 const cwd = process.cwd();
 
 // eslint-diable-next-line
-module.exports = function (args = {}) {
+module.exports = function(args = {}) {
   const pkgPath = path.join(cwd, 'package.json');
   const pkg = JSON.parse(fs.readFileSync(pkgPath));
   const babelConfig = getBabelConfig(pkg.buildConfig || {});
@@ -72,7 +72,7 @@ module.exports = function (args = {}) {
         mkdirp.sync(path.dirname(propsSchemaDist));
         fs.writeFileSync(
           propsSchemaDist,
-          `${JSON.stringify(propsSchema, null, 2)}\n`
+          `${JSON.stringify(propsSchema, null, 2)}\n`,
         );
         console.log(colors.green('propsSchema 生成完毕'));
         return dtsGenerator(propsSchema).then((dts) => {
@@ -117,7 +117,7 @@ module.exports = function (args = {}) {
                 case '.js':
                   // 检测依赖 start
                   const depsInContents = matchRequire.findAll(
-                    fs.readFileSync(from, 'utf-8')
+                    fs.readFileSync(from, 'utf-8'),
                   );
                   (depsInContents || []).forEach((dep) => {
                     // 本地依赖 忽略
@@ -129,7 +129,19 @@ module.exports = function (args = {}) {
                       return;
                     }
                     // normal module
-                    const modulePath = path.join(cwd, 'node_modules', dep, 'package.json');
+                    const splitDep = dep.split('/');
+                    let depModule = '';
+                    if (dep[0] === '@') {
+                      depModule = splitDep.slice(0, 2).join('/');
+                    } else {
+                      depModule = splitDep[0];
+                    }
+                    const modulePath = path.join(
+                      cwd,
+                      'node_modules',
+                      depModule,
+                      'package.json',
+                    );
                     if (!fs.existsSync(modulePath)) {
                       throw new Error('依赖检测错误: ' + dep);
                     }
@@ -139,32 +151,32 @@ module.exports = function (args = {}) {
                   });
                   const transformed = babel.transformFileSync(
                     from,
-                    babelConfig
+                    babelConfig,
                   );
                   fs.writeFileSync(
                     to.replace(/\.jsx/, '.js'),
                     transformed.code,
-                    'utf-8'
+                    'utf-8',
                   );
                   console.log(
                     `${path.relative(cwd, from)} ${colors.green(
-                      '-babel->'
-                    )} ${path.relative(cwd, to)}`
+                      '-babel->',
+                    )} ${path.relative(cwd, to)}`,
                   );
                   // todo .map file
                   break;
                 default:
                   console.log(
                     `${path.relative(cwd, from)} ${colors.green(
-                      '-copy->'
-                    )} ${path.relative(cwd, to)}`
+                      '-copy->',
+                    )} ${path.relative(cwd, to)}`,
                   );
                   copy(from, to);
               }
             });
             resolve(result);
           }
-        }
+        },
       );
     });
   });
