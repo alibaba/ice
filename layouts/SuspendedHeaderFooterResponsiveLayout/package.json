@@ -1,13 +1,9 @@
 {
-  "name": "@icedesign/fixed-header-footer-responsive-layout",
+  "name": "@icedesign/suspended-header-footer-responsive-layout",
   "version": "0.1.13",
-  "description": "固定的顶部导航 + 底部栏 + 自适应宽度内容区的布局, 通常用于项目介绍页, 首页。",
-  "files": [
-    "src/",
-    "lib/",
-    "demo/",
-    "mock/"
-  ],
+  "description":
+    "悬浮的顶部导航 + 底部栏 + 自适应宽度内容区的布局, 通常用于项目介绍页, 首页。Header 部分会 absolute 到第一个模块上面。",
+  "files": ["src/", "lib/", "demo/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +13,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/img": "^0.1.0",
@@ -44,12 +37,11 @@
     "registry": "http://registry.npmjs.com"
   },
   "blockConfig": {
-    "name": "fixed-header-footer-responsive-layout",
-    "title": "固定顶栏-底栏响应式布局",
-    "categories": [
-      "layout"
-    ],
-    "snapshot": "https://img.alicdn.com/tfs/TB1e8Eun8fH8KJjy1XbXXbLdXXa-314-314.png",
+    "name": "suspended-header-footer-responsive-layout",
+    "title": "悬浮顶栏-底栏响应式布局",
+    "categories": ["layout"],
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1e8Eun8fH8KJjy1XbXXbLdXXa-314-314.png",
     "themePackage": "@icedesign/skin"
   }
 }
