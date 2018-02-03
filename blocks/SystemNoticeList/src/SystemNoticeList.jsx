@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Pagination } from '@icedesign/base';
@@ -83,7 +81,7 @@ export default class SystemNoticeList extends Component {
               })}
             </ul>
           </div>
-          <div style={styles.todo0}>
+          <div style={styles.paginationWrap}>
             <Pagination
               shape="arrow-only"
               current={this.state.current}
@@ -128,5 +126,9 @@ const styles = {
     top: '15px',
     fontSize: '12px',
     color: '#999',
+  },
+  paginationWrap: {
+    marginTop: '20px',
+    textAlign: 'right',
   },
 };

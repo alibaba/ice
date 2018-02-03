@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import './BasicDetailInfo.scss';
 
 /**
@@ -39,7 +39,7 @@ export default class BasicDetailInfo extends Component {
   render() {
     return (
       <div className="basic-detail-info">
-        <IceCard>
+        <IceContainer>
           <h2 style={styles.basicDetailTitle}>基础详情页</h2>
           <div className="info-item" style={styles.infoItem}>
             <h5 style={styles.infoItemTitle}>基本信息</h5>
@@ -108,7 +108,7 @@ export default class BasicDetailInfo extends Component {
               </li>
             </ul>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

@@ -52,20 +52,21 @@ export default class PieDoughnutChart extends Component {
 
     return (
       <div className="pie-doughnut-chart">
-        <Row style={{ padding: 0 }}>
+        <Row type="no-padding">
           <Col span="12">
-            <IceContainer className="tab-card" title="性别占比">
+            <IceContainer title="性别占比" style={styles.leftContainer}>
               <Chart
-                width={400}
+                style={styles.chart}
+                width={450}
                 height={300}
                 data={dv}
                 scale={cols}
-                padding={[80, 100, 80, 80]}
+                padding={[0, 10, 30, 10]}
                 forceFit
               >
                 <Coord type="theta" radius={0.75} />
                 <Axis name="percent" />
-                <Legend position="bottom" />
+                <Legend position="bottom" offsetY={-60} />
                 <Tooltip
                   showTitle={false}
                   itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"
@@ -75,18 +76,19 @@ export default class PieDoughnutChart extends Component {
             </IceContainer>
           </Col>
           <Col span="12">
-            <IceContainer className="tab-card" title="年龄分布">
+            <IceContainer title="年龄分布" style={styles.rightContainer}>
               <Chart
+                style={styles.chart}
                 width={450}
                 height={300}
                 data={dv2}
                 scale={cols}
-                padding={[80, 100, 80, 80]}
+                padding={[0, 10, 30, 10]}
                 forceFit
               >
                 <Coord type="theta" radius={0.75} />
                 <Axis name="percent" />
-                <Legend position="bottom" />
+                <Legend position="bottom" offsetY={-60} />
                 <Tooltip
                   showTitle={false}
                   itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"
@@ -100,3 +102,15 @@ export default class PieDoughnutChart extends Component {
     );
   }
 }
+
+const styles = {
+  chart: {
+    marginTop: -1,
+  },
+  leftContainer: {
+    marginRight: 10,
+  },
+  rightContainer: {
+    marginLeft: 10,
+  },
+};

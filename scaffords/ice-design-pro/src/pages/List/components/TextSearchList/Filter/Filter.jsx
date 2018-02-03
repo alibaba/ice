@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 
 export default class Filter extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export default class Filter extends Component {
 
   render() {
     return (
-      <IceCard style={styles.container}>
+      <IceContainer style={styles.container}>
         <div style={styles.category}>
           <span style={styles.label}>所属类目：</span>
           <span style={styles.item}>全部</span>
@@ -26,7 +26,7 @@ export default class Filter extends Component {
           <span style={styles.item}>类目三</span>
           <span style={styles.item}>类目四</span>
         </div>
-      </IceCard>
+      </IceContainer>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Button } from '@icedesign/base';
 import './ArticleList.scss';
 
@@ -63,9 +63,9 @@ export default class ArticleList extends Component {
   render() {
     const { dataSource = [] } = this.props;
     return (
-      <IceCard className="article-list">
+      <IceContainer className="article-list">
         {dataSource.map(this.renderItem)}
-      </IceCard>
+      </IceContainer>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Tab, Button, Grid } from '@icedesign/base';
 import IceEllipsis from '@icedesign/ellipsis';
 import axios from 'axios';
@@ -83,7 +83,7 @@ export default class InfoDisplayTab extends Component {
     const { tabData } = this.state;
     return (
       <div className="info-display-tab" style={styles.infoDisplayTab}>
-        <IceCard>
+        <IceContainer>
           <Tab type="bar" onChange={this.callback}>
             <TabPane tab="全部频道" key="1">
               {tabData.all ? this.renderContent(tabData.all) : '暂无数据'}
@@ -97,7 +97,7 @@ export default class InfoDisplayTab extends Component {
                 : '暂无数据'}
             </TabPane>
           </Tab>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

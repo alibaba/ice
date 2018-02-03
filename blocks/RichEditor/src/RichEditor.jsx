@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
@@ -178,7 +178,7 @@ export default class RichEditor extends Component {
   render() {
     return (
       <div className="rich-editor">
-        <IceCard>
+        <IceContainer>
           <div>
             <div className="rich-editor-menu rich-editor-toolbar-menu">
               {this.renderMarkButton('bold', 'format_bold')}
@@ -203,7 +203,7 @@ export default class RichEditor extends Component {
               />
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

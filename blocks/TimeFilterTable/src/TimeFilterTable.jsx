@@ -75,7 +75,7 @@ export default class TimeFilterTable extends Component {
     const tableData = this.props.bindingData.tableData;
 
     return (
-      <div className="time-filter-table" style={styles.timeFilterTable}>
+      <div className="time-filter-table">
         <IceContainer style={styles.filterCard}>
           <div>
             <span>选择活动日期范围：</span>
@@ -149,6 +149,4 @@ const styles = {
   tableCard: {
     padding: '10px',
   },
-  timeFilterTable: {},
-  todo0: { marginLeft: '10px' },
 };

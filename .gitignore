@@ -5,5 +5,7 @@ npm-debug.log
 mochawesome-report
 .happypack
 package-lock.json
-lib/
+blocks/**/lib/
+layouts/**/lib/
 .eslintcache
+databases
