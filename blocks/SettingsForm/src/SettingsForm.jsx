@@ -1,6 +1,6 @@
 /* eslint  react/no-string-refs: 0 */
 import React, { Component } from 'react';
-import IceCard from '@icedesign/container';
+import IceContainer from '@icedesign/container';
 import { Input, Button, Radio, Switch, Upload, Grid } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
@@ -77,7 +77,7 @@ export default class SettingsForm extends Component {
   render() {
     return (
       <div className="settings-form">
-        <IceCard>
+        <IceContainer>
           <IceFormBinderWrapper
             value={this.state.value}
             onChange={this.formChange}
@@ -260,7 +260,7 @@ export default class SettingsForm extends Component {
               </Button>
             </Col>
           </Row>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
