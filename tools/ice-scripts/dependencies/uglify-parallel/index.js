@@ -81,7 +81,7 @@ function job(options, callback) {
         log(
           colors.magenta(rightPad(prettyBytes(stats.size), 7)),
           rightPad(prettyMs(now - start), 6),
-          colors.blue(path.relative(process.cwd(), dest))
+          colors.blue(path.relative(process.cwd(), dest)),
         );
         callback(null);
       }
@@ -103,8 +103,9 @@ module.exports = function uglify(options, globOptions, callback) {
     if (err) {
       return callback(err);
     }
-    if (!files.length) {
-      return callback();
+    if (files.length === 0) {
+      callback();
+      return;
     }
 
     var parallelNum = options.parallel || os.cpus().length;
@@ -125,7 +126,7 @@ module.exports = function uglify(options, globOptions, callback) {
         return callback(error);
       }
       // 直到所有进程任务完成
-      if (++runned == total) {
+      if (++runned === total) {
         callback();
       }
     });

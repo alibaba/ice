@@ -38,8 +38,9 @@ module.exports = function(options, callback) {
         throw Error(err);
       }
 
-      if (!files.length) {
-        return callback(null);
+      if (files.length === 0) {
+        callback(null);
+        return;
       }
 
       var parallelNum = options.parallel || os.cpus().length;
@@ -61,11 +62,11 @@ module.exports = function(options, callback) {
           throw err;
         }
 
-        if (++runned == total) {
+        if (++runned === total) {
           callback(null);
         }
       });
-    }
+    },
   );
 };
 
@@ -102,14 +103,14 @@ function singleTask(options, callback) {
 
     ps.on('close', function(code) {
       if (code !== 0) {
-        callback(new Error(`压缩文件 ${srcFilePath} 错误, exit code: ${code}`));
+        callback(new Error(`Build ${srcFilePath} fail, exit code: ${code}`));
       } else {
         var now = new Date();
         var stats = fs.statSync(destFilePath);
         log(
           colors.magenta(rightPad(prettyBytes(stats.size), 7)),
           rightPad(prettyMs(now - start), 6),
-          colors.blue(path.relative(process.cwd(), destFilePath))
+          colors.blue(path.relative(process.cwd(), destFilePath)),
         );
         callback(null);
       }
