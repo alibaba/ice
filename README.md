@@ -11,11 +11,11 @@
 
 ---
 
-:zap: **海量高质量物料：** 区块 + 模板，每周有新增，海量物料满足你开发之所需 [点击查看](https://alibaba.github.io/ice/#/block)
+:zap: **[海量高质量物料](https://alibaba.github.io/ice/#/block)：** 每周有新增，专业视觉设计，海量物料满足你开发之所需
 
-:dart: **GUI 工具：** 零配置的工程整合，物料可视化一键导入复用 [点击下载](https://alibaba.github.io/ice/#/iceworks)
+:dart: **[GUI 工具](https://alibaba.github.io/ice/#/iceworks)：** 零配置的工程整合，物料可视化一键导入复用
 
-:art: **ICE DESIGN 设计语言：** 淘宝中后台通用的 [设计语言](https://alibaba.github.io/ice/design.html)  
+:art: **[ICE DESIGN 设计语言](https://alibaba.github.io/ice/design.html)：** “冻”人的中后台设计语言
 
 ## 项目开发和使用方式
 
