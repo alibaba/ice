@@ -5,5 +5,5 @@ const componentBuild = require('./lib/component-build');
 module.exports = {
   dev,
   build,
-  componentBuild
+  componentBuild,
 };

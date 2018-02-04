@@ -41,7 +41,7 @@ export default class ComplexFilter extends Component {
               key={idx}
               className={`tab-filter-item ${
                 currentFilterType === item.type ? 'active' : ''
-                }`}
+              }`}
               onClick={() => {
                 this.setState({
                   currentFilterType: item.type,
@@ -60,12 +60,14 @@ export default class ComplexFilter extends Component {
               <span
                 className={`filter-belonging-item ${
                   categories.indexOf(cat.type) > -1 ? 'active' : ''
-                  }`}
+                }`}
                 onClick={() => {
                   const isInCategory = categories.indexOf(cat.type) > -1;
                   if (isInCategory) {
                     this.setState({
-                      categories: categories.filter(item => item !== cat.type),
+                      categories: categories.filter(
+                        (item) => item !== cat.type,
+                      ),
                     });
                   } else {
                     this.setState({

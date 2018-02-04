@@ -49,7 +49,11 @@ export default class TopicCard extends Component {
 
   render() {
     return (
-      <IceContainer style={styles.container} className="tab-card" title="数据概览">
+      <IceContainer
+        style={styles.container}
+        className="tab-card"
+        title="数据概览"
+      >
         <div className="topic-card">
           <div style={styles.horizontalWraper}>
             {dataSource.map((item, idx) => {

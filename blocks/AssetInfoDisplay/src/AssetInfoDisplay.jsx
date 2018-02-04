@@ -6,17 +6,13 @@ import './AssetInfoDisplay.scss';
 export default class AssetInfoDisplay extends Component {
   static displayName = 'AssetInfoDisplay';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   render() {
@@ -27,19 +23,26 @@ export default class AssetInfoDisplay extends Component {
           <div style={styles.assets}>
             <div style={styles.assetItem}>
               <div style={styles.price}>$46.24</div>
-              <a href="##" style={styles.subItem}>可用额度 <Icon type="help" size="s" /></a>
+              <a href="##" style={styles.subItem}>
+                可用额度 <Icon type="help" size="s" />
+              </a>
             </div>
             <div style={styles.assetItem}>
               <div style={styles.price}>$46.24</div>
-              <a href="##" style={styles.subItem}>现金余额 <Icon type="help" size="s" /></a>
+              <a href="##" style={styles.subItem}>
+                现金余额 <Icon type="help" size="s" />
+              </a>
             </div>
-            <div style={{
-              ...styles.assetItem,
-              borderRight: '0',
-            }}
+            <div
+              style={{
+                ...styles.assetItem,
+                borderRight: '0',
+              }}
             >
               <div style={styles.price}>$46.24</div>
-              <a href="##" style={styles.subItem}>信用额度 <Icon type="help" size="s" /></a>
+              <a href="##" style={styles.subItem}>
+                信用额度 <Icon type="help" size="s" />
+              </a>
             </div>
           </div>
           <div style={styles.cardItem}>
@@ -53,10 +56,11 @@ export default class AssetInfoDisplay extends Component {
                 <div style={styles.item}>$0</div>
                 <div style={styles.subItem}>优惠券</div>
               </div>
-              <div style={{
-                ...styles.assetItem,
-                borderRight: '0',
-              }}
+              <div
+                style={{
+                  ...styles.assetItem,
+                  borderRight: '0',
+                }}
               >
                 <div style={styles.item}>$3000</div>
                 <div style={styles.subItem}>代金券</div>
@@ -67,10 +71,11 @@ export default class AssetInfoDisplay extends Component {
         <div style={styles.gap} />
         <IceContainer style={styles.card}>
           <div style={styles.title}>合同发票</div>
-          <div style={{
-            ...styles.cardItem,
-            borderBottom: '1px solid #eee',
-          }}
+          <div
+            style={{
+              ...styles.cardItem,
+              borderBottom: '1px solid #eee',
+            }}
           >
             <h1 style={styles.subTitle}>合同</h1>
             <div style={styles.assetsGroup}>

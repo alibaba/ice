@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Checkbox, Button } from '@icedesign/base';

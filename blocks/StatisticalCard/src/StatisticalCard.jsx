@@ -88,7 +88,9 @@ export default class StatisticalCard extends Component {
   render() {
     return (
       <div className="statistical-card">
-        <IceContainer className="statistical-card-list">{this.renderItem()}</IceContainer>
+        <IceContainer className="statistical-card-list">
+          {this.renderItem()}
+        </IceContainer>
       </div>
     );
   }
