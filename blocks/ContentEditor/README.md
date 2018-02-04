@@ -4,4 +4,4 @@
 
 内容编辑器
 
-![截图](https://img.alicdn.com/tfs/TB10h._XDtYBeNjy1XdXXXXyVXa-1898-1498.jpg)
+![截图](https://img.alicdn.com/tfs/TB199TEXuuSBuNjy1XcXXcYjFXa-1906-1550.png)

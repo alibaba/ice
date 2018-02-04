@@ -64,7 +64,7 @@ export default class ContentEditor extends Component {
           <IceContainer title="文章发布">
             <Form labelAlign="top" style={styles.form}>
               <Row>
-                <Col span="14">
+                <Col span="11">
                   <FormItem label="标题" required>
                     <IceFormBinder name="title" required message="标题必填">
                       <Input placeholder="这里填写文章标题" />
@@ -72,7 +72,9 @@ export default class ContentEditor extends Component {
                     <IceFormError name="title" />
                   </FormItem>
                 </Col>
-                <Col fixedOffset="1">
+              </Row>
+              <Row>
+                <Col span="11">
                   <FormItem label="作者" required>
                     <IceFormBinder
                       name="author"
@@ -84,42 +86,45 @@ export default class ContentEditor extends Component {
                     <IceFormError name="author" />
                   </FormItem>
                 </Col>
+                <Col span="11" offset="2">
+                  <FormItem label="分类" required>
+                    <IceFormBinder
+                      name="cats"
+                      required
+                      type="array"
+                      message="分类必填支持多个"
+                    >
+                      <Select
+                        style={styles.cats}
+                        multiple
+                        placeholder="请选择分类"
+                        dataSource={[
+                          { label: '分类1', value: 'cat1' },
+                          { label: '分类2', value: 'cat2' },
+                          { label: '分类3', value: 'cat3' },
+                        ]}
+                      />
+                    </IceFormBinder>
+                    <IceFormError
+                      name="cats"
+                      render={(errors) => {
+                        console.log('errors', errors);
+                        return (
+                          <div>
+                            <span style={{ color: 'red' }}>
+                              {errors.map((item) => item.message).join(',')}
+                            </span>
+                            <span style={{ marginLeft: 10 }}>
+                              不知道选择什么分类？请 <a href="#">点击这里</a>{' '}
+                              查看
+                            </span>
+                          </div>
+                        );
+                      }}
+                    />
+                  </FormItem>
+                </Col>
               </Row>
-              <FormItem label="分类" required>
-                <IceFormBinder
-                  name="cats"
-                  required
-                  type="array"
-                  message="分类必填支持多个"
-                >
-                  <Select
-                    style={styles.cats}
-                    multiple
-                    placeholder="请选择分类"
-                    dataSource={[
-                      { label: '分类1', value: 'cat1' },
-                      { label: '分类2', value: 'cat2' },
-                      { label: '分类3', value: 'cat3' },
-                    ]}
-                  />
-                </IceFormBinder>
-                <IceFormError
-                  name="cats"
-                  render={(errors) => {
-                    console.log('errors', errors);
-                    return (
-                      <div>
-                        <span style={{ color: 'red' }}>
-                          {errors.map(item => item.message).join(',')}
-                        </span>
-                        <span style={{ marginLeft: 10 }}>
-                          不知道选择什么分类？请 <a href="#">点击这里</a> 查看
-                        </span>
-                      </div>
-                    );
-                  }}
-                />
-              </FormItem>
               <FormItem label="描述">
                 <IceFormBinder name="desc">
                   <Input multiple placeholder="这里填写正文描述" />
@@ -148,6 +153,6 @@ const styles = {
     marginTop: 30,
   },
   cats: {
-    width: 300,
+    width: '100%',
   },
 };
