@@ -6,11 +6,15 @@ module.exports = class Component extends Base {
     this.subComponents = this.subComponents || [];
 
     return `
-      ${exportType} class ${this.name} extends React.Component<${this.name}Props, any> {
-        ${this.subComponents.map(item => {
-          return `static ${item.name}: typeof ${item.name};`;
-        }).join('\n')}
+      ${exportType} class ${this.name} extends React.Component<${
+      this.name
+    }Props, any> {
+        ${this.subComponents
+          .map((item) => {
+            return `static ${item.name}: typeof ${item.name};`;
+          })
+          .join('\n')}
       }
     `;
   }
-}
+};

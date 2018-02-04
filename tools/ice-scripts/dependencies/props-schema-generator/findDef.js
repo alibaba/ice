@@ -24,11 +24,14 @@ class Seacher {
     traverse.default(this.ast, {
       MemberExpression(path) {
         try {
-          if (path.node.object.name === name && types.isProgram(path.parentPath.parentPath.parentPath)) {
+          if (
+            path.node.object.name === name &&
+            types.isProgram(path.parentPath.parentPath.parentPath)
+          ) {
             assigns.push(path);
           }
-        } catch (e) { }
-      }
+        } catch (e) {}
+      },
     });
     return assigns;
   }
@@ -42,20 +45,20 @@ class Seacher {
         ) {
           exportArray.push(path);
         }
-      }
+      },
     });
     return exportArray;
   }
   _parseExportInfo() {
     const output = {};
 
-    this.exportInfo.forEach(path => {
+    this.exportInfo.forEach((path) => {
       const info = this._getRealExport(path);
 
       if (types.isExportDefaultDeclaration(path)) {
         output['default'] = info[0];
       } else {
-        info.forEach(item => {
+        info.forEach((item) => {
           item.root.name && (output[item.root.name] = item);
         });
       }
@@ -74,13 +77,13 @@ class Seacher {
         code: this.code,
         filepath: this.filepath,
         type: node.type,
-        leadingComments: path.parentPath.parent.leadingComments
+        leadingComments: path.parentPath.parent.leadingComments,
       };
 
       name && (ret.name = name);
 
       return ret;
-    } catch (e) { }
+    } catch (e) {}
   }
   _getRealExport(path) {
     const specifiers = path.node.specifiers;
@@ -88,7 +91,6 @@ class Seacher {
     const node = path.node;
 
     if (node.soruce) {
-
     }
 
     if (declaration) {
@@ -96,7 +98,7 @@ class Seacher {
     }
 
     if (specifiers) {
-      return specifiers.map(node => {
+      return specifiers.map((node) => {
         return this._createNode(path, node.exported, node.exported.type);
       });
     }
@@ -112,13 +114,13 @@ class Seacher {
         code: this.code,
         filepath: this.filepath,
         type,
-        leadingComments: path.node.leadingComments
+        leadingComments: path.node.leadingComments,
       },
-      refs: {}
-    }
+      refs: {},
+    };
 
     const assigns = this._findAssignInfo(name);
-    assigns.forEach(item => {
+    assigns.forEach((item) => {
       ret.refs[item.node.property.name] = this._getRealAssign(item);
     });
 
@@ -127,10 +129,7 @@ class Seacher {
     return ret;
   }
   _getNodeName(node) {
-    if (
-      types.isFunctionDeclaration(node) ||
-      types.isClassDeclaration(node)
-    ) {
+    if (types.isFunctionDeclaration(node) || types.isClassDeclaration(node)) {
       return node.id && node.id.name;
     }
 
@@ -156,14 +155,13 @@ class Seacher {
    * 递归解析暴露的节点
    */
   _recursionParse() {
-    Object.keys(this.output).forEach(key => {
+    Object.keys(this.output).forEach((key) => {
       const target = this.output[key];
       this._inject(target, 'root');
 
-      Object.keys(target.refs).forEach(key => {
+      Object.keys(target.refs).forEach((key) => {
         this._inject(target.refs, key);
       });
-
     });
   }
   _inject(target, key) {
@@ -221,10 +219,10 @@ class Seacher {
         code: this.code,
         path: targetPath,
         filepath: this.filepath,
-        leadingComments: targetPath.parent.leadingComments || targetPath.node.leadingComments
+        leadingComments:
+          targetPath.parent.leadingComments || targetPath.node.leadingComments,
       };
-    } catch (e) {
-    }
+    } catch (e) {}
 
     return {};
   }
@@ -245,6 +243,6 @@ function run(codePath, dir) {
   const code = fs.readFileSync(fullPath);
   parsedPathMap[fullPath] = new Seacher(code, dirname, fullPath);
   return parsedPathMap[fullPath];
-};
+}
 
 module.exports = run;

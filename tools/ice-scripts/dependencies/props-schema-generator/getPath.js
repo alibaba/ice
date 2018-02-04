@@ -1,9 +1,9 @@
 const { join } = require('path');
 const { existsSync, statSync } = require('fs');
- 
+
 const postfix = {
   name: ['index'],
-  extension: ['.js', '.jsx']
+  extension: ['.js', '.jsx'],
 };
 
 module.exports = function(currentPath, path) {
@@ -18,10 +18,10 @@ module.exports = function(currentPath, path) {
     return tryExtension(resolvedPath);
   }
   throw new TypeError('没有找到该文件');
-}
+};
 
 function tryExtension(path) {
-  for (let i = 0; i < postfix.extension.length; i ++) {
+  for (let i = 0; i < postfix.extension.length; i++) {
     const resolvedPath = path + postfix.extension[i];
     if (existsSync(resolvedPath)) {
       return resolvedPath;

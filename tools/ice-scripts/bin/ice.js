@@ -23,11 +23,12 @@ if (proc) {
 }
 
 const subCmd = program.args[0];
-if (!subCmd || (
-  subCmd !== 'build'
-  && subCmd !== 'component'
-  && subCmd !== 'block'
-  && subCmd !== 'dev'
-)) {
+if (
+  !subCmd ||
+  (subCmd !== 'build' &&
+    subCmd !== 'component' &&
+    subCmd !== 'block' &&
+    subCmd !== 'dev')
+) {
   program.help();
 }

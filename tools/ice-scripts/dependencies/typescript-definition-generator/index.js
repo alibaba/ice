@@ -10,17 +10,19 @@ function run(schema) {
 
   if (Array.isArray(subComponents)) {
     // submodules is nullable
-    subComponents = subComponents.map(component => _run(component));
+    subComponents = subComponents.map((component) => _run(component));
   } else {
     subComponents = [];
   }
 
-
-  return tsfmt.processString('', _createHead() + subComponents.join('\n') + entryComponent, {});
+  return tsfmt.processString(
+    '',
+    _createHead() + subComponents.join('\n') + entryComponent,
+    {}
+  );
 }
 
 function _run(component) {
-
   const name = component.name;
   const subComponents = component.subComponents;
   const isEntry = component.isEntry;
@@ -28,12 +30,12 @@ function _run(component) {
   const reactProps = new Interface({
     name,
     props: component.props || {},
-    methods: component.methods || {}
+    methods: component.methods || {},
   });
   const reactComponent = new Component({
     name,
     subComponents,
-    isEntry
+    isEntry,
   });
   return reactProps.toString() + reactComponent.toString();
 }

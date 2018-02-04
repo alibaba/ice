@@ -81,7 +81,7 @@ function job(options, callback) {
         log(
           colors.magenta(rightPad(prettyBytes(stats.size), 7)),
           rightPad(prettyMs(now - start), 6),
-          colors.blue(path.relative(process.cwd(), dest)),
+          colors.blue(path.relative(process.cwd(), dest))
         );
         callback(null);
       }
