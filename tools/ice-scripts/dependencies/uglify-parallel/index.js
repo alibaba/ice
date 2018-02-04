@@ -1,7 +1,7 @@
 'use strict';
 
 var async = require('async');
-var childProcess = require('child_process');
+var spawn = require('cross-spawn');
 var colors = require('chalk');
 var fs = require('fs');
 var glob = require('glob');
@@ -33,7 +33,7 @@ function job(options, callback) {
     params.push('--comments=/^\\**!|@preserve|@license/');
   }
 
-  mkdirp(path.dirname(dest), function (mkdirPathError) {
+  mkdirp(path.dirname(dest), function(mkdirPathError) {
     if (mkdirPathError) {
       return callback(mkdirPathError);
     }
@@ -46,32 +46,31 @@ function job(options, callback) {
         '--source-map-url',
         path.basename(file) + '.map',
         '--in-source-map',
-        dest + '.map'
+        dest + '.map',
       ];
     }
-
 
     var psParams = [file, '-o', dest].concat(params).concat(source_map_params);
     var stdoutPrint = '';
     var stderrPrint = '';
 
-    var ps = childProcess.spawn(uglifyBinPath, psParams, {
-      stdio: 'pipe'
+    var ps = spawn(uglifyBinPath, psParams, {
+      stdio: 'pipe',
     });
 
     var start = new Date();
 
     ps.stdout &&
-      ps.stdout.on('data', data => {
+      ps.stdout.on('data', (data) => {
         stdoutPrint += String(data);
       });
 
     ps.stderr &&
-      ps.stderr.on('data', data => {
+      ps.stderr.on('data', (data) => {
         stderrPrint += String(data);
       });
 
-    ps.on('close', function (code, sig) {
+    ps.on('close', function(code, sig) {
       if (code !== 0) {
         console.log(stdoutPrint);
         console.log(stderrPrint);
@@ -82,7 +81,7 @@ function job(options, callback) {
         log(
           colors.magenta(rightPad(prettyBytes(stats.size), 7)),
           rightPad(prettyMs(now - start), 6),
-          colors.blue(path.relative(process.cwd(), dest))
+          colors.blue(path.relative(process.cwd(), dest)),
         );
         callback(null);
       }
@@ -94,39 +93,40 @@ module.exports = function uglify(options, globOptions, callback) {
   if (typeof callback === 'undefined') {
     callback = globOptions;
     globOptions = {
-      cwd: options.src
+      cwd: options.src,
     };
   } else {
     globOptions.cwd = options.src;
   }
 
-  glob(options.pattern, globOptions, function (err, files) {
+  glob(options.pattern, globOptions, function(err, files) {
     if (err) {
       return callback(err);
     }
-    if (!files.length) {
-      return callback();
+    if (files.length === 0) {
+      callback();
+      return;
     }
 
     var parallelNum = options.parallel || os.cpus().length;
-    var tasks = files.map(function (f) {
+    var tasks = files.map(function(f) {
       return {
         file: path.join(options.src, f),
         dest: path.resolve(process.cwd(), options.dest, f),
         params: options.params || [],
-        sourceMap: options.sourceMap
+        sourceMap: options.sourceMap,
       };
     });
     var q = async.queue(job, parallelNum);
     var runned = 0;
     var total = files.length;
 
-    q.push(tasks, function (error) {
+    q.push(tasks, function(error) {
       if (error) {
         return callback(error);
       }
       // 直到所有进程任务完成
-      if (++runned == total) {
+      if (++runned === total) {
         callback();
       }
     });
