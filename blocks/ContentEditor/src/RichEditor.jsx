@@ -3,7 +3,7 @@ import IceContainer from '@icedesign/container';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
-import initialValue from './initRichValue.json';
+import Plain from 'slate-plain-serializer';
 
 import './RichEditor.scss';
 
@@ -23,7 +23,7 @@ export default class RichEditor extends Component {
 
     // 加载初始数据，通常从接口中获取或者默认为空
     this.state = {
-      value: Value.fromJSON(initialValue),
+      value: props.value ? Value.fromJSON(props.value) : Plain.deserialize(''),
     };
   }
 
@@ -38,7 +38,6 @@ export default class RichEditor extends Component {
   };
 
   onChange = ({ value }) => {
-    console.log('当前富文本数据的 JSON 表示：', value.toJSON());
     this.setState({ value });
     // 如果上层有传递 onChange 回调，则应该传递上去
     if (this.props.onChange && typeof this.props.onChange === 'function') {
@@ -99,7 +98,7 @@ export default class RichEditor extends Component {
       const isType = value.blocks.some((block) => {
         return !!document.getClosest(
           block.key,
-          (parent) => parent.type === type
+          (parent) => parent.type === type,
         );
       });
 
@@ -111,7 +110,7 @@ export default class RichEditor extends Component {
       } else if (isList) {
         change
           .unwrapBlock(
-            type === 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
+            type === 'bulleted-list' ? 'numbered-list' : 'bulleted-list',
           )
           .wrapBlock(type);
       } else {
