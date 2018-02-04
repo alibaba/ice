@@ -23,17 +23,17 @@ class EditDialog extends Component {
 
   // ICE: React Component 的生命周期
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillReceiveProps() { }
+  componentWillReceiveProps() {}
 
   shouldComponentUpdate() {
     return true;
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   onOk = () => {
     this.refForm.validateAll((errors, values) => {

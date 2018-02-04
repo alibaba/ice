@@ -41,7 +41,7 @@ export default class ComplexProgressTable extends Component {
 
   // ICE: React Component 的生命周期
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     this.queryCache.page = 1;

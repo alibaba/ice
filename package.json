@@ -7,7 +7,9 @@
     "setup": "lerna setup",
     "db": "node ./scripts/generate-marterials-database",
     "lint": "npm run lint:nofix -- --fix",
-    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
+    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./",
+    "format":
+      "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffords/*/src/**/*.js scaffords/*/src/**/*.jsx tools/**/*.js --write"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,7 @@
     "ice-scripts": "^0.1.0",
     "lerna": "^2.5.1",
     "moment": "^2.20.1",
+    "prettier": "^1.10.2",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "semver-regex": "^1.0.0",

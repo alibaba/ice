@@ -117,7 +117,9 @@ export default class TabDialog extends Component {
             </Tab>
           </div>
         </Dialog>
-        <Button type="primary" onClick={this.showDialog}>显示 Dialog</Button>
+        <Button type="primary" onClick={this.showDialog}>
+          显示 Dialog
+        </Button>
       </IceContainer>
     );
   }
@@ -137,4 +139,3 @@ const styles = {
     fontSize: '20px',
   },
 };
-

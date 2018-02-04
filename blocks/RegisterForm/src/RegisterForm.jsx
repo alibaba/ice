@@ -60,7 +60,11 @@ export default class RegisterForm extends Component {
                 placeholder="姓名"
                 {...init('name', {
                   rules: [
-                    { required: true, min: 5, message: '用户名至少为 5 个字符' },
+                    {
+                      required: true,
+                      min: 5,
+                      message: '用户名至少为 5 个字符',
+                    },
                   ],
                 })}
               />
