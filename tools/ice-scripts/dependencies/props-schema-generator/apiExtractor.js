@@ -8,7 +8,7 @@ const doctrine = require('doctrine');
 function extract(dir, options = {}) {
   const relativePaths = glob.sync('**/*.@(js|jsx)', {
     cwd: dir,
-    ignore: 'node_modules/**'
+    ignore: 'node_modules/**',
   });
   const apiInfos = relativePaths.reduce((ret, relativePath) => {
     const fullPath = path.join(dir, relativePath);
@@ -22,23 +22,26 @@ function extract(dir, options = {}) {
 
   if (apiInfos.length) {
     let mainAPIInfo;
-    let mainIndex = apiInfos.findIndex(apiInfo => apiInfo.name.indexOf('.') === -1);
+    let mainIndex = apiInfos.findIndex(
+      (apiInfo) => apiInfo.name.indexOf('.') === -1
+    );
     if (mainIndex === -1) {
       mainAPIInfo = {
-        name: apiInfos[0].name.split('.')[0]
+        name: apiInfos[0].name.split('.')[0],
       };
     } else {
       mainAPIInfo = apiInfos[mainIndex];
       apiInfos.splice(mainIndex, 1);
     }
-    apiInfos.forEach(apiInfo => {
+    apiInfos.forEach((apiInfo) => {
       apiInfo.name = apiInfo.name.split('.')[1];
     });
     const apiInfosWithOrder = apiInfos
-      .filter(apiInfo => ('order' in apiInfo))
+      .filter((apiInfo) => 'order' in apiInfo)
       .sort((prev, next) => prev.order - next.order);
-    const apiInfosWithoutOrder = apiInfos
-      .filter(apiInfo => !('order' in apiInfo));
+    const apiInfosWithoutOrder = apiInfos.filter(
+      (apiInfo) => !('order' in apiInfo)
+    );
     mainAPIInfo.subComponents = apiInfosWithOrder.concat(apiInfosWithoutOrder);
 
     return mainAPIInfo;
@@ -51,7 +54,11 @@ function extractSource(source, options = {}) {
   const { filePath, componentName } = options;
   let componentInfo;
   try {
-    componentInfo = reactDocs.parse(source, reactDocs.resolver.findExportedComponentDefinition, reactDocs.defaultHandlers);
+    componentInfo = reactDocs.parse(
+      source,
+      reactDocs.resolver.findExportedComponentDefinition,
+      reactDocs.defaultHandlers
+    );
   } catch (e) {
     if (e.message !== 'No suitable component definition found.') {
       e.message = `${e.message}\n[${filePath}]`;
@@ -75,20 +82,23 @@ function filter(componentInfo = {}, options) {
   const docblock = componentInfo.description;
   const ast = doctrine.parse(docblock);
   const name = ast.description || options.componentName;
-  const descriptionTag = ast.tags.find(tag => tag.title === 'description');
-  const orderTag = ast.tags.find(tag => tag.title === 'order');
+  const descriptionTag = ast.tags.find((tag) => tag.title === 'description');
+  const orderTag = ast.tags.find((tag) => tag.title === 'order');
   const order = orderTag ? parseInt(orderTag.description) : null;
 
-  const props = Object.keys(componentInfo.props || {}).reduce((ret, propName) => {
-    const prop = componentInfo.props[propName];
-    if (prop.description) {
-      const docblock = prop.description;
-      const ast = parseJsDoc(docblock, prop.type) || {};
-      ret[propName] = Object.assign(prop, ast);
-    }
+  const props = Object.keys(componentInfo.props || {}).reduce(
+    (ret, propName) => {
+      const prop = componentInfo.props[propName];
+      if (prop.description) {
+        const docblock = prop.description;
+        const ast = parseJsDoc(docblock, prop.type) || {};
+        ret[propName] = Object.assign(prop, ast);
+      }
 
-    return ret;
-  }, {});
+      return ret;
+    },
+    {}
+  );
   const methods = componentInfo.methods.reduce((ret, method) => {
     if (method.description) {
       if (options.md) {
@@ -102,7 +112,7 @@ function filter(componentInfo = {}, options) {
   const apiInfo = {
     name,
     props,
-    methods
+    methods,
   };
 
   if (descriptionTag) {
@@ -144,55 +154,65 @@ function generatePropMD(name, prop) {
   } else if (['object', 'objectOf', 'shape'].indexOf(prop.type.name) > -1) {
     if (prop.properties.length) {
       extra += '<br><br>**属性**:<br>';
-      extra += prop.properties.map(tag => {
-        return `*${tag.name}*: {${getType(tag.type)}} ${tag.description}`;
-      }).join('<br>');
+      extra += prop.properties
+        .map((tag) => {
+          return `*${tag.name}*: {${getType(tag.type)}} ${tag.description}`;
+        })
+        .join('<br>');
     }
   } else if (prop.type.name === 'enum') {
-    const hasDesc = prop.type.value.some(item => !!item.description);
-    extra += `<br><br>**可选值**:<br>${prop.type.value.map(item => {
-      let desc = '';
-      if (item.description) {
-        desc = `(${item.description})`;
-      }
-      return `${item.value}${desc}`;
-    }).join(hasDesc ? '<br>' : ', ')}`;
+    const hasDesc = prop.type.value.some((item) => !!item.description);
+    extra += `<br><br>**可选值**:<br>${prop.type.value
+      .map((item) => {
+        let desc = '';
+        if (item.description) {
+          desc = `(${item.description})`;
+        }
+        return `${item.value}${desc}`;
+      })
+      .join(hasDesc ? '<br>' : ', ')}`;
   }
 
   const displayType = getDisplayType(prop.type);
 
-  const defaultValue = prop.defaultValue ?
-    prop.defaultValue.value
-      .replace(/\n/g, ' ')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;') :
-    '-';
+  const defaultValue = prop.defaultValue
+    ? prop.defaultValue.value
+        .replace(/\n/g, ' ')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+    : '-';
 
   return `${name} | ${description}${extra} | ${displayType} | ${defaultValue}\n`;
 }
 
 function generateMethodMD(method) {
-  const paramsSign = method.params.reduce((ret, tag) => {
-    if (tag.name.indexOf('.') === -1) {
-      ret.push(`${tag.name}: ${getType(tag.type)}`);
-    }
-    return ret;
-  }, []).join(', ');
+  const paramsSign = method.params
+    .reduce((ret, tag) => {
+      if (tag.name.indexOf('.') === -1) {
+        ret.push(`${tag.name}: ${getType(tag.type)}`);
+      }
+      return ret;
+    }, [])
+    .join(', ');
   const returnsSign = method.returns ? getType(method.returns.type) : 'void';
   const funcSign = `**签名**:<br>Function(${paramsSign}) => ${returnsSign}`;
 
   let paramsHTML = '';
   if (method.params.length) {
     paramsHTML += '<br>**参数**:<br>';
-    paramsHTML += method.params.map(tag => {
-      return `*${tag.name}*: {${getType(tag.type)}} ${tag.description}`;
-    }).join('<br>');
+    paramsHTML += method.params
+      .map((tag) => {
+        return `*${tag.name}*: {${getType(tag.type)}} ${tag.description}`;
+      })
+      .join('<br>');
   }
 
   let returnsHTML = '';
   if (method.returns) {
     returnsHTML += '<br>**返回值**:<br>';
-    returnsHTML += `{${getType(method.returns.type)}} ${method.returns.description}<br>`;
+    returnsHTML += `{${getType(method.returns.type)}} ${
+      method.returns.description
+    }<br>`;
   }
 
   return `${funcSign}${paramsHTML}${returnsHTML}`;
@@ -223,22 +243,24 @@ function getDisplayType(type) {
     return `Array&lt;${getDisplayType(type.value)}&gt;`;
   }
 
-  return {
-    any: 'any',
-    array: 'Array',
-    bool: 'Boolean',
-    custom: 'custom',
-    element: 'ReactElement',
-    enum: 'Enum',
-    func: 'Function',
-    node: 'ReactNode',
-    number: 'Number',
-    object: 'Object',
-    string: 'String',
-    symbol: 'Symbol',
-    objectOf: 'Object',
-    shape: 'Object'
-  }[type.name] || 'unknown';
+  return (
+    {
+      any: 'any',
+      array: 'Array',
+      bool: 'Boolean',
+      custom: 'custom',
+      element: 'ReactElement',
+      enum: 'Enum',
+      func: 'Function',
+      node: 'ReactNode',
+      number: 'Number',
+      object: 'Object',
+      string: 'String',
+      symbol: 'Symbol',
+      objectOf: 'Object',
+      shape: 'Object',
+    }[type.name] || 'unknown'
+  );
 }
 
 exports.extract = extract;

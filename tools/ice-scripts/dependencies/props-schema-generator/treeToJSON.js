@@ -3,8 +3,8 @@ const reactDocGen = require('react-docgen');
 const fusionApiExtractor = require('./apiExtractor');
 
 const typeMap = {
-  'FunctionDeclaration': 'function',
-  'ObjectExpression': 'object'
+  FunctionDeclaration: 'function',
+  ObjectExpression: 'object',
 };
 
 // function parse(tree) {
@@ -99,7 +99,6 @@ const typeMap = {
 //   });
 // }
 
-
 function run(node, nodeName) {
   const propsSchema = {};
   if (nodeName) {
@@ -107,16 +106,22 @@ function run(node, nodeName) {
   }
 
   if (node.root && node.root.filepath) {
-    Object.assign(propsSchema, fusionApiExtractor.extractSource(node.root.code, {
-      filePath: node.root.filepath,
-      componentName: nodeName
-    }));
+    Object.assign(
+      propsSchema,
+      fusionApiExtractor.extractSource(node.root.code, {
+        filePath: node.root.filepath,
+        componentName: nodeName,
+      })
+    );
   }
   if (node.refs) {
     propsSchema.subComponents = Object.keys(node.refs).map((componentName) => {
-      return run({
-        root: node.refs[componentName]
-      }, componentName);
+      return run(
+        {
+          root: node.refs[componentName],
+        },
+        componentName
+      );
     });
   }
   return propsSchema;
@@ -126,4 +131,4 @@ module.exports = function treeToJSON({ output }) {
   const schema = run(output.default || {});
   // const parsed = parse(tree.output);
   return schema;
-}
+};

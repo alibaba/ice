@@ -36,18 +36,20 @@ class Base {
 
     if (ENUM.test(typeName)) {
       if (typeValue) {
-        return typeValue.map(item => item.value).join(' | ');
+        return typeValue.map((item) => item.value).join(' | ');
       }
     }
 
     if (UNION.test(typeName)) {
       if (typeValue) {
-        return typeValue.map(item => this.mapping(null, item.name)).join(' | ');
+        return typeValue
+          .map((item) => this.mapping(null, item.name))
+          .join(' | ');
       }
     }
     if (OBJECT.test(typeName)) {
       return new Obj({
-        properties: value.properties || []
+        properties: value.properties || [],
       }).toString();
     }
 
@@ -56,7 +58,7 @@ class Base {
         return '(() => void)';
       } else {
         return new Func({
-          params: typeValue.params
+          params: typeValue.params,
         });
       }
     }
@@ -74,7 +76,6 @@ class Base {
     }
 
     return 'any';
-
   }
   /**
    * 一个类转换为 TS 的方法，由子类自己实现
@@ -84,13 +85,14 @@ class Base {
   }
 }
 
-
 class Func extends Base {
   toString() {
     return `
-      ((${this.params.map(param => {
-        return `${param.name}: ${this.mapping(param.name, param)}`
-      }).join(',')}) => void);
+      ((${this.params
+        .map((param) => {
+          return `${param.name}: ${this.mapping(param.name, param)}`;
+        })
+        .join(',')}) => void);
     `;
   }
 }
@@ -98,7 +100,7 @@ class Func extends Base {
 class Obj extends Base {
   toString() {
     return `{
-        ${this.properties.map(property => {
+        ${this.properties.map((property) => {
           return `${property.name}: ${this.mapping(property.name, property)}`;
         })}
       }

@@ -72,7 +72,7 @@ module.exports = function(args = {}) {
         mkdirp.sync(path.dirname(propsSchemaDist));
         fs.writeFileSync(
           propsSchemaDist,
-          `${JSON.stringify(propsSchema, null, 2)}\n`,
+          `${JSON.stringify(propsSchema, null, 2)}\n`
         );
         console.log(colors.green('propsSchema 生成完毕'));
         return dtsGenerator(propsSchema).then((dts) => {
@@ -117,7 +117,7 @@ module.exports = function(args = {}) {
                 case '.js':
                   // 检测依赖 start
                   const depsInContents = matchRequire.findAll(
-                    fs.readFileSync(from, 'utf-8'),
+                    fs.readFileSync(from, 'utf-8')
                   );
                   (depsInContents || []).forEach((dep) => {
                     // 本地依赖 忽略
@@ -140,7 +140,7 @@ module.exports = function(args = {}) {
                       cwd,
                       'node_modules',
                       depModule,
-                      'package.json',
+                      'package.json'
                     );
                     if (!fs.existsSync(modulePath)) {
                       throw new Error('依赖检测错误: ' + dep);
@@ -151,32 +151,32 @@ module.exports = function(args = {}) {
                   });
                   const transformed = babel.transformFileSync(
                     from,
-                    babelConfig,
+                    babelConfig
                   );
                   fs.writeFileSync(
                     to.replace(/\.jsx/, '.js'),
                     transformed.code,
-                    'utf-8',
+                    'utf-8'
                   );
                   console.log(
                     `${path.relative(cwd, from)} ${colors.green(
-                      '-babel->',
-                    )} ${path.relative(cwd, to)}`,
+                      '-babel->'
+                    )} ${path.relative(cwd, to)}`
                   );
                   // todo .map file
                   break;
                 default:
                   console.log(
                     `${path.relative(cwd, from)} ${colors.green(
-                      '-copy->',
-                    )} ${path.relative(cwd, to)}`,
+                      '-copy->'
+                    )} ${path.relative(cwd, to)}`
                   );
                   copy(from, to);
               }
             });
             resolve(result);
           }
-        },
+        }
       );
     });
   });
