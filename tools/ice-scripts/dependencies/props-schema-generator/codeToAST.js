@@ -16,11 +16,11 @@ const conf = {
     'exponentiationOperator',
     'asyncGenerators',
     'functionBind',
-    'functionSent'
-  ]
+    'functionSent',
+  ],
 };
 
-module.exports = function (code) {
+module.exports = function(code) {
   code = code.toString();
   return babylon.parse(code, conf);
-}
+};

@@ -12,7 +12,7 @@ function splitInput(str) {
 
 const readmePath = path.join(process.cwd(), 'README.md');
 
-module.exports = function (filepath = readmePath) {
+module.exports = function(filepath = readmePath) {
   if (!fs.existsSync(filepath)) {
     console.log('未找到 README.md');
     return null;

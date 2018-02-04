@@ -10,10 +10,9 @@ var skinContentCache = {};
 
 // 删除空行
 function deleteEmptyLine(str) {
-  var filterLines = str.split('\n')
-    .filter(function(line) {
-      return line !== '';
-    });
+  var filterLines = str.split('\n').filter(function(line) {
+    return line !== '';
+  });
 
   filterLines.push('');
   return filterLines.join('\n');
@@ -39,7 +38,10 @@ module.exports = function(source) {
     return skinContentCache[filePathHash] + source;
   } else {
     console.log(chalk.red('\n[Error] 不存在皮肤文件:'), themeFile);
-    console.log(chalk.green('[Info] 可参考皮肤配置文档:'), 'http://ice.alibaba-inc.com/docs/addons/skin');
+    console.log(
+      chalk.green('[Info] 可参考皮肤配置文档:'),
+      'http://ice.alibaba-inc.com/docs/addons/skin'
+    );
     return source;
   }
 };

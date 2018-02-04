@@ -66,7 +66,7 @@ module.exports = function(options, callback) {
           callback(null);
         }
       });
-    },
+    }
   );
 };
 
@@ -110,7 +110,7 @@ function singleTask(options, callback) {
         log(
           colors.magenta(rightPad(prettyBytes(stats.size), 7)),
           rightPad(prettyMs(now - start), 6),
-          colors.blue(path.relative(process.cwd(), destFilePath)),
+          colors.blue(path.relative(process.cwd(), destFilePath))
         );
         callback(null);
       }
