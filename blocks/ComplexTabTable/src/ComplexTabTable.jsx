@@ -232,7 +232,7 @@ export default class ComplexTabTable extends Component {
                       key={tab.type}
                       tab={
                         <span>
-                          {tab.text}{' '}
+                          {tab.text}
                           <span style={styles.tabCount}>{tab.count}</span>
                         </span>
                       }
@@ -304,11 +304,29 @@ export default class ComplexTabTable extends Component {
 }
 
 const styles = {
-  complexTabTableOperation: { lineHeight: '28px' },
-  titleWrapper: { display: 'flex', flexDirection: 'row' },
-  title: { marginLeft: '10px', lineHeight: '20px' },
-  tabExtra: { display: 'flex', alignItems: 'center' },
-  search: { marginLeft: 10 },
-  tabCount: { color: '#3080FE' },
-  pagination: { textAlign: 'right', paddingTop: '26px' },
+  complexTabTableOperation: {
+    lineHeight: '28px',
+  },
+  titleWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  title: {
+    marginLeft: '10px',
+    lineHeight: '20px',
+  },
+  tabExtra: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  search: {
+    marginLeft: 10,
+  },
+  tabCount: {
+    color: '#3080FE',
+  },
+  pagination: {
+    textAlign: 'right',
+    paddingTop: '26px',
+  },
 };
