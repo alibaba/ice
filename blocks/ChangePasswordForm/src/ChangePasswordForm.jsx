@@ -1,5 +1,4 @@
-'use strict';
-
+/* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Input, Grid, Button } from '@icedesign/base';

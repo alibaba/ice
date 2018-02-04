@@ -1,10 +1,7 @@
-'use strict';
-
+/* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import { Input, Grid, Button, Select } from '@icedesign/base';
-const { Row, Col } = Grid;
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -12,6 +9,7 @@ import {
 } from '@icedesign/form-binder';
 import './UserForm.scss';
 
+const { Row, Col } = Grid;
 export default class UserForm extends Component {
   static displayName = 'UserForm';
 
