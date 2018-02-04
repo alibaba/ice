@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import Monaco from 'react-monaco-editor';
@@ -10,8 +8,7 @@ function getScript(uri) {
   return new Promise((resolve, reject) => {
     const el = document.createElement('script');
     el.type = 'text/javascript';
-    const head = document.head ||
-      document.head.getElementsByTagName('head')[0];
+    const head = document.head || document.head.getElementsByTagName('head')[0];
     el.onerror = function onerror(e) {
       reject(new URIError(`${uri} could not be loaded`), e);
     };
@@ -26,11 +23,9 @@ function getScript(uri) {
 export default class MonacoEditor extends Component {
   static displayName = 'MonacoEditor';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -60,13 +55,9 @@ export default class MonacoEditor extends Component {
     });
   }
 
-  componentDidMount() {
+  componentDidMount() {}
 
-  }
-
-  componentWillUnmount() {
-
-  }
+  componentWillUnmount() {}
 
   onChange = (newValue, e) => {
     console.log('onChange', newValue, e);
@@ -89,10 +80,13 @@ function foo() {
     const { monacoReady } = this.state;
 
     return (
-      <div className="monaco-editor-container" style={styles.monacoEditorContainer}>
+      <div
+        className="monaco-editor-container"
+        style={styles.monacoEditorContainer}
+      >
         <IceContainer style={styles.container}>
-          {
-            monacoReady ? <Monaco
+          {monacoReady ? (
+            <Monaco
               height="600"
               language="javascript"
               theme="vs-dark"
@@ -100,8 +94,10 @@ function foo() {
               options={options}
               onChange={this.onChange}
               editorDidMount={this.editorDidMount}
-            /> : 'loading...'
-          }
+            />
+          ) : (
+            'loading...'
+          )}
         </IceContainer>
       </div>
     );

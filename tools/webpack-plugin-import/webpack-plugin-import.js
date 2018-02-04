@@ -51,13 +51,11 @@ module.exports = class WebpackPluginImport {
             if (this.needAdditionalStyle(result, opt)) {
               const modPath = path.join(
                 path.dirname(result.resource),
-                opt.stylePath || 'style.js'
+                opt.stylePath || 'style.js',
               );
 
               if (fileExists(modPath)) {
-                result.loaders.push(
-                  `${webpackLoaderRequire}?mod=${modPath}`
-                );
+                result.loaders.push(`${webpackLoaderRequire}?mod=${modPath}`);
               }
             }
           });

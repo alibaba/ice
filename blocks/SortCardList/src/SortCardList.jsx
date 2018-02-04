@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import './SortCardList.scss';
@@ -13,11 +12,9 @@ const stateBackgroundMap = {
 export default class SortCardList extends Component {
   static displayName = 'SortCardList';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -26,19 +23,22 @@ export default class SortCardList extends Component {
         {
           id: 1,
           state: 0,
-          description: '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
+          description:
+            '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
         {
           id: 2,
           state: 1,
-          description: '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
+          description:
+            '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
         {
           id: 3,
           state: 2,
-          description: '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
+          description:
+            '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
       ],
@@ -46,31 +46,36 @@ export default class SortCardList extends Component {
         {
           id: 1,
           state: 0,
-          description: '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
+          description:
+            '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
         {
           id: 2,
           state: 1,
-          description: '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
+          description:
+            '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
         {
           id: 3,
           state: 2,
-          description: '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
+          description:
+            '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
         {
           id: 4,
           state: 2,
-          description: '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
+          description:
+            '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
         {
           id: 5,
           state: 2,
-          description: '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
+          description:
+            '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
       ],
@@ -78,7 +83,8 @@ export default class SortCardList extends Component {
         {
           id: 2,
           state: 1,
-          description: '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
+          description:
+            '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
       ],
@@ -87,28 +93,23 @@ export default class SortCardList extends Component {
 
   // ICE: React Component 的生命周期
 
-  componentWillMount() {
+  componentWillMount() {}
 
-  }
+  componentDidMount() {}
 
-  componentDidMount() {
+  componentWillUnmount() {}
 
-  }
-
-  componentWillUnmount() {
-
-  }
-
-  handleFinish = () => { };
+  handleFinish = () => {};
 
   renderItem = (item) => {
     return (
-      <div style={{
-        ...styles.cardItem,
-        ...{
-          backgroundColor: stateBackgroundMap[item.state],
-        },
-      }}
+      <div
+        style={{
+          ...styles.cardItem,
+          ...{
+            backgroundColor: stateBackgroundMap[item.state],
+          },
+        }}
         key={item.id}
         draggable
       >
@@ -122,16 +123,16 @@ export default class SortCardList extends Component {
             />
             {item.datetime}
           </span>
-          <span style={styles.done} onClick={this.handleFinish}>完成</span>
+          <span style={styles.done} onClick={this.handleFinish}>
+            完成
+          </span>
         </div>
       </div>
     );
-  }
+  };
 
   render() {
-    const {
-      todos, doings, dones,
-    } = this.state;
+    const { todos, doings, dones } = this.state;
     return (
       <div className="sort-card-list">
         <IceContainer style={styles.cardContainer}>

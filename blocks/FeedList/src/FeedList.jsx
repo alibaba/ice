@@ -51,11 +51,11 @@ export default class FeedList extends Component {
 
   // ICE: React Component 的生命周期
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
   renderItem = (item, idx) => {
     return (
       <div style={styles.item} key={idx}>

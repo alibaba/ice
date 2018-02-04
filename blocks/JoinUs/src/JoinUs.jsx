@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Grid, Input, Button } from '@icedesign/base';
-import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
+import {
+  FormBinderWrapper,
+  FormBinder,
+  FormError,
+} from '@icedesign/form-binder';
 import './JoinUs.scss';
 
 const { Row, Col } = Grid;
@@ -123,7 +127,8 @@ export default class JoinUs extends Component {
 
 const styles = {
   container: {
-    background: 'url(https://img.alicdn.com/tfs/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png)',
+    background:
+      'url(https://img.alicdn.com/tfs/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png)',
     backgroundSize: 'cover',
   },
   content: {
