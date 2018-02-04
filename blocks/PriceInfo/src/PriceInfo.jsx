@@ -8,7 +8,8 @@ const data = [
     type: '微型企业',
     description:
       '海纳百川，精选全球的高品质软件与服务，大咖云集，知识分享的开发者技术社区',
-    imgUrl: 'https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png',
+    imgUrl:
+      'https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png',
   },
   {
     title: '标准配置',
@@ -16,7 +17,8 @@ const data = [
     type: '中小企业',
     description:
       '海纳百川，精选全球的高品质软件与服务，大咖云集，知识分享的开发者技术社区',
-    imgUrl: 'https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png',
+    imgUrl:
+      'https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png',
   },
   {
     title: '高端配置',
@@ -24,7 +26,8 @@ const data = [
     type: '大型企业',
     description:
       '海纳百川，精选全球的高品质软件与服务，大咖云集，知识分享的开发者技术社区',
-    imgUrl: 'https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png',
+    imgUrl:
+      'https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png',
   },
 ];
 

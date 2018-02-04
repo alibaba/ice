@@ -57,7 +57,10 @@ export default class ChartTypeLine extends Component {
           <h4 style={styles.title}>折线图</h4>
           <Chart height={400} data={dv} scale={cols} forceFit>
             <Axis name="month" />
-            <Axis name="temperature" label={{ formatter: val => `${val}°C` }} />
+            <Axis
+              name="temperature"
+              label={{ formatter: (val) => `${val}°C` }}
+            />
             <Tooltip crosshairs={{ type: 'y' }} />
             <Geom
               type="line"

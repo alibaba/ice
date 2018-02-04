@@ -29,12 +29,12 @@ export default class RichEditor extends Component {
 
   hasMark = (type) => {
     const { value } = this.state;
-    return value.activeMarks.some(mark => mark.type === type);
+    return value.activeMarks.some((mark) => mark.type === type);
   };
 
   hasBlock = (type) => {
     const { value } = this.state;
-    return value.blocks.some(node => node.type === type);
+    return value.blocks.some((node) => node.type === type);
   };
 
   onChange = ({ value }) => {
@@ -93,7 +93,10 @@ export default class RichEditor extends Component {
     } else {
       const isList = this.hasBlock('list-item');
       const isType = value.blocks.some((block) => {
-        return !!document.getClosest(block.key, parent => parent.type === type);
+        return !!document.getClosest(
+          block.key,
+          (parent) => parent.type === type,
+        );
       });
 
       if (isList && isType) {
@@ -117,7 +120,7 @@ export default class RichEditor extends Component {
 
   renderMarkButton = (type, icon) => {
     const isActive = this.hasMark(type);
-    const onMouseDown = event => this.onClickMark(event, type);
+    const onMouseDown = (event) => this.onClickMark(event, type);
 
     return (
       <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
@@ -128,7 +131,7 @@ export default class RichEditor extends Component {
 
   renderBlockButton = (type, icon) => {
     const isActive = this.hasBlock(type);
-    const onMouseDown = event => this.onClickBlock(event, type);
+    const onMouseDown = (event) => this.onClickBlock(event, type);
 
     return (
       <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
