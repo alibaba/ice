@@ -110,7 +110,7 @@ export default class ContentEditor extends Component {
                     return (
                       <div>
                         <span style={{ color: 'red' }}>
-                          {errors.map((item) => item.message).join(',')}
+                          {errors.map(item => item.message).join(',')}
                         </span>
                         <span style={{ marginLeft: 10 }}>
                           不知道选择什么分类？请 <a href="#">点击这里</a> 查看
