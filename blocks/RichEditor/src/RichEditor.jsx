@@ -29,17 +29,21 @@ export default class RichEditor extends Component {
 
   hasMark = (type) => {
     const { value } = this.state;
-    return value.activeMarks.some(mark => mark.type === type);
+    return value.activeMarks.some((mark) => mark.type === type);
   };
 
   hasBlock = (type) => {
     const { value } = this.state;
-    return value.blocks.some(node => node.type === type);
+    return value.blocks.some((node) => node.type === type);
   };
 
   onChange = ({ value }) => {
     console.log('当前富文本数据的 JSON 表示：', value.toJSON());
     this.setState({ value });
+    // 如果上层有传递 onChange 回调，则应该传递上去
+    if (this.props.onChange && typeof this.props.onChange === 'function') {
+      this.props.onChange(value.toJSON());
+    }
   };
 
   // 摁下快捷键之后，设置当前选中文本要切换的富文本类型
@@ -93,7 +97,10 @@ export default class RichEditor extends Component {
     } else {
       const isList = this.hasBlock('list-item');
       const isType = value.blocks.some((block) => {
-        return !!document.getClosest(block.key, parent => parent.type === type);
+        return !!document.getClosest(
+          block.key,
+          (parent) => parent.type === type,
+        );
       });
 
       if (isList && isType) {
@@ -117,7 +124,7 @@ export default class RichEditor extends Component {
 
   renderMarkButton = (type, icon) => {
     const isActive = this.hasMark(type);
-    const onMouseDown = event => this.onClickMark(event, type);
+    const onMouseDown = (event) => this.onClickMark(event, type);
 
     return (
       <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
@@ -128,7 +135,7 @@ export default class RichEditor extends Component {
 
   renderBlockButton = (type, icon) => {
     const isActive = this.hasBlock(type);
-    const onMouseDown = event => this.onClickBlock(event, type);
+    const onMouseDown = (event) => this.onClickBlock(event, type);
 
     return (
       <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
@@ -193,6 +200,7 @@ export default class RichEditor extends Component {
             </div>
             <div className="rich-editor-body">
               <Editor
+                style={styles.editor}
                 placeholder="请编写一些内容..."
                 value={this.state.value}
                 onChange={this.onChange}
@@ -208,3 +216,9 @@ export default class RichEditor extends Component {
     );
   }
 }
+
+const styles = {
+  editor: {
+    minHeight: 200,
+  },
+};
