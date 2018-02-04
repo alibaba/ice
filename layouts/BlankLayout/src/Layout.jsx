@@ -16,5 +16,3 @@ export default class BlankLayout extends Component {
     );
   }
 }
-
-const styles = {};
