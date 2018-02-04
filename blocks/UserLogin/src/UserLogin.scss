@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.user-login {
+  .next-input.next-input-single {
+    width: 240px;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-color: #dcdcdc;
+    input {
+      padding-left: 25px;
+      font-size: 13px;
+    }
+  }
+  i,
+  .next-checkbox-label {
+    color: #999;
+    font-size: 13px;
+  }
+  i {
+    position: absolute;
+    left: 0;
+    top: 3px;
+  }
+}

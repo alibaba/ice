@@ -43,7 +43,6 @@ export default class ChangePasswordForm extends Component {
 
   checkPasswd2 = (rule, values, callback, stateValues) => {
     console.log('stateValues:', stateValues);
-    debugger;
     if (values && values !== stateValues.passwd) {
       callback('两次输入密码不一致');
     } else {
