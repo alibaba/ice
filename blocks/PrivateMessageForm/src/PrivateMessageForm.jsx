@@ -18,14 +18,6 @@ export default class PrivateMessageForm extends Component {
     };
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
   titleChange = (title) => {
     this.setState({
       title,
@@ -44,7 +36,7 @@ export default class PrivateMessageForm extends Component {
 
   render() {
     return (
-      <div className="private-message-form" style={styles.privateMessageForm}>
+      <div className="private-message-form">
         <IceContainer style={styles.formCard}>
           <div style={styles.title}>私有消息</div>
           <div style={styles.subtitle}>给王明明发私有消息</div>
@@ -79,17 +71,33 @@ export default class PrivateMessageForm extends Component {
 }
 
 const styles = {
-  formCard: { width: 518, paddingLeft: '30px' },
+  formCard: {
+    width: 518,
+    paddingLeft: '30px',
+  },
   title: {
     fontSize: '16px',
     marginBottom: '10px',
     color: '#000',
     fontWeight: 'bold',
   },
-  subtitle: { color: '#000', fontSize: '14px', marginBottom: '30px' },
-  groupTitle: { marginBottom: '10px' },
-  input: { width: '332px', marginBottom: '20px' },
-  textarea: { width: '332px', heihgt: '85px' },
-  textareaWrap: { marginBottom: '20px' },
-  privateMessageForm: {},
+  subtitle: {
+    color: '#000',
+    fontSize: '14px',
+    marginBottom: '30px',
+  },
+  groupTitle: {
+    marginBottom: '10px',
+  },
+  input: {
+    width: '332px',
+    marginBottom: '20px',
+  },
+  textarea: {
+    width: '332px',
+    heihgt: '85px',
+  },
+  textareaWrap: {
+    marginBottom: '20px',
+  },
 };
