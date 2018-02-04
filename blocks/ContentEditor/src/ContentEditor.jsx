@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import { Input, Grid, Form, Button, Select } from '@icedesign/base';
 import {
@@ -45,7 +44,7 @@ export default class ContentEditor extends Component {
     this.postForm.validateAll((errors, values) => {
       console.log('errors', errors, 'values', values);
       if (errors) {
-        return;
+        return false;
       }
 
       // ajax values
@@ -95,7 +94,7 @@ export default class ContentEditor extends Component {
                 >
                   <Select
                     style={styles.cats}
-                    multiple={true}
+                    multiple
                     placeholder="请选择分类"
                     dataSource={[
                       { label: '分类1', value: 'cat1' },
@@ -123,7 +122,7 @@ export default class ContentEditor extends Component {
               </FormItem>
               <FormItem label="描述">
                 <IceFormBinder name="desc">
-                  <Input multiple={true} placeholder="这里填写正文描述" />
+                  <Input multiple placeholder="这里填写正文描述" />
                 </IceFormBinder>
               </FormItem>
               <FormItem label="正文" required>
