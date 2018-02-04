@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
@@ -29,12 +29,12 @@ export default class RichEditor extends Component {
 
   hasMark = (type) => {
     const { value } = this.state;
-    return value.activeMarks.some(mark => mark.type === type);
+    return value.activeMarks.some((mark) => mark.type === type);
   };
 
   hasBlock = (type) => {
     const { value } = this.state;
-    return value.blocks.some(node => node.type === type);
+    return value.blocks.some((node) => node.type === type);
   };
 
   onChange = ({ value }) => {
@@ -98,7 +98,7 @@ export default class RichEditor extends Component {
       const isType = value.blocks.some((block) => {
         return !!document.getClosest(
           block.key,
-          parent => parent.type === type,
+          (parent) => parent.type === type,
         );
       });
 
@@ -123,7 +123,7 @@ export default class RichEditor extends Component {
 
   renderMarkButton = (type, icon) => {
     const isActive = this.hasMark(type);
-    const onMouseDown = event => this.onClickMark(event, type);
+    const onMouseDown = (event) => this.onClickMark(event, type);
 
     return (
       <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
@@ -134,7 +134,7 @@ export default class RichEditor extends Component {
 
   renderBlockButton = (type, icon) => {
     const isActive = this.hasBlock(type);
-    const onMouseDown = event => this.onClickBlock(event, type);
+    const onMouseDown = (event) => this.onClickBlock(event, type);
 
     return (
       <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
@@ -184,7 +184,7 @@ export default class RichEditor extends Component {
   render() {
     return (
       <div className="rich-editor">
-        <IceCard>
+        <IceContainer>
           <div>
             <div className="rich-editor-menu rich-editor-toolbar-menu">
               {this.renderMarkButton('bold', 'format_bold')}
@@ -210,7 +210,7 @@ export default class RichEditor extends Component {
               />
             </div>
           </div>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }
