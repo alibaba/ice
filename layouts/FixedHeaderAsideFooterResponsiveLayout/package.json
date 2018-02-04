@@ -45,7 +45,8 @@
   },
   "blockConfig": {
     "name": "fixed-header-aside-footer-responsive-layout",
-    "snapshot": "",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB14hfTXxGYBuNjy0FnXXX5lpXa-760-760.png",
     "title": "固定顶栏-固定侧栏-底栏-响应式布局",
     "categories": ["layout"]
   }

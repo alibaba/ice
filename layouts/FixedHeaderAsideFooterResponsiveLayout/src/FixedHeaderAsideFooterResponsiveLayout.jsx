@@ -1,10 +1,11 @@
+/* eslint array-callback-return: 0 */
 import React, { Component } from 'react';
 import cx from 'classnames';
 import DocumentTitle from 'react-document-title';
 import { Link } from 'react-router';
 import { ContainerQuery } from 'react-container-query';
 import { enquireScreen } from 'enquire-js';
-import { Icon, Button } from '@icedesign/base';
+import { Icon } from '@icedesign/base';
 import Layout from '@icedesign/layout';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import Header from './component/Header';
@@ -48,7 +49,7 @@ export default class FixedHeaderAsideFooterResponsiveLayout extends Component {
     enquireScreen((mobile) => {
       this.setState({
         isMobile: mobile,
-        collapse: mobile ? true : false,
+        collapse: !!mobile,
       });
     });
   }
@@ -114,7 +115,7 @@ export default class FixedHeaderAsideFooterResponsiveLayout extends Component {
                   'ice-admin-layout': true,
                   'ice-admin-fix-header-aside-layout': true,
                 })}
-                fixable={true}
+                fixable
               >
                 <Layout.Aside width="auto">
                   <Logo collapse={this.state.collapse} />
@@ -196,13 +197,12 @@ export default class FixedHeaderAsideFooterResponsiveLayout extends Component {
                 <Layout.Section>
                   <Header
                     collapse={this.state.collapse}
+                    isMobile={this.state.isMobile}
                     toggleCollapse={this.toggleCollapse}
                   />
 
                   {/* 主体内容 */}
-                  <Layout.Main scrollable={true}>
-                    {this.props.children}
-                  </Layout.Main>
+                  <Layout.Main scrollable>{this.props.children}</Layout.Main>
                   <Footer />
                 </Layout.Section>
               </Layout>
