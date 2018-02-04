@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/scafford-lite",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/skin": "^0.1.0",
@@ -16,7 +16,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^0.1.9"
+    "ice-scripts": "^0.1.11"
   },
   "scripts": {
     "start": "ice dev",
