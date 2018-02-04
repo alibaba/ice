@@ -3,7 +3,7 @@ import IceContainer from '@icedesign/container';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
-import initialValue from './initRichValue.json';
+import Plain from 'slate-plain-serializer';
 
 import './RichEditor.scss';
 
@@ -23,22 +23,21 @@ export default class RichEditor extends Component {
 
     // 加载初始数据，通常从接口中获取或者默认为空
     this.state = {
-      value: Value.fromJSON(initialValue),
+      value: props.value ? Value.fromJSON(props.value) : Plain.deserialize(''),
     };
   }
 
   hasMark = (type) => {
     const { value } = this.state;
-    return value.activeMarks.some(mark => mark.type === type);
+    return value.activeMarks.some((mark) => mark.type === type);
   };
 
   hasBlock = (type) => {
     const { value } = this.state;
-    return value.blocks.some(node => node.type === type);
+    return value.blocks.some((node) => node.type === type);
   };
 
   onChange = ({ value }) => {
-    console.log('当前富文本数据的 JSON 表示：', value.toJSON());
     this.setState({ value });
     // 如果上层有传递 onChange 回调，则应该传递上去
     if (this.props.onChange && typeof this.props.onChange === 'function') {
@@ -99,7 +98,7 @@ export default class RichEditor extends Component {
       const isType = value.blocks.some((block) => {
         return !!document.getClosest(
           block.key,
-          parent => parent.type === type,
+          (parent) => parent.type === type,
         );
       });
 
@@ -124,7 +123,7 @@ export default class RichEditor extends Component {
 
   renderMarkButton = (type, icon) => {
     const isActive = this.hasMark(type);
-    const onMouseDown = event => this.onClickMark(event, type);
+    const onMouseDown = (event) => this.onClickMark(event, type);
 
     return (
       <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
@@ -135,7 +134,7 @@ export default class RichEditor extends Component {
 
   renderBlockButton = (type, icon) => {
     const isActive = this.hasBlock(type);
-    const onMouseDown = event => this.onClickBlock(event, type);
+    const onMouseDown = (event) => this.onClickBlock(event, type);
 
     return (
       <span className="button" onMouseDown={onMouseDown} data-active={isActive}>
