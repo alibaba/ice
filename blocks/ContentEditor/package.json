@@ -41,7 +41,8 @@
   },
   "blockConfig": {
     "name": "content-editor",
-    "snapshot": "",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB10h._XDtYBeNjy1XdXXXXyVXa-1898-1498.jpg",
     "title": "内容编辑器",
     "categories": ["form"],
     "themePackage": "@icedesign/skin"
