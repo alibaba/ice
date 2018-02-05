@@ -150,6 +150,7 @@ const styles = {
   formLabel: {
     height: '32px',
     lineHeight: '32px',
+    textAlign: 'right',
   },
   formTitle: {
     margin: '0 0 20px',
