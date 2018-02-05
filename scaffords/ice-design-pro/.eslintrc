@@ -10,13 +10,12 @@
     }
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "mocha": true
   },
-  "plugins": [
-    "react",
-    "babel"
-  ],
+  "plugins": ["react", "babel"],
   "rules": {
+    "react/prefer-stateless-function": 0,
     "no-console": 0,
     "jsx-a11y/label-has-for": 0,
     "jsx-a11y/no-static-element-interactions": 0,
@@ -33,10 +32,7 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
     ],
     "import/extensions": 0,
@@ -50,10 +46,7 @@
     "no-redeclare": 0,
     "react/require-extension": 0,
     "react/no-danger": 0,
-    "comma-dangle": [
-      "error",
-      "always-multiline"
-    ],
+    "comma-dangle": ["error", "always-multiline"],
     "function-paren-newline": 0,
     "object-curly-newline": 0,
     "no-restricted-globals": 0,
