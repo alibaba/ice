@@ -39,7 +39,7 @@ export default class ArticleList extends Component {
               return this.renderTag(
                 item,
                 this.handleTagClick.bind(this, idx, item),
-                idx,
+                idx
               );
             })}
           </div>

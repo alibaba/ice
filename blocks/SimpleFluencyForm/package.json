@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/simple-fluency-form-block",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "SimpleFluencyForm",
   "files": [
     "src/",

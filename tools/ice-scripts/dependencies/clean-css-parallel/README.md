@@ -7,14 +7,17 @@
 ```js
 gulp.task('clean-css-parallel', ['webpack'], function() {
   return new Promise(function(resolve) {
-    cssnano_parallel({
-      pattern: '**/*.css',
-      src: abcConfig.BUILD_BASE,
-      dest: abcConfig.BUILD_BASE,
-      params: []
-    }, function() {
-      resolve();
-    })
+    cssnano_parallel(
+      {
+        pattern: '**/*.css',
+        src: abcConfig.BUILD_BASE,
+        dest: abcConfig.BUILD_BASE,
+        params: [],
+      },
+      function() {
+        resolve();
+      }
+    );
   });
 });
 ```

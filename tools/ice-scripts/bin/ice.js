@@ -4,7 +4,7 @@
 
 const program = require('commander');
 const packageInfo = require('../package.json');
-
+console.log(packageInfo.name, packageInfo.version);
 program
   .version(packageInfo.version)
   .command('component', 'commands for component')
@@ -23,11 +23,12 @@ if (proc) {
 }
 
 const subCmd = program.args[0];
-if (!subCmd || (
-  subCmd !== 'build'
-  && subCmd !== 'component'
-  && subCmd !== 'block'
-  && subCmd !== 'dev'
-)) {
+if (
+  !subCmd ||
+  (subCmd !== 'build' &&
+    subCmd !== 'component' &&
+    subCmd !== 'block' &&
+    subCmd !== 'dev')
+) {
   program.help();
 }
