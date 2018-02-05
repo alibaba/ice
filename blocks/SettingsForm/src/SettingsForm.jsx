@@ -219,7 +219,7 @@ export default class SettingsForm extends Component {
 
               <Row style={styles.formItem}>
                 <Col span="3" style={styles.label}>
-                  Twitter 地址
+                  Twitter 地址：
                 </Col>
                 <Col span="10">
                   <IceFormBinder
@@ -267,6 +267,9 @@ export default class SettingsForm extends Component {
 }
 
 const styles = {
+  label: {
+    textAlign: 'right',
+  },
   formContent: {
     width: '100%',
     position: 'relative',
