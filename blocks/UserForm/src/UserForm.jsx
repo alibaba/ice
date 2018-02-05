@@ -83,7 +83,7 @@ export default class UserForm extends Component {
                 </Col>
                 <Col span="10">
                   <IceFormBinder name="username" required message="必填">
-                    <Input size="large" placeholder="于江水" />
+                    <Input size="large" placeholder="请输入用户名" />
                   </IceFormBinder>
                   <IceFormError name="username" />
                 </Col>
@@ -91,11 +91,11 @@ export default class UserForm extends Component {
 
               <Row style={styles.formItem}>
                 <Col span="3" style={styles.formLabel}>
-                  别名：
+                  昵称：
                 </Col>
                 <Col span="10">
                   <IceFormBinder name="displayName">
-                    <Input size="large" placeholder="江水于" />
+                    <Input size="large" placeholder="请输入昵称" />
                   </IceFormBinder>
                   <IceFormError name="displayName" />
                 </Col>
@@ -235,6 +235,7 @@ const styles = {
   formLabel: {
     height: '32px',
     lineHeight: '32px',
+    textAlign: 'right',
   },
   formTitle: {
     margin: '0 0 20px',
