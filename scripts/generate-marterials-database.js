@@ -21,7 +21,7 @@ function generateBlocks(files, SPACE) {
   files.forEach((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
     const componentDeps = depAnalyze(
-      path.resolve(SPACE, pkgPath, '../src/index.js'),
+      path.resolve(SPACE, pkgPath, '../src/index.js')
     );
 
     const useComponents = componentDeps.map((mod) => {
@@ -112,7 +112,7 @@ function gatherBlocksOrLayouts(pattern, SPACE) {
         } else {
           resolve(generateBlocks(files, SPACE));
         }
-      },
+      }
     );
   });
 }
@@ -137,7 +137,7 @@ function gatherScaffords(pattern, SPACE) {
         } else {
           resolve(generateScaffords(files, SPACE));
         }
-      },
+      }
     );
   });
 }
@@ -152,17 +152,19 @@ function gatherScaffords(pattern, SPACE) {
 function appendFieldFromNpm(item) {
   const registry = 'http://registry.npm.taobao.org/';
   const { npm, version } = item;
-  return rp({ uri: `${registry}${npm}/${version}`, json: true })
-    .then((body) => {
-      return Object.assign({}, item, {
-        publishTime: moment(body.publish_time).format('YYYY-MM-DD HH:mm'),
-        keywords: body.keywords || [],
-      });
-    })
-    .catch((err) => {
+  return rp({ uri: `${registry}${npm}`, json: true }).then((body) => {
+    const latestVersionBody = body.versions[version];
+    if (!latestVersionBody) {
       // check version is not published
       throw new Error(`${npm}@${version} is not published at ${registry}`);
+    }
+    const TIMEFMT = 'YYYY-MM-DD HH:mm';
+    return Object.assign({}, item, {
+      createdTime: moment(body.time.created).format(TIMEFMT),
+      publishTime: moment(latestVersionBody.publish_time).format(TIMEFMT),
+      keywords: latestVersionBody.keywords || [],
     });
+  });
 }
 
 // entry and run
@@ -188,17 +190,17 @@ function main() {
       mkdirp.sync(distDir);
       fs.writeFileSync(
         path.join(distDir, 'blocks.db.json'),
-        JSON.stringify(blocks, null, 2) + '\n',
+        JSON.stringify(blocks, null, 2) + '\n'
       );
 
       fs.writeFileSync(
         path.join(distDir, 'layouts.db.json'),
-        JSON.stringify(layouts, null, 2) + '\n',
+        JSON.stringify(layouts, null, 2) + '\n'
       );
 
       fs.writeFileSync(
         path.join(distDir, 'scaffords.db.json'),
-        JSON.stringify(scaffords, null, 2) + '\n',
+        JSON.stringify(scaffords, null, 2) + '\n'
       );
 
       console.log('Database generated.');
