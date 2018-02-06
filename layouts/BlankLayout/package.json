@@ -23,8 +23,6 @@
     "prepublish": "ice block build"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
-    "@icedesign/card": "^0.1.1",
     "@icedesign/layout": "^0.1.1",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8"
