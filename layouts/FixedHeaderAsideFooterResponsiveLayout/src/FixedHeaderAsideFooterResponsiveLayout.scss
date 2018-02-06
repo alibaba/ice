@@ -1,0 +1,160 @@
+// @import './theme/dark.scss';
+@import './theme/light.scss';
+
+html,
+body {
+  background-color: $ice-body-bg;
+  -webkit-font-smoothing: antialiased;
+}
+
+/************** LAYOUT *********************/
+.ice-layout {
+  width: 100%;
+  background-color: $ice-layout-bg;
+
+  /************** HEADER *********************/
+  .ice-admin-layout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    background: $ice-admin-layout-header-bg;
+    .ice-menu .ice-menu-item > a:hover,
+    .ice-menu.ice-menu-horizontal > .ice-menu-item:hover {
+      color: $ice-admin-layout-header-text-hover-color;
+    }
+    .ice-admin-layout-header-username {
+      color: $ice-admin-layout-header-text-color;
+      font-size: 12px;
+    }
+    .collapse-btn .next-icon-category::before {
+      font-size: 24px;
+    }
+  }
+
+  /************** ASIDE *********************/
+  .ice-layout-aside,
+  .ice-layout-aside .ice-menu {
+    background: $ice-layout-aside-bg;
+    color: $ice-layout-aside-text-color;
+  }
+
+  .ice-layout-aside {
+    position: relative;
+    z-index: 2;
+    box-shadow: 0px 0 3px rgba(0, 0, 0, 0.3);
+    .ice-menu.ice-menu-root.ice-menu-inline
+      > .ice-menu-submenu
+      > .ice-menu-submenu-title,
+    .ice-menu.ice-menu-root.ice-menu-inline > .ice-menu-item {
+      color: $ice-layout-aside-text-color;
+    }
+
+    .ice-menu .ice-menu-item > a:hover,
+    .ice-menu.ice-menu-horizontal > .ice-menu-item:hover,
+    .ice-menu.ice-menu-root > .ice-menu-item > a:hover {
+      color: $ice-layout-aside-text-hover-color;
+    }
+
+    .ice-menu:not(.ice-menu-horizontal) .ice-menu-item-selected {
+      background-image: linear-gradient(
+        90deg,
+        $ice-menu-item-selected-gradient-left-bg 0%,
+        $ice-menu-item-selected-gradient-right-bg 100%
+      );
+    }
+
+    .ice-menu .ice-menu-submenu-vertical > .ice-menu:after {
+      background: $ice-menu-submenu-vertical-bg;
+    }
+
+    .ice-menu:not(.ice-menu-horizontal) .ice-menu-item-selected:before,
+    .ice-menu-sub .ice-menu-item:hover:before {
+      width: 0;
+    }
+
+    .ice-menu-item-selected > a {
+      color: $ice-menu-item-selected-text-color;
+    }
+
+    .ice-menu-item:hover {
+      background: $ice-menu-submenu-item-hover-bg;
+    }
+
+    /************** ASIDE COLLAPSED *********************/
+    .ice-menu
+      .ice-menu-submenu.ice-menu-submenu-active
+      > .ice-menu-submenu-title {
+      background: transparent;
+      color: $ice-menu-item-selected-gradient-right-bg;
+      &:hover:before {
+        width: 0;
+      }
+    }
+
+    .ice-menu.ice-menu-collapse
+      > .ice-menu-submenu-active
+      > .ice-menu-submenu-title:before,
+    .ice-menu.ice-menu-collapse
+      > .ice-menu-submenu-selected
+      > .ice-menu-submenu-title:before,
+    .ice-menu.ice-menu-collapse .ice-menu-item:hover:before {
+      width: 0;
+    }
+
+    .ice-menu.ice-menu-collapse
+      .ice-menu:not(.ice-menu-horizontal)
+      .ice-menu-item-selected {
+      background: $ice-menu-collapse-bg;
+      a {
+        color: $ice-menu-collapse-selected-text-color;
+      }
+    }
+
+    .ice-menu.ice-menu-collapse
+      > .ice-menu-submenu-selected
+      > .ice-menu-submenu-title {
+      background-image: linear-gradient(
+        90deg,
+        $ice-menu-item-selected-gradient-left-bg 0%,
+        $ice-menu-item-selected-gradient-right-bg 100%
+      );
+      color: $ice-menu-item-selected-text-color;
+      &:before {
+        width: 0;
+      }
+    }
+
+    .logo-wrap {
+      position: relative;
+      z-index: 3;
+      box-shadow: 0px 0 3px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  /************** MAIN *********************/
+  .ice-layout-main {
+    padding: 20px;
+  }
+
+  /************** FOOTER *********************/
+  .ice-admin-layout-footer {
+    padding: 0 20px;
+    .ice-admin-layout-footer-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  /************** HEADER *********************/
+  .ice-admin-layout-header {
+    .ice-menu .ice-menu-item {
+      padding: 0 8px;
+    }
+  }
+}
