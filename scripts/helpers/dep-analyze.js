@@ -3,13 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const babel = require('babel-core');
 const babelPluginTransformLibImport = interopRequire(
-  'babel-plugin-transform-lib-import',
+  'babel-plugin-transform-lib-import'
 );
 const babelPluginTransformModulesCommonjs = interopRequire(
-  'babel-plugin-transform-es2015-modules-commonjs',
+  'babel-plugin-transform-es2015-modules-commonjs'
 );
 const babelPluginTransformExport = interopRequire(
-  'babel-plugin-transform-export-extensions',
+  'babel-plugin-transform-export-extensions'
 );
 
 function interopRequire(id) {
@@ -119,7 +119,7 @@ module.exports = function(entryFilename) {
     _result.forEach(function(module) {
       if (/^\./.test(module)) {
         const modulePath = require.resolve(
-          path.join(path.dirname(filename), module),
+          path.join(path.dirname(filename), module)
         );
         trace(modulePath);
       }
