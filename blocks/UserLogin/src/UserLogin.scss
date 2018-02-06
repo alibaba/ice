@@ -7,19 +7,20 @@
     border-left: 0;
     border-right: 0;
     border-color: #dcdcdc;
+    border-radius: 0;
     input {
       padding-left: 25px;
       font-size: 13px;
     }
   }
-  i,
   .next-checkbox-label {
     color: #999;
     font-size: 13px;
   }
   i {
     position: absolute;
-    left: 0;
+    left: 20px;
     top: 3px;
+    color: #999;
   }
 }

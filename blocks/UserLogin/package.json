@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@icedesign/base": "^0.1.0",
+    "@icedesign/form-binder": "^0.1.2",
     "prop-types": "^15.5.8",
     "react-router": "^4.2.0"
   },
@@ -36,7 +37,7 @@
   "blockConfig": {
     "name": "user-login",
     "snapshot":
-      "https://img.alicdn.com/tfs/TB1gGfDXuuSBuNjy1XcXXcYjFXa-2854-1580.png",
+      "https://img.alicdn.com/tfs/TB1WlGbXMmTBuNjy1XbXXaMrVXa-2868-1602.png",
     "title": "登录页",
     "categories": ["form"],
     "themePackage": "@icedesign/skin"
