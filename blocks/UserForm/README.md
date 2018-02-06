@@ -2,4 +2,4 @@
 
 简介：新增用户表单
 
-![截图](https://img.alicdn.com/tfs/TB1LEnwXuuSBuNjy1XcXXcYjFXa-1910-1068.png)
+![截图](https://img.alicdn.com/tfs/TB1oixzXMmTBuNjy1XbXXaMrVXa-1210-1050.png)
