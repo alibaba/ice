@@ -1,0 +1,53 @@
+{
+  "name": "@icedesign/fixed-header-aside-footer-responsive-layout-block",
+  "version": "0.1.0",
+  "description":
+    "固定顶部导航 + 固定侧边导航 + 底栏 + 响应式内容区的布局, 通常用于站点正文",
+  "files": ["src/", "demo/", "lib/", "mock/"],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": ["ice", "ice-block"],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "scripts": {
+    "start": "ice block dev",
+    "prepublish": "ice block build"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/container": "^0.1.0",
+    "@icedesign/img": "^0.1.0",
+    "@icedesign/layout": "^0.1.0",
+    "@icedesign/menu": "^0.1.0",
+    "@icedesign/skin": "^0.1.0",
+    "bizcharts": "latest",
+    "classnames": "^2.2.5",
+    "enquire-js": "^0.1.2",
+    "prop-types": "^15.5.8",
+    "react-container-query": "^0.10.0",
+    "react-document-title": "^2.0.3",
+    "react-router": "^3.2.0"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "react": "*",
+    "react-dom": "*",
+    "@icedesign/scripts": "^0.1.9"
+  },
+  "blockConfig": {
+    "name": "fixed-header-aside-footer-responsive-layout",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB14hfTXxGYBuNjy0FnXXX5lpXa-760-760.png",
+    "title": "固定顶栏-固定侧栏-底栏-响应式布局",
+    "categories": ["layout"]
+  }
+}
