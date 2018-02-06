@@ -1,0 +1,3 @@
+import FixedHeaderAsideFooterResponsiveLayout from './FixedHeaderAsideFooterResponsiveLayout';
+
+export default FixedHeaderAsideFooterResponsiveLayout;

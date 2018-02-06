@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '@icedesign/layout';
-import Logo from './__components_Logo__';
+import Logo from './Logo';
 
 export default () => {
   return (
