@@ -12,10 +12,6 @@ export default class Header extends PureComponent {
   render() {
     const { width, theme } = this.props;
 
-    {
-      /* Header 右侧内容块 */
-    }
-
     return (
       <Layout.Header
         theme={theme}
