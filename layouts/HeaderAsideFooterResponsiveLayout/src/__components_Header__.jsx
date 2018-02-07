@@ -8,15 +8,15 @@ import { Link } from 'react-router';
 import { headerNavs } from './__navs__';
 import Logo from './__components_Logo__';
 
-export default ({ width }) => {
+export default ({ width, theme }) => {
   return (
     <Layout.Header
-      theme="light"
-      className="ice-admin-layout-header"
+      theme={theme}
+      className="ice-design-layout-header"
       style={{ width }}
     >
       <Logo />
-      <div className="ice-admin-layout-header-menu" style={{ display: 'flex' }}>
+      <div className="ice-design-layout-header-menu" style={{ display: 'flex' }}>
         {/* Header 菜单项 begin */}
         {headerNavs && headerNavs.length > 0 ? (
           <Menu mode="horizontal" selectedKeys={[]}>
@@ -50,7 +50,7 @@ export default ({ width }) => {
         <Balloon
           trigger={
             <span
-              className="ice-admin-layout-header-userpannel"
+              className="ice-design-layout-header-userpannel"
               style={{
                 marginLeft: 20,
                 display: 'flex',
@@ -64,7 +64,7 @@ export default ({ width }) => {
                 src="https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png"
                 style={{ marginRight: '12px', borderRadius: 8 }}
               />
-              <span className="ice-admin-layout-header-username">淘小宝</span>
+              <span className="ice-design-layout-header-username">淘小宝</span>
               <AwesomeIcon type="down" size="xs" className="icon-down" />
             </span>
           }
