@@ -15,17 +15,16 @@ export default () => {
         <div style={{ filter: 'grayscale(100%)', opacity: 0.3 }}>
           <Logo />
         </div>
-        <div
-          style={{
-            color: '#999',
-            lineHeight: 1.5,
-            fontSize: 12,
-            textAlign: 'right',
-          }}
-        >
-          阿里巴巴集团
-          <br />
-          © 2018 版权所有
+        <div className="copyright">
+          © 2018 Theme designed by{' '}
+          <a
+            href="https://github.com/alibaba/ice"
+            target="_blank"
+            className="copyright-link"
+            rel="noopener noreferrer"
+          >
+            ICE
+          </a>
         </div>
       </div>
     </Layout.Footer>

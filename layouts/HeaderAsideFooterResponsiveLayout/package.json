@@ -1,13 +1,9 @@
 {
   "name": "@icedesign/header-aside-footer-responsive-layout",
   "version": "0.1.14",
-  "description": "顶部导航 + 边栏 + 底栏 + 响应式内容区的布局, 通常用于站点正文。",
-  "files": [
-    "lib/",
-    "src/",
-    "mock/",
-    "demo/"
-  ],
+  "description":
+    "顶部导航 + 边栏 + 底栏 + 响应式内容区的布局, 通常用于站点正文。",
+  "files": ["lib/", "src/", "mock/", "demo/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,12 +13,11 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-component"
-  ],
+  "keywords": ["ice", "ice-component"],
   "dependencies": {
+    "@icedesign/awesome-icon": "^0.1.0",
     "@icedesign/base": "^0.1.0",
+    "@icedesign/icon": "^0.1.1",
     "@icedesign/img": "^0.1.0",
     "@icedesign/layout": "^0.1.0",
     "@icedesign/menu": "^0.1.0",
@@ -46,10 +41,8 @@
   "blockConfig": {
     "name": "header-aside-footer-responsive-layout",
     "title": "顶栏-侧栏-底栏-响应式布局",
-    "categories": [
-      "layout"
-    ],
-    "snapshot": "https://gw.alicdn.com/tfs/TB1dC19lC_I8KJjy0FoXXaFnVXa-976-974.png",
-    "themePackage": "@icedesign/skin"
+    "categories": ["layout"],
+    "snapshot":
+      "https://gw.alicdn.com/tfs/TB1dC19lC_I8KJjy0FoXXaFnVXa-976-974.png"
   }
 }
