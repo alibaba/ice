@@ -3,10 +3,11 @@ import cx from 'classnames';
 import Layout from '@icedesign/layout';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { Link } from 'react-router';
-import { Icon, Button } from '@icedesign/base';
+import AwesomeIcon from '@icedesign/awesome-icon';
 import Header from './__components_Header__';
 import Footer from './__components_Footer__';
 import { asideNavs } from './__navs__';
+import config from './__config__';
 
 import './Layout.scss';
 
@@ -24,6 +25,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
   }
 
   toggleCollapse = () => {
+    document.body.classList.toggle('collapse');
     this.setState({
       collapse: !this.state.collapse,
     });
@@ -49,11 +51,10 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
   render() {
     const { location = {} } = this.props;
     const { pathname } = location;
-
     return (
       <Layout
         style={{ minHeight: '100vh' }}
-        className={cx({
+        className={cx(`ice-admin-${config.theme}`, {
           'ice-admin-layout': true,
           'ice-admin-header-aside-footer-responsive-layout': true,
         })}
@@ -61,22 +62,28 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
         <Header />
 
         <Layout.Section>
-          <Layout.Aside width="auto">
+          <Layout.Aside
+            width="auto"
+            theme="light"
+            className="ice-admin-layout-aside"
+          >
             {/* 侧边菜单项 begin */}
-            <Button
+            <a
               className="collapse-btn"
-              style={{ width: '100%', marginBottom: 10, border: 0 }}
               shape="text"
               onClick={this.toggleCollapse}
             >
-              <Icon type={this.state.collapse ? 'arrow-right' : 'arrow-left'} />
-            </Button>
+              <AwesomeIcon
+                type={this.state.collapse ? 'transfer-right' : 'transfer-left'}
+                size="medium"
+              />
+            </a>
             <Menu
-              style={{ width: this.state.collapse ? 60 : 240 }}
+              style={{ width: this.state.collapse ? 60 : 200 }}
               inlineCollapsed={this.state.collapse}
               mode="inline"
               selectedKeys={[pathname]}
-              defaultSelectedKeys={[pathname]}
+              defaultSelectedKeys={pathname ? [pathname] : []}
               defaultOpenKeys={[`${this.getOpenKeys()}`]}
             >
               {asideNavs &&
@@ -89,7 +96,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                         title={
                           <span>
                             {nav.icon ? (
-                              <Icon size="xs" type={nav.icon} />
+                              <AwesomeIcon size="small" type={nav.icon} />
                             ) : null}
                             <span className="ice-menu-collapse-hide">
                               {nav.text}
@@ -132,7 +139,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                     <MenuItem key={nav.to}>
                       <Link {...linkProps}>
                         <span>
-                          {nav.icon ? <Icon size="xs" type={nav.icon} /> : null}
+                          {nav.icon ? (
+                            <AwesomeIcon size="small" type={nav.icon} />
+                          ) : null}
                           <span className="ice-menu-collapse-hide">
                             {nav.text}
                           </span>
