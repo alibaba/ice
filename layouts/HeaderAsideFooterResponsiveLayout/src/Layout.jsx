@@ -1,3 +1,4 @@
+/* eslint global-require: 0 */
 import React, { Component } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
@@ -9,10 +10,7 @@ import Footer from './__components_Footer__';
 import { asideNavs } from './__navs__';
 import config from './__config__';
 
-
-// import './Layout.scss';
-
-if(config.theme === 'dark') {
+if (config.theme === 'dark') {
   require('./theme/dark.scss');
 } else {
   require('./theme/light.scss');
