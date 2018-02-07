@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/sortable-table-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -28,17 +36,18 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "latest",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "sortable-table",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1BtQJXDtYBeNjy1XdXXXXyVXa-1914-662.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1BtQJXDtYBeNjy1XdXXXXyVXa-1914-662.png",
     "title": "可排序表格",
-    "categories": ["table"],
+    "categories": [
+      "table"
+    ],
     "themePackage": "@icedesign/skin"
   }
 }
