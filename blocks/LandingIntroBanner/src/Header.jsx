@@ -4,8 +4,8 @@ import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
 import { Icon } from '@icedesign/base';
 import { Link } from 'react-router';
-import { headerNavs } from './__navs__';
-import Logo from './__components_Logo__';
+import { headerNavs } from './navs';
+import Logo from './Logo';
 
 export default ({ width }) => {
   return (

@@ -3,7 +3,7 @@ import { Button } from '@icedesign/base';
 import { Link } from 'react-router';
 
 // layout 部分组件请将目录换成项目 components 里面对应组件
-import Header from './__components_Header__';
+import Header from './Header';
 
 import './LandingIntroBanner.scss';
 
