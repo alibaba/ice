@@ -7,6 +7,4 @@ const props = {
   // ...
 };
 
-render((
-  <Layout {...props} />
-), document.querySelector('#mountNode'));
+render(<Layout {...props} />, document.querySelector('#mountNode'));
