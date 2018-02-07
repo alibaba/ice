@@ -149,6 +149,14 @@ body.collapse {
         }
       }
 
+      .ice-menu.ice-menu-collapse .ice-menu-item,
+      .ice-menu.ice-menu-collapse .ice-menu-submenu-title {
+        text-align: center;
+      }
+      .ice-menu.ice-menu-vertical .ice-icon-stable {
+        margin-right: 0;
+      }
+
       .ice-menu.ice-menu-collapse
         .ice-menu-submenu.ice-menu-submenu-active
         > .ice-menu-submenu-title {
