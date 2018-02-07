@@ -1,13 +1,9 @@
 {
   "name": "@icedesign/blank-layout",
   "version": "0.1.2",
-  "description": "空白的布局，交给你自由发挥，通常用来做首页、产品介绍或者个性化的宣传页面。",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "description":
+    "完全空白的布局，通常用来做首页、产品介绍或者登陆页面。推荐使用登陆页分类下的区块。",
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +13,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -42,11 +35,10 @@
   },
   "blockConfig": {
     "name": "blank-layout",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1SvQmlsLJ8KJjy0FnXXcFDpXa-976-974.png",
+    "snapshot":
+      "https://gw.alicdn.com/tfs/TB1SvQmlsLJ8KJjy0FnXXcFDpXa-976-974.png",
     "title": "空白布局",
-    "categories": [
-      "layout"
-    ],
+    "categories": ["layout"],
     "themePackage": "@icedesign/skin"
   }
 }
