@@ -15,7 +15,7 @@
   "license": "MIT",
   "keywords": ["ice", "ice-component"],
   "dependencies": {
-    "@icedesign/awesome-icon": "^0.1.0",
+    "@icedesign/awesome-icon": "^0.1.2",
     "@icedesign/base": "^0.1.0",
     "@icedesign/icon": "^0.1.1",
     "@icedesign/img": "^0.1.0",

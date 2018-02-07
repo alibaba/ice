@@ -7,7 +7,6 @@ export default () => {
     <Layout.Footer
       className="ice-design-layout-footer"
       style={{
-        textAlign: 'center',
         lineHeight: '36px',
       }}
     >

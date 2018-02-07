@@ -5,39 +5,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body.collapse {
-  .logo {
-    width: 60px;
-    .logo-text {
-      font-size: 20px;
-    }
-  }
-}
-
-.balloon-container {
-  width: 120px;
-  border-radius: 6px;
-  .balloon-item {
-    height: 40px;
-    line-height: 40px;
-    font-size: 12px;
-    i {
-      margin-right: 5px;
-    }
-  }
-}
-
 .ice-design-#{$theme} {
   .logo {
     width: 200px;
     height: 42px;
     line-height: 42px;
-    text-align: center;
     .logo-text {
       font-size: 36px;
       color: $logo-text-color;
       font-weight: bold;
-      font-family: 'Helvetica, sans-serif';
+      font-family: Helvetica, sans-serif;
     }
   }
   /* LAYOUT */
@@ -52,7 +29,8 @@ body.collapse {
     /* HEADER */
     .ice-design-layout-header {
       width: 100%;
-      margin: 20px auto;
+      padding: 20px 0;
+      margin: 0px auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -66,13 +44,15 @@ body.collapse {
           color: $ice-header-text-hover-color;
         }
       }
-      .ice-design-layout-header-username {
+      .ice-design-header-userpannel {
         cursor: pointer;
-        color: $ice-header-text-color;
-      }
-      .icon-down {
-        margin-left: 4px;
-        color: $ice-icon-down-color;
+        .ice-design-header-username {
+          color: $ice-header-text-color;
+        }
+        .icon-down {
+          margin-left: 2px;
+          color: $ice-icon-down-color;
+        }
       }
     }
 
@@ -91,18 +71,32 @@ body.collapse {
 
       .ice-menu {
         background: $ice-aside-menu-bg;
+        transition: all 0.3s ease;
       }
 
       .ice-menu.ice-menu-root.ice-menu-inline
         > .ice-menu-submenu
         > .ice-menu-submenu-title,
       .ice-menu.ice-menu-root.ice-menu-inline > .ice-menu-item {
+        margin-bottom: 1px;
         color: $ice-aside-text-color;
-        font-weight: bold;
       }
 
       .ice-menu.ice-menu-root .ice-menu-inline > .ice-menu-item {
+        margin-bottom: 1px;
         color: $ice-aside-sub-text-color;
+      }
+
+      .ice-menu .ice-menu-item:hover,
+      .ice-menu.ice-menu-horizontal > .ice-menu-item:hover,
+      .ice-menu.ice-menu-root > .ice-menu-item:hover {
+        color: #fff;
+        border-radius: 6px;
+        background-image: linear-gradient(
+          90deg,
+          $ice-aside-menu-item-selected-gradient-left-bg 0%,
+          $ice-aside-menu-item-selected-gradient-right-bg 100%
+        );
       }
 
       .ice-menu .ice-menu-item > a:hover,
@@ -135,21 +129,45 @@ body.collapse {
 
       .ice-menu-item:hover {
         background: $ice-aside-menu-submenu-item-hover-bg;
-        color: #1861d5;
+        color: $ice-aside-text-hover-color;
       }
 
       /* ASIDE COLLAPSED */
       .ice-menu.ice-menu-collapse {
         color: $ice-menu-collapse-text-color;
+        > .ice-menu-item {
+          text-align: center;
+        }
+        .ice-menu-submenu {
+          &:hover {
+            transition: initial;
+            color: $ice-aside-menu-item-selected-text-color;
+            border-radius: 6px;
+            background-image: linear-gradient(
+              90deg,
+              $ice-aside-menu-item-selected-gradient-left-bg 0%,
+              $ice-aside-menu-item-selected-gradient-right-bg 100%
+            );
+          }
+        }
         .ice-menu-sub {
           background: #fff;
         }
         .ice-menu .ice-menu-item > a:hover {
-          color: $ice-aside-text-hover-color;
+          color: $ice-aside-menu-collapse-selected-text-color;
+        }
+        .ice-menu-item-selected {
+          color: $ice-aside-menu-item-selected-text-color;
+          text-align: center;
+        }
+        .ice-menu .ice-menu-item:hover,
+        .ice-menu.ice-menu-horizontal > .ice-menu-item:hover,
+        .ice-menu.ice-menu-root > .ice-menu-item:hover {
+          color: $ice-aside-menu-collapse-selected-text-color;
+          background: transparent;
         }
       }
 
-      .ice-menu.ice-menu-collapse .ice-menu-item,
       .ice-menu.ice-menu-collapse .ice-menu-submenu-title {
         text-align: center;
       }
@@ -161,7 +179,7 @@ body.collapse {
         .ice-menu-submenu.ice-menu-submenu-active
         > .ice-menu-submenu-title {
         background: transparent;
-        color: $ice-aside-menu-item-selected-gradient-right-bg;
+        color: #fff;
         &:hover:before {
           width: 0;
         }
@@ -205,7 +223,6 @@ body.collapse {
     .ice-design-layout-footer-body {
       width: 100%;
       margin: 20px auto;
-      padding: 0 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -222,6 +239,25 @@ body.collapse {
           text-decoration: none;
         }
       }
+    }
+  }
+}
+
+.balloon-container {
+  width: 130px;
+  border-radius: 6px;
+  padding: 0 16px;
+  .balloon-item {
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    color: #666;
+    cursor: pointer;
+    a:hover {
+      color: #3080fe;
+    }
+    i {
+      margin-right: 5px;
     }
   }
 }

@@ -27,14 +27,28 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
     this.state = {
       collapse: false,
+      openKeys: [`${this.getOpenKeys()}`],
     };
+    this.openKeys = [`${this.getOpenKeys()}`];
   }
 
   toggleCollapse = () => {
     document.body.classList.toggle('collapse');
+
+    const { collapse } = this.state;
+    const openKeys = !collapse ? [] : this.openKeys;
+
     this.setState({
-      collapse: !this.state.collapse,
+      collapse: !collapse,
+      openKeys,
     });
+  };
+
+  onOpenChange = (openKeys) => {
+    this.setState({
+      openKeys,
+    });
+    this.openKeys = openKeys;
   };
 
   // 当前打开的菜单项
@@ -89,8 +103,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
               inlineCollapsed={this.state.collapse}
               mode="inline"
               selectedKeys={[pathname]}
-              defaultSelectedKeys={pathname ? [pathname] : []}
-              defaultOpenKeys={[`${this.getOpenKeys()}`]}
+              openKeys={this.state.openKeys}
+              defaultSelectedKeys={[pathname]}
+              onOpenChange={this.onOpenChange}
             >
               {asideNavs &&
                 asideNavs.length > 0 &&
