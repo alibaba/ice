@@ -1,6 +1,8 @@
 {
   "name": "@icedesign/scafford-lite",
   "version": "0.1.26",
+  "description":
+    "该模板适用于从 0 到 1 开始搭建项目，内置四套布局，以及基础的页面，路由和菜单展示，效果图预览：https://alibaba.github.io/ice/ice-design-lite.html",
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/skin": "^0.1.0",
@@ -34,6 +36,7 @@
   "scaffordConfig": {
     "name": "ice-design-lite",
     "title": "Ice Design Lite",
-    "snapshot": "https://gw.alicdn.com/tfs/TB169cUlOqAXuNjy1XdXXaYcVXa-2862-1590.png"
+    "snapshot":
+      "https://gw.alicdn.com/tfs/TB169cUlOqAXuNjy1XdXXaYcVXa-2862-1590.png"
   }
 }
