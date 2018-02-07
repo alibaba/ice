@@ -54,18 +54,18 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     return (
       <Layout
         style={{ minHeight: '100vh' }}
-        className={cx(`ice-admin-${config.theme}`, {
-          'ice-admin-layout': true,
-          'ice-admin-header-aside-footer-responsive-layout': true,
+        className={cx(`ice-design-${config.theme}`, {
+          'ice-design-layout': true,
+          'ice-design-header-aside-footer-responsive-layout': true,
         })}
       >
-        <Header />
+        <Header theme={config.theme} />
 
         <Layout.Section>
           <Layout.Aside
             width="auto"
-            theme="light"
-            className="ice-admin-layout-aside"
+            theme={config.theme}
+            className="ice-design-layout-aside"
           >
             {/* 侧边菜单项 begin */}
             <a

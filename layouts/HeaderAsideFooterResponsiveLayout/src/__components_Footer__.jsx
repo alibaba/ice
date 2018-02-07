@@ -5,13 +5,13 @@ import Logo from './__components_Logo__';
 export default () => {
   return (
     <Layout.Footer
-      className="ice-admin-layout-footer"
+      className="ice-design-layout-footer"
       style={{
         textAlign: 'center',
         lineHeight: '36px',
       }}
     >
-      <div className="ice-admin-layout-footer-body">
+      <div className="ice-design-layout-footer-body">
         <div style={{ filter: 'grayscale(100%)', opacity: 0.3 }}>
           <Logo />
         </div>

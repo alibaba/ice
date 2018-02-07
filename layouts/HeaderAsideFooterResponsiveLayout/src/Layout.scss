@@ -43,7 +43,7 @@ body.collapse {
 }
 
 /* LAYOUT */
-.ice-admin-layout {
+.ice-design-layout {
   width: 100%;
   min-width: 1280px;
   padding: 0 20px;
@@ -52,7 +52,7 @@ body.collapse {
   background-repeat: no-repeat;
 
   /* HEADER */
-  .ice-admin-layout-header {
+  .ice-design-layout-header {
     width: 100%;
     margin: 20px auto;
     display: flex;
@@ -60,7 +60,7 @@ body.collapse {
     align-items: center;
     box-shadow: none;
     background: transparent;
-    .ice-admin-layout-header-menu .ice-menu {
+    .ice-design-layout-header-menu .ice-menu {
       background: $ice-header-menu-bg;
       color: $ice-header-text-color;
       .ice-menu-item:hover,
@@ -68,7 +68,7 @@ body.collapse {
         color: $ice-header-text-hover-color;
       }
     }
-    .ice-admin-layout-header-username {
+    .ice-design-layout-header-username {
       cursor: pointer;
       color: $ice-header-text-color;
     }
@@ -79,7 +79,7 @@ body.collapse {
   }
 
   /* ASIDE */
-  .ice-admin-layout-aside {
+  .ice-design-layout-aside {
     background: $ice-aside-bg;
 
     .collapse-btn {
@@ -196,7 +196,7 @@ body.collapse {
   }
 
   /* FOOTER */
-  .ice-admin-layout-footer-body {
+  .ice-design-layout-footer-body {
     width: 100%;
     margin: 20px auto;
     padding: 0 20px;
