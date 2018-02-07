@@ -1,5 +1,5 @@
 import React from 'react';
-import { Balloon } from '@icedesign/base';
+import { Balloon, Icon } from '@icedesign/base';
 import IceImg from '@icedesign/img';
 import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
@@ -50,7 +50,7 @@ export default ({ width, theme }) => {
         <Balloon
           trigger={
             <span
-              className="ice-design-layout-header-userpannel"
+              className="ice-design-header-userpannel"
               style={{
                 marginLeft: 20,
                 display: 'flex',
@@ -62,14 +62,13 @@ export default ({ width, theme }) => {
                 height={40}
                 width={40}
                 src="https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png"
-                style={{ marginRight: '12px', borderRadius: 8 }}
+                style={{ marginRight: '12px', borderRadius: 4 }}
               />
-              <span className="ice-design-layout-header-username">淘小宝</span>
-              <AwesomeIcon type="down" size="xs" className="icon-down" />
+              <span className="ice-design-header-username">淘小宝</span>
+              <Icon type="arrow-down-filling" size="xxs" className="icon-down" />
             </span>
           }
           closable={false}
-          triggerType="click"
           className="balloon-container"
         >
           <ul className="balloon-content">
