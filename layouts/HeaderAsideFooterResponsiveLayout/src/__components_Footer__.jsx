@@ -8,7 +8,6 @@ export default class Footer extends PureComponent {
       <Layout.Footer
         className="ice-design-layout-footer"
         style={{
-          textAlign: 'center',
           lineHeight: '36px',
         }}
       >
