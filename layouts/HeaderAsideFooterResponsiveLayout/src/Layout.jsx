@@ -12,9 +12,9 @@ import { asideNavs } from './__navs__';
 import config from './__config__';
 
 if (config.theme === 'dark') {
-  require('./theme/dark.scss');
+  require('./scss/dark.scss');
 } else {
-  require('./theme/light.scss');
+  require('./scss/light.scss');
 }
 
 export default class HeaderAsideFooterResponsiveLayout extends Component {
