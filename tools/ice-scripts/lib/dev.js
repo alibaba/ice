@@ -203,6 +203,7 @@ module.exports = function(args, subprocess) {
         action: 'update_project',
         message: 'server_success',
         data: {
+          statusDev: 'working',
           serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
