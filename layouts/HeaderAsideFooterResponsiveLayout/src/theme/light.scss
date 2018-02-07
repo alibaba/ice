@@ -2,6 +2,7 @@
 $ice-body-bg: #fff !default;
 $ice-layout-bg: #fafafa !default;
 $collapse-btn-color: #666 !default;
+$logo-text-color: #3080fe !default;
 
 $ice-icon-down-color: #666 !default;
 $ice-header-menu-bg: transparent !default;
@@ -22,6 +23,13 @@ $ice-aside-menu-collapse-bg: transparent !default;
 $ice-menu-collapse-text-color: #666 !default;
 $ice-aside-menu-collapse-selected-text-color: #3080fe !default;
 
+$copyright-text-color: #666 !default;
+$copyright-text-hover-color: #3080fe !default;
+
 .ice-design-light.ice-design-layout {
   background-image: url(https://img.alicdn.com/tfs/TB1GsHCd8fH8KJjy1XbXXbLdXXa-1680-370.png);
 }
+
+$theme: 'light';
+
+@import './base.scss';

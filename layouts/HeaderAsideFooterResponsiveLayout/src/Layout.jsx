@@ -9,7 +9,14 @@ import Footer from './__components_Footer__';
 import { asideNavs } from './__navs__';
 import config from './__config__';
 
-import './Layout.scss';
+
+// import './Layout.scss';
+
+if(config.theme === 'dark') {
+  require('./theme/dark.scss');
+} else {
+  require('./theme/light.scss');
+}
 
 export default class HeaderAsideFooterResponsiveLayout extends Component {
   static propTypes = {};
