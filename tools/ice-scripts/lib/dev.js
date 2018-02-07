@@ -52,9 +52,12 @@ module.exports = function(args, subprocess) {
     webpackConfig.plugins.push(
       new webpack.ProgressPlugin((percentage, msg) => {
         send({
-          type: 'sdk_status',
-          message: 'dev_compiler_progress',
-          data: { percentage, msg },
+          action: 'update_project',
+          message: 'compiler_progress',
+          data: {
+            statusCompileProgress: percentage,
+            statusCompileProgressText: msg,
+          },
         });
       })
     );
@@ -74,10 +77,10 @@ module.exports = function(args, subprocess) {
     }
     if (isFirstCompile) {
       send({
-        type: 'sdk_status',
-        message: 'dev_server_finished',
+        action: 'update_project',
+        message: 'server_finished',
         data: {
-          url: `http://${LOCAL_IP}:${PORT}`,
+          serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
 
@@ -144,19 +147,19 @@ module.exports = function(args, subprocess) {
     if (isSuccessful) {
       // 服务启动完成切没有任务错误与警告
       send({
-        type: 'sdk_status',
-        message: 'dev_compiler_success',
+        action: 'update_project',
+        message: 'compiler_success',
         data: {
-          url: `http://${LOCAL_IP}:${PORT}`,
+          serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
     } else {
       // 服务启动完成切没有任务错误与警告
       send({
-        type: 'sdk_status',
-        message: 'dev_compiler_failed',
+        action: 'update_project',
+        message: 'compiler_failed',
         data: {
-          url: `http://${LOCAL_IP}:${PORT}`,
+          serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
     }
@@ -168,8 +171,8 @@ module.exports = function(args, subprocess) {
     }
     console.log('Compiling...');
     send({
-      type: 'sdk_status',
-      message: 'dev_compiler_compiling',
+      action: 'update_project',
+      message: 'compiler_compiling',
     });
   });
 
@@ -181,16 +184,19 @@ module.exports = function(args, subprocess) {
   devServer.listen(PORT, HOST, (err) => {
     if (err) {
       send({
-        type: 'sdk_status',
-        message: 'dev_server_failed',
+        action: 'update_project',
+        message: 'server_failed',
+        data: {
+          statusDev: 'failed',
+        },
       });
       return console.log(err);
     } else {
       send({
-        type: 'sdk_status',
-        message: 'dev_server_success',
+        action: 'update_project',
+        message: 'server_success',
         data: {
-          url: `http://${LOCAL_IP}:${PORT}`,
+          serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
     }
