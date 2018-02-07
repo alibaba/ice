@@ -55,6 +55,7 @@ module.exports = function(args, subprocess) {
           action: 'update_project',
           message: 'compiler_progress',
           data: {
+            statusCompile: 'progress',
             statusCompileProgress: percentage,
             statusCompileProgressText: msg,
           },
@@ -80,6 +81,7 @@ module.exports = function(args, subprocess) {
         action: 'update_project',
         message: 'server_finished',
         data: {
+          statusDev: 'working',
           serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
@@ -150,6 +152,7 @@ module.exports = function(args, subprocess) {
         action: 'update_project',
         message: 'compiler_success',
         data: {
+          statusCompile: 'success',
           serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
@@ -159,6 +162,7 @@ module.exports = function(args, subprocess) {
         action: 'update_project',
         message: 'compiler_failed',
         data: {
+          statusCompile: 'failed',
           serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
@@ -173,6 +177,9 @@ module.exports = function(args, subprocess) {
     send({
       action: 'update_project',
       message: 'compiler_compiling',
+      data: {
+        statusCompile: 'compiling',
+      },
     });
   });
 
