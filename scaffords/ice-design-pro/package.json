@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/scafford-pro",
-  "version": "0.1.8",
+  "version": "0.1.19",
   "dependencies": {
     "@antv/data-set": "^0.8.5",
     "@icedesign/base": "^0.1.0",
@@ -28,7 +28,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^0.1.0"
+    "ice-scripts": "^0.1.13"
   },
   "scripts": {
     "start": "ice dev",

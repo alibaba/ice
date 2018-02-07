@@ -227,33 +227,33 @@ export default class ComplexTabTable extends Component {
           >
             {tabList && tabList.length > 0
               ? tabList.map((tab) => {
-                return (
-                  <Tab.TabPane
-                    key={tab.type}
-                    tab={
-                      <span>
-                        {tab.text}{' '}
-                        <span style={styles.tabCount}>{tab.count}</span>
-                      </span>
-                    }
-                  >
-                    {tab.subCategories && tab.subCategories.length > 0
-                      ? tab.subCategories.map((catItem, index) => {
-                        return (
-                          <SubCategoryItem
-                            {...catItem}
-                            isCurrent={
-                              catItem.id === this.state.currentCategory
-                            }
-                            onItemClick={this.onSubCategoryClick}
-                            key={index}
-                          />
-                        );
-                      })
-                      : null}
-                  </Tab.TabPane>
-                );
-              })
+                  return (
+                    <Tab.TabPane
+                      key={tab.type}
+                      tab={
+                        <span>
+                          {tab.text}
+                          <span style={styles.tabCount}>{tab.count}</span>
+                        </span>
+                      }
+                    >
+                      {tab.subCategories && tab.subCategories.length > 0
+                        ? tab.subCategories.map((catItem, index) => {
+                            return (
+                              <SubCategoryItem
+                                {...catItem}
+                                isCurrent={
+                                  catItem.id === this.state.currentCategory
+                                }
+                                onItemClick={this.onSubCategoryClick}
+                                key={index}
+                              />
+                            );
+                          })
+                        : null}
+                    </Tab.TabPane>
+                  );
+                })
               : null}
           </Tab>
         </IceContainer>
@@ -304,11 +304,29 @@ export default class ComplexTabTable extends Component {
 }
 
 const styles = {
-  complexTabTableOperation: { lineHeight: '28px' },
-  titleWrapper: { display: 'flex', flexDirection: 'row' },
-  title: { marginLeft: '10px', lineHeight: '20px' },
-  tabExtra: { display: 'flex', alignItems: 'center' },
-  search: { marginLeft: 10 },
-  tabCount: { color: '#3080FE' },
-  pagination: { textAlign: 'right', paddingTop: '26px' },
+  complexTabTableOperation: {
+    lineHeight: '28px',
+  },
+  titleWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  title: {
+    marginLeft: '10px',
+    lineHeight: '20px',
+  },
+  tabExtra: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  search: {
+    marginLeft: 10,
+  },
+  tabCount: {
+    color: '#3080FE',
+  },
+  pagination: {
+    textAlign: 'right',
+    paddingTop: '26px',
+  },
 };

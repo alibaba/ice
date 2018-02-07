@@ -3,6 +3,7 @@ const path = require('path');
 const glob = require('glob');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
+const moment = require('moment');
 const cp = require('child_process');
 const os = require('os');
 const uppercamelcase = require('uppercamelcase');
@@ -18,10 +19,11 @@ const depAnalyze = require('./helpers/dep-analyze');
 function generateBlocks(files, SPACE) {
   const result = [];
   files.forEach((pkgPath) => {
-    const pkg = JSON.parse(fs.readFileSync(
-      path.join(SPACE, pkgPath)
-    ));
-    const componentDeps = depAnalyze(path.resolve(SPACE, pkgPath, '../src/index.js'));
+    const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
+    const componentDeps = depAnalyze(
+      path.resolve(SPACE, pkgPath, '../src/index.js')
+    );
+
     const useComponents = componentDeps.map((mod) => {
       let basePackage = '';
       let className = '';
@@ -49,6 +51,7 @@ function generateBlocks(files, SPACE) {
       categories: pkg.blockConfig.categories || [],
       description: pkg.description,
       snapshot: pkg.blockConfig.snapshot,
+      publishTime: pkg.publishTime || new Date().toISOString(),
       useComponents,
     };
 
@@ -68,9 +71,7 @@ function generateBlocks(files, SPACE) {
 
 function generateScaffords(files, SPACE) {
   return files.map((pkgPath) => {
-    const pkg = JSON.parse(fs.readFileSync(
-      path.join(SPACE, pkgPath)
-    ));
+    const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
     const dependencies = pkg.dependencies || {};
     const devDependencies = pkg.devDependencies || {};
 
@@ -98,17 +99,21 @@ function generateScaffords(files, SPACE) {
  */
 function gatherBlocksOrLayouts(pattern, SPACE) {
   return new Promise((resolve, reject) => {
-    glob(pattern, {
-      cwd: SPACE,
-      nodir: true,
-    }, (err, files) => {
-      if (err) {
-        console.log('err:', err);
-        reject(err);
-      } else {
-        resolve(generateBlocks(files, SPACE));
+    glob(
+      pattern,
+      {
+        cwd: SPACE,
+        nodir: true,
+      },
+      (err, files) => {
+        if (err) {
+          console.log('err:', err);
+          reject(err);
+        } else {
+          resolve(generateBlocks(files, SPACE));
+        }
       }
-    });
+    );
   });
 }
 
@@ -119,28 +124,47 @@ function gatherBlocksOrLayouts(pattern, SPACE) {
  */
 function gatherScaffords(pattern, SPACE) {
   return new Promise((resolve, reject) => {
-    glob(pattern, {
-      cwd: SPACE,
-      nodir: true,
-    }, (err, files) => {
-      if (err) {
-        console.log('err:', err);
-        reject(err);
-      } else {
-        resolve(generateScaffords(files, SPACE));
+    glob(
+      pattern,
+      {
+        cwd: SPACE,
+        nodir: true,
+      },
+      (err, files) => {
+        if (err) {
+          console.log('err:', err);
+          reject(err);
+        } else {
+          resolve(generateScaffords(files, SPACE));
+        }
       }
-    });
-  })
+    );
+  });
 }
 
-function checkIsPublished(npm, version, registry) {
-  return rp({ uri: `${registry}${npm}/${version}`, json: true })
-    .then((body) => {
-      return true;
-    })
-    .catch((err) => {
+/**
+ * 从 npm 源补充字段
+ * @param {*} npm npm 名
+ * @param {*} version 版本号
+ * @param {*} registry
+ * @param {Object} appender 需要补充的字段, key 是返回的字段, 对应的 value 是 registry 返回的字段
+ */
+function appendFieldFromNpm(item) {
+  const registry = 'http://registry.npm.taobao.org/';
+  const { npm, version } = item;
+  return rp({ uri: `${registry}${npm}`, json: true }).then((body) => {
+    const latestVersionBody = body.versions[version];
+    if (!latestVersionBody) {
+      // check version is not published
       throw new Error(`${npm}@${version} is not published at ${registry}`);
+    }
+    const TIMEFMT = 'YYYY-MM-DD HH:mm';
+    return Object.assign({}, item, {
+      createdTime: moment(body.time.created).format(TIMEFMT),
+      publishTime: moment(latestVersionBody.publish_time).format(TIMEFMT),
+      keywords: latestVersionBody.keywords || [],
     });
+  });
 }
 
 // entry and run
@@ -154,31 +178,29 @@ function main() {
       ]);
     })
     .then(([blocks, layouts, scaffords]) => {
-      // check version published
-      const registry = 'http://registry.npm.taobao.org/';
-
+      // 补充字段
       return Promise.all([
-        ...blocks.map(({ npm, version }) => checkIsPublished(npm, version, registry)),
-        ...layouts.map(({ npm, version }) => checkIsPublished(npm, version, registry)),
-        ...scaffords.map(({ npm, version }) => checkIsPublished(npm, version, registry))
-      ]).then(() => [blocks, layouts, scaffords]);
+        Promise.all(blocks.map(appendFieldFromNpm)),
+        Promise.all(layouts.map(appendFieldFromNpm)),
+        Promise.all(scaffords.map(appendFieldFromNpm)),
+      ]);
     })
     .then(([blocks, layouts, scaffords]) => {
       const distDir = path.resolve(__dirname, '../databases');
       mkdirp.sync(distDir);
       fs.writeFileSync(
         path.join(distDir, 'blocks.db.json'),
-        JSON.stringify(blocks, null, 2) + '\n',
+        JSON.stringify(blocks, null, 2) + '\n'
       );
 
       fs.writeFileSync(
         path.join(distDir, 'layouts.db.json'),
-        JSON.stringify(layouts, null, 2) + '\n',
+        JSON.stringify(layouts, null, 2) + '\n'
       );
 
       fs.writeFileSync(
         path.join(distDir, 'scaffords.db.json'),
-        JSON.stringify(scaffords, null, 2) + '\n',
+        JSON.stringify(scaffords, null, 2) + '\n'
       );
 
       console.log('Database generated.');
@@ -186,5 +208,5 @@ function main() {
     .catch((err) => {
       console.log('caught error:\n', err.message);
     });
-};
+}
 Promise.resolve(main());

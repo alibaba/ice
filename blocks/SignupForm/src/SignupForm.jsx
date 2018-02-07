@@ -49,7 +49,11 @@ export default class SignupForm extends Component {
                 placeholder="会员名/邮箱/手机号"
                 {...init('name', {
                   rules: [
-                    { required: true, min: 5, message: '用户名至少为 5 个字符' },
+                    {
+                      required: true,
+                      min: 5,
+                      message: '用户名至少为 5 个字符',
+                    },
                   ],
                 })}
               />

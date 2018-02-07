@@ -1,9 +1,11 @@
-
-
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Step, Grid, Input, Button } from '@icedesign/base';
-import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
+import {
+  FormBinderWrapper,
+  FormBinder,
+  FormError,
+} from '@icedesign/form-binder';
 import './SimpleFluencyForm.scss';
 
 const { Row, Col } = Grid;
@@ -12,11 +14,9 @@ const telPattern = /^(1[\d]{1}[\d]{9})|(((400)-(\d{3})-(\d{4}))|^((\d{7,8})|(\d{
 export default class SimpleFluencyForm extends Component {
   static displayName = 'SimpleFluencyForm';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -33,21 +33,13 @@ export default class SimpleFluencyForm extends Component {
 
   // ICE: React Component 的生命周期
 
-  componentWillMount() {
+  componentWillMount() {}
 
-  }
+  componentDidMount() {}
 
-  componentDidMount() {
+  componentWillReceiveProps() {}
 
-  }
-
-  componentWillReceiveProps() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
+  componentWillUnmount() {}
 
   formChange = (newValue) => {
     this.setState({
@@ -68,12 +60,17 @@ export default class SimpleFluencyForm extends Component {
     if (step === 0) {
       const { username, email, phone, address } = this.state.formValue;
       const initValue = {
-        username, email, phone, address,
+        username,
+        email,
+        phone,
+        address,
       };
       return (
         <IceContainer style={styles.form}>
           <FormBinderWrapper
-            ref={(form) => { this.form = form; }}
+            ref={(form) => {
+              this.form = form;
+            }}
             value={initValue}
             onChange={this.formChange}
           >
@@ -83,7 +80,9 @@ export default class SimpleFluencyForm extends Component {
                   <span>姓名：</span>
                 </Col>
                 <Col span={12}>
-                  <FormBinder required message="必填项"><Input name="username" /></FormBinder>
+                  <FormBinder required message="必填项">
+                    <Input name="username" />
+                  </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="username" />
                   </div>
@@ -94,7 +93,9 @@ export default class SimpleFluencyForm extends Component {
                   邮箱：
                 </Col>
                 <Col span={12}>
-                  <FormBinder type="email" required message="邮箱不合法"><Input name="email" /></FormBinder>
+                  <FormBinder type="email" required message="邮箱不合法">
+                    <Input name="email" />
+                  </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="email" />
                   </div>
@@ -105,7 +106,14 @@ export default class SimpleFluencyForm extends Component {
                   电话：
                 </Col>
                 <Col span={12}>
-                  <FormBinder required message="请输入合法的电话号码" pattern={telPattern} triggerType="onBlur"><Input name="phone" /></FormBinder>
+                  <FormBinder
+                    required
+                    message="请输入合法的电话号码"
+                    pattern={telPattern}
+                    triggerType="onBlur"
+                  >
+                    <Input name="phone" />
+                  </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="phone" />
                   </div>
@@ -116,7 +124,9 @@ export default class SimpleFluencyForm extends Component {
                   地址：
                 </Col>
                 <Col span={12}>
-                  <FormBinder><Input required message="必填" multiple name="address" /></FormBinder>
+                  <FormBinder>
+                    <Input required message="必填" multiple name="address" />
+                  </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="address" />
                   </div>
@@ -125,7 +135,9 @@ export default class SimpleFluencyForm extends Component {
 
               <Row>
                 <Col fixedOffset={8}>
-                  <Button onClick={this.nextStep} type="primary">下一步</Button>
+                  <Button onClick={this.nextStep} type="primary">
+                    下一步
+                  </Button>
                 </Col>
               </Row>
             </div>
@@ -163,4 +175,10 @@ export default class SimpleFluencyForm extends Component {
   }
 }
 
-const styles = { formLabel: { textAlign: 'right', lineHeight: '1.7rem', paddingRight: '10px' }, formRow: { marginBottom: '20px' }, form: { padding: '40px 0 20px' }, formErrorWrapper: { marginTop: '5px' }, simpleFluencyForm: {} };
+const styles = {
+  formLabel: { textAlign: 'right', lineHeight: '1.7rem', paddingRight: '10px' },
+  formRow: { marginBottom: '20px' },
+  form: { padding: '40px 0 20px' },
+  formErrorWrapper: { marginTop: '5px' },
+  simpleFluencyForm: {},
+};

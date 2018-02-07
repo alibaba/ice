@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/complex-filter-block",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "复杂筛选",
   "files": [
     "src/",

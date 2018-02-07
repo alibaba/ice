@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/chart-type-line-block",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "",
   "files": [
     "src/",

@@ -11,21 +11,28 @@
 
 ---
 
-:zap: **海量高质量物料：** 区块 + 模板，海量物料满足你开发之所需 [点击查看](https://alibaba.github.io/ice/#/block)
+:zap: **[海量高质量物料](https://alibaba.github.io/ice/#/block)：** 每周有新增，专业视觉设计，海量物料满足你开发之所需
 
-:dart: **GUI 工具：** 零配置的工程整合，物料可视化一键导入复用 [点击下载](https://alibaba.github.io/ice/#/iceworks)
+:dart: **[GUI 工具](https://alibaba.github.io/ice/#/iceworks)：** 零配置的工程整合，物料可视化一键导入复用
 
-:art: **ICE DESIGN 设计语言：** 淘宝中后台通用的 [设计语言](https://alibaba.github.io/ice/design.html)  
+:art: **[ICE DESIGN 设计语言](https://alibaba.github.io/ice/design.html)：** “冻”人的中后台设计语言
 
-## 开发及发布流程
+## 项目开发和使用方式
+
+下载 [iceworks](https://alibaba.github.io/ice/#/iceworks) 并创建项目，然后创建页面进行物料搭建组合，之后可以打开编辑器进行二次编码，完成之后点击构建即可打包出可用的 JS、CSS bundle。
+
+详细步骤请参见文档：[iceworks 快速上手](https://alibaba.github.io/ice/#/iceworks/start)。
+
+## 物料开发和发布方式
+
+首先 clone 当前仓库，开发完成之后提交 PR 合并后执行下面相关命令：
 
 - `npm run bootstrap` 初始化 Lerna
 - `npm run lint` 代码 Lint 风格检查
 - `npm run publish` 代码发布
 
-## 联系
+## 社区
 
-* <details>
-  <summary>钉钉群</summary>
-  <img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iLI8kxPI8KJjSspoXXX6MFXa-1242-1602.jpg" width="200">
-  </details>
+扫码进入 ICE 公测钉钉群（加入钉钉群即可公测并反馈问题）
+
+<img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iLI8kxPI8KJjSspoXXX6MFXa-1242-1602.jpg" width="200">
