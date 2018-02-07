@@ -189,6 +189,7 @@ module.exports = function(args, subprocess) {
   });
 
   devServer.listen(PORT, HOST, (err) => {
+    // 端口被占用，退出程序
     if (err) {
       send({
         action: 'update_project',
@@ -197,7 +198,8 @@ module.exports = function(args, subprocess) {
           statusDev: 'failed',
         },
       });
-      return console.log(err);
+      console.error(err);
+      process.exit(500);
     } else {
       send({
         action: 'update_project',

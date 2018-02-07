@@ -23,7 +23,7 @@ const HOST = program.host || process.env.HOST || '0.0.0.0';
 choosePort(HOST, parseInt(DEFAULT_PORT, 10)).then((port) => {
   if (port == null) {
     // We have not found a port.
-    return;
+    process.exit(500);
   }
   dev(
     Object.assign({}, program, {
