@@ -1,0 +1,29 @@
+// Basic color variables
+$primary-color: #3080fe;
+$secondary-color: #666;
+$light-color: #fff;
+$dark-color: #2e323f;
+$dark-blue-color: #1861d5;
+$dark-grey-color: #8c8c8c;
+
+// Layout dark styles
+$ice-body-bg: $light-color !default;
+$ice-layout-bg: $dark-color !default;
+$collapse-btn-color: $light-color !default;
+$logo-text-color: $primary-color !default;
+
+$ice-icon-down-color: $light-color !default;
+$ice-header-menu-bg: transparent !default;
+$ice-header-text-color: $light-color !default;
+$ice-header-text-hover-color: $primary-color !default;
+
+$copyright-text-color: #666 !default;
+$copyright-text-hover-color: $primary-color !default;
+
+.ice-design-dark.ice-design-layout {
+  background-image: url(https://img.alicdn.com/tfs/TB1_YvwXTtYBeNjy1XdXXXXyVXa-1680-370.png);
+}
+
+$theme: 'dark';
+
+@import './base.scss';
