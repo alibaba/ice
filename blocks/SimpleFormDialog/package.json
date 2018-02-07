@@ -2,12 +2,7 @@
   "name": "@icedesign/simple-form-dialog-block",
   "version": "0.1.4",
   "description": "简单的表单弹窗",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,14 +12,11 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
-    "@icedesign/form-binder": "^0.1.0",
+    "@icedesign/form-binder": "^0.1.3",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
@@ -36,10 +28,9 @@
   "blockConfig": {
     "name": "simple-form-dialog",
     "title": "简单表单弹窗",
-    "categories": [
-      "modal"
-    ],
-    "snapshot": "https://img.alicdn.com/tfs/TB1.65ri9_I8KJjy0FoXXaFnVXa-1270-628.png",
+    "categories": ["modal"],
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1.65ri9_I8KJjy0FoXXaFnVXa-1270-628.png",
     "themePackage": "@icedesign/skin"
   },
   "scripts": {
