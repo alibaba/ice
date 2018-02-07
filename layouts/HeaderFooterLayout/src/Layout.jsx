@@ -1,3 +1,4 @@
+/* eslint global-require:0 */
 import React, { PureComponent } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
