@@ -22,6 +22,7 @@
     "ice-block"
   ],
   "dependencies": {
+    "@icedesign/awesome-icon": "^0.1.2",
     "@icedesign/base": "^0.1.0",
     "@icedesign/img": "^0.1.0",
     "@icedesign/layout": "^0.1.0",
@@ -49,7 +50,6 @@
     "categories": [
       "layout"
     ],
-    "snapshot": "https://gw.alicdn.com/tfs/TB172QmlsLJ8KJjy0FnXXcFDpXa-976-974.png",
-    "themePackage": "@icedesign/skin"
+    "snapshot": "https://gw.alicdn.com/tfs/TB172QmlsLJ8KJjy0FnXXcFDpXa-976-974.png"
   }
 }
