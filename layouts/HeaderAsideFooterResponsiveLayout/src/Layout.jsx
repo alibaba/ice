@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
+import { Icon } from '@icedesign/base';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { Link } from 'react-router';
 import AwesomeIcon from '@icedesign/awesome-icon';
@@ -78,9 +79,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
               shape="text"
               onClick={this.toggleCollapse}
             >
-              <AwesomeIcon
-                type={this.state.collapse ? 'transfer-right' : 'transfer-left'}
-                size="medium"
+              <Icon
+                type={this.state.collapse ? 'arrow-right' : 'arrow-left'}
+                size="small"
               />
             </a>
             <Menu
