@@ -69,7 +69,11 @@ export default class UserLogin extends Component {
               <div style={styles.formItems}>
                 <Row style={styles.formItem}>
                   <Col>
-                    <IceIcon type="person" size="small" />
+                    <IceIcon
+                      type="person"
+                      size="small"
+                      style={styles.inputIcon}
+                    />
                     <IceFormBinder name="account" required message="必填">
                       <Input maxLength={20} placeholder="会员名/邮箱/手机号" />
                     </IceFormBinder>
@@ -81,7 +85,11 @@ export default class UserLogin extends Component {
 
                 <Row style={styles.formItem}>
                   <Col>
-                    <IceIcon type="lock" size="small" />
+                    <IceIcon
+                      type="lock"
+                      size="small"
+                      style={styles.inputIcon}
+                    />
                     <IceFormBinder name="password">
                       <Input htmlType="password" placeholder="密码" />
                     </IceFormBinder>
@@ -178,6 +186,12 @@ const styles = {
     textAlign: 'center',
     color: '#3080fe',
     letterSpacing: '12px',
+  },
+  inputIcon: {
+    position: 'absolute',
+    left: '18px',
+    top: '3px',
+    color: '#999',
   },
   submitBtn: {
     width: '240px',
