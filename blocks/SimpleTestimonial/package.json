@@ -2,12 +2,7 @@
   "name": "@icedesign/simple-testimonial-block",
   "version": "0.1.4",
   "description": "",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -34,12 +26,11 @@
   },
   "blockConfig": {
     "name": "simple-testimonial",
-    "snapshot": "https://img.alicdn.com/tfs/TB1X6osi4rI8KJjy0FpXXb5hVXa-1906-474.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1X6osi4rI8KJjy0FpXXb5hVXa-1906-474.png",
     "themePackage": "@icedesign/skin",
     "title": "简单的客户评价",
-    "categories": [
-      "info-display"
-    ]
+    "categories": ["信息展示"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

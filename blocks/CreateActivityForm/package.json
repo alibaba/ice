@@ -2,12 +2,7 @@
   "name": "@icedesign/create-activity-form-block",
   "version": "0.1.2",
   "description": "创建活动的表单",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -21,10 +16,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.1",
@@ -39,11 +31,10 @@
   },
   "blockConfig": {
     "name": "create-activity-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB1o0ipnx6I8KJjy0FgXXXXzVXa-1720-1062.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1o0ipnx6I8KJjy0FgXXXXzVXa-1720-1062.png",
     "title": "创建活动表单",
-    "categories": [
-      "form"
-    ],
+    "categories": ["表单"],
     "themePackage": "@icedesign/skin"
   },
   "publishConfig": {

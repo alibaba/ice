@@ -3,12 +3,7 @@
   "version": "0.1.4",
   "description": "可批量操作的表格",
   "main": "lib/index.js",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -18,10 +13,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -35,12 +27,11 @@
   },
   "blockConfig": {
     "name": "selectable-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB19Y4Ff5qAXuNjy1XdXXaYcVXa-1017-655.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB19Y4Ff5qAXuNjy1XdXXaYcVXa-1017-655.png",
     "themePackage": "@icedesign/skin",
     "title": "可批量操作的表格",
-    "categories": [
-      "table"
-    ]
+    "categories": ["表格"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
