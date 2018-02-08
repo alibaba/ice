@@ -2,12 +2,7 @@
   "name": "@icedesign/tab-dialog-block",
   "version": "0.1.6",
   "description": "标签内容弹窗",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.1",
@@ -35,10 +27,9 @@
   "blockConfig": {
     "name": "tab-dialog",
     "title": "标签内容弹窗",
-    "categories": [
-      "modal"
-    ],
-    "snapshot": "https://img.alicdn.com/tfs/TB19AF4gOqAXuNjy1XdXXaYcVXa-1262-812.png",
+    "categories": ["模态框"],
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB19AF4gOqAXuNjy1XdXXaYcVXa-1262-812.png",
     "themePackage": "@icedesign/skin"
   },
   "scripts": {
