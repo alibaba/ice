@@ -1,38 +1,35 @@
+@import '~@icedesign/skin/variables.scss';
+
 // Basic color variables
-$primary-color: #3080fe;
-$secondary-color: #666;
-$light-color: #fff;
-$dark-color: #2e323f;
-$dark-blue-color: #1861d5;
-$dark-grey-color: #8c8c8c;
+$custom-layout-bg: #2e323f;
 
 // Layout dark styles
-$ice-body-bg: $light-color !default;
-$ice-layout-bg: $dark-color !default;
-$collapse-btn-color: $light-color !default;
-$logo-text-color: $primary-color !default;
+$ice-body-bg: $color-white !default;
+$ice-layout-bg: $custom-layout-bg !default;
+$ice-collapse-btn-color: $color-white !default;
+$ice-logo-text-color: $color-brand1-5 !default;
+$ice-icon-down-color: $color-white !default;
 
-$ice-icon-down-color: $light-color !default;
-$ice-header-menu-bg: transparent !default;
-$ice-header-text-color: $light-color !default;
-$ice-header-text-hover-color: $primary-color !default;
+$ice-header-menu-bg: $color-transparent !default;
+$ice-header-text-color: $color-white !default;
+$ice-header-text-hover-color: $color-brand1-5 !default;
 
-$ice-aside-bg: transparent !default;
-$ice-aside-menu-bg: transparent !default;
-$ice-aside-text-color: $light-color !default;
-$ice-aside-sub-text-color: $dark-grey-color !default;
-$ice-aside-text-hover-color: $light-color !default;
-$ice-aside-menu-item-selected-gradient-left-bg: $dark-blue-color !default;
-$ice-aside-menu-item-selected-gradient-right-bg: $primary-color !default;
-$ice-aside-menu-item-selected-text-color: $light-color !default;
-$ice-aside-menu-submenu-item-hover-bg: transparent !default;
-$ice-aside-menu-submenu-vertical-bg: $light-color !default;
-$ice-aside-menu-collapse-bg: transparent !default;
-$ice-menu-collapse-text-color: $light-color !default;
-$ice-aside-menu-collapse-selected-text-color: $primary-color !default;
+$ice-aside-bg: $color-transparent !default;
+$ice-aside-menu-bg: $color-transparent !default;
+$ice-aside-text-color: $color-white !default;
+$ice-aside-sub-text-color: $color-text1-2 !default;
+$ice-aside-text-hover-color: $color-white !default;
+$ice-aside-menu-item-selected-gradient-left-bg: $color-brand1-9 !default;
+$ice-aside-menu-item-selected-gradient-right-bg: $color-brand1-5 !default;
+$ice-aside-menu-item-selected-text-color: $color-white !default;
+$ice-aside-menu-submenu-item-hover-bg: $color-transparent !default;
+$ice-aside-menu-submenu-vertical-bg: $color-white !default;
+$ice-aside-menu-collapse-bg: $color-transparent !default;
+$ice-aside-collapse-menu-text-color: $color-white !default;
+$ice-aside-menu-collapse-selected-text-color: $color-brand1-5 !default;
 
-$copyright-text-color: #666 !default;
-$copyright-text-hover-color: $primary-color !default;
+$ice-copyright-text-color: $color-text1-3 !default;
+$ice-copyright-text-hover-color: $color-brand1-5 !default;
 
 .ice-design-dark.ice-design-layout {
   background-image: url(https://img.alicdn.com/tfs/TB1_YvwXTtYBeNjy1XdXXXXyVXa-1680-370.png);

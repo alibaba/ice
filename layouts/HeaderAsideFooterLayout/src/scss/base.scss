@@ -14,7 +14,7 @@ body {
     line-height: 42px;
     .logo-text {
       font-size: 36px;
-      color: $logo-text-color;
+      color: $ice-logo-text-color;
       font-weight: bold;
       font-family: Helvetica, sans-serif;
     }
@@ -53,7 +53,10 @@ body {
       }
       .ice-design-header-userpannel {
         cursor: pointer;
-        .ice-design-header-username {
+        .user-profile {
+          display: inline-block;
+          text-align: center;
+          margin-bottom: 2px;
           color: $ice-header-text-color;
         }
         .icon-down {
@@ -141,15 +144,15 @@ body {
       justify-content: space-between;
       align-items: center;
       .copyright {
-        color: $copyright-text-color;
+        color: $ice-copyright-text-color;
         line-height: 1.5;
         font-size: 12px;
         text-align: left;
       }
       .copyright-link {
-        color: $copyright-text-color;
+        color: $ice-copyright-text-color;
         &:hover {
-          color: $copyright-text-hover-color;
+          color: $ice-copyright-text-hover-color;
           text-decoration: none;
         }
       }
@@ -157,18 +160,18 @@ body {
   }
 }
 
-.balloon-container {
+.user-profile-menu {
   width: 130px;
   border-radius: 6px;
   padding: 0 16px;
-  .balloon-item {
+  .user-profile-menu-item {
     height: 40px;
     line-height: 40px;
     font-size: 12px;
     color: #666;
     cursor: pointer;
     a:hover {
-      color: #3080fe;
+      color: $ice-header-text-hover-color;
     }
     i {
       margin-right: 5px;
