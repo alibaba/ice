@@ -46,12 +46,9 @@ module.exports = (paths, buildConfig = {}) => {
   if (theme) {
     console.log(colors.cyan('Tip:'), '使用皮肤包', theme);
     sassLoaders.push({
-      loader: require.resolve('../../dependencies/ice-skin-loader'),
+      loader: require.resolve('ice-skin-loader'),
       options: {
-        themeFile: path.join(
-          paths.appNodeModules,
-          `${theme}/variables.scss`
-        ),
+        themeFile: path.join(paths.appNodeModules, `${theme}/variables.scss`),
       },
     });
   }

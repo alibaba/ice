@@ -18,7 +18,7 @@ module.exports = (paths, options = {}) => {
     proxy: {
       '/**': {
         // target: '/index.html', // default target
-        bypass: function (req, res, opt) {
+        bypass: function(req, res, opt) {
           // your custom code to check for any exceptions
           // console.log('bypass check', {req: req, res:res, opt: opt});
           if (devType === 'block') {
@@ -26,7 +26,7 @@ module.exports = (paths, options = {}) => {
           } else {
             // default devType === 'project'
             if (req.path === '/') {
-              return '/public/';
+              return '/build/';
             }
           }
 
