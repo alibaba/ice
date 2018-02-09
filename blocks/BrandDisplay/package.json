@@ -3,12 +3,7 @@
   "version": "0.1.6",
   "description": "品牌列表展示",
   "main": "lib/index.js",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -18,10 +13,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/img": "^0.1.0",
@@ -35,12 +27,11 @@
   },
   "blockConfig": {
     "name": "brand-display",
-    "snapshot": "https://img.alicdn.com/tfs/TB1XIooihrI8KJjy0FpXXb5hVXa-1802-874.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1XIooihrI8KJjy0FpXXb5hVXa-1802-874.png",
     "themePackage": "@icedesign/skin",
     "title": "品牌列表展示",
-    "categories": [
-      "info-display"
-    ]
+    "categories": ["信息展示"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

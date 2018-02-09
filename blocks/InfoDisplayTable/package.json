@@ -3,12 +3,7 @@
   "version": "0.1.4",
   "description": "两栏信息展示型表格",
   "main": "lib/index.js",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -18,10 +13,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -35,12 +27,11 @@
   },
   "blockConfig": {
     "name": "info-display-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB1niC_fiqAXuNjy1XdXXaYcVXa-959-294.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1niC_fiqAXuNjy1XdXXaYcVXa-959-294.png",
     "themePackage": "@icedesign/skin",
     "title": "两栏信息展示型表格",
-    "categories": [
-      "table"
-    ]
+    "categories": ["表格"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
