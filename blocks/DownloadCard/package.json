@@ -3,12 +3,7 @@
   "version": "0.1.4",
   "description": "下载型信息卡片",
   "main": "lib/index.js",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -18,10 +13,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -36,13 +28,11 @@
   },
   "blockConfig": {
     "name": "download-card",
-    "snapshot": "https://img.alicdn.com/tfs/TB1HLu1hLDH8KJjy1XcXXcpdXXa-938-688.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1HLu1hLDH8KJjy1XcXXcpdXXa-938-688.png",
     "themePackage": "@icedesign/skin",
     "title": "下载型信息卡片",
-    "categories": [
-      "info-display",
-      "list"
-    ]
+    "categories": ["信息展示", "列表"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

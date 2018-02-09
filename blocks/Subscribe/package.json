@@ -2,12 +2,7 @@
   "name": "@icedesign/subscribe-block",
   "version": "0.1.5",
   "description": "订阅",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -36,12 +28,11 @@
   },
   "blockConfig": {
     "name": "subscribe",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1HFVejvDH8KJjy1XcXXcpdXXa-1832-382.png",
+    "snapshot":
+      "https://gw.alicdn.com/tfs/TB1HFVejvDH8KJjy1XcXXcpdXXa-1832-382.png",
     "themePackage": "@icedesign/skin",
     "title": "订阅",
-    "categories": [
-      "form"
-    ]
+    "categories": ["表单"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
