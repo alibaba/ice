@@ -1,9 +1,9 @@
-const tsfmt = require('typescript-formatter');
+const prettier = require('prettier');
 
 const Interface = require('./types/Interface');
 const Component = require('./types/Component');
 
-function run(schema) {
+function run(schema, syncExec) {
   let subComponents = schema.subComponents;
   schema.isEntry = true;
   let entryComponent = _run(schema);
@@ -15,11 +15,22 @@ function run(schema) {
     subComponents = [];
   }
 
-  return tsfmt.processString(
-    '',
+  const formatted = prettier.format(
     _createHead() + subComponents.join('\n') + entryComponent,
-    {}
+    {
+      parser: 'typescript',
+    }
   );
+
+  if (syncExec) {
+    return {
+      message: formatted,
+    };
+  }
+
+  return Promise.resolve({
+    message: formatted,
+  });
 }
 
 function _run(component) {

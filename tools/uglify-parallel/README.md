@@ -13,8 +13,8 @@ gulp.task('uglify-parallel', ['webpack'], function() {
     uglify_parallel(
       {
         pattern: '**/*.js',
-        src: abcConfig.BUILD_BASE,
-        dest: abcConfig.BUILD_BASE,
+        src: SOURCE,
+        dest: DEST,
         sourceMap: true,
         // https://github.com/mishoo/UglifyJS2/issues/490
         params: [
