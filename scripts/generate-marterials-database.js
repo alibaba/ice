@@ -84,6 +84,7 @@ function generateScaffords(files, SPACE) {
     return {
       ...pkg.scaffordConfig,
       npm: pkg.name,
+      description: pkg.description,
       version: pkg.version,
       layouts: generatorJson.layouts || [],
       dependencies,
