@@ -1,17 +1,19 @@
 'use strict';
 
+var fs = require('fs');
+var path = require('path');
+var os = require('os');
+
 var async = require('async');
 var spawn = require('cross-spawn');
 var colors = require('chalk');
-var fs = require('fs');
 var glob = require('glob');
 var log = require('fancy-log');
 var mkdirp = require('mkdirp');
-var os = require('os');
-var path = require('path');
 var prettyBytes = require('pretty-bytes');
 var prettyMs = require('pretty-ms');
 var rightPad = require('right-pad');
+
 const uglifyBinPath = require.resolve('uglify-js/bin/uglifyjs');
 
 // uglify js in child_process
