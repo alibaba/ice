@@ -1,0 +1,30 @@
+{
+  "name": "create-ice-block",
+  "version": "0.1.0",
+  "description": "",
+  "main": "bin/index.js",
+  "bin": {
+    "create-ice-block": "./bin/index.js"
+  },
+  "author": "ICE Team",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "debug": "^2.6.3",
+    "ejs": "^2.5.6",
+    "glob": "^7.1.1",
+    "kebab-case": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "request": "^2.81.0",
+    "rimraf": "^2.6.1",
+    "semver": "^5.3.0",
+    "tar": "^2.2.1",
+    "uuid": "^3.0.1",
+    "write": "^0.3.3"
+  }
+}
