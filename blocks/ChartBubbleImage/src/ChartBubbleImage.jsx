@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, Label, Shape } from 'bizcharts';
-import './ChartBubbleImage.scss';
 
 export default class ChartBubbleImage extends Component {
   static displayName = 'ChartBubbleImage';

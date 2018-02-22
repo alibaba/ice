@@ -1,11 +1,10 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Tab, DatePicker, Search } from '@icedesign/base';
+import { Table, Pagination, Tab, Search } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
-import './EnhanceTable.scss';
 
 @DataBinder({
   tableData: {
@@ -71,13 +70,18 @@ export default class EnhanceTable extends Component {
         className="enhance-table-operation"
         style={styles.enhanceTableOperation}
       >
-        <a href="#" target="_blank" onClick={this.editItem.bind(this, record)}>
+        <a
+          href="#"
+          style={styles.operation}
+          target="_blank"
+          onClick={this.editItem.bind(this, record)}
+        >
           解决
         </a>
-        <a href="#" target="_blank">
+        <a href="#" style={styles.operation} target="_blank">
           详情
         </a>
-        <a href="#" target="_blank">
+        <a href="#" style={styles.operation} target="_blank">
           分类
         </a>
       </div>
@@ -111,11 +115,6 @@ export default class EnhanceTable extends Component {
     } else {
       console.log(`你点击了 ${tabKey}`);
     }
-  };
-
-  onDateChange = (date, strDate) => {
-    this.queryCache.date = strDate;
-    this.fetchData();
   };
 
   onSearch = (value) => {
@@ -164,10 +163,9 @@ export default class EnhanceTable extends Component {
             </Tab>
           </div>
           <div style={styles.extraFilter}>
-            <DatePicker onChange={this.onDateChange} />
             <Search
               style={styles.search}
-              type="normal"
+              type="primary"
               inputWidth={150}
               placeholder="搜索"
               searchText=""
@@ -232,6 +230,10 @@ const styles = {
   },
   enhanceTableOperation: {
     lineHeight: '28px',
+  },
+  operation: {
+    marginRight: '12px',
+    textDecoration: 'none',
   },
   card: {
     minHeight: 0,

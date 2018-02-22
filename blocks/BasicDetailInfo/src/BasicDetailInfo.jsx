@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './BasicDetailInfo.scss';
 
 /**
  * 渲染详情信息的数据
@@ -41,55 +40,57 @@ export default class BasicDetailInfo extends Component {
       <div className="basic-detail-info">
         <IceContainer>
           <h2 style={styles.basicDetailTitle}>基础详情页</h2>
-          <div className="info-item" style={styles.infoItem}>
-            <h5 style={styles.infoItemTitle}>基本信息</h5>
-            <ul>
-              <li>
-                <span>任务标题：</span>
-                <span>{dataSoruce.title}</span>
+          <div style={styles.infoColumn}>
+            <h5 style={styles.infoColumnTitle}>基本信息</h5>
+            <ul style={styles.infoItems}>
+              <li style={styles.infoItem}>
+                <span style={styles.infoItemLabel}>任务标题：</span>
+                <span style={styles.infoItemValue}>{dataSoruce.title}</span>
               </li>
-              <li>
-                <span>店铺名称：</span>
-                <span>{dataSoruce.shopName}</span>
+              <li style={styles.infoItem}>
+                <span style={styles.infoItemLabel}>店铺名称：</span>
+                <span style={styles.infoItemValue}>{dataSoruce.shopName}</span>
               </li>
-              <li>
-                <span>任务金额：</span>
-                <span>¥ {dataSoruce.amount}</span>
+              <li style={styles.infoItem}>
+                <span style={styles.infoItemLabel}>任务金额：</span>
+                <span style={styles.infoItemValue}>¥ {dataSoruce.amount}</span>
               </li>
-              <li>
-                <span>任务赏金：</span>
-                <span>¥ {dataSoruce.bounty}</span>
+              <li style={styles.infoItem}>
+                <span style={styles.infoItemLabel}>任务赏金：</span>
+                <span style={styles.infoItemValue}>¥ {dataSoruce.bounty}</span>
               </li>
-              <li>
-                <span>接单时间：</span>
-                <span>{dataSoruce.orderTime}</span>
+              <li style={styles.infoItem}>
+                <span style={styles.infoItemLabel}>接单时间：</span>
+                <span style={styles.infoItemValue}>{dataSoruce.orderTime}</span>
               </li>
-              <li>
-                <span>交付时间：</span>
-                <span>{dataSoruce.deliveryTime}</span>
+              <li style={styles.infoItem}>
+                <span style={styles.infoItemLabel}>交付时间：</span>
+                <span style={styles.infoItemValue}>
+                  {dataSoruce.deliveryTime}
+                </span>
               </li>
             </ul>
           </div>
-          <div className="info-item" style={styles.infoItem}>
-            <h5 style={styles.infoItemTitle}>更多信息</h5>
-            <ul>
-              <li>
-                <span>联系方式：</span>
-                <span>{dataSoruce.phone}</span>
+          <div style={styles.infoColumn}>
+            <h5 style={styles.infoColumnTitle}>更多信息</h5>
+            <ul style={styles.infoItems}>
+              <li style={styles.infoItem}>
+                <span style={styles.infoItemLabel}>联系方式：</span>
+                <span style={styles.infoItemValue}>{dataSoruce.phone}</span>
               </li>
-              <li>
-                <span>收货地址：</span>
-                <span>{dataSoruce.address}</span>
+              <li style={styles.infoItem}>
+                <span style={styles.infoItemLabel}>收货地址：</span>
+                <span style={styles.infoItemValue}>{dataSoruce.address}</span>
               </li>
-              <li>
-                <span>任务状态：</span>
-                <span>{dataSoruce.status}</span>
+              <li style={styles.infoItem}>
+                <span style={styles.infoItemLabel}>任务状态：</span>
+                <span style={styles.infoItemValue}>{dataSoruce.status}</span>
               </li>
-              <li>
-                <span>备注：</span>
-                <span>{dataSoruce.remark}</span>
+              <li style={styles.infoItem}>
+                <span style={styles.infoItemLabel}>备注：</span>
+                <span style={styles.infoItemValue}>{dataSoruce.remark}</span>
               </li>
-              <li>
+              <li style={styles.infoItem}>
                 <span style={styles.attachLabel}>附件：</span>
                 <span>
                   {dataSoruce.pics &&
@@ -115,10 +116,42 @@ export default class BasicDetailInfo extends Component {
 }
 
 const styles = {
-  basicDetailTitle: { fontSize: '16px' },
-  infoItem: { marginLeft: '16px' },
-  infoItemTitle: { borderLeft: '3px solid #3080fe', paddingLeft: '10px' },
-  attachLabel: { float: 'left' },
+  basicDetailTitle: {
+    margin: '10px 0',
+    fontSize: '16px',
+  },
+  infoColumn: {
+    marginLeft: '16px',
+  },
+  infoColumnTitle: {
+    margin: '20px 0',
+    paddingLeft: '10px',
+    borderLeft: '3px solid #3080fe',
+  },
+  infoItems: {
+    overflow: 'hidden',
+    padding: 0,
+    marginLeft: '25px',
+  },
+  infoItem: {
+    float: 'left',
+    width: '50%',
+    marginBottom: '18px',
+    listStyle: 'none',
+    fontSize: '14px',
+  },
+  infoItemLabel: {
+    minWidth: '70px',
+    color: '#999',
+  },
+  infoItemValue: {
+    color: '#333',
+  },
+  attachLabel: {
+    minWidth: '70px',
+    color: '#999',
+    float: 'left',
+  },
   attachPics: {
     width: '80px',
     height: '80px',

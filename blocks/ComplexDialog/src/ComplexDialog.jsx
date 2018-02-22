@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Dialog, Button, Icon } from '@icedesign/base';
-import './ComplexDialog.scss';
 
 export default class ComplexDialog extends Component {
   static displayName = 'ComplexDialog';

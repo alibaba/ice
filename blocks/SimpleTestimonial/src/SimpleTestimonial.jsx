@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './SimpleTestimonial.scss';
 
 export default class SimpleTestimonial extends Component {
   static displayName = 'SimpleTestimonial';

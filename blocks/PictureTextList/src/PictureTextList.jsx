@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Pagination } from '@icedesign/base';
 import SingleItem from './SingleItem';
-import './PictureTextList.scss';
 
 const dataSource = [
   {

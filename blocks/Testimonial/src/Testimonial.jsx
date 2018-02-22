@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './Testimonial.scss';
 
 const generatorData = (count) => {
   return Array.from({ length: count }).map(() => {

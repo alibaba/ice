@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './StatisticalCard.scss';
 
 const dataSource = [
   {
@@ -14,7 +13,7 @@ const dataSource = [
     helpURL: 'http://taobao.com',
   },
   {
-    text: '昨日账号主页浏览人数',
+    text: '昨日主页浏览人数',
     number: '96',
     circle: {
       width: 40,
@@ -60,25 +59,22 @@ export default class StatisticalCard extends Component {
         height: `${data.circle.height}px`,
       };
       return (
-        <div key={idx} className="statistical-card-item">
-          <div className="circle-wrap">
+        <div key={idx} style={styles.statisticalCardItem}>
+          <div style={styles.circleWrap}>
             <img src={data.circle.icon} style={imgStyle} alt="图片" />
           </div>
-          <div className="statistical-card-desc">
-            <div className="statistical-card-text">
+          <div style={styles.statisticalCardDesc}>
+            <div style={styles.statisticalCardText}>
               {data.text}
               <a href={data.helpURL} target="_blank">
                 <img
                   src="https://gw.alicdn.com/tfs/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png"
-                  style={{
-                    width: '12px',
-                    height: '12px',
-                  }}
+                  style={styles.itemHelp}
                   alt="图片"
                 />
               </a>
             </div>
-            <div className="statistical-card-number">{data.number}</div>
+            <div style={styles.statisticalCardNumber}>{data.number}</div>
           </div>
         </div>
       );
@@ -87,11 +83,59 @@ export default class StatisticalCard extends Component {
 
   render() {
     return (
-      <div className="statistical-card">
-        <IceContainer className="statistical-card-list">
+      <div className="statistical-card" style={styles.statisticalCard}>
+        <IceContainer style={styles.statisticalCardItems}>
           {this.renderItem()}
         </IceContainer>
       </div>
     );
   }
 }
+
+const styles = {
+  statisticalCardItems: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: '110px',
+    justifyContent: 'center',
+  },
+  statisticalCardItem: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  circleWrap: {
+    backgroundColor: '#FFECB3',
+    width: '70px',
+    height: '70px',
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '50%',
+    marginRight: '10px',
+  },
+  statisticalCardDesc: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  statisticalCardText: {
+    position: 'relative',
+    color: '#333333',
+    fontSize: '12px',
+    fontWeight: 'bold',
+    marginBottom: '4px',
+  },
+  statisticalCardNumber: {
+    color: '#333333',
+    fontSize: '24px',
+  },
+  itemHelp: {
+    width: '12px',
+    height: '12px',
+    position: 'absolute',
+    top: '1px',
+    right: '-15px',
+  },
+};

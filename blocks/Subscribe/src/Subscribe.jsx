@@ -7,8 +7,6 @@ import {
   FormError,
 } from '@icedesign/form-binder';
 
-import './Subscribe.scss';
-
 export default class Subscribe extends Component {
   static displayName = 'Subscribe';
 

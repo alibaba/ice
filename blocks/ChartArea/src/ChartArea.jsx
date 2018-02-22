@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import { DataView } from '@antv/data-set';
 import IceContainer from '@icedesign/container';
-import './ChartArea.scss';
 
 export default class ChartArea extends Component {
   static displayName = 'ChartArea';

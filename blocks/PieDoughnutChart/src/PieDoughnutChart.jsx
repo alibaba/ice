@@ -3,7 +3,6 @@ import { Grid } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import { Chart, Coord, Geom, Tooltip, Axis, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
-import './PieDoughnutChart.scss';
 
 const { Row, Col } = Grid;
 const { DataView } = DataSet;

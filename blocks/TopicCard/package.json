@@ -3,12 +3,7 @@
   "version": "0.1.6",
   "description": "核心数据",
   "main": "lib/index.js",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -18,10 +13,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -36,12 +28,11 @@
   },
   "blockConfig": {
     "name": "topic-card",
-    "snapshot": "https://img.alicdn.com/tfs/TB1xH9df5qAXuNjy1XdXXaYcVXa-1796-290.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1NjFtaTtYBeNjy1XdXXXXyVXa-1910-338.png",
     "themePackage": "@icedesign/skin",
     "title": "核心数据",
-    "categories": [
-      "data-display"
-    ]
+    "categories": ["data-display"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

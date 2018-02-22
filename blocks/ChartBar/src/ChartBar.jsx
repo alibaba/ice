@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Chart, Axis, Geom, Tooltip, Legend } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
-import './ChartBar.scss';
 
 export default class ChartBar extends Component {
   static displayName = 'ChartBar';

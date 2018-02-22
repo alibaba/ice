@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Button } from '@icedesign/base';
-import './ArticleList.scss';
 
 export default class ArticleList extends Component {
   static displayName = 'ArticleList';

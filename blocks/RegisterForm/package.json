@@ -3,12 +3,7 @@
   "version": "0.1.6",
   "description": "注册表单",
   "main": "lib/index.js",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -18,12 +13,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
+    "@icedesign/form-binder": "^0.1.4",
     "@icedesign/icon": "^0.1.0",
     "prop-types": "^15.5.8"
   },
@@ -35,12 +28,11 @@
   },
   "blockConfig": {
     "name": "register-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB1hLZ7ih6I8KJjy0FgXXXXzVXa-574-772.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB10fLMaqmWBuNjy1XaXXXCbXXa-694-750.png",
     "themePackage": "@icedesign/skin",
     "title": "注册表单",
-    "categories": [
-      "form"
-    ]
+    "categories": ["form"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

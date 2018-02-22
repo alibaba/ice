@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import ArticleList from './ArticleList';
-import './TabArticle.scss';
 
 const dataSource = [
   {

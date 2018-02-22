@@ -47,16 +47,11 @@ export default class InfoDisplayTab extends Component {
       return (
         <div key={index} className="column-card" style={styles.columnCard}>
           <Row>
-            <Col
-              className="column-card-title titleStyle"
-              style={styles.columnCardTitleTitleStyle}
-            >
-              {item.title}
-            </Col>
+            <Col style={styles.cardTitle}>{item.title}</Col>
           </Row>
           <Row style={styles.cardDescWrapper}>
             <Col>
-              <div className="column-card-desc" style={styles.cardDesc}>
+              <div style={styles.cardDesc}>
                 <IceEllipsis lineLimit={6} text={item.desc} />
               </div>
             </Col>
@@ -108,10 +103,18 @@ const styles = {
     float: 'left',
     width: '284px',
     overflow: 'hidden',
-    boxShadow: '0px 0px 2px #eee',
+    boxShadow:
+      '0px 0px 2px 0px rgba(0, 0, 0, 0.1),0px 2px 2px 0px rgba(0, 0, 0, 0.1)',
+    background: '#fff',
+    height: '310px',
   },
   cardDescWrapper: {
     marginTop: '20px',
+  },
+  cardTitle: {
+    fontSize: '18px',
+    textAlign: 'center',
+    marginTop: '22px',
   },
   cardDesc: {
     height: '144px',

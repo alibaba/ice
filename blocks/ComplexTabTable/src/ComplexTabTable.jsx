@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle:0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Tab, DatePicker, Search } from '@icedesign/base';
+import { Table, Pagination, Tab, Search } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
@@ -134,17 +134,19 @@ export default class ComplexTabTable extends Component {
 
   renderOperations = (value, index, record) => {
     return (
-      <div
-        className="complex-tab-table-operation"
-        style={styles.complexTabTableOperation}
-      >
-        <a href="#" target="_blank" onClick={this.editItem.bind(this, record)}>
+      <div style={styles.complexTabTableOperation}>
+        <a
+          href="#"
+          style={styles.operation}
+          target="_blank"
+          onClick={this.editItem.bind(this, record)}
+        >
           解决
         </a>
-        <a href="#" target="_blank">
+        <a href="#" style={styles.operation} target="_blank">
           详情
         </a>
-        <a href="#" target="_blank">
+        <a href="#" style={styles.operation} target="_blank">
           分类
         </a>
       </div>
@@ -178,16 +180,6 @@ export default class ComplexTabTable extends Component {
     this.fetchData();
   };
 
-  onDateChange = (date, strDate) => {
-    this.queryCache.date = strDate;
-    this.fetchData();
-  };
-
-  onSearch = (value) => {
-    this.queryCache.keywords = value.key;
-    this.fetchData();
-  };
-
   onSubCategoryClick = (catId) => {
     this.setState({
       currentCategory: catId,
@@ -209,14 +201,13 @@ export default class ComplexTabTable extends Component {
             type="bar"
             currentTab={this.state.currentTab}
             contentStyle={{
-              padding: '4px 0 0 0',
+              padding: 0,
             }}
             tabBarExtraContent={
               <div style={styles.tabExtra}>
-                <DatePicker onChange={this.onDateChange} />
                 <Search
                   style={styles.search}
-                  type="normal"
+                  type="medium"
                   inputWidth={150}
                   placeholder="搜索"
                   searchText=""
@@ -314,6 +305,10 @@ const styles = {
   title: {
     marginLeft: '10px',
     lineHeight: '20px',
+  },
+  operation: {
+    marginRight: '12px',
+    textDecoration: 'none',
   },
   tabExtra: {
     display: 'flex',

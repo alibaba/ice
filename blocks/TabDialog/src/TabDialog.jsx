@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Dialog, Tab, Table, Button } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import './TabDialog.scss';
 
 const TabPane = Tab.TabPane;
 
