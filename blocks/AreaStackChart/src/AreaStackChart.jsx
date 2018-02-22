@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import IceContainer from '@icedesign/container';
-import './AreaStackChart.scss';
 
 export default class AreaStackChart extends Component {
   static displayName = 'AreaStackChart';

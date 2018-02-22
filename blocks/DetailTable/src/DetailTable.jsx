@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './DetailTable.scss';
 
 export default class DetailTable extends Component {
   static displayName = 'DetailTable';
@@ -66,6 +65,10 @@ const styles = {
     width: '120px',
     color: '#999999',
   },
-  detailBody: { flex: 1 },
-  statusProcessing: { color: '#64D874' },
+  detailBody: {
+    flex: 1,
+  },
+  statusProcessing: {
+    color: '#64D874',
+  },
 };

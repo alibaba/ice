@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Step, Grid, Icon } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import './ApplicationProgress.scss';
 
 const dataSource = () => {
   return [
@@ -123,20 +122,49 @@ export default class ApplicationProgress extends Component {
 }
 
 const styles = {
-  row: { backgroundColor: '#f9f9f9', marginTop: '32px', padding: '20px 40px' },
-  imageWrap: { textAlign: 'center' },
+  row: {
+    backgroundColor: '#f9f9f9',
+    marginTop: '32px',
+    padding: '20px 40px',
+  },
+  imageWrap: {
+    textAlign: 'center',
+  },
   image: {
     width: '64px',
     height: '64px',
     borderRadius: '50',
     marginBottom: '12px',
   },
-  itemBody: { padding: '10px 50px 0' },
-  itemDescription: { color: '#666', marginTop: '20px', width: '309px' },
-  operationWrap: { marginTop: '40px', textAlign: 'center' },
-  operation: { color: '#2192d9', cursor: 'pointer' },
-  itemFooter: { textAlign: 'center', color: '#666', marginTop: '40px' },
-  nextBtn: { marginTop: '40px' },
-  itemStatus: { color: '#f33', fontSize: '16px' },
-  itemStatusText: { marginLeft: '10px' },
+  itemBody: {
+    padding: '10px 50px 0',
+  },
+  itemDescription: {
+    color: '#666',
+    marginTop: '20px',
+    width: '309px',
+  },
+  operationWrap: {
+    marginTop: '40px',
+    textAlign: 'center',
+  },
+  operation: {
+    color: '#2192d9',
+    cursor: 'pointer',
+  },
+  itemFooter: {
+    textAlign: 'center',
+    color: '#666',
+    marginTop: '40px',
+  },
+  nextBtn: {
+    marginTop: '40px',
+  },
+  itemStatus: {
+    color: '#f33',
+    fontSize: '16px',
+  },
+  itemStatusText: {
+    marginLeft: '10px',
+  },
 };

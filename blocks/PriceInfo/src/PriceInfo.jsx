@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './PriceInfo.scss';
 
 const data = [
   {

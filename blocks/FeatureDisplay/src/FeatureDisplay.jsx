@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './FeatureDisplay.scss';
 
 const data = [
   {

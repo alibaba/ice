@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Icon } from '@icedesign/base';
-import classnames from 'classnames';
 import './CollapseCard.scss';
 
 export default class CollapseCard extends Component {
@@ -27,15 +26,15 @@ export default class CollapseCard extends Component {
 
   render() {
     const { collapse } = this.state;
-    const cls = classnames('base-info', { collapse });
+    const collapseStyle = collapse ? styles.collapse : null;
     return (
       <div className="collapse-card">
         <IceContainer>
           <div style={styles.summaryInfo}>
             <img
-              style={styles.logo}
+              style={styles.itemLogo}
               src="https://img.alicdn.com/tfs/TB1EBQ.hZLJ8KJjy0FnXXcFDpXa-300-300.png"
-              alt="logo"
+              alt=""
             />
             <div style={styles.infoIntro}>
               <h3 style={styles.infoTitle}>戴森</h3>
@@ -44,22 +43,22 @@ export default class CollapseCard extends Component {
               </p>
             </div>
           </div>
-          <ul className={cls}>
-            <li>
-              <span>活动标题：</span>
-              <span>戴森周年庆活动</span>
+          <ul style={{ ...styles.baseInfo, ...collapseStyle }}>
+            <li style={styles.infoItem}>
+              <span style={styles.infoItemLabel}>活动标题：</span>
+              <span style={styles.infoItemValue}>戴森周年庆活动</span>
             </li>
-            <li>
-              <span>店铺名称：</span>
-              <span>戴森周年庆活动</span>
+            <li style={styles.infoItem}>
+              <span style={styles.infoItemLabel}>店铺名称：</span>
+              <span style={styles.infoItemValue}>戴森周年庆活动</span>
             </li>
-            <li>
-              <span>开始时间：</span>
-              <span>2017-10-18 12:20:07</span>
+            <li style={styles.infoItem}>
+              <span style={styles.infoItemLabel}>开始时间：</span>
+              <span style={styles.infoItemValue}>2017-10-18 12:20:07</span>
             </li>
-            <li>
-              <span>结束时间：</span>
-              <span>2017-12-18 12:20:07</span>
+            <li style={styles.infoItem}>
+              <span style={styles.infoItemLabel}>结束时间：</span>
+              <span style={styles.infoItemValue}>2017-12-18 12:20:07</span>
             </li>
           </ul>
           <div className="toggle-btn" style={styles.toggleBtn}>
@@ -68,8 +67,10 @@ export default class CollapseCard extends Component {
               style={styles.toggleBtn}
               onClick={this.toggleCollapse}
             >
-              {collapse ? '更多信息' : '收起'}
-              <Icon type={collapse ? 'arrow-down' : 'arrow-up'} />
+              <span style={{ marginRight: '5px' }}>
+                {collapse ? '更多信息' : '收起'}
+              </span>
+              <Icon size="xs" type={collapse ? 'arrow-down' : 'arrow-up'} />
             </a>
           </div>
         </IceContainer>
@@ -79,11 +80,26 @@ export default class CollapseCard extends Component {
 }
 
 const styles = {
+  collapse: {
+    display: 'none',
+  },
   summaryInfo: {
     display: 'flex',
     borderBottom: '1px solid #e7e7eb',
   },
-  logo: {
+  baseInfo: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    paddingTop: '20px',
+  },
+  infoItem: {
+    width: '50%',
+    marginBottom: '15px',
+  },
+  infoItemLabel: {
+    color: '#999',
+  },
+  itemLogo: {
     width: '100px',
     height: '100px',
   },
@@ -102,5 +118,6 @@ const styles = {
     textAlign: 'center',
     color: '#999',
     textDecoration: 'none',
+    cursor: 'pointer',
   },
 };

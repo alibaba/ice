@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Button } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import './PrivateMessageForm.scss';
 
 export default class PrivateMessageForm extends Component {
   static displayName = 'PrivateMessageForm';

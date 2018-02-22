@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './EmptyContent.scss';
 
 export default class EmptyContent extends Component {
   static displayName = 'EmptyContent';

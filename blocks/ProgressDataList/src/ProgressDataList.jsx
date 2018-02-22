@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Progress } from '@icedesign/base';
-import './ProgressDataList.scss';
 
 export default class ProgressDataList extends Component {
   static displayName = 'ProgressDataList';

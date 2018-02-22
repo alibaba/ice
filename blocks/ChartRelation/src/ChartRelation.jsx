@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Chart, Geom, Tooltip, Label } from 'bizcharts';
 import { DataView } from '@antv/data-set';
-import './ChartRelation.scss';
 
 export default class ChartRelation extends Component {
   static displayName = 'ChartRelation';

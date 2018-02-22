@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Table, Progress, Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import './ProgressTable.scss';
 
 const getTableData = () => {
   return Array.from({ length: 10 }).map((item, index) => {

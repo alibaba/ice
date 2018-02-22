@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './PriceCard.scss';
 
 const data = [
   {

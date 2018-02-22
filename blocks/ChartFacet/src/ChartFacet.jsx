@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Chart, Tooltip, Facet, Legend, Coord } from 'bizcharts';
 import { DataView } from '@antv/data-set';
-import './ChartFacet.scss';
 
 export default class ChartFacet extends Component {
   static displayName = 'ChartFacet';
