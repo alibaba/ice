@@ -29,10 +29,10 @@
   "blockConfig": {
     "name": "topic-card",
     "snapshot":
-      "https://img.alicdn.com/tfs/TB1NjFtaTtYBeNjy1XdXXXXyVXa-1910-338.png",
+      "https://img.alicdn.com/tfs/TB1xH9df5qAXuNjy1XdXXaYcVXa-1796-290.png",
     "themePackage": "@icedesign/skin",
     "title": "核心数据",
-    "categories": ["data-display"]
+    "categories": ["数据展示"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

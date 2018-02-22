@@ -31,10 +31,10 @@
   "blockConfig": {
     "name": "enhance-table",
     "snapshot":
-      "https://img.alicdn.com/tfs/TB10TYlawmTBuNjy1XbXXaMrVXa-1914-1250.png",
+      "https://img.alicdn.com/tfs/TB1viRoixrI8KJjy0FpXXb5hVXa-1896-1134.png",
     "themePackage": "@icedesign/skin",
     "title": "增强筛选表单",
-    "categories": ["table"]
+    "categories": ["表格"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

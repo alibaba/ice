@@ -29,10 +29,10 @@
   "blockConfig": {
     "name": "register-form",
     "snapshot":
-      "https://img.alicdn.com/tfs/TB10fLMaqmWBuNjy1XaXXXCbXXa-694-750.png",
+      "https://img.alicdn.com/tfs/TB1hLZ7ih6I8KJjy0FgXXXXzVXa-574-772.png",
     "themePackage": "@icedesign/skin",
     "title": "注册表单",
-    "categories": ["form"]
+    "categories": ["表单"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

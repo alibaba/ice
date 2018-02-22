@@ -35,9 +35,9 @@
   "blockConfig": {
     "name": "asset-info-display",
     "snapshot":
-      "https://img.alicdn.com/tfs/TB1TsA4XQyWBuNjy0FpXXassXXa-1962-664.pngg",
+      "https://gw.alicdn.com/tfs/TB1QvhInhTI8KJjSspiXXbM4FXa-1910-570.png",
     "title": "资产信息展示",
-    "categories": ["info-display"],
+    "categories": ["信息展示"],
     "themePackage": "@icedesign/skin"
   }
 }

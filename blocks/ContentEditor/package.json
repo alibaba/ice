@@ -2,12 +2,7 @@
   "name": "@icedesign/content-editor-block",
   "version": "0.1.2",
   "description": "内容编辑器",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -49,11 +41,10 @@
   },
   "blockConfig": {
     "name": "content-editor",
-    "snapshot": "https://img.alicdn.com/tfs/TB199TEXuuSBuNjy1XcXXcYjFXa-1906-1550.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB199TEXuuSBuNjy1XcXXcYjFXa-1906-1550.png",
     "title": "内容编辑器",
-    "categories": [
-      "form"
-    ],
+    "categories": ["表单"],
     "themePackage": "@icedesign/skin"
   }
 }

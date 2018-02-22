@@ -2,12 +2,7 @@
   "name": "@icedesign/tree-card-list-block",
   "version": "0.1.5",
   "description": "树形卡片列表",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -35,12 +27,11 @@
   },
   "blockConfig": {
     "name": "tree-card-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1lJIelhTI8KJjSspiXXbM4FXa-1014-780.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1lJIelhTI8KJjSspiXXbM4FXa-1014-780.png",
     "themePackage": "@icedesign/skin",
     "title": "树形卡片列表",
-    "categories": [
-      "list"
-    ]
+    "categories": ["列表"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
