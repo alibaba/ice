@@ -13,6 +13,8 @@ const POSTCSS_LOADER = require.resolve('postcss-loader');
 const SASS_LOADER = require.resolve('sass-loader');
 const STYLE_LOADER = require.resolve('style-loader');
 const CSS_HOT_LOADER = require.resolve('css-hot-loader');
+const URL_LOADER = require.resolve('url-loader');
+const URL_LOADER_LIMIT = 8192;
 
 function withCssHotLoader(loaders) {
   if (process.env.NODE_ENV !== 'production') {
@@ -113,6 +115,28 @@ module.exports = (paths, buildConfig = {}) => {
       exclude: /node_modules/,
       loader: BABEL_LOADER,
       options: deepAssign({}, babelConfig, { cacheDirectory: true }),
+    },
+
+    // extra url loader usage
+    {
+      test: /\.woff2?$/,
+      loader: `${URL_LOADER}?limit=${URL_LOADER_LIMIT}&minetype=application/font-woff`,
+    },
+    {
+      test: /\.ttf$/,
+      loader: `${URL_LOADER}?limit=${URL_LOADER_LIMIT}&minetype=application/octet-stream`,
+    },
+    {
+      test: /\.eot$/,
+      loader: `${URL_LOADER}?limit=${URL_LOADER_LIMIT}&minetype=application/vnd.ms-fontobject`,
+    },
+    {
+      test: /\.svg$/,
+      loader: `${URL_LOADER}?limit=${URL_LOADER_LIMIT}&minetype=image/svg+xml`,
+    },
+    {
+      test: /\.(png|jpg|jpeg|gif)$/i,
+      loader: `${URL_LOADER}?limit=${URL_LOADER_LIMIT}`,
     },
   ];
 };

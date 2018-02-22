@@ -88,6 +88,7 @@
     "typescript-formatter": "^7.0.1",
     "uglify-js": "^2.8.22",
     "uglify-parallel": "^0.1.0",
+    "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
     "webpack-bundle-analyzer": "^2.9.2",
     "webpack-dev-server": "^2.9.4",
