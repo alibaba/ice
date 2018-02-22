@@ -7,7 +7,6 @@ import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
 
 import EditorInfoDialog from './EditorInfoDialog';
-import './OperationTable.scss';
 
 @DataBinder({
   tableData: {
@@ -87,7 +86,7 @@ export default class OperationTable extends Component {
               },
             });
             EditorInfoDialog.hide();
-          },
+          }
         );
       },
       onClose: () => {

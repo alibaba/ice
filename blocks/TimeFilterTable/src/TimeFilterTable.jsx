@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Table, Pagination, Radio, Search } from '@icedesign/base';
 import DataBinder from '@icedesign/data-binder';
-import './TimeFilterTable.scss';
 
 const { Group: RadioGroup } = Radio;
 

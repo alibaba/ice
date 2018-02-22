@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Checkbox, Button } from '@icedesign/base';
-import './TermsInfo.scss';
 
 export default class TermsInfo extends Component {
   static displayName = 'TermsInfo';

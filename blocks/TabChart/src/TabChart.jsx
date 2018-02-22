@@ -3,7 +3,6 @@ import IceContainer from '@icedesign/container';
 import { Tab } from '@icedesign/base';
 import SeriesLine from './SeriesLine';
 import BasicLine from './BasicLine';
-import './TabChart.scss';
 
 const TabPane = Tab.TabPane;
 

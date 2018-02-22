@@ -4,9 +4,4 @@
 
 标签消息列表
 
-![截图](https://img.alicdn.com/tfs/TB1VfEejlfH8KJjy1XbXXbLdXXa-846-776.png)
-
-
-
-
-
+![截图](https://img.alicdn.com/tfs/TB1I3zFav1TBuNjy0FjXXajyXXa-1916-754.png)

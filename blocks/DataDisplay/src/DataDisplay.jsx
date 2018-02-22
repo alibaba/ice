@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './DataDisplay.scss';
 
 const data = [
   {
@@ -56,8 +55,8 @@ const styles = {
     flexWrap: 'wrap',
   },
   item: {
-    width: '33%',
-    margin: '20px 0',
+    width: '33.3333%',
+    margin: '5px 0',
     textAlign: 'center',
   },
   count: {

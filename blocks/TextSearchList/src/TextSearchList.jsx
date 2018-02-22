@@ -3,7 +3,6 @@ import IceContainer from '@icedesign/container';
 import { Search } from '@icedesign/base';
 import ArticleList from './ArticleList';
 import Filter from './Filter';
-import './TextSearchList.scss';
 
 const dataSource = [
   {

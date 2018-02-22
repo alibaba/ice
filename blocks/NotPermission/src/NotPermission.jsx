@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './NotPermission.scss';
 
 export default class NotPermission extends Component {
   static displayName = 'NotPermission';

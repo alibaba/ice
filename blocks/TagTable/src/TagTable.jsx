@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Table, Input, Select, Grid } from '@icedesign/base';
 import { FormBinderWrapper, FormBinder } from '@icedesign/form-binder';
 import IceCard from '@icedesign/card';
-import './TagTable.scss';
 
 const { Combobox } = Select;
 const { Row, Col } = Grid;

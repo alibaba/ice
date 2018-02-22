@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './FailureDetail.scss';
 
 export default class FailureDetail extends Component {
   static displayName = 'FailureDetail';
@@ -40,7 +39,9 @@ export default class FailureDetail extends Component {
 }
 
 const styles = {
-  failureDetail: { textAlign: 'center' },
+  failureDetail: {
+    textAlign: 'center',
+  },
   img: {
     width: '40px',
     height: '40px',
@@ -48,13 +49,19 @@ const styles = {
   successDetailHead: {
     position: 'relative',
   },
-  title: { margin: '0', fontWeight: 'bold' },
+  title: {
+    margin: '0',
+    fontWeight: 'bold',
+  },
   summary: {
     marginBottom: '40px',
     fontSize: '14px',
     color: '#666',
   },
-  descrpiton: { fontSize: '14px', color: '#666' },
+  descrpiton: {
+    fontSize: '14px',
+    color: '#666',
+  },
   backToLink: {
     display: 'inline-block',
     marginTop: '80px',
@@ -66,5 +73,7 @@ const styles = {
     borderRadius: '50px',
     backgroundColor: '#3080fe',
   },
-  card: { padding: '80px 40px' },
+  card: {
+    padding: '80px 40px',
+  },
 };

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Balloon, Icon } from '@icedesign/base';
-import './UserInfoCard.scss';
 
 export default class UserInfoCard extends Component {
   static displayName = 'UserInfoCard';

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Table, Button, Icon, Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 
-import './SelectableTable.scss';
-
 const getMockData = () => {
   const result = [];
   for (let i = 0; i < 10; i++) {
@@ -107,7 +105,6 @@ export default class SelectableTable extends Component {
             <Button
               onClick={this.addMoreItem}
               size="small"
-              className="batch-btn"
               style={styles.batchBtn}
             >
               <Icon type="add" />增加
@@ -115,7 +112,6 @@ export default class SelectableTable extends Component {
             <Button
               onClick={this.deleteSelectedKeys}
               size="small"
-              className="batch-btn"
               style={styles.batchBtn}
               disabled={!this.state.selectedRowKeys.length}
             >
@@ -124,7 +120,6 @@ export default class SelectableTable extends Component {
             <Button
               onClick={this.clearSelectedKeys}
               size="small"
-              className="batch-btn"
               style={styles.batchBtn}
             >
               <Icon type="close" />清空选中

@@ -4,7 +4,6 @@ import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
-import './SimpleTable.scss';
 
 @DataBinder({
   tableData: {
@@ -78,9 +77,10 @@ export default class SimpleTable extends Component {
 
   renderOperations = (value, index, record) => {
     return (
-      <div className="simple-table-operation" style={{ lineHeight: '28px' }}>
+      <div style={{ lineHeight: '28px' }}>
         <a
           href="#"
+          style={styles.operation}
           target="_blank"
           onClick={() => {
             this.editItem(record);
@@ -88,10 +88,10 @@ export default class SimpleTable extends Component {
         >
           解决
         </a>
-        <a href="#" target="_blank">
+        <a href="#" style={styles.operation} target="_blank">
           详情
         </a>
-        <a href="#" target="_blank">
+        <a href="#" style={styles.operation} target="_blank">
           分类
         </a>
       </div>
@@ -163,6 +163,10 @@ export default class SimpleTable extends Component {
 }
 
 const styles = {
+  operation: {
+    marginRight: '12px',
+    textDecoration: 'none',
+  },
   paginationWrapper: {
     textAlign: 'right',
     paddingTop: '26px',
