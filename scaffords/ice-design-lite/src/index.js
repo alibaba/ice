@@ -5,6 +5,6 @@ import routes from './routes';
 
 // 以下代码 ICE 自动生成, 请勿修改
 const container = document.createElement('div');
-container.id = 'ice-container';
+container.dataset.reactRoot = true;
 document.body.appendChild(container);
 ReactDOM.render(routes, container);
