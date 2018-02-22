@@ -1,3 +1,4 @@
+/* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { Input, Button, Checkbox, Grid } from '@icedesign/base';
 import {
