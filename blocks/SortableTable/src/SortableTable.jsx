@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Table, Icon, Button } from '@icedesign/base';
-import './SortableTable.scss';
 
 const generatorData = () => {
   return Array.from({ length: 5 }).map((item, index) => {

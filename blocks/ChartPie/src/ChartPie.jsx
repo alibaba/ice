@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Chart, Axis, Geom, Tooltip, Coord, Legend, Label } from 'bizcharts';
 import { DataView } from '@antv/data-set';
 import IceContainer from '@icedesign/container';
-import './ChartPie.scss';
 
 export default class ChartPie extends Component {
   static displayName = 'ChartPie';

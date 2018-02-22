@@ -1,9 +1,15 @@
+/* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Form, Input, Button, Checkbox, Field } from '@icedesign/base';
+import { Input, Button, Checkbox, Grid } from '@icedesign/base';
+import {
+  FormBinderWrapper as IceFormBinderWrapper,
+  FormBinder as IceFormBinder,
+  FormError as IceFormError,
+} from '@icedesign/form-binder';
 import IceIcon from '@icedesign/icon';
 import './SignupForm.scss';
 
-const FormItem = Form.Item;
+const { Row, Col } = Grid;
 
 export default class SignupForm extends Component {
   static displayName = 'SignupForm';
@@ -12,84 +18,96 @@ export default class SignupForm extends Component {
 
   constructor(props) {
     super(props);
-    this.field = new Field(this);
+    this.state = {
+      value: {
+        account: undefined,
+        password: undefined,
+        checkbox: false,
+      },
+    };
   }
 
-  checkPassword = (rule, value, callback) => {
-    const { validate } = this.field;
-    if (value) {
-      validate(['rePasswd']);
-    }
-    callback();
+  formChange = (value) => {
+    this.setState({
+      value,
+    });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.field.validate((errors, values) => {
-      if (errors) {
-        console.log('Errors in form!!!');
-        return;
-      }
-      console.log(values);
+    this.refs.form.validateAll((errors, values) => {
+      console.log('values', values);
     });
   };
 
   render() {
-    const { init } = this.field;
-
     return (
       <div className="signup-form" style={styles.signupForm}>
-        <div className="form" style={styles.form}>
-          <h4>登录</h4>
-          <Form field={this.field}>
-            <FormItem>
-              <IceIcon type="person" size="xs" />
-              <Input
-                maxLength={20}
-                placeholder="会员名/邮箱/手机号"
-                {...init('name', {
-                  rules: [
-                    {
-                      required: true,
-                      min: 5,
-                      message: '用户名至少为 5 个字符',
-                    },
-                  ],
-                })}
-              />
-            </FormItem>
-            <FormItem>
-              <IceIcon type="lock" size="xs" />
-              <Input
-                htmlType="password"
-                placeholder="密码"
-                {...init('password', {
-                  rules: [
-                    {
-                      required: true,
-                      whitespace: true,
-                      min: 6,
-                      message: '密码至少为 6 个字符',
-                    },
-                    { validator: this.checkPassword },
-                  ],
-                })}
-              />
-            </FormItem>
-            <FormItem>
-              <Checkbox {...init('agreement')}>记住账号</Checkbox>
-            </FormItem>
-            <FormItem>
-              <Button type="primary" onClick={this.handleSubmit}>
-                登 录
-              </Button>
-            </FormItem>
-            <div className="tips" style={styles.tips}>
-              <a href="/">立即注册</a>
-              <span>|</span>
-              <a href="/">忘记密码</a>
+        <div style={styles.formContainer}>
+          <h4 style={styles.formTitle}>登录</h4>
+          <IceFormBinderWrapper
+            value={this.state.value}
+            onChange={this.formChange}
+            ref="form"
+          >
+            <div style={styles.formItems}>
+              <Row style={styles.formItem}>
+                <Col>
+                  <IceIcon
+                    type="person"
+                    size="small"
+                    style={styles.inputIcon}
+                  />
+                  <IceFormBinder name="account" required message="必填">
+                    <Input maxLength={20} placeholder="会员名/邮箱/手机号" />
+                  </IceFormBinder>
+                </Col>
+                <Col>
+                  <IceFormError name="account" />
+                </Col>
+              </Row>
+
+              <Row style={styles.formItem}>
+                <Col>
+                  <IceIcon type="lock" size="small" style={styles.inputIcon} />
+                  <IceFormBinder name="password">
+                    <Input htmlType="password" placeholder="密码" />
+                  </IceFormBinder>
+                </Col>
+                <Col>
+                  <IceFormError name="account" />
+                </Col>
+              </Row>
+
+              <Row style={styles.formItem}>
+                <Col>
+                  <IceFormBinder name="checkbox">
+                    <Checkbox style={styles.checkbox}>记住账号</Checkbox>
+                  </IceFormBinder>
+                </Col>
+              </Row>
+
+              <Row style={styles.formItem}>
+                <Button
+                  type="primary"
+                  onClick={this.handleSubmit}
+                  style={styles.submitBtn}
+                >
+                  登 录
+                </Button>
+              </Row>
+
+              <Row className="tips" style={styles.tips}>
+                <a href="/" style={styles.link}>
+                  立即注册
+                </a>
+                <span style={styles.line}>|</span>
+                <a href="/" style={styles.link}>
+                  忘记密码
+                </a>
+              </Row>
             </div>
-          </Form>
+          </IceFormBinderWrapper>
         </div>
       </div>
     );
@@ -97,12 +115,50 @@ export default class SignupForm extends Component {
 }
 
 const styles = {
-  signupForm: { display: 'flex', justifyContent: 'center' },
-  form: { display: 'flex', justifyContent: 'center' },
+  formContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    padding: '30px 40px',
+    background: '#fff',
+    borderRadius: '6px',
+    boxShadow: '1px 1px 2px #eee',
+  },
+  formItem: {
+    position: 'relative',
+    marginBottom: '25px',
+    flexDirection: 'column',
+  },
+  formTitle: {
+    margin: '0 0 20px',
+    textAlign: 'center',
+    color: '#3080fe',
+    letterSpacing: '12px',
+  },
+  inputIcon: {
+    position: 'absolute',
+    left: '18px',
+    top: '5px',
+    color: '#999',
+  },
+  submitBtn: {
+    width: '240px',
+    background: '#3080fe',
+    borderRadius: '28px',
+  },
+  checkbox: {
+    marginLeft: '5px',
+  },
   tips: {
     textAlign: 'center',
-    'a {Color': '#999',
+  },
+  link: {
+    color: '#999',
     textDecoration: 'none',
     fontSize: '13px',
+  },
+  line: {
+    color: '#dcd6d6',
+    margin: '0 8px',
   },
 };

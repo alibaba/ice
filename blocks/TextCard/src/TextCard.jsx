@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './TextCard.scss';
 
 export default class TextCard extends Component {
   static displayName = 'TextCard';
@@ -36,7 +35,10 @@ export default class TextCard extends Component {
             </div>
           </div>
 
-          <div className="text-card-item" style={styles.textCardItem}>
+          <div
+            className="text-card-item"
+            style={{ ...styles.textCardItem, borderRight: 0 }}
+          >
             <div className="text-card-subtitle" style={styles.textCardSubtitle}>
               本周完成任务数
             </div>

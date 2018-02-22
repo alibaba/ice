@@ -6,7 +6,6 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import './SimpleFormDialog.scss';
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;

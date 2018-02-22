@@ -97,7 +97,7 @@ export default class DownloadCard extends Component {
   render() {
     const { tabData } = this.state;
     return (
-      <div style={styles.downloadCard}>
+      <div className="download-card" style={styles.downloadCard}>
         <IceContainer>
           <Tab type="bar">
             <TabPane tab="客户端SDK" key="1">
@@ -122,10 +122,8 @@ const styles = {
     position: 'relative',
     float: 'left',
     width: '284px',
-    height: '280px',
+    // height: '280px',
     padding: '0px',
-    marginRight: '16px',
-    marginBottom: '16px',
     overflow: 'hidden',
     boxShadow:
       '0px 0px 2px 0px rgba(0, 0, 0, 0.1),0px 2px 2px 0px rgba(0, 0, 0, 0.1)',
@@ -134,7 +132,6 @@ const styles = {
   cardBody: {
     textAlign: 'center',
     padding: '20px 0',
-    marginBottom: '15px',
     borderBottom: '1px solid #dedede',
   },
   avatarWrapper: {
@@ -143,18 +140,30 @@ const styles = {
     overflow: 'hidden',
     margin: '0 auto',
   },
-  title: { fontSize: '20px', margin: '10px' },
-  desc: { fontSize: '15px', color: '#999' },
-  downloadButtons: { marginBottom: '15px', textAlign: 'center' },
-  rightButton: { width: '114px', fontSize: '13px', marginLeft: '10px' },
-  leftButton: { width: '114px', fontSize: '13px' },
+  title: {
+    fontSize: '20px',
+    margin: '10px',
+  },
+  desc: {
+    fontSize: '15px',
+    color: '#999',
+  },
+  downloadButtons: {
+    margin: '15px 0',
+    textAlign: 'center',
+  },
+  rightButton: {
+    width: '114px',
+    fontSize: '13px',
+    marginLeft: '10px',
+  },
+  leftButton: {
+    width: '114px',
+    fontSize: '13px',
+  },
   cardBottom: {
     padding: '10px 10px',
     background: '#f6f7f9',
-    position: 'absolute',
-    bottom: '0px',
-    left: '0px',
-    right: '0px',
   },
   bottomText: {
     marginLeft: '15px',
@@ -162,6 +171,7 @@ const styles = {
     color: '#666',
     textDecoration: 'none',
   },
-  downloadCard: {},
-  img: { width: '100%' },
+  img: {
+    width: '100%',
+  },
 };

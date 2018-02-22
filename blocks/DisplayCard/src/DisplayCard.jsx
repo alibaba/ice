@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Balloon } from '@icedesign/base';
-import './DisplayCard.scss';
 
 export default class DisplayCard extends Component {
   static displayName = 'DisplayCard';

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Table } from '@icedesign/base';
-import './LiteTable.scss';
 
 const styles = {
   processing: {

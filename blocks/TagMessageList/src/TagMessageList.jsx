@@ -34,14 +34,16 @@ export default class TagMessageList extends Component {
     return (
       <div className="tag-message-list">
         <IceContainer>
-          <Tab>
+          <Tab size="small">
             <Tab.TabPane key={0} tab="我的消息">
               {dataSource.map(this.renderItem)}
               <div style={styles.allMessage}>
                 <a href="##">查看全部消息</a>
               </div>
             </Tab.TabPane>
-            <Tab.TabPane key={1} tab="待我处理" />
+            <Tab.TabPane key={1} tab="待我处理">
+              <p>暂无数据</p>
+            </Tab.TabPane>
           </Tab>
         </IceContainer>
       </div>

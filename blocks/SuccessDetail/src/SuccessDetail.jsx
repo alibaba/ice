@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Button, Step } from '@icedesign/base';
-import './SuccessDetail.scss';
 
 export default class SuccessDetail extends Component {
   static displayName = 'SuccessDetail';

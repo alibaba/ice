@@ -6,7 +6,6 @@ import {
   FormBinder,
   FormError,
 } from '@icedesign/form-binder';
-import './SimpleFluencyForm.scss';
 
 const { Row, Col } = Grid;
 const telPattern = /^(1[\d]{1}[\d]{9})|(((400)-(\d{3})-(\d{4}))|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$|^([ ]?)$/;

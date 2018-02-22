@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './RightContentDisplay.scss';
 
 export default class RightContentDisplay extends Component {
   static displayName = 'RightContentDisplay';

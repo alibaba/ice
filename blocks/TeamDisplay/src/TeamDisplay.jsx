@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './TeamDisplay.scss';
 
 const generatorData = (count) => {
   return Array.from({ length: count }).map((item, index) => {
