@@ -22,18 +22,18 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/awesome-icon": "^0.1.2",
     "@icedesign/base": "^0.1.0",
     "@icedesign/img": "^0.1.0",
     "@icedesign/layout": "^0.1.0",
     "@icedesign/menu": "^0.1.0",
+    "@icedesign/skin": "latest",
     "classnames": "^2.2.5",
+    "foundation-symbol": "^0.1.0",
     "prop-types": "^15.5.8",
     "react-document-title": "^2.0.3",
     "react-router": "^3.2.0"
   },
   "devDependencies": {
-    "@icedesign/skin": "latest",
     "eslint-plugin-react": "^7.5.1"
   },
   "scripts": {

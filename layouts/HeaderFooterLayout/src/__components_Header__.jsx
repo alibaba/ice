@@ -3,7 +3,7 @@ import { Balloon, Icon } from '@icedesign/base';
 import IceImg from '@icedesign/img';
 import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
-import AwesomeIcon from '@icedesign/awesome-icon';
+import FoundationSymbol from 'foundation-symbol';
 import { Link } from 'react-router';
 import { headerNavs } from './__navs__';
 import Logo from './__components_Logo__';
@@ -40,7 +40,7 @@ export default class Header extends PureComponent {
                   <Menu.Item key={idx}>
                     <Link {...linkProps}>
                       {nav.icon ? (
-                        <AwesomeIcon type={nav.icon} size="small" />
+                        <FoundationSymbol type={nav.icon} size="small" />
                       ) : null}
                       {nav.text}
                     </Link>
@@ -95,17 +95,17 @@ export default class Header extends PureComponent {
             <ul>
               <li className="user-profile-menu-item">
                 <Link to="/">
-                  <AwesomeIcon type="person" size="small" />我的主页
+                  <FoundationSymbol type="person" size="small" />我的主页
                 </Link>
               </li>
               <li className="user-profile-menu-item">
                 <Link to="/">
-                  <AwesomeIcon type="repair" size="small" />设置
+                  <FoundationSymbol type="repair" size="small" />设置
                 </Link>
               </li>
               <li className="user-profile-menu-item">
                 <Link to="/">
-                  <AwesomeIcon type="compass" size="small" />退出
+                  <FoundationSymbol type="compass" size="small" />退出
                 </Link>
               </li>
             </ul>

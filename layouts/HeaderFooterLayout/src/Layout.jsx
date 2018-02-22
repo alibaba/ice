@@ -7,7 +7,7 @@ import Footer from './__components_Footer__';
 import './scss/light.scss';
 import './scss/dark.scss';
 
-const theme = typeof CONFIG_THEME === 'undefined' ? 'dark' : CONFIG_THEME;
+const theme = typeof THEME === 'undefined' ? 'dark' : THEME;
 
 export default class BasicLayout extends PureComponent {
   static propTypes = {};

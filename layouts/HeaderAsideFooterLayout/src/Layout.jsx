@@ -4,14 +4,14 @@ import cx from 'classnames';
 import Layout from '@icedesign/layout';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { Link } from 'react-router';
-import AwesomeIcon from '@icedesign/awesome-icon';
+import FoundationSymbol from 'foundation-symbol';
 import Header from './__components_Header__';
 import Footer from './__components_Footer__';
 import { asideNavs } from './__navs__';
 import './scss/light.scss';
 import './scss/dark.scss';
 
-const theme = typeof CONFIG_THEME === 'undefined' ? 'dark' : CONFIG_THEME;
+const theme = typeof THEME === 'undefined' ? 'dark' : THEME;
 export default class HeaderAsideFooterResponsiveLayout extends Component {
   static propTypes = {};
 
@@ -87,7 +87,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                         title={
                           <span>
                             {nav.icon ? (
-                              <AwesomeIcon size="small" type={nav.icon} />
+                              <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
                             <span className="ice-menu-collapse-hide">
                               {nav.text}
@@ -131,7 +131,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                       <Link {...linkProps}>
                         <span>
                           {nav.icon ? (
-                            <AwesomeIcon size="small" type={nav.icon} />
+                            <FoundationSymbol size="small" type={nav.icon} />
                           ) : null}
                           <span className="ice-menu-collapse-hide">
                             {nav.text}
