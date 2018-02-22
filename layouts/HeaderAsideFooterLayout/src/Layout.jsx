@@ -21,16 +21,14 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     super(props);
 
     this.state = {
-      openKeys: [`${this.getOpenKeys()}`],
+      openKeys: `${this.getOpenKeys()}`,
     };
-    this.openKeys = [`${this.getOpenKeys()}`];
   }
 
   onOpenChange = (openKeys) => {
     this.setState({
       openKeys,
     });
-    this.openKeys = openKeys;
   };
 
   // 当前打开的菜单项
