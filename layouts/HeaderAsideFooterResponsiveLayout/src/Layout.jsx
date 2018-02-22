@@ -24,7 +24,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
     this.state = {
       collapse: false,
-      openKeys: [`${this.getOpenKeys()}`],
+      openKeys: this.getOpenKeys(),
     };
   }
 
@@ -50,12 +50,11 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
   getOpenKeys = () => {
     const { routes = [{}] } = this.props;
     const matched = routes[0].path;
-    let openKeys = '';
-
+    let openKeys = [];
     if (asideNavs && asideNavs.length > 0) {
       asideNavs.forEach((item, index) => {
         if (item.to === matched) {
-          openKeys = index;
+          openKeys = [index];
         }
       });
     }
