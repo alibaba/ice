@@ -3,12 +3,7 @@
   "version": "0.1.5",
   "description": "提示框-成功",
   "main": "lib/index.js",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -18,10 +13,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.1",
@@ -36,10 +28,9 @@
   "blockConfig": {
     "name": "success-dialog",
     "title": "成功提示框",
-    "categories": [
-      "modal"
-    ],
-    "snapshot": "https://img.alicdn.com/tfs/TB1CMVpi5qAXuNjy1XdXXaYcVXa-1278-540.png",
+    "categories": ["模态框"],
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1CMVpi5qAXuNjy1XdXXaYcVXa-1278-540.png",
     "themePackage": "@icedesign/skin"
   },
   "scripts": {

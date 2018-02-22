@@ -28,10 +28,10 @@
   "blockConfig": {
     "name": "composite-filter",
     "snapshot":
-      "https://img.alicdn.com/tfs/TB1JRPsauuSBuNjy1XcXXcYjFXa-1914-246.png",
+      "https://img.alicdn.com/tfs/TB1mfclilTH8KJjy0FiXXcRsXXa-1896-246.png",
     "themePackage": "@icedesign/skin",
     "title": "复杂的筛选",
-    "categories": ["filter"]
+    "categories": ["筛选"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

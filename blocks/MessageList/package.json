@@ -27,10 +27,10 @@
   "blockConfig": {
     "name": "message-list",
     "snapshot":
-      "https://img.alicdn.com/tfs/TB1UsLBax9YBuNjy0FfXXXIsVXa-1918-1060.png",
+      "https://img.alicdn.com/tfs/TB1hbVYlsLJ8KJjy0FnXXcFDpXa-1900-1180.png",
     "themePackage": "@icedesign/skin",
     "title": "消息列表",
-    "categories": ["list"]
+    "categories": ["列表"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
