@@ -30,12 +30,15 @@ module.exports = (buildConfig = {}) => {
       require.resolve('babel-plugin-transform-decorators-legacy'),
       require.resolve('babel-plugin-add-module-exports'),
       require.resolve('babel-plugin-transform-es2015-object-super'),
-      [require.resolve('babel-plugin-transform-runtime'), {
-        helpers: false,
-        polyfill: false,
-        regenerator: true,
-        moduleName: 'babel-runtime',
-      }],
+      [
+        require.resolve('babel-plugin-transform-runtime'),
+        {
+          helpers: false,
+          polyfill: true,
+          regenerator: true,
+          moduleName: 'babel-runtime',
+        },
+      ],
       [babelPluginImport, { libraryName: '@icedesign/base' }],
     ],
   };
