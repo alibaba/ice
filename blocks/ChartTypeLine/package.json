@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/chart-type-line-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@antv/data-set": "^0.8.0",
     "@icedesign/base": "^0.1.0",
@@ -28,11 +36,12 @@
   },
   "blockConfig": {
     "name": "chart-type-line",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1Of87isLJ8KJjy0FnXXcFDpXa-1906-1044.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1Of87isLJ8KJjy0FnXXcFDpXa-1906-1044.png",
     "themePackage": "@icedesign/skin",
     "title": "折线图",
-    "categories": ["图表"]
+    "categories": [
+      "图表"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

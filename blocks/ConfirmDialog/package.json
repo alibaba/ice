@@ -1,9 +1,14 @@
 {
   "name": "@icedesign/confirm-dialog-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "确认类型的提示框",
   "main": "lib/index.js",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -13,7 +18,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.1",
@@ -28,9 +36,10 @@
   "blockConfig": {
     "name": "confirm-dialog",
     "title": "确认类型的提示框",
-    "categories": ["模态框"],
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1Zr3xigvD8KJjy0FlXXagBFXa-1272-620.png",
+    "categories": [
+      "模态框"
+    ],
+    "snapshot": "https://img.alicdn.com/tfs/TB1Zr3xigvD8KJjy0FlXXagBFXa-1272-620.png",
     "themePackage": "@icedesign/skin"
   },
   "scripts": {

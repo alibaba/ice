@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/scafford-create-react-app",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "该模板适用于习惯使用 Create-React-App 的用户",
   "dependencies": {
     "react": "^16.2.0",
@@ -20,7 +20,6 @@
   "scaffordConfig": {
     "name": "create-react-app",
     "title": "Create React App",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB11Y82oC_I8KJjy0FoXXaFnVXa-2856-1566.png"
+    "snapshot": "https://img.alicdn.com/tfs/TB11Y82oC_I8KJjy0FoXXaFnVXa-2856-1566.png"
   }
 }

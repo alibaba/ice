@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/forget-password-form-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "忘记密码",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -28,11 +36,12 @@
   },
   "blockConfig": {
     "name": "forget-password-form",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1TjBilvDH8KJjy1XcXXcpdXXa-1102-554.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1TjBilvDH8KJjy1XcXXcpdXXa-1102-554.png",
     "themePackage": "@icedesign/skin",
     "title": "忘记密码",
-    "categories": ["表单"]
+    "categories": [
+      "表单"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

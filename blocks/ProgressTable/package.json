@@ -1,9 +1,13 @@
 {
   "name": "@icedesign/progress-table-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "进度条表格",
   "main": "lib/index.js",
-  "files": ["src/", "demo/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -13,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -27,11 +34,12 @@
   },
   "blockConfig": {
     "name": "progress-table",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1MSwOih6I8KJjy0FgXXXXzVXa-1828-1206.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1MSwOih6I8KJjy0FgXXXXzVXa-1828-1206.png",
     "themePackage": "@icedesign/skin",
     "title": "进度条表格",
-    "categories": ["表格"]
+    "categories": [
+      "表格"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
