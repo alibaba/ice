@@ -47,7 +47,8 @@ export default class BrandShowCase extends Component {
 
 const styles = {
   container: {
-    width: '1080px',
+    width: '100%',
+    maxWidth: '1080px',
     margin: '0 auto',
     padding: '80px 0',
   },

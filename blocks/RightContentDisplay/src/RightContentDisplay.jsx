@@ -33,7 +33,8 @@ export default class RightContentDisplay extends Component {
 
 const styles = {
   container: {
-    width: '1080px',
+    width: '100%',
+    maxWidth: '1080px',
     margin: '0 auto',
     padding: '80px 0',
   },
@@ -52,7 +53,7 @@ const styles = {
     fontWeight: 'bold',
   },
   description: {
-    color: '#666',
+    color: '#999',
     lineHeight: '22px',
   },
   image: {

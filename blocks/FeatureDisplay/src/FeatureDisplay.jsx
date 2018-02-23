@@ -4,42 +4,42 @@ const data = [
   {
     title: '特点1',
     description:
-      '特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案',
+      '文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述',
     imgUrl:
       'https://img.alicdn.com/tfs/TB1RBTKi4rI8KJjy0FpXXb5hVXa-456-456.png',
   },
   {
     title: '特点2',
     description:
-      '特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案',
+      '文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述',
     imgUrl:
       'https://img.alicdn.com/tfs/TB1LN_Ai9_I8KJjy0FoXXaFnVXa-450-453.png',
   },
   {
     title: '特点3',
     description:
-      '特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案',
+      '文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述',
     imgUrl:
       'https://img.alicdn.com/tfs/TB1K3JmgOqAXuNjy1XdXXaYcVXa-450-450.png',
   },
   {
     title: '特点4',
     description:
-      '特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案',
+      '文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述',
     imgUrl:
       'https://img.alicdn.com/tfs/TB124gfiY_I8KJjy1XaXXbsxpXa-450-453.png',
   },
   {
     title: '特点5',
     description:
-      '特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案',
+      '文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述',
     imgUrl:
       'https://img.alicdn.com/tfs/TB1s4T4i2DH8KJjy1XcXXcpdXXa-450-450.png',
   },
   {
     title: '特点6',
     description:
-      '特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案',
+      '文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述文案特点描述',
     imgUrl:
       'https://img.alicdn.com/tfs/TB1oEe3i8fH8KJjy1XbXXbLdXXa-453-453.png',
   },
@@ -78,7 +78,8 @@ export default class FeatureDisplay extends Component {
 
 const styles = {
   container: {
-    width: '1080px',
+    width: '100%',
+    maxWidth: '1080px',
     margin: '0 auto',
     padding: '0 80px',
   },
@@ -104,5 +105,6 @@ const styles = {
   description: {
     fontSize: '13px',
     lineHeight: '22px',
+    color: '#999',
   },
 };

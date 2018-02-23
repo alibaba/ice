@@ -31,7 +31,7 @@
       "https://img.alicdn.com/tfs/TB1if0vg5qAXuNjy1XdXXaYcVXa-2516-356.png",
     "themePackage": "@icedesign/skin",
     "title": "页脚",
-    "categories": ["信息展示"]
+    "categories": ["信息展示", "欢迎页"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

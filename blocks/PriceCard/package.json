@@ -31,7 +31,7 @@
       "https://img.alicdn.com/tfs/TB1_5jHjgvD8KJjy0FlXXagBFXa-2810-1074.png",
     "themePackage": "@icedesign/skin",
     "title": "价格展示",
-    "categories": ["信息展示"]
+    "categories": ["信息展示", "欢迎页"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
