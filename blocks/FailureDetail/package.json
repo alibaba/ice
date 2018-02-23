@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/failure-detail-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "提交失败详情展示",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -26,11 +34,12 @@
   },
   "blockConfig": {
     "name": "failure-detail",
-    "snapshot":
-      "https://gw.alicdn.com/tfs/TB15u0eisLJ8KJjy0FnXXcFDpXa-1326-824.png",
+    "snapshot": "https://gw.alicdn.com/tfs/TB15u0eisLJ8KJjy0FnXXcFDpXa-1326-824.png",
     "themePackage": "@icedesign/skin",
     "title": "提交失败详情展示",
-    "categories": ["信息展示"]
+    "categories": [
+      "信息展示"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

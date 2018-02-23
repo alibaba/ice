@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/rich-editor-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "简单的富文本编辑器",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -39,10 +47,11 @@
   },
   "blockConfig": {
     "name": "rich-editor",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB16Kedov6H8KJjy0FjXXaXepXa-1906-872.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB16Kedov6H8KJjy0FjXXaXepXa-1906-872.png",
     "title": "富文本编辑器",
-    "categories": ["表单"],
+    "categories": [
+      "表单"
+    ],
     "themePackage": "@icedesign/skin"
   }
 }

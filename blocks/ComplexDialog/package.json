@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/complex-dialog-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "复杂信息和自定义底部按钮的弹窗",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -27,9 +35,10 @@
   "blockConfig": {
     "name": "complex-dialog",
     "title": "复杂信息弹窗",
-    "categories": ["模态框"],
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1Un_filfH8KJjy1XbXXbLdXXa-1270-650.png",
+    "categories": [
+      "模态框"
+    ],
+    "snapshot": "https://img.alicdn.com/tfs/TB1Un_filfH8KJjy1XbXXbLdXXa-1270-650.png",
     "themePackage": "@icedesign/skin"
   },
   "scripts": {

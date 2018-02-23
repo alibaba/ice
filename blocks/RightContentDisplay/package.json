@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/right-content-display-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -27,11 +35,13 @@
   },
   "blockConfig": {
     "name": "right-content-display",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1O.0KjC_I8KJjy0FoXXaFnVXa-2344-1184.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1O.0KjC_I8KJjy0FoXXaFnVXa-2344-1184.png",
     "themePackage": "@icedesign/skin",
     "title": "功能描述-左图右文",
-    "categories": ["信息展示", "欢迎页"]
+    "categories": [
+      "信息展示",
+      "欢迎页"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

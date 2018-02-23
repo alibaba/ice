@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/private-message-form-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "私有消息表单",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -27,11 +35,12 @@
   },
   "blockConfig": {
     "name": "private-message-form",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1H5Q1lhrI8KJjy0FpXXb5hVXa-1234-784.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1H5Q1lhrI8KJjy0FpXXb5hVXa-1234-784.png",
     "themePackage": "@icedesign/skin",
     "title": "私有消息表单",
-    "categories": ["表单"]
+    "categories": [
+      "表单"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

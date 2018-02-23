@@ -1,9 +1,14 @@
 {
   "name": "@icedesign/filter-list-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "支持过滤的列表",
   "main": "lib/index.js",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -13,7 +18,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -27,11 +35,12 @@
   },
   "blockConfig": {
     "name": "filter-list",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1iUbYilfH8KJjy1XbXXbLdXXa-2000-1154.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1iUbYilfH8KJjy1XbXXbLdXXa-2000-1154.png",
     "themePackage": "@icedesign/skin",
     "title": "支持过滤的列表",
-    "categories": ["列表"]
+    "categories": [
+      "列表"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

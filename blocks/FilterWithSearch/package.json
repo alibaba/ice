@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/filter-with-search-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": " 含搜索筛选",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -26,11 +34,12 @@
   },
   "blockConfig": {
     "name": "filter-with-search",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1vqnmihTI8KJjSspiXXbM4FXa-1906-136.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1vqnmihTI8KJjSspiXXbM4FXa-1906-136.png",
     "themePackage": "@icedesign/skin",
     "title": " 含搜索筛选",
-    "categories": ["筛选"]
+    "categories": [
+      "筛选"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

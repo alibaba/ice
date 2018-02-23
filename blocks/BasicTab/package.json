@@ -1,9 +1,14 @@
 {
   "name": "@icedesign/basic-tab-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "基础 Tab 组件",
   "main": "lib/index.js",
-  "files": ["src/", "demo/", "mock/", "lib/"],
+  "files": [
+    "src/",
+    "demo/",
+    "mock/",
+    "lib/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -13,7 +18,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -27,11 +35,12 @@
   },
   "blockConfig": {
     "name": "basic-tab",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1lrQXif2H8KJjy0FcXXaDlFXa-1144-112.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1lrQXif2H8KJjy0FcXXaDlFXa-1144-112.png",
     "themePackage": "@icedesign/skin",
     "title": "基础 Tab 组件",
-    "categories": ["信息展示"]
+    "categories": [
+      "信息展示"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
