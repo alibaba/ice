@@ -31,7 +31,7 @@
       "https://img.alicdn.com/tfs/TB14w4EjBfH8KJjy1XbXXbLdXXa-2824-1110.png",
     "themePackage": "@icedesign/skin",
     "title": "客户评论卡片",
-    "categories": ["信息展示"]
+    "categories": ["信息展示", "欢迎页"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

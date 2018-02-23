@@ -27,10 +27,10 @@
   "blockConfig": {
     "name": "feature-display",
     "snapshot":
-      "https://img.alicdn.com/tfs/TB1W3vQi3vD8KJjy0FlXXagBFXa-1914-1522.png",
+      "https://gw.alicdn.com/tfs/TB1StEQaqmWBuNjy1XaXXXCbXXa-1756-1464.png",
     "themePackage": "@icedesign/skin",
     "title": "功能特点展示",
-    "categories": ["信息展示"]
+    "categories": ["信息展示", "欢迎页"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
