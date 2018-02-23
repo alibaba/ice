@@ -38,7 +38,7 @@
           "npm": "@icedesign/tab-chart-block",
           "name": "TabChart",
           "version": "latest",
-          "title": ""
+          "title": "标签页和图表组合使用"
         },
         {
           "npm": "@icedesign/pie-doughnut-chart-block",
@@ -219,7 +219,7 @@
       ]
     },
     {
-      "page": "EmptyContent",
+      "page": "Empty",
       "path": "exception/204",
       "layout": "HeaderAsideFooterLayout",
       "blocks": [
@@ -254,19 +254,6 @@
           "name": "InfoDisplayTab",
           "version": "latest",
           "title": "标签页信息展示"
-        }
-      ]
-    },
-    {
-      "page": "PicturesList",
-      "path": "list/picture-list",
-      "layout": "HeaderAsideFooterLayout",
-      "blocks": [
-        {
-          "npm": "@icedesign/filter-list-block",
-          "name": "FilterList",
-          "version": "latest",
-          "title": "支持过滤的列表"
         }
       ]
     },

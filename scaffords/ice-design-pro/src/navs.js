@@ -63,10 +63,6 @@ const customAsideNavs = [
         text: '卡片列表',
         to: '/list/card-list',
       },
-      {
-        text: '素材列表',
-        to: '/list/picture-list',
-      },
     ],
   },
   {
