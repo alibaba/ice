@@ -2,7 +2,6 @@
 const autoGenHeaderNavs = [];
 
 const autoGenAsideNavs = [];
-
 // <!-- auto generated navs end -->
 
 const customHeaderNavs = [
@@ -24,11 +23,6 @@ const customAsideNavs = [
     text: 'Dashboard',
     to: '/',
     icon: 'nav-list',
-  },
-  {
-    text: '介绍页',
-    to: '/landing',
-    icon: 'process',
   },
   {
     text: '图表页',
