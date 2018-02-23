@@ -28,10 +28,10 @@
   "blockConfig": {
     "name": "brand-display",
     "snapshot":
-      "https://img.alicdn.com/tfs/TB1XIooihrI8KJjy0FpXXb5hVXa-1802-874.png",
+      "https://img.alicdn.com/tfs/TB1_IMuaAyWBuNjy0FpXXassXXa-2306-1244.png",
     "themePackage": "@icedesign/skin",
     "title": "品牌列表展示",
-    "categories": ["信息展示"]
+    "categories": ["信息展示", "欢迎页"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

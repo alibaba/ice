@@ -72,7 +72,8 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     padding: '80px 0',
-    width: '1080px',
+    width: '100%',
+    maxWidth: '1080px',
     margin: '0 auto',
   },
   item: {
@@ -110,5 +111,6 @@ const styles = {
   },
   description: {
     lineHeight: '28px',
+    color: '#999',
   },
 };
