@@ -24,7 +24,7 @@ export default class TabChart extends Component {
 
   render() {
     return (
-      <div className="tab-chart">
+      <div className="tab-chart" style={styles.container}>
         <IceContainer style={styles.card}>
           <Tab onChange={this.handleChange}>
             <TabPane key="1" tab="收益走势">
@@ -41,8 +41,10 @@ export default class TabChart extends Component {
 }
 
 const styles = {
+  container: {
+    marginBottom: '20px',
+  },
   card: {
-    marginBottom: '0',
     padding: '0 20px',
   },
 };
