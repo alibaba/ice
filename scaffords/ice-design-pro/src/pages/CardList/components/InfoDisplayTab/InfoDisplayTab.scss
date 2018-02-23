@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.info-display-tab {
+  .column-card {
+    margin-right: 16px;
+    margin-bottom: 16px;
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+}
