@@ -1,35 +1,46 @@
+/* eslint no-undef:0 */
 import React, { Component } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
-import { Icon } from '@icedesign/base';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { Link } from 'react-router';
+import FoundationSymbol from 'foundation-symbol';
 import Header from './__components_Header__';
 import Footer from './__components_Footer__';
 import { asideNavs } from './__navs__';
-import './Layout.scss';
+import './scss/light.scss';
+import './scss/dark.scss';
 
-export default class HeaderAsideFooterLayout extends Component {
+const theme = typeof THEME === 'undefined' ? 'dark' : THEME;
+export default class HeaderAsideFooterResponsiveLayout extends Component {
   static propTypes = {};
 
   static defaultProps = {};
 
-  // 当前点击的菜单项
-  handleClick = (selectedKeys) => {
-    // eslint-disable-next-line
-    console.log('selectedKeys:', selectedKeys);
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      openKeys: this.getOpenKeys(),
+    };
+  }
+
+  onOpenChange = (openKeys) => {
+    this.setState({
+      openKeys,
+    });
   };
 
   // 当前打开的菜单项
   getOpenKeys = () => {
     const { routes = [{}] } = this.props;
     const matched = routes[0].path;
-    let openKeys = '';
+    let openKeys = [];
 
     if (asideNavs && asideNavs.length > 0) {
       asideNavs.forEach((item, index) => {
         if (item.to === matched) {
-          openKeys = index;
+          openKeys = [index];
         }
       });
     }
@@ -40,26 +51,29 @@ export default class HeaderAsideFooterLayout extends Component {
   render() {
     const { location = {} } = this.props;
     const { pathname } = location;
-
     return (
       <Layout
         style={{ minHeight: '100vh' }}
-        className={cx({
-          'ice-admin-layout': true,
-          'ice-admin-header-aside-footer-layout': true,
+        className={cx(`ice-design-${theme}`, {
+          'ice-design-layout': true,
+          'ice-design-header-aside-footer-layout': true,
         })}
       >
-        <Header />
-        <Layout.Section className="ice-admin-layout-body">
-          <Layout.Aside>
+        <Header theme={theme} />
+
+        <Layout.Section className="ice-design-layout-body">
+          <Layout.Aside
+            width="auto"
+            theme={theme}
+            className="ice-design-layout-aside"
+          >
             <Menu
-              className="ice-admin-aside-menu"
-              onClick={this.handleClick}
-              selectedKeys={[pathname]}
-              defaultSelectedKeys={[pathname]}
-              defaultOpenKeys={[`${this.getOpenKeys()}`]}
+              style={{ width: 200 }}
               mode="inline"
-              style={{ marginTop: '20px' }}
+              selectedKeys={[pathname]}
+              openKeys={this.state.openKeys}
+              defaultSelectedKeys={[pathname]}
+              onOpenChange={this.onOpenChange}
             >
               {asideNavs &&
                 asideNavs.length > 0 &&
@@ -71,9 +85,11 @@ export default class HeaderAsideFooterLayout extends Component {
                         title={
                           <span>
                             {nav.icon ? (
-                              <Icon size="xs" type={nav.icon} />
+                              <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            <span>{nav.text}</span>
+                            <span className="ice-menu-collapse-hide">
+                              {nav.text}
+                            </span>
                           </span>
                         }
                       >
@@ -112,16 +128,22 @@ export default class HeaderAsideFooterLayout extends Component {
                     <MenuItem key={nav.to}>
                       <Link {...linkProps}>
                         <span>
-                          {nav.icon ? <Icon size="xs" type={nav.icon} /> : null}
-                          <span>{nav.text}</span>
+                          {nav.icon ? (
+                            <FoundationSymbol size="small" type={nav.icon} />
+                          ) : null}
+                          <span className="ice-menu-collapse-hide">
+                            {nav.text}
+                          </span>
                         </span>
                       </Link>
                     </MenuItem>
                   );
                 })}
             </Menu>
+            {/* 侧边菜单项 end */}
           </Layout.Aside>
 
+          {/* 主体内容 */}
           <Layout.Main>{this.props.children}</Layout.Main>
         </Layout.Section>
 

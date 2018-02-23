@@ -15,19 +15,19 @@
   "license": "MIT",
   "keywords": ["ice", "ice-component"],
   "dependencies": {
-    "@icedesign/awesome-icon": "^0.1.2",
     "@icedesign/base": "^0.1.0",
     "@icedesign/icon": "^0.1.1",
     "@icedesign/img": "^0.1.0",
     "@icedesign/layout": "^0.1.0",
     "@icedesign/menu": "^0.1.0",
+    "@icedesign/skin": "^0.1.0",
     "classnames": "^2.2.5",
+    "foundation-symbol": "^0.1.0",
     "prop-types": "^15.5.8",
     "react-document-title": "^2.0.3",
     "react-router": "^3.2.0"
   },
   "devDependencies": {
-    "@icedesign/skin": "^0.1.0",
     "eslint-plugin-react": "^7.5.1"
   },
   "scripts": {
