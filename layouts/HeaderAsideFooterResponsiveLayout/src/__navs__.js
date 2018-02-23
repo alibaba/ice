@@ -24,26 +24,26 @@ const autoGenHeaderNavs = [
 const autoGenAsideNavs = [
   {
     text: '首页',
-    to: '/',
+    to: '/Dashboard',
     icon: 'home',
   },
   {
     text: '用户管理',
-    to: '/',
+    to: '/user',
     icon: 'yonghu',
   },
   {
     text: '系统设置',
-    to: '/',
+    to: '/setting',
     icon: 'shezhi',
     children: [
       {
         text: '基本设置',
-        to: '/',
+        to: '/general',
       },
       {
         text: '评论设置',
-        to: '/',
+        to: '/comment',
       },
     ],
   },
