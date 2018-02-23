@@ -4,10 +4,10 @@ import React, { Component } from 'react';
 
 import EmptyContent from './components/EmptyContent';
 
-import './EmptyContent.scss';
+import './Empty.scss';
 
-export default class EmptyContent2 extends Component {
-  static displayName = 'EmptyContent2';
+export default class Empty extends Component {
+  static displayName = 'Empty';
 
   constructor(props) {
     super(props);
