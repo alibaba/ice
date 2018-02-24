@@ -1,4 +1,4 @@
-/* eslint no-undef:0 */
+/* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import React, { Component } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
@@ -16,10 +16,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
   static propTypes = {};
 
   static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-  }
 
   // 当前点击的菜单项
   handleClick = (selectedKeys) => {

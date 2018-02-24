@@ -1,4 +1,4 @@
-/* eslint no-undef:0 */
+/* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import React, { Component } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
@@ -125,7 +125,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                           </span>
                         }
                       >
-                        {nav.children.map((item, idx) => {
+                        {nav.children.map((item) => {
                           const linkProps = {};
                           if (item.newWindow) {
                             linkProps.href = item.to;
