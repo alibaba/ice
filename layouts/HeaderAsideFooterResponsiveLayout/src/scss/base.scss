@@ -5,7 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.ice-design-#{$theme} {
+.ice-design-header-aside-footer-responsive-layout-#{$theme} {
   .logo {
     width: 200px;
     height: 42px;
@@ -83,6 +83,7 @@ body {
       .ice-menu.ice-menu-root.ice-menu-inline > .ice-menu-item {
         margin-bottom: 1px;
         color: $ice-aside-text-color;
+        font-weight: bold;
       }
 
       .ice-menu.ice-menu-root .ice-menu-inline > .ice-menu-item {
@@ -161,7 +162,7 @@ body {
         }
         .ice-menu-item-selected {
           color: $ice-aside-menu-item-selected-text-color;
-          text-align: center;
+          text-align: left;
         }
         .ice-menu .ice-menu-item:hover,
         .ice-menu.ice-menu-horizontal > .ice-menu-item:hover,
@@ -220,6 +221,12 @@ body {
           width: 0;
         }
       }
+    }
+
+    /* MAIN */
+    .ice-layout-main {
+      padding: 0 0 0 20px;
+      overflow: auto;
     }
 
     /* FOOTER */

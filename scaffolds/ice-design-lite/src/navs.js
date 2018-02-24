@@ -8,43 +8,47 @@ const customHeaderNavs = [
   {
     text: '首页',
     to: '/',
+    icon: 'home',
   },
   {
     text: '反馈',
     to: 'https://github.com/alibaba/ice',
     external: true,
     newWindow: true,
+    icon: 'message',
   },
   {
     text: '帮助',
     to: 'https://alibaba.github.io/ice',
     external: true,
     newWindow: true,
+    icon: 'bangzhu',
   },
 ];
+
 const customAsideNavs = [
   {
     text: '首页',
     to: '/',
-    icon: 'store',
+    icon: 'home',
   },
   {
-    text: '一级目录示例',
-    to: '/example1',
-    icon: 'nav-list',
+    text: '用户管理',
+    to: '/user',
+    icon: 'yonghu',
   },
   {
-    text: '二级目录示例',
-    to: '/example2',
-    icon: 'compass',
+    text: '系统设置',
+    to: '/setting',
+    icon: 'shezhi',
     children: [
       {
-        text: '二级子目录1',
-        to: '/example21',
+        text: '基本设置',
+        to: '/base',
       },
       {
-        text: '二级子目录2',
-        to: '/example22',
+        text: '评论设置',
+        to: '/comment',
       },
     ],
   },
