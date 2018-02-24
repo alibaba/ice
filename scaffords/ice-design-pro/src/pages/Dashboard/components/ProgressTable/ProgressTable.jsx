@@ -26,7 +26,7 @@ export default class ProgressTable extends Component {
     };
   }
 
-  renderCellProgress = (value) => (
+  renderCellProgress = value => (
     <Progress showInfo={false} percent={parseInt(value, 10)} />
   );
 
