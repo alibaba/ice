@@ -58,7 +58,7 @@ export default class ChartTypeLine extends Component {
             <Axis name="month" />
             <Axis
               name="temperature"
-              label={{ formatter: (val) => `${val}°C` }}
+              label={{ formatter: val => `${val}°C` }}
             />
             <Tooltip crosshairs={{ type: 'y' }} />
             <Geom
