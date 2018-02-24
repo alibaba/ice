@@ -167,7 +167,7 @@ export default class SelectableTable extends Component {
 
 const styles = {
   selectableTable: {
-    width: '960px',
+    width: '100%',
   },
   batchBtn: {
     marginRight: '10px',

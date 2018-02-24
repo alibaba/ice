@@ -18,14 +18,15 @@ export default class BasicLayout extends PureComponent {
     return (
       <Layout
         style={{ minHeight: '100vh' }}
-        className={cx(`ice-design-${theme}`, {
+        className={cx(`ice-design-header-footer-layout-${theme}`, {
           'ice-design-layout': true,
-          'ice-design-header-footer-layout': true,
         })}
       >
         <Header theme={theme} />
 
-        <Layout.Main>{this.props.children}</Layout.Main>
+        <Layout.Main className="ice-design-layout-body">
+          {this.props.children}
+        </Layout.Main>
 
         <Footer />
       </Layout>
