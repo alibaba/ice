@@ -69,7 +69,7 @@ function generateBlocks(files, SPACE) {
   return result;
 }
 
-function generateScaffords(files, SPACE) {
+function generateScaffolds(files, SPACE) {
   return files.map((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
     const dependencies = pkg.dependencies || {};
@@ -82,7 +82,7 @@ function generateScaffords(files, SPACE) {
     }
 
     return {
-      ...pkg.scaffordConfig,
+      ...pkg.scaffoldConfig,
       npm: pkg.name,
       description: pkg.description,
       version: pkg.version,
@@ -119,11 +119,11 @@ function gatherBlocksOrLayouts(pattern, SPACE) {
 }
 
 /**
- * 生成 scaffords 信息
+ * 生成 scaffolds 信息
  * @param {*} pattern
  * @param {*} SPACE
  */
-function gatherScaffords(pattern, SPACE) {
+function gatherScaffolds(pattern, SPACE) {
   return new Promise((resolve, reject) => {
     glob(
       pattern,
@@ -136,7 +136,7 @@ function gatherScaffords(pattern, SPACE) {
           console.log('err:', err);
           reject(err);
         } else {
-          resolve(generateScaffords(files, SPACE));
+          resolve(generateScaffolds(files, SPACE));
         }
       }
     );
@@ -175,18 +175,18 @@ function main() {
       return Promise.all([
         gatherBlocksOrLayouts('blocks/*/package.json', space),
         gatherBlocksOrLayouts('layouts/*/package.json', space),
-        gatherScaffords('scaffords/*/package.json', space),
+        gatherScaffolds('scaffolds/*/package.json', space),
       ]);
     })
-    .then(([blocks, layouts, scaffords]) => {
+    .then(([blocks, layouts, scaffolds]) => {
       // 补充字段
       return Promise.all([
         Promise.all(blocks.map(appendFieldFromNpm)),
         Promise.all(layouts.map(appendFieldFromNpm)),
-        Promise.all(scaffords.map(appendFieldFromNpm)),
+        Promise.all(scaffolds.map(appendFieldFromNpm)),
       ]);
     })
-    .then(([blocks, layouts, scaffords]) => {
+    .then(([blocks, layouts, scaffolds]) => {
       const distDir = path.resolve(__dirname, '../databases');
       mkdirp.sync(distDir);
       fs.writeFileSync(
@@ -200,8 +200,8 @@ function main() {
       );
 
       fs.writeFileSync(
-        path.join(distDir, 'scaffords.db.json'),
-        JSON.stringify(scaffords, null, 2) + '\n'
+        path.join(distDir, 'scaffolds.db.json'),
+        JSON.stringify(scaffolds, null, 2) + '\n'
       );
 
       console.log('Database generated.');
