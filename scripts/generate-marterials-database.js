@@ -86,6 +86,7 @@ function generateScaffolds(files, SPACE) {
       npm: pkg.name,
       description: pkg.description,
       version: pkg.version,
+      homepage: pkg.homepage || '',
       layouts: generatorJson.layouts || [],
       dependencies,
       devDependencies,
