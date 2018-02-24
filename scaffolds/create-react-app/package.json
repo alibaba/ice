@@ -2,6 +2,8 @@
   "name": "@icedesign/scaffold-create-react-app",
   "version": "0.1.2",
   "description": "该模板适用于习惯使用 Create-React-App 的用户",
+  "homepage":
+    "https://alibaba.github.io/ice/scaffold-preview/create-react-app.html",
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
