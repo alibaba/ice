@@ -7,27 +7,29 @@ const autoGenAsideNavs = [];
 const customHeaderNavs = [
   {
     text: '反馈',
-    to: 'https://github.com/alibaba/ice/issues/new',
+    to: 'https://github.com/alibaba/ice',
     external: true,
     newWindow: true,
+    icon: 'mail',
   },
   {
-    text: '更多',
+    text: '帮助',
     to: 'https://alibaba.github.io/ice',
     external: true,
     newWindow: true,
+    icon: 'question2',
   },
 ];
 const customAsideNavs = [
   {
     text: 'Dashboard',
     to: '/',
-    icon: 'nav-list',
+    icon: 'home',
   },
   {
     text: '图表页',
-    to: '/charts',
-    icon: 'electronics',
+    to: '/chart',
+    icon: 'chart',
     children: [
       {
         text: '常用图表',
@@ -38,7 +40,7 @@ const customAsideNavs = [
   {
     text: '表格页',
     to: '/table',
-    icon: 'table',
+    icon: 'directory',
     children: [
       {
         text: '基础表格',
@@ -53,7 +55,7 @@ const customAsideNavs = [
   {
     text: '列表页',
     to: '/list',
-    icon: 'category',
+    icon: 'ul-list',
     children: [
       {
         text: '搜索列表',
@@ -68,7 +70,7 @@ const customAsideNavs = [
   {
     text: '内容页',
     to: '/portlets',
-    icon: 'office',
+    icon: 'publish',
     children: [
       {
         text: '基础详情页',
@@ -87,7 +89,7 @@ const customAsideNavs = [
   {
     text: '结果页',
     to: '/result',
-    icon: 'form',
+    icon: 'cascades',
     children: [
       {
         text: '成功',
@@ -102,7 +104,7 @@ const customAsideNavs = [
   {
     text: '异常页',
     to: '/exception',
-    icon: 'process',
+    icon: 'customize',
     children: [
       {
         text: '204',
