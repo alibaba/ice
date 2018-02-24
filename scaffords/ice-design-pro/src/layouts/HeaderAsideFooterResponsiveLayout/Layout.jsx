@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
 import { Icon } from '@icedesign/base';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
+import Menu, { SubMenu, Item as MenuItem } from '@icedesign/styled-menu';
 import { Link } from 'react-router';
 import FoundationSymbol from 'foundation-symbol';
 import Header from './../../components/Header';

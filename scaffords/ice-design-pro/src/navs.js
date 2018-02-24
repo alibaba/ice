@@ -10,26 +10,26 @@ const customHeaderNavs = [
     to: 'https://github.com/alibaba/ice',
     external: true,
     newWindow: true,
-    icon: 'mail',
+    icon: 'message',
   },
   {
     text: '帮助',
     to: 'https://alibaba.github.io/ice',
     external: true,
     newWindow: true,
-    icon: 'question2',
+    icon: 'bangzhu',
   },
 ];
 const customAsideNavs = [
   {
     text: 'Dashboard',
     to: '/',
-    icon: 'home',
+    icon: 'home2',
   },
   {
     text: '图表页',
     to: '/chart',
-    icon: 'chart',
+    icon: 'chart1',
     children: [
       {
         text: '常用图表',
@@ -40,7 +40,7 @@ const customAsideNavs = [
   {
     text: '表格页',
     to: '/table',
-    icon: 'directory',
+    icon: 'table',
     children: [
       {
         text: '基础表格',
@@ -89,7 +89,7 @@ const customAsideNavs = [
   {
     text: '结果页',
     to: '/result',
-    icon: 'cascades',
+    icon: 'result',
     children: [
       {
         text: '成功',
@@ -104,7 +104,7 @@ const customAsideNavs = [
   {
     text: '异常页',
     to: '/exception',
-    icon: 'customize',
+    icon: 'gaojingxinxi',
     children: [
       {
         text: '204',
