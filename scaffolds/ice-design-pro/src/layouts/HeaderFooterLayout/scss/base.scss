@@ -7,7 +7,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.ice-design-#{$theme} {
+.ice-design-header-footer-layout-#{$theme} {
   .logo {
     width: 200px;
     height: 42px;
@@ -64,6 +64,12 @@ body {
           color: $ice-icon-down-color;
         }
       }
+    }
+
+    /* MAIN */
+    .ice-layout-main {
+      padding: 0;
+      overflow: auto;
     }
 
     /* FOOTER */

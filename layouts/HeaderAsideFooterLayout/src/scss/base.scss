@@ -7,7 +7,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.ice-design-#{$theme} {
+.ice-design-header-aside-footer-layout-#{$theme} {
   .logo {
     width: 200px;
     height: 42px;
@@ -80,6 +80,7 @@ body {
       .ice-menu.ice-menu-root.ice-menu-inline > .ice-menu-item {
         margin-bottom: 1px;
         color: $ice-aside-text-color;
+        font-weight: bold;
       }
 
       .ice-menu.ice-menu-root .ice-menu-inline > .ice-menu-item {
@@ -131,6 +132,12 @@ body {
         background: $ice-aside-menu-submenu-item-hover-bg;
         color: $ice-aside-text-hover-color;
       }
+    }
+
+    /* MAIN */
+    .ice-layout-main {
+      padding: 0 0 0 20px;
+      overflow: auto;
     }
 
     /* FOOTER */
