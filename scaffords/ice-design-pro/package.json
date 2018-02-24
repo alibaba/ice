@@ -13,8 +13,8 @@
     "@icedesign/img": "^0.1.1",
     "@icedesign/label": "^0.1.1",
     "@icedesign/layout": "^0.1.1",
-    "@icedesign/menu": "^0.1.1",
     "@icedesign/skin": "^0.1.0",
+    "@icedesign/styled-menu": "^0.1.1",
     "axios": "^0.17.1",
     "bizcharts": "latest",
     "classnames": "^2.2.5",
@@ -49,6 +49,6 @@
     "name": "ice-design-pro",
     "title": "Ice Design Pro",
     "snapshot":
-      "https://img.alicdn.com/tfs/TB17TqhaKuSBuNjy1XcXXcYjFXa-2838-1600.png"
+      "https://img.alicdn.com/tfs/TB1L0kraTtYBeNjy1XdXXXXyVXa-2836-1594.png"
   }
 }
