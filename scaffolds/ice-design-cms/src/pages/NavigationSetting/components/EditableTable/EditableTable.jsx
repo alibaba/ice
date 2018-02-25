@@ -1,3 +1,4 @@
+/* eslint react/jsx-no-bind: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Table, Button } from '@icedesign/base';
@@ -42,7 +43,7 @@ export default class EditableTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: dataSource,
+      dataSource,
     };
   }
 

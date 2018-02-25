@@ -46,7 +46,7 @@ export default class UserLogin extends Component {
         console.log('errors', errors);
         return;
       }
-
+      console.log('values:', values);
       this.props.push('/');
     });
   };

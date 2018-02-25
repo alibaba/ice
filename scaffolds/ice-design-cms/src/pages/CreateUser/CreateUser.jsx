@@ -1,4 +1,4 @@
-'use strict';
+
 
 import React, { Component } from 'react';
 import CustomBreadcrumb from '../../components/CustomBreadcrumb';

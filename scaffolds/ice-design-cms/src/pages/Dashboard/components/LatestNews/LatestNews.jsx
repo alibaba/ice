@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid } from '@icedesign/base';
 import './LatestNews.scss';
 
 const dataSource = {
@@ -53,8 +52,6 @@ const dataSource = {
     },
   ],
 };
-
-const { Row, Col } = Grid;
 
 export default class LatestNews extends Component {
   static displayName = 'LatestNews';

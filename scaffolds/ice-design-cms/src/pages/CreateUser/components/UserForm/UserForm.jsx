@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Grid, Button, Select } from '@icedesign/base';
+import { Input, Grid, Button, Select, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -10,6 +10,7 @@ import {
 import './UserForm.scss';
 
 const { Row, Col } = Grid;
+const Toast = Feedback.toast;
 export default class UserForm extends Component {
   static displayName = 'UserForm';
 
@@ -61,7 +62,13 @@ export default class UserForm extends Component {
 
   validateAllFormField = () => {
     this.refs.form.validateAll((errors, values) => {
-      console.log('values', values);
+      if (errors) {
+        console.log('errors', errors);
+        return;
+      }
+
+      console.log('values:', values);
+      Toast.success('添加成功');
     });
   };
 
@@ -191,7 +198,7 @@ export default class UserForm extends Component {
                         rule,
                         values,
                         callback,
-                        this.state.value,
+                        this.state.value
                       )
                     }
                   >

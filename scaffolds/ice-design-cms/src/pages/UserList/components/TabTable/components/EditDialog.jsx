@@ -77,33 +77,61 @@ export default class EditDialog extends Component {
           title="编辑"
         >
           <Form direction="ver" field={this.field}>
-            <FormItem label="标题：" {...formItemLayout}>
+            <FormItem label="用户名：" {...formItemLayout}>
               <Input
-                {...init('title', {
+                {...init('username', {
                   rules: [{ required: true, message: '必填选项' }],
                 })}
               />
             </FormItem>
 
-            <FormItem label="作者：" {...formItemLayout}>
+            <FormItem label="邮箱：" {...formItemLayout}>
               <Input
-                {...init('author', {
+                {...init('email', {
                   rules: [{ required: true, message: '必填选项' }],
                 })}
               />
             </FormItem>
 
-            <FormItem label="状态：" {...formItemLayout}>
+            <FormItem label="用户组：" {...formItemLayout}>
               <Input
-                {...init('status', {
+                {...init('group', {
                   rules: [{ required: true, message: '必填选项' }],
                 })}
               />
             </FormItem>
 
-            <FormItem label="发布时间：" {...formItemLayout}>
+            <FormItem label="文章数：" {...formItemLayout}>
               <Input
-                {...init('date', {
+                disabled
+                {...init('articleNum', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+
+            <FormItem label="评论数：" {...formItemLayout}>
+              <Input
+                disabled
+                {...init('commentNum', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+
+            <FormItem label="注册时间：" {...formItemLayout}>
+              <Input
+                disabled
+                {...init('regTime', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+
+            <FormItem label="最后登录时间：" {...formItemLayout}>
+              <Input
+                disabled
+                {...init('LastLoginTime', {
                   rules: [{ required: true, message: '必填选项' }],
                 })}
               />
