@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Grid, Button } from '@icedesign/base';
+import { Input, Grid, Button, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -10,6 +10,7 @@ import {
 import './ChangePasswordForm.scss';
 
 const { Row, Col } = Grid;
+const Toast = Feedback.toast;
 
 export default class ChangePasswordForm extends Component {
   static displayName = 'ChangePasswordForm';
@@ -57,7 +58,13 @@ export default class ChangePasswordForm extends Component {
 
   validateAllFormField = () => {
     this.refs.form.validateAll((errors, values) => {
-      console.log('values', values);
+      if (errors) {
+        console.log('errors', errors);
+        return;
+      }
+
+      console.log('values:', values);
+      Toast.success('修改成功');
     });
   };
 

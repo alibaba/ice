@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Input, Button } from '@icedesign/base';
+import { Grid, Input, Button, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper,
   FormBinder,
@@ -9,6 +9,7 @@ import {
 import './SimpleFluencyForm.scss';
 
 const { Row, Col } = Grid;
+const Toast = Feedback.toast;
 
 export default class SimpleFluencyForm extends Component {
   static displayName = 'SimpleFluencyForm';
@@ -35,7 +36,13 @@ export default class SimpleFluencyForm extends Component {
 
   handleSubmit = () => {
     this.form.validateAll((errors, values) => {
-      console.log('errors', errors, 'values', values);
+      if (errors) {
+        console.log('errors', errors);
+        return;
+      }
+
+      console.log('values:', values);
+      Toast.success('添加成功');
     });
   };
 

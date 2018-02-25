@@ -6,10 +6,6 @@ import IceContainer from '@icedesign/container';
 export default class CustomBreadcrumb extends Component {
   static displayName = 'CustomBreadcrumb';
 
-  constructor(props) {
-    super(props);
-  }
-
   static defaultProps = {
     dataSource: [],
   };

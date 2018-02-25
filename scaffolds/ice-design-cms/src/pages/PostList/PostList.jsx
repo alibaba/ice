@@ -1,7 +1,4 @@
-'use strict';
-
 import React, { Component } from 'react';
-import IceContainer from '@icedesign/container';
 import CustomBreadcrumb from '../../components/CustomBreadcrumb';
 import TabTable from './components/TabTable';
 

@@ -4,7 +4,7 @@ import CustomTable from './components/CustomTable';
 import EditDialog from './components/EditDialog';
 import DeleteBalloon from './components/DeleteBalloon';
 
-const dataSource = [
+const MOCK_DATA = [
   {
     name: '前端',
     shortName: 'frontEnd',
@@ -57,7 +57,7 @@ export default class TabTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource,
+      dataSource: MOCK_DATA,
     };
     this.columns = [
       {
