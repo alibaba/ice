@@ -1,4 +1,4 @@
-# ice-scaffold-lite
+# ice-scaffold-cms
 
 > 使用文档
 
@@ -15,3 +15,7 @@
 * 路由配置: `src/routes.jsx`
 * 页面文件: `src/pages`
 * 组件: `src/components`
+
+效果图:
+
+![screenshot](https://img.alicdn.com/tfs/TB1NzwIaMmTBuNjy1XbXXaMrVXa-2880-2464.png)
