@@ -24,14 +24,8 @@
   "components": [],
   "routes": [
     {
-      "page": "NotFound",
-      "path": "*",
-      "builtIn": true,
-      "layout": "HeaderAsideFooterResponsiveLayout"
-    },
-    {
       "page": "Dashboard",
-      "path": "dashboard",
+      "path": "/",
       "builtIn": true,
       "layout": "HeaderAsideFooterResponsiveLayout"
     },
@@ -48,62 +42,68 @@
       "layout": "HeaderAsideFooterResponsiveLayout"
     },
     {
-      "page": "CreatePost",
-      "path": "postcreate",
-      "builtIn": true,
-      "layout": "HeaderAsideFooterResponsiveLayout"
-    },
-    {
       "page": "CateList",
-      "path": "catelist",
+      "path": "/cate/list",
       "builtIn": true,
       "layout": "HeaderAsideFooterResponsiveLayout"
     },
     {
       "page": "CreateCate",
-      "path": "cate-create",
+      "path": "/cate/create",
       "builtIn": true,
       "layout": "HeaderAsideFooterResponsiveLayout"
     },
     {
       "page": "TagList",
-      "path": "taglist",
+      "path": "/tag/list",
       "builtIn": true,
       "layout": "HeaderAsideFooterResponsiveLayout"
     },
     {
       "page": "CreateTag",
-      "path": "tagcreate",
+      "path": "/tag/create",
       "builtIn": true,
       "layout": "HeaderAsideFooterResponsiveLayout"
     },
     {
       "page": "UserList",
-      "path": "userlist",
+      "path": "/user/list",
       "builtIn": true,
       "layout": "HeaderAsideFooterResponsiveLayout"
     },
     {
       "page": "CreateUser",
-      "path": "createuser",
+      "path": "/user/create",
       "builtIn": true,
       "layout": "HeaderAsideFooterResponsiveLayout"
     },
     {
       "page": "EditPassword",
-      "path": "editpassword",
+      "path": "/user/pwd",
       "builtIn": true,
       "layout": "HeaderAsideFooterResponsiveLayout"
     },
     {
       "page": "BasicSetting",
-      "path": "basicsetting",
+      "path": "/setting/basic",
       "builtIn": true,
       "layout": "HeaderAsideFooterResponsiveLayout"
     },
     {
       "page": "NavigationSetting",
-      "path": "navigationsetting",
+      "path": "/setting/navigation",
+      "builtIn": true,
+      "layout": "HeaderAsideFooterResponsiveLayout"
+    },
+    {
+      "page": "Login",
+      "path": "login",
+      "builtIn": true,
+      "layout": "BlankLayout"
+    },
+    {
+      "page": "NotFound",
+      "path": "*",
       "builtIn": true,
       "layout": "HeaderAsideFooterResponsiveLayout"
     }
