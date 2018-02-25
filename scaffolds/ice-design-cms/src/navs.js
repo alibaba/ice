@@ -30,7 +30,7 @@ const customHeaderNavs = [
 const customAsideNavs = [
   {
     text: 'Dashboard',
-    to: '/dashboard',
+    to: '/',
     icon: 'home',
   },
   {
