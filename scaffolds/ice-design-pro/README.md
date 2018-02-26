@@ -12,7 +12,7 @@
 
 基于海量高质量可复用区块，通过 GUI 工具快速搭建的一套中后台模板。
 
-![ice-design-pro](https://img.alicdn.com/tfs/TB1V5iGnDnI8KJjy0FfXXcdoVXa-8057-4508.png)
+![ice-design-pro](https://img.alicdn.com/tfs/TB1dU6ta_tYBeNjy1XdXXXXyVXa-2880-5334.png)
 
 ## 特性
 
@@ -79,7 +79,7 @@ ice-design-pro
 
 1. (推荐) GUI 工具使用: 下载 [iceworks](https://alibaba.github.io/ice/#/iceworks)
 
-2. Cli 命令使用: 
+2. Cli 命令使用:
 
 ```bash
 $ npm start      // 启动预览服务器
