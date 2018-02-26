@@ -15,3 +15,6 @@
 * 路由配置: `src/routes.jsx`
 * 页面文件: `src/pages`
 * 组件: `src/components`
+
+效果图:
+![screenshot](https://img.alicdn.com/tfs/TB1TOluaYGYBuNjy0FoXXciBFXa-2874-1594.png)
