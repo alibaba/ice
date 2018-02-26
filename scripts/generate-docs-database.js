@@ -1,0 +1,53 @@
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const path = require('path');
+const glob = require('glob');
+const markTwain = require('mark-twain');
+
+const destDir = path.join(__dirname, '../databases');
+const dest = path.join(destDir, 'docs.db.json');
+const sourceDir = path.join(__dirname, '../docs');
+
+glob(
+  '**/*.md',
+  {
+    nodir: true,
+    ignore: 'README.md',
+    cwd: sourceDir,
+  },
+  (err, files) => {
+    if (err) {
+      throw err;
+    }
+
+    const result = [];
+
+    files.forEach((file) => {
+      const content = fs.readFileSync(path.join(sourceDir, file), 'utf-8');
+
+      const jsonML = markTwain(content);
+
+      // 隐藏文档过滤
+      if (jsonML.meta.hide) {
+        return;
+      }
+
+      if (!jsonML.meta.title) {
+        throw new Error(`${file} 缺失标题, 请补充`);
+      }
+
+      const sourceData = {
+        filename: file,
+        path: file.replace(/\.md$/, ''),
+        ...jsonML.meta,
+
+        jsonml: jsonML.content,
+      };
+      result.push(sourceData);
+    });
+
+    fs.writeFileSync(dest, JSON.stringify(result, null, 2), 'utf-8');
+    console.log('文档数据生成完毕. Docs DB Generated.');
+    console.log(dest);
+  }
+);

@@ -5,7 +5,7 @@
     "publish": "git fetch --all && git pull origin master && lerna publish",
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
-    "db": "node ./scripts/generate-marterials-database",
+    "db": "node ./scripts/generate-marterials-database && node ./scripts/generate-docs-database",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./",
     "format":

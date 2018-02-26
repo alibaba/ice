@@ -5,9 +5,9 @@ order: 4
 
 经过这段时间的反馈和对同类竞品的调研，我们产出了 ICE 新版 Design 设计语言。
 
-此外，我们基于当前设计语言，开发了大量的模块，可以直接进行模块复用，详情请见 [ICE Blocks](http://ice.alibaba-inc.com/external#/block)。
+此外，我们基于当前设计语言，开发了大量的模块，可以直接进行模块复用，详情请见 [ICE Blocks](#/blocks)。
 
-脚手架初始模板也进行了升级，实际效果请参见 [ICE Design 脚手架](http://groups.alidemo.cn/ice/ice-design-demo/#/)。直接执行 def init ice 选择项目即可生成。
+脚手架初始模板也进行了升级，实际效果请参见 [ICE Design 脚手架](#/scaffolds)。在 Iceworks 中生成项目选择对应脚手架即可。
 
 PS：目前模块使用方式暂时基于代码的方式，自动导入工具还在内测中。
 
@@ -35,4 +35,4 @@ PS：目前模块使用方式暂时基于代码的方式，自动导入工具还
 
 ![](https://img.alicdn.com/tfs/TB1b0yKgLDH8KJjy1XcXXcpdXXa-1680-1953.jpg)
 
-目前还在 Beta 中，实际效果可能会跟随真实场景效果进行优化或者改动。如果你有建议，欢迎加入 ICE 万能群 或者直接联系 @山何（设计师）或者 @浩睿。
+目前还在 Beta 中，实际效果可能会跟随真实场景效果进行优化或者改动。如果你有建议，欢迎加群或者直接使用邮件联系我们。

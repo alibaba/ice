@@ -4,11 +4,11 @@ category: 入门指引
 order: 6
 ---
 
-ICE 的组件统一使用集团 NPM <http://npm.alibaba-inc.com> 管理，所有的组件包都可以通过 tnpm 命令来下载。为了统一开发使用体验，ICE 在 SDK 工具中做了简单封装。本文档简单讲解组件的检索安装更新以及使用。
+ICE 的组件统一使用 NPM 进行管理，所有的组件包都可以通过 npm 命令来安装。
 
 ## 检索组件
 
-ICE 所有组件文档说明都部署在 <http://ice.alibaba-inc.com/> 上，现在你可以在顶部导航的搜索框输入你想要的的组件名称，可以是中文。
+ICE 所有组件文档说明都部署在 <https://alibaba.github.io/ice/> 上，现在你可以在全局搜索框输入你想要的的组件名称进行查找。
 
 ## 安装与更新
 
@@ -21,19 +21,18 @@ ICE 基础组件在初始化项目时，已默认安装。这里主要讲解业�
 #### 安装命令：
 
 ```bash
-def add <packageName>
+npm install <packageName> --save
 ```
 
 #### 更新命令：
 
 ```bash
-def add <packageName>@latest
+npm install <packageName>@latest --save
 ```
 
 当需要更新项目内的组件的时，使用此命令 `@latest` 表示当装当前最新版本。也就达到升级组件的目的。
 
-
-> 关于组件版本说明详见 </docs/guide/version>
+> 关于组件版本说明详见 </docs/basis/version>
 
 ## 使用组件
 
@@ -45,9 +44,10 @@ def add <packageName>@latest
 
 ```jsx
 import ReactDOM from 'react-dom';
-import IceAddress from '@ali/ice-address';
+import IceTitle from '@icedesign/title';
 
 // .... 省略其他代码
 
-ReactDOM.render(<IceAddress>, mountNode)
+// 渲染
+ReactDOM.render(<IceTitle>, mountNode)
 ```

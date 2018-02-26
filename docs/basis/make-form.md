@@ -8,7 +8,7 @@ category: 入门指引
 
 为了简化使用，我们推荐使用 ICE 增强表单组件 `ice-form` 来替代基础组件中的 `Form + Field` 组合，不需要理解 `Field` 复杂的 API 就可以快速创建出带有数据验证、提交等强大功能的表单。自带的 `Reset`、`Submit` 组件让你快速重置、提交数据。
 
-在这里我们准备了一个业务中非常常用的业务场景作为演示，那就是 Dialog + Table + Form 的这种组合业务场景。具体 Demo 请参见：http://ice.alibaba-inc.com/playground/502
+在这里我们准备了一个业务中非常常用的业务场景作为演示，那就是 Dialog + Table + Form 的这种组合业务场景。
 
 ![](https://img.alicdn.com/tps/TB1GZQhNFXXXXatXpXXXXXXXXXX-1420-506.png)
 
@@ -16,12 +16,12 @@ category: 入门指引
 
 ```jsx
 // 增强表单组件 @ali/ice-form
-<Form 
+<Form
   {...formItemLayout}
   // 声明 ref 以获得表单组件的引用
   ref="formInstance"
 >
-  <Input htmlType="hidden" name="id" /> 
+  <Input htmlType="hidden" name="id" />
   <Input label="姓名：" name="name" />
   <NumberPicker label="年龄：" name="age" />
   <RadioGroup label="性别：" name="sex">
@@ -39,7 +39,7 @@ category: 入门指引
 在使用增强表单组件后，我们不需要为单独的表单组件（如 Input，Radio 等）进行 value 值的回填。我们可以在 `Form` 上用 `value` 统一进行回填，使用对象的形式，其中键值会自动与表单上的 `name` 进行关联，就像 HTML5 标准表单一样：
 
 ```jsx
-<Form 
+<Form
   {...formItemLayout}
   value={{
     id: '1'
@@ -50,7 +50,7 @@ category: 入门指引
   // 声明 ref 以获得表单组件的引用
   ref="formInstance"
 >
-  <Input htmlType="hidden" name="id" /> 
+  <Input htmlType="hidden" name="id" />
   <Input label="姓名：" name="name" />
   <NumberPicker label="年龄：" name="age" />
   <RadioGroup label="性别：" name="sex">
@@ -82,13 +82,13 @@ class Demo extends Component {
 
   render() {
     return (
-      <Form 
+      <Form
         {...formItemLayout}
         value={this.state.formValue}
         // 声明 ref 以获得表单组件的引用
         ref="formInstance"
       >
-        <Input htmlType="hidden" name="id" /> 
+        <Input htmlType="hidden" name="id" />
         <Input label="姓名：" name="name" />
         <NumberPicker label="年龄：" name="age" />
         <RadioGroup label="性别：" name="sex">
@@ -111,13 +111,12 @@ class Demo extends Component {
 
 与 Field 的使用方式不同，增强表单支持直接在表单控件上用 HTML5 标准相似的方式进行表单校验逻辑的声明：
 
-参照 [增强表单文档](http://ice.alibaba-inc.com/modules/ice-form#表单校验属性名称表（props）)可以查询校验相关的 Props。必填的表单（required）会在 label 上自动显示 * 号。
+参照 [增强表单文档](http://ice.alibaba-inc.com/modules/ice-form#表单校验属性名称表（props）)可以查询校验相关的 Props。必填的表单（required）会在 label 上自动显示 \* 号。
 
 配置好校验项后，在获取数据的时候就会对每个值进行校验，如果有报错则会抛出来。具体用法如下：
 
 ```jsx
 class Demo extends Component {
-
   getData = () => {
     // 校验并获取数据
     // ...
@@ -125,39 +124,52 @@ class Demo extends Component {
 
   render() {
     return (
-      <Form 
+      <Form
         {...formItemLayout}
         // 回填数据
         value={this.state.formValue}
         // 声明 ref 以获得表单组件的引用
         ref="formInstance"
-        >
-        <Input htmlType="hidden" name="id" /> 
+      >
+        <Input htmlType="hidden" name="id" />
         <Input label="姓名：" name="name" required />
-        <NumberPicker label="年龄：" name="age" required 
-          format="number" min={18} max={100} />
-        <RadioGroup label="性别：" name="sex" required 
-          requiredMessage="必须选择性别！">
+        <NumberPicker
+          label="年龄："
+          name="age"
+          required
+          format="number"
+          min={18}
+          max={100}
+        />
+        <RadioGroup
+          label="性别："
+          name="sex"
+          required
+          requiredMessage="必须选择性别！"
+        >
           <Radio value="male">男</Radio>
           <Radio value="female">女</Radio>
         </RadioGroup>
-        <CheckboxGroup label="爱好："
-          dataSource={hobbies} name="hobby" required />
+        <CheckboxGroup
+          label="爱好："
+          dataSource={hobbies}
+          name="hobby"
+          required
+        />
       </Form>
     );
   }
 }
 ```
 
-下一步是获取数据，如果你的表单需要将数据用 Ajax 发送到服务端，其实增强表单已经自带了数据发送功能！在 Form 上添加 action 和 method 属性，配合 `Submit ` 组件就能快速提交！
+下一步是获取数据，如果你的表单需要将数据用 Ajax 发送到服务端，其实增强表单已经自带了数据发送功能！在 Form 上添加 action 和 method 属性，配合 `Submit` 组件就能快速提交！
 
 ```jsx
 import Form, { Submit } from '@ali/ice-form';
 class Demo extends Component {
-
   render() {
     return (
-      <Form 
+      <Form
         {...formItemLayout}
         action="/api/receive-form.do"
         method="POST"
@@ -166,21 +178,34 @@ class Demo extends Component {
         // 声明 ref 以获得表单组件的引用
         ref="formInstance"
       >
-        <Input htmlType="hidden" name="id" /> 
+        <Input htmlType="hidden" name="id" />
         <Input label="姓名：" name="name" required />
-        <NumberPicker label="年龄：" name="age" required 
-          format="number" min={18} max={100} />
-        <RadioGroup label="性别：" name="sex" required 
-          requiredMessage="必须选择性别！">
+        <NumberPicker
+          label="年龄："
+          name="age"
+          required
+          format="number"
+          min={18}
+          max={100}
+        />
+        <RadioGroup
+          label="性别："
+          name="sex"
+          required
+          requiredMessage="必须选择性别！"
+        >
           <Radio value="male">男</Radio>
           <Radio value="female">女</Radio>
         </RadioGroup>
-        <CheckboxGroup label="爱好："
-          dataSource={hobbies} name="hobby" required />
+        <CheckboxGroup
+          label="爱好："
+          dataSource={hobbies}
+          name="hobby"
+          required
+        />
         <Submit>提交</Submit>
       </Form>
     );
-
   }
 }
 ```
@@ -192,22 +217,22 @@ class Demo extends Component {
 ```jsx
 import Form, { Submit } from '@ali/ice-form';
 class Demo extends Component {
-
   getData = () => {
     // 使用 this.refs.formInstance 需要在 Form 上声明如下 ref
-    this.refs.formInstance.validate()
+    this.refs.formInstance
+      .validate()
       .then((value) => {
-        alert("表单校验成功，获取到数据");
+        alert('表单校验成功，获取到数据');
         console.log(value);
       })
       .catch((errors) => {
-        alert("有表单校验错误，请检查！")
+        alert('有表单校验错误，请检查！');
       });
   };
 
   render() {
     return (
-      <Form 
+      <Form
         {...formItemLayout}
         action="/api/receive-form.do"
         method="POST"
@@ -216,21 +241,34 @@ class Demo extends Component {
         // 声明 ref 以获得表单组件的引用
         ref="formInstance"
       >
-        <Input htmlType="hidden" name="id" /> 
+        <Input htmlType="hidden" name="id" />
         <Input label="姓名：" name="name" required />
-        <NumberPicker label="年龄：" name="age" required 
-          format="number" min={18} max={100} />
-        <RadioGroup label="性别：" name="sex" required 
-          requiredMessage="必须选择性别！">
+        <NumberPicker
+          label="年龄："
+          name="age"
+          required
+          format="number"
+          min={18}
+          max={100}
+        />
+        <RadioGroup
+          label="性别："
+          name="sex"
+          required
+          requiredMessage="必须选择性别！"
+        >
           <Radio value="male">男</Radio>
           <Radio value="female">女</Radio>
         </RadioGroup>
-        <CheckboxGroup label="爱好："
-          dataSource={hobbies} name="hobby" required />
+        <CheckboxGroup
+          label="爱好："
+          dataSource={hobbies}
+          name="hobby"
+          required
+        />
         <Button onClick={this.getData}>提交</Button>
       </Form>
     );
-
   }
 }
 ```
@@ -242,15 +280,15 @@ class Demo extends Component {
 ```jsx
 import Form, { Submit } from '@ali/ice-form';
 class Demo extends Component {
-
   getData = () => {
     // 使用 this.refs.formInstance 需要在 Form 上声明 ref
-    this.refs.formInstance.validate()
+    this.refs.formInstance
+      .validate()
       .then((value) => {
         alert(typeof value.id); // 接收到 String
       })
       .catch((errors) => {
-        alert("有表单校验错误，请检查！")
+        alert('有表单校验错误，请检查！');
       });
   };
 
@@ -266,7 +304,6 @@ class Demo extends Component {
         <Button onClick={this.getData}>提交</Button>
       </Form>
     );
-
   }
 }
 ```
@@ -291,12 +328,17 @@ class Demo extends Component {
 
 ### 如何自定义验证触发时机？
 
-验证触发时机指的是在合适触发表单校验，默认为 `onChange` 
+验证触发时机指的是在合适触发表单校验，默认为 `onChange`
 
 自定义格式：`${规则名称}Trigger`
 
 ```jsx
-<Input name="memberId" format="number" formatMessage="必须是数字类型" formatTrigger="onBlur" />
+<Input
+  name="memberId"
+  format="number"
+  formatMessage="必须是数字类型"
+  formatTrigger="onBlur"
+/>
 ```
 
 ## 总结
@@ -305,7 +347,7 @@ class Demo extends Component {
 
 1. 首先使用 Form 创建表单项。
 2. 在表单组件上使用 `name` 进行数据关联，配置校验规则。
-3. 使用 `Form` 的 `value `属性进行数据回填。
+3. 使用 `Form` 的 `value`属性进行数据回填。
 4. 使用 `Submit` 组件提交数据或用 `valildate` 方法校验当前表单数据并获取进行后续操作。
 
 ## FAQ
@@ -328,7 +370,7 @@ class Demo extends React.Component {
     if(nextProps.name) {
       const { formValue } = this.state;
       this.setState({
-        formValue: { 
+        formValue: {
           ...formValue,
           name
         }
@@ -354,7 +396,7 @@ handleInputChange = (input) => {
   console.log('Input 的值现在是', input);
 };
 // ...
-<Input onChange={this.handleInputChange} />
+<Input onChange={this.handleInputChange} />;
 ```
 
 ```jsx
@@ -366,6 +408,5 @@ handleFormChange = (value, changedByName) => {
 // ...
 <Form onChange={this.handleFormChange}>
   <Input name="foo" />
-</Form>
+</Form>;
 ```
-

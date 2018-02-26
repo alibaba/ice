@@ -18,6 +18,6 @@ ICE 组件体系基于 NPM 包管理，因此除了我们提供的高质量组�
 
 ![](//img.alicdn.com/tfs/TB14B7YOVXXXXcRXpXXXXXXXXXX-1914-982.png)
 
-其中会让你执行类似 `npm install [package name] --save` 的代码，其实 `def add [package name]` 这个命令的底层就是 `npm install --save [package name]` 然后做了一些特殊处理（比如切换安装源使用内网安装等）使其更快，因此你只需要记住当前项目的 package name，然后在你的项目里执行 `def add [package name]` 即可安装到你的项目中。
+通常来说，组件的安装方式是执行命令 `npm install [package name] --save`。
 
 之后需要参照相关文档进行使用，如果你觉得符合你的需求挺好用，欢迎推荐给我们补充到站点上面。如有问题也可以随时咨询。

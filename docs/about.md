@@ -31,9 +31,7 @@ ICE 是一套基于 React 的前端解决方案，包含了由中台 DPL 团队�
 
 ## 联系我们
 
-* 前端：@大果 @宝码 @浩睿 @卓凌
-* 视觉：@山何 @琳韵
-* 开发：@恩济（动态表单）
+* 邮件：ice-admin@alibaba-inc.com
 * 反馈/建议：https://github.com/alibaba/ice/issues/new
 * 答疑钉钉群：  
   <img src="https://gw.alicdn.com/tfs/TB1iLI8kxPI8KJjSspoXXX6MFXa-1242-1602.jpg" width="200" />
