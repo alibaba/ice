@@ -4,13 +4,13 @@ order: 9
 category: 入门指引
 ---
 
-实现前后端通信，我们推荐使用 Axios 或 DataBinder 与后端 HTTP API 接口通信的方案。
+实现前后端通信，我们推荐使用 axios 或 DataBinder 与后端 HTTP API 接口通信的方案。
 
 传输数据格式描述使用 JSON。
 
-## 如何通信
+## 使用 axios 进行请求
 
-ICE 推荐使用 axios 方法库提供基础的 AJAX 能力，也可以使用 DataBinder 为组件（比如 Table）绑定 AJAX 接口数据，方便查询异步数据以及错误处理。
+ICE 推荐使用 axios 方法库提供基础的 Ajax 能力，也可以使用 DataBinder 为组件（比如 Table）绑定 AJAX 接口数据，方便查询异步数据以及错误处理。
 
 首先安装模块：
 
@@ -18,13 +18,72 @@ ICE 推荐使用 axios 方法库提供基础的 AJAX 能力，也可以使用 Da
 npm install axios
 ```
 
-引入，并使用 `axios` 函数发送请求：
+引入对应组件，并使用 `axios` 函数获取数据：
 
-```js
+```jsx
 import axios from 'axios';
+
+export default class extends Component {
+  componentDidMount() {
+    // 使用 axios 获取数据
+    axios(remoteURL).then((response) => {
+      const { body } = response;
+      this.setState({
+        data: body,
+      });
+    });
+  }
+
+  render() {
+    // ...
+  }
+}
 ```
 
-对于一些较深的对象数据，如果后端返回为空，就可能导致渲染异常，所以需要进行先行判断：
+> 更多请参考 [axios 的文档](https://github.com/axios/axios)
+
+## 使用 DataBinder 为组件绑定数据
+
+DataBinder 是 ICE 推出的基于约定，在组件上绑定数据和自动更新数据的组件，让你专注于 UI 显示逻辑，从而屏蔽数据状态管理的开发成本。
+
+**使用方法**
+
+```jsx
+@DataBinder({
+  '模块名 key': {
+    url: 'xxxx.json',
+    method: 'post',
+    // 请求附带的 request 参数，method post 下是 data 参数，method get 下是 params
+    data: {
+      page: 1,
+    },
+    // AJAX 部分的参数完全继承自 axios ，参数请详见：https://github.com/axios/axios
+    // 下面是请求会返回的默认数据
+    defaultBindingData: {
+      // ...字段需要与 xxxx.json 接口返回的字段一一对应
+    },
+  },
+})
+class ListView extends Component {
+  // ...
+  render() {
+    const { account } = this.props.bindingData;
+
+    return (
+      <div>
+        <p>用户名：{account.userName}</p>
+        <p>年龄：{account.userAge}</p>
+      </div>
+    );
+  }
+}
+```
+
+> 更多请参考 [DataBinder 的文档](#/component/databinder)
+
+## 最佳实践
+
+对于一些嵌套较深的对象数据，如果后端返回为空，就可能导致渲染异常，所以需要进行先行判断：
 
 **注意：以下是错误的用法**
 
