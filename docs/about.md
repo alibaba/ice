@@ -1,6 +1,7 @@
 ---
 title: 关于 ICE
 order: 1
+cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 ---
 
 ## 为什么要做 ICE
