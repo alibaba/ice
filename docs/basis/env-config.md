@@ -1,5 +1,5 @@
 ---
-title: env-config
+title: 开发环境配置
 order: 1
 category: 入门指引
 ---

@@ -1,5 +1,5 @@
 ---
-title: Git git-assets-work仓库开发实践
+title: Git 仓库开发实践
 order: 3
 category: 入门指引
 ---

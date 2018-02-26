@@ -1,13 +1,11 @@
 ---
-title: 如何配置 IDEA 前端开发环境
+title: WebStorm 推荐配置
 category: 入门指引
 order: 12
 hide: true
 ---
 
-我们推荐使用 IntelliJ IDEA ULTIMATE 最新版来开发 ICE 代码，里面默认内置了 React 等语法解析和自动语法补全等能力。
-
-此外我们还推荐配置如下插件等，进一步提升你开发前端的流畅度。
+如果您使用 WebStorm 来进行项目的开发，我们还推荐配置如下插件，进一步提升你开发前端的流畅度。
 
 ### 配置功能点
 
@@ -59,6 +57,6 @@ Prettier 是针对 React 语法推出的代码格式化工具，基于 AST 精�
 
 ![](https://img.alicdn.com/tfs/TB1O_5QSpXXXXaZXpXXXXXXXXXX-1022-676.png)
 
-之后，当你编写 ICE JSX 代码时，就会自动进行格式化纠正，效果如下：
+之后，当你编写 React JSX 代码时，就会自动进行格式化纠正，效果如下：
 
 ![](https://img.alicdn.com/tfs/TB1oiOZSpXXXXbDXXXXXXXXXXXX-600-376.gif)

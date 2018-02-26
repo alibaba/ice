@@ -1,18 +1,15 @@
-ice-scripts---
-title: SDK 命令详解
+---
+title: 命令行工具详解
 order: 2
 category: 入门指引
-
 ---
 
-开发环境搭建好后，我们来了解下 ICE SDK 有哪些命令。
+开发环境搭建好后，我们会默认安装 `ice-scrips`，来了解下 ICE SDK 有哪些命令。
 
-## def init
-
-表示初始化。在安装了 def 与 ICE 套件之后，执行
+## ice-scripts
 
 ```bash
-$ def init ice
+$ npm start # 相当于执行 ice dev
 ```
 
 将会在所执行路径下创建 ICE 项目的基础文件。这里需要事先创建好项目文件夹。
