@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Balloon, Icon } from '@icedesign/base';
 import IceImg from '@icedesign/img';
 import Layout from '@icedesign/layout';
-import Menu from '@icedesign/menu';
+import Menu from '@icedesign/styled-menu';
 import FoundationSymbol from 'foundation-symbol';
 import { Link } from 'react-router';
 import { headerNavs } from './../navs';

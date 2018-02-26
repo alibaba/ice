@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.editable-table {
+  .celleditor {
+    &:hover .celleditor-trigger {
+      display: inline-block;
+    }
+  }
+  .celleditor-trigger {
+    display: none;
+  }
+}
