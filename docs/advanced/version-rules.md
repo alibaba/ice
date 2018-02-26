@@ -1,7 +1,7 @@
 ---
 title: 组件版本号规则说明
-category: 入门指引
-order: 8
+order: 2
+category: 进阶指南
 ---
 
 ## 版本号规则
