@@ -2,14 +2,11 @@
 title: WebStorm 推荐配置
 category: 入门指引
 order: 12
-hide: true
 ---
 
 如果您使用 WebStorm 来进行项目的开发，我们还推荐配置如下插件，进一步提升你开发前端的流畅度。
 
-### 配置功能点
-
-* [代码自动格式化工具 Prettier](todo)
+## 配置功能点
 
 ### 代码自动格式化工具 Prettier
 
@@ -17,7 +14,7 @@ Prettier 是针对 React 语法推出的代码格式化工具，基于 AST 精�
 
 #### 第一步：安装 Prettier 工具
 
-打开命令行，直接执行 `sudo tnpm install prettier -g` 即可。
+打开命令行，直接执行 `npm install prettier -g` 即可。
 
 #### 第二步：打开 IDEA External Tools 配置界面
 
