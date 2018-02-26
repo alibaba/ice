@@ -1,9 +1,8 @@
-webstorm-config---
+---
 title: WebStorm 推荐配置
 category: 入门指引
 order: 12
 hide: true
-
 ---
 
 如果您使用 WebStorm 来进行项目的开发，我们还推荐配置如下插件，进一步提升你开发前端的流畅度。

@@ -1,8 +1,7 @@
-ice-scripts---
+---
 title: SDK 命令详解
 order: 2
 category: 入门指引
-
 ---
 
 开发环境搭建好后，我们来了解下 ICE SDK 有哪些命令。
