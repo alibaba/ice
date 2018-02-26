@@ -3,21 +3,23 @@ title: Iceworks
 order: 3
 ---
 
-ICE 企业级泛后台应用解决方案，提供程序员更快、更优、更 Cool 的开发体验。
-
 **零环境搭建** **零配置** **简单易用**
 
-## 1. 下载 iceworks
+Iceworks 是 ICE 推出的辅助开发者快速开发中后台前端应用的 GUI 软件，目前支持 macOS 和 Windows 两大平台。
+
+## 快速开始
+
+### 1. 下载 iceworks
 
 目前公测阶段只支持 macOS 系统，通过 [Iceworks](https://alibaba.github.io/ice/#/iceworks) 点击下载即可。
 
-## 2. 启动 iceworks
+### 2. 启动 iceworks
 
 软件启动后，项目目录为空，通过上方的【创建项目】新建一个项目。
 
 ![undefined | center](https://img.alicdn.com/tfs/TB14o5YlsjI8KJjSsppXXXbyVXa-1648-1128.png)
 
-## 3. 选择或新建目录并输入项目信息
+### 3. 选择或新建目录并输入项目信息
 
 点击 创建项目 后，来到创建项目的流程，默认选择 ICE Design 风格的脚手架，公测阶段暂只提供此选择。进入下一步创建目录：
 
@@ -28,7 +30,7 @@ ICE 企业级泛后台应用解决方案，提供程序员更快、更优、更 
 
 点击创建项目即可完成创建。
 
-## 4. 项目管理
+### 4. 项目管理
 
 当项目创建完成后，会自动添加到项目列表中，未来开发的项目都会在列表中展示。通过项目管理面板，可执行 **构建** **启动调试** **新建页面** 等操作。
 
@@ -42,7 +44,7 @@ ICE 企业级泛后台应用解决方案，提供程序员更快、更优、更 
 
 初始化的项目默认没有页面，只有基础的框架，接下来可以通过 新建页面 来丰富我们的项目。
 
-## 5. 新建页面
+### 5. 新建页面
 
 启动调试服务后，可使用新建页面来搭建页面，通过 [block](https://alibaba.github.io/ice/#/template/block) 的组合完成页面的创建。
 
@@ -65,7 +67,7 @@ ICE 企业级泛后台应用解决方案，提供程序员更快、更优、更 
 
 ![undefined | center](https://img.alicdn.com/tfs/TB15mjklv6H8KJjy0FjXXaXepXa-1704-1184.png)
 
-## 6. 进入开发调试
+### 6. 进入开发调试
 
 点击项目版面上的 `编辑中打开` 会立即使用设置中选择的编辑器打开项目，目前支持 [Visual Stadio Code](https://code.visualstudio.com/) 和 [Sublime Text](https://www.sublimetext.com/) 两个编辑器，推荐使用 [Visual Stadio Code](https://code.visualstudio.com/)，如果你的电脑中未安装请先安装。
 
@@ -102,15 +104,15 @@ project-name
 
 通过二次开发增加业务逻辑，完成业务需求。
 
-## 7. 打包发布
+### 7. 打包发布
 
 点击项目面板上的构建项目按钮，将开发的构建出最终的 js css 等资源。
 
-构建完成后，会在项目目录下生成 `dist` 文件夹，里面存在了 `index.js` `index.css` 文件。使用你熟悉的方式，上传到对应的 cdn 服务器。
+构建完成后，会在项目目录下生成 `build` 文件夹，里面存在了 `index.js` `index.css` 文件。使用你熟悉的方式，上传到对应的 cdn 服务器。
 
 ![undefined | center](https://img.alicdn.com/tfs/TB1hCjMlx6I8KJjy0FgXXXXzVXa-1082-814.png)
 
-## 8. 部署 html
+### 8. 部署 html
 
 index.html 文件存在在 public 中，将 index.html 文件复制到对应的服务服务器，并修改 html 源码中的 `/dist/index.css` 和 `/dest/index.js` 地址，是上一步中得到的 cdn 地址。
 
@@ -123,17 +125,19 @@ index.html 文件存在在 public 中，将 index.html 文件复制到对应的�
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <link rel="stylesheet" type="text/css" href="{cdn路径}/dist/index.css">
+  <link rel="stylesheet" type="text/css" href="{cdn路径}/build/index.css">
   <title>{站点标题}</title>
 </head>
 
 <body>
-  <div id="ice_container"></div>
+  <div id="ice-container"></div>
   <script src="https://g.alicdn.com/code/npm/??react/16.2.0/umd/react.development.js,react-dom/16.2.0/umd/react-dom.development.js"></script>
-  <script type="text/javascript" charset="utf-8" src="{cdn路径}/dist/index.js" id="ice-script"></script>
+  <script type="text/javascript" charset="utf-8" src="{cdn路径}/build/index.js" id="ice-script"></script>
 </body>
 
 </html>
 ```
+
+> 在线上环境我们强烈推荐使用 production 版本的 React，而不是 development 版本。它们之间的区别除了体积之外，还包括一些针对线上环境的性能优化。
 
 到这里你已经学会使用 Iceworks 创建一个项目并发布：）

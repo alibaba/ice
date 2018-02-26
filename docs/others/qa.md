@@ -4,28 +4,29 @@ category: 其它
 order: 1
 ---
 
-> 持续更新
+> 持续更新中...
+> 如有问题可以到 <https://github.com/alibaba/ice/issues/new> 反馈
 
 ## ICE 的浏览器兼容策略是什么
 
-因为 IE8 及以下浏览器存在各种兼容性问题以及安全漏洞，ICE 默认兼容 IE9 及以上的浏览器。对于面向商家、达人、内部小二的系统已经没有必要再去花费很大的成本兼容这些低版本浏览器，目前天猫多数站点已经不再支持 IE8, 可参考文章 [天猫即将不支持 IE8](https://zhuanlan.zhihu.com/p/24091492)。
+由于 ICE 优先使用 React 16+，其需要的最低 IE 版本为 11，如果您需要在以下的版本使用，您可能需要引入一些 polyfill 来支持 `Map`, `Set` 等特性。参考[React 官网说明](https://reactjs.org/blog/2017/09/26/react-v16.0.html#javascript-environment-requirements)。
 
-面对还在使用 IE8 及以下浏览器的用户，我们只需按照下面的方法进行正确引导即可。开发者只需要在 vm/html 的 head 区域添加以下代码：
+以下代码可以帮助你在低版本 IE 下自动跳转到我们提供的提示浏览器升级页面。当然您也可以使用自定义的浏览器升级页面。
 
 ```
-<!--[if lt IE 9]>
+<!--[if lt IE 11]>
 <script>location.href = "//www.taobao.com/markets/tbhome/ali-page-updater"; </script>
 <![endif]-->
 ```
 
-添加如上代码后，如果使用 IE8 及以下浏览器访问页面，则会自动跳转到统一引导升级浏览器的页面。
+添加如上代码后，如果使用 IE11 及以下浏览器访问页面，则会自动跳转到统一引导升级浏览器的页面。
 
-## 编辑器卡顿现象
+## WebStorm/IDEA 编辑器卡顿现象
 
 由于项目在安装依赖后，产生文件夹 `node_modules` 含有较多的碎小文件，编辑器在索引文件引起的卡顿。
 IDEA 尤为明显，可通过 exclude `node_modules` 目录，不需要检索该文件夹下的内容。
 
-## 如何设置网页在浏览器 Tab 上面的 Icon (favicon) ？
+## 如何设置网页在浏览器 Tab 上面的 Icon (favicon)
 
 细心的同学可能会看到页面在浏览器 Tab 上面会有自定义的 Icon：
 
@@ -40,7 +41,7 @@ IDEA 尤为明显，可通过 exclude `node_modules` 目录，不需要检索该
 
 这样就添加成功啦！
 
-## 如何在页面显示原始的 html 代码内容？
+## 如何在页面显示原始的 HTML 内容
 
 出于安全方面的考虑，React 默认会将节点中 html 代码进行转义，比如：
 
@@ -52,10 +53,10 @@ class Demo extends Component {
   }
 }
 
-// 输出 hello world
+// 输出 hello <span>world</span>
 ```
 
-如上，`<span>` 标签并不会输出在页面上，怎么解决这个问题呢，React 给我们提供了一个 `dangerouslySetInnerHTML` 属性：
+如上，`<span>` 标签并不会在页面上被解析，而是被当成字符串输出了。React 提供了 `dangerouslySetInnerHTML` 属性帮助我们进行类似 `innerHTML` 的操作：
 
 ```jsx
 class Demo extends Component {
@@ -65,7 +66,7 @@ class Demo extends Component {
   }
 }
 
-// 输出 hello <span>world</span>
+// 输出 hello world
 ```
 
-更多内容请参考 [Dangerously Set innerHTML](http://reactjs.cn/react/tips/dangerously-set-inner-html.html)
+更多内容请参考 [Dangerously Set innerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
