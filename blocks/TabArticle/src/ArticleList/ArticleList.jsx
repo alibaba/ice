@@ -17,7 +17,7 @@ export default class ArticleList extends Component {
 
   renderTag = (text, onClick, idx) => {
     return (
-      <Button size="small" onClick={onClick} key={idx} style={styles.button}>
+      <Button size="small" onClick={onClick} key={text} style={styles.button}>
         {text}
       </Button>
     );
@@ -85,7 +85,8 @@ const styles = {
   },
   desc: {
     color: '#999',
-    fontSize: '14px',
+    fontSize: '13px',
+    lineHeight: '24px',
     paddingBottom: '15px',
   },
   information: {
