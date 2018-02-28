@@ -15,7 +15,7 @@ export default class ArticleList extends Component {
     // handler
   };
 
-  renderTag = (text, onClick, idx) => {
+  renderTag = (text, onClick) => {
     return (
       <Button size="small" onClick={onClick} key={text} style={styles.button}>
         {text}

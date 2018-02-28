@@ -10,7 +10,7 @@ export default class ArticleList extends Component {
     console.log('handleTagClick:', text);
   };
 
-  renderTag = (text, onClick, idx) => {
+  renderTag = (text, onClick) => {
     return (
       <Button key={text} size="small" onClick={onClick} style={styles.button}>
         {text}
