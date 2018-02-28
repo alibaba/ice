@@ -190,22 +190,22 @@ function main() {
     .then(([blocks, layouts, scaffolds]) => {
       const distDir = path.resolve(__dirname, '../databases');
       mkdirp.sync(distDir);
-      fs.writeFileSync(
-        path.join(distDir, 'blocks.db.json'),
-        JSON.stringify(blocks, null, 2) + '\n'
-      );
+      const blocksDest = path.join(distDir, 'blocks.db.json');
+      const layoutsDest = path.join(distDir, 'layouts.db.json');
+      const scaffoldsDest = path.join(distDir, 'scaffolds.db.json');
+      fs.writeFileSync(blocksDest, JSON.stringify(blocks, null, 2) + '\n');
+
+      fs.writeFileSync(layoutsDest, JSON.stringify(layouts, null, 2) + '\n');
 
       fs.writeFileSync(
-        path.join(distDir, 'layouts.db.json'),
-        JSON.stringify(layouts, null, 2) + '\n'
-      );
-
-      fs.writeFileSync(
-        path.join(distDir, 'scaffolds.db.json'),
+        scaffoldsDest,
         JSON.stringify(scaffolds, null, 2) + '\n'
       );
 
-      console.log('Database generated.');
+      console.log('物料数据生成完毕. Marterials DB Generated.');
+      console.log(blocksDest);
+      console.log(layoutsDest);
+      console.log(scaffoldsDest);
     })
     .catch((err) => {
       console.log('caught error:\n', err.message);
