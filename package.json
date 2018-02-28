@@ -34,7 +34,6 @@
     "lerna": "^2.5.1",
     "mark-twain": "^2.0.2",
     "moment": "^2.20.1",
-    "prettier": "^1.10.2",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "semver-regex": "^1.0.0",

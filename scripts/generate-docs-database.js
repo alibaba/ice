@@ -51,3 +51,18 @@ glob(
     console.log(dest);
   }
 );
+
+/**
+ * 从 jsonml 结构中获取纯字符串
+ */
+function getJsonmlString(jsonml) {
+  let result = '';
+  for (let i = 1; i < jsonml.length; i++) {
+    if (Array.isArray(jsonml[i])) {
+      result += getJsonmlString(jsonml[i]);
+    } else if (typeof jsonml[i] === 'string') {
+      result += jsonml[i] + ' ';
+    }
+  }
+  return result;
+}
