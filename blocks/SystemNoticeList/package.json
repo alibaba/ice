@@ -1,9 +1,14 @@
 {
   "name": "@icedesign/system-notice-list-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "系统消息列表",
   "main": "lib/index.js",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -13,7 +18,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -27,11 +35,12 @@
   },
   "blockConfig": {
     "name": "system-notice-list",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1sG8CbXGWBuNjy0FbXXb4sXXa-1914-676.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1sG8CbXGWBuNjy0FbXXb4sXXa-1914-676.png",
     "themePackage": "@icedesign/skin",
     "title": "系统消息列表",
-    "categories": ["列表"]
+    "categories": [
+      "列表"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
