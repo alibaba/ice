@@ -109,7 +109,7 @@ const styles = {
   },
   tab: {
     cursor: 'pointer',
-    marginRight: '15px',
+    marginRight: '20px',
   },
   tabActive: {
     color: '#3080FE',

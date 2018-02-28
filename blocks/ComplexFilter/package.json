@@ -1,13 +1,8 @@
 {
   "name": "@icedesign/complex-filter-block",
   "version": "0.1.10",
-  "description": "复杂筛选",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "description": "标签页组合筛选",
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -34,12 +26,11 @@
   },
   "blockConfig": {
     "name": "complex-filter",
-    "snapshot": "https://img.alicdn.com/tfs/TB1y4M2lgvD8KJjy0FlXXagBFXa-1908-232.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1wuVIbamWBuNjy1XaXXXCbXXa-1914-384.png",
     "themePackage": "@icedesign/skin",
-    "title": "复杂筛选",
-    "categories": [
-      "筛选"
-    ]
+    "title": "标签页组合筛选",
+    "categories": ["筛选"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

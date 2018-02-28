@@ -65,11 +65,14 @@ export default class MessageList extends Component {
 }
 
 const styles = {
-  item: { borderBottom: '1px solid #eee', margin: '0 15px 20px' },
+  item: {
+    borderBottom: '1px solid #eee',
+    margin: '0 0 20px',
+  },
   title: {
-    fontSize: '16px',
+    fontSize: '14px',
     color: '#444',
-    marginBottom: '15px',
+    marginBottom: '10px',
     position: 'relative',
   },
   datetime: {
@@ -77,11 +80,11 @@ const styles = {
     right: '10px',
     paddingTop: '10px',
     fontSize: '12px',
-    color: '#666',
+    color: '#999',
   },
   message: {
-    fontSize: '14px',
-    color: '#666',
+    fontSize: '12px',
+    color: '#999',
     marginBottom: '20px',
     width: '790px',
   },
