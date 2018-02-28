@@ -1,7 +1,7 @@
 ---
 title: ICE 设计语言
 order: 2
-cover: https://gw.alicdn.com/tfs/TB1LNX6aYGYBuNjy0FoXXciBFXa-1600-442.png
+cover: https://gw.alicdn.com/tfs/TB1fcX1bkyWBuNjy0FpXXassXXa-1600-422.png
 ---
 
 在淘宝内部，经过长时间调研和沉淀，我们产出了 ICE Design 这一套适合于中后台前端应用使用的设计语言。  
