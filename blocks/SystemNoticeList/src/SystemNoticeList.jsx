@@ -97,8 +97,8 @@ export default class SystemNoticeList extends Component {
 
 const styles = {
   title: {
-    margin: '0',
-    fontSize: '16px',
+    margin: '0 0 10px',
+    fontSize: '18px',
   },
   noticeList: {
     margin: 0,
@@ -112,7 +112,7 @@ const styles = {
   },
   noticeTitle: {
     fontSize: '14px',
-    color: '#333',
+    color: '#666',
     textDecoration: 'none',
   },
   noticeTag: {

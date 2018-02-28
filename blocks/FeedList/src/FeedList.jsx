@@ -5,32 +5,31 @@ const dataSource = [
   {
     nickName: '某某',
     datetime: '2分钟前',
-    avatar: 'https://gw.alicdn.com/tfs/TB1h_tjbyqAXuNjy1XdXXaYcVXa-333-415.png',
+    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
     message: '刚刚完成了智能化搭建课程的学习',
   },
   {
     nickName: '某某',
     datetime: '3分钟前',
-    avatar: 'https://gw.alicdn.com/tfs/TB1h_tjbyqAXuNjy1XdXXaYcVXa-333-415.png',
-    message:
-      '这里展示状态的描述简介，最多可以展示两行的内容，超出的内容可以用省略号代替',
+    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
+    message: '刚刚完成了 JavaScript 模块化打包课程的学习',
   },
   {
     nickName: '某某',
     datetime: '5分钟前',
-    avatar: 'https://gw.alicdn.com/tfs/TB1h_tjbyqAXuNjy1XdXXaYcVXa-333-415.png',
+    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
     message: '刚刚完成了智能化搭建课程的学习',
   },
   {
     nickName: '某某',
     datetime: '1天前',
-    avatar: 'https://gw.alicdn.com/tfs/TB1h_tjbyqAXuNjy1XdXXaYcVXa-333-415.png',
+    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
     message: '刚刚完成了智能化搭建课程的学习',
   },
   {
     nickName: '某某',
     datetime: '2天前',
-    avatar: 'https://gw.alicdn.com/tfs/TB1h_tjbyqAXuNjy1XdXXaYcVXa-333-415.png',
+    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
     message:
       '刚刚完成了Sketch图形设计课程的学习，课程内容包括组件绘制，画布编辑等',
   },
@@ -74,10 +73,10 @@ export default class FeedList extends Component {
 
   render() {
     return (
-      <div className="feed-list" style={styles.feedList}>
+      <div className="feed-list">
         <IceContainer>
           <div style={styles.titleRow}>
-            <span style={styles.title}>朋友状态列表</span>
+            <h2 style={styles.cardTitle}>状态列表</h2>
             <span style={styles.status}>共10条状态</span>
           </div>
           {dataSource.map(this.renderItem)}
@@ -97,13 +96,22 @@ const styles = {
     justifyContent: 'space-between',
     marginBottom: '15px',
   },
+  cardTitle: {
+    margin: 0,
+    fontSize: '18px',
+    display: 'inline-flex',
+  },
   title: {
-    color: '#000',
     fontSize: '14px',
     display: 'inline-flex',
     lineHeight: '22px',
   },
-  status: { color: '#999', fontSize: '12px' },
+  status: {
+    display: 'flex',
+    alignItems: 'center',
+    color: '#999',
+    fontSize: '12px',
+  },
   itemRow: {
     display: 'flex',
     flexDirection: 'row',
@@ -122,13 +130,15 @@ const styles = {
     borderBottom: '1px solid #fafafa',
   },
   message: {
-    color: '#666',
-    fontSize: '14px',
+    color: '#999',
+    fontSize: '12px',
     paddingLeft: '34px',
-    width: '320px',
     marginBottom: '15px',
     lineHeight: '22px',
   },
-  allMessage: { textAlign: 'center', height: '50px', lineHeight: '50px' },
-  feedList: { width: '430px' },
+  allMessage: {
+    textAlign: 'center',
+    height: '50px',
+    lineHeight: '50px',
+  },
 };

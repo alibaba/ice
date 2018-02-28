@@ -62,15 +62,14 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-
     padding: '15px 0',
   },
   title: {
     fontSize: '14px',
-    color: '#000',
+    color: '#666',
   },
   date: {
     fontSize: '12px',
-    color: '#000',
+    color: '#666',
   },
 };
