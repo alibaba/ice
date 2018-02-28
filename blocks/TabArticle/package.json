@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/tab-article-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "tab和文章列表组合",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -26,11 +34,12 @@
   },
   "blockConfig": {
     "name": "tab-article",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1hNNybmCWBuNjy0FhXXb6EVXa-1916-1082.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1hNNybmCWBuNjy0FhXXb6EVXa-1916-1082.png",
     "themePackage": "@icedesign/skin",
     "title": "tab和文章列表组合",
-    "categories": ["列表"]
+    "categories": [
+      "列表"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
