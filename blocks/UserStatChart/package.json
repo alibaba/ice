@@ -26,12 +26,13 @@
     "registry": "http://registry.npmjs.com"
   },
   "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
+    "start": "../../node_modules/.bin/ice block dev",
+    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.1",
+    "bizcharts": "^3.1.3-beta.2",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
@@ -43,7 +44,7 @@
   },
   "blockConfig": {
     "name": "user-stat-chart",
-    "snapshot": "",
+    "snapshot": "https://img.alicdn.com/tfs/TB1.q8_bDtYBeNjy1XdXXXXyVXa-1832-852.png",
     "title": "用户统计数据图表",
     "categories": ["chart"
     ],
