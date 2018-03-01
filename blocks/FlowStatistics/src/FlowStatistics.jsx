@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
-import { Tab, Grid } from '@icedesign/base';
+import { Tab } from '@icedesign/base';
 import AreaChart from './AreaChart';
 import Head from './Head';
 import './FlowStatistics.scss';

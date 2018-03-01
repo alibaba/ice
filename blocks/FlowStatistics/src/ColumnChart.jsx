@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Chart, Axis, Geom, Tooltip } from 'bizcharts';
-import { DataView } from '@antv/data-set';
+import { Chart, Geom } from 'bizcharts';
 
 export default class ColumnChart extends Component {
   static displayName = 'ColumnChart';
 
-  static propTypes = {
-    value: PropTypes.string,
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-    value: 'string data',
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
