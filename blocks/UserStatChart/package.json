@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/user-stat-chart-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "用户统计数据或类似形式的图表",
   "files": [
     "src/",
@@ -37,16 +37,17 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "latest",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "user-stat-chart",
     "snapshot": "https://img.alicdn.com/tfs/TB1.q8_bDtYBeNjy1XdXXXXyVXa-1832-852.png",
     "title": "用户统计数据图表",
-    "categories": ["chart"
+    "categories": [
+      "chart"
     ],
     "themePackage": "@icedesign/skin"
   }
