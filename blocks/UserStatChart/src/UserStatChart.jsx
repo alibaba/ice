@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend, Coord, Label } from 'bizcharts';
 import { Grid } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import './UserStatChart.scss';
 
 const { Row, Col } = Grid;
 
