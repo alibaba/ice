@@ -1,29 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Coord,
-  Label,
-  Legend,
-  View,
-  Guide,
-  Shape,
-} from 'bizcharts';
-import { DataView } from '@antv/data-set';
+import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 
 export default class AreaChart extends Component {
   static displayName = 'AreaChart';
 
-  static propTypes = {
-    value: PropTypes.string,
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-    value: 'string data',
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);

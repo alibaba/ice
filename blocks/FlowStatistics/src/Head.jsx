@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Tab, Grid } from '@icedesign/base';
+import { Grid } from '@icedesign/base';
 import ColumnChart from './ColumnChart';
 
 const { Row, Col } = Grid;
@@ -8,13 +7,9 @@ const { Row, Col } = Grid;
 export default class Head extends Component {
   static displayName = 'Head';
 
-  static propTypes = {
-    value: PropTypes.string,
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-    value: 'string data',
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
