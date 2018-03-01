@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Coord,
-  Label,
-  Legend,
-  View,
-  Guide,
-  Shape,
-} from 'bizcharts';
+
+import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import { Grid } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import './SalesStatChart.scss';
