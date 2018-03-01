@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import { Grid } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import './SalesStatChart.scss';
 
 const { Row, Col } = Grid;
 
