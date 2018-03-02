@@ -24,7 +24,7 @@ order: 1
 ## WebStorm/IDEA 编辑器卡顿现象
 
 由于项目在安装依赖后，产生文件夹 `node_modules` 含有较多的碎小文件，编辑器在索引文件引起的卡顿。
-IDEA 尤为明显，可通过 exclude `node_modules` 目录，不需要检索该文件夹下的内容。
+WebStorm 中尤为明显，可通过 exclude `node_modules` 目录，不需要检索该文件夹下的内容。
 
 ## 如何设置网页在浏览器 Tab 上面的 Icon (favicon)
 
@@ -34,10 +34,10 @@ IDEA 尤为明显，可通过 exclude `node_modules` 目录，不需要检索该
 
 如果你想要在自己站点上面加上这个 Icon 可以按照如下步骤添加：
 
-1. 准备一个 Icon，文件格式可以为 `.png` 或者 `.ico`，正方形，分辨率可以是 32x32px 或者 64x64px 文件体积要求尽可能小。
-2. 上传 CDN 拿到一个 url 或者在自己服务器配置静态资源服务
-3. 在 HTML 页面 `<head>` 标签里面添加如下代码：`<link rel="shortcut icon" href="your-icon-url">`
-   ![](//img.alicdn.com/tfs/TB1IC53PpXXXXbmXVXXXXXXXXXX-1834-774.png)
+1.  准备一个 Icon，文件格式可以为 `.png` 或者 `.ico`，正方形，分辨率可以是 32x32px 或者 64x64px 文件体积要求尽可能小。
+2.  上传 CDN 拿到一个 url 或者在自己服务器配置静态资源服务
+3.  在 HTML 页面 `<head>` 标签里面添加如下代码：`<link rel="shortcut icon" href="your-icon-url">`
+    ![](//img.alicdn.com/tfs/TB1IC53PpXXXXbmXVXXXXXXXXXX-1834-774.png)
 
 这样就添加成功啦！
 
