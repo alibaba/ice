@@ -20,8 +20,8 @@ export default class UserStatChart extends Component {
   render() {
     return (
       <div className="user-stat-chart">
-        <Row>
-          <Col span="15">
+        <Row type="wrap">
+          <Col xxs="24" s="15" l="15">
             <IceContainer title="用户增长数量">
               <Chart
                 height={350}
@@ -36,67 +36,60 @@ export default class UserStatChart extends Component {
               </Chart>
             </IceContainer>
           </Col>
-          <Col span="9">
-            <Row>
-              <Col span="24">
-                <IceContainer style={styles.smallContainer} title="年龄">
-                  <Chart
-                    height={150}
-                    data={ageData}
-                    forceFit
-                    padding={[0, 0, 0, 0]}
-                  >
-                    <Axis name="count" />
-                    <Tooltip crosshairs={{ type: 'y' }} />
-                    <Geom type="interval" position="age*count" />
-                  </Chart>
-                </IceContainer>
-              </Col>
-            </Row>
-            <Row>
-              <Col span="24">
-                <IceContainer style={styles.smallContainer} title="男女比例">
-                  <Chart
-                    height={150}
-                    data={sexRatio}
-                    forceFit
-                    padding={[0, 60, 0, 0]}
-                  >
-                    <Coord type="theta" radius={0.75} />
-                    <Axis name="percent" />
-                    <Legend position="right" offsetY={-44} offsetX={-40} />
-                    <Tooltip showTitle={false} />
-                    <Geom
-                      type="intervalStack"
-                      position="percent"
-                      color="item"
-                      tooltip={[
-                        'item*percent',
-                        (item, percent) => {
-                          percent += '%';
-                          return {
-                            name: item,
-                            value: percent,
-                          };
-                        },
-                      ]}
-                      style={{ lineWidth: 1, stroke: '#fff' }}
-                    >
-                      <Label
-                        content="percent"
-                        offset={-20}
-                        textStyle={{
-                          rotate: 0,
-                          textAlign: 'center',
-                          shadowBlur: 2,
-                          shadowColor: 'rgba(0, 0, 0, .45)',
-                        }}
-                      />
-                    </Geom>
-                  </Chart>
-                </IceContainer>
-              </Col>
-            </Row>
+          <Col xxs="24" s="9" l="9">
+            <IceContainer style={styles.smallContainer} title="年龄">
+              <Chart
+                height={150}
+                data={ageData}
+                forceFit
+                padding={[0, 0, 0, 0]}
+              >
+                <Axis name="count" />
+                <Tooltip crosshairs={{ type: 'y' }} />
+                <Geom type="interval" position="age*count" />
+              </Chart>
+            </IceContainer>
+
+            <IceContainer style={styles.smallContainer} title="男女比例">
+              <Chart
+                height={150}
+                data={sexRatio}
+                forceFit
+                padding={[0, 60, 0, 0]}
+              >
+                <Coord type="theta" radius={0.75} />
+                <Axis name="percent" />
+                <Legend position="right" offsetY={-44} offsetX={-40} />
+                <Tooltip showTitle={false} />
+                <Geom
+                  type="intervalStack"
+                  position="percent"
+                  color="item"
+                  tooltip={[
+                    'item*percent',
+                    (item, percent) => {
+                      percent += '%';
+                      return {
+                        name: item,
+                        value: percent,
+                      };
+                    },
+                  ]}
+                  style={{ lineWidth: 1, stroke: '#fff' }}
+                >
+                  <Label
+                    content="percent"
+                    offset={-20}
+                    textStyle={{
+                      rotate: 0,
+                      textAlign: 'center',
+                      shadowBlur: 2,
+                      shadowColor: 'rgba(0, 0, 0, .45)',
+                    }}
+                  />
+                </Geom>
+              </Chart>
+            </IceContainer>
           </Col>
         </Row>
       </div>
@@ -114,7 +107,7 @@ const styles = {
 const sexRatio = [
   {
     item: '男',
-    percent: 67,
+    percent: 57,
   },
   {
     item: '女',
@@ -122,11 +115,27 @@ const sexRatio = [
   },
   {
     item: '其他',
-    percent: 3,
+    percent: 13,
   },
 ];
 
 const userData = [
+  {
+    month: '1 月',
+    count: 50,
+  },
+  {
+    month: '2 月',
+    count: 60,
+  },
+  {
+    month: '3 月',
+    count: 120,
+  },
+  {
+    month: '4 月',
+    count: 90,
+  },
   {
     month: '5 月',
     count: 100,
@@ -145,15 +154,19 @@ const userData = [
   },
   {
     month: '9 月',
-    count: 102,
+    count: 260,
   },
   {
     month: '10 月',
-    count: 100,
+    count: 220,
   },
   {
     month: '11 月',
     count: 420,
+  },
+  {
+    month: '12 月',
+    count: 320,
   },
 ];
 const ageData = [

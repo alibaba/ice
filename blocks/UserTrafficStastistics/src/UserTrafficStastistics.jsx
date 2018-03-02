@@ -39,8 +39,7 @@ export default class UserTrafficStastistics extends Component {
       },
     };
     return (
-      <IceContainer>
-        <h2 style={styles.title}>访问用户类型分布</h2>
+      <IceContainer title="访问用户类型分布">
         <div>
           <Chart
             height={300}
@@ -159,8 +158,7 @@ export default class UserTrafficStastistics extends Component {
       },
     };
     return (
-      <IceContainer>
-        <h2 style={styles.title}>用户数据分析</h2>
+      <IceContainer title="用户数据分析">
         <div>
           <Chart
             height={300}
@@ -223,8 +221,7 @@ export default class UserTrafficStastistics extends Component {
 
     return (
       <div>
-        <IceContainer>
-          <h2 style={styles.title}>浏览器类型</h2>
+        <IceContainer title="浏览器类型">
           <ul>
             {browsers.map((browser) => {
               return (
@@ -238,8 +235,7 @@ export default class UserTrafficStastistics extends Component {
             })}
           </ul>
         </IceContainer>
-        <IceContainer>
-          <h2 style={styles.title}>用户满意度</h2>
+        <IceContainer title="用户满意度">
           <div style={styles.satisfaction}>70%</div>
           <Row>
             <Col span={8} style={styles.satisfactionItem}>
@@ -280,10 +276,6 @@ export default class UserTrafficStastistics extends Component {
 }
 
 const styles = {
-  title: {
-    margin: 0,
-    padding: '0 0 10px 0',
-  },
   browserItem: {
     display: 'flex',
     flexDirection: 'row',

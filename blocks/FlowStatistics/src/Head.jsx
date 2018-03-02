@@ -59,7 +59,7 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '40px',
+    marginBottom: '10px',
   },
   textLabel: {
     margin: 0,
