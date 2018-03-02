@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/scaffold-cms",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "该模板内置了丰富的区块，主要适用于类 CMS 管理系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-cms.html",
   "dependencies": {
@@ -34,7 +34,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^0.1.16"
+    "ice-scripts": "^0.1.18"
   },
   "scripts": {
     "start": "ice dev",
