@@ -10,7 +10,7 @@ module.exports = (buildConfig = {}) => {
       [
         require.resolve('babel-preset-env'),
         {
-          modules: 'commonjs',
+          modules: false,
           targets: {
             browsers: [
               'last 2 versions',
@@ -28,7 +28,6 @@ module.exports = (buildConfig = {}) => {
     ],
     plugins: [
       require.resolve('babel-plugin-transform-decorators-legacy'),
-      require.resolve('babel-plugin-add-module-exports'),
       require.resolve('babel-plugin-transform-es2015-object-super'),
       [
         require.resolve('babel-plugin-transform-runtime'),
