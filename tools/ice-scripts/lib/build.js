@@ -79,7 +79,7 @@ module.exports = function(args = {}) {
             '--compress',
             'unused=false,warnings=false',
             '--beautify',
-            'beautify=false,ascii-only=true',
+            'beautify=false,ascii_only=true',
             '--mangle',
           ],
         },
