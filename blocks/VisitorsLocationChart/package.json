@@ -2,12 +2,7 @@
   "name": "@icedesign/visitors-location-chart-block",
   "version": "0.1.0",
   "description": "",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -46,11 +38,10 @@
   },
   "blockConfig": {
     "name": "visitors-location-chart",
-    "snapshot": "",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1i_LbbpOWBuNjy0FiXXXFxVXa-2498-1078.png",
     "title": "访客位置概览图表",
-    "categories": [
-      "chart"
-    ],
+    "categories": ["chart"],
     "themePackage": "@icedesign/skin"
   }
 }
