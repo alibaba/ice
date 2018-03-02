@@ -1,0 +1,47 @@
+{
+  "name": "@icedesign/visitors-location-chart-block",
+  "version": "0.1.0",
+  "description": "",
+  "files": ["src/", "demo/", "lib/", "mock/"],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": ["ice", "ice-block"],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "scripts": {
+    "start": "ice block dev",
+    "prepublish": "ice block build"
+  },
+  "dependencies": {
+    "@antv/data-set": "^0.8.0",
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/container": "^0.1.1",
+    "axios": "^0.18.0",
+    "bizcharts": "^3.0.5",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/skin": "latest",
+    "react": "*",
+    "react-dom": "*",
+    "@icedesign/scripts": "^0.1.9"
+  },
+  "blockConfig": {
+    "name": "visitors-location-chart",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1i_LbbpOWBuNjy0FiXXXFxVXa-2498-1078.png",
+    "title": "访客位置概览图表",
+    "categories": ["chart"],
+    "themePackage": "@icedesign/skin"
+  }
+}
