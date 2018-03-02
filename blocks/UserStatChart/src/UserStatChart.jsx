@@ -73,7 +73,7 @@ export default class UserStatChart extends Component {
                       tooltip={[
                         'item*percent',
                         (item, percent) => {
-                          percent = percent + '%';
+                          percent += '%';
                           return {
                             name: item,
                             value: percent,
