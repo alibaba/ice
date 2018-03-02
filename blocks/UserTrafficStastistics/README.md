@@ -4,4 +4,4 @@
 
 简介：信息展示类，使用可视化的方式展示用户浏览以及数据分析的结果
 
-![截图](https://gw.alicdn.com/tfs/TB1TVjLbDtYBeNjy1XdXXXXyVXa-1866-754.png)
+![截图](https://img.alicdn.com/tfs/TB10wi8bwmTBuNjy1XbXXaMrVXa-2844-770.png)

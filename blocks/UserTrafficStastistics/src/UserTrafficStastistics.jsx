@@ -40,7 +40,7 @@ export default class UserTrafficStastistics extends Component {
     };
     return (
       <IceContainer>
-        <div style={styles.title}>访问用户类型分布</div>
+        <h2 style={styles.title}>访问用户类型分布</h2>
         <div>
           <Chart
             height={300}
@@ -160,7 +160,7 @@ export default class UserTrafficStastistics extends Component {
     };
     return (
       <IceContainer>
-        <div style={styles.title}>用户数据分析</div>
+        <h2 style={styles.title}>用户数据分析</h2>
         <div>
           <Chart
             height={300}
@@ -224,7 +224,7 @@ export default class UserTrafficStastistics extends Component {
     return (
       <div>
         <IceContainer>
-          <div style={styles.title}>浏览器类型</div>
+          <h2 style={styles.title}>浏览器类型</h2>
           <ul>
             {browsers.map((browser) => {
               return (
@@ -239,7 +239,7 @@ export default class UserTrafficStastistics extends Component {
           </ul>
         </IceContainer>
         <IceContainer>
-          <div style={styles.title}>用户满意度</div>
+          <h2 style={styles.title}>用户满意度</h2>
           <div style={styles.satisfaction}>70%</div>
           <Row>
             <Col span={8} style={styles.satisfactionItem}>
@@ -264,13 +264,13 @@ export default class UserTrafficStastistics extends Component {
     return (
       <div className="user-traffic-stastistics">
         <Row type="wrap">
-          <Col l="7" xxs="8">
+          <Col xxs="24" l="7">
             {this.renderTrafficTypes()}
           </Col>
-          <Col l="10" xxs="16">
+          <Col xxs="24" l="10">
             {this.renderUserStatistics()}
           </Col>
-          <Col l="7" xxs="24">
+          <Col xxs="24" l="7">
             {this.renderBrowserStatus()}
           </Col>
         </Row>
@@ -281,7 +281,7 @@ export default class UserTrafficStastistics extends Component {
 
 const styles = {
   title: {
-    fontWeight: 500,
+    margin: 0,
     padding: '0 0 10px 0',
   },
   browserItem: {
@@ -289,7 +289,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: '5px 0',
-    // borderTop: '1px solid #ddd',
+    // borderBottom: '1px dotted #eee',
   },
   percentage: {
     padding: '2px 5px',
@@ -302,7 +302,7 @@ const styles = {
     textAlign: 'center',
     fontSize: '36px',
     color: '#307bf0',
-    padding: '7px 0 10px 0',
+    padding: '0 0 5px',
   },
   satisfactionItem: {
     textAlign: 'center',
