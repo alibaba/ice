@@ -1,6 +1,5 @@
 // <!-- auto generated navs start -->
 const autoGenHeaderNavs = [];
-
 const autoGenAsideNavs = [];
 // <!-- auto generated navs end -->
 
