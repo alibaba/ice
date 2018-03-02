@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/not-permission-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "files": [
     "src/",
@@ -39,7 +39,7 @@
     "themePackage": "@icedesign/skin",
     "title": "无权限提示",
     "categories": [
-      "exception"
+      "异常"
     ]
   },
   "scripts": {

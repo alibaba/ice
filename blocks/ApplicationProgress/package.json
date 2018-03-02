@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/application-progress-block",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "申请进度信息展示",
   "files": [
     "src/",
@@ -38,7 +38,7 @@
     "themePackage": "@icedesign/skin",
     "title": "申请进度信息展示",
     "categories": [
-      "info-display"
+      "信息展示"
     ]
   },
   "scripts": {

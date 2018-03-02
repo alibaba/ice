@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/failure-detail-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "提交失败详情展示",
   "files": [
     "src/",
@@ -38,7 +38,7 @@
     "themePackage": "@icedesign/skin",
     "title": "提交失败详情展示",
     "categories": [
-      "info-display"
+      "信息展示"
     ]
   },
   "scripts": {

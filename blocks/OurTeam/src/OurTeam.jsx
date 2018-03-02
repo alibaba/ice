@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './OurTeam.scss';
 
 const generatorData = (count) => {
   return Array.from({ length: count }).map((item, index) => {
@@ -54,7 +53,8 @@ export default class OurTeam extends Component {
 
 const styles = {
   container: {
-    width: '1080px',
+    width: '100%',
+    maxWidth: '1080px',
     margin: '0 auto',
     padding: '80px 0',
   },
@@ -68,6 +68,7 @@ const styles = {
   },
   intro: {
     textAlign: 'center',
+    color: '#999',
   },
   items: {
     display: 'flex',
@@ -92,6 +93,7 @@ const styles = {
   },
   description: {
     margin: 0,
+    color: '#999',
   },
   avatar: {
     width: '150px',

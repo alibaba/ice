@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, Label } from 'bizcharts';
-import './ChartHeatMap.scss';
 
 export default class ChartHeatMap extends Component {
   static displayName = 'ChartHeatMap';

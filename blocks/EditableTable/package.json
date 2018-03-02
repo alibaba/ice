@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/editable-table-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "可编辑内容的表格",
   "files": [
     "src/",
@@ -38,7 +38,7 @@
     "themePackage": "@icedesign/skin",
     "title": "可编辑表格",
     "categories": [
-      "table"
+      "表格"
     ]
   },
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/progress-data-list-block",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "进度条数据列表展示",
   "files": [
     "src/",
@@ -41,9 +41,9 @@
     "snapshot": "https://img.alicdn.com/tfs/TB1OUVDnwvD8KJjy0FlXXagBFXa-1900-338.png",
     "title": "进度条数据列表",
     "categories": [
-      "chart",
-      "list",
-      "data-display"
+      "图表",
+      "列表",
+      "数据展示"
     ],
     "themePackage": "@icedesign/skin"
   },

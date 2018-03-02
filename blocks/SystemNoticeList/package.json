@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/system-notice-list-block",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "系统消息列表",
   "main": "lib/index.js",
   "files": [
@@ -35,11 +35,11 @@
   },
   "blockConfig": {
     "name": "system-notice-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1Xz9cf5qAXuNjy1XdXXaYcVXa-1904-638.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1sG8CbXGWBuNjy0FbXXb4sXXa-1914-676.png",
     "themePackage": "@icedesign/skin",
     "title": "系统消息列表",
     "categories": [
-      "list"
+      "列表"
     ]
   },
   "scripts": {

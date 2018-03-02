@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Tab } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import './BasicTab.scss';
 
 export default class BasicTab extends Component {
   static displayName = 'BasicTab';
@@ -28,8 +27,6 @@ export default class BasicTab extends Component {
 
 const styles = {
   tabCardStyle: {
-    display: 'flex',
-    padding: '0',
-    alignItems: 'flex-end',
+    padding: 0,
   },
 };

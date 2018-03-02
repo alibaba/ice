@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Coord, Guide, Shape } from 'bizcharts';
-import './ChartGauge.scss';
 
 export default class ChartGauge extends Component {
   static displayName = 'ChartGauge';

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/chart-point-block",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "",
   "files": [
     "src/",
@@ -41,7 +41,7 @@
     "themePackage": "@icedesign/skin",
     "title": "点图",
     "categories": [
-      "chart"
+      "图表"
     ]
   },
   "scripts": {

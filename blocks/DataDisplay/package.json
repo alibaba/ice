@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/data-display-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "files": [
     "src/",
@@ -39,7 +39,7 @@
     "themePackage": "@icedesign/skin",
     "title": "数据展示",
     "categories": [
-      "data-display"
+      "数据展示"
     ]
   },
   "scripts": {

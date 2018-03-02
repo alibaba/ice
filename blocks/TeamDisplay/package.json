@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/team-display-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "files": [
     "src/",
@@ -34,11 +34,12 @@
   },
   "blockConfig": {
     "name": "team-display",
-    "snapshot": "https://img.alicdn.com/tfs/TB1P1cBi3DD8KJjy0FdXXcjvXXa-1904-1554.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1dUcAauuSBuNjy1XcXXcYjFXa-2184-1568.png",
     "themePackage": "@icedesign/skin",
     "title": "团队展示",
     "categories": [
-      "info-display"
+      "信息展示",
+      "欢迎页"
     ]
   },
   "scripts": {

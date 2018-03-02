@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/private-message-form-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "私有消息表单",
   "files": [
     "src/",
@@ -39,7 +39,7 @@
     "themePackage": "@icedesign/skin",
     "title": "私有消息表单",
     "categories": [
-      "form"
+      "表单"
     ]
   },
   "scripts": {

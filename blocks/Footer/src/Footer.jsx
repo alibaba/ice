@@ -65,7 +65,8 @@ const styles = {
   content: {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '1080px',
+    width: '100%',
+    maxWidth: '1080px',
     margin: '0 auto',
   },
   logo: {
@@ -74,12 +75,30 @@ const styles = {
     fontSize: '28px',
     margin: '12px 0',
   },
-  nav: { width: '400px', margin: '0 auto', display: 'flex' },
-  navItem: { width: '25%', lineHeight: '54px', textAlign: 'center' },
-  navLink: { color: '#666', display: 'block' },
-  share: { lineHeight: '54px' },
-  shareIcon: { width: '22px', height: '16px' },
-  weChart: { marginLeft: '20px' },
+  nav: {
+    width: '400px',
+    margin: '0 auto',
+    display: 'flex',
+  },
+  navItem: {
+    width: '25%',
+    lineHeight: '54px',
+    textAlign: 'center',
+  },
+  navLink: {
+    color: '#666',
+    display: 'block',
+  },
+  share: {
+    lineHeight: '54px',
+  },
+  shareIcon: {
+    width: '22px',
+    height: '16px',
+  },
+  weChart: {
+    marginLeft: '20px',
+  },
   copyRight: {
     display: 'flex',
     width: '100%',

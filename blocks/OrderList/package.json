@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/order-list-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "订单型列表",
   "main": "lib/index.js",
   "files": [
@@ -40,7 +40,7 @@
     "themePackage": "@icedesign/skin",
     "title": "订单型列表",
     "categories": [
-      "list"
+      "列表"
     ]
   },
   "scripts": {

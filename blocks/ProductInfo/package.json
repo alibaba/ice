@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/product-info-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "产品信息展示",
   "files": [
     "src/",
@@ -34,11 +34,12 @@
   },
   "blockConfig": {
     "name": "product-info",
-    "snapshot": "https://img.alicdn.com/tfs/TB1IQ9Fif6H8KJjy0FjXXaXepXa-955-528.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1pyKlaTtYBeNjy1XdXXXXyVXa-2178-1294.png",
     "themePackage": "@icedesign/skin",
     "title": "产品信息展示",
     "categories": [
-      "info-display"
+      "信息展示",
+      "欢迎页"
     ]
   },
   "scripts": {

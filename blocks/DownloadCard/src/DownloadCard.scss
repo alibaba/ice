@@ -2,6 +2,8 @@
 
 .download-card {
   .column-card-item {
+    margin-right: 16px;
+    margin-bottom: 16px;
     &:nth-child(3n) {
       margin-right: 0;
     }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Icon } from '@icedesign/base';
-import './AssetInfoDisplay.scss';
 
 export default class AssetInfoDisplay extends Component {
   static displayName = 'AssetInfoDisplay';
@@ -74,7 +73,7 @@ export default class AssetInfoDisplay extends Component {
           <div
             style={{
               ...styles.cardItem,
-              borderBottom: '1px solid #eee',
+              borderBottom: '1px solid #fbfbfb',
             }}
           >
             <h1 style={styles.subTitle}>合同</h1>
@@ -136,7 +135,7 @@ const styles = {
     color: '#6ca1ee',
     fontSize: '16px',
     padding: '20px',
-    borderBottom: '1px solid #eee',
+    borderBottom: '1px solid #fbfbfb',
   },
   subTitle: {
     color: '#666',
@@ -149,14 +148,13 @@ const styles = {
   },
   assets: {
     height: '116px',
-    borderBottom: '1px solid #eee',
+    borderBottom: '1px solid #fbfbfb',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
   cardItem: {
-    // height: '100px',
     padding: '5px 20px',
   },
   assetsGroup: {
@@ -165,7 +163,7 @@ const styles = {
   },
   assetItem: {
     flex: 1,
-    borderRight: '1px solid #ddd',
+    borderRight: '1px solid #fbfbfb',
     textAlign: 'center',
     color: '#666',
   },

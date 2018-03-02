@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/enhance-table-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "附带简单表单筛选功能的增强筛选表单",
   "main": "lib/index.js",
   "files": [
@@ -42,7 +42,7 @@
     "themePackage": "@icedesign/skin",
     "title": "增强筛选表单",
     "categories": [
-      "table"
+      "表格"
     ]
   },
   "scripts": {

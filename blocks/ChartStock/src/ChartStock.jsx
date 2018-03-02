@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import { DataView } from '@antv/data-set';
 import IceContainer from '@icedesign/container';
-import './ChartStock.scss';
 
 export default class ChartStock extends Component {
   static displayName = 'ChartStock';

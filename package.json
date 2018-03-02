@@ -5,11 +5,10 @@
     "publish": "git fetch --all && git pull origin master && lerna publish",
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
-    "db": "node ./scripts/generate-marterials-database",
+    "db": "node ./scripts/generate-marterials-database && node ./scripts/generate-docs-database",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./",
-    "format":
-      "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffords/*/src/**/*.js scaffords/*/src/**/*.jsx tools/**/*.js --write"
+    "format": "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffolds/*/src/**/*.js scaffolds/*/src/**/*.jsx tools/**/*.js --write"
   },
   "repository": {
     "type": "git",
@@ -33,8 +32,8 @@
     "ghooks": "^2.0.2",
     "ice-scripts": "^0.1.0",
     "lerna": "^2.5.1",
+    "mark-twain": "^2.0.2",
     "moment": "^2.20.1",
-    "prettier": "^1.10.2",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "semver-regex": "^1.0.0",
