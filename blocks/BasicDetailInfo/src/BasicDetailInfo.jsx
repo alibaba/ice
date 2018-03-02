@@ -4,7 +4,7 @@ import IceContainer from '@icedesign/container';
 /**
  * 渲染详情信息的数据
  */
-const dataSoruce = {
+const dataSource = {
   title: '集盒家居旗舰店双十一活动',
   shopName: '集盒家居旗舰店',
   amount: '1000.00',
@@ -45,28 +45,28 @@ export default class BasicDetailInfo extends Component {
             <ul style={styles.infoItems}>
               <li style={styles.infoItem}>
                 <span style={styles.infoItemLabel}>任务标题：</span>
-                <span style={styles.infoItemValue}>{dataSoruce.title}</span>
+                <span style={styles.infoItemValue}>{dataSource.title}</span>
               </li>
               <li style={styles.infoItem}>
                 <span style={styles.infoItemLabel}>店铺名称：</span>
-                <span style={styles.infoItemValue}>{dataSoruce.shopName}</span>
+                <span style={styles.infoItemValue}>{dataSource.shopName}</span>
               </li>
               <li style={styles.infoItem}>
                 <span style={styles.infoItemLabel}>任务金额：</span>
-                <span style={styles.infoItemValue}>¥ {dataSoruce.amount}</span>
+                <span style={styles.infoItemValue}>¥ {dataSource.amount}</span>
               </li>
               <li style={styles.infoItem}>
                 <span style={styles.infoItemLabel}>任务赏金：</span>
-                <span style={styles.infoItemValue}>¥ {dataSoruce.bounty}</span>
+                <span style={styles.infoItemValue}>¥ {dataSource.bounty}</span>
               </li>
               <li style={styles.infoItem}>
                 <span style={styles.infoItemLabel}>接单时间：</span>
-                <span style={styles.infoItemValue}>{dataSoruce.orderTime}</span>
+                <span style={styles.infoItemValue}>{dataSource.orderTime}</span>
               </li>
               <li style={styles.infoItem}>
                 <span style={styles.infoItemLabel}>交付时间：</span>
                 <span style={styles.infoItemValue}>
-                  {dataSoruce.deliveryTime}
+                  {dataSource.deliveryTime}
                 </span>
               </li>
             </ul>
@@ -76,26 +76,26 @@ export default class BasicDetailInfo extends Component {
             <ul style={styles.infoItems}>
               <li style={styles.infoItem}>
                 <span style={styles.infoItemLabel}>联系方式：</span>
-                <span style={styles.infoItemValue}>{dataSoruce.phone}</span>
+                <span style={styles.infoItemValue}>{dataSource.phone}</span>
               </li>
               <li style={styles.infoItem}>
                 <span style={styles.infoItemLabel}>收货地址：</span>
-                <span style={styles.infoItemValue}>{dataSoruce.address}</span>
+                <span style={styles.infoItemValue}>{dataSource.address}</span>
               </li>
               <li style={styles.infoItem}>
                 <span style={styles.infoItemLabel}>任务状态：</span>
-                <span style={styles.infoItemValue}>{dataSoruce.status}</span>
+                <span style={styles.infoItemValue}>{dataSource.status}</span>
               </li>
               <li style={styles.infoItem}>
                 <span style={styles.infoItemLabel}>备注：</span>
-                <span style={styles.infoItemValue}>{dataSoruce.remark}</span>
+                <span style={styles.infoItemValue}>{dataSource.remark}</span>
               </li>
               <li style={styles.infoItem}>
                 <span style={styles.attachLabel}>附件：</span>
                 <span>
-                  {dataSoruce.pics &&
-                    dataSoruce.pics.length &&
-                    dataSoruce.pics.map((pic, index) => {
+                  {dataSource.pics &&
+                    dataSource.pics.length &&
+                    dataSource.pics.map((pic, index) => {
                       return (
                         <img
                           key={index}
