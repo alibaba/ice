@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/filter-list-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "支持过滤的列表",
   "main": "lib/index.js",
   "files": [
@@ -39,7 +39,7 @@
     "themePackage": "@icedesign/skin",
     "title": "支持过滤的列表",
     "categories": [
-      "list"
+      "列表"
     ]
   },
   "scripts": {

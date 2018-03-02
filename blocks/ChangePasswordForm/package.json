@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/change-password-form-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "files": [
     "src/",
@@ -47,7 +47,7 @@
     "snapshot": "https://img.alicdn.com/tfs/TB1Y.8yXHGYBuNjy0FoXXciBFXa-1212-490.png",
     "title": "修改密码表单",
     "categories": [
-      "form"
+      "表单"
     ],
     "themePackage": "@icedesign/skin"
   }

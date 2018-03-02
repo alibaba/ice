@@ -6,8 +6,8 @@
 
 process.env.NODE_ENV = 'production';
 
-const cleancssParallel = require('../dependencies/clean-css-parallel');
-const uglifyParallel = require('../dependencies/uglify-parallel');
+const cleancssParallel = require('clean-css-parallel');
+const uglifyParallel = require('uglify-parallel');
 const gulp = require('gulp');
 const rimraf = require('rimraf');
 const webpack = require('webpack');

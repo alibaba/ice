@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './TeamDisplay.scss';
 
 const generatorData = (count) => {
   return Array.from({ length: count }).map((item, index) => {
@@ -43,7 +42,8 @@ export default class TeamDisplay extends Component {
 
 const styles = {
   container: {
-    width: '1080px',
+    width: '100%',
+    maxWidth: '1080px',
     margin: '0 auto',
     padding: '80px 0',
   },
@@ -68,5 +68,9 @@ const styles = {
   avatar: {
     width: '150px',
     height: '150px',
+  },
+  description: {
+    lineHeight: '22px',
+    color: '#999',
   },
 };

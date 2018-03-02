@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/sortable-table-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "files": [
     "src/",
@@ -46,7 +46,7 @@
     "snapshot": "https://img.alicdn.com/tfs/TB1BtQJXDtYBeNjy1XdXXXXyVXa-1914-662.png",
     "title": "可排序表格",
     "categories": [
-      "table"
+      "表格"
     ],
     "themePackage": "@icedesign/skin"
   }

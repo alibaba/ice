@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/left-content-display-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "files": [
     "src/",
@@ -39,7 +39,8 @@
     "themePackage": "@icedesign/skin",
     "title": "功能描述-右图左文",
     "categories": [
-      "info-display"
+      "信息展示",
+      "欢迎页"
     ]
   },
   "scripts": {

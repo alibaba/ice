@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/feature-display-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "files": [
     "src/",
@@ -34,11 +34,12 @@
   },
   "blockConfig": {
     "name": "feature-display",
-    "snapshot": "https://img.alicdn.com/tfs/TB1W3vQi3vD8KJjy0FlXXagBFXa-1914-1522.png",
+    "snapshot": "https://gw.alicdn.com/tfs/TB1StEQaqmWBuNjy1XaXXXCbXXa-1756-1464.png",
     "themePackage": "@icedesign/skin",
     "title": "功能特点展示",
     "categories": [
-      "info-display"
+      "信息展示",
+      "欢迎页"
     ]
   },
   "scripts": {

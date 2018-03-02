@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/download-card-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "下载型信息卡片",
   "main": "lib/index.js",
   "files": [
@@ -40,8 +40,8 @@
     "themePackage": "@icedesign/skin",
     "title": "下载型信息卡片",
     "categories": [
-      "info-display",
-      "list"
+      "信息展示",
+      "列表"
     ]
   },
   "scripts": {

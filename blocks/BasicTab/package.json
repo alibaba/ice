@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/basic-tab-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "基础 Tab 组件",
   "main": "lib/index.js",
   "files": [
@@ -39,7 +39,7 @@
     "themePackage": "@icedesign/skin",
     "title": "基础 Tab 组件",
     "categories": [
-      "info-display"
+      "信息展示"
     ]
   },
   "scripts": {

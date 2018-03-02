@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './TestimonialCard.scss';
 
 const generatorData = (count) => {
   return Array.from({ length: count }).map(() => {
@@ -69,12 +68,13 @@ const styles = {
     background:
       'url(https://img.alicdn.com/tfs/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png)',
     borderRadius: 0,
+    width: '100%',
   },
   items: {
     display: 'flex',
     flexWrap: 'wrap',
     padding: '80px 0',
-    width: '1080px',
+    maxWidth: '1080px',
     margin: '0 auto',
   },
   item: {

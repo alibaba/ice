@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/filter-with-search-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": " 含搜索筛选",
   "files": [
     "src/",
@@ -38,7 +38,7 @@
     "themePackage": "@icedesign/skin",
     "title": " 含搜索筛选",
     "categories": [
-      "filter"
+      "筛选"
     ]
   },
   "scripts": {

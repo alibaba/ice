@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/settings-form-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "files": [
     "src/",
@@ -47,7 +47,7 @@
     "snapshot": "https://img.alicdn.com/tfs/TB1SY4kXKSSBuNjy0FlXXbBpVXa-1232-1498.png",
     "title": "通用的基本设置表单",
     "categories": [
-      "form"
+      "表单"
     ],
     "themePackage": "@icedesign/skin"
   }

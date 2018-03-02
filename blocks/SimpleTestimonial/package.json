@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/simple-testimonial-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "files": [
     "src/",
@@ -38,7 +38,8 @@
     "themePackage": "@icedesign/skin",
     "title": "简单的客户评价",
     "categories": [
-      "info-display"
+      "信息展示",
+      "欢迎页"
     ]
   },
   "scripts": {

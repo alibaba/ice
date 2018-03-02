@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './SimpleTestimonial.scss';
 
 export default class SimpleTestimonial extends Component {
   static displayName = 'SimpleTestimonial';
@@ -44,8 +43,16 @@ export default class SimpleTestimonial extends Component {
 }
 
 const styles = {
-  item: { width: '80%', margin: '0 auto', textAlign: 'center' },
-  description: { lineHeight: '28px' },
+  item: {
+    width: '100%',
+    maxWidth: '1080px',
+    margin: '0 auto',
+    textAlign: 'center',
+  },
+  description: {
+    lineHeight: '28px',
+    color: '#999',
+  },
   infoBox: {
     display: 'flex',
     textAlign: 'center',
@@ -53,8 +60,17 @@ const styles = {
     alignItems: 'center',
     marginTop: '40px',
   },
-  avatar: { width: '64px', height: '64px' },
-  name: { margin: '0 15px', fontSize: '15px', fontWeight: 'bold' },
-  company: { margin: 0 },
+  avatar: {
+    width: '64px',
+    height: '64px',
+  },
+  name: {
+    margin: '0 15px',
+    fontSize: '15px',
+    fontWeight: 'bold',
+  },
+  company: {
+    margin: 0,
+  },
   simpleTestimonial: {},
 };

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/text-card-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "纯文字展示型卡片",
   "files": [
     "src/",
@@ -38,7 +38,7 @@
     "themePackage": "@icedesign/skin",
     "title": "纯文字展示型卡片",
     "categories": [
-      "data-display"
+      "数据展示"
     ]
   },
   "scripts": {

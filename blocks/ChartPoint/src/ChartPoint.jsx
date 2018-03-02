@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip } from 'bizcharts';
-import './ChartPoint.scss';
 
 export default class ChartPoint extends Component {
   static displayName = 'ChartPoint';

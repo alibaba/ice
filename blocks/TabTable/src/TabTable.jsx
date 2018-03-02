@@ -5,7 +5,6 @@ import axios from 'axios';
 import CustomTable from './components/CustomTable';
 import EditDialog from './components/EditDialog';
 import DeleteBalloon from './components/DeleteBalloon';
-import './TabTable.scss';
 
 const TabPane = Tab.TabPane;
 

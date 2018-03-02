@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/complex-progress-table-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "进度管理表格",
   "files": [
     "src/",
@@ -43,7 +43,7 @@
     "themePackage": "@icedesign/skin",
     "title": "进度管理表格",
     "categories": [
-      "table"
+      "表格"
     ]
   },
   "scripts": {

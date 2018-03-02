@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/testimonial-card-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "files": [
     "src/",
@@ -39,7 +39,8 @@
     "themePackage": "@icedesign/skin",
     "title": "客户评论卡片",
     "categories": [
-      "info-display"
+      "信息展示",
+      "欢迎页"
     ]
   },
   "scripts": {

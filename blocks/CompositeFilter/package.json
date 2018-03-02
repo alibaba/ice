@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/composite-filter-block",
-  "version": "0.1.4",
-  "description": "复杂的筛选",
+  "version": "0.1.6",
+  "description": "标签、日期和搜索组合筛选",
   "main": "lib/index.js",
   "files": [
     "src/",
@@ -35,11 +35,11 @@
   },
   "blockConfig": {
     "name": "composite-filter",
-    "snapshot": "https://img.alicdn.com/tfs/TB1mfclilTH8KJjy0FiXXcRsXXa-1896-246.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1gabvbntYBeNjy1XdXXXXyVXa-1916-244.png",
     "themePackage": "@icedesign/skin",
-    "title": "复杂的筛选",
+    "title": "标签、日期和搜索组合筛选",
     "categories": [
-      "filter"
+      "筛选"
     ]
   },
   "scripts": {

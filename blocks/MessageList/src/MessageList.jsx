@@ -1,34 +1,31 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Pagination } from '@icedesign/base';
-import './MessageList.scss';
 
 const dataSource = [
   {
     title: '消息标题',
-    message: '这里是一条消息提醒详细说明。',
+    message: '这里是消息的一些详细说明。',
     datetime: '07-07 18:36',
   },
   {
     title: '消息标题',
-    message:
-      '这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。',
+    message: '这里是消息的一些详细说明。',
     datetime: '07-07 18:36',
   },
   {
     title: '消息标题',
-    message:
-      '这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。这里是一条比较长的消息提醒详细说明。',
+    message: '这里是消息的一些详细说明。',
     datetime: '07-07 18:36',
   },
   {
     title: '消息标题',
-    message: '这里是一条比较长的消息提醒详细说明。',
+    message: '这里是消息的一些详细说明。',
     datetime: '07-07 18:36',
   },
   {
     title: '消息标题',
-    message: '这里是一条比较长的消息提醒详细说明。',
+    message: '这里是消息的一些详细说明。',
     datetime: '07-07 18:36',
   },
 ];
@@ -68,11 +65,14 @@ export default class MessageList extends Component {
 }
 
 const styles = {
-  item: { borderBottom: '1px solid #eee', margin: '0 15px 20px' },
+  item: {
+    borderBottom: '1px solid #eee',
+    margin: '0 0 20px',
+  },
   title: {
-    fontSize: '16px',
+    fontSize: '14px',
     color: '#444',
-    marginBottom: '15px',
+    marginBottom: '10px',
     position: 'relative',
   },
   datetime: {
@@ -80,11 +80,11 @@ const styles = {
     right: '10px',
     paddingTop: '10px',
     fontSize: '12px',
-    color: '#666',
+    color: '#999',
   },
   message: {
-    fontSize: '14px',
-    color: '#666',
+    fontSize: '12px',
+    color: '#999',
     marginBottom: '20px',
     width: '790px',
   },
