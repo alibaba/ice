@@ -77,33 +77,43 @@ export default class MapChart extends Component {
     const dvData = ds.createView().source(userData);
     // assign centroid point (x, y) to user data
     dvData.transform({
-      type: 'geo.centroid',
+      type: 'geo.region',
       field: 'name',
       geoDataView: dvGeo,
-      as: ['x', 'y'],
+      as: ['longitude', 'latitude'],
     });
-    dvGeo.transform({
-      type: 'rename',
-      map: {
-        longitude: 'x',
-        latitude: 'y',
-      },
-    });
+
     return (
-      <Chart height={500} scale={cols} padding={[40, 90]} forceFit>
+      <Chart height={380} scale={cols} padding={[2]} forceFit>
+        <Tooltip showTitle={false} />
         <View data={dvGeo}>
           <Geom
             type="polygon"
-            position="x*y"
-            style={{ stroke: '#ddd', lineWidth: 0.5 }}
+            position="longitude*latitude"
+            style={{ fill: '#fff', stroke: '#ccc', lineWidth: 1 }}
           />
         </View>
-        <View data={dvData}>
-          <Geom type="point" position="x*y" size={0}>
+        <View
+          data={dvData}
+          scale={{
+            trend: {
+              alias: 'name',
+            },
+          }}
+        >
+          <Geom
+            type="polygon"
+            position="longitude*latitude"
+            animate={{ leave: { animation: 'fadeOut' } }}
+            opacity="value"
+            tooltip="name*trend"
+            color={['trend', ['#307ffe', '#e3edff']]}
+            size={0}
+          >
             <Label
               content="name"
               offset={0}
-              textStyle={{ fill: '#fff', fontSize: 10 }}
+              textStyle={{ fill: '#545454', fontSize: 10 }}
             />
           </Geom>
         </View>
