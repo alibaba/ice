@@ -4,11 +4,9 @@ import { Chart, Geom, Tooltip } from 'bizcharts';
 export default class LintChart extends Component {
   static displayName = 'LintChart';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
   constructor(props) {
     super(props);
     this.state = {};
@@ -33,13 +31,8 @@ export default class LintChart extends Component {
     return (
       <Chart height={40} data={data} scale={cols} forceFit padding={[2, 30]}>
         <Tooltip crosshairs={{ type: 'y' }} />
-        <Geom
-          type="line"
-          position="year*value"
-          color="#3fa1ff"
-        />
+        <Geom type="line" position="year*value" color="#3fa1ff" />
       </Chart>
     );
   }
 }
-

@@ -19,28 +19,32 @@ const activePages = [
 const ViewedProducts = [
   {
     id: 1,
-    pic: 'https://img.alicdn.com/imgextra/i3/2616970884/TB2_EHOgS3PL1JjSZFtXXclRVXa_!!2616970884.jpg_60x60q90.jpg',
+    pic:
+      'https://img.alicdn.com/imgextra/i3/2616970884/TB2_EHOgS3PL1JjSZFtXXclRVXa_!!2616970884.jpg_60x60q90.jpg',
     title: 'Apple/苹果',
     cate: '电子产品',
     amount: '38,600',
   },
   {
     id: 2,
-    pic: 'https://img.alicdn.com/imgextra/i2/1714128138/TB2NVRzcbMlyKJjSZFlXXbMoFXa_!!1714128138.jpg_60x60q90.jpg',
+    pic:
+      'https://img.alicdn.com/imgextra/i2/1714128138/TB2NVRzcbMlyKJjSZFlXXbMoFXa_!!1714128138.jpg_60x60q90.jpg',
     title: 'Xiaomi/小米5X',
     cate: '电子产品',
     amount: '33,779',
   },
   {
     id: 3,
-    pic: 'https://img.alicdn.com/imgextra/i3/3081047815/TB2i7McmHsTMeJjy1zcXXXAgXXa_!!3081047815.jpg_60x60q90.jpg',
+    pic:
+      'https://img.alicdn.com/imgextra/i3/3081047815/TB2i7McmHsTMeJjy1zcXXXAgXXa_!!3081047815.jpg_60x60q90.jpg',
     title: '天猫精灵',
     cate: '智能家居',
     amount: '29,588',
   },
   {
     id: 4,
-    pic: 'https://img.alicdn.com/imgextra/i1/1714128138/TB2ABOCcV5N.eBjSZFKXXX_QVXa_!!1714128138.jpg_60x60q90.jpg',
+    pic:
+      'https://img.alicdn.com/imgextra/i1/1714128138/TB2ABOCcV5N.eBjSZFKXXX_QVXa_!!1714128138.jpg_60x60q90.jpg',
     title: '小米盒子3',
     cate: '智能小家电',
     amount: '8,636',
@@ -50,17 +54,13 @@ const ViewedProducts = [
 export default class TopActiveChart extends Component {
   static displayName = 'TopActiveChart';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   renderProduct = (value, index, record) => {
@@ -70,7 +70,7 @@ export default class TopActiveChart extends Component {
         <p style={styles.prodyctTitle}>{record.title}</p>
       </div>
     );
-  }
+  };
 
   render() {
     return (
@@ -78,26 +78,52 @@ export default class TopActiveChart extends Component {
         <Col xxs="24" s="12" l="12">
           <IceContainer>
             <h2>活跃页面</h2>
-            <Table dataSource={activePages} hasBorder={false} hasHeader={false} style={{ width: '100%' }}>
+            <Table
+              dataSource={activePages}
+              hasBorder={false}
+              hasHeader={false}
+              style={{ width: '100%' }}
+            >
               <Table.Column title="ID" dataIndex="id" width="5%" />
               <Table.Column title="页面" dataIndex="page" />
               <Table.Column title="销售数量" dataIndex="amount" />
-              <Table.Column title="销售占比" dataIndex="page" cell={(value, index, record) => <Progress percent={record.percent} showInfo={false} />} />
+              <Table.Column
+                title="销售占比"
+                dataIndex="page"
+                cell={(value, index, record) => (
+                  <Progress percent={record.percent} showInfo={false} />
+                )}
+              />
             </Table>
           </IceContainer>
         </Col>
         <Col xxs="24" s="12" l="12">
           <IceContainer>
             <h2>浏览最多</h2>
-            <Table dataSource={ViewedProducts} hasBorder={false} hasHeader={false} style={{ width: '100%' }}>
-              <Table.Column title="产品" dataIndex="title" cell={(value, index, record) => this.renderProduct(value, index, record)} width="40%" />
+            <Table
+              dataSource={ViewedProducts}
+              hasBorder={false}
+              hasHeader={false}
+              style={{ width: '100%' }}
+            >
+              <Table.Column
+                title="产品"
+                dataIndex="title"
+                cell={(value, index, record) =>
+                  this.renderProduct(value, index, record)
+                }
+                width="40%"
+              />
               <Table.Column title="分类" dataIndex="cate" width="20%" />
-              <Table.Column title="销售趋势" width="20%" cell={() => <LintChart />} />
+              <Table.Column
+                title="销售趋势"
+                width="20%"
+                cell={() => <LintChart />}
+              />
               <Table.Column title="销售数量" dataIndex="amount" width="20%" />
             </Table>
           </IceContainer>
         </Col>
-
       </Row>
     );
   }
