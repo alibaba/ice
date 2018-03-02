@@ -47,9 +47,9 @@ export default class VisitorsLocationChart extends Component {
           <Col xxs="24" l="8">
             {data.map((item, index) => {
               return (
-                <Row style={styles.item}>
+                <Row style={styles.item} key={index}>
                   <Col xxs="6" l="6">
-                    <img src={item.pic} style={styles.itemPic} />
+                    <img src={item.pic} style={styles.itemPic} alt="" />
                   </Col>
                   <Col xxs="17" l="17">
                     <p style={styles.itemCity}>{item.city}</p>

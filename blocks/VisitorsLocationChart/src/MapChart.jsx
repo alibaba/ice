@@ -1,16 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Coord,
-  Label,
-  Legend,
-  View,
-  Guide,
-  Shape,
-} from 'bizcharts';
+import { Chart, Geom, Tooltip, Label, View } from 'bizcharts';
 import axios from 'axios';
 import { DataSet } from '@antv/data-set';
 
