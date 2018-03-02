@@ -7,6 +7,7 @@
 
 <p align="center">
   <a href="https://github.com/alibaba/ice/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
+  <a href="https://github.com/alibaba/ice"><img src="https://img.shields.io/badge/developing%20with-ICE-2077ff.svg"></a>
 </p>
 
 ---
@@ -19,9 +20,9 @@
 
 ## 项目开发和使用方式
 
-下载 [iceworks](https://alibaba.github.io/ice/#/iceworks) 并创建项目，然后创建页面进行物料搭建组合，之后可以打开编辑器进行二次编码，完成之后点击构建即可打包出可用的 JS、CSS bundle。
+下载 [Iceworks](https://alibaba.github.io/ice/#/iceworks) 并创建项目，然后创建页面进行物料搭建组合，之后可以打开编辑器进行二次编码，完成之后点击构建即可打包出可用的 JS、CSS bundle。
 
-详细步骤请参见文档：[iceworks 快速上手](https://alibaba.github.io/ice/#/iceworks/start)。
+详细步骤请参见文档：[Iceworks 快速上手](https://alibaba.github.io/ice/#/iceworks/start)。
 
 ## 物料开发和发布方式
 
@@ -31,8 +32,15 @@
 - `npm run lint` 代码 Lint 风格检查
 - `npm run publish` 代码发布
 
+## README 徽章
+
+如果你的项目正在使用飞冰，可以将飞冰徽章 [![ice](https://img.shields.io/badge/developing%20with-ICE-2077ff.svg)](https://github.com/alibaba/ice) 添加到你的 README 中：
+```
+[![ice](https://img.shields.io/badge/developing%20with-ICE-2077ff.svg)](https://github.com/alibaba/ice)
+```
+
 ## 社区
 
-扫码进入 ICE 公测钉钉群（加入钉钉群即可公测并反馈问题）
+扫码进入飞冰公测钉钉群（加入钉钉群即可公测并反馈问题）
 
 <img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iLI8kxPI8KJjSspoXXX6MFXa-1242-1602.jpg" width="200">
