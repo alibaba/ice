@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/terms-info-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "协议信息展示",
   "main": "lib/index.js",
   "files": [
@@ -39,7 +39,7 @@
     "themePackage": "@icedesign/skin",
     "title": "协议信息展示",
     "categories": [
-      "info-display"
+      "信息展示"
     ]
   },
   "scripts": {

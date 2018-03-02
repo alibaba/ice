@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/signup-form-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "登录表单",
   "main": "lib/index.js",
   "files": [
@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
+    "@icedesign/form-binder": "^0.1.4",
     "@icedesign/icon": "^0.1.0",
     "prop-types": "^15.5.8"
   },
@@ -39,7 +40,7 @@
     "themePackage": "@icedesign/skin",
     "title": "登录表单",
     "categories": [
-      "form"
+      "表单"
     ]
   },
   "scripts": {

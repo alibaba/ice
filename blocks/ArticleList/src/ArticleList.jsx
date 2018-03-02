@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Icon } from '@icedesign/base';
-import './ArticleList.scss';
 
 const generatorData = () => {
   return Array.from({ length: 5 }).map(() => {
@@ -31,17 +30,17 @@ export default class ArticleList extends Component {
       <div className="article-list">
         <IceContainer style={styles.articleFilterCard}>
           <ul className="article-sort" style={styles.articleSort}>
-            <li>
-              最新 <Icon type="arrow-down" />
+            <li style={styles.sortItem}>
+              最新 <Icon type="arrow-down" size="xs" />
             </li>
-            <li>
-              最热 <Icon type="arrow-down" />
+            <li style={styles.sortItem}>
+              最热 <Icon type="arrow-down" size="xs" />
             </li>
-            <li>
-              距离截稿日期最近 <Icon type="arrow-down" />
+            <li style={styles.sortItem}>
+              距离截稿日期最近 <Icon type="arrow-down" size="xs" />
             </li>
-            <li>
-              距离开始开启最近 <Icon type="arrow-down" />
+            <li style={styles.sortItem}>
+              距离开始开启最近 <Icon type="arrow-down" size="xs" />
             </li>
           </ul>
         </IceContainer>
@@ -71,18 +70,15 @@ export default class ArticleList extends Component {
                       );
                     })}
                   </div>
-                  <div
-                    className="article-item-meta"
-                    style={styles.articleItemMeta}
-                  >
-                    <span>
-                      <Icon type="good" /> {item.like}
+                  <div style={styles.articleItemMeta}>
+                    <span style={styles.itemMetaIcon}>
+                      <Icon type="good" size="small" /> {item.like}
                     </span>
-                    <span>
-                      <Icon type="favorite" /> {item.favor}
+                    <span style={styles.itemMetaIcon}>
+                      <Icon type="favorite" size="small" /> {item.favor}
                     </span>
-                    <span>
-                      <Icon type="comments" /> {item.comment}
+                    <span style={styles.itemMetaIcon}>
+                      <Icon type="comments" size="small" /> {item.comment}
                     </span>
                   </div>
                 </div>
@@ -96,20 +92,39 @@ export default class ArticleList extends Component {
 }
 
 const styles = {
-  articleFilterCard: { marginBottom: '10px', minHeight: 'auto' },
+  articleFilterCard: {
+    marginBottom: '10px',
+    minHeight: 'auto',
+  },
   articleSort: {
     margin: '0',
     padding: '0',
     display: 'flex',
+  },
+  sortItem: {
+    cursor: 'pointer',
+    listStyle: 'none',
+    fontSize: '14px',
+    marginRight: '30px',
   },
   articleItem: {
     marginBottom: '30px',
     paddingBottom: '30px',
     borderBottom: '1px solid #f5f5f5',
   },
-  title: { fontSize: '16px', color: '#333', textDecoration: 'none' },
-  desc: { lineHeight: '24px', fontSize: '14px', color: '#999' },
-  articleItemFooter: { position: 'relative' },
+  title: {
+    fontSize: '16px',
+    color: '#333',
+    textDecoration: 'none',
+  },
+  desc: {
+    lineHeight: '24px',
+    fontSize: '14px',
+    color: '#999',
+  },
+  articleItemFooter: {
+    position: 'relative',
+  },
   tag: {
     fontSize: '13px',
     background: '#f5f5f5',
@@ -122,5 +137,10 @@ const styles = {
     position: 'absolute',
     right: '0',
     top: '0',
+  },
+  itemMetaIcon: {
+    fontSize: '14px',
+    color: '#999',
+    marginRight: '15px',
   },
 };

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/user-form-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "files": [
     "src/",
@@ -47,7 +47,7 @@
     "snapshot": "https://img.alicdn.com/tfs/TB1oixzXMmTBuNjy1XbXXaMrVXa-1210-1050.png",
     "title": "新增用户表单",
     "categories": [
-      "form"
+      "表单"
     ],
     "themePackage": "@icedesign/skin"
   }

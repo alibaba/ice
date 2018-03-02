@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/tab-dialog-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "标签内容弹窗",
   "files": [
     "src/",
@@ -36,7 +36,7 @@
     "name": "tab-dialog",
     "title": "标签内容弹窗",
     "categories": [
-      "modal"
+      "模态框"
     ],
     "snapshot": "https://img.alicdn.com/tfs/TB19AF4gOqAXuNjy1XdXXaYcVXa-1262-812.png",
     "themePackage": "@icedesign/skin"

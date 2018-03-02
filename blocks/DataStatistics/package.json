@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/data-statistics-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "files": [
     "src/",
@@ -48,7 +48,7 @@
     "snapshot": "https://img.alicdn.com/tfs/TB1X7WapfDH8KJjy1XcXXcpdXXa-1912-736.png",
     "title": "数据统计展示",
     "categories": [
-      "data-display"
+      "数据展示"
     ],
     "themePackage": "@icedesign/skin"
   }

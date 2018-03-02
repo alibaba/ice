@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/chart-stock-block",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "股票图",
   "files": [
     "src/",
@@ -41,7 +41,7 @@
     "themePackage": "@icedesign/skin",
     "title": "股票图",
     "categories": [
-      "chart"
+      "图表"
     ]
   },
   "scripts": {

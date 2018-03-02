@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/statistical-card-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "统计型卡片",
   "files": [
     "src/",
@@ -38,7 +38,7 @@
     "themePackage": "@icedesign/skin",
     "title": "统计型卡片",
     "categories": [
-      "data-display"
+      "数据展示"
     ]
   },
   "scripts": {

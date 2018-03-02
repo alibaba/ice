@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/subscribe-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "订阅",
   "files": [
     "src/",
@@ -40,7 +40,7 @@
     "themePackage": "@icedesign/skin",
     "title": "订阅",
     "categories": [
-      "form"
+      "表单"
     ]
   },
   "scripts": {

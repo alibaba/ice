@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/join-us-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "files": [
     "src/",
@@ -40,7 +40,7 @@
     "themePackage": "@icedesign/skin",
     "title": "加入我们",
     "categories": [
-      "form"
+      "表单"
     ]
   },
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/tab-chart-block",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "标签页和图表组合使用",
   "files": [
     "src/",
@@ -39,8 +39,8 @@
     "snapshot": "https://img.alicdn.com/tfs/TB1OVMBmb_I8KJjy1XaXXbsxpXa-1920-764.png",
     "title": "标签页图表组合",
     "categories": [
-      "chart",
-      "data-display"
+      "图表",
+      "数据展示"
     ],
     "themePackage": "@icedesign/skin"
   },

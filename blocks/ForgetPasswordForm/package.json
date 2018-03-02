@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/forget-password-form-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "忘记密码",
   "files": [
     "src/",
@@ -40,7 +40,7 @@
     "themePackage": "@icedesign/skin",
     "title": "忘记密码",
     "categories": [
-      "form"
+      "表单"
     ]
   },
   "scripts": {

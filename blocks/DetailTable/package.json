@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/detail-table-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "展示详情信息的表格",
   "files": [
     "src/",
@@ -39,7 +39,7 @@
     "themePackage": "@icedesign/skin",
     "title": "详情信息表格",
     "categories": [
-      "table"
+      "表格"
     ]
   },
   "scripts": {

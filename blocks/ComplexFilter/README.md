@@ -1,12 +1,5 @@
 # complex-filter
 
-简介：复杂筛选 
+简介：标签页、和下拉框组合的筛选
 
-复杂筛选
-
-![截图](https://img.alicdn.com/tfs/TB1y4M2lgvD8KJjy0FlXXagBFXa-1908-232.png)
-
-
-
-
-
+![截图](https://img.alicdn.com/tfs/TB1wuVIbamWBuNjy1XaXXXCbXXa-1914-384.png)

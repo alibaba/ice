@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/progress-table-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "进度条表格",
   "main": "lib/index.js",
   "files": [
@@ -38,7 +38,7 @@
     "themePackage": "@icedesign/skin",
     "title": "进度条表格",
     "categories": [
-      "table"
+      "表格"
     ]
   },
   "scripts": {

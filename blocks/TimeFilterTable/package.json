@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/time-filter-table-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "支持时间筛选的表格",
   "files": [
     "src/",
@@ -40,7 +40,7 @@
     "themePackage": "@icedesign/skin",
     "title": "时间筛选表格",
     "categories": [
-      "table"
+      "表格"
     ]
   },
   "scripts": {

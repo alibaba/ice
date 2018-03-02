@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Dialog, Button } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import './SuccessDialog.scss';
 
 export default class SuccessDialog extends Component {
   static displayName = 'SuccessDialog';

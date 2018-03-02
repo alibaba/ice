@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/picture-text-list-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "图文列表",
   "files": [
     "src/",
@@ -38,7 +38,7 @@
     "themePackage": "@icedesign/skin",
     "title": "图文列表",
     "categories": [
-      "list"
+      "列表"
     ]
   },
   "scripts": {

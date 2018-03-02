@@ -8,7 +8,6 @@ import {
 } from '@icedesign/form-binder';
 
 import RichEditor from './RichEditor';
-import './ContentEditor.scss';
 
 const { Row, Col } = Grid;
 const FormItem = Form.Item;

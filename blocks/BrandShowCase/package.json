@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/brand-show-case-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "files": [
     "src/",
@@ -39,7 +39,8 @@
     "themePackage": "@icedesign/skin",
     "title": "品牌展示",
     "categories": [
-      "info-display"
+      "信息展示",
+      "欢迎页"
     ]
   },
   "scripts": {

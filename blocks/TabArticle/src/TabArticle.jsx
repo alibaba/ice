@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import ArticleList from './ArticleList';
-import './TabArticle.scss';
 
 const dataSource = [
   {
@@ -110,7 +109,7 @@ const styles = {
   },
   tab: {
     cursor: 'pointer',
-    marginRight: '15px',
+    marginRight: '20px',
   },
   tabActive: {
     color: '#3080FE',

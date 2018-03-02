@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/monaco-editor-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Monaco 代码编辑器",
   "files": [
     "src/",
@@ -41,7 +41,7 @@
     "themePackage": "@icedesign/skin",
     "title": "Monaco 代码编辑器",
     "categories": [
-      "form"
+      "表单"
     ]
   },
   "scripts": {

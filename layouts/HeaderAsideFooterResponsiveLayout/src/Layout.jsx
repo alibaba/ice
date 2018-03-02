@@ -1,14 +1,18 @@
+/* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import React, { Component } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
+import { Icon } from '@icedesign/base';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { Link } from 'react-router';
-import { Icon, Button } from '@icedesign/base';
+import FoundationSymbol from 'foundation-symbol';
 import Header from './__components_Header__';
 import Footer from './__components_Footer__';
 import { asideNavs } from './__navs__';
+import './scss/light.scss';
+import './scss/dark.scss';
 
-import './Layout.scss';
+const theme = typeof THEME === 'undefined' ? 'light' : THEME;
 
 export default class HeaderAsideFooterResponsiveLayout extends Component {
   static propTypes = {};
@@ -18,30 +22,45 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
   constructor(props) {
     super(props);
 
+    const openKeys = this.getOpenKeys();
     this.state = {
       collapse: false,
+      openKeys,
     };
+    this.openKeysCache = openKeys;
   }
 
   toggleCollapse = () => {
+    document.body.classList.toggle('collapse');
+    const { collapse } = this.state;
+    const openKeys = !collapse ? [] : this.openKeysCache;
+
     this.setState({
-      collapse: !this.state.collapse,
+      collapse: !collapse,
+      openKeys,
     });
+  };
+
+  onOpenChange = (openKeys) => {
+    this.setState({
+      openKeys,
+    });
+    this.openKeysCache = openKeys;
   };
 
   // 当前打开的菜单项
   getOpenKeys = () => {
-    const { routes = [{}] } = this.props;
+    const { routes } = this.props;
     const matched = routes[0].path;
-    let openKeys = '';
+    let openKeys = [];
 
-    if (asideNavs && asideNavs.length > 0) {
-      asideNavs.forEach((item, index) => {
+    asideNavs &&
+      asideNavs.length > 0 &&
+      asideNavs.map((item, index) => {
         if (item.to === matched) {
-          openKeys = index;
+          openKeys = [`${index}`];
         }
       });
-    }
 
     return openKeys;
   };
@@ -53,31 +72,40 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     return (
       <Layout
         style={{ minHeight: '100vh' }}
-        className={cx({
-          'ice-admin-layout': true,
-          'ice-admin-header-aside-footer-responsive-layout': true,
-        })}
+        className={cx(
+          `ice-design-header-aside-footer-responsive-layout-${theme}`,
+          {
+            'ice-design-layout': true,
+          }
+        )}
       >
-        <Header />
+        <Header theme={theme} />
 
         <Layout.Section>
-          <Layout.Aside width="auto">
+          <Layout.Aside
+            width="auto"
+            theme={theme}
+            className="ice-design-layout-aside"
+          >
             {/* 侧边菜单项 begin */}
-            <Button
+            <a
               className="collapse-btn"
-              style={{ width: '100%', marginBottom: 10, border: 0 }}
               shape="text"
               onClick={this.toggleCollapse}
             >
-              <Icon type={this.state.collapse ? 'arrow-right' : 'arrow-left'} />
-            </Button>
+              <Icon
+                type={this.state.collapse ? 'arrow-right' : 'arrow-left'}
+                size="small"
+              />
+            </a>
             <Menu
-              style={{ width: this.state.collapse ? 60 : 240 }}
+              style={{ width: this.state.collapse ? 60 : 200 }}
               inlineCollapsed={this.state.collapse}
               mode="inline"
               selectedKeys={[pathname]}
+              openKeys={this.state.openKeys}
               defaultSelectedKeys={[pathname]}
-              defaultOpenKeys={[`${this.getOpenKeys()}`]}
+              onOpenChange={this.onOpenChange}
             >
               {asideNavs &&
                 asideNavs.length > 0 &&
@@ -89,7 +117,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                         title={
                           <span>
                             {nav.icon ? (
-                              <Icon size="xs" type={nav.icon} />
+                              <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
                             <span className="ice-menu-collapse-hide">
                               {nav.text}
@@ -132,7 +160,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                     <MenuItem key={nav.to}>
                       <Link {...linkProps}>
                         <span>
-                          {nav.icon ? <Icon size="xs" type={nav.icon} /> : null}
+                          {nav.icon ? (
+                            <FoundationSymbol size="small" type={nav.icon} />
+                          ) : null}
                           <span className="ice-menu-collapse-hide">
                             {nav.text}
                           </span>

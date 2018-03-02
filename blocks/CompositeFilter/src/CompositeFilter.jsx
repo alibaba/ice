@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Search, Tab, Tag, DatePicker } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import './CompositeFilter.scss';
 
 const TabPane = Tab.TabPane;
 
@@ -72,7 +71,8 @@ export default class CompositeFilter extends Component {
                   onChange={this.onDateChange}
                 />
                 <Search
-                  placeholder="标题"
+                  placeholder="搜索"
+                  searchText=""
                   inputWidth={150}
                   onSearch={this.onSearch}
                   style={styles.search}
@@ -92,7 +92,7 @@ export default class CompositeFilter extends Component {
               return (
                 <Tag
                   shape="selectable"
-                  type="primary"
+                  type="normal"
                   key={index}
                   onChange={this.onTagChange.bind(this, tag.key)}
                 >
@@ -108,13 +108,19 @@ export default class CompositeFilter extends Component {
 }
 
 const styles = {
-  compositeFilter: {},
-  filterCard: { position: 'relative', padding: 10 },
-  tagList: { marginTop: '10px' },
+  filterCard: {
+    position: 'relative',
+    padding: 10,
+  },
+  tagList: {
+    marginTop: '10px',
+  },
   extraFilter: {
     marginTop: '8px',
     display: 'flex',
     flexDirection: 'row',
   },
-  search: { marginLeft: '12px' },
+  search: {
+    marginLeft: '12px',
+  },
 };

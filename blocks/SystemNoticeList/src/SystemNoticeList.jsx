@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Pagination } from '@icedesign/base';
-import './SystemNoticeList.scss';
 
 const dataSource = [
   {
@@ -71,7 +70,9 @@ export default class SystemNoticeList extends Component {
                       {item.title}
                     </a>
                     {item.tag && (
-                      <span className={`${item.tag}`} style={styles.noticeTag}>
+                      <span
+                        style={{ ...styles.noticeTag, ...styles[item.tag] }}
+                      >
                         {dict[item.tag]}
                       </span>
                     )}
@@ -96,8 +97,8 @@ export default class SystemNoticeList extends Component {
 
 const styles = {
   title: {
-    margin: '0',
-    fontSize: '16px',
+    margin: '0 0 10px',
+    fontSize: '18px',
   },
   noticeList: {
     margin: 0,
@@ -111,7 +112,7 @@ const styles = {
   },
   noticeTitle: {
     fontSize: '14px',
-    color: '#333',
+    color: '#666',
     textDecoration: 'none',
   },
   noticeTag: {
@@ -130,5 +131,17 @@ const styles = {
   paginationWrap: {
     marginTop: '20px',
     textAlign: 'right',
+  },
+  up: {
+    color: '#4296ff',
+    background: '#eff6ff',
+  },
+  new: {
+    color: '#fca61c',
+    background: '#fff4e2',
+  },
+  hot: {
+    color: '#f86d6d',
+    background: '#ffe8e8',
   },
 };

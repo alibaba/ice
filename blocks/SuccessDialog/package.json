@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/success-dialog-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "提示框-成功",
   "main": "lib/index.js",
   "files": [
@@ -37,7 +37,7 @@
     "name": "success-dialog",
     "title": "成功提示框",
     "categories": [
-      "modal"
+      "模态框"
     ],
     "snapshot": "https://img.alicdn.com/tfs/TB1CMVpi5qAXuNjy1XdXXaYcVXa-1278-540.png",
     "themePackage": "@icedesign/skin"

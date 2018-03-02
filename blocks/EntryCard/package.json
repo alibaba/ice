@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/entry-card-block",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "入口列表卡片",
   "main": "lib/index.js",
   "files": [
@@ -39,7 +39,7 @@
     "themePackage": "@icedesign/skin",
     "title": "入口列表卡片",
     "categories": [
-      "list"
+      "列表"
     ]
   },
   "scripts": {

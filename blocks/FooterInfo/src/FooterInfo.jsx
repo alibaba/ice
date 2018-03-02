@@ -69,11 +69,15 @@ export default class FooterInfo extends Component {
 }
 
 const styles = {
-  container: { background: '#1861D5', padding: '80px 0' },
+  container: {
+    background: '#1861D5',
+    padding: '80px 0',
+    width: '100%',
+  },
   items: {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '1080px',
+    maxWidth: '1080px',
     margin: '0 auto',
   },
   item: {
@@ -83,12 +87,19 @@ const styles = {
     borderRadius: '6px',
     textAlign: 'center',
   },
-  itemTitle: { margin: '20px 0', color: '#fff', fontSize: '24px' },
+  itemTitle: {
+    margin: '20px 0',
+    color: '#fff',
+    fontSize: '24px',
+  },
   navLink: {
     display: 'block',
     height: '32px',
     lineHeight: '32px',
     color: '#E1EEFF',
   },
-  copyRight: { color: '#fff', textAlign: 'center' },
+  copyRight: {
+    color: '#fff',
+    textAlign: 'center',
+  },
 };

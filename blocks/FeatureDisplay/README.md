@@ -2,9 +2,4 @@
 
 简介：功能特点展示
 
-![截图](https://img.alicdn.com/tfs/TB1W3vQi3vD8KJjy0FlXXagBFXa-1914-1522.png)
-
-
-
-
-
+![截图](https://img.alicdn.com/tfs/TB1.0ykaTtYBeNjy1XdXXXXyVXa-2320-1460.png)
