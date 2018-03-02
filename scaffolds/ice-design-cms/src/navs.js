@@ -89,7 +89,9 @@ function transform(navs) {
   return [...navs];
 }
 
-export default {
-  headerNavs: transform([...autoGenHeaderNavs, ...customHeaderNavs]),
-  asideNavs: transform([...autoGenAsideNavs, ...customAsideNavs]),
-};
+export const headerNavs = transform([
+  ...autoGenHeaderNavs,
+  ...customHeaderNavs,
+]);
+
+export const asideNavs = transform([...autoGenAsideNavs, ...customAsideNavs]);
