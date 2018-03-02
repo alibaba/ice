@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Chart, Geom, Tooltip, Coord, Label, Legend, Guide } from 'bizcharts';
 import { DataView } from '@antv/data-set';
-import './ChartFunnel.scss';
 
 export default class ChartFunnel extends Component {
   static displayName = 'ChartFunnel';

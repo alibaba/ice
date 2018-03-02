@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/testimonial-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "files": [
     "src/",
@@ -34,11 +34,12 @@
   },
   "blockConfig": {
     "name": "testimonial",
-    "snapshot": "https://img.alicdn.com/tfs/TB1N4oni8fH8KJjy1XbXXbLdXXa-2692-1250.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1W6KmaTtYBeNjy1XdXXXXyVXa-2402-1110.png",
     "themePackage": "@icedesign/skin",
     "title": "客户评价展示",
     "categories": [
-      "info-display"
+      "信息展示",
+      "欢迎页"
     ]
   },
   "scripts": {

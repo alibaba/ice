@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/tag-table-block",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "标签表格组合",
   "files": [
     "src/",
@@ -38,7 +38,7 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
     "@icedesign/skin": "latest",
-    "ice-scripts": "^0.1.13",
+    "ice-scripts": "^0.1.16",
     "react": "*",
     "react-dom": "*"
   },
@@ -47,9 +47,9 @@
     "snapshot": "https://img.alicdn.com/tfs/TB1aEQDXmBYBeNjy0FeXXbnmFXa-945-351.png",
     "title": "标签表格组合",
     "categories": [
-      "table",
-      "filter",
-      "data-display"
+      "表格",
+      "筛选",
+      "数据展示"
     ],
     "themePackage": "@icedesign/skin"
   }

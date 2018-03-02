@@ -16,8 +16,6 @@ import {
   Radio,
 } from '@icedesign/base';
 
-import './CreateActivityForm.scss';
-
 // Form 和 FormItem 用于描述表单 UI 结构
 // FormBinder 用于获取表单组件的数据，通过标准受控 API value 和 onChange 来双向操作数据
 // Inpput 等为具体表单组件

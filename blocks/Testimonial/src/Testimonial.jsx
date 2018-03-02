@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './Testimonial.scss';
 
 const generatorData = (count) => {
   return Array.from({ length: count }).map(() => {
@@ -73,7 +72,8 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     padding: '80px 0',
-    width: '1080px',
+    width: '100%',
+    maxWidth: '1080px',
     margin: '0 auto',
   },
   item: {
@@ -111,5 +111,6 @@ const styles = {
   },
   description: {
     lineHeight: '28px',
+    color: '#999',
   },
 };

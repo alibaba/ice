@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './ProductInfo.scss';
 
 const dataSource = [
   {
@@ -67,7 +66,8 @@ const styles = {
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '1080px',
+    width: '100%',
+    maxWidth: '1080px',
     margin: '0 auto',
     padding: '80px 0',
   },
@@ -86,5 +86,6 @@ const styles = {
   },
   desc: {
     lineHeight: '22px',
+    color: '#999',
   },
 };

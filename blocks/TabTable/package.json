@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/tab-table-block",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "",
   "files": [
     "src/",
@@ -47,7 +47,7 @@
     "snapshot": "https://img.alicdn.com/tfs/TB1IYWRXeuSBuNjy1XcXXcYjFXa-1902-906.png",
     "title": "标签页表格组合",
     "categories": [
-      "table"
+      "表格"
     ],
     "themePackage": "@icedesign/skin"
   }

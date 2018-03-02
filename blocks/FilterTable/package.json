@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/filter-table-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "附带筛选工具条的表格",
   "files": [
     "src/",
@@ -42,7 +42,7 @@
     "themePackage": "@icedesign/skin",
     "title": "支持筛选的表格",
     "categories": [
-      "table"
+      "表格"
     ]
   },
   "scripts": {

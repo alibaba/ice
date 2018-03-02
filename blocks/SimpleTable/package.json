@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/simple-table-block",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "基础的表格",
   "main": "lib/index.js",
   "files": [
@@ -41,7 +41,7 @@
     "themePackage": "@icedesign/skin",
     "title": "基础表格",
     "categories": [
-      "table"
+      "表格"
     ]
   },
   "scripts": {

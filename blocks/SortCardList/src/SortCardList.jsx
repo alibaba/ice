@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import './SortCardList.scss';
 
 const stateBackgroundMap = {
   0: '#F4F7FF',
@@ -176,7 +175,7 @@ const styles = {
     color: '#000',
   },
   cardItem: {
-    width: '324px',
+    width: '300px',
     height: '80px',
     borderRadius: '4px',
     marginBottom: '10px',

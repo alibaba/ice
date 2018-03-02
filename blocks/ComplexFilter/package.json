@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/complex-filter-block",
-  "version": "0.1.9",
-  "description": "复杂筛选",
+  "version": "0.1.11",
+  "description": "标签页组合筛选",
   "files": [
     "src/",
     "demo/",
@@ -34,11 +34,11 @@
   },
   "blockConfig": {
     "name": "complex-filter",
-    "snapshot": "https://img.alicdn.com/tfs/TB1y4M2lgvD8KJjy0FlXXagBFXa-1908-232.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1wuVIbamWBuNjy1XaXXXCbXXa-1914-384.png",
     "themePackage": "@icedesign/skin",
-    "title": "复杂筛选",
+    "title": "标签页组合筛选",
     "categories": [
-      "filter"
+      "筛选"
     ]
   },
   "scripts": {

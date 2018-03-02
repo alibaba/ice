@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Dialog, Button } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import './ConfirmDialog.scss';
 
 export default class ConfirmDialog extends Component {
   static displayName = 'ConfirmDialog';

@@ -1,0 +1,339 @@
+{
+  "layouts": [
+    {
+      "source": "@icedesign/header-footer-layout",
+      "alias": "HeaderFooterLayout",
+      "title": "顶栏-底栏布局"
+    },
+    {
+      "source": "@icedesign/header-aside-footer-layout",
+      "alias": "HeaderAsideFooterLayout",
+      "title": "顶栏-侧栏-底栏-布局"
+    },
+    {
+      "source": "@icedesign/header-aside-footer-responsive-layout",
+      "alias": "HeaderAsideFooterResponsiveLayout",
+      "title": "顶栏-侧栏-底栏-响应式布局"
+    },
+    {
+      "source": "@icedesign/blank-layout",
+      "alias": "BlankLayout",
+      "title": "空白布局"
+    }
+  ],
+  "components": [],
+  "routes": [
+    {
+      "page": "Dashboard",
+      "path": "/",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/display-card-block",
+          "name": "DisplayCard",
+          "version": "latest",
+          "title": "展示型卡片"
+        },
+        {
+          "npm": "@icedesign/tab-chart-block",
+          "name": "TabChart",
+          "version": "latest",
+          "title": "标签页和图表组合使用"
+        },
+        {
+          "npm": "@icedesign/pie-doughnut-chart-block",
+          "name": "PieDoughnutChart",
+          "version": "latest",
+          "title": "双列饼图"
+        },
+        {
+          "npm": "@icedesign/progress-table-block",
+          "name": "ProgressTable",
+          "version": "latest",
+          "title": "进度条表格"
+        },
+        {
+          "npm": "@icedesign/editable-table-block",
+          "name": "EditableTable",
+          "version": "latest",
+          "title": "可编辑内容的表格"
+        },
+        {
+          "npm": "@icedesign/chart-bar-block",
+          "name": "ChartBar",
+          "version": "latest",
+          "title": "柱状图"
+        }
+      ]
+    },
+    {
+      "page": "Charts",
+      "path": "/chart/chart-list",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/chart-bar-block",
+          "name": "ChartBar",
+          "version": "latest",
+          "title": "柱状图"
+        },
+        {
+          "npm": "@icedesign/chart-area-block",
+          "name": "ChartArea",
+          "version": "latest",
+          "title": "面积图"
+        },
+        {
+          "npm": "@icedesign/chart-bubble-image-block",
+          "name": "ChartBubbleImage",
+          "version": "latest",
+          "title": "自定义气泡图"
+        },
+        {
+          "npm": "@icedesign/chart-box-block",
+          "name": "ChartBox",
+          "version": "latest",
+          "title": "箱型图"
+        },
+        {
+          "npm": "@icedesign/chart-type-line-block",
+          "name": "ChartTypeLine",
+          "version": "latest",
+          "title": "折线图"
+        },
+        {
+          "npm": "@icedesign/chart-radar-block",
+          "name": "ChartRadar",
+          "version": "latest",
+          "title": "雷达图"
+        }
+      ]
+    },
+    {
+      "page": "Portlets",
+      "path": "portlets/base",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/basic-detail-info-block",
+          "name": "BasicDetailInfo",
+          "version": "latest",
+          "title": "基础详情信息展示"
+        },
+        {
+          "npm": "@icedesign/collapse-card-block",
+          "name": "CollapseCard",
+          "version": "latest",
+          "title": "折叠型卡片的信息展示"
+        },
+        {
+          "npm": "@icedesign/detail-table-block",
+          "name": "DetailTable",
+          "version": "latest",
+          "title": "展示详情信息的表格"
+        }
+      ]
+    },
+    {
+      "page": "Terms",
+      "path": "portlets/terms",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/terms-info-block",
+          "name": "TermsInfo",
+          "version": "latest",
+          "title": "协议信息展示"
+        }
+      ]
+    },
+    {
+      "page": "ProgressInfo",
+      "path": "portlets/progress",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/text-card-block",
+          "name": "TextCard",
+          "version": "latest",
+          "title": "纯文字展示型卡片"
+        },
+        {
+          "npm": "@icedesign/application-progress-block",
+          "name": "ApplicationProgress",
+          "version": "latest",
+          "title": "申请进度信息展示"
+        }
+      ]
+    },
+    {
+      "page": "Result",
+      "path": "result/success",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/success-detail-block",
+          "name": "SuccessDetail",
+          "version": "latest",
+          "title": "成功详情信息展示"
+        }
+      ]
+    },
+    {
+      "page": "Fail",
+      "path": "result/fail",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/failure-detail-block",
+          "name": "FailureDetail",
+          "version": "latest",
+          "title": "提交失败详情展示"
+        }
+      ]
+    },
+    {
+      "page": "ServerError",
+      "path": "exception/500",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/basic-exception-block",
+          "name": "BasicException",
+          "version": "latest",
+          "title": "基础异常报错"
+        }
+      ]
+    },
+    {
+      "page": "Forbidden",
+      "path": "exception/403",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/not-permission-block",
+          "name": "NotPermission",
+          "version": "latest",
+          "title": "无权限提示"
+        }
+      ]
+    },
+    {
+      "page": "Empty",
+      "path": "exception/204",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/empty-content-block",
+          "name": "EmptyContent",
+          "version": "latest",
+          "title": "空内容提示"
+        }
+      ]
+    },
+    {
+      "page": "List",
+      "path": "list/article-list",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/text-search-list-block",
+          "name": "TextSearchList",
+          "version": "latest",
+          "title": "文字搜索列表"
+        }
+      ]
+    },
+    {
+      "page": "CardList",
+      "path": "list/card-list",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/info-display-tab-block",
+          "name": "InfoDisplayTab",
+          "version": "latest",
+          "title": "标签页信息展示"
+        }
+      ]
+    },
+    {
+      "page": "BasicTable",
+      "path": "table/basic-table",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/selectable-table-block",
+          "name": "SelectableTable",
+          "version": "latest",
+          "title": "可批量操作的表格"
+        },
+        {
+          "npm": "@icedesign/editable-table-block",
+          "name": "EditableTable",
+          "version": "latest",
+          "title": "可编辑内容的表格"
+        },
+        {
+          "npm": "@icedesign/sortable-table-block",
+          "name": "SortableTable",
+          "version": "latest",
+          "title": "可排序表格"
+        }
+      ]
+    },
+    {
+      "page": "TableDisplay",
+      "path": "table/table-display",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/progress-table-block",
+          "name": "ProgressTable",
+          "version": "latest",
+          "title": "进度条表格"
+        },
+        {
+          "npm": "@icedesign/info-display-table-block",
+          "name": "InfoDisplayTable",
+          "version": "latest",
+          "title": "两栏信息展示型表格"
+        },
+        {
+          "npm": "@icedesign/detail-table-block",
+          "name": "DetailTable",
+          "version": "latest",
+          "title": "展示详情信息的表格"
+        }
+      ]
+    },
+    {
+      "page": "NotFound",
+      "path": "exception/404",
+      "layout": "HeaderAsideFooterLayout",
+      "builtIn": true,
+      "blocks": [
+        {
+          "npm": "@icedesign/basic-not-found-block",
+          "name": "BasicNotFound",
+          "version": "latest",
+          "title": "404 报错提示"
+        }
+      ]
+    }
+  ]
+}

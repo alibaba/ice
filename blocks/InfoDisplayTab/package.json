@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/info-display-tab-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "标签页信息展示",
   "main": "lib/index.js",
   "files": [
@@ -41,7 +41,7 @@
     "themePackage": "@icedesign/skin",
     "title": "标签页信息展示",
     "categories": [
-      "info-display"
+      "信息展示"
     ]
   },
   "scripts": {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Button } from '@icedesign/base';
-import './ArticleList.scss';
 
 export default class ArticleList extends Component {
   static displayName = 'ArticleList';
@@ -11,9 +10,9 @@ export default class ArticleList extends Component {
     console.log('handleTagClick:', text);
   };
 
-  renderTag = (text, onClick, idx) => {
+  renderTag = (text, onClick) => {
     return (
-      <Button size="small" onClick={onClick} key={idx} style={styles.button}>
+      <Button key={text} size="small" onClick={onClick} style={styles.button}>
         {text}
       </Button>
     );
@@ -84,7 +83,8 @@ const styles = {
   },
   desc: {
     color: '#999',
-    fontSize: '14px',
+    fontSize: '13px',
+    lineHeight: '24px',
     paddingBottom: '15px',
   },
   information: {

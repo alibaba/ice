@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/confirm-dialog-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "确认类型的提示框",
   "main": "lib/index.js",
   "files": [
@@ -37,7 +37,7 @@
     "name": "confirm-dialog",
     "title": "确认类型的提示框",
     "categories": [
-      "modal"
+      "模态框"
     ],
     "snapshot": "https://img.alicdn.com/tfs/TB1Zr3xigvD8KJjy0FlXXagBFXa-1272-620.png",
     "themePackage": "@icedesign/skin"

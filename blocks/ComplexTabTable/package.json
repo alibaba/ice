@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/complex-tab-table-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "附带复杂的 Tab 多级筛选项的表格",
   "files": [
     "src/",
@@ -42,7 +42,7 @@
     "themePackage": "@icedesign/skin",
     "title": "复杂 Tab 筛选表格",
     "categories": [
-      "table"
+      "表格"
     ]
   },
   "scripts": {
