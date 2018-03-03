@@ -18,8 +18,8 @@
     "registry": "http://registry.npmjs.com"
   },
   "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
+    "start": "../../node_modules/.bin/ice block dev",
+    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "dependencies": {
     "@antv/data-set": "^0.8.5",
@@ -40,7 +40,10 @@
     "snapshot":
       "https://img.alicdn.com/tfs/TB1VaqjbTtYBeNjy1XdXXXXyVXa-2854-1126.png",
     "title": "流量统计",
-    "categories": ["data-display"],
+    "categories": [
+      "图表",
+      "数据展示"
+    ],
     "themePackage": "@icedesign/skin"
   }
 }
