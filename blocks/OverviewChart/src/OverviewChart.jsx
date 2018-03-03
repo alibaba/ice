@@ -23,20 +23,17 @@ export default class OverviewChart extends Component {
     return (
       <Row type="wrap" style={styles.overviewChart}>
         <Col xxs="24" s="8" l="8">
-          <IceContainer style={{ padding: '10px 20px' }}>
-            <h2 style={styles.chartTitle}>行业特征</h2>
+          <IceContainer title="行业特征">
             <PieDonutChart />
           </IceContainer>
         </Col>
         <Col xxs="24" s="8" l="8">
-          <IceContainer style={{ padding: '10px' }}>
-            <h2 style={styles.chartTitle}>销售趋势</h2>
+          <IceContainer title="销售趋势">
             <BarChart />
           </IceContainer>
         </Col>
         <Col xxs="24" s="8" l="8">
-          <IceContainer style={{ padding: '10px' }}>
-            <h2 style={styles.chartTitle}>营收趋势</h2>
+          <IceContainer title="营收趋势">
             <LineChart />
           </IceContainer>
         </Col>
@@ -45,8 +42,4 @@ export default class OverviewChart extends Component {
   }
 }
 
-const styles = {
-  chartTitle: {
-    margin: '0 0 10px',
-  },
-};
+const styles = {};
