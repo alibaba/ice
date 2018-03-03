@@ -2,12 +2,7 @@
   "name": "@icedesign/user-traffic-stastistics",
   "version": "0.1.0",
   "description": "信息展示类，使用可视化的方式展示用户浏览以及数据分析的结果",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@antv/data-set": "^0.8.5",
     "@icedesign/base": "^0.1.0",
@@ -36,13 +28,11 @@
   },
   "blockConfig": {
     "name": "user-traffic-stastistics",
-    "snapshot": "https://img.alicdn.com/tfs/TB10wi8bwmTBuNjy1XbXXaMrVXa-2844-770.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1g5ygbTtYBeNjy1XdXXXXyVXa-2820-760.png",
     "themePackage": "@icedesign/skin",
     "title": "用户浏览数据分析",
-    "categories": [
-      "数据展示",
-      "图表"
-    ]
+    "categories": ["数据展示", "图表"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

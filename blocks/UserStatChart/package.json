@@ -47,7 +47,8 @@
     "snapshot": "https://img.alicdn.com/tfs/TB1.q8_bDtYBeNjy1XdXXXXyVXa-1832-852.png",
     "title": "用户统计数据图表",
     "categories": [
-      "chart"
+      "图表",
+      "数据展示"
     ],
     "themePackage": "@icedesign/skin"
   }

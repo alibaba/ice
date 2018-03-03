@@ -41,37 +41,37 @@ export default class VisitorsLocationChart extends Component {
 
   render() {
     return (
-      <IceContainer>
-        <h2 style={styles.title}>活跃地区</h2>
-        <Row type="wrap">
-          <Col xxs="24" l="8">
-            {data.map((item, index) => {
-              return (
-                <Row style={styles.item} key={index}>
-                  <Col xxs="6" l="6">
-                    <img src={item.pic} style={styles.itemPic} alt="" />
-                  </Col>
-                  <Col xxs="17" l="17">
-                    <p style={styles.itemCity}>{item.city}</p>
-                    <Progress percent={item.percent} />
-                  </Col>
-                </Row>
-              );
-            })}
-          </Col>
-          <Col xxs="24" l="16">
-            <MapChart />
-          </Col>
-        </Row>
-      </IceContainer>
+      <Row type="wrap">
+        <Col xxs="24" l="24">
+          <IceContainer title="活跃地区">
+            <Row type="wrap">
+              <Col xxs="24" l="8">
+                {data.map((item, index) => {
+                  return (
+                    <Row style={styles.item} key={index}>
+                      <Col xxs="6" l="6">
+                        <img src={item.pic} style={styles.itemPic} alt="" />
+                      </Col>
+                      <Col xxs="17" l="17">
+                        <p style={styles.itemCity}>{item.city}</p>
+                        <Progress percent={item.percent} />
+                      </Col>
+                    </Row>
+                  );
+                })}
+              </Col>
+              <Col xxs="24" l="16">
+                <MapChart />
+              </Col>
+            </Row>
+          </IceContainer>
+        </Col>
+      </Row>
     );
   }
 }
 
 const styles = {
-  title: {
-    margin: '0 0 20px',
-  },
   item: {
     marginBottom: '20px',
   },

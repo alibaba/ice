@@ -76,13 +76,12 @@ export default class TopActiveChart extends Component {
     return (
       <Row type="wrap" className="top-active-chart">
         <Col xxs="24" s="12" l="12">
-          <IceContainer>
-            <h2>活跃页面</h2>
+          <IceContainer title="活跃页面">
             <Table
               dataSource={activePages}
               hasBorder={false}
               hasHeader={false}
-              style={{ width: '100%' }}
+              style={{ width: '100%', height: '341px' }}
             >
               <Table.Column title="ID" dataIndex="id" width="5%" />
               <Table.Column title="页面" dataIndex="page" />
@@ -98,13 +97,12 @@ export default class TopActiveChart extends Component {
           </IceContainer>
         </Col>
         <Col xxs="24" s="12" l="12">
-          <IceContainer>
-            <h2>浏览最多</h2>
+          <IceContainer title="浏览最多">
             <Table
               dataSource={ViewedProducts}
               hasBorder={false}
               hasHeader={false}
-              style={{ width: '100%' }}
+              style={{ width: '100%', height: '341px' }}
             >
               <Table.Column
                 title="产品"

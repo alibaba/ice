@@ -16,24 +16,24 @@ export default class LineChart extends Component {
 
   render() {
     const data = [
-      { month: '01', total: 7.0, profit: 3.9 },
-      { month: '02', total: 6.9, profit: 4.2 },
-      { month: '03', total: 9.5, profit: 5.7 },
-      { month: '04', total: 14.5, profit: 8.5 },
-      { month: '05', total: 18.4, profit: 11.9 },
-      { month: '06', total: 21.5, profit: 15.2 },
-      { month: '07', total: 25.2, profit: 17.0 },
-      { month: '08', total: 26.5, profit: 16.6 },
-      { month: '09', total: 23.3, profit: 14.2 },
-      { month: '10', total: 18.3, profit: 10.3 },
-      { month: '11', total: 13.9, profit: 6.6 },
-      { month: '12', total: 9.6, profit: 4.8 },
+      { month: '01/01', SiteA: 7000, SiteB: 3900 },
+      { month: '02/01', SiteA: 6900, SiteB: 4200 },
+      { month: '03/01', SiteA: 9500, SiteB: 5700 },
+      { month: '04/01', SiteA: 14500, SiteB: 8500 },
+      { month: '05/01', SiteA: 18400, SiteB: 11900 },
+      { month: '06/01', SiteA: 21500, SiteB: 15200 },
+      { month: '07/01', SiteA: 25200, SiteB: 17000 },
+      { month: '08/01', SiteA: 26500, SiteB: 16600 },
+      { month: '09/01', SiteA: 23300, SiteB: 14200 },
+      { month: '10/01', SiteA: 18300, SiteB: 10300 },
+      { month: '11/01', SiteA: 13900, SiteB: 6600 },
+      { month: '12/01', SiteA: 9600, SiteB: 4800 },
     ];
     const ds = new DataSet();
     const dv = ds.createView().source(data);
     dv.transform({
       type: 'fold',
-      fields: ['total', 'profit'], // 展开字段集
+      fields: ['SiteA', 'SiteB'], // 展开字段集
       key: 'city', // key字段
       value: 'temperature', // value字段
     });
@@ -45,11 +45,11 @@ export default class LineChart extends Component {
     };
     return (
       <Chart
-        height={200}
+        height={350}
         data={dv}
         scale={cols}
         forceFit
-        padding={[10, 20, 30, 10]}
+        padding={[30, 30, 30, 60]}
       >
         <Axis name="month" />
         <Axis name="temperature" label={{ formatter: (val) => `${val}` }} />
@@ -58,15 +58,14 @@ export default class LineChart extends Component {
           type="line"
           position="month*temperature"
           size={2}
-          color="city"
-          shape="smooth"
+          color={'city'}
         />
         <Geom
           type="point"
           position="month*temperature"
           size={4}
-          shape="circle"
-          color="city"
+          shape={'circle'}
+          color={'city'}
           style={{ stroke: '#fff', lineWidth: 1 }}
         />
       </Chart>
