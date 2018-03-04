@@ -115,7 +115,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
     return (
       <ContainerQuery query={query}>
-        {(params) => (
+        {params => (
           <div className={cx(params)}>
             <Layout
               style={{ minHeight: '100vh' }}
@@ -125,7 +125,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
             >
               <Header
                 theme={theme}
-                isMobile={this.state.isScreen !== 'isDesktop' ? true : false}
+                isMobile={this.state.isScreen !== 'isDesktop'}
               />
 
               <Layout.Section className="ice-design-layout-body">

@@ -1,3 +1,4 @@
+/* eslint no-plusplus:0 */
 import React, { Component } from 'react';
 import { Chart, Geom, Tooltip, Label, View } from 'bizcharts';
 import axios from 'axios';

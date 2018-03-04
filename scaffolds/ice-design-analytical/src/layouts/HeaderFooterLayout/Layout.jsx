@@ -45,7 +45,7 @@ export default class BasicLayout extends PureComponent {
 
   enquireScreenRegister = () => {
     const mediaCondition = `only screen and (max-width: ${
-      query['screen-xs']['maxWidth']
+      query['screen-xs'].maxWidth
     }px)`;
 
     enquireScreen((mobile) => {
@@ -59,7 +59,7 @@ export default class BasicLayout extends PureComponent {
     console.log('isMobile:', this.state.isMobile);
     return (
       <ContainerQuery query={query}>
-        {(params) => (
+        {params => (
           <div className={cx(params)}>
             <Layout
               style={{ minHeight: '100vh' }}
