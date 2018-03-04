@@ -52,20 +52,20 @@ export default class LineChart extends Component {
         padding={[30, 30, 30, 60]}
       >
         <Axis name="month" />
-        <Axis name="temperature" label={{ formatter: (val) => `${val}` }} />
+        <Axis name="temperature" label={{ formatter: val => `${val}` }} />
         <Tooltip crosshairs={{ type: 'y' }} />
         <Geom
           type="line"
           position="month*temperature"
           size={2}
-          color={'city'}
+          color="city"
         />
         <Geom
           type="point"
           position="month*temperature"
           size={4}
-          shape={'circle'}
-          color={'city'}
+          shape="circle"
+          color="city"
           style={{ stroke: '#fff', lineWidth: 1 }}
         />
       </Chart>

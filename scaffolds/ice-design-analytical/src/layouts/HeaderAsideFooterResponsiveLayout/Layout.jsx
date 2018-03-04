@@ -7,7 +7,7 @@ import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { Link } from 'react-router';
 import FoundationSymbol from 'foundation-symbol';
 import { ContainerQuery } from 'react-container-query';
-import { enquireScreen, enquire } from 'enquire-js';
+import { enquire } from 'enquire-js';
 import Header from './../../components/Header';
 import Footer from './../../components/Footer';
 import Logo from './../../components/Logo';
@@ -138,7 +138,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
     return (
       <ContainerQuery query={query}>
-        {(params) => (
+        {params => (
           <div className={cx(params)}>
             <Layout
               style={{ minHeight: '100vh' }}
