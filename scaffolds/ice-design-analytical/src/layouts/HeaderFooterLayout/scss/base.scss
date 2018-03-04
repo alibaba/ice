@@ -9,11 +9,15 @@ body {
 
 .ice-design-header-footer-layout-#{$theme} {
   .logo {
-    width: 200px;
+    max-width: 340px;
     height: 42px;
     line-height: 42px;
     .logo-text {
       display: block;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       font-size: 36px;
       color: $ice-logo-text-color;
       font-weight: bold;
@@ -145,9 +149,6 @@ body {
       width: 80px;
       .logo-text {
         font-size: 22px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
     }
     .ice-design-layout-header-menu {
