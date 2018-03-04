@@ -27,7 +27,33 @@ const customHeaderNavs = [
   },
 ];
 
-const customAsideNavs = [];
+const customAsideNavs = [
+  {
+    text: '首页',
+    to: '/',
+    icon: 'home',
+  },
+  {
+    text: '用户管理',
+    to: '/user',
+    icon: 'yonghu',
+  },
+  {
+    text: '系统设置',
+    to: '/setting',
+    icon: 'shezhi',
+    children: [
+      {
+        text: '基本设置',
+        to: '/base',
+      },
+      {
+        text: '评论设置',
+        to: '/comment',
+      },
+    ],
+  },
+];
 
 function transform(navs) {
   // custom logical
