@@ -13,6 +13,7 @@ body {
     height: 42px;
     line-height: 42px;
     .logo-text {
+      display: block;
       font-size: 36px;
       color: $ice-logo-text-color;
       font-weight: bold;
@@ -128,6 +129,31 @@ body {
     }
     i {
       margin-right: 5px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 721px) and (min-width: 1199px) {
+}
+
+@media screen and (max-width: 720px) {
+  .ice-design-header-footer-layout-#{$theme} {
+    .logo {
+      width: 80px;
+      .logo-text {
+        font-size: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .ice-design-layout-header-menu {
+      .ice-menu .ice-menu-item {
+        padding: 0 5px;
+      }
     }
   }
 }
