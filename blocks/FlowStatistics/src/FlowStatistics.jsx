@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@icedesign/base';
-import AreaChart from './AreaChart';
+import { Tab, Grid } from '@icedesign/base';
+import LineChart from './LineChart';
 import Head from './Head';
 import './FlowStatistics.scss';
 
 const TabPane = Tab.TabPane;
+const { Row, Col } = Grid;
 
 const MOCK_DATA = {
   threeMonths: {
@@ -41,35 +42,37 @@ export default class FlowStatistics extends Component {
 
   render() {
     return (
-      <div className="flow-statistics">
-        <IceContainer>
-          <h4 style={styles.title}>流量统计</h4>
-          <Tab type="text" size="small">
-            <TabPane tab="近三个月" key="1">
-              <Head data={MOCK_DATA.threeMonths} />
-              <AreaChart />
-            </TabPane>
-            <TabPane tab="近半年" key="2">
-              <Head data={MOCK_DATA.halfYear} />
-              <AreaChart />
-            </TabPane>
-            <TabPane tab="近一年" key="3">
-              <Head data={MOCK_DATA.nearlyYear} />
-              <AreaChart />
-            </TabPane>
-          </Tab>
-        </IceContainer>
-      </div>
+      <Row type="wrap" className="flow-statistics">
+        <Col span="24">
+          <IceContainer>
+            <h4 style={styles.title}>流量统计</h4>
+            <Tab type="text" size="small">
+              <TabPane tab="近三个月" key="1">
+                <Head data={MOCK_DATA.threeMonths} />
+                <LineChart />
+              </TabPane>
+              <TabPane tab="近半年" key="2">
+                <Head data={MOCK_DATA.halfYear} />
+                <LineChart />
+              </TabPane>
+              <TabPane tab="近一年" key="3">
+                <Head data={MOCK_DATA.nearlyYear} />
+                <LineChart />
+              </TabPane>
+            </Tab>
+          </IceContainer>
+        </Col>
+      </Row>
     );
   }
 }
 
 const styles = {
   title: {
-    margin: '0 0 20px',
-    fontSize: '18px',
+    margin: '0',
+    fontSize: '16px',
     paddingBottom: '15px',
     fontWeight: 'bold',
-    borderBottom: '1px solid #eee',
+    color: '#333',
   },
 };

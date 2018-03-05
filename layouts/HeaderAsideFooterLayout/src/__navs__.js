@@ -24,26 +24,26 @@ const autoGenHeaderNavs = [
 const autoGenAsideNavs = [
   {
     text: '首页',
-    to: '/',
+    to: '/Dashboard',
     icon: 'home',
   },
   {
     text: '用户管理',
-    to: '/',
+    to: '/user',
     icon: 'yonghu',
   },
   {
     text: '系统设置',
-    to: '/',
+    to: '/setting',
     icon: 'shezhi',
     children: [
       {
         text: '基本设置',
-        to: '/',
+        to: '/general',
       },
       {
         text: '评论设置',
-        to: '/',
+        to: '/comment',
       },
     ],
   },
@@ -58,7 +58,9 @@ function transform(navs) {
   return [...navs];
 }
 
-export default {
-  headerNavs: transform([...autoGenHeaderNavs, ...customHeaderNavs]),
-  asideNavs: transform([...autoGenAsideNavs, ...customAsideNavs]),
-};
+export const headerNavs = transform([
+  ...autoGenHeaderNavs,
+  ...customHeaderNavs,
+]);
+
+export const asideNavs = transform([...autoGenAsideNavs, ...customAsideNavs]);

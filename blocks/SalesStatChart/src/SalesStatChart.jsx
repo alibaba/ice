@@ -21,17 +21,17 @@ export default class SalesStatChart extends Component {
   render() {
     return (
       <div className="sales-stat-chart">
-        <Row>
-          <Col span="15">
+        <Row type="wrap">
+          <Col xxs="24" s="15" l="15">
             <IceContainer title="销售额">
-              <Chart height={350} data={data} forceFit>
+              <Chart height={408} data={data} forceFit>
                 <Axis name="month" />
                 <Axis name="value" />
                 <Legend />
                 <Tooltip crosshairs={{ type: 'line' }} />
                 <Geom type="area" position="month*value" color="saler" />
                 <Geom
-                  type="line"
+                  type="polygon"
                   position="month*value"
                   size={2}
                   color="saler"
@@ -39,55 +39,40 @@ export default class SalesStatChart extends Component {
               </Chart>
             </IceContainer>
           </Col>
-          <Col span="9">
-            <Row>
-              <Col span="24">
-                <IceContainer style={styles.smallContainer} title="新用户">
-                  <Chart
-                    height={76}
-                    data={userData}
-                    forceFit
-                    padding={[0, 0, 0, 0]}
-                  >
-                    <Axis name="count" />
-                    <Tooltip crosshairs={{ type: 'y' }} />
-                    <Geom type="interval" position="month*count" />
-                  </Chart>
-                </IceContainer>
-              </Col>
-            </Row>
-            <Row>
-              <Col span="24">
-                <IceContainer style={styles.smallContainer} title="下单量">
-                  <Chart
-                    height={76}
-                    data={downloadData}
-                    forceFit
-                    padding={[0, 0, 0, 0]}
-                  >
-                    <Axis name="pv" />
-                    <Tooltip crosshairs={{ type: 'y' }} />
-                    <Geom type="interval" position="month*count" />
-                  </Chart>
-                </IceContainer>
-              </Col>
-            </Row>
-            <Row>
-              <Col span="24">
-                <IceContainer style={styles.smallContainer} title="访问量">
-                  <Chart
-                    height={76}
-                    data={pvData}
-                    forceFit
-                    padding={[0, 0, 0, 0]}
-                  >
-                    <Axis name="pv" />
-                    <Tooltip crosshairs={{ type: 'y' }} />
-                    <Geom type="interval" position="month*pv" />
-                  </Chart>
-                </IceContainer>
-              </Col>
-            </Row>
+          <Col xxs="24" s="9" l="9">
+            <IceContainer style={styles.smallContainer} title="新用户">
+              <Chart
+                height={76}
+                data={userData}
+                forceFit
+                padding={[0, 0, 0, 0]}
+              >
+                <Axis name="count" />
+                <Tooltip crosshairs={{ type: 'y' }} />
+                <Geom type="interval" position="month*count" />
+              </Chart>
+            </IceContainer>
+
+            <IceContainer style={styles.smallContainer} title="下单量">
+              <Chart
+                height={76}
+                data={downloadData}
+                forceFit
+                padding={[0, 0, 0, 0]}
+              >
+                <Axis name="pv" />
+                <Tooltip crosshairs={{ type: 'y' }} />
+                <Geom type="interval" position="month*count" />
+              </Chart>
+            </IceContainer>
+
+            <IceContainer style={styles.smallContainer} title="访问量">
+              <Chart height={76} data={pvData} forceFit padding={[0, 0, 0, 0]}>
+                <Axis name="pv" />
+                <Tooltip crosshairs={{ type: 'y' }} />
+                <Geom type="interval" position="month*pv" />
+              </Chart>
+            </IceContainer>
           </Col>
         </Row>
       </div>
@@ -98,39 +83,38 @@ export default class SalesStatChart extends Component {
 const styles = {
   smallContainer: {
     marginBottom: 10,
-    padding: 10,
   },
 };
 
 const data = [
-  { saler: 'Bob', month: '5', value: 502 },
-  { saler: 'Bob', month: '6', value: 635 },
-  { saler: 'Bob', month: '7', value: 809 },
-  { saler: 'Bob', month: '8', value: 5268 },
-  { saler: 'Bob', month: '9', value: 4400 },
-  { saler: 'Bob', month: '10', value: 3634 },
-  { saler: 'Bob', month: '11', value: 947 },
-  { saler: 'Anna', month: '5', value: 106 },
-  { saler: 'Anna', month: '6', value: 107 },
-  { saler: 'Anna', month: '7', value: 111 },
+  { saler: 'Bob', month: '5', value: 2502 },
+  { saler: 'Bob', month: '6', value: 2635 },
+  { saler: 'Bob', month: '7', value: 2809 },
+  { saler: 'Bob', month: '8', value: 3268 },
+  { saler: 'Bob', month: '9', value: 3400 },
+  { saler: 'Bob', month: '10', value: 3334 },
+  { saler: 'Bob', month: '11', value: 3347 },
+  { saler: 'Anna', month: '5', value: 1106 },
+  { saler: 'Anna', month: '6', value: 1107 },
+  { saler: 'Anna', month: '7', value: 1111 },
   { saler: 'Anna', month: '8', value: 1766 },
-  { saler: 'Anna', month: '9', value: 221 },
-  { saler: 'Anna', month: '10', value: 767 },
-  { saler: 'Anna', month: '11', value: 133 },
-  { saler: 'Tim', month: '5', value: 163 },
-  { saler: 'Tim', month: '6', value: 203 },
-  { saler: 'Tim', month: '7', value: 276 },
-  { saler: 'Tim', month: '8', value: 628 },
-  { saler: 'Tim', month: '9', value: 547 },
-  { saler: 'Tim', month: '10', value: 729 },
-  { saler: 'Tim', month: '11', value: 408 },
-  { saler: 'Xiaoming', month: '5', value: 200 },
-  { saler: 'Xiaoming', month: '6', value: 200 },
-  { saler: 'Xiaoming', month: '7', value: 200 },
-  { saler: 'Xiaoming', month: '8', value: 460 },
-  { saler: 'Xiaoming', month: '9', value: 230 },
-  { saler: 'Xiaoming', month: '10', value: 300 },
-  { saler: 'Xiaoming', month: '11', value: 300 },
+  { saler: 'Anna', month: '9', value: 1221 },
+  { saler: 'Anna', month: '10', value: 1767 },
+  { saler: 'Anna', month: '11', value: 1133 },
+  { saler: 'Tim', month: '5', value: 1163 },
+  { saler: 'Tim', month: '6', value: 1203 },
+  { saler: 'Tim', month: '7', value: 1276 },
+  { saler: 'Tim', month: '8', value: 1628 },
+  { saler: 'Tim', month: '9', value: 1547 },
+  { saler: 'Tim', month: '10', value: 1729 },
+  { saler: 'Tim', month: '11', value: 1408 },
+  { saler: 'Xiaoming', month: '5', value: 1200 },
+  { saler: 'Xiaoming', month: '6', value: 1200 },
+  { saler: 'Xiaoming', month: '7', value: 1200 },
+  { saler: 'Xiaoming', month: '8', value: 1460 },
+  { saler: 'Xiaoming', month: '9', value: 1230 },
+  { saler: 'Xiaoming', month: '10', value: 1300 },
+  { saler: 'Xiaoming', month: '11', value: 1300 },
 ];
 
 const pvData = [
