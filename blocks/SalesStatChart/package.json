@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/sales-stat-chart-block",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "显示销售数据或者类似形式数据的图表模块",
   "files": [
     "src/",
@@ -37,17 +37,18 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "latest",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "sales-stat-chart",
-    "snapshot": "https://img.alicdn.com/tfs/TB1FTv1bXGWBuNjy0FbXXb4sXXa-1834-842.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1VH7rbuuSBuNjy1XcXXcYjFXa-2812-980.png",
     "title": "销售数据图表",
     "categories": [
-      "chart"
+      "图表",
+      "数据展示"
     ],
     "themePackage": "@icedesign/skin"
   }

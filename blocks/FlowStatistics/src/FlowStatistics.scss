@@ -6,7 +6,13 @@
   }
   .next-tabs-bar {
     position: absolute;
-    top: -68px;
+    top: -48px;
     right: 0;
+  }
+  .next-tabs-tab.active {
+    border-bottom: 1px solid #2077ff;
+  }
+  .next-tabs-text > .next-tabs-bar .next-tabs-tab:after {
+    width: 0;
   }
 }

@@ -1,8 +1,6 @@
 // <!-- auto generated navs start -->
 const autoGenHeaderNavs = [];
-
 const autoGenAsideNavs = [];
-
 // <!-- auto generated navs end -->
 
 const customHeaderNavs = [
@@ -89,7 +87,9 @@ function transform(navs) {
   return [...navs];
 }
 
-export default {
-  headerNavs: transform([...autoGenHeaderNavs, ...customHeaderNavs]),
-  asideNavs: transform([...autoGenAsideNavs, ...customAsideNavs]),
-};
+export const headerNavs = transform([
+  ...autoGenHeaderNavs,
+  ...customHeaderNavs,
+]);
+
+export const asideNavs = transform([...autoGenAsideNavs, ...customAsideNavs]);
