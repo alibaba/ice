@@ -42,12 +42,11 @@
   },
   "blockConfig": {
     "name": "blank-layout",
-    "snapshot": "https://img.alicdn.com/tfs/TB1B_fFb_tYBeNjy1XdXXXXyVXa-2840-1596.png",
-    "mockup": "https://gw.alicdn.com/tfs/TB1SvQmlsLJ8KJjy0FnXXcFDpXa-976-974.png",
     "title": "空白布局",
     "categories": [
       "layout"
     ],
-    "themePackage": "@icedesign/skin"
+    "snapshot": "https://gw.alicdn.com/tfs/TB1SvQmlsLJ8KJjy0FnXXcFDpXa-976-974.png",
+    "thumbnail": "https://img.alicdn.com/tfs/TB1B_fFb_tYBeNjy1XdXXXXyVXa-2840-1596.png"
   }
 }
