@@ -4,4 +4,4 @@
 
 空白的布局
 
-![截图](https://img.alicdn.com/tfs/TB1B_fFb_tYBeNjy1XdXXXXyVXa-2840-1596.png)
+![截图](https://img.alicdn.com/tfs/TB1T65abVOWBuNjy0FiXXXFxVXa-2840-1596.png)
