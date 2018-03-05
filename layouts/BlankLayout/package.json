@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/blank-layout",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "完全空白的布局，通常用来做首页、产品介绍或者登陆页面。推荐使用登陆页分类下的区块。",
   "files": [
     "src/",
