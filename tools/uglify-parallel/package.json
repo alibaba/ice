@@ -1,6 +1,6 @@
 {
   "name": "uglify-parallel",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "使用 uglify 多进程压缩 js 文件, 减少压缩 js 的耗时.",
   "main": "index.js",
   "scripts": {
