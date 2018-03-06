@@ -20,7 +20,7 @@ export default class Filter extends Component {
         value={this.props.value}
         onChange={this.props.onChange}
       >
-        <IceContainer title="内容筛选" style={{ marginBottom: '20px' }}>
+        <div>
           <Row>
             <Col span="8" style={styles.filterCol}>
               <label style={styles.filterTitle}>所属应用</label>
@@ -110,8 +110,8 @@ export default class Filter extends Component {
           </Row>
           <div
             style={{
-              textAlign: 'right',
-              marginRight: '28px',
+              textAlign: 'left',
+              marginLeft: '12px',
             }}
           >
             <Button onClick={this.props.onReset} type="normal">
@@ -125,7 +125,7 @@ export default class Filter extends Component {
               确定
             </Button>
           </div>
-        </IceContainer>
+        </div>
       </IceFormBinderWrapper>
     );
   }
