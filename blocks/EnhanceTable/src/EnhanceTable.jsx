@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Table, Pagination, Tab, Search } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
 
@@ -51,9 +50,6 @@ export default class EnhanceTable extends Component {
   renderTitle = (value, index, record) => {
     return (
       <div style={styles.titleWrapper}>
-        <div>
-          <IceImg src={record.cover} width={48} height={48} />
-        </div>
         <span style={styles.title}>{record.title}</span>
       </div>
     );
@@ -61,7 +57,7 @@ export default class EnhanceTable extends Component {
 
   editItem = (record, e) => {
     e.preventDefault();
-    // todo
+    // TODO: record 为该行所对应的数据，可自定义操作行为
   };
 
   renderOperations = (value, index, record) => {
