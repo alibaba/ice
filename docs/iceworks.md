@@ -61,7 +61,7 @@ Iceworks 是 ICE 推出的辅助开发者快速开发中后台前端应用的 GU
 
 ## 进入开发调试
 
-点击项目版面上的 `编辑中打开` 会立即使用设置中选择的编辑器打开项目，目前支持 [Visual Stadio Code](https://code.visualstudio.com/)，[Sublime Text 3](https://www.sublimetext.com/)，`WebStorm` 和 `Atom` 等编辑器，推荐使用 [Visual Stadio Code](https://code.visualstudio.com/)，如果你的电脑中未安装请先安装。
+点击项目版面上的 `编辑中打开` 会立即使用设置中选择的编辑器打开项目，目前支持 [Visual Studio Code](https://code.visualstudio.com/)，[Sublime Text 3](https://www.sublimetext.com/)，`WebStorm` 和 `Atom` 等编辑器，推荐使用 [Visual Studio Code](https://code.visualstudio.com/)，如果你的电脑中未安装请先安装。
 
 项目目录结构说明：
 
