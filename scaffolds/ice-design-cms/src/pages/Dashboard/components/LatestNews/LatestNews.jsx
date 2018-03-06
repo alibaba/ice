@@ -116,10 +116,14 @@ const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-between',
+    marginLeft: '-10px',
+    marginRight: '-10px',
   },
   cardContainer: {
-    width: '49%',
+    width: '50%',
     height: 280,
+    marginLeft: '10px',
+    marginRight: '10px',
   },
   cardTitle: {
     position: 'relative',

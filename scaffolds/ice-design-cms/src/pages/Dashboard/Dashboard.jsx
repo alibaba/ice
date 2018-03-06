@@ -1,8 +1,6 @@
-
-
 import React, { Component } from 'react';
 
-import DataDisplay from './components/DataDisplay';
+import StatisticalCard from './components/StatisticalCard';
 
 import DataStatistics from './components/DataStatistics';
 
@@ -23,7 +21,7 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard-page">
-        <DataDisplay />
+        <StatisticalCard />
 
         <DataStatistics />
 

@@ -85,7 +85,7 @@ export default class UserForm extends Component {
               <h2 style={styles.formTitle}>添加用户</h2>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col span="2" style={styles.formLabel}>
                   用户名：
                 </Col>
                 <Col span="10">
@@ -97,7 +97,7 @@ export default class UserForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col span="2" style={styles.formLabel}>
                   昵称：
                 </Col>
                 <Col span="10">
@@ -109,7 +109,7 @@ export default class UserForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col span="2" style={styles.formLabel}>
                   邮箱：
                 </Col>
                 <Col span="10">
@@ -129,7 +129,7 @@ export default class UserForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col span="2" style={styles.formLabel}>
                   用户组：
                 </Col>
                 <Col span="10">
@@ -147,7 +147,7 @@ export default class UserForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col span="2" style={styles.formLabel}>
                   状态：
                 </Col>
                 <Col span="10">
@@ -166,7 +166,7 @@ export default class UserForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col span="2" style={styles.formLabel}>
                   新密码：
                 </Col>
                 <Col span="10">
@@ -186,7 +186,7 @@ export default class UserForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col span="2" style={styles.formLabel}>
                   确认密码：
                 </Col>
                 <Col span="10">
