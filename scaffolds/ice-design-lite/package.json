@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/scaffold-lite",
-  "version": "0.1.36",
+  "version": "0.1.37",
   "description": "该模板适用于从 0 到 1 开始搭建项目，内置四套布局，以及基础的页面，路由和菜单展示",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-lite.html",
   "dependencies": {
