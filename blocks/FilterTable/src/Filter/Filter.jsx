@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Input, Grid, Select, Button, DatePicker } from '@icedesign/base';
-import IceContainer from '@icedesign/container';
 
 // form binder 详细用法请参见官方文档
 import {
