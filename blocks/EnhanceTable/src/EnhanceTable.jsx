@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Table, Pagination, Tab, Search } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
 
