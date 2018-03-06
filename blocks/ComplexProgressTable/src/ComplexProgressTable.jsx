@@ -76,8 +76,7 @@ export default class ComplexProgressTable extends Component {
         EditDialog.hide();
       },
       onOk: (value) => {
-        // 获取修改后的数据，更新表格
-        // todo 更新接口，并重新刷新数据
+        // TODO: 更新接口，并重新获取数据
         // this.props.updateBindingData('updateRow', {
         //   method: 'post',
         //   data: value

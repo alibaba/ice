@@ -129,7 +129,7 @@ export default class ComplexTabTable extends Component {
 
   editItem = (record, e) => {
     e.preventDefault();
-    // todo
+    // TODO: record 为该行所对应的数据，可自定义操作行为
   };
 
   renderOperations = (value, index, record) => {
@@ -207,7 +207,7 @@ export default class ComplexTabTable extends Component {
               <div style={styles.tabExtra}>
                 <Search
                   style={styles.search}
-                  type="medium"
+                  type="secondary"
                   inputWidth={150}
                   placeholder="搜索"
                   searchText=""
@@ -318,6 +318,7 @@ const styles = {
     marginLeft: 10,
   },
   tabCount: {
+    marginLeft: '5px',
     color: '#3080FE',
   },
   pagination: {
