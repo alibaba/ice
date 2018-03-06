@@ -134,7 +134,7 @@ export default class TabTable extends Component {
     const { dataSource } = this.state;
     return (
       <div className="tab-table">
-        <IceContainer>
+        <IceContainer style={{ padding: '0 20px 20px' }}>
           <Tab onChange={this.handleTabChange}>
             {tabs.map((item) => {
               return (
