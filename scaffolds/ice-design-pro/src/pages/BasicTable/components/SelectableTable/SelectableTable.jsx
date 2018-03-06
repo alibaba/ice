@@ -68,18 +68,12 @@ export default class SelectableTable extends Component {
     });
   };
 
-  addMoreItem = () => {
-    // todo add some item
-  };
-
   deleteSelectedKeys = () => {
     const { selectedRowKeys } = this.state;
-    // todo delete selectedRowKeys
     console.log('delete keys', selectedRowKeys);
   };
 
   deleteItem = (record) => {
-    // todo remove this record
     const { id } = record;
     console.log('delete item', id);
   };
@@ -103,11 +97,7 @@ export default class SelectableTable extends Component {
       <div className="selectable-table" style={styles.selectableTable}>
         <IceContainer style={styles.IceContainer}>
           <div>
-            <Button
-              onClick={this.addMoreItem}
-              size="small"
-              style={styles.batchBtn}
-            >
+            <Button size="small" style={styles.batchBtn}>
               <Icon type="add" />增加
             </Button>
             <Button
