@@ -17,11 +17,7 @@ const getPublicUrl = (appPackageJson) => {
     return appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl;
   }
 
-  if (appPackage.homepage) {
-    return appPackage.homepage;
-  }
-
-  return '/';
+  return './';
 };
 
 function ensureSlash(path, needsSlash) {
