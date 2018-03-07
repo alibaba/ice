@@ -1,1 +1,2 @@
-export default from './BasicSetting';
+import BasicSetting from './BasicSetting';
+export default BasicSetting;

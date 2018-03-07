@@ -1,1 +1,2 @@
-export default from './CateList';
+import CateList from './CateList';
+export default CateList;

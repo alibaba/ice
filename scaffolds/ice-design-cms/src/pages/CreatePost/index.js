@@ -1,1 +1,2 @@
-export default from './CreatePost';
+import CreatePost from './CreatePost';
+export default CreatePost;
