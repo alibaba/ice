@@ -1,1 +1,2 @@
-export default from './Empty';
+import Empty from './Empty';
+export default Empty;

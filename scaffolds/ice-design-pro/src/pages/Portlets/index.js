@@ -1,1 +1,2 @@
-export default from './Portlets';
+import Portlets from './Portlets';
+export default Portlets;

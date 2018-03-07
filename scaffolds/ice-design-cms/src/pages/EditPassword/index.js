@@ -1,1 +1,2 @@
-export default from './EditPassword';
+import EditPassword from './EditPassword';
+export default EditPassword;
