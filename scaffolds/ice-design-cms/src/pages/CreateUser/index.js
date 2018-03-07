@@ -1,1 +1,2 @@
-export default from './CreateUser';
+import CreateUser from './CreateUser';
+export default CreateUser;

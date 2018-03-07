@@ -1,1 +1,2 @@
-export default from './CreateCate';
+import CreateCate from './CreateCate';
+export default CreateCate;
