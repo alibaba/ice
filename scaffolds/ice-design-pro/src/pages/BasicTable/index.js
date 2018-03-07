@@ -1,1 +1,2 @@
-export default from './BasicTable';
+import BasicTable from './BasicTable';
+export default BasicTable;

@@ -1,1 +1,2 @@
-export default from './TableDisplay';
+import TableDisplay from './TableDisplay';
+export default TableDisplay;
