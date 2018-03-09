@@ -88,7 +88,7 @@ export const asideNavs = transform([...autoGenAsideNavs, ...customAsideNavs]);
 
 ## 在 Iceworks 下载页面点击下载没反应怎么办？
 
-请检查是否安装 Adguard、AdBlock、xxx 安全助手等工具并被其拦截？因为 Iceworks 是二进制可安装程序，可能会被安全软件拦截，请点击确认或者临时关闭相关拦截功能。
+请检查是否安装 Adguard、AdBlock、xxx 安全助手等工具并被其拦截？因为 Iceworks 是二进制可安装程序，可能会被安全软件拦截，如有拦截请点击确认或者临时关闭相关拦截功能。
 
 ## 出现端口已占用启动失败应该如何处理？
 
