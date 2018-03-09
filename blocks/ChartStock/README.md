@@ -2,11 +2,4 @@
 
 简介：股票图
 
-
-
-![截图](https://img.alicdn.com/tfs/TB1ZYAYigvD8KJjSsplXXaIEFXa-1886-974.png)
-
-
-
-
-
+![截图](https://img.alicdn.com/tfs/TB1rpkscDtYBeNjy1XdXXXXyVXa-2352-1020.png)

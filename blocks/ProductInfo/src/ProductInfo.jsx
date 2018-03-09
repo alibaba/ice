@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 const dataSource = [
   {
@@ -48,15 +51,17 @@ export default class ProductInfo extends Component {
   render() {
     return (
       <div className="product-info" style={styles.container}>
-        {dataSource.map((item, index) => {
-          return (
-            <div key={index} style={styles.item}>
-              <img src={item.pic} style={styles.pic} alt="" />
-              <h3 style={styles.title}>{item.title}</h3>
-              <p style={styles.desc}>{item.desc}</p>
-            </div>
-          );
-        })}
+        <Row wrap>
+          {dataSource.map((item, index) => {
+            return (
+              <Col xxs="12" s="8" l="8" key={index} style={styles.item}>
+                <img src={item.pic} style={styles.pic} alt="" />
+                <h3 style={styles.title}>{item.title}</h3>
+                <p style={styles.desc}>{item.desc}</p>
+              </Col>
+            );
+          })}
+        </Row>
       </div>
     );
   }
@@ -72,7 +77,6 @@ const styles = {
     padding: '80px 0',
   },
   item: {
-    width: '33.3333%',
     textAlign: 'center',
     padding: '10px 22px',
     marginBottom: '20px',

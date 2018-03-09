@@ -103,8 +103,7 @@ export default class OrderList extends Component {
 
     return (
       <div className="order-list" style={styles.orderList}>
-        <IceContainer>
-          <div style={styles.orderListHead}>订单列表</div>
+        <IceContainer title="订单列表">
           <Table
             dataSource={tableData}
             getRowClassName={this.getRowClassName}
@@ -116,6 +115,7 @@ export default class OrderList extends Component {
               cell={this.renderOrderInfo}
               title="商品"
               dataIndex="product"
+              width={400}
             />
             <Table.Column
               cell={this.renderOrderPrice}
@@ -142,6 +142,7 @@ const styles = {
     float: 'left',
     marginRight: '10px',
   },
-  orderDetailLink: { textDecoration: 'none' },
-  orderListHead: { marginBottom: '20px', color: '#666' },
+  orderDetailLink: {
+    textDecoration: 'none',
+  },
 };

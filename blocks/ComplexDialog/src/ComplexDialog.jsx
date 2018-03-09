@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Dialog, Button, Icon } from '@icedesign/base';
+import { enquireScreen } from 'enquire-js';
 
 export default class ComplexDialog extends Component {
   static displayName = 'ComplexDialog';
@@ -9,8 +10,23 @@ export default class ComplexDialog extends Component {
     super(props);
     this.state = {
       visible: false,
+      isMobile: false,
     };
   }
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   showDialog = () => {
     this.setState({
@@ -35,11 +51,16 @@ export default class ComplexDialog extends Component {
   };
 
   render() {
+    const { isMobile } = this.state;
+    const dialogStyle = {
+      width: isMobile ? 'auto' : '640px',
+      height: isMobile ? 'auto' : '340px',
+    };
     return (
       <IceContainer>
         <Dialog
           className="complex-dialog"
-          style={styles.complexDialog}
+          style={{ ...dialogStyle }}
           autoFocus={false}
           footer={this.renderFooter()}
           title="入驻成功"
@@ -92,8 +113,8 @@ const styles = {
     height: '52px',
   },
   dialogContent: {
-    width: '640px',
-    height: '200px',
+    // width: '640px',
+    // height: '200px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

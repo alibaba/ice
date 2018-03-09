@@ -84,10 +84,9 @@ const styles = {
     height: '40px',
     lineHeight: '40px',
     fontSize: '14px',
-    color: '#000',
+    color: '#666',
     cursor: 'pointer',
     padding: '0 10px',
     textDecoration: 'none',
   },
-  treeCardList: { width: '240px' },
 };
