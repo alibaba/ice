@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 const data = [
   {
@@ -61,15 +64,19 @@ export default class FeatureDisplay extends Component {
     return (
       <div className="feature-display" style={styles.container}>
         <div style={styles.items}>
-          {data.map((item, index) => {
-            return (
-              <div key={index} style={styles.item}>
-                <img src={item.imgUrl} style={styles.image} alt="" />
-                <h3 style={styles.title}>{item.title}</h3>
-                <p style={styles.description}>{item.description}</p>
-              </div>
-            );
-          })}
+          <Row gutter="20" wrap={true}>
+            {data.map((item, index) => {
+              return (
+                <Col key={index} xxs="24" s="12" l="8">
+                  <div style={styles.item}>
+                    <img src={item.imgUrl} style={styles.image} alt="" />
+                    <h3 style={styles.title}>{item.title}</h3>
+                    <p style={styles.description}>{item.description}</p>
+                  </div>
+                </Col>
+              );
+            })}
+          </Row>
         </div>
       </div>
     );
@@ -88,7 +95,6 @@ const styles = {
     flexWrap: 'wrap',
   },
   item: {
-    width: '33%',
     textAlign: 'center',
     padding: '0 30px',
     margin: '40px 0',
