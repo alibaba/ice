@@ -22,12 +22,13 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.1.5-1",
     "@icedesign/container": "^0.1.0",
     "@icedesign/data-binder": "^0.1.0",
     "@icedesign/img": "^0.1.0",
     "@icedesign/label": "^0.1.0",
     "@icedesign/skin": "^0.1.3",
+    "enquire-js": "^0.1.2",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {

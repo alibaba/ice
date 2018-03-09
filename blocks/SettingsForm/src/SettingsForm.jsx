@@ -87,10 +87,10 @@ export default class SettingsForm extends Component {
               <h2 style={styles.formTitle}>基本设置</h2>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col xxs="6" s="3" l="3" style={styles.label}>
                   姓名：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder name="name" required max={10} message="必填">
                     <Input size="large" placeholder="于江水" />
                   </IceFormBinder>
@@ -99,10 +99,10 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col xxs="6" s="3" l="3" style={styles.label}>
                   头像：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder name="avatar" required message="必填">
                     <ImageUpload
                       listType="picture-card"
@@ -125,10 +125,10 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col xxs="6" s="3" l="3" style={styles.label}>
                   性别：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder name="gender" required message="必填">
                     <RadioGroup>
                       <Radio value="male">男</Radio>
@@ -140,10 +140,10 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col xxs="6" s="3" l="3" style={styles.label}>
                   通知：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder type="boolean" name="notice">
                     <Switch />
                   </IceFormBinder>
@@ -152,10 +152,10 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col xxs="6" s="3" l="3" style={styles.label}>
                   邮件：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder
                     type="email"
                     name="email"
@@ -172,10 +172,10 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col xxs="6" s="3" l="3" style={styles.label}>
                   网站地址 ：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder
                     type="url"
                     name="siteUrl"
@@ -198,10 +198,10 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
-                  Github 地址：
+                <Col xxs="6" s="3" l="3" style={styles.label}>
+                  Github：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder
                     type="url"
                     name="githubUrl"
@@ -218,10 +218,10 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
-                  Twitter 地址：
+                <Col xxs="6" s="3" l="3" style={styles.label}>
+                  Twitter：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder
                     type="url"
                     name="twitterUrl"
@@ -235,10 +235,10 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col xxs="6" s="3" l="3" style={styles.label}>
                   自我描述：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder name="description">
                     <Input size="large" multiple placeholder="请输入描述..." />
                   </IceFormBinder>

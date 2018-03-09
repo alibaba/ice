@@ -107,10 +107,10 @@ export default class ChartHeatMap extends Component {
         <IceContainer>
           <h4 style={styles.title}>色块图</h4>
           <Chart
-            height={500}
+            height={400}
             data={source}
             scale={cols}
-            padding={[20, 80, 120, 85]}
+            padding={[10, 20, 40, 80]}
             forceFit
           >
             <Axis

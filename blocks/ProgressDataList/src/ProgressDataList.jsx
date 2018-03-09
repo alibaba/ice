@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Progress } from '@icedesign/base';
+import { Progress, Grid } from '@icedesign/base';
+import { enquireScreen } from 'enquire-js';
+
+const { Row, Col } = Grid;
 
 export default class ProgressDataList extends Component {
   static displayName = 'ProgressDataList';
@@ -9,96 +12,106 @@ export default class ProgressDataList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isMobile: false,
+    };
   }
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   render() {
     return (
-      <div className="progress-data-list">
-        <IceContainer style={{ padding: 0 }}>
-          <div style={styles.dataList}>
-            <div style={styles.dataItem}>
-              <div style={styles.dataTitle}>总收入</div>
-              <div style={styles.dataIntro}>所有项目收入</div>
-              <div style={styles.dataValue}>￥10M</div>
-              <div style={styles.dataProgress}>
-                <Progress percent={30} showInfo={false} />
-              </div>
-              <div style={styles.dataExtra}>
-                <div>
-                  <a style={styles.settingsLink} href="#">
-                    设置
-                  </a>
-                </div>
-                <div>30%</div>
-              </div>
-              <div style={styles.verticalLine} />
+      <IceContainer>
+        <Row wrap>
+          <Col xxs="24" s="12" l="6" style={styles.dataItem}>
+            <div style={styles.dataTitle}>总收入</div>
+            <div style={styles.dataIntro}>所有项目收入</div>
+            <div style={styles.dataValue}>￥10M</div>
+            <div style={styles.dataProgress}>
+              <Progress percent={30} showInfo={false} />
             </div>
-            <div style={styles.dataItem}>
-              <div style={styles.dataTitle}>今年新用户</div>
-              <div style={styles.dataIntro}>今年新注册用户</div>
-              <div style={styles.dataValue}>2000</div>
-              <div style={styles.dataProgress}>
-                <Progress percent={80} showInfo={false} />
+            <div style={styles.dataExtra}>
+              <div>
+                <a style={styles.settingsLink} href="#">
+                  设置
+                </a>
               </div>
-              <div style={styles.dataExtra}>
-                <div>
-                  <a style={styles.settingsLink} href="#">
-                    设置
-                  </a>
-                </div>
-                <div>80%</div>
-              </div>
-              <div style={styles.verticalLine} />
+              <div>30%</div>
             </div>
-            <div style={styles.dataItem}>
-              <div style={styles.dataTitle}>本月新订单</div>
-              <div style={styles.dataIntro}>本月新增订单数</div>
-              <div style={styles.dataValue}>579</div>
-              <div style={styles.dataProgress}>
-                <Progress percent={60} showInfo={false} />
-              </div>
-              <div style={styles.dataExtra}>
-                <div>
-                  <a style={styles.settingsLink} href="#">
-                    设置
-                  </a>
-                </div>
-                <div>60%</div>
-              </div>
-              <div style={styles.verticalLine} />
+            {!this.state.isMobile && <div style={styles.verticalLine} />}
+          </Col>
+          <Col xxs="24" s="12" l="6" style={styles.dataItem}>
+            <div style={styles.dataTitle}>今年新用户</div>
+            <div style={styles.dataIntro}>今年新注册用户</div>
+            <div style={styles.dataValue}>2000</div>
+            <div style={styles.dataProgress}>
+              <Progress percent={80} showInfo={false} />
             </div>
-            <div style={styles.dataItem}>
-              <div style={styles.dataTitle}>用户反馈待处理</div>
-              <div style={styles.dataIntro}>用户反馈待处理的数量</div>
-              <div style={styles.dataValue}>10</div>
-              <div style={styles.dataProgress}>
-                <Progress percent={10} showInfo={false} />
+            <div style={styles.dataExtra}>
+              <div>
+                <a style={styles.settingsLink} href="#">
+                  设置
+                </a>
               </div>
-              <div style={styles.dataExtra}>
-                <div>
-                  <a style={styles.settingsLink} href="#">
-                    设置
-                  </a>
-                </div>
-                <div>10%</div>
-              </div>
+              <div>80%</div>
             </div>
-          </div>
-        </IceContainer>
-      </div>
+            {!this.state.isMobile && <div style={styles.verticalLine} />}
+          </Col>
+          <Col xxs="24" s="12" l="6" style={styles.dataItem}>
+            <div style={styles.dataTitle}>本月新订单</div>
+            <div style={styles.dataIntro}>本月新增订单数</div>
+            <div style={styles.dataValue}>579</div>
+            <div style={styles.dataProgress}>
+              <Progress percent={60} showInfo={false} />
+            </div>
+            <div style={styles.dataExtra}>
+              <div>
+                <a style={styles.settingsLink} href="#">
+                  设置
+                </a>
+              </div>
+              <div>60%</div>
+            </div>
+            {!this.state.isMobile && <div style={styles.verticalLine} />}
+          </Col>
+          <Col xxs="24" s="12" l="6" style={styles.dataItem}>
+            <div style={styles.dataTitle}>用户反馈待处理</div>
+            <div style={styles.dataIntro}>用户反馈待处理的数量</div>
+            <div style={styles.dataValue}>10</div>
+            <div style={styles.dataProgress}>
+              <Progress percent={10} showInfo={false} />
+            </div>
+            <div style={styles.dataExtra}>
+              <div>
+                <a style={styles.settingsLink} href="#">
+                  设置
+                </a>
+              </div>
+              <div>10%</div>
+            </div>
+          </Col>
+        </Row>
+      </IceContainer>
     );
   }
 }
 
 const styles = {
-  dataList: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
   dataItem: {
-    width: 240,
-    padding: '30px 30px',
+    margin: '10px 0',
+    padding: '0 30px',
     position: 'relative',
   },
   dataTitle: {
@@ -112,12 +125,12 @@ const styles = {
     fontSize: 22,
     fontWeight: 'bold',
     position: 'absolute',
-    top: 35,
+    top: 10,
     right: 30,
     color: '#3080fe',
   },
   dataProgress: {
-    marginTop: 30,
+    marginTop: 20,
   },
   dataExtra: {
     marginTop: 10,

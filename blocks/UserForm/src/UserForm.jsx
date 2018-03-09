@@ -7,7 +7,6 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import './UserForm.scss';
 
 const { Row, Col } = Grid;
 export default class UserForm extends Component {
@@ -78,34 +77,42 @@ export default class UserForm extends Component {
               <h2 style={styles.formTitle}>添加用户</h2>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col xxs="6" s="3" l="3" style={styles.formLabel}>
                   用户名：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder name="username" required message="必填">
-                    <Input size="large" placeholder="请输入用户名" />
+                    <Input
+                      size="large"
+                      placeholder="请输入用户名"
+                      style={{ width: '100%' }}
+                    />
                   </IceFormBinder>
                   <IceFormError name="username" />
                 </Col>
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col xxs="6" s="3" l="3" style={styles.formLabel}>
                   昵称：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder name="displayName">
-                    <Input size="large" placeholder="请输入昵称" />
+                    <Input
+                      size="large"
+                      placeholder="请输入昵称"
+                      style={{ width: '100%' }}
+                    />
                   </IceFormBinder>
                   <IceFormError name="displayName" />
                 </Col>
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col xxs="6" s="3" l="3" style={styles.formLabel}>
                   邮箱：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder
                     type="email"
                     name="email"
@@ -113,6 +120,7 @@ export default class UserForm extends Component {
                     message="请输入正确的邮箱"
                   >
                     <Input
+                      style={{ width: '100%' }}
                       size="large"
                       placeholder="ice-admin@alibaba-inc.com"
                     />
@@ -122,12 +130,13 @@ export default class UserForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col xxs="6" s="3" l="3" style={styles.formLabel}>
                   用户组：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder name="userGroup">
                     <Select
+                      style={{ width: '100%' }}
                       size="large"
                       placeholder="请选择..."
                       dataSource={[
@@ -140,12 +149,13 @@ export default class UserForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col xxs="6" s="3" l="3" style={styles.formLabel}>
                   状态：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder name="userState">
                     <Select
+                      style={{ width: '100%' }}
                       size="large"
                       placeholder="请选择..."
                       dataSource={[
@@ -159,16 +169,17 @@ export default class UserForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col xxs="6" s="3" l="3" style={styles.formLabel}>
                   新密码：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder
                     name="passwd"
                     required
                     validator={this.checkPasswd}
                   >
                     <Input
+                      style={{ width: '100%' }}
                       htmlType="password"
                       size="large"
                       placeholder="请重新输入新密码"
@@ -179,10 +190,10 @@ export default class UserForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+                <Col xxs="6" s="3" l="3" style={styles.formLabel}>
                   确认密码：
                 </Col>
-                <Col span="10">
+                <Col s="12" l="10">
                   <IceFormBinder
                     name="rePasswd"
                     required
@@ -191,11 +202,12 @@ export default class UserForm extends Component {
                         rule,
                         values,
                         callback,
-                        this.state.value,
+                        this.state.value
                       )
                     }
                   >
                     <Input
+                      style={{ width: '100%' }}
                       htmlType="password"
                       size="large"
                       placeholder="两次输入密码保持一致"

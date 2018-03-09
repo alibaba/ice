@@ -75,7 +75,13 @@ export default class ChartRelation extends Component {
       <div className="chart-relation">
         <IceContainer>
           <h4 style={styles.title}>面积图</h4>
-          <Chart data={nodes} forceFit height={400} scale={scale}>
+          <Chart
+            data={nodes}
+            forceFit
+            height={400}
+            scale={scale}
+            padding={[10]}
+          >
             <Tooltip showTitle={false} itemTpl={htmlStr} />
             <Geom
               type="polygon"
@@ -112,7 +118,7 @@ export default class ChartRelation extends Component {
 
 const styles = {
   title: {
-    margin: '0 0 40px',
+    margin: '0 0 20px',
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',

@@ -130,7 +130,7 @@ export default class SelectableTable extends Component {
               selectedRowKeys: this.state.selectedRowKeys,
             }}
           >
-            <Table.Column title="编码" dataIndex="id" lock width={120} />
+            <Table.Column title="编码" dataIndex="id" width={120} />
             <Table.Column title="名称" dataIndex="title.name" width={350} />
             <Table.Column title="类型" dataIndex="type" width={160} />
             <Table.Column title="模板" dataIndex="template" width={160} />
