@@ -1,9 +1,7 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
 import { Table, Pagination } from '@icedesign/base';
-
 import IceContainer from '@icedesign/container';
-import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
 
@@ -53,9 +51,6 @@ export default class EnhanceTable extends Component {
   renderTitle = (value, index, record) => {
     return (
       <div style={styles.titleWrapper}>
-        <div>
-          <IceImg src={record.cover} width={48} height={48} />
-        </div>
         <span style={styles.title}>{record.title}</span>
       </div>
     );
@@ -63,7 +58,7 @@ export default class EnhanceTable extends Component {
 
   editItem = (record, e) => {
     e.preventDefault();
-    // todo
+    // TODO: record 为该行所对应的数据，可自定义操作行为
   };
 
   renderOperations = (value, index, record) => {
@@ -131,7 +126,7 @@ export default class EnhanceTable extends Component {
 
     return (
       <div className="filter-table">
-        <IceContainer style={styles.cardWrapper}>
+        <IceContainer title="内容筛选">
           <FilterForm
             value={filterFormValue}
             onChange={this.filterFormChange}
@@ -192,6 +187,7 @@ const styles = {
   operationItem: {
     marginRight: '12px',
     textDecoration: 'none',
+    color: '#5485F7',
   },
   titleWrapper: {
     display: 'flex',
@@ -200,12 +196,6 @@ const styles = {
   title: {
     marginLeft: '10px',
     lineHeight: '20px',
-  },
-  cardWrapper: {
-    minHeight: 0,
-    marginBottom: 20,
-    display: 'flex',
-    justifyContent: 'space-between',
   },
   paginationWrapper: {
     textAlign: 'right',

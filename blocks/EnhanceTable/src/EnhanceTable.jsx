@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import { Table, Pagination, Tab, Search } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
+import { enquireScreen } from 'enquire-js';
 
 @DataBinder({
   tableData: {
@@ -40,7 +40,18 @@ export default class EnhanceTable extends Component {
   componentDidMount() {
     this.queryCache.page = 1;
     this.fetchData();
+    this.enquireScreenRegister();
   }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   fetchData = () => {
     this.props.updateBindingData('tableData', {
@@ -51,9 +62,6 @@ export default class EnhanceTable extends Component {
   renderTitle = (value, index, record) => {
     return (
       <div style={styles.titleWrapper}>
-        <div>
-          <IceImg src={record.cover} width={48} height={48} />
-        </div>
         <span style={styles.title}>{record.title}</span>
       </div>
     );
@@ -61,7 +69,7 @@ export default class EnhanceTable extends Component {
 
   editItem = (record, e) => {
     e.preventDefault();
-    // todo
+    // TODO: record 为该行所对应的数据，可自定义操作行为
   };
 
   renderOperations = (value, index, record) => {
@@ -211,6 +219,7 @@ export default class EnhanceTable extends Component {
               pageSize={tableData.pageSize}
               total={tableData.total}
               onChange={this.changePage}
+              type={this.state.isMobile ? 'simple' : 'normal'}
             />
           </div>
         </IceContainer>
@@ -240,6 +249,7 @@ const styles = {
     marginBottom: 20,
     display: 'flex',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
   tabCount: {
     color: '#3080FE',

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 const data = [
   {
@@ -33,34 +36,30 @@ export default class PriceCard extends Component {
 
   render() {
     return (
-      <div className="price-card" style={styles.priceCard}>
-        <div style={styles.container}>
-          <div style={styles.items}>
+      <div style={styles.container}>
+        <div style={styles.content}>
+          <Row gutter="20" wrap>
             {data.map((item, index) => {
-              const rowLastItem =
-                (index + 1) % 3 === 0 ? styles.rowLastItem : {};
               return (
-                <div
-                  key={index}
-                  style={{ ...styles.item, ...rowLastItem }}
-                  className="item"
-                >
-                  <div style={styles.head}>
-                    <h3 style={styles.title}>{item.title}</h3>
-                    <p style={styles.description}>{item.description}</p>
+                <Col xxs="24" s="8" l="8" key={index}>
+                  <div style={styles.item}>
+                    <div style={styles.head}>
+                      <h3 style={styles.title}>{item.title}</h3>
+                      <p style={styles.description}>{item.description}</p>
+                    </div>
+                    <div style={styles.info}>
+                      <p style={styles.price}>￥{item.price}</p>
+                    </div>
+                    <div style={styles.buyBtn}>
+                      <a href="/" style={styles.link}>
+                        立即购买
+                      </a>
+                    </div>
                   </div>
-                  <div style={styles.info}>
-                    <p style={styles.price}>￥{item.price}</p>
-                  </div>
-                  <div style={styles.buyBtn}>
-                    <a href="/" style={styles.link}>
-                      立即购买
-                    </a>
-                  </div>
-                </div>
+                </Col>
               );
             })}
-          </div>
+          </Row>
         </div>
       </div>
     );
@@ -71,25 +70,20 @@ const styles = {
   container: {
     background:
       'url(https://img.alicdn.com/tfs/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png)',
-    backgroundSize: 'cover',
+    borderRadius: 0,
     width: '100%',
+    padding: '80px 0',
   },
-  items: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    padding: '120px 0',
+  content: {
     maxWidth: '1080px',
     margin: '0 auto',
+    overflow: 'hidden',
   },
   item: {
-    width: '28%',
-    marginRight: '8%',
-    background: '#FAFAFA',
+    marginBottom: '20px',
+    padding: '20px 30px 60px',
+    background: '#fff',
     borderRadius: '6px',
-    paddingBottom: '50px',
-  },
-  rowLastItem: {
-    marginRight: 0,
   },
   head: {
     padding: '30px 0',
@@ -124,10 +118,9 @@ const styles = {
     marginTop: '20px',
   },
   link: {
-    padding: '4px 15px',
+    padding: '6px 15px',
     background: '#3080FE',
-    borderRadius: '12px',
+    borderRadius: '16px',
     color: '#fff',
   },
-  priceCard: {},
 };

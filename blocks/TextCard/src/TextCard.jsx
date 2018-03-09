@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
+import { Grid } from '@icedesign/base';
+import './TextCard.scss';
+
+const { Row, Col } = Grid;
 
 export default class TextCard extends Component {
   static displayName = 'TextCard';
@@ -11,59 +15,47 @@ export default class TextCard extends Component {
 
   render() {
     return (
-      <div className="text-card" style={styles.textCard}>
-        <IceContainer className="text-card-list" style={styles.textCardList}>
-          <div className="text-card-item" style={styles.textCardItem}>
-            <div className="text-card-subtitle" style={styles.textCardSubtitle}>
-              我的待办
-            </div>
+      <IceContainer>
+        <Row wrap>
+          <Col xxs="12" s="12" l="8" style={styles.textCardItem}>
+            <div style={styles.textCardSubtitle}>我的待办</div>
             <div className="text-card-title" style={styles.textCardTitle}>
               <span className="text-card-number" style={styles.textCardNumber}>
                 8
               </span>个任务
             </div>
-          </div>
+          </Col>
 
-          <div className="text-card-item" style={styles.textCardItem}>
-            <div className="text-card-subtitle" style={styles.textCardSubtitle}>
-              本周任务平均处理时间
-            </div>
+          <Col xxs="12" s="12" l="8" style={styles.textCardItem}>
+            <div style={styles.textCardSubtitle}>本周任务平均处理时间</div>
             <div className="text-card-title" style={styles.textCardTitle}>
               <span className="text-card-number" style={styles.textCardNumber}>
                 32
               </span>分钟
             </div>
-          </div>
+          </Col>
 
-          <div
-            className="text-card-item"
+          <Col
+            xxs="12"
+            s="12"
+            l="8"
             style={{ ...styles.textCardItem, borderRight: 0 }}
           >
-            <div className="text-card-subtitle" style={styles.textCardSubtitle}>
-              本周完成任务数
-            </div>
+            <div style={styles.textCardSubtitle}>本周完成任务数</div>
             <div className="text-card-title" style={styles.textCardTitle}>
               <span className="text-card-number" style={styles.textCardNumber}>
                 23
               </span>个任务
             </div>
-          </div>
-        </IceContainer>
-      </div>
+          </Col>
+        </Row>
+      </IceContainer>
     );
   }
 }
 
 const styles = {
-  textCard: {
-    color: '#333',
-  },
-  textCardList: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
   textCardItem: {
-    flex: '1',
     borderRight: '1px solid #F0F0F0',
     height: '90px',
     width: '33%',

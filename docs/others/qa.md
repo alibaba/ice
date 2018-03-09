@@ -70,3 +70,18 @@ class Demo extends Component {
 ```
 
 更多内容请参考 [Dangerously Set innerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
+
+## 之前创建的项目，遇到如下报错怎么办
+
+![截图](https://gw.alicdn.com/tfs/TB12gIkbVGWBuNjy0FbXXb4sXXa-862-258.png)
+
+这是由于 ES6 Modules 的标准在物料中不兼容导致的。您可以把 `src/navs.js` 中最后一行修改为：
+
+```js
+export const headerNavs = transform([
+  ...autoGenHeaderNavs,
+  ...customHeaderNavs,
+]);
+
+export const asideNavs = transform([...autoGenAsideNavs, ...customAsideNavs]);
+```

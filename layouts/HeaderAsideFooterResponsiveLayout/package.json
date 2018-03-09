@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/header-aside-footer-responsive-layout",
-  "version": "0.1.17",
+  "version": "0.1.20",
   "description": "顶部导航 + 边栏 + 底栏 + 响应式内容区的布局, 通常用于站点正文。",
   "files": [
     "lib/",
@@ -54,6 +54,7 @@
     "categories": [
       "layout"
     ],
-    "snapshot": "https://gw.alicdn.com/tfs/TB1dC19lC_I8KJjy0FoXXaFnVXa-976-974.png"
+    "snapshot": "https://gw.alicdn.com/tfs/TB1dC19lC_I8KJjy0FoXXaFnVXa-976-974.png",
+    "thumbnail": "https://img.alicdn.com/tfs/TB1vD6Jb_tYBeNjy1XdXXXXyVXa-2840-1596.png"
   }
 }

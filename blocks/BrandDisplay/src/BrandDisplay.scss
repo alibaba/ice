@@ -1,9 +1,0 @@
-@charset "UTF-8";
-
-.brand-display {
-  .brand-item {
-    &::nth-child(2n + 1) {
-      margin-left: 0;
-    }
-  }
-}

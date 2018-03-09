@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/complex-progress-table-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "进度管理表格",
   "files": [
     "src/",
@@ -22,7 +22,7 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.1.5-1",
     "@icedesign/container": "^0.1.0",
     "@icedesign/data-binder": "^0.1.0",
     "@icedesign/form-binder": "^0.1.3",
@@ -39,7 +39,7 @@
   },
   "blockConfig": {
     "name": "complex-progress-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB1tcvSg5qAXuNjy1XdXXaYcVXa-1894-1312.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1P4gsb21TBuNjy0FjXXajyXXa-2312-1320.png",
     "themePackage": "@icedesign/skin",
     "title": "进度管理表格",
     "categories": [

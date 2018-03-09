@@ -24,7 +24,12 @@ export default class CustomTable extends Component {
     return columns.map((item) => {
       if (typeof item.render === 'function') {
         return (
-          <Table.Column title={item.title} key={item.key} cell={item.render} />
+          <Table.Column
+            title={item.title}
+            key={item.key}
+            cell={item.render}
+            width={item.width || 150}
+          />
         );
       }
 
@@ -33,6 +38,7 @@ export default class CustomTable extends Component {
           key={item.key}
           title={item.title}
           dataIndex={item.dataIndex}
+          width={item.width || 150}
         />
       );
     });

@@ -87,7 +87,7 @@ export default class SettingsForm extends Component {
               <h2 style={styles.formTitle}>基本设置</h2>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col span="2" style={styles.label}>
                   姓名：
                 </Col>
                 <Col span="10">
@@ -99,7 +99,7 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col span="2" style={styles.label}>
                   头像：
                 </Col>
                 <Col span="10">
@@ -125,7 +125,7 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col span="2" style={styles.label}>
                   性别：
                 </Col>
                 <Col span="10">
@@ -140,7 +140,7 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col span="2" style={styles.label}>
                   通知：
                 </Col>
                 <Col span="10">
@@ -152,7 +152,7 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col span="2" style={styles.label}>
                   邮件：
                 </Col>
                 <Col span="10">
@@ -172,7 +172,7 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col span="2" style={styles.label}>
                   网站地址 ：
                 </Col>
                 <Col span="10">
@@ -198,8 +198,8 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
-                  Github 地址：
+                <Col span="2" style={styles.label}>
+                  Github地址：
                 </Col>
                 <Col span="10">
                   <IceFormBinder
@@ -218,8 +218,8 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
-                  Twitter 地址：
+                <Col span="2" style={styles.label}>
+                  Twitter地址：
                 </Col>
                 <Col span="10">
                   <IceFormBinder
@@ -235,7 +235,7 @@ export default class SettingsForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="3" style={styles.label}>
+                <Col span="2" style={styles.label}>
                   自我描述：
                 </Col>
                 <Col span="10">

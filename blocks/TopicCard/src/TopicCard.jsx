@@ -58,10 +58,10 @@ export default class TopicCard extends Component {
                     <div style={styles.meta}>{item.meta}</div>
                     <div style={styles.total}>{item.total}</div>
                     <div style={styles.compareText}>
-                      较前日 <span style={styles.up}>↑+{item.up}</span>
+                      较前日 <span style={styles.up}> ↑ +{item.up}</span>
                     </div>
                     <div style={styles.compareText}>
-                      近7天 <span style={styles.down}>↓-{item.down}</span>
+                      近7天 <span style={styles.down}> ↓ -{item.down}</span>
                     </div>
                   </div>
                 </div>
