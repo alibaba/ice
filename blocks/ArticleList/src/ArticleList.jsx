@@ -95,21 +95,23 @@ const styles = {
   articleFilterCard: {
     marginBottom: '10px',
     minHeight: 'auto',
+    padding: 0,
   },
   articleSort: {
     margin: '0',
     padding: '0',
-    display: 'flex',
   },
   sortItem: {
     cursor: 'pointer',
     listStyle: 'none',
     fontSize: '14px',
-    marginRight: '30px',
+    float: 'left',
+    whiteSpace: 'nowrap',
+    padding: '20px',
   },
   articleItem: {
     marginBottom: '30px',
-    paddingBottom: '30px',
+    paddingBottom: '20px',
     borderBottom: '1px solid #f5f5f5',
   },
   title: {
@@ -123,7 +125,10 @@ const styles = {
     color: '#999',
   },
   articleItemFooter: {
-    position: 'relative',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   tag: {
     fontSize: '13px',
@@ -133,10 +138,11 @@ const styles = {
     borderRadius: '20px',
     marginRight: '20px',
   },
+  articleItemTags: {
+    padding: '10px 0',
+  },
   articleItemMeta: {
-    position: 'absolute',
-    right: '0',
-    top: '0',
+    padding: '10px 0',
   },
   itemMetaIcon: {
     fontSize: '14px',
