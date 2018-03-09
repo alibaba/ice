@@ -64,7 +64,7 @@ export default class FeatureDisplay extends Component {
     return (
       <div className="feature-display" style={styles.container}>
         <div style={styles.items}>
-          <Row gutter="20" wrap={true}>
+          <Row gutter="20" wrap>
             {data.map((item, index) => {
               return (
                 <Col key={index} xxs="24" s="12" l="8">

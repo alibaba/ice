@@ -100,14 +100,14 @@ export default class DownloadCard extends Component {
         <IceContainer>
           <Tab type="bar" contentStyle={{ padding: '20px 5px' }}>
             <TabPane tab="客户端SDK" key="1">
-              <Row gutter="20" wrap={true}>
+              <Row gutter="20" wrap>
                 {tabData.clientSDK
                   ? this.renderContent(tabData.clientSDK)
                   : '暂无数据'}
               </Row>
             </TabPane>
             <TabPane tab="服务端SDK" key="2">
-              <Row gutter="20" wrap={true}>
+              <Row gutter="20" wrap>
                 {tabData.serverSDK
                   ? this.renderContent(tabData.serverSDK)
                   : '暂无数据'}
