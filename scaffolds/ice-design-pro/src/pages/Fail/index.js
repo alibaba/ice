@@ -1,1 +1,3 @@
-export default from './Fail';
+import Fail from './Fail';
+
+export default Fail;

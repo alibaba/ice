@@ -68,8 +68,7 @@ export default class OperationTable extends Component {
     EditorInfoDialog.show({
       value: record,
       onOk: (value) => {
-        console.log('value', value);
-        // todo send to api
+        // 更新数据
         this.props.updateBindingData(
           'updateTableData',
           {

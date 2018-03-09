@@ -85,8 +85,7 @@ const styles = {
   message: {
     fontSize: '12px',
     color: '#999',
-    marginBottom: '20px',
-    width: '790px',
+    marginBottom: '10px',
   },
   paginationWarp: {
     marginTop: '15px',

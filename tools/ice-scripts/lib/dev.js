@@ -52,9 +52,13 @@ module.exports = function(args, subprocess) {
     webpackConfig.plugins.push(
       new webpack.ProgressPlugin((percentage, msg) => {
         send({
-          type: 'sdk_status',
-          message: 'dev_compiler_progress',
-          data: { percentage, msg },
+          action: 'update_project',
+          message: 'compiler_progress',
+          data: {
+            statusCompile: 'progress',
+            statusCompileProgress: percentage,
+            statusCompileProgressText: msg,
+          },
         });
       })
     );
@@ -74,10 +78,11 @@ module.exports = function(args, subprocess) {
     }
     if (isFirstCompile) {
       send({
-        type: 'sdk_status',
-        message: 'dev_server_finished',
+        action: 'update_project',
+        message: 'server_finished',
         data: {
-          url: `http://${LOCAL_IP}:${PORT}`,
+          statusDev: 'working',
+          serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
 
@@ -144,19 +149,21 @@ module.exports = function(args, subprocess) {
     if (isSuccessful) {
       // 服务启动完成切没有任务错误与警告
       send({
-        type: 'sdk_status',
-        message: 'dev_compiler_success',
+        action: 'update_project',
+        message: 'compiler_success',
         data: {
-          url: `http://${LOCAL_IP}:${PORT}`,
+          statusCompile: 'success',
+          serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
     } else {
       // 服务启动完成切没有任务错误与警告
       send({
-        type: 'sdk_status',
-        message: 'dev_compiler_failed',
+        action: 'update_project',
+        message: 'compiler_failed',
         data: {
-          url: `http://${LOCAL_IP}:${PORT}`,
+          statusCompile: 'failed',
+          serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
     }
@@ -168,8 +175,11 @@ module.exports = function(args, subprocess) {
     }
     console.log('Compiling...');
     send({
-      type: 'sdk_status',
-      message: 'dev_compiler_compiling',
+      action: 'update_project',
+      message: 'compiler_compiling',
+      data: {
+        statusCompile: 'compiling',
+      },
     });
   });
 
@@ -179,18 +189,24 @@ module.exports = function(args, subprocess) {
   });
 
   devServer.listen(PORT, HOST, (err) => {
+    // 端口被占用，退出程序
     if (err) {
       send({
-        type: 'sdk_status',
-        message: 'dev_server_failed',
+        action: 'update_project',
+        message: 'server_failed',
+        data: {
+          statusDev: 'failed',
+        },
       });
-      return console.log(err);
+      console.error(err);
+      process.exit(500);
     } else {
       send({
-        type: 'sdk_status',
-        message: 'dev_server_success',
+        action: 'update_project',
+        message: 'server_success',
         data: {
-          url: `http://${LOCAL_IP}:${PORT}`,
+          statusDev: 'working',
+          serverUrl: `http://${LOCAL_IP}:${PORT}`,
         },
       });
     }

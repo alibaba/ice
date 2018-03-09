@@ -2,4 +2,4 @@
 
 简介：实时数据统计展示
 
-![截图](https://img.alicdn.com/tfs/TB1RWJ7pm_I8KJjy0FoXXaFnVXa-1978-376.png)
+![截图](https://img.alicdn.com/tfs/TB1TQDxchGYBuNjy0FnXXX5lpXa-2388-324.png)

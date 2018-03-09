@@ -15,8 +15,8 @@ const colors = require('chalk');
 const babel = require('babel-core');
 const fs = require('fs');
 const path = require('path');
-const propsSchemaGenerator = require('../dependencies/props-schema-generator');
-const dtsGenerator = require('../dependencies/typescript-definition-generator');
+const propsSchemaGenerator = require('props-schema-generator');
+const dtsGenerator = require('typescript-definition-generator');
 const ComponentStyleGenerator = require('./utils/ComponentStyleGenerator');
 const getBabelConfig = require('./config/getBabelConfig');
 

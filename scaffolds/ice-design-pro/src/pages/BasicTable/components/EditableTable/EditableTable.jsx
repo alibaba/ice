@@ -48,7 +48,6 @@ export default class EditableTable extends Component {
   };
 
   changeDataSource = (index, valueKey, value) => {
-    // todo 将修改后的表格数据发送接口，持久化
     this.state.dataSource[index][valueKey] = value;
     this.setState({
       dataSource: this.state.dataSource,

@@ -1,10 +1,137 @@
 import React, { Component } from 'react';
-import { Button, Search } from '@icedesign/base';
+import { Button, Search, Grid } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import SingleItem from './SingleItem';
 import './FilterList.scss';
 
+const { Row, Col } = Grid;
 const dataSource = [
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2O4nSnblmpuFjSZFlXXbdQXXa_!!120976213.jpg_240x240.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2GiVsdS0mpuFjSZPiXXbssVXa_!!120976213.jpg_240x240.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2bxHGtpXXXXXVXXXXXXXXXXXX_!!120976213.jpg_240x240.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2bEcHnXXXXXbgXXXXXXXXXXXX_!!120976213.jpg_100x100.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i2/TB11DjAIFXXXXaTXFXXXXXXXXXX_!!0-item_pic.jpg_100x100.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i4/TB1GiPSinJ_SKJjSZPiYXH3LpXa_M2.SS2_100x100.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2O4nSnblmpuFjSZFlXXbdQXXa_!!120976213.jpg_240x240.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2GiVsdS0mpuFjSZPiXXbssVXa_!!120976213.jpg_240x240.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2bxHGtpXXXXXVXXXXXXXXXXXX_!!120976213.jpg_240x240.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2bEcHnXXXXXbgXXXXXXXXXXXX_!!120976213.jpg_100x100.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i2/TB11DjAIFXXXXaTXFXXXXXXXXXX_!!0-item_pic.jpg_100x100.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i4/TB1GiPSinJ_SKJjSZPiYXH3LpXa_M2.SS2_100x100.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2O4nSnblmpuFjSZFlXXbdQXXa_!!120976213.jpg_240x240.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2GiVsdS0mpuFjSZPiXXbssVXa_!!120976213.jpg_240x240.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i3/120976213/TB2bxHGtpXXXXXVXXXXXXXXXXXX_!!120976213.jpg_240x240.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i4/120976213/TB2bEcHnXXXXXbgXXXXXXXXXXXX_!!120976213.jpg_100x100.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i2/TB11DjAIFXXXXaTXFXXXXXXXXXX_!!0-item_pic.jpg_100x100.jpg',
+  },
+  {
+    title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
+    extra: '预计佣金 ¥10',
+    price: '¥89',
+    image:
+      '//img.alicdn.com/bao/uploaded/i4/TB1GiPSinJ_SKJjSZPiYXH3LpXa_M2.SS2_100x100.jpg',
+  },
   {
     title: '衬衫女雪纺上衣2017大纺上衣2017大纺上衣2017大',
     extra: '预计佣金 ¥10',
@@ -52,11 +179,18 @@ const dataSource = [
 export default class FilterList extends Component {
   static displayName = 'FilterList';
 
-  renderItem = (item, index) => {
-    return <SingleItem key={index} {...item} />;
-  };
-  renderItemRow = () => {
-    return <div style={styles.itemRow}>{dataSource.map(this.renderItem)}</div>;
+  renderItems = () => {
+    return (
+      <Row gutter="20" wrap style={styles.itemRow}>
+        {dataSource.map((item, index) => {
+          return (
+            <Col key={index} xxs="24" s="8" l="4">
+              <SingleItem key={index} {...item} />
+            </Col>
+          );
+        })}
+      </Row>
+    );
   };
 
   render() {
@@ -70,16 +204,6 @@ export default class FilterList extends Component {
         <IceContainer
           style={{ ...styles.filterListHeaderWrapper, ...cardStyle }}
         >
-          <div style={styles.searchWrapper}>
-            <Search
-              placeholder="标题"
-              inputWidth={120}
-              searchText=""
-              style={styles.searchInput}
-            />
-            <Button type="primary">搜索</Button>
-          </div>
-
           <div style={styles.filterCategories}>
             <div className="select-item" style={styles.selectItem}>
               我的商品
@@ -90,6 +214,16 @@ export default class FilterList extends Component {
             <div className="select-item" style={styles.selectItem}>
               我的视频
             </div>
+          </div>
+
+          <div style={styles.searchWrapper}>
+            <Search
+              placeholder="标题"
+              inputWidth={120}
+              searchText=""
+              style={styles.searchInput}
+            />
+            <Button type="primary">搜索</Button>
           </div>
 
           <div style={styles.filterCategory}>
@@ -112,15 +246,8 @@ export default class FilterList extends Component {
           </div>
         </IceContainer>
 
-        <IceContainer
-          style={{ ...styles.searchResultWrapper, ...cardStyle }}
-          className=""
-        >
-          {this.renderItemRow()}
-          {this.renderItemRow()}
-          {this.renderItemRow()}
-          {this.renderItemRow()}
-          {this.renderItemRow()}
+        <IceContainer style={{ ...styles.searchResultWrapper, ...cardStyle }}>
+          {this.renderItems()}
         </IceContainer>
       </div>
     );
@@ -135,6 +262,7 @@ const styles = {
   },
   selectBtn: {
     marginRight: '10px',
+    marginBottom: '10px',
   },
   itemRow: {
     margin: '0 10px 10px 10px',
@@ -143,16 +271,15 @@ const styles = {
     justifyContent: 'space-around',
   },
   filterListHeaderWrapper: {
-    padding: '20px',
-    flexDirection: 'column',
-    position: 'relative',
+    padding: '20px 20px 5px 20px',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    alignItems: 'center',
   },
   searchWrapper: {
-    position: 'absolute',
-    right: '20px',
-    top: '20px',
     display: 'flex',
     flexDirection: 'row',
+    margin: '0 0 15px 0',
   },
   searchInput: {
     marginRight: '15px',
@@ -160,10 +287,14 @@ const styles = {
   filterCategories: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: '25px',
+    margin: '0 0 15px 0',
   },
   searchResultWrapper: {
     flexDirection: 'column',
+    flexWrap: 'wrap',
     padding: '20px 0',
+  },
+  filterCategory: {
+    width: '100%',
   },
 };

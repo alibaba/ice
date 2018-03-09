@@ -10,12 +10,12 @@ category: 入门指引
 
 ## 使用 axios 进行请求
 
-ICE 推荐使用 axios 方法库提供基础的 Ajax 能力，也可以使用 DataBinder 为组件（比如 Table）绑定 AJAX 接口数据，方便查询异步数据以及错误处理。
+我们推荐使用 `axios` 方法库提供基础的 Ajax 能力，也可以使用 DataBinder 为组件（比如 Table）绑定 AJAX 接口数据，方便查询异步数据以及错误处理。
 
 首先安装模块：
 
 ```bash
-npm install axios
+npm install axios --save
 ```
 
 引入对应组件，并使用 `axios` 函数获取数据：

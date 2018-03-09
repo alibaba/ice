@@ -6,7 +6,6 @@ import {
   FormError as IceFormError,
 } from '@icedesign/form-binder';
 import {
-  Form,
   Input,
   Button,
   Checkbox,
@@ -14,20 +13,12 @@ import {
   DatePicker,
   Switch,
   Radio,
+  Grid,
 } from '@icedesign/base';
 
-// Form 和 FormItem 用于描述表单 UI 结构
+const { Row, Col } = Grid;
+
 // FormBinder 用于获取表单组件的数据，通过标准受控 API value 和 onChange 来双向操作数据
-// Inpput 等为具体表单组件
-const FormItem = Form.Item;
-const formItemLayout = {
-  labelCol: {
-    span: 4,
-  },
-  wrapperCol: {
-    span: 14,
-  },
-};
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const { RangePicker } = DatePicker;
@@ -108,86 +99,132 @@ export default class CreateActivityForm extends Component {
             value={this.state.value}
             onChange={this.onFormChange}
           >
-            <Form direction="ver">
-              <FormItem label="活动名称：" required {...formItemLayout}>
-                <IceFormBinder name="name" required message="活动名称必须填写">
-                  <Input />
-                </IceFormBinder>
-                <IceFormError name="name" />
-              </FormItem>
-              <FormItem label="活动区域：" {...formItemLayout}>
-                <IceFormBinder name="area">
-                  <Select
-                    className="next-form-text-align"
-                    dataSource={[
-                      { label: '区域一', value: 'location1' },
-                      { label: '区域二', value: 'location2' },
-                    ]}
-                  />
-                </IceFormBinder>
-              </FormItem>
-              <FormItem label="活动时间：" {...formItemLayout}>
-                <IceFormBinder
-                  name="time"
-                  type="array"
-                  // 使用 RangePicker 组件输出的第二个参数字符串格式的日期
-                  valueFormatter={(date, dateStr) => dateStr}
-                >
-                  <RangePicker showTime />
-                </IceFormBinder>
-              </FormItem>
-              <FormItem label="即时配送：" {...formItemLayout}>
-                <IceFormBinder name="delivery">
-                  <SwitchForForm />
-                </IceFormBinder>
-              </FormItem>
-              <FormItem label="活动性质：" {...formItemLayout}>
-                <IceFormBinder
-                  name="type"
-                  len={2}
-                  type="array"
-                  message="活动性质必须选择两个"
-                >
-                  <CheckboxGroup
-                    className="next-form-text-align"
-                    dataSource={[
-                      { label: '美食线上活动', value: '美食线上活动' },
-                      { label: '地推活动', value: '地推活动' },
-                      { label: '线下主题活动', value: '线下主题活动' },
-                      { label: '单纯品牌曝光', value: '单纯品牌曝光' },
-                    ]}
-                  />
-                </IceFormBinder>
-                <div>
-                  <IceFormError name="type" />
-                </div>
-              </FormItem>
-              <FormItem label="特殊资源：" {...formItemLayout}>
-                <IceFormBinder name="resource">
-                  <RadioGroup
-                    className="next-form-text-align"
-                    dataSource={[
-                      { label: '线上品牌商赞助', value: '线上品牌商赞助' },
-                      { label: '线下场地免费', value: '线下场地免费' },
-                    ]}
-                  />
-                </IceFormBinder>
-              </FormItem>
-              <FormItem label="活动形式：" {...formItemLayout}>
-                <IceFormBinder name="extra">
-                  <Input multiple />
-                </IceFormBinder>
-              </FormItem>
+            <div>
+              <Row style={styles.formItem}>
+                <Col xxs="6" s="2" l="2" style={styles.formLabel}>
+                  活动名称：
+                </Col>
 
-              <FormItem label=" " {...formItemLayout}>
-                <Button type="primary" onClick={this.submit}>
-                  立即创建
-                </Button>
-                <Button style={styles.resetBtn} onClick={this.reset}>
-                  重置
-                </Button>
-              </FormItem>
-            </Form>
+                <Col s="12" l="10">
+                  <IceFormBinder
+                    name="name"
+                    required
+                    message="活动名称必须填写"
+                  >
+                    <Input style={{ width: '100%' }} />
+                  </IceFormBinder>
+                  <IceFormError name="name" />
+                </Col>
+              </Row>
+
+              <Row style={styles.formItem}>
+                <Col xxs="6" s="2" l="2" style={styles.formLabel}>
+                  活动区域：
+                </Col>
+                <Col s="12" l="10">
+                  <IceFormBinder name="area">
+                    <Select
+                      className="next-form-text-align"
+                      dataSource={[
+                        { label: '区域一', value: 'location1' },
+                        { label: '区域二', value: 'location2' },
+                      ]}
+                    />
+                  </IceFormBinder>
+                </Col>
+              </Row>
+
+              <Row style={styles.formItem}>
+                <Col xxs="6" s="2" l="2" style={styles.formLabel}>
+                  活动时间：
+                </Col>
+                <Col s="12" l="10">
+                  <IceFormBinder
+                    name="time"
+                    type="array"
+                    // 使用 RangePicker 组件输出的第二个参数字符串格式的日期
+                    valueFormatter={(date, dateStr) => dateStr}
+                  >
+                    <RangePicker showTime />
+                  </IceFormBinder>
+                </Col>
+              </Row>
+
+              <Row style={styles.formItem}>
+                <Col xxs="6" s="2" l="2" style={styles.formLabel}>
+                  即时配送：
+                </Col>
+                <Col s="12" l="10">
+                  <IceFormBinder name="delivery">
+                    <SwitchForForm />
+                  </IceFormBinder>
+                </Col>
+              </Row>
+
+              <Row style={styles.formItem}>
+                <Col xxs="6" s="2" l="2" style={styles.formLabel}>
+                  活动性质：
+                </Col>
+                <Col s="12" l="10">
+                  <IceFormBinder name="type" type="array">
+                    <CheckboxGroup
+                      className="next-form-text-align"
+                      dataSource={[
+                        { label: '美食线上活动', value: '美食线上活动' },
+                        { label: '地推活动', value: '地推活动' },
+                        { label: '线下主题活动', value: '线下主题活动' },
+                        { label: '单纯品牌曝光', value: '单纯品牌曝光' },
+                      ]}
+                    />
+                  </IceFormBinder>
+                  <div>
+                    <IceFormError name="type" />
+                  </div>
+                </Col>
+              </Row>
+
+              <Row style={styles.formItem}>
+                <Col xxs="6" s="2" l="2" style={styles.formLabel}>
+                  特殊资源：
+                </Col>
+                <Col s="12" l="10">
+                  <IceFormBinder name="resource">
+                    <RadioGroup
+                      className="next-form-text-align"
+                      dataSource={[
+                        { label: '线上品牌商赞助', value: '线上品牌商赞助' },
+                        { label: '线下场地免费', value: '线下场地免费' },
+                      ]}
+                    />
+                  </IceFormBinder>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xxs="6" s="2" l="2" style={styles.formLabel}>
+                  活动形式：
+                </Col>
+                <Col s="12" l="10">
+                  <IceFormBinder name="extra">
+                    <Input multiple style={{ width: '100%' }} />
+                  </IceFormBinder>
+                </Col>
+              </Row>
+
+              <Row style={styles.btns}>
+                <Col xxs="6" s="2" l="2" style={styles.formLabel}>
+                  {' '}
+                </Col>
+                <Col s="12" l="10">
+                  <Button type="primary" onClick={this.submit}>
+                    立即创建
+                  </Button>
+                  <Button style={styles.resetBtn} onClick={this.reset}>
+                    重置
+                  </Button>
+                </Col>
+              </Row>
+            </div>
           </IceFormBinderWrapper>
         </IceContainer>
       </div>
@@ -199,10 +236,18 @@ const styles = {
   container: {
     paddingBottom: 0,
   },
-  label: {
+  formItem: {
+    height: '28px',
+    lineHeight: '28px',
+    marginBottom: '25px',
+  },
+  formLabel: {
     textAlign: 'right',
   },
+  btns: {
+    margin: '25px 0',
+  },
   resetBtn: {
-    marginLeft: 20,
+    marginLeft: '20px',
   },
 };

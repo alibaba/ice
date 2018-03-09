@@ -1,1 +1,3 @@
-export default from './ProgressInfo';
+import ProgressInfo from './ProgressInfo';
+
+export default ProgressInfo;

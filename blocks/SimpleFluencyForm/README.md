@@ -4,9 +4,4 @@
 
 SimpleFluencyForm
 
-![截图](https://gw.alicdn.com/tfs/TB1emXIjDnI8KJjy0FfXXcdoVXa-1776-902.png)
-
-
-
-
-
+![截图](https://img.alicdn.com/tfs/TB1U7tFcDtYBeNjy1XdXXXXyVXa-2352-1002.png)
