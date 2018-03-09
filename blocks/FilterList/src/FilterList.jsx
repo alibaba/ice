@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Search } from '@icedesign/base';
+import { Button, Search, Grid } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import { Grid } from '@icedesign/base';
-
 import SingleItem from './SingleItem';
 import './FilterList.scss';
 
