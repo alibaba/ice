@@ -1,1 +1,3 @@
-export default from './NavigationSetting';
+import NavigationSetting from './NavigationSetting';
+
+export default NavigationSetting;

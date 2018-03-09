@@ -1,1 +1,3 @@
-export default from './CreateTag';
+import CreateTag from './CreateTag';
+
+export default CreateTag;

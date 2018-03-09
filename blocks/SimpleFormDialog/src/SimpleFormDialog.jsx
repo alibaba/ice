@@ -6,6 +6,7 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
+import { enquireScreen } from 'enquire-js';
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
@@ -24,8 +25,23 @@ export default class SimpleFormDialog extends Component {
     this.state = {
       visible: false,
       value: defaultValue,
+      isMobile: false,
     };
   }
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   showDialog = () => {
     this.setState({
@@ -58,11 +74,20 @@ export default class SimpleFormDialog extends Component {
   };
 
   render() {
+    const { isMobile } = this.state;
+    const simpleFormDialog = {
+      ...styles.simpleFormDialog,
+    };
+    // 响应式处理
+    if (isMobile) {
+      simpleFormDialog.width = '300px';
+    }
+
     return (
       <IceContainer>
         <Dialog
           className="simple-form-dialog"
-          style={styles.simpleFormDialog}
+          style={simpleFormDialog}
           autoFocus={false}
           footerAlign="center"
           title="简单表单"
@@ -82,10 +107,10 @@ export default class SimpleFormDialog extends Component {
           >
             <div style={styles.dialogContent}>
               <Row style={styles.formRow}>
-                <Col span="3">
+                <Col span={`${isMobile ? '6' : '3'}`}>
                   <label style={styles.formLabel}>关键词</label>
                 </Col>
-                <Col span="16">
+                <Col span={`${isMobile ? '18' : '16'}`}>
                   <IceFormBinder
                     required
                     min={2}
