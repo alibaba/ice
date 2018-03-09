@@ -4,6 +4,7 @@ import { Table, Pagination, Tab, Search } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
+import { enquireScreen } from 'enquire-js';
 
 @DataBinder({
   tableData: {
@@ -39,7 +40,18 @@ export default class EnhanceTable extends Component {
   componentDidMount() {
     this.queryCache.page = 1;
     this.fetchData();
+    this.enquireScreenRegister();
   }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   fetchData = () => {
     this.props.updateBindingData('tableData', {
@@ -207,6 +219,7 @@ export default class EnhanceTable extends Component {
               pageSize={tableData.pageSize}
               total={tableData.total}
               onChange={this.changePage}
+              type={this.state.isMobile ? 'simple' : 'normal'}
             />
           </div>
         </IceContainer>
@@ -236,6 +249,7 @@ const styles = {
     marginBottom: 20,
     display: 'flex',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
   tabCount: {
     color: '#3080FE',
