@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Icon } from '@icedesign/base';
+import { Icon, Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 export default class AssetInfoDisplay extends Component {
   static displayName = 'AssetInfoDisplay';
@@ -17,109 +19,117 @@ export default class AssetInfoDisplay extends Component {
   render() {
     return (
       <div className="asset-info-display" style={styles.container}>
-        <IceContainer style={styles.card}>
-          <div style={styles.title}>资产展示</div>
-          <div style={styles.assets}>
-            <div style={styles.assetItem}>
-              <div style={styles.price}>$46.24</div>
-              <a href="##" style={styles.subItem}>
-                可用额度 <Icon type="help" size="s" />
-              </a>
-            </div>
-            <div style={styles.assetItem}>
-              <div style={styles.price}>$46.24</div>
-              <a href="##" style={styles.subItem}>
-                现金余额 <Icon type="help" size="s" />
-              </a>
-            </div>
-            <div
-              style={{
-                ...styles.assetItem,
-                borderRight: '0',
-              }}
-            >
-              <div style={styles.price}>$46.24</div>
-              <a href="##" style={styles.subItem}>
-                信用额度 <Icon type="help" size="s" />
-              </a>
-            </div>
-          </div>
-          <div style={styles.cardItem}>
-            <h1 style={styles.subTitle}>优惠卡券</h1>
-            <div style={styles.assetsGroup}>
-              <div style={styles.assetItem}>
-                <div style={styles.item}>$100</div>
-                <div style={styles.subItem}>储值卡</div>
+        <Row gutter="20" wrap style={styles.containerContent}>
+          <Col xxs="24" s="12">
+            <IceContainer style={styles.card}>
+              <div style={styles.title}>资产展示</div>
+              <div style={styles.assets}>
+                <div style={styles.assetItem}>
+                  <div style={styles.price}>$46.24</div>
+                  <a href="##" style={styles.subItem}>
+                    可用额度 <Icon type="help" size="s" />
+                  </a>
+                </div>
+                <div style={styles.assetItem}>
+                  <div style={styles.price}>$46.24</div>
+                  <a href="##" style={styles.subItem}>
+                    现金余额 <Icon type="help" size="s" />
+                  </a>
+                </div>
+                <div
+                  style={{
+                    ...styles.assetItem,
+                    borderRight: '0',
+                  }}
+                >
+                  <div style={styles.price}>$46.24</div>
+                  <a href="##" style={styles.subItem}>
+                    信用额度 <Icon type="help" size="s" />
+                  </a>
+                </div>
               </div>
-              <div style={styles.assetItem}>
-                <div style={styles.item}>$0</div>
-                <div style={styles.subItem}>优惠券</div>
+              <div style={styles.cardItem}>
+                <h1 style={styles.subTitle}>优惠卡券</h1>
+                <div style={styles.assetsGroup}>
+                  <div style={styles.assetItem}>
+                    <div style={styles.item}>$100</div>
+                    <div style={styles.subItem}>储值卡</div>
+                  </div>
+                  <div style={styles.assetItem}>
+                    <div style={styles.item}>$0</div>
+                    <div style={styles.subItem}>优惠券</div>
+                  </div>
+                  <div
+                    style={{
+                      ...styles.assetItem,
+                      borderRight: '0',
+                    }}
+                  >
+                    <div style={styles.item}>$3000</div>
+                    <div style={styles.subItem}>代金券</div>
+                  </div>
+                </div>
               </div>
+            </IceContainer>
+          </Col>
+          <Col xxs="24" s="12">
+            <IceContainer style={styles.card}>
+              <div style={styles.title}>合同发票</div>
               <div
                 style={{
-                  ...styles.assetItem,
-                  borderRight: '0',
+                  ...styles.cardItem,
+                  borderBottom: '1px solid #fbfbfb',
                 }}
               >
-                <div style={styles.item}>$3000</div>
-                <div style={styles.subItem}>代金券</div>
+                <h1 style={styles.subTitle}>合同</h1>
+                <div style={styles.assetsGroup}>
+                  <a href="##" style={styles.assetItem}>
+                    <div style={styles.item}>0</div>
+                    <div style={styles.subItem}>正式</div>
+                  </a>
+                  <a
+                    href="##"
+                    style={{
+                      ...styles.assetItem,
+                      borderRight: '0',
+                    }}
+                  >
+                    <div style={styles.item}>1</div>
+                    <div style={styles.subItem}>草稿</div>
+                  </a>
+                </div>
               </div>
-            </div>
-          </div>
-        </IceContainer>
-        <div style={styles.gap} />
-        <IceContainer style={styles.card}>
-          <div style={styles.title}>合同发票</div>
-          <div
-            style={{
-              ...styles.cardItem,
-              borderBottom: '1px solid #fbfbfb',
-            }}
-          >
-            <h1 style={styles.subTitle}>合同</h1>
-            <div style={styles.assetsGroup}>
-              <a href="##" style={styles.assetItem}>
-                <div style={styles.item}>0</div>
-                <div style={styles.subItem}>正式</div>
-              </a>
-              <a
-                href="##"
-                style={{
-                  ...styles.assetItem,
-                  borderRight: '0',
-                }}
-              >
-                <div style={styles.item}>1</div>
-                <div style={styles.subItem}>草稿</div>
-              </a>
-            </div>
-          </div>
-          <div style={styles.cardItem}>
-            <h1 style={styles.subTitle}>发票</h1>
-            <div style={styles.assetsGroup}>
-              <a href="##" style={styles.assetItem}>
-                <div style={styles.item}>$182.13</div>
-                <div style={styles.subItem}>正式</div>
-              </a>
-              <a
-                href="##"
-                style={{
-                  ...styles.assetItem,
-                  borderRight: '0',
-                }}
-              >
-                <div style={styles.item}>$0</div>
-                <div style={styles.subItem}>发票</div>
-              </a>
-            </div>
-          </div>
-        </IceContainer>
+              <div style={styles.cardItem}>
+                <h1 style={styles.subTitle}>发票</h1>
+                <div style={styles.assetsGroup}>
+                  <a href="##" style={styles.assetItem}>
+                    <div style={styles.item}>$182.13</div>
+                    <div style={styles.subItem}>正式</div>
+                  </a>
+                  <a
+                    href="##"
+                    style={{
+                      ...styles.assetItem,
+                      borderRight: '0',
+                    }}
+                  >
+                    <div style={styles.item}>$0</div>
+                    <div style={styles.subItem}>发票</div>
+                  </a>
+                </div>
+              </div>
+            </IceContainer>
+          </Col>
+        </Row>
       </div>
     );
   }
 }
 
 const styles = {
+  containerContent: {
+    width: '100%',
+  },
   container: {
     display: 'flex',
     flexDirection: 'row',

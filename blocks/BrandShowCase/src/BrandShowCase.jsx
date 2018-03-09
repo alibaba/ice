@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 const generatorData = (count) => {
   return Array.from({ length: count }).map(() => {
@@ -31,15 +34,17 @@ export default class BrandShowCase extends Component {
             广义的“品牌”是具有经济价值的无形资产，用抽象化的、特有的、能识别的心智概念来表现其差异性，从而在人们的意识当中占据一定位置的综合反映。品牌建设具有长期性
           </p>
         </div>
-        <div style={styles.items}>
+        <Row gutter="20" wrap style={styles.items}>
           {data.map((item, index) => {
             return (
-              <div style={styles.item} key={index}>
-                <img src={item.imgUrl} style={styles.image} alt="" />
-              </div>
+              <Col xxs="12" s="4" l="4" key={index}>
+                <div style={styles.item}>
+                  <img src={item.imgUrl} style={styles.image} alt="" />
+                </div>
+              </Col>
             );
           })}
-        </div>
+        </Row>
       </div>
     );
   }
@@ -53,7 +58,8 @@ const styles = {
     padding: '80px 0',
   },
   head: {
-    width: '50%',
+    width: '80%',
+    maxWidth: '540px',
     margin: '0 auto',
   },
   title: {
@@ -65,12 +71,9 @@ const styles = {
     color: '#999',
   },
   items: {
-    display: 'flex',
-    flexWrap: 'wrap',
     margin: '30px 0',
   },
   item: {
-    width: '16.66%',
     margin: '10px 0',
     textAlign: 'center',
   },
