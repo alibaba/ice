@@ -107,6 +107,7 @@ const styles = {
   noticeItem: {
     position: 'relative',
     padding: '12px 0',
+    paddingRight: '65px',
     listStyle: 'none',
     borderBottom: '1px solid #F4F4F4',
   },
