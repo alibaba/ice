@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
+import { Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 const stateBackgroundMap = {
   0: '#F4F7FF',
@@ -135,21 +138,23 @@ export default class SortCardList extends Component {
     return (
       <div className="sort-card-list">
         <IceContainer style={styles.cardContainer}>
-          <div style={styles.cardList}>
-            <div style={styles.title}>待办事项</div>
-            <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
-            {todos.map(this.renderItem)}
-          </div>
-          <div style={styles.cardList}>
-            <div style={styles.title}>进行中</div>
-            <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
-            {doings.map(this.renderItem)}
-          </div>
-          <div style={styles.cardList}>
-            <div style={styles.title}>已完成</div>
-            <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
-            {dones.map(this.renderItem)}
-          </div>
+          <Row wrap gutter={20}>
+            <Col xxs={24} m={8} style={styles.cardList}>
+              <div style={styles.title}>待办事项</div>
+              <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
+              {todos.map(this.renderItem)}
+            </Col>
+            <Col xxs={24} m={8} style={styles.cardList}>
+              <div style={styles.title}>进行中</div>
+              <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
+              {doings.map(this.renderItem)}
+            </Col>
+            <Col xxs={24} m={8} style={styles.cardList}>
+              <div style={styles.title}>已完成</div>
+              <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
+              {dones.map(this.renderItem)}
+            </Col>
+          </Row>
         </IceContainer>
       </div>
     );
