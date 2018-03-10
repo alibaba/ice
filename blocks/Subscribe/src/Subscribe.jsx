@@ -83,7 +83,9 @@ const styles = {
     margin: '0',
   },
   input: {
-    width: '400px',
+    minWidth: '170px',
+    width: '25%',
+    maxWidth: '250px',
     marginRight: '15px',
   },
   center: {
