@@ -89,7 +89,10 @@ export default class ForgetPasswordForm extends Component {
 }
 
 const styles = {
-  formCard: { width: '518px', paddingLeft: '30px' },
+  formCard: {
+    maxWidth: '518px',
+    paddingLeft: '30px',
+  },
   title: {
     fontSize: '16px',
     marginBottom: '10px',
@@ -98,6 +101,10 @@ const styles = {
   },
   subtitle: { color: '#000', fontSize: '14px', marginBottom: '30px' },
   groupTitle: { marginBottom: '10px' },
-  input: { width: '332px' },
+  input: {
+    maxWidth: '332px',
+    width: '70%',
+    minWidth: '150px',
+  },
   inputWrap: { marginBottom: '20px' },
 };
