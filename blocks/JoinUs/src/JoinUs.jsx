@@ -62,10 +62,19 @@ export default class JoinUs extends Component {
             onChange={this.formChange}
           >
             <div style={styles.formContent}>
-              <Row className="hoz-form-item" style={styles.hozFormItem}>
+              <Row
+                wrap
+                gutter={20}
+                className="hoz-form-item"
+                style={styles.hozFormItem}
+              >
                 <Col span={8}>
                   <FormBinder required message="必填项">
-                    <Input name="username" placeholder="姓名" />
+                    <Input
+                      style={{ width: '100%', marginTop: '20px' }}
+                      name="username"
+                      placeholder="姓名"
+                    />
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="username" style={styles.errorText} />
@@ -73,7 +82,11 @@ export default class JoinUs extends Component {
                 </Col>
                 <Col span={8}>
                   <FormBinder type="email" required message="邮箱不合法">
-                    <Input name="email" placeholder="邮箱" />
+                    <Input
+                      style={{ width: '100%', marginTop: '20px' }}
+                      name="email"
+                      placeholder="邮箱"
+                    />
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="email" style={styles.errorText} />
@@ -86,24 +99,39 @@ export default class JoinUs extends Component {
                     pattern={telPattern}
                     triggerType="onBlur"
                   >
-                    <Input name="phone" placeholder="电话" />
+                    <Input
+                      style={{ width: '100%', marginTop: '20px' }}
+                      name="phone"
+                      placeholder="电话"
+                    />
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="phone" style={styles.errorText} />
                   </div>
                 </Col>
-              </Row>
-
-              <Row className="ver-form-item" style={styles.verFormItem}>
-                <FormBinder>
-                  <Input name="jobtitle" placeholder="职位" />
-                </FormBinder>
-              </Row>
-
-              <Row className="ver-form-item" style={styles.verFormItem}>
-                <FormBinder>
-                  <Input multiple name="content" placeholder="一些自我介绍" />
-                </FormBinder>
+                <Col span={24} style={styles.verFormItem}>
+                  <FormBinder>
+                    <Input
+                      style={{ width: '100%', marginTop: '20px' }}
+                      name="jobtitle"
+                      placeholder="职位"
+                    />
+                  </FormBinder>
+                </Col>
+                <Col
+                  span={24}
+                  className="ver-form-item"
+                  style={styles.verFormItem}
+                >
+                  <FormBinder>
+                    <Input
+                      style={{ width: '100%', marginTop: '20px' }}
+                      multiple
+                      name="content"
+                      placeholder="一些自我介绍"
+                    />
+                  </FormBinder>
+                </Col>
               </Row>
 
               <Row>
@@ -132,17 +160,22 @@ const styles = {
     backgroundSize: 'cover',
   },
   content: {
-    width: '1080px',
+    maxWidth: '1080px',
     margin: '0 auto',
     padding: '80px 0',
   },
   head: { width: '50%', margin: '0 auto' },
   title: { margin: '0', textAlign: 'center', fontSize: '28px', color: '#fff' },
   intro: { textAlign: 'center', color: '#fff' },
-  formContent: { width: '640px', margin: '60px auto' },
+  formContent: { maxWidth: '680px', padding: '0 20px', margin: '60px auto' },
   errorText: { color: '#fff' },
   submitBtn: { color: '#2977f3', background: '#fff', borderRadius: '6px' },
   joinUs: {},
   hozFormItem: {},
-  verFormItem: {},
+  verFormItem: {
+    marginTop: '20px',
+  },
+  formErrorWrapper: {
+    color: 'red',
+  },
 };
