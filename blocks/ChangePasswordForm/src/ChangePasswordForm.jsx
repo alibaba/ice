@@ -73,11 +73,11 @@ export default class ChangePasswordForm extends Component {
             <div style={styles.formContent}>
               <h2 style={styles.formTitle}>修改密码</h2>
 
-              <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+              <Row wrap style={styles.formItem}>
+                <Col xxs={6} s={3} style={styles.formLabel}>
                   新密码：
                 </Col>
-                <Col span="10">
+                <Col xxs={10}>
                   <IceFormBinder
                     name="passwd"
                     required
@@ -93,11 +93,11 @@ export default class ChangePasswordForm extends Component {
                 </Col>
               </Row>
 
-              <Row style={styles.formItem}>
-                <Col span="3" style={styles.formLabel}>
+              <Row wrap style={styles.formItem}>
+                <Col xxs={6} s={3} style={styles.formLabel}>
                   确认密码：
                 </Col>
-                <Col span="10">
+                <Col xxs={10}>
                   <IceFormBinder
                     name="rePasswd"
                     required
@@ -106,7 +106,7 @@ export default class ChangePasswordForm extends Component {
                         rule,
                         values,
                         callback,
-                        this.state.value,
+                        this.state.value
                       )
                     }
                   >
@@ -122,8 +122,8 @@ export default class ChangePasswordForm extends Component {
             </div>
           </IceFormBinderWrapper>
 
-          <Row style={{ marginTop: 20 }}>
-            <Col offset="3">
+          <Row wrap style={{ marginTop: 20 }}>
+            <Col xxs={{ offset: 6 }} s={{ offset: 3 }}>
               <Button
                 size="large"
                 type="primary"
