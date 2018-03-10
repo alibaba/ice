@@ -1,12 +1,10 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Grid } from '@icedesign/base';
+import { Table, Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
 import FilterForm from './Filter';
-
-const { Row, Col } = Grid;
 
 @DataBinder({
   tableData: {
