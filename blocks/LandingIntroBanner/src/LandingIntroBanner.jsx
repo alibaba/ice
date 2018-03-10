@@ -45,7 +45,7 @@ export default class LandingIntroBanner extends Component {
                 <Link to="/link-to-help-document">
                   <Button
                     style={{
-                      marginRight: 20,
+                      margin: '0 10px 20px',
                       height: 50,
                       padding: '0 58px',
                       fontSize: 16,
@@ -60,7 +60,12 @@ export default class LandingIntroBanner extends Component {
                 </Link>
                 <Link to="/link-to-dashboard">
                   <Button
-                    style={{ height: 50, padding: '0 58px', fontSize: 16 }}
+                    style={{
+                      margin: '0 10px 20px',
+                      height: 50,
+                      padding: '0 58px',
+                      fontSize: 16,
+                    }}
                     type="primary"
                     size="large"
                   >
@@ -102,7 +107,6 @@ const styles = {
   title: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: '32px',
     letterSpacing: '1.94px',
     lineHeight: '48px',
   },
