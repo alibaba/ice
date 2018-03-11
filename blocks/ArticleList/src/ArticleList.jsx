@@ -98,8 +98,8 @@ const styles = {
     padding: 0,
   },
   articleSort: {
-    margin: '0',
-    padding: '0',
+    margin: 0,
+    padding: 0,
   },
   sortItem: {
     cursor: 'pointer',

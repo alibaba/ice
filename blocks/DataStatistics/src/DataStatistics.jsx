@@ -118,7 +118,7 @@ const styles = {
     width: '100%',
   },
   title: {
-    margin: '0',
+    margin: 0,
     fontSize: '18px',
     paddingBottom: '15px',
     fontWeight: 'bold',

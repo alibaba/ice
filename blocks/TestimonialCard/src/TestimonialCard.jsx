@@ -94,7 +94,7 @@ const styles = {
     height: '64px',
   },
   name: {
-    margin: '0',
+    margin: 0,
     fontSize: '15px',
     fontWeight: 'bold',
   },

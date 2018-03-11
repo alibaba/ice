@@ -91,11 +91,11 @@ const styles = {
   },
   name: {
     padding: '0 10px',
-    margin: '0',
+    margin: 0,
   },
   deptName: {
     padding: '0 10px',
-    margin: '0',
+    margin: 0,
     fontSize: '12px',
   },
   body: {
