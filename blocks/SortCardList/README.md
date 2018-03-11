@@ -4,9 +4,4 @@
 
 拖拽排序卡片列表
 
-![截图](https://gw.alicdn.com/tfs/TB1CmT8jfDH8KJjy1XcXXcpdXXa-2034-830.png)
-
-
-
-
-
+![截图](https://img.alicdn.com/tfs/TB1SuIoc_tYBeNjy1XdXXXXyVXa-2346-1078.png)

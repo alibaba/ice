@@ -74,10 +74,10 @@ export default class ChangePasswordForm extends Component {
               <h2 style={styles.formTitle}>修改密码</h2>
 
               <Row wrap style={styles.formItem}>
-                <Col xxs={6} s={3} style={styles.formLabel}>
+                <Col xxs="7" s="4" l="3" style={styles.formLabel}>
                   新密码：
                 </Col>
-                <Col xxs={10}>
+                <Col xxs="16" s="10" l="7">
                   <IceFormBinder
                     name="passwd"
                     required
@@ -94,10 +94,10 @@ export default class ChangePasswordForm extends Component {
               </Row>
 
               <Row wrap style={styles.formItem}>
-                <Col xxs={6} s={3} style={styles.formLabel}>
+                <Col xxs="7" s="4" l="3" style={styles.formLabel}>
                   确认密码：
                 </Col>
-                <Col xxs={10}>
+                <Col xxs="16" s="10" l="7">
                   <IceFormBinder
                     name="rePasswd"
                     required

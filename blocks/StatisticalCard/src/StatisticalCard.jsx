@@ -107,14 +107,13 @@ const styles = {
   statisticalCardItems: {
     display: 'flex',
     flexDirection: 'row',
-    // height: '110px',
     justifyContent: 'center',
     alignItems: 'center',
   },
   statisticalCardItem: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: '15px',
+    margin: '10px 0',
   },
   circleWrap: {
     backgroundColor: '#FFECB3',
