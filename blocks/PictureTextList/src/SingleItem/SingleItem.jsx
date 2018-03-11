@@ -24,6 +24,7 @@ export default class SingleItem extends Component {
           height: '230px',
           cursor: 'pointer',
           borderRadius: '4px',
+          margin: '0 auto',
           backgroundColor: active ? '#f4f4f4' : undefined,
         }}
       >

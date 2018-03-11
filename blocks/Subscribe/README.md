@@ -4,9 +4,4 @@
 
 订阅
 
-![截图](https://gw.alicdn.com/tfs/TB1HFVejvDH8KJjy1XcXXcpdXXa-1832-382.png)
-
-
-
-
-
+![截图](https://img.alicdn.com/tfs/TB17bQvc_tYBeNjy1XdXXXXyVXa-2352-150.png)

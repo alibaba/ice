@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Search } from '@icedesign/base';
+import { Search, Grid } from '@icedesign/base';
 import './FilterWithSearch.scss';
+
+const { Row, Col } = Grid;
 
 export default class FilterWithSearch extends Component {
   static displayName = 'FilterWithSearch';
@@ -32,36 +34,40 @@ export default class FilterWithSearch extends Component {
           className="filter-with-search-container"
           style={styles.filterWithSearchContainer}
         >
-          <div className="filter-container" style={styles.filterContainer}>
-            <span
-              className="filter-item selected"
-              style={styles.filterItemSelected}
-              onClick={this.selectFilter.bind(this, 'all')}
-            >
-              全部
-            </span>
-            <span
-              className="filter-item"
-              style={styles.filterItem}
-              onClick={this.selectFilter.bind(this, 'process')}
-            >
-              进行中
-            </span>
-            <span
-              className="filter-item"
-              style={styles.filterItem}
-              onClick={this.selectFilter.bind(this, 'pending')}
-            >
-              等待中
-            </span>
-          </div>
-          <Search
-            inputWidth={400}
-            searchText=""
-            size="large"
-            placeholder="请输入要搜索的关键词或商品链接"
-            onSearch={this.handleSearch}
-          />
+          <Row wrap justify="space-between">
+            <Col xxs={24} s={8} style={styles.filterContainer}>
+              <span
+                className="filter-item selected"
+                style={styles.filterItemSelected}
+                onClick={this.selectFilter.bind(this, 'all')}
+              >
+                全部
+              </span>
+              <span
+                className="filter-item"
+                style={styles.filterItem}
+                onClick={this.selectFilter.bind(this, 'process')}
+              >
+                进行中
+              </span>
+              <span
+                className="filter-item"
+                style={styles.filterItem}
+                onClick={this.selectFilter.bind(this, 'pending')}
+              >
+                等待中
+              </span>
+            </Col>
+            <Col xxs={24} s={16}>
+              <Search
+                inputWidth={250}
+                searchText=""
+                size="large"
+                placeholder="请输入要搜索的关键词或商品链接"
+                onSearch={this.handleSearch}
+              />
+            </Col>
+          </Row>
         </IceContainer>
       </div>
     );
@@ -69,12 +75,10 @@ export default class FilterWithSearch extends Component {
 }
 
 const styles = {
-  filterWithSearchContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  filterContainer: {
+    marginBottom: '20px',
+    lineHeight: '32px',
   },
-  filterContainer: { display: 'flex', alignItems: 'center' },
   filterItem: {
     height: '20px',
     padding: '0 20px',

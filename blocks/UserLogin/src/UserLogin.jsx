@@ -55,11 +55,13 @@ export default class UserLogin extends Component {
             backgroundImage: `url(${backgroundImage})`,
           }}
         />
-        <div style={styles.contentWrapper}>
-          <h2 style={styles.slogan}>
-            欢迎使用 <br /> ICE 内容管理系统
-          </h2>
-          <div style={styles.formContainer}>
+        <Row wrap style={styles.contentWrapper}>
+          <Col xxs={24} s={12}>
+            <h2 style={styles.slogan}>
+              欢迎使用 <br /> ICE 内容管理系统
+            </h2>
+          </Col>
+          <Col xxs={24} s={12} style={styles.formContainer}>
             <h4 style={styles.formTitle}>登录</h4>
             <IceFormBinderWrapper
               value={this.state.value}
@@ -128,8 +130,8 @@ export default class UserLogin extends Component {
                 </Row>
               </div>
             </IceFormBinderWrapper>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
     );
   }
@@ -168,6 +170,7 @@ const styles = {
     lineHeight: '48px',
   },
   formContainer: {
+    maxWidth: '310px',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
@@ -189,8 +192,8 @@ const styles = {
   },
   inputIcon: {
     position: 'absolute',
-    left: '18px',
-    top: '3px',
+    left: '4px',
+    top: '4px',
     color: '#999',
   },
   submitBtn: {
