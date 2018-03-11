@@ -124,7 +124,7 @@ const styles = {
   },
   noticeTime: {
     position: 'absolute',
-    right: '0',
+    right: '0px',
     top: '15px',
     fontSize: '12px',
     color: '#999',

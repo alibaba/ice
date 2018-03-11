@@ -63,7 +63,7 @@ const styles = {
   },
   title: {
     textAlign: 'center',
-    margin: '0',
+    margin: 0,
     paddingBottom: '20px',
     fontSize: '20px',
     borderBottom: '1px solid #dedede',

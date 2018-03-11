@@ -165,7 +165,7 @@ const styles = {
     padding: '80px 0',
   },
   head: { width: '50%', margin: '0 auto' },
-  title: { margin: '0', textAlign: 'center', fontSize: '28px', color: '#fff' },
+  title: { margin: 0, textAlign: 'center', fontSize: '28px', color: '#fff' },
   intro: { textAlign: 'center', color: '#fff' },
   formContent: { maxWidth: '680px', padding: '0 20px', margin: '60px auto' },
   errorText: { color: '#fff' },

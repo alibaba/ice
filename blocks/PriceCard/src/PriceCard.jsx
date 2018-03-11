@@ -96,7 +96,7 @@ const styles = {
     fontSize: '20px',
   },
   price: {
-    margin: '0',
+    margin: 0,
     fontWeight: 'bold',
     fontSize: '22px',
   },
