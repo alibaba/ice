@@ -24,13 +24,14 @@ export default class ArticleList extends Component {
   };
 
   renderItem = (data, idx) => {
+    const { isMobile } = this.props;
     const wrapperStyle = { ...styles.item };
     const informationStyle = { ...styles.information };
     return (
       <div key={idx} style={wrapperStyle}>
         <div style={styles.title}>
           {data.title}
-          <span style={styles.datetime}>{data.datetime}</span>
+          {!isMobile && <span style={styles.datetime}>{data.datetime}</span>}
         </div>
         <div style={styles.desc}>{data.description}</div>
         <div style={informationStyle}>
@@ -43,11 +44,13 @@ export default class ArticleList extends Component {
               );
             })}
           </div>
-          <div style={styles.operator}>
-            <span style={styles.operatorItem}>点赞: {data.star}</span>
-            <span style={styles.operatorItem}>喜爱: {data.like}</span>
-            <span style={styles.operatorItem}>评论: {data.comment}</span>
-          </div>
+          {!isMobile && (
+            <div style={styles.operator}>
+              <span style={styles.operatorItem}>点赞: {data.star}</span>
+              <span style={styles.operatorItem}>喜爱: {data.like}</span>
+              <span style={styles.operatorItem}>评论: {data.comment}</span>
+            </div>
+          )}
         </div>
       </div>
     );

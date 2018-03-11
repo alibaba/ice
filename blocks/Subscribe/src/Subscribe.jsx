@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button } from '@icedesign/base';
+import { Input, Button, Grid } from '@icedesign/base';
 import {
   FormBinderWrapper,
   FormBinder,
   FormError,
 } from '@icedesign/form-binder';
+
+const { Row, Col } = Grid;
 
 export default class Subscribe extends Component {
   static displayName = 'Subscribe';
@@ -37,66 +39,47 @@ export default class Subscribe extends Component {
 
   render() {
     return (
-      <div className="subscribe" style={styles.subscribe}>
-        <IceContainer style={styles.container}>
-          <h1 style={styles.title}>订阅</h1>
-          <FormBinderWrapper
-            ref={(form) => {
-              this.form = form;
-            }}
-            value={this.state.formValue}
-            onChange={this.formChange}
-          >
-            <div>
-              <div style={styles.center}>
-                <FormBinder type="email" message="邮箱不合法" required>
-                  <Input
-                    size="large"
-                    name="email"
-                    placeholder="请输入您的订阅邮箱..."
-                    style={styles.input}
-                  />
-                </FormBinder>
-                <Button size="large" type="primary" onClick={this.subscribe}>
-                  订阅
-                </Button>
-              </div>
-              <div style={styles.error}>
-                <FormError name="email" />
-              </div>
-            </div>
-          </FormBinderWrapper>
-        </IceContainer>
-      </div>
+      <IceContainer>
+        <FormBinderWrapper
+          ref={(form) => {
+            this.form = form;
+          }}
+          value={this.state.formValue}
+          onChange={this.formChange}
+        >
+          <Row wrap>
+            <Col xxs="1" s="6" l="8" />
+            <Col xxs="16" s="8" l="6">
+              <Row wrap>
+                <Col span="24">
+                  <FormBinder type="email" message="邮箱不合法" required>
+                    <Input
+                      size="large"
+                      name="email"
+                      placeholder="请输入您的订阅邮箱..."
+                      style={{ width: '100%' }}
+                    />
+                  </FormBinder>
+                </Col>
+                <Col span="24" style={styles.error}>
+                  <FormError name="email" />
+                </Col>
+              </Row>
+            </Col>
+            <Col xxs="6" s="4" l="2" style={{ textAlign: 'center' }}>
+              <Button size="large" type="primary" onClick={this.subscribe}>
+                订阅
+              </Button>
+            </Col>
+          </Row>
+        </FormBinderWrapper>
+      </IceContainer>
     );
   }
 }
 
 const styles = {
-  container: {
-    padding: '48px 0',
-  },
-  title: {
-    fontSize: '26px',
-    color: '#000',
-    textAlign: 'center',
-    margin: '0',
-  },
-  input: {
-    minWidth: '170px',
-    width: '25%',
-    maxWidth: '250px',
-    marginRight: '15px',
-  },
-  center: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: '20px',
-  },
   error: {
-    paddingLeft: '240px',
     marginTop: '5px',
   },
-  subscribe: {},
 };

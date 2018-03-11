@@ -41,66 +41,65 @@ export default class ForgetPasswordForm extends Component {
 
   render() {
     return (
-      <div className="private-message-form" style={styles.privateMessageForm}>
-        <IceContainer style={styles.formCard}>
-          <div style={styles.title}>忘记密码</div>
-          <div style={styles.subtitle}>
-            填入您的邮箱，重置后的密码会发到您的邮箱
-          </div>
-          <div style={styles.groupTitle}>邮箱地址：</div>
-          <div style={styles.inputWrap}>
-            <FormBinderWrapper
-              ref={(form) => {
-                this.form = form;
-              }}
-              value={{
-                email: this.state.email,
-              }}
-              onChange={this.emailChange}
-            >
+      <IceContainer>
+        <div style={styles.title}>忘记密码</div>
+        <div style={styles.subtitle}>
+          填入您的邮箱，重置后的密码会发到您的邮箱
+        </div>
+        <div style={styles.groupTitle}>邮箱地址：</div>
+        <div style={styles.inputWrap}>
+          <FormBinderWrapper
+            ref={(form) => {
+              this.form = form;
+            }}
+            value={{
+              email: this.state.email,
+            }}
+            onChange={this.emailChange}
+          >
+            <div>
+              <FormBinder
+                required
+                type="email"
+                message="Email 地址不合法, 请检查"
+              >
+                <Input
+                  style={styles.input}
+                  name="email"
+                  placeholder="请输入邮箱地址"
+                />
+              </FormBinder>
               <div>
-                <FormBinder
-                  required
-                  type="email"
-                  message="Email 地址不合法, 请检查"
-                >
-                  <Input
-                    style={styles.input}
-                    name="email"
-                    placeholder="请输入邮箱地址"
-                  />
-                </FormBinder>
-                <div>
-                  <FormError name="email" />
-                </div>
+                <FormError name="email" />
               </div>
-            </FormBinderWrapper>
-          </div>
+            </div>
+          </FormBinderWrapper>
+        </div>
 
-          <div style={styles.btnWrap}>
-            <Button type="primary" onClick={this.sendMessage}>
-              发送新密码
-            </Button>
-          </div>
-        </IceContainer>
-      </div>
+        <div style={styles.btnWrap}>
+          <Button type="primary" onClick={this.sendMessage}>
+            发送新密码
+          </Button>
+        </div>
+      </IceContainer>
     );
   }
 }
 
 const styles = {
-  formCard: {
-    maxWidth: '518px',
-    paddingLeft: '30px',
-  },
   title: {
     fontSize: '16px',
-    marginBottom: '10px',
-    color: '#000',
+    margin: '0 0 10px',
     fontWeight: 'bold',
+    color: '#333',
   },
-  subtitle: { color: '#000', fontSize: '14px', marginBottom: '30px' },
-  groupTitle: { marginBottom: '10px' },
+  subtitle: {
+    fontSize: '12px',
+    marginBottom: '20px',
+  },
+  groupTitle: {
+    marginBottom: '10px',
+  },
   input: {
     maxWidth: '332px',
     width: '70%',

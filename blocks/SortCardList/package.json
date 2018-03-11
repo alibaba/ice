@@ -2,12 +2,7 @@
   "name": "@icedesign/sort-card-list-block",
   "version": "0.1.6",
   "description": "拖拽排序卡片列表",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,12 +12,9 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.1.5-1",
     "@icedesign/container": "^0.1.0",
     "prop-types": "^15.5.8"
   },
@@ -35,12 +27,11 @@
   },
   "blockConfig": {
     "name": "sort-card-list",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1CmT8jfDH8KJjy1XcXXcpdXXa-2034-830.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1SuIoc_tYBeNjy1XdXXXXyVXa-2346-1078.png",
     "themePackage": "@icedesign/skin",
     "title": "拖拽排序卡片列表",
-    "categories": [
-      "列表"
-    ]
+    "categories": ["列表"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dialog, Button } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
+import { enquireScreen } from 'enquire-js';
 
 export default class ConfirmDialog extends Component {
   static displayName = 'ConfirmDialog';
@@ -9,14 +10,30 @@ export default class ConfirmDialog extends Component {
     super(props);
     this.state = {
       visible: false,
+      isMobile: false,
     };
   }
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   showDialog = () => {
     this.setState({
       visible: true,
     });
   };
+
   hideDialog = () => {
     this.setState({
       visible: false,
@@ -24,11 +41,17 @@ export default class ConfirmDialog extends Component {
   };
 
   render() {
+    const { isMobile } = this.state;
+    const dialogStyle = {
+      width: isMobile ? '320px' : '640px',
+      height: isMobile ? 'auto' : '340px',
+    };
+
     return (
       <IceContainer>
         <Dialog
           className="confirm-dialog"
-          style={styles.dialog}
+          style={{ ...dialogStyle }}
           autoFocus={false}
           footerAlign="center"
           title="删除提示"
@@ -59,9 +82,6 @@ export default class ConfirmDialog extends Component {
 }
 
 const styles = {
-  dialog: {
-    width: '640px',
-  },
   icon: {
     width: '52px',
     height: '52px',

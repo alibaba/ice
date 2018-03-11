@@ -4,11 +4,10 @@ import { Grid } from '@icedesign/base';
 
 const { Row, Col } = Grid;
 
-const stateBackgroundMap = {
-  0: '#F4F7FF',
-  1: '#FFFAE8',
-  2: '#EAFCF6',
-  3: '#FFF7F7',
+const stateMap = {
+  0: { color: '#F4F7FF', text: '未开始' },
+  1: { color: '#FFFAE8', text: '进行中' },
+  2: { color: '#EAFCF6', text: '完成' },
 };
 
 export default class SortCardList extends Component {
@@ -31,14 +30,14 @@ export default class SortCardList extends Component {
         },
         {
           id: 2,
-          state: 1,
+          state: 0,
           description:
             '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
         {
           id: 3,
-          state: 2,
+          state: 0,
           description:
             '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
@@ -47,7 +46,7 @@ export default class SortCardList extends Component {
       doings: [
         {
           id: 1,
-          state: 0,
+          state: 1,
           description:
             '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
@@ -61,21 +60,21 @@ export default class SortCardList extends Component {
         },
         {
           id: 3,
-          state: 2,
+          state: 1,
           description:
             '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
         {
           id: 4,
-          state: 2,
+          state: 1,
           description:
             '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
         },
         {
           id: 5,
-          state: 2,
+          state: 1,
           description:
             '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
@@ -84,7 +83,7 @@ export default class SortCardList extends Component {
       dones: [
         {
           id: 2,
-          state: 1,
+          state: 2,
           description:
             '这里是任务的描述，用简短的文字介绍任务的内容，最多可以展示两行的文字',
           datetime: '07-07  18:36',
@@ -109,7 +108,7 @@ export default class SortCardList extends Component {
         style={{
           ...styles.cardItem,
           ...{
-            backgroundColor: stateBackgroundMap[item.state],
+            backgroundColor: stateMap[item.state].color,
           },
         }}
         key={item.id}
@@ -126,7 +125,7 @@ export default class SortCardList extends Component {
             {item.datetime}
           </span>
           <span style={styles.done} onClick={this.handleFinish}>
-            完成
+            {stateMap[item.state].text}
           </span>
         </div>
       </div>
@@ -139,17 +138,17 @@ export default class SortCardList extends Component {
       <div className="sort-card-list">
         <IceContainer style={styles.cardContainer}>
           <Row wrap gutter={20}>
-            <Col xxs={24} m={8} style={styles.cardList}>
+            <Col xxs="24" s="8" l="8" style={styles.cardList}>
               <div style={styles.title}>待办事项</div>
               <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
               {todos.map(this.renderItem)}
             </Col>
-            <Col xxs={24} m={8} style={styles.cardList}>
+            <Col xxs="24" s="8" l="8" style={styles.cardList}>
               <div style={styles.title}>进行中</div>
               <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
               {doings.map(this.renderItem)}
             </Col>
-            <Col xxs={24} m={8} style={styles.cardList}>
+            <Col xxs="24" s="8" l="8" style={styles.cardList}>
               <div style={styles.title}>已完成</div>
               <div style={styles.subTitle}>在任务卡片间拖拽来排序</div>
               {dones.map(this.renderItem)}
@@ -172,15 +171,12 @@ const styles = {
   title: {
     fontSize: '16px',
     marginBottom: '10px',
-    color: '#000',
   },
   subTitle: {
     fontSize: '12px',
     marginBottom: '10px',
-    color: '#000',
   },
   cardItem: {
-    width: '300px',
     height: '80px',
     borderRadius: '4px',
     marginBottom: '10px',
@@ -194,14 +190,13 @@ const styles = {
   },
   desc: {
     fontSize: '12px',
-    color: '#000',
     marginBottom: '10px',
-    height: '35px',
+    height: '36px',
+    lineHeight: '18px',
     overflow: 'hidden',
   },
   done: {
     fontSize: '12px',
-    color: '#000',
     position: 'absolute',
     right: '16px',
     bottom: '10px',
