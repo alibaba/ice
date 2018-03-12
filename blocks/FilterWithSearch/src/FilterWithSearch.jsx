@@ -34,11 +34,11 @@ export default class FilterWithSearch extends Component {
           className="filter-with-search-container"
           style={styles.filterWithSearchContainer}
         >
-          <Row wrap justify="space-between">
+          <Row wrap justify="space-between" style={styles.row}>
             <Col xxs={24} s={8} style={styles.filterContainer}>
               <span
                 className="filter-item selected"
-                style={styles.filterItemSelected}
+                style={styles.filterItem}
                 onClick={this.selectFilter.bind(this, 'all')}
               >
                 全部
@@ -58,13 +58,14 @@ export default class FilterWithSearch extends Component {
                 等待中
               </span>
             </Col>
-            <Col xxs={24} s={16}>
+            <Col xxs={24} s={16} style={styles.searchWrapper}>
               <Search
                 inputWidth={250}
                 searchText=""
                 size="large"
                 placeholder="请输入要搜索的关键词或商品链接"
                 onSearch={this.handleSearch}
+                style={{ display: 'inline-block' }}
               />
             </Col>
           </Row>
@@ -75,8 +76,10 @@ export default class FilterWithSearch extends Component {
 }
 
 const styles = {
+  row: {
+    alignItems: 'center',
+  },
   filterContainer: {
-    marginBottom: '20px',
     lineHeight: '32px',
   },
   filterItem: {
@@ -86,5 +89,9 @@ const styles = {
     fontSize: '14px',
     cursor: 'pointer',
     borderRight: '1px solid #D8D8D8',
+  },
+  searchWrapper: {
+    textAlign: 'right',
+    margin: '10px 0',
   },
 };
