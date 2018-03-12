@@ -55,6 +55,10 @@ function generateBlocks(files, SPACE) {
       useComponents,
     };
 
+    if (pkg.blockConfig.thumbnail) {
+      payload.thumbnail = pkg.blockConfig.thumbnail;
+    }
+
     if (pkg.blockConfig.sketchURL) {
       payload.sketchURL = pkg.blockConfig.sketchURL;
     }

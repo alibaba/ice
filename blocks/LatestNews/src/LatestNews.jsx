@@ -71,8 +71,8 @@ export default class LatestNews extends Component {
   render() {
     return (
       <div className="latest-news">
-        <Row>
-          <Col>
+        <Row wrap gutter={20}>
+          <Col xxs="24" l="12">
             <IceContainer style={styles.cardContainer}>
               <h3 style={styles.cardTitle}>
                 最新文章
@@ -97,7 +97,7 @@ export default class LatestNews extends Component {
               </div>
             </IceContainer>
           </Col>
-          <Col>
+          <Col xxs="24" l="12">
             <IceContainer style={styles.cardContainer}>
               <h3 style={styles.cardTitle}>
                 最新评论

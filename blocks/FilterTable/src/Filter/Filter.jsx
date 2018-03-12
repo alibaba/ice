@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Input, Grid, Select, Button, DatePicker } from '@icedesign/base';
-import IceContainer from '@icedesign/container';
 
 // form binder 详细用法请参见官方文档
 import {
@@ -20,29 +19,27 @@ export default class Filter extends Component {
         value={this.props.value}
         onChange={this.props.onChange}
       >
-        <IceContainer title="内容筛选" style={{ marginBottom: '20px' }}>
-          <Row>
-            <Col span="8" style={styles.filterCol}>
+        <div>
+          <Row wrap>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>所属应用</label>
               <IceFormBinder>
                 <Input name="app" />
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>分类ID</label>
               <IceFormBinder>
                 <Input name="id" />
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>标签ID</label>
               <IceFormBinder>
                 <Input name="tag" />
               </IceFormBinder>
             </Col>
-          </Row>
-          <Row>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>开始时间</label>
               <IceFormBinder
                 valueFormatter={(date, strValue) => {
@@ -52,7 +49,7 @@ export default class Filter extends Component {
                 <DatePicker name="startTime" style={styles.filterTool} />
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>结束时间</label>
               <IceFormBinder
                 valueFormatter={(date, strValue) => {
@@ -62,7 +59,7 @@ export default class Filter extends Component {
                 <DatePicker name="endTime" style={styles.filterTool} />
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>尺寸</label>
               <IceFormBinder>
                 <Select
@@ -76,9 +73,7 @@ export default class Filter extends Component {
                 </Select>
               </IceFormBinder>
             </Col>
-          </Row>
-          <Row>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>删除状态</label>
               <IceFormBinder>
                 <Select name="status" style={styles.filterTool}>
@@ -87,13 +82,13 @@ export default class Filter extends Component {
                 </Select>
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>讨论ID</label>
               <IceFormBinder>
                 <Input name="commentId" />
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>置顶</label>
               <IceFormBinder>
                 <Select
@@ -110,8 +105,8 @@ export default class Filter extends Component {
           </Row>
           <div
             style={{
-              textAlign: 'right',
-              marginRight: '28px',
+              textAlign: 'left',
+              marginLeft: '12px',
             }}
           >
             <Button onClick={this.props.onReset} type="normal">
@@ -125,7 +120,7 @@ export default class Filter extends Component {
               确定
             </Button>
           </div>
-        </IceContainer>
+        </div>
       </IceFormBinderWrapper>
     );
   }

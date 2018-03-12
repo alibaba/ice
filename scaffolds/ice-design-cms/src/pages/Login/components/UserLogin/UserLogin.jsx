@@ -194,7 +194,7 @@ const styles = {
   },
   inputIcon: {
     position: 'absolute',
-    left: '18px',
+    left: '0px',
     top: '3px',
     color: '#999',
   },

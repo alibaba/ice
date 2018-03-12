@@ -1,7 +1,9 @@
 /* eslint react/jsx-no-target-blank: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Balloon } from '@icedesign/base';
+import { Balloon, Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 export default class DisplayCard extends Component {
   static displayName = 'DisplayCard';
@@ -35,12 +37,9 @@ export default class DisplayCard extends Component {
       />
     );
     return (
-      <div className="display-card">
-        <IceContainer
-          className="display-card-container"
-          style={styles.displayCardContainer}
-        >
-          <div style={styles.displayCardItem}>
+      <IceContainer style={styles.displayCardContainer}>
+        <Row wrap>
+          <Col xxs="24" s="12" l="6" style={styles.displayCardItem}>
             <div style={styles.displayCardText}>
               昨日内容浏览次数
               <span style={styles.extraIcon}>
@@ -62,19 +61,11 @@ export default class DisplayCard extends Component {
             </div>
             <div style={styles.displayCardNumber}>46,657</div>
             <div style={styles.displayCardDesc}>
-              <span>
-                较前日
-                {down}
-                -200
-              </span>
-              <span style={{ marginLeft: 5 }}>
-                近7天
-                {up}
-                +100
-              </span>
+              <span>较前日 {down} -200</span>
+              <span style={{ marginLeft: 5 }}>近7天 {up} +100</span>
             </div>
-          </div>
-          <div style={styles.displayCardItem}>
+          </Col>
+          <Col xxs="24" s="12" l="6" style={styles.displayCardItem}>
             <div style={styles.displayCardText}>
               昨日账号主页浏览人数
               <span style={styles.extraIcon}>
@@ -96,19 +87,11 @@ export default class DisplayCard extends Component {
             </div>
             <div style={styles.displayCardNumber}>533</div>
             <div style={styles.displayCardDesc}>
-              <span>
-                较前日
-                {down}
-                -200
-              </span>
-              <span style={{ marginLeft: 5 }}>
-                近7天
-                {up}
-                +100
-              </span>
+              <span>较前日 {down} -200</span>
+              <span style={{ marginLeft: 5 }}>近7天 {up} +100</span>
             </div>
-          </div>
-          <div style={styles.displayCardItem}>
+          </Col>
+          <Col xxs="24" s="12" l="6" style={styles.displayCardItem}>
             <div style={styles.displayCardText}>
               昨日活跃粉丝数
               <span style={styles.extraIcon}>
@@ -130,19 +113,11 @@ export default class DisplayCard extends Component {
             </div>
             <div style={styles.displayCardNumber}>2233</div>
             <div style={styles.displayCardDesc}>
-              <span>
-                较前日
-                {down}
-                -200
-              </span>
-              <span style={{ marginLeft: 5 }}>
-                近7天
-                {up}
-                +100
-              </span>
+              <span>较前日 {down} -200</span>
+              <span style={{ marginLeft: 5 }}>近7天 {up} +100</span>
             </div>
-          </div>
-          <div style={styles.displayCardItem}>
+          </Col>
+          <Col xxs="24" s="12" l="6" style={styles.displayCardItem}>
             <div style={styles.displayCardText}>
               昨日粉丝数
               <span style={styles.extraIcon}>
@@ -164,52 +139,52 @@ export default class DisplayCard extends Component {
             </div>
             <div style={styles.displayCardNumber}>23,333</div>
             <div style={styles.displayCardDesc}>
-              <span>
-                较前日
-                {down}
-                -200
-              </span>
-              <span style={{ marginLeft: 5 }}>
-                近7天
-                {up}
-                +100
-              </span>
+              <span>较前日 {down} -200</span>
+              <span style={{ marginLeft: 5 }}>近7天 {up} +100</span>
             </div>
-          </div>
-        </IceContainer>
-      </div>
+          </Col>
+        </Row>
+      </IceContainer>
     );
   }
 }
 
 const styles = {
   displayCardContainer: {
-    padding: '0 60px',
     backgroundImage:
       'url(https://gw.alicdn.com/tfs/TB1yjIrh3vD8KJjy0FlXXagBFXa-2112-340.png)',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center center',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   displayCardItem: {
+    height: 150,
     display: 'flex',
-    height: '150px',
-    width: '169',
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  displayCardText: { color: '#BEBEBE', fontSize: '12px', marginBottom: '5px' },
+  displayCardText: {
+    color: '#BEBEBE',
+    fontSize: '12px',
+    marginBottom: '5px',
+  },
   displayCardNumber: {
     color: '#fff',
     fontSize: '24px',
     fontWeight: 'bold',
     marginBottom: '3px',
   },
-  displayCardDesc: { color: '#BEBEBE', fontSize: '12px' },
-  down: { width: '6px', height: '9px' },
-  up: { width: '6px', height: '9px' },
+  displayCardDesc: {
+    color: '#BEBEBE',
+    fontSize: '12px',
+  },
+  down: {
+    width: '6px',
+    height: '9px',
+  },
+  up: {
+    width: '6px',
+    height: '9px',
+  },
   extraIcon: {
     marginLeft: '5px',
     position: 'relative',

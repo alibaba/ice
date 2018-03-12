@@ -6,8 +6,10 @@ import { Icon } from '@icedesign/base';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { Link } from 'react-router';
 import FoundationSymbol from 'foundation-symbol';
+import { enquire } from 'enquire-js';
 import Header from './../../components/Header';
 import Footer from './../../components/Footer';
+import Logo from './../../components/Logo';
 import { asideNavs } from './../../navs';
 import './scss/light.scss';
 import './scss/dark.scss';
@@ -25,13 +27,60 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     const openKeys = this.getOpenKeys();
     this.state = {
       collapse: false,
+      openDrawer: false,
+      isScreen: undefined,
       openKeys,
+      theme,
     };
     this.openKeysCache = openKeys;
   }
 
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const isMobile = 'screen and (max-width: 720px)';
+    const isTablet = 'screen and (min-width: 721px) and (max-width: 1199px)';
+    const isDesktop = 'screen and (min-width: 1200px)';
+
+    enquire.register(isMobile, this.enquireScreenHandle('isMobile'));
+    enquire.register(isTablet, this.enquireScreenHandle('isTablet'));
+    enquire.register(isDesktop, this.enquireScreenHandle('isDesktop'));
+  };
+
+  enquireScreenHandle = (type) => {
+    let collapse;
+    if (type === 'isMobile') {
+      collapse = false;
+    } else if (type === 'isTablet') {
+      collapse = true;
+    } else {
+      collapse = this.state.collapse;
+    }
+
+    const handler = {
+      match: () => {
+        this.setState({
+          isScreen: type,
+          collapse,
+        });
+      },
+      unmatch: () => {
+        // handler unmatched
+      },
+    };
+
+    return handler;
+  };
+
+  toggleTheme = () => {
+    this.setState({
+      theme: this.state.theme === 'dark' ? 'light' : 'dark',
+    });
+  };
+
   toggleCollapse = () => {
-    document.body.classList.toggle('collapse');
     const { collapse } = this.state;
     const openKeys = !collapse ? [] : this.openKeysCache;
 
@@ -41,11 +90,22 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     });
   };
 
+  toggleMenu = () => {
+    const { openDrawer } = this.state;
+    this.setState({
+      openDrawer: !openDrawer,
+    });
+  };
+
   onOpenChange = (openKeys) => {
     this.setState({
       openKeys,
     });
     this.openKeysCache = openKeys;
+  };
+
+  onMenuClick = () => {
+    this.toggleMenu();
   };
 
   // 当前打开的菜单项
@@ -73,31 +133,49 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
       <Layout
         style={{ minHeight: '100vh' }}
         className={cx(
-          `ice-design-header-aside-footer-responsive-layout-${theme}`,
+          `ice-design-header-aside-footer-responsive-layout-${
+            this.state.theme
+          }`,
           {
             'ice-design-layout': true,
           }
         )}
       >
-        <Header theme={theme} />
-
+        <Header
+          theme={this.state.theme}
+          isMobile={this.state.isScreen !== 'isDesktop' ? true : undefined}
+        />
         <Layout.Section>
+          {this.state.isScreen === 'isMobile' && (
+            <a className="menu-btn" onClick={this.toggleMenu}>
+              <Icon type="category" size="small" />
+            </a>
+          )}
+          {this.state.openDrawer && (
+            <div className="open-drawer-bg" onClick={this.toggleMenu} />
+          )}
+          {this.state.isScreen === 'isDesktop' && (
+            <a className="theme-btn" onClick={this.toggleTheme}>
+              切换主题
+            </a>
+          )}
           <Layout.Aside
             width="auto"
-            theme={theme}
-            className="ice-design-layout-aside"
+            theme={this.state.theme}
+            className={cx('ice-design-layout-aside', {
+              'open-drawer': this.state.openDrawer,
+            })}
           >
             {/* 侧边菜单项 begin */}
-            <a
-              className="collapse-btn"
-              shape="text"
-              onClick={this.toggleCollapse}
-            >
-              <Icon
-                type={this.state.collapse ? 'arrow-right' : 'arrow-left'}
-                size="small"
-              />
-            </a>
+            {this.state.isScreen !== 'isMobile' && (
+              <a className="collapse-btn" onClick={this.toggleCollapse}>
+                <Icon
+                  type={this.state.collapse ? 'arrow-right' : 'arrow-left'}
+                  size="small"
+                />
+              </a>
+            )}
+            {this.state.isScreen === 'isMobile' && <Logo />}
             <Menu
               style={{ width: this.state.collapse ? 60 : 200 }}
               inlineCollapsed={this.state.collapse}
@@ -106,6 +184,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
               openKeys={this.state.openKeys}
               defaultSelectedKeys={[pathname]}
               onOpenChange={this.onOpenChange}
+              onClick={this.onMenuClick}
             >
               {asideNavs &&
                 asideNavs.length > 0 &&
@@ -135,7 +214,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                           } else {
                             linkProps.to = item.to;
                           }
-
                           return (
                             <MenuItem key={item.to}>
                               <Link {...linkProps}>{item.text}</Link>
@@ -145,7 +223,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                       </SubMenu>
                     );
                   }
-
                   const linkProps = {};
                   if (nav.newWindow) {
                     linkProps.href = nav.to;
@@ -155,7 +232,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                   } else {
                     linkProps.to = nav.to;
                   }
-
                   return (
                     <MenuItem key={nav.to}>
                       <Link {...linkProps}>
@@ -174,11 +250,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
             </Menu>
             {/* 侧边菜单项 end */}
           </Layout.Aside>
-
           {/* 主体内容 */}
           <Layout.Main>{this.props.children}</Layout.Main>
         </Layout.Section>
-
         <Footer />
       </Layout>
     );

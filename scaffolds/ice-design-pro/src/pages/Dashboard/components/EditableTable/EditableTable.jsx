@@ -48,7 +48,6 @@ export default class EditableTable extends Component {
   };
 
   changeDataSource = (index, valueKey, value) => {
-    // todo 将修改后的表格数据发送接口，持久化
     this.state.dataSource[index][valueKey] = value;
     this.setState({
       dataSource: this.state.dataSource,
@@ -98,7 +97,7 @@ export default class EditableTable extends Component {
               title="有效时间"
               cell={this.renderEditor.bind(this, 'validity')}
             />
-            <Table.Column title="操作" cell={this.renderOperation} />
+            <Table.Column title="操作" width={80} cell={this.renderOperation} />
           </Table>
           <div onClick={this.addNewItem} style={styles.addNewItem}>
             + 新增一行

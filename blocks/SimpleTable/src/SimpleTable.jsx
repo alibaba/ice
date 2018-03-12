@@ -5,6 +5,8 @@ import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
 
+import { enquireScreen } from 'enquire-js';
+
 @DataBinder({
   tableData: {
     // 详细请求配置请参见 https://github.com/axios/axios
@@ -29,14 +31,27 @@ export default class SimpleTable extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isMobile: false,
+    };
   }
 
   componentDidMount() {
+    this.enquireScreenRegister();
     this.fetchData({
       page: 1,
     });
   }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   fetchData = ({ page }) => {
     this.props.updateBindingData('tableData', {
@@ -71,8 +86,7 @@ export default class SimpleTable extends Component {
 
   editItem = (record, e) => {
     e.preventDefault();
-    // todo
-    console.log('record', record);
+    // TODO: record 为该行所对应的数据，可自定义操作行为
   };
 
   renderOperations = (value, index, record) => {
@@ -154,6 +168,7 @@ export default class SimpleTable extends Component {
               pageSize={tableData.pageSize}
               total={tableData.total}
               onChange={this.changePage}
+              type={this.state.isMobile ? 'simple' : 'normal'}
             />
           </div>
         </IceContainer>

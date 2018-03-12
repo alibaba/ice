@@ -6,6 +6,8 @@ $custom-layout-bg: #fafafa;
 // Layout light styles
 $ice-body-bg: $color-white !default;
 $ice-layout-bg: $custom-layout-bg !default;
+$ice-toggle-btn-bg: $color-brand1-5 !default;
+$ice-toggle-btn-text-color: $color-white !default;
 $ice-collapse-btn-color: $color-text1-3 !default;
 $ice-logo-text-color: $color-brand1-5 !default;
 $ice-icon-down-color: $color-text1-3 !default;
@@ -31,7 +33,7 @@ $ice-aside-collapse-menu-text-color: $color-text1-3 !default;
 $ice-copyright-text-color: $color-text1-3 !default;
 $ice-copyright-text-hover-color: $color-brand1-5 !default;
 
-.ice-design-light.ice-design-layout {
+.ice-design-header-aside-footer-layout-light.ice-design-layout {
   background-image: url(https://img.alicdn.com/tfs/TB1GsHCd8fH8KJjy1XbXXbLdXXa-1680-370.png);
 }
 

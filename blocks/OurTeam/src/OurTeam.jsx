@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 const generatorData = (count) => {
   return Array.from({ length: count }).map((item, index) => {
@@ -33,19 +36,19 @@ export default class OurTeam extends Component {
             我们是一支充满激情、志向远大、怀揣梦想<br />的团队，也是一个思维活跃、朝气蓬勃、团结互助的大家庭。
           </p>
         </div>
-        <div style={styles.items}>
+        <Row wrap style={styles.items}>
           {data.map((item, index) => {
             return (
-              <div style={styles.item} key={index}>
+              <Col xxs="24" s="12" l="12" style={styles.item} key={index}>
                 <img src={item.imgUrl} style={styles.avatar} alt="" />
                 <div style={styles.baseInfo}>
                   <h5 style={styles.name}>{item.name}</h5>
                   <p style={styles.description}>{item.description}</p>
                 </div>
-              </div>
+              </Col>
             );
           })}
-        </div>
+        </Row>
       </div>
     );
   }

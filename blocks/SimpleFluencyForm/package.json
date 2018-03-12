@@ -2,12 +2,7 @@
   "name": "@icedesign/simple-fluency-form-block",
   "version": "0.1.7",
   "description": "SimpleFluencyForm",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
@@ -36,12 +28,11 @@
   },
   "blockConfig": {
     "name": "simple-fluency-form",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1emXIjDnI8KJjy0FfXXcdoVXa-1776-902.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1U7tFcDtYBeNjy1XdXXXXyVXa-2352-1002.png",
     "themePackage": "@icedesign/skin",
     "title": "简单流畅型表单",
-    "categories": [
-      "表单"
-    ]
+    "categories": ["表单"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

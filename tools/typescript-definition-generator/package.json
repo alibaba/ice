@@ -1,0 +1,15 @@
+{
+  "name": "typescript-definition-generator",
+  "version": "0.1.1",
+  "description": ".d.ts generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "prettier": "^1.10.2"
+  },
+  "keywords": [],
+  "author": "ICE Team",
+  "license": "MIT"
+}
