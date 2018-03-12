@@ -33,25 +33,30 @@ export default class TabTable extends Component {
         title: '标题',
         dataIndex: 'title',
         key: 'title',
+        width: 200,
       },
       {
         title: '作者',
         dataIndex: 'author',
         key: 'author',
+        width: 150,
       },
       {
         title: '状态',
         dataIndex: 'status',
         key: 'status',
+        width: 150,
       },
       {
         title: '发布时间',
         dataIndex: 'date',
         key: 'date',
+        width: 150,
       },
       {
         title: '操作',
         key: 'action',
+        width: 150,
         render: (value, index, record) => {
           return (
             <span>
@@ -74,7 +79,6 @@ export default class TabTable extends Component {
     axios
       .get('/mock/tab-table.json')
       .then((response) => {
-        console.log(response.data.data);
         this.setState({
           dataSource: response.data.data,
         });

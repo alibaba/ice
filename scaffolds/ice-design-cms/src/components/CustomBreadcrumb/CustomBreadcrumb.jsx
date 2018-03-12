@@ -15,7 +15,6 @@ export default class CustomBreadcrumb extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { dataSource } = this.props;
     return (
       <IceContainer>
