@@ -100,8 +100,8 @@ export default class DataStatistics extends Component {
       <div className="data-statistics">
         <IceContainer>
           <h4 style={styles.title}>用户活跃趋势</h4>
-          <Row>
-            <Col span="16">
+          <Row wrap>
+            <Col xxs="24" l="16">
               <Chart
                 height={300}
                 padding={[40, 10, 40, 35]}
@@ -115,7 +115,7 @@ export default class DataStatistics extends Component {
                 <Geom type="interval" position="month*users" />
               </Chart>
             </Col>
-            <Col span="8">
+            <Col xxs="24" l="8">
               <ul style={styles.items}>
                 {dataSource.statisticData.map((item, index) => {
                   return (
@@ -129,13 +129,6 @@ export default class DataStatistics extends Component {
                           }}
                           alt=""
                         />
-                        {/*
-                        <Icon
-                          type="account-filling"
-                          style={styles.icon}
-                          className="itemIcon"
-                        />
-                        */}
                       </div>
                       <div style={styles.itemText}>
                         <div style={styles.name}>{item.name}</div>
@@ -159,9 +152,10 @@ const styles = {
   },
   title: {
     margin: 0,
-    fontSize: '18px',
+    fontSize: '16px',
     paddingBottom: '15px',
     fontWeight: 'bold',
+    color: '#333',
     borderBottom: '1px solid #eee',
   },
   items: {

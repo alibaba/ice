@@ -64,20 +64,24 @@ export default class TabTable extends Component {
         title: '名称',
         dataIndex: 'name',
         key: 'name',
+        width: 150,
       },
       {
         title: '缩写名',
         dataIndex: 'shortName',
         key: 'shortName',
+        width: 150,
       },
       {
         title: '文章数',
+        width: 150,
         dataIndex: 'articleNum',
         key: 'articleNum',
       },
       {
         title: '操作',
         key: 'action',
+        width: 150,
         render: (value, index, record) => {
           return (
             <span>
