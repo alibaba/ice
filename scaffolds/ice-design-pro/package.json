@@ -5,7 +5,7 @@
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-pro.html",
   "dependencies": {
     "@antv/data-set": "^0.8.5",
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.1.5-1",
     "@icedesign/container": "^0.1.2",
     "@icedesign/data-binder": "^0.1.1",
     "@icedesign/ellipsis": "^0.1.1",
@@ -13,11 +13,13 @@
     "@icedesign/img": "^0.1.1",
     "@icedesign/label": "^0.1.1",
     "@icedesign/layout": "^0.1.1",
+    "@icedesign/menu": "^0.1.1",
     "@icedesign/skin": "^0.1.0",
     "@icedesign/styled-menu": "^0.1.1",
     "axios": "^0.17.1",
     "bizcharts": "latest",
     "classnames": "^2.2.5",
+    "enquire-js": "^0.1.2",
     "prop-types": "^15.5.8",
     "react-document-title": "^2.0.3",
     "react-router": "^3.2.0"
@@ -30,7 +32,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.0.4"
+    "ice-scripts": "^1.0.3"
   },
   "scripts": {
     "start": "ice dev",

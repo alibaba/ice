@@ -2,11 +2,14 @@
 import React, { Component } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/styled-menu';
+import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
+import { Icon } from '@icedesign/base';
 import { Link } from 'react-router';
 import FoundationSymbol from 'foundation-symbol';
+import { enquire } from 'enquire-js';
 import Header from './../../components/Header';
 import Footer from './../../components/Footer';
+import Logo from './../../components/Logo';
 import { asideNavs } from './../../navs';
 import './scss/light.scss';
 import './scss/dark.scss';
@@ -17,9 +20,70 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
   static defaultProps = {};
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      openDrawer: false,
+      isScreen: undefined,
+      theme,
+    };
+  }
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const isMobile = 'screen and (max-width: 720px)';
+    const isTablet = 'screen and (min-width: 721px) and (max-width: 1199px)';
+    const isDesktop = 'screen and (min-width: 1200px)';
+
+    enquire.register(isMobile, this.enquireScreenHandle('isMobile'));
+    enquire.register(isTablet, this.enquireScreenHandle('isTablet'));
+    enquire.register(isDesktop, this.enquireScreenHandle('isDesktop'));
+  };
+
+  enquireScreenHandle = (type) => {
+    let collapse;
+    if (type === 'isMobile') {
+      collapse = false;
+    } else if (type === 'isTablet') {
+      collapse = true;
+    } else {
+      collapse = this.state.collapse;
+    }
+
+    const handler = {
+      match: () => {
+        this.setState({
+          isScreen: type,
+          collapse,
+        });
+      },
+      unmatch: () => {
+        // handler unmatched
+      },
+    };
+
+    return handler;
+  };
+
+  toggleTheme = () => {
+    this.setState({
+      theme: this.state.theme === 'dark' ? 'light' : 'dark',
+    });
+  };
+
+  toggleMenu = () => {
+    const { openDrawer } = this.state;
+    this.setState({
+      openDrawer: !openDrawer,
+    });
+  };
+
   // 当前点击的菜单项
-  handleClick = (selectedKeys) => {
-    console.log('selectedKeys:', selectedKeys);
+  onMenuClick = () => {
+    this.toggleMenu();
   };
 
   // 当前打开的菜单项
@@ -41,24 +105,46 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
   render() {
     const { location: { pathname } } = this.props;
+
     return (
       <Layout
         style={{ minHeight: '100vh' }}
-        className={cx(`ice-design-header-aside-footer-layout-${theme}`, {
-          'ice-design-layout': true,
-        })}
+        className={cx(
+          `ice-design-header-aside-footer-layout-${this.state.theme}`,
+          {
+            'ice-design-layout': true,
+          }
+        )}
       >
-        <Header theme={theme} />
-
+        <Header
+          theme={this.state.theme}
+          isMobile={this.state.isScreen !== 'isDesktop'}
+        />
         <Layout.Section className="ice-design-layout-body">
+          {this.state.isScreen !== 'isDesktop' && (
+            <a className="menu-btn" onClick={this.toggleMenu}>
+              <Icon type="category" size="small" />
+            </a>
+          )}
+          {this.state.isScreen === 'isDesktop' && (
+            <a className="theme-btn" onClick={this.toggleTheme}>
+              切换主题
+            </a>
+          )}
+          {this.state.openDrawer && (
+            <div className="open-drawer-bg" onClick={this.toggleMenu} />
+          )}
           <Layout.Aside
             width="auto"
-            theme={theme}
-            className="ice-design-layout-aside"
+            theme={this.state.theme}
+            className={cx('ice-design-layout-aside', {
+              'open-drawer': this.state.openDrawer,
+            })}
           >
+            {this.state.isScreen !== 'isDesktop' && <Logo />}
             <Menu
               style={{ width: 200 }}
-              onClick={this.handleClick}
+              onClick={this.onMenuClick}
               selectedKeys={[pathname]}
               defaultSelectedKeys={[pathname]}
               defaultOpenKeys={[`${this.getOpenKeys()}`]}
@@ -92,7 +178,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                           } else {
                             linkProps.to = item.to;
                           }
-
                           return (
                             <MenuItem key={item.to}>
                               <Link {...linkProps}>{item.text}</Link>
@@ -102,7 +187,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                       </SubMenu>
                     );
                   }
-
                   const linkProps = {};
                   if (nav.newWindow) {
                     linkProps.href = nav.to;
@@ -112,7 +196,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                   } else {
                     linkProps.to = nav.to;
                   }
-
                   return (
                     <MenuItem key={nav.to}>
                       <Link {...linkProps}>
@@ -131,11 +214,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
             </Menu>
             {/* 侧边菜单项 end */}
           </Layout.Aside>
-
           {/* 主体内容 */}
           <Layout.Main>{this.props.children}</Layout.Main>
         </Layout.Section>
-
         <Footer />
       </Layout>
     );
