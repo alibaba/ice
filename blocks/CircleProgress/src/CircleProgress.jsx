@@ -18,46 +18,44 @@ export default class CircleProgress extends Component {
 
   render() {
     return (
-      <div className="circle-progress">
-        <IceContainer title="项目进度">
-          <Row>
-            <Col span="6">
-              <div style={styles.item}>
-                <Progress
-                  percent={10}
-                  shape="circle"
-                  state="error"
-                  size="large"
-                />
-                <h6 style={styles.title}>项目A</h6>
-              </div>
-            </Col>
-            <Col span="6">
-              <div style={styles.item}>
-                <Progress percent={50} shape="circle" size="large" />
-                <h6 style={styles.title}>项目B</h6>
-              </div>
-            </Col>
-            <Col span="6">
-              <div style={styles.item}>
-                <Progress percent={50} shape="circle" size="large" />
-                <h6 style={styles.title}>项目C</h6>
-              </div>
-            </Col>
-            <Col span="6">
-              <div style={styles.item}>
-                <Progress
-                  percent={100}
-                  shape="circle"
-                  state="success"
-                  size="large"
-                />
-                <h6 style={styles.title}>项目D</h6>
-              </div>
-            </Col>
-          </Row>
-        </IceContainer>
-      </div>
+      <IceContainer title="项目进度">
+        <Row wrap>
+          <Col xxs="12" s="6" l="6">
+            <div style={styles.item}>
+              <Progress
+                percent={10}
+                shape="circle"
+                state="error"
+                size="large"
+              />
+              <h6 style={styles.title}>项目A</h6>
+            </div>
+          </Col>
+          <Col xxs="12" s="6" l="6">
+            <div style={styles.item}>
+              <Progress percent={50} shape="circle" size="large" />
+              <h6 style={styles.title}>项目B</h6>
+            </div>
+          </Col>
+          <Col xxs="12" s="6" l="6">
+            <div style={styles.item}>
+              <Progress percent={50} shape="circle" size="large" />
+              <h6 style={styles.title}>项目C</h6>
+            </div>
+          </Col>
+          <Col xxs="12" s="6" l="6">
+            <div style={styles.item}>
+              <Progress
+                percent={100}
+                shape="circle"
+                state="success"
+                size="large"
+              />
+              <h6 style={styles.title}>项目D</h6>
+            </div>
+          </Col>
+        </Row>
+      </IceContainer>
     );
   }
 }
