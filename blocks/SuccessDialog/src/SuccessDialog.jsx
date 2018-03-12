@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dialog, Button } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
+import { enquireScreen } from 'enquire-js';
 
 export default class SuccessDialog extends Component {
   static displayName = 'SuccessDialog';
@@ -9,8 +10,23 @@ export default class SuccessDialog extends Component {
     super(props);
     this.state = {
       visible: false,
+      isMobile: false,
     };
   }
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   showDialog = () => {
     this.setState({
@@ -25,11 +41,17 @@ export default class SuccessDialog extends Component {
   };
 
   render() {
+    const { isMobile } = this.state;
+    const dialogStyle = {
+      width: isMobile ? 'auto' : '640px',
+      height: isMobile ? 'auto' : '340px',
+    };
+
     return (
       <IceContainer>
         <Dialog
           className="success-dialog"
-          style={styles.dialog}
+          style={{ ...dialogStyle }}
           autoFocus={false}
           footer={false}
           title="认证申请已提交"
@@ -56,7 +78,6 @@ export default class SuccessDialog extends Component {
 }
 
 const styles = {
-  dialog: { width: '640px' },
   dialogContent: {
     height: '200px',
     display: 'flex',
@@ -69,5 +90,7 @@ const styles = {
     marginTop: '46px',
     marginBottom: '10px',
   },
-  text: { fontSize: '16px' },
+  text: {
+    fontSize: '16px',
+  },
 };

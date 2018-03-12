@@ -17,11 +17,7 @@ const getPublicUrl = (appPackageJson) => {
     return appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl;
   }
 
-  if (appPackage.homepage) {
-    return appPackage.homepage;
-  }
-
-  return '/';
+  return './';
 };
 
 function ensureSlash(path, needsSlash) {
@@ -53,6 +49,7 @@ module.exports = function getPaths(cwd) {
   return {
     appBuild: resolveApp('build'),
     appPublic: resolveApp('public'),
+    appHtml: resolveApp('public/index.html'),
     appPackageJson: resolveApp('package.json'),
     appAbcJson: resolveApp('abc.json'),
     appSrc: resolveApp('src'),

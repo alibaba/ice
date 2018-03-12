@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/header-aside-footer-layout",
-  "version": "0.1.16",
+  "version": "0.1.20",
   "description": "固定宽度的内容区域, 顶栏 + 侧栏 + 底栏, 通常用于中后台站点正文内容",
   "files": [
     "src/",
@@ -28,8 +28,10 @@
     "@icedesign/menu": "^0.1.0",
     "@icedesign/skin": "latest",
     "classnames": "^2.2.5",
+    "enquire-js": "^0.1.2",
     "foundation-symbol": "^0.1.0",
     "prop-types": "^15.5.8",
+    "react-container-query": "^0.11.0",
     "react-document-title": "^2.0.3",
     "react-router": "^3.2.0"
   },
@@ -50,6 +52,7 @@
     "categories": [
       "layout"
     ],
-    "snapshot": "https://gw.alicdn.com/tfs/TB172QmlsLJ8KJjy0FnXXcFDpXa-976-974.png"
+    "snapshot": "https://gw.alicdn.com/tfs/TB172QmlsLJ8KJjy0FnXXcFDpXa-976-974.png",
+    "thumbnail": "https://img.alicdn.com/tfs/TB1PnhCb9CWBuNjy0FhXXb6EVXa-2840-1596.png"
   }
 }

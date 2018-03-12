@@ -121,7 +121,7 @@ export default class ChartBox extends Component {
             height={400}
             data={dv}
             scale={cols}
-            padding={[20, 120, 95]}
+            padding={[10, 10, 40, 60]}
             forceFit
           >
             <Axis name="x" />

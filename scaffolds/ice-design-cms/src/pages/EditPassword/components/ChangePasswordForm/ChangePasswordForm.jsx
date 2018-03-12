@@ -42,7 +42,6 @@ export default class ChangePasswordForm extends Component {
   };
 
   checkPasswd2 = (rule, values, callback, stateValues) => {
-    console.log('stateValues:', stateValues);
     if (values && values !== stateValues.passwd) {
       callback('两次输入密码不一致');
     } else {
@@ -81,10 +80,10 @@ export default class ChangePasswordForm extends Component {
               <h2 style={styles.formTitle}>修改密码</h2>
 
               <Row style={styles.formItem}>
-                <Col span="2" style={styles.formLabel}>
+                <Col xxs="6" s="4" l="3" style={styles.formLabel}>
                   新密码：
                 </Col>
-                <Col span="6">
+                <Col xxs="16" s="10" l="6">
                   <IceFormBinder
                     name="passwd"
                     required
@@ -101,10 +100,10 @@ export default class ChangePasswordForm extends Component {
               </Row>
 
               <Row style={styles.formItem}>
-                <Col span="2" style={styles.formLabel}>
+                <Col xxs="6" s="4" l="3" style={styles.formLabel}>
                   确认密码：
                 </Col>
-                <Col span="6">
+                <Col xxs="16" s="10" l="6">
                   <IceFormBinder
                     name="rePasswd"
                     required
@@ -130,7 +129,7 @@ export default class ChangePasswordForm extends Component {
           </IceFormBinderWrapper>
 
           <Row style={{ marginTop: 20 }}>
-            <Col offset="2">
+            <Col offset="3">
               <Button
                 size="large"
                 type="primary"

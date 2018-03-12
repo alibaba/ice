@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Search } from '@icedesign/base';
+import { Search, Grid } from '@icedesign/base';
 import ArticleList from './ArticleList';
 import Filter from './Filter';
+
+const { Row, Col } = Grid;
 
 const dataSource = [
   {
@@ -63,13 +65,17 @@ export default class TextSearchList extends Component {
   render() {
     return (
       <div className="text-search-list">
-        <IceContainer style={styles.searchWrap}>
-          <Search
-            size="large"
-            inputWidth={500}
-            searchText="搜索"
-            placeholder="请输入要搜索的关键词或商品链接"
-          />
+        <IceContainer>
+          <Row>
+            <Col l="16">
+              <Search
+                size="large"
+                style={{ width: '100%' }}
+                searchText="搜索"
+                placeholder="请输入要搜索的关键词或商品链接"
+              />
+            </Col>
+          </Row>
         </IceContainer>
         <Filter />
         <ArticleList dataSource={dataSource} />
@@ -77,12 +83,3 @@ export default class TextSearchList extends Component {
     );
   }
 }
-
-const styles = {
-  searchWrap: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '80px',
-  },
-};

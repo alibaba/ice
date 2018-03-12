@@ -53,8 +53,7 @@ export default class TagMessageList extends Component {
 
 const styles = {
   allMessage: {
-    height: '50px',
-    lineHeight: '50px',
+    marginTop: '20px',
     textAlign: 'center',
   },
   item: {

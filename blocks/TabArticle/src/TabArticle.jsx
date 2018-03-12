@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
+import { enquireScreen } from 'enquire-js';
 import ArticleList from './ArticleList';
 
 const dataSource = [
@@ -65,8 +66,24 @@ export default class TabArticle extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isMobile: false,
+    };
   }
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   render() {
     return (
@@ -92,7 +109,7 @@ export default class TabArticle extends Component {
             />
           </div>
         </IceContainer>
-        <ArticleList dataSource={dataSource} />
+        <ArticleList isMobile={this.state.isMobile} dataSource={dataSource} />
       </div>
     );
   }

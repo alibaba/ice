@@ -41,6 +41,6 @@
 
 ## 社区
 
-扫码进入飞冰公测钉钉群（加入钉钉群即可公测并反馈问题）
+扫码进入飞冰钉钉群（加入钉钉群即可实时交流、反馈）
 
-<img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iLI8kxPI8KJjSspoXXX6MFXa-1242-1602.jpg" width="200">
+<img alt="Join the chat at dingtalk" src="https://img.alicdn.com/tfs/TB1FOmob3mTBuNjy1XbXXaMrVXa-993-1280.jpg" width="200">

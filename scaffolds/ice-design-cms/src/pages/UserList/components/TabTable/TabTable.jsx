@@ -52,13 +52,13 @@ export default class TabTable extends Component {
         title: '文章数',
         dataIndex: 'articleNum',
         key: 'articleNum',
-        width: 120,
+        width: 80,
       },
       {
         title: '评论数',
         dataIndex: 'commentNum',
         key: 'commentNum',
-        width: 120,
+        width: 80,
       },
       {
         title: '注册时间',
@@ -75,7 +75,7 @@ export default class TabTable extends Component {
       {
         title: '操作',
         key: 'action',
-        widdth: 200,
+        width: 200,
         render: (value, index, record) => {
           return (
             <span>
@@ -98,7 +98,6 @@ export default class TabTable extends Component {
     axios
       .get('/mock/user-list.json')
       .then((response) => {
-        console.log(response.data.data);
         this.setState({
           dataSource: response.data.data,
         });
@@ -134,7 +133,7 @@ export default class TabTable extends Component {
     const { dataSource } = this.state;
     return (
       <div className="tab-table">
-        <IceContainer>
+        <IceContainer style={{ padding: '0 20px 20px' }}>
           <Tab onChange={this.handleTabChange}>
             {tabs.map((item) => {
               return (

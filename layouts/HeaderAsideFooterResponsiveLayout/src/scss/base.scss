@@ -7,20 +7,36 @@ body {
 
 .ice-design-header-aside-footer-responsive-layout-#{$theme} {
   .logo {
-    width: 200px;
+    max-width: 340px;
     height: 42px;
     line-height: 42px;
     .logo-text {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       font-size: 36px;
       color: $ice-logo-text-color;
       font-weight: bold;
       font-family: Helvetica, sans-serif;
     }
   }
+
+  /* RESET Grid */
+  .next-row {
+    padding: 0 10px;
+    margin-left: -20px;
+    margin-right: -20px;
+    .next-col {
+      padding: 0 10px;
+    }
+  }
+
   /* LAYOUT */
   &.ice-design-layout {
     width: 100%;
-    min-width: 1200px;
+    // min-width: 1200px;
     padding: 0 20px;
     background-color: $ice-layout-bg;
     background-size: 100%;
@@ -226,7 +242,7 @@ body {
     /* MAIN */
     .ice-layout-main {
       padding: 0 0 0 20px;
-      overflow: auto;
+      overflow: hidden;
     }
 
     /* FOOTER */
@@ -268,6 +284,80 @@ body {
     }
     i {
       margin-right: 5px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 721px) and (min-width: 1199px) {
+}
+
+@media screen and (max-width: 720px) {
+  .ice-design-header-aside-footer-responsive-layout-#{$theme} {
+    .logo {
+      width: 80px;
+      .logo-text {
+        font-size: 22px;
+      }
+    }
+
+    .ice-design-layout-header-menu {
+      .ice-menu .ice-menu-item {
+        padding: 0 5px;
+      }
+    }
+
+    &.ice-design-layout {
+      .ice-design-layout-aside {
+        position: fixed;
+        left: -240px;
+        top: 0px;
+        bottom: 0;
+        padding: 0 20px;
+        background: #2e323e;
+        z-index: 9999;
+      }
+
+      .ice-layout-main {
+        padding: 0;
+      }
+
+      .menu-btn {
+        position: fixed;
+        left: 0;
+        top: 82px;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 0;
+        line-height: 40px;
+        border-radius: 0 6px 6px 0;
+        text-align: center;
+        cursor: pointer;
+        color: $ice-collapse-btn-color;
+        background: $ice-logo-text-color;
+      }
+
+      .open-drawer {
+        transform: translateX(240px);
+        .logo {
+          width: 200px;
+          margin: 20px 0;
+          text-align: center;
+        }
+      }
+
+      .open-drawer-bg {
+        position: fixed;
+        top: 0px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #000;
+        opacity: 0.3;
+        z-index: 999;
+      }
     }
   }
 }

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 const data = [
   {
@@ -44,32 +47,31 @@ export default class PriceInfo extends Component {
 
   render() {
     return (
-      <div className="price-info" style={styles.container}>
-        {data.map((item, index) => {
-          const rowLastItem = (index + 1) % 3 === 0 ? styles.rowLastItem : {};
-          return (
-            <div
-              key={index}
-              style={{ ...styles.item, ...rowLastItem }}
-              className="item"
-            >
-              <div style={styles.head}>
-                <h3 style={styles.title}>{item.title}</h3>
-                <p style={styles.price}>￥{item.price}</p>
-              </div>
-              <div style={styles.info}>
-                <img style={styles.image} src={item.imgUrl} alt="" />
-                <h5 style={styles.type}>{item.type}</h5>
-                <p style={styles.description}>{item.description}</p>
-              </div>
-              <div style={styles.buyBtn}>
-                <a href="/" style={styles.link}>
-                  立即购买
-                </a>
-              </div>
-            </div>
-          );
-        })}
+      <div style={styles.container}>
+        <Row gutter="20" wrap>
+          {data.map((item, index) => {
+            return (
+              <Col xxs="24" s="8" l="8" key={index}>
+                <div style={styles.item}>
+                  <div style={styles.head}>
+                    <h3 style={styles.title}>{item.title}</h3>
+                    <p style={styles.price}>￥{item.price}</p>
+                  </div>
+                  <div style={styles.info}>
+                    <img style={styles.image} src={item.imgUrl} alt="" />
+                    <h5 style={styles.type}>{item.type}</h5>
+                    <p style={styles.description}>{item.description}</p>
+                  </div>
+                  <div style={styles.buyBtn}>
+                    <a href="/" style={styles.link}>
+                      立即购买
+                    </a>
+                  </div>
+                </div>
+              </Col>
+            );
+          })}
+        </Row>
       </div>
     );
   }
@@ -85,14 +87,10 @@ const styles = {
     margin: '0 auto',
   },
   item: {
-    width: '28%',
-    marginRight: '8%',
     background: '#FAFAFA',
     borderRadius: '6px',
     paddingBottom: '50px',
-  },
-  rowLastItem: {
-    marginRight: 0,
+    marginBottom: '20px',
   },
   head: {
     padding: '30px 0',
@@ -107,7 +105,7 @@ const styles = {
     fontSize: '20px',
   },
   price: {
-    margin: '0',
+    margin: 0,
     fontWeight: 'bold',
     fontSize: '18px',
   },
@@ -140,9 +138,9 @@ const styles = {
     marginTop: '20px',
   },
   link: {
-    padding: '4px 15px',
+    padding: '6px 15px',
     background: '#3080FE',
-    borderRadius: '12px',
+    borderRadius: '16px',
     color: '#fff',
   },
 };

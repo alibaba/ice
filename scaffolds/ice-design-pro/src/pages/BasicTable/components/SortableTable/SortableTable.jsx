@@ -87,7 +87,11 @@ export default class SortableTable extends Component {
             <Table.Column width={280} title="待办事项" dataIndex="todo" />
             <Table.Column width={240} title="备注" dataIndex="memo" />
             <Table.Column width={180} title="有效时间" dataIndex="validity" />
-            <Table.Column title="排序" cell={this.renderSortButton} />
+            <Table.Column
+              width={80}
+              title="排序"
+              cell={this.renderSortButton}
+            />
           </Table>
         </IceContainer>
       </div>
