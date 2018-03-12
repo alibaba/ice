@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "enquire-js": "^0.1.2",
+    "react-container-query": "^0.11.0"
+  }
+}
