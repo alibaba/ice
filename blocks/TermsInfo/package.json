@@ -15,7 +15,7 @@
   "license": "MIT",
   "keywords": ["ice", "ice-block"],
   "dependencies": {
-    "@icedesign/base": "^0.1.5-1",
+    "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.0",
     "prop-types": "^15.5.8"
   },

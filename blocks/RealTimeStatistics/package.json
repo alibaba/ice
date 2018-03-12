@@ -22,7 +22,7 @@
     "prepublish": "ice block build"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.5-1",
+    "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.2",
     "prop-types": "^15.5.8"
   },
