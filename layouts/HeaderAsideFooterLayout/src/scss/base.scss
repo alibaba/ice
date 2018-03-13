@@ -78,6 +78,9 @@ body {
 
       .ice-menu {
         background: $ice-aside-menu-bg;
+        &.ice-menu-inline .ice-icon-stable {
+          font-weight: normal;
+        }
       }
 
       .ice-menu.ice-menu-root.ice-menu-inline

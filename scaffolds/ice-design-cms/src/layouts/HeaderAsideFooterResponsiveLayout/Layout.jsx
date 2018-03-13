@@ -14,6 +14,7 @@ import { asideNavs } from './../../navs';
 import './scss/light.scss';
 import './scss/dark.scss';
 
+// 设置默认的皮肤配置，支持 dark 和 light 两套皮肤配置
 const theme = typeof THEME === 'undefined' ? 'dark' : THEME;
 
 export default class HeaderAsideFooterResponsiveLayout extends Component {
@@ -30,7 +31,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
       openDrawer: false,
       isScreen: undefined,
       openKeys,
-      theme,
     };
     this.openKeysCache = openKeys;
   }
@@ -39,6 +39,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     this.enquireScreenRegister();
   }
 
+  /**
+   * 注册监听屏幕的变化，可根据不同分辨率做对应的处理
+   */
   enquireScreenRegister = () => {
     const isMobile = 'screen and (max-width: 720px)';
     const isTablet = 'screen and (min-width: 721px) and (max-width: 1199px)';
@@ -74,12 +77,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     return handler;
   };
 
-  toggleTheme = () => {
-    this.setState({
-      theme: this.state.theme === 'dark' ? 'light' : 'dark',
-    });
-  };
-
   toggleCollapse = () => {
     const { collapse } = this.state;
     const openKeys = !collapse ? [] : this.openKeysCache;
@@ -90,6 +87,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     });
   };
 
+  /**
+   * 左侧菜单收缩切换
+   */
   toggleMenu = () => {
     const { openDrawer } = this.state;
     this.setState({
@@ -97,6 +97,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     });
   };
 
+  /**
+   * 当前展开的菜单项
+   */
   onOpenChange = (openKeys) => {
     this.setState({
       openKeys,
@@ -104,11 +107,16 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     this.openKeysCache = openKeys;
   };
 
+  /**
+   * 响应式时点击菜单进行切换
+   */
   onMenuClick = () => {
     this.toggleMenu();
   };
 
-  // 当前打开的菜单项
+  /**
+   * 获取当前展开的菜单项
+   */
   getOpenKeys = () => {
     const { routes } = this.props;
     const matched = routes[0].path;
@@ -133,16 +141,14 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
       <Layout
         style={{ minHeight: '100vh' }}
         className={cx(
-          `ice-design-header-aside-footer-responsive-layout-${
-            this.state.theme
-          }`,
+          `ice-design-header-aside-footer-responsive-layout-${theme}`,
           {
             'ice-design-layout': true,
           }
         )}
       >
         <Header
-          theme={this.state.theme}
+          theme={theme}
           isMobile={this.state.isScreen !== 'isDesktop' ? true : undefined}
         />
         <Layout.Section>
@@ -154,14 +160,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
           {this.state.openDrawer && (
             <div className="open-drawer-bg" onClick={this.toggleMenu} />
           )}
-          {this.state.isScreen === 'isDesktop' && (
-            <a className="theme-btn" onClick={this.toggleTheme}>
-              切换主题
-            </a>
-          )}
           <Layout.Aside
             width="auto"
-            theme={this.state.theme}
+            theme={theme}
             className={cx('ice-design-layout-aside', {
               'open-drawer': this.state.openDrawer,
             })}

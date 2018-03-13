@@ -85,6 +85,9 @@ body {
       .ice-menu {
         background: $ice-aside-menu-bg;
         transition: all 0.3s ease;
+        &.ice-menu-inline .ice-icon-stable {
+          font-weight: normal;
+        }
       }
 
       .ice-menu.ice-menu-root.ice-menu-inline

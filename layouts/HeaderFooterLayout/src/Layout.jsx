@@ -2,27 +2,14 @@
 import React, { PureComponent } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
-import { ContainerQuery } from 'react-container-query';
 import { enquireScreen } from 'enquire-js';
 import Header from './__components_Header__';
 import Footer from './__components_Footer__';
 import './scss/light.scss';
 import './scss/dark.scss';
 
+// 设置默认的皮肤配置，支持 dark 和 light 两套皮肤配置
 const theme = typeof THEME === 'undefined' ? 'dark' : THEME;
-
-const query = {
-  'screen-xs': {
-    maxWidth: 720,
-  },
-  'screen-sm': {
-    minWidth: 721,
-    maxWidth: 1199,
-  },
-  'screen-xl': {
-    minWidth: 1200,
-  },
-};
 
 export default class BasicLayout extends PureComponent {
   static propTypes = {};
@@ -41,10 +28,11 @@ export default class BasicLayout extends PureComponent {
     this.enquireScreenRegister();
   }
 
+  /**
+   * 注册监听屏幕的变化，可根据不同分辨率做对应的处理
+   */
   enquireScreenRegister = () => {
-    const mediaCondition = `only screen and (max-width: ${
-      query['screen-xs'].maxWidth
-    }px)`;
+    const mediaCondition = 'only screen and (max-width: 720px)';
 
     enquireScreen((mobile) => {
       this.setState({
@@ -54,26 +42,19 @@ export default class BasicLayout extends PureComponent {
   };
 
   render() {
-    console.log('isMobile:', this.state.isMobile);
     return (
-      <ContainerQuery query={query}>
-        {(params) => (
-          <div className={cx(params)}>
-            <Layout
-              style={{ minHeight: '100vh' }}
-              className={cx(`ice-design-header-footer-layout-${theme}`, {
-                'ice-design-layout': true,
-              })}
-            >
-              <Header theme={theme} isMobile={this.state.isMobile} />
-              <Layout.Main className="ice-design-layout-body">
-                {this.props.children}
-              </Layout.Main>
-              <Footer />
-            </Layout>
-          </div>
-        )}
-      </ContainerQuery>
+      <Layout
+        style={{ minHeight: '100vh' }}
+        className={cx(`ice-design-header-footer-layout-${theme}`, {
+          'ice-design-layout': true,
+        })}
+      >
+        <Header theme={theme} isMobile={this.state.isMobile} />
+        <Layout.Main className="ice-design-layout-body">
+          {this.props.children}
+        </Layout.Main>
+        <Footer />
+      </Layout>
     );
   }
 }
