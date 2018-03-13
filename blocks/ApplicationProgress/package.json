@@ -2,12 +2,7 @@
   "name": "@icedesign/application-progress-block",
   "version": "0.1.4",
   "description": "申请进度信息展示",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,13 +12,11 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
+    "enquire-js": "^0.1.2",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
@@ -34,12 +27,11 @@
   },
   "blockConfig": {
     "name": "application-progress",
-    "snapshot": "https://img.alicdn.com/tfs/TB1I67ih3vD8KJjy0FlXXagBFXa-947-929.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1I67ih3vD8KJjy0FlXXagBFXa-947-929.png",
     "themePackage": "@icedesign/skin",
     "title": "申请进度信息展示",
-    "categories": [
-      "信息展示"
-    ]
+    "categories": ["信息展示"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

@@ -56,10 +56,6 @@ export default class MonacoEditor extends Component {
     });
   }
 
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
   onChange = (newValue, e) => {
     console.log('onChange', newValue, e);
   };
@@ -77,6 +73,7 @@ function foo() {
 `;
     const options = {
       selectOnLineNumbers: true,
+      automaticLayout: true,
     };
     const { monacoReady } = this.state;
 

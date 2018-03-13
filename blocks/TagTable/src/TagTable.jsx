@@ -96,7 +96,7 @@ export default class TagTable extends Component {
           <FormBinderWrapper value={formValue} onChange={this.formChange}>
             <div style={{ marginBottom: '25px' }}>
               <Row style={styles.formRow}>
-                <Col span="2" style={styles.label}>
+                <Col xxs="6" s="4" l="2" style={styles.label}>
                   漏洞搜索:{' '}
                 </Col>
                 <Col span="10">
@@ -106,7 +106,7 @@ export default class TagTable extends Component {
                 </Col>
               </Row>
               <Row style={styles.formRow}>
-                <Col span="2" style={styles.label}>
+                <Col xxs="6" s="4" l="2" style={styles.label}>
                   处理状态:{' '}
                 </Col>
                 <Col span="10">
@@ -120,7 +120,7 @@ export default class TagTable extends Component {
                 </Col>
               </Row>
               <Row style={styles.formRow}>
-                <Col span="2" style={styles.label}>
+                <Col xxs="6" s="4" l="2" style={styles.label}>
                   漏洞等级:{' '}
                 </Col>
                 <Col span="10">
@@ -143,17 +143,22 @@ export default class TagTable extends Component {
             locale={{ empty: '没有查询到符合条件的记录' }}
             dataSource={this.getDataSource()}
           >
-            <Table.Column title="漏洞名称" dataIndex="name" />
-            <Table.Column title="漏洞等级" dataIndex="level" />
-            <Table.Column title="需尽快修复资产" dataIndex="assets.needFix" />
+            <Table.Column title="漏洞名称" dataIndex="name" width={200} />
+            <Table.Column title="漏洞等级" dataIndex="level" width={200} />
+            <Table.Column
+              title="需尽快修复资产"
+              dataIndex="assets.needFix"
+              width={200}
+            />
             <Table.Column
               title="当前未处理资产"
               dataIndex="assets.unHandle"
+              width={200}
               cell={(val) => {
                 return val || '无';
               }}
             />
-            <Table.Column title="最后发现时间" dataIndex="time" />
+            <Table.Column title="最后发现时间" dataIndex="time" width={200} />
           </Table>
         </IceCard>
       </div>

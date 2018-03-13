@@ -10,7 +10,7 @@ import Logo from './Logo';
 
 export default class Header extends PureComponent {
   render() {
-    const { width, theme } = this.props;
+    const { width, theme, isMobile } = this.props;
 
     return (
       <Layout.Header
@@ -42,7 +42,7 @@ export default class Header extends PureComponent {
                       {nav.icon ? (
                         <FoundationSymbol type={nav.icon} size="small" />
                       ) : null}
-                      {nav.text}
+                      {!isMobile ? nav.text : null}
                     </Link>
                   </Menu.Item>
                 );
@@ -58,7 +58,6 @@ export default class Header extends PureComponent {
               <div
                 className="ice-design-header-userpannel"
                 style={{
-                  marginLeft: 20,
                   display: 'flex',
                   alignItems: 'center',
                   fontSize: 12,
@@ -68,7 +67,8 @@ export default class Header extends PureComponent {
                   height={40}
                   width={40}
                   src="https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png"
-                  style={{ marginRight: '12px', borderRadius: 4 }}
+                  style={{ borderRadius: 4 }}
+                  className="user-avatar"
                 />
                 <div className="user-profile">
                   <span className="user-name" style={{ fontSize: '13px' }}>

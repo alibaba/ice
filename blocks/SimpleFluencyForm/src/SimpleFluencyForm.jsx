@@ -75,12 +75,16 @@ export default class SimpleFluencyForm extends Component {
           >
             <div>
               <Row style={styles.formRow}>
-                <Col fixedSpan={8} style={styles.formLabel}>
+                <Col xxs="5" s="5" l="7" style={styles.formLabel}>
                   <span>姓名：</span>
                 </Col>
-                <Col span={12}>
+                <Col s="14" l="12">
                   <FormBinder required message="必填项">
-                    <Input name="username" />
+                    <Input
+                      name="username"
+                      size="large"
+                      style={{ width: '100%' }}
+                    />
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="username" />
@@ -88,12 +92,16 @@ export default class SimpleFluencyForm extends Component {
                 </Col>
               </Row>
               <Row style={styles.formRow}>
-                <Col fixedSpan={8} style={styles.formLabel}>
+                <Col xxs="5" s="5" l="7" style={styles.formLabel}>
                   邮箱：
                 </Col>
-                <Col span={12}>
+                <Col s="14" l="12">
                   <FormBinder type="email" required message="邮箱不合法">
-                    <Input name="email" />
+                    <Input
+                      name="email"
+                      size="large"
+                      style={{ width: '100%' }}
+                    />
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="email" />
@@ -101,17 +109,21 @@ export default class SimpleFluencyForm extends Component {
                 </Col>
               </Row>
               <Row style={styles.formRow}>
-                <Col fixedSpan={8} style={styles.formLabel}>
+                <Col xxs="5" s="5" l="7" style={styles.formLabel}>
                   电话：
                 </Col>
-                <Col span={12}>
+                <Col s="14" l="12">
                   <FormBinder
                     required
                     message="请输入合法的电话号码"
                     pattern={telPattern}
                     triggerType="onBlur"
                   >
-                    <Input name="phone" />
+                    <Input
+                      name="phone"
+                      size="large"
+                      style={{ width: '100%' }}
+                    />
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="phone" />
@@ -119,12 +131,19 @@ export default class SimpleFluencyForm extends Component {
                 </Col>
               </Row>
               <Row style={styles.formRow}>
-                <Col fixedSpan={8} style={styles.formLabel}>
+                <Col xxs="5" s="5" l="7" style={styles.formLabel}>
                   地址：
                 </Col>
-                <Col span={12}>
+                <Col s="14" l="12">
                   <FormBinder>
-                    <Input required message="必填" multiple name="address" />
+                    <Input
+                      required
+                      message="必填"
+                      multiple
+                      name="address"
+                      size="large"
+                      style={{ width: '100%' }}
+                    />
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="address" />
@@ -133,7 +152,7 @@ export default class SimpleFluencyForm extends Component {
               </Row>
 
               <Row>
-                <Col fixedOffset={8}>
+                <Col offset={7}>
                   <Button onClick={this.nextStep} type="primary">
                     下一步
                   </Button>
@@ -160,7 +179,7 @@ export default class SimpleFluencyForm extends Component {
 
   render() {
     return (
-      <div className="simple-fluency-form" style={styles.simpleFluencyForm}>
+      <div className="simple-fluency-form">
         <IceContainer>
           <Step current={this.state.step} type="dot">
             <Step.Item key={0} title="填写信息" />
@@ -175,9 +194,19 @@ export default class SimpleFluencyForm extends Component {
 }
 
 const styles = {
-  formLabel: { textAlign: 'right', lineHeight: '1.7rem', paddingRight: '10px' },
-  formRow: { marginBottom: '20px' },
-  form: { padding: '40px 0 20px' },
-  formErrorWrapper: { marginTop: '5px' },
+  form: {
+    padding: '40px 20px',
+  },
+  formLabel: {
+    textAlign: 'right',
+    lineHeight: '1.7rem',
+    paddingRight: '10px',
+  },
+  formRow: {
+    marginBottom: '20px',
+  },
+  formErrorWrapper: {
+    marginTop: '5px',
+  },
   simpleFluencyForm: {},
 };

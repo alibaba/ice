@@ -8,7 +8,7 @@
     right: 0;
   }
   .ice-admin-layout-header {
-    width: 1200px;
+    max-width: 1200px;
     margin: 20px auto;
     display: flex;
     justify-content: space-between;
@@ -19,7 +19,7 @@
   }
 
   .ice-admin-layout-footer-body {
-    width: 1200px;
+    max-width: 1200px;
     margin: 45px auto;
     display: flex;
     justify-content: space-between;
@@ -41,5 +41,18 @@
   a:visited,
   a:link {
     color: #fff;
+  }
+}
+
+.landing-intro-banner-content-wrapper {
+  h2 {
+    font-size: 32px;
+  }
+}
+@media (max-width: 720px) {
+  .landing-intro-banner-content-wrapper {
+    h2 {
+      font-size: 24px;
+    }
   }
 }

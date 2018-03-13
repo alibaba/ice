@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
+import { Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 const dataSource = [
   {
@@ -59,7 +62,13 @@ export default class StatisticalCard extends Component {
         height: `${data.circle.height}px`,
       };
       return (
-        <div key={idx} style={styles.statisticalCardItem}>
+        <Col
+          xxs={24}
+          xs={12}
+          l={6}
+          key={idx}
+          style={styles.statisticalCardItem}
+        >
           <div style={styles.circleWrap}>
             <img src={data.circle.icon} style={imgStyle} alt="图片" />
           </div>
@@ -76,7 +85,7 @@ export default class StatisticalCard extends Component {
             </div>
             <div style={styles.statisticalCardNumber}>{data.number}</div>
           </div>
-        </div>
+        </Col>
       );
     });
   };
@@ -85,7 +94,9 @@ export default class StatisticalCard extends Component {
     return (
       <div className="statistical-card" style={styles.statisticalCard}>
         <IceContainer style={styles.statisticalCardItems}>
-          {this.renderItem()}
+          <Row wrap style={{ width: '100%' }}>
+            {this.renderItem()}
+          </Row>
         </IceContainer>
       </div>
     );
@@ -96,13 +107,13 @@ const styles = {
   statisticalCardItems: {
     display: 'flex',
     flexDirection: 'row',
-    height: '110px',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   statisticalCardItem: {
-    flex: 1,
     display: 'flex',
     flexDirection: 'row',
+    margin: '10px 0',
   },
   circleWrap: {
     backgroundColor: '#FFECB3',

@@ -1,11 +1,13 @@
 {
   "name": "@icedesign/scaffold-cms",
-  "version": "0.1.11",
-  "description": "该模板内置了丰富的区块，主要适用于类 CMS 管理系统，使用时需要根据需求进行删除和添加",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-cms.html",
+  "version": "0.1.12",
+  "description":
+    "该模板内置了丰富的区块，主要适用于类 CMS 管理系统，使用时需要根据需求进行删除和添加",
+  "homepage":
+    "https://alibaba.github.io/ice/scaffold-preview/ice-design-cms.html",
   "dependencies": {
     "@antv/data-set": "^0.8.5",
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "@icedesign/form-binder": "^0.1.4",
     "@icedesign/icon": "^0.1.1",
@@ -16,6 +18,7 @@
     "axios": "^0.17.1",
     "bizcharts": "3.1.0",
     "classnames": "^2.2.5",
+    "enquire-js": "^0.1.2",
     "foundation-symbol": "^0.1.0",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.1",
@@ -52,7 +55,8 @@
   "scaffoldConfig": {
     "name": "ice-design-cms",
     "title": "Ice Design CMS",
-    "snapshot": "https://img.alicdn.com/tfs/TB13MoicntYBeNjy1XdXXXXyVXa-2840-1596.png"
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1jS9pdXOWBuNjy0FiXXXFxVXa-2840-1596.png"
   },
   "title": "ice_design_cms"
 }

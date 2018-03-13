@@ -5,6 +5,7 @@ import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
+import { enquireScreen } from 'enquire-js';
 import SubCategoryItem from './SubCategoryItem';
 import './ComplexTabTable.scss';
 
@@ -33,6 +34,7 @@ export default class ComplexTabTable extends Component {
 
     this.queryCache = {};
     this.state = {
+      isMobile: false,
       currentTab: 'solved',
       currentCategory: '1',
       tabList: [
@@ -106,9 +108,20 @@ export default class ComplexTabTable extends Component {
   }
 
   componentDidMount() {
+    this.enquireScreenRegister();
     this.queryCache.page = 1;
     this.fetchData();
   }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   fetchData = () => {
     this.props.updateBindingData('tableData', {
@@ -188,6 +201,20 @@ export default class ComplexTabTable extends Component {
     this.fetchData();
   };
 
+  renderTabBarExtraContent = () => {
+    return (
+      <div style={styles.tabExtra}>
+        <Search
+          style={styles.search}
+          type="secondary"
+          placeholder="搜索"
+          searchText=""
+          onSearch={this.onSearch}
+        />
+      </div>
+    );
+  };
+
   render() {
     const tableData = this.props.bindingData.tableData;
 
@@ -204,16 +231,7 @@ export default class ComplexTabTable extends Component {
               padding: 0,
             }}
             tabBarExtraContent={
-              <div style={styles.tabExtra}>
-                <Search
-                  style={styles.search}
-                  type="secondary"
-                  inputWidth={150}
-                  placeholder="搜索"
-                  searchText=""
-                  onSearch={this.onSearch}
-                />
-              </div>
+              !this.state.isMobile ? this.renderTabBarExtraContent() : null
             }
           >
             {tabList && tabList.length > 0

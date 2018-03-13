@@ -2,12 +2,7 @@
   "name": "@icedesign/lite-table-block",
   "version": "0.1.8",
   "description": "简单的附带状态的表格",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,12 +12,9 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "prop-types": "^15.5.8"
   },
@@ -35,12 +27,11 @@
   },
   "blockConfig": {
     "name": "lite-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB1ftZiXgmTBuNjy1XbXXaMrVXa-1910-994.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1apAecDtYBeNjy1XdXXXXyVXa-2290-998.png",
     "themePackage": "@icedesign/skin",
     "title": "简单带状态表格",
-    "categories": [
-      "表格"
-    ]
+    "categories": ["表格"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

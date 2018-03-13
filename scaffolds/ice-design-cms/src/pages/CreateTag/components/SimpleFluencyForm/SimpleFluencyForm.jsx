@@ -60,10 +60,10 @@ export default class SimpleFluencyForm extends Component {
             <div style={styles.formContent}>
               <h2 style={styles.formTitle}>添加标签</h2>
               <Row style={styles.formRow}>
-                <Col span={2} style={styles.formLabel}>
+                <Col xxs="6" s="4" l="3" style={styles.formLabel}>
                   <span>标签名称：</span>
                 </Col>
-                <Col span={6}>
+                <Col xxs="16" s="10" l="6">
                   <FormBinder required message="必填项">
                     <Input name="name" />
                   </FormBinder>
@@ -73,10 +73,10 @@ export default class SimpleFluencyForm extends Component {
                 </Col>
               </Row>
               <Row style={styles.formRow}>
-                <Col span={2} style={styles.formLabel}>
+                <Col xxs="6" s="4" l="3" style={styles.formLabel}>
                   <span>缩略名称：</span>
                 </Col>
-                <Col span={6}>
+                <Col xxs="16" s="10" l="6">
                   <FormBinder required message="必填项">
                     <Input name="shortName" />
                   </FormBinder>
@@ -86,7 +86,7 @@ export default class SimpleFluencyForm extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col offset={2}>
+                <Col offset="3">
                   <Button
                     onClick={this.handleSubmit}
                     type="primary"

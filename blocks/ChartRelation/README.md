@@ -2,10 +2,4 @@
 
 简介：关系图
 
-
-![截图](https://img.alicdn.com/tfs/TB1My.6idfJ8KJjy0FeXXXKEXXa-1874-922.png)
-
-
-
-
-
+![截图](https://img.alicdn.com/tfs/TB1urMfcDtYBeNjy1XdXXXXyVXa-2286-994.png)

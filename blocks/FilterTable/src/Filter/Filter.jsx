@@ -20,28 +20,26 @@ export default class Filter extends Component {
         onChange={this.props.onChange}
       >
         <div>
-          <Row>
-            <Col span="8" style={styles.filterCol}>
+          <Row wrap>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>所属应用</label>
               <IceFormBinder>
                 <Input name="app" />
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>分类ID</label>
               <IceFormBinder>
                 <Input name="id" />
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>标签ID</label>
               <IceFormBinder>
                 <Input name="tag" />
               </IceFormBinder>
             </Col>
-          </Row>
-          <Row>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>开始时间</label>
               <IceFormBinder
                 valueFormatter={(date, strValue) => {
@@ -51,7 +49,7 @@ export default class Filter extends Component {
                 <DatePicker name="startTime" style={styles.filterTool} />
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>结束时间</label>
               <IceFormBinder
                 valueFormatter={(date, strValue) => {
@@ -61,7 +59,7 @@ export default class Filter extends Component {
                 <DatePicker name="endTime" style={styles.filterTool} />
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>尺寸</label>
               <IceFormBinder>
                 <Select
@@ -75,9 +73,7 @@ export default class Filter extends Component {
                 </Select>
               </IceFormBinder>
             </Col>
-          </Row>
-          <Row>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>删除状态</label>
               <IceFormBinder>
                 <Select name="status" style={styles.filterTool}>
@@ -86,13 +82,13 @@ export default class Filter extends Component {
                 </Select>
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>讨论ID</label>
               <IceFormBinder>
                 <Input name="commentId" />
               </IceFormBinder>
             </Col>
-            <Col span="8" style={styles.filterCol}>
+            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>置顶</label>
               <IceFormBinder>
                 <Select

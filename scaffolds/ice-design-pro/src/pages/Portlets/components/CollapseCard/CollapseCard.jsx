@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Icon } from '@icedesign/base';
-import './CollapseCard.scss';
+import { Icon, Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 export default class CollapseCard extends Component {
   static displayName = 'CollapseCard';
@@ -43,24 +44,24 @@ export default class CollapseCard extends Component {
               </p>
             </div>
           </div>
-          <ul style={{ ...styles.baseInfo, ...collapseStyle }}>
-            <li style={styles.infoItem}>
+          <Row style={{ ...styles.baseInfo, ...collapseStyle }}>
+            <Col xxs="24" xs="12" s="12" l="12" style={styles.infoItem}>
               <span style={styles.infoItemLabel}>活动标题：</span>
               <span style={styles.infoItemValue}>戴森周年庆活动</span>
-            </li>
-            <li style={styles.infoItem}>
+            </Col>
+            <Col xxs="24" xs="12" s="12" l="12" style={styles.infoItem}>
               <span style={styles.infoItemLabel}>店铺名称：</span>
               <span style={styles.infoItemValue}>戴森周年庆活动</span>
-            </li>
-            <li style={styles.infoItem}>
+            </Col>
+            <Col xxs="24" xs="12" s="12" l="12" style={styles.infoItem}>
               <span style={styles.infoItemLabel}>开始时间：</span>
               <span style={styles.infoItemValue}>2017-10-18 12:20:07</span>
-            </li>
-            <li style={styles.infoItem}>
+            </Col>
+            <Col xxs="24" xs="12" s="12" l="12" style={styles.infoItem}>
               <span style={styles.infoItemLabel}>结束时间：</span>
               <span style={styles.infoItemValue}>2017-12-18 12:20:07</span>
-            </li>
-          </ul>
+            </Col>
+          </Row>
           <div className="toggle-btn" style={styles.toggleBtn}>
             <a
               className="toggle-btn"

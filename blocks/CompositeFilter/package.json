@@ -3,12 +3,7 @@
   "version": "0.1.6",
   "description": "标签、日期和搜索组合筛选",
   "main": "lib/index.js",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -18,13 +13,11 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
+    "enquire-js": "^0.1.2",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
@@ -35,12 +28,11 @@
   },
   "blockConfig": {
     "name": "composite-filter",
-    "snapshot": "https://img.alicdn.com/tfs/TB1gabvbntYBeNjy1XdXXXXyVXa-1916-244.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1gabvbntYBeNjy1XdXXXXyVXa-1916-244.png",
     "themePackage": "@icedesign/skin",
     "title": "标签、日期和搜索组合筛选",
-    "categories": [
-      "筛选"
-    ]
+    "categories": ["筛选"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

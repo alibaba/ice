@@ -20,19 +20,20 @@ export default class SingleItem extends Component {
         className={`${className} single-item`}
         style={{
           ...style,
-          width: '165px',
           height: '230px',
           cursor: 'pointer',
           borderRadius: '4px',
           backgroundColor: active ? '#f4f4f4' : undefined,
         }}
       >
-        <IceImg
-          src={image}
-          width={149}
-          height={149}
-          style={{ margin: '8px' }}
-        />
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <IceImg
+            src={image}
+            width={149}
+            height={149}
+            style={{ margin: '8px' }}
+          />
+        </div>
         <div
           style={{
             textOverflow: 'ellipsis',

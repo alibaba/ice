@@ -151,26 +151,7 @@
         }
       ]
     },
-    {
-      "page": "ProgressInfo",
-      "path": "portlets/progress",
-      "layout": "HeaderAsideFooterLayout",
-      "builtIn": true,
-      "blocks": [
-        {
-          "npm": "@icedesign/text-card-block",
-          "name": "TextCard",
-          "version": "latest",
-          "title": "纯文字展示型卡片"
-        },
-        {
-          "npm": "@icedesign/application-progress-block",
-          "name": "ApplicationProgress",
-          "version": "latest",
-          "title": "申请进度信息展示"
-        }
-      ]
-    },
+
     {
       "page": "Result",
       "path": "result/success",

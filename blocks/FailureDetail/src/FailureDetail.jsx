@@ -50,7 +50,7 @@ const styles = {
     position: 'relative',
   },
   title: {
-    margin: '0',
+    margin: 0,
     fontWeight: 'bold',
   },
   summary: {

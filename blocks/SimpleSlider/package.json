@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/simple-slider-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -22,23 +30,25 @@
     "prepublish": "ice block build"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.1",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "latest",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "simple-slider",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1vVvicpOWBuNjy0FiXXXFxVXa-2356-758.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1vVvicpOWBuNjy0FiXXXFxVXa-2356-758.png",
     "title": "图片轮播",
-    "categories": ["data-display", "info-display"],
+    "categories": [
+      "data-display",
+      "info-display"
+    ],
     "themePackage": "@icedesign/skin"
   }
 }

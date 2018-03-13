@@ -38,7 +38,7 @@ export default class SimpleSlider extends Component {
       <IceContainer>
         <Slider>
           {slides.map((item, index) => (
-            <div key={index} className="slider-img-wrapper">
+            <div key={index}>
               <img src={item.url} alt={item.text} style={styles.itemImg} />
             </div>
           ))}

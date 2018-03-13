@@ -46,10 +46,6 @@ export default class CustomTable extends Component {
   };
 
   render() {
-    return (
-      <Table style={{ width: 1100 }} {...this.props}>
-        {this.renderColumns()}
-      </Table>
-    );
+    return <Table {...this.props}>{this.renderColumns()}</Table>;
   }
 }

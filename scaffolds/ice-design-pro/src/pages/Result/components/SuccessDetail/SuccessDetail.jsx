@@ -74,7 +74,8 @@ const styles = {
     height: '40px',
   },
   title: {
-    margin: '0',
+    margin: 0,
+    fontWeight: 'bold',
   },
   summary: {
     marginBottom: '40px',

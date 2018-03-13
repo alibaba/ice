@@ -2,12 +2,7 @@
   "name": "@icedesign/price-card-block",
   "version": "0.1.6",
   "description": "",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,12 +12,9 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "prop-types": "^15.5.8"
   },
@@ -35,13 +27,11 @@
   },
   "blockConfig": {
     "name": "price-card",
-    "snapshot": "https://img.alicdn.com/tfs/TB1_5jHjgvD8KJjy0FlXXagBFXa-2810-1074.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1Mn6dcuuSBuNjy1XcXXcYjFXa-2836-1006.png",
     "themePackage": "@icedesign/skin",
     "title": "价格展示",
-    "categories": [
-      "信息展示",
-      "欢迎页"
-    ]
+    "categories": ["信息展示", "欢迎页"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
