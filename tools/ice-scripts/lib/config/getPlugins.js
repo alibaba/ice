@@ -1,14 +1,21 @@
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
 
-module.exports = function (paths, options = {}) {
+module.exports = function(paths, options = {}) {
   const plugins = [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(
+        process.env.NODE_ENV || 'development'
+      ),
+    }),
+
     new ExtractTextPlugin({
       filename: '[name].css',
       disable: false,
@@ -54,7 +61,7 @@ module.exports = function (paths, options = {}) {
       type: 'sass',
       srcFile: iconScssPath,
       variableFile: variableFilePath,
-      distMatch: function (chunkName, compilerEntry, compilationPreparedChunks) {
+      distMatch: function(chunkName, compilerEntry, compilationPreparedChunks) {
         const entriesAndPreparedChunkNames = normalizeEntry(
           compilerEntry,
           compilationPreparedChunks
