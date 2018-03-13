@@ -12,6 +12,8 @@ program.option('--debug', 'debug mode without compression').parse(process.argv);
 
 const build = require('../lib/build');
 
-build({
-  debug: !!program.debug,
-});
+checkSass().then(() => {
+  build({
+    debug: !!program.debug,
+  });
+})
