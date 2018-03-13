@@ -58,14 +58,14 @@ export default class LineChart extends Component {
           type="line"
           position="month*temperature"
           size={2}
-          color={'city'}
+          color="city"
         />
         <Geom
           type="point"
           position="month*temperature"
           size={4}
-          shape={'circle'}
-          color={'city'}
+          shape="circle"
+          color="city"
           style={{ stroke: '#fff', lineWidth: 1 }}
         />
       </Chart>
