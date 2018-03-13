@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Step, Grid, Icon } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
+import { enquireScreen } from 'enquire-js';
 
 const dataSource = () => {
   return [
@@ -58,15 +59,32 @@ export default class ApplicationProgress extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isMobile: false,
+    };
   }
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   render() {
     const data = dataSource();
+    const { isMobile } = this.state;
     return (
       <div className="application-progress">
         <IceContainer>
-          <Step current={0}>
+          <Step current={0} type={isMobile ? 'dot' : 'circle'}>
             <Step.Item title="检测账号" />
             <Step.Item title="选择入住类型" />
             <Step.Item title="填写详细资料" />
@@ -76,8 +94,8 @@ export default class ApplicationProgress extends Component {
             {data.map((item, index) => {
               return (
                 <div style={styles.row} key={index}>
-                  <Row>
-                    <Col span={4}>
+                  <Row wrap>
+                    <Col xxs="24" s="4">
                       <div style={styles.imageWrap}>
                         <img
                           style={styles.image}
@@ -88,20 +106,40 @@ export default class ApplicationProgress extends Component {
                         <span>{item.condition}</span>
                       </div>
                     </Col>
-                    <Col span={16} style={styles.itemBody}>
-                      <span style={styles.itemStatus}>
+                    <Col
+                      xxs="24"
+                      s="16"
+                      style={{
+                        ...styles.itemBody,
+                        ...(isMobile && styles.mobileContentCenter),
+                      }}
+                    >
+                      <span
+                        style={
+                          item.validate
+                            ? styles.itemStatusSuccess
+                            : styles.itemStatusFail
+                        }
+                      >
                         <Icon type={item.validate ? 'success' : 'error'} />
                         <span style={styles.itemStatusText}>
                           {item.validate ? '符合文案' : '不符合文案'}
                         </span>
                       </span>
-                      <div style={styles.itemDescription}>
+                      <div
+                        style={{
+                          ...styles.itemDescription,
+                          ...(isMobile && styles.removeContentWidth),
+                        }}
+                      >
                         {item.description}
                       </div>
                     </Col>
-                    <Col span={4}>
+                    <Col xxs="24" s="4">
                       <div style={styles.operationWrap}>
-                        <span style={styles.operation}>{item.operation}</span>
+                        <a href={item.url} target="_blank">
+                          {item.operation}
+                        </a>
                       </div>
                     </Col>
                   </Row>
@@ -142,15 +180,11 @@ const styles = {
   itemDescription: {
     color: '#666',
     marginTop: '20px',
-    width: '309px',
+    maxWidth: '309px',
   },
   operationWrap: {
     marginTop: '40px',
     textAlign: 'center',
-  },
-  operation: {
-    color: '#2192d9',
-    cursor: 'pointer',
   },
   itemFooter: {
     textAlign: 'center',
@@ -160,11 +194,21 @@ const styles = {
   nextBtn: {
     marginTop: '40px',
   },
-  itemStatus: {
+  itemStatusSuccess: {
+    color: '#1be25c',
+  },
+  itemStatusFail: {
     color: '#f33',
     fontSize: '16px',
   },
   itemStatusText: {
     marginLeft: '10px',
+  },
+  mobileContentCenter: {
+    textAlign: 'center',
+    padding: '20px 0 0 0',
+  },
+  removeContentWidth: {
+    maxWidth: 'none',
   },
 };
