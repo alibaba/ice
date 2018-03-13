@@ -9,16 +9,23 @@ const paths = require('./paths');
  *  4. externals
  *  5. entry
  */
-module.exports = function getWebpackConfigBasic(entry, paths, buildConfig = {}) {
+module.exports = function getWebpackConfigBasic(
+  entry,
+  paths,
+  buildConfig = {}
+) {
   const webpackConfig = {
     devtool: buildConfig.devtool || 'cheap-module-source-map',
     context: paths.appDirectory,
     entry,
-    output: Object.assign({
-      path: paths.appBuild,
-      filename: '[name].js',
-      publicPath: paths.servedPath,
-    }, buildConfig.output || {}),
+    output: Object.assign(
+      {
+        path: paths.appBuild,
+        filename: '[name].js',
+        publicPath: paths.servedPath,
+      },
+      buildConfig.output || {}
+    ),
     resolve: {
       modules: [paths.appNodeModules, 'node_modules'],
       extensions: ['.js', '.jsx', '.json', '.html'],
