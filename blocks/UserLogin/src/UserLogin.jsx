@@ -42,7 +42,12 @@ export default class UserLogin extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.refs.form.validateAll((errors, values) => {
-      console.log('values', values);
+      if (errors) {
+        console.log('errors', errors);
+        return;
+      }
+      console.log('values:', values);
+      this.props.push('/');
     });
   };
 
@@ -55,88 +60,81 @@ export default class UserLogin extends Component {
             backgroundImage: `url(${backgroundImage})`,
           }}
         />
-        <Row wrap style={styles.contentWrapper}>
-          <Col xxs={24} s={12} align="center">
-            <h2 style={styles.slogan}>
-              欢迎使用 <br /> ICE 内容管理系统
-            </h2>
-          </Col>
-          <Col xxs={24} s={12} align="center">
-            <div style={styles.formContainer}>
-              <h4 style={styles.formTitle}>登录</h4>
-              <IceFormBinderWrapper
-                value={this.state.value}
-                onChange={this.formChange}
-                ref="form"
-              >
-                <div style={styles.formItems}>
-                  <Row style={styles.formItem}>
-                    <Col>
-                      <IceIcon
-                        type="person"
-                        size="small"
-                        style={styles.inputIcon}
-                      />
-                      <IceFormBinder name="account" required message="必填">
-                        <Input
-                          maxLength={20}
-                          placeholder="会员名/邮箱/手机号"
-                        />
-                      </IceFormBinder>
-                    </Col>
-                    <Col>
-                      <IceFormError name="account" />
-                    </Col>
-                  </Row>
+        <div style={styles.contentWrapper} className="content-wrapper">
+          <h2 style={styles.slogan} className="slogan">
+            欢迎使用 <br /> ICE 内容管理系统
+          </h2>
+          <div style={styles.formContainer}>
+            <h4 style={styles.formTitle}>登录</h4>
+            <IceFormBinderWrapper
+              value={this.state.value}
+              onChange={this.formChange}
+              ref="form"
+            >
+              <div style={styles.formItems}>
+                <Row style={styles.formItem}>
+                  <Col>
+                    <IceIcon
+                      type="person"
+                      size="small"
+                      style={styles.inputIcon}
+                    />
+                    <IceFormBinder name="account" required message="必填">
+                      <Input maxLength={20} placeholder="会员名/邮箱/手机号" />
+                    </IceFormBinder>
+                  </Col>
+                  <Col>
+                    <IceFormError name="account" />
+                  </Col>
+                </Row>
 
-                  <Row style={styles.formItem}>
-                    <Col>
-                      <IceIcon
-                        type="lock"
-                        size="small"
-                        style={styles.inputIcon}
-                      />
-                      <IceFormBinder name="password">
-                        <Input htmlType="password" placeholder="密码" />
-                      </IceFormBinder>
-                    </Col>
-                    <Col>
-                      <IceFormError name="account" />
-                    </Col>
-                  </Row>
+                <Row style={styles.formItem}>
+                  <Col>
+                    <IceIcon
+                      type="lock"
+                      size="small"
+                      style={styles.inputIcon}
+                    />
+                    <IceFormBinder name="password">
+                      <Input htmlType="password" placeholder="密码" />
+                    </IceFormBinder>
+                  </Col>
+                  <Col>
+                    <IceFormError name="account" />
+                  </Col>
+                </Row>
 
-                  <Row style={styles.formItem}>
-                    <Col>
-                      <IceFormBinder name="checkbox">
-                        <Checkbox style={styles.checkbox}>记住账号</Checkbox>
-                      </IceFormBinder>
-                    </Col>
-                  </Row>
+                <Row style={styles.formItem}>
+                  <Col>
+                    <IceFormBinder name="checkbox">
+                      <Checkbox style={styles.checkbox}>记住账号</Checkbox>
+                    </IceFormBinder>
+                  </Col>
+                </Row>
 
-                  <Row style={styles.formItem}>
-                    <Button
-                      type="primary"
-                      onClick={this.handleSubmit}
-                      style={styles.submitBtn}
-                    >
-                      登 录
-                    </Button>
-                  </Row>
+                <Row style={styles.formItem}>
+                  <Button
+                    type="primary"
+                    onClick={this.handleSubmit}
+                    style={styles.submitBtn}
+                  >
+                    登 录
+                  </Button>
+                </Row>
 
-                  <Row className="tips" style={styles.tips}>
-                    <a href="/" style={styles.link}>
-                      立即注册
-                    </a>
-                    <span style={styles.line}>|</span>
-                    <a href="/" style={styles.link}>
-                      忘记密码
-                    </a>
-                  </Row>
-                </div>
-              </IceFormBinderWrapper>
-            </div>
-          </Col>
-        </Row>
+                <Row className="tips" style={styles.tips}>
+                  <a href="/" style={styles.link}>
+                    立即注册
+                  </a>
+                  <span style={styles.line}>|</span>
+                  <a href="/" style={styles.link}>
+                    忘记密码
+                  </a>
+                </Row>
+              </div>
+            </IceFormBinderWrapper>
+          </div>
+        </div>
       </div>
     );
   }
@@ -155,27 +153,7 @@ const styles = {
     bottom: 0,
     backgroundSize: 'cover',
   },
-  contentWrapper: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    maxWidth: '1080px',
-    margin: '0 auto',
-    display: 'flex',
-    justifyContent: 'space-around',
-    // alignItems: 'center',
-  },
-  slogan: {
-    textAlign: 'center',
-    color: '#fff',
-    fontSize: '36px',
-    letterSpacing: '2px',
-    lineHeight: '48px',
-  },
   formContainer: {
-    maxWidth: '310px',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
@@ -183,7 +161,6 @@ const styles = {
     background: '#fff',
     borderRadius: '6px',
     boxShadow: '1px 1px 2px #eee',
-    margin: '0 auto',
   },
   formItem: {
     position: 'relative',
@@ -198,8 +175,8 @@ const styles = {
   },
   inputIcon: {
     position: 'absolute',
-    left: '4px',
-    top: '4px',
+    left: '0px',
+    top: '3px',
     color: '#999',
   },
   submitBtn: {

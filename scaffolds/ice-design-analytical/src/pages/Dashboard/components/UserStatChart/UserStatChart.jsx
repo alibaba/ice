@@ -20,14 +20,14 @@ export default class UserStatChart extends Component {
   render() {
     return (
       <div className="user-stat-chart">
-        <Row type="wrap">
+        <Row wrap gutter="20">
           <Col xxs="24" s="15" l="15">
             <IceContainer title="用户增长数量">
               <Chart
-                height={350}
+                height={400}
                 data={userData}
                 forceFit
-                padding={[40, 40, 40, 40]}
+                padding={[40, 20, 40, 40]}
               >
                 <Axis name="month" />
                 <Axis name="count" />
@@ -37,7 +37,7 @@ export default class UserStatChart extends Component {
             </IceContainer>
           </Col>
           <Col xxs="24" s="9" l="9">
-            <IceContainer style={styles.smallContainer} title="年龄">
+            <IceContainer title="年龄">
               <Chart
                 height={150}
                 data={ageData}
@@ -50,7 +50,7 @@ export default class UserStatChart extends Component {
               </Chart>
             </IceContainer>
 
-            <IceContainer style={styles.smallContainer} title="男女比例">
+            <IceContainer title="男女比例">
               <Chart
                 height={150}
                 data={sexRatio}
@@ -96,13 +96,6 @@ export default class UserStatChart extends Component {
     );
   }
 }
-
-const styles = {
-  smallContainer: {
-    marginBottom: 10,
-    padding: 10,
-  },
-};
 
 const sexRatio = [
   {

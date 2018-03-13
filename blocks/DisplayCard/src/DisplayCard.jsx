@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Balloon, Grid } from '@icedesign/base';
+import './DisplayCard.scss';
 
 const { Row, Col } = Grid;
 
-export default class DisplayCard extends Component {
-  static displayName = 'DisplayCard';
+export default class extends Component {
+  static displayName = '';
 
   static propTypes = {};
 
@@ -16,10 +17,6 @@ export default class DisplayCard extends Component {
     super(props);
     this.state = {};
   }
-
-  renderItem = (data, idx) => {
-    return <div key={idx}>111</div>;
-  };
 
   render() {
     const down = (
@@ -36,11 +33,12 @@ export default class DisplayCard extends Component {
         alt=""
       />
     );
+
     return (
-      <IceContainer style={styles.displayCardContainer}>
+      <IceContainer className="display-card-container" style={styles.container}>
         <Row wrap>
-          <Col xxs="24" s="12" l="6" style={styles.displayCardItem}>
-            <div style={styles.displayCardText}>
+          <Col xxs="24" s="12" l="6" style={styles.item}>
+            <div style={styles.title} className="title">
               昨日内容浏览次数
               <span style={styles.extraIcon}>
                 <Balloon
@@ -59,14 +57,16 @@ export default class DisplayCard extends Component {
                 </Balloon>
               </span>
             </div>
-            <div style={styles.displayCardNumber}>46,657</div>
-            <div style={styles.displayCardDesc}>
+            <div className="count" style={styles.count}>
+              46,657
+            </div>
+            <div style={styles.desc} className="desc">
               <span>较前日 {down} -200</span>
               <span style={{ marginLeft: 5 }}>近7天 {up} +100</span>
             </div>
           </Col>
-          <Col xxs="24" s="12" l="6" style={styles.displayCardItem}>
-            <div style={styles.displayCardText}>
+          <Col xxs="24" s="12" l="6" style={styles.item}>
+            <div style={styles.title} className="title">
               昨日账号主页浏览人数
               <span style={styles.extraIcon}>
                 <Balloon
@@ -85,14 +85,16 @@ export default class DisplayCard extends Component {
                 </Balloon>
               </span>
             </div>
-            <div style={styles.displayCardNumber}>533</div>
-            <div style={styles.displayCardDesc}>
+            <div style={styles.count} className="count">
+              533
+            </div>
+            <div style={styles.desc} className="desc">
               <span>较前日 {down} -200</span>
               <span style={{ marginLeft: 5 }}>近7天 {up} +100</span>
             </div>
           </Col>
-          <Col xxs="24" s="12" l="6" style={styles.displayCardItem}>
-            <div style={styles.displayCardText}>
+          <Col xxs="24" s="12" l="6" style={styles.item}>
+            <div style={styles.title} className="title">
               昨日活跃粉丝数
               <span style={styles.extraIcon}>
                 <Balloon
@@ -111,14 +113,16 @@ export default class DisplayCard extends Component {
                 </Balloon>
               </span>
             </div>
-            <div style={styles.displayCardNumber}>2233</div>
-            <div style={styles.displayCardDesc}>
+            <div style={styles.count} className="count">
+              2233
+            </div>
+            <div style={styles.desc} className="desc">
               <span>较前日 {down} -200</span>
               <span style={{ marginLeft: 5 }}>近7天 {up} +100</span>
             </div>
           </Col>
-          <Col xxs="24" s="12" l="6" style={styles.displayCardItem}>
-            <div style={styles.displayCardText}>
+          <Col xxs="24" s="12" l="6" style={styles.item}>
+            <div style={styles.title} className="title">
               昨日粉丝数
               <span style={styles.extraIcon}>
                 <Balloon
@@ -137,8 +141,10 @@ export default class DisplayCard extends Component {
                 </Balloon>
               </span>
             </div>
-            <div style={styles.displayCardNumber}>23,333</div>
-            <div style={styles.displayCardDesc}>
+            <div style={styles.count} className="count">
+              23,333
+            </div>
+            <div style={styles.desc} className="desc">
               <span>较前日 {down} -200</span>
               <span style={{ marginLeft: 5 }}>近7天 {up} +100</span>
             </div>
@@ -150,31 +156,26 @@ export default class DisplayCard extends Component {
 }
 
 const styles = {
-  displayCardContainer: {
-    backgroundImage:
-      'url(https://gw.alicdn.com/tfs/TB1yjIrh3vD8KJjy0FlXXagBFXa-2112-340.png)',
+  container: {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center center',
   },
-  displayCardItem: {
-    height: 150,
+  item: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    padding: '10px 0',
   },
-  displayCardText: {
-    color: '#BEBEBE',
+  title: {
     fontSize: '12px',
     marginBottom: '5px',
   },
-  displayCardNumber: {
-    color: '#fff',
+  count: {
     fontSize: '24px',
     fontWeight: 'bold',
     marginBottom: '3px',
   },
-  displayCardDesc: {
-    color: '#BEBEBE',
+  desc: {
     fontSize: '12px',
   },
   down: {

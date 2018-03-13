@@ -79,10 +79,6 @@ const customAsideNavs = [
         text: '条款协议页',
         to: '/portlets/terms',
       },
-      {
-        text: '进度展示页',
-        to: '/portlets/progress',
-      },
     ],
   },
   {

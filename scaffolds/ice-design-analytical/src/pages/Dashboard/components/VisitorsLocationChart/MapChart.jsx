@@ -28,7 +28,6 @@ export default class MapChart extends Component {
         '//raw.githubusercontent.com/alibaba/BizCharts/gh-pages/public/data/china-geo.json'
       )
       .then((res) => {
-        console.log('res:', res);
         this.setState({
           data: res.data,
         });

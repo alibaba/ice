@@ -8,22 +8,22 @@ const data = [
   {
     pic: 'https://img.alicdn.com/tfs/TB1BnWWbwmTBuNjy1XbXXaMrVXa-263-263.png',
     city: '北京',
-    percent: '95',
+    percent: 95,
   },
   {
     pic: 'https://img.alicdn.com/tfs/TB1sFe1brGYBuNjy0FoXXciBFXa-400-400.png',
     city: '上海',
-    percent: '70',
+    percent: 70,
   },
   {
     pic: 'https://img.alicdn.com/tfs/TB1MlrfbqmWBuNjy1XaXXXCbXXa-400-400.png',
     city: '广州',
-    percent: '40',
+    percent: 40,
   },
   {
     pic: 'https://img.alicdn.com/tfs/TB18Va1brGYBuNjy0FoXXciBFXa-363-363.png',
     city: '杭州',
-    percent: '20',
+    percent: 20,
   },
 ];
 
@@ -41,32 +41,28 @@ export default class VisitorsLocationChart extends Component {
 
   render() {
     return (
-      <Row type="wrap">
-        <Col xxs="24" l="24">
-          <IceContainer title="活跃地区">
-            <Row type="wrap">
-              <Col xxs="24" l="8">
-                {data.map((item, index) => {
-                  return (
-                    <Row style={styles.item} key={index}>
-                      <Col xxs="6" l="6">
-                        <img src={item.pic} style={styles.itemPic} alt="" />
-                      </Col>
-                      <Col xxs="17" l="17">
-                        <p style={styles.itemCity}>{item.city}</p>
-                        <Progress percent={item.percent} />
-                      </Col>
-                    </Row>
-                  );
-                })}
-              </Col>
-              <Col xxs="24" l="16">
-                <MapChart />
-              </Col>
-            </Row>
-          </IceContainer>
-        </Col>
-      </Row>
+      <IceContainer title="活跃地区">
+        <Row wrap>
+          <Col xxs="24" l="10">
+            {data.map((item, index) => {
+              return (
+                <Row style={styles.item} key={index}>
+                  <Col xxs="6" l="6">
+                    <img src={item.pic} style={styles.itemPic} alt="" />
+                  </Col>
+                  <Col xxs="17" l="17">
+                    <p style={styles.itemCity}>{item.city}</p>
+                    <Progress percent={item.percent} />
+                  </Col>
+                </Row>
+              );
+            })}
+          </Col>
+          <Col xxs="24" l="14">
+            <MapChart />
+          </Col>
+        </Row>
+      </IceContainer>
     );
   }
 }
