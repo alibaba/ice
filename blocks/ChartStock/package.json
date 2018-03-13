@@ -2,12 +2,7 @@
   "name": "@icedesign/chart-stock-block",
   "version": "0.1.4",
   "description": "股票图",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,13 +12,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@antv/data-set": "^0.8.0",
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "axios": "^0.17.1",
     "bizcharts": "^3.0.5",
@@ -37,12 +29,11 @@
   },
   "blockConfig": {
     "name": "chart-stock",
-    "snapshot": "https://img.alicdn.com/tfs/TB1ZYAYigvD8KJjSsplXXaIEFXa-1886-974.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1rpkscDtYBeNjy1XdXXXXyVXa-2352-1020.png",
     "themePackage": "@icedesign/skin",
     "title": "股票图",
-    "categories": [
-      "图表"
-    ]
+    "categories": ["图表"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

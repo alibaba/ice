@@ -117,7 +117,11 @@ export default class EditableTable extends Component {
               title="菜单属性"
               cell={this.renderEditor.bind(this, 'attr')}
             />
-            <Table.Column title="操作" cell={this.renderOperation} />
+            <Table.Column
+              width={180}
+              title="操作"
+              cell={this.renderOperation}
+            />
           </Table>
           <div onClick={this.addNewItem} style={styles.addNewItem}>
             + 新增一行

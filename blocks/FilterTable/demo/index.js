@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import DemoLayout from '@icedesign/demo-layout';
+import '@icedesign/base/reset.scss';
 import Block from '../src';
 
 const props = {
   // ...
 };
 
-render((
+render(
   <DemoLayout type="ice-design">
     <Block {...props} />
-  </DemoLayout>
-), document.querySelector('#mountNode'));
+  </DemoLayout>,
+  document.querySelector('#mountNode')
+);

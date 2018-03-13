@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Balloon, Icon } from '@icedesign/base';
+import { enquireScreen } from 'enquire-js';
+import { Balloon, Icon, Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 const dataSource = [
   {
@@ -38,59 +41,75 @@ export default class StatisticalCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isMobile: false,
+    };
   }
 
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
+
   renderItem = () => {
+    const itemStyle = this.state.isMobile ? { justifyContent: 'left' } : {};
     return dataSource.map((data, idx) => {
       return (
-        <div key={idx} style={styles.statisticalCardItem}>
-          <div style={styles.circleWrap}>
-            <img src={data.imgUrl} style={styles.imgStyle} alt="图片" />
-          </div>
-          <div style={styles.statisticalCardDesc}>
-            <div style={styles.statisticalCardText}>
-              {data.text}
-              <Balloon
-                align="t"
-                alignment="edge"
-                trigger={
-                  <span>
-                    <Icon type="help" style={styles.helpIcon} size="xs" />
-                  </span>
-                }
-                closable={false}
-              >
-                {data.desc}
-              </Balloon>
+        <Col xxs="24" s="12" l="6" key={idx}>
+          <div style={{ ...styles.statisticalCardItem, ...itemStyle }}>
+            <div style={styles.circleWrap}>
+              <img src={data.imgUrl} style={styles.imgStyle} alt="图片" />
             </div>
-            <div style={styles.statisticalCardNumber}>{data.number}</div>
+            <div style={styles.statisticalCardDesc}>
+              <div style={styles.statisticalCardText}>
+                {data.text}
+                <Balloon
+                  align="t"
+                  alignment="edge"
+                  trigger={
+                    <span>
+                      <Icon type="help" style={styles.helpIcon} size="xs" />
+                    </span>
+                  }
+                  closable={false}
+                >
+                  {data.desc}
+                </Balloon>
+              </div>
+              <div style={styles.statisticalCardNumber}>{data.number}</div>
+            </div>
           </div>
-        </div>
+        </Col>
       );
     });
   };
 
   render() {
     return (
-      <div className="statistical-card" style={styles.statisticalCard}>
-        <IceContainer style={styles.statisticalCardItems}>
-          {this.renderItem()}
-        </IceContainer>
-      </div>
+      <IceContainer style={styles.container}>
+        <Row wrap>{this.renderItem()}</Row>
+      </IceContainer>
     );
   }
 }
 
 const styles = {
-  statisticalCardItems: {
-    display: 'flex',
-    flexDirection: 'row',
-    height: '110px',
-    justifyContent: 'space-between',
+  container: {
+    padding: '10px 20px',
   },
   statisticalCardItem: {
     display: 'flex',
+    justifyContent: 'center',
+    padding: '10px 0',
   },
   circleWrap: {
     width: '70px',

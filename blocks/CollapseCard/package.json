@@ -2,12 +2,7 @@
   "name": "@icedesign/collapse-card-block",
   "version": "0.1.5",
   "description": "折叠型卡片的信息展示",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,12 +12,9 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8"
@@ -35,12 +27,11 @@
   },
   "blockConfig": {
     "name": "collapse-card",
-    "snapshot": "https://img.alicdn.com/tfs/TB1NXIUh2DH8KJjy1XcXXcpdXXa-956-270.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1dcIQckyWBuNjy0FpXXassXXa-2350-560.png",
     "themePackage": "@icedesign/skin",
     "title": "折叠型卡片的信息展示",
-    "categories": [
-      "信息展示"
-    ]
+    "categories": ["信息展示"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

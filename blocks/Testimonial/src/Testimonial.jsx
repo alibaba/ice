@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
+import { Grid } from '@icedesign/base';
+
+const { Row, Col } = Grid;
 
 const generatorData = (count) => {
   return Array.from({ length: count }).map(() => {
@@ -29,40 +32,36 @@ export default class Testimonial extends Component {
   render() {
     const data = generatorData(3);
     return (
-      <div className="testimonial">
-        <IceContainer>
-          <div style={styles.items}>
+      <IceContainer>
+        <div style={styles.items}>
+          <Row gutter="20" wrap>
             {data.map((item, index) => {
-              const rowLastItem =
-                (index + 1) % 3 === 0 ? styles.rowLastItem : {};
               return (
-                <div
-                  key={index}
-                  style={{ ...styles.item, ...rowLastItem }}
-                  className="item"
-                >
-                  <p style={styles.description}>
-                    “
-                    {item.description}
-                    ”
-                  </p>
-                  <div style={styles.infoBox}>
-                    <img
-                      style={styles.avatar}
-                      src={item.imgUrl}
-                      alt={item.name}
-                    />
-                    <div style={styles.baseInfo}>
-                      <h5 style={styles.name}>{item.name}</h5>
-                      <p style={styles.company}>{item.company}</p>
+                <Col xxs="24" s="8" l="8" key={index}>
+                  <div style={styles.item}>
+                    <p style={styles.description}>
+                      “
+                      {item.description}
+                      ”
+                    </p>
+                    <div style={styles.infoBox}>
+                      <img
+                        style={styles.avatar}
+                        src={item.imgUrl}
+                        alt={item.name}
+                      />
+                      <div style={styles.baseInfo}>
+                        <h5 style={styles.name}>{item.name}</h5>
+                        <p style={styles.company}>{item.company}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Col>
               );
             })}
-          </div>
-        </IceContainer>
-      </div>
+          </Row>
+        </div>
+      </IceContainer>
     );
   }
 }
@@ -77,15 +76,7 @@ const styles = {
     margin: '0 auto',
   },
   item: {
-    width: '30%',
-    padding: '20px 30px 60px',
-    marginRight: '5%',
-    background: '#fff',
-    borderRadius: '6px',
-    textAlign: 'center',
-  },
-  rowLastItem: {
-    marginRight: 0,
+    padding: '0 20px',
   },
   infoBox: {
     display: 'flex',

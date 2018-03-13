@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "@antv/data-set": "^0.8.0",
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "bizcharts": "^3.0.5",
     "prop-types": "^15.5.8"

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
+import { Grid } from '@icedesign/base';
 import './LatestNews.scss';
+
+const { Row, Col } = Grid;
 
 const dataSource = {
   articles: [
@@ -68,62 +71,70 @@ export default class LatestNews extends Component {
   render() {
     return (
       <div className="latest-news" style={styles.container}>
-        <IceContainer style={styles.cardContainer}>
-          <h3 style={styles.cardTitle}>
-            最新文章
-            <a className="link" href="#" style={styles.more}>
-              更多
-            </a>
-          </h3>
-          <div style={styles.items}>
-            {dataSource.articles.map((item, index) => {
-              return (
-                <a className="link" key={index} href="#" style={styles.item}>
-                  <div style={styles.itemTitle}>{item.title}</div>
-                  <div style={styles.itemTime}>{item.time}</div>
+        <Row wrap gutter="20">
+          <Col xxs="24" s="12" l="12">
+            <IceContainer style={styles.cardContainer}>
+              <h3 style={styles.cardTitle}>
+                最新文章
+                <a className="link" href="#" style={styles.more}>
+                  更多
                 </a>
-              );
-            })}
-          </div>
-        </IceContainer>
-        <IceContainer style={styles.cardContainer}>
-          <h3 style={styles.cardTitle}>
-            最新评论
-            <a className="link" href="#" style={styles.more}>
-              更多
-            </a>
-          </h3>
-          <div style={styles.items}>
-            {dataSource.comments.map((item, index) => {
-              return (
-                <a className="link" key={index} href="#" style={styles.item}>
-                  <div style={styles.itemComment}>
-                    <div style={styles.commentTitle}>{item.title}</div>
-                    <div style={styles.commentTime}>{item.time}</div>
-                  </div>
-                  <div style={styles.commentNum}>{item.num}</div>
+              </h3>
+              <div style={styles.items}>
+                {dataSource.articles.map((item, index) => {
+                  return (
+                    <a
+                      className="link"
+                      key={index}
+                      href="#"
+                      style={styles.item}
+                    >
+                      <div style={styles.itemTitle}>{item.title}</div>
+                      <div style={styles.itemTime}>{item.time}</div>
+                    </a>
+                  );
+                })}
+              </div>
+            </IceContainer>
+          </Col>
+          <Col xxs="24" s="12" l="12">
+            <IceContainer style={styles.cardContainer}>
+              <h3 style={styles.cardTitle}>
+                最新评论
+                <a className="link" href="#" style={styles.more}>
+                  更多
                 </a>
-              );
-            })}
-          </div>
-        </IceContainer>
+              </h3>
+              <div style={styles.items}>
+                {dataSource.comments.map((item, index) => {
+                  return (
+                    <a
+                      className="link"
+                      key={index}
+                      href="#"
+                      style={styles.item}
+                    >
+                      <div style={styles.itemComment}>
+                        <div style={styles.commentTitle}>{item.title}</div>
+                        <div style={styles.commentTime}>{item.time}</div>
+                      </div>
+                      <div style={styles.commentNum}>{item.num}</div>
+                    </a>
+                  );
+                })}
+              </div>
+            </IceContainer>
+          </Col>
+        </Row>
       </div>
     );
   }
 }
 
 const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginLeft: '-10px',
-    marginRight: '-10px',
-  },
   cardContainer: {
-    width: '50%',
-    height: 280,
-    marginLeft: '10px',
-    marginRight: '10px',
+    height: '286px',
+    overflowY: 'auto',
   },
   cardTitle: {
     position: 'relative',

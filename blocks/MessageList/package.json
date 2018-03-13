@@ -2,12 +2,7 @@
   "name": "@icedesign/message-list-block",
   "version": "0.1.7",
   "description": "消息列表",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,12 +12,9 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "prop-types": "^15.5.8"
   },
@@ -34,12 +26,11 @@
   },
   "blockConfig": {
     "name": "message-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1dXtzbgmTBuNjy1XbXXaMrVXa-1918-962.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1BhsgcDtYBeNjy1XdXXXXyVXa-2354-856.png",
     "themePackage": "@icedesign/skin",
     "title": "消息列表",
-    "categories": [
-      "列表"
-    ]
+    "categories": ["列表"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

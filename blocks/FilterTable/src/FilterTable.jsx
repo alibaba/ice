@@ -4,7 +4,6 @@ import { Table, Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
-
 import FilterForm from './Filter';
 
 @DataBinder({

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/filter-table-block",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "附带筛选工具条的表格",
   "files": [
     "src/",
@@ -22,7 +22,7 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "@icedesign/data-binder": "^0.1.0",
     "@icedesign/form-binder": "^0.1.3",

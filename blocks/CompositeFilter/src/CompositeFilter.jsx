@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Search, Tab, Tag, DatePicker } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
+import { enquireScreen } from 'enquire-js';
 
 const TabPane = Tab.TabPane;
 
@@ -37,8 +38,24 @@ export default class CompositeFilter extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isMobile: false,
+    };
   }
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
 
   onTabChange = (key) => {
     console.log(`select tab is: ${key}`);
@@ -56,6 +73,24 @@ export default class CompositeFilter extends Component {
     console.log(value);
   };
 
+  renderTabBarExtraContent = () => {
+    return (
+      <div style={styles.extraFilter}>
+        <DatePicker
+          locale={{ datePlaceholder: '发布日期' }}
+          onChange={this.onDateChange}
+        />
+        <Search
+          placeholder="搜索"
+          searchText=""
+          inputWidth={150}
+          onSearch={this.onSearch}
+          style={styles.search}
+        />
+      </div>
+    );
+  };
+
   render() {
     return (
       <div className="composite-filter">
@@ -65,19 +100,7 @@ export default class CompositeFilter extends Component {
             onChange={this.onTabChange}
             contentStyle={{ display: 'none' }}
             tabBarExtraContent={
-              <div style={styles.extraFilter}>
-                <DatePicker
-                  locale={{ datePlaceholder: '发布日期' }}
-                  onChange={this.onDateChange}
-                />
-                <Search
-                  placeholder="搜索"
-                  searchText=""
-                  inputWidth={150}
-                  onSearch={this.onSearch}
-                  style={styles.search}
-                />
-              </div>
+              !this.state.isMobile ? this.renderTabBarExtraContent() : null
             }
           >
             <TabPane tab="全部" key="all" />

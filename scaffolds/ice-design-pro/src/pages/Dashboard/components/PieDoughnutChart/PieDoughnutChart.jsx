@@ -51,11 +51,10 @@ export default class PieDoughnutChart extends Component {
 
     return (
       <div className="pie-doughnut-chart">
-        <Row type="no-padding">
-          <Col span="12">
+        <Row wrap gutter="20">
+          <Col xxs="24" s="24" l="12">
             <IceContainer title="性别占比" style={styles.leftContainer}>
               <Chart
-                style={styles.chart}
                 width={450}
                 height={300}
                 data={dv}
@@ -74,7 +73,7 @@ export default class PieDoughnutChart extends Component {
               </Chart>
             </IceContainer>
           </Col>
-          <Col span="12">
+          <Col xxs="24" s="24" l="12">
             <IceContainer title="年龄分布" style={styles.rightContainer}>
               <Chart
                 style={styles.chart}
@@ -102,14 +101,4 @@ export default class PieDoughnutChart extends Component {
   }
 }
 
-const styles = {
-  chart: {
-    marginTop: -1,
-  },
-  leftContainer: {
-    marginRight: 10,
-  },
-  rightContainer: {
-    marginLeft: 10,
-  },
-};
+const styles = {};

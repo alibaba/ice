@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Img from '@icedesign/img';
-import './BrandDisplay.scss';
+import { Grid } from '@icedesign/base';
+import { enquireScreen } from 'enquire-js';
+
+const { Row, Col } = Grid;
 
 const dataSource = [
   {
@@ -42,24 +45,51 @@ const dataSource = [
 export default class BrandDisplay extends Component {
   static displayName = 'BrandDisplay';
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMobile: false,
+    };
+  }
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
+
   render() {
+    const { isMobile } = this.state;
+    const logoWidth = isMobile ? 150 : 195;
+    const logoHeight = isMobile ? 150 : 175;
+
     return (
       <div className="brand-display" style={styles.container}>
         <div style={styles.brandHeader}>
           <h5 style={styles.brandTitle}>品牌展示</h5>
         </div>
-        <ul>
+        <Row gutter="20" wrap>
           {dataSource.map((item, index) => {
             return (
-              <li key={index} className="brand-item" style={styles.brandItem}>
-                <a href={item.url}>
-                  <Img
-                    width={194}
-                    height={175}
-                    src={item.pic}
-                    type="cover"
-                    alt="图片"
-                  />
+              <Col xxs="24" s="12" l="12" key={index} style={styles.brandItem}>
+                <a href={item.url} style={styles.brandItemContent}>
+                  <div>
+                    <Img
+                      width={logoWidth}
+                      height={logoHeight}
+                      src={item.pic}
+                      type="cover"
+                      alt="图片"
+                    />
+                  </div>
                   <div style={styles.caseContent}>
                     <div style={styles.caseSubject}>
                       <img
@@ -72,10 +102,10 @@ export default class BrandDisplay extends Component {
                     <p style={styles.caseDetail}>{item.subject}</p>
                   </div>
                 </a>
-              </li>
+              </Col>
             );
           })}
-        </ul>
+        </Row>
       </div>
     );
   }
@@ -86,7 +116,7 @@ const styles = {
     width: '100%',
     maxWidth: '1080px',
     margin: '0 auto',
-    padding: '80px 0',
+    padding: '80px 20px',
   },
   brandHeader: {
     position: 'relative',
@@ -98,7 +128,6 @@ const styles = {
     color: '#333333',
   },
   brandItem: {
-    width: '50%',
     height: '175px',
     background: '#fff',
     display: 'inline-block',
@@ -106,13 +135,13 @@ const styles = {
     marginBottom: '30px',
     overflow: 'hidden',
   },
-  caseContent: {
-    width: '250px',
-    display: 'inline-block',
-    verticalAlign: 'top',
+  brandItemContent: {
+    display: 'flex',
   },
+
+  caseContent: {},
   caseSubject: {
-    margin: '20px 10px 0',
+    margin: '0 10px 0',
     lineHeight: '60px',
     height: '60px',
   },
@@ -129,6 +158,7 @@ const styles = {
     marginLeft: '12px',
   },
   caseDetail: {
+    marginTop: 0,
     fontSize: '12px',
     color: '#666666',
     padding: '0 16px',

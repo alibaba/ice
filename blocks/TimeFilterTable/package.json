@@ -2,12 +2,7 @@
   "name": "@icedesign/time-filter-table-block",
   "version": "0.1.9",
   "description": "支持时间筛选的表格",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,15 +12,13 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "@icedesign/data-binder": "^0.1.0",
     "@icedesign/label": "^0.1.0",
+    "enquire-js": "^0.1.2",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
@@ -36,12 +29,11 @@
   },
   "blockConfig": {
     "name": "time-filter-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB1.dqQi5qAXuNjy1XdXXaYcVXa-1902-1004.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB153PlcxGYBuNjy0FnXXX5lpXa-2354-1000.png",
     "themePackage": "@icedesign/skin",
     "title": "时间筛选表格",
-    "categories": [
-      "表格"
-    ]
+    "categories": ["表格"]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",
