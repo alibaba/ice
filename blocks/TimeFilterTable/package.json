@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/time-filter-table-block",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "支持时间筛选的表格",
   "files": [
     "src/",

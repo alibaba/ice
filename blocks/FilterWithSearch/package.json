@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/filter-with-search-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": " 含搜索筛选",
   "files": [
     "src/",

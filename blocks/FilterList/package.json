@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/filter-list-block",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "支持过滤的列表",
   "main": "lib/index.js",
   "files": [

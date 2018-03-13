@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/display-card-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "展示型卡片",
   "files": [
     "src/",

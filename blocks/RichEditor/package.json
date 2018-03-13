@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/rich-editor-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "简单的富文本编辑器",
   "files": [
     "src/",
