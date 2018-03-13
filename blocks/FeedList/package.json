@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/feed-list-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": " Feed 消息列表",
   "files": [
     "src/",

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/progress-data-list-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "进度条数据列表展示",
   "files": [
     "src/",

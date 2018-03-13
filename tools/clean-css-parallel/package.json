@@ -1,6 +1,6 @@
 {
   "name": "clean-css-parallel",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "使用 clean-css 多进程压缩 css 文件",
   "main": "index.js",
   "scripts": {

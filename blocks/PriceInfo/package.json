@@ -1,8 +1,13 @@
 {
   "name": "@icedesign/price-info-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -12,7 +17,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
@@ -26,11 +34,13 @@
   },
   "blockConfig": {
     "name": "price-info",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB12Bg8cDtYBeNjy1XdXXXXyVXa-2740-1158.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB12Bg8cDtYBeNjy1XdXXXXyVXa-2740-1158.png",
     "themePackage": "@icedesign/skin",
     "title": "价格信息展示",
-    "categories": ["信息展示", "欢迎页"]
+    "categories": [
+      "信息展示",
+      "欢迎页"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

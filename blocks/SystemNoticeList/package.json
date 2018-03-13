@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/system-notice-list-block",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "系统消息列表",
   "main": "lib/index.js",
   "files": [
