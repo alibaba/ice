@@ -7,7 +7,7 @@ const WebpackPluginImport = require('webpack-plugin-import');
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
 
-module.exports = function (paths, options = {}) {
+module.exports = function(paths, options = {}) {
   const plugins = [
     new ExtractTextPlugin({
       filename: '[name].css',
@@ -54,7 +54,7 @@ module.exports = function (paths, options = {}) {
       type: 'sass',
       srcFile: iconScssPath,
       variableFile: variableFilePath,
-      distMatch: function (chunkName, compilerEntry, compilationPreparedChunks) {
+      distMatch: function(chunkName, compilerEntry, compilationPreparedChunks) {
         const entriesAndPreparedChunkNames = normalizeEntry(
           compilerEntry,
           compilationPreparedChunks
