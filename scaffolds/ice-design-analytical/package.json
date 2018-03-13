@@ -1,10 +1,8 @@
 {
   "name": "@icedesign/scaffold-analytical",
-  "version": "0.1.0",
-  "description":
-    "该模板适用于数据可视化展示，内置 Dashboard 页面，包含折线图、柱状图、饼图、地图等常用区块",
-  "homepage":
-    "https://alibaba.github.io/ice/scaffold-preview/ice-design-analytical.html",
+  "version": "0.1.1",
+  "description": "该模板适用于数据可视化展示，内置 Dashboard 页面，包含折线图、柱状图、饼图、地图等常用区块",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-analytical.html",
   "dependencies": {
     "@antv/data-set": "^0.8.5",
     "@icedesign/base": "^0.2.0",
@@ -49,8 +47,7 @@
   "scaffoldConfig": {
     "name": "ice-design-analytical",
     "title": "ICE Design Analytical",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB11lPLdDtYBeNjy1XdXXXXyVXa-2840-1596.png"
+    "snapshot": "https://img.alicdn.com/tfs/TB11lPLdDtYBeNjy1XdXXXXyVXa-2840-1596.png"
   },
   "title": "ice_design_analytical"
 }

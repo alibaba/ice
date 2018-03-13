@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/failure-detail-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "提交失败详情展示",
   "files": [
     "src/",

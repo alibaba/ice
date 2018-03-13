@@ -1,9 +1,14 @@
 {
   "name": "@icedesign/terms-info-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "协议信息展示",
   "main": "lib/index.js",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -13,7 +18,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
@@ -27,11 +35,12 @@
   },
   "blockConfig": {
     "name": "terms-info",
-    "snapshot":
-      "https://img.alicdn.com/tfs/TB1aL6ZfiqAXuNjy1XdXXaYcVXa-948-735.png",
+    "snapshot": "https://img.alicdn.com/tfs/TB1aL6ZfiqAXuNjy1XdXXaYcVXa-948-735.png",
     "themePackage": "@icedesign/skin",
     "title": "协议信息展示",
-    "categories": ["信息展示"]
+    "categories": [
+      "信息展示"
+    ]
   },
   "scripts": {
     "start": "../../node_modules/.bin/ice block dev",

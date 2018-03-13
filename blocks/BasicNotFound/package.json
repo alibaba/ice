@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/basic-not-found-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "404 报错提示",
   "main": "lib/index.js",
   "files": [
