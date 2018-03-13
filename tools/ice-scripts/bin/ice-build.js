@@ -10,10 +10,17 @@ program.on('--help', () => {
 
 program.option('--debug', 'debug mode without compression').parse(process.argv);
 
-const build = require('../lib/build');
+const checkSass = require('../lib/utils/check-sass');
 
-checkSass().then(() => {
-  build({
-    debug: !!program.debug,
+checkSass()
+  .then(() => {
+    const build = require('../lib/build');
+    build({
+      debug: !!program.debug,
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    console.error('ice-scripts exited unexpectedly.');
+    process.exit(1);
   });
-})
