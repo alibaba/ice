@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/product-info-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "产品信息展示",
   "files": [
     "src/",
