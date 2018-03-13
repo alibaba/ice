@@ -14,6 +14,7 @@ import { asideNavs } from './../../navs';
 import './scss/light.scss';
 import './scss/dark.scss';
 
+// 设置默认的皮肤配置，支持 dark 和 light 两套皮肤配置
 const theme = typeof THEME === 'undefined' ? 'dark' : THEME;
 export default class HeaderAsideFooterResponsiveLayout extends Component {
   static propTypes = {};
@@ -25,7 +26,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     this.state = {
       openDrawer: false,
       isScreen: undefined,
-      theme,
     };
   }
 
@@ -33,6 +33,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     this.enquireScreenRegister();
   }
 
+  /**
+   * 注册监听屏幕的变化，可根据不同分辨率做对应的处理
+   */
   enquireScreenRegister = () => {
     const isMobile = 'screen and (max-width: 720px)';
     const isTablet = 'screen and (min-width: 721px) and (max-width: 1199px)';
@@ -68,12 +71,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     return handler;
   };
 
-  toggleTheme = () => {
-    this.setState({
-      theme: this.state.theme === 'dark' ? 'light' : 'dark',
-    });
-  };
-
+  /**
+   * 响应式通过抽屉形式切换菜单
+   */
   toggleMenu = () => {
     const { openDrawer } = this.state;
     this.setState({
@@ -81,12 +81,16 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     });
   };
 
-  // 当前点击的菜单项
+  /**
+   * 左侧菜单收缩切换
+   */
   onMenuClick = () => {
     this.toggleMenu();
   };
 
-  // 当前打开的菜单项
+  /**
+   * 当前展开的菜单项
+   */
   getOpenKeys = () => {
     const { routes } = this.props;
     const matched = routes[0].path;
@@ -109,34 +113,25 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     return (
       <Layout
         style={{ minHeight: '100vh' }}
-        className={cx(
-          `ice-design-header-aside-footer-layout-${this.state.theme}`,
-          {
-            'ice-design-layout': true,
-          }
-        )}
+        className={cx(`ice-design-header-aside-footer-layout-${theme}`, {
+          'ice-design-layout': true,
+        })}
       >
-        <Header
-          theme={this.state.theme}
-          isMobile={this.state.isScreen !== 'isDesktop'}
-        />
+        <Header theme={theme} isMobile={this.state.isScreen !== 'isDesktop'} />
         <Layout.Section className="ice-design-layout-body">
           {this.state.isScreen !== 'isDesktop' && (
             <a className="menu-btn" onClick={this.toggleMenu}>
               <Icon type="category" size="small" />
             </a>
           )}
-          {this.state.isScreen === 'isDesktop' && (
-            <a className="theme-btn" onClick={this.toggleTheme}>
-              切换主题
-            </a>
-          )}
+
           {this.state.openDrawer && (
             <div className="open-drawer-bg" onClick={this.toggleMenu} />
           )}
+
           <Layout.Aside
             width="auto"
-            theme={this.state.theme}
+            theme={theme}
             className={cx('ice-design-layout-aside', {
               'open-drawer': this.state.openDrawer,
             })}

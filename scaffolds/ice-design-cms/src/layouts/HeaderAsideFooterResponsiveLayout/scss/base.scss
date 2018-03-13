@@ -31,9 +31,13 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
 
-    .theme-btn,
     .menu-btn {
       position: fixed;
+      left: 0;
+      top: 82px;
+      width: 40px;
+      height: 40px;
+      border-radius: 0 6px 6px 0;
       margin-bottom: 0;
       line-height: 40px;
       text-align: center;
@@ -45,22 +49,6 @@ body {
       &:hover {
         color: #e7e7e7;
       }
-    }
-
-    .theme-btn {
-      right: 0;
-      top: 82px;
-      width: 80px;
-      height: 40px;
-      border-radius: 6px 0 0 6px;
-    }
-
-    .menu-btn {
-      left: 0;
-      top: 82px;
-      width: 40px;
-      height: 40px;
-      border-radius: 0 6px 6px 0;
     }
 
     /* HEADER */
@@ -117,6 +105,9 @@ body {
       .ice-menu {
         background: $ice-aside-menu-bg;
         transition: all 0.3s ease;
+        &.ice-menu-inline .ice-icon-stable::before {
+          font-weight: normal;
+        }
       }
 
       .ice-menu.ice-menu-root.ice-menu-inline

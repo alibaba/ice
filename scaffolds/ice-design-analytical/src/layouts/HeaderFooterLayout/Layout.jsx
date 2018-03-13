@@ -21,7 +21,6 @@ export default class BasicLayout extends PureComponent {
 
     this.state = {
       isMobile: false,
-      theme,
     };
   }
 
@@ -29,6 +28,9 @@ export default class BasicLayout extends PureComponent {
     this.enquireScreenRegister();
   }
 
+  /**
+   * 注册监听屏幕的变化，可根据不同分辨率做对应的处理
+   */
   enquireScreenRegister = () => {
     const mediaCondition = 'only screen and (max-width: 720px)';
 
@@ -39,27 +41,15 @@ export default class BasicLayout extends PureComponent {
     }, mediaCondition);
   };
 
-  toggleTheme = () => {
-    this.setState({
-      theme: this.state.theme === 'dark' ? 'light' : 'dark',
-    });
-  };
-
   render() {
     return (
       <Layout
         style={{ minHeight: '100vh' }}
-        className={cx(`ice-design-header-footer-layout-${this.state.theme}`, {
+        className={cx(`ice-design-header-footer-layout-${theme}`, {
           'ice-design-layout': true,
         })}
       >
-        <Header theme={this.state.theme} isMobile={this.state.isMobile} />
-
-        {!this.state.isMobile && (
-          <a className="theme-btn" onClick={this.toggleTheme}>
-            切换主题
-          </a>
-        )}
+        <Header theme={theme} isMobile={this.state.isMobile} />
 
         <Layout.Main className="ice-design-layout-body">
           {this.props.children}

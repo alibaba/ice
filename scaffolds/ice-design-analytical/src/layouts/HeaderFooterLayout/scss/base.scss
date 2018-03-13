@@ -25,26 +25,6 @@ body {
     }
   }
 
-  .theme-btn {
-    position: fixed;
-    right: 0;
-    top: 82px;
-    width: 80px;
-    height: 40px;
-    border-radius: 6px 0 0 6px;
-    margin-bottom: 0;
-    line-height: 40px;
-    text-align: center;
-    cursor: pointer;
-    color: $ice-toggle-btn-text-color;
-    background: $ice-toggle-btn-bg;
-    z-index: 9;
-    text-decoration: none;
-    &:hover {
-      color: #e7e7e7;
-    }
-  }
-
   /* LAYOUT */
   &.ice-design-layout {
     width: 100%;
