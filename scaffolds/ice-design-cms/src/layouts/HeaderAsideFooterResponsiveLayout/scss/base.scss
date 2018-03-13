@@ -26,7 +26,6 @@ body {
   /* LAYOUT */
   &.ice-design-layout {
     width: 100%;
-    // min-width: 1200px;
     padding: 0 20px;
     background-color: $ice-layout-bg;
     background-size: 100%;
@@ -74,6 +73,10 @@ body {
       align-items: center;
       box-shadow: none;
       background: transparent;
+      .user-avatar {
+        margin-right: 12px;
+        border-radius: 4px;
+      }
       .ice-design-layout-header-menu .ice-menu {
         background: $ice-header-menu-bg;
         color: $ice-header-text-color;
@@ -83,6 +86,7 @@ body {
         }
       }
       .ice-design-header-userpannel {
+        margin-left: 20px;
         cursor: pointer;
         .user-profile {
           display: inline-block;
@@ -325,13 +329,21 @@ body {
       }
     }
 
-    .ice-design-layout-header-menu {
-      .ice-menu .ice-menu-item {
-        padding: 0 5px;
-      }
-    }
-
     &.ice-design-layout {
+      .ice-design-layout-header {
+        .user-avatar {
+          margin-right: 4px;
+        }
+        .ice-design-header-userpannel {
+          margin-left: 0;
+        }
+        .ice-design-layout-header-menu {
+          .ice-menu .ice-menu-item {
+            padding: 0 5px;
+          }
+        }
+      }
+
       .ice-design-layout-aside {
         position: fixed;
         left: -240px;

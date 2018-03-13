@@ -29,7 +29,7 @@ const ViewedProducts = [
     id: 2,
     pic:
       'https://img.alicdn.com/imgextra/i2/1714128138/TB2NVRzcbMlyKJjSZFlXXbMoFXa_!!1714128138.jpg_60x60q90.jpg',
-    title: 'Xiaomi/小米5X',
+    title: '小米5X',
     cate: '电子产品',
     amount: '33,779',
   },
@@ -67,14 +67,14 @@ export default class TopActiveChart extends Component {
     return (
       <div style={styles.product}>
         <img src={record.pic} style={styles.productPic} alt="" />
-        <p style={styles.prodyctTitle}>{record.title}</p>
+        <p style={styles.productTitle}>{record.title}</p>
       </div>
     );
   };
 
   render() {
     return (
-      <Row type="wrap" className="top-active-chart">
+      <Row wrap gutter="20">
         <Col xxs="24" s="12" l="12">
           <IceContainer title="活跃页面">
             <Table
@@ -102,7 +102,7 @@ export default class TopActiveChart extends Component {
               dataSource={ViewedProducts}
               hasBorder={false}
               hasHeader={false}
-              style={{ width: '100%', height: '341px' }}
+              style={{ height: '342px' }}
             >
               <Table.Column
                 title="产品"
@@ -133,10 +133,10 @@ const styles = {
     alignItems: 'center',
   },
   productPic: {
-    width: 60,
-    height: 60,
+    width: '60px',
+    height: '60px',
   },
   productTitle: {
-    margin: 0,
+    margin: '0 0 0 10px',
   },
 };

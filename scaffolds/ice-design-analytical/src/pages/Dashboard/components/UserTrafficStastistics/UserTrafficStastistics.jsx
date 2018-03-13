@@ -259,7 +259,7 @@ export default class UserTrafficStastistics extends Component {
   render() {
     return (
       <div className="user-traffic-stastistics">
-        <Row type="wrap">
+        <Row wrap gutter="20">
           <Col xxs="24" l="7">
             {this.renderTrafficTypes()}
           </Col>

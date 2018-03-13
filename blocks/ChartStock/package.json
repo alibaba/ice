@@ -15,7 +15,7 @@
   "keywords": ["ice", "ice-block"],
   "dependencies": {
     "@antv/data-set": "^0.8.0",
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "axios": "^0.17.1",
     "bizcharts": "^3.0.5",

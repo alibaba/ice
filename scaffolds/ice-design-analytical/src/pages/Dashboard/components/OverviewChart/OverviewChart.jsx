@@ -21,7 +21,7 @@ export default class OverviewChart extends Component {
 
   render() {
     return (
-      <Row type="wrap" style={styles.overviewChart}>
+      <Row wrap gutter="20" style={styles.overviewChart}>
         <Col xxs="24" s="8" l="8">
           <IceContainer title="行业特征">
             <PieDonutChart />

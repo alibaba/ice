@@ -7,7 +7,7 @@
     "https://alibaba.github.io/ice/scaffold-preview/ice-design-cms.html",
   "dependencies": {
     "@antv/data-set": "^0.8.5",
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "@icedesign/form-binder": "^0.1.4",
     "@icedesign/icon": "^0.1.1",

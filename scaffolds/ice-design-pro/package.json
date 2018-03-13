@@ -5,7 +5,7 @@
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-pro.html",
   "dependencies": {
     "@antv/data-set": "^0.8.5",
-    "@icedesign/base": "^0.1.5-1",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.2",
     "@icedesign/data-binder": "^0.1.1",
     "@icedesign/ellipsis": "^0.1.1",

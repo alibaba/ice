@@ -42,7 +42,7 @@ export default class FlowStatistics extends Component {
 
   render() {
     return (
-      <Row type="wrap" className="flow-statistics">
+      <Row wrap>
         <Col span="24">
           <IceContainer>
             <h4 style={styles.title}>流量统计</h4>
