@@ -2,7 +2,7 @@
   "name": "ice-workspace",
   "version": "0.0.2",
   "scripts": {
-    "publish": "git fetch --all && git pull origin master && lerna publish",
+    "publish": "git fetch --all && git pull origin master && lerna run prepublish && lerna publish",
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
     "db": "node ./scripts/generate-marterials-database && node ./scripts/generate-docs-database",
