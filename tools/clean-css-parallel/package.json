@@ -20,5 +20,9 @@
     "pretty-bytes": "^4.0.2",
     "pretty-ms": "^3.1.0",
     "right-pad": "^1.0.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
   }
 }

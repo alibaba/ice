@@ -20,5 +20,9 @@
     "pretty-ms": "^3.1.0",
     "right-pad": "^1.0.1",
     "uglify-js": "^3.3.9"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
   }
 }
