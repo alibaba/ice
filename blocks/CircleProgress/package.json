@@ -2,12 +2,7 @@
   "name": "@icedesign/circle-progress-block",
   "version": "0.1.2",
   "description": "",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -43,11 +35,10 @@
   },
   "blockConfig": {
     "name": "circle-progress",
-    "snapshot": "https://img.alicdn.com/tfs/TB1xOKYcwmTBuNjy1XbXXaMrVXa-2352-522.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1xOKYcwmTBuNjy1XbXXaMrVXa-2352-522.png",
     "title": "环形进度条",
-    "categories": [
-      "data-display"
-    ],
+    "categories": ["数据展示"],
     "themePackage": "@icedesign/skin"
   }
 }
