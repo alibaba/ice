@@ -117,6 +117,10 @@ npm i babel-plugin-import --save-dev
   };
 ```
 
+# <<<<<<< HEAD
+
+> > > > > > > docs: add how-to-use-create-react-app
+
 ### 使用 webpack-plugin-import 实现样式自动引入
 
 `webpack-plugin-import` 是用于自动加载样式的 webpack 插件，它的原理是对引入模块路径下存在 `style.js` 的样式进行自动加载，这意味着您可能需要同时配置 `less` 或 `sass` 等预处理器的 `loader`。
@@ -145,6 +149,10 @@ module.exports = function override(config, env) {
   return config;
 };
 ```
+
+# <<<<<<< HEAD
+
+> > > > > > > docs: add how-to-use-create-react-app
 
 ### 配置 sass-loader 和 ice-skin-loader
 
@@ -224,5 +232,5 @@ module.exports = function override(config, env) {
 import { Button } from '@icedesign/base';
 import Img from '@icedesign/img';
 
-<Button type="primary">ICE</Button>;
+<Button type="primary">ICE</Button>
 ```
