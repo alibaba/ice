@@ -8,22 +8,22 @@ const data = [
   {
     pic: 'https://img.alicdn.com/tfs/TB1BnWWbwmTBuNjy1XbXXaMrVXa-263-263.png',
     city: '北京',
-    percent: '95',
+    percent: 95,
   },
   {
     pic: 'https://img.alicdn.com/tfs/TB1sFe1brGYBuNjy0FoXXciBFXa-400-400.png',
     city: '上海',
-    percent: '70',
+    percent: 70,
   },
   {
     pic: 'https://img.alicdn.com/tfs/TB1MlrfbqmWBuNjy1XaXXXCbXXa-400-400.png',
     city: '广州',
-    percent: '40',
+    percent: 40,
   },
   {
     pic: 'https://img.alicdn.com/tfs/TB18Va1brGYBuNjy0FoXXciBFXa-363-363.png',
     city: '杭州',
-    percent: '20',
+    percent: 20,
   },
 ];
 
@@ -51,8 +51,10 @@ export default class VisitorsLocationChart extends Component {
                     <img src={item.pic} style={styles.itemPic} alt="" />
                   </Col>
                   <Col xxs="16" l="17">
-                    <p style={styles.itemCity}>{item.city}</p>
-                    <Progress percent={item.percent} />
+                    <div style={styles.itemInfo}>
+                      <p style={styles.itemCity}>{item.city}</p>
+                      <Progress percent={item.percent} />
+                    </div>
                   </Col>
                 </Row>
               );
@@ -72,12 +74,17 @@ const styles = {
     marginBottom: '20px',
   },
   itemPic: {
-    width: '100%',
-    maxWidth: '80px',
+    width: '80px',
+    height: '80px',
     borderRadius: 50,
   },
   itemCity: {
-    margin: '10px 0 0',
+    margin: '0px',
   },
-  itemBody: {},
+  itemInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: '80px',
+  },
 };

@@ -43,7 +43,7 @@ export default class VisitorsLocationChart extends Component {
     return (
       <IceContainer title="活跃地区">
         <Row wrap>
-          <Col xxs="24" l="10">
+          <Col xxs="24" l="8">
             {data.map((item, index) => {
               return (
                 <Row style={styles.item} key={index}>
@@ -58,7 +58,7 @@ export default class VisitorsLocationChart extends Component {
               );
             })}
           </Col>
-          <Col xxs="24" l="14">
+          <Col xxs="24" offset="2" l="14">
             <MapChart />
           </Col>
         </Row>
