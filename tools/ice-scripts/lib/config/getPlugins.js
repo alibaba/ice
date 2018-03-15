@@ -8,13 +8,19 @@ const WebpackPluginImport = require('webpack-plugin-import');
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
 
-module.exports = function(paths, options = {}) {
+module.exports = function(paths, options = {}, themeConfig = {}) {
+  const defineVriables = {
+    'process.env.NODE_ENV': JSON.stringify(
+      process.env.NODE_ENV || 'development'
+    ),
+  };
+  // support theme type, eg. dark or light
+  if (themeConfig && typeof themeConfig.theme === 'string') {
+    defineVriables.THEME = JSON.stringify(themeConfig.theme);
+  }
+
   const plugins = [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(
-        process.env.NODE_ENV || 'development'
-      ),
-    }),
+    new webpack.DefinePlugin(defineVriables),
 
     new ExtractTextPlugin({
       filename: '[name].css',

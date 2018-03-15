@@ -12,7 +12,8 @@ const paths = require('./paths');
 module.exports = function getWebpackConfigBasic(
   entry,
   paths,
-  buildConfig = {}
+  buildConfig = {},
+  themeConfig = {}
 ) {
   const webpackConfig = {
     devtool: buildConfig.devtool || 'cheap-module-source-map',
@@ -35,9 +36,9 @@ module.exports = function getWebpackConfigBasic(
       'react-dom': 'window.ReactDOM',
     },
     module: {
-      rules: getRules(paths, buildConfig),
+      rules: getRules(paths, buildConfig, themeConfig),
     },
-    plugins: getPlugins(paths, buildConfig),
+    plugins: getPlugins(paths, buildConfig, themeConfig),
   };
 
   return webpackConfig;
