@@ -7,7 +7,7 @@ category: 进阶指南
 
 ## 初始化项目
 
-使用 `npx` 命令使用 `create-react-app` 创建一个项目
+使用 `npx` 命令执行 `create-react-app` 创建一个项目
 
 ```bash
 npx create-react-app my-app
@@ -226,8 +226,3 @@ import Img from '@icedesign/img';
 
 <Button type="primary">ICE</Button>
 ```
-
-### 关于 eject
-
-您可以可以使用 `create-react-app` 提供的 `npm run eject` 命令将所有内建的配置暴露出来。不过这种配置方式需要你自行探索，不在本文讨论范围内。
-
