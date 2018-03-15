@@ -21,10 +21,11 @@ Iceworks 是 ICE 推出的辅助开发者快速开发中后台前端应用的 GU
 * 给项目起一个项目名，以便后续识别。
 
 点击【开始创建项目】即可开始创建
+
 > 默认会在创建的时候同时安装项目依赖，时间上会相对久一些，也可取消勾选，后续自行安装
 
 ## 管理项目
-  
+
 项目创建完成后，会自动添加到项目列表中，并打开当前项目管理面板。
 
 通过项目管理面板，可执行 **启动调试服务** **新建页面** **构建项目** 等操作。
@@ -37,7 +38,7 @@ Iceworks 是 ICE 推出的辅助开发者快速开发中后台前端应用的 GU
 
 ![undefined | center](https://img.alicdn.com/tfs/TB1p6lCceSSBuNjy0FlXXbBpVXa-2562-1590.png)
 
-> 上图是一个 Ice Design CMS 模板启动后的预览效果。
+> 上图是一个 ICE Design CMS 模板启动后的预览效果。
 
 ## 新建页面
 
@@ -131,7 +132,6 @@ project-name
 <script type="text/javascript" src="./index.js"></script></body>
 
 </html>
-
 ```
 
 > 在线上环境我们强烈推荐使用 production 版本的 React，而不是 development 版本。它们之间的区别除了体积之外，还包括一些针对线上环境的性能优化。
