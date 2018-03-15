@@ -1,6 +1,6 @@
 ---
 title: 组件版本号规则
-order: 2
+order: 3
 category: 其它
 ---
 
