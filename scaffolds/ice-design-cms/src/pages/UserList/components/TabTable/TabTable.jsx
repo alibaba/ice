@@ -117,7 +117,7 @@ export default class TabTable extends Component {
 
   handleRemove = (value, index) => {
     const { dataSource, tabKey } = this.state;
-    dataSource[tabKey].splice(index, index + 1);
+    dataSource[tabKey].splice(index, 1);
     this.setState({
       dataSource,
     });
