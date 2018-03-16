@@ -8,7 +8,7 @@ category: 入门指引
 
 ## 目录结构
 
-以 `Ice Design Pro` 模板为例:
+以 `ICE Design Pro` 模板为例:
 
 ```
 ice-design-pro
