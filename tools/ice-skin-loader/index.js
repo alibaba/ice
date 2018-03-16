@@ -1,16 +1,15 @@
-'use strict';
+const chalk = require('chalk');
+const fs = require('fs');
+const loaderUtils = require('loader-utils');
+const md5 = require('md5');
+const pathExists = require('path-exists');
+const createSkinExtraContent = require('./createSkinExtraContent');
 
-var chalk = require('chalk');
-var fs = require('fs');
-var loaderUtils = require('loader-utils');
-var md5 = require('md5');
-var pathExists = require('path-exists');
+const skinContentCache = {};
 
-var skinContentCache = {};
-
-// 删除空行
+// delete empty lines
 function deleteEmptyLine(str) {
-  var filterLines = str.split('\n').filter(function(line) {
+  const filterLines = str.split('\n').filter(function(line) {
     return line !== '';
   });
 
@@ -18,30 +17,51 @@ function deleteEmptyLine(str) {
   return filterLines.join('\n');
 }
 
+// 移除手动引入的变量文件, 防止被原始皮肤覆盖
+function deleteVariablesImport(source = '') {
+  return source
+    .split('\n')
+    .filter(function(line) {
+      return !/\/variables\.scss/.test(line);
+    })
+    .join('\n');
+}
+
+// init user defined variables
+const extraContent = createSkinExtraContent();
+
+let hasEmittedHelp = false;
 module.exports = function(source) {
-  var options = loaderUtils.getOptions(this);
-  var themeFile = options.themeFile;
+  const options = loaderUtils.getOptions(this);
+  const themeFile = options.themeFile;
   if (!themeFile) {
     return source;
   }
 
   // 计算 md5 值，避免中文路径的问题
-  var filePathHash = md5(themeFile);
+  const filePathHash = md5(themeFile);
+
+  source = deleteVariablesImport(source);
 
   if (skinContentCache[filePathHash]) {
-    return skinContentCache[filePathHash] + source;
+    return skinContentCache[filePathHash] + '\n' + extraContent + '\n' + source;
   }
   // 缓存 skinLoader
   if (pathExists.sync(themeFile)) {
-    var themeFileContent = fs.readFileSync(themeFile).toString();
+    const themeFileContent = fs.readFileSync(themeFile).toString();
     skinContentCache[filePathHash] = deleteEmptyLine(themeFileContent);
-    return skinContentCache[filePathHash] + source;
+    return skinContentCache[filePathHash] + '\n' + extraContent + '\n' + source;
   } else {
-    console.log(chalk.red('\n[Error] 不存在皮肤文件:'), themeFile);
-    console.log(
-      chalk.green('[Info] 可参考皮肤配置文档:'),
-      'http://ice.alibaba-inc.com/docs/addons/skin'
-    );
+    // only tip once
+    if (!hasEmittedHelp) {
+      console.log(chalk.red('\n[Error] 不存在皮肤文件:'), themeFile);
+      console.log(
+        chalk.green('[Info] 可参考皮肤配置文档:'),
+        'http://ice.alibaba-inc.com/docs/addons/skin'
+      );
+      hasEmittedHelp = true;
+    }
+
     return source;
   }
 };
