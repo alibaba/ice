@@ -46,7 +46,6 @@ export default class MapChart extends Component {
       x: { sync: true, nice: false },
       y: { sync: true, nice: false },
     };
-    console.log(this.state.data);
     const { features = [] } = this.state.data;
     const userData = [];
     for (let i = 0; i < features.length; i++) {
