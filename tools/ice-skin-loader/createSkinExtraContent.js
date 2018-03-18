@@ -31,8 +31,17 @@ function getVariableMappingString(key, value) {
       return primaryColor(value);
     case 'secondary-color':
       return secondaryColor(value);
+
+    case 'icon-font-path':
+    case 'icon-font-name':
+      return `$${key}: ${JSON.stringify(value)};`;
+
     default:
-      return `$${key}: ${value};`;
+      if (/icon\-content\-/.test(key)) {
+        return `$${key}: ${JSON.stringify(value)};`;
+      } else {
+        return `$${key}: ${value};`;
+      }
   }
 }
 
