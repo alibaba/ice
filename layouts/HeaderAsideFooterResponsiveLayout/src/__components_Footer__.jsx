@@ -1,13 +1,17 @@
 import React, { PureComponent } from 'react';
 import Layout from '@icedesign/layout';
+import cx from 'classnames';
 import Logo from './__components_Logo__';
 
 export default class Footer extends PureComponent {
   render() {
+    const { className, style, ...others } = this.props;
     return (
       <Layout.Footer
-        className="ice-design-layout-footer"
+        {...others}
+        className={cx('ice-design-layout-footer', className)}
         style={{
+          ...style,
           lineHeight: '36px',
         }}
       >
