@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 
 import OverviewChart from './components/OverviewChart';
@@ -9,8 +7,6 @@ import FlowStatistics from './components/FlowStatistics';
 import UserTrafficStastistics from './components/UserTrafficStastistics';
 
 import UserStatChart from './components/UserStatChart';
-
-import VisitorsLocationChart from './components/VisitorsLocationChart';
 
 import TopActiveChart from './components/TopActiveChart';
 
@@ -34,8 +30,6 @@ export default class Dashboard extends Component {
         <UserTrafficStastistics />
 
         <UserStatChart />
-
-        <VisitorsLocationChart />
 
         <TopActiveChart />
       </div>
