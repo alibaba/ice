@@ -49,7 +49,8 @@ module.exports = function(args = {}) {
     const webpackConfig = getWebpackConfigProd(
       entries,
       paths,
-      packageData.buildConfig || packageData.ice
+      packageData.buildConfig || packageData.ice,
+      packageData.themeConfig
     );
 
     webpack(webpackConfig, function(error, stats) {

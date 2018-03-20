@@ -46,7 +46,8 @@ module.exports = function(args, subprocess) {
   const webpackConfig = getWebpackConfigDev(
     entries,
     paths,
-    packageData.buildConfig || packageData.ice
+    packageData.buildConfig || packageData.ice,
+    packageData.themeConfig
   );
 
   if (iceworksClient.available) {
