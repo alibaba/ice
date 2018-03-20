@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import ReactEcharts from 'echarts-for-react';
 
+/**
+ * 图表来源参考：http://gallery.echartsjs.com/editor.html?c=xHJDyokLHb
+ */
 export default class PieLineChart extends Component {
   static displayName = 'PieLineChart';
 
