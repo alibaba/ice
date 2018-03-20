@@ -14,21 +14,21 @@ module.exports = (opts = {}) => {
   // const webpackRCPath = path.resolve(cwd, jsonConfigFile);
   const webpackRCJSPath = path.resolve(cwd, jsConfigFile);
 
-  const webpackConfig = {};
+  const userConfig = {};
 
   // todo support .webpackrc file
   if (fs.existsSync(webpackRCJSPath)) {
-    console.log('Inject .webpackrc.js to webpack.');
+    console.log('Tip: 注入 .webpackrc.js 的配置.');
     // no cache
     delete require.cache[webpackRCJSPath];
     const config = require(webpackRCJSPath); // eslint-disable-line
     // support es module
     if (config.default) {
-      Object.assign(webpackConfig, config.default);
+      Object.assign(userConfig, config.default);
     } else {
-      Object.assign(webpackConfig, config);
+      Object.assign(userConfig, config);
     }
   }
 
-  return webpackConfig;
+  return userConfig;
 };
