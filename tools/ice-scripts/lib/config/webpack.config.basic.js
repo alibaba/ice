@@ -1,3 +1,4 @@
+const webpackMerge = require('webpack-merge');
 const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
@@ -42,5 +43,5 @@ module.exports = function getWebpackConfigBasic(
   };
 
   const userConfig = getUserConfig();
-  return Object.assign({}, webpackConfig, userConfig);
+  return webpackMerge(webpackConfig, userConfig);
 };
