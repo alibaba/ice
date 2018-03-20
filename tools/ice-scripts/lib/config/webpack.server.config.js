@@ -15,24 +15,18 @@ module.exports = (paths, options = {}) => {
       ignored: /node_modules/,
       aggregateTimeout: 600,
     },
-    proxy: {
-      '/**': {
-        // target: '/index.html', // default target
-        bypass: function(req, res, opt) {
-          // your custom code to check for any exceptions
-          // console.log('bypass check', {req: req, res:res, opt: opt});
-          if (devType === 'block') {
-          } else if (devType === 'component') {
-          } else {
-            // default devType === 'project'
-            if (req.path === '/') {
-              return '/build/';
-            }
+    before(app) {
+      // todo add user's before
+      // user.before(app);
+      app.use(function(req, res, next) {
+        // your custom code to check for any exceptions
+        if (devType === 'project') {
+          if (['/', '/index.html'].includes(req.url)) {
+            req.url = DEV_DIST_DIR;
           }
-
-          return req.path;
-        },
-      },
+        }
+        next();
+      });
     },
   };
 };
