@@ -1,3 +1,4 @@
+const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
 const paths = require('./paths');
@@ -40,5 +41,6 @@ module.exports = function getWebpackConfigBasic(
     plugins: getPlugins(paths, buildConfig),
   };
 
-  return webpackConfig;
+  const userConfig = getUserConfig();
+  return Object.assign({}, webpackConfig, userConfig);
 };
