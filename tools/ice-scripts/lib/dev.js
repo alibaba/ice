@@ -70,7 +70,8 @@ module.exports = function(args, subprocess) {
   const compiler = webpack(webpackConfig);
   let devServerConfig = require('./config/webpack.server.config')(paths, args);
   if ('devServer' in webpackConfig) {
-    devServerConfig = deepmerge(webpackConfig.devServer, devServerConfig);
+    // merge user config
+    devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);
   }
   const devServer = new WebpackDevServer(compiler, devServerConfig);
 
