@@ -24,12 +24,11 @@ function rewireSass(config, env, sassOptions = {}) {
 
   // add regexes for scss files
   styleLoaderRule.test = [...currentTests, /\.scss$/, /\.sass$/];
-
-  styleLoaderRule.use.push({
+  styleLoaderRule.loader.push({
     loader: require.resolve('sass-loader'),
     options: sassOptions,
   });
-  styleLoaderRule.use.push({
+  styleLoaderRule.loader.push({
     loader: require.resolve('ice-skin-loader'),
     options: {
       themeFile: require.resolve('@icedesign/skin'),
