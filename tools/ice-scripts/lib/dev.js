@@ -37,7 +37,7 @@ module.exports = function(args, subprocess) {
   const LOCAL_IP = address.ip();
 
   const isInteractive = false; // process.stdout.isTTY;
-  const entries = getEntries(cwd, false);
+  const entries = getEntries(cwd);
   const paths = getPaths(cwd);
 
   const packageData = require(paths.appPackageJson);

@@ -30,5 +30,9 @@ module.exports = (opts = {}) => {
     }
   }
 
+  if (userConfig.entry) {
+    console.log(colors.blue('TIPS:'), '.webpackrc.js 存在 entry 配置');
+  }
+
   return userConfig;
 };

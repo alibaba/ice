@@ -2,6 +2,7 @@ const webpackMerge = require('webpack-merge');
 const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
+const processEntry = require('./processEntry');
 const { differenceWith } = require('lodash');
 
 /**
@@ -63,7 +64,11 @@ module.exports = function getWebpackConfigBasic(
   };
 
   const userConfig = getUserConfig();
-  return webpackMerge({
+  const finalWebpackConfig = webpackMerge({
     customizeArray: pluginsUnique(['ExtractTextPlugin']),
   })(webpackConfig, userConfig);
+
+  finalWebpackConfig.entry = processEntry(finalWebpackConfig.entry);
+
+  return finalWebpackConfig;
 };

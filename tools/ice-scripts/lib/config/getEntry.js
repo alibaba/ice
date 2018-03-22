@@ -1,10 +1,8 @@
 // 读取需要编译的文件
 'use strict';
-const colors = require('chalk');
 const fs = require('fs');
+const colors = require('chalk');
 const path = require('path');
-
-const hotDevClientPath = require.resolve('react-dev-utils/webpackHotDevClient');
 
 const walk = function walk(dir) {
   var results = [];
@@ -24,14 +22,15 @@ const walk = function walk(dir) {
  * @return {Object}           entry 的 kv 对象
  */
 
-module.exports = function getEntry(cwd, isBuild = true) {
+module.exports = function getEntry(cwd) {
   var entryObj = {};
   const appDirectory = fs.realpathSync(cwd);
   const packageFilePath = path.resolve(appDirectory, 'package.json');
   const packageData = require(packageFilePath);
+
   // 需要区分项目类型，新版的项目直接返回 src/index.js
   if (packageData) {
-    let entry = '';
+    let entry;
 
     // 兼容 iceworks 旧项目 package.json 里的 ice 字段。
     if (packageData.ice && packageData.ice.entry) {
@@ -42,16 +41,10 @@ module.exports = function getEntry(cwd, isBuild = true) {
       entry = packageData.buildConfig.entry;
     }
 
-    entryObj = {
-      index: [path.resolve(appDirectory, entry)],
-    };
-
-    if (!isBuild) {
-      entryObj.index.unshift(hotDevClientPath);
+    if (entry) {
+      console.log(colors.blue('TIPS:'), 'package.json 存在 entry 配置');
+      return entry;
     }
-
-    console.log(colors.blue('TIPS:'), 'entry 为 package.json 里指定的值');
-    return entryObj;
   }
 
   var entryDir = './src';
@@ -79,11 +72,7 @@ module.exports = function getEntry(cwd, isBuild = true) {
         pageDirTree.push('index');
         var pageName = pageDirTree.join('/');
 
-        if (isBuild) {
-          entryObj[pageName] = [filePath];
-        } else {
-          entryObj[pageName] = [hotDevClientPath, filePath];
-        }
+        entryObj[pageName] = filePath;
       }
     });
     return entryObj;
