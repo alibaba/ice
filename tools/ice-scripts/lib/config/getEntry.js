@@ -19,34 +19,8 @@ const walk = function walk(dir) {
 };
 
 /**
- * 获取 abc.json 文件里指定的 entry 内容
- * @param  {Objecct} abcConfig abc.json 文件内容
- * @return {Object}           如果存在则返回  abc.webpack.entry
- */
-const getEntryByAbc = function(appDirectory) {
-  const abcFilePath = path.resolve(appDirectory, 'abc.json');
-
-  try {
-    const abcConfig = require(abcFilePath);
-    if (abcConfig && abcConfig.webpack) {
-      if (abcConfig.webpack.entry) {
-        console.log(
-          colors.yellow('请知晓! 当前编译页面为 abc.json 里指定的 entry !')
-        );
-        var costomEntry = abcConfig.webpack.entry;
-        return costomEntry;
-      }
-    }
-  } catch (e) {}
-
-  return null;
-};
-
-/**
  * 获取项目中符合 src/pages/xxxx/index.jsx 的文件
- * 或者在 abc.webpack.entry 对象，这个优先级最高
  *
- * @param  {Object} abcConfig abc.json 的对象
  * @return {Object}           entry 的 kv 对象
  */
 
@@ -58,9 +32,12 @@ module.exports = function getEntry(cwd, isBuild = true) {
   // 需要区分项目类型，新版的项目直接返回 src/index.js
   if (packageData) {
     let entry = '';
+
+    // 兼容 iceworks 旧项目 package.json 里的 ice 字段。
     if (packageData.ice && packageData.ice.entry) {
       entry = packageData.ice.entry;
     }
+
     if (packageData.buildConfig && packageData.buildConfig.entry) {
       entry = packageData.buildConfig.entry;
     }
@@ -73,14 +50,8 @@ module.exports = function getEntry(cwd, isBuild = true) {
       entryObj.index.unshift(hotDevClientPath);
     }
 
+    console.log(colors.blue('TIPS:'), 'entry 为 package.json 里指定的值');
     return entryObj;
-  }
-
-  // abcConfig.webpack.entry 的优先级比 pages 高
-  const customEntry = getEntryByAbc(appDirectory);
-
-  if (customEntry && Object.keys(customEntry).length) {
-    return customEntry;
   }
 
   var entryDir = './src';
