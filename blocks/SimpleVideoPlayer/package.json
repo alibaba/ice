@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/simple-video-player-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "简单的视频播放器",
   "files": [
     "src/",
@@ -38,10 +38,10 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "latest",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "simple-video-player",
