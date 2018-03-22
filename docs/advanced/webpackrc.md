@@ -53,3 +53,45 @@ module.exports = {
 
 ```
 
+3. `webpack` 支持配置多入口实现在一个工程中同时构建多个单页面应用，以下为多 `entry` 的 `.webpackrc.js` 配置示例
+
+```js
+const { resolve } = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  entry: {
+    index: ['src/index.js'],
+    app: ['src/index.js'],
+  },
+  output: {
+    path: resolve('dist'),
+    filename: '[name].[hash].js',
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'index',
+      chunks: ['index'],
+      template: resolve('./public/index.html'),
+      filename: 'index.html',
+    }),
+    new HtmlWebpackPlugin({
+      title: 'app',
+      chunks: ['app'],
+      template: resolve('./public/index.html'),
+      filename: 'app.html',
+    }),
+  ],
+  devServer: {
+    before(app) {
+      app.use(function(req, res, next) {
+        // 重定向 html 的请求到 /build/ dev 服务上
+        if (req.url === '/' || req.path.endsWith('.html')) {
+          req.url = '/build' + req.url;
+        }
+        next();
+      });
+    },
+  },
+};
+```
