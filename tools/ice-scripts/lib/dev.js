@@ -37,7 +37,7 @@ module.exports = function(args, subprocess) {
   const LOCAL_IP = address.ip();
 
   const isInteractive = false; // process.stdout.isTTY;
-  const entries = getEntries(cwd, false);
+  const entries = getEntries(cwd);
   const paths = getPaths(cwd);
 
   const packageData = require(paths.appPackageJson);
@@ -46,7 +46,8 @@ module.exports = function(args, subprocess) {
   const webpackConfig = getWebpackConfigDev(
     entries,
     paths,
-    packageData.buildConfig || packageData.ice
+    packageData.buildConfig || packageData.ice,
+    packageData.themeConfig
   );
 
   if (iceworksClient.available) {
@@ -69,7 +70,8 @@ module.exports = function(args, subprocess) {
   const compiler = webpack(webpackConfig);
   let devServerConfig = require('./config/webpack.server.config')(paths, args);
   if ('devServer' in webpackConfig) {
-    devServerConfig = deepmerge(webpackConfig.devServer, devServerConfig);
+    // merge user config
+    devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);
   }
   const devServer = new WebpackDevServer(compiler, devServerConfig);
 

@@ -6,8 +6,8 @@ import Menu from '@icedesign/menu';
 import FoundationSymbol from 'foundation-symbol';
 import cx from 'classnames';
 import { Link } from 'react-router';
-import { headerNavs } from './__navs__';
-import Logo from './__components_Logo__';
+import { headerNavs } from '../navs';
+import Logo from './Logo';
 
 export default class Header extends PureComponent {
   render() {

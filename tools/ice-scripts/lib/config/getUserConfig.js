@@ -3,7 +3,7 @@
  */
 const path = require('path');
 const fs = require('fs');
-const assert = require('assert');
+const colors = require('chalk');
 
 // const jsonConfigFile = '.webpackrc';
 const jsConfigFile = '.webpackrc.js';
@@ -18,7 +18,7 @@ module.exports = (opts = {}) => {
 
   // todo support .webpackrc file
   if (fs.existsSync(webpackRCJSPath)) {
-    console.log('Tip: 注入 .webpackrc.js 的配置.');
+    console.log(colors.blue('TIPS:'), '注入 .webpackrc.js 的配置.');
     // no cache
     delete require.cache[webpackRCJSPath];
     const config = require(webpackRCJSPath); // eslint-disable-line
@@ -28,6 +28,10 @@ module.exports = (opts = {}) => {
     } else {
       Object.assign(userConfig, config);
     }
+  }
+
+  if (userConfig.entry) {
+    console.log(colors.blue('TIPS:'), '.webpackrc.js 存在 entry 配置');
   }
 
   return userConfig;
