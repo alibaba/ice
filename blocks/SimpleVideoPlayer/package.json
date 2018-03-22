@@ -30,9 +30,10 @@
     "prepublish": "ice block build"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.1",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "video.js": "^6.7.3"
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
@@ -43,9 +44,10 @@
   },
   "blockConfig": {
     "name": "simple-video-player",
-    "snapshot": "",
+    "snapshot": "https://img.alicdn.com/tfs/TB1rIZEfXOWBuNjy0FiXXXFxVXa-2314-1064.png",
     "title": "简单视频播放器",
-    "categories": ["info-display"
+    "categories": [
+      "视频"
     ],
     "themePackage": "@icedesign/skin"
   }
