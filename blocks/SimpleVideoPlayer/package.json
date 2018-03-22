@@ -2,12 +2,7 @@
   "name": "@icedesign/simple-video-player-block",
   "version": "0.1.1",
   "description": "简单的视频播放器",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -45,11 +37,10 @@
   },
   "blockConfig": {
     "name": "simple-video-player",
-    "snapshot": "https://img.alicdn.com/tfs/TB1rIZEfXOWBuNjy0FiXXXFxVXa-2314-1064.png",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1SlthfwmTBuNjy1XbXXaMrVXa-2350-918.png",
     "title": "简单视频播放器",
-    "categories": [
-      "视频"
-    ],
+    "categories": ["视频"],
     "themePackage": "@icedesign/skin"
   }
 }
