@@ -1,6 +1,7 @@
 ---
 title: 定制构建器
 order: 3
+category: 进阶指南
 ---
 
 ICE 的[工程](https://github.com/alibaba/ice/tree/master/tools/ice-scripts)使用了 `webpack` 作为构建的基石，并且提供了零配置的构建配置，但是如果你对 `webpack` 配置有特别的需求，可以参考本文对默认配置进行定制。
@@ -19,10 +20,10 @@ module.exports = {
 
 ## 配置举例
 
-1. 修改编译输出的路径为 `dist/`
+1.  修改编译输出的路径为 `dist/`
 
 ```js
-const { resolve } = require('path')
+const { resolve } = require('path');
 
 module.exports = {
   output: {
@@ -31,7 +32,7 @@ module.exports = {
 };
 ```
 
-2. 添加反向代理服务
+2.  添加反向代理服务
 
 ```js
 const proxyTarget = 'http://127.0.0.1:7001';
@@ -45,15 +46,14 @@ module.exports = {
           // 添加 HTTP Header 标识 proxy 开启
           res.set('X-ICE-PROXY', 'on');
           res.set('X-ICE-PROXY-BY', proxyTarget);
-        }
-      }
-    }
-  }
-}; 
-
+        },
+      },
+    },
+  },
+};
 ```
 
-3. `webpack` 支持配置多入口实现在一个工程中同时构建多个单页面应用，以下为多 `entry` 的 `.webpackrc.js` 配置示例
+3.  `webpack` 支持配置多入口实现在一个工程中同时构建多个单页面应用，以下为多 `entry` 的 `.webpackrc.js` 配置示例
 
 ```js
 const { resolve } = require('path');
