@@ -2,7 +2,8 @@ const webpackMerge = require('webpack-merge');
 const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
-const paths = require('./paths');
+const { differenceWith } = require('lodash');
+
 /**
  * 可以在 buildConfig 中覆盖的配置项:
  *  1. devtool: ''
@@ -11,6 +12,24 @@ const paths = require('./paths');
  *  4. externals
  *  5. entry
  */
+
+/**
+ * 合并 plugin 操作，
+ * @param  {array} uniques plugin 名单，在这名单内的插件会过滤掉，不会出现两份
+ * @return {array}
+ */
+const pluginsUnique = (uniques) => {
+  const getter = (plugin) => plugin.constructor && plugin.constructor.name;
+  return (a, b, k) => {
+    if (k == 'plugins') {
+      return [
+        ...differenceWith(a, b, (item) => uniques.indexOf(getter(item)) >= 0),
+        ...b,
+      ];
+    }
+  };
+};
+
 module.exports = function getWebpackConfigBasic(
   entry,
   paths,
@@ -44,5 +63,7 @@ module.exports = function getWebpackConfigBasic(
   };
 
   const userConfig = getUserConfig();
-  return webpackMerge(webpackConfig, userConfig);
+  return webpackMerge({
+    customizeArray: pluginsUnique(['ExtractTextPlugin']),
+  })(webpackConfig, userConfig);
 };
