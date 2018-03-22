@@ -21,13 +21,12 @@ export default class SimpleVideoPlayer extends Component {
       isMobile: false,
       currentVideo: {
         poster:
-          'https://img.alicdn.com/tfs/TB15B7LfeuSBuNjy1XcXXcYjFXa-596-356.png',
+          'https://img.alicdn.com/tfs/TB1UctgfwmTBuNjy1XbXXaMrVXa-754-420.png',
         title: '这里是示例视频1的视频标题',
         duration: '10:54',
         sources: [
           {
-            src:
-              '//cloud.video.taobao.com/play/u/435682200/p/2/e/6/t/1/50033572083.mp4',
+            src: 'http://vjs.zencdn.net/v/oceans.mp4',
             type: 'video/mp4',
           },
         ],
@@ -105,7 +104,7 @@ const styles = {
   videoWrapper: {
     width: '100%',
     background: '#000',
-    height: 500,
+    height: 420,
   },
   videoWrapperMobile: {
     height: 300,
@@ -113,7 +112,7 @@ const styles = {
   },
   video: {
     width: '100%',
-    height: 300,
+    height: 420,
   },
   videoMobile: {
     height: 300,
@@ -123,52 +122,48 @@ const styles = {
 const mockVideoData = [
   {
     poster:
-      'https://img.alicdn.com/tfs/TB15B7LfeuSBuNjy1XcXXcYjFXa-596-356.png',
+      'https://img.alicdn.com/tfs/TB1UctgfwmTBuNjy1XbXXaMrVXa-754-420.png',
     title: '这里是示例视频1的视频标题',
     duration: '10:54',
     sources: [
       {
-        src:
-          '//cloud.video.taobao.com/play/u/435682200/p/2/e/6/t/1/50033572083.mp4',
+        src: 'http://vjs.zencdn.net/v/oceans.mp4',
         type: 'video/mp4',
       },
     ],
   },
   {
     poster:
-      'https://img.alicdn.com/tfs/TB1Z8MnfmCWBuNjy0FhXXb6EVXa-593-389.png',
+      'https://img.alicdn.com/tfs/TB1qEJ4fqmWBuNjy1XaXXXCbXXa-754-420.png',
     title: '这里是示例视频2的视频标题',
     duration: '03:54',
     sources: [
       {
-        src:
-          '//cloud.video.taobao.com/play/u/435682200/p/2/e/6/t/1/50069942168.mp4',
+        src: 'http://vjs.zencdn.net/v/oceans.mp4',
         type: 'video/mp4',
       },
     ],
   },
   {
     poster:
-      'https://img.alicdn.com/tfs/TB15B7LfeuSBuNjy1XcXXcYjFXa-596-356.png',
+      'https://img.alicdn.com/tfs/TB1yHhWfuuSBuNjy1XcXXcYjFXa-754-420.png',
     title: '这里是示例视频3的视频标题',
     duration: '10:54',
     sources: [
       {
-        src:
-          '//cloud.video.taobao.com/play/u/435682200/p/2/e/6/t/1/50033572083.mp4',
+        src: 'http://vjs.zencdn.net/v/oceans.mp4',
         type: 'video/mp4',
       },
     ],
   },
   {
     poster:
-      'https://img.alicdn.com/tfs/TB1Z8MnfmCWBuNjy0FhXXb6EVXa-593-389.png',
+      'https://img.alicdn.com/tfs/TB1FdDTfDtYBeNjy1XdXXXXyVXa-754-420.png',
     title: '这里是示例视频4的视频标题',
     duration: '03:54',
     sources: [
       {
-        src:
-          '//cloud.video.taobao.com/play/u/435682200/p/2/e/6/t/1/50069942168.mp4',
+        src: 'http://vjs.zencdn.net/v/oceans.mp4',
         type: 'video/mp4',
       },
     ],
