@@ -74,8 +74,8 @@ module.exports = function(args = {}) {
       uglifyParallel(
         {
           pattern: '**/*.js',
-          src: paths.appBuild,
-          dest: paths.appBuild,
+          src: webpackConfig.output.path,
+          dest: webpackConfig.output.path,
           params: [
             '--compress',
             'unused=false,warnings=false',
@@ -102,8 +102,8 @@ module.exports = function(args = {}) {
       cleancssParallel(
         {
           pattern: '**/*.css',
-          src: paths.appBuild,
-          dest: paths.appBuild,
+          src: webpackConfig.output.path,
+          dest: webpackConfig.output.path,
           params: [],
         },
         function() {
