@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Grid } from '@icedesign/base';
+import { enquireScreen } from 'enquire-js';
 import './SimpleVideoPlayer.scss';
 import Video from './Video';
 import VideoList from './VideoList';
-import { enquireScreen } from 'enquire-js';
 
 const { Col, Row } = Grid;
 
