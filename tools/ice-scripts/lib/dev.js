@@ -12,6 +12,7 @@ const clearConsole = require('react-dev-utils/clearConsole');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
+const deepmerge = require('deepmerge');
 
 const getPaths = require('./config/paths');
 const getEntries = require('./config/getEntry');
@@ -36,7 +37,7 @@ module.exports = function(args, subprocess) {
   const LOCAL_IP = address.ip();
 
   const isInteractive = false; // process.stdout.isTTY;
-  const entries = getEntries(cwd, false);
+  const entries = getEntries(cwd);
   const paths = getPaths(cwd);
 
   const packageData = require(paths.appPackageJson);
@@ -45,7 +46,8 @@ module.exports = function(args, subprocess) {
   const webpackConfig = getWebpackConfigDev(
     entries,
     paths,
-    packageData.buildConfig || packageData.ice
+    packageData.buildConfig || packageData.ice,
+    packageData.themeConfig
   );
 
   if (iceworksClient.available) {
@@ -66,10 +68,11 @@ module.exports = function(args, subprocess) {
 
   let isFirstCompile = true;
   const compiler = webpack(webpackConfig);
-  const devServerConfig = require('./config/webpack.server.config')(
-    paths,
-    args
-  );
+  let devServerConfig = require('./config/webpack.server.config')(paths, args);
+  if ('devServer' in webpackConfig) {
+    // merge user config
+    devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);
+  }
   const devServer = new WebpackDevServer(compiler, devServerConfig);
 
   compiler.plugin('done', (stats) => {
