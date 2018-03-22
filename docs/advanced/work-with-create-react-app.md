@@ -3,6 +3,7 @@ title: 在 create-react-app 中使用
 order: 1
 category: 进阶指南
 ---
+
 [create-react-app](https://github.com/facebook/create-react-app) 是社区广泛使用的 React 开发工具，本文讲述如何在使用 create-react-app 创建的项目中使用 ICE。
 
 ## 初始化项目
@@ -35,7 +36,8 @@ import Button from '@icedesign/base/lib/button';
 import Img from '@icedesign/img';
 import './App.css';
 
-const image = 'https://img.alicdn.com/tfs/TB2NU_nmRUSMeJjy1zkXXaWmpXa_!!10-2-luban.png';
+const image =
+  'https://img.alicdn.com/tfs/TB2NU_nmRUSMeJjy1zkXXaWmpXa_!!10-2-luban.png';
 
 class App extends Component {
   render() {
@@ -76,7 +78,7 @@ export default App;
 
 要解决这些问题，我们需要对 `create-react-app` 进行一些工程定制。我们建议使用社区流行的 [react-app-rewired](https://github.com/timarney/react-app-rewired) 进行自定义配置。
 
-首先安装 `react-app-rewired` 
+首先安装 `react-app-rewired`
 
 ```bash
 npm i react-app-rewired --save-dev
@@ -87,9 +89,9 @@ npm i react-app-rewired --save-dev
 ```json
 {
   "scripts": {
-   "start": "react-app-rewired start",
-   "build": "react-app-rewired build",
-   "test": "react-app-rewired test --env=jsdom",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom"
   }
 }
 ```
@@ -115,7 +117,6 @@ npm i babel-plugin-import --save-dev
   };
 ```
 
-
 ### 使用 webpack-plugin-import 实现样式自动引入
 
 `webpack-plugin-import` 是用于自动加载样式的 webpack 插件，它的原理是对引入模块路径下存在 `style.js` 的样式进行自动加载，这意味着您可能需要同时配置 `less` 或 `sass` 等预处理器的 `loader`。
@@ -132,19 +133,18 @@ module.exports = function override(config, env) {
     new WebpackPluginImport([
       {
         libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
-        stylePath: 'style.js'
+        stylePath: 'style.js',
       },
       {
         libraryName: /@icedesign\/.*/,
-        stylePath: 'style.js'
-      }
+        stylePath: 'style.js',
+      },
     ])
   );
   // ...
   return config;
 };
 ```
-
 
 ### 配置 sass-loader 和 ice-skin-loader
 
@@ -158,11 +158,11 @@ npm i sass-loader node-sass ice-skin-loader --save-dev
 在根目录创建 `rewire-scss.js` 文件，添加以下内容。
 
 ```js
-const getRules = config =>
-  config.module.rules.find(rule => Object.keys(rule).includes('oneOf')).oneOf;
-const findFileLoaderRuleFn = rule =>
+const getRules = (config) =>
+  config.module.rules.find((rule) => Object.keys(rule).includes('oneOf')).oneOf;
+const findFileLoaderRuleFn = (rule) =>
   typeof rule.loader === 'string' && rule.loader.includes('file-loader');
-const findStyleLoaderRuleFn = rule =>
+const findStyleLoaderRuleFn = (rule) =>
   rule.test.toString() === /\.css$/.toString();
 
 function rewireSass(config, env, sassOptions = {}) {
@@ -185,15 +185,15 @@ function rewireSass(config, env, sassOptions = {}) {
   // add regexes for scss files
   styleLoaderRule.test = [...currentTests, /\.scss$/, /\.sass$/];
 
-  styleLoaderRule.use.push({
+  styleLoaderRule.loader.push({
     loader: require.resolve('sass-loader'),
-    options: sassOptions
+    options: sassOptions,
   });
-  styleLoaderRule.use.push({
+  styleLoaderRule.loader.push({
     loader: require.resolve('ice-skin-loader'),
     options: {
-      themeFile: require.resolve('@icedesign/skin')
-    }
+      themeFile: require.resolve('@icedesign/skin'),
+    },
   });
 
   return config;
@@ -224,5 +224,5 @@ module.exports = function override(config, env) {
 import { Button } from '@icedesign/base';
 import Img from '@icedesign/img';
 
-<Button type="primary">ICE</Button>
+<Button type="primary">ICE</Button>;
 ```
