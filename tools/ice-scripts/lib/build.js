@@ -21,6 +21,18 @@ module.exports = function(args = {}) {
   const cwd = process.cwd();
   const paths = getPaths(cwd);
   const entries = getEntries(cwd);
+  // 指定构建的 entry
+  // @TODO 可构建多页面
+  const packageData = require(paths.appPackageJson);
+  // get ice config by package.ice
+
+  const webpackConfig = getWebpackConfigProd(
+    entries,
+    paths,
+    packageData.buildConfig || packageData.ice,
+    packageData.themeConfig
+  );
+
   // build task
   gulp.task('build', ['clean'], function() {
     const buildTasks = ['webpack'];
@@ -32,7 +44,7 @@ module.exports = function(args = {}) {
   });
 
   gulp.task('clean', function(done) {
-    rimraf(paths.appBuild, done);
+    rimraf(webpackConfig.output.path, done);
   });
 
   gulp.task('install', function() {
@@ -41,17 +53,6 @@ module.exports = function(args = {}) {
 
   // webpack 打包工作流
   gulp.task('webpack', function(done) {
-    // 指定构建的 entry
-    // @TODO 可构建多页面
-    const packageData = require(paths.appPackageJson);
-    // get ice config by package.ice
-
-    const webpackConfig = getWebpackConfigProd(
-      entries,
-      paths,
-      packageData.buildConfig || packageData.ice
-    );
-
     webpack(webpackConfig, function(error, stats) {
       console.log(
         stats.toString({
@@ -73,8 +74,8 @@ module.exports = function(args = {}) {
       uglifyParallel(
         {
           pattern: '**/*.js',
-          src: paths.appBuild,
-          dest: paths.appBuild,
+          src: webpackConfig.output.path,
+          dest: webpackConfig.output.path,
           params: [
             '--compress',
             'unused=false,warnings=false',
@@ -101,8 +102,8 @@ module.exports = function(args = {}) {
       cleancssParallel(
         {
           pattern: '**/*.css',
-          src: paths.appBuild,
-          dest: paths.appBuild,
+          src: webpackConfig.output.path,
+          dest: webpackConfig.output.path,
           params: [],
         },
         function() {

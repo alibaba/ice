@@ -7,14 +7,39 @@ const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = function(paths, options = {}) {
+module.exports = function(paths, options = {}, themeConfig = {}) {
+  const defineVriables = {
+    'process.env.NODE_ENV': JSON.stringify(
+      process.env.NODE_ENV || 'development'
+    ),
+  };
+  // support theme type, eg. dark or light
+  if (themeConfig && typeof themeConfig.theme === 'string') {
+    defineVriables.THEME = JSON.stringify(themeConfig.theme);
+  }
+
   const plugins = [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(
-        process.env.NODE_ENV || 'development'
-      ),
+    // Generates an `index.html` file with the <script> injected.
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: paths.appHtml,
+      minify: false,
+      // minify: {
+      //   removeComments: true,
+      //   collapseWhitespace: true,
+      //   removeRedundantAttributes: true,
+      //   useShortDoctype: true,
+      //   removeEmptyAttributes: true,
+      //   removeStyleLinkTypeAttributes: true,
+      //   keepClosingSlash: true,
+      //   minifyJS: true,
+      //   minifyCSS: true,
+      //   minifyURLs: true,
+      // },
     }),
+    new webpack.DefinePlugin(defineVriables),
 
     new ExtractTextPlugin({
       filename: '[name].css',
