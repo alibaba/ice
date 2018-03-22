@@ -12,7 +12,7 @@ export default class VideoList extends Component {
     const { list, currentVideo } = this.props;
 
     return (
-      <div>
+      <div style={styles.videoList}>
         {list.length > 0
           ? list.map((item, index) => {
               const isCurrentVideo =
@@ -49,6 +49,10 @@ export default class VideoList extends Component {
 }
 
 const styles = {
+  videoList: {
+    maxHeight: 500,
+    overflowY: 'auto',
+  },
   videoItem: {
     display: 'flex',
     marginBottom: 8,
