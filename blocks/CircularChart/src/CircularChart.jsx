@@ -1,3 +1,4 @@
+/* eslint no-mixed-operators:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import ReactEcharts from 'echarts-for-react';
