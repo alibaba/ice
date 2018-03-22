@@ -4,4 +4,4 @@
 
 简单的视频播放器
 
-![截图](https://img.alicdn.com/tfs/TB1rIZEfXOWBuNjy0FiXXXFxVXa-2314-1064.png)
+![截图](https://img.alicdn.com/tfs/TB1SlthfwmTBuNjy1XbXXaMrVXa-2350-918.png)
