@@ -14,7 +14,7 @@ export default class Video extends Component {
     }
 
     return (
-      <video controls style={styles.video} {...others}>
+      <video controls {...others}>
         <track kind="captions" />
         {sources.map((video, index) => {
           return <source {...video} key={index} />;
@@ -23,10 +23,3 @@ export default class Video extends Component {
     );
   }
 }
-
-const styles = {
-  video: {
-    width: '100%',
-    height: 500,
-  },
-};

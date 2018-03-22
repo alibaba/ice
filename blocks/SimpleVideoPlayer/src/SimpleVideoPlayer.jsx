@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import { Grid } from '@icedesign/base';
 import './SimpleVideoPlayer.scss';
 import Video from './Video';
 import VideoList from './VideoList';
+import { enquireScreen } from 'enquire-js';
 
 const { Col, Row } = Grid;
 
@@ -18,6 +18,7 @@ export default class SimpleVideoPlayer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isMobile: false,
       currentVideo: {
         poster:
           'https://img.alicdn.com/tfs/TB15B7LfeuSBuNjy1XcXXcYjFXa-596-356.png',
@@ -35,11 +36,26 @@ export default class SimpleVideoPlayer extends Component {
     };
   }
 
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
+
   switchVideo = (selectVideo) => {
     this.setState({
       reloadVideo: true,
       currentVideo: selectVideo,
     });
+    // 每次切换 video 需要将 video 标签彻底销毁重新渲染，否则不会生效
     setTimeout(() => {
       this.setState({
         reloadVideo: false,
@@ -48,18 +64,30 @@ export default class SimpleVideoPlayer extends Component {
   };
 
   render() {
+    const { isMobile } = this.state;
     return (
       <div className="simple-video-player">
         <IceContainer>
-          <Row gutter={20}>
-            <Col span="16">
-              <div style={styles.videoWrapper}>
+          <Row gutter={20} wrap>
+            <Col m="16" xxs="24">
+              <div
+                style={{
+                  ...styles.videoWrapper,
+                  ...(isMobile ? styles.videoWrapperMobile : {}),
+                }}
+              >
                 {!this.state.reloadVideo && (
-                  <Video {...this.state.currentVideo} />
+                  <Video
+                    {...this.state.currentVideo}
+                    style={{
+                      ...styles.video,
+                      ...(isMobile ? styles.videoMobile : {}),
+                    }}
+                  />
                 )}
               </div>
             </Col>
-            <Col span="8">
+            <Col m="8" xxs="24">
               <VideoList
                 currentVideo={this.state.currentVideo}
                 list={this.state.videoLists}
@@ -78,6 +106,17 @@ const styles = {
     width: '100%',
     background: '#000',
     height: 500,
+  },
+  videoWrapperMobile: {
+    height: 300,
+    marginBottom: 20,
+  },
+  video: {
+    width: '100%',
+    height: 300,
+  },
+  videoMobile: {
+    height: 300,
   },
 };
 
