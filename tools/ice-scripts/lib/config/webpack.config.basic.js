@@ -3,6 +3,7 @@ const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
 const processEntry = require('./processEntry');
+const getEntryByPages = require('./getEntryByPages');
 const { differenceWith } = require('lodash');
 
 /**
@@ -24,7 +25,11 @@ const pluginsUnique = (uniques) => {
   return (a, b, k) => {
     if (k == 'plugins') {
       return [
-        ...differenceWith(a, b, (item) => uniques.indexOf(getter(item)) >= 0),
+        ...differenceWith(a, b, (item, item2) => {
+          return (
+            uniques.indexOf(getter(item)) >= 0 && getter(item) == getter(item2)
+          );
+        }),
         ...b,
       ];
     }
@@ -65,10 +70,14 @@ module.exports = function getWebpackConfigBasic(
 
   const userConfig = getUserConfig();
   const finalWebpackConfig = webpackMerge({
-    customizeArray: pluginsUnique(['ExtractTextPlugin']),
+    customizeArray: pluginsUnique(['ExtractTextPlugin', 'HtmlWebpackPlugin']),
   })(webpackConfig, userConfig);
 
-  finalWebpackConfig.entry = processEntry(finalWebpackConfig.entry);
+  if (finalWebpackConfig.entry) {
+    finalWebpackConfig.entry = processEntry(finalWebpackConfig.entry);
+  } else {
+    finalWebpackConfig.entry = processEntry(getEntryByPages());
+  }
 
   return finalWebpackConfig;
 };
