@@ -41,7 +41,7 @@ module.exports = function getWebpackConfigBasic(
   paths,
   buildConfig = {}
 ) {
-  const { themeConfig } = pkg;
+  const { themeConfig = {} } = pkg;
   const webpackConfig = {
     devtool: buildConfig.devtool || 'cheap-module-source-map',
     context: paths.appDirectory,
