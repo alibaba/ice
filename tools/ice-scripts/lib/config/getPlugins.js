@@ -15,6 +15,7 @@ module.exports = function(paths, options = {}, themeConfig = {}) {
       process.env.NODE_ENV || 'development'
     ),
   };
+
   // support theme type, eg. dark or light
   if (themeConfig && typeof themeConfig.theme === 'string') {
     defineVriables.THEME = JSON.stringify(themeConfig.theme);
