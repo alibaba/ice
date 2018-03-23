@@ -63,7 +63,7 @@ module.exports = function getWebpackConfigBasic(
       'react-dom': 'window.ReactDOM',
     },
     module: {
-      rules: getRules(paths, buildConfig, themeConfig),
+      rules: getRules(paths, buildConfig),
     },
     plugins: getPlugins(paths, buildConfig, themeConfig),
   };
