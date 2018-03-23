@@ -24,7 +24,6 @@ function rewireSass(config, env, sassOptions = {}) {
 
   // add regexes for scss files
   styleLoaderRule.test = [...currentTests, /\.scss$/, /\.sass$/];
-
   styleLoaderRule.use.push({
     loader: require.resolve('sass-loader'),
     options: sassOptions,

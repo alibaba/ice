@@ -1,0 +1,55 @@
+{
+  "name": "@icedesign/circular-chart-block",
+  "version": "0.1.1",
+  "description": "",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "scripts": {
+    "start": "ice block dev",
+    "prepublish": "ice block build"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/container": "^0.1.1",
+    "echarts": "^4.0.4",
+    "echarts-for-react": "^2.0.8",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/scripts": "^0.1.9",
+    "@icedesign/skin": "latest",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "circular-chart",
+    "snapshot": "https://img.alicdn.com/tfs/TB137Fme_tYBeNjy1XdXXXXyVXa-2218-884.png",
+    "title": "环形图",
+    "categories": [
+      "图表"
+    ],
+    "themePackage": "@icedesign/skin"
+  }
+}
