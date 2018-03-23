@@ -46,6 +46,7 @@ module.exports = {
     proxy: {
       '/**': {
         target: proxyTarget,
+        changeOrigin: true,
         bypass: function(req, res, proxyOpt) {
           // 添加 HTTP Header 标识 proxy 开启
           res.set('X-ICE-PROXY', 'on');
