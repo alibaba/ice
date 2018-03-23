@@ -4,8 +4,8 @@ const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
 const processEntry = require('./processEntry');
 const getEntryByPages = require('./getEntryByPages');
+const pkg = require('./packageJson');
 const { differenceWith } = require('lodash');
-
 /**
  * 可以在 buildConfig 中覆盖的配置项:
  *  1. devtool: ''
@@ -39,9 +39,9 @@ const pluginsUnique = (uniques) => {
 module.exports = function getWebpackConfigBasic(
   entry,
   paths,
-  buildConfig = {},
-  themeConfig = {}
+  buildConfig = {}
 ) {
+  const { themeConfig } = pkg;
   const webpackConfig = {
     devtool: buildConfig.devtool || 'cheap-module-source-map',
     context: paths.appDirectory,
