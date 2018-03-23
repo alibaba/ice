@@ -6,6 +6,10 @@ category: 进阶指南
 
 ICE 的[工程](https://github.com/alibaba/ice/tree/master/tools/ice-scripts)使用了 `webpack` 作为构建的基石，并且提供了零配置的构建配置，但是如果你对 `webpack` 配置有特别的需求，可以参考本文对默认配置进行定制。
 
+## 要求
+
+* devDependencies 里的 ice-scripts 依赖版本号为 1.1.0 及以上
+
 ## 如何配置
 
 ICE 项目支持在项目根目录创建 `.webpackrc.js` 文件对 `webpack` 项目进行定制和覆盖，`.webpackrc.js` 文件需要导出一个 `webpackConfig` 对象，其支持的参数可以参考 `webpack` [官方文档](https://webpack.js.org/concepts/output/)。
@@ -20,7 +24,7 @@ module.exports = {
 
 ## 配置举例
 
-1.  修改编译输出的路径为 `dist/`
+* 修改编译输出的路径为 `dist/`
 
 ```js
 const { resolve } = require('path');
@@ -32,7 +36,7 @@ module.exports = {
 };
 ```
 
-2.  添加反向代理服务
+* 添加反向代理服务
 
 ```js
 const proxyTarget = 'http://127.0.0.1:7001';
@@ -53,7 +57,7 @@ module.exports = {
 };
 ```
 
-3.  `webpack` 支持配置多入口实现在一个工程中同时构建多个单页面应用，以下为多 `entry` 的 `.webpackrc.js` 配置示例
+* `webpack` 支持配置多入口实现在一个工程中同时构建多个单页面应用，以下为多 `entry` 的 `.webpackrc.js` 配置示例
 
 ```js
 const { resolve } = require('path');
