@@ -193,7 +193,7 @@ export default class CustomPieChart extends Component {
           itemStyle: {
             normal: {
               color: (params) => {
-                const colorList = ['#13356b', '#823956'];
+                const colorList = ['#44a3fc', '#f0647c'];
                 return colorList[params.dataIndex];
               },
             },
@@ -238,7 +238,7 @@ export default class CustomPieChart extends Component {
               itemStyle: {
                 normal: {
                   borderWidth: 1,
-                  borderColor: '#6394f4',
+                  borderColor: '#44a3fc',
                 },
               },
             },
@@ -263,7 +263,7 @@ export default class CustomPieChart extends Component {
               itemStyle: {
                 normal: {
                   borderWidth: 1,
-                  borderColor: '#dc7caa',
+                  borderColor: '#f0647c',
                 },
               },
             },
@@ -301,7 +301,7 @@ export default class CustomPieChart extends Component {
           itemStyle: {
             normal: {
               color: (params) => {
-                const colorList = ['#13356b', '#823956'];
+                const colorList = ['#44a3fc', '#f0647c'];
                 return colorList[params.dataIndex];
               },
             },
@@ -338,7 +338,7 @@ export default class CustomPieChart extends Component {
           itemStyle: {
             normal: {
               color: (params) => {
-                const colorList = ['#13356b', '#885132'];
+                const colorList = ['#fad551', '#57cc78'];
                 return colorList[params.dataIndex];
               },
             },
@@ -383,7 +383,7 @@ export default class CustomPieChart extends Component {
               itemStyle: {
                 normal: {
                   borderWidth: 1,
-                  borderColor: '#6394f4',
+                  borderColor: '#fad551',
                 },
               },
             },
@@ -408,7 +408,7 @@ export default class CustomPieChart extends Component {
               itemStyle: {
                 normal: {
                   borderWidth: 1,
-                  borderColor: '#d47b49',
+                  borderColor: '#57cc78',
                 },
               },
             },
@@ -446,7 +446,7 @@ export default class CustomPieChart extends Component {
           itemStyle: {
             normal: {
               color: (params) => {
-                const colorList = ['#13356b', '#885132'];
+                const colorList = ['#fad551', '#57cc78'];
                 return colorList[params.dataIndex];
               },
             },
