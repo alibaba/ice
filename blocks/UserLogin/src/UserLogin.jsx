@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Input, Button, Checkbox, Grid } from '@icedesign/base';
+import { Input, Button, Checkbox, Grid, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -47,7 +47,8 @@ export default class UserLogin extends Component {
         return;
       }
       console.log('values:', values);
-      this.props.push('/');
+      Feedback.toast.success('登录成功');
+      // 登录成功后可通过 hashHistory.push('/') 跳转首页
     });
   };
 
@@ -95,12 +96,12 @@ export default class UserLogin extends Component {
                       size="small"
                       style={styles.inputIcon}
                     />
-                    <IceFormBinder name="password">
+                    <IceFormBinder name="password" required message="必填">
                       <Input htmlType="password" placeholder="密码" />
                     </IceFormBinder>
                   </Col>
                   <Col>
-                    <IceFormError name="account" />
+                    <IceFormError name="password" />
                   </Col>
                 </Row>
 
