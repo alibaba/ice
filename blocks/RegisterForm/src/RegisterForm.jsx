@@ -139,7 +139,7 @@ export default class RegisterForm extends Component {
               <Row style={styles.formItem}>
                 <Col>
                   <IceFormBinder name="checkbox">
-                    <Checkbox style={styles.checkbox}>记住账号</Checkbox>
+                    <Checkbox>记住账号</Checkbox>
                   </IceFormBinder>
                 </Col>
               </Row>
@@ -150,13 +150,13 @@ export default class RegisterForm extends Component {
                   onClick={this.handleSubmit}
                   style={styles.submitBtn}
                 >
-                  登 录
+                  注 册
                 </Button>
               </Row>
 
               <Row className="tips" style={styles.tips}>
                 <a href="/" style={styles.link}>
-                  立即注册
+                  立即登录
                 </a>
                 <span style={styles.line}>|</span>
                 <a href="/" style={styles.link}>
@@ -194,7 +194,7 @@ const styles = {
   },
   inputIcon: {
     position: 'absolute',
-    left: '18px',
+    left: '0px',
     top: '5px',
     color: '#999',
   },
@@ -202,9 +202,6 @@ const styles = {
     width: '240px',
     background: '#3080fe',
     borderRadius: '28px',
-  },
-  checkbox: {
-    marginLeft: '5px',
   },
   tips: {
     textAlign: 'center',
