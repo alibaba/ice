@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/scaffold-analytical",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "该模板适用于数据可视化展示，内置 Dashboard 页面，包含折线图、柱状图、饼图、地图等常用区块",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-analytical.html",
   "dependencies": {
