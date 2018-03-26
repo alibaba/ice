@@ -82,7 +82,7 @@ export default class SignupForm extends Component {
               <Row style={styles.formItem}>
                 <Col>
                   <IceFormBinder name="checkbox">
-                    <Checkbox style={styles.checkbox}>记住账号</Checkbox>
+                    <Checkbox>记住账号</Checkbox>
                   </IceFormBinder>
                 </Col>
               </Row>
@@ -137,7 +137,7 @@ const styles = {
   },
   inputIcon: {
     position: 'absolute',
-    left: '18px',
+    left: '0px',
     top: '5px',
     color: '#999',
   },
@@ -145,9 +145,6 @@ const styles = {
     width: '240px',
     background: '#3080fe',
     borderRadius: '28px',
-  },
-  checkbox: {
-    marginLeft: '5px',
   },
   tips: {
     textAlign: 'center',
