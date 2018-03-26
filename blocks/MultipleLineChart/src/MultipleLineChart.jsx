@@ -15,7 +15,7 @@ export default class MultipleLineChart extends Component {
   }
 
   getOption = () => {
-    const colors = ['#5793f3', '#d14a61', '#675bba'];
+    const colors = ['#57cc78', '#44a3fc', '#f0657d'];
     return {
       color: colors,
 
