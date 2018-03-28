@@ -22,7 +22,7 @@
 
 下载 [Iceworks](https://alibaba.github.io/ice/#/iceworks) 并创建项目，然后创建页面进行物料搭建组合，之后可以打开编辑器进行二次编码，完成之后点击构建即可打包出可用的 JS、CSS bundle。
 
-详细步骤请参见文档：[Iceworks 快速上手](https://alibaba.github.io/ice/#/iceworks/start)。
+详细步骤请参见文档：[Iceworks 快速上手](https://alibaba.github.io/ice/#/docs/iceworks)。
 
 ## 物料开发和发布方式
 
