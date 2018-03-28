@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
@@ -9,11 +8,7 @@ import {
 import {
   Input,
   Button,
-  Checkbox,
   Select,
-  DatePicker,
-  Switch,
-  Radio,
   Grid,
 } from '@icedesign/base';
 
@@ -36,7 +31,7 @@ export default class ColumnForm extends Component {
         operator: '',
         settleAccount: '',
         period: '',
-        currency: 'usd'
+        currency: 'usd',
       },
     };
   }
@@ -54,7 +49,7 @@ export default class ColumnForm extends Component {
         operator: '',
         settleAccount: '',
         period: '',
-        currency: 'usd'
+        currency: 'usd',
       },
     });
   }
