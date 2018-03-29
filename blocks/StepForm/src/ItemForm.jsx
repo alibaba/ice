@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -31,7 +30,7 @@ export default class ItemForm extends Component {
         price: '',
         desc: '',
         type: '',
-      }
+      },
     };
   }
 
@@ -154,6 +153,6 @@ const styles = {
   },
   btns: {
     marginTop: '25px',
-    marginBottom: '25px'
+    marginBottom: '25px',
   },
 };

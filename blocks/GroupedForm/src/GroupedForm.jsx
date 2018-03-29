@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
@@ -35,7 +34,7 @@ export default class GroupedForm extends Component {
         desc: '',
         type: '',
         deliveryType: '',
-        deliveryFee: ''
+        deliveryFee: '',
       },
     };
   }
@@ -54,7 +53,7 @@ export default class GroupedForm extends Component {
         desc: '',
         type: '',
         deliveryType: '',
-        deliveryFee: ''
+        deliveryFee: '',
       },
     });
   }
@@ -165,8 +164,8 @@ export default class GroupedForm extends Component {
                           required
                           message="请选择物流公司"
                           dataSource={[
-                            { label: "顺丰", value: "shunfeng" },
-                            { label: "百世汇通", value: "baishi" },
+                            { label: '顺丰', value: 'shunfeng' },
+                            { label: '百世汇通', value: 'baishi' },
                           ]}
                         />
                       </IceFormBinder>
@@ -217,7 +216,7 @@ const styles = {
     paddingBottom: 0,
   },
   subForm: {
-    marginBottom: '20px'
+    marginBottom: '20px',
   },
   formTitle: {
     margin: '0 0 20px',

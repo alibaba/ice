@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -29,8 +28,8 @@ export default class DeliveryForm extends Component {
     this.state = {
       value: {
         type: '',
-        fee: ''
-      }
+        fee: '',
+      },
     };
   }
 
@@ -71,8 +70,8 @@ export default class DeliveryForm extends Component {
                   required
                   message="请选择物流公司"
                   dataSource={[
-                    { label: "顺丰", value: "shunfeng" },
-                    { label: "百世汇通", value: "baishi" },
+                    { label: '顺丰', value: 'shunfeng' },
+                    { label: '百世汇通', value: 'baishi' },
                   ]}
                 />
               </IceFormBinder>
@@ -123,6 +122,6 @@ const styles = {
   },
   btns: {
     marginTop: '25px',
-    marginBottom: '25px'
+    marginBottom: '25px',
   },
 };
