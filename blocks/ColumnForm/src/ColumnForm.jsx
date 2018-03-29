@@ -5,23 +5,16 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import {
-  Input,
-  Button,
-  Select,
-  Grid,
-} from '@icedesign/base';
+import { Input, Button, Select, Grid } from '@icedesign/base';
 
 const { Row, Col } = Grid;
 
 export default class ColumnForm extends Component {
   static displayName = 'ColumnForm';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -52,7 +45,7 @@ export default class ColumnForm extends Component {
         currency: 'usd',
       },
     });
-  }
+  };
 
   submit = () => {
     this.formRef.validateAll((error, value) => {
@@ -79,7 +72,7 @@ export default class ColumnForm extends Component {
               <Row wrap>
                 <Col xxs="24" s="12" l="12">
                   <Row style={styles.formItem}>
-                    <Col xxs="6" s="6" l="4" style={styles.formLabel}>
+                    <Col xxs="8" s="6" l="4" style={styles.formLabel}>
                       合同编号：
                     </Col>
 
@@ -96,7 +89,7 @@ export default class ColumnForm extends Component {
                   </Row>
 
                   <Row style={styles.formItem}>
-                    <Col xxs="6" s="6" l="4" style={styles.formLabel}>
+                    <Col xxs="8" s="6" l="4" style={styles.formLabel}>
                       签约运营商：
                     </Col>
                     <Col s="12" l="12">
@@ -112,7 +105,7 @@ export default class ColumnForm extends Component {
                   </Row>
 
                   <Row style={styles.formItem}>
-                    <Col xxs="6" s="6" l="4" style={styles.formLabel}>
+                    <Col xxs="8" s="6" l="4" style={styles.formLabel}>
                       计费周期：
                     </Col>
                     <Col s="12" l="12">
@@ -136,7 +129,7 @@ export default class ColumnForm extends Component {
 
                 <Col xxs="24" s="12" l="12">
                   <Row style={styles.formItem}>
-                    <Col xxs="6" s="6" l="4" style={styles.formLabel}>
+                    <Col xxs="8" s="6" l="4" style={styles.formLabel}>
                       结算运营商：
                     </Col>
 
@@ -153,7 +146,7 @@ export default class ColumnForm extends Component {
                   </Row>
 
                   <Row style={styles.formItem}>
-                    <Col xxs="6" s="6" l="4" style={styles.formLabel}>
+                    <Col xxs="8" s="6" l="4" style={styles.formLabel}>
                       币种：
                     </Col>
                     <Col s="12" l="12">
@@ -173,7 +166,7 @@ export default class ColumnForm extends Component {
               </Row>
 
               <Row style={styles.btns}>
-                <Col xxs="6" s="2" l="2" style={styles.formLabel}>
+                <Col xxs="8" s="2" l="2" style={styles.formLabel}>
                   {' '}
                 </Col>
                 <Col s="12" l="10">
@@ -200,7 +193,7 @@ const styles = {
   formItem: {
     height: '28px',
     lineHeight: '28px',
-    marginBottom: '25px',
+    marginBottom: '30px',
   },
   formLabel: {
     textAlign: 'right',

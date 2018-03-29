@@ -44,10 +44,10 @@
   },
   "blockConfig": {
     "name": "grouped-form",
-    "snapshot": "",
+    "snapshot": "https://img.alicdn.com/tfs/TB1faTKg1OSBuNjy0FdXXbDnVXa-2306-1156.png",
     "title": "分组显示的表单",
     "categories": [
-      "form"
+      "表单"
     ],
     "themePackage": "@icedesign/skin"
   }
