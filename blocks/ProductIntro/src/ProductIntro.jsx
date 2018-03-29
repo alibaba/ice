@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button } from '@icedesign/base';
-import './ProductIntro.scss';
 
 export default class ProductIntro extends Component {
   static displayName = 'ProductIntro';
