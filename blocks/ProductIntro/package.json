@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/product-intro-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "用于左文右图产品介绍模块",
   "files": [
     "src/",
@@ -36,16 +36,18 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "latest",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "product-intro",
     "snapshot": "https://img.alicdn.com/tfs/TB1FiYUgGmWBuNjy1XaXXXCbXXa-1373-665.png",
     "title": "产品介绍区块",
-    "categories": ["信息展示"],
+    "categories": [
+      "信息展示"
+    ],
     "themePackage": "@icedesign/skin"
   }
 }
