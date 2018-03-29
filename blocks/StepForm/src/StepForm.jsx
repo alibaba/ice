@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import {
   Grid,
@@ -24,7 +23,7 @@ export default class StepForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      step: 0
+      step: 0,
     };
   }
 
@@ -33,7 +32,6 @@ export default class StepForm extends Component {
   };
 
   renderStep = (step) => {
-    let data = this.state.data;
     if (step === 0) {
       return <ItemForm onSubmit={this.nextStep} />;
     }
@@ -87,16 +85,16 @@ const styles = {
     paddingBottom: 0,
   },
   step: {
-    marginBottom: '20px'
+    marginBottom: '20px',
   },
   content: {
     height: '200px',
     justifyContent: 'center',
     alignItems: 'center',
-    display: 'flex'
+    display: 'flex',
   },
   icon: {
-    color: "#1DC11D",
-    marginRight: "10px"
-  }
+    color: '#1DC11D',
+    marginRight: '10px',
+  },
 };
