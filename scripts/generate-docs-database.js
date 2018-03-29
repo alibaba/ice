@@ -3,7 +3,7 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const glob = require('glob');
 const markTwain = require('mark-twain');
-
+const { cut } = require('./participle');
 const destDir = path.join(__dirname, '../databases');
 const dest = path.join(destDir, 'docs.db.json');
 const sourceDir = path.join(__dirname, '../docs');
@@ -36,10 +36,17 @@ glob(
         throw new Error(`${file} 缺失标题, 请补充`);
       }
 
+      // 分词 payload
+      const participle = {
+        title: cut(jsonML.meta.title),
+        content: cut(content),
+      };
+
       const sourceData = {
         filename: file,
         path: file.replace(/\.md$/, ''),
         ...jsonML.meta,
+        participle,
 
         jsonml: jsonML.content,
       };
