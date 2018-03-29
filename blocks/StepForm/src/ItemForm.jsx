@@ -4,23 +4,16 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import {
-  Input,
-  Button,
-  Select,
-  Grid,
-} from '@icedesign/base';
+import { Input, Button, Select, Grid } from '@icedesign/base';
 
 const { Row, Col } = Grid;
 
 export default class ItemForm extends Component {
   static displayName = 'ItemForm';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -47,7 +40,7 @@ export default class ItemForm extends Component {
         this.props.onSubmit();
       }
     });
-  }
+  };
 
   render() {
     return (
@@ -67,7 +60,6 @@ export default class ItemForm extends Component {
             <Col s="12" l="10">
               <IceFormBinder name="title">
                 <Input
-                  size="large"
                   required
                   placeholder="请输入宝贝标题"
                   message="宝贝标题必须填写"
@@ -104,7 +96,6 @@ export default class ItemForm extends Component {
             <Col s="12" l="10">
               <IceFormBinder name="price">
                 <Input
-                  size="large"
                   required
                   placeholder="请输入宝贝价格"
                   message="宝贝价格必须填写"
@@ -146,7 +137,7 @@ const styles = {
   formItem: {
     height: '28px',
     lineHeight: '28px',
-    marginBottom: '25px',
+    marginBottom: '30px',
   },
   formLabel: {
     textAlign: 'right',

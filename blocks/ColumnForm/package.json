@@ -44,10 +44,10 @@
   },
   "blockConfig": {
     "name": "column-form",
-    "snapshot": "",
+    "snapshot": "https://img.alicdn.com/tfs/TB1NvCkgY9YBuNjy0FgXXcxcXXa-2318-566.png",
     "title": "分栏表单",
     "categories": [
-      "form"
+      "表单"
     ],
     "themePackage": "@icedesign/skin"
   }

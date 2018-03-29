@@ -44,10 +44,10 @@
   },
   "blockConfig": {
     "name": "step-form",
-    "snapshot": "",
+    "snapshot": "https://img.alicdn.com/tfs/TB1txzNhntYBeNjy1XdXXXXyVXa-2052-792.png",
     "title": "步骤形表单",
     "categories": [
-      "form"
+      "表单"
     ],
     "themePackage": "@icedesign/skin"
   }
