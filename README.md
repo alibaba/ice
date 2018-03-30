@@ -43,4 +43,6 @@
 
 扫码进入飞冰钉钉群（加入钉钉群即可实时交流、反馈）
 
+* 飞冰 ❶ (已满）
+* 飞冰 ❷ 
 <img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iVfbe1SSBuNjy0FlXXbBpVXa-640-880.jpg" width="200">
