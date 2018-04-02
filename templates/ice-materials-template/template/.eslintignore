@@ -1,0 +1,18 @@
+# 忽略目录
+build/
+tests/
+demo/
+layouts/**/lib/
+blocks/**/lib/
+node_modules/
+scripts/
+
+# node 覆盖率文件
+coverage/
+
+# 忽略文件
+**/*-min.js
+**/*.min.js
+
+# templorarily ignore tools
+tools/
