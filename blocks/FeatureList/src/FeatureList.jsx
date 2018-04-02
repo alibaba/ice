@@ -56,7 +56,14 @@ export default class FeatureList extends Component {
             </div>
           </div>
           <div style={styles.extraInfo}>
-            <Button style={styles.extraButton}>了解更多 &gt;</Button>
+            <Button
+              component="a"
+              href="#"
+              target="_blank"
+              style={styles.extraButton}
+            >
+              了解更多 &gt;
+            </Button>
           </div>
         </div>
         <div style={styles.clipBackground} />
