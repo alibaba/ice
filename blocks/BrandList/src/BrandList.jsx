@@ -71,6 +71,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    paddingBottom: 60,
   },
   titleWrapper: {
     marginTop: 60,
