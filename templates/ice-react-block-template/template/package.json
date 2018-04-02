@@ -1,0 +1,28 @@
+{
+  "name": "{{name}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "author": "{{author}}",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "@icedesign/container": "^0.1.1",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/skin": "latest",
+    "react": "*",
+    "react-dom": "*",
+    "@icedesign/scripts": "^0.1.9"
+  },
+  "blockConfig": {
+    "name": "{{name}}",
+    "snapshot": "",
+    "title": "{{title}}",
+    "categories": "[]",
+    "themePackage": "@icedesign/skin"
+  }
+}
