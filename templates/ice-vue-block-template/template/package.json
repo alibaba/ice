@@ -1,0 +1,21 @@
+{
+  "name": "{{name}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "author": "{{author}}",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "dependencies": {
+    "vue": "^2.5.16"
+  },
+  "devDependencies": {
+  },
+  "blockConfig": {
+    "name": "{{name}}",
+    "snapshot": "",
+    "title": "{{title}}",
+    "categories": "[]"
+  }
+}
