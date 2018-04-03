@@ -25,6 +25,9 @@ module.exports = function(paths, options = {}, themeConfig = {}) {
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
+      templateParameters: {
+        NODE_ENV: process.env.NODE_ENV,
+      },
       template: paths.appHtml,
       minify: false,
       // minify: {

@@ -47,7 +47,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
     "gulp": "^3.9.1",
-    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-plugin": "^3.2.0",
     "ice-skin-loader": "^0.1.2",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
