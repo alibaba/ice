@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+
+<body>
+  <div id="mountNode"></div>
+  <script src="https://g.alicdn.com/code/npm/??react/16.3.0/umd/react.development.js,react-dom/16.3.0/umd/react-dom.development.js"></script>
+
+  <h2>区块列表</h2>
+  <ul>
+    {{#each blocks as |blockName|}}
+    <ol>
+      <a href="/block/{{ blockName }}">{{ blockName }}</a>
+    </ol>
+    {{/each}}
+  </ul>
+
+  <h2>布局列表</h2>
+  <ul>
+    {{#each layouts as |layoutName|}}
+    <ol>
+      <a href="/layout/{{ layoutName }}">{{ layoutName }}</a>
+    </ol>
+    {{/each}}
+  </ul>
+
+</body>
+<script>
+  // init block
+  var mountNode = document.querySelector('#mountNode');
+  ReactDOM.render(
+    null,
+    mountNode
+  );
+</script>
+
+</html>
