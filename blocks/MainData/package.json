@@ -43,9 +43,9 @@
   },
   "blockConfig": {
     "name": "main-data",
-    "snapshot": "",
+    "snapshot": "https://img.alicdn.com/tfs/TB1tmdQiAKWBuNjy1zjXXcOypXa-2058-426.png",
     "title": "主要数据",
-    "categories": ["data-display"
+    "categories": ["数据展示","信息展示"
     ],
     "themePackage": "@icedesign/skin"
   }

@@ -45,7 +45,7 @@
     "name": "brand-list",
     "snapshot": "https://img.alicdn.com/tfs/TB1_tflieGSBuNjSspbXXciipXa-1234-487.png",
     "title": "品牌列表",
-    "categories": ["info-display"
+    "categories": ["信息展示"
     ],
     "themePackage": "@icedesign/skin"
   }

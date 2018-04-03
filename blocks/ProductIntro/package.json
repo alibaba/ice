@@ -45,7 +45,7 @@
     "name": "product-intro",
     "snapshot": "https://img.alicdn.com/tfs/TB1FiYUgGmWBuNjy1XaXXXCbXXa-1373-665.png",
     "title": "产品介绍区块",
-    "categories": ["info-display"
+    "categories": ["信息展示"
     ],
     "themePackage": "@icedesign/skin"
   }
