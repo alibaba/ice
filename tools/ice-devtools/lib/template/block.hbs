@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://unpkg.cnpmjs.org/@icedesign/skin/index.css">
+  <link rel="stylesheet" href="https://unpkg.cnpmjs.org/@icedesign/skin/override.css">
+</head>
+
+<body>
+  <div id="mountNode"></div>
+  <script src="https://g.alicdn.com/code/npm/??react/16.3.0/umd/react.development.js,react-dom/16.3.0/umd/react-dom.development.js"></script>
+
+</body>
+<script src="{{ layoutJS }}"></script>
+<script src="{{ blockJS }}"></script>
+<script>
+  function getDefaultOrSelf(mod) {
+    if (mod && mod.default) {
+      return mod.default;
+    } else {
+      return mod;
+    }
+  }
+  var DemoLayout = getDefaultOrSelf(DEMOLAYOUT);
+  var Block = getDefaultOrSelf(window['{{ blockName }}']);
+
+  // init block
+  var mountNode = document.querySelector('#mountNode');
+  ReactDOM.render(
+    React.createElement(
+      DemoLayout, {},
+      React.createElement(Block, {})
+    ),
+    mountNode
+  );
+</script>
+
+</html>
