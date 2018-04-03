@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://alibaba.github.io/ice">
-    <img alt="ICE" src="https://gw.alicdn.com/tfs/TB1FEW2nfDH8KJjy1XcXXcpdXXa-487-132.svg" width="200">
+    <img alt="飞冰" src="https://img.alicdn.com/tfs/TB1czpfiFOWBuNjy0FiXXXFxVXa-504-132.png" width="200">
   </a>
 </p>
 <p align="center">海量可复用物料，通过 GUI 工具极速构建中后台应用</p>
