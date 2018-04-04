@@ -1,5 +1,0 @@
-{
-  "root": true,
-  "parser": "babel-eslint",
-  "extends": "@ali/eslint-config-tbfed"
-}
