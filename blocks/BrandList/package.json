@@ -1,7 +1,7 @@
 {
-  "name": "@icedesign/product-intro-block",
-  "version": "0.1.1",
-  "description": "用于左文右图产品介绍模块",
+  "name": "@icedesign/brand-list-block",
+  "version": "0.1.0",
+  "description": "展示品牌列表",
   "files": [
     "src/",
     "demo/",
@@ -36,15 +36,15 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "latest",
     "react": "*",
-    "react-dom": "*"
+    "react-dom": "*",
+    "@icedesign/scripts": "^0.1.9"
   },
   "blockConfig": {
-    "name": "product-intro",
-    "snapshot": "https://img.alicdn.com/tfs/TB1FiYUgGmWBuNjy1XaXXXCbXXa-1373-665.png",
-    "title": "产品介绍区块",
+    "name": "brand-list",
+    "snapshot": "https://img.alicdn.com/tfs/TB1_tflieGSBuNjSspbXXciipXa-1234-487.png",
+    "title": "品牌列表",
     "categories": ["信息展示"
     ],
     "themePackage": "@icedesign/skin"
