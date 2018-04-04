@@ -120,23 +120,47 @@ module.exports = (paths, buildConfig = {}) => {
     // extra url loader usage
     {
       test: /\.woff2?$/,
-      loader: `${URL_LOADER}?limit=${URL_LOADER_LIMIT}&minetype=application/font-woff`,
+      loader: URL_LOADER,
+      options: {
+        limit: URL_LOADER_LIMIT,
+        minetype: 'application/font-woff',
+        name: 'assets/[hash].[ext]',
+      },
     },
     {
       test: /\.ttf$/,
-      loader: `${URL_LOADER}?limit=${URL_LOADER_LIMIT}&minetype=application/octet-stream`,
+      loader: URL_LOADER,
+      options: {
+        limit: URL_LOADER_LIMIT,
+        minetype: 'application/octet-stream',
+        name: 'assets/[hash].[ext]',
+      },
     },
     {
       test: /\.eot$/,
-      loader: `${URL_LOADER}?limit=${URL_LOADER_LIMIT}&minetype=application/vnd.ms-fontobject`,
+      loader: URL_LOADER,
+      options: {
+        limit: URL_LOADER_LIMIT,
+        minetype: 'application/vnd.ms-fontobject',
+        name: 'assets/[hash].[ext]',
+      },
     },
     {
       test: /\.svg$/,
-      loader: `${URL_LOADER}?limit=${URL_LOADER_LIMIT}&minetype=image/svg+xml`,
+      loader: URL_LOADER,
+      options: {
+        limit: URL_LOADER_LIMIT,
+        minetype: 'image/svg+xml',
+        name: 'assets/[hash].[ext]',
+      },
     },
     {
       test: /\.(png|jpg|jpeg|gif)$/i,
-      loader: `${URL_LOADER}?limit=${URL_LOADER_LIMIT}`,
+      loader: URL_LOADER,
+      options: {
+        limit: URL_LOADER_LIMIT,
+        name: 'assets/[hash].[ext]',
+      },
     },
   ];
 };
