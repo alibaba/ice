@@ -1,0 +1,13 @@
+{
+  "name": "ice-styled-menu",
+  "description": "ICE 导航组件",
+  "type": "ice",
+  "repository": {
+    "type": "component"
+  },
+  "options": {
+    "themePackage": "@icedesign/skin",
+    "styleAutoMixin": true,
+    "iceMapNext": false
+  }
+}

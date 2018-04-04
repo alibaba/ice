@@ -1,0 +1,25 @@
+// ice-data-binder variables
+// --------------------------------------------------
+
+////
+/// @module @ali/ice-data-binder: ICE 手机预览页面组件
+
+/// @tag IceDataBinder
+/// @category custom
+/// @family ice
+/// @varPrefix $ice-data-binder
+/// @classPrefix ice-data-binder
+////
+
+// -------------- variable --------------
+// 组件如有皮肤功能，请从该文件引用 scss 变量
+// @import '~@alife/next/lib/core/index.scss';
+
+$component-prefix: '.ice-data-binder';
+
+// Statement: Normal
+// ----------------------------------------
+
+/// background color
+/// @namespace statement/normal
+/// @type color

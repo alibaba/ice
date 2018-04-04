@@ -1,0 +1,13 @@
+{
+  "name": "ice-title",
+  "description": "标题组件，可以用在动态表单里面作为表单分隔符。",
+  "type": "ice",
+  "repository": {
+    "type": "component"
+  },
+  "options": {
+    "themePackage": "@alife/ice-skin",
+    "iceMapNext": true,
+    "styleAutoMixin": true
+  }
+}

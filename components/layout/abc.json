@@ -1,0 +1,13 @@
+{
+  "name": "ice-layout",
+  "description": "初始化空白页面, 提供页面框架性的layout",
+  "type": "ice",
+  "repository": {
+    "type": "component"
+  },
+  "options": {
+    "themePackage": "@icedesign/skin",
+    "styleAutoMixin": true,
+    "iceMapNext": true
+  }
+}

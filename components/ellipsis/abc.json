@@ -1,0 +1,15 @@
+{
+  "name": "foundation-symbol",
+  "description": "",
+  "type": "ice",
+  "repository": {
+    "type": "component",
+    "template": "@ali/ice-template-component",
+    "templateVersion": "0.2.2"
+  },
+  "options": {
+    "themePackage": "@icedesign/skin",
+    "styleAutoMixin": true,
+    "iceMapNext": true
+  }
+}

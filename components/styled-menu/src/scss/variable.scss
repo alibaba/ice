@@ -1,0 +1,39 @@
+// ice-menu variables
+// --------------------------------------------------
+
+////
+/// @module @ali/ice-menu: ICE 导航组件
+/// @tag IceMenu
+/// @category custom
+/// @family ice
+/// @varPrefix $ice-menu
+/// @classPrefix ice-menu
+////
+
+// -------------- variable --------------
+$ice-menu-prefix: '.ice-menu';
+
+// Statement: Normal
+// ----------------------------------------
+
+/// 主体色
+/// @namespace statement/normal
+/// @type color
+$primary-color: #fff !default;
+
+/// 旋转球大小
+/// @namespace statement/normal
+/// @type size
+$ball-size: 15px !default;
+
+$margin: 2px !default;
+
+/// 行高
+/// @namespace statement/normal
+/// @type size
+$line-height: 35px !default;
+
+/// 行宽
+/// @namespace statement/normal
+/// @type size
+$line-width: 4px !default;

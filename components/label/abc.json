@@ -1,0 +1,13 @@
+{
+  "name": "ice-label",
+  "description": "创建标签组件用来突出所要显示的信息",
+  "type": "ice",
+  "repository": {
+    "type": "component"
+  },
+  "options": {
+    "themePackage": "@icedesign/skin",
+    "styleAutoMixin": true,
+    "iceMapNext": false
+  }
+}

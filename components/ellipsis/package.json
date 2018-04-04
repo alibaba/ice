@@ -1,0 +1,50 @@
+{
+  "name": "@icedesign/ellipsis",
+  "version": "0.1.2",
+  "description": "多行文字控制展示组件",
+  "main": "lib/index.js",
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
+  "scripts": {},
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice-component"
+  ],
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "prop-types": "^15.6.0",
+    "@icedesign/base": "^0.1.0",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "devDependencies": {
+    "@icedesign/base": "^0.1.4",
+    "@icedesign/skin": "^0.1.2",
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1"
+  },
+  "typings": "lib/index.d.ts",
+  "fusionConfig": {
+    "docs": "demo/",
+    "variable": "lib/scss/variable.scss",
+    "entry": "lib/index.scss",
+    "deps": []
+  }
+}

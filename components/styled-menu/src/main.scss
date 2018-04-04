@@ -1,0 +1,798 @@
+@import '~@icedesign/base/lib/core/index.scss';
+@import './scss/variable';
+
+#{$ice-menu-prefix} {
+  outline: none;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 0;
+  list-style: none;
+  z-index: 1050;
+  color: #666666;
+  line-height: 44px;
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.06);
+  font-size: 12px;
+
+  &#{$ice-menu-prefix}-vertical,
+  &#{$ice-menu-prefix}-inline,
+  &#{$ice-menu-prefix}-horizontal {
+    z-index: auto;
+    .ice-icon-stable,
+    .next-icon {
+      margin-right: 8px;
+    }
+  }
+
+  #{$ice-menu-prefix}-hidden {
+    display: none;
+  }
+
+  &#{$ice-menu-prefix}-root {
+    box-shadow: none;
+
+    // 只有第一层的 menuitem 才会全部高亮，否则只是背景色高亮
+    > #{$ice-menu-prefix}-item {
+      &:hover {
+        color: $color-brand1-6;
+        background: $color-brand1-1;
+        &:before {
+          content: ' ';
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 4px;
+          background: $color-b1-6;
+          position: absolute;
+        }
+      }
+      > a {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+        &:hover {
+          color: $color-brand1-6;
+        }
+      }
+    }
+    > #{$ice-menu-prefix}-item-selected {
+      color: $color-brand1-6;
+      background: $color-brand1-1;
+      &:before {
+        content: ' ';
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 4px;
+        background: $color-b1-6;
+        position: absolute;
+      }
+    }
+
+    // 只有第一层的 submenu 才会有高亮
+    > #{$ice-menu-prefix}-submenu-active > #{$ice-menu-prefix}-submenu-title,
+    > #{$ice-menu-prefix}-submenu-selected > #{$ice-menu-prefix}-submenu-title {
+      color: $color-brand1-6;
+      background: $color-brand1-1;
+      &:before {
+        content: ' ';
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 4px;
+        background: $color-b1-6;
+        position: absolute;
+      }
+    }
+
+    // inline 模式下第一层不会具备高亮状态
+    &#{$ice-menu-prefix}-inline {
+      > #{$ice-menu-prefix}-submenu > #{$ice-menu-prefix}-submenu-title,
+      > #{$ice-menu-prefix}-item {
+        color: #666;
+        background: transparent;
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
+
+  // menuitem
+  #{$ice-menu-prefix}-item,
+  #{$ice-menu-prefix}-submenu-title {
+    line-height: 42px;
+    height: 42px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #{$ice-menu-prefix}-item {
+    cursor: pointer;
+    margin: 0;
+    padding: 0 20px;
+    position: relative;
+    display: block;
+    white-space: nowrap;
+    background: transparent;
+
+    // 只有第一层的 menuitem 附带全部高亮
+    &:hover {
+      color: $color-brand1-6;
+      background: $color-brand1-1;
+    }
+    > a {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      &:hover {
+        color: $color-brand1-6;
+        // background: $color-brand1-1;
+      }
+    }
+  }
+
+  #{$ice-menu-prefix}-item-selected {
+    color: $color-brand1-6;
+    // background: $color-brand1-1;
+    // &:before {
+    //   content: ' ';
+    //   top: 0;
+    //   left: 0;
+    //   bottom: 0;
+    //   width: 4px;
+    //   background: $color-b1-6;
+    //   position: absolute;
+    // }
+    // > a,
+    // > a:hover {
+    //   color: $color-brand1-6;
+    //   background: $color-brand1-1;
+    //   &:before {
+    //     content: ' ';
+    //     top: 0;
+    //     left: 0;
+    //     bottom: 0;
+    //     width: 4px;
+    //     background: $color-b1-6;
+    //     position: absolute;
+    //   }
+    // }
+  }
+
+  #{$ice-menu-prefix}-submenu-title {
+    cursor: pointer;
+    margin: 0;
+    padding: 0 20px;
+    position: relative;
+    display: block;
+    white-space: nowrap;
+    background: transparent;
+  }
+  // #{$ice-menu-prefix}-submenu-title:active {
+  //   background: $color-brand1-1;
+  //   color: $color-brand1-6;
+  //   &:before {
+  //     content: ' ';
+  //     top: 0;
+  //     left: 0;
+  //     bottom: 0;
+  //     width: 4px;
+  //     background: $color-b1-6;
+  //     position: absolute;
+  //   }
+  // }
+
+  #{$ice-menu-prefix}-item-divider {
+    height: 1px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.06);
+    line-height: 0;
+  }
+
+  // #{$ice-menu-prefix}-item-active,
+  // &:not(#{$ice-menu-prefix}-inline) #{$ice-menu-prefix}-submenu-open,
+  // #{$ice-menu-prefix}-submenu-active,
+  // #{$ice-menu-prefix}-submenu-title:hover {
+  //   color: $color-brand1-6;
+  //   background: $color-brand1-1;
+  //   &:before {
+  //     content: ' ';
+  //     top: 0;
+  //     left: 0;
+  //     bottom: 0;
+  //     width: 4px;
+  //     background: $color-b1-6;
+  //     position: absolute;
+  //   }
+  // }
+
+  & > #{$ice-menu-prefix}-item-divider {
+    height: 1px;
+    margin: 1px 0;
+    overflow: hidden;
+    padding: 0;
+    line-height: 0;
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+
+  #{$ice-menu-prefix}-item-group-list {
+    #{$ice-menu-prefix}-item,
+    #{$ice-menu-prefix}-submenu-title {
+      padding: 0 16px 0 28px;
+    }
+  }
+
+  &#{$ice-menu-prefix}-horizontal {
+    border: 0;
+    box-shadow: none;
+
+    > #{$ice-menu-prefix}-item:hover,
+    > #{$ice-menu-prefix}-item-active,
+    > #{$ice-menu-prefix}-submenu #{$ice-menu-prefix}-submenu-title:hover {
+      background-color: transparent;
+    }
+    > #{$ice-menu-prefix}-item,
+    > #{$ice-menu-prefix}-submenu {
+      position: relative;
+      float: left;
+    }
+
+    > #{$ice-menu-prefix}-submenu {
+      &:hover {
+        color: $color-brand1-6;
+        background: transparent;
+        &:before {
+          display: none;
+        }
+      }
+    }
+    // 横向的不需要这些背景色
+    > #{$ice-menu-prefix}-item-selected,
+    > #{$ice-menu-prefix}-submenu-active > #{$ice-menu-prefix}-submenu-title,
+    > #{$ice-menu-prefix}-submenu-selected > #{$ice-menu-prefix}-submenu-title {
+      color: $color-brand1-6;
+      background: transparent;
+      &:before {
+        display: none;
+      }
+    }
+
+    > #{$ice-menu-prefix}-item {
+      &:hover {
+        color: $color-brand1-6;
+        background: transparent;
+        &:before {
+          display: none;
+        }
+      }
+      a:hover {
+        background: transparent;
+      }
+    }
+
+    &:after {
+      content: '\20';
+      display: block;
+      height: 0;
+      clear: both;
+    }
+  }
+
+  &#{$ice-menu-prefix}-vertical {
+    &#{$ice-menu-prefix}-sub {
+      border-right: 0;
+      padding: 0;
+      transform-origin: 0 0;
+      border-radius: 6px;
+
+      #{$ice-menu-prefix}-item {
+        border-right: 0;
+        margin-left: 0;
+        left: 0;
+      }
+
+      // #{$ice-menu-prefix}-item-selected {
+      //   position: relative;
+
+      //   &:after {
+      //     content: ' ';
+      //     top: 0;
+      //     left: 0;
+      //     bottom: 0;
+      //     width: 4px;
+      //     background: $color-b1-6;
+      //     position: absolute;
+      //   }
+      // }
+    }
+  }
+
+  &#{$ice-menu-prefix}-inline {
+    #{$ice-menu-prefix} {
+      box-shadow: none;
+    }
+    #{$ice-menu-prefix}-sub {
+      #{$ice-menu-prefix}-submenu-active #{$ice-menu-prefix}-submenu-title,
+      #{$ice-menu-prefix}-submenu-selected #{$ice-menu-prefix}-submenu-title {
+        color: #666;
+      }
+      #{$ice-menu-prefix}-item {
+        &:hover {
+          &:before {
+            content: ' ';
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 4px;
+            background: $color-b1-6;
+            position: absolute;
+          }
+        }
+      }
+      #{$ice-menu-prefix}-item-selected {
+        background: $color-b1-1;
+        &:before {
+          content: ' ';
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 4px;
+          background: $color-b1-6;
+          position: absolute;
+        }
+      }
+    }
+    // #{$ice-menu-prefix}-selected,
+    // #{$ice-menu-prefix}-item-selected {
+    //   transform: translateZ(0);
+    //   background-color: $color-b1-1;
+    //   position: relative;
+    //   &:after {
+    //     content: ' ';
+    //     top: 0;
+    //     left: 0;
+    //     bottom: 0;
+    //     width: 4px;
+    //     background: $color-b1-6;
+    //     position: absolute;
+    //   }
+    // }
+    // #{$ice-menu-prefix}-submenu-selected #{$ice-menu-prefix}-submenu-title {
+    //   color: #666;
+    // }
+  }
+
+  &#{$ice-menu-prefix}-collapse {
+    #{$ice-menu-prefix}-collapse-hide {
+      display: none;
+    }
+
+    #{$ice-menu-prefix}-submenu-vertical
+      > #{$ice-menu-prefix}-submenu-title:after {
+      display: none;
+    }
+    #{$ice-menu-prefix}-item,
+    #{$ice-menu-prefix}-submenu-title {
+      text-overflow: initial;
+    }
+
+    // &#{$ice-menu-prefix}-vertical > #{$ice-menu-prefix}-submenu-selected {
+    // background-color: $color-b1-1;
+    // position: relative;
+
+    // &:after {
+    //   content: ' ';
+    //   top: 0;
+    //   left: 0;
+    //   bottom: 0;
+    //   width: 4px;
+    //   background: $color-b1-6;
+    //   position: absolute;
+    // }
+    // }
+    // &#{$ice-menu-prefix}-vertical
+    //   > #{$ice-menu-prefix}-submenu-vertical
+    //   > #{$ice-menu-prefix}-submenu-title {
+    //   text-overflow: clip;
+    //   &:after {
+    //     content: '';
+    //     display: none;
+    //   }
+    // }
+  }
+
+  #{$ice-menu-prefix}-item-disabled {
+    // 禁用的 item 啥也没有
+    &:hover {
+      background: transparent !important;
+      &:before {
+        display: none;
+      }
+    }
+  }
+  #{$ice-menu-prefix}-item-disabled,
+  #{$ice-menu-prefix}-submenu-disabled {
+    color: rgba(0, 0, 0, 0.25) !important;
+    cursor: not-allowed;
+    background: none;
+    border-color: transparent !important;
+  }
+  #{$ice-menu-prefix}-item-disabled > a,
+  #{$ice-menu-prefix}-submenu-disabled > a {
+    color: rgba(0, 0, 0, 0.25) !important;
+    pointer-events: none;
+  }
+
+  // submenu
+  #{$ice-menu-prefix}-submenu {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    // 第一层的 submenu 高亮所有，见上面 root 部分
+    // 之后层级 submenu 都是只高亮文字颜色
+    &#{$ice-menu-prefix}-submenu-active > #{$ice-menu-prefix}-submenu-title,
+    &#{$ice-menu-prefix}-submenu-selected > #{$ice-menu-prefix}-submenu-title {
+      color: $color-brand1-6;
+    }
+
+    // #{$ice-menu-prefix}-sub {
+    //   cursor: initial;
+    // }
+  }
+  // &:not(#{$ice-menu-prefix}-inline) #{$ice-menu-prefix}-submenu-open {
+  //   z-index: 1050;
+  // }
+  #{$ice-menu-prefix}-submenu-horizontal {
+    > #{$ice-menu-prefix} {
+      top: 100%;
+      left: 0;
+      position: absolute;
+      min-width: 100%;
+      margin-top: 7px;
+      z-index: 1050;
+      padding: 6px 0;
+    }
+  }
+  #{$ice-menu-prefix}-submenu-vertical {
+    z-index: 1;
+
+    > #{$ice-menu-prefix} {
+      top: 0;
+      left: 100%;
+      position: absolute;
+      min-width: 160px;
+      margin-left: 15px;
+      z-index: 1050;
+      padding: 6px 0;
+      &:after {
+        content: ' ';
+        position: absolute;
+        top: 15px;
+        left: -5px;
+        width: 10px;
+        height: 10px;
+        background: #fff;
+        box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.06);
+        transform: rotate(45deg);
+        z-index: -1;
+      }
+    }
+
+    > #{$ice-menu-prefix}-submenu-title:after {
+      // Each Next theme may have the different icons so the content below is uncontrolled, so use iceicon2 to fix this.
+      // We don't use <IceIcon /> because of the transform effect
+      font-family: 'iceicon2' !important;
+      font-style: normal;
+      vertical-align: baseline;
+      text-align: center;
+      text-transform: none;
+      text-rendering: auto;
+      position: absolute;
+      transition: transform 0.3s ease;
+      content: '\E61f';
+      right: 16px;
+      -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=3)';
+      transform: rotate(270deg) scale(0.75);
+    }
+  }
+
+  #{$ice-menu-prefix}-submenu-inline {
+    > #{$ice-menu-prefix}-submenu-title:after {
+      font-family: 'iceicon2' !important;
+      font-style: normal;
+      vertical-align: baseline;
+      text-align: center;
+      text-transform: none;
+      text-rendering: auto;
+      position: absolute;
+      transition: transform 0.3s ease;
+      content: '\E61f';
+      right: 16px;
+      top: 0;
+      display: inline-block;
+      font-size: 16px;
+      font-size: 12px \9;
+      transform: scale(0.66666667) rotate(0deg);
+      zoom: 1;
+      filter: none;
+    }
+  }
+
+  // #{$ice-menu-prefix}-submenu-open#{$ice-menu-prefix}-submenu-inline
+  //   > #{$ice-menu-prefix}-submenu-title:after {
+  //   transform: rotate(180deg) scale(0.75);
+  // }
+
+  #{$ice-menu-prefix}-sub {
+    // &#{$ice-menu-prefix}-inline {
+    //   padding: 0;
+    //   border: 0;
+    //   box-shadow: none;
+    // }
+
+    // &#{$ice-menu-prefix}-inline > #{$ice-menu-prefix}-item,
+    // &#{$ice-menu-prefix}-inline
+    //   > #{$ice-menu-prefix}-submenu
+    //   > #{$ice-menu-prefix}-submenu-title {
+    //   line-height: 42px;
+    //   height: 42px;
+    //   list-style-type: disc;
+    //   list-style-position: inside;
+    // }
+    // &#{$ice-menu-prefix}-inline
+    //   #{$ice-menu-prefix}-item-group-title {
+    //   padding-left: 32px;
+    // }
+  }
+
+  // menugroup
+  #{$ice-menu-prefix}-item-group-list {
+    margin: 0;
+    padding: 0;
+  }
+  #{$ice-menu-prefix}-item-group-title {
+    color: #999;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 8px 16px;
+  }
+}
+
+// dark theme
+#{$ice-menu-prefix}-dark {
+  color: #ffffff;
+  background: #333333;
+  #{$ice-menu-prefix} {
+    background: #333333;
+  }
+
+  &#{$ice-menu-prefix}-root {
+    > #{$ice-menu-prefix}-item > a,
+    > #{$ice-menu-prefix}-submenu > #{$ice-menu-prefix}-submenu-title,
+    > #{$ice-menu-prefix}-item {
+      color: #999;
+      background-color: transparent;
+    }
+
+    > #{$ice-menu-prefix}-submenu-active > #{$ice-menu-prefix}-submenu-title {
+      color: $color-brand1-6;
+      background-color: #1e1e1e;
+    }
+
+    > #{$ice-menu-prefix}-item:hover {
+      background: #1e1e1e;
+    }
+
+    #{$ice-menu-prefix}-sub #{$ice-menu-prefix}-item-selected,
+    #{$ice-menu-prefix}-sub
+      #{$ice-menu-prefix}-submenu-selected
+      #{$ice-menu-prefix}-submenu-title {
+      background: transparent;
+    }
+
+    #{$ice-menu-prefix}-submenu-selected > #{$ice-menu-prefix}-submenu-title,
+    #{$ice-menu-prefix}-item-selected {
+      color: $color-brand1-6;
+      background: #1e1e1e;
+    }
+
+    &#{$ice-menu-prefix}-horizontal {
+      > #{$ice-menu-prefix}-submenu-active > #{$ice-menu-prefix}-submenu-title {
+        background-color: transparent;
+      }
+      #{$ice-menu-prefix}-submenu-active:hover,
+      #{$ice-menu-prefix}-submenu-active:hover
+        > #{$ice-menu-prefix}-submenu-title,
+      #{$ice-menu-prefix}-submenu #{$ice-menu-prefix}-submenu-title:hover,
+      #{$ice-menu-prefix}-submenu-selected #{$ice-menu-prefix}-submenu-title,
+      #{$ice-menu-prefix}-item:hover,
+      #{$ice-menu-prefix}-item-selected {
+        color: $color-brand1-6;
+        background: transparent;
+      }
+
+      #{$ice-menu-prefix}-sub {
+        #{$ice-menu-prefix}-item:hover {
+          color: $color-brand1-6;
+          background: #1e1e1e;
+        }
+      }
+    }
+
+    &#{$ice-menu-prefix}-inline {
+      > #{$ice-menu-prefix}-item {
+        color: #999;
+        &:hover {
+          background: transparent;
+        }
+      }
+      #{$ice-menu-prefix}-sub {
+        #{$ice-menu-prefix}-item-selected {
+          background: #1e1e1e;
+        }
+        #{$ice-menu-prefix}-submenu-active:hover,
+        #{$ice-menu-prefix}-submenu-active #{$ice-menu-prefix}-submenu-title,
+        #{$ice-menu-prefix}-submenu-selected #{$ice-menu-prefix}-submenu-title {
+          color: #fff;
+          background: transparent;
+        }
+      }
+    }
+
+    &#{$ice-menu-prefix}-inline {
+      > #{$ice-menu-prefix}-submenu > #{$ice-menu-prefix}-submenu-title {
+        color: #999;
+        background: transparent;
+        &:before {
+          display: none;
+        }
+      }
+      > #{$ice-menu-prefix}-submenu > #{$ice-menu-prefix}-submenu-title:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  #{$ice-menu-prefix}-item-disabled,
+  #{$ice-menu-prefix}-submenu-disabled {
+    color: #666 !important;
+  }
+  #{$ice-menu-prefix}-item-disabled > a,
+  #{$ice-menu-prefix}-submenu-disabled > a {
+    color: #666 !important;
+  }
+
+  #{$ice-menu-prefix}-submenu #{$ice-menu-prefix}-submenu-title {
+    &:hover {
+      color: $color-brand1-6;
+      background: #1e1e1e;
+    }
+  }
+
+  #{$ice-menu-prefix}-submenu-vertical > #{$ice-menu-prefix}:after {
+    background: #333;
+  }
+
+  #{$ice-menu-prefix}-sub {
+    color: #fff;
+    #{$ice-menu-prefix}-item,
+    #{$ice-menu-prefix}-submenu-active {
+      &:hover {
+        color: $color-brand1-6;
+        background: #1e1e1e;
+      }
+    }
+  }
+
+  // color: #ffffff;
+  // background: #333333;
+  // #{$ice-menu-prefix} {
+  //   background: #333333;
+  // }
+
+  // #{$ice-menu-prefix}-item a,
+  // #{$ice-menu-prefix}-submenu,
+  // #{$ice-menu-prefix}-item {
+  //   color: #fff;
+  // }
+  // #{$ice-menu-prefix}-item-selected {
+  //   color: $color-brand1-6;
+  // }
+
+  //   > #{$ice-menu-prefix}-submenu-selected > #{$ice-menu-prefix}-submenu-title,
+  //   > #{$ice-menu-prefix}-item:hover,
+  //   > #{$ice-menu-prefix}-item-selected,
+  //   > #{$ice-menu-prefix}-submenu:hover > #{$ice-menu-prefix}-submenu-title {
+  //     position: relative;
+  //     color: $color-brand1-6;
+
+  //     &:before {
+  //       content: ' ';
+  //       top: 0;
+  //       left: 0;
+  //       bottom: 0;
+  //       width: 4px;
+  //       background: $color-b1-6;
+  //       position: absolute;
+  //     }
+  //   }
+
+  //   > #{$ice-menu-prefix}-item-selected a,
+  //   > #{$ice-menu-prefix}-item a:hover {
+  //     color: $color-brand1-6;
+  //   }
+  // }
+
+  // #{$ice-menu-prefix}-item-disabled,
+  // #{$ice-menu-prefix}-submenu-disabled {
+  //   color: #666 !important;
+  //   cursor: not-allowed;
+  //   background: none;
+  //   border-color: transparent !important;
+  // }
+  // #{$ice-menu-prefix}-item-disabled > a,
+  // #{$ice-menu-prefix}-submenu-disabled > a {
+  //   color: #333 !important;
+  //   pointer-events: none;
+  // }
+
+  // #{$ice-menu-prefix}-submenu-selected {
+  //   color: $color-brand1-6;
+  // }
+  // #{$ice-menu-prefix}-submenu-vertical #{$ice-menu-prefix}:after {
+  //   background: #333333;
+  // }
+
+  // #{$ice-menu-prefix}-submenu-vertical #{$ice-menu-prefix}-item-selected {
+  //   color: $color-brand1-6;
+  // }
+
+  // #{$ice-menu-prefix}-item:hover,
+  // #{$ice-menu-prefix}-item-active,
+  // #{$ice-menu-prefix}-submenu #{$ice-menu-prefix}-submenu-title:hover {
+  //   background-color: #1e1e1e;
+  //   color: $color-brand1-6;
+  // }
+
+  // #{$ice-menu-prefix}-submenu-vertical
+  //   > #{$ice-menu-prefix}-submenu-title:after {
+  //   color: #999999;
+  // }
+
+  // &#{$ice-menu-prefix}-inline {
+  //   > #{$ice-menu-prefix}-submenu > #{$ice-menu-prefix}-submenu-title,
+  //   > #{$ice-menu-prefix}-submenu:hover > #{$ice-menu-prefix}-submenu-title {
+  //     background: transparent;
+  //     position: relative;
+  //     color: #999;
+
+  //     &:before {
+  //       display: none;
+  //     }
+  //   }
+
+  //   #{$ice-menu-prefix}-sub
+  //     #{$ice-menu-prefix}-submenu
+  //     #{$ice-menu-prefix}-submenu-title {
+  //     color: #fff;
+  //   }
+
+  //   #{$ice-menu-prefix}-item-selected {
+  //     background-color: #1e1e1e;
+  //     color: $color-brand1-6;
+  //   }
+  // }
+
+  // &#{$ice-menu-prefix}-collapse {
+  //   &#{$ice-menu-prefix}-vertical
+  //     > #{$ice-menu-prefix}-submenu-selected
+  //     > #{$ice-menu-prefix}-submenu-title,
+  //   &#{$ice-menu-prefix}-vertical > #{$ice-menu-prefix}-submenu-selected {
+  //     background-color: #1e1e1e;
+  //     color: $color-brand1-6;
+  //   }
+  // }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "@icedesign/title",
+  "version": "0.1.1",
+  "description": "标题组件，可以用在动态表单里面作为表单分隔符。",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "demo/",
+    "theme/"
+  ],
+  "scripts": {
+    "lint": "eslint . --ext '.js,.jsx' --fix",
+    "prepublish": "npm run lint"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice-component"
+  ],
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.10",
+    "react": "*",
+    "@icedesign/base": "^0.1.0"
+  },
+  "devDependencies": {
+    "@icedesign/icon": "^0.1.0",
+    "babel-eslint": "^8.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "react-copy-to-clipboard": "^5.0.0",
+    "eslint": "^4.13.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3"
+  },
+  "typings": "lib/index.d.ts"
+}

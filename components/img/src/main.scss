@@ -1,0 +1,15 @@
+@import './scss/variable';
+
+#{$ice-img-prefix} {
+  &.rounded {
+    border-radius: $border-radius;
+  }
+
+  &.circle {
+    border-radius: 50%;
+  }
+
+  &.sharp {
+
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "@icedesign/data-binder",
+  "version": "0.1.1",
+  "description": "ICE 前后端数据绑定、交互方案",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "demo/",
+    "theme/"
+  ],
+  "scripts": {
+    "lint": "eslint . --ext '.js,.jsx' --fix",
+    "prepublish": "npm run lint"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "ISC",
+  "keywords": [
+    "ice-component"
+  ],
+  "dependencies": {
+    "axios": "^0.17.1",
+    "deepmerge": "^2.0.1",
+    "pure-render-decorator": "^1.2.1",
+    "@icedesign/base": "^0.1.0"
+  },
+  "devDependencies": {
+    "@icedesign/skin": "^0.1.2",
+    "babel-eslint": "^8.0.3",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "eslint-plugin-react": "^7.5.1",
+    "express": "^4.14.0",
+    "eslint": "^4.13.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3"
+  },
+  "typings": "lib/index.d.ts"
+}

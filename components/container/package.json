@@ -1,0 +1,49 @@
+{
+  "name": "@icedesign/container",
+  "version": "0.1.1",
+  "description": "",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "theme/",
+    "demo/"
+  ],
+  "scripts": {
+    "lint": "eslint . --ext '.js,.jsx' --fix",
+    "prepublish": "npm run lint"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:ice/workspace-outside.git"
+  },
+  "license": "ISC",
+  "keywords": [
+    "ice",
+    "ice-component"
+  ],
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "@icedesign/base": "^0.1.1"
+  },
+  "devDependencies": {
+    "@icedesign/skin": "^0.1.2",
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3"
+  },
+  "typings": "lib/index.d.ts",
+  "fusionConfig": {
+    "docs": "demo/",
+    "variable": "lib/scss/variable.scss",
+    "entry": "lib/index.scss",
+    "deps": []
+  }
+}

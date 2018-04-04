@@ -1,0 +1,13 @@
+{
+  "name": "ice-data-binder",
+  "description": "ICE 前后端数据绑定、交互方案",
+  "type": "ice",
+  "repository": {
+    "type": "component"
+  },
+  "options": {
+    "themePackage": "@icedesign/skin",
+    "styleAutoMixin": true,
+    "iceMapNext": false
+  }
+}

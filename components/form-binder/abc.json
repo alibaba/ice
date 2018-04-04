@@ -1,0 +1,15 @@
+{
+  "name": "ice-form-binder",
+  "description": "ICE 表单数据获取方案",
+  "type": "ice",
+  "repository": {
+    "type": "component",
+    "template": "@ali/ice-template-component",
+    "templateVersion": "0.2.1"
+  },
+  "options": {
+    "themePackage": "@icedesign/skin",
+    "styleAutoMixin": true,
+    "iceMapNext": true
+  }
+}

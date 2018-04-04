@@ -1,0 +1,107 @@
+@charset "UTF-8";
+@import 'scss/variable';
+
+@mixin layout-theme ($theme, $bgColor, $textColor) {
+  #{$component-prifix}-theme-#{$theme} {
+    &#{$component-prifix}-header {
+      background-color: $bgColor;
+    }
+    &#{$component-prifix}-aside {
+      background-color: $bgColor;
+    }
+  }
+}
+@include layout-theme('dark', #404040, #FFF);
+@include layout-theme('light', #FFF, #404040);
+
+#{$component-prifix} {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  background-color: #ececec;
+  &-has-aside {
+    flex-direction: row;
+  }
+  &-fixable {
+    height: 0;
+    max-height: 100vh;
+    min-height: 100vh; // @hack flex-grow not working in ie 11
+    overflow: hidden;
+    & #{$component-prifix}-section {
+      overflow: hidden; // @hack flex-grow not working in firefox
+    }
+  }
+  &-scrollable {
+    overflow: auto !important;
+    display: block !important;
+  }
+  #{$component-prifix}-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    &-has-aside {
+      flex-direction: row;
+      #{$component-prifix}-section-inner {
+        flex-direction: row;
+      }
+    }
+  }
+  #{$component-prifix}-section-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #{$component-prifix}-header {
+    display: flex;
+    flex: none;
+    box-shadow: 3px 0 3px rgba(0, 0, 0, 0.3);
+    z-index: 1; // shadow 盖住 main
+  }
+  #{$component-prifix}-header-right {
+    display: flex;
+    flex: auto;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  #{$component-prifix}-footer {
+    flex: none;
+    display: block;
+  }
+  #{$component-prifix}-main {
+    flex: auto;
+    display: block;
+  }
+  #{$component-prifix}-aside {
+    display: block;
+    transition: all 0.2s linear;
+    flex: 0 0 200px;
+    &#{$component-prifix}-aside-has-trigger {
+      position: relative;
+      #{$component-prifix}-aside-trigger {
+        height: 40px;
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    }
+    #{$component-prifix}-aside-trigger {
+      background-color: rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      .next-icon {
+        transition: all 0.2s linear;
+      }
+      &#{$component-prifix}-aside-trigger-collapsed {
+        .next-icon {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+}

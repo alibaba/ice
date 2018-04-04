@@ -1,0 +1,48 @@
+{
+  "name": "@icedesign/img",
+  "version": "0.1.1",
+  "description": "ICE 图片组件。",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "demo/"
+  ],
+  "scripts": {
+    "lint": "eslint . --ext '.js,.jsx' --fix",
+    "prepublish": "npm run lint"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "ISC",
+  "keywords": [
+    "ice",
+    "ice-component"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.1.0",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.10"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint": "^4.13.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3"
+  },
+  "typings": "lib/index.d.ts",
+  "fusionConfig": {
+    "docs": "demo/",
+    "variable": "lib/scss/variable.scss",
+    "entry": "lib/index.scss",
+    "deps": []
+  }
+}

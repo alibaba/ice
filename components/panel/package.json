@@ -1,0 +1,43 @@
+{
+  "name": "@icedesign/panel",
+  "version": "0.1.1",
+  "description": "面板组件：虽然不总是必须，但是某些时候你可能需要将某些 DOM 内容放到一个盒子里。对于这种情况，可以试试面板组件",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "theme/",
+    "demo/"
+  ],
+  "scripts": {
+    "lint": "eslint . --ext '.js,.jsx' --fix",
+    "prepublish": "npm run lint"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:ice-components/panel.git"
+  },
+  "license": "ISC",
+  "keywords": [
+    "ice-component"
+  ],
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "prop-types": "^15.6.0",
+    "@icedesign/base": "^0.1.0"
+  },
+  "devDependencies": {
+    "@icedesign/skin": "^0.1.2",
+    "babel-eslint": "^8.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint": "^4.13.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3"
+  },
+  "typings": "lib/index.d.ts"
+}
