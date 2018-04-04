@@ -1,7 +1,7 @@
 {
-  "name": "@icedesign/product-intro-block",
+  "name": "@icedesign/grouped-form-block",
   "version": "0.1.1",
-  "description": "用于左文右图产品介绍模块",
+  "description": "",
   "files": [
     "src/",
     "demo/",
@@ -32,6 +32,7 @@
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.1",
+    "@icedesign/form-binder": "^0.1.4",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
@@ -42,10 +43,11 @@
     "react-dom": "*"
   },
   "blockConfig": {
-    "name": "product-intro",
-    "snapshot": "https://img.alicdn.com/tfs/TB1FiYUgGmWBuNjy1XaXXXCbXXa-1373-665.png",
-    "title": "产品介绍区块",
-    "categories": ["信息展示"
+    "name": "grouped-form",
+    "snapshot": "https://img.alicdn.com/tfs/TB1faTKg1OSBuNjy0FdXXbDnVXa-2306-1156.png",
+    "title": "分组显示的表单",
+    "categories": [
+      "表单"
     ],
     "themePackage": "@icedesign/skin"
   }

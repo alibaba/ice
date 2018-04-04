@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://alibaba.github.io/ice">
-    <img alt="ICE" src="https://gw.alicdn.com/tfs/TB1FEW2nfDH8KJjy1XcXXcpdXXa-487-132.svg" width="200">
+    <img alt="飞冰" src="https://img.alicdn.com/tfs/TB1czpfiFOWBuNjy0FiXXXFxVXa-504-132.png" width="200">
   </a>
 </p>
 <p align="center">海量可复用物料，通过 GUI 工具极速构建中后台应用</p>
@@ -22,7 +22,7 @@
 
 下载 [Iceworks](https://alibaba.github.io/ice/#/iceworks) 并创建项目，然后创建页面进行物料搭建组合，之后可以打开编辑器进行二次编码，完成之后点击构建即可打包出可用的 JS、CSS bundle。
 
-详细步骤请参见文档：[Iceworks 快速上手](https://alibaba.github.io/ice/#/iceworks/start)。
+详细步骤请参见文档：[Iceworks 快速上手](https://alibaba.github.io/ice/#/docs/iceworks)。
 
 ## 物料开发和发布方式
 
@@ -43,4 +43,6 @@
 
 扫码进入飞冰钉钉群（加入钉钉群即可实时交流、反馈）
 
+* 飞冰 ❶ (已满）
+* 飞冰 ❷ 
 <img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iVfbe1SSBuNjy0FlXXbBpVXa-640-880.jpg" width="200">

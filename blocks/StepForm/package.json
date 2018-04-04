@@ -1,7 +1,7 @@
 {
-  "name": "@icedesign/product-intro-block",
+  "name": "@icedesign/step-form-block",
   "version": "0.1.1",
-  "description": "用于左文右图产品介绍模块",
+  "description": "",
   "files": [
     "src/",
     "demo/",
@@ -30,8 +30,9 @@
     "prepublish": "ice block build"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.1",
+    "@icedesign/form-binder": "^0.1.4",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
@@ -42,10 +43,11 @@
     "react-dom": "*"
   },
   "blockConfig": {
-    "name": "product-intro",
-    "snapshot": "https://img.alicdn.com/tfs/TB1FiYUgGmWBuNjy1XaXXXCbXXa-1373-665.png",
-    "title": "产品介绍区块",
-    "categories": ["信息展示"
+    "name": "step-form",
+    "snapshot": "https://img.alicdn.com/tfs/TB1txzNhntYBeNjy1XdXXXXyVXa-2052-792.png",
+    "title": "步骤形表单",
+    "categories": [
+      "表单"
     ],
     "themePackage": "@icedesign/skin"
   }

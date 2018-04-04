@@ -1,7 +1,7 @@
 {
-  "name": "@icedesign/product-intro-block",
+  "name": "@icedesign/column-form-block",
   "version": "0.1.1",
-  "description": "用于左文右图产品介绍模块",
+  "description": "",
   "files": [
     "src/",
     "demo/",
@@ -30,22 +30,24 @@
     "prepublish": "ice block build"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.1",
+    "@icedesign/form-binder": "^0.1.4",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
     "@icedesign/skin": "latest",
+    "ice-scripts": "^1.1.1",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
-    "name": "product-intro",
-    "snapshot": "https://img.alicdn.com/tfs/TB1FiYUgGmWBuNjy1XaXXXCbXXa-1373-665.png",
-    "title": "产品介绍区块",
-    "categories": ["信息展示"
+    "name": "column-form",
+    "snapshot": "https://img.alicdn.com/tfs/TB1NvCkgY9YBuNjy0FgXXcxcXXa-2318-566.png",
+    "title": "分栏表单",
+    "categories": [
+      "表单"
     ],
     "themePackage": "@icedesign/skin"
   }

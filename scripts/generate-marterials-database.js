@@ -10,6 +10,7 @@ const uppercamelcase = require('uppercamelcase');
 const request = require('request-promise');
 const rp = require('request-promise');
 const depAnalyze = require('./helpers/dep-analyze');
+const { cut } = require('./participle');
 
 /**
  * 生成 blocks 信息列表
@@ -42,12 +43,20 @@ function generateBlocks(files, SPACE) {
         className,
       };
     });
+
+    // 分词 payload
+    const participle = {
+      title: cut(pkg.blockConfig.title),
+      content: cut(pkg.description),
+    };
+
     const payload = {
       npm: pkg.name,
       version: pkg.version,
       name: pkg.blockConfig.name,
       className: uppercamelcase(pkg.blockConfig.name),
       title: pkg.blockConfig.title,
+      participle,
       categories: pkg.blockConfig.categories || [],
       description: pkg.description,
       snapshot: pkg.blockConfig.snapshot,
@@ -85,9 +94,16 @@ function generateScaffolds(files, SPACE) {
       Object.assign(generatorJson, require(generatorJsonPath));
     }
 
+    // 分词 payload
+    const participle = {
+      title: cut(pkg.scaffoldConfig.title),
+      content: cut(pkg.description),
+    };
+
     return {
       ...pkg.scaffoldConfig,
       npm: pkg.name,
+      participle,
       description: pkg.description,
       version: pkg.version,
       homepage: pkg.homepage || '',
