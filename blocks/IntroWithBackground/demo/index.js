@@ -12,8 +12,8 @@ const props = {
 };
 
 render(
-  <DemoLayout type="ice-design">
+  <div type="ice-design">
     <Block {...props} />
-  </DemoLayout>,
+  </div>,
   document.querySelector('#mountNode')
 );
