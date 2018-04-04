@@ -43,7 +43,7 @@ module.exports = function(paths, options = {}, themeConfig = {}) {
     new webpack.DefinePlugin(defineVriables),
 
     new ExtractTextPlugin({
-      filename: '[name].css',
+      filename: 'css/[name].css',
       disable: false,
       allChunks: true,
     }),
