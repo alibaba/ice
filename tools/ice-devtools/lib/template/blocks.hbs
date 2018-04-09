@@ -9,22 +9,14 @@
 
 <body>
   <div id="mountNode"></div>
-  <script src="https://g.alicdn.com/code/npm/??react/16.3.0/umd/react.development.js,react-dom/16.3.0/umd/react-dom.development.js"></script>
+  <script src="https://g.alicdn.com/code/npm/??react/16.2.0/umd/react.development.js,react-dom/16.2.0/umd/react-dom.development.js"></script>
 
+  <pre>{{toJSON materials}}</pre>
   <h2>区块列表</h2>
   <ul>
     {{#each blocks as |blockName|}}
     <ol>
       <a href="/block/{{ blockName }}">{{ blockName }}</a>
-    </ol>
-    {{/each}}
-  </ul>
-
-  <h2>布局列表</h2>
-  <ul>
-    {{#each layouts as |layoutName|}}
-    <ol>
-      <a href="/layout/{{ layoutName }}">{{ layoutName }}</a>
     </ol>
     {{/each}}
   </ul>
