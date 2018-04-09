@@ -124,10 +124,16 @@ if (!program.args.length) {
 function run(templateName, templateType) {
   const templateAsk = ask();
   const templatePath = getTemplatePath(templateName);
+  const defaultData = getDefaultData();
 
   inquirer.prompt([templateAsk[templateType]]).then((answers) => {
     name = answers.name;
-    to = path.resolve(process.cwd(), `./${templateType}s/${name}`);
+
+    // similar react-materials/blocks/ExampleBlock
+    to = path.resolve(
+      process.cwd(),
+      `./${defaultData.marterialType}-materials/${templateType}s/${name}`
+    );
 
     if (isLocalPath(templateName)) {
       if (exists(templatePath)) {
