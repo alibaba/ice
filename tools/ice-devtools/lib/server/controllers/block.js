@@ -1,6 +1,7 @@
 const path = require('path');
 const MultiEntryPlugin = require('webpack/lib/MultiEntryPlugin');
 const cwd = process.cwd();
+const cachedChunks = {};
 
 module.exports = async (ctx) => {
   const { params } = ctx;
@@ -19,6 +20,21 @@ module.exports = async (ctx) => {
   );
 
   const chunkName = currentMaterial + '/' + params.blockName;
+  if (!(chunkName in cachedChunks)) {
+    ctx.compiler.running = false;
+    ctx.compiler.apply(new MultiEntryPlugin(cwd, [entryPath], chunkName));
+    // wait until bundle ok
+    await new Promise((resolve, reject) => {
+      ctx.compiler.run((err) => {
+        if (err) {
+          resolve(err);
+        } else {
+          cachedChunks[chunkName] = [entryPath];
+          resolve();
+        }
+      });
+    });
+  }
 
   const state = {
     layoutJS: '/DEMOLAYOUT.js',
