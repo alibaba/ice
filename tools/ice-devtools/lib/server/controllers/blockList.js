@@ -1,11 +1,13 @@
-const { getBlockList } = require('../utils');
+const getMaterialLists = require('../getMaterialLists');
 
 module.exports = async (ctx) => {
-  const blocks = await getBlockList(
-    '/Users/zhuoling/workspace/ice-dev-tool-space/app'
-  );
-  const state = {
-    blocks,
-  };
-  return ctx.render('blocks.hbs', state);
+  const currentMaterial = ctx.params.material;
+
+  const materialsAll = await getMaterialLists(process.cwd());
+  const materials = materialsAll[currentMaterial];
+
+  return ctx.render('blocks.hbs', {
+    currentMaterial,
+    materials,
+  });
 };
