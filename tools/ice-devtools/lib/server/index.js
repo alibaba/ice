@@ -1,5 +1,6 @@
+const path = require('path');
+const fs = require('fs');
 const serve = require('webpack-serve');
-const webpack = require('webpack');
 const glob = require('glob-promise');
 const { resolve, parse, join } = require('path');
 const views = require('koa-views');
@@ -8,17 +9,21 @@ const routes = require('./routes');
 const getMaterialLists = require('./getMaterialLists');
 
 module.exports = function startServer(opts) {
-  // const entries = getEntry(opts.cwd);
+  const pkgPath = path.resolve(opts.cwd, 'package.json');
+  if (!fs.existsSync(pkgPath)) {
+    throw new Error('package.json not exists.');
+  }
 
-  // console.log(entries);
   return Promise.resolve()
     .then(() => {
-      const entry = {};
-      const materialList = getMaterialLists(opts.cwd);
-      Object.keys(materialList).forEach((material) => {
-        console.log(material, materialList[material]);
-        Object.assign(entry, materialList[material]);
-      });
+      const entry = {
+        package: pkgPath,
+      };
+      // const materialList = getMaterialLists(opts.cwd);
+      // Object.keys(materialList).forEach((material) => {
+      //   console.log(material, materialList[material]);
+      //   Object.assign(entry, materialList[material]);
+      // });
 
       const config = getWebpackConfig(entry);
 
@@ -31,6 +36,7 @@ module.exports = function startServer(opts) {
           middleware.content();
 
           app.use(async function(ctx, next) {
+            ctx.compiler = options.compiler;
             await next();
           });
           app.use(
