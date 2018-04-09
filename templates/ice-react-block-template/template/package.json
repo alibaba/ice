@@ -8,21 +8,13 @@
     "lib/"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
+    "react": "^16.2.0",
     "prop-types": "^15.5.8"
-  },
-  "devDependencies": {
-    "@icedesign/skin": "latest",
-    "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
   },
   "blockConfig": {
     "name": "{{name}}",
-    "snapshot": "",
     "title": "{{title}}",
-    "categories": "[]",
-    "themePackage": "@icedesign/skin"
+    "categories": "{{categories}}",
+    "snapshot": ""
   }
 }

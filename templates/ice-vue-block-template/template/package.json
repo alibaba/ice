@@ -10,12 +10,10 @@
   "dependencies": {
     "vue": "^2.5.16"
   },
-  "devDependencies": {
-  },
   "blockConfig": {
     "name": "{{name}}",
-    "snapshot": "",
     "title": "{{title}}",
-    "categories": "[]"
+    "categories": "{{categories}}",
+    "snapshot": ""
   }
 }
