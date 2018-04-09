@@ -50,10 +50,10 @@ const baseConfig = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: blockTemplate,
-    }),
+    // new HtmlWebpackPlugin({
+    //   inject: true,
+    //   template: blockTemplate,
+    // }),
     new WebpackPluginImport([
       {
         libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
@@ -65,6 +65,11 @@ const baseConfig = {
       },
     ]),
   ],
+  stats: {
+    chunks: false,
+    children: false,
+    entrypoints: false,
+  },
 };
 
 module.exports = function getWebpackConfig(entry) {
