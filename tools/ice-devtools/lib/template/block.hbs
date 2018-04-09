@@ -14,7 +14,8 @@
   <script src="https://g.alicdn.com/code/npm/??react/16.2.0/umd/react.development.js,react-dom/16.2.0/umd/react-dom.development.js"></script>
 
 </body>
-<script src="{{ layoutJS }}"></script>
+{{!--
+<script src="{{ layoutJS }}"></script> --}}
 <script src="{{ blockJS }}"></script>
 <script>
   function getDefaultOrSelf(mod) {
@@ -24,7 +25,7 @@
       return mod;
     }
   }
-  var DemoLayout = getDefaultOrSelf(DEMOLAYOUT);
+  var DemoLayout = 'div';
   var Block = getDefaultOrSelf(window['{{ blockName }}']);
 
   // init block
