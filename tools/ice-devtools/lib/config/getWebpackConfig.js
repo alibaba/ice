@@ -13,9 +13,10 @@ const baseConfig = {
   output: {
     library: '[name]',
     libraryTarget: 'window',
+    publicPath: '/',
   },
   entry: {
-    DEMOLAYOUT: require.resolve('@icedesign/demo-layout'),
+    // DEMOLAYOUT: require.resolve('@icedesign/demo-layout'),
   },
   externals: {
     react: 'React',

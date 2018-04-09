@@ -8,7 +8,7 @@ function getBlockEntries(dir, material) {
   blockDirs.forEach((dirName) => {
     const fullPath = path.join(dir, material, 'blocks', dirName);
     if (fs.existsSync(fullPath) && isDirectory(fullPath)) {
-      result[`${material}/${dirName}`] = fullPath;
+      result[`${material}/${dirName}`] = path.join(fullPath, 'src/index.js');
     }
   });
   return result;
