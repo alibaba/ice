@@ -1,3 +1,4 @@
+/* eslint no-unused-expressions: 0 */
 const chalk = require('chalk');
 const Metalsmith = require('metalsmith');
 const Handlebars = require('handlebars');
@@ -13,11 +14,11 @@ const transform = require('./transform');
 const logger = require('./logger');
 
 // register handlebars helper
-Handlebars.registerHelper('if_eq', function(a, b, opts) {
+Handlebars.registerHelper('if_eq', (a, b, opts) => {
   return a === b ? opts.fn(this) : opts.inverse(this);
 });
 
-Handlebars.registerHelper('unless_eq', function(a, b, opts) {
+Handlebars.registerHelper('unless_eq', (a, b, opts) => {
   return a === b ? opts.inverse(this) : opts.fn(this);
 });
 
