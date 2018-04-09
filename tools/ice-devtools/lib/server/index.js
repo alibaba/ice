@@ -5,7 +5,7 @@ const { resolve, parse, join } = require('path');
 const views = require('koa-views');
 const getWebpackConfig = require('../config/getWebpackConfig');
 const routes = require('./routes');
-// const getEntry = require('./getEntry');
+const getMaterialLists = require('./getMaterialLists');
 
 module.exports = function startServer(opts) {
   // const entries = getEntry(opts.cwd);
@@ -14,18 +14,16 @@ module.exports = function startServer(opts) {
   return Promise.resolve()
     .then(() => {
       const entry = {};
-
-      // files.forEach((file) => {
-      //   const { name } = parse(file);
-      //   entry['block-' + name] = require.resolve(join(opts.cwd, file, 'src'));
-      // });
+      const materialList = getMaterialLists(opts.cwd);
+      Object.keys(materialList).forEach((material) => {
+        console.log(material, materialList[material]);
+        Object.assign(entry, materialList[material]);
+      });
 
       const config = getWebpackConfig(entry);
-      const compiler = webpack(config);
 
       return serve({
-        compiler,
-        hot: false,
+        config,
         add: (app, middleware, options) => {
           // since we're manipulating the order of middleware added, we need to handle
           // adding these two internal middleware functions.
@@ -33,7 +31,6 @@ module.exports = function startServer(opts) {
           middleware.content();
 
           app.use(async function(ctx, next) {
-            ctx.compiler = compiler;
             await next();
           });
           app.use(
