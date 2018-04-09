@@ -4,7 +4,7 @@ const blockCtrl = require('./controllers/block');
 
 const router = new Router();
 
-router.get('/block', blockListCtrl);
-router.get('/block/:blockName', blockCtrl);
+router.get('/:material/block', blockListCtrl);
+router.get('/:material/block/:blockName', blockCtrl);
 
 module.exports = router.routes();
