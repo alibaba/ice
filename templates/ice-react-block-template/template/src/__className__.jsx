@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import IceContainer from '@icedesign/container';
 
 export default class {{className}} extends Component {
   static displayName = '{{className}}';
@@ -22,15 +21,15 @@ export default class {{className}} extends Component {
 
   render() {
     return (
-      <div className="{{name}}">
-        <IceContainer>
-          hello {{name}}
-        </IceContainer>
+      <div style={{styles.name}}>
+        {{name}}
       </div>
     );
   }
 }
 
 const styles = {
+  {{name}}: {
 
+  }
 }
