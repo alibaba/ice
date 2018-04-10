@@ -24,6 +24,7 @@ const baseConfig = {
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',
+    vue: 'Vue',
   },
   module: {
     rules: [
@@ -59,6 +60,10 @@ const baseConfig = {
     extensions: ['.js', '.jsx', '.json', '.vue'],
     alias: {
       'webpack-hot-client/client': require.resolve('webpack-hot-client/client'),
+      // for vue hmr
+      'vue-loader/node_modules/vue-hot-reload-api': require.resolve(
+        'vue-hot-reload-api'
+      ),
     },
   },
   plugins: [
