@@ -1,0 +1,19 @@
+{
+  "name": "ice-react-layout-template",
+  "version": "1.0.0-beta.1",
+  "description": "ice react layout template",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["ice", "ice-template"],
+  "author": "chenbin92",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  }
+}

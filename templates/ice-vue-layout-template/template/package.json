@@ -13,11 +13,7 @@
   "blockConfig": {
     "name": "{{name}}",
     "title": "{{title}}",
-    "categorie": [
-      {{#each categories}}
-        "{{@key}}",
-      {{/each}}
-    ],
+    "categories": ["layout"],
     "snapshot": ""
   }
 }

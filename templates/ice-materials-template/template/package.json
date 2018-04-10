@@ -37,7 +37,16 @@
     "semver-regex": "^1.0.0",
     "uppercamelcase": "^3.0.0"
   },
-  "marterialsConfig": {
-    "type": "{{type}}"
+  "marterials": {
+    {{#if_eq type.react true}}
+    "react-materials": {
+      "type": "react"
+    },
+    {{/if_eq}}
+    {{#if_eq type.vue true}}
+    "vue-materials": {
+      "type": "vue"
+    }
+    {{/if_eq}}
   }
 }

@@ -1,44 +1,14 @@
 const BLOCK_CATEGORIES = [
-  {
-    name: '表格',
-    value: 'table',
-  },
-  {
-    name: '表单',
-    value: 'form',
-  },
-  {
-    name: '图表',
-    value: 'chart',
-  },
-  {
-    name: '列表',
-    value: 'list',
-  },
-  {
-    name: '模态框',
-    value: 'modal',
-  },
-  {
-    name: '筛选',
-    value: 'filter',
-  },
-  {
-    name: '数据展示',
-    value: 'data-display',
-  },
-  {
-    name: '信息展示',
-    value: 'info-display',
-  },
-  {
-    name: '异常',
-    value: 'exception',
-  },
-  {
-    name: '布局',
-    value: 'layout',
-  },
+  '表格',
+  '表单',
+  '图表',
+  '列表',
+  '模态框',
+  '筛选',
+  '数据展示',
+  '信息展示',
+  '异常',
+  '布局',
 ];
 
 module.exports = {
@@ -72,11 +42,12 @@ module.exports = {
       choices: BLOCK_CATEGORIES,
       validate: (answer) => {
         if (answer.length < 1) {
-          return '必须选则一个分类，请重新选择';
+          return '必须选择一个分类，请重新选择';
         }
         return true;
       },
       filter: (answer) => {
+        console.log('answer:', answer);
         return answer;
       },
     },
