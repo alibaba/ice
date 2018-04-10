@@ -32,16 +32,10 @@ Handlebars.registerHelper('unless_eq', (a, b, opts) => {
  */
 
 module.exports = function generate(name, src, dest, done) {
-  // very ugly
-  const templateName = src.split('/')[src.split('/').length - 1];
-
-  src = `${src}/templates/${templateName}`;
-
   const opts = getOptions(name, src);
 
   const metalsmith = Metalsmith(path.join(src, 'template'));
 
-  // 补充初始数据
   const data = Object.assign(metalsmith.metadata(), {
     name: kebabCase(name).replace(/^-/, ''),
     npmName: kebabCase(name).replace(/^-/, ''),
@@ -49,10 +43,6 @@ module.exports = function generate(name, src, dest, done) {
     inPlace: dest === process.cwd(),
     noEscape: true,
   });
-
-  // console.log('========================================');
-  // console.log('data:', data);
-  // console.log('========================================');
 
   opts.helpers &&
     Object.keys(opts.helpers).map((key) => {

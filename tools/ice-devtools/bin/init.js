@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-
-const download = require('download-git-repo');
 const program = require('commander');
 const exists = require('fs').existsSync;
 const path = require('path');
@@ -14,6 +12,7 @@ const logger = require('../lib/logger');
 const generate = require('../lib/generate');
 const checkVersion = require('../lib/check-version');
 const localPath = require('../lib/local-path');
+const download = require('../lib/download');
 
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
@@ -24,7 +23,6 @@ const getTemplatePath = localPath.getTemplatePath;
 
 program
   .usage('<template-name> [project-name]')
-  .option('-c, --clone', 'use git clone')
   .option('--offline', 'use cached template');
 
 /**
@@ -37,12 +35,7 @@ program.on('--help', () => {
   console.log(
     chalk.gray('    # create a new project with an official template')
   );
-  console.log('    $ ice-devtools init');
-  console.log();
-  console.log(
-    chalk.gray('    # create a new project straight from a github template')
-  );
-  console.log('    $ ice-devtools init username/repo my-project');
+  console.log('    $ ice-devtools init ice-materials-template app');
   console.log();
 });
 
@@ -57,13 +50,11 @@ help();
  */
 program.parse(process.argv);
 let template = program.args[0];
-const hasSlash = template.indexOf('/') > -1;
 const rawName = program.args[1];
 const inPlace = !rawName || rawName === '.';
 const name = inPlace ? path.relative('../', process.cwd()) : rawName;
 const to = path.resolve(rawName || '.');
-const clone = program.clone || false;
-const tmp = path.join(home, '.ice-templates', template.replace(/[\/:]/g, '-'));
+const tmp = path.join(home, '.ice-templates', template);
 if (program.offline) {
   console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`);
   template = tmp;
@@ -73,7 +64,6 @@ if (program.offline) {
  * Padding.
  */
 
-console.log();
 process.on('exit', () => {
   console.log();
 });
@@ -118,19 +108,13 @@ function run() {
     }
   } else {
     checkVersion(() => {
-      if (!hasSlash) {
-        // use official templates
-        const officialTemplate = `alibaba/ice#ice-devtools`;
-        downloadAndGenerate(officialTemplate);
-      } else {
-        downloadAndGenerate(template);
-      }
+      downloadAndGenerate(template);
     });
   }
 }
 
 /**
- * Download a generate from a template repo.
+ * Download a generate from a template npm.
  *
  * @param {String} template
  */
@@ -141,15 +125,17 @@ function downloadAndGenerate(template) {
 
   // Remove if local template exists
   if (exists(tmp)) rm(tmp);
-  download(template, tmp, { clone }, (err) => {
-    spinner.stop();
-    if (err) {
-      logger.fatal(`Failed to download repo ${template} : err.message.trim()`);
-    }
-    generate(name, tmp, to, (err) => {
-      if (err) logger.fatal(err);
-      console.log();
-      logger.success('Generated "%s".', name);
+  download({ template })
+    .then(() => {
+      spinner.stop();
+
+      generate(name, tmp, to, (err) => {
+        if (err) logger.fatal(err);
+        logger.success('Generated "%s".', name);
+      });
+    })
+    .catch((err) => {
+      spinner.stop();
+      logger.fatal(`Failed to download repo ${template} : ${err.message}`);
     });
-  });
 }
