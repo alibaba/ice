@@ -49,7 +49,7 @@ module.exports = function getWebpackConfigBasic(
     output: Object.assign(
       {
         path: paths.appBuild,
-        filename: '[name].js',
+        filename: 'js/[name].js',
         publicPath: paths.servedPath,
       },
       buildConfig.output || {}
