@@ -11,32 +11,31 @@
 
 <body>
   <div id="mountNode"></div>
+  {{#if isReact}}
   <script src="https://g.alicdn.com/code/npm/??react/16.2.0/umd/react.development.js,react-dom/16.2.0/umd/react-dom.development.js"></script>
-
+  {{/if}}
+  {{#if isVue}}
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  {{/if}}
 </body>
-{{!--
-<script src="{{ layoutJS }}"></script> --}}
+
 <script src="{{ blockJS }}"></script>
 <script>
-  function getDefaultOrSelf(mod) {
-    if (mod && mod.default) {
-      return mod.default;
-    } else {
-      return mod;
-    }
+function getDefaultOrSelf(mod) {
+  if (mod && mod.default) {
+    return mod.default;
+  } else {
+    return mod;
   }
-  var DemoLayout = 'div';
-  var Block = getDefaultOrSelf(window['{{ blockName }}']);
+}
 
-  // init block
-  var mountNode = document.querySelector('#mountNode');
-  ReactDOM.render(
-    React.createElement(
-      DemoLayout, {},
-      React.createElement(Block, {})
-    ),
-    mountNode
-  );
+  {{#if isReact}}
+    {> initReact }}
+  {{/if}}
+
+  {{#if isVue}}
+    {{> initVue }}
+  {{/if}}
 </script>
 
 </html>
