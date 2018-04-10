@@ -1,19 +1,29 @@
+const path = require('path');
+const fs = require('fs');
 const serve = require('webpack-serve');
 const glob = require('glob-promise');
 const { resolve, parse, join } = require('path');
 const views = require('koa-views');
 const getWebpackConfig = require('../config/getWebpackConfig');
 const routes = require('./routes');
+const getMaterialLists = require('./getMaterialLists');
 
 module.exports = function startServer(opts) {
-  return glob('blocks/*', { cwd: opts.cwd })
-    .then((files) => {
-      const entry = {};
+  const pkgPath = path.resolve(opts.cwd, 'package.json');
+  if (!fs.existsSync(pkgPath)) {
+    throw new Error('package.json not exists.');
+  }
 
-      files.forEach((file) => {
-        const { name } = parse(file);
-        entry['block-' + name] = require.resolve(join(opts.cwd, file, 'src'));
-      });
+  return Promise.resolve()
+    .then(() => {
+      const entry = {
+        package: pkgPath,
+      };
+      // const materialList = getMaterialLists(opts.cwd);
+      // Object.keys(materialList).forEach((material) => {
+      //   console.log(material, materialList[material]);
+      //   Object.assign(entry, materialList[material]);
+      // });
 
       const config = getWebpackConfig(entry);
 
@@ -25,9 +35,22 @@ module.exports = function startServer(opts) {
           middleware.webpack();
           middleware.content();
 
+          app.use(async function(ctx, next) {
+            ctx.compiler = options.compiler;
+            await next();
+          });
           app.use(
             views(resolve(__dirname, '../template'), {
               map: { html: 'hbs', hbs: 'handlebars' },
+              options: {
+                helpers: {
+                  toJSON: (obj) => JSON.stringify(obj, null, 2).trim(),
+                },
+                partials: {
+                  initReact: './init-react',
+                  initVue: './init-vue',
+                },
+              },
             })
           );
           // router *must* be the last middleware added
