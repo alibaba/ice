@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-
-const download = require('download-git-repo');
 const program = require('commander');
 const exists = require('fs').existsSync;
 const path = require('path');
@@ -14,6 +12,7 @@ const logger = require('../lib/logger');
 const generate = require('../lib/generate');
 const checkVersion = require('../lib/check-version');
 const localPath = require('../lib/local-path');
+const download = require('../lib/download');
 
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
@@ -23,8 +22,7 @@ const getTemplatePath = localPath.getTemplatePath;
  */
 
 program
-  .usage('<type> <template-name>')
-  .option('-c, --clone', 'use git clone')
+  .usage('<template-name> <type>')
   .option('--offline', 'use cached template');
 
 /**
@@ -41,19 +39,17 @@ program.on('--help', () => {
   );
   console.log('    $ ice-devtools add');
   console.log();
-  console.log(
-    chalk.gray(
-      '    # create a new block/layout/scaffold straight from a github template'
-    )
-  );
-  console.log('    $ ice-devtools type username/repo');
-  console.log();
 });
+
+program.parse(process.argv);
+// function help() {
+//   if (program.args.length) return program.help();
+// }
+// help();
 
 /**
  * Setting
  */
-program.parse(process.argv);
 
 let tmp;
 let to;
@@ -61,11 +57,31 @@ let name;
 let templateName;
 let templateType;
 
-const clone = program.clone || false;
-
 if (!program.args.length) {
   const defaultData = getDefaultData();
-  const marterialType = defaultData.marterialType;
+
+  let marterialType = defaultData.marterialType;
+
+  if (marterialType.length > 1) {
+    inquirer.prompt([
+      {
+        type: 'list',
+        name: 'marterialType',
+        message: '请选择添加的类型',
+        choices: marterialType,
+        validate: (answers) => {
+          if (answer.length < 1) {
+            return '必须选择一个分类，请重新选择';
+          }
+          return true;
+          marterialType = answers.materials;
+        },
+      },
+    ]);
+  } else {
+    marterialType = marterialType[0];
+  }
+
   const templateList = [
     {
       name: '区块',
@@ -77,7 +93,7 @@ if (!program.args.length) {
     {
       name: '布局',
       value: {
-        template: `ice-${marterialType}-block-template`,
+        template: `ice-${marterialType}-layout-template`,
         type: 'layout',
       },
     },
@@ -100,21 +116,20 @@ if (!program.args.length) {
       },
     ])
     .then((answers) => {
+      console.log('answers', answers);
       templateName = answers.template.template;
       templateType = answers.template.type;
 
-      tmp = path.join(
-        home,
-        '.ice-templates',
-        templateName.replace(/[\/:]/g, '-')
-      );
+      tmp = path.join(home, '.ice-templates', templateName);
       run(templateName, templateType);
     })
     .catch((err) => {
       console.log(err);
     });
 } else {
-  // TODO: localpath support
+  templateName = program.args[0];
+  templateType = program.args[1];
+  run(templateName, templateType);
 }
 
 /**
@@ -150,16 +165,14 @@ function run(templateName, templateType) {
       }
     } else {
       checkVersion(() => {
-        // use official templates
-        const officialTemplate = 'alibaba/ice#ice-devtools';
-        downloadAndGenerate(officialTemplate);
+        downloadAndGenerate(templateName);
       });
     }
   });
 }
 
 /**
- * Download a generate from a template repo.
+ * Download a generate from a template npm.
  *
  * @param {String} template
  */
@@ -170,18 +183,19 @@ function downloadAndGenerate(template) {
 
   // Remove if local template exists
   if (exists(tmp)) rm(tmp);
-  download(template, tmp, { clone }, (err) => {
-    spinner.stop();
-    if (err) {
-      console.log(err);
-      logger.fatal(`Failed to download repo ${template} : err.message.trim()`);
-    }
-    generate(name, tmp, to, (err) => {
-      if (err) logger.fatal(err);
-      console.log();
-      logger.success('Generated "%s".', name);
+  download({ template })
+    .then(() => {
+      spinner.stop();
+
+      generate(name, tmp, to, (err) => {
+        if (err) logger.fatal(err);
+        logger.success('Generated "%s".', name);
+      });
+    })
+    .catch((err) => {
+      spinner.stop();
+      logger.fatal(`Failed to download repo ${template} : ${err.message}`);
     });
-  });
 }
 
 /**
@@ -189,14 +203,17 @@ function downloadAndGenerate(template) {
  */
 
 function getDefaultData() {
+  const defaultData = {};
   const pkgData = require(path.resolve(process.cwd(), 'package.json'));
+  const marterials = pkgData.marterials;
 
-  const defaultData = {
-    marterialType: 'react',
-  };
+  let marterialType = [];
+  Object.keys(marterials).forEach((key) => {
+    marterialType.push(marterials[key]['type']);
+  });
 
   return Object.assign({}, defaultData, {
-    marterialType: pkgData.marterialsConfig.type,
+    marterialType,
   });
 }
 
