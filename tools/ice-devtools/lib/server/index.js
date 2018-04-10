@@ -46,6 +46,10 @@ module.exports = function startServer(opts) {
                 helpers: {
                   toJSON: (obj) => JSON.stringify(obj, null, 2).trim(),
                 },
+                partials: {
+                  initReact: './init-react',
+                  initVue: './init-vue',
+                },
               },
             })
           );

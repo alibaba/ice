@@ -10,6 +10,9 @@ module.exports = async (ctx) => {
     return ctx.render('403.hbs');
   }
 
+  // todo change type by `currentMaterial`
+  const type = 'vue';
+
   const currentMaterial = material;
   const entryPath = path.resolve(
     cwd,
@@ -40,6 +43,8 @@ module.exports = async (ctx) => {
     layoutJS: '/DEMOLAYOUT.js',
     blockJS: `/${chunkName}.js`,
     blockName: `${chunkName}`,
+    isReact: type === 'react',
+    isVue: type === 'vue',
   };
   return ctx.render('block.hbs', state);
 };
