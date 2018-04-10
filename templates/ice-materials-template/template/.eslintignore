@@ -16,5 +16,3 @@ coverage/
 
 # templorarily ignore tools
 tools/
-
-**/templates/**
