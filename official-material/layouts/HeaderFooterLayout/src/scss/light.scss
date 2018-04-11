@@ -1,0 +1,25 @@
+@import '~@icedesign/skin/variables.scss';
+
+// Basic color variables
+$custom-layout-bg: #fafafa;
+
+// Layout light styles
+$ice-body-bg: $color-white !default;
+$ice-layout-bg: $custom-layout-bg !default;
+$ice-logo-text-color: $color-brand1-5 !default;
+$ice-icon-down-color: $color-text1-3 !default;
+
+$ice-header-menu-bg: transparent !default;
+$ice-header-text-color: $color-text1-3 !default;
+$ice-header-text-hover-color: $color-brand1-5 !default;
+
+$ice-copyright-text-color: $color-text1-3 !default;
+$ice-copyright-text-hover-color: $color-brand1-5 !default;
+
+.ice-design-header-footer-layout-light.ice-design-layout {
+  background-image: url(https://img.alicdn.com/tfs/TB1GsHCd8fH8KJjy1XbXXbLdXXa-1680-370.png);
+}
+
+$theme: 'light';
+
+@import './base.scss';

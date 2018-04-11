@@ -38,7 +38,8 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "semver-regex": "^1.0.0",
-    "uppercamelcase": "^3.0.0"
+    "uppercamelcase": "^3.0.0",
+    "ice-devtools": "^1.0.0-beta.6"
   },
   "config": {
     "ghooks": {
@@ -47,6 +48,11 @@
     },
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "materials": {
+    "official-material": {
+      "type": "react"
     }
   }
 }
