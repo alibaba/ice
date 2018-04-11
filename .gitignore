@@ -10,3 +10,5 @@ package-lock.json
 .eslintcache
 databases
 build
+.vscode/
+
