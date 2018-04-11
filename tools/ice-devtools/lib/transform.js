@@ -5,6 +5,9 @@ module.exports = (files, data, done) => {
     if (/[_\.]/.test(filename)) {
       newFilename = filename.replace(/[_\.]_className__/, data.className);
     }
+    if (filename === '_gitignore') {
+      newFilename = '.gitignore';
+    }
 
     if (newFilename !== filename) {
       files[newFilename] = files[filename];
