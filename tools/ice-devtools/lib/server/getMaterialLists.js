@@ -23,8 +23,9 @@ module.exports = function getMaterialLists(dir) {
   const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
 
   const result = {};
+  checkMaterial(pkg);
 
-  Object.keys(pkg.marterials)
+  Object.keys(pkg.materials)
     .map((m) => {
       return {
         key: m,
@@ -43,4 +44,12 @@ module.exports = function getMaterialLists(dir) {
 
 function isDirectory(pathString) {
   return fs.lstatSync(pathString).isDirectory();
+}
+
+function checkMaterial(pkg) {
+  if (!('materials' in pkg)) {
+    throw new Error(
+      '物料源数据不存在, 请确认 package.json 中包含 materials 字段'
+    );
+  }
 }
