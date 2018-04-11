@@ -1,7 +1,17 @@
 const path = require('path');
 const MultiEntryPlugin = require('webpack/lib/MultiEntryPlugin');
+const { getMaterials } = require('../utils');
 const cwd = process.cwd();
+const webpackHotClient = require.resolve('webpack-hot-client/client');
 const cachedChunks = {};
+let watchingHandler;
+let warned = false;
+function warnOnce(msg) {
+  if (!warned) {
+    console.log('[WARN]', msg);
+    warned = true;
+  }
+}
 
 module.exports = async (ctx) => {
   const { params } = ctx;
@@ -10,8 +20,14 @@ module.exports = async (ctx) => {
     return ctx.render('403.hbs');
   }
 
-  // todo change type by `currentMaterial`
-  const type = 'vue';
+  const materials = getMaterials(cwd);
+  let type;
+  try {
+    type = materials[material].type;
+  } catch (err) {
+    warnOnce('使用默认物料类型 react');
+    type = 'react';
+  }
 
   const currentMaterial = material;
   const entryPath = path.resolve(
@@ -25,18 +41,33 @@ module.exports = async (ctx) => {
   const chunkName = currentMaterial + '/' + params.blockName;
   if (!(chunkName in cachedChunks)) {
     ctx.compiler.running = false;
-    ctx.compiler.apply(new MultiEntryPlugin(cwd, [entryPath], chunkName));
+    ctx.compiler.apply(
+      new MultiEntryPlugin(cwd, [webpackHotClient, entryPath], chunkName)
+    );
     // wait until bundle ok
     await new Promise((resolve, reject) => {
-      ctx.compiler.run((err) => {
+      const watchOpts = {
+        aggregateTimeout: 20,
+      };
+      if (watchingHandler) {
+        watchingHandler.close(() => {
+          console.log('Watching Ended.');
+          watchingHandler = ctx.compiler.watch(watchOpts, handler);
+        });
+      } else {
+        watchingHandler = ctx.compiler.watch(watchOpts, handler);
+      }
+
+      function handler(err, stats) {
         if (err) {
           resolve(err);
         } else {
           cachedChunks[chunkName] = [entryPath];
           resolve();
         }
-      });
+      }
     });
+    ctx.compiler.running = true;
   }
 
   const state = {
