@@ -148,8 +148,8 @@ function tryNPMInstall() {
       {
         type: 'confirm',
         name: 'needNPMInstall',
-        message: '是否立即执行 npm install 安装项目依赖？',
-        choices: ['是', '否'],
+        message: 'Do you need run `npm install` right now?',
+        choices: ['yes', 'no'],
       },
     ])
     .then((answers) => {
@@ -166,7 +166,7 @@ function tryNPMInstall() {
         });
 
         npm.on('close', (code) => {
-          console.log(`依赖安装完成`);
+          console.log(`npm install finished.`);
         });
       }
     });
