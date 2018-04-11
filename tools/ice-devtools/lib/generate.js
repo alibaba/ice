@@ -133,6 +133,23 @@ function renderTemplateFiles(skipInterpolation) {
   return (files, metalsmith, done) => {
     const keys = Object.keys(files);
     const metalsmithMetadata = metalsmith.metadata();
+
+    // HACK: need refactor
+    Object.keys(metalsmithMetadata).forEach((key) => {
+      if (key === 'type') {
+        if (
+          metalsmithMetadata[key]['react'] &&
+          metalsmithMetadata[key]['vue']
+        ) {
+          metalsmithMetadata['materialType'] = ['react', 'vue'];
+        } else if (metalsmithMetadata[key]['react']) {
+          metalsmithMetadata['materialType'] = 'react';
+        } else if (metalsmithMetadata[key]['vue']) {
+          metalsmithMetadata['materialType'] = 'vue';
+        }
+      }
+    });
+
     async.each(
       keys,
       (file, next) => {

@@ -24,7 +24,7 @@ module.exports = function getMaterialLists(dir) {
 
   const result = {};
 
-  Object.keys(pkg.marterials)
+  Object.keys(pkg.materials)
     .map((m) => {
       return {
         key: m,

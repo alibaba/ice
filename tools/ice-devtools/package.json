@@ -46,6 +46,7 @@
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.7",
     "semver": "^5.3.0",
+    "style-loader": "^0.20.3",
     "tar": "^2.2.1",
     "tildify": "^1.2.0",
     "user-home": "^2.0.0",
@@ -57,6 +58,7 @@
     "webpack": "^4.4.1",
     "webpack-dev-server": "^3.1.1",
     "webpack-hot-client": "^2.2.0",
+    "webpack-merge": "^4.1.2",
     "webpack-plugin-import": "^0.1.2",
     "webpack-serve": "^0.3.1",
     "write": "^0.3.3"
