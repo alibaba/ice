@@ -15,8 +15,8 @@ function warnOnce(msg) {
 
 module.exports = async (ctx) => {
   const { params } = ctx;
-  const { blockName, material } = params;
-  if (!blockName) {
+  const { layoutName, material } = params;
+  if (!layoutName) {
     return ctx.render('403.hbs');
   }
 
@@ -33,12 +33,12 @@ module.exports = async (ctx) => {
   const entryPath = path.resolve(
     cwd,
     currentMaterial,
-    'blocks',
-    params.blockName,
+    'layouts',
+    layoutName,
     'src/index.js'
   );
 
-  const chunkName = currentMaterial + '/' + params.blockName;
+  const chunkName = currentMaterial + '/' + params.layoutName;
   if (!(chunkName in cachedChunks)) {
     ctx.compiler.running = false;
     ctx.compiler.apply(
@@ -72,7 +72,7 @@ module.exports = async (ctx) => {
   const state = {
     layoutJS: '/DEMOLAYOUT.js',
     blockJS: `/${chunkName}.js`,
-    blockName: `${chunkName}`,
+    layoutName: `${chunkName}`,
     isReact: type === 'react',
     isVue: type === 'vue',
   };
