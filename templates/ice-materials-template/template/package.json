@@ -4,13 +4,11 @@
   "description": "{{description}}",
   "author": "{{author}}",
   "scripts": {
-    "publish": "git fetch --all && git pull origin master && lerna run prepublish && lerna publish",
     "bootstrap": "lerna bootstrap",
+    "publish": "lerna run prepublish && lerna publish",
     "setup": "lerna setup",
-    "db": "node ./scripts/generate-marterials-database && node ./scripts/generate-docs-database",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./",
-    "format": "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffolds/*/src/**/*.js scaffolds/*/src/**/*.jsx tools/**/*.js --write"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -37,16 +35,28 @@
     "semver-regex": "^1.0.0",
     "uppercamelcase": "^3.0.0"
   },
-  "marterials": {
-    {{#if_eq type.react true}}
+  {{#if_eq type.react type.vue}}
+  "materials": {
     "react-materials": {
       "type": "react"
     },
-    {{/if_eq}}
-    {{#if_eq type.vue true}}
     "vue-materials": {
       "type": "vue"
     }
-    {{/if_eq}}
   }
+  {{/if_eq}}
+  {{#if_eq materialType 'react' }}
+  "materials": {
+    "react-materials": {
+      "type": "react"
+    }
+  }
+  {{/if_eq}}
+  {{#if_eq materialType 'vue' }}
+  "materials": {
+    "vue-materials": {
+      "type": "vue"
+    }
+  }
+  {{/if_eq}}
 }
