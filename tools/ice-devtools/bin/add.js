@@ -21,15 +21,16 @@ const getTemplatePath = localPath.getTemplatePath;
  * Usage.
  */
 
-program
-  .usage('<template-name> <type>')
-  .option('--offline', 'use cached template');
+// program
+//   .usage('<template-name> <type>')
+//   .option('--offline', 'use cached template');
 
 /**
  * Help.
  */
 
 program.on('--help', () => {
+  console.log();
   console.log('  Examples:');
   console.log();
   console.log(
@@ -42,100 +43,107 @@ program.on('--help', () => {
 });
 
 program.parse(process.argv);
-// function help() {
-//   if (program.args.length) return program.help();
-// }
-// help();
+function help() {
+  if (program.args.length) return program.help();
+}
+help();
 
 /**
  * Setting
  */
 
-let tmp;
-let to;
+/**
+ * 添加物料：block、layout、scaffold
+ */
+
 let name;
+let to;
 let templateName;
 let templateType;
+let materialType;
 
-if (!program.args.length) {
-  const defaultData = getDefaultData();
-
-  let materialType = defaultData.materialType;
-
-  if (materialType.length > 1) {
-    inquirer.prompt([
+const materialCate = [
+  {
+    type: 'list',
+    name: 'template',
+    message: '请选择物料类型',
+    choices: [
       {
+        name: '区块',
+        value: {
+          type: 'block',
+        },
+      },
+      {
+        name: '布局',
+        value: {
+          type: 'layout',
+        },
+      },
+      {
+        name: '模板',
+        value: {
+          type: 'scaffold',
+        },
+      },
+    ],
+  },
+];
+
+/**
+ * 选择添加的初始类型：区块、布局、模板
+ */
+function initAdd() {
+  if (!program.args.length) {
+    const defaultData = getDefaultData();
+
+    if (defaultData.materialType.length > 1) {
+      materialCate.push({
         type: 'list',
         name: 'materialType',
-        message: '请选择添加的类型',
-        choices: materialType,
+        message: '请选择技术类型',
+        choices: defaultData.materialType,
         validate: (answers) => {
-          if (answer.length < 1) {
+          if (answers.length < 1) {
             return '必须选择一个分类，请重新选择';
           }
           return true;
-          materialType = answers.materials;
         },
-      },
-    ]);
+      });
+    }
+
+    inquirer
+      .prompt(materialCate)
+      .then((answers) => {
+        templateType = answers.template.type;
+        materialType = answers.materialType || defaultData.materialType[0];
+
+        if (templateType === 'scaffold') {
+          templateName = `ice-${materialType}-app-template`;
+        } else {
+          templateName = `ice-${materialType}-${templateType}-template`;
+        }
+
+        run(templateName, templateType);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   } else {
-    materialType = materialType[0];
+    // 支持本地路径
+    templateName = program.args[0];
+    templateType = program.args[1];
+    materialType = program.args[2];
+    run(templateName, templateType);
   }
-
-  const templateList = [
-    {
-      name: '区块',
-      value: {
-        template: `ice-${materialType}-block-template`,
-        type: 'block',
-      },
-    },
-    {
-      name: '布局',
-      value: {
-        template: `ice-${materialType}-layout-template`,
-        type: 'layout',
-      },
-    },
-    {
-      name: '模板',
-      value: {
-        template: `ice-${materialType}-app-template`,
-        type: 'scaffold',
-      },
-    },
-  ];
-
-  inquirer
-    .prompt([
-      {
-        type: 'list',
-        name: 'template',
-        message: '选择初始类型',
-        choices: templateList,
-      },
-    ])
-    .then((answers) => {
-      console.log('answers', answers);
-      templateName = answers.template.template;
-      templateType = answers.template.type;
-
-      tmp = path.join(home, '.ice-templates', templateName);
-      run(templateName, templateType);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-} else {
-  templateName = program.args[0];
-  templateType = program.args[1];
-  run(templateName, templateType);
 }
 
 /**
- * Check, download and generate the project.
+ * 初始化 & 检查模板类型
+ *
+ * @param {String} templateName
+ * @param {String} templateType
  */
-
 function run(templateName, templateType) {
   const templateAsk = ask();
   const templatePath = getTemplatePath(templateName);
@@ -147,7 +155,7 @@ function run(templateName, templateType) {
     // similar react-materials/blocks/ExampleBlock
     to = path.resolve(
       process.cwd(),
-      `./${defaultData.materialType}-materials/${templateType}s/${name}`
+      `./${materialType}-materials/${templateType}s/${name}`
     );
 
     if (isLocalPath(templateName)) {
@@ -172,25 +180,45 @@ function run(templateName, templateType) {
 }
 
 /**
- * Download a generate from a template npm.
+ * 获取物料项目定义的默认配置
+ */
+function getDefaultData() {
+  const defaultData = {};
+  const pkgData = require(path.resolve(process.cwd(), 'package.json'));
+  const materials = pkgData.materials;
+
+  // material type
+  let type = [];
+  Object.keys(materials).forEach((key) => {
+    type.push(materials[key]['type']);
+  });
+
+  return Object.assign({}, defaultData, {
+    materialType: type,
+  });
+}
+
+/**
+ * 下载生成模板
  *
  * @param {String} template
  */
-
 function downloadAndGenerate(template) {
   const spinner = ora('downloading template');
   spinner.start();
 
-  // Remove if local template exists
+  const tmp = path.join(home, '.ice-templates', templateName);
+
   if (exists(tmp)) rm(tmp);
   download({ template })
     .then(() => {
       spinner.stop();
-
-      generate(name, tmp, to, (err) => {
-        if (err) logger.fatal(err);
-        logger.success('Generated "%s".', name);
-      });
+      setTimeout(() => {
+        generate(name, tmp, to, (err) => {
+          if (err) logger.fatal(err);
+          logger.success('Generated "%s".', name);
+        });
+      }, 1000);
     })
     .catch((err) => {
       spinner.stop();
@@ -199,37 +227,18 @@ function downloadAndGenerate(template) {
 }
 
 /**
- * get default data
- */
-
-function getDefaultData() {
-  const defaultData = {};
-  const pkgData = require(path.resolve(process.cwd(), 'package.json'));
-  const materials = pkgData.materials;
-
-  let materialType = [];
-  Object.keys(materials).forEach((key) => {
-    materialType.push(materials[key]['type']);
-  });
-
-  return Object.assign({}, defaultData, {
-    materialType,
-  });
-}
-
-/**
- * Ask
+ * 初始物料时的名称询问
  */
 function ask() {
   return {
     block: {
       type: 'input',
       name: 'name',
-      message: '区块名称',
+      message: '名称',
       default: 'ExampleBlock',
       validate: (value) => {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
-          return '区块名称不合法，必须是大驼峰写法(以大写字母开头并且由小写字母数字组成)，请重新输入';
+          return '名称不合法，必须是大驼峰写法(以大写字母开头并且由小写字母数字组成)，请重新输入';
         }
         return true;
       },
@@ -237,11 +246,11 @@ function ask() {
     layout: {
       type: 'input',
       name: 'name',
-      message: '布局名称',
+      message: '名称',
       default: 'ExampleLayout',
       validate: (value) => {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
-          return '布局名称不合法，必须是大驼峰写法(以大写字母开头并且由小写字母数字组成)，请重新输入';
+          return '名称不合法，必须是大驼峰写法(以大写字母开头并且由小写字母数字组成)，请重新输入';
         }
         return true;
       },
@@ -249,15 +258,17 @@ function ask() {
     scaffold: {
       type: 'input',
       name: 'name',
-      message: '模板名称',
-      default: 'ice-template',
+      message: '名称',
+      default: 'ice-admin',
       validate: (value) => {
         value = value.trim();
         if (!value) {
-          return '模板名称不合法，不能为空! 请重新输入';
+          return '名称不合法，不能为空! 请重新输入';
         }
         return true;
       },
     },
   };
 }
+
+initAdd();

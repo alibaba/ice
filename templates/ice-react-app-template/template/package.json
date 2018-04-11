@@ -28,7 +28,7 @@
     "theme": "@icedesign/skin",
     "entry": "src/index.js"
   },
-  "templateConfig": {
+  "scaffoldConfig": {
     "name": "{{npmName}}",
     "title": "{{title}}",
     "snapshot": ""

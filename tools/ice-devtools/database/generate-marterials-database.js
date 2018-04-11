@@ -58,7 +58,7 @@ function generateBlocks(files, SPACE) {
         type: 'npm',
         npm: pkg.name,
         version: pkg.version,
-        sourceCodeDirectory: 'src',
+        sourceCodeDirectory: 'src/',
       },
       // (必) 用于说明组件依赖关系
       dependencies: pkg.dependencies || {},

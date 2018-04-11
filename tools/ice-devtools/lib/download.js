@@ -12,30 +12,21 @@ const npmUtils = require('./npm');
 const os = require('os');
 
 module.exports = (options = {}) => {
-  return new Promise((resolve, reject) => {
-    const template = options.template;
+  const template = options.template;
 
-    const templateTmpDirPath = path.join(home, '.ice-templates', template);
+  const templateTmpDirPath = path.join(home, '.ice-templates', template);
 
-    let templateVersion = '';
+  let templateVersion = '';
+  return getNpmVersion(template, options.version).then(function(npmVersion) {
+    templateVersion = npmVersion;
 
-    getNpmVersion(template, options.version)
-      .catch(function(err) {
-        reject(err);
-      })
-      .then(function(npmVersion) {
-        templateVersion = npmVersion;
+    deleteDir(templateTmpDirPath);
 
-        deleteDir(templateTmpDirPath);
-
-        return downloadAndFilterNpmFiles(
-          template,
-          templateVersion,
-          templateTmpDirPath
-        );
-      })
-      .catch(reject)
-      .then(resolve);
+    return downloadAndFilterNpmFiles(
+      template,
+      templateVersion,
+      templateTmpDirPath
+    );
   });
 };
 
@@ -54,7 +45,19 @@ function deleteDir(destDir) {
  */
 function downloadAndFilterNpmFiles(npm, version, destDir) {
   return new Promise(function(resolve, reject) {
+    const taskComplete = {
+      // foo: false
+    };
+    function end() {
+      const isDone = Object.values(taskComplete).every((done) => done === true);
+
+      if (isDone) {
+        resolve();
+      }
+    }
+
     const npmTarball = `https://registry.npmjs.org/${npm}/-/${npm}-${version}.tgz`;
+    taskComplete.entryPipe = false;
     request
       .get(npmTarball)
       .on('error', function(err) {
@@ -77,10 +80,15 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
         }
 
         mkdirp.sync(path.dirname(destPath));
-        entry.pipe(fs.createWriteStream(destPath));
+        taskComplete[destPath] = false;
+        entry.pipe(fs.createWriteStream(destPath)).on('close', () => {
+          taskComplete[destPath] = true;
+          end();
+        });
       })
       .on('end', function() {
-        resolve();
+        taskComplete.entryPipe = true;
+        end();
       });
   });
 }
