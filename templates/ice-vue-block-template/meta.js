@@ -8,6 +8,7 @@ const BLOCK_CATEGORIES = [
   '数据展示',
   '信息展示',
   '异常',
+  '其他',
 ];
 
 module.exports = {
