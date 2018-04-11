@@ -49,5 +49,5 @@ module.exports = {
     'vue-materials/**/*': 'type.vue',
   },
   completeMessage:
-    '下一步你可以在{{#inPlace}}当前{{else}} {{destDirName}} {{/inPlace}}目录下\n  执行 `ice-devtools start` 查看官方默认初始 Demo\n  执行 `ice-devtools add` 开始创建自己的物料',
+    '下一步你可以在项目根目录下：\n  * 执行 `ice-devtools start` 查看官方默认初始 Demo\n  * 执行 `ice-devtools add` 开始创建自己的物料',
 };
