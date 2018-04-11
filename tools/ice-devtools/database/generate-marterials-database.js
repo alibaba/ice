@@ -133,7 +133,6 @@ function generateScaffolds(files, SPACE) {
         type: 'npm',
         npm: pkg.name,
         version: pkg.version,
-        sourceCodeDirectory: 'src',
       },
       // (必) 用于说明组件依赖关系
       components: pkg.dependencies || {},
