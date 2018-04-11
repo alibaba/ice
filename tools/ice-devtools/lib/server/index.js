@@ -29,6 +29,22 @@ module.exports = function startServer(opts) {
 
       return serve({
         config,
+        dev: {
+          stats: {
+            colors: true,
+            chunks: false,
+            children: false,
+            entrypoints: false,
+            chunkModules: false,
+            source: false,
+            cachedAssets: false,
+            cached: false,
+            cachedAssets: true,
+            chunkOrigins: false,
+            modules: false,
+            builtAt: false,
+          },
+        },
         add: (app, middleware, options) => {
           // since we're manipulating the order of middleware added, we need to handle
           // adding these two internal middleware functions.
@@ -59,8 +75,6 @@ module.exports = function startServer(opts) {
       });
     })
     .then((server) => {
-      server.on('listening', () => {
-        console.log('DEV Server Started.');
-      });
+      server.on('listening', () => {});
     });
 };
