@@ -5,23 +5,17 @@
 </template>
 
 <script>
-  export default {
-    name: '{{className}}',
+export default {
+  name: '{{className}}',
 
-    data() {
-      return {
+  data() {
+    return {}
+  },
 
-      }
-    },
+  created() {},
 
-    created() {
-
-    },
-
-    methods() {
-
-    }
-  }
+  methods() {}
+}
 </script>
 
 <style>

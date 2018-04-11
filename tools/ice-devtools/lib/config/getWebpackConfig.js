@@ -81,11 +81,6 @@ const baseConfig = {
       },
     ]),
   ],
-  stats: {
-    chunks: false,
-    children: false,
-    entrypoints: false,
-  },
 };
 
 module.exports = function getWebpackConfig(entry) {
