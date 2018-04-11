@@ -160,13 +160,14 @@ function run(templateName, templateType) {
 
     if (isLocalPath(templateName)) {
       if (exists(templatePath)) {
-        generate(name, templatePath, to, (err) => {
+        generate(name, templatePath, to, (err, callback) => {
           if (err) {
             console.log(err);
             logger.fatal(err);
           }
 
           logger.success('Generated "%s".', name);
+          callback();
         });
       } else {
         logger.fatal('Local template "%s" not found.', templateName);
@@ -214,9 +215,10 @@ function downloadAndGenerate(template) {
     .then(() => {
       spinner.stop();
       setTimeout(() => {
-        generate(name, tmp, to, (err) => {
+        generate(name, tmp, to, (err, callback) => {
           if (err) logger.fatal(err);
           logger.success('Generated "%s".', name);
+          callback();
         });
       }, 1000);
     })

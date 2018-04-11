@@ -98,11 +98,11 @@ function run() {
   if (isLocalPath(template)) {
     const templatePath = getTemplatePath(template);
     if (exists(templatePath)) {
-      generate(name, templatePath, to, (err) => {
+      generate(name, templatePath, to, (err, callback) => {
         if (err) logger.fatal(err);
         console.log();
         logger.success('Generated "%s".', name);
-        tryNPMInstall();
+        tryNPMInstall({ to, callback });
       });
     } else {
       logger.fatal('Local template "%s" not found.', template);
@@ -130,10 +130,10 @@ function downloadAndGenerate(template) {
     .then(() => {
       spinner.stop();
 
-      generate(name, tmp, to, (err) => {
+      generate(name, tmp, to, (err, callback) => {
         if (err) logger.fatal(err);
         logger.success('Generated "%s".', name);
-        tryNPMInstall();
+        tryNPMInstall({ to, callback });
       });
     })
     .catch((err) => {
@@ -142,20 +142,20 @@ function downloadAndGenerate(template) {
     });
 }
 
-function tryNPMInstall() {
+// callback 参数是用来显性控制从 meta.js 里面读取的 message 展现时机
+function tryNPMInstall({ to, callback }) {
   inquirer
     .prompt([
       {
         type: 'confirm',
         name: 'needNPMInstall',
         message: 'Do you need run `npm install` right now?',
-        choices: ['yes', 'no'],
       },
     ])
     .then((answers) => {
       if (answers.needNPMInstall) {
         // todo 日志没有高亮
-        const npm = spawn('npm', ['install']);
+        const npm = spawn('npm', ['install'], { cwd: to });
 
         npm.stdout.on('data', (data) => {
           console.log(`${data}`);
@@ -167,6 +167,7 @@ function tryNPMInstall() {
 
         npm.on('close', (code) => {
           console.log(`npm install finished.`);
+          callback();
         });
       }
     });
