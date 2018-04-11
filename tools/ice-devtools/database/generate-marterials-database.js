@@ -95,6 +95,11 @@ function generateBlocks(files, SPACE) {
       payload.sketchURL = pkg.blockConfig.icelandURL;
     }
 
+    // if registry is user defined
+    if (pkg.publishConfig && pkg.publishConfig.registry) {
+      payload.source.registry = pkg.publishConfig.registry;
+    }
+
     result.push(payload);
   });
 
@@ -168,6 +173,11 @@ function generateScaffolds(files, SPACE) {
 
     if (pkg.scaffoldConfig.icelandURL) {
       payload.sketchURL = pkg.blockConfig.icelandURL;
+    }
+
+    // if registry is user defined
+    if (pkg.publishConfig && pkg.publishConfig.registry) {
+      payload.source.registry = pkg.publishConfig.registry;
     }
 
     return payload;
