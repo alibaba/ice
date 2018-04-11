@@ -121,9 +121,9 @@ function generateScaffolds(files, SPACE) {
 
     const payload = {
       // (必)英文名
-      name: pkg.blockConfig.name,
+      name: pkg.scaffoldConfig.name,
       // (必)中文描述
-      title: pkg.blockConfig.title,
+      title: pkg.scaffoldConfig.title,
       source: {
         type: 'npm',
         npm: pkg.name,
@@ -133,9 +133,9 @@ function generateScaffolds(files, SPACE) {
       // (必) 用于说明组件依赖关系
       components: pkg.dependencies || {},
       // (必) 截图
-      snapshot: pkg.blockConfig.snapshot,
+      snapshot: pkg.scaffoldConfig.snapshot,
 
-      categories: pkg.blockConfig.categories || [],
+      categories: pkg.scaffoldConfig.categories || [],
       publishTime: pkg.publishTime || new Date().toISOString(),
       features: {
         participle,
