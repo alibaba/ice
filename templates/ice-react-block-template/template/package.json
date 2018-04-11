@@ -16,7 +16,7 @@
     "title": "{{title}}",
     "categories": [
       {{#each categories}}
-        "{{@key}}",
+        "{{@key}}"{{#if @last}} {{else}},{{/if}}
       {{/each}}
     ],
     "snapshot": ""
