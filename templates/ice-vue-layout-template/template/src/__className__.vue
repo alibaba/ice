@@ -1,27 +1,22 @@
 <template>
   <div className={{name}}>
     <h1>{{className}}</h1>
+    <router-view/>
   </div>
 </template>
 
 <script>
-  export default {
-    name: '{{className}}',
+export default {
+  name: '{{className}}',
 
-    data() {
-      return {
+  data() {
+    return {};
+  },
 
-      }
-    }
+  created() {},
 
-    created() {
-
-    },
-
-    methods() {
-
-    }
-  }
+  methods() {},
+};
 </script>
 
 <style>
