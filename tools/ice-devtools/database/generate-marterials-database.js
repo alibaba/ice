@@ -80,7 +80,7 @@ function generateBlocks(files, SPACE) {
 
     // (可) 标签
     if (pkg.blockConfig.categories) {
-      payload.tags = pkg.blockConfig.categories;
+      payload.categories = pkg.blockConfig.categories;
     }
 
     if (pkg.blockConfig.thumbnail) {
@@ -155,7 +155,7 @@ function generateScaffolds(files, SPACE) {
 
     // (可) 标签
     if (pkg.scaffoldConfig.categories) {
-      payload.tags = pkg.blockConfig.categories;
+      payload.categories = pkg.blockConfig.categories;
     }
 
     if (pkg.scaffoldConfig.thumbnail) {
