@@ -60,47 +60,47 @@ let templateType;
 if (!program.args.length) {
   const defaultData = getDefaultData();
 
-  let marterialType = defaultData.marterialType;
+  let materialType = defaultData.materialType;
 
-  if (marterialType.length > 1) {
+  if (materialType.length > 1) {
     inquirer.prompt([
       {
         type: 'list',
-        name: 'marterialType',
+        name: 'materialType',
         message: '请选择添加的类型',
-        choices: marterialType,
+        choices: materialType,
         validate: (answers) => {
           if (answer.length < 1) {
             return '必须选择一个分类，请重新选择';
           }
           return true;
-          marterialType = answers.materials;
+          materialType = answers.materials;
         },
       },
     ]);
   } else {
-    marterialType = marterialType[0];
+    materialType = materialType[0];
   }
 
   const templateList = [
     {
       name: '区块',
       value: {
-        template: `ice-${marterialType}-block-template`,
+        template: `ice-${materialType}-block-template`,
         type: 'block',
       },
     },
     {
       name: '布局',
       value: {
-        template: `ice-${marterialType}-layout-template`,
+        template: `ice-${materialType}-layout-template`,
         type: 'layout',
       },
     },
     {
       name: '模板',
       value: {
-        template: `ice-${marterialType}-app-template`,
+        template: `ice-${materialType}-app-template`,
         type: 'scaffold',
       },
     },
@@ -147,7 +147,7 @@ function run(templateName, templateType) {
     // similar react-materials/blocks/ExampleBlock
     to = path.resolve(
       process.cwd(),
-      `./${defaultData.marterialType}-materials/${templateType}s/${name}`
+      `./${defaultData.materialType}-materials/${templateType}s/${name}`
     );
 
     if (isLocalPath(templateName)) {
@@ -205,15 +205,15 @@ function downloadAndGenerate(template) {
 function getDefaultData() {
   const defaultData = {};
   const pkgData = require(path.resolve(process.cwd(), 'package.json'));
-  const marterials = pkgData.marterials;
+  const materials = pkgData.materials;
 
-  let marterialType = [];
-  Object.keys(marterials).forEach((key) => {
-    marterialType.push(marterials[key]['type']);
+  let materialType = [];
+  Object.keys(materials).forEach((key) => {
+    materialType.push(materials[key]['type']);
   });
 
   return Object.assign({}, defaultData, {
-    marterialType,
+    materialType,
   });
 }
 
