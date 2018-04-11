@@ -2,10 +2,11 @@
   "name": "ice-workspace",
   "version": "0.0.2",
   "scripts": {
-    "publish": "git fetch --all && git pull origin master && lerna run prepublish && lerna publish",
+    "start": "ice-devtools start",
+    "publish": "lerna publish",
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
-    "db": "ice-devtools generate && node ./scripts/generate-docs-database",
+    "generate": "ice-devtools generate && node ./scripts/generate-docs-database",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./",
     "format": "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffolds/*/src/**/*.js scaffolds/*/src/**/*.jsx tools/**/*.js --write"
