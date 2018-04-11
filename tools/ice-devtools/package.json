@@ -7,7 +7,8 @@
     "ice-devtools": "bin/index.js",
     "ice-devtools-init": "bin/init.js",
     "ice-devtools-add": "bin/add.js",
-    "ice-devtools-start": "bin/dev-server.js"
+    "ice-devtools-start": "bin/dev-server.js",
+    "ice-devtools-generate": "bin/db.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,7 +17,11 @@
   "license": "MIT",
   "dependencies": {
     "async": "^2.6.0",
+    "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-lib-import": "^0.1.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
@@ -38,16 +43,20 @@
     "koa-views": "^6.1.4",
     "metalsmith": "^2.3.0",
     "mkdirp": "^0.5.1",
+    "moment": "^2.22.0",
     "multimatch": "^2.1.0",
     "node-sass": "^4.8.3",
+    "nodejieba": "^2.2.5",
     "ora": "^2.0.0",
     "read-metadata": "^1.0.0",
-    "request": "^2.81.0",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.7",
     "semver": "^5.3.0",
     "tar": "^2.2.1",
     "tildify": "^1.2.0",
+    "uppercamelcase": "^3.0.0",
     "user-home": "^2.0.0",
     "uuid": "^3.0.1",
     "validate-npm-package-name": "^3.0.0",
