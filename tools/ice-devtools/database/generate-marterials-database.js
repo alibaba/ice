@@ -144,7 +144,6 @@ function generateScaffolds(files, SPACE) {
       publishTime: pkg.publishTime || new Date().toISOString(),
       features: {
         participle,
-        useComponents,
       },
     };
 
