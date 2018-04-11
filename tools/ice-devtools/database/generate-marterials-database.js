@@ -61,7 +61,7 @@ function generateBlocks(files, SPACE) {
         sourceCodeDirectory: 'src',
       },
       // (必) 用于说明组件依赖关系
-      components: pkg.dependencies || {},
+      dependencies: pkg.dependencies || {},
       // (必) 截图
       snapshot: pkg.blockConfig.snapshot,
 
@@ -135,7 +135,8 @@ function generateScaffolds(files, SPACE) {
         version: pkg.version,
       },
       // (必) 用于说明组件依赖关系
-      components: pkg.dependencies || {},
+      dependencies: pkg.dependencies || {},
+      devDependencies: pkg.devDependencies || {},
       // (必) 截图
       snapshot: pkg.scaffoldConfig.snapshot,
 
