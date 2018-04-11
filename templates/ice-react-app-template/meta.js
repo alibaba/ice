@@ -3,7 +3,7 @@ module.exports = {
     title: {
       type: 'input',
       message: '标题',
-      default: 'ice 模板',
+      default: 'ice 后台管理模板',
       validate: (value) => {
         value = value.trim();
         if (!value) {

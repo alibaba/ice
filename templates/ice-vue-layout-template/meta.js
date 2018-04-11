@@ -22,5 +22,6 @@ module.exports = {
       type: 'string',
       required: true,
       message: '描述(可选)',
-    }
+    },
+  },
 };
