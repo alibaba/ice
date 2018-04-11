@@ -72,13 +72,15 @@ module.exports = function generate(name, src, dest, done) {
     .source('.') // start from template root instead of `./src` which is Metalsmith's default for `source`
     .destination(dest)
     .build((err, files) => {
-      done(err);
-      if (typeof opts.complete === 'function') {
-        const helpers = { chalk, logger, files };
-        opts.complete(data, helpers);
-      } else {
-        logMessage(opts.completeMessage, data);
-      }
+      // 需要显性控制从物料 meta.js 中提取出来的 message 展现时机
+      done(err, () => {
+        if (typeof opts.complete === 'function') {
+          const helpers = { chalk, logger, files };
+          opts.complete(data, helpers);
+        } else {
+          logMessage(opts.completeMessage, data);
+        }
+      });
     });
 
   return data;
