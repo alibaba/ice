@@ -8,7 +8,7 @@
     "publish": "lerna run prepublish && lerna publish",
     "setup": "lerna setup",
     "lint": "npm run lint:nofix -- --fix",
-    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./",
+    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
