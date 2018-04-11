@@ -4,7 +4,7 @@
   "description": "{{description}}",
   "author": "{{author}}",
   "scripts": {
-    "serve": "vue-cli-service serve --open",
+    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -30,5 +30,6 @@
     "name": "{{npmName}}",
     "title": "{{title}}",
     "snapshot": ""
-  }
+  },
+  "buildConfig": {}
 }

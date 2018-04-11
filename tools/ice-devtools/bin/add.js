@@ -139,25 +139,10 @@ function initAdd() {
 }
 
 /**
- * 获取物料项目定义的默认配置
- */
-function getDefaultData() {
-  const defaultData = {};
-  const pkgData = require(path.resolve(process.cwd(), 'package.json'));
-  const materials = pkgData.materials;
-
-  let materialType = [];
-  Object.keys(materials).forEach((key) => {
-    materialType.push(materials[key]['type']);
-  });
-
-  return Object.assign({}, defaultData, {
-    materialType,
-  });
-}
-
-/**
- * 检查模板类型
+ * 初始化 & 检查模板类型
+ *
+ * @param {String} templateName
+ * @param {String} templateType
  */
 function run(templateName, templateType) {
   const templateAsk = ask();
@@ -191,6 +176,25 @@ function run(templateName, templateType) {
         downloadAndGenerate(templateName);
       });
     }
+  });
+}
+
+/**
+ * 获取物料项目定义的默认配置
+ */
+function getDefaultData() {
+  const defaultData = {};
+  const pkgData = require(path.resolve(process.cwd(), 'package.json'));
+  const materials = pkgData.materials;
+
+  // material type
+  let type = [];
+  Object.keys(materials).forEach((key) => {
+    type.push(materials[key]['type']);
+  });
+
+  return Object.assign({}, defaultData, {
+    materialType: type,
   });
 }
 
