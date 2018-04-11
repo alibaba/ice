@@ -13,10 +13,10 @@ const generate = require('../lib/generate');
 const checkVersion = require('../lib/check-version');
 const localPath = require('../lib/local-path');
 const download = require('../lib/download');
+const { spawn } = require('child_process');
 
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
-
 /**
  * Usage.
  */
@@ -102,6 +102,7 @@ function run() {
         if (err) logger.fatal(err);
         console.log();
         logger.success('Generated "%s".', name);
+        tryNPMInstall();
       });
     } else {
       logger.fatal('Local template "%s" not found.', template);
@@ -132,10 +133,41 @@ function downloadAndGenerate(template) {
       generate(name, tmp, to, (err) => {
         if (err) logger.fatal(err);
         logger.success('Generated "%s".', name);
+        tryNPMInstall();
       });
     })
     .catch((err) => {
       spinner.stop();
       logger.fatal(`Failed to download repo ${template} : ${err.message}`);
+    });
+}
+
+function tryNPMInstall() {
+  inquirer
+    .prompt([
+      {
+        type: 'confirm',
+        name: 'needNPMInstall',
+        message: '是否立即执行 npm install 安装项目依赖？',
+        choices: ['是', '否'],
+      },
+    ])
+    .then((answers) => {
+      if (answers.needNPMInstall) {
+        // todo 日志没有高亮
+        const npm = spawn('npm', ['install']);
+
+        npm.stdout.on('data', (data) => {
+          console.log(`${data}`);
+        });
+
+        npm.stderr.on('data', (data) => {
+          console.log(`${data}`);
+        });
+
+        npm.on('close', (code) => {
+          console.log(`依赖安装完成`);
+        });
+      }
     });
 }
