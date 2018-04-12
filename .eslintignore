@@ -2,8 +2,8 @@
 build/
 tests/
 demo/
-official-material/layouts/**/lib/
-official-material/blocks/**/lib/
+react-material/layouts/**/lib/
+react-material/blocks/**/lib/
 node_modules/
 scripts/
 
