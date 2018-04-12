@@ -2,10 +2,11 @@
   "name": "ice-workspace",
   "version": "0.0.2",
   "scripts": {
-    "publish": "git fetch --all && git pull origin master && lerna run prepublish && lerna publish",
+    "start": "ice-devtools start",
+    "publish": "lerna publish",
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
-    "db": "node ./scripts/generate-marterials-database && node ./scripts/generate-docs-database",
+    "generate": "ice-devtools generate && node ./scripts/generate-docs-database",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./",
     "format": "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffolds/*/src/**/*.js scaffolds/*/src/**/*.jsx tools/**/*.js --write"
@@ -38,7 +39,8 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "semver-regex": "^1.0.0",
-    "uppercamelcase": "^3.0.0"
+    "uppercamelcase": "^3.0.0",
+    "ice-devtools": "^1.0.0-beta.8"
   },
   "config": {
     "ghooks": {
@@ -47,6 +49,11 @@
     },
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "materials": {
+    "official-material": {
+      "type": "react"
     }
   }
 }

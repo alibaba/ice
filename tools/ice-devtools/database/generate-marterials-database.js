@@ -100,6 +100,16 @@ function generateBlocks(files, SPACE) {
       payload.source.registry = pkg.publishConfig.registry;
     }
 
+    // 预览地址
+    if (pkg.homepage) {
+      payload.homepage = pkg.homepage;
+    }
+
+    // 仓库地址
+    if (pkg.repository && pkg.repository.url) {
+      payload.repository = pkg.repository.url;
+    }
+
     result.push(payload);
   });
 
@@ -150,6 +160,11 @@ function generateScaffolds(files, SPACE) {
     // (可)预览地址
     if (pkg.homepage) {
       payload.homepage = pkg.homepage;
+    }
+
+    // 仓库地址
+    if (pkg.repository && pkg.repository.url) {
+      payload.repository = pkg.repository.url;
     }
 
     // (可)区块详细说明, markdown 格式

@@ -1,12 +1,15 @@
 {
-  "name": "ice-materials-template",
-  "version": "1.0.0-beta.5",
+  "name": "@icedesign/ice-materials-template",
+  "version": "1.0.0-beta.1",
   "description": "ice materials template & react materials & vue materials",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["ice", "ice-template"],
-  "author": "chenbin92",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
