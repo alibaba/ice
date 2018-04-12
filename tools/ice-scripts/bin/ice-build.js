@@ -4,11 +4,7 @@
 
 const program = require('commander');
 
-program.on('--help', () => {
-  console.log('todo 帮助信息');
-});
-
-program.option('--debug', 'debug mode without compression').parse(process.argv);
+program.option('--debug', 'debug 模式下不压缩').parse(process.argv);
 
 const checkSass = require('../lib/utils/check-sass');
 
