@@ -1,4 +1,5 @@
 const path = require('path');
+const { existsSync } = require('fs');
 const MultiEntryPlugin = require('webpack/lib/MultiEntryPlugin');
 const { getMaterials } = require('../utils');
 const cwd = process.cwd();
@@ -37,6 +38,10 @@ module.exports = async (ctx) => {
     params.blockName,
     'src/index.js'
   );
+
+  if (!existsSync(entryPath)) {
+    return ctx.render('404.hbs');
+  }
 
   const chunkName = currentMaterial + '/' + params.blockName;
   if (!(chunkName in cachedChunks)) {

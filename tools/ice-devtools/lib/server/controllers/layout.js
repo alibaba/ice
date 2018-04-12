@@ -1,4 +1,5 @@
 const path = require('path');
+const { existsSync } = require('fs');
 const MultiEntryPlugin = require('webpack/lib/MultiEntryPlugin');
 const { getMaterials } = require('../utils');
 const cwd = process.cwd();
@@ -38,6 +39,10 @@ module.exports = async (ctx) => {
     'src/index.js'
   );
 
+  if (!existsSync(entryPath)) {
+    return ctx.render('404.hbs');
+  }
+
   const chunkName = currentMaterial + '/' + params.layoutName;
   if (!(chunkName in cachedChunks)) {
     ctx.compiler.running = false;
@@ -72,7 +77,7 @@ module.exports = async (ctx) => {
   const state = {
     layoutJS: '/DEMOLAYOUT.js',
     blockJS: `/${chunkName}.js`,
-    layoutName: `${chunkName}`,
+    blockName: `${chunkName}`,
     isReact: type === 'react',
     isVue: type === 'vue',
   };
