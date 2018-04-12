@@ -52,7 +52,7 @@
     }
   },
   "materials": {
-    "react-material": {
+    "react-materials": {
       "type": "react"
     }
   }
