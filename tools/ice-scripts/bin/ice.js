@@ -7,8 +7,6 @@ const packageInfo = require('../package.json');
 console.log(packageInfo.name, packageInfo.version);
 program
   .version(packageInfo.version)
-  .command('component', 'commands for component')
-  .command('block', 'commands for blocks or layouts')
   .command('build', 'build project')
   .command('dev', 'start server')
   .parse(process.argv);
@@ -23,12 +21,6 @@ if (proc) {
 }
 
 const subCmd = program.args[0];
-if (
-  !subCmd ||
-  (subCmd !== 'build' &&
-    subCmd !== 'component' &&
-    subCmd !== 'block' &&
-    subCmd !== 'dev')
-) {
+if (!subCmd || (subCmd !== 'build' && subCmd !== 'dev')) {
   program.help();
 }
