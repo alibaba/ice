@@ -29,6 +29,6 @@ const styles = {
     textAlign: 'center',
     color: '#F8BC38',
     backgroundColor: '#1A484E',
-    fontSize: '14px'
-  }
+    fontSize: '14px',
+  },
 };

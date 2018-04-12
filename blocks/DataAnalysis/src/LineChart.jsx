@@ -2,50 +2,50 @@ import React, { Component } from 'react';
 import ReactEcharts from 'echarts-for-react';
 import Title from './Title';
 
-var option = {
+const option = {
   color: ['#3398DB'],
   tooltip: {
     trigger: 'axis',
-    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-    }
+    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+      type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
+    },
   },
   grid: {
     left: '3%',
     right: '4%',
     bottom: '3%',
-    containLabel: true
+    containLabel: true,
   },
   xAxis: [
     {
       type: 'category',
       axisTick: {
-        alignWithLabel: true
+        alignWithLabel: true,
       },
-      "axisLine": {
+      axisLine: {
         lineStyle: {
-          color: '#90979c'
-        }
-      }
-    }
+          color: '#90979c',
+        },
+      },
+    },
   ],
   yAxis: [
     {
       type: 'value',
-      "axisLine": {
+      axisLine: {
         lineStyle: {
-          color: '#90979c'
-        }
-      }
+          color: '#90979c',
+        },
+      },
     },
   ],
   series: [
     {
-      name:'直接访问',
-      type:'bar',
-      barWidth: '60%'
-    }
-  ]
+      name: '直接访问',
+      type: 'bar',
+      barWidth: '60%',
+    },
+  ],
 };
 
 export default class LineChart extends Component {
@@ -62,11 +62,11 @@ export default class LineChart extends Component {
 
   render() {
     const {
-      data
+      data,
     } = this.props;
 
-    option.xAxis[0].data = data.map(d => d.name);
-    option.series[0].data = data.map(d => d.value);
+    option.xAxis[0].data = data.map((d) => d.name);
+    option.series[0].data = data.map((d) => d.value);
 
     return (
       <div>

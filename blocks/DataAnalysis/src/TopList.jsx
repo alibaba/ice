@@ -38,16 +38,16 @@ const styles = {
   list: {
     color: '#fff',
     lineHeight: '36px',
-    marginBottom: '60px'
+    marginBottom: '60px',
   },
   item: {
     borderBottom: '1px solid #00F0FF',
     width: '300px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
   },
   name: {
     marginLeft: '10px',
-  }
+  },
 };
