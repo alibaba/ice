@@ -3,11 +3,12 @@ module.exports = {
     type: {
       type: 'checkbox',
       label: 'type',
-      message: '选择初始的物料类型(可多选)',
+      message:
+        'Please select libaries which you will use in this material source.',
       required: true,
       validate: (answer) => {
         if (answer.length < 1) {
-          return '必须选则一个类型，请重新选择';
+          return 'It must be at least one';
         }
         return true;
       },
@@ -28,19 +29,19 @@ module.exports = {
       type: 'string',
       required: true,
       label: 'name',
-      message: '项目名称',
+      message: 'Set material source name',
       default: 'materials-app',
     },
     version: {
       type: 'string',
       label: 'version',
-      message: '版本',
+      message: 'Set material source version',
       default: '1.0.0',
     },
     description: {
       type: 'string',
       required: true,
-      message: '描述',
+      message: 'Add more description',
       label: 'description',
     },
   },
@@ -49,5 +50,5 @@ module.exports = {
     'vue-materials/**/*': 'type.vue',
   },
   completeMessage:
-    '下一步你可以在项目根目录下：\n  * 执行 `ice-devtools start` 查看官方默认初始 Demo\n  * 执行 `ice-devtools add` 开始创建自己的物料',
+    'Next step:\n  * run `ice-devtools start` to explorer demos\n  * run `ice-devtools add` to start your own materials development',
 };
