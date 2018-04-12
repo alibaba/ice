@@ -10,10 +10,10 @@
   "dependencies": {
     "vue": "^2.5.16"
   },
-  "blockConfig": {
+  "layoutConfig": {
     "name": "{{name}}",
     "title": "{{title}}",
-    "categories": ["layout"],
+    "categories": ["布局"],
     "snapshot": ""
   }
 }

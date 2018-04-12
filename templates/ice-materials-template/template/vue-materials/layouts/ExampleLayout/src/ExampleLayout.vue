@@ -1,13 +1,13 @@
 <template>
-  <div className={{name}}>
-    <h1>{{className}}</h1>
+  <div className=example-layout>
+    <h1>ExampleLayout</h1>
     <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: '{{className}}',
+  name: 'ExampleLayout',
 
   data() {
     return {}
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style>
-  .{{name}} {
+  .example-layout {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
