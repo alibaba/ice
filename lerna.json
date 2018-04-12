@@ -3,9 +3,9 @@
   "packages": [
     "tools/*",
     "packages/*",
-    "official-material/blocks/*",
-    "official-material/layouts/*",
-    "official-material/scaffolds/*"
+    "react-material/blocks/*",
+    "react-material/layouts/*",
+    "react-material/scaffolds/*"
   ],
   "commands": {
     "publish": {
