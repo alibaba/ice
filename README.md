@@ -3,7 +3,7 @@
     <img alt="飞冰" src="https://img.alicdn.com/tfs/TB1czpfiFOWBuNjy0FiXXXFxVXa-504-132.png" width="200">
   </a>
 </p>
-<p align="center">海量可复用物料，通过 GUI 工具极速构建中后台应用</p>
+<p align="center">让前端开发简单而友好</p>
 
 <p align="center">
   <a href="https://github.com/alibaba/ice/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
@@ -41,8 +41,8 @@
 
 ## 社区
 
-扫码进入飞冰钉钉群（加入钉钉群即可实时交流、反馈）
+扫码加入飞冰群组即刻交流与反馈：
 
-* 飞冰 ❶ (已满）
-* 飞冰 ❷ 
+* 飞冰一群 (已满）
+* 飞冰二群
 <img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iVfbe1SSBuNjy0FlXXbBpVXa-640-880.jpg" width="200">
