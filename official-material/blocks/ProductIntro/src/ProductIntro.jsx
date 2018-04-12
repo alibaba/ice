@@ -25,7 +25,14 @@ export default class ProductIntro extends Component {
             <p style={styles.desc}>
               丰富模板一键创建，提供多种垂直领域模板，快速创建项目，支持风格切换，满足个性化需求；轻松操作页面管理，海量物料自由搭配，页面组合可视化操作更得心应手；开发调试一体化，集成运行环境零配置运行，开箱即用。
             </p>
-            <Button style={styles.extraButton}>了解更多 &gt;</Button>
+            <Button
+              component="a"
+              href="#"
+              target="_blank"
+              style={styles.extraButton}
+            >
+              了解更多 &gt;
+            </Button>
           </div>
           <div style={styles.productSnapshot}>
             <img
