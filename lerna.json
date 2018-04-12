@@ -1,6 +1,12 @@
 {
   "lerna": "2.5.1",
-  "packages": ["tools/*", "packages/*", "blocks/*", "layouts/*", "scaffolds/*"],
+  "packages": [
+    "tools/*",
+    "packages/*",
+    "official-material/blocks/*",
+    "official-material/layouts/*",
+    "official-material/scaffolds/*"
+  ],
   "commands": {
     "publish": {
       "message": "chore(release): publish"

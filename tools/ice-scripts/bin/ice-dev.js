@@ -5,10 +5,6 @@
 const program = require('commander');
 const checkSass = require('../lib/utils/check-sass');
 
-program.on('--help', () => {
-  console.log('todo 帮助信息');
-});
-
 program
   .option('-p, --port <port>', 'server port')
   .option('-h, --host <host>', 'server host')

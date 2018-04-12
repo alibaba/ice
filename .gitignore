@@ -5,8 +5,10 @@ npm-debug.log
 mochawesome-report
 .happypack
 package-lock.json
-blocks/**/lib/
-layouts/**/lib/
+*/blocks/**/lib/
+*/layouts/**/lib/
 .eslintcache
 databases
+build
 .vscode/
+
