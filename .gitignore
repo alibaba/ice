@@ -9,3 +9,4 @@ blocks/**/lib/
 layouts/**/lib/
 .eslintcache
 databases
+.vscode/
