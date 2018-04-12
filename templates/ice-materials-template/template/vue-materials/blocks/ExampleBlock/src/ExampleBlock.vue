@@ -1,13 +1,12 @@
 <template>
-  <div className={{name}}>
-    <h1>{{className}}</h1>
-    <router-view/>
+  <div className="example-block">
+    <h1>ExampleBlock</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: '{{className}}',
+  name: 'ExampleBlock',
 
   data() {
     return {}
@@ -15,12 +14,12 @@ export default {
 
   created() {},
 
-  methods() {},
-};
+  methods() {}
+}
 </script>
 
 <style>
-  .{{name}} {
+  .example-block {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
