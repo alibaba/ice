@@ -7,6 +7,6 @@ const router = new Router();
 
 router.get('/:material', materialsListCtrl);
 router.get('/:material/block/:blockName', blockCtrl);
-router.get('/:material/layout/:layoutName', blockCtrl);
+router.get('/:material/layout/:layoutName', layoutCtrl);
 
 module.exports = router.routes();

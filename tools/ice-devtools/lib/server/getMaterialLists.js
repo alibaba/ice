@@ -4,11 +4,25 @@ const fs = require('fs');
 function getBlockEntries(dir, material) {
   const result = {};
   const blockDirs = fs.readdirSync(path.join(dir, material, 'blocks'));
+  const layoutDirs = fs.readdirSync(path.join(dir, material, 'layouts'));
 
   blockDirs.forEach((dirName) => {
     const fullPath = path.join(dir, material, 'blocks', dirName);
     if (fs.existsSync(fullPath) && isDirectory(fullPath)) {
-      result[`${material}/${dirName}`] = path.join(fullPath, 'src/index.js');
+      result[`${material}/blocks/${dirName}`] = path.join(
+        fullPath,
+        'src/index.js'
+      );
+    }
+  });
+
+  layoutDirs.forEach((dirName) => {
+    const fullPath = path.join(dir, material, 'layouts', dirName);
+    if (fs.existsSync(fullPath) && isDirectory(fullPath)) {
+      result[`${material}/layouts/${dirName}`] = path.join(
+        fullPath,
+        'src/index.js'
+      );
     }
   });
   return result;

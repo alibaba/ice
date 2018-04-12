@@ -60,7 +60,7 @@ module.exports = function startServer(opts) {
               map: { html: 'hbs', hbs: 'handlebars' },
               options: {
                 helpers: {
-                  toJSON: (obj) => JSON.stringify(obj, null, 2).trim(),
+                  toJSON: (obj) => (JSON.stringify(obj, null, 2) || '').trim(),
                 },
                 partials: {
                   initReact: './init-react',
