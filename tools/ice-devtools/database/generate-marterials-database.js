@@ -43,6 +43,11 @@ function generateBlocks(files, SPACE) {
       };
     });
 
+    // hack 临时兼容下 layout 的场景
+    if (!pkg.blockConfig) {
+      pkg.blockConfig = pkg.layoutConfig;
+    }
+
     // 分词 payload
     const participle = {
       title: cut(pkg.blockConfig.title),
