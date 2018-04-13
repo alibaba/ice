@@ -55,7 +55,7 @@ $ ice-devtools start
 ```
 
 **预览界面**
-![ice-materials-preview](https://img.alicdn.com/tfs/TB1PHibhCCWBuNjy0FhXXb6EVXa-2848-1452.png)
+![ice-materials-preview](https://img.alicdn.com/tfs/TB15cl2lSBYBeNjy0FeXXbnmFXa-2786-1524.png)
 
 ## 自定义区块
 
