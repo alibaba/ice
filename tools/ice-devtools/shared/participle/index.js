@@ -1,4 +1,14 @@
-const jieba = require('nodejieba');
+let jieba;
+
+try {
+  jieba = require('nodejieba');
+} catch (err) {
+  console.log(
+    `[ERR] nodejieba is not installed, please mamually install it by executing npm i nodejieba --save-dev`
+  );
+  process.exit(1);
+}
+
 // load dict at first time
 jieba.load({
   userDict: require.resolve('./userDict.utf8'),
