@@ -1,6 +1,6 @@
 {
-  "name": "@icedesign/ice-vue-app-template",
-  "version": "1.0.0-beta.1",
+  "name": "ice-vue-app-template",
+  "version": "1.0.0-beta.4",
   "description": "ice vue app template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
