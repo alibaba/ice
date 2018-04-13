@@ -5,11 +5,11 @@ module.exports = (files, data, done) => {
     if (/[_\.]/.test(filename)) {
       newFilename = filename.replace(/[_\.]_className__/, data.className);
     }
-    if (filename === '_gitignore') {
-      newFilename = '.gitignore';
+    if (/_gitignore/.test(filename)) {
+      newFilename = filename.replace(/_gitignore/, '.gitignore');
     }
-    if (filename === '_package.json') {
-      newFilename = 'package.json';
+    if (/_package.json/.test(filename)) {
+      newFilename = filename.replace(/_package.json/, 'package.json');
     }
 
     if (newFilename !== filename) {

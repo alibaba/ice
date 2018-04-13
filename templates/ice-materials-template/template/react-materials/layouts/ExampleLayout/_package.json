@@ -1,15 +1,18 @@
 {
-  "name": "example-block",
+  "name": "example-layout",
   "version": "1.0.0",
   "description": "",
-  "author": "chenbin92 <chenbinbin.cb@alibaba-inc.com>",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
   "files": ["src/", "lib/"],
   "dependencies": {
     "react": "^16.2.0",
     "prop-types": "^15.5.8"
   },
-  "blockConfig": {
-    "name": "example-block",
+  "layoutConfig": {
+    "name": "example-layout",
     "title": "示例区块",
     "categories": ["其他"],
     "snapshot": ""
