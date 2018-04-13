@@ -12,7 +12,7 @@ category: 物料
 
 ## 初始 Vue 物料项目
 
-使用 `ice-devtools init` 选择初始类型是 React，按照提示依次输入初始信息：
+使用 `ice-devtools init` 开始进入环境生成操作，按照提示依次输入初始信息：
 
 ```
 $ ice-devtools init ice-materials-template app
@@ -54,7 +54,7 @@ ice-materials-template
 $ ice-devtools start
 ```
 
-**预览界面**
+**预览界面（todo 目前 beta 阶段只有简版）**
 ![ice-materials-preview](https://img.alicdn.com/tfs/TB1PHibhCCWBuNjy0FhXXb6EVXa-2848-1452.png)
 
 ## 自定义区块
@@ -170,7 +170,7 @@ export default ExampleBlock;
   },
   "blockConfig": {            // 区块的相关配置，用于 Iceworks 和站点的展示
     "name": "example-block",  // 名称
-    "snapshot": "",           // 截图
+    "snapshot": "",           // 截图（如果没有截图则不在 Iceworks 中显示图片）
     "title": "示例区块",       // 标题
     "categories": "[]"        // 分类
   }
@@ -190,7 +190,7 @@ export default ExampleBlock;
 
 ### 开发调试
 
-新增一个区块后，可以看到通过 `ice-devtools start` 启动的浏览器窗口看到新增的区块，支持实时编译和监听改动。
+新增一个区块后，可以看到通过 `ice-devtools start` 启动的开发者界面刷新看到新增的区块，支持实时编译和监听改动。
 
 ## 自定义布局
 
@@ -242,7 +242,7 @@ $ ice-devtools add
 
 ### 开发调试
 
-脚手架的开发调试与常规项目开发模式相同：
+脚手架就是用户生成到项目中的初始文件、目录，脚手架的开发调试与常规项目开发模式相同：
 
 ```
 $ cd your-scaffold
@@ -250,14 +250,58 @@ $ npm run start  // 启动服务
 $ npm run build  // 构建项目
 ```
 
+Iceworks 对于脚手架会将其直接下载解压到目录中。
+
 ## 发布
 
-当物料开发完成时，需要生成静态的物料数据，发布到 CDN 或者其他可访问的在线地址提供给 Iceworks 使用，命令如下
+当物料开发完成时，发布需要几个步骤：
+
+1. 清理无用代码。默认生成的 example-block 等需要删除，因为它们的 package name 已经被占用无法发布。
+2. 将物料以 npm 包的形式发布。Iceworks 将通过 npm 下载物料解压使用。
+3. 生成物料源 db.json。根据你当前的物料生成 db 的数据，提供给 iceworks 使用。
+4. 部署 db.json 到 http 静态服务器，将 url 发送给使用者填入 iceworks 即可开始使用。
+
+> 建议：模板 + 布局 + 模块 为一套完整的工程物料，建议发布之前保证每一类都有一个物料。
+
+相关命令如下：
+
+通过 lerna 发布物料包：
 
 ```
 $ npm run bootstrap   // 初始 lerna
 $ npm run publish     // 发布 NPM 包
-$ npm run db          // 生成 DB 数据
 ```
 
+lerna 批量发包会比较容易，但可能会出现一些异常。而且 lerna 的变更检测是通过 git tag 实现的，因此通过这种方式你必须创建一个 git 仓库在 github 或者 gitlab 等。
+
+其实只要将物料发包即可，因此你也可以选择普通的 npm 命令的方式发布，只是这样操作步骤会变多一些：
+
+```
+$ cd 到对应物料目录
+$ npm publish
+```
+
+之后生成物料 DB：
+
+```
+$ ice-devtools generate          // 生成 DB 数据
+```
+
+此时将会在当前物料源下面新建 `build` 目录，并生成 json 文件。
+
+创建一个 http 静态服务器托管这个 db.json。你可以使用 https://browsersync.io/ 或者 python SimpleHTTPServer 等启动静态服务，并可以通过类似 `http://localhost:3000/vue-materials.json` 这样的方式获取到物料数据。
+
+至此，物料源开发完成，可以在 Iceworks 中试用。
 ## 接入 Iceworks
+
+目前还在 beta 版本，支持多物料源的 Iceworks 并没有正式发布，详情请参见群里。
+
+在设置面板中填入当前物料源 db url：
+
+![](https://img.alicdn.com/tfs/TB1QJEhlv9TBuNjy0FcXXbeiFXa-1740-1200.png)
+
+之后在创建项目界面即可看到你的自定义物料啦：
+
+![](https://img.alicdn.com/tfs/TB1aEwMlr5YBuNjSspoXXbeNFXa-854-758.png)
+
+![](https://img.alicdn.com/tfs/TB1.Oo1lxWYBuNjy1zkXXXGGpXa-1056-768.png)
