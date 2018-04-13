@@ -18,5 +18,8 @@ const generateMaterialsDatabases = require('./generate-marterials-database');
 function generateDatabase({ name, path, options }) {
   generateMaterialsDatabases(name, path, options).then(() => {
     // done
+    console.log(
+      'All materials db generated, then you can put the db.json in a http server and put the url in Iceworks settings panel. You will see your materials in Iceworks.'
+    );
   });
 }
