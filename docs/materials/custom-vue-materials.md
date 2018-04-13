@@ -59,7 +59,7 @@ $ ice-devtools start
 ```
 
 **预览界面（todo 目前 beta 阶段只有简版）**
-![ice-materials-preview](https://img.alicdn.com/tfs/TB1PHibhCCWBuNjy0FhXXb6EVXa-2848-1452.png)
+![ice-materials-preview](https://img.alicdn.com/tfs/TB15cl2lSBYBeNjy0FeXXbnmFXa-2786-1524.png)
 
 ## 自定义区块
 
@@ -105,7 +105,7 @@ $ ice-devtools start
     ├── README.md               // 说明文档
     ├── package.json            // pkg.json
     └── src                     // source 源码目录
-        ├── ExampleBlock.jsx
+        ├── ExampleBlock.vue
         └── index.js            // 模块入口
 ```
 
