@@ -111,9 +111,9 @@ $ ice-devtools start
 
 ### 目录文件说明
 
-**src/ExampleBlock.jsx**
+**src/ExampleBlock.vue**
 
-`ExampleBlock.jsx` 文件提供了基础的区块模板代码规范，方便快速开发一个区块：
+`ExampleBlock.vue` 文件提供了基础的区块模板代码规范，方便快速开发一个区块：
 
 ```
 <template>
