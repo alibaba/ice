@@ -65,6 +65,7 @@ module.exports = function startServer(opts) {
                 partials: {
                   initReact: './init-react',
                   initVue: './init-vue',
+                  sideBar: './sidebar'
                 },
               },
             })

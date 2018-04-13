@@ -2,6 +2,8 @@ const path = require('path');
 const { existsSync } = require('fs');
 const MultiEntryPlugin = require('webpack/lib/MultiEntryPlugin');
 const { getMaterials } = require('../utils');
+const getMaterialLists = require('../getMaterialLists');
+const { getMaterialList } = require('../utils')
 const cwd = process.cwd();
 const webpackHotClient = require.resolve('webpack-hot-client/client');
 const cachedChunks = {};
@@ -74,12 +76,16 @@ module.exports = async (ctx) => {
     ctx.compiler.running = true;
   }
 
+  const materialList = getMaterialList(material);
+
   const state = {
     layoutJS: '/DEMOLAYOUT.js',
     blockJS: `/${chunkName}.js`,
     blockName: `${chunkName}`,
     isReact: type === 'react',
     isVue: type === 'vue',
+    blocks: materialList.blocks,
+    layouts: materialList.layouts
   };
   return ctx.render('block.hbs', state);
 };
