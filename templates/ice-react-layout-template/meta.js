@@ -2,12 +2,12 @@ module.exports = {
   prompts: {
     title: {
       type: 'input',
-      message: '标题',
-      default: '示例布局',
+      message: 'title',
+      default: 'demo layout',
       validate: (value) => {
         value = value.trim();
         if (!value) {
-          return '布局标题不能为空，请重新输入';
+          return 'title cannot be empty';
         }
         return true;
       },
@@ -15,13 +15,13 @@ module.exports = {
     version: {
       type: 'string',
       required: true,
-      message: '版本',
+      message: 'version',
       default: '1.0.0',
     },
     description: {
       type: 'string',
       required: true,
-      message: '描述(可选)',
+      message: 'description (not required)',
     },
   },
 };

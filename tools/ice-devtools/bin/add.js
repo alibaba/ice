@@ -66,22 +66,22 @@ const materialCate = [
   {
     type: 'list',
     name: 'template',
-    message: '请选择物料类型',
+    message: 'Please select material type',
     choices: [
       {
-        name: '区块',
+        name: '区块(block)',
         value: {
           type: 'block',
         },
       },
       {
-        name: '布局',
+        name: '布局(layout)',
         value: {
           type: 'layout',
         },
       },
       {
-        name: '模板',
+        name: '模板(scaffold)',
         value: {
           type: 'scaffold',
         },
@@ -101,11 +101,11 @@ function initAdd() {
       materialCate.push({
         type: 'list',
         name: 'materialType',
-        message: '请选择技术类型',
+        message: 'Please a libary',
         choices: defaultData.materialType,
         validate: (answers) => {
           if (answers.length < 1) {
-            return '必须选择一个分类，请重新选择';
+            return 'It must be at least one';
           }
           return true;
         },
@@ -236,11 +236,11 @@ function ask() {
     block: {
       type: 'input',
       name: 'name',
-      message: '名称',
+      message: '名称(name)',
       default: 'ExampleBlock',
       validate: (value) => {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
-          return '名称不合法，必须是大驼峰写法(以大写字母开头并且由小写字母数字组成)，请重新输入';
+          return 'Name must be a Upper Camel Case word, e.g. ExampleBlock.';
         }
         return true;
       },
@@ -248,11 +248,11 @@ function ask() {
     layout: {
       type: 'input',
       name: 'name',
-      message: '名称',
+      message: '名称(name)',
       default: 'ExampleLayout',
       validate: (value) => {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
-          return '名称不合法，必须是大驼峰写法(以大写字母开头并且由小写字母数字组成)，请重新输入';
+          return 'Name must be a Upper Camel Case word, e.g. ExampleLayout.';
         }
         return true;
       },
@@ -260,12 +260,12 @@ function ask() {
     scaffold: {
       type: 'input',
       name: 'name',
-      message: '名称',
+      message: '名称(name)',
       default: 'ice-admin',
       validate: (value) => {
         value = value.trim();
         if (!value) {
-          return '名称不合法，不能为空! 请重新输入';
+          return 'Name cannot be empty';
         }
         return true;
       },

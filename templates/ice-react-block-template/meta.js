@@ -15,12 +15,12 @@ module.exports = {
   prompts: {
     title: {
       type: 'input',
-      message: '标题',
-      default: '示例区块',
+      message: 'title',
+      default: 'demo block',
       validate: (value) => {
         value = value.trim();
         if (!value) {
-          return '区块标题不能为空，请重新输入';
+          return 'title cannot be empty';
         }
         return true;
       },
@@ -28,21 +28,21 @@ module.exports = {
     version: {
       type: 'string',
       required: true,
-      message: '版本',
+      message: 'version',
       default: '1.0.0',
     },
     description: {
       type: 'string',
       required: true,
-      message: '描述(可选)',
+      message: 'description (not required)',
     },
     categories: {
       type: 'checkbox',
-      message: '分类',
+      message: 'categories',
       choices: BLOCK_CATEGORIES,
       validate: (answer) => {
         if (answer.length < 1) {
-          return '必须选择一个分类，请重新选择';
+          return 'It must be at least one';
         }
         return true;
       },

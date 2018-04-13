@@ -8,6 +8,9 @@ module.exports = (files, data, done) => {
     if (filename === '_gitignore') {
       newFilename = '.gitignore';
     }
+    if (filename === '_package.json') {
+      newFilename = 'package.json';
+    }
 
     if (newFilename !== filename) {
       files[newFilename] = files[filename];
