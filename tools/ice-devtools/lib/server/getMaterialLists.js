@@ -1,28 +1,47 @@
 const path = require('path');
 const fs = require('fs');
+const upperCamelCase = require('uppercamelcase');
 
 function getBlockEntries(dir, material) {
-  const result = {};
+  let result = {};
   const blockDirs = fs.readdirSync(path.join(dir, material, 'blocks'));
   const layoutDirs = fs.readdirSync(path.join(dir, material, 'layouts'));
 
   blockDirs.forEach((dirName) => {
     const fullPath = path.join(dir, material, 'blocks', dirName);
     if (fs.existsSync(fullPath) && isDirectory(fullPath)) {
-      result[`${material}/blocks/${dirName}`] = path.join(
-        fullPath,
-        'src/index.js'
-      );
+      const pkgData = require(path.join(fullPath, 'package.json'));
+      result[pkgData.blockConfig.name] = {
+        type: 'block',
+        material: material,
+        className: upperCamelCase(pkgData.blockConfig.name),
+        name: pkgData.blockConfig.name,
+        title: pkgData.blockConfig.title,
+        categories: pkgData.blockConfig.categories,
+        snapshot: pkgData.blockConfig.snapshot,
+        description: pkgData.description,
+        author: pkgData.author,
+        [`${material}/blocks/${dirName}`]: path.join(fullPath, 'src/index.js'),
+      };
     }
   });
 
   layoutDirs.forEach((dirName) => {
     const fullPath = path.join(dir, material, 'layouts', dirName);
     if (fs.existsSync(fullPath) && isDirectory(fullPath)) {
-      result[`${material}/layouts/${dirName}`] = path.join(
-        fullPath,
-        'src/index.js'
-      );
+      const pkgData = require(path.join(fullPath, 'package.json'));
+      result[pkgData.layoutConfig.name] = {
+        type: 'layout',
+        material: material,
+        className: upperCamelCase(pkgData.layoutConfig.name),
+        name: pkgData.layoutConfig.name,
+        title: pkgData.layoutConfig.title,
+        categories: pkgData.layoutConfig.categories,
+        snapshot: pkgData.layoutConfig.snapshot,
+        description: pkgData.description,
+        author: pkgData.author,
+        [`${material}/layouts/${dirName}`]: path.join(fullPath, 'src/index.js'),
+      };
     }
   });
   return result;

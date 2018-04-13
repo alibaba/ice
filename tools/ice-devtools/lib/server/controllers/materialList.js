@@ -1,13 +1,13 @@
-const getMaterialLists = require('../getMaterialLists');
+const { getMaterialList } = require('../utils')
 
 module.exports = async (ctx) => {
   const currentMaterial = ctx.params.material;
 
-  const materialsAll = await getMaterialLists(process.cwd());
-  const materials = materialsAll[currentMaterial];
+  const result = getMaterialList(currentMaterial);
 
   return ctx.render('blocks.hbs', {
     currentMaterial,
-    materials,
+    blocks: result.blocks,
+    layouts: result.layouts
   });
 };
