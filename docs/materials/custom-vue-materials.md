@@ -10,6 +10,10 @@ category: 物料
 * 基础编码码规范: [JavaScript Style Guide](https://github.com/airbnb/javascript)
 * CSS 规范: [CSS-in-JS](https://github.com/MicheleBertoli/css-in-js)
 
+## 安装物料开发工具
+
+执行 `npm install ice-devtools@beta -g` 
+
 ## 初始 Vue 物料项目
 
 使用 `ice-devtools init` 开始进入环境生成操作，按照提示依次输入初始信息：
