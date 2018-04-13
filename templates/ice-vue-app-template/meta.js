@@ -24,4 +24,6 @@ module.exports = {
       message: 'description (not required)',
     },
   },
+  completeMessage:
+    'Next step: cd {your-scaffold-directory} && npm install && npm run start',
 };
