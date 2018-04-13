@@ -49,7 +49,6 @@
     "moment": "^2.22.0",
     "multimatch": "^2.1.0",
     "node-sass": "^4.8.3",
-    "nodejieba": "^2.2.5",
     "ora": "^2.0.0",
     "read-metadata": "^1.0.0",
     "request": "^2.85.0",

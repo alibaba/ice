@@ -9,14 +9,28 @@ const os = require('os');
 const uppercamelcase = require('uppercamelcase');
 const rp = require('request-promise');
 const depAnalyze = require('../shared/dep-analyze');
-const { cut } = require('../shared/participle');
+
+function generatePartciple(payload, source) {
+  if (process.env.PARTICIPLE) {
+    const { cut } = require('../shared/participle');
+    // 分词 payload
+    const participle = {
+      title: cut(source.title),
+      content: cut(source.content),
+    };
+    if (payload && payload.features) {
+      payload.features.participle = participle;
+    }
+  }
+}
 
 /**
  * 生成 blocks 信息列表
  * @param {*} files
  * @param {*} SPACE
+ * @param {String} type | block or react
  */
-function generateBlocks(files, SPACE) {
+function generateBlocks(files, SPACE, type) {
   const result = [];
   files.forEach((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
@@ -43,40 +57,38 @@ function generateBlocks(files, SPACE) {
       };
     });
 
-    // hack 临时兼容下 layout 的场景
-    if (!pkg.blockConfig) {
-      pkg.blockConfig = pkg.layoutConfig;
-    }
-
-    // 分词 payload
-    const participle = {
-      title: cut(pkg.blockConfig.title),
-      content: cut(pkg.description),
-    };
+    // blockConfig or layoutConfig
+    const configKey = `${type}Config`;
+    const pkgConfig = pkg[configKey] || {};
 
     const payload = {
       // (必)英文名
-      name: pkg.blockConfig.name,
+      name: pkgConfig.name,
       // (必)中文描述
-      title: pkg.blockConfig.title,
+      title: pkgConfig.title,
       source: {
         type: 'npm',
         npm: pkg.name,
         version: pkg.version,
+        // layout or block need src/
         sourceCodeDirectory: 'src/',
       },
       // (必) 用于说明组件依赖关系
       dependencies: pkg.dependencies || {},
       // (必) 截图
-      snapshot: pkg.blockConfig.snapshot,
+      snapshot: pkgConfig.snapshot,
 
-      categories: pkg.blockConfig.categories || [],
+      categories: pkgConfig.categories || [],
       publishTime: pkg.publishTime || new Date().toISOString(),
       features: {
-        participle,
         useComponents,
       },
     };
+
+    generatePartciple(payload, {
+      title: pkgConfig.title,
+      content: pkg.description,
+    });
 
     // (可)区块详细说明, markdown 格式
     if (pkg.description) {
@@ -84,20 +96,20 @@ function generateBlocks(files, SPACE) {
     }
 
     // (可) 标签
-    if (pkg.blockConfig.categories) {
-      payload.categories = pkg.blockConfig.categories;
+    if (pkgConfig.categories) {
+      payload.categories = pkgConfig.categories;
     }
 
-    if (pkg.blockConfig.thumbnail) {
-      payload.thumbnail = pkg.blockConfig.thumbnail;
+    if (pkgConfig.thumbnail) {
+      payload.thumbnail = pkgConfig.thumbnail;
     }
 
-    if (pkg.blockConfig.sketchURL) {
-      payload.sketchURL = pkg.blockConfig.sketchURL;
+    if (pkgConfig.sketchURL) {
+      payload.sketchURL = pkgConfig.sketchURL;
     }
 
-    if (pkg.blockConfig.icelandURL) {
-      payload.sketchURL = pkg.blockConfig.icelandURL;
+    if (pkgConfig.icelandURL) {
+      payload.sketchURL = pkgConfig.icelandURL;
     }
 
     // if registry is user defined
@@ -133,12 +145,6 @@ function generateScaffolds(files, SPACE) {
       Object.assign(generatorJson, require(generatorJsonPath));
     }
 
-    // 分词 payload
-    const participle = {
-      title: cut(pkg.scaffoldConfig.title),
-      content: cut(pkg.description),
-    };
-
     const payload = {
       // (必)英文名
       name: pkg.scaffoldConfig.name,
@@ -157,10 +163,13 @@ function generateScaffolds(files, SPACE) {
 
       categories: pkg.scaffoldConfig.categories || [],
       publishTime: pkg.publishTime || new Date().toISOString(),
-      features: {
-        participle,
-      },
+      features: {},
     };
+
+    generatePartciple(payload, {
+      title: pkg.scaffoldConfig.title,
+      content: pkg.description,
+    });
 
     // (可)预览地址
     if (pkg.homepage) {
@@ -179,19 +188,19 @@ function generateScaffolds(files, SPACE) {
 
     // (可) 标签
     if (pkg.scaffoldConfig.categories) {
-      payload.categories = pkg.blockConfig.categories;
+      payload.categories = pkg.scaffoldConfig.categories;
     }
 
     if (pkg.scaffoldConfig.thumbnail) {
-      payload.thumbnail = pkg.blockConfig.thumbnail;
+      payload.thumbnail = pkg.scaffoldConfig.thumbnail;
     }
 
     if (pkg.scaffoldConfig.sketchURL) {
-      payload.sketchURL = pkg.blockConfig.sketchURL;
+      payload.sketchURL = pkg.scaffoldConfig.sketchURL;
     }
 
     if (pkg.scaffoldConfig.icelandURL) {
-      payload.sketchURL = pkg.blockConfig.icelandURL;
+      payload.sketchURL = pkg.scaffoldConfig.icelandURL;
     }
 
     // if registry is user defined
@@ -208,7 +217,7 @@ function generateScaffolds(files, SPACE) {
  * @param {*} pattern
  * @param {*} SPACE
  */
-function gatherBlocksOrLayouts(pattern, SPACE) {
+function gatherBlocksOrLayouts(pattern, SPACE, type) {
   return new Promise((resolve, reject) => {
     glob(
       pattern,
@@ -221,7 +230,7 @@ function gatherBlocksOrLayouts(pattern, SPACE) {
           console.log('err:', err);
           reject(err);
         } else {
-          resolve(generateBlocks(files, SPACE));
+          resolve(generateBlocks(files, SPACE, type));
         }
       }
     );
@@ -287,8 +296,8 @@ module.exports = function main(materialName, materialPath, options) {
     Promise.resolve(materialPath)
       .then((space) => {
         return Promise.all([
-          gatherBlocksOrLayouts('blocks/*/package.json', space),
-          gatherBlocksOrLayouts('layouts/*/package.json', space),
+          gatherBlocksOrLayouts('blocks/*/package.json', space, 'block'),
+          gatherBlocksOrLayouts('layouts/*/package.json', space, 'layout'),
           gatherScaffolds('scaffolds/*/package.json', space),
         ]);
       })
