@@ -2,7 +2,10 @@
   "name": "ice-app",
   "version": "1.0.0",
   "description": "",
-  "author": "chenbin92 <chenbinbin.cb@alibaba-inc.com>",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",

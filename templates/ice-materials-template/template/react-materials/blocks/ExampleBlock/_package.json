@@ -6,17 +6,15 @@
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
-  "files": [
-    "src/",
-    "lib/"
-  ],
+  "files": ["src/", "lib/"],
   "dependencies": {
-    "vue": "^2.5.16"
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
   },
   "blockConfig": {
     "name": "example-block",
     "title": "示例区块",
-    "categorie": ["其他"],
+    "categories": ["其他"],
     "snapshot": ""
   }
 }
