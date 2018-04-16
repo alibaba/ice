@@ -78,7 +78,7 @@ export default class Header extends PureComponent {
                   <br />
                   <span
                     className="user-department"
-                    style={{ fontSize: '12px' }}
+                    style={{ fontSize: '12px', color: '#999' }}
                   >
                     技术部
                   </span>
