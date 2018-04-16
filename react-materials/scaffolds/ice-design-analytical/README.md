@@ -17,4 +17,4 @@
 * 组件: `src/components`
 
 效果图:
-![screenshot](https://img.alicdn.com/tfs/TB1VDwWdHSYBuNjSspiXXXNzpXa-1920-1080.png)
+![screenshot](https://img.alicdn.com/tfs/TB15rq8mx9YBuNjy0FfXXXIsVXa-1920-1080.png)
