@@ -95,6 +95,6 @@ const styles = {
     alignItems: 'center',
   },
   text: {
-    fontSize: '16px;',
+    fontSize: '16px',
   },
 };
