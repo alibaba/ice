@@ -14,7 +14,7 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import { Input, Button, Select, DatePicker } from '@icedesign/base';
+import { Input, Button, Select } from '@icedesign/base';
 
 class App extends Component {
   constructor(props) {
