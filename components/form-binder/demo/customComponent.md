@@ -68,6 +68,7 @@ class CustomCombobox extends Component {
   render() {
     return (
       <Combobox
+        style={{verticalAlign: 'middle'}}
         onChange={this.onChange}
         value={this.state.value}
         onInputUpdate={this.onInputUpdate}
