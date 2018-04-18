@@ -1,0 +1,23 @@
+{
+  "name": "header-aside-layout",
+  "version": "1.0.0",
+  "description": "",
+  "author": "chenbin92 <chenbinbin.cb@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "dependencies": {
+    "element-ui": "^2.3.4",
+    "vue": "^2.5.16",
+    "vuex": "^3.0.1"
+  },
+  "layoutConfig": {
+    "name": "header-aside-layout",
+    "title": "顶部-侧边-布局",
+    "categories": [
+      "布局"
+    ],
+    "snapshot": ""
+  }
+}
