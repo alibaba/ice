@@ -1,11 +1,38 @@
+/* eslint no-plusplus:0 */
 import React, { Component } from 'react';
 import ReactEcharts from 'echarts-for-react';
 import 'echarts/lib/chart/map';
 import 'echarts/map/js/world';
 
-const v = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3];
+const v = [
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+];
 const geoCoordMap = {
-  '中国 · 浙江兰溪': [119.1330, 29.120],
+  '中国 · 浙江兰溪': [119.133, 29.12],
   尼日利亚仓: [-4.388361, 11.186148],
   美国洛杉矶仓: [-118.24311, 34.052713],
   香港邦泰仓: [114.195466, 22.282751],
@@ -37,82 +64,108 @@ const geoCoordMap = {
   加拿大温哥华仓: [-123.023921, 49.311753],
 };
 
-const data = [{
-  name: '中国 · 浙江兰溪',
-  value: 10,
-}, {
-  name: '尼日利亚仓',
-  value: 10,
-}, {
-  name: '美国洛杉矶仓',
-  value: 20,
-}, {
-  name: '香港邦泰仓',
-  value: 20,
-}, {
-  name: '美国芝加哥仓',
-  value: 50,
-}, {
-  name: '加纳库马西仓',
-  value: 64,
-}, {
-  name: '英国曼彻斯特仓',
-  value: 68,
-}, {
-  name: '德国汉堡仓',
-  value: 45,
-}, {
-  name: '哈萨克斯坦阿拉木图仓',
-  value: 10,
-}, {
-  name: '俄罗斯伊尔库茨克仓',
-  value: 10,
-}, {
-  name: '巴西仓',
-  value: 20,
-}, {
-  name: '埃及达米埃塔仓',
-  value: 50,
-}, {
-  name: '西班牙巴塞罗纳仓',
-  value: 58,
-}, {
-  name: '柬埔寨金边仓',
-  value: 64,
-}, {
-  name: '意大利米兰仓',
-  value: 68,
-}, {
-  name: '乌拉圭蒙得维的亚仓',
-  value: 45,
-}, {
-  name: '莫桑比克马普托仓',
-  value: 50,
-}, {
-  name: '阿尔及利亚阿尔及尔仓',
-  value: 58,
-}, {
-  name: '阿联酋迪拜仓',
-  value: 64,
-}, {
-  name: '匈牙利布达佩斯仓',
-  value: 68,
-}, {
-  name: '澳大利亚悉尼仓',
-  value: 45,
-}, {
-  name: '美国加州仓',
-  value: 68,
-}, {
-  name: '澳大利亚墨尔本仓',
-  value: 45,
-}, {
-  name: '墨西哥仓',
-  value: 45,
-}, {
-  name: '加拿大温哥华仓',
-  value: 45,
-}];
+const data = [
+  {
+    name: '中国 · 浙江兰溪',
+    value: 10,
+  },
+  {
+    name: '尼日利亚仓',
+    value: 10,
+  },
+  {
+    name: '美国洛杉矶仓',
+    value: 20,
+  },
+  {
+    name: '香港邦泰仓',
+    value: 20,
+  },
+  {
+    name: '美国芝加哥仓',
+    value: 50,
+  },
+  {
+    name: '加纳库马西仓',
+    value: 64,
+  },
+  {
+    name: '英国曼彻斯特仓',
+    value: 68,
+  },
+  {
+    name: '德国汉堡仓',
+    value: 45,
+  },
+  {
+    name: '哈萨克斯坦阿拉木图仓',
+    value: 10,
+  },
+  {
+    name: '俄罗斯伊尔库茨克仓',
+    value: 10,
+  },
+  {
+    name: '巴西仓',
+    value: 20,
+  },
+  {
+    name: '埃及达米埃塔仓',
+    value: 50,
+  },
+  {
+    name: '西班牙巴塞罗纳仓',
+    value: 58,
+  },
+  {
+    name: '柬埔寨金边仓',
+    value: 64,
+  },
+  {
+    name: '意大利米兰仓',
+    value: 68,
+  },
+  {
+    name: '乌拉圭蒙得维的亚仓',
+    value: 45,
+  },
+  {
+    name: '莫桑比克马普托仓',
+    value: 50,
+  },
+  {
+    name: '阿尔及利亚阿尔及尔仓',
+    value: 58,
+  },
+  {
+    name: '阿联酋迪拜仓',
+    value: 64,
+  },
+  {
+    name: '匈牙利布达佩斯仓',
+    value: 68,
+  },
+  {
+    name: '澳大利亚悉尼仓',
+    value: 45,
+  },
+  {
+    name: '美国加州仓',
+    value: 68,
+  },
+  {
+    name: '澳大利亚墨尔本仓',
+    value: 45,
+  },
+  {
+    name: '墨西哥仓',
+    value: 45,
+  },
+  {
+    name: '加拿大温哥华仓',
+    value: 45,
+  },
+];
 
 function formtGCData(geoData, gcData, srcNam, dest) {
   const tGeoDt = [];
@@ -188,71 +241,75 @@ const option = {
       },
     },
   },
-  series: [{
-    type: 'lines',
-    zlevel: 2,
-    effect: {
-      show: true,
-      period: 6,
-      trailLength: 0.1,
-      color: '#FFB973',
-      symbol: planePath,
-      symbolSize: 5,
-    },
-    lineStyle: {
-      normal: {
+  series: [
+    {
+      type: 'lines',
+      zlevel: 2,
+      effect: {
+        show: true,
+        period: 6,
+        trailLength: 0.1,
         color: '#FFB973',
-        width: 0,
-        opacity: 0.2,
-        curveness: 0,
+        symbol: planePath,
+        symbolSize: 5,
       },
+      lineStyle: {
+        normal: {
+          color: '#FFB973',
+          width: 0,
+          opacity: 0.2,
+          curveness: 0,
+        },
+      },
+      data: formtGCData(geoCoordMap, data, '中国 · 浙江兰溪', true),
     },
-    data: formtGCData(geoCoordMap, data, '中国 · 浙江兰溪', true),
-  }, {
-    type: 'lines',
-    zlevel: 2,
-    effect: {
-      show: true,
-      period: 6,
-      trailLength: 0.1,
-      color: '#9CE6FE',
-      symbol: planePath,
+    {
+      type: 'lines',
+      zlevel: 2,
+      effect: {
+        show: true,
+        period: 6,
+        trailLength: 0.1,
+        color: '#9CE6FE',
+        symbol: planePath,
+        symbolSize: 5,
+      },
+      lineStyle: {
+        normal: {
+          color: '#65A2C2',
+          width: 0,
+          opacity: 0.4,
+          curveness: 0,
+        },
+      },
+      data: formtGCData(geoCoordMap, data, '中国 · 浙江兰溪', false),
+    },
+    {
+      type: 'effectScatter',
+      coordinateSystem: 'geo',
+      zlevel: 2,
+      rippleEffect: {
+        period: 4,
+        scale: 4,
+        brushType: 'stroke',
+      },
+      label: {
+        normal: {
+          show: false,
+          position: 'right',
+          formatter: '{b}',
+        },
+      },
       symbolSize: 5,
-    },
-    lineStyle: {
-      normal: {
-        color: '#65A2C2',
-        width: 0,
-        opacity: 0.4,
-        curveness: 0,
+      itemStyle: {
+        normal: {
+          color: '#fff',
+          borderColor: 'gold',
+        },
       },
+      data: formtVData(geoCoordMap, data, '中国 · 浙江兰溪'),
     },
-    data: formtGCData(geoCoordMap, data, '中国 · 浙江兰溪', false),
-  }, {
-    type: 'effectScatter',
-    coordinateSystem: 'geo',
-    zlevel: 2,
-    rippleEffect: {
-      period: 4,
-      scale: 4,
-      brushType: 'stroke',
-    },
-    label: {
-      normal: {
-        show: false,
-        position: 'right',
-        formatter: '{b}',
-      },
-    },
-    symbolSize: 5,
-    itemStyle: {
-      normal: {
-        color: '#fff',
-        borderColor: 'gold',
-      },
-    },
-    data: formtVData(geoCoordMap, data, '中国 · 浙江兰溪'),
-  }],
+  ],
 };
 
 export default class Map extends Component {
