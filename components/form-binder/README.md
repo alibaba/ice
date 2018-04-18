@@ -184,3 +184,12 @@ return (
 ```
 
 格式化之后进行 return 即可，详情参见下面 Demo。
+
+### Combobox 组件不能用？非标准的组件如何接入 FormBinder 使用？
+
+FormBinder 规定表单组件需要具备两个 props：
+
+* value 用于接收数据进行回填
+* onChange 用于用户操作之后，更新 value
+
+如果表单组件不支持当前表单规范，需要自定封装一个自定义组件接入。详情参见下面 Demo。
