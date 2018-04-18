@@ -1,24 +1,18 @@
 {
-  "name": "@icedesign/scaffold-lite",
+  "name": "@icedesign/scaffold-analysis",
   "version": "1.0.0",
-  "description": "该模板适用于从 0 到 1 开始搭建项目，内置四套布局，以及基础的页面，路由和菜单展示",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-lite.html",
+  "description":
+    "该模板适用于可视化实时数据的大屏展示，默认只有一个页面，内置饼图、柱状图等图形",
+  "homepage":
+    "https://alibaba.github.io/ice/scaffold-preview/ice-design-analysis.html",
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
-    "@icedesign/icon": "^0.1.1",
-    "@icedesign/img": "^0.1.0",
     "@icedesign/layout": "^0.1.0",
-    "@icedesign/menu": "^0.1.0",
     "@icedesign/skin": "^0.1.0",
-    "bizcharts": "latest",
-    "classnames": "^2.2.5",
     "echarts": "^4.0.4",
     "echarts-for-react": "^2.0.8",
-    "enquire-js": "^0.1.2",
-    "foundation-symbol": "^0.1.0",
     "prop-types": "^15.5.8",
-    "react-document-title": "^2.0.3",
     "react-router": "^3.2.0",
     "react-text-loop": "^1.1.0"
   },
@@ -46,9 +40,10 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "name": "ice-design-lite",
-    "title": "ICE Design Lite",
-    "snapshot": "https://img.alicdn.com/tfs/TB1l_wWdHSYBuNjSspiXXXNzpXa-1920-1080.png"
+    "name": "ice-design-analysis",
+    "title": "ICE Design Analysis",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1_Xf8m_tYBeNjy1XdXXXXyVXa-1920-1080.png"
   },
   "title": "ice_design_analysis"
 }
