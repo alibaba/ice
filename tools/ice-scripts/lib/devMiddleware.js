@@ -5,26 +5,30 @@ const getProxyConfig = require('./config/getProxyConfig');
 module.exports = (app) => {
   const proxyConfig = getProxyConfig();
 
-  const proxyRules = Object.entries(proxyConfig);
+  if (proxyConfig) {
+    const proxyRules = Object.entries(proxyConfig);
 
-  proxyRules.forEach(([match, target]) => {
-    const opts = {
-      context: match,
-      target,
-      changeOrigin: true,
-      logLevel: 'warn',
-      onProxyRes: function onProxyReq(proxyRes, req, res) {
-        proxyRes.headers['x-proxy-by'] = 'ice-proxy';
-        proxyRes.headers['x-proxy-match'] = match;
-        proxyRes.headers['x-proxy-target'] = target;
-        if (target.endsWith('/')) {
-          target = target.replace(/\/$/, '');
-        }
-        proxyRes.headers['x-proxy-target-path'] = target + req.url;
-      },
-    };
+    proxyRules.forEach(([match, opts]) => {
+      if (opts.enable) {
+        const opts = {
+          context: match,
+          target: opts.target,
+          changeOrigin: true,
+          logLevel: 'warn',
+          onProxyRes: function onProxyReq(proxyRes, req, res) {
+            proxyRes.headers['x-proxy-by'] = 'ice-proxy';
+            proxyRes.headers['x-proxy-match'] = match;
+            proxyRes.headers['x-proxy-target'] = opts.target;
+            if (opts.target && opts.target.endsWith('/')) {
+              opts.target = opts.target.replace(/\/$/, '');
+            }
+            proxyRes.headers['x-proxy-target-path'] = opts.target + req.url;
+          },
+        };
 
-    const exampleProxy = httpProxyMiddleware(match, opts);
-    app.use(exampleProxy);
-  });
+        const exampleProxy = httpProxyMiddleware(match, opts);
+        app.use(exampleProxy);
+      }
+    });
+  }
 };
