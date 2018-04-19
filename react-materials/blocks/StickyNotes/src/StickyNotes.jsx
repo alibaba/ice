@@ -46,5 +46,3 @@ export default class StickyNotes extends Component {
     );
   }
 }
-
-const styles = {};
