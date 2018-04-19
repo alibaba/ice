@@ -14,27 +14,14 @@ ResponsiveReactGridLayout = WidthProvider(ResponsiveReactGridLayout);
 /**
  * @method: guid
  * @desc: Generates unique guid
- **/
+ * */
 function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
       .substring(1);
   }
-  return (
-    s4() +
-    s4() +
-    '-' +
-    s4() +
-    '-' +
-    s4() +
-    '-' +
-    s4() +
-    '-' +
-    s4() +
-    s4() +
-    s4()
-  );
+  return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
 }
 
 export default class extends Component {
@@ -74,9 +61,9 @@ export default class extends Component {
     return colors[Math.floor(Math.random() * (colors.length - 1))];
   }
 
-  generateRandomDegree(max, min) {
-    return `${Math.floor(Math.random() * (max - min + 1)) + min}deg`;
-  }
+  generateRandomDegree = (max, min) => {
+    return `${Math.floor(Math.random() * ((max - min) + 1)) + min}deg`;
+  };
 
   handleTitleChange(html, currentNote) {
     const notes = this.state.notes;
@@ -163,7 +150,6 @@ export default class extends Component {
     }
   }
   onLayoutChange(layout) {
-    console.log('layout', layout);
     const notes = this.state.notes;
     notes.forEach((note) => {
       layout.forEach((grid) => {
@@ -187,9 +173,8 @@ export default class extends Component {
     );
   }
   onBreakpointChange(breakpoint, cols) {
-    console.log('breakpoint', breakpoint);
     this.setState({
-      breakpoint,
+      // breakpoint,
       cols,
     });
   }
@@ -267,7 +252,7 @@ export default class extends Component {
           </div>
           <div className="note-body" style={noteBodyStyle}>
             <Input
-              multiple={true}
+              multiple
               value={note.textValue}
               onChange={(textValue) => this.onChange(textValue, note)}
               placeholder="添加待办事项和说明"
