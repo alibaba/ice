@@ -18,7 +18,7 @@ module.exports = (paths, options = {}) => {
     before(app) {
       // todo add user's before
       // user.before(app);
-      app.use(function(req, res, next) {
+      app.use((req, res, next) => {
         // your custom code to check for any exceptions
         if (devType === 'project') {
           if (['/', '/index.html'].includes(req.url)) {
