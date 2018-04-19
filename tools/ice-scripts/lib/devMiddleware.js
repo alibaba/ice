@@ -10,7 +10,7 @@ module.exports = (app) => {
 
     proxyRules.forEach(([match, opts]) => {
       if (opts.enable) {
-        const opts = {
+        const proxyOptions = {
           context: match,
           target: opts.target,
           changeOrigin: true,
@@ -26,7 +26,7 @@ module.exports = (app) => {
           },
         };
 
-        const exampleProxy = httpProxyMiddleware(match, opts);
+        const exampleProxy = httpProxyMiddleware(match, proxyOptions);
         app.use(exampleProxy);
       }
     });
