@@ -1,3 +1,3 @@
-import HeaderAsideLayout from './HeaderAsideLayout';
+import Layout from './Layout';
 
-export default HeaderAsideLayout;
+export default Layout;

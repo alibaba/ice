@@ -1,19 +1,27 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
-    <span class="greeting">Welcome</span>
-    <el-dropdown class="avatar-container" trigger="click">
-      <div class="avatar-wrapper">
-        <img class="user-avatar" src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80">
-        <i class="el-icon-caret-bottom"></i>
+    <el-dropdown class="user-profile-container" trigger="click">
+      <div class="user-profile-content">
+        <img class="user-avatar" src="https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png">
+        <div class="user-profile-body">
+          <span class="user-name">淘小宝</span>
+          <span class="user-department">技术部</span>
+          <i class="el-icon-caret-bottom"></i>
+        </div>
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
-        <router-link class="inlineBlock" to="/">
+        <router-link to="/">
           <el-dropdown-item>
-            Home
+            我的主页
           </el-dropdown-item>
         </router-link>
-        <el-dropdown-item divided>
-          <span @click="logout" style="display:block;">LogOut</span>
+        <router-link to="/">
+          <el-dropdown-item>
+            个人设置
+          </el-dropdown-item>
+        </router-link>
+        <el-dropdown-item>
+          <span @click="logout" style="display:block;">退出</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -23,7 +31,6 @@
 <script>
 
 export default {
-
   methods: {
     logout() {
       console.log('Logout');
@@ -34,32 +41,40 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
-  height: 50px;
-  line-height: 50px;
-  border-radius: 0px !important;
-  .greeting {
-    margin-left: 30px,
-  }
-  .avatar-container {
-    height: 50px;
-    display: inline-block;
+  height: 64px;
+  .user-profile-container {
     position: absolute;
-    right: 35px;
-    .avatar-wrapper {
-      cursor: pointer;
-      margin-top: 5px;
+    right: 20px;
+    cursor: pointer;
+    .user-profile-content {
+      display: flex;
+      margin: 12px 0;
+    }
+    .user-profile-body {
       position: relative;
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-      }
-      .el-icon-caret-bottom {
-        position: absolute;
-        right: -20px;
-        top: 25px;
-        font-size: 12px;
-      }
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      padding-right: 14px;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      margin-right: 12px;
+      border-radius: 4px;
+    }
+    .user-name {
+      color: #333;
+    }
+    .user-department {
+      font-size: 12px;
+      color: #666;
+    }
+    .el-icon-caret-bottom {
+      position: absolute;
+      right: 0;
+      top: 13px;
+      font-size: 12px;
     }
   }
 }
