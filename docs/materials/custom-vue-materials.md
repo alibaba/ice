@@ -304,8 +304,6 @@ $ ice-devtools generate          // 生成 DB 数据
 
 ![](https://img.alicdn.com/tfs/TB1QJEhlv9TBuNjy0FcXXbeiFXa-1740-1200.png)
 
-之后在创建项目界面即可看到你的自定义物料啦：
+之后在创建项目界面即可看到你的自定义物料：
 
 ![](https://img.alicdn.com/tfs/TB1aEwMlr5YBuNjSspoXXbeNFXa-854-758.png)
-
-![](https://img.alicdn.com/tfs/TB1.Oo1lxWYBuNjy1zkXXXGGpXa-1056-768.png)
