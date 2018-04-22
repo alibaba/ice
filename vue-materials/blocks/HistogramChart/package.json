@@ -1,0 +1,37 @@
+{
+  "name": "ice-vue-histogram-chart-block",
+  "version": "1.0.0",
+  "description": "",
+  "author": "ice-admin@alibaba-inc.com",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "echarts": "^4.0.4",
+    "ice-vue-basic-container-block": "^1.0.2",
+    "v-charts": "^1.16.10",
+    "vue": "^2.5.16"
+  },
+  "blockConfig": {
+    "name": "histogram-chart",
+    "title": "柱状图",
+    "categories": [
+      "图表"
+    ],
+    "snapshot": "https://img.alicdn.com/tfs/TB19vkHnuuSBuNjy1XcXXcYjFXa-1960-924.png"
+  }
+}
