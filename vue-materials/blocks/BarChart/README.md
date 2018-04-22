@@ -2,4 +2,4 @@
 
 简介：条形图
 
-![截图](https://img.alicdn.com/tfs/TB1Xn7Cnv5TBuNjSspmXXaDRVXa-1960-912.png)
+![截图](https://img.alicdn.com/tfs/TB1LgufnQCWBuNjy0FaXXXUlXXa-1960-908.png)
