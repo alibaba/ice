@@ -11,8 +11,8 @@ const customAsideNavs = [
         path: 'index',
         name: 'Dashboard',
         icon: 'el-icon-menu',
-      }
-    ]
+      },
+    ],
   },
   {
     path: '/table',
@@ -46,7 +46,7 @@ const customAsideNavs = [
         name: '注册表单',
         icon: '',
       },
-    ]
+    ],
   },
   {
     path: '/charts',
@@ -68,7 +68,7 @@ const customAsideNavs = [
         name: '条形图',
         icon: '',
       },
-    ]
+    ],
   },
 ];
 // <!-- custom navs start -->
