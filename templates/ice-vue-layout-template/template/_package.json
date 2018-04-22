@@ -1,5 +1,5 @@
 {
-  "name": "{{name}}",
+  "name": "ice-vue-{{name}}-layout",
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
@@ -7,6 +7,19 @@
     "src/",
     "lib/"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-layout"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
   "dependencies": {
     "vue": "^2.5.16"
   },
