@@ -170,7 +170,7 @@ export default ExampleBlock;
     "lib/"
   ],
   "dependencies": {
-    "react": "^16.3.0",
+    "vue": "^2.5.16"
   },
   "blockConfig": {            // 区块的相关配置，用于 Iceworks 和站点的展示
     "name": "example-block",  // 名称
@@ -302,8 +302,8 @@ $ ice-devtools generate          // 生成 DB 数据
 
 在设置面板中填入当前物料源 db url：
 
-![](https://img.alicdn.com/tfs/TB1QJEhlv9TBuNjy0FcXXbeiFXa-1740-1200.png)
+![](https://img.alicdn.com/tfs/TB1qYBFnMmTBuNjy1XbXXaMrVXa-1736-1150.png)
 
 之后在创建项目界面即可看到你的自定义物料：
 
-![](https://img.alicdn.com/tfs/TB1aEwMlr5YBuNjSspoXXbeNFXa-854-758.png)
+![](https://img.alicdn.com/tfs/TB10ONGnQOWBuNjSsppXXXPgpXa-1740-1152.png)
