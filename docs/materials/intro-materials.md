@@ -13,3 +13,5 @@ category: 物料
 * 布局：在中后台系统中布局通常较为统一，以 顶部-侧边布局-通栏 模式为主，为此我们提供了 4+ 常见的布局，支持 light 和 dark 两套主题。
 
 * 模板：基于已有的区块搭建而成，目前提供了 4+ 的特定领域的模板，可以从零开始搭建应用，也可以选择特定类型的模板开始使用。
+
+![intro materials](https://img.alicdn.com/tfs/TB1uMkVnTtYBeNjy1XdXXXXyVXa-2048-1400.jpg)

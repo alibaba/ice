@@ -60,6 +60,6 @@ $ ice-devtools start
 ```
 
 **预览界面**
-![ice-materials-preview](https://img.alicdn.com/tfs/TB1PHibhCCWBuNjy0FhXXb6EVXa-2848-1452.png)
+![ice-materials-preview](https://img.alicdn.com/tfs/TB17haCnKuSBuNjy1XcXXcYjFXa-2858-1586.png)
 
 至此，按照上面的步骤，我们已经初始化了一个物料仓库，接下来，你可以按照实际的业务场景进行自定义物料。
