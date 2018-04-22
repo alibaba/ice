@@ -1,5 +1,5 @@
 {
-  "name": "header-aside-layout",
+  "name": "ice-vue-header-aside-layout",
   "version": "1.0.0",
   "description": "顶部导航 + 边栏 + 内容区的布局, 通常用于站点正文。",
   "author": {
@@ -17,7 +17,7 @@
   "license": "MIT",
   "keywords": [
     "ice",
-    "ice-component"
+    "ice-block"
   ],
   "publishConfig": {
     "access": "public",
