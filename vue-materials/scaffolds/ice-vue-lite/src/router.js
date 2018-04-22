@@ -69,7 +69,7 @@ const customRoutes = {
         { path: '', component: NotFound },
       ],
     },
-    { path: '*', redirect: '/404' }
+    { path: '*', redirect: '/404' },
   ],
 };
 
