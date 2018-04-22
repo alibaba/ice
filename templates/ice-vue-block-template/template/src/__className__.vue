@@ -1,11 +1,16 @@
 <template>
   <div className="{{name}}">
-    <h1>{{className}}</h1>
+    <basic-container>
+      <h1>{{className}}</h1>
+    </basic-container>
   </div>
 </template>
 
 <script>
+import BasicContainer from 'ice-vue-basic-container-block'
+
 export default {
+  components: { BasicContainer },
   name: '{{className}}',
 
   data() {
@@ -21,8 +26,6 @@ export default {
 
 <style>
   .{{name}} {
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+
   }
 </style>
