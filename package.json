@@ -16,6 +16,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "devDependencies": {
+    "@vue/eslint-config-airbnb": "^3.0.0-beta.6",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",
     "babel-plugin-import": "^1.6.3",
@@ -31,6 +32,7 @@
     "eslint-plugin-react": "^7.5.1",
     "findup": "^0.1.5",
     "ghooks": "^2.0.2",
+    "ice-devtools": "^1.0.0-beta.8",
     "ice-scripts": "^0.1.0",
     "lerna": "^2.5.1",
     "mark-twain": "^2.0.2",
@@ -39,8 +41,7 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "semver-regex": "^1.0.0",
-    "uppercamelcase": "^3.0.0",
-    "ice-devtools": "^1.0.0-beta.8"
+    "uppercamelcase": "^3.0.0"
   },
   "config": {
     "ghooks": {
@@ -55,5 +56,8 @@
     "vue-materials": {
       "type": "vue"
     }
+  },
+  "dependencies": {
+    "@vue/eslint-config-airbnb": "^3.0.0-beta.6"
   }
 }

@@ -85,7 +85,8 @@ module.exports = async (ctx) => {
     isReact: type === 'react',
     isVue: type === 'vue',
     blocks: materialList.blocks,
-    layouts: materialList.layouts
+    layouts: materialList.layouts,
+    isBlock: true
   };
   return ctx.render('block.hbs', state);
 };

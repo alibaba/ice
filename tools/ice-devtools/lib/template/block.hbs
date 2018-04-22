@@ -10,6 +10,23 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icedesign/skin/index.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icedesign/skin/override.css">
   {{/if}}
+  {{#if isVue}}
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  {{/if}}
+
+  {{#if isBlock}}
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+    .vue-demo-layout {
+      width: 67%;
+      margin: 40px auto;
+    }
+  </style>
+  {{/if}}
 </head>
 
 <body>
@@ -23,6 +40,7 @@
   {{/if}}
   {{#if isVue}}
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
   {{/if}}
 </body>
 
