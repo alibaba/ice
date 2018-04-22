@@ -52,8 +52,8 @@
     }
   },
   "materials": {
-    "official-material": {
-      "type": "react"
+    "vue-materials": {
+      "type": "vue"
     }
   }
 }

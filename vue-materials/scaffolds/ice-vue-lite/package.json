@@ -1,0 +1,49 @@
+{
+  "name": "ice-vue-lite",
+  "version": "1.0.0",
+  "description": "该模板适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示，基于 vue-element-admin",
+  "author": "chenbin92 <chenbinbin.cb@alibaba-inc.com>",
+  "scripts": {
+    "start": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "element-ui": "^2.3.6",
+    "normalize.css": "^8.0.0",
+    "vue": "^2.5.13",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.0-beta.6",
+    "@vue/cli-plugin-eslint": "^3.0.0-beta.6",
+    "@vue/cli-service": "^3.0.0-beta.6",
+    "@vue/eslint-config-airbnb": "^3.0.0-beta.6",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "vue-template-compiler": "^2.5.13"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-scaffold"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "scaffoldConfig": {
+    "name": "ice-vue-lite",
+    "title": "ice vue lite",
+    "snapshot": "https://img.alicdn.com/tfs/TB1Ms2UnuuSBuNjy1XcXXcYjFXa-2840-1596.png"
+  }
+}
