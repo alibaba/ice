@@ -1,0 +1,29 @@
+{
+  "name": "ice-vue-basic-container-block",
+  "version": "1.0.2",
+  "description": "",
+  "author": "ice-admin@alibaba-inc.com",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "vue": "^2.5.16"
+  },
+  "blockConfig": {
+    "name": "basic-container",
+    "title": "区块容器",
+    "categories": ["其他"],
+    "snapshot": "https://img.alicdn.com/tfs/TB1fCIGnxSYBuNjSspjXXX73VXa-1960-716.png"
+  }
+}
