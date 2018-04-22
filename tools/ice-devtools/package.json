@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "1.0.0-beta.18",
+  "version": "1.0.0-beta.19",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {
@@ -22,6 +22,7 @@
     "async": "^2.6.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
+    "babel-plugin-component": "^1.1.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-lib-import": "^0.1.0",
