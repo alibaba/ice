@@ -249,4 +249,4 @@ $ npm run publish     // 发布 NPM 包
 $ npm run db          // 生成 DB 数据
 ```
 
-## 接入 Iceworks
+接入 Iceworks 流程与自定义 Vue 物料开发接入流程一致，具体请参考 `自定义 Vue 物料` 接入 Iceworks 流程部分。
