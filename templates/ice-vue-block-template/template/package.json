@@ -1,0 +1,37 @@
+{
+  "name": "ice-vue-{{name}}-block",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "author": "{{author}}",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "ice-vue-basic-container-block": "^1.0.2",
+    "vue": "^2.5.16"
+  },
+  "blockConfig": {
+    "name": "{{name}}",
+    "title": "{{title}}",
+    "categorie": [
+      {{#each categories}}
+        "{{@key}}"{{#if @last}} {{else}},{{/if}}
+      {{/each}}
+    ],
+    "snapshot": ""
+  }
+}

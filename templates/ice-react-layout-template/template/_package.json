@@ -1,0 +1,20 @@
+{
+  "name": "{{name}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "author": "{{author}}",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "dependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "layoutConfig": {
+    "name": "{{name}}",
+    "title": "{{title}}",
+    "categories": ["layout"],
+    "snapshot": ""
+  }
+}
