@@ -2,8 +2,8 @@
 build/
 tests/
 demo/
-react-materials/layouts/**/lib/
-react-materials/blocks/**/lib/
+layouts/**/lib/
+blocks/**/lib/
 node_modules/
 scripts/
 
@@ -16,5 +16,3 @@ coverage/
 
 # templorarily ignore tools
 tools/
-
-**/templates/**
