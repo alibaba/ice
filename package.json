@@ -32,7 +32,7 @@
     "eslint-plugin-react": "^7.5.1",
     "findup": "^0.1.5",
     "ghooks": "^2.0.2",
-    "ice-devtools": "^1.0.0-beta.8",
+    "ice-devtools": "^1.0.0-beta.19",
     "ice-scripts": "^0.1.0",
     "lerna": "^2.5.1",
     "mark-twain": "^2.0.2",
@@ -53,11 +53,11 @@
     }
   },
   "materials": {
+    "react-materials": {
+      "type": "react"
+    },
     "vue-materials": {
       "type": "vue"
     }
-  },
-  "dependencies": {
-    "@vue/eslint-config-airbnb": "^3.0.0-beta.6"
   }
 }
