@@ -1,0 +1,35 @@
+{
+  "name": "ice-vue-fixed-table-block",
+  "version": "1.0.0",
+  "description": "",
+  "author": "ice-admin@alibaba-inc.com",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "ice-vue-basic-container-block": "^1.0.2",
+    "vue": "^2.5.16"
+  },
+  "blockConfig": {
+    "name": "fixed-table",
+    "title": "固定表格",
+    "categories": [
+      "表格"
+    ],
+    "snapshot": "https://img.alicdn.com/tfs/TB1Jx3cnr1YBuNjSszeXXablFXa-1960-686.png"
+  }
+}

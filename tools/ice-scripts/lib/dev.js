@@ -17,6 +17,7 @@ const deepmerge = require('deepmerge');
 const getPaths = require('./config/paths');
 const getEntries = require('./config/getEntry');
 const getWebpackConfigDev = require('./config/webpack.config.dev');
+const devMiddleware = require('./devMiddleware');
 // const npmUpdate = require('./helpers/npmUpdate');
 const iceworksClient = require('./iceworksClient');
 
@@ -73,7 +74,10 @@ module.exports = function(args, subprocess) {
     // merge user config
     devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);
   }
+
   const devServer = new WebpackDevServer(compiler, devServerConfig);
+
+  devMiddleware(devServer);
 
   compiler.plugin('done', (stats) => {
     if (isInteractive) {

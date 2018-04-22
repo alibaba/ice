@@ -1,0 +1,49 @@
+// 主体区域
+.main-container {
+  min-height: 100vh;
+  transition: margin-left 0.28s;
+  margin-left: 240px;
+}
+
+// 侧边栏
+.sidebar-container {
+  .horizontal-collapse-transition {
+    transition: 0s width ease-in-out, 0s padding-left ease-in-out,
+      0s padding-right ease-in-out;
+  }
+  box-shadow: 2px 0 6px rgba(0,21,41,.35);
+  transition: width 0.28s;
+  width: 240px !important;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1001;
+  overflow: hidden;
+  a {
+    display: inline-block;
+    width: 100%;
+  }
+  .svg-icon {
+    margin-right: 16px;
+  }
+  .el-menu {
+    border: none;
+    width: 100% !important;
+  }
+}
+
+.nest-menu .el-submenu > .el-submenu__title,
+.el-submenu .el-menu-item {
+  min-width: 240px !important;
+  background-color: $subMenuBg !important;
+  &:hover {
+    background-color: $menuHover !important;
+  }
+}
+
+.el-menu--collapse .el-menu .el-submenu {
+  min-width: 240px !important;
+}
+

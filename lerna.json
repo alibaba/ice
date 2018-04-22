@@ -2,10 +2,9 @@
   "lerna": "2.5.1",
   "packages": [
     "tools/*",
-    "packages/*",
-    "official-material/blocks/*",
-    "official-material/layouts/*",
-    "official-material/scaffolds/*"
+    "react-materials/blocks/*",
+    "react-materials/layouts/*",
+    "react-materials/scaffolds/*"
   ],
   "commands": {
     "publish": {
