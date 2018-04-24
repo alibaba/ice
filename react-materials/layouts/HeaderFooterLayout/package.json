@@ -45,7 +45,7 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "blockConfig": {
+  "layoutConfig": {
     "name": "header-footer-layout",
     "title": "顶栏-底栏布局",
     "categories": [
