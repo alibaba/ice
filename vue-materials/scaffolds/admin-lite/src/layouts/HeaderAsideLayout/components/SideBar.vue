@@ -1,13 +1,14 @@
 <template>
   <scroll-bar>
     <div class="logo">
-      LOGO
+      <img src="https://img.alicdn.com/tfs/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png" width="40">
+      <span class="site-name">ADMIN LITE</span>
     </div>
     <el-menu
       mode="vertical"
       :show-timeout="200"
-      background-color="#03152a"
-      text-color="#bfcbd9"
+      background-color="#00142a"
+      text-color="hsla(0,0%,100%,.65)"
       active-text-color="#409EFF"
     >
       <template v-for="item in navs" v-if="!item.hidden && item.children">
@@ -64,21 +65,26 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .logo {
-    height: 64px;
-    line-height: 64px;
-    background: #062240;
-    color: #fff;
-    text-align: center;
-    font-size: 28px;
-    font-weight: 600;
-    overflow: hidden;
-  }
-  // 侧边栏
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  line-height: 64px;
+  background: #002140;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  overflow: hidden;
+}
+.site-name {
+  margin-left: 10px;
+}
 .sidebar-container {
-  box-shadow: 2px 0 6px rgba(0,21,41,.35);
+  box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
   transition: width 0.28s;
-  width: 240px !important;
+  width: 256px !important;
   height: 100%;
   position: fixed;
   top: 0;
@@ -91,16 +97,28 @@ export default {
     width: 100%;
   }
   .el-menu {
-    border: none;
+    padding-top: 16px;
     width: 100% !important;
+    border: none;
   }
   .el-submenu .el-menu-item {
-    min-width: 240px !important;
+    min-width: 256px !important;
     padding-left: 48px !important;
-    background-color: #010c18 !important;
+    background-color: #000c17 !important;
     &:hover {
-      background-color: #317ffe !important;
+      color: #fff !important;
     }
+  }
+  .el-menu-item,
+  .el-submenu .el-menu-item {
+    &.is-active {
+      background-color: #188fff !important;
+      color: #fff !important;
+    }
+  }
+  .el-submenu__title i {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.65);
   }
 }
 </style>

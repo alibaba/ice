@@ -8,9 +8,7 @@
         <img class="pic-404__child right" :src="img_404_cloud" alt="404">
       </div>
       <div class="bullshit">
-        <div class="bullshit__oops">OOPS!</div>
         <div class="bullshit__headline">抱歉，你访问的页面不存在</div>
-        <div class="bullshit__info">请检查您输入的网址是否正确，请点击以下按钮返回主页或者发送错误报告</div>
         <a href="/" class="bullshit__return-home">返回首页</a>
       </div>
     </div>
@@ -34,8 +32,9 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .wscn-http404 {
+  display: flex;
+  align-items: center;
   position: relative;
-  width: 1200px;
   margin: 20px auto 60px;
   padding: 0 100px;
   overflow: hidden;
@@ -171,9 +170,9 @@ export default {
     &__headline {
       font-size: 20px;
       line-height: 24px;
-      color: #1482f0;
+      color: #434e59;
       opacity: 0;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       animation-name: slideUp;
       animation-duration: 0.5s;
       animation-delay: 0.1s;

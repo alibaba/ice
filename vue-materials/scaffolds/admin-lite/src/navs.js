@@ -5,18 +5,27 @@ const autoGenAsideNavs = [];
 // <!-- custom navs start -->
 const customAsideNavs = [
   {
-    path: '',
+    path: '/table',
+    name: 'Dashboard',
+    icon: 'el-icon-menu',
     children: [
       {
-        path: '',
-        name: 'Dashboard',
-        icon: 'el-icon-menu',
+        path: 'analysis',
+        name: '分析页',
+      },
+      {
+        path: 'monitor',
+        name: '监控页',
+      },
+      {
+        path: 'workplace',
+        name: '工作台',
       },
     ],
   },
   {
     path: '/table',
-    name: '表格',
+    name: '表格页',
     icon: 'el-icon-date',
     children: [
       {
@@ -31,7 +40,7 @@ const customAsideNavs = [
   },
   {
     path: '/form',
-    name: '表单',
+    name: '表单页',
     icon: 'el-icon-edit-outline',
     children: [
       {
@@ -46,7 +55,7 @@ const customAsideNavs = [
   },
   {
     path: '/charts',
-    name: '图表',
+    name: '图表页',
     icon: 'el-icon-picture-outline',
     children: [
       {
@@ -60,6 +69,36 @@ const customAsideNavs = [
       {
         path: 'bar',
         name: '条形图',
+      },
+    ],
+  },
+  {
+    path: '/profile',
+    name: '详情页',
+    icon: 'el-icon-tickets',
+    children: [
+      {
+        path: 'success',
+        name: '基础详情页',
+      },
+      {
+        path: 'fail',
+        name: '失败',
+      },
+    ],
+  },
+  {
+    path: '/result',
+    name: '结果页',
+    icon: 'el-icon-circle-check-outline',
+    children: [
+      {
+        path: 'success',
+        name: '成功',
+      },
+      {
+        path: 'fail',
+        name: '失败',
       },
     ],
   },
