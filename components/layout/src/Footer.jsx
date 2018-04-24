@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 
-export default class IceLayoutFooter extends PureComponent {
+export default class IceLayoutFooter extends Component {
   static displayName = 'IceLayoutFooter';
 
   render() {
