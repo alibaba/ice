@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" scoped>
 .wscn-http404 {
   display: flex;
   align-items: center;
