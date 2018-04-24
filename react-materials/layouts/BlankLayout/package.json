@@ -40,7 +40,7 @@
     "react": "*",
     "react-dom": "*"
   },
-  "blockConfig": {
+  "layoutConfig": {
     "name": "blank-layout",
     "title": "空白布局",
     "categories": [
