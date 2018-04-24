@@ -1,4 +1,4 @@
-# ice-vue-basic-table-block
+# basic-table-block
 
 简介：基础表格
 

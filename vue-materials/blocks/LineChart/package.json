@@ -1,5 +1,5 @@
 {
-  "name": "ice-vue-line-chart-block",
+  "name": "@vue-materials/line-chart-block",
   "version": "1.0.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "echarts": "^4.0.4",
-    "ice-vue-basic-container-block": "^1.0.2",
+    "@vue-materials/basic-container": "^1.0.0",
     "v-charts": "^1.16.10",
     "vue": "^2.5.16"
   },
