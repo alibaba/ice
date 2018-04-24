@@ -1,5 +1,5 @@
 {
-  "name": "ice-vue-header-aside-layout",
+  "name": "@vue-materials/header-aside-layout",
   "version": "1.0.0",
   "description": "顶部导航 + 边栏 + 内容区的布局, 通常用于站点正文。",
   "author": {

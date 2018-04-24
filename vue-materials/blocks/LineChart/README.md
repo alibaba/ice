@@ -1,4 +1,4 @@
-# ice-vue-line-chart-block
+# line-chart-block
 
 简介：折线图
 
