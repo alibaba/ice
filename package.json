@@ -52,12 +52,14 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "materials": {
-    "react-materials": {
+  "materials": [
+    {
+      "directory": "react-materials",
       "type": "react"
     },
-    "vue-materials": {
+    {
+      "directory": "vue-materials",
       "type": "vue"
     }
-  }
+  ]
 }
