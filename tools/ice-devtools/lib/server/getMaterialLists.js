@@ -3,7 +3,7 @@ const fs = require('fs');
 const upperCamelCase = require('uppercamelcase');
 
 function getBlockEntries(dir, material) {
-  let result = {};
+  const result = {};
   const blockDirs = fs.readdirSync(path.join(dir, material, 'blocks'));
   const layoutDirs = fs.readdirSync(path.join(dir, material, 'layouts'));
 
@@ -12,8 +12,8 @@ function getBlockEntries(dir, material) {
     if (fs.existsSync(fullPath) && isDirectory(fullPath)) {
       const pkgData = require(path.join(fullPath, 'package.json'));
       result[pkgData.blockConfig.name] = {
+        material,
         type: 'block',
-        material: material,
         className: upperCamelCase(pkgData.blockConfig.name),
         name: pkgData.blockConfig.name,
         title: pkgData.blockConfig.title,
@@ -31,8 +31,8 @@ function getBlockEntries(dir, material) {
     if (fs.existsSync(fullPath) && isDirectory(fullPath)) {
       const pkgData = require(path.join(fullPath, 'package.json'));
       result[pkgData.layoutConfig.name] = {
+        material,
         type: 'layout',
-        material: material,
         className: upperCamelCase(pkgData.layoutConfig.name),
         name: pkgData.layoutConfig.name,
         title: pkgData.layoutConfig.title,
@@ -58,17 +58,17 @@ module.exports = function getMaterialLists(dir) {
   const result = {};
   checkMaterial(pkg);
 
-  Object.keys(pkg.materials)
-    .map((m) => {
+  pkg.materials
+    .map((material) => {
       return {
-        key: m,
-        path: path.join(dir, m),
+        key: material.directory,
+        fullpath: path.join(dir, material.directory),
       };
     })
-    .filter(({ path }) => {
-      return fs.existsSync(path);
+    .filter(({ fullpath }) => {
+      return fs.existsSync(fullpath);
     })
-    .forEach(({ key, path }) => {
+    .forEach(({ key }) => {
       result[key] = getBlockEntries(dir, key);
     });
 

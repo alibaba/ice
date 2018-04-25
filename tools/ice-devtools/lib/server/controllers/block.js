@@ -1,11 +1,11 @@
 const path = require('path');
 const { existsSync } = require('fs');
 const MultiEntryPlugin = require('webpack/lib/MultiEntryPlugin');
-const { getMaterials } = require('../utils');
-const getMaterialLists = require('../getMaterialLists');
-const { getMaterialList } = require('../utils')
-const cwd = process.cwd();
+
 const webpackHotClient = require.resolve('webpack-hot-client/client');
+const { getMaterialList, getMaterials } = require('../utils');
+
+const cwd = process.cwd();
 const cachedChunks = {};
 let watchingHandler;
 let warned = false;
@@ -26,7 +26,12 @@ module.exports = async (ctx) => {
   const materials = getMaterials(cwd);
   let type;
   try {
-    type = materials[material].type;
+    materials.map((m) => {
+      if (m.directory === material) {
+        type = m.type;
+      }
+      return type;
+    });
   } catch (err) {
     warnOnce('使用默认物料类型 react');
     type = 'react';
@@ -45,14 +50,14 @@ module.exports = async (ctx) => {
     return ctx.render('404.hbs');
   }
 
-  const chunkName = currentMaterial + '/' + params.blockName;
+  const chunkName = `${currentMaterial}/${params.blockName}`;
   if (!(chunkName in cachedChunks)) {
     ctx.compiler.running = false;
     ctx.compiler.apply(
       new MultiEntryPlugin(cwd, [webpackHotClient, entryPath], chunkName)
     );
     // wait until bundle ok
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       const watchOpts = {
         aggregateTimeout: 20,
       };
@@ -64,7 +69,7 @@ module.exports = async (ctx) => {
         watchingHandler = ctx.compiler.watch(watchOpts, handler);
       }
 
-      function handler(err, stats) {
+      function handler(err) {
         if (err) {
           resolve(err);
         } else {
@@ -86,7 +91,7 @@ module.exports = async (ctx) => {
     isVue: type === 'vue',
     blocks: materialList.blocks,
     layouts: materialList.layouts,
-    isBlock: true
+    isBlock: true,
   };
   return ctx.render('block.hbs', state);
 };

@@ -4,7 +4,6 @@ const exists = require('fs').existsSync;
 const path = require('path');
 const ora = require('ora');
 const home = require('user-home');
-const tildify = require('tildify');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 const rm = require('rimraf').sync;
