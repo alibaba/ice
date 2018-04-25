@@ -1,6 +1,5 @@
 # uglify-parallel
-
-多进程压缩 js 文件, 减少压缩 js 的耗时.
+> 多进程压缩 js 文件, 减少压缩 js 的耗时
 
 ## Usage
 

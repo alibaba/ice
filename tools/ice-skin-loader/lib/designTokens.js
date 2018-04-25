@@ -171,7 +171,6 @@ const secondaryColorMap = {
 module.exports = {
   primaryColorMap,
   primaryColorDeltas,
-
   secondaryColorMap,
   secondaryLightDelta: {
     h: 7.352941176470587,

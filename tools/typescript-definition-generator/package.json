@@ -1,11 +1,8 @@
 {
   "name": "typescript-definition-generator",
   "version": "0.1.1",
-  "description": ".d.ts generator",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": ".d.ts 文件生成器",
+  "main": "lib/index.js",
   "dependencies": {
     "prettier": "^1.10.2"
   },

@@ -2,11 +2,10 @@
   "name": "ice-skin-loader",
   "version": "0.1.2",
   "description": "ice skin loader",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
+  "main": "lib/index.js",
+  "keywords": [
+    "ice"
+  ],
   "author": "ICE Team",
   "license": "MIT",
   "dependencies": {
