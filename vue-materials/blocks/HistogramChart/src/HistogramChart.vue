@@ -8,7 +8,7 @@
 
 <script>
 import VeHistogram from 'v-charts/lib/histogram'
-import BasicContainer from 'ice-vue-basic-container-block'
+import BasicContainer from '@vue-materials/basic-container'
 
 export default {
   components: { VeHistogram, BasicContainer },

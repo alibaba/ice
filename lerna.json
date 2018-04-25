@@ -4,7 +4,10 @@
     "tools/*",
     "react-materials/blocks/*",
     "react-materials/layouts/*",
-    "react-materials/scaffolds/*"
+    "react-materials/scaffolds/*",
+    "vue-materials/blocks/*",
+    "vue-materials/layouts/*",
+    "vue-materials/scaffolds/*"
   ],
   "commands": {
     "publish": {

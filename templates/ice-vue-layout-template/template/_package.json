@@ -1,5 +1,5 @@
 {
-  "name": "ice-vue-{{name}}-layout",
+  "name": "@vue-materials/{{name}}-layout",
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",

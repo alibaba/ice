@@ -1,5 +1,5 @@
 {
-  "name": "ice-vue-fixed-table-block",
+  "name": "@vue-materials/fixed-table-block",
   "version": "1.0.0",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
@@ -21,7 +21,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "ice-vue-basic-container-block": "^1.0.2",
+    "@vue-materials/basic-container": "^1.0.0",
     "vue": "^2.5.16"
   },
   "blockConfig": {
