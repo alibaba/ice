@@ -1,22 +1,10 @@
-@import './variables.scss';
-@import './mixin.scss';
-@import './transition.scss';
-@import './element-ui.scss';
-@import './sidebar.scss';
+@import '~normalize.css/normalize.css';
 
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-}
-
-html {
-  box-sizing: border-box;
-}
-
-html, body {
-  margin: 0;
 }
 
 *,
@@ -51,13 +39,4 @@ a:hover {
     clear: both;
     height: 0;
   }
-}
-
-//main-container全局样式
-.app-main{
-  min-height: 100%
-}
-
-.app-container {
-  padding: 20px;
 }

@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-const { readdirSync, readFileSync } = require('fs');
+const { readFileSync } = require('fs');
 const glob = require('glob-promise');
 const getMaterialLists = require('./getMaterialLists');
 
@@ -22,14 +22,14 @@ exports.getMaterialList = function getMaterialList(currentMaterial) {
   const materialsAll = getMaterialLists(process.cwd());
   const materials = materialsAll[currentMaterial];
 
-  let blocks = [];
-  let layouts = [];
+  const blocks = [];
+  const layouts = [];
 
   if (materials) {
     Object.keys(materials).forEach((key) => {
-      if (materials[key]['type'] === 'block') {
+      if (materials[key].type === 'block') {
         blocks.push(materials[key]);
-      } else if (materials[key]['type'] === 'layout') {
+      } else if (materials[key].type === 'layout') {
         layouts.push(materials[key]);
       }
     });
@@ -37,6 +37,6 @@ exports.getMaterialList = function getMaterialList(currentMaterial) {
 
   return {
     blocks,
-    layouts
-  }
-}
+    layouts,
+  };
+};

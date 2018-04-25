@@ -10,7 +10,7 @@
 const delta = 15
 
 export default {
-  name: 'scrollBar',
+  name: 'ScrollBar',
   data() {
     return {
       top: 0
@@ -41,13 +41,11 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-@import '../scss/variables.scss';
-
+<style lang="scss" scoped>
 .scroll-container {
   width: 100%;
   height: 100%;
-  background-color: $menuBg;
+  background-color: #00142a;
   .scroll-wrapper {
     position: absolute;
     width: 100%;

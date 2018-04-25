@@ -5,68 +5,100 @@ const autoGenAsideNavs = [];
 // <!-- custom navs start -->
 const customAsideNavs = [
   {
-    path: '/dashboard',
+    path: '/table',
+    name: 'Dashboard',
+    icon: 'el-icon-menu',
     children: [
       {
-        path: 'index',
-        name: 'Dashboard',
-        icon: 'el-icon-menu',
+        path: 'analysis',
+        name: '分析页',
+      },
+      {
+        path: 'monitor',
+        name: '监控页',
+      },
+      {
+        path: 'workplace',
+        name: '工作台',
       },
     ],
   },
   {
     path: '/table',
-    name: '表格',
+    name: '表格页',
     icon: 'el-icon-date',
     children: [
       {
         path: 'basic',
         name: '基础表格',
-        icon: '',
       },
       {
         path: 'fixed',
         name: '固定表格',
-        icon: '',
       },
     ],
   },
   {
     path: '/form',
-    name: '表单',
+    name: '表单页',
     icon: 'el-icon-edit-outline',
     children: [
       {
         path: 'basic',
         name: '典型表单',
-        icon: '',
       },
       {
         path: 'signup',
         name: '注册表单',
-        icon: '',
       },
     ],
   },
   {
     path: '/charts',
-    name: '图表',
+    name: '图表页',
     icon: 'el-icon-picture-outline',
     children: [
       {
         path: 'line',
         name: '折线图',
-        icon: '',
       },
       {
         path: 'histogram',
         name: '柱状图',
-        icon: '',
       },
       {
         path: 'bar',
         name: '条形图',
-        icon: '',
+      },
+    ],
+  },
+  {
+    path: '/profile',
+    name: '详情页',
+    icon: 'el-icon-tickets',
+    children: [
+      {
+        path: 'success',
+        name: '基础详情页',
+      },
+      {
+        path: 'fail',
+        name: '失败',
+      },
+    ],
+  },
+  {
+    path: '/result',
+    name: '结果页',
+    icon: 'el-icon-circle-check-outline',
+    children: [
+      {
+        path: 'success',
+        name: '成功',
+      },
+      {
+        path: 'fail',
+        name: '失败',
       },
     ],
   },

@@ -8,12 +8,12 @@ const tildify = require('tildify');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 const rm = require('rimraf').sync;
+const spawn = require('cross-spawn');
 const logger = require('../lib/logger');
 const generate = require('../lib/generate');
 const checkVersion = require('../lib/check-version');
 const localPath = require('../lib/local-path');
 const download = require('../lib/download');
-const { spawn } = require('child_process');
 
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
