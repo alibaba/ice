@@ -41,7 +41,7 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" scoped>
 .scroll-container {
   width: 100%;
   height: 100%;

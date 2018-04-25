@@ -1,7 +1,7 @@
 {
   "name": "@vue-materials/basic-table-block",
   "version": "1.0.0",
-  "description": "",
+  "description": "element基础表格",
   "author": "ice-admin@alibaba-inc.com",
   "files": [
     "src/",

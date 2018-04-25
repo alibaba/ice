@@ -1,7 +1,6 @@
 <template>
   <div className={{name}}>
     <h1>{{className}}</h1>
-    <router-view/>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 {
   "name": "@vue-materials/fixed-table-block",
   "version": "1.0.0",
-  "description": "",
+  "description": "Element 固定列和表头的表格",
   "author": "ice-admin@alibaba-inc.com",
   "files": [
     "src/",

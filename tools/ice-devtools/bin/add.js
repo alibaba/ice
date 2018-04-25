@@ -4,9 +4,9 @@ const exists = require('fs').existsSync;
 const path = require('path');
 const ora = require('ora');
 const home = require('user-home');
-const tildify = require('tildify');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
+const spawn = require('cross-spawn');
 const rm = require('rimraf').sync;
 const logger = require('../lib/logger');
 const generate = require('../lib/generate');
@@ -205,19 +205,43 @@ function getDefaultData() {
  * @param {String} template
  */
 function downloadAndGenerate(template) {
-  const spinner = ora('downloading template');
-  spinner.start();
+  const downloadspinner = ora('downloading template');
+  downloadspinner.start();
 
   const tmp = path.join(home, '.ice-templates', templateName);
 
   if (exists(tmp)) rm(tmp);
   download({ template })
     .then(() => {
-      spinner.stop();
+      downloadspinner.stop();
       setTimeout(() => {
         generate(name, tmp, to, (err, callback) => {
           if (err) logger.fatal(err);
           logger.success('Generated "%s".', name);
+
+          const installSpinner = ora('npm install');
+          installSpinner.start();
+
+          const npm = spawn('npm', ['install'], { cwd: to });
+          npm.stdout.on('data', (data) => {
+            chalk.gray(`${data} \n`)
+          });
+
+          npm.stderr.on('data', (data) => {
+            installSpinner.stop();
+            console.log(
+              chalk.red(`${data} \n`)
+            );
+          });
+
+          npm.on('close', (code) => {
+            installSpinner.stop();
+            console.log(
+              chalk.white('   npm install finished \n')
+            );
+            callback();
+          });
+
           callback();
         });
       }, 1000);

@@ -64,7 +64,7 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" scoped>
 .logo {
   display: flex;
   justify-content: center;
