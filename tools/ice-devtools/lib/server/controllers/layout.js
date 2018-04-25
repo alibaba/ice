@@ -25,7 +25,11 @@ module.exports = async (ctx) => {
   const materials = getMaterials(cwd);
   let type;
   try {
-    type = materials[material].type;
+    materials.find((m) => {
+      if (m.directory === material) {
+        type = m.type;
+      }
+    });
   } catch (err) {
     warnOnce('使用默认物料类型 react');
     type = 'react';
