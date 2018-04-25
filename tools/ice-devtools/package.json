@@ -10,9 +10,6 @@
     "ice-devtools-start": "bin/dev-server.js",
     "ice-devtools-generate": "bin/db.js"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"

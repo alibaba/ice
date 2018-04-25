@@ -3,10 +3,9 @@
   "version": "0.1.4",
   "description": "使用 clean-css 多进程压缩 css 文件",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
+  "keywords": [
+    "css"
+  ],
   "author": "ICE Team",
   "license": "MIT",
   "dependencies": {

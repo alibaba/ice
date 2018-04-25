@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const WebpackPluginImport = require('..');
+const WebpackPluginImport = require('../');
 
 const config = {
   entry: require.resolve('./entry.js'),

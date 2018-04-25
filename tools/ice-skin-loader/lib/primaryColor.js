@@ -1,5 +1,5 @@
 const baseSkin = require('@icedesign/skin/variables.js');
-const { primaryColorDeltas, primaryColorMap } = require('./CONSTRACT');
+const { primaryColorDeltas, primaryColorMap } = require('./designTokens');
 const { transfromColor } = require('./utils');
 
 /**
