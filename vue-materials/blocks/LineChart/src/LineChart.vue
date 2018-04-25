@@ -8,7 +8,7 @@
 
 <script>
 import VeLine from 'v-charts/lib/line'
-import BasicContainer from 'ice-vue-basic-container-block'
+import BasicContainer from '@vue-materials/basic-container'
 
 export default {
   components: { VeLine, BasicContainer },

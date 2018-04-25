@@ -1,4 +1,4 @@
-# ice-vue-histogram-chart-block
+# histogram-chart-block
 
 简介：柱状图
 

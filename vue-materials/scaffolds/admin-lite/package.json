@@ -1,5 +1,5 @@
 {
-  "name": "ice-vue-lite",
+  "name": "@vue-materials/admin-lite",
   "version": "1.0.0",
   "description": "该模板适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示，基于 vue-element-admin",
   "author": "chenbin92 <chenbinbin.cb@alibaba-inc.com>",
@@ -42,8 +42,8 @@
     "not ie <= 8"
   ],
   "scaffoldConfig": {
-    "name": "ice-vue-lite",
-    "title": "ice vue lite",
+    "name": "admin-lite",
+    "title": "Admin Lite",
     "snapshot": "https://img.alicdn.com/tfs/TB1Ms2UnuuSBuNjy1XcXXcYjFXa-2840-1596.png"
   }
 }
