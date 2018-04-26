@@ -8,6 +8,7 @@ process.env.NODE_ENV = 'development';
 
 const address = require('address');
 const chalk = require('chalk');
+const fs = require('fs');
 const clearConsole = require('react-dev-utils/clearConsole');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const webpack = require('webpack');
@@ -20,15 +21,16 @@ const getWebpackConfigDev = require('./config/webpack.config.dev');
 const devMiddleware = require('./devMiddleware');
 // const npmUpdate = require('./helpers/npmUpdate');
 const iceworksClient = require('./iceworksClient');
+const generateRootCA = require('./config/generateRootCA');
 
 /* eslint no-console:off */
 
-module.exports = function(args, subprocess) {
+module.exports = async function (args, subprocess) {
   const cwd = process.cwd();
   const HOST = args.host || '0.0.0.0';
   const PORT = args.port || 3333;
-
-  const send = function(data) {
+  const protocol = args.https ? 'https' : 'http';
+  const send = function (data) {
     iceworksClient.send(data);
     if (subprocess && typeof subprocess.send === 'function') {
       subprocess.send(data);
@@ -75,6 +77,17 @@ module.exports = function(args, subprocess) {
     devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);
   }
 
+  // buffer与deepmerge有冲突，会被解析成乱码
+  if (protocol === 'https') {
+    const ca = await generateRootCA();
+    console.log(chalk.green('当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)'));
+    console.log(chalk.green(ca.cert));
+    devServerConfig.https = {
+      key: fs.readFileSync(ca.key),
+      cert: fs.readFileSync(ca.cert),
+    };
+  }
+
   const devServer = new WebpackDevServer(compiler, devServerConfig);
 
   devMiddleware(devServer);
@@ -89,14 +102,14 @@ module.exports = function(args, subprocess) {
         message: 'server_finished',
         data: {
           statusDev: 'working',
-          serverUrl: `http://${LOCAL_IP}:${PORT}`,
+          serverUrl: `${protocol}://${LOCAL_IP}:${PORT}`,
         },
       });
 
       isFirstCompile = false;
       console.log(chalk.cyan('Starting the development server...'));
-      console.log('   ', chalk.yellow(`http://localhost:${PORT}`));
-      console.log('   ', chalk.yellow(`http://${LOCAL_IP}:${PORT}`));
+      console.log('   ', chalk.yellow(`${protocol}://localhost:${PORT}`));
+      console.log('   ', chalk.yellow(`${protocol}://${LOCAL_IP}:${PORT}`));
     }
 
     console.log(
@@ -160,7 +173,7 @@ module.exports = function(args, subprocess) {
         message: 'compiler_success',
         data: {
           statusCompile: 'success',
-          serverUrl: `http://${LOCAL_IP}:${PORT}`,
+          serverUrl: `${protocol}://${LOCAL_IP}:${PORT}`,
         },
       });
     } else {
@@ -170,7 +183,7 @@ module.exports = function(args, subprocess) {
         message: 'compiler_failed',
         data: {
           statusCompile: 'failed',
-          serverUrl: `http://${LOCAL_IP}:${PORT}`,
+          serverUrl: `${protocol}://${LOCAL_IP}:${PORT}`,
         },
       });
     }
@@ -213,7 +226,7 @@ module.exports = function(args, subprocess) {
         message: 'server_success',
         data: {
           statusDev: 'working',
-          serverUrl: `http://${LOCAL_IP}:${PORT}`,
+          serverUrl: `${protocol}://${LOCAL_IP}:${PORT}`,
         },
       });
     }

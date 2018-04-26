@@ -8,6 +8,7 @@ const checkSass = require('../lib/utils/check-sass');
 program
   .option('-p, --port <port>', 'server port')
   .option('-h, --host <host>', 'server host')
+  .option('--https', 'server https')
   .option('-s, --skip-install', 'skip install dependencies')
   .parse(process.argv);
 
