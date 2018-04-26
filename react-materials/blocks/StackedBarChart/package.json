@@ -2,12 +2,7 @@
   "name": "@icedesign/stacked-bar-chart-block",
   "version": "0.1.0",
   "description": "",
-  "files": [
-    "src/",
-    "demo/",
-    "lib/",
-    "mock/"
-  ],
+  "files": ["src/", "demo/", "lib/", "mock/"],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -17,10 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
+  "keywords": ["ice", "ice-block"],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -45,11 +37,10 @@
   },
   "blockConfig": {
     "name": "stacked-bar-chart",
-    "snapshot": "",
+    "snapshot":
+      "https://img.alicdn.com/tfs/TB1p5zaouuSBuNjy1XcXXcYjFXa-2396-994.png",
     "title": "堆叠条形图",
-    "categories": [
-      "form"
-    ],
+    "categories": ["图表"],
     "themePackage": "@icedesign/skin"
   }
 }
