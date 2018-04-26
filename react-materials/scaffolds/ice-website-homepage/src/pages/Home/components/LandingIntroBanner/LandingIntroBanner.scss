@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.landing-intro-banner {
+  position: relative;
+}
+
+.landing-intro-banner-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+}
+
+.landing-intro-banner-content-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .landing-intro-banner-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 50px;
+  }
+
+  .landing-intro-banner-buttons {
+    a:hover,
+    a:visited,
+    a:link {
+      color: #fff;
+    }
+  }
+}
