@@ -26,7 +26,6 @@ module.exports = (opts = {}) => {
           Object.prototype.toString.apply(pkgData.proxyConfig) ==
           '[object Object]'
         ) {
-          console.log(pkgData.proxyConfig);
           return pkgData.proxyConfig;
         }
       }
