@@ -42,9 +42,9 @@ export default {
   methods: {
     logout() {
       console.log('Logout');
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

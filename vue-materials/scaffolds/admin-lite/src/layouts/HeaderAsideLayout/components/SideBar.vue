@@ -11,28 +11,28 @@
       text-color="hsla(0,0%,100%,.65)"
       active-text-color="#409EFF"
     >
-      <template v-for="item in navs" v-if="!item.hidden && item.children">
+      <template v-for="item in menuConfig" v-if="!item.hidden && item.children">
         <router-link v-if="item.children.length === 1 && !item.children[0].children && !item.alwaysShow" :to="item.path+'/'+item.children[0].path"
-          :key="item.children[0].name">
+          :key="item.children[0].text">
           <el-menu-item :index="item.path+'/'+item.children[0].path" :class="{'submenu-title-noDropdown':!isNest}">
             <i v-if="item.children[0]&&item.children[0].icon" :class="item.children[0].icon"></i>
-            <span v-if="item.children[0] && item.children[0].name" slot="title">{{item.children[0].name}}</span>
+            <span v-if="item.children[0] && item.children[0].text" slot="title">{{item.children[0].text}}</span>
           </el-menu-item>
         </router-link>
 
-        <el-submenu v-else :index="item.name||item.path" :key="item.name">
+        <el-submenu v-else :index="item.text||item.path" :key="item.text">
           <template slot="title">
             <i v-if="item && item.icon" :class="item.icon"></i>
-            <span v-if="item && item.name" slot="title">{{item.name}}</span>
+            <span v-if="item && item.text" slot="title">{{item.text}}</span>
           </template>
 
           <template v-for="child in item.children" v-if="!child.hidden">
-            <sidebar-item :is-nest="true" class="nest-menu" v-if="child.children&&child.children.length>0" :navs="[child]" :key="child.path"></sidebar-item>
+            <sidebar-item :is-nest="true" class="nest-menu" v-if="child.children&&child.children.length>0" :menuConfig="[child]" :key="child.path"></sidebar-item>
 
-            <router-link v-else :to="item.path+'/'+child.path" :key="child.name">
+            <router-link v-else :to="item.path+'/'+child.path" :key="child.text">
               <el-menu-item :index="item.path+'/'+child.path">
                 <i v-if="child && child.icon" :class="child.icon"></i>
-                <span v-if="child && child.name" slot="title">{{child.name}}</span>
+                <span v-if="child && child.text" slot="title">{{child.text}}</span>
               </el-menu-item>
             </router-link>
           </template>
@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import ScrollBar from './ScrollBar'
-import navs from '../../../navs'
+import ScrollBar from './ScrollBar';
+import { menuConfig } from '../../../routesConfig';
 
 export default {
   components: { ScrollBar },
@@ -53,15 +53,15 @@ export default {
   props: {
     isNest: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      navs
-    }
-  }
-}
+      menuConfig,
+    };
+  },
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
