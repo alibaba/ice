@@ -1,0 +1,15 @@
+Not found: package "@icedesign/ice-design-ecommerce"<link rel="stylesheet" href="https://g.alicdn.com/ice-assets/ice-design/ice-design-ecommerce/index.css" />
+      <script>
+        (function() {
+          var rawOpen = XMLHttpRequest.prototype.open;
+          var _this = this;
+          XMLHttpRequest.prototype.open = function() {
+            var args = [].slice.call(arguments);
+            if (/^\/mock/.test(arguments[1])) {
+              args[1] = '/ice' + args[1];
+            }
+            return rawOpen.apply(this, args);
+          };
+        })();
+      </script>
+      <script src="https://g.alicdn.com/ice-assets/ice-design/ice-design-ecommerce/index.js"></script>
