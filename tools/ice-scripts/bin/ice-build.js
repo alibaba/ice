@@ -6,9 +6,9 @@ const program = require('commander');
 
 program.option('--debug', 'debug 模式下不压缩').parse(process.argv);
 
-const checkSass = require('../lib/utils/check-sass');
+const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 
-checkSass()
+validationSassAvailable()
   .then(() => {
     const build = require('../lib/build');
     build({
