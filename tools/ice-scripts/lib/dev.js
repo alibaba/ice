@@ -29,7 +29,7 @@ module.exports = async function (args, subprocess) {
   const cwd = process.cwd();
   const HOST = args.host || '0.0.0.0';
   const PORT = args.port || 3333;
-  const protocol = args.https ? 'https' : 'http';
+  let protocol = args.https ? 'https' : 'http';
   const send = function (data) {
     iceworksClient.send(data);
     if (subprocess && typeof subprocess.send === 'function') {
@@ -79,13 +79,19 @@ module.exports = async function (args, subprocess) {
 
   // buffer与deepmerge有冲突，会被解析成乱码
   if (protocol === 'https') {
-    const ca = await generateRootCA();
-    console.log(chalk.green('当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)'));
-    console.log(chalk.green(ca.cert));
-    devServerConfig.https = {
-      key: fs.readFileSync(ca.key),
-      cert: fs.readFileSync(ca.cert),
-    };
+    try {
+      const ca = await generateRootCA();
+      devServerConfig.https = {
+        key: fs.readFileSync(ca.key),
+        cert: fs.readFileSync(ca.cert),
+      };
+      console.log(chalk.green('当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)'));
+      console.log(chalk.green(ca.cert));
+    } catch(err) {
+      protocol = 'http';
+      delete devServerConfig.https;
+      console.log(chalk.red('HTTPS 证书生成失败，已转换为HTTP'));
+    }
   }
 
   const devServer = new WebpackDevServer(compiler, devServerConfig);
