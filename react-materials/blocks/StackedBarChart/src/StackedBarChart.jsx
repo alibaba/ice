@@ -1,7 +1,7 @@
 /* eslint react/jsx-curly-brace-presence: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Chart, Axis, Geom, Tooltip, Coord, Legend } from 'bizCharts';
+import { Chart, Axis, Geom, Tooltip, Coord, Legend } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
 import './StackedBarChart.scss';
 
