@@ -3,7 +3,7 @@
 const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
-const iceDepAnalyzer = require('../utils/dep-analyze');
+const iceDepAnalyzer = require('../utils/depAnalyze');
 
 module.exports = class ComponentStyleGenerator {
   constructor(options) {
