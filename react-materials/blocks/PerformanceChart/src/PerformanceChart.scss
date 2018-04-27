@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.flow-statistics {
+  .next-tabs {
+    overflow: visible;
+  }
+  .next-tabs-bar {
+    position: absolute;
+    top: -48px;
+    right: 0;
+  }
+  .next-tabs-text > .next-tabs-bar .next-tabs-tab:after {
+    width: 0;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .flow-statistics {
+    .next-tabs-small .next-tabs-tab-inner {
+      padding: 0 5px;
+    }
+  }
+}
