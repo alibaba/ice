@@ -1,7 +1,7 @@
 /* eslint object-shorthand:0, no-mixed-operators:0, prefer-template:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Chart, Geom, Axis, Label, Shape, Util, PathUtil } from 'bizCharts';
+import { Chart, Geom, Axis, Label, Shape, Util, PathUtil } from 'bizcharts';
 
 export default class CustomBarChart extends Component {
   static displayName = 'CustomBarChart';

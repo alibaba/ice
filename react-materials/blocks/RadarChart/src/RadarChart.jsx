@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Chart, Geom, Axis, Tooltip, Coord, Legend } from 'bizCharts';
+import { Chart, Geom, Axis, Tooltip, Coord, Legend } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
 
 const { DataView } = DataSet;
