@@ -1,5 +1,3 @@
-/* globals def:true */
-
 const colors = require('chalk');
 
 module.exports = function() {

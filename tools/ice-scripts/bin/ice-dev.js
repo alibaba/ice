@@ -3,7 +3,7 @@
 'use strict';
 
 const program = require('commander');
-const checkSass = require('../lib/utils/check-sass');
+const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 
 program
   .option('-p, --port <port>', 'server port')
@@ -17,7 +17,7 @@ const { choosePort } = require('react-dev-utils/WebpackDevServerUtils');
 const DEFAULT_PORT = program.port || process.env.PORT || 3333;
 const HOST = program.host || process.env.HOST || '0.0.0.0';
 
-checkSass()
+validationSassAvailable()
   .then(() => {
     return choosePort(HOST, parseInt(DEFAULT_PORT, 10));
   })
