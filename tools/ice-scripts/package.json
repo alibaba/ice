@@ -54,6 +54,7 @@
     "less-loader": "^4.0.5",
     "lodash": "^4.17.4",
     "mkdirp": "^0.5.1",
+    "node-easy-cert": "^1.2.0",
     "node-ipc": "^9.1.1",
     "node-sass": "^4.6.0",
     "postcss-loader": "^2.0.8",

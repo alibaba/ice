@@ -11,4 +11,5 @@ package-lock.json
 databases
 build
 .vscode/
+tools/ice-scripts/lib/ICE_CA
 
