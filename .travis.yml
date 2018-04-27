@@ -6,10 +6,8 @@ before_install:
   - npm i -g npm@5
 
 node_js:
-  - "6"
-  - "7"
   - "8"
-  - "9"
 
 script:
   - npm run lint:nofix
+  - npm run sync
