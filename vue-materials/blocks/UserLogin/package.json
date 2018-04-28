@@ -1,7 +1,7 @@
 {
   "name": "@vue-materials/user-login-block",
   "version": "1.0.0",
-  "description": "",
+  "description": "基于element-ui组件的用户登录模板",
   "author": "smallwei <1634566606@qq.com>",
   "files": [
     "src/",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@vue-materials/basic-container": "^1.0.0",
+    "normalize.css": "^8.0.0",
     "vue": "^2.5.16"
   },
   "blockConfig": {
@@ -30,6 +31,6 @@
     "categorie": [
       "其他"
     ],
-    "snapshot": ""
+    "snapshot": "https://img.alicdn.com/tfs/TB1WlGbXMmTBuNjy1XbXXaMrVXa-2868-1602.png"
   }
 }
