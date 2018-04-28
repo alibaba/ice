@@ -21,7 +21,14 @@ module.exports = {
     description: {
       type: 'string',
       required: true,
-      message: 'description (not required)',
+      message: 'description',
+      validate: (value) => {
+        value = value.trim();
+        if (!value) {
+          return 'description cannot be empty';
+        }
+        return true;
+      },
     },
   },
   completeMessage:
