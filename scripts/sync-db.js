@@ -16,7 +16,7 @@ const store = oss({
 });
 
 console.log('start uploading');
-const files = readdirSync('build').map((filename) => ({
+const files = readdirSync(resolve(__dirname, '../build')).map((filename) => ({
   from: resolve(__dirname, '../build', filename),
   to: join('assets', filename),
 }));
