@@ -10,5 +10,5 @@ node_js:
 
 script:
   - npm run lint:nofix
-  - tnpm i ice-devtools -g && npm run generate
+  - npm i ice-devtools -g && npm run generate
   - npm run sync
