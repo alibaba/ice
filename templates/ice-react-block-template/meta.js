@@ -8,6 +8,8 @@ const BLOCK_CATEGORIES = [
   '数据展示',
   '信息展示',
   '异常',
+  '欢迎页',
+  '视频',
   '其他',
 ];
 
@@ -34,7 +36,14 @@ module.exports = {
     description: {
       type: 'string',
       required: true,
-      message: 'description (not required)',
+      message: 'description',
+      validate: (value) => {
+        value = value.trim();
+        if (!value) {
+          return 'description cannot be empty';
+        }
+        return true;
+      },
     },
     categories: {
       type: 'checkbox',
@@ -47,7 +56,6 @@ module.exports = {
         return true;
       },
       filter: (answer) => {
-        console.log('answer:', answer);
         return answer;
       },
     },
