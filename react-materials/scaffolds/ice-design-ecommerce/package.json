@@ -1,5 +1,5 @@
 {
-  "name": "ice-design-ecommerce",
+  "name": "@icedesign/scaffold-ecommerce",
   "version": "1.0.0",
   "description":
     "该模板适用于电商类管理后台，布局方式采用左侧固定，右侧自适应方式，适合大量数据展示和界面操作",
@@ -17,6 +17,10 @@
     "foundation-symbol": "^0.1.3",
     "prop-types": "^15.5.8",
     "react-router": "^3.2.0"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
@@ -40,6 +44,7 @@
   "scaffoldConfig": {
     "name": "ice-design-ecommerce",
     "title": "Ice Design Ecommerce",
-    "snapshot": "https://img.alicdn.com/tfs/TB1X5qIoqmWBuNjy1XaXXXCbXXa-2840-1596.png"
+    "screenshot":
+      "https://img.alicdn.com/tfs/TB1X5qIoqmWBuNjy1XaXXXCbXXa-2840-1596.png"
   }
 }
