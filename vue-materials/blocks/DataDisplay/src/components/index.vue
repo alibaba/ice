@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'DataDisplay',
+  name: 'index',
   data() {
     return {};
   },
@@ -34,5 +34,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './DataDisplay.scss';
+@import './index.scss';
 </style>
