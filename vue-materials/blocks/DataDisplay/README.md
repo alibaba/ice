@@ -75,8 +75,4 @@ export default {
     <td>一</td>
     <td>一</td>
   </tr>
-</table> 
-
-
-
-
+</table>

@@ -1,3 +1,3 @@
-import DataDisplay from './index.vue';
+import DataDisplay from './DataDisplay.vue';
 
 export default DataDisplay;
