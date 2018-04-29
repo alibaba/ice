@@ -36,27 +36,31 @@
     "uppercamelcase": "^3.0.0"
   },
   {{#if_eq type.react type.vue}}
-  "materials": {
-    "react-materials": {
+  "materials": [
+    {
+      "directory": "react-materials",
       "type": "react"
     },
-    "vue-materials": {
+    {
+      "directory": "vue-materials",
       "type": "vue"
     }
-  }
+  ]
   {{/if_eq}}
   {{#if_eq materialType 'react' }}
-  "materials": {
-    "react-materials": {
+  "materials": [
+    {
+      "directory": "react-materials",
       "type": "react"
     }
-  }
+  ]
   {{/if_eq}}
   {{#if_eq materialType 'vue' }}
-  "materials": {
-    "vue-materials": {
+  "materials": [
+    {
+      "directory": "vue-materials",
       "type": "vue"
     }
-  }
+  ]
   {{/if_eq}}
 }
