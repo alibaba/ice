@@ -168,7 +168,7 @@ export default ExampleBlock;
   },
   "blockConfig": {            // 区块的相关配置，用于 Iceworks 和站点的展示
     "name": "example-block",  // 名称
-    "screenshot": "",           // 截图
+    "screenshot": "",         // 截图
     "title": "示例区块",       // 标题
     "categories": "[]"        // 分类
   }
