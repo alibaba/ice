@@ -1,0 +1,26 @@
+@import '~normalize.css/normalize.css';
+.item {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.count {
+  margin: 12px 0;
+  font-weight: bold;
+  font-size: 32px;
+  color: #15A0FF;
+}
+
+.title {
+  color: #999;
+}
+
+.splitLine {
+  display: block;
+  margin: 0 auto;
+  width: 24px;
+  height: 1px;
+  background: #9B9B9B;
+}
