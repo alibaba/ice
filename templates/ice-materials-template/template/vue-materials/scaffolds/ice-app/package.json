@@ -32,7 +32,7 @@
   "scaffoldConfig": {
     "name": "ice-app",
     "title": "示例模板",
-    "snapshot": ""
+    "screenshot": ""
   },
   "buildConfig": {}
 }

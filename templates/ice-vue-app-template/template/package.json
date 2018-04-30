@@ -21,15 +21,11 @@
     "sass-loader": "^6.0.6",
     "vue-template-compiler": "^2.5.13"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
   "scaffoldConfig": {
     "name": "{{npmName}}",
     "title": "{{title}}",
-    "snapshot": ""
+    "screenshot": ""
   },
   "buildConfig": {}
 }
