@@ -9,17 +9,17 @@ const autoGenAsideNavs = [
   },
   {
     text: '消息',
-    to: '/goods',
+    to: '/messages',
     icon: 'mail',
   },
   {
     text: '日历',
-    to: '/customer',
+    to: '/calendar',
     icon: 'task',
   },
   {
     text: '网盘',
-    to: '/asset',
+    to: '/drive',
     icon: 'attachment',
   },
 ];

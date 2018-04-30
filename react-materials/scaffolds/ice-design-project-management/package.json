@@ -4,6 +4,8 @@
   "description":
     "该模板适用于项目类管理后台，采用三栏布局方式，模板内置了类似 trello 任务管理的卡片区块",
   "author": "ice-admin@alibaba-inc.com",
+  "homepage":
+    "https://alibaba.github.io/ice/scaffold-preview/ice-design-project-management.html",
   "dependencies": {
     "@antv/data-set": "^0.8.7",
     "@icedesign/base": "^0.2.0",
@@ -43,7 +45,7 @@
   },
   "scaffoldConfig": {
     "name": "ice-design-project-management",
-    "title": "Ice Design Project Management",
+    "title": "ICE Design Project Management",
     "snapshot":
       "https://img.alicdn.com/tfs/TB1PIDhpntYBeNjy1XdXXXXyVXa-2840-1596.png"
   },
