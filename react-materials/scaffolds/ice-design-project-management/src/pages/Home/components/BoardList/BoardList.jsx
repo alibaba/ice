@@ -75,7 +75,6 @@ export default class App extends Component {
           data={data}
           draggable
           collapsibleLanes
-          // editable
           handleDragStart={this.handleDragStart}
           handleDragEnd={this.handleDragEnd}
           onDataChange={this.shouldReceiveNewData}

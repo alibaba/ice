@@ -42,7 +42,7 @@ body {
       width: 40px;
       height: 40px;
       border-radius: 50px;
-      background: rgb(255, 255, 255);
+      background: #fff;
       cursor: pointer;
     }
   }
@@ -83,7 +83,6 @@ body {
           color: #fff;
           font-size: 24px;
           opacity: 0.8;
-          -webkit-transform: translateY(0);
           transform: translateY(0);
           transition: opacity 0.5s, -webkit-transform 0.5s;
           transition: transform 0.5s, opacity 0.5s;
@@ -95,7 +94,6 @@ body {
           overflow: hidden;
           font-size: 12px;
           color: #fff;
-          -webkit-transform: translateY(0);
           transform: translateY(0);
           transition: height 0.5s, -webkit-transform 0.5s;
           transition: height 0.5s, transform 0.5s;
@@ -104,12 +102,10 @@ body {
         &:hover {
           .custom-menu-item-icon {
             opacity: 1;
-            -webkit-transform: translateY(-10px);
             transform: translateY(-10px);
           }
           .custom-menu-item-text {
             height: auto;
-            -webkit-transform: translateY(-10px);
             transform: translateY(-10px);
           }
         }

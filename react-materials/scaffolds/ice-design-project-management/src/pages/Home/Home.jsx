@@ -4,8 +4,6 @@ import ContentMenu from '../../components/ContentMenu';
 import Header from '../../components/Header';
 
 export default class Home extends Component {
-  static displayName = 'Home';
-
   constructor(props) {
     super(props);
     this.state = {};

@@ -1,4 +1,3 @@
-/* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import React, { Component } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
@@ -27,15 +26,14 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     const matched = routes[0].path;
     let openKeys = '';
 
-    asideNavs &&
-      asideNavs.length > 0 &&
+    if (asideNavs && asideNavs.length > 0) {
       asideNavs.map((item, index) => {
         if (item.to === matched) {
           openKeys = index;
         }
+        return openKeys;
       });
-
-    return openKeys;
+    }
   };
 
   render() {
@@ -46,9 +44,8 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     return (
       <Layout
         style={{ minHeight: '100vh' }}
-        className={cx('ice-design-header-aside-footer-layout', {
-          'ice-design-layout': true,
-        })}
+        className="ice-design-header-aside-footer-layout ice-design-layout"
+
       >
         <Layout.Section className="ice-design-layout-body">
           <Layout.Aside

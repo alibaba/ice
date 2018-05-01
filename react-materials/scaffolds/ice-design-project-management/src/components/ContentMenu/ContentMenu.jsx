@@ -3,8 +3,6 @@ import { Menu, Input, Dropdown, Icon } from '@icedesign/base';
 import './ContentMenu.scss';
 
 export default class ContentMenu extends Component {
-  static displayName = 'ContentMenu';
-
   static propTypes = {};
 
   constructor(props) {

@@ -3,8 +3,6 @@ import { Link } from 'react-router';
 import IceContainer from '@icedesign/container';
 
 export default class BasicNotFound extends Component {
-  static displayName = 'BasicNotFound';
-
   render() {
     return (
       <div className="basic-not-found">
