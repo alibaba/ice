@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "our-team",
-    "snapshot": "https://img.alicdn.com/tfs/TB1Bw3zauuSBuNjy1XcXXcYjFXa-2168-1460.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1Bw3zauuSBuNjy1XcXXcYjFXa-2168-1460.png",
     "themePackage": "@icedesign/skin",
     "title": "我们的团队",
     "categories": [

@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-pie",
-    "snapshot": "https://img.alicdn.com/tfs/TB1rfJHivDH8KJjy1XcXXcpdXXa-1910-1022.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1rfJHivDH8KJjy1XcXXcpdXXa-1910-1022.png",
     "themePackage": "@icedesign/skin",
     "title": "饼图",
     "categories": [

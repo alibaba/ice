@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-box",
-    "snapshot": "https://img.alicdn.com/tfs/TB1u5oLckyWBuNjy0FpXXassXXa-2340-1042.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1u5oLckyWBuNjy0FpXXassXXa-2340-1042.png",
     "themePackage": "@icedesign/skin",
     "title": "箱型图",
     "categories": [

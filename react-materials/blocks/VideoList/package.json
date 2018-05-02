@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "video-list",
-    "snapshot":
+    "screenshot":
       "https://img.alicdn.com/tfs/TB1DZ4rmQyWBuNjy0FpXXassXXa-2314-1016.png",
     "title": "视频列表",
     "categories": ["数据展示"],

@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-relation",
-    "snapshot": "https://img.alicdn.com/tfs/TB1urMfcDtYBeNjy1XdXXXXyVXa-2286-994.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1urMfcDtYBeNjy1XdXXXXyVXa-2286-994.png",
     "themePackage": "@icedesign/skin",
     "title": "关系图",
     "categories": [

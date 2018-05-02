@@ -45,7 +45,7 @@
   },
   "blockConfig": {
     "name": "circular-chart",
-    "snapshot": "https://img.alicdn.com/tfs/TB137Fme_tYBeNjy1XdXXXXyVXa-2218-884.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB137Fme_tYBeNjy1XdXXXXyVXa-2218-884.png",
     "title": "环形图",
     "categories": [
       "图表"
