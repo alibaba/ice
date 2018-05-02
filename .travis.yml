@@ -1,0 +1,14 @@
+sudo: required
+
+language: node_js
+
+before_install:
+  - npm i -g npm@5
+
+node_js:
+  - "8"
+
+script:
+  - npm run lint:nofix
+  - npm i ice-devtools -g && npm run generate
+  - npm run sync

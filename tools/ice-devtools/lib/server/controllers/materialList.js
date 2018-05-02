@@ -8,6 +8,6 @@ module.exports = async (ctx) => {
   return ctx.render('blocks.hbs', {
     currentMaterial,
     blocks: result.blocks,
-    layouts: result.layouts
+    layouts: result.layouts,
   });
 };

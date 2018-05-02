@@ -1,8 +1,6 @@
 const merge = require('webpack-merge');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const getBabelConfig = require('./getBabelConfig');
-const blockTemplate = require.resolve('../template/block.hbs');
+
 const BABEL_LOADER = require.resolve('babel-loader');
 const STYLE_LOADER = require.resolve('style-loader');
 const CSS_LOADER = require.resolve('css-loader');
@@ -10,6 +8,8 @@ const SASS_LOADER = require.resolve('sass-loader');
 const VUE_STYLE_LOADER = require.resolve('vue-style-loader');
 const VUE_LOADER = require.resolve('vue-loader');
 const WebpackPluginImport = require('webpack-plugin-import');
+
+const getBabelConfig = require('./getBabelConfig');
 
 const baseConfig = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',

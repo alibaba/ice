@@ -1,8 +1,8 @@
 {
   "name": "@vue-materials/basic-form-block",
   "version": "1.0.0",
-  "description": "",
-  "author": "chenbin92 <chenbinbin.cb@alibaba-inc.com>",
+  "description": "element 基础表单",
+  "author": "ice-admin@alibaba-inc.com",
   "files": [
     "src/",
     "lib/"

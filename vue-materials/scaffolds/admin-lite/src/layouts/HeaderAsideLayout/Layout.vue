@@ -21,7 +21,7 @@ export default {
 };
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style lang="scss" scoped>
 .app-wrapper {
   position: relative;
   height: 100%;

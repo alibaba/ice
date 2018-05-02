@@ -1,12 +1,11 @@
+/* eslint prefer-arrow-callback: 0 */
 const path = require('path');
 const fs = require('fs');
 const serve = require('webpack-serve');
-const glob = require('glob-promise');
-const { resolve, parse, join } = require('path');
+const { resolve } = require('path');
 const views = require('koa-views');
 const getWebpackConfig = require('../config/getWebpackConfig');
 const routes = require('./routes');
-const getMaterialLists = require('./getMaterialLists');
 
 module.exports = function startServer(opts) {
   const pkgPath = path.resolve(opts.cwd, 'package.json');
@@ -39,7 +38,6 @@ module.exports = function startServer(opts) {
             source: false,
             cachedAssets: false,
             cached: false,
-            cachedAssets: true,
             chunkOrigins: false,
             modules: false,
             builtAt: false,
@@ -65,7 +63,7 @@ module.exports = function startServer(opts) {
                 partials: {
                   initReact: './init-react',
                   initVue: './init-vue',
-                  sideBar: './sidebar'
+                  sideBar: './sidebar',
                 },
               },
             })
