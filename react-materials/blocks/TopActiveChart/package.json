@@ -44,7 +44,7 @@
   },
   "blockConfig": {
     "name": "top-active-chart",
-    "snapshot": "https://img.alicdn.com/tfs/TB1fYilbTtYBeNjy1XdXXXXyVXa-2854-824.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1fYilbTtYBeNjy1XdXXXXyVXa-2854-824.png",
     "title": "活跃排行图表",
     "categories": [
       "数据展示",

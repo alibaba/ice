@@ -43,7 +43,7 @@
   },
   "blockConfig": {
     "name": "main-data",
-    "snapshot": "https://img.alicdn.com/tfs/TB1tmdQiAKWBuNjy1zjXXcOypXa-2058-426.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1tmdQiAKWBuNjy1zjXXcOypXa-2058-426.png",
     "title": "主要数据",
     "categories": ["数据展示","信息展示"
     ],

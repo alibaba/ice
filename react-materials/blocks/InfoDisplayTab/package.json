@@ -37,7 +37,7 @@
   },
   "blockConfig": {
     "name": "info-display-tab",
-    "snapshot": "https://img.alicdn.com/tfs/TB1AltjcuuSBuNjy1XcXXcYjFXa-2344-1378.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1AltjcuuSBuNjy1XcXXcYjFXa-2344-1378.png",
     "themePackage": "@icedesign/skin",
     "title": "标签页信息展示",
     "categories": [
