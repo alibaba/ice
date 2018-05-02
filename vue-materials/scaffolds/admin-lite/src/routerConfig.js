@@ -6,20 +6,19 @@ const routesConfig = [
     path: '/',
     layout: HeaderAsideLayout,
     component: Dashboard,
-    redirect: 'dashboard/analysis',
     children: [
       {
-        path: 'dashboard/analysis',
+        path: '/dashboard/analysis',
         layout: HeaderAsideLayout,
         component: Dashboard,
       },
       {
-        path: 'dashboard/monitor',
+        path: '/dashboard/monitor',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
       {
-        path: 'dashboard/workplace',
+        path: '/dashboard/workplace',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
@@ -31,12 +30,12 @@ const routesConfig = [
     component: NotFound,
     children: [
       {
-        path: 'basic',
+        path: '/table/basic',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
       {
-        path: 'fixed',
+        path: '/table/fixed',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
@@ -48,12 +47,12 @@ const routesConfig = [
     component: NotFound,
     children: [
       {
-        path: 'basic',
+        path: '/form/basic',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
       {
-        path: 'signup',
+        path: '/form/signup',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
@@ -65,17 +64,17 @@ const routesConfig = [
     component: NotFound,
     children: [
       {
-        path: 'line',
+        path: '/charts/line',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
       {
-        path: 'histogram',
+        path: '/charts/histogram',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
       {
-        path: 'bar',
+        path: '/charts/bar',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
@@ -87,12 +86,12 @@ const routesConfig = [
     component: NotFound,
     children: [
       {
-        path: 'success',
+        path: '/profile/success',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
       {
-        path: 'fail',
+        path: '/profile/fail',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
@@ -104,12 +103,12 @@ const routesConfig = [
     component: NotFound,
     children: [
       {
-        path: 'success',
+        path: '/result/success',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
       {
-        path: 'fail',
+        path: '/result/fail',
         layout: HeaderAsideLayout,
         component: NotFound,
       },
@@ -119,13 +118,6 @@ const routesConfig = [
     path: '*',
     layout: HeaderAsideLayout,
     component: NotFound,
-    children: [
-      {
-        path: '*',
-        layout: HeaderAsideLayout,
-        component: NotFound,
-      },
-    ],
   },
 ];
 

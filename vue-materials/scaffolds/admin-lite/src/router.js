@@ -1,29 +1,53 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import routesConfig from './routesConfig';
+import routerConfig from './routerConfig';
 
 /**
- * 将路由信息扁平化，继承上一级路由的 path
+ * 将路由配置扁平化
  * @param {Array} config 路由配置
+ * @return {Route}
+ * @example
+ * const routes = [
+ *   {
+ *     path: '/dashboard/analysis',
+ *     component: HeaderAsideLayout,
+ *     children: [
+ *       {
+ *         path: '',
+ *         component: Dashboard,
+ *       },
+ *     ],
+ *   },
+ * ];
  */
-const recursiveRoutesConfig = (config = [], componentType) => {
-  const routeMap = [];
+
+const routerMap = [];
+
+const recursiveRouterConfig = (config = []) => {
   config.forEach((item) => {
     const route = {
       path: item.path,
-      component: item[componentType],
-      redirect: item.redirect,
+      component: item.layout,
+      children: [
+        {
+          path: '',
+          component: item.component,
+        },
+      ],
     };
+
     if (Array.isArray(item.children)) {
-      route.children = recursiveRoutesConfig(item.children, 'component');
+      recursiveRouterConfig(item.children);
     }
-    routeMap.push(route);
+    routerMap.push(route);
   });
 
-  return routeMap;
+  return routerMap;
 };
 
-const routes = recursiveRoutesConfig(routesConfig, 'layout');
+const routes = recursiveRouterConfig(routerConfig);
+
+console.log(routes);
 
 Vue.use(Router);
 
