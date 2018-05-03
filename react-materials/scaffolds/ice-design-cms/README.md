@@ -11,8 +11,8 @@
 
 * react-router @3.x 默认采用 hashHistory 的单页应用
 * 入口文件: `src/index.js`
-* 导航配置: `src/navs.js`
-* 路由配置: `src/routes.jsx`
+* 导航配置: `src/asideMenuConfig.js`
+* 路由配置: `src/routerConfig.js`
 * 页面文件: `src/pages`
 * 组件: `src/components`
 
