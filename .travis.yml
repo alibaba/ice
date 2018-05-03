@@ -2,14 +2,18 @@ sudo: required
 
 language: node_js
 
-before_install:
-  - npm install
-  - npm run bootstrap
-
 node_js:
   - "8"
 
+before_install:
+  - npm install
+
+before_script:
+  - npm run bootstrap
+
 script:
   - npm run lint:nofix
+
+after_script:
   - npm i ice-devtools -g && npm run generate
   - npm run sync
