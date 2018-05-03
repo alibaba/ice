@@ -5,8 +5,8 @@ import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
 import FoundationSymbol from 'foundation-symbol';
 import cx from 'classnames';
-import { Link } from 'react-router';
-import { headerNavs } from '../navs';
+import { Link } from 'react-router-dom';
+import { headerMenuConfig } from './../menuConfig';
 import Logo from './Logo';
 
 export default class Header extends PureComponent {
@@ -26,26 +26,35 @@ export default class Header extends PureComponent {
           style={{ display: 'flex' }}
         >
           {/* Header 菜单项 begin */}
-          {headerNavs && headerNavs.length > 0 ? (
+          {headerMenuConfig && headerMenuConfig.length > 0 ? (
             <Menu mode="horizontal" selectedKeys={[]}>
-              {headerNavs.map((nav, idx) => {
+              {headerMenuConfig.map((nav, idx) => {
                 const linkProps = {};
                 if (nav.newWindow) {
-                  linkProps.href = nav.to;
+                  linkProps.href = nav.path;
                   linkProps.target = '_blank';
                 } else if (nav.external) {
-                  linkProps.href = nav.to;
+                  linkProps.href = nav.path;
                 } else {
-                  linkProps.to = nav.to;
+                  linkProps.to = nav.path;
                 }
                 return (
                   <Menu.Item key={idx}>
-                    <Link {...linkProps}>
-                      {nav.icon ? (
-                        <FoundationSymbol type={nav.icon} size="small" />
-                      ) : null}
-                      {!isMobile ? nav.text : null}
-                    </Link>
+                    {linkProps.to ? (
+                      <Link {...linkProps}>
+                        {nav.icon ? (
+                          <FoundationSymbol type={nav.icon} size="small" />
+                        ) : null}
+                        {!isMobile ? nav.name : null}
+                      </Link>
+                    ) : (
+                      <a {...linkProps}>
+                        {nav.icon ? (
+                          <FoundationSymbol type={nav.icon} size="small" />
+                        ) : null}
+                        {!isMobile ? nav.name : null}
+                      </a>
+                    )}
                   </Menu.Item>
                 );
               })}
@@ -78,7 +87,7 @@ export default class Header extends PureComponent {
                   <br />
                   <span
                     className="user-department"
-                    style={{ fontSize: '12px', color: '#999' }}
+                    style={{ fontSize: '12px' }}
                   >
                     技术部
                   </span>
