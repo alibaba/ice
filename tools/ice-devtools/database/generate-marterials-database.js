@@ -76,7 +76,8 @@ function generateBlocks(files, SPACE, type) {
       // (必) 用于说明组件依赖关系
       dependencies: pkg.dependencies || {},
       // (必) 截图
-      snapshot: pkgConfig.snapshot,
+      // 兼容 snapshot 字段, 但是不推荐
+      screenshot: pkgConfig.screenshot || pkgConfig.snapshot,
 
       categories: pkgConfig.categories || [],
       publishTime: pkg.publishTime || new Date().toISOString(),
@@ -159,7 +160,7 @@ function generateScaffolds(files, SPACE) {
       dependencies: pkg.dependencies || {},
       devDependencies: pkg.devDependencies || {},
       // (必) 截图
-      snapshot: pkg.scaffoldConfig.snapshot,
+      screenshot: pkg.scaffoldConfig.screenshot || pkg.scaffoldConfig.snapshot,
 
       categories: pkg.scaffoldConfig.categories || [],
       publishTime: pkg.publishTime || new Date().toISOString(),
