@@ -31,6 +31,6 @@
   "scaffoldConfig": {
     "name": "{{npmName}}",
     "title": "{{title}}",
-    "snapshot": ""
+    "screenshot": ""
   }
 }
