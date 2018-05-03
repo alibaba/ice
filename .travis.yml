@@ -3,7 +3,6 @@ sudo: required
 language: node_js
 
 before_install:
-  - npm i -g npm@5
   - npm install
   - npm run bootstrap
 
