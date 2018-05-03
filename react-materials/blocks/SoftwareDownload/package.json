@@ -1,0 +1,28 @@
+{
+  "name": "@react-materials/software-download-block",
+  "version": "1.0.0",
+  "description": "根据平台信息，展示对应软件下载，以及软件介绍等。",
+  "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": ["src/", "lib/"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": ["ice", "react", "block"],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "software-download",
+    "title": "软件下载",
+    "categories": ["信息展示"],
+    "screenshot":
+      "https://img.alicdn.com/tfs/TB1M6WKpTtYBeNjy1XdXXXXyVXa-2418-1348.png"
+  }
+}
