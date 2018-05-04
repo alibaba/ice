@@ -44,7 +44,7 @@
   },
   "blockConfig": {
     "name": "change-password-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB1Y.8yXHGYBuNjy0FoXXciBFXa-1212-490.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1Y.8yXHGYBuNjy0FoXXciBFXa-1212-490.png",
     "title": "修改密码表单",
     "categories": [
       "表单"

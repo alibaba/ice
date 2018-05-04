@@ -1,4 +1,4 @@
-# ice-vue-fixed-table-block
+# fixed-table-block
 
 简介：固定表格
 

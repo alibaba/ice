@@ -9,6 +9,7 @@ const os = require('os');
 const uppercamelcase = require('uppercamelcase');
 const rp = require('request-promise');
 const depAnalyze = require('../shared/dep-analyze');
+const { queryNpmTime } = require('../shared/utils');
 
 function generatePartciple(payload, source) {
   if (process.env.PARTICIPLE) {
@@ -30,7 +31,7 @@ function generatePartciple(payload, source) {
  * @param {*} SPACE
  * @param {String} type | block or react
  */
-function generateBlocks(files, SPACE, type) {
+function generateBlocks(files, SPACE, type, done) {
   const result = [];
   files.forEach((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
@@ -76,10 +77,11 @@ function generateBlocks(files, SPACE, type) {
       // (必) 用于说明组件依赖关系
       dependencies: pkg.dependencies || {},
       // (必) 截图
-      snapshot: pkgConfig.snapshot,
+      // 兼容 snapshot 字段, 但是不推荐
+      screenshot: pkgConfig.screenshot || pkgConfig.snapshot,
 
       categories: pkgConfig.categories || [],
-      publishTime: pkg.publishTime || new Date().toISOString(),
+      // publishTime: pkg.publishTime || new Date().toISOString(),
       features: {
         useComponents,
       },
@@ -130,11 +132,30 @@ function generateBlocks(files, SPACE, type) {
     result.push(payload);
   });
 
-  return result;
+  Promise.all(
+    result.map((item) => {
+      if (item.source.type !== 'npm') {
+        return Promise.resolve();
+      } else {
+        return queryNpmTime(item.source.npm)
+          .then(({ created, modified }) => {
+            item.publishTime = created;
+            item.updateTime = modified;
+          })
+          .catch((err) => {
+            item.publishTime = null;
+            item.updateTime = null;
+          });
+      }
+    })
+  ).then(() => {
+    done(result);
+  });
 }
 
-function generateScaffolds(files, SPACE) {
-  return files.map((pkgPath) => {
+function generateScaffolds(files, SPACE, done) {
+  const tasks = [];
+  const result = files.map((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
     const dependencies = pkg.dependencies || {};
     const devDependencies = pkg.devDependencies || {};
@@ -159,12 +180,24 @@ function generateScaffolds(files, SPACE) {
       dependencies: pkg.dependencies || {},
       devDependencies: pkg.devDependencies || {},
       // (必) 截图
-      snapshot: pkg.scaffoldConfig.snapshot,
+      screenshot: pkg.scaffoldConfig.screenshot || pkg.scaffoldConfig.snapshot,
 
       categories: pkg.scaffoldConfig.categories || [],
-      publishTime: pkg.publishTime || new Date().toISOString(),
+      // publishTime: pkg.publishTime || new Date().toISOString(),
       features: {},
     };
+
+    tasks.push(
+      queryNpmTime(pkg.name)
+        .then(({ created, modified }) => {
+          payload.publishTime = created;
+          payload.updateTime = modified;
+        })
+        .catch((err) => {
+          item.publishTime = null;
+          item.updateTime = null;
+        })
+    );
 
     generatePartciple(payload, {
       title: pkg.scaffoldConfig.title,
@@ -210,6 +243,9 @@ function generateScaffolds(files, SPACE) {
 
     return payload;
   });
+  Promise.all(tasks).then(() => {
+    done(result);
+  });
 }
 
 /**
@@ -230,7 +266,7 @@ function gatherBlocksOrLayouts(pattern, SPACE, type) {
           console.log('err:', err);
           reject(err);
         } else {
-          resolve(generateBlocks(files, SPACE, type));
+          generateBlocks(files, SPACE, type, resolve);
         }
       }
     );
@@ -255,7 +291,7 @@ function gatherScaffolds(pattern, SPACE) {
           console.log('err:', err);
           reject(err);
         } else {
-          resolve(generateScaffolds(files, SPACE));
+          generateScaffolds(files, SPACE, resolve);
         }
       }
     );

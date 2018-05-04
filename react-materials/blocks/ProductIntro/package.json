@@ -43,7 +43,7 @@
   },
   "blockConfig": {
     "name": "product-intro",
-    "snapshot": "https://img.alicdn.com/tfs/TB1FiYUgGmWBuNjy1XaXXXCbXXa-1373-665.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1FiYUgGmWBuNjy1XaXXXCbXXa-1373-665.png",
     "title": "产品介绍区块",
     "categories": ["信息展示"
     ],

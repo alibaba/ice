@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "user-info-card",
-    "snapshot": "https://img.alicdn.com/tfs/TB1NxO4l8fH8KJjy1XbXXbLdXXa-978-668.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1NxO4l8fH8KJjy1XbXXbLdXXa-978-668.png",
     "themePackage": "@icedesign/skin",
     "title": "用户信息展示",
     "categories": [

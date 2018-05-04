@@ -1,8 +1,8 @@
 {
-  "name": "ice-vue-basic-form-block",
+  "name": "@vue-materials/basic-form-block",
   "version": "1.0.0",
-  "description": "",
-  "author": "chenbin92 <chenbinbin.cb@alibaba-inc.com>",
+  "description": "element 基础表单",
+  "author": "ice-admin@alibaba-inc.com",
   "files": [
     "src/",
     "lib/"
@@ -21,13 +21,13 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "ice-vue-basic-container-block": "^1.0.2",
+    "@vue-materials/basic-container": "^1.0.0",
     "vue": "^2.5.16"
   },
   "blockConfig": {
     "name": "basic-form",
     "title": "基础表单",
     "categorie": ["表单"],
-    "snapshot": "https://img.alicdn.com/tfs/TB13.gSnTtYBeNjy1XdXXXXyVXa-1960-1146.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB13.gSnTtYBeNjy1XdXXXXyVXa-1960-1146.png"
   }
 }

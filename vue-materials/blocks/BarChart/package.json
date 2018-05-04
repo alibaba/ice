@@ -1,7 +1,7 @@
 {
-  "name": "ice-vue-bar-chart-block",
+  "name": "@vue-materials/bar-chart-block",
   "version": "1.0.0",
-  "description": "",
+  "description": "v-charts 条形图",
   "author": "ice-admin@alibaba-inc.com",
   "files": [
     "src/",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "echarts": "^4.0.4",
-    "ice-vue-basic-container-block": "^1.0.2",
+    "@vue-materials/basic-container": "^1.0.0",
     "v-charts": "^1.16.10",
     "vue": "^2.5.16"
   },
@@ -32,6 +32,6 @@
     "categories": [
       "图表"
     ],
-    "snapshot": "https://img.alicdn.com/tfs/TB1LgufnQCWBuNjy0FaXXXUlXXa-1960-908.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1LgufnQCWBuNjy0FaXXXUlXXa-1960-908.png"
   }
 }

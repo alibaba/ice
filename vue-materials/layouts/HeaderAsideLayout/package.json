@@ -1,5 +1,5 @@
 {
-  "name": "ice-vue-header-aside-layout",
+  "name": "@vue-materials/header-aside-layout",
   "version": "1.0.0",
   "description": "顶部导航 + 边栏 + 内容区的布局, 通常用于站点正文。",
   "author": {
@@ -25,13 +25,16 @@
   },
   "dependencies": {
     "element-ui": "^2.3.4",
+    "normalize.css": "^8.0.0",
     "vue": "^2.5.16"
   },
   "layoutConfig": {
     "name": "header-aside-layout",
     "title": "顶部-侧边-布局",
-    "categories": ["布局"],
-    "snapshot": "https://gw.alicdn.com/tfs/TB1dC19lC_I8KJjy0FoXXaFnVXa-976-974.png",
-    "thumbnail": "https://img.alicdn.com/tfs/TB1Ms2UnuuSBuNjy1XcXXcYjFXa-2840-1596.png"
+    "categories": [
+      "布局"
+    ],
+    "thumbnail": "https://gw.alicdn.com/tfs/TB1dC19lC_I8KJjy0FoXXaFnVXa-976-974.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1SqrjontYBeNjy1XdXXXXyVXa-2842-1596.png"
   }
 }

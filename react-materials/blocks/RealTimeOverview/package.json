@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "real-time-overview",
-    "snapshot":
+    "screenshot":
       "https://img.alicdn.com/tfs/TB1GgjAmVOWBuNjy0FiXXXFxVXa-2348-596.png",
     "title": "实时概况",
     "categories": ["数据展示"],

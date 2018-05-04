@@ -1,7 +1,7 @@
 {
   "name": "ice-materials-template",
   "version": "1.0.0-beta.12",
-  "description": "ice materials template & react materials & vue materials",
+  "description": "ice materials template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

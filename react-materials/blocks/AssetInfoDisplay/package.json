@@ -42,7 +42,7 @@
   },
   "blockConfig": {
     "name": "asset-info-display",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1QvhInhTI8KJjSspiXXbM4FXa-1910-570.png",
+    "screenshot": "https://gw.alicdn.com/tfs/TB1QvhInhTI8KJjSspiXXbM4FXa-1910-570.png",
     "title": "资产信息展示",
     "categories": [
       "信息展示"

@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "join-us",
-    "snapshot": "https://img.alicdn.com/tfs/TB1L1SQjr_I8KJjy1XaXXbsxpXa-2650-1126.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1L1SQjr_I8KJjy1XaXXbsxpXa-2650-1126.png",
     "themePackage": "@icedesign/skin",
     "title": "加入我们",
     "categories": [

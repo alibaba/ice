@@ -43,7 +43,7 @@
   },
   "blockConfig": {
     "name": "circle-progress",
-    "snapshot": "https://img.alicdn.com/tfs/TB1xOKYcwmTBuNjy1XbXXaMrVXa-2352-522.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1xOKYcwmTBuNjy1XbXXaMrVXa-2352-522.png",
     "title": "环形进度条",
     "categories": [
       "数据展示"

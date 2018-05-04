@@ -2,6 +2,7 @@ const path = require('path');
 const { existsSync } = require('fs');
 const MultiEntryPlugin = require('webpack/lib/MultiEntryPlugin');
 const { getMaterials } = require('../utils');
+
 const cwd = process.cwd();
 const webpackHotClient = require.resolve('webpack-hot-client/client');
 const cachedChunks = {};
@@ -23,12 +24,11 @@ module.exports = async (ctx) => {
 
   const materials = getMaterials(cwd);
   let type;
-  try {
-    type = materials[material].type;
-  } catch (err) {
-    warnOnce('使用默认物料类型 react');
-    type = 'react';
-  }
+  materials.find((m) => {
+    if (m.directory === material) {
+      type = m.type;
+    }
+  });
 
   const currentMaterial = material;
   const entryPath = path.resolve(
@@ -43,7 +43,7 @@ module.exports = async (ctx) => {
     return ctx.render('404.hbs');
   }
 
-  const chunkName = currentMaterial + '/' + params.layoutName;
+  const chunkName = `${currentMaterial}/${params.layoutName}`;
   if (!(chunkName in cachedChunks)) {
     ctx.compiler.running = false;
     ctx.compiler.apply(

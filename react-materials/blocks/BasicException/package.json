@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "basic-exception",
-    "snapshot": "https://img.alicdn.com/tfs/TB197z8if2H8KJjy0FcXXaDlFXa-1786-914.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB197z8if2H8KJjy0FcXXaDlFXa-1786-914.png",
     "themePackage": "@icedesign/skin",
     "title": "基础异常报错",
     "categories": [

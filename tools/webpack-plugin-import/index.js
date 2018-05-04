@@ -1,1 +1,1 @@
-module.exports = require('./webpack-plugin-import');
+module.exports = require('./lib/webpack-plugin-import');

@@ -37,7 +37,7 @@
   },
   "blockConfig": {
     "name": "chart-stock",
-    "snapshot": "https://img.alicdn.com/tfs/TB1rpkscDtYBeNjy1XdXXXXyVXa-2352-1020.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1rpkscDtYBeNjy1XdXXXXyVXa-2352-1020.png",
     "themePackage": "@icedesign/skin",
     "title": "股票图",
     "categories": [

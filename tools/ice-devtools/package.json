@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "1.0.0-beta.19",
+  "version": "1.0.0-beta.21",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {
@@ -10,9 +10,6 @@
     "ice-devtools-start": "bin/dev-server.js",
     "ice-devtools-generate": "bin/db.js"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -20,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "async": "^2.6.0",
+    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-component": "^1.1.0",
@@ -84,6 +82,7 @@
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.7",
+    "cross-spawn": "^6.0.5",
     "html-webpack-plugin": "^3.1.0"
   }
 }

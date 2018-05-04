@@ -6,9 +6,10 @@
     "publish": "lerna publish",
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
+    "sync": "node scripts/sync-db.js",
     "generate": "ice-devtools generate && node ./scripts/generate-docs-database",
     "lint": "npm run lint:nofix -- --fix",
-    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./",
+    "lint:nofix": "eslint --cache --ext .js .vue .jsx react-materials vue-materials",
     "format": "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffolds/*/src/**/*.js scaffolds/*/src/**/*.jsx tools/**/*.js --write"
   },
   "repository": {
@@ -16,13 +17,17 @@
     "url": "https://github.com/alibaba/ice"
   },
   "devDependencies": {
+    "@vue/cli-plugin-eslint": "^3.0.0-beta.6",
+    "@vue/cli-service": "^3.0.0-beta.6",
     "@vue/eslint-config-airbnb": "^3.0.0-beta.6",
+    "ali-oss": "^5.1.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",
     "babel-plugin-import": "^1.6.3",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-lib-import": "^0.1.0",
+    "co": "^4.6.0",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
@@ -30,6 +35,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-vue": "^4.5.0",
     "findup": "^0.1.5",
     "ghooks": "^2.0.2",
     "ice-devtools": "^1.0.0-beta.19",
@@ -45,19 +51,20 @@
   },
   "config": {
     "ghooks": {
-      "commit-msg": "./scripts/validate-commit-msg.js",
-      "pre-push": "npm run lint"
+      "commit-msg": "./scripts/validate-commit-msg.js"
     },
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "materials": {
-    "react-materials": {
+  "materials": [
+    {
+      "directory": "react-materials",
       "type": "react"
     },
-    "vue-materials": {
+    {
+      "directory": "vue-materials",
       "type": "vue"
     }
-  }
+  ]
 }

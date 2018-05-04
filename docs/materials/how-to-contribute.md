@@ -66,7 +66,7 @@ $ ice-devtools add
 </template>
 
 <script>
-import BasicContainer from 'ice-vue-basic-container-block'
+import BasicContainer from '@vue-materials/basic-container'
 
 export default {
   components: { BasicContainer },
@@ -118,11 +118,11 @@ export default ExampleBlock;
   ],
   "dependencies": {
     "vue": "^2.5.16",
-    "ice-vue-basic-container-block": "^1.0.2",
+    "@vue-materials/basic-container": "^1.0.0",
   },
   "blockConfig": {            // 区块的相关配置，用于 Iceworks 和站点的展示
     "name": "example-block",  // 名称
-    "snapshot": "",           // 截图（如果没有截图则不在 Iceworks 中显示图片）
+    "screenshot": "",         // 截图（如果没有截图则不在 Iceworks 中显示图片）
     "title": "示例区块",       // 标题
     "categories": "[]"        // 分类
   }

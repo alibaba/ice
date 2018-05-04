@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "composite-filter",
-    "snapshot": "https://img.alicdn.com/tfs/TB1gabvbntYBeNjy1XdXXXXyVXa-1916-244.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1gabvbntYBeNjy1XdXXXXyVXa-1916-244.png",
     "themePackage": "@icedesign/skin",
     "title": "标签、日期和搜索组合筛选",
     "categories": [

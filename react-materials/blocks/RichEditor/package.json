@@ -47,7 +47,7 @@
   },
   "blockConfig": {
     "name": "rich-editor",
-    "snapshot": "https://img.alicdn.com/tfs/TB16Kedov6H8KJjy0FjXXaXepXa-1906-872.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB16Kedov6H8KJjy0FjXXaXepXa-1906-872.png",
     "title": "富文本编辑器",
     "categories": [
       "表单"
