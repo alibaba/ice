@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-heat-map",
-    "snapshot": "https://img.alicdn.com/tfs/TB1oUBKcwmTBuNjy1XbXXaMrVXa-2348-1036.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1oUBKcwmTBuNjy1XbXXaMrVXa-2348-1036.png",
     "themePackage": "@icedesign/skin",
     "title": "色块图",
     "categories": [

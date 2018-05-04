@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "tab-article",
-    "snapshot": "https://img.alicdn.com/tfs/TB1hNNybmCWBuNjy0FhXXb6EVXa-1916-1082.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1hNNybmCWBuNjy0FhXXb6EVXa-1916-1082.png",
     "themePackage": "@icedesign/skin",
     "title": "tab和文章列表组合",
     "categories": [

@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "system-notice-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1sG8CbXGWBuNjy0FbXXb4sXXa-1914-676.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1sG8CbXGWBuNjy0FbXXb4sXXa-1914-676.png",
     "themePackage": "@icedesign/skin",
     "title": "系统消息列表",
     "categories": [

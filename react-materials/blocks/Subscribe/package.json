@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "subscribe",
-    "snapshot": "https://img.alicdn.com/tfs/TB17bQvc_tYBeNjy1XdXXXXyVXa-2352-150.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB17bQvc_tYBeNjy1XdXXXXyVXa-2352-150.png",
     "themePackage": "@icedesign/skin",
     "title": "订阅",
     "categories": [

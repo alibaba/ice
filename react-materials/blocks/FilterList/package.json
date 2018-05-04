@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "filter-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1iUbYilfH8KJjy1XbXXbLdXXa-2000-1154.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1iUbYilfH8KJjy1XbXXbLdXXa-2000-1154.png",
     "themePackage": "@icedesign/skin",
     "title": "支持过滤的列表",
     "categories": [

@@ -45,7 +45,7 @@
   },
   "blockConfig": {
     "name": "pie-line-chart",
-    "snapshot": "https://img.alicdn.com/tfs/TB1xJRseSCWBuNjy0FhXXb6EVXa-2238-1422.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1xJRseSCWBuNjy0FhXXb6EVXa-2238-1422.png",
     "title": "饼图和环形图组合",
     "categories": [
       "图表"
