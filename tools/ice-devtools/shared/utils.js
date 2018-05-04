@@ -27,34 +27,53 @@ function getPkgJson() {
 }
 exports.getPkgJson = getPkgJson;
 
+/**
+ * 检测 NPM 包是否已发送，并返回包的发布时间
+ * @param  {string} npm      package name
+ * @param  {String} version  pacage version
+ * @param  {String} registry npm registry
+ * @return {array}
+ *         [code, resute]
+ */
 function checkAndQueryNpmTime(
   npm,
   version = 'latest',
   registry = 'http://registry.npmjs.com'
 ) {
-  return axios(`${registry}/${npm.replace(/\//g, '%2f')}/`)
+  const packageRegistryUrl = `${registry}/${npm.replace(/\//g, '%2f')}/`;
+  return axios(packageRegistryUrl)
     .then((response) => response.data)
     .then((data) => {
       if (!data.time) {
         throw new Error('time 字段不存在');
       }
       if (
-        !data.version ||
+        !data.versions ||
         typeof data.versions[data['dist-tags'][version] || version] ===
           'undefined'
       ) {
+        console.log(packageRegistryUrl);
         throw new Error(`${npm}@${version} 未发布! 禁止提交!`);
       }
-      return data.time;
+      return [0, data.time];
     })
     .catch((err) => {
       if (err.response && err.response.status === 404) {
         // 这种情况是该 npm 包名一次都没有发布过
-        console.error('[ERR checkAndQueryNpmTime] 未发布的 npm 包', npm);
+        return [1, {
+          error: err,
+          npm: npm,
+          version: version,
+          message: '[ERR checkAndQueryNpmTime] 未发布的 npm 包',
+        }]
       } else {
-        console.error(`[ERR checkAndQueryNpmTime] ${err.message}`, err);
+        return [1, {
+          error: err,
+          npm: npm,
+          version: version,
+          message: `[ERR checkAndQueryNpmTime] ${err.message}`,
+        }]
       }
-      process.exit(1);
     });
 }
 exports.checkAndQueryNpmTime = checkAndQueryNpmTime;

@@ -7,7 +7,5 @@ node_js:
 
 script:
   - npm run lint:nofix
-
-after_script:
-  - npm i ice-devtools -g && npm run generate
-  - npm run sync
+  - ice-devtools --version && npm run generate # 生成 database 数据
+  - npm run sync # 同步到 ali-oss
