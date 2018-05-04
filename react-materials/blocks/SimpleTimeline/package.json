@@ -43,7 +43,7 @@
   },
   "blockConfig": {
     "name": "simple-timeline",
-    "snapshot": "https://img.alicdn.com/tfs/TB1N4jvcqmWBuNjy1XaXXXCbXXa-2302-974.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1N4jvcqmWBuNjy1XaXXXCbXXa-2302-974.png",
     "title": "时间轴",
     "categories": [
       "数据展示",

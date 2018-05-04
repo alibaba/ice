@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "topic-card",
-    "snapshot": "https://img.alicdn.com/tfs/TB1fEdAcTtYBeNjy1XdXXXXyVXa-2348-332.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1fEdAcTtYBeNjy1XdXXXXyVXa-2348-332.png",
     "themePackage": "@icedesign/skin",
     "title": "核心数据",
     "categories": [

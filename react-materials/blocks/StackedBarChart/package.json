@@ -37,7 +37,7 @@
   },
   "blockConfig": {
     "name": "stacked-bar-chart",
-    "snapshot":
+    "screenshot":
       "https://img.alicdn.com/tfs/TB1p5zaouuSBuNjy1XcXXcYjFXa-2396-994.png",
     "title": "堆叠条形图",
     "categories": ["图表"],

@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "simple-fluency-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB1U7tFcDtYBeNjy1XdXXXXyVXa-2352-1002.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1U7tFcDtYBeNjy1XdXXXXyVXa-2352-1002.png",
     "themePackage": "@icedesign/skin",
     "title": "简单流畅型表单",
     "categories": [

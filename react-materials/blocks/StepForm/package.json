@@ -44,7 +44,7 @@
   },
   "blockConfig": {
     "name": "step-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB1txzNhntYBeNjy1XdXXXXyVXa-2052-792.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1txzNhntYBeNjy1XdXXXXyVXa-2052-792.png",
     "title": "步骤形表单",
     "categories": [
       "表单"

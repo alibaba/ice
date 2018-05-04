@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "order-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1QQY0fiqAXuNjy1XdXXaYcVXa-960-646.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1QQY0fiqAXuNjy1XdXXaYcVXa-960-646.png",
     "themePackage": "@icedesign/skin",
     "title": "订单型列表",
     "categories": [

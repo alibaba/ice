@@ -37,7 +37,7 @@
   },
   "blockConfig": {
     "name": "custom-bar-chart",
-    "snapshot":
+    "screenshot":
       "https://img.alicdn.com/tfs/TB1WcSvorGYBuNjy0FoXXciBFXa-2402-800.png",
     "title": "自定义柱状图",
     "categories": ["图表"],
