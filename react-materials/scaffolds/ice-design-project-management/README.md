@@ -1,6 +1,4 @@
-# ice-website-homepage
-
-该模板适用于产品类的首页介绍，默认内置一个页面和五个不同风格的展示区块
+# ice-design-project-management
 
 > 使用文档
 
@@ -19,4 +17,5 @@
 * 组件: `src/components`
 
 效果图:
-![screenshot](https://img.alicdn.com/tfs/TB1lvtMpQOWBuNjSsppXXXPgpXa-2840-1596.png)
+
+![screenshot](https://img.alicdn.com/tfs/TB1PIDhpntYBeNjy1XdXXXXyVXa-2840-1596.png)

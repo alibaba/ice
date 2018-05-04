@@ -73,6 +73,7 @@ const styles = {
     alignItems: 'center',
     paddingBottom: 60,
     marginTop: '-88px',
+    overflow: 'hidden',
   },
   titleWrapper: {
     marginTop: 60,
