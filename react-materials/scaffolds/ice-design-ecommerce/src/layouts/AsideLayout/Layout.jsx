@@ -4,12 +4,12 @@ import cx from 'classnames';
 import Layout from '@icedesign/layout';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { Icon } from '@icedesign/base';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import FoundationSymbol from 'foundation-symbol';
 import { enquire } from 'enquire-js';
 import IceImg from '@icedesign/img';
 import Logo from './components/Logo';
-import { asideNavs } from '../../navs';
+import asideMenuConfig from '../../menuConfig';
 import './scss/light.scss';
 import './scss/dark.scss';
 
@@ -91,15 +91,14 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
    * 当前展开的菜单项
    */
   getOpenKeys = () => {
-    const { routes } = this.props;
-    const matched = routes[0].path;
-    let openKeys = '';
+    const { match } = this.props;
+    const matched = match.path;
+    let openKeys = [];
 
-    asideNavs &&
-      asideNavs.length > 0 &&
-      asideNavs.map((item, index) => {
-        if (item.to === matched) {
-          openKeys = index;
+    Array.isArray(asideMenuConfig) &&
+      asideMenuConfig.forEach((item, index) => {
+        if (matched.startsWith(item.path)) {
+          openKeys = [`${index}`];
         }
       });
 
@@ -107,9 +106,8 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
   };
 
   render() {
-    const {
-      location: { pathname },
-    } = this.props;
+    const { location } = this.props;
+    const { pathname } = location;
 
     return (
       <Layout
@@ -143,9 +141,9 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
               defaultOpenKeys={[`${this.getOpenKeys()}`]}
               mode="inline"
             >
-              {asideNavs &&
-                asideNavs.length > 0 &&
-                asideNavs.map((nav, index) => {
+              {asideMenuConfig &&
+                asideMenuConfig.length > 0 &&
+                asideMenuConfig.map((nav, index) => {
                   if (nav.children && nav.children.length > 0) {
                     return (
                       <SubMenu
@@ -156,7 +154,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
                             <span className="ice-menu-collapse-hide">
-                              {nav.text}
+                              {nav.name}
                             </span>
                           </span>
                         }
@@ -164,16 +162,16 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                         {nav.children.map((item) => {
                           const linkProps = {};
                           if (item.newWindow) {
-                            linkProps.href = item.to;
+                            linkProps.href = item.path;
                             linkProps.target = '_blank';
                           } else if (item.external) {
-                            linkProps.href = item.to;
+                            linkProps.href = item.path;
                           } else {
-                            linkProps.to = item.to;
+                            linkProps.to = item.path;
                           }
                           return (
-                            <MenuItem key={item.to}>
-                              <Link {...linkProps}>{item.text}</Link>
+                            <MenuItem key={item.path}>
+                              <Link {...linkProps}>{item.name}</Link>
                             </MenuItem>
                           );
                         })}
@@ -182,22 +180,22 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                   }
                   const linkProps = {};
                   if (nav.newWindow) {
-                    linkProps.href = nav.to;
+                    linkProps.href = nav.path;
                     linkProps.target = '_blank';
                   } else if (nav.external) {
-                    linkProps.href = nav.to;
+                    linkProps.href = nav.path;
                   } else {
-                    linkProps.to = nav.to;
+                    linkProps.to = nav.path;
                   }
                   return (
-                    <MenuItem key={nav.to}>
+                    <MenuItem key={nav.path}>
                       <Link {...linkProps}>
                         <span>
                           {nav.icon ? (
                             <FoundationSymbol size="small" type={nav.icon} />
                           ) : null}
                           <span className="ice-menu-collapse-hide">
-                            {nav.text}
+                            {nav.name}
                           </span>
                         </span>
                       </Link>
