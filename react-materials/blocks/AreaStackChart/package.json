@@ -37,7 +37,7 @@
   },
   "blockConfig": {
     "name": "area-stack-chart",
-    "snapshot": "https://img.alicdn.com/tfs/TB13crWidfJ8KJjy0FeXXXKEXXa-1754-994.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB13crWidfJ8KJjy0FeXXXKEXXa-1754-994.png",
     "themePackage": "@icedesign/skin",
     "title": "叠加面积图",
     "categories": [

@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "private-message-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB1KNsWcuOSBuNjy0FdXXbDnVXa-880-512.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1KNsWcuOSBuNjy0FdXXbDnVXa-880-512.png",
     "themePackage": "@icedesign/skin",
     "title": "私有消息表单",
     "categories": [

@@ -5,10 +5,9 @@ import Logo from './__components_Logo__';
 
 export default class Footer extends PureComponent {
   render() {
-    const { className, style, ...others } = this.props;
+    const { className, style } = this.props;
     return (
       <Layout.Footer
-        {...others}
         className={cx('ice-design-layout-footer', className)}
         style={{
           ...style,

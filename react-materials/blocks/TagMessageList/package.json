@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "tag-message-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1M3XQbhGYBuNjy0FnXXX5lpXa-1922-738.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1M3XQbhGYBuNjy0FnXXX5lpXa-1922-738.png",
     "themePackage": "@icedesign/skin",
     "title": "标签消息列表",
     "categories": [

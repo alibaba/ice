@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from '@icedesign/base';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export default class IntroWithBackground extends Component {
   static displayName = 'IntroWithBackground';

@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "register-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB17FUzgkCWBuNjy0FaXXXUlXXa-634-748.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB17FUzgkCWBuNjy0FaXXXUlXXa-634-748.png",
     "themePackage": "@icedesign/skin",
     "title": "注册表单",
     "categories": [

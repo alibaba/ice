@@ -45,7 +45,7 @@
   },
   "blockConfig": {
     "name": "overview-chart",
-    "snapshot": "https://img.alicdn.com/tfs/TB1Wa7wbuuSBuNjy1XcXXcYjFXa-2850-564.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1Wa7wbuuSBuNjy1XcXXcYjFXa-2850-564.png",
     "title": "综合图表",
     "categories": [
       "图表",

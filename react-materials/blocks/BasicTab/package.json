@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "basic-tab",
-    "snapshot": "https://img.alicdn.com/tfs/TB1lrQXif2H8KJjy0FcXXaDlFXa-1144-112.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1lrQXif2H8KJjy0FcXXaDlFXa-1144-112.png",
     "themePackage": "@icedesign/skin",
     "title": "基础 Tab 组件",
     "categories": [

@@ -37,7 +37,7 @@
   },
   "blockConfig": {
     "name": "radar-chart",
-    "snapshot":
+    "screenshot":
       "https://img.alicdn.com/tfs/TB1ijfcov1TBuNjy0FjXXajyXXa-2390-996.png",
     "title": "基础雷达图",
     "categories": ["图表"],

@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "product-info",
-    "snapshot": "https://img.alicdn.com/tfs/TB1pyKlaTtYBeNjy1XdXXXXyVXa-2178-1294.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1pyKlaTtYBeNjy1XdXXXXyVXa-2178-1294.png",
     "themePackage": "@icedesign/skin",
     "title": "产品信息展示",
     "categories": [

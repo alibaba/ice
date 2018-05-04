@@ -22,7 +22,8 @@
     "is-hotkey": "^0.1.1",
     "prop-types": "^15.5.8",
     "react-document-title": "^2.0.3",
-    "react-router": "^3.2.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "slate": "^0.32.5",
     "slate-plain-serializer": "^0.5.6",
     "slate-react": "^0.11.6"
@@ -53,7 +54,7 @@
   "scaffoldConfig": {
     "name": "ice-design-cms",
     "title": "ICE Design CMS",
-    "snapshot": "https://img.alicdn.com/tfs/TB1ai53mqmWBuNjy1XaXXXCbXXa-1920-1080.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1ai53mqmWBuNjy1XaXXXCbXXa-1920-1080.png"
   },
   "title": "ice_design_cms"
 }

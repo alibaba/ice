@@ -5,6 +5,7 @@ import DesignLanguage from './components/DesignLanguage';
 import Materials from './components/Materials';
 import BrandList from './components/BrandList';
 import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 
 export default class Home extends Component {
   static displayName = 'Home';
@@ -17,6 +18,7 @@ export default class Home extends Component {
   render() {
     return (
       <div className="home-page" style={{ background: '#fff' }}>
+        <Header />
         <LandingIntroBanner />
         <IceworksInfo />
         <DesignLanguage />

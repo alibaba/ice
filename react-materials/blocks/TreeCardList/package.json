@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "tree-card-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1EQrXcAyWBuNjy0FpXXassXXa-2310-694.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1EQrXcAyWBuNjy0FpXXassXXa-2310-694.png",
     "themePackage": "@icedesign/skin",
     "title": "树形卡片列表",
     "categories": [

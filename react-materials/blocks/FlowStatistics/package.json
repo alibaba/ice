@@ -45,7 +45,7 @@
   },
   "blockConfig": {
     "name": "flow-statistics",
-    "snapshot": "https://img.alicdn.com/tfs/TB1VaqjbTtYBeNjy1XdXXXXyVXa-2854-1126.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1VaqjbTtYBeNjy1XdXXXXyVXa-2854-1126.png",
     "title": "流量统计",
     "categories": [
       "图表",
