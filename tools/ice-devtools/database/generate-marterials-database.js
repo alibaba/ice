@@ -138,17 +138,28 @@ function generateBlocks(files, SPACE, type, done) {
         return Promise.resolve();
       } else {
         return checkAndQueryNpmTime(item.source.npm, item.source.version)
-          .then(({ created, modified }) => {
-            item.publishTime = created;
-            item.updateTime = modified;
+          .then(([code, npmResult]) => {
+            if (code == 0) {
+              item.publishTime = npmResult.created;
+              item.updateTime = npmResult.modified;
+              return Promise.resolve();
+            } else {
+              item.publishTime = null;
+              item.updateTime = null;
+              return Promise.resolve(npmResult);
+            }
           })
-          .catch((err) => {
-            item.publishTime = null;
-            item.updateTime = null;
-          });
       }
     })
-  ).then(() => {
+  ).then((allCheckStatus) => {
+    const failedStatus = allCheckStatus.filter(n=> typeof n !== 'undefined')
+    if (failedStatus.length > 0) {
+      failedStatus.forEach((status) => {
+        console.error(status.npm, status.version);
+        console.error(status.message);
+      })
+      process.exit(1);
+    }
     done(result);
   });
 }
@@ -189,13 +200,16 @@ function generateScaffolds(files, SPACE, done) {
 
     tasks.push(
       checkAndQueryNpmTime(pkg.name, pkg.version)
-        .then(({ created, modified }) => {
-          payload.publishTime = created;
-          payload.updateTime = modified;
-        })
-        .catch((err) => {
-          item.publishTime = null;
-          item.updateTime = null;
+        .then(([code, npmResult]) => {
+          if (code == 0) {
+            payload.publishTime = npmResult.created;
+            payload.updateTime = npmResult.modified;
+            return Promise.resolve();
+          } else {
+            item.publishTime = null;
+            item.updateTime = null;
+            return Promise.resolve(npmResult);
+          }
         })
     );
 
@@ -243,7 +257,15 @@ function generateScaffolds(files, SPACE, done) {
 
     return payload;
   });
-  Promise.all(tasks).then(() => {
+  Promise.all(tasks).then((allCheckStatus) => {
+    const failedStatus = allCheckStatus.filter(n=> typeof n !== 'undefined')
+    if (failedStatus.length > 0) {
+      failedStatus.forEach((status) => {
+        console.error(status.npm, status.version);
+        console.error(status.message);
+      })
+      process.exit(1);
+    }
     done(result);
   });
 }
