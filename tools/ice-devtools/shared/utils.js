@@ -27,27 +27,34 @@ function getPkgJson() {
 }
 exports.getPkgJson = getPkgJson;
 
-function queryNpmTime(
+function checkAndQueryNpmTime(
   npm,
   version = 'latest',
   registry = 'http://registry.npmjs.com'
 ) {
   return axios(`${registry}/${npm.replace(/\//g, '%2f')}/`)
     .then((response) => response.data)
-    .then((data) => data.time)
+    .then((data) => {
+      if (!data.time) {
+        throw new Error('time 字段不存在');
+      }
+      if (
+        !data.version ||
+        typeof data.versions[data['dist-tags'][version] || version] ===
+          'undefined'
+      ) {
+        throw new Error(`${npm}@${version} 未发布! 禁止提交!`);
+      }
+      return data.time;
+    })
     .catch((err) => {
       if (err.response && err.response.status === 404) {
-        console.error(
-          '[WARN queryNpmTime] 未发布的 npm 包',
-          npm,
-          '@',
-          version,
-          '发布时间和更新时间为 Null'
-        );
+        // 这种情况是该 npm 包名一次都没有发布过
+        console.error('[ERR checkAndQueryNpmTime] 未发布的 npm 包', npm);
       } else {
-        console.error('[WARN queryNpmTime] failed request with err');
+        console.error(`[ERR checkAndQueryNpmTime] ${err.message}`, err);
       }
-      throw err;
+      process.exit(1);
     });
 }
-exports.queryNpmTime = queryNpmTime;
+exports.checkAndQueryNpmTime = checkAndQueryNpmTime;
