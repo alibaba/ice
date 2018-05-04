@@ -1,5 +1,5 @@
 {
-  "name": "@icedesign/scaffold-ice-website-homepage",
+  "name": "@icedesign/website-homepage-scaffold",
   "version": "1.0.0",
   "description":
     "该模板适用于产品类的首页介绍，默认内置一个页面和五个不同风格的展示区块",
@@ -47,8 +47,7 @@
   "scaffoldConfig": {
     "name": "ice-website-homepage",
     "title": "ICE Website HomePage",
-    "snapshot":
+    "screenshot":
       "https://img.alicdn.com/tfs/TB1lvtMpQOWBuNjSsppXXXPgpXa-2840-1596.png"
-  },
-  "title": "ice-website-homepage"
+  }
 }
