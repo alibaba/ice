@@ -3,6 +3,7 @@
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
 import HeaderAsideFooterResponsiveLayout from './layouts/HeaderAsideFooterResponsiveLayout';
+import BlankLayout from './layouts/BlankLayout';
 import Dashboard from './pages/Dashboard';
 import PostList from './pages/PostList';
 import CreatePost from './pages/CreatePost';
@@ -16,7 +17,6 @@ import EditPassword from './pages/EditPassword';
 import BasicSetting from './pages/BasicSetting';
 import NavigationSetting from './pages/NavigationSetting';
 import NotFound from './pages/NotFound';
-import BlankLayout from './layouts/BlankLayout';
 import Login from './pages/Login';
 
 const routerConfig = [

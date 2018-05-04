@@ -11,11 +11,10 @@ import Logo from './Logo';
 
 export default class Header extends PureComponent {
   render() {
-    const { width, theme, isMobile, className, style, ...others } = this.props;
+    const { width, theme, isMobile, className, style } = this.props;
 
     return (
       <Layout.Header
-        {...others}
         theme={theme}
         className={cx('ice-design-layout-header', className)}
         style={{ ...style, width }}
@@ -87,7 +86,7 @@ export default class Header extends PureComponent {
                   <br />
                   <span
                     className="user-department"
-                    style={{ fontSize: '12px' }}
+                    style={{ fontSize: '12px', color: '#999' }}
                   >
                     技术部
                   </span>
