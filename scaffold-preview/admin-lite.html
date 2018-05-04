@@ -16,7 +16,7 @@
           var _this = this;
           XMLHttpRequest.prototype.open = function() {
             var args = [].slice.call(arguments);
-            if (/^\\/mock/.test(arguments[1])) {
+            if (/^\/mock/.test(arguments[1])) {
               args[1] = '/ice' + args[1];
             }
             return rawOpen.apply(this, args);
