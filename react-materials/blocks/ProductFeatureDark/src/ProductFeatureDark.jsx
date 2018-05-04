@@ -3,29 +3,26 @@ import React, { Component } from 'react';
 export default class ProductFeatureDark extends Component {
   static displayName = 'ProductFeatureDark';
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
-      <div style={styles.wrapper}>
-        <div style={styles.feature}>
-          <div style={styles.title}>物料自定义接入</div>
-          <div style={styles.line}>
-            <div style={styles.lineHeader} />
+      <div style={styles.wrapperContainer}>
+        <div style={styles.wrapper}>
+          <div style={styles.feature}>
+            <div style={styles.title}>物料自定义接入</div>
+            <div style={styles.line}>
+              <div style={styles.lineHeader} />
+            </div>
+            <div style={styles.desc}>
+              官方提供海量的物料，覆盖多种业务场景，也支持物料自定义接入，定制物料源
+            </div>
           </div>
-          <div style={styles.desc}>
-            官方提供海量的物料，覆盖多种业务场景，也支持物料自定义接入，定制物料源
+          <div style={styles.cover}>
+            <img
+              alt="特点图"
+              style={styles.coverImage}
+              src="https://img.alicdn.com/tfs/TB1gEoLpwmTBuNjy1XbXXaMrVXa-1760-974.png"
+            />
           </div>
-        </div>
-        <div style={styles.cover}>
-          <img
-            alt="特点图"
-            style={styles.coverImage}
-            src="https://img.alicdn.com/tfs/TB1A93MpuuSBuNjy1XcXXcYjFXa-880-485.png"
-          />
         </div>
       </div>
     );
@@ -33,14 +30,19 @@ export default class ProductFeatureDark extends Component {
 }
 
 const styles = {
-  wrapper: {
-    position: 'relative',
+  wrapperContainer: {
     backgroundColor: '#f6f6f6',
     backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1d_TCpwmTBuNjy1XbXXaMrVXa-1899-500.png)',
+      'url(//img.alicdn.com/tfs/TB1P7ELpwmTBuNjy1XbXXaMrVXa-3798-1000.png)',
     backgroundSize: 'cover',
+  },
+  wrapper: {
+    position: 'relative',
+
     height: 500,
     overflow: 'hidden',
+    maxWidth: 1190,
+    margin: '0 auto',
   },
   feature: {
     paddingTop: 160,
@@ -52,7 +54,7 @@ const styles = {
     backgroundPosition: '10px 120px',
     zIndex: 2,
     top: 0,
-    right: '50%',
+    right: '70%',
     position: 'absolute',
   },
   line: {
@@ -74,13 +76,13 @@ const styles = {
   desc: {
     fontSize: 16,
     color: '#fff',
-    maxWidth: 400,
     lineHeight: '26px',
+    maxWidth: 280,
     textShadow: '0 0 1px rgba(0,0,0,0.3)',
   },
   cover: {
     position: 'absolute',
-    left: '55%',
+    left: '40%',
     bottom: 0,
     zIndex: 1,
   },

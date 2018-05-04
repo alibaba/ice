@@ -3,23 +3,9 @@ import React, { Component } from 'react';
 export default class ProductFeatureDark2 extends Component {
   static displayName = 'ProductFeatureDark2';
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
-      <div style={styles.wrapper}>
-        <div style={styles.feature}>
-          <div style={styles.title}>区块可视化组装</div>
-          <div style={styles.line}>
-            <div style={styles.lineHeader} />
-          </div>
-          <div style={styles.desc}>
-            海量物料自由搭配，轻松完成页面组合可视化操作更得心应手
-          </div>
-        </div>
+      <div style={styles.wrapperContainer}>
         <div style={styles.cover}>
           <img
             alt="特点图"
@@ -27,19 +13,36 @@ export default class ProductFeatureDark2 extends Component {
             src="//img.alicdn.com/tfs/TB1Xf7OpuuSBuNjy1XcXXcYjFXa-2334-1092.png"
           />
         </div>
+        <div style={styles.wrapper}>
+          <div style={styles.feature}>
+            <div style={styles.title}>区块可视化组装</div>
+            <div style={styles.line}>
+              <div style={styles.lineHeader} />
+            </div>
+            <div style={styles.desc}>
+              海量物料自由搭配，轻松完成页面组合可视化操作更得心应手
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 const styles = {
-  wrapper: {
+  wrapperContainer: {
     position: 'relative',
+    height: 500,
     backgroundColor: '#f6f6f6',
     backgroundImage:
       'url(//img.alicdn.com/tfs/TB1_E.OpuuSBuNjy1XcXXcYjFXa-3800-1000.png)',
     backgroundSize: 'cover',
+  },
+  wrapper: {
+    position: 'relative',
     height: 500,
+    maxWidth: 1190,
+    margin: '0 auto',
     overflowX: 'hidden',
   },
   feature: {
