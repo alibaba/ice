@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "not-permission",
-    "snapshot": "https://img.alicdn.com/tfs/TB1XvlnjtfJ8KJjy0FeXXXKEXXa-1900-1072.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1XvlnjtfJ8KJjy0FeXXXKEXXa-1900-1072.png",
     "themePackage": "@icedesign/skin",
     "title": "无权限提示",
     "categories": [

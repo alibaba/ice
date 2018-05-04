@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "feed-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1IbnkbmBYBeNjy0FeXXbnmFXa-1910-998.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1IbnkbmBYBeNjy0FeXXbnmFXa-1910-998.png",
     "themePackage": "@icedesign/skin",
     "title": "Feed 消息列表",
     "categories": [

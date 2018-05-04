@@ -37,7 +37,7 @@
   },
   "blockConfig": {
     "name": "time-filter-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB153PlcxGYBuNjy0FnXXX5lpXa-2354-1000.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB153PlcxGYBuNjy0FnXXX5lpXa-2354-1000.png",
     "themePackage": "@icedesign/skin",
     "title": "时间筛选表格",
     "categories": [

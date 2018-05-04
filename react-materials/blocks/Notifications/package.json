@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "notifications",
-    "snapshot":
+    "screenshot":
       "https://img.alicdn.com/tfs/TB14kHgm1uSBuNjSsplXXbe8pXa-2344-570.png",
     "title": "消息提醒",
     "categories": ["信息展示"],

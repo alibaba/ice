@@ -43,7 +43,7 @@
   },
   "blockConfig": {
     "name": "normal-footer",
-    "snapshot": "https://img.alicdn.com/tfs/TB1xQ1rov5TBuNjSspcXXbnGFXa-2400-328.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1xQ1rov5TBuNjSspcXXbnGFXa-2400-328.png",
     "title": "普通页脚",
     "categories": ["页脚"],
     "themePackage": "@icedesign/skin"

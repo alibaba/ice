@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "terms-info",
-    "snapshot": "https://img.alicdn.com/tfs/TB1aL6ZfiqAXuNjy1XdXXaYcVXa-948-735.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1aL6ZfiqAXuNjy1XdXXaYcVXa-948-735.png",
     "themePackage": "@icedesign/skin",
     "title": "协议信息展示",
     "categories": [

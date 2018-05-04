@@ -44,7 +44,7 @@
   },
   "blockConfig": {
     "name": "user-stat-chart",
-    "snapshot": "https://img.alicdn.com/tfs/TB1.q8_bDtYBeNjy1XdXXXXyVXa-1832-852.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1.q8_bDtYBeNjy1XdXXXXyVXa-1832-852.png",
     "title": "用户统计数据图表",
     "categories": [
       "图表",

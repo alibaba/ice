@@ -44,7 +44,7 @@
   },
   "blockConfig": {
     "name": "settings-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB1SUbMdKuSBuNjy1XcXXcYjFXa-2340-1462.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1SUbMdKuSBuNjy1XcXXcYjFXa-2340-1462.png",
     "title": "通用的基本设置表单",
     "categories": [
       "表单"

@@ -44,7 +44,7 @@
   },
   "blockConfig": {
     "name": "sales-stat-chart",
-    "snapshot": "https://img.alicdn.com/tfs/TB1VH7rbuuSBuNjy1XcXXcYjFXa-2812-980.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1VH7rbuuSBuNjy1XcXXcYjFXa-2812-980.png",
     "title": "销售数据图表",
     "categories": [
       "图表",
