@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://g.alicdn.com/ice-assets/ice-design/admin-lite/index.css" rel="stylesheet" />
+  <title>ADMIN LITE</title>
+</head>
+
+<body>
+<script>
+        (function() {
+          var rawOpen = XMLHttpRequest.prototype.open;
+          var _this = this;
+          XMLHttpRequest.prototype.open = function() {
+            var args = [].slice.call(arguments);
+            if (/^\\/mock/.test(arguments[1])) {
+              args[1] = '/ice' + args[1];
+            }
+            return rawOpen.apply(this, args);
+          };
+        })();
+      </script>
+  <noscript>
+    <strong>We're sorry but app2 doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <script src="https://g.alicdn.com/ice-assets/ice-design/admin-lite/index.js"></script>
+  <!-- built files will be auto injected -->
+</body>
+
+</html>
