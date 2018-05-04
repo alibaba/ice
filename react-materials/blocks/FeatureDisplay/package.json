@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "feature-display",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1StEQaqmWBuNjy1XaXXXCbXXa-1756-1464.png",
+    "screenshot": "https://gw.alicdn.com/tfs/TB1StEQaqmWBuNjy1XaXXXCbXXa-1756-1464.png",
     "themePackage": "@icedesign/skin",
     "title": "功能特点展示",
     "categories": [

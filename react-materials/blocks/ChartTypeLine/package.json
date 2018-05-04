@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-type-line",
-    "snapshot": "https://img.alicdn.com/tfs/TB1Of87isLJ8KJjy0FnXXcFDpXa-1906-1044.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1Of87isLJ8KJjy0FnXXcFDpXa-1906-1044.png",
     "themePackage": "@icedesign/skin",
     "title": "折线图",
     "categories": [

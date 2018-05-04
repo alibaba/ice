@@ -44,7 +44,7 @@
   },
   "blockConfig": {
     "name": "user-login",
-    "snapshot": "https://img.alicdn.com/tfs/TB1WlGbXMmTBuNjy1XbXXaMrVXa-2868-1602.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1WlGbXMmTBuNjy1XbXXaMrVXa-2868-1602.png",
     "title": "登录页",
     "categories": [
       "登录页"

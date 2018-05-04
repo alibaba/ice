@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "user-traffic-stastistics",
-    "snapshot": "https://img.alicdn.com/tfs/TB1g5ygbTtYBeNjy1XdXXXXyVXa-2820-760.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1g5ygbTtYBeNjy1XdXXXXyVXa-2820-760.png",
     "themePackage": "@icedesign/skin",
     "title": "用户浏览数据分析",
     "categories": [

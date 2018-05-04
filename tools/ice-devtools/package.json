@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "async": "^2.6.0",
+    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-component": "^1.1.0",

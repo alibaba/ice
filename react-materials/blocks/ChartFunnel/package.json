@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-funnel",
-    "snapshot": "https://img.alicdn.com/tfs/TB14y8xiv6H8KJjy0FjXXaXepXa-1888-1038.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB14y8xiv6H8KJjy0FjXXaXepXa-1888-1038.png",
     "themePackage": "@icedesign/skin",
     "title": "漏斗图",
     "categories": [
