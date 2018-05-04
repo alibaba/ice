@@ -47,8 +47,6 @@ const recursiveRouterConfig = (config = []) => {
 
 const routes = recursiveRouterConfig(routerConfig);
 
-console.log(routes);
-
 Vue.use(Router);
 
 export default new Router({
