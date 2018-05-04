@@ -38,7 +38,11 @@ function checkAndQueryNpmTime(
       if (!data.time) {
         throw new Error('time 字段不存在');
       }
-      if (!data.version || typeof data.versions[version] === 'undefined') {
+      if (
+        !data.version ||
+        typeof data.versions[data['dist-tags'][version] || version] ===
+          'undefined'
+      ) {
         throw new Error(`${npm}@${version} 未发布! 禁止提交!`);
       }
       return data.time;
