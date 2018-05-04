@@ -9,7 +9,7 @@ const os = require('os');
 const uppercamelcase = require('uppercamelcase');
 const rp = require('request-promise');
 const depAnalyze = require('../shared/dep-analyze');
-const { queryNpmTime } = require('../shared/utils');
+const { checkAndQueryNpmTime } = require('../shared/utils');
 
 function generatePartciple(payload, source) {
   if (process.env.PARTICIPLE) {
@@ -137,7 +137,7 @@ function generateBlocks(files, SPACE, type, done) {
       if (item.source.type !== 'npm') {
         return Promise.resolve();
       } else {
-        return queryNpmTime(item.source.npm)
+        return checkAndQueryNpmTime(item.source.npm, item.source.version)
           .then(({ created, modified }) => {
             item.publishTime = created;
             item.updateTime = modified;
@@ -188,7 +188,7 @@ function generateScaffolds(files, SPACE, done) {
     };
 
     tasks.push(
-      queryNpmTime(pkg.name)
+      checkAndQueryNpmTime(pkg.name, pkg.version)
         .then(({ created, modified }) => {
           payload.publishTime = created;
           payload.updateTime = modified;
