@@ -1,3 +1,3 @@
-import SoftwareDownload from './SoftwareDownload';
+import ReleaseIntro from './ReleaseIntro';
 
-export default SoftwareDownload;
+export default ReleaseIntro;
