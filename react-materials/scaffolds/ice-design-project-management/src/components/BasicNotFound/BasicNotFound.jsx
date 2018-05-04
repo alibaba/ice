@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import IceContainer from '@icedesign/container';
 
 export default class BasicNotFound extends Component {
   render() {
     return (
-      <div className="basic-not-found">
+      <div className="basic-not-found" style={styles.notFoundContainer}>
         <IceContainer>
           <div style={styles.notfoundContent}>
             <img
@@ -27,6 +27,10 @@ export default class BasicNotFound extends Component {
 }
 
 const styles = {
+  notFoundContainer: {
+    minHeight: '100vh',
+    background: '#fff',
+  },
   notfoundContent: {
     display: 'flex',
     justifyContent: 'center',
