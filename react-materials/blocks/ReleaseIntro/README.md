@@ -1,6 +1,6 @@
-# software-download
+# release-intro
 
-简介：软件下载
+简介：软件发布介绍页
 
 根据平台信息，展示对应软件下载，以及软件介绍等。
 
