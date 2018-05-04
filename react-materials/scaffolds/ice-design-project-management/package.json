@@ -1,5 +1,5 @@
 {
-  "name": "@icedesign/scaffold-project-management",
+  "name": "@icedesign/project-management-scaffold",
   "version": "1.0.0",
   "description":
     "该模板适用于项目类管理后台，采用三栏布局方式，模板内置了类似 trello 任务管理的卡片区块",
@@ -51,8 +51,7 @@
   "scaffoldConfig": {
     "name": "ice-design-project-management",
     "title": "ICE Design Project Management",
-    "snapshot":
+    "screenshot":
       "https://img.alicdn.com/tfs/TB1PIDhpntYBeNjy1XdXXXXyVXa-2840-1596.png"
-  },
-  "title": "ice-design-project-management"
+  }
 }
