@@ -1,5 +1,5 @@
 {
-  "name": "@react-materials/software-download-block",
+  "name": "@icedesign/software-download-block",
   "version": "1.0.0",
   "description": "根据平台信息，展示对应软件下载，以及软件介绍等。",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
