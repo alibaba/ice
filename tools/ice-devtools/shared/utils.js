@@ -32,17 +32,19 @@ function checkAndQueryNpmTime(
   version = 'latest',
   registry = 'http://registry.npmjs.com'
 ) {
-  return axios(`${registry}/${npm.replace(/\//g, '%2f')}/`)
+  const packageRegistryUrl = `${registry}/${npm.replace(/\//g, '%2f')}/`;
+  return axios(packageRegistryUrl)
     .then((response) => response.data)
     .then((data) => {
       if (!data.time) {
         throw new Error('time 字段不存在');
       }
       if (
-        !data.version ||
+        !data.versions ||
         typeof data.versions[data['dist-tags'][version] || version] ===
           'undefined'
       ) {
+        console.log(packageRegistryUrl);
         throw new Error(`${npm}@${version} 未发布! 禁止提交!`);
       }
       return data.time;
