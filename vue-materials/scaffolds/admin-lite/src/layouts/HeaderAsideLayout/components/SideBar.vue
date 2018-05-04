@@ -11,7 +11,7 @@
       text-color="hsla(0, 0%, 100%, .65)"
       active-text-color="#409EFF"
     >
-      <template v-for="item in menuConfig">
+      <template v-for="item in asideMenuConfig">
         <router-link v-if="!item.children" :to="item.path" :key="item.name">
           <el-menu-item :index="item.path">
             <i v-if="item.icon" :class="item.icon"></i>
@@ -40,7 +40,7 @@
 
 <script>
 import ScrollBar from './ScrollBar';
-import menuConfig from '../../../menuConfig';
+import { asideMenuConfig } from '../../../menuConfig';
 
 export default {
   components: { ScrollBar },
@@ -48,7 +48,7 @@ export default {
   props: {},
   data() {
     return {
-      menuConfig,
+      asideMenuConfig,
     };
   },
 };
