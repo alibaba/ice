@@ -14,8 +14,8 @@ const descriptor = {
   },
 };
 
-export default class SoftwareDownload extends Component {
-  static displayName = 'SoftwareDownload';
+export default class ReleaseIntro extends Component {
+  static displayName = 'ReleaseIntro';
 
   constructor(props) {
     super(props);
