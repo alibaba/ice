@@ -5,10 +5,7 @@ language: node_js
 node_js:
   - "8"
 
-after_install:
-  - npm i ice-devtools -g
-
 script:
   - npm run lint:nofix
-  - npm run generate # 生成 database 数据
+  - ice-devtools --version && npm run generate # 生成 database 数据
   - npm run sync # 同步到 ali-oss
