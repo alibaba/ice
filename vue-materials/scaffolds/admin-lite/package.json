@@ -1,6 +1,6 @@
 {
   "name": "@vue-materials/admin-lite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description":
     "该模板适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示。",
   "author": "ice-admin@alibaba-inc.com",
