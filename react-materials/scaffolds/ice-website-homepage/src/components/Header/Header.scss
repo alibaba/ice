@@ -78,3 +78,16 @@
     }
   }
 }
+
+@media (max-width: 750px) {
+  .header-container {
+    .header-search-input {
+      display: none;
+    }
+    .header-navbar {
+      .ice-menu .ice-menu-item {
+        padding: 0 5px;
+      }
+    }
+  }
+}
