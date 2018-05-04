@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "failure-detail",
-    "snapshot": "https://gw.alicdn.com/tfs/TB15u0eisLJ8KJjy0FnXXcFDpXa-1326-824.png",
+    "screenshot": "https://gw.alicdn.com/tfs/TB15u0eisLJ8KJjy0FnXXcFDpXa-1326-824.png",
     "themePackage": "@icedesign/skin",
     "title": "提交失败详情展示",
     "categories": [

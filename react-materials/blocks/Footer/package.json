@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "footer",
-    "snapshot": "https://img.alicdn.com/tfs/TB1if0vg5qAXuNjy1XdXXaYcVXa-2516-356.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1if0vg5qAXuNjy1XdXXaYcVXa-2516-356.png",
     "themePackage": "@icedesign/skin",
     "title": "页脚",
     "categories": [

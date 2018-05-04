@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "testimonial",
-    "snapshot": "https://img.alicdn.com/tfs/TB1W6KmaTtYBeNjy1XdXXXXyVXa-2402-1110.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1W6KmaTtYBeNjy1XdXXXXyVXa-2402-1110.png",
     "themePackage": "@icedesign/skin",
     "title": "客户评价展示",
     "categories": [

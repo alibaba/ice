@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "price-card",
-    "snapshot": "https://img.alicdn.com/tfs/TB1Mn6dcuuSBuNjy1XcXXcYjFXa-2836-1006.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1Mn6dcuuSBuNjy1XcXXcYjFXa-2836-1006.png",
     "themePackage": "@icedesign/skin",
     "title": "价格展示",
     "categories": [

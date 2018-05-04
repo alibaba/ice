@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "picture-text-list",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1ZbgJilTH8KJjy0FiXXcRsXXa-2026-1556.png",
+    "screenshot": "https://gw.alicdn.com/tfs/TB1ZbgJilTH8KJjy0FiXXcRsXXa-2026-1556.png",
     "themePackage": "@icedesign/skin",
     "title": "图文列表",
     "categories": [

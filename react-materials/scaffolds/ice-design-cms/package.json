@@ -53,7 +53,7 @@
   "scaffoldConfig": {
     "name": "ice-design-cms",
     "title": "ICE Design CMS",
-    "snapshot": "https://img.alicdn.com/tfs/TB1ai53mqmWBuNjy1XaXXXCbXXa-1920-1080.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1ai53mqmWBuNjy1XaXXXCbXXa-1920-1080.png"
   },
   "title": "ice_design_cms"
 }
