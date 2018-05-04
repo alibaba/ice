@@ -3,17 +3,33 @@
 
 <head>
   <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+  <link rel="icon" type="image/png" href="https://img.alicdn.com/tps/TB1kBU7NpXXXXXLXXXXXXXXXXXX-160-160.png">
   <meta name="viewport" content="width=device-width">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <link rel="stylesheet" type="text/css" href="//g.alicdn.com/ice-assets/ice-design/ice-website-homepage/index.css">
   <title>ICE Website Homepage</title>
-</head>
+<link rel="stylesheet" href="https://g.alicdn.com/ice-assets/ice-design/ice-website-homepage/index.css" /></head>
 
 <body>
   <div id="ice-container"></div>
-  <script src="//g.alicdn.com/code/npm/??react/16.2.0/umd/react.development.js,react-dom/16.2.0/umd/react-dom.development.js"></script>
-  <script type="text/javascript" charset="utf-8" src="//g.alicdn.com/ice-assets/ice-design/ice-website-homepage/index.js" id="ice-script"></script>
-  <script async src="https://s19.cnzz.com/z_stat.php?id=1272019848&web_id=1272019848" language="JavaScript"></script>
-</body>
+  <% if (NODE_ENV === 'production') { %>
+  <script src="https://g.alicdn.com/code/npm/??react/16.2.0/umd/react.production.min.js,react-dom/16.2.0/umd/react-dom.production.min.js"></script>
+  <% } else { %>
+  <script src="https://g.alicdn.com/code/npm/??react/16.2.0/umd/react.development.js,react-dom/16.2.0/umd/react-dom.development.js"></script>
+  <% } %>
+
+      <script>
+        (function() {
+          var rawOpen = XMLHttpRequest.prototype.open;
+          var _this = this;
+          XMLHttpRequest.prototype.open = function() {
+            var args = [].slice.call(arguments);
+            if (/^\/mock/.test(arguments[1])) {
+              args[1] = '/ice' + args[1];
+            }
+            return rawOpen.apply(this, args);
+          };
+        })();
+      </script>
+      <script src="https://g.alicdn.com/ice-assets/ice-design/ice-website-homepage/index.js"></script></body>
 
 </html>
