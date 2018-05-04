@@ -1,7 +1,7 @@
 {
   "name": "@vue-materials/basic-table-block",
   "version": "1.0.0",
-  "description": "element基础表格",
+  "description": "基础表格",
   "author": "ice-admin@alibaba-inc.com",
   "files": [
     "src/",
@@ -30,6 +30,6 @@
     "categories": [
       "表格"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1WwpLnStYBeNjSspaXXaOOFXa-1960-976.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1BvzBpGmWBuNjy1XaXXXCbXXa-2004-1018.png"
   }
 }
