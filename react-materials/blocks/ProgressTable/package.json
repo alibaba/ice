@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "progress-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB1MSwOih6I8KJjy0FgXXXXzVXa-1828-1206.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1MSwOih6I8KJjy0FgXXXXzVXa-1828-1206.png",
     "themePackage": "@icedesign/skin",
     "title": "进度条表格",
     "categories": [

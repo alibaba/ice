@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-radar",
-    "snapshot": "https://img.alicdn.com/tfs/TB1wNkNilfH8KJjy1XbXXbLdXXa-1876-958.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1wNkNilfH8KJjy1XbXXbLdXXa-1876-958.png",
     "themePackage": "@icedesign/skin",
     "title": "雷达图",
     "categories": [

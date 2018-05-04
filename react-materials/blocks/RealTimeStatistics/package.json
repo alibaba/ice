@@ -43,7 +43,7 @@
   },
   "blockConfig": {
     "name": "real-time-statistics",
-    "snapshot": "https://img.alicdn.com/tfs/TB1TQDxchGYBuNjy0FnXXX5lpXa-2388-324.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1TQDxchGYBuNjy0FnXXX5lpXa-2388-324.png",
     "title": "实时数据统计展示",
     "categories": [
       "数据展示"

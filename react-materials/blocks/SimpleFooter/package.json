@@ -43,7 +43,7 @@
   },
   "blockConfig": {
     "name": "simple-footer",
-    "snapshot": "https://img.alicdn.com/tfs/TB1rnmNouuSBuNjy1XcXXcYjFXa-2390-170.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1rnmNouuSBuNjy1XcXXcYjFXa-2390-170.png",
     "title": "简单页脚",
     "categories": ["页脚"],
     "themePackage": "@icedesign/skin"

@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "basic-detail-info",
-    "snapshot": "https://gw.alicdn.com/tfs/TB1JD2VifDH8KJjy1XcXXcpdXXa-1880-1004.png",
+    "screenshot": "https://gw.alicdn.com/tfs/TB1JD2VifDH8KJjy1XcXXcpdXXa-1880-1004.png",
     "themePackage": "@icedesign/skin",
     "title": "基础详情信息展示",
     "categories": [

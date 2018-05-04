@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "basic-not-found",
-    "snapshot": "https://img.alicdn.com/tfs/TB1.HyVgyqAXuNjy1XdXXaYcVXa-1914-1066.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1.HyVgyqAXuNjy1XdXXaYcVXa-1914-1066.png",
     "themePackage": "@icedesign/skin",
     "title": "404 报错提示",
     "categories": [

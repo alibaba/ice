@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "forget-password-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB11ywwc_tYBeNjy1XdXXXXyVXa-2322-398.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB11ywwc_tYBeNjy1XdXXXXyVXa-2322-398.png",
     "themePackage": "@icedesign/skin",
     "title": "忘记密码",
     "categories": [

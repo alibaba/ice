@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "signup-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB1wHA9ib_I8KJjy1XaXXbsxpXa-616-612.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1wHA9ib_I8KJjy1XaXXbsxpXa-616-612.png",
     "themePackage": "@icedesign/skin",
     "title": "登录表单",
     "categories": [

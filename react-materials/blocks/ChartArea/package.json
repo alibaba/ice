@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-area",
-    "snapshot": "https://img.alicdn.com/tfs/TB1tF0DivDH8KJjy1XcXXcpdXXa-1910-1040.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1tF0DivDH8KJjy1XcXXcpdXXa-1910-1040.png",
     "themePackage": "@icedesign/skin",
     "title": "面积图",
     "categories": [
