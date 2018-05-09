@@ -14,7 +14,7 @@ $ npm i ice-devtools -g
 
 // clone 官方仓库
 $ git clone git@github.com:alibaba/ice.git
-$ npm install
+$ npm run bootstrap
 $ npm run start
 ```
 
