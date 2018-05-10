@@ -44,7 +44,7 @@
   },
   "blockConfig": {
     "name": "grouped-form",
-    "snapshot": "https://img.alicdn.com/tfs/TB1faTKg1OSBuNjy0FdXXbDnVXa-2306-1156.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1faTKg1OSBuNjy0FdXXbDnVXa-2306-1156.png",
     "title": "分组显示的表单",
     "categories": [
       "表单"

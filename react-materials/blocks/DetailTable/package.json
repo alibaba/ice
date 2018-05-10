@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "detail-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB1hplfjr_I8KJjy1XaXXbsxpXa-1886-700.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1hplfjr_I8KJjy1XaXXbsxpXa-1886-700.png",
     "themePackage": "@icedesign/skin",
     "title": "详情信息表格",
     "categories": [

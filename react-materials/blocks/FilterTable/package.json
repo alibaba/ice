@@ -38,7 +38,7 @@
   },
   "blockConfig": {
     "name": "filter-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB1PaawcntYBeNjy1XdXXXXyVXa-2370-1528.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1PaawcntYBeNjy1XdXXXXyVXa-2370-1528.png",
     "themePackage": "@icedesign/skin",
     "title": "支持筛选的表格",
     "categories": [

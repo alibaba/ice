@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "article-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1PXQAifDH8KJjy1XcXXcpdXXa-1906-996.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1PXQAifDH8KJjy1XcXXcpdXXa-1906-996.png",
     "themePackage": "@icedesign/skin",
     "title": "文章列表",
     "categories": [

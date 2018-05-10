@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "text-search-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1mhxFbkyWBuNjy0FpXXassXXa-1912-1376.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1mhxFbkyWBuNjy0FpXXassXXa-1912-1376.png",
     "themePackage": "@icedesign/skin",
     "title": "文字搜索列表",
     "categories": [

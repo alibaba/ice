@@ -49,7 +49,7 @@
   },
   "blockConfig": {
     "name": "content-editor",
-    "snapshot": "https://img.alicdn.com/tfs/TB199TEXuuSBuNjy1XcXXcYjFXa-1906-1550.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB199TEXuuSBuNjy1XcXXcYjFXa-1906-1550.png",
     "title": "内容编辑器",
     "categories": [
       "表单"

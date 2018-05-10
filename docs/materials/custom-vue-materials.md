@@ -12,7 +12,7 @@ category: 物料
 
 ## 安装物料开发工具
 
-执行 `npm install ice-devtools@beta -g` 
+执行 `npm install ice-devtools@beta -g`
 
 ## 初始 Vue 物料项目
 
@@ -174,7 +174,7 @@ export default ExampleBlock;
   },
   "blockConfig": {            // 区块的相关配置，用于 Iceworks 和站点的展示
     "name": "example-block",  // 名称
-    "snapshot": "",           // 截图（如果没有截图则不在 Iceworks 中显示图片）
+    "screenshot": "",         // 截图（如果没有截图则不在 Iceworks 中显示图片）
     "title": "示例区块",       // 标题
     "categories": "[]"        // 分类
   }
@@ -260,10 +260,10 @@ Iceworks 对于脚手架会将其直接下载解压到目录中。
 
 当物料开发完成时，发布需要几个步骤：
 
-1. 清理无用代码。默认生成的 example-block 等需要删除，因为它们的 package name 已经被占用无法发布。
-2. 将物料以 npm 包的形式发布。Iceworks 将通过 npm 下载物料解压使用。
-3. 生成物料源 db.json。根据你当前的物料生成 db 的数据，提供给 iceworks 使用。
-4. 部署 db.json 到 http 静态服务器，将 url 发送给使用者填入 iceworks 即可开始使用。
+1.  清理无用代码。默认生成的 example-block 等需要删除，因为它们的 package name 已经被占用无法发布。
+2.  将物料以 npm 包的形式发布。Iceworks 将通过 npm 下载物料解压使用。
+3.  生成物料源 db.json。根据你当前的物料生成 db 的数据，提供给 iceworks 使用。
+4.  部署 db.json 到 http 静态服务器，将 url 发送给使用者填入 iceworks 即可开始使用。
 
 > 建议：模板 + 布局 + 模块 为一套完整的工程物料，建议发布之前保证每一类都有一个物料。
 
@@ -296,6 +296,7 @@ $ ice-devtools generate          // 生成 DB 数据
 创建一个 http 静态服务器托管这个 db.json。你可以使用 https://browsersync.io/ 或者 python SimpleHTTPServer 等启动静态服务，并可以通过类似 `http://localhost:3000/vue-materials.json` 这样的方式获取到物料数据。
 
 至此，物料源开发完成，可以在 Iceworks 中试用。
+
 ## 接入 Iceworks
 
 目前还在 beta 版本，支持多物料源的 Iceworks 并没有正式发布，详情请参见群里。

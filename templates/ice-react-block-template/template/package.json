@@ -1,12 +1,19 @@
 {
-  "name": "{{name}}",
+  "name": "@react-materials/{{name}}-block",
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
-  "files": [
-    "src/",
-    "lib/"
-  ],
+  "files": ["src/","lib/"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": ["ice","react","block"],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
   "dependencies": {
     "react": "^16.2.0",
     "prop-types": "^15.5.8"
@@ -19,6 +26,6 @@
         "{{@key}}"{{#if @last}} {{else}},{{/if}}
       {{/each}}
     ],
-    "snapshot": ""
+    "screenshot": ""
   }
 }

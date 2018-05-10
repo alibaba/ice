@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-facet",
-    "snapshot": "https://img.alicdn.com/tfs/TB1D80FivDH8KJjy1XcXXcpdXXa-1988-1236.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1D80FivDH8KJjy1XcXXcpdXXa-1988-1236.png",
     "themePackage": "@icedesign/skin",
     "title": "分面图",
     "categories": [

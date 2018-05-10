@@ -1,0 +1,46 @@
+{
+  "name": "@icedesign/custom-bar-chart-block",
+  "version": "0.1.1",
+  "description": "",
+  "files": ["src/", "demo/", "lib/", "mock/"],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": ["ice", "ice-block"],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "scripts": {
+    "start": "ice block dev",
+    "prepublish": "ice block build"
+  },
+  "dependencies": {
+    "@antv/data-set": "^0.8.7",
+    "@icedesign/base": "^0.1.0",
+    "@icedesign/container": "^0.1.1",
+    "bizcharts": "^3.1.5",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@icedesign/demo-layout": "^0.1.2",
+    "@icedesign/skin": "latest",
+    "react": "*",
+    "react-dom": "*",
+    "@icedesign/scripts": "^0.1.9"
+  },
+  "blockConfig": {
+    "name": "custom-bar-chart",
+    "screenshot":
+      "https://img.alicdn.com/tfs/TB1WcSvorGYBuNjy0FoXXciBFXa-2402-800.png",
+    "title": "自定义柱状图",
+    "categories": ["图表"],
+    "themePackage": "@icedesign/skin"
+  }
+}
