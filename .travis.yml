@@ -1,0 +1,11 @@
+sudo: required
+
+language: node_js
+
+node_js:
+  - "8"
+
+script:
+  - npm run lint:nofix
+  - ice-devtools --version && npm run generate # 生成 database 数据
+  - npm run sync # 同步到 ali-oss

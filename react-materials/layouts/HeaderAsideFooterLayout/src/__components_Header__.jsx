@@ -5,17 +5,16 @@ import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
 import FoundationSymbol from 'foundation-symbol';
 import cx from 'classnames';
-import { Link } from 'react-router';
-import { headerNavs } from './__navs__';
+import { Link } from 'react-router-dom';
+import { headerMenuConfig } from './__menuConfig__';
 import Logo from './__components_Logo__';
 
 export default class Header extends PureComponent {
   render() {
-    const { width, theme, isMobile, className, style, ...others } = this.props;
+    const { width, theme, isMobile, className, style } = this.props;
 
     return (
       <Layout.Header
-        {...others}
         theme={theme}
         className={cx('ice-design-layout-header', className)}
         style={{ ...style, width }}
@@ -26,26 +25,35 @@ export default class Header extends PureComponent {
           style={{ display: 'flex' }}
         >
           {/* Header 菜单项 begin */}
-          {headerNavs && headerNavs.length > 0 ? (
+          {headerMenuConfig && headerMenuConfig.length > 0 ? (
             <Menu mode="horizontal" selectedKeys={[]}>
-              {headerNavs.map((nav, idx) => {
+              {headerMenuConfig.map((nav, idx) => {
                 const linkProps = {};
                 if (nav.newWindow) {
-                  linkProps.href = nav.to;
+                  linkProps.href = nav.path;
                   linkProps.target = '_blank';
                 } else if (nav.external) {
-                  linkProps.href = nav.to;
+                  linkProps.href = nav.path;
                 } else {
-                  linkProps.to = nav.to;
+                  linkProps.to = nav.path;
                 }
                 return (
                   <Menu.Item key={idx}>
-                    <Link {...linkProps}>
-                      {nav.icon ? (
-                        <FoundationSymbol type={nav.icon} size="small" />
-                      ) : null}
-                      {!isMobile ? nav.text : null}
-                    </Link>
+                    {linkProps.to ? (
+                      <Link {...linkProps}>
+                        {nav.icon ? (
+                          <FoundationSymbol type={nav.icon} size="small" />
+                        ) : null}
+                        {!isMobile ? nav.name : null}
+                      </Link>
+                    ) : (
+                      <a {...linkProps}>
+                        {nav.icon ? (
+                          <FoundationSymbol type={nav.icon} size="small" />
+                        ) : null}
+                        {!isMobile ? nav.name : null}
+                      </a>
+                    )}
                   </Menu.Item>
                 );
               })}

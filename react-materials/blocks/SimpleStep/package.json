@@ -43,7 +43,7 @@
   },
   "blockConfig": {
     "name": "simple-step",
-    "snapshot": "https://img.alicdn.com/tfs/TB1pzPXcv9TBuNjy0FcXXbeiFXa-2350-464.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1pzPXcv9TBuNjy0FcXXbeiFXa-2350-464.png",
     "title": "步骤条",
     "categories": [
       "信息展示"

@@ -43,7 +43,7 @@
   },
   "blockConfig": {
     "name": "intro-with-background",
-    "snapshot": "https://img.alicdn.com/tfs/TB1yzD5iH1YBuNjSszhXXcUsFXa-2490-1240.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1yzD5iH1YBuNjSszhXXcUsFXa-2490-1240.png",
     "title": "附带背景图片的信息介绍",
     "categories": ["信息展示"
     ],

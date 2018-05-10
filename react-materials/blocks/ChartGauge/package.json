@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-gauge",
-    "snapshot": "https://img.alicdn.com/tfs/TB1KXNyiv6H8KJjy0FjXXaXepXa-1908-1040.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1KXNyiv6H8KJjy0FjXXaXepXa-1908-1040.png",
     "themePackage": "@icedesign/skin",
     "title": "仪表图",
     "categories": [

@@ -36,7 +36,7 @@
   },
   "blockConfig": {
     "name": "chart-bar",
-    "snapshot": "https://img.alicdn.com/tfs/TB1IdeWf5qAXuNjy1XdXXaYcVXa-1900-1042.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1IdeWf5qAXuNjy1XdXXaYcVXa-1900-1042.png",
     "themePackage": "@icedesign/skin",
     "title": "柱状图",
     "categories": [

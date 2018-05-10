@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "entry-card",
-    "snapshot": "https://img.alicdn.com/tfs/TB1RSAIif6H8KJjy0FjXXaXepXa-1102-262.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1RSAIif6H8KJjy0FjXXaXepXa-1102-262.png",
     "themePackage": "@icedesign/skin",
     "title": "入口列表卡片",
     "categories": [

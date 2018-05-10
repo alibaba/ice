@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "statistical-card",
-    "snapshot": "https://img.alicdn.com/tfs/TB1MLLbilfH8KJjy1XbXXbLdXXa-1910-210.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1MLLbilfH8KJjy1XbXXbLdXXa-1910-210.png",
     "themePackage": "@icedesign/skin",
     "title": "统计型卡片",
     "categories": [

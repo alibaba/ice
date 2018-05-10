@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "collapse-card",
-    "snapshot": "https://img.alicdn.com/tfs/TB1dcIQckyWBuNjy0FpXXassXXa-2350-560.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1dcIQckyWBuNjy0FpXXassXXa-2350-560.png",
     "themePackage": "@icedesign/skin",
     "title": "折叠型卡片的信息展示",
     "categories": [

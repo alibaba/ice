@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "data-display",
-    "snapshot": "https://img.alicdn.com/tfs/TB1IKT9jfDH8KJjy1XcXXcpdXXa-1892-324.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1IKT9jfDH8KJjy1XcXXcpdXXa-1892-324.png",
     "themePackage": "@icedesign/skin",
     "title": "数据展示",
     "categories": [
