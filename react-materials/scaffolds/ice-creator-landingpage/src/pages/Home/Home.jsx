@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import PlatformIntro from './components/PlatformIntro';
-import PlatformIntro2 from './components/PlatformIntro2';
+import PlatformToolsIntro from './components/PlatformToolsIntro';
 import PlatformJoinus from './components/PlatformJoinus';
 import PlatformLanding from './components/PlatformLanding';
+import PlatformBlackIntro from './components/PlatformBlackIntro';
 
 export default class Home extends Component {
   static displayName = 'Home';
@@ -19,8 +20,9 @@ export default class Home extends Component {
       <div className="home-page" style={{ background: '#fff' }}>
         <Header />
         <PlatformLanding />
-        <PlatformIntro2 />
+        <PlatformToolsIntro />
         <PlatformIntro />
+        <PlatformBlackIntro />
         <PlatformJoinus />
         <Footer />
       </div>
