@@ -6,7 +6,7 @@ category: 物料
 
 ## 飞冰设计思路
 
-在了解飞冰物料数据规范之前，我们先来大概了解一下飞冰的设计思路；在飞冰使用过程中，大多数开发者只需要下载 GUI 工具 Iceworks，然后按照文档教程进行项目开发即可。目前飞冰提供的物料数据源有 React 和 Vue 版本，然而，在飞冰开发群里常见的问题是有没有计划支持 AngularJs 版本，有没有移动端的支持计划等等。实际上，对飞冰来说，本质上一套通用的模式，只需要按照相应的数据规范生产物料，生成数据源，最后通过 Iceworks 接入即可。如果你计划接入一套新的框架物料，可以参考下面的步骤进行：
+在了解飞冰物料数据规范之前，我们先来大概了解一下飞冰的设计思路；在飞冰使用过程中，大多数开发者只需要下载 GUI 工具 Iceworks，然后按照文档教程进行项目开发即可。目前飞冰提供的物料数据源有 React 和 Vue 版本，然而，在飞冰开发群里常见的问题是有没有计划支持 AngularJS 版本，有没有移动端的支持计划等等。实际上，对飞冰来说，本质上一套通用的模式，只需要按照相应的数据规范生产物料、生成数据源，最后通过 Iceworks 接入即可。如果你计划接入一套新的框架物料，可以参考下面的步骤进行：
 
 ![material-flow](https://img.alicdn.com/tfs/TB1KgToqN9YBuNjy0FfXXXIsVXa-2014-1326.png)
 
@@ -28,8 +28,6 @@ category: 物料
 项目是可以脱离 Iceworks 单独运行的，`package.json` 里声明 `scripts` 命令，必须存在 `start` `build`. 通过 `npm run start` 与 `npm run build` 即可启动调试服务与构建。
 
 Iceworks 会识别项目中定义的 `scripts` 脚本，**启动调试服务**、**构建项目** 分别对应 `npm run start` `npm run build`。当然，你不一定要自己去实现一个完整的 CLI 工具，Vue 社区已经有了很完善的工具 [vue-cli](https://github.com/vuejs/vue-cli)，AngularJs 也有对应的 [angular-cli](https://github.com/angular/angular-cli)。 
-
-
 
 物料开发工具即为开发物料提供的配套工具，物料开发工具提供的能力主要是根据预设好的物料脚手架进行初始化，生成模板文件方便开发，同时提供预览，热加载等服务。详细可参考 [飞冰物料开发工具 ice-devtools](https://github.com/alibaba/ice/tree/master/tools/ice-devtools)
 
