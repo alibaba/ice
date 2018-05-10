@@ -1,20 +1,28 @@
 <template>
-  <div className="data-display">
+  <div class="data-display">
     <basic-container>
-      <index :option="Option"></index>
+      <el-row :span="24">
+        <el-col v-for="(item,index) in option.data" :key="index" :span="option.span">
+          <div class="item" :style="{color:option.color}">
+            <h5 class="count">{{item.count}}</h5>
+            <span class="splitLine" />
+            <p class="title">{{item.title}}</p>
+          </div>
+        </el-col>
+      </el-row>
+
     </basic-container>
   </div>
 </template>
 
 <script>
 import BasicContainer from '@vue-materials/basic-container';
-import index from './components/index';
 export default {
-  components: { BasicContainer, index },
-  name: 'Index',
+  components: { BasicContainer },
+  name: 'DataDisplay',
   data() {
     return {
-      Option: {
+      option: {
         span: 8,
         color: '#15A0FF',
         data: [
@@ -36,8 +44,9 @@ export default {
   },
 
   created() {},
-
-  methods() {},
 };
 </script>
+<style lang="scss" scoped>
+@import './DataDisplay.scss';
+</style>
 
