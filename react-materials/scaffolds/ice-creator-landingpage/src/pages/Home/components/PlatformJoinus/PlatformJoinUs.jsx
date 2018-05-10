@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@icedesign/base';
 
-export default class PlatformLanding extends Component {
-  static displayName = 'PlatformLanding';
+export default class PlatformJoinUs extends Component {
+  static displayName = 'PlatformJoinUs';
 
   static propTypes = {
     value: PropTypes.string,
@@ -20,11 +20,20 @@ export default class PlatformLanding extends Component {
 
   render() {
     return (
-      <div style={styles.wrapper}>
+      <div
+        style={{
+          ...styles.wrapper,
+          backgroundImage:
+            'url(https://img.alicdn.com/tfs/TB1Iw2ZRVXXXXb4aFXXXXXXXXXX-2760-1544.png)',
+        }}
+      >
         <div style={styles.body}>
-          <h2 style={styles.title}>
-            在人工智能将替代一切的未来<br />唯有内容的创作无可替代
-          </h2>
+          <div style={styles.titleWrapper}>
+            <h2 style={styles.title}>现在就加入我们</h2>
+            <p>
+              在人工智能将替代一切的未来<br />唯有内容的创作无可替代
+            </p>
+          </div>
           <div style={styles.buttons}>
             <Button
               style={styles.secondaryButton}
@@ -50,35 +59,25 @@ export default class PlatformLanding extends Component {
 }
 
 const styles = {
-  buttons: { textAlign: 'center', marginTop: 33 },
-  body: {
-    position: 'absolute',
-    top: '190px',
-    left: '50%',
-    marginLeft: '-300px',
-    width: '600px',
-    color: '#fff',
-    maxHeight: '260px',
-    overflow: 'hidden',
-    textAlign: 'center',
-  },
   wrapper: {
-    overflow: 'hidden',
-    height: 720,
-    backgroundImage:
-      'url("https://img.alicdn.com/tfs/TB1DgSmSpXXXXaJXpXXXXXXXXXX-2760-1480.jpg")',
-    position: 'relative',
+    height: 740,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    backgroundColor: '#66ABFF',
-    boxShadow: '0 1px 16px 0 rgba(0,0,0,0.10)',
+  },
+  body: {},
+  titleWrapper: {
+    textAlign: 'center',
+    paddingTop: 200,
   },
   title: {
-    fontSize: '32px',
+    fontSize: 32,
     color: '#333',
     letterSpacing: '1.94px',
     lineHeight: '48px',
     textAlign: 'center',
   },
+  buttons: { textAlign: 'center', marginTop: '60px' },
   primaryButton: {
     height: 50,
     fontSize: 16,
