@@ -21,4 +21,4 @@
 * 页面文件: `src/pages`
 
 效果图:
-![screenshot](https://img.alicdn.com/tfs/TB1IBGfqNWYBuNjy1zkXXXGGpXa-2840-1596.png)
+![screenshot](https://img.alicdn.com/tfs/TB1JPCEqMmTBuNjy1XbXXaMrVXa-2840-1596.png)

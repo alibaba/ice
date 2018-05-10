@@ -39,6 +39,6 @@ const styles = {
     background: '#f0f2f5',
     backgroundImage:
       'url(https://img.alicdn.com/tfs/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png)',
-    backgroundSize: 'cover',
+    backgroundSize: 'contain',
   },
 };
