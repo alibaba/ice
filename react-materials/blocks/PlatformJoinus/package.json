@@ -1,0 +1,37 @@
+{
+  "name": "@react-materials/platform-joinus-block",
+  "version": "1.0.0",
+  "description": "加入平台区块",
+  "author": "浩睿 <jiangshui.yjs@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.1",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "platform-joinus",
+    "title": "加入平台区块",
+    "categories": [
+      "信息展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1dabEqTtYBeNjy1XdXXXXyVXa-1970-1124.png"
+  }
+}
