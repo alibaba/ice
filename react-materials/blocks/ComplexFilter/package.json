@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "complex-filter",
-    "snapshot": "https://img.alicdn.com/tfs/TB1wuVIbamWBuNjy1XaXXXCbXXa-1914-384.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1wuVIbamWBuNjy1XaXXXCbXXa-1914-384.png",
     "themePackage": "@icedesign/skin",
     "title": "标签页组合筛选",
     "categories": [

@@ -9,16 +9,16 @@
 </template>
 
 <script>
-import { NavBar, SideBar, AppMain } from './components'
+import { NavBar, SideBar, AppMain } from './components';
 
 export default {
   name: 'layout',
   components: {
     NavBar,
     SideBar,
-    AppMain
+    AppMain,
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

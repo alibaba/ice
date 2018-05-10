@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "brand-show-case",
-    "snapshot": "https://img.alicdn.com/tfs/TB1DGFejr_I8KJjy1XaXXbsxpXa-1910-860.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1DGFejr_I8KJjy1XaXXbsxpXa-1910-860.png",
     "themePackage": "@icedesign/skin",
     "title": "品牌展示",
     "categories": [

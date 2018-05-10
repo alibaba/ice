@@ -4,9 +4,7 @@ order: 5
 category: 物料
 ---
 
-
 目前飞冰提供了基于 React 技术栈的物料，React 物料由飞冰团队维护，每周会定期更新。但在飞冰的用户群里，我们收到很多反馈，希望能提供对 Vue 的支持，为此，我们提供了开发者工具 ice-devtools，以及基础的 Vue 物料。当然，这对于物料体系来说，所做的远远不够，如果你热爱开源，欢迎与我们一起共同建设。
-
 
 ## 环境准备
 
@@ -23,7 +21,6 @@ $ npm run start
 通过上面的命令可以启动服务，支持预览 react-materials 和 vue-materials 目录下的所有区块和布局，启动主界面如下，可通过点击物料类型选择预览不同的物料。
 
 ![](https://img.alicdn.com/tfs/TB17haCnKuSBuNjy1XcXXcYjFXa-2858-1586.png)
-
 
 ## 开发区块
 
@@ -122,7 +119,7 @@ export default ExampleBlock;
   },
   "blockConfig": {            // 区块的相关配置，用于 Iceworks 和站点的展示
     "name": "example-block",  // 名称
-    "snapshot": "",           // 截图（如果没有截图则不在 Iceworks 中显示图片）
+    "screenshot": "",         // 截图（如果没有截图则不在 Iceworks 中显示图片）
     "title": "示例区块",       // 标题
     "categories": "[]"        // 分类
   }
@@ -140,11 +137,9 @@ export default ExampleBlock;
 ![截图]()
 ```
 
-
 ## 添加布局
 
 布局与区块在开发模式上基本保持相同，不同点在于布局没有分类的概念，可以根据业务需求和设计规范自定义不同的布局。
-
 
 ## 开发调试
 
@@ -153,7 +148,6 @@ export default ExampleBlock;
 ![](https://img.alicdn.com/tfs/TB1TP3InTtYBeNjy1XdXXXXyVXa-2864-1474.png)
 
 在列表页面，已经有了一些基础的区块和布局，可以点击预览查看效果图，支持实时编译刷新调试。
-
 
 ## 提交代码
 
@@ -196,15 +190,15 @@ $ git push origin branch-name
 
 提交 commit 的类型，包括以下几种
 
-- feat: 新功能
-- fix: 修复问题
-- docs: 修改文档
-- style: 修改代码格式，不影响代码逻辑
-- refactor: 重构代码，理论上不影响现有功能
-- perf: 提升性能
-- test: 增加修改测试用例
-- chore: 修改工具相关（包括但不限于文档、代码生成等）
-- deps: 升级依赖
+* feat: 新功能
+* fix: 修复问题
+* docs: 修改文档
+* style: 修改代码格式，不影响代码逻辑
+* refactor: 重构代码，理论上不影响现有功能
+* perf: 提升性能
+* test: 增加修改测试用例
+* chore: 修改工具相关（包括但不限于文档、代码生成等）
+* deps: 升级依赖
 
 （2）scope
 
@@ -220,12 +214,11 @@ $ git push origin branch-name
 
 （5）footer
 
-- **当有非兼容修改(Breaking Change)时必须在这里描述清楚**
-- 关联相关 issue，如 `Closes #1, Closes #2, #3`
+* **当有非兼容修改(Breaking Change)时必须在这里描述清楚**
+* 关联相关 issue，如 `Closes #1, Closes #2, #3`
 
-* 查看具体[文档](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit)
-* [CONTRIBUTING.md](https://github.com/alibaba/ice/blob/master/.github/CONTRIBUTING.md)
-
+- 查看具体[文档](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit)
+- [CONTRIBUTING.md](https://github.com/alibaba/ice/blob/master/.github/CONTRIBUTING.md)
 
 ## 发布
 

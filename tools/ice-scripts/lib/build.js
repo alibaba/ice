@@ -62,7 +62,10 @@ module.exports = function(args = {}) {
           chunkModules: false,
         })
       );
-      done(error);
+      if (stats.hasErrors()) {
+        throw new Error('webpack compiled failed.');
+      }
+      done();
     });
   });
 

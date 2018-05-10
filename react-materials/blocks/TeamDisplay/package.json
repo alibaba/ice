@@ -34,7 +34,7 @@
   },
   "blockConfig": {
     "name": "team-display",
-    "snapshot": "https://img.alicdn.com/tfs/TB1dUcAauuSBuNjy1XcXXcYjFXa-2184-1568.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1dUcAauuSBuNjy1XcXXcYjFXa-2184-1568.png",
     "themePackage": "@icedesign/skin",
     "title": "团队展示",
     "categories": [

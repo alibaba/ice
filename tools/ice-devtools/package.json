@@ -1,14 +1,14 @@
 {
   "name": "ice-devtools",
-  "version": "1.0.0-beta.19",
+  "version": "1.0.0-beta.28",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {
-    "ice-devtools": "bin/index.js",
-    "ice-devtools-init": "bin/init.js",
-    "ice-devtools-add": "bin/add.js",
-    "ice-devtools-start": "bin/dev-server.js",
-    "ice-devtools-generate": "bin/db.js"
+    "ice-devtools": "bin/ice-devtools.js",
+    "ice-devtools-init": "bin/ice-devtools-init.js",
+    "ice-devtools-add": "bin/ice-devtools-add.js",
+    "ice-devtools-start": "bin/ice-devtools-start.js",
+    "ice-devtools-generate": "bin/ice-devtools-generate.js"
   },
   "author": {
     "name": "ICE Team",
@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "async": "^2.6.0",
+    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-component": "^1.1.0",
