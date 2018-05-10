@@ -75,7 +75,7 @@ const styles = {
   title: {
     fontSize: '32px',
     color: '#333',
-    letterSpacing: '1.94px',
+    letterSpacing: '2px',
     lineHeight: '48px',
     textAlign: 'center',
   },

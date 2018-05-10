@@ -27,7 +27,7 @@ export default class PlatformJoinUs extends Component {
             'url(https://img.alicdn.com/tfs/TB1Iw2ZRVXXXXb4aFXXXXXXXXXX-2760-1544.png)',
         }}
       >
-        <div style={styles.body}>
+        <div>
           <div style={styles.titleWrapper}>
             <h2 style={styles.title}>现在就加入我们</h2>
             <p>
@@ -65,7 +65,6 @@ const styles = {
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   },
-  body: {},
   titleWrapper: {
     textAlign: 'center',
     paddingTop: 200,
@@ -73,7 +72,7 @@ const styles = {
   title: {
     fontSize: 32,
     color: '#333',
-    letterSpacing: '1.94px',
+    letterSpacing: '2px',
     lineHeight: '48px',
     textAlign: 'center',
   },
