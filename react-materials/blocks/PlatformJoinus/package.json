@@ -30,8 +30,9 @@
     "name": "platform-joinus",
     "title": "加入平台区块",
     "categories": [
-      "信息展示"
+      "信息展示",
+      "欢迎页"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1dabEqTtYBeNjy1XdXXXXyVXa-1970-1124.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1ke8jqHGYBuNjy0FoXXciBFXa-1830-1064.png"
   }
 }

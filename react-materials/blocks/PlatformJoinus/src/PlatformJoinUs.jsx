@@ -80,14 +80,19 @@ const styles = {
   buttons: { textAlign: 'center', marginTop: '60px' },
   primaryButton: {
     height: 50,
+    fontSize: 16,
     padding: '0 58px',
     lineHeight: '50px',
     color: '#fff',
   },
   secondaryButton: {
     height: 50,
+    fontSize: 16,
     padding: '0 58px',
     lineHeight: '50px',
     marginRight: 20,
+    backgroundColor: 'transparent',
+    borderColor: '#5485f7',
+    color: '#5485f7',
   },
 };
