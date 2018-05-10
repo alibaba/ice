@@ -1,5 +1,5 @@
 {
-  "name": "@icedesign/scaffold-analysis",
+  "name": "@icedesign/analysis-scaffold",
   "version": "1.0.0",
   "description":
     "该模板适用于可视化实时数据的大屏展示，默认只有一个页面，内置饼图、柱状图等图形",
@@ -13,7 +13,8 @@
     "echarts": "^4.0.4",
     "echarts-for-react": "^2.0.8",
     "prop-types": "^15.5.8",
-    "react-router": "^3.2.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "react-text-loop": "^1.1.0"
   },
   "devDependencies": {
@@ -42,8 +43,7 @@
   "scaffoldConfig": {
     "name": "ice-design-analysis",
     "title": "ICE Design Analysis",
-    "snapshot":
+    "screenshot":
       "https://img.alicdn.com/tfs/TB1_Xf8m_tYBeNjy1XdXXXXyVXa-1920-1080.png"
-  },
-  "title": "ice_design_analysis"
+  }
 }

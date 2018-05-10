@@ -1,7 +1,9 @@
 {
   "name": "@vue-materials/admin-lite",
-  "version": "1.0.0",
-  "description": "该模板适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示。",
+  "version": "1.0.4",
+  "description":
+    "该模板适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示。",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/admin-lite.html",
   "author": "ice-admin@alibaba-inc.com",
   "scripts": {
     "start": "vue-cli-service serve",
@@ -29,22 +31,16 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-scaffold"
-  ],
+  "keywords": ["ice", "ice-scaffold"],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
   "scaffoldConfig": {
     "name": "admin-lite",
     "title": "Admin Lite",
-    "snapshot": "https://img.alicdn.com/tfs/TB1SqrjontYBeNjy1XdXXXXyVXa-2842-1596.png"
+    "screenshot":
+      "https://img.alicdn.com/tfs/TB1SqrjontYBeNjy1XdXXXXyVXa-2842-1596.png"
   }
 }

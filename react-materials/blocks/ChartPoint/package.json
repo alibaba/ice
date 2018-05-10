@@ -37,7 +37,7 @@
   },
   "blockConfig": {
     "name": "chart-point",
-    "snapshot": "https://img.alicdn.com/tfs/TB1PfT1cDtYBeNjy1XdXXXXyVXa-2346-1034.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1PfT1cDtYBeNjy1XdXXXXyVXa-2346-1034.png",
     "themePackage": "@icedesign/skin",
     "title": "点图",
     "categories": [

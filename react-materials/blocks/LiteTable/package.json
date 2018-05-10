@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "lite-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB1apAecDtYBeNjy1XdXXXXyVXa-2290-998.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1apAecDtYBeNjy1XdXXXXyVXa-2290-998.png",
     "themePackage": "@icedesign/skin",
     "title": "简单带状态表格",
     "categories": [

@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "sort-card-list",
-    "snapshot": "https://img.alicdn.com/tfs/TB1SuIoc_tYBeNjy1XdXXXXyVXa-2346-1078.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1SuIoc_tYBeNjy1XdXXXXyVXa-2346-1078.png",
     "themePackage": "@icedesign/skin",
     "title": "拖拽排序卡片列表",
     "categories": [

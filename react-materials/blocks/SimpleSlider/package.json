@@ -43,7 +43,7 @@
   },
   "blockConfig": {
     "name": "simple-slider",
-    "snapshot": "https://img.alicdn.com/tfs/TB19Gn3dNGYBuNjy0FnXXX5lpXa-2348-750.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB19Gn3dNGYBuNjy0FnXXX5lpXa-2348-750.png",
     "title": "图片轮播",
     "categories": [
       "数据展示",

@@ -35,7 +35,7 @@
   },
   "blockConfig": {
     "name": "selectable-table",
-    "snapshot": "https://img.alicdn.com/tfs/TB19zkHb1uSBuNjy1XcXXcYjFXa-2322-1298.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB19zkHb1uSBuNjy1XcXXcYjFXa-2322-1298.png",
     "themePackage": "@icedesign/skin",
     "title": "可批量操作的表格",
     "categories": [
