@@ -1,7 +1,7 @@
 {
-  "name": "@icedesign/platform-intro2-block",
+  "name": "@icedesign/platform-tools-intro-block",
   "version": "1.0.0",
-  "description": "平台介绍",
+  "description": "平台工具介绍",
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -31,7 +31,7 @@
   },
   "blockConfig": {
     "name": "platform-intro2",
-    "title": "平台介绍",
+    "title": "平台工具介绍",
     "categories": [
       "信息展示",
       "欢迎页"
