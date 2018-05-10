@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/board-list-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TODO 任务管理面板，可拖拽排序",
   "author": {
     "name": "ICE Team",
