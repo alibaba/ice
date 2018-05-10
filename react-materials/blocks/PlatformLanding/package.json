@@ -2,7 +2,10 @@
   "name": "@icedesign/platform-landing-block",
   "version": "1.0.0",
   "description": "平台登陆引导页面",
-  "author": "浩睿 <jiangshui.yjs@alibaba-inc.com>",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
   "files": [
     "src/",
     "lib/"
