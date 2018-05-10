@@ -22,17 +22,26 @@ category: 物料
 
 **开发者工具**
 
-开发者工具主要包含`项目构建工具`和`物料开发工具`，项目构建工具故名思议是用来启动，构建项目的，比如我们为飞冰项目提供的项目构建工具 [ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts)。大家在使用 Iceworks 时，会经常用到 Iceworks 项目面板的`启动调试服务`、`构建项目`等功能，其背后的原理本质上是通过 GUI 的形式去调用了 CLI 的命令，Iceworks 会根据不同的项目进行识别调用不同的 CLI 执行服务。当然，你不一定要自己去实现一个完整的 CLI 工具，Vue 社区已经有了很完善的工具 [vue-cli](https://github.com/vuejs/vue-cli)，AngularJs 也有对应的 [angular-cli](https://github.com/angular/angular-cli)。
+开发者工具主要包含`项目构建工具`和`物料开发工具`，项目构建工具故名思议是用来启动，构建项目的，比如我们为飞冰项目提供的项目构建工具 [ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts)。大家在使用 Iceworks 时，会经常用到 Iceworks 项目面板的 **启动调试服务**、**构建项目** 等功能，其背后的原理本质上是通过 GUI 的形式去调用了 CLI 的命令.
+
+
+项目是可以脱离 Iceworks 单独运行的，`package.json` 里声明 `scripts` 命令，必须存在 `start` `build`. 通过 `npm run start` 与 `npm run build` 即可启动调试服务与构建。
+
+Iceworks 会识别项目中定义的 `scripts` 脚本，**启动调试服务**、**构建项目** 分别对应 `npm run start` `npm run build`。当然，你不一定要自己去实现一个完整的 CLI 工具，Vue 社区已经有了很完善的工具 [vue-cli](https://github.com/vuejs/vue-cli)，AngularJs 也有对应的 [angular-cli](https://github.com/angular/angular-cli)。 
+
+
 
 物料开发工具即为开发物料提供的配套工具，物料开发工具提供的能力主要是根据预设好的物料脚手架进行初始化，生成模板文件方便开发，同时提供预览，热加载等服务。详细可参考 [飞冰物料开发工具 ice-devtools](https://github.com/alibaba/ice/tree/master/tools/ice-devtools)
 
 **生成物料数据**
 
-在物料开发完成时，需要生成对应的物料元数据，为 Iceworks 提供数据源。
+在物料开发完成时，需要生成对应的物料元数据，为 Iceworks 提供数据源。数据源为一份 JSON 文件。
+
+> 可参考 <http://ice.alicdn.com/assets/react-materials.json>
 
 **接入 Iceworks**
 
-生成好物料数据源，只需要将物料数据源发布 CDN 提供给 Iceworks 即完成了完整链路的闭环。
+生成好物料数据源，只需要将物料数据源发布 CDN 提供给 Iceworks, 在设置面板中添加即完成了完整链路的闭环。
 
 ## 物料数据规范
 
