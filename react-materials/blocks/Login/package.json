@@ -1,0 +1,40 @@
+{
+  "name": "@icedesign/login-block",
+  "version": "1.0.0",
+  "description": "",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "@icedesign/form-binder": "^0.1.4",
+    "@icedesign/icon": "^0.1.1",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "login",
+    "title": "登录页",
+    "categories": ["登录页"],
+    "screenshot": "https://img.alicdn.com/tfs/TB14mtgq_tYBeNjy1XdXXXXyVXa-2780-1582.png"
+  }
+}
