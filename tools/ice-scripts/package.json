@@ -1,6 +1,6 @@
 {
   "name": "ice-scripts",
-  "version": "1.4.0",
+  "version": "1.4.1-0",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
@@ -36,7 +36,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-runtime": "^6.26.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
-    "chalk": "^2.0.0",
+    "chalk": "^2.4.1",
     "clean-css": "^3.4.19",
     "clean-css-parallel": "^0.1.4",
     "commander": "^2.11.0",
@@ -58,7 +58,7 @@
     "node-ipc": "^9.1.1",
     "node-sass": "^4.6.0",
     "postcss-loader": "^2.0.8",
-    "react-dev-utils": "^4.2.1",
+    "react-dev-utils": "^6.0.0-next.66cc7a90",
     "react-hot-loader": "3.1.3",
     "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
