@@ -7,5 +7,5 @@ node_js:
 
 script:
   - npm run lint:nofix
-  - ice-devtools --version && npm run generate # 生成 database 数据
-  - npm run sync # 同步到 ali-oss
+  - if [ "$TRAVIS_BRANCH" == "chore/materials-publish-tips" ]; then ice-devtools --version && npm run generate; fi # 生成 database 数据
+  - if [ "$TRAVIS_BRANCH" == "chore/materials-publish-tips" ]; then npm run sync; fi # 同步到 ali-oss
