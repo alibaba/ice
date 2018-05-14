@@ -24,6 +24,12 @@
 
 详细步骤请参见文档：[Iceworks 快速上手](https://alibaba.github.io/ice/#/docs/iceworks)。
 
+<p align="center">
+  <a href="https://alibaba.github.io/ice/#/iceworks">
+    <img alt="飞冰" src="https://user-images.githubusercontent.com/677114/39990355-f806798e-579e-11e8-808e-222a4a7fc66e.png" width="600">
+  </a>
+</p>
+
 ## 物料开发和发布方式
 
 首先 clone 当前仓库，开发完成之后提交 PR 合并后执行下面相关命令：
