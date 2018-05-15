@@ -1,0 +1,37 @@
+{
+  "name": "@vue-materials/realtime-statistics-block",
+  "version": "1.0.0",
+  "description": "实时数据统计展示",
+  "author": "smallwei <1634566606@qq.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "vue",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@vue-materials/basic-container": "^1.0.0",
+    "normalize.css": "^8.0.0",
+    "vue": "^2.5.16"
+  },
+  "blockConfig": {
+    "name": "realtime-statistics",
+    "title": "实时数据统计展示",
+    "categories": [
+      "数据展示"
+    ],
+    "screenshot": "http://oetrwxnhv.bkt.clouddn.com/RealtimeStatistics.png"
+  }
+}

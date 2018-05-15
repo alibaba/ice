@@ -1,0 +1,64 @@
+@import '~normalize.css/normalize.css';
+.realtime-statistics {
+  .item {
+    position: relative;
+    margin: 5px;
+    height: auto;
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow: hidden;
+    color: #fff;
+  }
+  .item-border {
+    padding: 15px 25px;
+  }
+  .item-header {
+    position: relative;
+    &>p {
+      margin: 0px;
+      font-size: 14px;
+    }
+    &>span {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+  .item-body {
+    &>h2 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 60px;
+    }
+  }
+  .item-footer {
+    line-height: 16px;
+    &>span {
+      font-size: 10px;
+    }
+    &>p {
+      margin: 0px;
+      font-size: 12px;
+    }
+  }
+  .item-tip {
+    $height: 70px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $height;
+    height: $height;
+    bottom: -25px;
+    right: 10px;
+    border: 2px solid #fff;
+    border-radius: 100%;
+    font-size: 36px;
+    transform: rotate(-40deg);
+    opacity: 0.1;
+  }
+}
