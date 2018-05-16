@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/project-management-scaffold",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description":
     "该模板适用于项目类管理后台，采用三栏布局方式，模板内置了类似 trello 任务管理的卡片区块",
   "author": "ice-admin@alibaba-inc.com",
@@ -8,7 +8,8 @@
     "https://alibaba.github.io/ice/scaffold-preview/ice-design-project-management.html",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/scaffolds/ice-design-project-management"
+    "url":
+      "https://github.com/alibaba/ice/tree/master/react-materials/scaffolds/ice-design-project-management"
   },
   "dependencies": {
     "@antv/data-set": "^0.8.7",
@@ -23,7 +24,8 @@
     "react-beautiful-dnd": "^7.1.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-trello": "^1.29.1"
+    "react-trello": "^1.29.1",
+    "styled-components": "^2.1.1"
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.com",
