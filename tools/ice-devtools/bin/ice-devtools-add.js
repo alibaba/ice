@@ -224,21 +224,17 @@ function downloadAndGenerate(template) {
 
           const npm = spawn('npm', ['install'], { cwd: to });
           npm.stdout.on('data', (data) => {
-            chalk.gray(`${data} \n`)
+            chalk.gray(`${data} \n`);
           });
 
           npm.stderr.on('data', (data) => {
             installSpinner.stop();
-            console.log(
-              chalk.red(`${data} \n`)
-            );
+            console.log(chalk.red(`${data} \n`));
           });
 
           npm.on('close', (code) => {
             installSpinner.stop();
-            console.log(
-              chalk.white('   npm install finished \n')
-            );
+            console.log(chalk.white('   npm install finished \n'));
             callback();
           });
 
@@ -247,7 +243,7 @@ function downloadAndGenerate(template) {
       }, 1000);
     })
     .catch((err) => {
-      spinner.stop();
+      downloadspinner.stop();
       logger.fatal(`Failed to download repo ${template} : ${err.message}`);
     });
 }
