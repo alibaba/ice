@@ -1,8 +1,11 @@
 {
-  "name": "@react-materials/review-overview-block",
+  "name": "@icedesign/review-overview-block",
   "version": "1.0.0",
   "description": "评价数据概览",
-  "author": "浩睿 <jiangshui.yjs@alibaba-inc.com>",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
   "files": [
     "src/",
     "lib/"
