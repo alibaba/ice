@@ -141,7 +141,7 @@ Iceworks 会识别项目中定义的 `scripts` 脚本，**启动调试服务**�
   "categories": [],
 
   // (必) 截图
-  "snapshot": "https://img.alicdn.com/tfs/TB1I67ih3vD8KJjy0FlXXagBFXa-947-929.png",
+  "screenshot": "https://img.alicdn.com/tfs/TB1I67ih3vD8KJjy0FlXXagBFXa-947-929.png",
 
   // (必) 发布时间
   "publishTime": "2018-03-13 22:19",
