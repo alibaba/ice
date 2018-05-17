@@ -4,4 +4,4 @@
 
 评价数据概览
 
-![截图](https://img.alicdn.com/tfs/TB1iGELrStYBeNjSspkXXbU8VXa-1844-498.png)
+![截图](https://img.alicdn.com/tfs/TB1KAOyr1SSBuNjy0FlXXbBpVXa-1828-496.png)
