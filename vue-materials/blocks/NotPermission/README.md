@@ -4,4 +4,4 @@
 
 基于element-ui组件的无权限提示
 
-![NotPermission](https://user-images.githubusercontent.com/18508817/40072165-7fecc16c-58a5-11e8-81ff-d141b7c71121.png)
+![NotPermission](https://user-images.githubusercontent.com/18508817/40156536-aa55aa7c-59cc-11e8-971a-ecc339655041.png)
