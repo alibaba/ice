@@ -1,24 +1,25 @@
-// <!-- auto generated navs start -->
-const autoGenAsideNavs = [];
-// <!-- auto generated navs end -->
+// 菜单配置
+// headerMenuConfig：头部导航配置
+// asideMenuConfig：侧边导航配置
 
-// <!-- custom navs start -->
-const customAsideNavs = [
+const headerMenuConfig = [];
+
+const asideMenuConfig = [
   {
-    path: '/table',
+    path: '/dashboard',
     name: 'Dashboard',
     icon: 'el-icon-menu',
     children: [
       {
-        path: 'analysis',
+        path: '/analysis',
         name: '分析页',
       },
       {
-        path: 'monitor',
+        path: '/monitor',
         name: '监控页',
       },
       {
-        path: 'workplace',
+        path: '/workplace',
         name: '工作台',
       },
     ],
@@ -29,11 +30,11 @@ const customAsideNavs = [
     icon: 'el-icon-date',
     children: [
       {
-        path: 'basic',
+        path: '/basic',
         name: '基础表格',
       },
       {
-        path: 'fixed',
+        path: '/fixed',
         name: '固定表格',
       },
     ],
@@ -44,11 +45,11 @@ const customAsideNavs = [
     icon: 'el-icon-edit-outline',
     children: [
       {
-        path: 'basic',
+        path: '/basic',
         name: '典型表单',
       },
       {
-        path: 'signup',
+        path: '/signup',
         name: '注册表单',
       },
     ],
@@ -59,15 +60,15 @@ const customAsideNavs = [
     icon: 'el-icon-picture-outline',
     children: [
       {
-        path: 'line',
+        path: '/line',
         name: '折线图',
       },
       {
-        path: 'histogram',
+        path: '/histogram',
         name: '柱状图',
       },
       {
-        path: 'bar',
+        path: '/bar',
         name: '条形图',
       },
     ],
@@ -78,11 +79,11 @@ const customAsideNavs = [
     icon: 'el-icon-tickets',
     children: [
       {
-        path: 'success',
+        path: '/success',
         name: '基础详情页',
       },
       {
-        path: 'fail',
+        path: '/fail',
         name: '失败',
       },
     ],
@@ -93,24 +94,15 @@ const customAsideNavs = [
     icon: 'el-icon-circle-check-outline',
     children: [
       {
-        path: 'success',
+        path: '/success',
         name: '成功',
       },
       {
-        path: 'fail',
+        path: '/fail',
         name: '失败',
       },
     ],
   },
 ];
-// <!-- custom navs start -->
 
-function transform(navs) {
-  // custom logical
-  return [...navs];
-}
-
-const asideNavs = transform([...autoGenAsideNavs, ...customAsideNavs]);
-
-export default asideNavs;
-
+export { headerMenuConfig, asideMenuConfig };
