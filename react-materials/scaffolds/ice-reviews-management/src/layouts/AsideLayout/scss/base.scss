@@ -26,7 +26,6 @@ body {
   /* LAYOUT */
   &.ice-design-layout {
     width: 100%;
-    padding: 0 20px;
     background-color: $ice-layout-bg;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -54,13 +53,13 @@ body {
     /* HEADER */
     .ice-design-layout-header {
       width: 100%;
-      padding: 20px 0;
-      margin: 0px auto;
+      padding: 20px 20px;
+      margin: 0px auto 20px auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: none;
-      background: transparent;
+      background: #fff;
       .user-avatar {
         margin-right: 12px;
         border-radius: 4px;
@@ -92,6 +91,9 @@ body {
     /* ASIDE */
     .ice-design-layout-aside {
       background: $ice-aside-bg;
+      position: relative;
+      margin-top: -20px;
+      padding-top: 20px;
 
       .collapse-btn {
         cursor: pointer;
@@ -128,7 +130,6 @@ body {
       .ice-menu.ice-menu-horizontal > .ice-menu-item:hover,
       .ice-menu.ice-menu-root > .ice-menu-item:hover {
         color: #fff;
-        border-radius: 6px;
         background-image: linear-gradient(
           90deg,
           $ice-aside-menu-item-selected-gradient-left-bg 0%,
@@ -143,7 +144,7 @@ body {
       }
 
       .ice-menu:not(.ice-menu-horizontal) .ice-menu-item-selected {
-        border-radius: 6px;
+        border-radius: 0px;
         background-image: linear-gradient(
           90deg,
           $ice-aside-menu-item-selected-gradient-left-bg 0%,
@@ -179,7 +180,6 @@ body {
           &:hover {
             transition: initial;
             color: $ice-aside-menu-item-selected-text-color;
-            border-radius: 6px;
             background-image: linear-gradient(
               90deg,
               $ice-aside-menu-item-selected-gradient-left-bg 0%,
