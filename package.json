@@ -27,6 +27,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-lib-import": "^0.1.0",
+    "chalk": "^2.4.1",
     "co": "^4.6.0",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.14.0",
