@@ -8,18 +8,9 @@ const { Row, Col } = Grid;
 export default class ReviewOverview extends Component {
   static displayName = 'ReviewOverview';
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
-      <Row wrap>
+      <Row wrap gutter="20">
         <Col s="12" xxs="24">
           <IceContainer style={styles.container} title="评价概览">
             <div style={styles.overviewData}>

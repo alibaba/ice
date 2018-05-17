@@ -111,7 +111,7 @@ const styles = {
     display: 'flex',
   },
   coreData: {
-    marginRight: 40,
+    marginRight: 50,
   },
   coreDataCount: {
     fontSize: 30,

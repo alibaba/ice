@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Table, Progress, Icon } from '@icedesign/base';
+import { Grid, Progress, Icon } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;
@@ -8,22 +7,9 @@ const { Row, Col } = Grid;
 export default class ReviewDetailInfo extends Component {
   static displayName = 'ReviewDetailInfo';
 
-  static propTypes = {
-    value: PropTypes.string,
-  };
-
-  static defaultProps = {
-    value: 'string data',
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
-      <Row wrap style={{ marginTop: 20 }}>
+      <Row wrap gutter="20">
         <Col s="8" xxs="24">
           <IceContainer style={styles.container} title="好评比率">
             <div style={styles.reviewRatingWrapper}>
@@ -83,7 +69,7 @@ export default class ReviewDetailInfo extends Component {
                     style={styles.reviewLeaderboardItemAvatarImg}
                     width="40"
                     height="40"
-                    src="https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg"
+                    src="https://img.alicdn.com/tfs/TB1j159r21TBuNjy0FjXXajyXXa-499-498.png_80x80.jpg"
                     alt=""
                   />
                 </span>
@@ -97,7 +83,7 @@ export default class ReviewDetailInfo extends Component {
                     style={styles.reviewLeaderboardItemAvatarImg}
                     width="40"
                     height="40"
-                    src="https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg"
+                    src="https://img.alicdn.com/tfs/TB1Daimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg"
                     alt=""
                   />
                 </span>
@@ -111,7 +97,7 @@ export default class ReviewDetailInfo extends Component {
                     style={styles.reviewLeaderboardItemAvatarImg}
                     width="40"
                     height="40"
-                    src="https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg"
+                    src="https://img.alicdn.com/tfs/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg"
                     alt=""
                   />
                 </span>
@@ -125,7 +111,7 @@ export default class ReviewDetailInfo extends Component {
                     style={styles.reviewLeaderboardItemAvatarImg}
                     width="40"
                     height="40"
-                    src="https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg"
+                    src="https://img.alicdn.com/tfs/TB1AdOerVOWBuNjy0FiXXXFxVXa-499-498.png_80x80.jpg"
                     alt=""
                   />
                 </span>
@@ -139,7 +125,7 @@ export default class ReviewDetailInfo extends Component {
                     style={styles.reviewLeaderboardItemAvatarImg}
                     width="40"
                     height="40"
-                    src="https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg"
+                    src="https://img.alicdn.com/tfs/TB1FWimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg"
                     alt=""
                   />
                 </span>

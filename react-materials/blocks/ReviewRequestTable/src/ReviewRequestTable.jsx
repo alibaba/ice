@@ -7,13 +7,13 @@ const mockDataSource = [
     invite: {
       name: '李经理',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1j159r21TBuNjy0FjXXajyXXa-499-498.png_80x80.jpg',
     },
     email: 'hi@example.com',
     sent: {
       name: '王总',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1Daimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
     },
     date: '2018年3月12日',
     status: '已发送',
@@ -22,13 +22,13 @@ const mockDataSource = [
     invite: {
       name: '王经理',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1j159r21TBuNjy0FjXXajyXXa-499-498.png_80x80.jpg',
     },
     email: 'hi@example.com',
     sent: {
       name: '张总',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
     },
     date: '2018年3月11日',
     status: '等待接受',
@@ -37,13 +37,13 @@ const mockDataSource = [
     invite: {
       name: '张经理',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1AdOerVOWBuNjy0FiXXXFxVXa-499-498.png_80x80.jpg',
     },
     email: 'hi@example.com',
     sent: {
       name: '于总',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1Daimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
     },
     date: '2018年3月10日',
     status: '已完成',
@@ -52,13 +52,13 @@ const mockDataSource = [
     invite: {
       name: '于经理',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1Daimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
     },
     email: 'hi@example.com',
     sent: {
       name: '马总',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1AdOerVOWBuNjy0FiXXXFxVXa-499-498.png_80x80.jpg',
     },
     date: '2018年3月9日',
     status: '已发送',
@@ -67,13 +67,13 @@ const mockDataSource = [
     invite: {
       name: '马经理',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
     },
     email: 'hi@example.com',
     sent: {
       name: '刘总',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1FWimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
     },
     date: '2018年3月8日',
     status: '已发送',
@@ -82,13 +82,13 @@ const mockDataSource = [
     invite: {
       name: '刘经理',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1Daimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
     },
     email: 'hi@example.com',
     sent: {
       name: '陈总',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
     },
     date: '2018年3月6日',
     status: '已发送',
@@ -97,13 +97,13 @@ const mockDataSource = [
     invite: {
       name: '陈经理',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1FWimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
     },
     email: 'hi@example.com',
     sent: {
       name: '许总',
       avatar:
-        'https://img.alicdn.com/tfs/TB1xiYhm1GSBuNjSspbXXciipXa-620-620.png_80x80.jpg',
+        'https://img.alicdn.com/tfs/TB1AdOerVOWBuNjy0FiXXXFxVXa-499-498.png_80x80.jpg',
     },
     date: '2018年3月3日',
     status: '已完成',
