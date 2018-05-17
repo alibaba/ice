@@ -1,8 +1,8 @@
 {
-  "name": "@vue-materials/user-login-block",
-  "version": "1.0.1",
-  "description": "基于element-ui组件的用户登录界面",
-  "author": "smallwei <1634566606@qq.com>",
+  "name": "@vue-materials/not-permission-block",
+  "version": "1.0.0",
+  "description": "基于element-ui组件的无权限提示",
+  "author": "mowatermelon <neefoxmo@gmail.com>",
   "files": [
     "src/",
     "lib/"
@@ -14,7 +14,8 @@
   "license": "MIT",
   "keywords": [
     "ice",
-    "ice-block"
+    "vue",
+    "block"
   ],
   "publishConfig": {
     "access": "public",
@@ -22,15 +23,14 @@
   },
   "dependencies": {
     "@vue-materials/basic-container": "^1.0.0",
-    "normalize.css": "^8.0.0",
     "vue": "^2.5.16"
   },
   "blockConfig": {
-    "name": "user-login",
-    "title": "登录页",
+    "name": "not-permission",
+    "title": "无权限提示",
     "categories": [
-      "登录页"
+      "异常"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1WlGbXMmTBuNjy1XbXXaMrVXa-2868-1602.png"
+    "screenshot": "https://user-images.githubusercontent.com/18508817/40072165-7fecc16c-58a5-11e8-81ff-d141b7c71121.png"
   }
 }
