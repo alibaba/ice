@@ -8,9 +8,9 @@ script:
 deploy:
   provider: script
   script:
-    - node ./scripts/deploy.js
-    - ice-devtools generate
-    - node ./scripts/generate-docs-database
+  - node ./scripts/deploy.js
+  - ice-devtools generate
+  - node ./scripts/generate-docs-database
   on:
     branch: ci/deploy
     repo: alibaba/ice
