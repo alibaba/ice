@@ -1,11 +1,13 @@
 sudo: required
-
 language: node_js
-
 node_js:
-  - "8"
-
+- '8'
 script:
-  - npm run lint:nofix
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then ice-devtools --version && npm run generate; fi # 生成 database 数据
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then npm run sync; fi # 同步到 ali-oss
+- npm run lint:nofix
+
+deploy:
+  provider: script
+  script: node ./scripts/deploy.js
+  on:
+    branch: ci/deploy
+    repo: alibaba/ice
