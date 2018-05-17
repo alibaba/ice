@@ -1,8 +1,11 @@
 {
-  "name": "@vue-materials/user-login-block",
-  "version": "1.0.1",
-  "description": "基于element-ui组件的用户登录界面",
-  "author": "smallwei <1634566606@qq.com>",
+  "name": "@vue-materials/tag-message-list-block",
+  "version": "1.0.0",
+  "description": "标签消息列表",
+  "author": {
+    "name": "sjy",
+    "email": "shijianyue47@gmail.com"
+  },
   "files": [
     "src/",
     "lib/"
@@ -14,7 +17,8 @@
   "license": "MIT",
   "keywords": [
     "ice",
-    "ice-block"
+    "vue",
+    "block"
   ],
   "publishConfig": {
     "access": "public",
@@ -26,11 +30,11 @@
     "vue": "^2.5.16"
   },
   "blockConfig": {
-    "name": "user-login",
-    "title": "登录页",
+    "name": "tag-message-list",
+    "title": "标签消息列表",
     "categories": [
-      "登录页"
+      "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1WlGbXMmTBuNjy1XbXXaMrVXa-2868-1602.png"
+    "screenshot": "https://user-images.githubusercontent.com/1523060/39664002-246a6496-50af-11e8-996f-ed203d7ad564.png"
   }
 }

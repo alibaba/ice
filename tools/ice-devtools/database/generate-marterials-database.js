@@ -2,10 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const mkdirp = require('mkdirp');
-const rimraf = require('rimraf');
 const moment = require('moment');
-const cp = require('child_process');
-const os = require('os');
 const uppercamelcase = require('uppercamelcase');
 const rp = require('request-promise');
 const depAnalyze = require('../shared/dep-analyze');
@@ -137,8 +134,8 @@ function generateBlocks(files, SPACE, type, done) {
       if (item.source.type !== 'npm') {
         return Promise.resolve();
       } else {
-        return checkAndQueryNpmTime(item.source.npm, item.source.version)
-          .then(([code, npmResult]) => {
+        return checkAndQueryNpmTime(item.source.npm, item.source.version).then(
+          ([code, npmResult]) => {
             if (code == 0) {
               item.publishTime = npmResult.created;
               item.updateTime = npmResult.modified;
@@ -148,16 +145,17 @@ function generateBlocks(files, SPACE, type, done) {
               item.updateTime = null;
               return Promise.resolve(npmResult);
             }
-          })
+          }
+        );
       }
     })
   ).then((allCheckStatus) => {
-    const failedStatus = allCheckStatus.filter(n=> typeof n !== 'undefined')
+    const failedStatus = allCheckStatus.filter((n) => typeof n !== 'undefined');
     if (failedStatus.length > 0) {
       failedStatus.forEach((status) => {
         console.error(status.npm, status.version);
         console.error(status.message);
-      })
+      });
       process.exit(1);
     }
     done(result);
@@ -199,18 +197,17 @@ function generateScaffolds(files, SPACE, done) {
     };
 
     tasks.push(
-      checkAndQueryNpmTime(pkg.name, pkg.version)
-        .then(([code, npmResult]) => {
-          if (code == 0) {
-            payload.publishTime = npmResult.created;
-            payload.updateTime = npmResult.modified;
-            return Promise.resolve();
-          } else {
-            item.publishTime = null;
-            item.updateTime = null;
-            return Promise.resolve(npmResult);
-          }
-        })
+      checkAndQueryNpmTime(pkg.name, pkg.version).then(([code, npmResult]) => {
+        if (code == 0) {
+          payload.publishTime = npmResult.created;
+          payload.updateTime = npmResult.modified;
+          return Promise.resolve();
+        } else {
+          payload.publishTime = null;
+          payload.updateTime = null;
+          return Promise.resolve(npmResult);
+        }
+      })
     );
 
     generatePartciple(payload, {
@@ -258,12 +255,12 @@ function generateScaffolds(files, SPACE, done) {
     return payload;
   });
   Promise.all(tasks).then((allCheckStatus) => {
-    const failedStatus = allCheckStatus.filter(n=> typeof n !== 'undefined')
+    const failedStatus = allCheckStatus.filter((n) => typeof n !== 'undefined');
     if (failedStatus.length > 0) {
       failedStatus.forEach((status) => {
         console.error(status.npm, status.version);
         console.error(status.message);
-      })
+      });
       process.exit(1);
     }
     done(result);

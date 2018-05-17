@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "1.0.0-beta-30",
+  "version": "1.0.0-beta.32",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {
@@ -62,6 +62,7 @@
     "user-home": "^2.0.0",
     "uuid": "^3.0.1",
     "validate-npm-package-name": "^3.0.0",
+    "vue-hot-reload-api": "^2.3.0",
     "vue-loader": "^14.2.2",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.16",
@@ -74,7 +75,7 @@
     "write": "^0.3.3"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.com",
