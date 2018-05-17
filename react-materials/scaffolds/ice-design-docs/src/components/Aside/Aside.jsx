@@ -1,8 +1,7 @@
 /* eslint no-unused-expressions:0 */
 import React, { Component } from 'react';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
+import { Link, withRouter } from 'react-router-dom';
 import { asideMenuConfig } from '../../menuConfig';
 import './Aside.scss';
 

@@ -46,9 +46,7 @@ const styles = {
   },
   aside: {
     position: 'fixed',
-    width: '255px',
-    borderRight: '1px solid #E9E9E9',
-    height: '400px',
+    width: '256px',
   },
   content: {
     marginLeft: '256px',

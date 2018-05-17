@@ -13,7 +13,6 @@
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8",
     "react-markdown": "^3.3.2",
-    "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
@@ -43,6 +42,6 @@
     "name": "ice-design-docs",
     "title": "ICE Design Docs",
     "screenshot":
-      "https://img.alicdn.com/tfs/TB11SEOrL9TBuNjy0FcXXbeiFXa-2840-1596.png"
+      "https://img.alicdn.com/tfs/TB1QI1Er4WYBuNjy1zkXXXGGpXa-2840-1596.png"
   }
 }
