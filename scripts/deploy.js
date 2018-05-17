@@ -89,7 +89,7 @@ function publishQueue(unpublishedPackageJson) {
     const publishCwd = path.dirname(packageJson);
     q.push(function() {
       return new Promise((resolve, reject) => {
-        const ps = spawn('npm', ['publish'] {
+        const ps = spawn('npm', ['publish'], {
           cwd: publishCwd,
           stdio: 'inherit',
           env: Object.assign({}, process.env, {
