@@ -44,7 +44,7 @@
     "mark-twain": "^2.0.2",
     "moment": "^2.20.1",
     "nodejieba": "^2.2.5",
-    "npm-request-json": "^1.0.1",
+    "npm-request-json": "^1.0.3",
     "queue": "^4.4.2",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",

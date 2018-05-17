@@ -51,7 +51,6 @@ function checkNpmPublish(packagePath) {
     registry: registry,
   })
     .then((data) => {
-      console.log(chalk.green('已发布'), packageData.name, packageData.version);
       return null;
     })
     .catch(() => {
@@ -90,7 +89,7 @@ function publishQueue(unpublishedPackageJson) {
     const publishCwd = path.dirname(packageJson);
     q.push(function() {
       return new Promise((resolve, reject) => {
-        const ps = spawn('npm', ['publish'], {
+        const ps = spawn('npm', ['publish'] {
           cwd: publishCwd,
           stdio: 'inherit',
           env: Object.assign({}, process.env, {
@@ -108,7 +107,9 @@ function publishQueue(unpublishedPackageJson) {
       });
     });
 
-    q.start(function(err) {
+    q.start();
+
+    q.end(function(err) {
       if (err) throw err;
       console.log(chalk.green('所有未发布的物料已发布完成'));
     });
