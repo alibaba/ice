@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import { Table } from '@icedesign/base';
 
@@ -113,19 +112,6 @@ const mockDataSource = [
 
 export default class ReviewRequestTable extends Component {
   static displayName = 'ReviewRequestTable';
-
-  static propTypes = {
-    value: PropTypes.string,
-  };
-
-  static defaultProps = {
-    value: 'string data',
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
 
   renderInviteInfo = (value, index, record) => {
     return (
