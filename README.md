@@ -8,6 +8,7 @@
 <p align="center">
   <a href="https://github.com/alibaba/ice/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
   <a href="https://github.com/alibaba/ice"><img src="https://img.shields.io/badge/developing%20with-ICE-2077ff.svg"></a>
+  <a href="https://travis-ci.org/alibaba/ice"><img src="https://api.travis-ci.org/alibaba/ice.svg?branch=master"></a>
 </p>
 
 ---
@@ -21,7 +22,7 @@
 :dart: **[`ICEWORKS 桌面工具`](https://alibaba.github.io/ice/#/iceworks)** 物料可视化一键复用，无需学习复杂的配置，全链路工程支持
 
 :art: **[`ICE DESIGN 设计语言`](https://alibaba.github.io/ice/design.html)** “冻”人的中后台设计语言
- 
+
 ## 开始使用
 
 下载 [`ICEWORKS`](https://alibaba.github.io/ice/#/iceworks) 后创建或导入项目，详细步骤请浏览 [`快速上手指南`](https://alibaba.github.io/ice/#/docs/iceworks)。
@@ -29,7 +30,7 @@
 ## 参与物料建设
 
 参考[`物料贡献指南`](https://alibaba.github.io/ice/docs/materials/how-to-contribute)开发完成后 `PR` 到官方仓库。
- 
+
 ## 浏览器兼容性
 
 ![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![IE](https://raw.github.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![UC](https://raw.github.com/alrra/browser-logos/master/src/uc/uc_48x48.png)
@@ -39,6 +40,7 @@
 ## README 徽章
 
 如果你的项目正在使用飞冰，可以将飞冰徽章 [![ice](https://img.shields.io/badge/developing%20with-ICE-2077ff.svg)](https://github.com/alibaba/ice) 添加到你的 README 中：
+
 ```
 [![ice](https://img.shields.io/badge/developing%20with-ICE-2077ff.svg)](https://github.com/alibaba/ice)
 ```
