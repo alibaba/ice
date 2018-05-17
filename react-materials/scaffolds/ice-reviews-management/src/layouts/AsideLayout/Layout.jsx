@@ -247,12 +247,34 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                 })}
             </Menu>
             {/* 侧边菜单项 end */}
+            <div style={styles.footer}>
+              © 2018 powered by
+              <a
+                href="https://github.com/alibaba/ice"
+                target="_blank"
+                className="copyright-link"
+                rel="noopener noreferrer"
+              >
+                飞冰
+              </a>
+            </div>
           </Layout.Aside>
           {/* 主体内容 */}
-          <Layout.Main>{this.props.children}</Layout.Main>
+          <Layout.Main style={{ marginRight: 20 }}>
+            {this.props.children}
+          </Layout.Main>
         </Layout.Section>
-        <Footer />
       </Layout>
     );
   }
 }
+
+const styles = {
+  footer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+  },
+};
