@@ -2,6 +2,6 @@
 
 简介：无权限提示
 
-基于element-ui组件的无权限提示
+基于 element-ui 组件的无权限提示
 
-![EmptyContent](https://user-images.githubusercontent.com/18508817/40071919-b86fa00a-58a4-11e8-9d4d-1435cfa39217.png)
+![EmptyContent](https://img.alicdn.com/tfs/TB161Wer1uSBuNjy1XcXXcYjFXa-2528-1266.png)
