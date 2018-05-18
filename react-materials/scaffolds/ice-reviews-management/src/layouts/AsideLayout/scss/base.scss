@@ -26,6 +26,10 @@ body {
   /* LAYOUT */
   &.ice-design-layout {
     width: 100%;
+<<<<<<< HEAD
+=======
+    padding: 0 20px;
+>>>>>>> parent of dedd7e14... Revert "feat: add reviews management scaffold"
     background-color: $ice-layout-bg;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -53,13 +57,22 @@ body {
     /* HEADER */
     .ice-design-layout-header {
       width: 100%;
+<<<<<<< HEAD
       padding: 20px 20px;
       margin: 0px auto 20px auto;
+=======
+      padding: 20px 0;
+      margin: 0px auto;
+>>>>>>> parent of dedd7e14... Revert "feat: add reviews management scaffold"
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: none;
+<<<<<<< HEAD
       background: #fff;
+=======
+      background: transparent;
+>>>>>>> parent of dedd7e14... Revert "feat: add reviews management scaffold"
       .user-avatar {
         margin-right: 12px;
         border-radius: 4px;
@@ -91,9 +104,12 @@ body {
     /* ASIDE */
     .ice-design-layout-aside {
       background: $ice-aside-bg;
+<<<<<<< HEAD
       position: relative;
       margin-top: -20px;
       padding-top: 20px;
+=======
+>>>>>>> parent of dedd7e14... Revert "feat: add reviews management scaffold"
 
       .collapse-btn {
         cursor: pointer;
@@ -130,6 +146,10 @@ body {
       .ice-menu.ice-menu-horizontal > .ice-menu-item:hover,
       .ice-menu.ice-menu-root > .ice-menu-item:hover {
         color: #fff;
+<<<<<<< HEAD
+=======
+        border-radius: 6px;
+>>>>>>> parent of dedd7e14... Revert "feat: add reviews management scaffold"
         background-image: linear-gradient(
           90deg,
           $ice-aside-menu-item-selected-gradient-left-bg 0%,
@@ -144,7 +164,11 @@ body {
       }
 
       .ice-menu:not(.ice-menu-horizontal) .ice-menu-item-selected {
+<<<<<<< HEAD
         border-radius: 0px;
+=======
+        border-radius: 6px;
+>>>>>>> parent of dedd7e14... Revert "feat: add reviews management scaffold"
         background-image: linear-gradient(
           90deg,
           $ice-aside-menu-item-selected-gradient-left-bg 0%,
@@ -180,6 +204,10 @@ body {
           &:hover {
             transition: initial;
             color: $ice-aside-menu-item-selected-text-color;
+<<<<<<< HEAD
+=======
+            border-radius: 6px;
+>>>>>>> parent of dedd7e14... Revert "feat: add reviews management scaffold"
             background-image: linear-gradient(
               90deg,
               $ice-aside-menu-item-selected-gradient-left-bg 0%,
