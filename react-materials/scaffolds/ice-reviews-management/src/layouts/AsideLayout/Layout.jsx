@@ -247,7 +247,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                 })}
             </Menu>
             {/* 侧边菜单项 end */}
-<<<<<<< HEAD
             <div style={styles.footer}>
               © 2018 powered by
               <a
@@ -265,18 +264,10 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
             {this.props.children}
           </Layout.Main>
         </Layout.Section>
-=======
-          </Layout.Aside>
-          {/* 主体内容 */}
-          <Layout.Main>{this.props.children}</Layout.Main>
-        </Layout.Section>
-        <Footer />
->>>>>>> parent of dedd7e14... Revert "feat: add reviews management scaffold"
       </Layout>
     );
   }
 }
-<<<<<<< HEAD
 
 const styles = {
   footer: {
@@ -287,5 +278,3 @@ const styles = {
     textAlign: 'center',
   },
 };
-=======
->>>>>>> parent of dedd7e14... Revert "feat: add reviews management scaffold"

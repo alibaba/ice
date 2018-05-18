@@ -11,10 +11,7 @@ export default class Footer extends PureComponent {
         className={cx('ice-design-layout-footer', className)}
         style={{
           ...style,
-<<<<<<< HEAD
           padding: '0 20px',
-=======
->>>>>>> parent of dedd7e14... Revert "feat: add reviews management scaffold"
           lineHeight: '36px',
         }}
       >
