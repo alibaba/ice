@@ -4,4 +4,4 @@
 
 评论详细信息
 
-![截图](https://img.alicdn.com/tfs/TB1PXuyr1SSBuNjy0FlXXbBpVXa-1828-614.png)
+![截图](https://img.alicdn.com/tfs/TB1pc9TsmBYBeNjy0FeXXbnmFXa-2030-616.png)
