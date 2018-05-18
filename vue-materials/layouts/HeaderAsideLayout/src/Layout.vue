@@ -9,21 +9,20 @@
 </template>
 
 <script>
-import { NavBar, SideBar, AppMain } from './components'
-
+import { NavBar, SideBar, AppMain } from './components';
+import './styles/index.scss';
 export default {
   name: 'layout',
   components: {
     NavBar,
     SideBar,
-    AppMain
+    AppMain,
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import './styles/index.scss';
-
+@
 .app-wrapper {
   position: relative;
   height: 100%;
