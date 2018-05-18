@@ -53,13 +53,14 @@ body {
     /* HEADER */
     .ice-design-layout-header {
       width: 100%;
-      padding: 20px 20px;
-      margin: 0px auto 20px auto;
+      padding: 10px 20px;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       box-shadow: none;
       background: #fff;
+      border-bottom: 2px solid $custom-layout-bg;
+
       .user-avatar {
         margin-right: 12px;
         border-radius: 4px;
@@ -92,8 +93,7 @@ body {
     .ice-design-layout-aside {
       background: $ice-aside-bg;
       position: relative;
-      margin-top: -20px;
-      padding-top: 20px;
+      border-right: 2px solid $custom-layout-bg;
 
       .collapse-btn {
         cursor: pointer;
@@ -261,28 +261,6 @@ body {
       padding: 0 0 0 20px;
       overflow: hidden;
     }
-
-    /* FOOTER */
-    .ice-design-layout-footer-body {
-      width: 100%;
-      margin: 20px auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .copyright {
-        color: $ice-copyright-text-color;
-        line-height: 1.5;
-        font-size: 12px;
-        text-align: left;
-      }
-      .copyright-link {
-        color: $ice-copyright-text-color;
-        &:hover {
-          color: $ice-copyright-text-hover-color;
-          text-decoration: none;
-        }
-      }
-    }
   }
 }
 
@@ -312,62 +290,4 @@ body {
 }
 
 @media screen and (max-width: 720px) {
-  .ice-design-header-aside-footer-responsive-layout-#{$theme} {
-    .logo {
-      width: 80px;
-      .logo-text {
-        font-size: 22px;
-      }
-    }
-
-    &.ice-design-layout {
-      .ice-design-layout-header {
-        .user-avatar {
-          margin-right: 4px;
-        }
-        .ice-design-header-userpannel {
-          margin-left: 0;
-        }
-        .ice-design-layout-header-menu {
-          .ice-menu .ice-menu-item {
-            padding: 0 5px;
-          }
-        }
-      }
-
-      .ice-design-layout-aside {
-        position: fixed;
-        left: -240px;
-        top: 0px;
-        bottom: 0;
-        padding: 0 20px;
-        background: #2e323e;
-        z-index: 9999;
-      }
-
-      .ice-layout-main {
-        padding: 0;
-      }
-
-      .open-drawer {
-        transform: translateX(240px);
-        .logo {
-          width: 200px;
-          margin: 20px 0;
-          text-align: center;
-        }
-      }
-
-      .open-drawer-bg {
-        position: fixed;
-        top: 0px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: #000;
-        opacity: 0.3;
-        z-index: 999;
-      }
-    }
-  }
 }

@@ -19,7 +19,6 @@ export default class Header extends PureComponent {
         className={cx('ice-design-layout-header', className)}
         style={{ ...style, width }}
       >
-        <Logo />
         <div
           className="ice-design-layout-header-menu"
           style={{ display: 'flex' }}
