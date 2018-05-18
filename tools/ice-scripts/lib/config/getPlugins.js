@@ -61,6 +61,10 @@ module.exports = function(paths, options = {}, themeConfig = {}) {
         libraryName: /@icedesign\/.*/,
         stylePath: 'style.js',
       },
+      {
+        libraryName: /@ali\/ice-.*/,
+        stylePath: 'style.js',
+      },
     ]),
   ];
 
