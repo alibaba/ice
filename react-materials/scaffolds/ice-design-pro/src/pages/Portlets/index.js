@@ -1,3 +1,7 @@
-import Portlets from './Portlets';
+import Loadable from 'react-loadable';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
-export default Portlets;
+export default Loadable({
+  loader: () => import('./Portlets'),
+  loading: LoadingIndicator,
+});

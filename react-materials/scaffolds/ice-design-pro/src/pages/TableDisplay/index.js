@@ -1,3 +1,7 @@
-import TableDisplay from './TableDisplay';
+import Loadable from 'react-loadable';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
-export default TableDisplay;
+export default Loadable({
+  loader: () => import('./TableDisplay'),
+  loading: LoadingIndicator,
+});

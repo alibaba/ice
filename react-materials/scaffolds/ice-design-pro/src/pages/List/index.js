@@ -1,3 +1,7 @@
-import List from './List';
+import Loadable from 'react-loadable';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
-export default List;
+export default Loadable({
+  loader: () => import('./List'),
+  loading: LoadingIndicator,
+});

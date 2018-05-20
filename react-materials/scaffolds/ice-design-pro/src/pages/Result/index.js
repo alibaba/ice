@@ -1,3 +1,7 @@
-import Result from './Result';
+import Loadable from 'react-loadable';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
-export default Result;
+export default Loadable({
+  loader: () => import('./Result'),
+  loading: LoadingIndicator,
+});

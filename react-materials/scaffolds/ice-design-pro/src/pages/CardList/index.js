@@ -1,3 +1,7 @@
-import CardList from './CardList';
+import Loadable from 'react-loadable';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
-export default CardList;
+export default Loadable({
+  loader: () => import('./CardList'),
+  loading: LoadingIndicator,
+});

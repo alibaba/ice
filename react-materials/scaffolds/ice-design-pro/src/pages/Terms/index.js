@@ -1,3 +1,7 @@
-import Terms from './Terms';
+import Loadable from 'react-loadable';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
-export default Terms;
+export default Loadable({
+  loader: () => import('./Terms'),
+  loading: LoadingIndicator,
+});

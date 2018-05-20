@@ -1,3 +1,7 @@
-import NotFound from './NotFound';
+import Loadable from 'react-loadable';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
-export default NotFound;
+export default Loadable({
+  loader: () => import('./NotFound'),
+  loading: LoadingIndicator,
+});
