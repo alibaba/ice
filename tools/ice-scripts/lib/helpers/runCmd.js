@@ -1,9 +1,10 @@
 const getRunCmdEnv = require('./getRunCmdEnv');
+const { spawn } = require('child_process');
 
 module.exports = function runCmd(cmd, _args, callback) {
   const promise = new Promise((resolve, reject) => {
     const args = _args || [];
-    const runner = require('child_process').spawn(cmd, args, {
+    const runner = spawn(cmd, args, {
       stdio: 'inherit',
       env: getRunCmdEnv(),
     });

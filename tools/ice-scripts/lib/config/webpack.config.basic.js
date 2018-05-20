@@ -43,7 +43,7 @@ module.exports = function getWebpackConfigBasic(
 ) {
   const { themeConfig = {} } = pkg;
   const webpackConfig = {
-    devtool: buildConfig.devtool || 'cheap-module-source-map',
+    mode: process.env.NODE_ENV,
     context: paths.appDirectory,
     entry,
     output: Object.assign(
@@ -66,11 +66,25 @@ module.exports = function getWebpackConfigBasic(
       rules: getRules(paths, buildConfig),
     },
     plugins: getPlugins(paths, buildConfig, themeConfig),
+    optimization: {
+      runtimeChunk: {
+        name: 'bootstrap',
+      },
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendor',
+            chunks: 'all',
+          },
+        },
+      },
+    },
   };
 
   const userConfig = getUserConfig();
   const finalWebpackConfig = webpackMerge({
-    customizeArray: pluginsUnique(['ExtractTextPlugin', 'HtmlWebpackPlugin']),
+    customizeArray: pluginsUnique(['HtmlWebpackPlugin']),
   })(webpackConfig, userConfig);
 
   if (finalWebpackConfig.entry) {

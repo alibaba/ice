@@ -10,18 +10,17 @@ module.exports = ({ skipInstall = false } = {}) => {
     console.log('ice sdk npm bin:', npm);
     if (npm == 'tnpm' || npm == 'npm') {
       return runCmd(npm, ['install']);
-    } else {
-      return new Promise((resolve, reject) => {
-        const ps = fork(npm, ['install']);
-
-        ps.on('close', (code) => {
-          if (code === 0) {
-            resolve(code);
-          } else {
-            reject(code);
-          }
-        });
-      });
     }
+    return new Promise((resolve, reject) => {
+      const ps = fork(npm, ['install']);
+
+      ps.on('close', (code) => {
+        if (code === 0) {
+          resolve(code);
+        } else {
+          reject(code);
+        }
+      });
+    });
   });
 };
