@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default class Logo extends PureComponent {
   render() {
     return (
-      <div className="logo" style={{}}>
+      <div className="logo" style={this.props.style}>
         <Link to="/" className="logo-text">
           LOGO
         </Link>

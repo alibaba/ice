@@ -57,9 +57,8 @@ body {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      box-shadow: none;
+      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
       background: #fff;
-      border-bottom: 2px solid $custom-layout-bg;
 
       .user-avatar {
         margin-right: 12px;
@@ -93,7 +92,8 @@ body {
     .ice-design-layout-aside {
       background: $ice-aside-bg;
       position: relative;
-      border-right: 2px solid $custom-layout-bg;
+      box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+      z-index: 3;
 
       .collapse-btn {
         cursor: pointer;
@@ -260,6 +260,30 @@ body {
     .ice-layout-main {
       padding: 0 0 0 20px;
       overflow: hidden;
+    }
+  }
+
+  /* FOOTER */
+  .ice-design-layout-footer {
+    margin: 0 auto;
+    .ice-design-layout-footer-body {
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .copyright {
+        color: $ice-copyright-text-color;
+        line-height: 1.5;
+        font-size: 12px;
+        text-align: left;
+      }
+      .copyright-link {
+        color: $ice-copyright-text-color;
+        &:hover {
+          color: $ice-copyright-text-hover-color;
+          text-decoration: none;
+        }
+      }
     }
   }
 }
