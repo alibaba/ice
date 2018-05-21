@@ -57,6 +57,9 @@ module.exports = function getWebpackConfigBasic(
     resolve: {
       modules: [paths.appNodeModules, 'node_modules'],
       extensions: ['.js', '.jsx', '.json', '.html'],
+      alias: {
+        '@': paths.appSrc
+      }
     },
     externals: buildConfig.externals || {
       react: 'window.React',
