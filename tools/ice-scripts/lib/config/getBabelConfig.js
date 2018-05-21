@@ -1,4 +1,5 @@
 const babelPluginImport = require('babel-plugin-import').default;
+
 /**
  * 编译设置
  * @param {Object} buildConfig 定义在 package.json 的字段

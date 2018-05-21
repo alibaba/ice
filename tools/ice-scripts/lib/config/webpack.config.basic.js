@@ -1,18 +1,18 @@
+const { differenceWith } = require('lodash');
 const webpackMerge = require('webpack-merge');
+
 const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
 const processEntry = require('./processEntry');
 const getEntryByPages = require('./getEntryByPages');
 const pkg = require('./packageJson');
-const { differenceWith } = require('lodash');
 /**
  * 可以在 buildConfig 中覆盖的配置项:
- *  1. devtool: ''
- *  2. output: {}
- *  3. publicPath
- *  4. externals
- *  5. entry
+ *  1. output: {}
+ *  2. publicPath
+ *  3. externals
+ *  4. entry
  */
 
 /**
@@ -49,7 +49,7 @@ module.exports = function getWebpackConfigBasic(
     output: Object.assign(
       {
         path: paths.appBuild,
-        filename: 'js/[name].js',
+        filename: 'js/[name].chunk.js',
         publicPath: paths.servedPath,
       },
       buildConfig.output || {}

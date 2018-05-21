@@ -1,10 +1,11 @@
-const path = require('path');
-const fs = require('fs');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const fs = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const webpack = require('webpack');
+const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
+const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
+
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -33,7 +34,7 @@ module.exports = function(paths, options = {}, themeConfig = {}) {
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
       filename: 'css/common-[name].css',
-      chunkFilename: 'css/[name].css',
+      chunkFilename: 'css/[name].chunk.css',
     }),
     new SimpleProgressPlugin(),
     new CaseSensitivePathsPlugin(),
