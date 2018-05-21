@@ -29,7 +29,7 @@ const asideMenuConfig = [
   {
     name: '平台概况',
     path: '/',
-    icon: 'home2',
+    icon: 'home',
   },
   {
     name: '评论信息',
@@ -39,12 +39,7 @@ const asideMenuConfig = [
   {
     name: '客户信息',
     path: '/customer',
-    icon: 'redpacket',
-  },
-  {
-    name: '统计数据',
-    path: '/statcenter',
-    icon: 'chart',
+    icon: 'yonghu',
   },
   {
     name: '通用设置',
