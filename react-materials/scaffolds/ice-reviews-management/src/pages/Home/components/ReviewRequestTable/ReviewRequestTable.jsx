@@ -110,6 +110,12 @@ const mockDataSource = [
   },
 ];
 
+const statusColors = {
+  已发送: '#fdcb6e',
+  等待接受: '#ff7675',
+  已完成: '#2ecc71',
+};
+
 export default class ReviewRequestTable extends Component {
   static displayName = 'ReviewRequestTable';
 
@@ -147,6 +153,10 @@ export default class ReviewRequestTable extends Component {
     );
   };
 
+  renderStatus = (value, index, record) => {
+    return <span style={{ color: statusColors[value] }}>{value}</span>;
+  };
+
   render() {
     return (
       <IceContainer title="最近邀评数据">
@@ -155,7 +165,11 @@ export default class ReviewRequestTable extends Component {
           <Table.Column title="被邀请人邮件" dataIndex="email" />
           <Table.Column title="邀请人" cell={this.renderSentInfo} />
           <Table.Column title="邀请时间" dataIndex="date" />
-          <Table.Column title="状态" dataIndex="status" />
+          <Table.Column
+            title="状态"
+            dataIndex="status"
+            cell={this.renderStatus}
+          />
         </Table>
       </IceContainer>
     );
@@ -172,12 +186,10 @@ const styles = {
     alignItems: 'center',
   },
   avatarWrapper: {
-    borderRadius: '40px',
-    overflow: 'hidden',
-    display: 'inline-block',
     marginRight: 10,
   },
   avatar: {
+    borderRadius: '40px',
     display: 'block',
   },
 };
