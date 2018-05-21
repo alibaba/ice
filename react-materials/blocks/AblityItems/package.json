@@ -1,0 +1,37 @@
+{
+  "name": "@react-materials/ablity-items-block",
+  "version": "1.0.0",
+  "description": "中间展示特点 特性的区块",
+  "author": "muchen <tao360907796@gmail.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "ablity-items",
+    "title": "特性展示",
+    "categories": [
+      "信息展示",
+      "欢迎页"
+    ],
+    "screenshot": ""
+  }
+}
