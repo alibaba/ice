@@ -24,7 +24,7 @@ const style = {
     fontWeight: '400',
     margin: '18px 0 10px',
   },
-  hyAbilityItemSubtitleStyle = {
+  hyAbilityItemSubtitleStyle: {
     fontSize:'16px',
     color:'#999',
     lineHeight:'21px',
