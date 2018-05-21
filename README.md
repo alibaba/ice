@@ -49,4 +49,4 @@
 
 扫码加入即刻交流与反馈：
 
-<img alt="Join the chat at dingtalk" src="https://gw.alicdn.com/tfs/TB1iVfbe1SSBuNjy0FlXXbBpVXa-640-880.jpg" width="200">
+<img alt="Join the chat at dingtalk" src="https://img.alicdn.com/tfs/TB1HhSKsKuSBuNjy1XcXXcYjFXa-993-1280.jpg" width="200">
