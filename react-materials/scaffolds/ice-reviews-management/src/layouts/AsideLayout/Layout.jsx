@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import FoundationSymbol from 'foundation-symbol';
 import Header from './../../components/Header';
+import Footer from './../../components/Footer';
 import Logo from './../../components/Logo';
 import { asideMenuConfig } from './../../menuConfig';
 import './scss/light.scss';
@@ -62,10 +63,10 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
     return (
       <Layout
-        fixable={true}
+        fixable
         style={{ minHeight: '100vh' }}
         className={cx(
-          `ice-design-header-aside-footer-responsive-layout-light`,
+          'ice-design-header-aside-footer-responsive-layout-light',
           {
             'ice-design-layout': true,
           }
@@ -77,10 +78,10 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
           className={cx('ice-design-layout-aside')}
         >
           <div style={styles.logo}>
-            <Logo />
+            <Logo style={styles.logoText} />
           </div>
           <Menu
-            style={{ width: this.state.collapse ? 60 : 200 }}
+            style={{ width: 256 }}
             mode="inline"
             selectedKeys={[pathname]}
             openKeys={this.state.openKeys}
@@ -150,29 +151,13 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
               })}
           </Menu>
           {/* 侧边菜单项 end */}
-          <div style={styles.footer}>
-            © 2018 powered by
-            <a
-              href="https://github.com/alibaba/ice"
-              target="_blank"
-              style={styles.copyrightLink}
-              rel="noopener noreferrer"
-            >
-              飞冰
-            </a>
-          </div>
         </Layout.Aside>
         <Layout.Section>
-          <Header
-            theme="light"
-            isMobile={this.state.isScreen !== 'isDesktop' ? true : undefined}
-          />
+          <Header theme="light" />
           {/* 主体内容 */}
-          <Layout.Main
-            scrollable={true}
-            style={{ paddingRight: 20, paddingTop: 20 }}
-          >
+          <Layout.Main scrollable style={{ paddingRight: 20, paddingTop: 20 }}>
             {this.props.children}
+            <Footer />
           </Layout.Main>
         </Layout.Section>
       </Layout>
@@ -184,11 +169,7 @@ const styles = {
   logo: {
     padding: '10px 15px',
   },
-  footer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 0,
-    right: 0,
+  logoText: {
     textAlign: 'center',
   },
   copyrightLink: {

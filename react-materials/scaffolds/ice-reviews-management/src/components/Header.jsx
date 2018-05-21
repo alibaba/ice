@@ -11,7 +11,7 @@ import Logo from './Logo';
 
 export default class Header extends PureComponent {
   render() {
-    const { width, theme, isMobile, className, style } = this.props;
+    const { width, theme, className, style } = this.props;
 
     return (
       <Layout.Header
@@ -43,14 +43,14 @@ export default class Header extends PureComponent {
                         {nav.icon ? (
                           <FoundationSymbol type={nav.icon} size="small" />
                         ) : null}
-                        {!isMobile ? nav.name : null}
+                        {nav.name}
                       </Link>
                     ) : (
                       <a {...linkProps}>
                         {nav.icon ? (
                           <FoundationSymbol type={nav.icon} size="small" />
                         ) : null}
-                        {!isMobile ? nav.name : null}
+                        {nav.name}
                       </a>
                     )}
                   </Menu.Item>
