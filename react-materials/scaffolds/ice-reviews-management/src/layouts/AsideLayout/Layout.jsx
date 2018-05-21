@@ -23,7 +23,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
     const openKeys = this.getOpenKeys();
     this.state = {
-      openDrawer: false,
       openKeys,
     };
     this.openKeysCache = openKeys;
@@ -49,11 +48,14 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
     Array.isArray(asideMenuConfig) &&
       asideMenuConfig.forEach((item, index) => {
-        if (matched.startsWith(item.path)) {
+        if (
+          matched.startsWith(item.path) &&
+          item.children &&
+          item.children.length
+        ) {
           openKeys = [`${index}`];
         }
       });
-
     return openKeys;
   };
 
