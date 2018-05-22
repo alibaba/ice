@@ -31,36 +31,36 @@ const headerMenuConfig = [
 
 const asideMenuConfig = [
   {
-    name: '开发者入驻',
+    name: '关于飞冰',
     path: '/',
   },
   {
-    name: '创建小程序',
-    path: '/create',
+    name: 'ICE 设计语言',
+    path: '/design',
   },
   {
-    name: '小程序开发准备',
-    path: '/prepare',
+    name: 'Iceworks 快速开始',
+    path: '/iceworks',
   },
   {
-    name: '安全检测',
-    path: '/inspection',
+    name: '如何使用 ICE 组件',
+    path: '/components',
   },
   {
-    name: '小程序DEMO',
-    path: '/demo',
+    name: '开发环境配置',
+    path: '/config',
   },
   {
-    name: '开放能力',
-    path: '/open',
+    name: '自定义物料',
+    path: '/materials',
     children: [
       {
-        name: '接入支付',
-        path: '/open/tradepay',
+        name: '自定义 React 物料',
+        path: '/materials/react',
       },
       {
-        name: '支付代扣',
-        path: '/open/meduct',
+        name: '自定义 Vue 物料',
+        path: '/materials/vue',
       },
     ],
   },
