@@ -2,19 +2,19 @@
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
-import BlankLayout from './layouts/BlankLayout';
+import HeaderAsideFooterLayout from './layouts/HeaderAsideFooterLayout';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
   {
     path: '/',
-    layout: BlankLayout,
+    layout: HeaderAsideFooterLayout,
     component: Home,
   },
   {
     path: '*',
-    layout: BlankLayout,
+    layout: HeaderAsideFooterLayout,
     component: NotFound,
   },
 ];
