@@ -11,7 +11,7 @@ export default class NotFound extends Component {
 
   render() {
     return (
-      <div className="not-found-page">
+      <div>
         <BasicNotFound />
       </div>
     );
