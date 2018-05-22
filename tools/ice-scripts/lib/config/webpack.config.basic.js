@@ -1,12 +1,12 @@
 const { differenceWith } = require('lodash');
 const webpackMerge = require('webpack-merge');
-
 const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
 const processEntry = require('./processEntry');
 const getEntryByPages = require('./getEntryByPages');
 const pkg = require('./packageJson');
+
 /**
  * 可以在 buildConfig 中覆盖的配置项:
  *  1. output: {}
@@ -58,8 +58,8 @@ module.exports = function getWebpackConfigBasic(
       modules: [paths.appNodeModules, 'node_modules'],
       extensions: ['.js', '.jsx', '.json', '.html'],
       alias: {
-        '@': paths.appSrc
-      }
+        '@': paths.appSrc,
+      },
     },
     externals: buildConfig.externals || {
       react: 'window.React',

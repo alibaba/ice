@@ -6,7 +6,6 @@
 
 process.env.NODE_ENV = 'production';
 
-const cleancssParallel = require('clean-css-parallel');
 const gulp = require('gulp');
 const rimraf = require('rimraf');
 const webpack = require('webpack');
@@ -17,6 +16,9 @@ const getWebpackConfigProd = require('./config/webpack.config.prod');
 const npmInstall = require('./helpers/npmInstall');
 
 module.exports = function(args = {}) {
+  if (args.debug) {
+    process.env.BUILD_DEBUG = true;
+  }
   const cwd = process.cwd();
   const paths = getPaths(cwd);
   const entries = getEntries(cwd);
@@ -34,11 +36,7 @@ module.exports = function(args = {}) {
 
   // build task
   gulp.task('build', ['clean'], () => {
-    const buildTasks = ['webpack'];
-    if (!args.debug) {
-      buildTasks.push('minify-css');
-    }
-    gulp.start(buildTasks);
+    gulp.start(['webpack']);
   });
 
   gulp.task('clean', (done) => {
@@ -65,23 +63,6 @@ module.exports = function(args = {}) {
         throw new Error('webpack compiled failed.');
       }
       done();
-    });
-  });
-
-  // js 压缩使用了多核，css 的压缩等待 js 压缩完成
-  gulp.task('minify-css', ['webpack'], () => {
-    return new Promise((resolve) => {
-      cleancssParallel(
-        {
-          pattern: '**/*.css',
-          src: webpackConfig.output.path,
-          dest: webpackConfig.output.path,
-          params: [],
-        },
-        () => {
-          resolve();
-        }
-      );
     });
   });
 
