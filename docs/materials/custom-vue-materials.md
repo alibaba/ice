@@ -12,7 +12,7 @@ category: 物料
 
 ## 安装物料开发工具
 
-执行 `npm install ice-devtools@beta -g`
+执行 `npm install ice-devtools -g`
 
 ## 初始 Vue 物料项目
 
