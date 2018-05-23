@@ -22,7 +22,7 @@ ice-design-pro
 │   ├── index.js     // 应用入口
 │   ├── menuConfig   // 导航配置
 │   ├── routerConfig // 路由配置
-│   └── router.jsx   // 路由配置
+│   └── router.jsx   // 路由入口
 ├── tests            // 测试
 ├── .gitignore       // git 忽略目录配置
 ├── .editorconfig    // 代码风格配置
