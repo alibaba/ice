@@ -26,9 +26,9 @@ ice-design-pro
 ├── .editorconfig    // 代码风格配置
 ├── .eslintignore    // eslint 忽略目录配置
 ├── .eslintrc        // eslint 配置
-├── .generator.json  // 区块配置
-├── package.json     // package-lock.json
-├── package.json     // package.json
+├── .generator.json   // 区块配置
+├── package-lock.json // package-lock.json
+├── package.json      // package.json
 └── README.md        // 项目说明
 ```
 
