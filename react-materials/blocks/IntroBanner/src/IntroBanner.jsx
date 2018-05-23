@@ -77,7 +77,7 @@ export default class IntroBanner extends Component {
             style={style.introBannerWrapStyles}>
             <img
               className="intro-banner-img"
-              src="https://gw.alipayobjects.com/zos/rmsportal/KvBZDNlRVXZcEspLxAGX.jpg"
+              src="https://img.alicdn.com/tfs/TB1R9Ius1uSBuNjy1XcXXcYjFXa-3840-900.jpg"
               style={style.introBannerImgStyles}/>
             <div className="intro-banner-img-mask" style={style.introBannerImgMaskStyles}></div>
             <div className="intro-banner-text" style={style.introBannerTextStyles}>
