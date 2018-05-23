@@ -1,0 +1,42 @@
+{
+  "name": "@icedesign/review-request-table-block",
+  "version": "1.0.0",
+  "description": "评价邀请表格",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.1",
+    "@icedesign/container": "^0.1.2",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "review-request-table",
+    "title": "评价邀请表格",
+    "categories": [
+      "表格",
+      "信息展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB186OHr7yWBuNjy0FpXXassXXa-1866-1122.png"
+  }
+}
