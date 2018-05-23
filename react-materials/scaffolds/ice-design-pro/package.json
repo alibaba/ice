@@ -50,12 +50,12 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "src/index.js",
-    "enableCodeSplitting": true
+    "entry": "src/index.js"
   },
   "scaffoldConfig": {
     "name": "ice-design-pro",
     "title": "ICE Design Pro",
+    "enableCodeSplitting": true,
     "screenshot":
       "https://img.alicdn.com/tfs/TB1_bulmpOWBuNjy0FiXXXFxVXa-1920-1080.png"
   }
