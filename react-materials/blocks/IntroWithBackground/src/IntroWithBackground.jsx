@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from '@icedesign/base';
+import { enquireScreen } from 'enquire-js';
 
 export default class IntroWithBackground extends Component {
   static displayName = 'IntroWithBackground';
@@ -10,12 +11,32 @@ export default class IntroWithBackground extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isMobile: false,
+    };
   }
 
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
+
   render() {
+    const { isMobile } = this.state;
+
     return (
-      <div style={styles.wrapper}>
+      <div
+        style={{ ...styles.wrapper, ...(isMobile ? styles.wrapperMobile : {}) }}
+      >
         <div style={styles.inntroContent}>
           <h3 style={styles.title}>海量物料</h3>
           <div style={styles.titleLine}>
@@ -29,7 +50,10 @@ export default class IntroWithBackground extends Component {
             component="a"
             href="#"
             target="_blank"
-            style={styles.extraButton}
+            style={{
+              ...styles.extraButton,
+              ...(isMobile ? styles.extraButtonMobile : {}),
+            }}
           >
             了解更多 &gt;
           </Button>
@@ -38,8 +62,8 @@ export default class IntroWithBackground extends Component {
           <div style={styles.grayOverlay} />
           <div style={styles.backgroundImage} />
         </div>
-        <div style={styles.topClipTriange} />
-        <div style={styles.bottomClipTriange} />
+        {!isMobile ? <div style={styles.topClipTriange} /> : null}
+        {!isMobile ? <div style={styles.bottomClipTriange} /> : null}
       </div>
     );
   }
@@ -53,6 +77,11 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  wrapperMobile: {
+    marginTop: 0,
+    height: 'auto',
+    paddingBottom: 30,
   },
   inntroContent: {
     position: 'relative',
@@ -84,12 +113,16 @@ const styles = {
     lineHeight: 1.5,
     marginTop: 34,
     textAlign: 'center',
+    width: '80%',
   },
   extraButton: {
     marginTop: 85,
     borderColor: '#fff',
     background: 'transparent',
     color: '#fff',
+  },
+  extraButtonMobile: {
+    marginTop: 30,
   },
   background: {
     position: 'absolute',
