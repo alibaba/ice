@@ -8,15 +8,16 @@
   },
   "scripts": {
     "cover": "http-server ./ -o -c-1",
-    "clear":
-      "rm -rf test/fixtures/*/build/ && rm -rf test/fixtures/*/.happypack/",
+    "clear": "rm -rf test/fixtures/*/build/ && rm -rf test/fixtures/*/.happypack/",
     "webpack": "npm run clear && node ./test/compiler.js",
     "start": "http-server ./test/fixtures/ -o -c-1 -p 8081",
     "test": "npm run clear && istanbul cover _mocha ./test/*-test.js -- ",
     "test:update": "npm test -- --updateExpect",
     "test:watch": "npm test -- --watch "
   },
-  "keywords": ["ice"],
+  "keywords": [
+    "ice"
+  ],
   "author": "ICE Team",
   "license": "MIT",
   "engines": {
@@ -43,11 +44,13 @@
     "css-loader": "^0.28.7",
     "deep-assign": "^2.0.0",
     "deepmerge": "^2.1.0",
+    "detect-port": "^1.2.3",
     "file-loader": "^1.1.11",
     "gulp": "^3.9.1",
     "html-webpack-plugin": "^3.2.0",
     "http-proxy-middleware": "^0.18.0",
     "ice-skin-loader": "^0.1.2",
+    "inquirer": "^5.2.0",
     "less": "^3.0.4",
     "less-loader": "^4.0.5",
     "lodash": "^4.17.10",
