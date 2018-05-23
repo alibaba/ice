@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from '@icedesign/base';
+import { enquireScreen } from 'enquire-js';
 
 export default class FeatureList extends Component {
   static displayName = 'FeatureList';
@@ -10,14 +11,42 @@ export default class FeatureList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isMobile: false,
+    };
   }
 
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 750px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
+
   render() {
+    const { isMobile } = this.state;
+
     return (
-      <div style={styles.wrapper}>
+      <div
+        style={{
+          ...styles.wrapper,
+          ...(isMobile ? styles.wrapperMobile : {}),
+        }}
+      >
         <div style={styles.contentWrapper}>
-          <div style={styles.titleWrapper}>
+          <div
+            style={{
+              ...styles.titleWrapper,
+              ...(isMobile ? styles.titleWrapperMobile : {}),
+            }}
+          >
             <h3 style={styles.title}>设计语言</h3>
             <div style={styles.titleLine}>
               <div style={styles.titleHighlightLine} />
@@ -40,7 +69,7 @@ export default class FeatureList extends Component {
               <img
                 src="https://img.alicdn.com/tfs/TB1PnOuik9WBuNjSspeXXaz5VXa-180-146.png"
                 alt=""
-                style={{ width: 90, height: 73 }}
+                style={{ width: 90, height: 73, marginBottom: 12 }}
               />
               <h4 style={styles.featureTitle}>视觉趋势</h4>
               <p style={styles.featureDesc}>突出色彩 图像辅助</p>
@@ -49,7 +78,7 @@ export default class FeatureList extends Component {
               <img
                 src="https://img.alicdn.com/tfs/TB1GUF9ibSYBuNjSspiXXXNzpXa-160-136.png"
                 alt=""
-                style={{ width: 80, height: 68 }}
+                style={{ width: 80, height: 68, marginBottom: 17 }}
               />
               <h4 style={styles.featureTitle}>模块兼容</h4>
               <p style={styles.featureDesc}>模块结构 设计兼容</p>
@@ -66,7 +95,12 @@ export default class FeatureList extends Component {
             </Button>
           </div>
         </div>
-        <div style={styles.clipBackground} />
+        <div
+          style={{
+            ...styles.clipBackground,
+            ...(isMobile ? styles.clipBackgroundMobile : {}),
+          }}
+        />
       </div>
     );
   }
@@ -78,6 +112,11 @@ const styles = {
     overflow: 'hidden',
     height: 690,
   },
+  wrapperMobile: {
+    marginTop: 0,
+    height: 'auto',
+    padding: '0 0 30px 0',
+  },
   contentWrapper: {
     position: 'relative',
     zIndex: 1,
@@ -88,6 +127,9 @@ const styles = {
   },
   titleWrapper: {
     marginTop: 120,
+  },
+  titleWrapperMobile: {
+    marginTop: 20,
   },
   titleLine: {
     width: 140,
@@ -110,7 +152,8 @@ const styles = {
     fontSize: 16,
     lineHeight: 1.5,
     marginTop: 24,
-    width: 525,
+    maxWidth: 525,
+    width: '80%',
     textAlign: 'center',
   },
   featureListWrapper: {
@@ -152,5 +195,8 @@ const styles = {
     right: 0,
     background: '#fff',
     clipPath: 'polygon(0 15%, 100% 0, 100% 85%, 0% 100%)',
+  },
+  clipBackgroundMobile: {
+    clipPath: 'none',
   },
 };
