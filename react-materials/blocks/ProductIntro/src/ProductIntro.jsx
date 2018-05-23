@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Grid } from '@icedesign/base';
-import { join } from 'path';
-import { Link } from 'react-router';
 import { enquireScreen } from 'enquire-js';
 
 const { Row, Col } = Grid;
