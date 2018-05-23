@@ -49,7 +49,9 @@ module.exports = function getWebpackConfigBasic(
     output: Object.assign(
       {
         path: paths.appBuild,
-        filename: 'js/[name].chunk.js',
+        filename: process.env.BUILD_HASH
+          ? 'js/[name].[hash:6].js'
+          : 'js/[name].js',
         publicPath: paths.servedPath,
       },
       buildConfig.output || {}
@@ -76,6 +78,7 @@ module.exports = function getWebpackConfigBasic(
             test: /[\\/]node_modules[\\/]/,
             name: 'vendor',
             chunks: 'all',
+            minChunks: 2,
           },
         },
       },

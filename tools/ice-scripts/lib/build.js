@@ -15,10 +15,7 @@ const getEntries = require('./config/getEntry');
 const getWebpackConfigProd = require('./config/webpack.config.prod');
 const npmInstall = require('./helpers/npmInstall');
 
-module.exports = function(args = {}) {
-  if (args.debug) {
-    process.env.BUILD_DEBUG = true;
-  }
+module.exports = function() {
   const cwd = process.cwd();
   const paths = getPaths(cwd);
   const entries = getEntries(cwd);
