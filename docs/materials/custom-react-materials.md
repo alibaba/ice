@@ -212,21 +212,23 @@ $ ice-devtools add
 
 ```
 .
-├── README.md
-├── package.json
-├── public
-│   └── index.html
-└── src
-    ├── assets        // 资源
-    ├── components    // 组件
-    ├── index.js      // 入口文件
-    ├── layouts       // 布局
-    ├── navs.js       // 菜单配置
-    ├── pages         // 页面
-    │   └── Home
-    │       ├── Home.jsx
-    │       └── index.js
-    └── routes.jsx    // 路由
+├── mock             // 模拟数据
+├── public           // 静态资源
+├── src
+│   ├── components   // 公共组件
+│   ├── layouts      // 通用布局
+│   ├── pages        // 页面
+│   ├── index.js     // 应用入口
+│   ├── menuConfig   // 导航配置
+│   ├── routerConfig // 路由配置
+│   └── router.jsx   // 路由入口
+├── tests            // 测试
+├── .gitignore       // git 忽略目录配置
+├── .editorconfig    // 代码风格配置
+├── .eslintignore    // eslint 忽略目录配置
+├── .eslintrc        // eslint 配置
+├── package.json     // package.json
+└── README.md        // 项目说明
 ```
 
 ### 开发调试
