@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from '@icedesign/base';
+import { enquireScreen } from 'enquire-js';
 
 const brandlist = [
   'https://img.alicdn.com/tfs/TB14.LkieuSBuNjy1XcXXcYjFXa-226-78.png',
@@ -21,19 +22,40 @@ const brandlist = [
 export default class BrandList extends Component {
   static displayName = 'BrandList';
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isMobile: false,
+    };
   }
 
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
+
   render() {
+    const { isMobile } = this.state;
+
     return (
-      <div style={styles.wrapper}>
-        <div style={styles.titleWrapper}>
+      <div
+        style={{ ...styles.wrapper, ...(isMobile ? styles.wrapperMobile : {}) }}
+      >
+        <div
+          style={{
+            ...styles.titleWrapper,
+            ...(isMobile ? styles.titleWrapperMobile : {}),
+          }}
+        >
           <h3 style={styles.title}>专业的选择</h3>
           <div style={styles.titleLine}>
             <div style={styles.titleHighlightLine} />
@@ -73,8 +95,17 @@ const styles = {
     alignItems: 'center',
     paddingBottom: 60,
   },
+  wrapperMobile: {
+    marginTop: 0,
+    height: 'auto',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
   titleWrapper: {
     marginTop: 60,
+  },
+  titleWrapperMobile: {
+    marginTop: 0,
   },
   titleLine: {
     width: 140,
