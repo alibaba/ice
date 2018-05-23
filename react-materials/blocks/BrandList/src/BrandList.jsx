@@ -97,7 +97,8 @@ const styles = {
     fontSize: 16,
     lineHeight: 1.5,
     marginTop: 24,
-    width: 525,
+    maxWidth: 525,
+    width: '80%',
     textAlign: 'center',
   },
   brandListWrapper: {
