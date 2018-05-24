@@ -1,0 +1,37 @@
+{
+  "name": "@vue-materials/review-request-table-block",
+  "version": "1.0.0",
+  "description": "评价邀请表",
+  "author": "creanme <354527050@qq.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "vue",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@vue-materials/basic-container": "^1.0.0",
+    "vue": "^2.5.16"
+  },
+  "blockConfig": {
+    "name": "review-request-table",
+    "title": "评价邀请表",
+    "categories": [
+        "表格",
+        "信息展示"
+    ],
+    "screenshot": ""
+  }
+}
