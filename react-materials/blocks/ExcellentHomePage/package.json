@@ -1,0 +1,37 @@
+{
+  "name": "@react-materials/excellent-home-page-block",
+  "version": "0.1.0",
+  "description": "home page block",
+  "author": "zhuoling.lcl@alibaba-inc.com",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.1",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "excellent-home-page",
+    "title": "excellent home page",
+    "categories": [
+      "欢迎页"
+    ],
+    "screenshot": ""
+  }
+}
