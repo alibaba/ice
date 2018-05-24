@@ -43,19 +43,16 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
    */
   getOpenKeys = () => {
     const { match } = this.props;
-    const matched = match.path;
+    const matched = match.url;
     let openKeys = [];
 
     Array.isArray(asideMenuConfig) &&
       asideMenuConfig.forEach((item, index) => {
-        if (
-          matched.startsWith(item.path) &&
-          item.children &&
-          item.children.length
-        ) {
+        if (matched.startsWith(item.path)) {
           openKeys = [`${index}`];
         }
       });
+
     return openKeys;
   };
 
@@ -83,7 +80,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
             <Logo style={styles.logoText} />
           </div>
           <Menu
-            style={{ width: 256 }}
+            style={{ width: 240 }}
             mode="inline"
             selectedKeys={[pathname]}
             openKeys={this.state.openKeys}
@@ -159,6 +156,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
           {/* 主体内容 */}
           <Layout.Main scrollable style={{ paddingRight: 20, paddingTop: 20 }}>
             {this.props.children}
+
             <Footer />
           </Layout.Main>
         </Layout.Section>
@@ -170,6 +168,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 const styles = {
   logo: {
     padding: '10px 15px',
+    background: '#002140',
   },
   logoText: {
     textAlign: 'center',
