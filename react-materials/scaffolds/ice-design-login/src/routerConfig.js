@@ -6,6 +6,7 @@ import BlankLayout from './layouts/BlankLayout';
 import UserLayout from './layouts/UserLayout';
 import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
+import UserForgetPassword from './pages/UserForgetPassword';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
@@ -18,6 +19,11 @@ const routerConfig = [
     path: '/register',
     layout: UserLayout,
     component: UserRegister,
+  },
+  {
+    path: '/forgetpassword',
+    layout: UserLayout,
+    component: UserForgetPassword,
   },
   {
     path: '*',

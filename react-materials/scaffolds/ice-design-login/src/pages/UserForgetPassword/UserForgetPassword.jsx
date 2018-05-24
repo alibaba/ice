@@ -1,7 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Grid, Feedback } from '@icedesign/base';
+import { Input, Button, Grid, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -11,8 +10,8 @@ import IceIcon from '@icedesign/icon';
 
 const { Row, Col } = Grid;
 
-export default class UserLogin extends Component {
-  static displayName = 'UserLogin';
+export default class UserForgetPassword extends Component {
+  static displayName = 'UserForgetPassword';
 
   static propTypes = {};
 
@@ -23,8 +22,7 @@ export default class UserLogin extends Component {
     this.state = {
       value: {
         name: '',
-        password: '',
-        checkbox: false,
+        email: '',
       },
     };
   }
@@ -43,16 +41,16 @@ export default class UserLogin extends Component {
         return;
       }
       console.log('values:', values);
-      Feedback.toast.success('登录成功');
-      // 登录成功后做对应的逻辑处理
+      Feedback.toast.success('请查看邮件重设密码');
+      // 成功后做对应的逻辑处理
     });
   };
 
   render() {
     return (
-      <div className="user-login">
+      <div className="user-forget-password">
         <div className="formContainer">
-          <h4 className="formTitle">登 录</h4>
+          <h4 className="formTitle">忘记密码</h4>
           <IceFormBinderWrapper
             value={this.state.value}
             onChange={this.formChange}
@@ -73,25 +71,18 @@ export default class UserLogin extends Component {
 
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <IceIcon type="lock" size="small" className="inputIcon" />
-                  <IceFormBinder name="password" required message="必填">
-                    <Input
-                      size="large"
-                      htmlType="password"
-                      placeholder="密码"
-                    />
+                  <IceIcon type="mail" size="small" className="inputIcon" />
+                  <IceFormBinder
+                    type="email"
+                    name="email"
+                    required
+                    message="请输入正确的邮箱"
+                  >
+                    <Input size="large" maxLength={20} placeholder="邮箱" />
                   </IceFormBinder>
                 </Col>
                 <Col>
-                  <IceFormError name="password" />
-                </Col>
-              </Row>
-
-              <Row className="formItem">
-                <Col>
-                  <IceFormBinder name="checkbox">
-                    <Checkbox className="checkbox">记住账号</Checkbox>
-                  </IceFormBinder>
+                  <IceFormError name="email" />
                 </Col>
               </Row>
 
@@ -101,18 +92,12 @@ export default class UserLogin extends Component {
                   onClick={this.handleSubmit}
                   className="submitBtn"
                 >
-                  登 录
+                  找回密码
                 </Button>
               </Row>
 
               <Row className="tips">
-                <Link to="/register" className="tips-text">
-                  立即注册
-                </Link>
-                <span className="line">|</span>
-                <Link to="/forgetpassword" className="tips-text">
-                  忘记密码
-                </Link>
+                <div className="tips-text">通过用户名和电子邮件重设密码</div>
               </Row>
             </div>
           </IceFormBinderWrapper>
