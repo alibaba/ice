@@ -35,20 +35,10 @@ export default class PlatformJoinUs extends Component {
             </p>
           </div>
           <div style={styles.buttons}>
-            <Button
-              style={styles.secondaryButton}
-              type="normal"
-              component="a"
-              href="your-url"
-            >
+            <Button style={styles.secondaryButton} type="normal">
               开通
             </Button>
-            <Button
-              style={styles.primaryButton}
-              type="primary"
-              component="a"
-              href="your-url"
-            >
+            <Button style={styles.primaryButton} type="primary">
               登录
             </Button>
           </div>
