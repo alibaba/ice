@@ -53,6 +53,7 @@ body {
     /* HEADER */
     .ice-design-layout-header {
       width: 100%;
+      min-width: 1080px;
       padding: 10px 20px;
       display: flex;
       justify-content: flex-end;
@@ -258,6 +259,7 @@ body {
 
     /* MAIN */
     .ice-layout-main {
+      min-width: 1080px;
       padding: 0 0 0 20px;
       overflow: hidden;
     }
