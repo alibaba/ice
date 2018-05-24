@@ -17,7 +17,7 @@ const detect = require('detect-port');
 const inquirer = require('inquirer');
 
 const isInteractive = process.stdout.isTTY;
-const DEFAULT_PORT = program.port || process.env.PORT || 3333;
+const DEFAULT_PORT = program.port || process.env.PORT || 4444;
 const HOST = program.host || process.env.HOST || '0.0.0.0';
 
 const defaultPort = parseInt(DEFAULT_PORT, 10);
