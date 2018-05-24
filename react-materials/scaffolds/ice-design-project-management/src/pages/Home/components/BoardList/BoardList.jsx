@@ -62,6 +62,12 @@ export default class App extends Component {
         },
         {
           id: '4',
+          title: '以后再做',
+          label: '0/0',
+          cards: [],
+        },
+        {
+          id: '5',
           title: '已归档',
           label: '0/0',
           cards: [],
@@ -69,24 +75,16 @@ export default class App extends Component {
       ],
     };
     return (
-      <div style={styles.boardList}>
-        <Board
-          style={{ background: '#eee', padding: '12px' }}
-          data={data}
-          draggable
-          collapsibleLanes
-          handleDragStart={this.handleDragStart}
-          handleDragEnd={this.handleDragEnd}
-          onDataChange={this.shouldReceiveNewData}
-          onCardAdd={this.handleCardAdd}
-        />
-      </div>
+      <Board
+        style={{ background: '#eee', padding: '12px' }}
+        data={data}
+        draggable
+        collapsibleLanes
+        handleDragStart={this.handleDragStart}
+        handleDragEnd={this.handleDragEnd}
+        onDataChange={this.shouldReceiveNewData}
+        onCardAdd={this.handleCardAdd}
+      />
     );
   }
 }
-
-const styles = {
-  boardList: {
-    width: '100%',
-  },
-};
