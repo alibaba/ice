@@ -29,10 +29,9 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: '50px',
-    padding: '0 20px',
+    padding: '13px 20px',
     background: '#fff',
-    zIndex: '999999',
+    zIndex: '999',
   },
   title: {
     fontWeight: '500',
