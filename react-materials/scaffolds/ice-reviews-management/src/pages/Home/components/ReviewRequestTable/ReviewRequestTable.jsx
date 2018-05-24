@@ -153,8 +153,12 @@ export default class ReviewRequestTable extends Component {
     );
   };
 
-  renderStatus = (value, index, record) => {
-    return <span style={{ color: statusColors[value] }}>{value}</span>;
+  renderStatus = (value) => {
+    return (
+      <span style={{ ...styles.statusBtn, background: statusColors[value] }}>
+        {value}
+      </span>
+    );
   };
 
   render() {
@@ -191,5 +195,13 @@ const styles = {
   avatar: {
     borderRadius: '40px',
     display: 'block',
+  },
+  statusBtn: {
+    display: 'inline-block',
+    width: '76px',
+    padding: '8px 10px',
+    borderRadius: '4px',
+    color: '#fff',
+    textAlign: 'center',
   },
 };
