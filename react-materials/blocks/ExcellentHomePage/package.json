@@ -1,7 +1,7 @@
 {
   "name": "@react-materials/excellent-home-page-block",
   "version": "0.1.0",
-  "description": "home page block",
+  "description": "简洁大气首页",
   "author": "zhuoling.lcl@alibaba-inc.com",
   "files": [
     "src/",
@@ -28,7 +28,7 @@
   },
   "blockConfig": {
     "name": "excellent-home-page",
-    "title": "excellent home page",
+    "title": "简洁大气首页",
     "categories": [
       "欢迎页"
     ],

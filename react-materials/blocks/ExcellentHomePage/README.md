@@ -1,6 +1,6 @@
 # excellent-home-page
 
-简介：excellent home page
+简介：简洁大气首页
 
 home page block
 
