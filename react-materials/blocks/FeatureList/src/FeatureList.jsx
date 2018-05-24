@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Button } from '@icedesign/base';
+import { Button, Grid } from '@icedesign/base';
 import { enquireScreen } from 'enquire-js';
+
+const { Row, Col } = Grid;
 
 export default class FeatureList extends Component {
   static displayName = 'FeatureList';
@@ -55,35 +57,42 @@ export default class FeatureList extends Component {
           <p style={styles.desc}>
             突破传统平台产品设计风格束缚，新的探索尝试，启发传统设计认知结合设计趋势，衍生全新平台产品设计语言
           </p>
-          <div style={styles.featureListWrapper}>
-            <div style={styles.featureItem}>
-              <img
-                src="https://img.alicdn.com/tfs/TB1b7O4if5TBuNjSspmXXaDRVXa-172-170.png"
-                alt=""
-                style={{ width: 86, height: 85 }}
-              />
-              <h4 style={styles.featureTitle}>凸显内容</h4>
-              <p style={styles.featureDesc}>体现层次 弱化分割</p>
-            </div>
-            <div style={styles.featureItem}>
-              <img
-                src="https://img.alicdn.com/tfs/TB1PnOuik9WBuNjSspeXXaz5VXa-180-146.png"
-                alt=""
-                style={{ width: 90, height: 73, marginBottom: 12 }}
-              />
-              <h4 style={styles.featureTitle}>视觉趋势</h4>
-              <p style={styles.featureDesc}>突出色彩 图像辅助</p>
-            </div>
-            <div style={styles.featureItem}>
-              <img
-                src="https://img.alicdn.com/tfs/TB1GUF9ibSYBuNjSspiXXXNzpXa-160-136.png"
-                alt=""
-                style={{ width: 80, height: 68, marginBottom: 17 }}
-              />
-              <h4 style={styles.featureTitle}>模块兼容</h4>
-              <p style={styles.featureDesc}>模块结构 设计兼容</p>
-            </div>
-          </div>
+
+          <Row wrap style={styles.featureListWrapper}>
+            <Col xs="8" xxs="24">
+              <div style={styles.featureItem}>
+                <img
+                  src="https://img.alicdn.com/tfs/TB1b7O4if5TBuNjSspmXXaDRVXa-172-170.png"
+                  alt=""
+                  style={{ width: 86, height: 85 }}
+                />
+                <h4 style={styles.featureTitle}>凸显内容</h4>
+                <p style={styles.featureDesc}>体现层次 弱化分割</p>
+              </div>
+            </Col>
+            <Col xs="8" xxs="24">
+              <div style={styles.featureItem}>
+                <img
+                  src="https://img.alicdn.com/tfs/TB1PnOuik9WBuNjSspeXXaz5VXa-180-146.png"
+                  alt=""
+                  style={{ width: 90, height: 73, marginBottom: 12 }}
+                />
+                <h4 style={styles.featureTitle}>视觉趋势</h4>
+                <p style={styles.featureDesc}>突出色彩 图像辅助</p>
+              </div>
+            </Col>
+            <Col xs="8" xxs="24">
+              <div style={styles.featureItem}>
+                <img
+                  src="https://img.alicdn.com/tfs/TB1GUF9ibSYBuNjSspiXXXNzpXa-160-136.png"
+                  alt=""
+                  style={{ width: 80, height: 68, marginBottom: 17 }}
+                />
+                <h4 style={styles.featureTitle}>模块兼容</h4>
+                <p style={styles.featureDesc}>模块结构 设计兼容</p>
+              </div>
+            </Col>
+          </Row>
           <div style={styles.extraInfo}>
             <Button
               component="a"
@@ -153,13 +162,10 @@ const styles = {
     lineHeight: 1.5,
     marginTop: 24,
     maxWidth: 525,
-    width: '80%',
+    width: '90%',
     textAlign: 'center',
   },
   featureListWrapper: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
     marginTop: 60,
     maxWidth: 960,
     width: '100%',
@@ -169,6 +175,7 @@ const styles = {
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
+    marginBottom: 20,
   },
   featureTitle: {
     marginTop: 35,
@@ -182,7 +189,7 @@ const styles = {
     marginBottom: 0,
   },
   extraButton: {
-    marginTop: 50,
+    marginTop: 30,
     borderColor: '#3080FE',
     background: 'transparent',
     color: '#3080FE',
