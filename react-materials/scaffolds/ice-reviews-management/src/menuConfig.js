@@ -27,26 +27,44 @@ const headerMenuConfig = [
 
 const asideMenuConfig = [
   {
-    name: '平台概况',
+    name: 'Dashboard',
     path: '/',
     icon: 'home',
-  },
-  {
-    name: '评论信息',
-    path: '/reviews',
-    icon: 'message',
+    children: [
+      {
+        name: '平台概况',
+        path: '/',
+      },
+      {
+        name: '数据监控',
+        path: '/monitor',
+      },
+    ],
   },
   {
     name: '客户信息',
-    path: '/customer',
+    path: '/message',
     icon: 'yonghu',
+    children: [
+      {
+        name: '评论信息',
+        path: '/message/comment',
+      },
+      {
+        name: '客户反馈',
+        path: '/message/feedback',
+      },
+    ],
   },
   {
     name: '通用设置',
     path: '/setting',
     icon: 'shezhi',
     children: [
-      { name: '基础设置', path: '/setting/basic' },
+      {
+        name: '基础设置',
+        path: '/setting/basic',
+      },
       {
         name: '菜单设置',
         path: '/setting/navigation',
