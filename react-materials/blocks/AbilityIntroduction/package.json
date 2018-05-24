@@ -1,7 +1,7 @@
 {
   "name": "@react-materials/ability-introduction-block",
   "version": "0.1.0",
-  "description": "ablilty-introduction",
+  "description": "产品能力介绍",
   "author": "wssgcg1213 <i@zeroling.com>",
   "files": [
     "src/",
@@ -28,7 +28,7 @@
   },
   "blockConfig": {
     "name": "ability-introduction",
-    "title": "ablilty introduction",
+    "title": "产品能力介绍",
     "categories": [
       "信息展示"
     ],
