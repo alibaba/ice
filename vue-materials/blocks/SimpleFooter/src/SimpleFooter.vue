@@ -46,6 +46,7 @@ export default {
 @import '~normalize.css/normalize.css';
 
 .simple-footer {
+  overflow: hidden;
   .footer-row {
     display: flex;
     justify-content: space-between;
@@ -61,13 +62,12 @@ export default {
       &-item {
         list-style: none;
         margin-right: 20px;
-        color: rgba(0, 0, 0, 0.87);
         &:last-child {
           margin-right: 0;
         }
         & > a {
           text-decoration: none;
-          color: #333;
+          color: rgba(0, 0, 0, 0.87);
         }
       }
     }
