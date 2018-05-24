@@ -4,4 +4,4 @@
 
 评价邀请表格
 
-![截图](https://img.alicdn.com/tfs/TB186OHr7yWBuNjy0FpXXassXXa-1866-1122.png)
+![截图](https://img.alicdn.com/tfs/TB1YLe7sTtYBeNjy1XdXXXXyVXa-2108-1120.png)

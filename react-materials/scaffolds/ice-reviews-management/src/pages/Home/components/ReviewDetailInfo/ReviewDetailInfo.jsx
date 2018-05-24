@@ -202,10 +202,12 @@ const styles = {
     justifyContent: 'space-between',
   },
   reviewLeaderboardItemAvatar: {
+    borderRadius: '50%',
+    overflow: 'hidden',
+    display: 'inline-block',
     marginRight: 15,
   },
   reviewLeaderboardItemAvatarImg: {
-    borderRadius: '50%',
     display: 'block',
   },
   reviewLeaderboardItemName: {
