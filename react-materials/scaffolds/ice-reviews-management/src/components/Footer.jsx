@@ -16,7 +16,7 @@ export default class Footer extends PureComponent {
       >
         <div className="ice-design-layout-footer-body">
           <div style={{ filter: 'grayscale(100%)', opacity: 0.3 }}>
-            <Logo />
+            <Logo color="#666" />
           </div>
           <div className="copyright">
             © 2018 Theme designed by{' '}

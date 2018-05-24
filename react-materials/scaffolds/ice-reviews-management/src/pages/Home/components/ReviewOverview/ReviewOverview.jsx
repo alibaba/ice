@@ -186,7 +186,7 @@ const styles = {
   overviewDetailItem: {
     display: 'flex',
     alignItems: 'center',
-    marginTop: 5,
+    marginTop: 10,
   },
   overviewDetailItemPercentWrapper: {
     flex: 1,

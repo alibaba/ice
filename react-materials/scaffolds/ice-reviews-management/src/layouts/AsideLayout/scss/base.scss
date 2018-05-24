@@ -10,13 +10,17 @@ body {
     max-width: 340px;
     height: 42px;
     line-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .logo-text {
       display: block;
-      width: 100%;
+      max-width: 120px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-size: 36px;
+      margin-left: 10px;
+      font-size: 28px;
       color: $ice-logo-text-color;
       font-weight: bold;
       font-family: Helvetica, sans-serif;
@@ -53,7 +57,7 @@ body {
     /* HEADER */
     .ice-design-layout-header {
       width: 100%;
-      min-width: 1080px;
+      min-width: 430px;
       padding: 10px 20px;
       display: flex;
       justify-content: flex-end;
@@ -113,13 +117,22 @@ body {
         }
       }
 
+      .ice-menu.ice-menu-root {
+        padding: 16px 0;
+      }
+
+      .ice-menu-inline.ice-menu-sub {
+        background: #000c17;
+      }
+
       .ice-menu.ice-menu-root.ice-menu-inline
         > .ice-menu-submenu
         > .ice-menu-submenu-title,
       .ice-menu.ice-menu-root.ice-menu-inline > .ice-menu-item {
         margin-bottom: 1px;
         color: $ice-aside-text-color;
-        font-weight: bold;
+        font-weight: 400;
+        font-size: 14px;
       }
 
       .ice-menu.ice-menu-root .ice-menu-inline > .ice-menu-item {
@@ -259,7 +272,7 @@ body {
 
     /* MAIN */
     .ice-layout-main {
-      min-width: 1080px;
+      min-width: 430px;
       padding: 0 0 0 20px;
       overflow: hidden;
     }
@@ -267,12 +280,16 @@ body {
 
   /* FOOTER */
   .ice-design-layout-footer {
-    margin: 0 auto;
+    width: 100%;
     .ice-design-layout-footer-body {
+      padding: 0 20px;
       margin: 20px auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      .logo .logo-text {
+        color: #3080fe;
+      }
       .copyright {
         color: $ice-copyright-text-color;
         line-height: 1.5;
