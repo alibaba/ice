@@ -10,7 +10,7 @@ body {
 
 .ice-design-header-aside-footer-layout {
   .logo {
-    max-width: 68px;
+    max-width: 72px;
     height: 64px;
     line-height: 64px;
     .logo-text {
@@ -99,10 +99,14 @@ body {
           transition: height 0.5s, transform 0.5s;
           transition: height 0.5s, transform 0.5s, -webkit-transform 0.5s;
         }
+      }
+
+      .custom-menu-sub-menu {
         &:hover {
           .custom-menu-item-icon {
             opacity: 1;
             transform: translateY(-10px);
+            margin-top: 20px;
           }
           .custom-menu-item-text {
             height: auto;
@@ -115,6 +119,7 @@ body {
         > .ice-menu-submenu
         > .ice-menu-submenu-title,
       .ice-menu.ice-menu-root.ice-menu-inline > .ice-menu-item {
+        padding: 0 24px;
         margin-bottom: 1px;
         color: $ice-aside-text-color;
         font-weight: bold;

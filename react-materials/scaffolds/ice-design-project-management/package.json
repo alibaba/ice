@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/project-management-scaffold",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description":
     "该模板适用于项目类管理后台，采用三栏布局方式，模板内置了类似 trello 任务管理的卡片区块",
   "author": "ice-admin@alibaba-inc.com",
