@@ -4,4 +4,4 @@
 
 产品能力介绍
 
-![截图](https://gw.alicdn.com/tfs/TB151oVteuSBuNjy1XcXXcYjFXa-2508-1248.png)
+![截图](https://gw.alicdn.com/tfs/TB1T_OutDtYBeNjy1XdXXXXyVXa-2458-1186.png)

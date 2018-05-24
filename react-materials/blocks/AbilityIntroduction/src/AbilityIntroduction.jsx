@@ -7,7 +7,7 @@ const abilities = [
   {
     icon: 'https://gw.alicdn.com/tfs/TB1BY1osGmWBuNjy1XaXXXCbXXa-320-316.png',
     title: '框架',
-    content: '熟悉的社区开发模式，彻底的组件化能力补充文字补充文字补充',
+    content: '熟悉的社区开发模式，彻底的组件化能力',
     link: '/framework/',
   },
   {
@@ -19,7 +19,7 @@ const abilities = [
   {
     icon: 'https://gw.alicdn.com/tfs/TB1uzsTsv9TBuNjy0FcXXbeiFXa-320-316.png',
     title: 'API',
-    content: '手机淘宝能力支持和保障补充文字补充文字补充文字补充文字',
+    content: '手机淘宝能力支持和保障',
     link: '/api/',
   },
 ];
