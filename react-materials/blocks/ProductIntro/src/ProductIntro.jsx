@@ -35,7 +35,9 @@ export default class ProductIntro extends Component {
   render() {
     const { isMobile } = this.state;
     return (
-      <div style={styles.wrapper}>
+      <div
+        style={{ ...styles.wrapper, ...(isMobile ? styles.wrapperMobile : {}) }}
+      >
         <div
           style={{
             ...styles.productContent,
@@ -70,8 +72,7 @@ export default class ProductIntro extends Component {
             <Col s="14" xxs="24">
               <div style={styles.productSnapshot}>
                 <img
-                  width={696}
-                  height={527}
+                  style={styles.productSnapshotImg}
                   src="https://img.alicdn.com/tfs/TB1SbvpgQyWBuNjy0FpXXassXXa-1392-1054.png"
                   alt=""
                 />
@@ -95,6 +96,10 @@ const styles = {
     position: 'relative',
     overflow: 'hidden',
     height: 690,
+  },
+  wrapperMobile: {
+    height: 'auto',
+    paddingBottom: 20,
   },
   productContent: {
     position: 'relative',

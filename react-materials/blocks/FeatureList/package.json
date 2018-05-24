@@ -30,7 +30,7 @@
     "prepublish": "ice block build"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.1",
     "@icedesign/container": "^0.1.1",
     "enquire-js": "^0.2.1",
     "prop-types": "^15.5.8"
