@@ -23,7 +23,7 @@ export default class UserRegister extends Component {
     super(props);
     this.state = {
       value: {
-        username: '',
+        name: '',
         email: '',
         passwd: '',
         rePasswd: '',
@@ -87,7 +87,7 @@ export default class UserRegister extends Component {
                 <Col className="formItemCol">
                   <IceIcon type="person" size="small" className="inputIcon" />
                   <IceFormBinder
-                    name="username"
+                    name="name"
                     required
                     message="请输入正确的用户名"
                   >
@@ -95,7 +95,7 @@ export default class UserRegister extends Component {
                   </IceFormBinder>
                 </Col>
                 <Col>
-                  <IceFormError name="username" />
+                  <IceFormError name="name" />
                 </Col>
               </Row>
 
@@ -174,7 +174,7 @@ export default class UserRegister extends Component {
               </Row>
 
               <Row className="tips">
-                <a href="/" className="link">
+                <a href="/" className="tips-text">
                   使用已有账户登录
                 </a>
               </Row>
