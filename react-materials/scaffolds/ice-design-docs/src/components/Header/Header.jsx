@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Menu from '@icedesign/menu';
+import { Link } from 'react-router-dom';
 import { headerMenuConfig } from '../../menuConfig';
 import Logo from '../Logo';
 import './Header.scss';
@@ -9,7 +10,7 @@ export default class Header extends Component {
     return headerMenuConfig.map((menu, index) => {
       return (
         <Menu.Item key={index}>
-          <a href={menu.path}>{menu.name}</a>
+          <Link to={menu.path}>{menu.name}</Link>
         </Menu.Item>
       );
     });
