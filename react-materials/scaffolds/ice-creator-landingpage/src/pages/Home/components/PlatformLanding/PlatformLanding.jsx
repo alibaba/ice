@@ -26,20 +26,10 @@ export default class PlatformLanding extends Component {
             在人工智能将替代一切的未来<br />唯有内容的创作无可替代
           </h2>
           <div style={styles.buttons}>
-            <Button
-              style={styles.secondaryButton}
-              type="normal"
-              component="a"
-              href="your-url"
-            >
+            <Button style={styles.secondaryButton} type="normal">
               开通
             </Button>
-            <Button
-              style={styles.primaryButton}
-              type="primary"
-              component="a"
-              href="your-url"
-            >
+            <Button style={styles.primaryButton} type="primary">
               登录
             </Button>
           </div>

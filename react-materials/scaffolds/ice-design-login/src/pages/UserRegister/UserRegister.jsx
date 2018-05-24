@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { Input, Button, Grid, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
@@ -174,9 +174,9 @@ export default class UserRegister extends Component {
               </Row>
 
               <Row className="tips">
-                <a href="/" className="tips-text">
+                <Link to="/" className="tips-text">
                   使用已有账户登录
-                </a>
+                </Link>
               </Row>
             </div>
           </IceFormBinderWrapper>
