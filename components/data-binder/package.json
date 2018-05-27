@@ -25,10 +25,10 @@
     "ice-component"
   ],
   "dependencies": {
+    "@icedesign/base": "^0.1.4",
     "axios": "^0.17.1",
     "deepmerge": "^2.0.1",
-    "pure-render-decorator": "^1.2.1",
-    "@icedesign/base": "^0.1.0"
+    "pure-render-decorator": "^1.2.1"
   },
   "devDependencies": {
     "@icedesign/skin": "^0.1.2",
@@ -43,5 +43,11 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-jsx-a11y": "^6.0.3"
   },
-  "typings": "lib/index.d.ts"
+  "typings": "lib/index.d.ts",
+  "fusionConfig": {
+    "docs": "demo/",
+    "variable": "lib/scss/variable.scss",
+    "entry": "lib/index.scss",
+    "deps": []
+  }
 }
