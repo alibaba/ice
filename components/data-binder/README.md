@@ -115,22 +115,22 @@ DataBinder 除了为组件添加一个 props 之外，还向组件内部注入�
     type: 'post',
     data: {
       page: 1,
-      pageSize: 10
+      pageSize: 10,
     },
     defaultBindingData: {
       page: 1,
       pageSize: 10,
       total: 0,
-      lists: []
-    }
-  }
+      lists: [],
+    },
+  },
 })
 class ListView extends Component {
-  changePage = pageNo => {
+  changePage = (pageNo) => {
     this.props.updateBindingData('accountTable', {
       data: {
-        page: pageNo
-      }
+        page: pageNo,
+      },
     });
   };
 
@@ -193,9 +193,9 @@ import { Loading } from '@alife/next';
     // 接口返回数据：{status: 'SUCCESS', data: {foo: 'bar'}}
     url: '/getdefaultBindingData.json',
     defaultBindingData: {
-      foo: null
-    }
-  }
+      foo: null,
+    },
+  },
 })
 class ListView extends Component {
   componentDidMount() {
@@ -247,16 +247,16 @@ class ListView extends Component {
       // 做一些数据转换
       const newRes = {
         status: res.code !== 0 ? 'SUCCESS' : 'ERROR',
-        message: res.successMsg
+        message: res.successMsg,
       };
       // 回传给处理函数
       // 不做回传处理会导致数据更新逻辑中断
       responseHandler(newRes, originResponse);
     },
     defaultBindingData: {
-      foo: 'bar'
-    }
-  }
+      foo: 'bar',
+    },
+  },
 })
 class ListView extends React.Component {
   render() {
@@ -271,7 +271,7 @@ class ListView extends React.Component {
 * `responseFormatter` 用来做老接口数据转换用，老接口如果不按照现有模式需要进行一层数据转换处理。
 * `defaultBindingData` 内容为接口对应字段的默认数据，在 render 中使用 `this.props.bindingData` 获取。
 
-## API
+## 接口 API
 
 以下 API 会注入到 Class 中，通过 `this.props.xxxx` 的方式调用。
 
@@ -304,7 +304,7 @@ class ListView extends React.Component {
 
 ## 常见需求
 
-## 发送数组类型数据，key 自动加了 `[]` 怎么办？
+#### 发送数组类型数据，key 自动加了 `[]` 怎么办？
 
 当你传输的 data 中有个 key 数据（例如：items）为数组格式时，提交给后端 key 会自动添加 `[]`（例如：items[]=xxx、items[]=yyy）。如果你不需要这种功能，希望使用原本的 key 进行提交，可以添加下面配置解决：
 
@@ -314,11 +314,11 @@ class ListView extends React.Component {
 }
 ```
 
-### 接口是老版本接口，不符合 DataBinder 接口协议如何处理？
+#### 接口是老版本接口，不符合 DataBinder 接口协议如何处理？
 
 配置 DataSource 时，添加 `responseFormatter` 配置进行数据处理，然后返回符合规范的数据。
 
-### 自定义请求成功、失败的提示和逻辑
+#### 自定义请求成功、失败的提示和逻辑
 
 在 DataSource 配置部分自定义 success、error callback 实现，以 success 为例：
 
@@ -343,7 +343,7 @@ class ...
 
 error callback 的参数和逻辑同 success。
 
-### 0.3.x -> 0.4.x 的变更
+#### 0.3.x -> 0.4.x 的变更
 
 1.  response 的格式修改，通过使用 status: 'SUCCESS' 来判断是否请求成功，更具扩展性。
 2.  底层 AJAX 请求包从 kissy-io 更换成社区最为流行的包 [axios](https://github.com/axios/axios) 部分用法需要注意：
@@ -351,7 +351,7 @@ error callback 的参数和逻辑同 success。
 * 指定请求类型，从 type: 'get' 换成了更为标准的 method: 'get'
 * 对于 get 类型的请求，传递参数使用 params: { page: 1 }。而对于 post 类型的请求，传递参数则需要使用 data: { page: 1 } 更加贴合 HTTP 请求规范中的概念
 
-### 0.4.x -> 0.5.x 的变更
+#### 0.4.x -> 0.5.x 的变更
 
 1.  返回参数字段标准变更为
 

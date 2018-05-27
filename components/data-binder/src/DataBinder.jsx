@@ -244,6 +244,7 @@ export default function dataBinder(options) {
             getDataSource={this.getDataSource}
             updateBindingData={this.updateBindingData}
             bindingData={this.state}
+            updateStateWithDataSource={this.updateStateWithDataSource}
           />
         );
       }
