@@ -34,11 +34,11 @@ module.exports = function(paths, options = {}, themeConfig = {}) {
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
       filename: process.env.BUILD_HASH
-        ? 'css/[id].[hash:6].css'
-        : 'css/[id].css',
-      chunkFilename: process.env.BUILD_HASH
         ? 'css/[name].[hash:6].css'
         : 'css/[name].css',
+      chunkFilename: process.env.BUILD_HASH
+        ? 'css/[id].[hash:6].css'
+        : 'css/[id].css',
     }),
     new SimpleProgressPlugin(),
     new CaseSensitivePathsPlugin(),
