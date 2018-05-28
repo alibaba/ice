@@ -69,9 +69,6 @@ module.exports = function getWebpackConfigBasic(
     },
     plugins: getPlugins(paths, buildConfig, themeConfig),
     optimization: {
-      runtimeChunk: {
-        name: 'bootstrap',
-      },
       splitChunks: {
         cacheGroups: {
           commons: {
