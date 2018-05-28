@@ -46,6 +46,7 @@ module.exports = function() {
 
   // webpack 打包工作流
   gulp.task('webpack', (done) => {
+    console.log('publicPath:', webpackConfig.output.publicPath);
     webpack(webpackConfig, (error, stats) => {
       console.log(
         stats.toString({
