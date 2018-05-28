@@ -1,5 +1,5 @@
 {
-  "name": "@react-materials/card-items-block",
+  "name": "@icedesign/card-items-block",
   "version": "1.0.0",
   "description": "用卡片展示信息",
   "author": "muchen <tao360907796@gmail.com>",
@@ -27,7 +27,7 @@
   },
   "blockConfig": {
     "name": "card-items",
-    "title": "卡片项次",
+    "title": "卡片展示",
     "categories": [
       "列表",
       "信息展示"
