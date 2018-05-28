@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-export default class IceLayoutMain extends PureComponent {
+export default class IceLayoutMain extends Component {
   static displayName = 'IceLayoutMain';
 
   static propTypes = {

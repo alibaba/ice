@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle, no-nested-ternary */
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Feedback } from '@icedesign/base';
@@ -7,25 +8,58 @@ import merge from 'deepmerge';
 const Toast = Feedback.toast;
 
 /**
+ * 初始化对象的加载状态，错误状态等，并且该值不能枚举
+ * @param {Object|Array} target  目标对象
+ */
+function initializeRequestStatus(
+  target,
+  requestStatus = { __loading: false, __error: null }
+) {
+  Object.defineProperty(target, '__loading', {
+    value:
+      typeof requestStatus.__loading !== 'undefined'
+        ? requestStatus.__loading
+        : target.__loading !== 'undefined'
+          ? target.__loading
+          : false,
+    writable: true,
+    enumerable: false,
+    configurable: false,
+  });
+
+  Object.defineProperty(target, '__error', {
+    value:
+      typeof requestStatus.__error !== 'undefined'
+        ? requestStatus.__error
+        : target.__error !== 'undefined'
+          ? target.__error
+          : null,
+    writable: true,
+    configurable: false,
+    enumerable: false,
+  });
+  return target;
+}
+
+/**
  * DataBinder 的 HOC 创建函数，预先做一些数据整理
  *
  * @param  {Object} options 为各个模块的 DataSource 配置，详情参见 README.md 和 Demo
  * @return {function}
  */
+
 export default function dataBinder(options) {
-  const requestOptions = {};
-  const defaultBindingDatas = {
-    __loading: false,
-    __error: null,
-  };
+  const requestOptions = {}; // 请求参数 map 数据结构
+  // 请求数据 map 数据结构
+  const defaultBindingDatas = initializeRequestStatus({});
 
   // 根据传入数据进行初始化
   Object.keys(options).forEach((dataSourceKey) => {
     const { defaultBindingData = {}, ...others } = options[dataSourceKey];
 
-    defaultBindingDatas[dataSourceKey] = defaultBindingData;
-    defaultBindingDatas[dataSourceKey].__loading = false; // eslint-disable-line
-    defaultBindingDatas[dataSourceKey].__error = null; // eslint-disable-line
+    defaultBindingDatas[dataSourceKey] = initializeRequestStatus(
+      defaultBindingData
+    );
     requestOptions[dataSourceKey] = others;
   });
 
@@ -63,21 +97,32 @@ export default function dataBinder(options) {
         dataSourceKey,
         originDatas,
         newData,
-        { __loading = false, __error = null }
+        requestStatus
       ) => {
+        // 变成数据的请求状态
+        initializeRequestStatus(originDatas[dataSourceKey], requestStatus);
         const tmpObj = {};
-        tmpObj[dataSourceKey] = {
-          ...originDatas[dataSourceKey],
-          ...newData,
-          __loading,
-          __error,
-        };
-
+        if (newData) {
+          if (
+            Object.prototype.toString.call(originDatas[dataSourceKey]) ===
+            '[object Array]'
+          ) {
+            tmpObj[dataSourceKey] = initializeRequestStatus(
+              newData,
+              requestStatus
+            );
+          } else {
+            // Object 是一个浅拷贝操作，保留原数据的其他一级字段
+            tmpObj[dataSourceKey] = initializeRequestStatus({
+              ...originDatas[dataSourceKey],
+              ...newData,
+            });
+          }
+        }
         this.setState({
           ...this.state,
-          __loading,
-          __error,
           ...tmpObj,
+          ...requestStatus,
         });
       };
 
@@ -91,6 +136,7 @@ export default function dataBinder(options) {
        */
       updateBindingData = (dataSourceKey, newDataSource = {}, callback) => {
         if (!dataSourceKey && typeof dataSourceKey !== 'string') {
+          // eslint-disable-next-line no-console
           console.error('必须指明一个 dataSourceKey，并且值类型为 String。');
           return;
         }
@@ -98,7 +144,7 @@ export default function dataBinder(options) {
         const newRequestOptions = merge(
           // 参数每次跟初始化的配置进行 merge
           requestOptions[dataSourceKey],
-          newDataSource,
+          newDataSource
         );
 
         // 如果更新时同时附带 defaultBindingData 则先同步更新一次数据，再请求更新
@@ -108,10 +154,10 @@ export default function dataBinder(options) {
             this.updateStateWithDataSource(
               dataSourceKey,
               defaultBindingDatas,
-              newDataSource.defaultBindingData,
-              {}
+              newDataSource.defaultBindingData
             );
           } else {
+            // eslint-disable-next-line no-console
             console.error(
               '要更新的 DataSource 必须要有一个 url 或者 defaultBindingData 配置。'
             );
@@ -149,7 +195,7 @@ export default function dataBinder(options) {
             this.updateStateWithDataSource(
               dataSourceKey,
               defaultBindingDatas,
-              (err.response || {}).data || {},
+              (err.response || {}).data,
               { __loading: false, __error }
             );
 
@@ -167,6 +213,7 @@ export default function dataBinder(options) {
           .then((res) => {
             const responseHandler = (responseData, originResponse) => {
               if (!responseData.data) {
+                // eslint-disable-next-line no-console
                 console.error(
                   '警告：接口必须返回一个 data 字段作为新数据！如果接口无法改动，请配置 responseFormatter 进行数据格式调整！'
                 );
