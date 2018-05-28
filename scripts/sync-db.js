@@ -1,6 +1,6 @@
 const oss = require('ali-oss');
 const co = require('co');
-const { readdirSync } = require('fs');
+const { readdirSync, readFileSync, writeFile } = require('fs');
 const { resolve, join } = require('path');
 
 if (process.env.TRAVIS_BRANCH !== 'master') {
@@ -22,13 +22,80 @@ const store = oss({
 });
 
 console.log('start uploading');
-const files = readdirSync(resolve(__dirname, '../build')).map((filename) => ({
-  from: resolve(__dirname, '../build', filename),
-  to: join('assets', filename),
-}));
+sortScaffoldMaterials()
+  .then((res) => {
+    const files = readdirSync(resolve(__dirname, '../build')).map(
+      (filename) => ({
+        from: resolve(__dirname, '../build', filename),
+        to: join('assets', filename),
+      })
+    );
 
-console.log(files);
+    const tasks = files.map(createUploadTask);
 
+    Promise.all(tasks)
+      .then(() => {
+        console.log('All Done');
+      })
+      .catch((err) => {
+        console.log('upload err', err);
+      });
+  })
+  .catch((err) => {
+    console.log('sort err', err);
+  });
+
+/**
+ * 按照下载量进行排序推荐
+ */
+function sortScaffoldMaterials() {
+  return new Promise((resolve, reject) => {
+    const materialsPath = join(__dirname, '../build', 'react-materials.json');
+    const materialsData = JSON.parse(readFileSync(materialsPath, 'utf-8'));
+    // TODO: 需要根据接口进行维护
+    const sortKeys = [
+      'ice-design-pro',
+      'ice-design-lite',
+      'ice-design-cms',
+      'ice-reviews-management',
+      'ice-design-ecommerce',
+      'ice-design-analysis',
+      'ice-design-login',
+      'ice-design-project-management',
+      'ice-website-homepage',
+      'iceworks-homepage',
+      'ice-creator-landingpage',
+      'ice-design-docs',
+      'create-react-app',
+    ];
+
+    const sortMaterialsData = [];
+    sortKeys.forEach((sortKey) => {
+      materialsData.scaffolds.forEach((currentItem) => {
+        if (currentItem.name === sortKey) {
+          sortMaterialsData.push(currentItem);
+        }
+      });
+    });
+
+    materialsData.scaffolds = sortMaterialsData;
+
+    return writeFile(
+      materialsPath,
+      JSON.stringify(materialsData, null, 2),
+      'utf-8',
+      (err) => {
+        if (err) reject(err);
+        resolve();
+      }
+    );
+  });
+}
+
+/**
+ * 上传任务
+ * @param {object} opts
+ */
 function createUploadTask(opts) {
   const { from, to } = opts;
 
@@ -41,13 +108,3 @@ function createUploadTask(opts) {
     }
   });
 }
-
-const tasks = files.map(createUploadTask);
-
-Promise.all(tasks)
-  .then(() => {
-    console.log('All Done');
-  })
-  .catch((err) => {
-    console.log('upload err', err);
-  });
