@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from '@icedesign/base';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import './LandingIntroBanner.scss';
 
 // 寻找背景图片可以从 https://unsplash.com/ 寻找
