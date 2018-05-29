@@ -93,7 +93,7 @@ module.exports = class AppendStylePlugin {
         chunks.forEach((chunk) => {
           chunk.files.forEach((fileName) => {
             if (
-              distMatch(fileName, compilerEntry, compilation.preparedChunks)
+              distMatch(fileName, compilerEntry, compilation._preparedEntrypoints)
             ) {
               const css = this.compileToCSS(srcFile, variableFile);
               this.wrapFile(compilation, fileName, css);
