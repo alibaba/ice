@@ -3,7 +3,7 @@ import IceImg from '@icedesign/img';
 import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
 import { Icon } from '@icedesign/base';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { headerNavs } from './navs';
 import Logo from './Logo';
 
