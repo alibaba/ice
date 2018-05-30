@@ -1,4 +1,3 @@
-'use strict';
 const assert = require('assert');
 const ConcatSource = require('webpack-sources').ConcatSource;
 const fs = require('fs');
@@ -89,24 +88,21 @@ module.exports = class AppendStylePlugin {
       return;
     }
 
-    compiler.plugin(
-      'compilation',
-      function(compilation) {
-        compilation.plugin('optimize-chunk-assets', (chunks, done) => {
-          chunks.forEach((chunk) => {
-            chunk.files.forEach((fileName) => {
-              if (
-                distMatch(fileName, compilerEntry, compilation.preparedChunks)
-              ) {
-                const css = this.compileToCSS(srcFile, variableFile);
-                this.wrapFile(compilation, fileName, css);
-              }
-            });
+    compiler.plugin('compilation', (compilation) => {
+      compilation.plugin('optimize-chunk-assets', (chunks, done) => {
+        chunks.forEach((chunk) => {
+          chunk.files.forEach((fileName) => {
+            if (
+              distMatch(fileName, compilerEntry, compilation._preparedEntrypoints)
+            ) {
+              const css = this.compileToCSS(srcFile, variableFile);
+              this.wrapFile(compilation, fileName, css);
+            }
           });
-          done();
         });
-      }.bind(this)
-    );
+        done();
+      });
+    });
   }
 
   wrapFile(compilation, fileName, content) {
@@ -127,14 +123,13 @@ module.exports = class AppendStylePlugin {
   compileToCSS(srcFile, variableFile) {
     if (this.type === 'sass') {
       return compileSass(srcFile, variableFile);
-    } else {
-      let css = '';
-      try {
-        css = fs.readFileSync(srcFile, 'utf-8');
-      } catch (err) {
-        return '';
-      }
-      return css;
     }
+    let css = '';
+    try {
+      css = fs.readFileSync(srcFile, 'utf-8');
+    } catch (err) {
+      return '';
+    }
+    return css;
   }
 };

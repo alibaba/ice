@@ -1,3 +1,4 @@
+const { differenceWith } = require('lodash');
 const webpackMerge = require('webpack-merge');
 const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
@@ -5,14 +6,13 @@ const getPlugins = require('./getPlugins');
 const processEntry = require('./processEntry');
 const getEntryByPages = require('./getEntryByPages');
 const pkg = require('./packageJson');
-const { differenceWith } = require('lodash');
+
 /**
  * 可以在 buildConfig 中覆盖的配置项:
- *  1. devtool: ''
- *  2. output: {}
- *  3. publicPath
- *  4. externals
- *  5. entry
+ *  1. output: {}
+ *  2. publicPath
+ *  3. externals
+ *  4. entry
  */
 
 /**
@@ -43,13 +43,15 @@ module.exports = function getWebpackConfigBasic(
 ) {
   const { themeConfig = {} } = pkg;
   const webpackConfig = {
-    devtool: buildConfig.devtool || 'cheap-module-source-map',
+    mode: process.env.NODE_ENV,
     context: paths.appDirectory,
     entry,
     output: Object.assign(
       {
         path: paths.appBuild,
-        filename: 'js/[name].js',
+        filename: process.env.BUILD_HASH
+          ? 'js/[name].[hash:6].js'
+          : 'js/[name].js',
         publicPath: paths.servedPath,
       },
       buildConfig.output || {}
@@ -66,11 +68,23 @@ module.exports = function getWebpackConfigBasic(
       rules: getRules(paths, buildConfig),
     },
     plugins: getPlugins(paths, buildConfig, themeConfig),
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendor',
+            chunks: 'all',
+            minChunks: 2,
+          },
+        },
+      },
+    },
   };
 
   const userConfig = getUserConfig();
   const finalWebpackConfig = webpackMerge({
-    customizeArray: pluginsUnique(['ExtractTextPlugin', 'HtmlWebpackPlugin']),
+    customizeArray: pluginsUnique(['HtmlWebpackPlugin']),
   })(webpackConfig, userConfig);
 
   if (finalWebpackConfig.entry) {

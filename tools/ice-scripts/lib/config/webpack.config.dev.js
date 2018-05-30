@@ -1,19 +1,15 @@
 const webpackMerge = require('webpack-merge');
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const webpack = require('webpack');
 const getWebpackConfigBasic = require('./webpack.config.basic');
+
 const env = process.env;
 
 module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
   const baseConfig = getWebpackConfigBasic(entry, paths, options);
 
-  const plugins = [
-    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-  ];
+  const plugins = [new webpack.HotModuleReplacementPlugin()];
 
   if (options.webpackBundleAnalyzer !== false && env.ANALYZER_PORT) {
     plugins.push(

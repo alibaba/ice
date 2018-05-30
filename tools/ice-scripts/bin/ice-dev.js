@@ -3,6 +3,7 @@
 'use strict';
 
 const program = require('commander');
+
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 
 program
@@ -12,14 +13,43 @@ program
   .option('-s, --skip-install', 'skip install dependencies')
   .parse(process.argv);
 
-const { choosePort } = require('react-dev-utils/WebpackDevServerUtils');
+const detect = require('detect-port');
+const inquirer = require('inquirer');
 
-const DEFAULT_PORT = program.port || process.env.PORT || 3333;
+const isInteractive = process.stdout.isTTY;
+const DEFAULT_PORT = program.port || process.env.PORT || 4444;
 const HOST = program.host || process.env.HOST || '0.0.0.0';
+
+const defaultPort = parseInt(DEFAULT_PORT, 10);
 
 validationSassAvailable()
   .then(() => {
-    return choosePort(HOST, parseInt(DEFAULT_PORT, 10));
+    return detect(defaultPort);
+  })
+  .then((newPort) => {
+    return new Promise((resolve) => {
+      if (newPort === defaultPort) {
+        return resolve(newPort);
+      }
+
+      if (isInteractive) {
+        const question = {
+          type: 'confirm',
+          name: 'shouldChangePort',
+          message: `${defaultPort} 端口已被占用，是否使用 ${newPort} 端口启动？`,
+          default: true,
+        };
+        inquirer.prompt(question).then((answer) => {
+          if (answer.shouldChangePort) {
+            resolve(newPort);
+          } else {
+            resolve(null);
+          }
+        });
+      } else {
+        resolve(null);
+      }
+    });
   })
   .then((port) => {
     const dev = require('../lib/dev');

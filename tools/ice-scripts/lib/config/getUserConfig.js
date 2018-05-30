@@ -18,6 +18,7 @@ module.exports = (opts = {}) => {
 
   // todo support .webpackrc file
   if (fs.existsSync(webpackRCJSPath)) {
+    // eslint-disable-next-line no-console
     console.log(colors.blue('TIPS:'), '注入 .webpackrc.js 的配置.');
     // no cache
     delete require.cache[webpackRCJSPath];
@@ -31,6 +32,7 @@ module.exports = (opts = {}) => {
   }
 
   if (userConfig.entry) {
+    // eslint-disable-next-line no-console
     console.log(colors.blue('TIPS:'), '.webpackrc.js 存在 entry 配置');
   }
 
