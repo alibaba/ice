@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import IceContainer from '@icedesign/container';
 import './BasicException.scss';
 
@@ -21,7 +20,7 @@ export default class BasicException extends Component {
                 抱歉，服务器出错了
               </h3>
               <p style={styles.description} className="description">
-                服务器出错了，请重新刷新页面或返回<Link to="/">首页</Link>
+                服务器出错了，请重新刷新页面或返回<a href="#">首页</a>
               </p>
             </div>
           </div>
