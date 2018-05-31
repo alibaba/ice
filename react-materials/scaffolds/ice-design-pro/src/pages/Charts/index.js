@@ -1,3 +1,7 @@
-import Charts from './Charts';
+import loadable from 'react-loadable';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-export default Charts;
+export default loadable({
+  loader: () => import('./Charts'),
+  loading: LoadingIndicator,
+});

@@ -1,3 +1,7 @@
-import BasicTable from './BasicTable';
+import loadable from 'react-loadable';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-export default BasicTable;
+export default loadable({
+  loader: () => import('./BasicTable'),
+  loading: LoadingIndicator,
+});

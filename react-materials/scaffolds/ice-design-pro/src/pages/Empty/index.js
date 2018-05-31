@@ -1,3 +1,7 @@
-import Empty from './Empty';
+import loadable from 'react-loadable';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-export default Empty;
+export default loadable({
+  loader: () => import('./Empty'),
+  loading: LoadingIndicator,
+});

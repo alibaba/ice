@@ -1,3 +1,7 @@
-import Forbidden from './Forbidden';
+import loadable from 'react-loadable';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-export default Forbidden;
+export default loadable({
+  loader: () => import('./Forbidden'),
+  loading: LoadingIndicator,
+});

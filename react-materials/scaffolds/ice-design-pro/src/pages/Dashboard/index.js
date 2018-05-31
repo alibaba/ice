@@ -1,3 +1,7 @@
-import Dashboard from './Dashboard';
+import loadable from 'react-loadable';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-export default Dashboard;
+export default loadable({
+  loader: () => import('./Dashboard'),
+  loading: LoadingIndicator,
+});

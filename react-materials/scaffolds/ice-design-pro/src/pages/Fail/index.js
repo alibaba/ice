@@ -1,3 +1,7 @@
-import Fail from './Fail';
+import loadable from 'react-loadable';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-export default Fail;
+export default loadable({
+  loader: () => import('./Fail'),
+  loading: LoadingIndicator,
+});
