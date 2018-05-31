@@ -1,0 +1,47 @@
+{
+  "name": "@icedesign/open-platform-scaffold",
+  "version": "1.0.0",
+  "description":
+    "该模板适用于开放平台的引导页，默认内置一个页面和六个不同风格的展示区块",
+  "homepage":
+    "https://alibaba.github.io/ice/scaffold-preview/ice-open-platform-landingpage.html",
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "@icedesign/container": "^0.1.0",
+    "@icedesign/layout": "^0.1.2",
+    "@icedesign/menu": "^0.1.0",
+    "@icedesign/skin": "^0.1.0",
+    "prop-types": "^15.5.8",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.1.1"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/skin",
+    "entry": "src/index.js"
+  },
+  "scaffoldConfig": {
+    "name": "ice-open-platform",
+    "title": "ICE Open Platform LandingPage",
+    "screenshot":
+      "https://img.alicdn.com/tfs/TB1F3SAuGmWBuNjy1XaXXXCbXXa-2840-1596.png"
+  }
+}
