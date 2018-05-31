@@ -22,7 +22,6 @@
     "foundation-symbol": "^0.1.3",
     "prop-types": "^15.5.8",
     "react-beautiful-dnd": "^7.1.0",
-    "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-trello": "^1.29.1",
     "styled-components": "^2.1.1"
