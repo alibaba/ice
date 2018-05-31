@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Table, Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 
@@ -32,14 +31,24 @@ export default class ExpandedTable extends Component {
     };
   }
 
-  handleChange = (current) => {
+  handlePaginationChange = (current) => {
     this.setState({
       current,
     });
   };
 
+  handleRowSelection = (selectedRowKeys, records) => {
+    console.log('selectedRowKeys:', selectedRowKeys);
+    console.log('records:', records);
+  };
+
   render() {
     const data = generatorData();
+    const rowSelection = {
+      onChange: this.handleRowSelection,
+      mode: 'single',
+    };
+
     return (
       <IceContainer>
         <Table
@@ -47,7 +56,7 @@ export default class ExpandedTable extends Component {
           dataSource={data}
           primaryKey="key"
           expandedRowRender={(record) => record.desc}
-          rowSelection={{ onChange: () => {} }}
+          rowSelection={rowSelection}
         >
           <Table.Column title="Key" dataIndex="key" />
           <Table.Column title="名称" dataIndex="name" />
@@ -59,7 +68,7 @@ export default class ExpandedTable extends Component {
         <Pagination
           style={{ marginTop: '20px', textAlign: 'right' }}
           current={this.state.current}
-          onChange={this.handleChange}
+          onChange={this.handlePaginationChange}
         />
       </IceContainer>
     );

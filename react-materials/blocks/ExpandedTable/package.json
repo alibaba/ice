@@ -20,7 +20,9 @@
   "dependencies": {
     "@icedesign/base": "^0.2.2",
     "@icedesign/container": "^0.1.2",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
     "react": "^16.2.0"
   },
   "blockConfig": {
