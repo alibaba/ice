@@ -13,7 +13,6 @@
     "echarts": "^4.0.4",
     "echarts-for-react": "^2.0.8",
     "prop-types": "^15.5.8",
-    "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-text-loop": "^1.1.0"
   },
