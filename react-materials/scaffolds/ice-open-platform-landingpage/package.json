@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/open-platform-scaffold",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description":
     "该模板适用于开放平台的引导页，默认内置一个页面和六个不同风格的展示区块",
   "homepage":
@@ -39,7 +39,7 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "name": "ice-open-platform",
+    "name": "ice-open-platform-landingpage",
     "title": "ICE Open Platform LandingPage",
     "screenshot":
       "https://img.alicdn.com/tfs/TB1F3SAuGmWBuNjy1XaXXXCbXXa-2840-1596.png"
