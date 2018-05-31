@@ -18,7 +18,6 @@
     "foundation-symbol": "^0.1.0",
     "prop-types": "^15.5.8",
     "react-document-title": "^2.0.3",
-    "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {

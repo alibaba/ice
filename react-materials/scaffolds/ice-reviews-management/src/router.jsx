@@ -1,8 +1,7 @@
 /**
  * 定义应用路
  */
-import { HashRouter as Router } from 'react-router-dom';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, HashRouter as Router } from 'react-router-dom';
 import React from 'react';
 
 import routerConfig from './routerConfig';
