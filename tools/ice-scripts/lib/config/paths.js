@@ -8,6 +8,7 @@ function resolveSDK(relativePath) {
 
 // We use "buildConfig.publicURL" at which the app is served.
 const getPublicUrl = (appPackageJson) => {
+  // eslint-disable-next-line
   const appPackage = require(appPackageJson);
   if (
     appPackage.buildConfig &&
@@ -15,8 +16,8 @@ const getPublicUrl = (appPackageJson) => {
   ) {
     return appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl;
   }
-
-  return './';
+  // 默认值为相对于当前域名绝对路径
+  return '/';
 };
 
 function ensureSlash(path, needsSlash) {
