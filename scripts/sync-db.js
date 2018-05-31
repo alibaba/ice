@@ -65,6 +65,7 @@ function sortScaffoldMaterials() {
       'ice-website-homepage',
       'iceworks-homepage',
       'ice-creator-landingpage',
+      'ice-open-platform-landingpage',
       'ice-design-docs',
       'create-react-app',
     ];
