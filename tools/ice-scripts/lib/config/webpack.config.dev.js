@@ -20,7 +20,7 @@ module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
       })
     );
   }
-  // 开发环境下 publicPath 指定为
+  // 开发环境下 publicPath 指定为 /build/ 与 webpack server 一致
   return webpackMerge(baseConfig, {
     devtool: 'cheap-module-source-map',
     output: {

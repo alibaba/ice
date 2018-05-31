@@ -16,7 +16,7 @@ const getPublicUrl = (appPackageJson) => {
   ) {
     return appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl;
   }
-  // 默认值为当前目录
+  // 默认值为相对于当前域名绝对路径
   return '/';
 };
 
