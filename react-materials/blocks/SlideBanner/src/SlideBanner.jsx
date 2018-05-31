@@ -25,7 +25,7 @@ export default class SlideBanner extends Component {
   isSelected = (selected) => selected ? ' selected' : ''
 
   onMouseEnter = (event) => {
-    const {index} = event.target.dataset;
+    const {index} = event.currentTarget.dataset;
     const selectedIndex = parseInt(index, 10);
     if (!isNaN(selectedIndex)) {
       this.setState({
