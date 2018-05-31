@@ -19,7 +19,7 @@ export default class IntroTab extends Component {
   isSelected = (index, target) => index === target ? 'selected' : ' '
 
   clickTab = (event) => {
-    let {index} = event.target.dataset;
+    let {index} = event.currentTarget.dataset;
     index = parseInt(index, 10);
     if (isNaN(index)) {
       index = 0;
