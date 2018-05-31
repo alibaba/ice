@@ -17,8 +17,7 @@
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8",
-    "react-router-dom": "^4.2.2"
+    "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.0",
@@ -33,10 +32,6 @@
     "themePackage": "@icedesign/skin",
     "title": "基础异常报错",
     "categories": ["异常"]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",
