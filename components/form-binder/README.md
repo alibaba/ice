@@ -31,8 +31,8 @@ const value = {
 
 ...
 
-formChange = (value) => {
-  console.log(value);
+formChange = (value, changedByName) => {
+  console.log(value, changedByName);
 };
 
 render() {
