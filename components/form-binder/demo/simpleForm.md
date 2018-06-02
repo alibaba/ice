@@ -31,8 +31,8 @@ class App extends Component {
     };
   }
 
-  formChange = value => {
-    console.log('value', value);
+  formChange = (value, changedByName) => {
+    console.log('value', value, 'changedByName', changedByName);
     this.setState({
       value
     });

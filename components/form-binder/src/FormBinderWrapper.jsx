@@ -132,7 +132,7 @@ export default class IceFormBinderWrapper extends Component {
     // state already update
     this.setState({}, () => {
       if (typeof this.props.onChange === 'function') {
-        this.props.onChange(this.state.value);
+        this.props.onChange(this.state.value, path);
       }
     });
   };
