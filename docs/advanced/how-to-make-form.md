@@ -152,10 +152,10 @@ validateForm = () => {
 
 至此，已经讲解完了如何使用 `FormBinder` 组件并进行相关操作，以及可能遇到的问题。简单的回顾：
 
-1. 首先使用 `FormBinderWrapper` 包裹所有表单项。
-2. 在 `FormBinder` 组件上使用 `name` 进行数据关联，配置校验规则。
-3. 使用 `FormBinderWrapper` 的 `value` 属性进行数据回填。
-4. 使用 ref 上的 `valildateAll` 方法校验当前表单数据并进行后续操作。
+1.  首先使用 `FormBinderWrapper` 包裹所有表单项。
+2.  在 `FormBinder` 组件上使用 `name` 进行数据关联，配置校验规则。
+3.  使用 `FormBinderWrapper` 的 `value` 属性进行数据回填。
+4.  使用 ref 上的 `valildateAll` 方法校验当前表单数据并进行后续操作。
 
 ## FAQ
 
@@ -207,9 +207,7 @@ handleInputChange = (input) => {
 ```
 
 ```jsx
-handleFormChange = (value, changedByName) => {
-  const changedValue = value[changedByName];
-  console.log('由于' + changedByName + '变成了' + changedValue);
+handleFormChange = (value) => {
   console.log('表单的值现在是', value);
 };
 // ...
