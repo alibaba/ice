@@ -8,10 +8,4 @@
 
 ![MapToggleChart-AMap-02](https://user-images.githubusercontent.com/18508817/40878048-b260eecc-66bd-11e8-80ff-2dc0bfc5d800.png)
 
-![MapToggleChart-AMap-03](https://user-images.githubusercontent.com/18508817/40878063-062c0a14-66be-11e8-8b02-15df8020b978.png)
-
-![MapToggleChart-AMap-04](https://user-images.githubusercontent.com/18508817/40878022-28fedf4a-66bd-11e8-8b1c-7a5cd70097e2.png)
-
-![MapToggleChart-BMap-01](https://user-images.githubusercontent.com/18508817/40877899-b0fa54fe-66ba-11e8-8c5b-cbefa88295c2.png)
-
 ![MapToggleChart-BMap-01](https://user-images.githubusercontent.com/18508817/40877954-fed6a212-66bb-11e8-8e14-9081bc598cd2.png)
