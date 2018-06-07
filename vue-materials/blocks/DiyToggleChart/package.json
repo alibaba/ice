@@ -1,7 +1,7 @@
 {
   "name": "@vue-materials/diy-toggle-chart-block",
   "version": "1.0.0",
-  "description": "v-chart 自定义图表类型切换",
+  "description": "v-chart 自定义图表类型切换，支持七种图表类型切换",
   "author": "mowatermelon <neefoxmo@gmail.com>",
   "files": [
     "src/",

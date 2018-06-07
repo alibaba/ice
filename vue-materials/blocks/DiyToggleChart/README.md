@@ -2,7 +2,7 @@
 
 简介：diy-toggle-chart
 
-v-chart 自定义图表类型切换
+v-chart 自定义图表类型切换，支持Line、Histogram、Bar、Pie、Ring、Waterfall和Funnel，七种图表类型切换
 
 ![DiyToggleChart-Line](https://user-images.githubusercontent.com/18508817/40872239-78c74606-667d-11e8-855d-efd7ed7d6d9e.png)
 
