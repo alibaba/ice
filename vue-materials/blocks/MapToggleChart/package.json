@@ -1,7 +1,7 @@
 {
   "name": "@vue-materials/map-toggle-chart-block",
   "version": "1.0.0",
-  "description": "基于v-chart 地图类型切换",
+  "description": "基于v-chart 地图类型切换，amap支持主题类型切换，bmap支持底图切换",
   "author": "mowatermelon <neefoxmo@gmail.com>",
   "files": [
     "src/",
