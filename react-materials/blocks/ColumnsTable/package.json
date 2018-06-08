@@ -1,0 +1,36 @@
+{
+  "name": "@icedesign/columns-table-block",
+  "version": "1.0.0",
+  "description": "两栏布局的表格",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": ["src/", "lib/"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": ["ice", "react", "block"],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.2",
+    "@icedesign/container": "^0.1.2",
+    "foundation-symbol": "^0.1.3",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "columns-table",
+    "title": "表格",
+    "categories": ["表格"],
+    "screenshot":
+      "https://img.alicdn.com/tfs/TB1AIrmuwmTBuNjy1XbXXaMrVXa-2666-1002.png"
+  }
+}

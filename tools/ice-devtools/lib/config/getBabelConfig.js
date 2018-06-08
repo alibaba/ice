@@ -4,6 +4,7 @@ function createResolve(type) {
 
 module.exports = function getBabelrc() {
   return {
+    babelrc: false,
     presets: ['es2015', 'stage-0', 'react'].map(createResolve('preset')),
     plugins: [
       [

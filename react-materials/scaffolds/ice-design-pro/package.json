@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/pro-scaffold",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description":
     "该模板内置了丰富的区块，主要用于展示现有区块的分类以及区块组合的效果，使用时需要根据需求进行删除和添加",
   "homepage":
@@ -25,7 +25,6 @@
     "enquire-js": "^0.1.2",
     "prop-types": "^15.5.8",
     "react-document-title": "^2.0.3",
-    "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
@@ -54,6 +53,7 @@
   "scaffoldConfig": {
     "name": "ice-design-pro",
     "title": "ICE Design Pro",
-    "screenshot": "https://img.alicdn.com/tfs/TB1_bulmpOWBuNjy0FiXXXFxVXa-1920-1080.png"
+    "screenshot":
+      "https://img.alicdn.com/tfs/TB1_bulmpOWBuNjy0FiXXXFxVXa-1920-1080.png"
   }
 }

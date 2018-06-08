@@ -26,9 +26,13 @@ const styles = {
   homePage: {
     display: 'flex',
     height: '100vh',
-    background: '#eee',
   },
   mainContent: {
-    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    flex: '1 1 0',
+    position: 'relative',
+    overflowY: 'auto',
+    overflowX: 'auto',
   },
 };

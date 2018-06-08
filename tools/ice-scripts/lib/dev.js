@@ -28,7 +28,7 @@ const generateRootCA = require('./config/generateRootCA');
 module.exports = async function (args, subprocess) {
   const cwd = process.cwd();
   const HOST = args.host || '0.0.0.0';
-  const PORT = args.port || 3333;
+  const PORT = args.port || 4444;
   let protocol = args.https ? 'https' : 'http';
   const send = function (data) {
     iceworksClient.send(data);

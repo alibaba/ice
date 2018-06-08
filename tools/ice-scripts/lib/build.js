@@ -6,8 +6,6 @@
 
 process.env.NODE_ENV = 'production';
 
-const cleancssParallel = require('clean-css-parallel');
-const uglifyParallel = require('uglify-parallel');
 const gulp = require('gulp');
 const rimraf = require('rimraf');
 const webpack = require('webpack');
@@ -17,12 +15,13 @@ const getEntries = require('./config/getEntry');
 const getWebpackConfigProd = require('./config/webpack.config.prod');
 const npmInstall = require('./helpers/npmInstall');
 
-module.exports = function(args = {}) {
+module.exports = function() {
   const cwd = process.cwd();
   const paths = getPaths(cwd);
   const entries = getEntries(cwd);
   // 指定构建的 entry
   // @TODO 可构建多页面
+  // eslint-disable-next-line
   const packageData = require(paths.appPackageJson);
   // get ice config by package.ice
 
@@ -33,26 +32,21 @@ module.exports = function(args = {}) {
   );
 
   // build task
-  gulp.task('build', ['clean'], function() {
-    const buildTasks = ['webpack'];
-    if (!args.debug) {
-      buildTasks.push('uglify-js');
-      buildTasks.push('minify-css');
-    }
-    gulp.start(buildTasks);
+  gulp.task('build', ['clean'], () => {
+    gulp.start(['webpack']);
   });
 
-  gulp.task('clean', function(done) {
+  gulp.task('clean', (done) => {
     rimraf(webpackConfig.output.path, done);
   });
 
-  gulp.task('install', function() {
+  gulp.task('install', () => {
     return npmInstall();
   });
 
   // webpack 打包工作流
-  gulp.task('webpack', function(done) {
-    webpack(webpackConfig, function(error, stats) {
+  gulp.task('webpack', (done) => {
+    webpack(webpackConfig, (error, stats) => {
       console.log(
         stats.toString({
           colors: true,
@@ -69,53 +63,7 @@ module.exports = function(args = {}) {
     });
   });
 
-  // 并行压缩基于多进程，不适合使用 gulp 插件文件流的方式，直接异步任务
-  gulp.task('uglify-js', ['webpack'], function() {
-    console.log('after compression:');
-    return new Promise(function(resolve) {
-      uglifyParallel(
-        {
-          pattern: '**/*.js',
-          src: webpackConfig.output.path,
-          dest: webpackConfig.output.path,
-          params: [
-            '--compress',
-            'unused=false,warnings=false',
-            '--beautify',
-            'beautify=false,ascii_only=true',
-            '--mangle',
-          ],
-        },
-        function(error) {
-          if (error) {
-            console.log('压缩 JS 文件失败，请根据提示检查相应文件。');
-            console.log(error);
-          } else {
-            resolve();
-          }
-        }
-      );
-    });
-  });
-
-  // js 压缩使用了多核，css 的压缩等待 js 压缩完成
-  gulp.task('minify-css', ['uglify-js'], function() {
-    return new Promise(function(resolve) {
-      cleancssParallel(
-        {
-          pattern: '**/*.css',
-          src: webpackConfig.output.path,
-          dest: webpackConfig.output.path,
-          params: [],
-        },
-        function() {
-          resolve();
-        }
-      );
-    });
-  });
-
-  gulp.start('build', function(err) {
+  gulp.start('build', (err) => {
     if (err) {
       console.log('ICE BUILD ERROR');
       console.log(err.stack);

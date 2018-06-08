@@ -1,6 +1,6 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
-    <el-dropdown class="user-profile-container" trigger="click">
+    <div class="user-profile-container" trigger="click">
       <div class="user-profile-content">
         <div class="menu-icons">
           <span class="menu-icon"><i class="el-icon-search icon"></i></span>
@@ -11,27 +11,29 @@
             </el-badge>
           </span>
         </div>
-        <img class="user-avatar" src="https://img.alicdn.com/tfs/TB1ONhloamWBuNjy1XaXXXCbXXa-200-200.png">
-        <div class="user-profile-body">
-          <span class="user-name">淘小宝</span>
-        </div>
+        <el-dropdown>
+          <div class="user-profile-body">
+            <img class="user-avatar" src="https://img.alicdn.com/tfs/TB1ONhloamWBuNjy1XaXXXCbXXa-200-200.png">
+            <span class="user-name">淘小宝</span>
+          </div>
+          <el-dropdown-menu class="user-dropdown" slot="dropdown">
+            <router-link to="/">
+              <el-dropdown-item>
+                我的主页
+              </el-dropdown-item>
+            </router-link>
+            <router-link to="/">
+              <el-dropdown-item>
+                个人设置
+              </el-dropdown-item>
+            </router-link>
+            <el-dropdown-item>
+              <span @click="logout" style="display:block;">退出</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
-      <el-dropdown-menu class="user-dropdown" slot="dropdown">
-        <router-link to="/">
-          <el-dropdown-item>
-            我的主页
-          </el-dropdown-item>
-        </router-link>
-        <router-link to="/">
-          <el-dropdown-item>
-            个人设置
-          </el-dropdown-item>
-        </router-link>
-        <el-dropdown-item>
-          <span @click="logout" style="display:block;">退出</span>
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+    </div>
   </el-menu>
 </template>
 
@@ -42,9 +44,9 @@ export default {
   methods: {
     logout() {
       console.log('Logout');
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -74,7 +76,7 @@ export default {
     .user-profile-body {
       position: relative;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
       text-align: center;

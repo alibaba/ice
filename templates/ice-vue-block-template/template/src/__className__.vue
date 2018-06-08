@@ -1,5 +1,5 @@
 <template>
-  <div className="{{name}}">
+  <div class="{{name}}">
     <basic-container>
       <h1>{{className}}</h1>
     </basic-container>
@@ -19,7 +19,7 @@ export default {
 
   created() {},
 
-  methods() {}
+  methods: {}
 }
 
 </script>

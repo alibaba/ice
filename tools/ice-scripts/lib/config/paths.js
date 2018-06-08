@@ -6,9 +6,9 @@ function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
 }
 
-// We use `PUBLIC_URL` environment variable or "buildConfig.publicURL" or
-// "homepage" field to infer "public path" at which the app is served.
+// We use "buildConfig.publicURL" at which the app is served.
 const getPublicUrl = (appPackageJson) => {
+  // eslint-disable-next-line
   const appPackage = require(appPackageJson);
   if (
     appPackage.buildConfig &&
@@ -16,8 +16,8 @@ const getPublicUrl = (appPackageJson) => {
   ) {
     return appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl;
   }
-
-  return './';
+  // 默认值为相对于当前域名绝对路径
+  return '/';
 };
 
 function ensureSlash(path, needsSlash) {
@@ -26,9 +26,8 @@ function ensureSlash(path, needsSlash) {
     return path.substr(path, path.length - 1);
   } else if (!hasSlash && needsSlash) {
     return `${path}/`;
-  } else {
-    return path;
   }
+  return path;
 }
 
 // Webpack uses `publicPath` to determine where the app is being served from.
