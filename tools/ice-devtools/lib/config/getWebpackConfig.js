@@ -9,6 +9,9 @@ const VUE_STYLE_LOADER = require.resolve('vue-style-loader');
 const VUE_LOADER = require.resolve('vue-loader');
 const WebpackPluginImport = require('webpack-plugin-import');
 
+const URL_LOADER = require.resolve('url-loader');
+const URL_LOADER_LIMIT = 8192;
+
 const getBabelConfig = require('./getBabelConfig');
 
 const baseConfig = {
@@ -51,6 +54,23 @@ const baseConfig = {
             sass: `${VUE_STYLE_LOADER}!${CSS_LOADER}!${SASS_LOADER}?indentedSyntax`, // <style lang="sass">
             css: `${VUE_STYLE_LOADER}!${CSS_LOADER}`,
           },
+        },
+      },
+      {
+        test: /\.svg$/,
+        loader: URL_LOADER,
+        options: {
+          limit: URL_LOADER_LIMIT,
+          minetype: 'image/svg+xml',
+          name: 'images/[hash].[ext]',
+        },
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/i,
+        loader: URL_LOADER,
+        options: {
+          limit: URL_LOADER_LIMIT,
+          name: 'images/[hash].[ext]',
         },
       },
     ],
