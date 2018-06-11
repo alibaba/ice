@@ -1,0 +1,43 @@
+{
+  "name": "@icedesign/overview-sates-chart-block",
+  "version": "1.0.0",
+  "description": "数据概览",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.2",
+    "@icedesign/container": "^0.1.2",
+    "bizcharts": "^3.1.8"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "overview-sates-chart",
+    "title": "数据概览",
+    "categories": [
+      "图表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1jWRlxntYBeNjy1XdXXXXyVXa-2864-428.png"
+  }
+}
