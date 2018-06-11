@@ -2,26 +2,25 @@ import React, { Component } from 'react';
 import { Grid, Checkbox, Icon } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 
+const avatarImg = require('./images/avatar.jpg');
+
 const { Row, Col } = Grid;
 const mockData = {
   accounts: [
     {
-      avatar:
-        'https://img.alicdn.com/tfs/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
+      avatar: avatarImg,
       username: 'David',
       position: 'UI/UX Designer',
       time: '2018-06-10',
     },
     {
-      avatar:
-        'https://img.alicdn.com/tfs/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
+      avatar: avatarImg,
       username: 'Edward Fletcher',
       position: 'Business Development',
       time: '2018-06-02',
     },
     {
-      avatar:
-        'https://img.alicdn.com/tfs/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
+      avatar: avatarImg,
       username: 'Allen Donald',
       position: 'SEO Expert',
       time: '2018-06-10',

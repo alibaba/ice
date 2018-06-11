@@ -27,8 +27,9 @@
   "dependencies": {
     "@icedesign/base": "^0.2.2",
     "@icedesign/container": "^0.1.2",
-    "bizcharts": "^3.1.8",
-    "prop-types": "^15.5.8",
+    "bizcharts": "^3.1.8"
+  },
+  "peerDependencies": {
     "react": "^16.2.0"
   },
   "blockConfig": {
