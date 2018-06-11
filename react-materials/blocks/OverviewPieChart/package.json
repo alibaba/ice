@@ -1,0 +1,42 @@
+{
+  "name": "@icedesign/overview-pie-chart-block",
+  "version": "1.0.0",
+  "description": "概览数据",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.2",
+    "@icedesign/container": "^0.1.2",
+    "bizcharts": "^3.1.8",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "overview-pie-chart",
+    "title": "概览数据",
+    "categories": [
+      "图表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1yTJixntYBeNjy1XdXXXXyVXa-2820-642.png"
+  }
+}

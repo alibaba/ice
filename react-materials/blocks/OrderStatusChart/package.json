@@ -1,0 +1,42 @@
+{
+  "name": "@icedesign/order-status-chart-block",
+  "version": "1.0.0",
+  "description": "订单状态型的图表",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@antv/data-set": "^0.8.9",
+    "@icedesign/container": "^0.1.2",
+    "bizcharts": "^3.1.8",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "order-status-chart",
+    "title": "订单状态型图表",
+    "categories": [
+      "图表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1uwrkw49YBuNjy0FfXXXIsVXa-2868-1114.png"
+  }
+}
