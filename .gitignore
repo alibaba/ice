@@ -14,3 +14,4 @@ build
 tools/ice-scripts/lib/ICE_CA
 
 npmrc
+tools/extract-css-assets-webpack-plugin/test/actual/
