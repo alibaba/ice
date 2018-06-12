@@ -2,6 +2,10 @@
 
 提取 css 文件中网络资源，将其本地化。
 
+## Required
+
+- webpack >= 4.0
+
 ## Options
 
 - `outputPath` 提取后的文件目录前缀
