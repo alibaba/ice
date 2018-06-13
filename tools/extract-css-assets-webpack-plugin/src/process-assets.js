@@ -3,9 +3,7 @@ import path from 'path';
 import postcss from 'postcss';
 import request from 'request-promise';
 
-import generatorFilename from './generator-filename';
-
-const urlReg = /url\(('|")?((?:http|\/\/)(?:[^\"\']+))(\1)\)/;
+const urlReg = /url\(('|")?((?:http|\/\/)(?:[^"']+))(\1)\)/;
 
 const getDeclUrl = (value) => {
   const url = value.match(urlReg)[2];

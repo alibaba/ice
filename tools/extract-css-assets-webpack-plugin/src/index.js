@@ -1,11 +1,8 @@
 // import webpack from 'webpack';
 import { RawSource } from 'webpack-sources';
 import postcss from 'postcss';
-import request from 'request-promise';
 
-import generatorFilename from './generator-filename';
 import ProcessAssets from './process-assets';
-import { rejects } from 'assert';
 
 class ExtractCssAssetsPlugin {
   constructor(options) {
@@ -19,7 +16,7 @@ class ExtractCssAssetsPlugin {
     compiler.hooks.emit.tapPromise('ExtractCssAssetsPlugin', (compilation) => {
       const { outputOptions } = compilation;
 
-      const collectAssets = []; // 收集资源
+      const collectChunks = []; // 收集资源
       return Promise.all(
         Object.keys(compilation.assets)
           .map((filename) => {
@@ -32,32 +29,31 @@ class ExtractCssAssetsPlugin {
                     new ProcessAssets(
                       { outputOptions, compilation, options },
                       {
-                        emit: (asset) => {
-                          collectAssets.push(asset);
+                        emit: (chunk) => {
+                          collectChunks.push(chunk);
                         },
                       }
                     )
                   )
                   .process(css, { from: filename, to: filename })
-                  .then(function(result) {
+                  .then((result) => {
                     compilation.assets[filename] = new RawSource(result.css);
                     resolve();
                   });
               });
-            } else {
-              return null;
             }
+            return null;
           })
           .filter(Boolean)
       )
         .then(() => {
-          if (collectAssets.length > 0) {
+          if (collectChunks.length > 0) {
             return Promise.all(
-              collectAssets.map((asset) => {
-                return new Promise((resolve) => {
-                  if (asset.path) {
-                    const chunk = new RawSource(asset.contents);
-                    compilation.assets[asset.path] = chunk;
+              collectChunks.map((chunk) => {
+                return new Promise((resolve, reject) => {
+                  if (chunk.path) {
+                    const file = new RawSource(chunk.contents);
+                    compilation.assets[chunk.path] = file;
                     resolve();
                   } else {
                     reject();

@@ -2,10 +2,13 @@
   "name": "extract-css-assets-webpack-plugin",
   "description": "",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "directories": {
     "test": "test"
   },
+  "files": [
+    "lib/"
+  ],
   "repository": {
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/tools/extract-css-assets-webpack-plugin"
@@ -17,6 +20,8 @@
   "author": "noyobo <noyobo@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "prepublish": "npm run build",
+    "build": "babel src --out-dir lib",
     "test": "jest && tree ./test/actual/default/assets",
     "test:watch": "jest --watch",
     "test:coverage": "jest --collectCoverageFrom='src/**/*.js' --coverage",
@@ -25,6 +30,7 @@
     "travis:coverage": "npm run test:coverage -- --runInBand"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.51",
     "@babel/core": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
     "@babel/preset-stage-0": "^7.0.0-beta.49",
