@@ -1,6 +1,6 @@
 {
   "name": "extract-css-assets-webpack-plugin",
-  "description": "",
+  "description": "Extract network resources in css",
   "version": "1.0.0",
   "main": "lib/index.js",
   "directories": {
