@@ -5,6 +5,7 @@ import request from 'request-promise';
 
 import generatorFilename from './generator-filename';
 import ProcessAssets from './process-assets';
+import { rejects } from 'assert';
 
 class ExtractCssAssetsPlugin {
   constructor(options) {
@@ -29,13 +30,13 @@ class ExtractCssAssetsPlugin {
                 postcss()
                   .use(
                     new ProcessAssets(
-                      { outputOptions, options },
+                      { outputOptions, compilation, options },
                       {
-                        emit: (url) => {
-                          collectAssets.push(url);
+                        emit: (asset) => {
+                          collectAssets.push(asset);
                         },
-                      },
-                    ),
+                      }
+                    )
                   )
                   .process(css, { from: filename, to: filename })
                   .then(function(result) {
@@ -47,33 +48,22 @@ class ExtractCssAssetsPlugin {
               return null;
             }
           })
-          .filter(Boolean),
+          .filter(Boolean)
       )
         .then(() => {
           if (collectAssets.length > 0) {
             return Promise.all(
-              collectAssets.map((url) => {
-                url = url.indexOf('http') == 0 ? url : 'http:' + url;
-                return new Promise((resolve, reject) => {
-                  const filename = generatorFilename(url);
-                  request
-                    .get({
-                      url,
-                      encoding: null,
-                    })
-                    .then(function(res) {
-                      const buffer = Buffer.from(res, 'utf-8');
-                      const chunk = new RawSource(buffer);
-
-                      compilation.assets[
-                        outputOptions.publicPath + options.outputPath + filename
-                      ] = chunk;
-
-                      resolve();
-                    })
-                    .catch(reject);
+              collectAssets.map((asset) => {
+                return new Promise((resolve) => {
+                  if (asset.path) {
+                    const chunk = new RawSource(asset.contents);
+                    compilation.assets[asset.path] = chunk;
+                    resolve();
+                  } else {
+                    reject();
+                  }
                 });
-              }),
+              })
             );
           }
           return Promise.resolve();
