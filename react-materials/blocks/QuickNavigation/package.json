@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/QuickNavigation"
   },
   "license": "MIT",
   "keywords": [
@@ -29,8 +29,7 @@
     "@icedesign/container": "^0.1.2"
   },
   "peerDependencies": {
-    "react": "^16.2.0",
-    "prop-types": "^15.5.8"
+    "react": "^16.2.0"
   },
   "blockConfig": {
     "name": "quick-navigation",

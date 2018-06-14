@@ -94,5 +94,3 @@ export default class SalesChart extends Component {
     );
   }
 }
-
-const styles = {};
