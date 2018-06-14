@@ -68,9 +68,5 @@
       "directory": "vue-materials",
       "type": "vue"
     }
-  ],
-  "dependencies": {
-    "@icedesign/base": "^0.2.2",
-    "@icedesign/container": "^0.1.2"
-  }
+  ]
 }
