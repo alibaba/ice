@@ -10,7 +10,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|jpg|gif|eot)(.*)?$/,
         use: [
           {
             loader: 'url-loader',
@@ -33,7 +33,7 @@ module.exports = {
       chunkFileName: '[id].css',
     }),
     new ExtractCssAssetsPlugin({
-      outputPath: 'assets/',
+      outputPath: 'cssassets/',
     }),
   ],
 };

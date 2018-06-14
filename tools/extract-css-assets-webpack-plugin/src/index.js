@@ -15,7 +15,6 @@ class ExtractCssAssetsPlugin {
     const options = this.options;
     compiler.hooks.emit.tapPromise('ExtractCssAssetsPlugin', (compilation) => {
       const { outputOptions } = compilation;
-
       const collectChunks = []; // 收集资源
       return Promise.all(
         Object.keys(compilation.assets)

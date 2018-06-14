@@ -45,6 +45,7 @@ export default postcss.plugin(
           });
         });
 
+
         if (Object.keys(networkRequestMap).length > 0) {
           Promise.all(
             Object.entries(networkRequestMap).map(([key, networkRequest]) => {
@@ -58,7 +59,7 @@ export default postcss.plugin(
                 const md5 = crypto.createHash('md5');
                 const basename = md5.update(buffer).digest('hex') + ext;
                 const outputPath = path.join(
-                  outputOptions.publicPath,
+                  outputOptions.publicPath || '',
                   options.outputPath,
                   basename
                 );
@@ -91,6 +92,7 @@ export default postcss.plugin(
                           }')`;
                         });
                       }
+                      return value;
                     })
                     .join(',');
                   decl.value = newValue;

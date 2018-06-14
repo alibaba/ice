@@ -14,7 +14,7 @@ body {
 
 @font-face {
   font-family: 'iconfont'; /* project id 377048 */
-  src: url('//at.alicdn.com/t/font_377048_kjcjjyweu4sra4i.eot');
+  src: url('./font_377048_kjcjjyweu4sra4i.eot');
   src: url('//at.alicdn.com/t/font_377048_kjcjjyweu4sra4i.eot?#iefix')
       format('embedded-opentype'),
     url('//at.alicdn.com/t/font_377048_kjcjjyweu4sra4i.woff') format('woff'),
