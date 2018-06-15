@@ -5,12 +5,24 @@
 import HeaderAsideFooterResponsiveLayout from './layouts/HeaderAsideFooterResponsiveLayout';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import UserManagement from './pages/UserManagement';
+import TestManagement from './pages/TestManagement';
 
 const routerConfig = [
   {
     path: '/',
     layout: HeaderAsideFooterResponsiveLayout,
     component: Home,
+  },
+  {
+    path: '/permission/users',
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: UserManagement,
+  },
+  {
+    path: '/test/paper',
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: TestManagement,
   },
   {
     path: '*',

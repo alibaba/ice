@@ -10,13 +10,17 @@ body {
     max-width: 340px;
     height: 42px;
     line-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .logo-text {
       display: block;
-      width: 100%;
+      max-width: 120px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-size: 36px;
+      margin-left: 10px;
+      font-size: 28px;
       color: $ice-logo-text-color;
       font-weight: bold;
       font-family: Helvetica, sans-serif;
@@ -26,8 +30,7 @@ body {
   /* LAYOUT */
   &.ice-design-layout {
     width: 100%;
-    padding: 0 20px;
-    background-color: $ice-layout-bg;
+    // background-color: $ice-layout-bg;
     background-size: 100%;
     background-repeat: no-repeat;
 
@@ -51,16 +54,20 @@ body {
       }
     }
 
+    .ice-layout-main {
+      padding: 20px 20px 0 20px;
+    }
+
     /* HEADER */
     .ice-design-layout-header {
       width: 100%;
-      padding: 20px 0;
+      padding: 10px 20px;
       margin: 0px auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: none;
-      background: transparent;
+      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+      background: #fff;
       .user-avatar {
         margin-right: 12px;
         border-radius: 4px;
@@ -92,13 +99,14 @@ body {
     /* ASIDE */
     .ice-design-layout-aside {
       background: $ice-aside-bg;
+      box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
 
       .collapse-btn {
         cursor: pointer;
         display: block;
         width: 100%;
         text-align: center;
-        margin-bottom: 20px;
+        margin: 20px 0;
         color: $ice-collapse-btn-color;
       }
 
@@ -114,13 +122,11 @@ body {
         > .ice-menu-submenu
         > .ice-menu-submenu-title,
       .ice-menu.ice-menu-root.ice-menu-inline > .ice-menu-item {
-        margin-bottom: 1px;
         color: $ice-aside-text-color;
         font-weight: bold;
       }
 
       .ice-menu.ice-menu-root .ice-menu-inline > .ice-menu-item {
-        margin-bottom: 1px;
         color: $ice-aside-sub-text-color;
       }
 
@@ -128,7 +134,7 @@ body {
       .ice-menu.ice-menu-horizontal > .ice-menu-item:hover,
       .ice-menu.ice-menu-root > .ice-menu-item:hover {
         color: #fff;
-        border-radius: 6px;
+        border-radius: 0;
         background-image: linear-gradient(
           90deg,
           $ice-aside-menu-item-selected-gradient-left-bg 0%,
@@ -143,7 +149,8 @@ body {
       }
 
       .ice-menu:not(.ice-menu-horizontal) .ice-menu-item-selected {
-        border-radius: 6px;
+        margin-bottom: 1px;
+        border-radius: 0;
         background-image: linear-gradient(
           90deg,
           $ice-aside-menu-item-selected-gradient-left-bg 0%,
@@ -179,7 +186,7 @@ body {
           &:hover {
             transition: initial;
             color: $ice-aside-menu-item-selected-text-color;
-            border-radius: 6px;
+            border-radius: 0;
             background-image: linear-gradient(
               90deg,
               $ice-aside-menu-item-selected-gradient-left-bg 0%,
@@ -256,12 +263,6 @@ body {
       }
     }
 
-    /* MAIN */
-    .ice-layout-main {
-      padding: 0 0 0 20px;
-      overflow: hidden;
-    }
-
     /* FOOTER */
     .ice-design-layout-footer-body {
       width: 100%;
@@ -288,7 +289,7 @@ body {
 
 .user-profile-menu {
   width: 130px;
-  border-radius: 6px;
+  border-radius: 0;
   padding: 0 16px;
   .user-profile-menu-item {
     height: 40px;
@@ -337,22 +338,17 @@ body {
 
       .ice-design-layout-aside {
         position: fixed;
-        left: -240px;
+        left: -280px;
         top: 0px;
         bottom: 0;
-        padding: 0 20px;
         background: #2e323e;
         z-index: 9999;
       }
 
-      .ice-layout-main {
-        padding: 0;
-      }
-
       .open-drawer {
-        transform: translateX(240px);
+        transform: translateX(280px);
         .logo {
-          width: 200px;
+          width: 240px;
           margin: 20px 0;
           text-align: center;
         }

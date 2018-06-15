@@ -33,14 +33,14 @@ const asideMenuConfig = [
   {
     name: '权限管理',
     path: '/permission',
-    icon: 'copy',
+    icon: 'yonghu',
     children: [{ name: '用户管理', path: '/permission/users' }],
   },
   {
     name: '试题管理',
-    path: '/exam',
-    icon: 'copy',
-    children: [{ name: '试卷管理', path: '/exam/question' }],
+    path: '/test',
+    icon: 'publish',
+    children: [{ name: '试卷管理', path: '/test/paper' }],
   },
 ];
 
