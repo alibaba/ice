@@ -3,6 +3,7 @@
 // Basic color variables
 $custom-layout-bg: hsl(226, 16%, 21%);
 $ice-aside-bg: #001529;
+$ice-aside-text-color: rgba(204, 204, 204, 0.95);
 
 // Layout dark styles
 $ice-body-bg: $color-white !default;
@@ -19,7 +20,7 @@ $ice-header-text-hover-color: $color-brand1-5 !default;
 
 $ice-aside-bg: $ice-aside-bg !default;
 $ice-aside-menu-bg: $color-transparent !default;
-$ice-aside-text-color: $color-white !default;
+$ice-aside-text-color: $ice-aside-text-color !default;
 $ice-aside-sub-text-color: $color-text1-2 !default;
 $ice-aside-text-hover-color: $color-white !default;
 $ice-aside-menu-item-selected-gradient-left-bg: $color-brand1-9 !default;
@@ -33,10 +34,6 @@ $ice-aside-menu-collapse-selected-text-color: $color-brand1-5 !default;
 
 $ice-copyright-text-color: $color-text1-3 !default;
 $ice-copyright-text-hover-color: $color-brand1-5 !default;
-
-// .ice-design-header-aside-footer-responsive-layout-dark.ice-design-layout {
-//   background-image: url(https://img.alicdn.com/tfs/TB1_YvwXTtYBeNjy1XdXXXXyVXa-1680-370.png);
-// }
 
 $theme: 'dark';
 

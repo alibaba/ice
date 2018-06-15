@@ -31,6 +31,10 @@ export default class Filter extends Component {
     };
   }
 
+  handleClick = (value) => {
+    console.log(value);
+  };
+
   render() {
     const { activeIndex } = this.state;
     return (
@@ -51,6 +55,7 @@ export default class Filter extends Component {
                       activeIndex === idx ? styles.active : null;
                     return (
                       <span
+                        onClick={() => this.handleClick(text)}
                         style={{ ...styles.filterText, ...activeStyle }}
                         key={idx}
                       >
