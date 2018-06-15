@@ -14,12 +14,12 @@
     "@icedesign/layout": "^0.1.0",
     "@icedesign/menu": "^0.1.0",
     "@icedesign/skin": "^0.1.0",
-    "axios": "^0.17.1",
     "bizcharts": "^3.1.0",
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
     "foundation-symbol": "^0.1.0",
     "prop-types": "^15.5.8",
+    "react-countup": "^3.0.3",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {

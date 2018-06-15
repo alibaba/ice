@@ -2,14 +2,14 @@
 html,
 body {
   background-color: $ice-body-bg;
-  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
 }
 
 .ice-design-header-aside-footer-responsive-layout-#{$theme} {
   .logo {
     max-width: 340px;
-    height: 42px;
-    line-height: 42px;
+    height: 62px;
+    line-height: 62px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,7 +30,6 @@ body {
   /* LAYOUT */
   &.ice-design-layout {
     width: 100%;
-    // background-color: $ice-layout-bg;
     background-size: 100%;
     background-repeat: no-repeat;
 
@@ -64,7 +63,7 @@ body {
       padding: 10px 20px;
       margin: 0px auto;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
       background: #fff;
@@ -122,8 +121,10 @@ body {
         > .ice-menu-submenu
         > .ice-menu-submenu-title,
       .ice-menu.ice-menu-root.ice-menu-inline > .ice-menu-item {
+        margin-bottom: 1px;
         color: $ice-aside-text-color;
-        font-weight: bold;
+        font-weight: 400;
+        font-size: 14px;
       }
 
       .ice-menu.ice-menu-root .ice-menu-inline > .ice-menu-item {
@@ -285,6 +286,12 @@ body {
       }
     }
   }
+
+  &.ice-design-aside-collapled {
+    .logo-text {
+      display: none;
+    }
+  }
 }
 
 .user-profile-menu {
@@ -304,12 +311,6 @@ body {
       margin-right: 5px;
     }
   }
-}
-
-@media screen and (max-width: 1200px) {
-}
-
-@media screen and (max-width: 721px) and (min-width: 1199px) {
 }
 
 @media screen and (max-width: 720px) {
@@ -351,6 +352,7 @@ body {
           width: 240px;
           margin: 20px 0;
           text-align: center;
+          background: transparent !important;
         }
       }
 

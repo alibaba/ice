@@ -140,16 +140,104 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
         fixable
         style={{ minHeight: '100vh' }}
         className={cx(
-          `ice-design-header-aside-footer-responsive-layout-${theme}`,
+          `ice-design-header-aside-footer-responsive-layout-${theme} ice-design-layout`,
           {
-            'ice-design-layout': true,
+            'ice-design-aside-collapled': this.state.collapse,
           }
         )}
       >
-        <Header
+        <Layout.Aside
+          width="auto"
           theme={theme}
-          isMobile={this.state.isScreen !== 'isDesktop' ? true : undefined}
-        />
+          className={cx('ice-design-layout-aside', {
+            'open-drawer': this.state.openDrawer,
+          })}
+        >
+          <Logo style={{ background: '#002140' }} />
+          {/* 侧边菜单项 begin */}
+          {this.state.isScreen !== 'isMobile' && (
+            <a className="collapse-btn" onClick={this.toggleCollapse}>
+              <Icon
+                type={this.state.collapse ? 'arrow-right' : 'arrow-left'}
+                size="small"
+              />
+            </a>
+          )}
+
+          <Menu
+            style={{ width: this.state.collapse ? 60 : 240 }}
+            inlineCollapsed={this.state.collapse}
+            mode="inline"
+            selectedKeys={[pathname]}
+            openKeys={this.state.openKeys}
+            defaultSelectedKeys={[pathname]}
+            onOpenChange={this.onOpenChange}
+            onClick={this.onMenuClick}
+          >
+            {Array.isArray(asideMenuConfig) &&
+              asideMenuConfig.length > 0 &&
+              asideMenuConfig.map((nav, index) => {
+                if (nav.children && nav.children.length > 0) {
+                  return (
+                    <SubMenu
+                      key={index}
+                      title={
+                        <span>
+                          {nav.icon ? (
+                            <FoundationSymbol size="small" type={nav.icon} />
+                          ) : null}
+                          <span className="ice-menu-collapse-hide">
+                            {nav.name}
+                          </span>
+                        </span>
+                      }
+                    >
+                      {nav.children.map((item) => {
+                        const linkProps = {};
+                        if (item.newWindow) {
+                          linkProps.href = item.path;
+                          linkProps.target = '_blank';
+                        } else if (item.external) {
+                          linkProps.href = item.path;
+                        } else {
+                          linkProps.to = item.path;
+                        }
+                        return (
+                          <MenuItem key={item.path}>
+                            <Link {...linkProps}>{item.name}</Link>
+                          </MenuItem>
+                        );
+                      })}
+                    </SubMenu>
+                  );
+                }
+                const linkProps = {};
+                if (nav.newWindow) {
+                  linkProps.href = nav.path;
+                  linkProps.target = '_blank';
+                } else if (nav.external) {
+                  linkProps.href = nav.path;
+                } else {
+                  linkProps.to = nav.path;
+                }
+                return (
+                  <MenuItem key={nav.path}>
+                    <Link {...linkProps}>
+                      <span>
+                        {nav.icon ? (
+                          <FoundationSymbol size="small" type={nav.icon} />
+                        ) : null}
+                        <span className="ice-menu-collapse-hide">
+                          {nav.name}
+                        </span>
+                      </span>
+                    </Link>
+                  </MenuItem>
+                );
+              })}
+          </Menu>
+          {/* 侧边菜单项 end */}
+        </Layout.Aside>
         <Layout.Section>
           {this.state.isScreen === 'isMobile' && (
             <a className="menu-btn" onClick={this.toggleMenu}>
@@ -159,97 +247,11 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
           {this.state.openDrawer && (
             <div className="open-drawer-bg" onClick={this.toggleMenu} />
           )}
-          <Layout.Aside
-            width="auto"
+          <Header
             theme={theme}
-            className={cx('ice-design-layout-aside', {
-              'open-drawer': this.state.openDrawer,
-            })}
-          >
-            {/* 侧边菜单项 begin */}
-            {this.state.isScreen !== 'isMobile' && (
-              <a className="collapse-btn" onClick={this.toggleCollapse}>
-                <Icon
-                  type={this.state.collapse ? 'arrow-right' : 'arrow-left'}
-                  size="small"
-                />
-              </a>
-            )}
-            {this.state.isScreen === 'isMobile' && <Logo />}
-            <Menu
-              style={{ width: this.state.collapse ? 60 : 240 }}
-              inlineCollapsed={this.state.collapse}
-              mode="inline"
-              selectedKeys={[pathname]}
-              openKeys={this.state.openKeys}
-              defaultSelectedKeys={[pathname]}
-              onOpenChange={this.onOpenChange}
-              onClick={this.onMenuClick}
-            >
-              {Array.isArray(asideMenuConfig) &&
-                asideMenuConfig.length > 0 &&
-                asideMenuConfig.map((nav, index) => {
-                  if (nav.children && nav.children.length > 0) {
-                    return (
-                      <SubMenu
-                        key={index}
-                        title={
-                          <span>
-                            {nav.icon ? (
-                              <FoundationSymbol size="small" type={nav.icon} />
-                            ) : null}
-                            <span className="ice-menu-collapse-hide">
-                              {nav.name}
-                            </span>
-                          </span>
-                        }
-                      >
-                        {nav.children.map((item) => {
-                          const linkProps = {};
-                          if (item.newWindow) {
-                            linkProps.href = item.path;
-                            linkProps.target = '_blank';
-                          } else if (item.external) {
-                            linkProps.href = item.path;
-                          } else {
-                            linkProps.to = item.path;
-                          }
-                          return (
-                            <MenuItem key={item.path}>
-                              <Link {...linkProps}>{item.name}</Link>
-                            </MenuItem>
-                          );
-                        })}
-                      </SubMenu>
-                    );
-                  }
-                  const linkProps = {};
-                  if (nav.newWindow) {
-                    linkProps.href = nav.path;
-                    linkProps.target = '_blank';
-                  } else if (nav.external) {
-                    linkProps.href = nav.path;
-                  } else {
-                    linkProps.to = nav.path;
-                  }
-                  return (
-                    <MenuItem key={nav.path}>
-                      <Link {...linkProps}>
-                        <span>
-                          {nav.icon ? (
-                            <FoundationSymbol size="small" type={nav.icon} />
-                          ) : null}
-                          <span className="ice-menu-collapse-hide">
-                            {nav.name}
-                          </span>
-                        </span>
-                      </Link>
-                    </MenuItem>
-                  );
-                })}
-            </Menu>
-            {/* 侧边菜单项 end */}
-          </Layout.Aside>
+            isMobile={this.state.isScreen !== 'isDesktop' ? true : undefined}
+          />
+
           {/* 主体内容 */}
           <Layout.Main scrollable>
             {this.props.children}

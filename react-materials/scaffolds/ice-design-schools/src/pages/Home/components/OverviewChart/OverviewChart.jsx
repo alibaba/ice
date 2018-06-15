@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Icon } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
+import CountUp from 'react-countup';
 import AreaChart from './AreaChart';
 
 const { Row, Col } = Grid;
@@ -24,7 +25,7 @@ export default class OverviewChart extends Component {
           <Col xxs="12" s="12" l="6">
             <div style={styles.box}>
               <h2 style={styles.counterNum}>
-                5675{' '}
+                <CountUp start={0} end={5675} duration={3} useEasing />{' '}
                 <Icon
                   size="xs"
                   type="arrow-down-filling"
@@ -37,7 +38,7 @@ export default class OverviewChart extends Component {
           <Col xxs="12" s="12" l="6">
             <div style={styles.box}>
               <h2 style={styles.counterNum}>
-                7841{' '}
+                <CountUp start={0} end={7841} duration={3} useEasing />{' '}
                 <Icon
                   size="xs"
                   type="arrow-up-filling"
@@ -50,7 +51,7 @@ export default class OverviewChart extends Component {
           <Col xxs="12" s="12" l="6">
             <div style={styles.box}>
               <h2 style={styles.counterNum}>
-                6521{' '}
+                <CountUp start={0} end={6521} duration={3} useEasing />{' '}
                 <Icon
                   size="xs"
                   type="arrow-down-filling"
@@ -63,7 +64,7 @@ export default class OverviewChart extends Component {
           <Col xxs="12" s="12" l="6">
             <div style={styles.box}>
               <h2 style={styles.counterNum}>
-                8954{' '}
+                <CountUp start={0} end={8954} duration={3} useEasing />{' '}
                 <Icon
                   size="xs"
                   type="arrow-up-filling"
