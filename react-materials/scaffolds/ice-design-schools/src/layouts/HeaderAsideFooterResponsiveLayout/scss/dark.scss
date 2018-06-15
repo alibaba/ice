@@ -1,7 +1,8 @@
 @import '~@icedesign/skin/variables.scss';
 
 // Basic color variables
-$custom-layout-bg: #2e323f;
+$custom-layout-bg: hsl(226, 16%, 21%);
+$ice-aside-bg: #001529;
 
 // Layout dark styles
 $ice-body-bg: $color-white !default;
@@ -13,10 +14,10 @@ $ice-logo-text-color: $color-brand1-5 !default;
 $ice-icon-down-color: $color-white !default;
 
 $ice-header-menu-bg: $color-transparent !default;
-$ice-header-text-color: $color-white !default;
+$ice-header-text-color: $color-text1-3 !default;
 $ice-header-text-hover-color: $color-brand1-5 !default;
 
-$ice-aside-bg: $color-transparent !default;
+$ice-aside-bg: $ice-aside-bg !default;
 $ice-aside-menu-bg: $color-transparent !default;
 $ice-aside-text-color: $color-white !default;
 $ice-aside-sub-text-color: $color-text1-2 !default;
@@ -33,9 +34,9 @@ $ice-aside-menu-collapse-selected-text-color: $color-brand1-5 !default;
 $ice-copyright-text-color: $color-text1-3 !default;
 $ice-copyright-text-hover-color: $color-brand1-5 !default;
 
-.ice-design-header-aside-footer-responsive-layout-dark.ice-design-layout {
-  background-image: url(https://img.alicdn.com/tfs/TB1_YvwXTtYBeNjy1XdXXXXyVXa-1680-370.png);
-}
+// .ice-design-header-aside-footer-responsive-layout-dark.ice-design-layout {
+//   background-image: url(https://img.alicdn.com/tfs/TB1_YvwXTtYBeNjy1XdXXXXyVXa-1680-370.png);
+// }
 
 $theme: 'dark';
 

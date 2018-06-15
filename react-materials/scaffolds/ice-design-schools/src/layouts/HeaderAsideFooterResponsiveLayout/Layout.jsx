@@ -11,7 +11,6 @@ import Header from './../../components/Header';
 import Footer from './../../components/Footer';
 import Logo from './../../components/Logo';
 import { asideMenuConfig } from './../../menuConfig';
-import './scss/light.scss';
 import './scss/dark.scss';
 
 // 设置默认的皮肤配置，支持 dark 和 light 两套皮肤配置
@@ -138,6 +137,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
     return (
       <Layout
+        fixable
         style={{ minHeight: '100vh' }}
         className={cx(
           `ice-design-header-aside-footer-responsive-layout-${theme}`,
@@ -177,7 +177,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
             )}
             {this.state.isScreen === 'isMobile' && <Logo />}
             <Menu
-              style={{ width: this.state.collapse ? 60 : 200 }}
+              style={{ width: this.state.collapse ? 60 : 240 }}
               inlineCollapsed={this.state.collapse}
               mode="inline"
               selectedKeys={[pathname]}
@@ -251,9 +251,11 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
             {/* 侧边菜单项 end */}
           </Layout.Aside>
           {/* 主体内容 */}
-          <Layout.Main>{this.props.children}</Layout.Main>
+          <Layout.Main scrollable>
+            {this.props.children}
+            <Footer />
+          </Layout.Main>
         </Layout.Section>
-        <Footer />
       </Layout>
     );
   }

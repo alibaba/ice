@@ -1,8 +1,6 @@
-
-
 import React, { Component } from 'react';
-
-import './Home.scss';
+import QuickNavigation from './components/QuickNavigation';
+import OverviewChart from './components/OverviewChart';
 
 export default class Home extends Component {
   static displayName = 'Home';
@@ -14,7 +12,10 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div className="home-page">HomePage</div>
+      <div className="home-page">
+        <QuickNavigation />
+        <OverviewChart />
+      </div>
     );
   }
 }
