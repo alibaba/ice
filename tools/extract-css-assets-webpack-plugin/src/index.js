@@ -16,6 +16,11 @@ class ExtractCssAssetsPlugin {
     compiler.hooks.emit.tapPromise('ExtractCssAssetsPlugin', (compilation) => {
       const { outputOptions } = compilation;
       const collectChunks = []; // 收集资源
+
+      if (/(https?:)?\/\//.test(outputOptions.publicPath)) {
+        return Promise.resolve();
+      }
+
       return Promise.all(
         Object.keys(compilation.assets)
           .map((filename) => {

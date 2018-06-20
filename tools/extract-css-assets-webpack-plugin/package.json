@@ -2,7 +2,7 @@
   "name": "extract-css-assets-webpack-plugin",
   "description": "Extract network resources in css",
   "version": "0.1.1",
-  "main": "lib/index.js",
+  "main": "lib/cjs.js",
   "directories": {
     "test": "test"
   },
@@ -22,7 +22,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "babel src --out-dir lib",
-    "test": "jest && tree ./test/actual/*/assets",
+    "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --collectCoverageFrom='src/**/*.js' --coverage",
     "travis:lint": "npm run lint && npm run security",
