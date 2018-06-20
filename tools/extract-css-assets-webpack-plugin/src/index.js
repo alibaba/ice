@@ -50,9 +50,9 @@ class ExtractCssAssetsPlugin {
             return Promise.all(
               collectChunks.map((chunk) => {
                 return new Promise((resolve, reject) => {
-                  if (chunk.path) {
+                  if (chunk.outputPath) {
                     const file = new RawSource(chunk.contents);
-                    compilation.assets[chunk.path] = file;
+                    compilation.assets[chunk.outputPath] = file;
                     resolve();
                   } else {
                     reject();

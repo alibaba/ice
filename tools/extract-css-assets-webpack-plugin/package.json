@@ -22,7 +22,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "babel src --out-dir lib",
-    "test": "jest && tree ./test/actual/default/assets",
+    "test": "jest && tree ./test/actual/*/assets",
     "test:watch": "jest --watch",
     "test:coverage": "jest --collectCoverageFrom='src/**/*.js' --coverage",
     "travis:lint": "npm run lint && npm run security",

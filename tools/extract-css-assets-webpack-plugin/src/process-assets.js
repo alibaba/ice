@@ -9,7 +9,6 @@ const getDeclUrl = (value) => {
   const url = value.match(urlReg)[2];
   const md5 = crypto.createHash('md5');
   const urlIdentity = md5.update(url).digest('hex');
-
   return { urlIdentity, url };
 };
 
@@ -45,7 +44,6 @@ export default postcss.plugin(
           });
         });
 
-
         if (Object.keys(networkRequestMap).length > 0) {
           Promise.all(
             Object.entries(networkRequestMap).map(([key, networkRequest]) => {
@@ -58,15 +56,16 @@ export default postcss.plugin(
                 const ext = path.extname(url);
                 const md5 = crypto.createHash('md5');
                 const basename = md5.update(buffer).digest('hex') + ext;
-                const outputPath = path.join(
-                  outputOptions.publicPath || '',
-                  options.outputPath,
-                  basename
-                );
+                const contextPath =
+                  (outputOptions.publicPath || '') +
+                  path.join(options.outputPath, basename);
+
+                const outputPath = path.join(options.outputPath, basename);
 
                 const asset = {
                   contents: buffer,
-                  path: outputPath,
+                  contextPath,
+                  outputPath,
                   basename,
                 };
 
@@ -88,7 +87,7 @@ export default postcss.plugin(
                         const { urlIdentity } = getDeclUrl(value);
                         return value.replace(urlReg, () => {
                           return `url('${
-                            networkRequestMap[urlIdentity].path
+                            networkRequestMap[urlIdentity].contextPath
                           }')`;
                         });
                       }
@@ -109,7 +108,9 @@ export default postcss.plugin(
                   if (urlReg.test(decl.value)) {
                     const { urlIdentity } = getDeclUrl(decl.value);
                     decl.value = decl.value.replace(urlReg, () => {
-                      return `url('${networkRequestMap[urlIdentity].path}')`;
+                      return `url('${
+                        networkRequestMap[urlIdentity].contextPath
+                      }')`;
                     });
                   }
                 }
