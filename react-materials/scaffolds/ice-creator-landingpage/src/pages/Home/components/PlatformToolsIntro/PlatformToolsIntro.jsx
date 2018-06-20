@@ -33,7 +33,7 @@ export default class PlatformIntro2 extends Component {
           </p>
         </div>
         <img
-          src="https://img.alicdn.com/tfs/TB1DzIrRVXXXXckXFXXXXXXXXXX-1740-800.png"
+          src={require('./images/TB1DzIrRVXXXXckXFXXXXXXXXXX-1740-800.png')}
           alt=""
           width="870"
           height="400"

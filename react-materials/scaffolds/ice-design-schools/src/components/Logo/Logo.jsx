@@ -6,7 +6,7 @@ export default class Logo extends PureComponent {
     return (
       <div className="logo" style={this.props.style}>
         <img
-          src="https://img.alicdn.com/tfs/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png"
+          src={require('./images/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png')}
           alt=""
           style={{ width: '40px' }}
         />

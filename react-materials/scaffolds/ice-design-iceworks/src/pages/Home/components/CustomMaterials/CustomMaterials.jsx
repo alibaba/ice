@@ -25,7 +25,7 @@ export default class CustomMaterials extends Component {
             <img
               alt="特点图"
               style={styles.coverImage}
-              src="https://img.alicdn.com/tfs/TB1gEoLpwmTBuNjy1XbXXaMrVXa-1760-974.png"
+              src={require('./images/TB1gEoLpwmTBuNjy1XbXXaMrVXa-1760-974.png')}
             />
           </div>
         </div>

@@ -11,7 +11,7 @@ export default class BasicNotFound extends Component {
         <IceContainer>
           <div style={styles.notfoundContent}>
             <img
-              src="https://img.alicdn.com/tfs/TB1txw7bNrI8KJjy0FpXXb5hVXa-260-260.png"
+              src={require('./images/TB1txw7bNrI8KJjy0FpXXb5hVXa-260-260.png')}
               style={styles.imgNotfound}
               alt="页面不存在"
             />
