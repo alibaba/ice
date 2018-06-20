@@ -10,11 +10,12 @@ function resolveSDK(relativePath) {
 const getPublicUrl = (appPackageJson) => {
   // eslint-disable-next-line
   const appPackage = require(appPackageJson);
-  if (
-    appPackage.buildConfig &&
-    (appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl)
-  ) {
-    return appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl;
+  const buildConfig = appPackage.buildConfig || {};
+  if (buildConfig && (buildConfig.publicURL || buildConfig.publicUrl)) {
+    return buildConfig.publicURL || buildConfig.publicUrl;
+  }
+  if (buildConfig.localization) {
+    return './';
   }
   // 默认值为相对于当前域名绝对路径
   return '/';
