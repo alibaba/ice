@@ -42,6 +42,7 @@
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "chalk": "^2.4.1",
     "commander": "^2.11.0",
+    "copy-webpack-plugin": "^4.5.1",
     "css-hot-loader": "^1.3.4",
     "css-loader": "^0.28.7",
     "deep-assign": "^2.0.0",

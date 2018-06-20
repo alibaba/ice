@@ -1,11 +1,12 @@
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 const fs = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
-const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
@@ -55,6 +56,14 @@ module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
       {
         libraryName: /@ali\/ice-.*/,
         stylePath: 'style.js',
+      },
+    ]),
+    new CopyWebpackPlugin([
+      {
+        from: 'public/*.*',
+        to: `${paths.appBuild}/`,
+        ignore: ['*.html'],
+        toType: 'dir',
       },
     ]),
   ];
