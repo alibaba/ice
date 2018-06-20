@@ -4,7 +4,7 @@ const { readdirSync, readFileSync, writeFile } = require('fs');
 const { resolve, join } = require('path');
 
 if (
-  process.env.TRAVIS_BRANCH !== 'master' ||
+  process.env.TRAVIS_BRANCH !== 'master' &&
   process.env.TRAVIS_BRANCH !== 'pre-depoly'
 ) {
   console.log('当前分支非 Master, 不执行物料源同步脚本');
