@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Button } from '@icedesign/base';
 
 export default class PlatformLanding extends Component {
   static displayName = 'PlatformLanding';
 
-  static propTypes = {
-    value: PropTypes.string,
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-    value: 'string data',
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);

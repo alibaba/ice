@@ -6,14 +6,12 @@ export default class Progress extends Component {
 
   static propTypes = {
     percent: PropTypes.number,
-    maxLength: PropTypes.number,
     extra: PropTypes.string,
     color: PropTypes.string,
   };
 
   static defaultProps = {
     percent: 100,
-    maxLength: 100,
     extra: '',
     color: '#5485f7',
   };

@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 export default class PlatformIntro extends Component {
   static displayName = 'PlatformIntro';
 
-  static propTypes = {
-    value: PropTypes.string,
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-    value: 'string data',
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
