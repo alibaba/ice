@@ -1,10 +1,8 @@
 {
   "name": "@icedesign/website-homepage-scaffold",
   "version": "1.0.2",
-  "description":
-    "该模板适用于产品类的首页介绍，默认内置一个页面和五个不同风格的展示区块",
-  "homepage":
-    "https://alibaba.github.io/ice/scaffold-preview/ice-website-homepage.html",
+  "description": "该模板适用于产品类的首页介绍，默认内置一个页面和五个不同风格的展示区块",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-website-homepage.html",
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
@@ -41,12 +39,12 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "src/index.js"
+    "entry": "src/index.js",
+    "localization": true
   },
   "scaffoldConfig": {
     "name": "ice-website-homepage",
     "title": "ICE Website HomePage",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1lvtMpQOWBuNjSsppXXXPgpXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1lvtMpQOWBuNjSsppXXXPgpXa-2840-1596.png"
   }
 }

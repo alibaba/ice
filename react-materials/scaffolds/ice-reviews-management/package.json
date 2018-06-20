@@ -1,11 +1,9 @@
 {
   "name": "@icedesign/reviews-management-scaffold",
   "version": "1.0.1",
-  "description":
-    "该模板适用于用户反馈和评价管理，布局方式采用左侧固定，右侧自适应方式，适合大量数据展示和界面操作",
+  "description": "该模板适用于用户反馈和评价管理，布局方式采用左侧固定，右侧自适应方式，适合大量数据展示和界面操作",
   "author": "ice-admin@alibaba-inc.com",
-  "homepage":
-    "https://alibaba.github.io/ice/scaffold-preview/ice-reviews-management.html",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-reviews-management.html",
   "dependencies": {
     "@antv/data-set": "^0.8.7",
     "@icedesign/base": "^0.2.0",
@@ -41,12 +39,12 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "src/index.js"
+    "entry": "src/index.js",
+    "localization": true
   },
   "scaffoldConfig": {
     "name": "ice-reviews-management",
     "title": "ICE Reviews Management",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1FrmItDtYBeNjy1XdXXXXyVXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1FrmItDtYBeNjy1XdXXXXyVXa-2840-1596.png"
   }
 }
