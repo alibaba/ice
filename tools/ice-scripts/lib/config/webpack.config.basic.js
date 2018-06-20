@@ -17,7 +17,7 @@ const pkg = require('./packageJson');
 
 /**
  * 合并 plugin 操作，
- * @param  {array} uniques plugin 名单，在这名单内的插件会过滤掉，不会出现两份
+ * @param  {array} uniques plugin 名单，在这名单内的插件会过滤掉，不会出现两份，以用户的配置为准。
  * @return {array}
  */
 const pluginsUnique = (uniques) => {
@@ -67,7 +67,7 @@ module.exports = function getWebpackConfigBasic(
     module: {
       rules: getRules(paths, buildConfig),
     },
-    plugins: getPlugins(paths, buildConfig, themeConfig),
+    plugins: getPlugins(paths, { buildConfig, themeConfig }),
     optimization: {
       splitChunks: {
         cacheGroups: {
@@ -81,6 +81,15 @@ module.exports = function getWebpackConfigBasic(
       },
     },
   };
+
+  if (buildConfig.localization && typeof webpackConfig.externals === 'object') {
+    if ('react' in webpackConfig.externals) {
+      delete webpackConfig.externals.react;
+    }
+    if ('react-dom' in webpackConfig.externals) {
+      delete webpackConfig.externals['react-dom'];
+    }
+  }
 
   const userConfig = getUserConfig();
   const finalWebpackConfig = webpackMerge({

@@ -5,12 +5,13 @@ const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
+const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = function(paths, options = {}, themeConfig = {}) {
+module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
   const defineVriables = {
     'process.env.NODE_ENV': JSON.stringify(
       process.env.NODE_ENV || 'development'
@@ -58,7 +59,18 @@ module.exports = function(paths, options = {}, themeConfig = {}) {
     ]),
   ];
 
-  const themePackage = options.theme || options.themePackage;
+  const localization = buildConfig.localization || false;
+
+  if (localization) {
+    plugins.push(
+      new ExtractCssAssetsWebpackPlugin({
+        outputPath: 'assets',
+        relativeCssPath: '../',
+      })
+    );
+  }
+
+  const themePackage = buildConfig.theme || buildConfig.themePackage;
   let iconScssPath;
   let skinOverridePath;
   let variableFilePath;
