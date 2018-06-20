@@ -43,7 +43,8 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "src/index.js"
+    "entry": "src/index.js",
+    "localization": true
   },
   "scaffoldConfig": {
     "name": "ice-design-schools",
