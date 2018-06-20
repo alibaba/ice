@@ -15,7 +15,7 @@ export default class VisualAssembly extends Component {
           <img
             alt="特点图"
             style={styles.coverImage}
-            src="//img.alicdn.com/tfs/TB1Xf7OpuuSBuNjy1XcXXcYjFXa-2334-1092.png"
+            src={require('./images/TB1Xf7OpuuSBuNjy1XcXXcYjFXa-2334-1092.png')}
           />
         </div>
         <div style={styles.wrapper}>

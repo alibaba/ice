@@ -16,7 +16,7 @@ export default class UserLayout extends Component {
           <a href="#" className="meta">
             <img
               className="logo"
-              src="https://img.alicdn.com/tfs/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png"
+              src={require('./images/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png')}
               alt="logo"
             />
             <span className="title">飞冰</span>

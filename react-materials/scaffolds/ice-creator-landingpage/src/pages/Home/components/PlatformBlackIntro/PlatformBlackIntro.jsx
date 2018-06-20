@@ -31,7 +31,7 @@ export default class PlatformBlackIntro extends Component {
         <div style={styles.extraBody}>
           <img
             alt=""
-            src="https://img.alicdn.com/tfs/TB1opWDSpXXXXbwXFXXXXXXXXXX-1412-436.png"
+            src={require('./images/TB1opWDSpXXXXbwXFXXXXXXXXXX-1412-436.png')}
             height="218"
             width="706"
             style={styles.image}

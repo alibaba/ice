@@ -38,12 +38,12 @@ export default class IntroTab extends Component {
               className={`scenario-item ${this.isSelected(index, 0)}`}
             >
               <img
-                src="https://gw.alipayobjects.com/zos/rmsportal/buKnoKlvQeEzYxttqrFh.svg"
+                src={require('./images/buKnoKlvQeEzYxttqrFh.svg')}
                 alt=""
               />
               <img
                 className="selected"
-                src="https://gw.alipayobjects.com/zos/rmsportal/MnBlZZrbYBdVvXrCOyfW.svg"
+                src={require('./images/MnBlZZrbYBdVvXrCOyfW.svg')}
                 alt=""
               />
               <h4>物业缴费</h4>
@@ -56,12 +56,12 @@ export default class IntroTab extends Component {
               className={`scenario-item ${this.isSelected(index, 1)}`}
             >
               <img
-                src="https://gw.alipayobjects.com/zos/rmsportal/BdPVAfibJHPeFvZIcsTr.svg"
+                src={require('./images/BdPVAfibJHPeFvZIcsTr.svg')}
                 alt=""
               />
               <img
                 className="selected"
-                src="https://gw.alipayobjects.com/zos/rmsportal/NqHbRYuggzIiBJTZOCfa.svg"
+                src={require('./images/NqHbRYuggzIiBJTZOCfa.svg')}
                 alt=""
               />
               <h4>小区生活号</h4>
@@ -74,12 +74,12 @@ export default class IntroTab extends Component {
               className={`scenario-item ${this.isSelected(index, 2)}`}
             >
               <img
-                src="https://gw.alipayobjects.com/zos/rmsportal/ZDqQbDUiGLDzygPQIMxp.svg"
+                src={require('./images/ZDqQbDUiGLDzygPQIMxp.svg')}
                 alt=""
               />
               <img
                 className="selected"
-                src="https://gw.alipayobjects.com/zos/rmsportal/rHxglRXhjrhTOgRfqrah.svg"
+                src={require('./images/rHxglRXhjrhTOgRfqrah.svg')}
                 alt=""
               />
               <h4>社区理财</h4>
@@ -146,7 +146,7 @@ export default class IntroTab extends Component {
 
             <div className="scenario-detail-right">
               <img
-                src="https://gw.alipayobjects.com/zos/rmsportal/ATrmyVCFsdLJlliHBppp.png"
+                src={require('./images/ATrmyVCFsdLJlliHBppp.png')}
                 alt=""
               />
             </div>
@@ -207,7 +207,7 @@ export default class IntroTab extends Component {
 
             <div className="scenario-detail-right">
               <img
-                src="https://gw.alipayobjects.com/zos/rmsportal/qhiRAOVMONMMircrVhJB.png"
+                src={require('./images/qhiRAOVMONMMircrVhJB.png')}
                 alt=""
               />
             </div>
@@ -255,7 +255,7 @@ export default class IntroTab extends Component {
 
             <div className="scenario-detail-right">
               <img
-                src="https://gw.alipayobjects.com/zos/rmsportal/ySkOyTnwEMufrSgxRSyq.png"
+                src={require('./images/ySkOyTnwEMufrSgxRSyq.png')}
                 alt=""
               />
             </div>
