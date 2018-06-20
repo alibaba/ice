@@ -56,9 +56,13 @@ export default postcss.plugin(
                 const ext = path.extname(url);
                 const md5 = crypto.createHash('md5');
                 const basename = md5.update(buffer).digest('hex') + ext;
-                const contextPath =
-                  (outputOptions.publicPath || '') +
-                  path.join(options.outputPath, basename);
+
+                const contextPath = path.join(
+                  options.relativeCssPath,
+                  outputOptions.publicPath || '',
+                  options.outputPath,
+                  basename
+                );
 
                 const outputPath = path.join(options.outputPath, basename);
 

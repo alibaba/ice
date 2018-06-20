@@ -8,7 +8,8 @@
 
 ## Options
 
-- `outputPath` 提取后的文件目录前缀
+- `outputPath` 默认值： `""` 提取后的文件目录前缀
+- `relativeCssPath` 默认值： `""` 提取的文件后相对于 css 的路径
 
 ## Usage
 
@@ -43,11 +44,12 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFileName: '[id].css',
+      filename: 'css/[name].css',
+      chunkFileName: 'css/[id].css',
     }),
     new ExtractCssAssetsPlugin({
       outputPath: 'assets/',
+      relativeCssPath: '../', // 由于创建了 css 目录 则生成的图片相对于 css 目录则为 `'../'`
     }),
   ],
 };
@@ -96,7 +98,6 @@ body {
       format('svg');
 }
 ```
-
 
 ## 注意事项
 

@@ -6,9 +6,13 @@ import ProcessAssets from './process-assets';
 
 class ExtractCssAssetsPlugin {
   constructor(options) {
-    this.options = options || {
-      outputPath: '',
-    };
+    this.options = Object.assign(
+      {
+        outputPath: '',
+        relativeCssPath: '',
+      },
+      options
+    );
   }
 
   apply(compiler) {
