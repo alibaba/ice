@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/application-progress-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "申请进度信息展示",
   "files": [
     "src/",
