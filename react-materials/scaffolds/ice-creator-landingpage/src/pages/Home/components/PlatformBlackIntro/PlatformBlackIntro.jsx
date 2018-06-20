@@ -17,8 +17,7 @@ export default class PlatformBlackIntro extends Component {
       <div
         style={{
           ...styles.wrapper,
-          backgroundImage:
-            'url(https://img.alicdn.com/tfs/TB1.IQmRVXXXXbYXVXXXXXXXXXX-2760-1480.png)',
+          backgroundImage: `url(${require('./images/TB1.IQmRVXXXXbYXVXXXXXXXXXX-2760-1480.png')})`,
         }}
       >
         <div style={styles.body}>

@@ -23,7 +23,7 @@ export default class PlatformIntro2 extends Component {
         style={{
           ...styles.wrapper,
           backgroundImage:
-            'url(https://img.alicdn.com/tfs/TB1d..oRVXXXXX4XVXXXXXXXXXX-2760-1480.png)',
+            `url(${require('./images/TB1d..oRVXXXXX4XVXXXXXXXXXX-2760-1480.png')})`,
         }}
       >
         <div style={styles.body}>

@@ -222,7 +222,7 @@ const styles = {
   },
   software: {
     backgroundImage:
-      'url(//img.alicdn.com/tfs/TB1uPagpQyWBuNjy0FpXXassXXa-1446-1148.png)',
+      `url(${require('./images/TB1uPagpQyWBuNjy0FpXXassXXa-1446-1148.png')})`,
     width: 1446 / 2,
     height: 1148 / 2,
     backgroundSize: '723px 574px',
@@ -251,7 +251,7 @@ const styles = {
     height: 750,
     backgroundSize: 'cover',
     backgroundImage:
-      'url(//img.alicdn.com/tfs/TB1eoehpKOSBuNjy0FdXXbDnVXa-3798-1500.jpg)',
+      `url(${require('./images/TB1eoehpKOSBuNjy0FdXXbDnVXa-3798-1500.jpg')})`,
   },
   subtitle: {
     fontSize: '16px',
