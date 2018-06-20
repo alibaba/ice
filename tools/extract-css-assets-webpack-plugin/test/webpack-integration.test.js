@@ -3,6 +3,8 @@ import path from 'path';
 import webpack from 'webpack';
 import junk from 'junk';
 
+jest.setTimeout(60000);
+
 const cases = process.env.CASES
   ? process.env.CASES.split(',')
   : fs.readdirSync(path.join(__dirname, 'cases')).filter(junk.not);
@@ -24,7 +26,7 @@ describe('Webpack Integration Tests', () => {
       if (!options.output.path) options.output.path = outputDirectory;
       if (process.env.CASES) {
         console.log(
-          `\nwebpack.${testCase}.config.js ${JSON.stringify(options, null, 2)}`,
+          `\nwebpack.${testCase}.config.js ${JSON.stringify(options, null, 2)}`
         );
       }
 
