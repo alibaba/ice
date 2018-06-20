@@ -3,11 +3,16 @@ const co = require('co');
 const { readdirSync, readFileSync, writeFile } = require('fs');
 const { resolve, join } = require('path');
 
-if (process.env.TRAVIS_BRANCH !== 'master') {
+if (
+  process.env.TRAVIS_BRANCH !== 'master' ||
+  process.env.TRAVIS_BRANCH !== 'pre-depoly'
+) {
   console.log('当前分支非 Master, 不执行物料源同步脚本');
   console.log('TRAVIS_BRANCH=' + process.env.TRAVIS_BRANCH);
   process.exit(0);
 }
+
+const isPre = process.env.TRAVIS_BRANCH == 'pre-depoly';
 
 const bucket = 'iceworks';
 const accessKeyId = process.env.ACCESS_KEY_ID;
@@ -27,7 +32,7 @@ sortScaffoldMaterials()
     const files = readdirSync(resolve(__dirname, '../build')).map(
       (filename) => ({
         from: resolve(__dirname, '../build', filename),
-        to: join('assets', filename),
+        to: isPre ? join('pre-assets', filename) : join('assets', filename),
       })
     );
 
