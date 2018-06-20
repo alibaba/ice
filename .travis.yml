@@ -6,10 +6,10 @@ script:
 - npm run lint:nofix
 
 deploy:
-  - provider: script
-    skip_cleanup: true # 避免清空已安装的依赖
-    script: node ./scripts/deploy.js && npm run generate && npm run sync
-    on:
-      all_branches: true # 仅在 master | pre-depoly 分支进行 deploy
-      repo: alibaba/ice
-      condition: $TRAVIS_BRANCH =~ ^master|pre-depoly$
+  provider: script
+  skip_cleanup: true # 避免清空已安装的依赖
+  script: node ./scripts/deploy.js && npm run generate && npm run sync
+  on:
+    all_branches: true # 仅在 master | pre-depoly 分支进行 deploy
+    repo: alibaba/ice
+    condition: $TRAVIS_BRANCH =~ ^master|pre-depoly$
