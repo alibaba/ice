@@ -11,6 +11,8 @@
     "echarts": "^4.0.4",
     "echarts-for-react": "^2.0.8",
     "prop-types": "^15.5.8",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-router-dom": "^4.2.2",
     "react-text-loop": "^1.1.0"
   },
@@ -22,7 +24,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.1.1"
+    "ice-scripts": "^1.5.5-0"
   },
   "scripts": {
     "start": "ice dev",

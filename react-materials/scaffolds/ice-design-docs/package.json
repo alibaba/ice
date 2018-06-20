@@ -11,6 +11,8 @@
     "@icedesign/skin": "^0.1.0",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-markdown": "^3.3.2",
     "react-router-dom": "^4.2.2"
   },
@@ -22,7 +24,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.1.1"
+    "ice-scripts": "^1.5.5-0"
   },
   "scripts": {
     "start": "ice dev",
