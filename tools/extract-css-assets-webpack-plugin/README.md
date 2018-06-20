@@ -96,3 +96,8 @@ body {
       format('svg');
 }
 ```
+
+
+## 注意事项
+
+- 当 `output.publicPath` 设置为 http 网络路径时，插件不工作。
