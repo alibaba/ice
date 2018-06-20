@@ -38,7 +38,7 @@ const styles = {
   wrapperContainer: {
     backgroundColor: '#f6f6f6',
     backgroundImage:
-      'url(//img.alicdn.com/tfs/TB1P7ELpwmTBuNjy1XbXXaMrVXa-3798-1000.png)',
+      `url(${require('./images/TB1P7ELpwmTBuNjy1XbXXaMrVXa-3798-1000.png')})`,
     backgroundSize: 'cover',
   },
   wrapper: {
@@ -54,7 +54,7 @@ const styles = {
     paddingBottom: 160,
     paddingLeft: 30,
     backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1A5MNpuuSBuNjy1XcXXcYjFXa-66-66.png)',
+      `url(${require('./images/TB1A5MNpuuSBuNjy1XcXXcYjFXa-66-66.png')})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '10px 120px',
     zIndex: 2,
