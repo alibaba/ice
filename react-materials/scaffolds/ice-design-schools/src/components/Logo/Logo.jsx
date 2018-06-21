@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { Link } from 'react-router-dom';
 
 const LIGHT = require('./images/lightLogo.png');
 const DARK = require('./images/darkLogo.png');
