@@ -1,3 +1,4 @@
+/* eslint no-undef: 0 */
 import { Button } from '@icedesign/base';
 import React, { Component } from 'react';
 
