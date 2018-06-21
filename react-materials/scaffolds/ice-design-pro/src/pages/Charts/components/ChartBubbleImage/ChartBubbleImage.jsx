@@ -57,11 +57,11 @@ export default class ChartBubbleImage extends Component {
 
     const imageMap = {
       'Internet Explorer':
-        'https://gw.alipayobjects.com/zos/rmsportal/eOYRaLPOmkieVvjyjTzM.png',
+        require('./images/eOYRaLPOmkieVvjyjTzM.png'),
       Chrome:
-        'https://gw.alipayobjects.com/zos/rmsportal/dWJWRLWfpOEbwCyxmZwu.png',
+        require('./images/dWJWRLWfpOEbwCyxmZwu.png'),
       Firefox:
-        'https://gw.alipayobjects.com/zos/rmsportal/ZEPeDluKmAoTioCABBTc.png',
+        require('./images/ZEPeDluKmAoTioCABBTc.png'),
       Safari:
         'https://gw.alipayobjects.com/zos/rmsportal/eZYhlLzqWLAYwOHQAXmc.png',
       Opera:

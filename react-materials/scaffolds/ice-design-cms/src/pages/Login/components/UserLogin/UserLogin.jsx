@@ -14,7 +14,7 @@ const { Row, Col } = Grid;
 
 // 寻找背景图片可以从 https://unsplash.com/ 寻找
 const backgroundImage =
-  'https://img.alicdn.com/tfs/TB1zsNhXTtYBeNjy1XdXXXXyVXa-2252-1500.png';
+  require('./images/TB1zsNhXTtYBeNjy1XdXXXXyVXa-2252-1500.png');
 
 @withRouter
 export default class UserLogin extends Component {

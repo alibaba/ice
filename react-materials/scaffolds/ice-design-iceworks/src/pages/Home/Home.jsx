@@ -25,7 +25,7 @@ export default class Home extends Component {
           desc="提供多种垂直领域模板，快速创建项目，支持风格切换，满足个性化需求"
           img={{
             url:
-              'https://img.alicdn.com/tfs/TB1AC4BpL5TBuNjSspmXXaDRVXa-1816-878.png',
+              require('./images/TB1AC4BpL5TBuNjSspmXXaDRVXa-1816-878.png'),
             width: 1816 / 2,
             height: 878 / 2,
           }}
@@ -36,7 +36,7 @@ export default class Home extends Component {
           desc="模板内置布局，同时提供交互式的定制功能生产专属布局"
           img={{
             url:
-              'https://img.alicdn.com/tfs/TB1CbvHpTtYBeNjy1XdXXXXyVXa-1240-902.png',
+              require('./images/TB1CbvHpTtYBeNjy1XdXXXXyVXa-1240-902.png'),
             width: 1240 / 2,
             height: 902 / 2,
           }}
@@ -47,7 +47,7 @@ export default class Home extends Component {
           desc="丰富多样的项目信息面板，页面信息，路由信息依赖管理等，配置专属的Iceworks界面"
           img={{
             url:
-              'https://img.alicdn.com/tfs/TB1pPQppv1TBuNjy0FjXXajyXXa-1280-860.png',
+              require('./images/TB1pPQppv1TBuNjy0FjXXajyXXa-1280-860.png'),
             width: 1280 / 2,
             height: 860 / 2,
           }}
