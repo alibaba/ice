@@ -24,7 +24,7 @@ export default class SimpleFooter extends Component {
             <Col l="4" xxs="24">
               <a href="#" style={styles.brand}>
                 <img
-                  src="https://img.alicdn.com/tfs/TB1saOBbYGYBuNjy0FoXXciBFXa-218-58.png"
+                  src={require('./images/TB1saOBbYGYBuNjy0FoXXciBFXa-218-58.png')}
                   alt=""
                   style={styles.logo}
                 />

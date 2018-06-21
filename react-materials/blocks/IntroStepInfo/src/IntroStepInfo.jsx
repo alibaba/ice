@@ -28,7 +28,7 @@ export default class IntroStepInfo extends Component {
               <Col span="6">
                 <div style={styles.introItem}>
                   <img
-                    src="https://img.alicdn.com/tfs/TB1JngwmXmWBuNjSspdXXbugXXa-120-112.png"
+                    src={require('./images/TB1JngwmXmWBuNjSspdXXbugXXa-120-112.png')}
                     style={{ width: '60px', height: '57px' }}
                     alt=""
                   />
@@ -41,7 +41,7 @@ export default class IntroStepInfo extends Component {
               <Col span="6">
                 <div style={styles.introItem}>
                   <img
-                    src="https://img.alicdn.com/tfs/TB1Bp8mmuOSBuNjy0FdXXbDnVXa-102-102.png"
+                    src={require('./images/TB1Bp8mmuOSBuNjy0FdXXbDnVXa-102-102.png')}
                     style={{ width: '52px', height: '52px' }}
                     alt=""
                   />
@@ -55,7 +55,7 @@ export default class IntroStepInfo extends Component {
               <Col span="6">
                 <div style={styles.introItem}>
                   <img
-                    src="https://img.alicdn.com/tfs/TB1KDgwmXmWBuNjSspdXXbugXXa-156-156.png"
+                    src={require('./images/TB1KDgwmXmWBuNjSspdXXbugXXa-156-156.png')}
                     style={{ width: '52px', height: '52px' }}
                     alt=""
                   />
@@ -68,7 +68,7 @@ export default class IntroStepInfo extends Component {
               <Col span="6">
                 <div style={styles.introItem}>
                   <img
-                    src="https://img.alicdn.com/tfs/TB1dqlRmqmWBuNjy1XaXXXCbXXa-112-116.png"
+                    src={require('./images/TB1dqlRmqmWBuNjy1XaXXXCbXXa-112-116.png')}
                     style={{ width: '56px', height: '59px' }}
                     alt=""
                   />
@@ -83,7 +83,7 @@ export default class IntroStepInfo extends Component {
             <div style={styles.customVideoSteps}>
               <h3 style={styles.customStepsTitle}>如何三步完成短视频制作？</h3>
               <img
-                src="https://img.alicdn.com/tfs/TB1JUuGmCtYBeNjSspaXXaOOFXa-1064-88.png"
+                src={require('./images/TB1JUuGmCtYBeNjSspaXXaOOFXa-1064-88.png')}
                 style={{ width: '532px' }}
                 alt=""
               />

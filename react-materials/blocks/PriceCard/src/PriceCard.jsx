@@ -68,8 +68,7 @@ export default class PriceCard extends Component {
 
 const styles = {
   container: {
-    background:
-      'url(https://img.alicdn.com/tfs/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png)',
+    background: `url${require('./images/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png')}`,
     borderRadius: 0,
     width: '100%',
     padding: '80px 0',

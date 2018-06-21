@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './index.scss';
 
 export default class IntroTab extends Component {
@@ -16,48 +15,63 @@ export default class IntroTab extends Component {
     };
   }
 
-  isSelected = (index, target) => index === target ? 'selected' : ' '
+  isSelected = (index, target) => (index === target ? 'selected' : ' ');
 
   clickTab = (event) => {
-    let {index} = event.currentTarget.dataset;
+    let { index } = event.currentTarget.dataset;
     index = parseInt(index, 10);
     if (isNaN(index)) {
       index = 0;
     }
-    this.setState({index});
-  }
+    this.setState({ index });
+  };
   render() {
-    const {index} = this.state;
+    const { index } = this.state;
     return (
       <div className="scenario">
         <h3>应用场景</h3>
         <div className="scenario-slider ">
           <div className="scenario-list">
-            <div data-index="0" onClick={this.clickTab} className={`scenario-item ${this.isSelected(index, 0)}`}>
-              <img src="https://gw.alipayobjects.com/zos/rmsportal/buKnoKlvQeEzYxttqrFh.svg" />
+            <div
+              data-index="0"
+              onClick={this.clickTab}
+              className={`scenario-item ${this.isSelected(index, 0)}`}
+            >
+              <img alt="" src={require('./images/buKnoKlvQeEzYxttqrFh.svg')} />
               <img
+                alt=""
                 className="selected"
-                src="https://gw.alipayobjects.com/zos/rmsportal/MnBlZZrbYBdVvXrCOyfW.svg"
+                src={require('./images/MnBlZZrbYBdVvXrCOyfW.svg')}
               />
               <h4>物业缴费</h4>
               <p>提升缴费效率</p>
             </div>
 
-            <div data-index="1" onClick={this.clickTab} className={`scenario-item ${this.isSelected(index, 1)}`}>
-              <img src="https://gw.alipayobjects.com/zos/rmsportal/BdPVAfibJHPeFvZIcsTr.svg" />
+            <div
+              data-index="1"
+              onClick={this.clickTab}
+              className={`scenario-item ${this.isSelected(index, 1)}`}
+            >
+              <img alt="" src={require('./images/BdPVAfibJHPeFvZIcsTr.svg')} />
               <img
+                alt=""
                 className="selected"
-                src="https://gw.alipayobjects.com/zos/rmsportal/NqHbRYuggzIiBJTZOCfa.svg"
+                src={require('./images/NqHbRYuggzIiBJTZOCfa.svg')}
               />
               <h4>小区生活号</h4>
               <p>物业运营阵地</p>
             </div>
 
-            <div data-index="2" onClick={this.clickTab} className={`scenario-item ${this.isSelected(index, 2)}`}>
-              <img src="https://gw.alipayobjects.com/zos/rmsportal/ZDqQbDUiGLDzygPQIMxp.svg" />
+            <div
+              data-index="2"
+              onClick={this.clickTab}
+              className={`scenario-item ${this.isSelected(index, 2)}`}
+            >
+              <img alt="" src={require('./images/ZDqQbDUiGLDzygPQIMxp.svg')} />
               <img
+                alt=""
                 className="selected"
-                src="https://gw.alipayobjects.com/zos/rmsportal/rHxglRXhjrhTOgRfqrah.svg"
+                src={require('./images/rHxglRXhjrhTOgRfqrah.svg')}
               />
               <h4>社区理财</h4>
               <p>提升现金管理收益</p>
@@ -69,9 +83,7 @@ export default class IntroTab extends Component {
             <div className="scenario-detail-left">
               <h4>
                 物业缴费
-                <a href="https://docs.open.alipay.com/347" target="_blank">
-                  查看详细文档
-                </a>
+                <a href="#">查看详细文档</a>
               </h4>
               <p>
                 用户可通过“支付宝—生活缴费—物业费，选择自己的房间号后即可查询相关费用并进行缴费；支持在线付、扫码付和代扣等
@@ -127,7 +139,7 @@ export default class IntroTab extends Component {
             </div>
 
             <div className="scenario-detail-right">
-              <img src="https://gw.alipayobjects.com/zos/rmsportal/ATrmyVCFsdLJlliHBppp.png" />
+              <img alt="" src={require('./images/ATrmyVCFsdLJlliHBppp.png')} />
             </div>
           </div>
 
@@ -135,7 +147,7 @@ export default class IntroTab extends Component {
             <div className="scenario-detail-left">
               <h4>
                 小区生活号
-                <a href="" target="_blank" />
+                <a href="" />
               </h4>
               <p>
                 以生活号为阵地，接入各项业务，搭建智慧社区运营阵地。可以通过此平台对用户进行信息推送、服务输出、交易场景打通和会员关系管理；
@@ -185,7 +197,7 @@ export default class IntroTab extends Component {
             </div>
 
             <div className="scenario-detail-right">
-              <img src="https://gw.alipayobjects.com/zos/rmsportal/qhiRAOVMONMMircrVhJB.png" />
+              <img alt="" src={require('./images/qhiRAOVMONMMircrVhJB.png')} />
             </div>
           </div>
 
@@ -193,7 +205,7 @@ export default class IntroTab extends Component {
             <div className="scenario-detail-left">
               <h4>
                 社区理财
-                <a href="" target="_blank" />
+                <a href="" />
               </h4>
               <p>
                 物业公司在收到物业费停车费等相关费用后，直接发起余利宝的申购，能享受理财收益，待需要费用支出时，再从余利宝中赎回，将资金付给相关人员
@@ -230,61 +242,37 @@ export default class IntroTab extends Component {
             </div>
 
             <div className="scenario-detail-right">
-              <img src="https://gw.alipayobjects.com/zos/rmsportal/ySkOyTnwEMufrSgxRSyq.png" />
+              <img alt="" src={require('./images/ySkOyTnwEMufrSgxRSyq.png')} />
             </div>
           </div>
         </div>
 
         <div className={`scenario-actions ${this.isSelected(index, 0)}`}>
-          <a
-            target="_blank"
-            className="scenario-action primary"
-            href="https://openhome.alipay.com/platform/appCreate.htm?templateId=7-8a49-6c036d0837991491877738533&amp;templateName=%E7%89%A9%E4%B8%9A%E7%BC%B4%E8%B4%B9"
-          >
+          <a className="scenario-action primary" href="#">
             立即接入
           </a>
 
-          <a
-            target="_blank"
-            className="scenario-action secondary"
-            href="https://docs.open.alipay.com/347/106502"
-          >
+          <a className="scenario-action secondary" href="#">
             查看接入指南
           </a>
         </div>
 
         <div className={`scenario-actions ${this.isSelected(index, 1)}`}>
-          <a
-            target="_blank"
-            className="scenario-action primary"
-            href="https://openhome.alipay.com/platform/publicAppCreate.htm?templateId=b-a601-a6009fcc96321499759404361"
-          >
+          <a className="scenario-action primary" href="#">
             立即接入
           </a>
 
-          <a
-            target="_blank"
-            className="scenario-action secondary"
-            href="https://docs.alipay.com/fw/introduce/106173"
-          >
+          <a className="scenario-action secondary" href="#">
             查看接入指南
           </a>
         </div>
 
         <div className={`scenario-actions ${this.isSelected(index, 2)}`}>
-          <a
-            target="_blank"
-            className="scenario-action primary"
-            href="https://openhome.alipay.com/platform/appCreate.htm?templateId=7-8a49-6c036d0837991491877738533&amp;templateName=%E7%89%A9%E4%B8%9A%E7%BC%B4%E8%B4%B9"
-          >
+          <a className="scenario-action primary" href="#">
             立即接入
           </a>
 
-          <a
-            target="_blank"
-            className="scenario-action secondary"
-            href="https://docs.open.alipay.com/246/105624"
-          >
+          <a className="scenario-action secondary" href="#">
             接入指南
           </a>
         </div>
@@ -292,4 +280,3 @@ export default class IntroTab extends Component {
     );
   }
 }
-
