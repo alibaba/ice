@@ -6,6 +6,8 @@ const getPlugins = require('./getPlugins');
 const processEntry = require('./processEntry');
 const getEntryByPages = require('./getEntryByPages');
 const pkg = require('./packageJson');
+const checkTemplateHasReact = require('../utils/checkTemplateHasReact');
+const debug = require('../debug');
 
 /**
  * 可以在 buildConfig 中覆盖的配置项:
@@ -42,6 +44,8 @@ module.exports = function getWebpackConfigBasic(
   buildConfig = {}
 ) {
   const { themeConfig = {} } = pkg;
+  const hasExternalReact = checkTemplateHasReact(paths.appHtml);
+  debug.info('hasExternalReact', hasExternalReact);
   const webpackConfig = {
     mode: process.env.NODE_ENV,
     context: paths.appDirectory,
@@ -60,10 +64,13 @@ module.exports = function getWebpackConfigBasic(
       modules: [paths.appNodeModules, 'node_modules'],
       extensions: ['.js', '.jsx', '.json', '.html'],
     },
-    externals: buildConfig.externals || {
-      react: 'window.React',
-      'react-dom': 'window.ReactDOM',
-    },
+    externals:
+      buildConfig.externals || hasExternalReact
+        ? {
+            react: 'window.React',
+            'react-dom': 'window.ReactDOM',
+          }
+        : {},
     module: {
       rules: getRules(paths, buildConfig),
     },
@@ -81,15 +88,6 @@ module.exports = function getWebpackConfigBasic(
       },
     },
   };
-
-  if (buildConfig.localization && typeof webpackConfig.externals === 'object') {
-    if ('react' in webpackConfig.externals) {
-      delete webpackConfig.externals.react;
-    }
-    if ('react-dom' in webpackConfig.externals) {
-      delete webpackConfig.externals['react-dom'];
-    }
-  }
 
   const userConfig = getUserConfig();
   const finalWebpackConfig = webpackMerge({
