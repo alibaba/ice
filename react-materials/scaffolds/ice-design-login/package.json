@@ -1,10 +1,8 @@
 {
   "name": "@icedesign/login-scaffold",
-  "version": "1.0.4",
-  "description":
-    "该模板适用于有注册登录类的管理后台，默认只内置了注册和登录页面，可根据实际业务场景选择其他物料进行开发。",
-  "homepage":
-    "https://alibaba.github.io/ice/scaffold-preview/ice-design-login.html",
+  "version": "1.1.0",
+  "description": "该模板适用于有注册登录类的管理后台，默认只内置了注册和登录页面，可根据实际业务场景选择其他物料进行开发。",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-login.html",
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
@@ -13,6 +11,8 @@
     "@icedesign/layout": "^0.1.2",
     "@icedesign/skin": "^0.1.0",
     "prop-types": "^15.5.8",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
@@ -23,7 +23,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.1.1"
+    "ice-scripts": "^1.5.5-0"
   },
   "scripts": {
     "start": "ice dev",
@@ -36,12 +36,12 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "src/index.js"
+    "entry": "src/index.js",
+    "localization": true
   },
   "scaffoldConfig": {
     "name": "ice-design-login",
     "title": "ICE Design Login",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1JPCEqMmTBuNjy1XbXXaMrVXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1JPCEqMmTBuNjy1XbXXaMrVXa-2840-1596.png"
   }
 }

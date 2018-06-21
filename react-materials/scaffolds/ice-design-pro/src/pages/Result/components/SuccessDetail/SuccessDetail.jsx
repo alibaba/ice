@@ -25,7 +25,7 @@ export default class SuccessDetail extends Component {
         <IceContainer style={styles.container}>
           <div className="success-detail-head" style={styles.successDetailHead}>
             <img
-              src="https://img.alicdn.com/tfs/TB1ya6gh0zJ8KJjSspkXXbF7VXa-156-156.png"
+              src={require('./images/TB1ya6gh0zJ8KJjSspkXXbF7VXa-156-156.png')}
               style={styles.img}
               alt=""
             />

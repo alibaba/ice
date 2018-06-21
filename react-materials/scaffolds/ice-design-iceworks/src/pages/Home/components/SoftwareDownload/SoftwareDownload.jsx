@@ -1,3 +1,4 @@
+/* eslint react/jsx-no-bind:0 */
 import { Menu, Button, Feedback } from '@icedesign/base';
 import React, { Component } from 'react';
 
@@ -221,8 +222,7 @@ const styles = {
     alignItems: 'center',
   },
   software: {
-    backgroundImage:
-      'url(//img.alicdn.com/tfs/TB1uPagpQyWBuNjy0FpXXassXXa-1446-1148.png)',
+    backgroundImage: `url(${require('./images/TB1uPagpQyWBuNjy0FpXXassXXa-1446-1148.png')})`,
     width: 1446 / 2,
     height: 1148 / 2,
     backgroundSize: '723px 574px',
@@ -250,8 +250,7 @@ const styles = {
     width: '100%',
     height: 750,
     backgroundSize: 'cover',
-    backgroundImage:
-      'url(//img.alicdn.com/tfs/TB1eoehpKOSBuNjy0FdXXbDnVXa-3798-1500.jpg)',
+    backgroundImage: `url(${require('./images/TB1eoehpKOSBuNjy0FdXXbDnVXa-3798-1500.jpg')})`,
   },
   subtitle: {
     fontSize: '16px',
