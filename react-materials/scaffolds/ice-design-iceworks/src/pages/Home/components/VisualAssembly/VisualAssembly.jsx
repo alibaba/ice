@@ -1,3 +1,4 @@
+/* eslint no-mixed-operators: 0 */
 import React, { Component } from 'react';
 
 export default class VisualAssembly extends Component {
@@ -39,8 +40,7 @@ const styles = {
     position: 'relative',
     height: 500,
     backgroundColor: '#f6f6f6',
-    backgroundImage:
-      `url(${require('./images/TB1_E.OpuuSBuNjy1XcXXcYjFXa-3800-1000.png')})`,
+    backgroundImage: `url(${require('./images/TB1_E.OpuuSBuNjy1XcXXcYjFXa-3800-1000.png')})`,
     backgroundSize: 'cover',
   },
   wrapper: {
@@ -54,8 +54,7 @@ const styles = {
     paddingTop: 160,
     paddingBottom: 160,
     paddingLeft: 30,
-    backgroundImage:
-      `url(${require('./images/TB1A5MNpuuSBuNjy1XcXXcYjFXa-66-66.png')})`,
+    backgroundImage: `url(${require('./images/TB1A5MNpuuSBuNjy1XcXXcYjFXa-66-66.png')})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '10px 120px',
     zIndex: 2,
