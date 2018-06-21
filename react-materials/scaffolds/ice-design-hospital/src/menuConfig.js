@@ -2,28 +2,35 @@
 // headerMenuConfig：头部导航配置
 // asideMenuConfig：侧边导航配置
 
-const headerMenuConfig = [
+const asideMenuConfig = [
+  {
+    name: '药价管理',
+    path: '/',
+    icon: 'home',
+  },
   {
     name: '系统管理',
-    path: '/basic',
+    path: '/system',
+    icon: 'home',
     children: [
       {
         name: '业务权限审批',
-        path: '/basic/PermissionAppliListForDep',
+        path: '/system/business',
       },
       {
         name: '手术条目字典',
-        path: '/basis/PermissionEntryPermissions',
+        path: '/system/surgery',
       },
       {
         name: '医生权限申请',
-        path: '/basis/PermissionAppliListForDoc',
+        path: '/system/doctor',
       },
     ],
   },
   {
     name: '患者管理',
     path: '/patients',
+    icon: 'home',
     children: [
       {
         name: '黑名单管理',
@@ -31,52 +38,83 @@ const headerMenuConfig = [
       },
       {
         name: '患者列表',
-        path: '/patients/patientList',
+        path: '/patients/patientlist',
       },
     ],
   },
   {
     name: '字典管理',
-    path: '/medicine',
+    path: '/dict',
+    icon: 'home',
     children: [
       {
         name: '药品字典',
-        path: '/medicine/MedicineDictionary',
+        path: '/dict/medicine',
       },
       {
         name: '医嘱频次',
-        path: '/medicine/AdviceManage',
+        path: '/dict/advice',
       },
     ],
   },
   {
     name: '智能排班',
     path: '/schedule',
-  },
-  {
-    name: '票据管理',
-    path: '/bill',
+    icon: 'home',
+    children: [
+      {
+        name: '排班计划',
+        path: '/schedule/plan',
+      },
+      {
+        name: '排班规则',
+        path: '/schedule/Rule',
+      },
+    ],
   },
   {
     name: '药库管理',
-    path: '/medicine',
+    path: '/storage',
+    icon: 'home',
+    children: [
+      {
+        name: '接收退库',
+        path: '/storage/accept',
+      },
+      {
+        name: '退货审核',
+        path: '/storage/check',
+      },
+    ],
   },
   {
     name: '出入院管理',
-    path: '/inpationtManage',
-  },
-  {
-    name: '住院费用管理',
-    path: '/costManage',
+    path: '/inpationt',
+    icon: 'home',
+    children: [
+      {
+        name: '入院登记',
+        path: '/storage/enter',
+      },
+      {
+        name: '预交金管理',
+        path: '/storage/payment',
+      },
+    ],
   },
   {
     name: '医保平台',
     path: '/insurance',
-  },
-  {
-    name: '药房管理',
-    path: '/medicine',
+    icon: 'home',
+    children: [
+      {
+        name: '医保注册',
+        path: '/insurance/registration',
+      },
+    ],
   },
 ];
 
-export { headerMenuConfig };
+const headerMenuConfig = asideMenuConfig;
+
+export default headerMenuConfig;

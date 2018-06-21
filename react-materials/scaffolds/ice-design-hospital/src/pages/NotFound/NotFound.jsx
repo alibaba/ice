@@ -11,7 +11,7 @@ export default class NotFound extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ minHeight: '100vh' }}>
         <BasicNotFound />
       </div>
     );

@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
+import { Link, withRouter } from 'react-router-dom';
 import { Balloon, Icon } from '@icedesign/base';
-import IceImg from '@icedesign/img';
-import { Link } from 'react-router-dom';
+import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import FoundationSymbol from 'foundation-symbol';
-import { headerMenuConfig } from '../../menuConfig';
+import IceImg from '@icedesign/img';
+import headerMenuConfig from '../../menuConfig';
 import Logo from '../Logo';
 import './Header.scss';
 
+@withRouter
 export default class Header extends Component {
+  static propTypes = {};
+
+  static defaultProps = {};
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
+    const { location = {} } = this.props;
+    const { pathname } = location;
     return (
       <div className="header-container">
         <div className="header-content">
@@ -18,7 +30,8 @@ export default class Header extends Component {
             <Menu
               className="header-navbar-menu"
               onClick={this.handleNavClick}
-              // selectedKeys={[this.state.current]}
+              selectedKeys={[pathname]}
+              defaultSelectedKeys={[pathname]}
               mode="horizontal"
             >
               {headerMenuConfig &&
@@ -29,7 +42,14 @@ export default class Header extends Component {
                       <SubMenu
                         triggerType="click"
                         key={index}
-                        title={<span>{nav.name}</span>}
+                        title={
+                          <span>
+                            {nav.icon ? (
+                              <FoundationSymbol size="small" type={nav.icon} />
+                            ) : null}
+                            <span>{nav.name}</span>
+                          </span>
+                        }
                       >
                         {nav.children.map((item) => {
                           const linkProps = {};
@@ -43,7 +63,9 @@ export default class Header extends Component {
                           }
                           return (
                             <MenuItem key={item.path}>
-                              <Link {...linkProps}>{item.name}</Link>
+                              <Link {...linkProps}>
+                                <span>{item.name}</span>
+                              </Link>
                             </MenuItem>
                           );
                         })}
@@ -62,7 +84,12 @@ export default class Header extends Component {
                   return (
                     <MenuItem key={nav.path}>
                       <Link {...linkProps}>
-                        <span>{nav.name}</span>
+                        <span>
+                          {nav.icon ? (
+                            <FoundationSymbol size="small" type={nav.icon} />
+                          ) : null}
+                          {nav.name}
+                        </span>
                       </Link>
                     </MenuItem>
                   );
@@ -83,7 +110,7 @@ export default class Header extends Component {
                 <IceImg
                   height={40}
                   width={40}
-                  src="https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png"
+                  src={require('./images/avatar.png')}
                   className="user-avatar"
                 />
                 <div className="user-profile">
@@ -91,12 +118,7 @@ export default class Header extends Component {
                     淘小宝
                   </span>
                   <br />
-                  <span
-                    className="user-department"
-                    style={{ fontSize: '12px', color: '#fff' }}
-                  >
-                    技术部
-                  </span>
+                  <span className="user-department">技术部</span>
                 </div>
                 <Icon
                   type="arrow-down-filling"

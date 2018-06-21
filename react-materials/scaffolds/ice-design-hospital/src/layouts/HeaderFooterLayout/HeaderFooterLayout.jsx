@@ -3,14 +3,16 @@ import Layout from '@icedesign/layout';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-export default class HeaderAsideFooterLayout extends Component {
+import './HeaderFooterLayout.scss';
+
+export default class HeaderFooterLayout extends Component {
   static propTypes = {};
 
   static defaultProps = {};
 
   render() {
     return (
-      <Layout style={{ minHeight: '100vh' }}>
+      <Layout className="header-footer-layout">
         <Header />
         <div style={styles.mainContent}>{this.props.children}</div>
         <Footer />
@@ -21,7 +23,7 @@ export default class HeaderAsideFooterLayout extends Component {
 
 const styles = {
   mainContent: {
-    marginTop: '62px',
+    marginTop: '82px',
     padding: '0 20px',
   },
 };

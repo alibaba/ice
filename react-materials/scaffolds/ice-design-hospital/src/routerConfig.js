@@ -2,19 +2,19 @@
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
-import HeaderAsideFooterLayout from './layouts/HeaderAsideFooterLayout';
+import HeaderFooterLayout from './layouts/HeaderFooterLayout';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
   {
-    path: '/basic/PermissionAppliListForDep',
-    layout: HeaderAsideFooterLayout,
+    path: '/',
+    layout: HeaderFooterLayout,
     component: Home,
   },
   {
     path: '*',
-    layout: HeaderAsideFooterLayout,
+    layout: HeaderFooterLayout,
     component: NotFound,
   },
 ];

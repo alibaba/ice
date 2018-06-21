@@ -20,7 +20,6 @@ export default class Home extends Component {
             <Button type="primary">新增调价单</Button>
           </div>
         </div>
-
         <div style={styles.pageBody}>
           <TableFilter />
           <CustomTable />
@@ -32,7 +31,7 @@ export default class Home extends Component {
 
 const styles = {
   pageHead: {
-    margin: '20px 0',
+    margin: '0 0 20px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -46,8 +45,6 @@ const styles = {
     paddingLeft: '12px',
     borderLeft: '4px solid #666',
   },
-  pageAction: {},
-
   tableFilter: {
     background: '#f4f4f4',
     padding: '10px 20px',

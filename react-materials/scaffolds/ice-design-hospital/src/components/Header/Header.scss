@@ -3,11 +3,12 @@
   left: 0;
   right: 0;
   z-index: 999;
-  border-bottom: 1px solid #e9e9e9;
   background: #11a0f8;
+  min-width: 1280px;
   .header-content {
     width: 100%;
-    padding: 10px 20px;
+    height: 62px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -37,54 +38,60 @@
         }
       }
     }
+    > .ice-menu {
+      > .ice-menu-item,
+      .ice-menu-submenu-title {
+        height: 62px;
+        line-height: 62px;
+      }
+      .ice-menu-item-selected,
+      .ice-menu-submenu-selected {
+        background: #00b7eb;
+      }
+    }
   }
-}
 
-/* HEADER */
+  .user-avatar {
+    margin-right: 12px;
+    border-radius: 4px;
+  }
 
-.user-avatar {
-  margin-right: 12px;
-  border-radius: 4px;
-}
-
-.ice-design-header-userpannel {
-  margin-left: 20px;
-  cursor: pointer;
-  .user-profile {
-    display: inline-block;
-    text-align: center;
-    margin-bottom: 2px;
+  .user-department {
+    font-size: 12px;
     color: #fff;
   }
-  .icon-down {
-    margin-left: 2px;
-    color: #fff;
-  }
-}
 
-.header-balloon-content {
-  width: 120px;
-  padding: 10px;
-  .custom-sub-menu {
-    display: block;
-    padding: 0 10px;
-    height: 28px;
-    line-height: 28px;
-    font-size: 13px;
-    color: #666;
-    text-decoration: none;
-    &:hover {
-      color: #2077ff;
+  .ice-design-header-userpannel {
+    margin-left: 20px;
+    cursor: pointer;
+    .user-profile {
+      display: inline-block;
+      text-align: center;
+      margin-bottom: 2px;
+      color: #fff;
+    }
+    .icon-down {
+      margin-left: 2px;
+      color: #fff;
     }
   }
 }
 
-@media (max-width: 750px) {
-  .header-container {
-    .header-navbar {
-      .ice-menu .ice-menu-item {
-        padding: 0 5px;
-      }
+.user-profile-menu {
+  width: 130px;
+  border-radius: 6px;
+  padding: 0 16px;
+  .user-profile-menu-item {
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    color: #666;
+    cursor: pointer;
+    a:hover {
+      color: #2077ff;
+    }
+    i {
+      margin-right: 5px;
     }
   }
 }
