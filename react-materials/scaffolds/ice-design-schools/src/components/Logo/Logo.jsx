@@ -1,18 +1,15 @@
 import React, { PureComponent } from 'react';
-import { Link } from 'react-router-dom';
+
+const LIGHT = require('./images/lightLogo.png');
+const DARK = require('./images/darkLogo.png');
 
 export default class Logo extends PureComponent {
   render() {
+    const { isDark } = this.props;
+    const logo = isDark ? DARK : LIGHT;
     return (
       <div className="logo" style={this.props.style}>
-        <img
-          src="https://img.alicdn.com/tfs/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png"
-          alt=""
-          style={{ width: '40px' }}
-        />
-        <Link to="/" className="logo-text">
-          LOGO
-        </Link>
+        <img src={logo} alt="" width="114" />
       </div>
     );
   }
