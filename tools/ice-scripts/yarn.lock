@@ -2440,13 +2440,7 @@ debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.
   dependencies:
     ms "2.0.0"
 
-debug@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
-  dependencies:
-    ms "2.0.0"
-
-debug@^3.1.0:
+debug@3.1.0, debug@^3.1.0:
   version "3.1.0"
   resolved "http://registry.npm.alibaba-inc.com/debug/download/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
@@ -3048,9 +3042,9 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-extract-css-assets-webpack-plugin@^0.2.1:
-  version "0.2.1"
-  resolved "http://registry.npm.alibaba-inc.com/extract-css-assets-webpack-plugin/download/extract-css-assets-webpack-plugin-0.2.1.tgz#a1d9629ed776af783321e3aab7bde56a16b6448f"
+extract-css-assets-webpack-plugin@^0.2.2:
+  version "0.2.2"
+  resolved "http://registry.npm.alibaba-inc.com/extract-css-assets-webpack-plugin/download/extract-css-assets-webpack-plugin-0.2.2.tgz#e1bf5756e6f63cc24997047ed4e50266e9e8d3ba"
   dependencies:
     postcss "^6.0.22"
     request "^2.87.0"
