@@ -5,7 +5,7 @@ import ExtractCssAssetsPlugin from '../../../src/index';
 module.exports = {
   entry: './index',
   output: {
-    publicPath: '/',
+    publicPath: '/build/',
   },
   module: {
     rules: [
@@ -29,11 +29,12 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFileName: '[id].css',
+      filename: 'css/[name].css',
+      chunkFileName: 'css/[id].css',
     }),
     new ExtractCssAssetsPlugin({
       outputPath: 'cssassets/',
+      relativeCssPath: '../'
     }),
   ],
 };

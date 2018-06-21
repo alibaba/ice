@@ -17,6 +17,7 @@ export default postcss.plugin(
   ({ outputOptions, options }, opts = {}) => {
     // 所有 css 中的网络请求
     const networkRequestMap = {};
+
     return (root) => {
       return new Promise((resolve) => {
         // 字体文件
@@ -59,7 +60,6 @@ export default postcss.plugin(
 
                 const contextPath = path.join(
                   options.relativeCssPath,
-                  outputOptions.publicPath || '',
                   options.outputPath,
                   basename
                 );
