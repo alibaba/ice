@@ -50,6 +50,7 @@ module.exports = function getPaths(cwd) {
     appBuild: resolveApp('build'),
     appPublic: resolveApp('public'),
     appHtml: resolveApp('public/index.html'),
+    appFavicon: resolveApp('public/favicon.png'),
     appPackageJson: resolveApp('package.json'),
     appAbcJson: resolveApp('abc.json'),
     appSrc: resolveApp('src'),

@@ -1,5 +1,4 @@
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 const fs = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -30,6 +29,7 @@ module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
       templateParameters: {
         NODE_ENV: process.env.NODE_ENV,
       },
+      favicon: paths.appFavicon,
       template: paths.appHtml,
       minify: false,
     }),
@@ -56,14 +56,6 @@ module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
       {
         libraryName: /@ali\/ice-.*/,
         stylePath: 'style.js',
-      },
-    ]),
-    new CopyWebpackPlugin([
-      {
-        context: paths.appPublic,
-        from: '*.*',
-        to: `${paths.appBuild}/`,
-        ignore: ['*.html'],
       },
     ]),
   ];
