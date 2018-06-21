@@ -60,10 +60,10 @@ module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
     ]),
     new CopyWebpackPlugin([
       {
-        from: 'public/*.*',
+        context: paths.appPublic,
+        from: '**/*.*',
         to: `${paths.appBuild}/`,
         ignore: ['*.html'],
-        toType: 'dir',
       },
     ]),
   ];
