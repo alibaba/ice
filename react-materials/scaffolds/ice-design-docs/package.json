@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/docs-scaffold",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "该模板适用于文档介绍类的场景，支持渲染 Markdown 格式的内容",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-docs.html",
   "dependencies": {
