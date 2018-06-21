@@ -1,7 +1,7 @@
 {
   "name": "extract-css-assets-webpack-plugin",
   "description": "Extract network resources in css",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "lib/cjs.js",
   "directories": {
     "test": "test"
