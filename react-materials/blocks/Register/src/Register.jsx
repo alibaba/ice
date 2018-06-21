@@ -206,8 +206,7 @@ const styles = {
     height: '100vh',
     paddingTop: '100px',
     background: '#f0f2f5',
-    backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png)',
+    backgroundImage: `url${require('./images/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png')}`,
   },
   header: {
     display: 'flex',
