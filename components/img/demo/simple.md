@@ -6,23 +6,22 @@ importStyle: true
 
 本 Demo 演示最基础的用法。
 
-````jsx
-import React, {Component} from 'react';
+```jsx
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from '@icedesign/base';
 import Img from '@icedesign/img';
 
 class App extends Component {
-
   state = {
-    url1: 'https://img.alicdn.com/tps/TB1qfWuMVXXXXcEXpXXXXXXXXXX-434-254.png',
-    url2: 'https://img.alicdn.com/tps/TB1_AZdNFXXXXbLXVXXXXXXXXXX-500-1063.jpg'
+    url1: 'https://img.alicdn.com/tfs/TB1JQ4MAntYBeNjy1XdXXXXyVXa-643-331.png',
+    url2: 'https://img.alicdn.com/tfs/TB1_gtdAamWBuNjy1XaXXXCbXXa-500-750.png',
   };
 
   changeImgs = () => {
     this.setState({
       url1: getImgs(this.state.url1),
-      url2: getImgs(this.state.url1)
+      url2: getImgs(this.state.url1),
     });
   };
 
@@ -36,7 +35,7 @@ class App extends Component {
           height={200}
           src={this.state.url1}
           type="cover"
-          style={{border: '1px solid #ccc', margin: '10px'}}
+          style={{ border: '1px solid #ccc', margin: '10px' }}
         />
         <Img
           enableAliCDNSuffix={false}
@@ -44,7 +43,7 @@ class App extends Component {
           height={200}
           src={this.state.url2}
           type="cover"
-          style={{border: '1px solid #ccc', margin: '10px'}}
+          style={{ border: '1px solid #ccc', margin: '10px' }}
         />
         <h1>contain 模式强调信息全部展示</h1>
         <Img
@@ -53,7 +52,7 @@ class App extends Component {
           height={200}
           src={this.state.url1}
           type="contain"
-          style={{border: '1px solid #ccc', margin: '10px'}}
+          style={{ border: '1px solid #ccc', margin: '10px' }}
         />
         <Img
           enableAliCDNSuffix={true}
@@ -61,10 +60,12 @@ class App extends Component {
           height={200}
           src={this.state.url2}
           type="contain"
-          style={{border: '1px solid #ccc', margin: '10px'}}
+          style={{ border: '1px solid #ccc', margin: '10px' }}
         />
         <div>
-          <Button style={{marginTop: 20}} onClick={this.changeImgs}>切换新图片会重新计算尺寸</Button>
+          <Button style={{ marginTop: 20 }} onClick={this.changeImgs}>
+            切换新图片会重新计算尺寸
+          </Button>
         </div>
       </div>
     );
@@ -72,14 +73,15 @@ class App extends Component {
 }
 
 function getImgs(url) {
-  if (url === 'https://img.alicdn.com/imgextra/i3/2779138589/TB2_gtLlrBmpuFjSZFuXXaG_XXa_!!2779138589.jpg') {
-    return 'https://img.alicdn.com/tps/TB1qfWuMVXXXXcEXpXXXXXXXXXX-434-254.png';
+  if (
+    url ===
+    'https://img.alicdn.com/imgextra/i3/2779138589/TB2_gtLlrBmpuFjSZFuXXaG_XXa_!!2779138589.jpg'
+  ) {
+    return 'https://img.alicdn.com/tfs/TB1JQ4MAntYBeNjy1XdXXXXyVXa-643-331.png';
   }
 
   return 'https://img.alicdn.com/imgextra/i3/2779138589/TB2_gtLlrBmpuFjSZFuXXaG_XXa_!!2779138589.jpg';
 }
 
-ReactDOM.render((
-  <App />
-), mountNode);
-````
+ReactDOM.render(<App />, mountNode);
+```

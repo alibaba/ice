@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -17,7 +15,7 @@ export default class Cover extends Component {
   };
 
   static defaultProps = {
-    onError: () => { },
+    onError: () => {},
     alt: '',
     width: 0,
     height: 0,
@@ -39,43 +37,44 @@ export default class Cover extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.width !== this.props.width
-      || nextProps.height !== this.props.height) {
+    if (
+      nextProps.width !== this.props.width ||
+      nextProps.height !== this.props.height
+    ) {
       // fix http://ice.alibaba-inc.com/playground/549
       this.imgOnload();
     }
   }
 
   imgOnload = () => {
-    this.setState({
-      imgStyles: {
-        display: 'block',
-        maxWidth: 'none',
-        wdith: 'auto',
-        height: 'auto',
-        // transition: 'opacity 0.2s ease',
-        opacity: 0,
-      },
-    }, () => {
-      const imgDOM = this.refsImg;
-      const {
-        width,
-        height,
-      } = this.props;
-      const imgWidth = imgDOM.width;
-      const imgHeight = imgDOM.height;
-
-      const imgStyles = getStyles(width, height, imgWidth, imgHeight);
-      this.setState({
+    this.setState(
+      {
         imgStyles: {
-          ...this.state.imgStyles,
-          ...imgStyles,
-          opacity: 1,
+          display: 'block',
+          maxWidth: 'none',
+          wdith: 'auto',
+          height: 'auto',
+          // transition: 'opacity 0.2s ease',
+          opacity: 0,
         },
-      });
-    });
-  };
+      },
+      () => {
+        const imgDOM = this.refsImg;
+        const { width, height } = this.props;
+        const imgWidth = imgDOM.width;
+        const imgHeight = imgDOM.height;
 
+        const imgStyles = getStyles(width, height, imgWidth, imgHeight);
+        this.setState({
+          imgStyles: {
+            ...this.state.imgStyles,
+            ...imgStyles,
+            opacity: 1,
+          },
+        });
+      }
+    );
+  };
 
   render() {
     const {
@@ -98,11 +97,11 @@ export default class Cover extends Component {
       width,
       height,
     };
-    const {
-      imgStyles,
-    } = this.state;
+    const { imgStyles } = this.state;
 
-    const realSrc = enableAliCDNSuffix ? src + aliCDNSuffix({ width, height }) : src;
+    const realSrc = enableAliCDNSuffix
+      ? src + aliCDNSuffix({ width, height })
+      : src;
 
     const cls = classnames('ice-img', shape, className);
 
@@ -111,7 +110,9 @@ export default class Cover extends Component {
         <img
           style={imgStyles}
           onError={onError}
-          ref={(ref) => { this.refsImg = ref; }}
+          ref={(ref) => {
+            this.refsImg = ref;
+          }}
           src={realSrc}
           alt={alt}
           title={title}
@@ -121,7 +122,6 @@ export default class Cover extends Component {
     );
   }
 }
-
 
 const getStyles = (wrapWidth, wrapHeight, imgWidth, imgHeight) => {
   // 进行等比运算

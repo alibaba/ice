@@ -6,23 +6,23 @@ importStyle: true
 
 图片加载失败的处理方法。
 
-````jsx
-import React, { Component } from 'react'
+```jsx
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import Img from '@icedesign/img';
 
 class App extends Component {
-
   state = {
-    imgSrc: 'https://im---g.alicdn.com/tps/TB1qfWuMVXXXXcEXpXXXXXXXXXX-434-254.png'
-  }
+    imgSrc:
+      'https://im---g.alicdn.com/tps/TB1qfWuMVXXXXcEXpXXXXXXXXXX-434-254.png',
+  };
 
   handleImgError = () => {
     // 你可以额外添加一些容错处理业务逻辑
-    // console.log('图片报错啦！日志记录下');
     this.setState({
-      imgSrc: 'https://img.alicdn.com/tps/TB11W.WOXXXXXcbaXXXXXXXXXXX-496-310.png'
+      imgSrc:
+        'https://img.alicdn.com/tps/TB11W.WOXXXXXcbaXXXXXXXXXXX-496-310.png',
     });
   };
 
@@ -38,7 +38,7 @@ class App extends Component {
           onError={this.handleImgError}
           src={this.state.imgSrc}
           type="cover"
-          style={{border: '1px solid #ccc', margin: '10px'}}
+          style={{ border: '1px solid #ccc', margin: '10px' }}
         />
         <h1>或者通过设置 errorImgSrc props 会自动在出错的时候替换掉</h1>
         <Img
@@ -48,14 +48,12 @@ class App extends Component {
           errorImgSrc="https://img.alicdn.com/tps/TB11W.WOXXXXXcbaXXXXXXXXXXX-496-310.png"
           src="https://im---g.alicdn.com/tps/TB1qfWuMVXXXXcEXpXXXXXXXXXX-434-254.png"
           type="cover"
-          style={{border: '1px solid #ccc', margin: '10px'}}
+          style={{ border: '1px solid #ccc', margin: '10px' }}
         />
       </div>
     );
   }
 }
 
-ReactDOM.render((
-  <App />
-), mountNode);
-````
+ReactDOM.render(<App />, mountNode);
+```

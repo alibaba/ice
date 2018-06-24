@@ -1,11 +1,10 @@
-
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import aliCDNSuffix from './aliCDNSuffix';
 
-export default class Contain extends Component {
+/* eslint-disable react/prefer-stateless-function */
+class Contain extends Component {
   static displayName = 'Contain';
 
   static propTypes = {
@@ -18,16 +17,12 @@ export default class Contain extends Component {
   };
 
   static defaultProps = {
-    onError: () => { },
+    onError: () => {},
     alt: '',
     width: 0,
     height: 0,
     shape: 'cover',
   };
-
-  shouldComponentUpdate() {
-    return false;
-  }
 
   render() {
     const {
@@ -66,16 +61,26 @@ export default class Contain extends Component {
       maxHeight: height,
     };
 
-    const realSrc = enableAliCDNSuffix ? src + aliCDNSuffix({ width, height }) : src;
+    const realSrc = enableAliCDNSuffix
+      ? src + aliCDNSuffix({ width, height })
+      : src;
 
     const cls = classnames('ice-img', shape, className);
 
     return (
       <div className={cls} style={styles}>
         <div style={centerStyles}>
-          <img style={imgStyles} onError={onError} src={realSrc} alt={alt} title={title} />
+          <img
+            style={imgStyles}
+            onError={onError}
+            src={realSrc}
+            alt={alt}
+            title={title}
+          />
         </div>
       </div>
     );
   }
 }
+
+export default Contain;

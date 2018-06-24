@@ -25,18 +25,19 @@
     "ice-component"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.2",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
+    "@icedesign/skin": "^0.1.14",
     "babel-eslint": "^8.0.3",
-    "eslint-plugin-react": "^7.5.1",
     "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-import": "^2.8.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3"
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1"
   },
   "typings": "lib/index.d.ts",
   "fusionConfig": {

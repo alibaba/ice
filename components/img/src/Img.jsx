@@ -1,9 +1,8 @@
-
-
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Cover from './modules/Cover';
+import React, { Component } from 'react';
+
 import Contain from './modules/Contain';
+import Cover from './modules/Cover';
 
 export default class IceImg extends Component {
   static displayName = 'IceImg';
@@ -58,7 +57,7 @@ export default class IceImg extends Component {
     errorImgSrc: '',
     shape: 'sharp',
     enableAliCDNSuffix: false,
-    onError: () => { },
+    onError: () => {},
     width: 'auto',
     height: 'auto',
   };
@@ -73,9 +72,7 @@ export default class IceImg extends Component {
 
   componentWillReceiveProps(nextProps) {
     if ('src' in nextProps) {
-      this.setState({
-        src: nextProps.src,
-      });
+      this.setState({ src: nextProps.src });
     }
   }
 
@@ -85,7 +82,7 @@ export default class IceImg extends Component {
         src: this.props.errorImgSrc,
       });
     }
-    if (typeof this.props.onError === 'string') {
+    if (typeof this.props.onError === 'function') {
       this.props.onError();
     }
   };
