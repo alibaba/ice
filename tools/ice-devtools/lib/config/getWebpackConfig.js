@@ -92,11 +92,7 @@ const baseConfig = {
     }),
     new WebpackPluginImport([
       {
-        libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /@icedesign\/.*/,
+        libraryName: /^@alife\/next\/lib\/([^/]+)/,
         stylePath: 'style.js',
       },
     ]),

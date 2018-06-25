@@ -21,7 +21,7 @@ function getBlockEntries(dir, material) {
         snapshot: pkgData.blockConfig.snapshot,
         description: pkgData.description,
         author: pkgData.author,
-        [`${material}/blocks/${dirName}`]: path.join(fullPath, 'src/index.js'),
+        [`${material}/blocks/${dirName}`]: path.join(fullPath, 'demo/index.jsx'),
       };
     }
   });
@@ -40,7 +40,7 @@ function getBlockEntries(dir, material) {
         snapshot: pkgData.layoutConfig.snapshot,
         description: pkgData.description,
         author: pkgData.author,
-        [`${material}/layouts/${dirName}`]: path.join(fullPath, 'src/index.js'),
+        [`${material}/layouts/${dirName}`]: path.join(fullPath, 'demo/index.jsx'),
       };
     }
   });

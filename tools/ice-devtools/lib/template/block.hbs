@@ -7,8 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   {{#if isReact}}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icedesign/skin/index.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icedesign/skin/override.css">
+  <link rel="stylesheet" href="//unpkg.alibaba-inc.com/@alife/next@1.5.6/dist/next.min.css"></link>
   {{/if}}
   {{#if isVue}}
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
@@ -45,22 +44,4 @@
 </body>
 
 <script src="{{ blockJS }}"></script>
-<script>
-function getDefaultOrSelf(mod) {
-  if (mod && mod.default) {
-    return mod.default;
-  } else {
-    return mod;
-  }
-}
-
-  {{#if isReact}}
-    {{> initReact }}
-  {{/if}}
-
-  {{#if isVue}}
-    {{> initVue }}
-  {{/if}}
-</script>
-
 </html>
