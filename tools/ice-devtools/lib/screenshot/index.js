@@ -13,7 +13,7 @@ module.exports = function (opts) {
         throw new Error('package.json not exists.');
     }
 
-    const screenshotPath = 'demo/screenshot.png';
+    const screenshotPath = 'screenshot.png';
 
     (async () => {
         const server = localServer(opts.cwd, port);
