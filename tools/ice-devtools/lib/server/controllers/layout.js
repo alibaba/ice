@@ -36,7 +36,7 @@ module.exports = async (ctx) => {
     currentMaterial,
     'layouts',
     layoutName,
-    'src/index.js'
+    'demo/index.jsx'
   );
 
   if (!existsSync(entryPath)) {
