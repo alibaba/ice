@@ -44,6 +44,7 @@ module.exports = (buildConfig = {}) => {
         },
       ],
       [babelPluginImport, { libraryName: '@icedesign/base' }],
+      ["import", { libraryName: '@alife/next' }],
     ],
   };
 };

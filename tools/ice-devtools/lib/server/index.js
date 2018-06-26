@@ -24,7 +24,8 @@ module.exports = function startServer(opts) {
       //   Object.assign(entry, materialList[material]);
       // });
 
-      const config = getWebpackConfig(entry);
+      const config = getWebpackConfig();
+      config.entry = entry;
 
       return serve({
         config,

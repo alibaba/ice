@@ -6,6 +6,6 @@
 //   .parse(process.argv);
 
 const cwd = process.cwd();
-require('../lib/demo')({
+require('../lib/dev')({
   cwd,
 });
