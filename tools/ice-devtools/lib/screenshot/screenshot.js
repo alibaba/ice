@@ -12,11 +12,11 @@ module.exports = {
   async screenshotDOMElement(url, selector, path, viewport) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    const defaultViewport = { width: 1240, height: 760, deviceScaleFactor: 2 };
+    const defaultViewport = { width: 1240, height: 600, deviceScaleFactor: 2 };
     page.setViewport(viewport || defaultViewport);
     await page.goto(url);
     await this.screenBySelector(page, {
-      padding: viewport ? 0 : 10,
+      // padding: viewport ? 0 : 10,
       path,
       selector,
       noClip: !!viewport

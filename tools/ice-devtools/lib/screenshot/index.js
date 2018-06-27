@@ -14,6 +14,7 @@ module.exports = function (opts) {
     }
 
     const screenshotPath = 'screenshot.png';
+    const pkgInfo = require(pkgPath);
 
     (async () => {
         const server = localServer(opts.cwd, port);
@@ -21,9 +22,13 @@ module.exports = function (opts) {
         // 截取页面中某个元素的快照
         await screenshot.screenshotDOMElement(
             `http://127.0.0.1:${port}/demo/index.html`,
-            'body',
-            screenshotPath
-        );
+            '#mountNode',
+            screenshotPath,
+            pkgInfo.blockConfig? null: {
+                width: 1240,
+                height: 740,
+                deviceScaleFactor: 2
+            });
 
         console.info(path.resolve('screenshot.png'), 'created');
 
