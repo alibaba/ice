@@ -22,12 +22,8 @@ module.exports = function (opts) {
         await screenshot.screenshotDOMElement(
             `http://127.0.0.1:${port}/demo/index.html`,
             'body',
-            screenshotPath,
-            {
-                width: 1240,
-                height: 740,
-                deviceScaleFactor: 2
-            });
+            screenshotPath
+        );
 
         console.info(path.resolve('screenshot.png'), 'created');
 
