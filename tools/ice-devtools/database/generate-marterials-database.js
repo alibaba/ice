@@ -76,7 +76,7 @@ function generateBlocks(files, SPACE, type, done) {
       // (必) 截图
       // 兼容 snapshot 字段, 但是不推荐
       screenshot: pkgConfig.screenshot || pkgConfig.snapshot,
-
+      demopage: pkgConfig.demopage,
       categories: pkgConfig.categories || [],
       // publishTime: pkg.publishTime || new Date().toISOString(),
       features: {
