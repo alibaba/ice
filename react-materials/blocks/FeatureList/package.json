@@ -30,8 +30,9 @@
     "prepublish": "ice block build"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
+    "@icedesign/base": "^0.2.1",
     "@icedesign/container": "^0.1.1",
+    "enquire-js": "^0.2.1",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
@@ -45,7 +46,8 @@
     "name": "feature-list",
     "screenshot": "https://img.alicdn.com/tfs/TB1pjqTikyWBuNjy0FpXXassXXa-988-568.png",
     "title": "特性列表",
-    "categories": ["信息展示"
+    "categories": [
+      "信息展示"
     ],
     "themePackage": "@icedesign/skin"
   }
