@@ -1,0 +1,26 @@
+// main样式
+.ice-layout-main {
+  color: #666;
+}
+
+// BreadCrumb
+.ice-layout-main {
+  padding: 20px;
+
+  .next-breadcrumb {
+    margin: 0 20px 20px 20px;
+  }
+  .next-breadcrumb .next-breadcrumb-text a {
+    color: #c4c4c4;
+  }
+  .next-breadcrumb .next-breadcrumb-text.activated a {
+    color: #fff;
+  }
+}
+
+// ice-card
+div.card-block {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+}
+
+
