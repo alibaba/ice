@@ -3,16 +3,16 @@
 
 const asideMenuConfig = [
   {
-    name: '列表管理',
+    name: '型号管理',
     path: '/',
   },
   {
-    name: '表单编辑',
-    path: '/form',
+    name: '编辑页',
+    path: '/edit',
   },
   {
-    name: '消息',
-    path: '/message',
+    name: '查看页',
+    path: '/view',
   },
 ];
 

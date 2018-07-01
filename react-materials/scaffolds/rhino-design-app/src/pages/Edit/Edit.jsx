@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Container from '@icedesign/container';
+import { withRouter } from 'react-router-dom';
 import {
   Button,
   Form,
@@ -11,11 +12,11 @@ import {
   Dialog,
   Breadcrumb
 } from '@icedesign/base';
-import './Form.scss';
+import './Edit.scss';
 
 const { toast: Toast } = Feedback;
 const { Col, Row } = Grid;
-const clsPrefix = 'form';
+const clsPrefix = 'edit';
 const FormItem = Form.Item;
 
 const formItemLayout = {
@@ -31,6 +32,7 @@ const versionDataSource = [{
   value: '2.0'
 }];
 
+@withRouter
 export default class NewInstance extends Component {
   field = new Field(this, {
     onChange: (name, value) => {
@@ -65,7 +67,7 @@ export default class NewInstance extends Component {
       closable: true,
       title: '提示',
       content: '创建还未提交，确定要离开吗？',
-      onOk: () => this.props.router.push('/instance')
+      onOk: () => this.props.history.go(-1)
     });
   }
 
@@ -81,7 +83,7 @@ export default class NewInstance extends Component {
       <div className={`page-${clsPrefix}`}>
         <Row>
           <Breadcrumb>
-            <Breadcrumb.Item link="/">列表管理</Breadcrumb.Item>
+            <Breadcrumb.Item link="/">型号管理</Breadcrumb.Item>
             <Breadcrumb.Item>表单编辑</Breadcrumb.Item>
           </Breadcrumb>
         </Row>
@@ -89,7 +91,13 @@ export default class NewInstance extends Component {
           <h2 className="section-title">基础信息</h2>
           <Form field={this.field}>
             <FormItem label="model" {...formItemLayout} required>
-              <Input maxLength={50} placeholder="请输入" {...init('modelId')} />
+              <Input
+                maxLength={50}
+                placeholder="请输入"
+                {...init('modelId', {
+                  rules: { required: true, message: '该项为必填项' }
+                })}
+              />
             </FormItem>
 
             <FormItem label="version" {...formItemLayout} required>
@@ -109,11 +117,23 @@ export default class NewInstance extends Component {
             </FormItem>
 
             <FormItem label="supplier" {...formItemLayout} required>
-              <Input maxLength={50} placeholder="请输入" {...init('supplier')} />
+              <Input
+                maxLength={50}
+                placeholder="请输入"
+                {...init('supplier', {
+                  rules: { required: true, message: '该项为必填项' }
+                })}
+              />
             </FormItem>
 
             <FormItem label="supplier model" {...formItemLayout} required>
-              <Input maxLength={50} placeholder="请输入" {...init('supplierModel')} />
+              <Input
+                maxLength={50}
+                placeholder="请输入"
+                {...init('supplierModel', {
+                  rules: { required: true, message: '该项为必填项' }
+                })}
+              />
             </FormItem>
 
             <FormItem label="supplier model name" {...formItemLayout}>

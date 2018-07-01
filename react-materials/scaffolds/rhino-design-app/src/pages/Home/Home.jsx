@@ -113,24 +113,19 @@ class Home extends Component {
   }
 
   onInputChange = (value) => {
-    if (this.inputTimer) {
-      return;
-    }
-    this.inputTimer = setTimeout(() => {
-      this.setState({ value });
-    }, 200);
+    this.setState({ value });
   }
 
-  renderStatus = (value, index, record) => {
+  renderStatus = () => {
     const splitSpan = <span className="actions-split">|</span>;
-    const view = <a href="javascrpt:void(0)" onClick={this.onClickView}>查看</a>;
-    const delete1 = <a href="javascrpt:void(0)" onClick={this.onClickDelete}>删除</a>;
-    const edit = <Link to={`/edit/${record.id}`}>编辑</Link>;
+    const view = <Link to="view">查看</Link>;
+    const deleteItem = <a href="javascrpt:void(0)" onClick={this.onClickDelete}>删除</a>;
+    const edit = <Link to="edit">编辑</Link>;
     return (
       <div>
         {view}
         {splitSpan}
-        {delete1}
+        {deleteItem}
         {splitSpan}
         {edit}
       </div>
@@ -154,7 +149,7 @@ class Home extends Component {
               onChange={this.onInputChange}
               onSearch={this.onSearch}
             />
-            <Link to="/xxx">
+            <Link to="/edit">
               <Button className={`${clsPrefix}-new`}>+ 新增</Button>
             </Link>
           </div>
@@ -172,7 +167,7 @@ class Home extends Component {
             isZebra={false}
             dataSource={dataSource}
             isLoading={isTableLoading}
-            className={`${clsPrefix}-table`}
+            className="rhino-table"
           >
             <Column title="ID" dataIndex="id" />
             <Column title="型号ID" dataIndex="id1" />
@@ -180,8 +175,8 @@ class Home extends Component {
             <Column title="Name" dataIndex="name2" />
             <Column title="状态" dataIndex="name3" />
             <Column title="状态2" dataIndex="name4" />
-            <Column title="操作" dataIndex="name5" />
-            <Column title="编辑" cell={this.renderStatus} width={200} />
+            <Column title="状态3" dataIndex="name5" />
+            <Column title="操作" cell={this.renderStatus} width={200} />
           </Table>
         </div>
         <div className={`${clsPrefix}-pagination-right`}>

@@ -5,7 +5,8 @@ import BaseLayout from './layouts/BaseLayout';
 import Home from './pages/Home';
 import ServerError from './pages/Exception/ServerError';
 import NotFound from './pages/Exception/NotFound';
-import Form from './pages/Form';
+import Edit from './pages/Edit';
+import View from './pages/View';
 
 const routerConfig = [
   {
@@ -14,8 +15,13 @@ const routerConfig = [
     component: Home
   },
   {
-    path: '/form',
-    component: Form,
+    path: '/edit',
+    component: Edit,
+    layout: BaseLayout
+  },
+  {
+    path: '/view',
+    component: View,
     layout: BaseLayout
   },
   {

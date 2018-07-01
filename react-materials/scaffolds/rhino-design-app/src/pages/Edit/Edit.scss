@@ -1,14 +1,4 @@
-.section-title {
-  color: #333;
-  border-left: 4px solid #3080FE;
-  padding-left: 5px;
-  line-height: 16px;
-  height: 16px;
-  font-size: 14px;
-}
-
-
-$prefixCls: 'form';
+$prefixCls: 'edit';
 
 .page-#{$prefixCls} {
   .#{$prefixCls}-btn {

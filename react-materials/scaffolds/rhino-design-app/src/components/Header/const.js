@@ -1,7 +1,7 @@
 const config = [
   {
     text: '反馈',
-    to: '//aone.alibaba-inc.com/project/478546/issue/new?akProjectId=478546&',
+    to: '//baidu.com',
     external: true,
     newWindow: true,
     icon: 'cart'
