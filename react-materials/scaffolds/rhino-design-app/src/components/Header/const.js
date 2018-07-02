@@ -1,18 +1,18 @@
 const config = [
   {
     text: '反馈',
-    to: '//baidu.com',
+    to: '//github.com/alibaba/ice/issues/new',
     external: true,
     newWindow: true,
-    icon: 'cart'
+    icon: 'cart',
   },
   {
     text: '帮助',
     to: '//ice.alibaba-inc.com/docs/about',
     external: true,
     newWindow: true,
-    icon: 'all'
-  }
+    icon: 'all',
+  },
 ];
 
 export default config;

@@ -6,14 +6,4 @@ $color-bg-hover: #3E2F7E;
   font-family: PingFangSC-Regular;
   background-color: $color-bg;
   min-width: 1280px;
-
-  .ice-admin-layout-body {
-    position: relative;
-    width: auto;
-    min-width: 1280px;
-    z-index: 10;
-    .ice-menu {
-      background: transparent;
-    }
-  }
 }

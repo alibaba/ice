@@ -10,7 +10,7 @@ import {
   Grid,
   Feedback,
   Dialog,
-  Breadcrumb
+  Breadcrumb,
 } from '@icedesign/base';
 import './Edit.scss';
 
@@ -21,15 +21,15 @@ const FormItem = Form.Item;
 
 const formItemLayout = {
   labelCol: { span: 4 },
-  wrapperCol: { offset: 1, span: 8 }
+  wrapperCol: { offset: 1, span: 8 },
 };
 
 const versionDataSource = [{
   label: '1.0',
-  value: '1.0'
+  value: '1.0',
 }, {
   label: '2.0',
-  value: '2.0'
+  value: '2.0',
 }];
 
 @withRouter
@@ -37,7 +37,7 @@ export default class NewInstance extends Component {
   field = new Field(this, {
     onChange: (name, value) => {
       this.field.setValue(name, value);
-    }
+    },
   });
 
   // 提交创建
@@ -53,9 +53,9 @@ export default class NewInstance extends Component {
           onOk: () => {
             Toast.loading({
               hasMask: true,
-              content: '提交请求中...'
+              content: '提交请求中...',
             });
-          }
+          },
         });
       }
     });
@@ -67,7 +67,7 @@ export default class NewInstance extends Component {
       closable: true,
       title: '提示',
       content: '创建还未提交，确定要离开吗？',
-      onOk: () => this.props.history.go(-1)
+      onOk: () => this.props.history.go(-1),
     });
   }
 
@@ -76,7 +76,7 @@ export default class NewInstance extends Component {
     const value = this.field.getValues();
     const {
       modelTypeName,
-      supplierModelName
+      supplierModelName,
     } = value;
 
     return (
@@ -95,7 +95,7 @@ export default class NewInstance extends Component {
                 maxLength={50}
                 placeholder="请输入"
                 {...init('modelId', {
-                  rules: { required: true, message: '该项为必填项' }
+                  rules: { required: true, message: '该项为必填项' },
                 })}
               />
             </FormItem>
@@ -104,7 +104,7 @@ export default class NewInstance extends Component {
               <Select
                 dataSource={versionDataSource}
                 {...init('version', {
-                  rules: { required: true, message: '该项为必填项' }
+                  rules: { required: true, message: '该项为必填项' },
                 })}
                 style={{ width: '100%', position: 'relative' }}
               />
@@ -121,7 +121,7 @@ export default class NewInstance extends Component {
                 maxLength={50}
                 placeholder="请输入"
                 {...init('supplier', {
-                  rules: { required: true, message: '该项为必填项' }
+                  rules: { required: true, message: '该项为必填项' },
                 })}
               />
             </FormItem>
@@ -131,7 +131,7 @@ export default class NewInstance extends Component {
                 maxLength={50}
                 placeholder="请输入"
                 {...init('supplierModel', {
-                  rules: { required: true, message: '该项为必填项' }
+                  rules: { required: true, message: '该项为必填项' },
                 })}
               />
             </FormItem>

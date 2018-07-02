@@ -3,5 +3,5 @@ import LoadingIndicator from '../../components/LoadingIndicator';
 
 export default Loadable({
   loader: () => import('./Home'),
-  loading: LoadingIndicator
+  loading: LoadingIndicator,
 });

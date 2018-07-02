@@ -22,8 +22,8 @@ const Fetch = () => new Promise((resolve) => {
       code: 200,
       content: {
         total: 88,
-        dataSource: dataSourceBak
-      }
+        dataSource: dataSourceBak,
+      },
     });
   }, 1000);
 });
@@ -36,7 +36,7 @@ class Home extends Component {
       visible: false,
       dataSource: [],
       current: 1,
-      total: 0
+      total: 0,
     };
     // 输入框
     this.value = '';
@@ -48,15 +48,15 @@ class Home extends Component {
 
   getData(page = 1, isInit = false) {
     // 分页参数
-    const paginationParams = {
+    const paginationParams = { // eslint-disable-line
       page,
       pageSize: PAGESIZE,
-      value: this.value
+      value: this.value,
     };
 
     if (!isInit) {
       this.setState({
-        isTableLoading: true
+        isTableLoading: true,
       });
     }
 
@@ -67,7 +67,7 @@ class Home extends Component {
           dataSource: content.dataSource,
           isTableLoading: false,
           total: content.total,
-          current: page
+          current: page,
         });
       }
     });
@@ -75,7 +75,7 @@ class Home extends Component {
 
   onClickView = () => {
     this.setState({
-      visible: true
+      visible: true,
     });
   }
 
@@ -86,7 +86,7 @@ class Home extends Component {
       content: '是否要删除该数据',
       onOk: () => {
         // 发送删除请求-loading-删除成功
-      }
+      },
     });
   }
 
@@ -97,13 +97,13 @@ class Home extends Component {
 
   onOk = () => {
     this.setState({
-      visible: false
+      visible: false,
     });
   }
 
   onCancel = () => {
     this.setState({
-      visible: false
+      visible: false,
     });
   }
 

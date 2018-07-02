@@ -88,13 +88,13 @@
 
 // 清楚浮动
 .clearfix {
-zoom: 1;
-&:after {
-  clear: both;
-  content: '';
-  display: block;
-  visibility: hidden;
-  overflow: hidden;
-  line-height: 0;
-}
+  zoom: 1;
+  &:after {
+    clear: both;
+    content: '';
+    display: block;
+    visibility: hidden;
+    overflow: hidden;
+    line-height: 0;
+  }
 }
