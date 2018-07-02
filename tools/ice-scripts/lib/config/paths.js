@@ -1,6 +1,7 @@
 const { realpathSync } = require('fs');
 const { resolve } = require('path');
 const url = require('url');
+const pathExists = require('path-exists');
 
 function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
@@ -51,6 +52,7 @@ module.exports = function getPaths(cwd) {
     appPublic: resolveApp('public'),
     appHtml: resolveApp('public/index.html'),
     appFavicon: resolveApp('public/favicon.png'),
+    appFaviconIco: resolveApp('public/favicon.ico'),
     appPackageJson: resolveApp('package.json'),
     appAbcJson: resolveApp('abc.json'),
     appSrc: resolveApp('src'),

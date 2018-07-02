@@ -30,7 +30,7 @@ module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
       templateParameters: {
         NODE_ENV: process.env.NODE_ENV,
       },
-      favicon: getFaviconPath(paths.appFavicon),
+      favicon: getFaviconPath([paths.appFaviconIco, paths.appFavicon]),
       template: paths.appHtml,
       minify: false,
     }),
