@@ -3042,9 +3042,9 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-extract-css-assets-webpack-plugin@^0.2.2:
-  version "0.2.2"
-  resolved "http://registry.npm.alibaba-inc.com/extract-css-assets-webpack-plugin/download/extract-css-assets-webpack-plugin-0.2.2.tgz#e1bf5756e6f63cc24997047ed4e50266e9e8d3ba"
+extract-css-assets-webpack-plugin@^0.2.3:
+  version "0.2.3"
+  resolved "http://registry.npm.alibaba-inc.com/extract-css-assets-webpack-plugin/download/extract-css-assets-webpack-plugin-0.2.3.tgz#e73e2dd2ec7939ca3c59570d675f561f72a2295d"
   dependencies:
     postcss "^6.0.22"
     request "^2.87.0"
