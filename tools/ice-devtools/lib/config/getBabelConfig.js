@@ -1,3 +1,5 @@
+const babelPluginImport = require('babel-plugin-import').default;
+
 function createResolve(type) {
   return (name) => require.resolve(`babel-${type}-${name}`);
 }
@@ -14,6 +16,7 @@ module.exports = function getBabelrc() {
           styleLibraryName: 'theme-chalk',
         },
       ],
+      [babelPluginImport, [{ libraryName: '@icedesign/base' }, { libraryName: '@alife/next' }]],
     ],
   };
 };

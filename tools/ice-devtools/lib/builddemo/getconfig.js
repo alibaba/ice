@@ -30,5 +30,8 @@ module.exports = function (cwd) {
     publicPath: './',
     filename: '[name].js',
   }
+
+  config.mode = 'production';
+  
   return config;
 };
