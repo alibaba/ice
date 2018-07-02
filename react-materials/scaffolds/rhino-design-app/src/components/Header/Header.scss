@@ -31,9 +31,6 @@
     padding: 0 20px;
     height: 50px;
     width: 100%;
-    .ice-menu {
-      background: transparent;
-    }
     .ice-menu-item {
       width: 100px;
       text-align: center;
@@ -52,11 +49,8 @@
       background: #074FE7;
     }
   }
-  // 顶部导航效果覆盖
-  .ice-admin-layout-header-menu {
-    .ice-menu {
-      background: transparent;
-    }
+  .ice-menu {
+    background: transparent;
   }
 
   .ice-header-userpannel {

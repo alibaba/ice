@@ -34,7 +34,6 @@ class Header extends React.Component {
       <div className="ice-admin-layout-header-top">
         <span>欢迎来到运营平台</span>
         <div
-          className="ice-admin-layout-header-menu"
           style={{ display: 'flex' }}
         >
           {headerNavs && headerNavs.length > 0 ? (
