@@ -91,7 +91,6 @@ class Home extends Component {
   }
 
   onPaginationChange = (page) => {
-    console.log(page);
     this.getData(page);
   }
 
@@ -187,7 +186,6 @@ class Home extends Component {
             pageSize={PAGESIZE}
             hideOnlyOnePage
             shape="arrow-prev-only"
-            // className="common-pagination"
           />
         </div>
       </div>
