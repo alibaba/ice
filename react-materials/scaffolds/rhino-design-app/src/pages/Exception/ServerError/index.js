@@ -3,5 +3,5 @@ import LoadingIndicator from '../../../components/LoadingIndicator';
 
 export default Loadable({
   loader: () => import('./ServerError'),
-  loading: LoadingIndicator
+  loading: LoadingIndicator,
 });

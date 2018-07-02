@@ -8,7 +8,7 @@ import {
   formConfig,
   mockFormData,
   mockTableData,
-  dialogFormConfig
+  dialogFormConfig,
 } from './const';
 import './View.scss';
 
@@ -22,26 +22,26 @@ class DeviceModelView extends Component {
       visible: false,
       formData: mockFormData,
       tableData: mockTableData,
-      dialogData: {}
+      dialogData: {},
     };
   }
 
   onClickView = (value) => {
     this.setState({
       visible: true,
-      dialogData: value
+      dialogData: value,
     });
   };
 
   onOk = () => {
     this.setState({
-      visible: false
+      visible: false,
     });
   }
 
   onCancel = () => {
     this.setState({
-      visible: false
+      visible: false,
     });
   }
 
@@ -66,7 +66,7 @@ class DeviceModelView extends Component {
           onCancel={this.onCancel}
           onClose={this.onCancel}
           style={{
-            width: '400px'
+            width: '400px',
           }}
         >
           <FormView

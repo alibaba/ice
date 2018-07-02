@@ -12,27 +12,27 @@ const routerConfig = [
   {
     path: '/',
     layout: BaseLayout,
-    component: Home
+    component: Home,
   },
   {
     path: '/edit',
     component: Edit,
-    layout: BaseLayout
+    layout: BaseLayout,
   },
   {
     path: '/view',
     component: View,
-    layout: BaseLayout
+    layout: BaseLayout,
   },
   {
     path: '/500-with-basic-layout',
     layout: BaseLayout,
-    component: ServerError
+    component: ServerError,
   },
   {
     path: '*',
     layout: BaseLayout,
-    component: NotFound
+    component: NotFound,
   },
 ];
 

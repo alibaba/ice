@@ -12,12 +12,12 @@ class FormView extends Component {
       [3, 21],
       [3, 9],
       [2, 6],
-      [3, 3]
+      [3, 3],
     ],
     config: {},
     data: {},
     className: '',
-    isShowAllData: true // false的情况下，数据为空则不做展示
+    isShowAllData: true, // false的情况下，数据为空则不做展示
   }
 
   static propTypes = {
@@ -26,11 +26,11 @@ class FormView extends Component {
       labels: PropTypes.object,
       title: PropTypes.string,
       rows: PropTypes.array,
-      types: PropTypes.object
+      types: PropTypes.object,
     }),
     data: PropTypes.objectOf(PropTypes.any),
     className: PropTypes.string,
-    isShowAllData: PropTypes.bool
+    isShowAllData: PropTypes.bool,
   }
 
   render() {
