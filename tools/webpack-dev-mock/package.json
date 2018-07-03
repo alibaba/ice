@@ -9,6 +9,7 @@
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "chokidar": "^2.0.4",
+    "debug": "^3.1.0",
     "express-http-proxy": "^1.2.0"
   },
   "devDependencies": {

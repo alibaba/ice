@@ -87,17 +87,12 @@ function realApplyMock(app) {
   const config = getConfig();
 
   app.use(bodyParser.json({ limit: '5mb', strict: false }));
-  app.use(
-    bodyParser.urlencoded({
-      extended: true,
-      limit: '5mb',
-    })
-  );
+  app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
 
   let serverPaths = [];
+
   Object.keys(config).forEach((key) => {
     const keyParsed = parseKey(key);
-    console.log(keyParsed);
     Array.prototype.push.apply(serverPaths, keyParsed);
   });
 

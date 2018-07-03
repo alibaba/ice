@@ -228,10 +228,6 @@ color-name@1.1.1:
   version "1.1.1"
   resolved "http://registry.npm.alibaba-inc.com/color-name/download/color-name-1.1.1.tgz#4b1415304cf50028ea81643643bd82ea05803689"
 
-commander@*:
-  version "2.16.0"
-  resolved "http://registry.npm.alibaba-inc.com/commander/download/commander-2.16.0.tgz#f16390593996ceb4f3eeb020b31d78528f7f8a50"
-
 component-emitter@^1.2.1:
   version "1.2.1"
   resolved "http://registry.npm.alibaba-inc.com/component-emitter/download/component-emitter-1.2.1.tgz#137918d6d78283f7df7a6b7c5a63e140e69425e6"
@@ -277,6 +273,12 @@ debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3:
 debug@^3.0.1:
   version "3.1.0"
   resolved "http://registry.npm.alibaba-inc.com/debug/download/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  dependencies:
+    ms "2.0.0"
+
+debug@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
     ms "2.0.0"
 
@@ -848,12 +850,6 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   resolved "http://registry.npm.alibaba-inc.com/mkdirp/download/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
-
-mockjs@^1.0.1-beta3:
-  version "1.0.1-beta3"
-  resolved "http://registry.npm.alibaba-inc.com/mockjs/download/mockjs-1.0.1-beta3.tgz#d234f3c27256397564f2c955142e891909537209"
-  dependencies:
-    commander "*"
 
 ms@2.0.0:
   version "2.0.0"
