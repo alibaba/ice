@@ -99,7 +99,7 @@ module.exports = async function(args, subprocess) {
 
   const devServer = new WebpackDevServer(compiler, devServerConfig);
 
-  devMiddleware(devServer);
+  devMiddleware(devServer.app);
 
   compiler.plugin('done', (stats) => {
     if (isInteractive) {

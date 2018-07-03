@@ -1,6 +1,6 @@
 {
   "name": "webpack-dev-mock",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Webpack devserver middleware mock server",
   "main": "index.js",
   "author": "noyobo<nongyoubao@alibaba-inc.com>",
