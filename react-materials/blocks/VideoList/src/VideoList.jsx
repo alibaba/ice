@@ -272,7 +272,7 @@ export default class VideoList extends Component {
                   <div style={{ position: 'relative' }}>
                     <img
                       alt=""
-                      src="https://img.alicdn.com/tfs/TB1E0sbmpmWBuNjSspdXXbugXXa-84-84.png"
+                      src={require('./images/TB1E0sbmpmWBuNjSspdXXbugXXa-84-84.png')}
                       style={styles.playerIcon}
                     />
                     <video
@@ -298,7 +298,7 @@ export default class VideoList extends Component {
                       开始定制{' '}
                       <img
                         alt=""
-                        src="https://img.alicdn.com/tfs/TB13yHPmrSYBuNjSspiXXXNzpXa-40-40.png"
+                        src={require('./images/TB13yHPmrSYBuNjSspiXXXNzpXa-40-40.png')}
                         style={styles.arrowIcon}
                       />
                     </a>
@@ -333,7 +333,7 @@ export default class VideoList extends Component {
                     >
                       开始定制{' '}
                       <img
-                        src="https://img.alicdn.com/tfs/TB13yHPmrSYBuNjSspiXXXNzpXa-40-40.png"
+                        src={require('./images/TB13yHPmrSYBuNjSspiXXXNzpXa-40-40.png')}
                         style={styles.arrowIcon}
                         alt=""
                       />

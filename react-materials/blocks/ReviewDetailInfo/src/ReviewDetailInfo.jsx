@@ -68,7 +68,7 @@ export default class ReviewDetailInfo extends Component {
                     style={styles.reviewLeaderboardItemAvatarImg}
                     width="40"
                     height="40"
-                    src="https://img.alicdn.com/tfs/TB1j159r21TBuNjy0FjXXajyXXa-499-498.png_80x80.jpg"
+                    src={require('./images/TB1j159r21TBuNjy0FjXXajyXXa-499-498.png_80x80.jpg')}
                     alt=""
                   />
                 </span>
@@ -81,7 +81,7 @@ export default class ReviewDetailInfo extends Component {
                     style={styles.reviewLeaderboardItemAvatarImg}
                     width="40"
                     height="40"
-                    src="https://img.alicdn.com/tfs/TB1Daimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg"
+                    src={require('./images/TB1Daimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg')}
                     alt=""
                   />
                 </span>
@@ -94,7 +94,7 @@ export default class ReviewDetailInfo extends Component {
                     style={styles.reviewLeaderboardItemAvatarImg}
                     width="40"
                     height="40"
-                    src="https://img.alicdn.com/tfs/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg"
+                    src={require('./images/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg')}
                     alt=""
                   />
                 </span>
@@ -107,7 +107,7 @@ export default class ReviewDetailInfo extends Component {
                     style={styles.reviewLeaderboardItemAvatarImg}
                     width="40"
                     height="40"
-                    src="https://img.alicdn.com/tfs/TB1AdOerVOWBuNjy0FiXXXFxVXa-499-498.png_80x80.jpg"
+                    src={require('./images/TB1AdOerVOWBuNjy0FiXXXFxVXa-499-498.png_80x80.jpg')}
                     alt=""
                   />
                 </span>
@@ -120,7 +120,7 @@ export default class ReviewDetailInfo extends Component {
                     style={styles.reviewLeaderboardItemAvatarImg}
                     width="40"
                     height="40"
-                    src="https://img.alicdn.com/tfs/TB1FWimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg"
+                    src={require('./images/TB1FWimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg')}
                     alt=""
                   />
                 </span>

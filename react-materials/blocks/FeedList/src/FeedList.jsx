@@ -5,31 +5,31 @@ const dataSource = [
   {
     nickName: '某某',
     datetime: '2分钟前',
-    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
+    avatar: require('./images/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png'),
     message: '刚刚完成了智能化搭建课程的学习',
   },
   {
     nickName: '某某',
     datetime: '3分钟前',
-    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
+    avatar: require('./images/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png'),
     message: '刚刚完成了 JavaScript 模块化打包课程的学习',
   },
   {
     nickName: '某某',
     datetime: '5分钟前',
-    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
+    avatar: require('./images/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png'),
     message: '刚刚完成了智能化搭建课程的学习',
   },
   {
     nickName: '某某',
     datetime: '1天前',
-    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
+    avatar: require('./images/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png'),
     message: '刚刚完成了智能化搭建课程的学习',
   },
   {
     nickName: '某某',
     datetime: '2天前',
-    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
+    avatar: require('./images/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png'),
     message:
       '刚刚完成了Sketch图形设计课程的学习，课程内容包括组件绘制，画布编辑等',
   },
