@@ -20,7 +20,7 @@ export default class ProductFeatureDark extends Component {
             <img
               alt="特点图"
               style={styles.coverImage}
-              src="https://img.alicdn.com/tfs/TB1gEoLpwmTBuNjy1XbXXaMrVXa-1760-974.png"
+              src={require('./images/TB1gEoLpwmTBuNjy1XbXXaMrVXa-1760-974.png')}
             />
           </div>
         </div>
@@ -48,8 +48,7 @@ const styles = {
     paddingTop: 160,
     paddingBottom: 160,
     paddingLeft: 30,
-    backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1A5MNpuuSBuNjy1XcXXcYjFXa-66-66.png)',
+    backgroundImage: `url${require('./images/TB1A5MNpuuSBuNjy1XcXXcYjFXa-66-66.png')}`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '10px 120px',
     zIndex: 2,

@@ -55,8 +55,7 @@ const styles = {
     paddingTop: 160,
     paddingBottom: 160,
     paddingLeft: 30,
-    backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1fFH5pAyWBuNjy0FpXXassXXa-66-66.png)',
+    backgroundImage: `url${require('./images/TB1fFH5pAyWBuNjy0FpXXassXXa-66-66.png')}`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '10px 120px',
   },

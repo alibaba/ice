@@ -38,7 +38,7 @@ export default class ProductIntro extends Component {
             <img
               width={696}
               height={527}
-              src="https://img.alicdn.com/tfs/TB1SbvpgQyWBuNjy0FpXXassXXa-1392-1054.png"
+              src={require('./images/TB1SbvpgQyWBuNjy0FpXXassXXa-1392-1054.png')}
               alt=""
             />
           </div>
