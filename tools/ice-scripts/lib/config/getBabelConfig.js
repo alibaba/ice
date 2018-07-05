@@ -43,8 +43,9 @@ module.exports = (buildConfig = {}) => {
           moduleName: 'babel-runtime',
         },
       ],
-      [babelPluginImport, { libraryName: '@icedesign/base' }],
-      ["import", { libraryName: '@alife/next' }],
+      [babelPluginImport, { libraryName: '@icedesign/base' }, '@icedesign/base'],
+      [babelPluginImport, { libraryName: '@alife/next' }, '@alife/next'],
+      [babelPluginImport, { libraryName: '@alifd/next' }, '@alifd/next'],
     ],
   };
 };
