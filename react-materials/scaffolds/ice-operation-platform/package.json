@@ -1,7 +1,7 @@
 {
-  "name": "rhino-design-app",
+  "name": "ice-operation-platform",
   "version": "1.0.0",
-  "description": "该模板适用于后台管理系统，内置列表管理页、表单编辑页及表单查看页，这三个页面可形成一个闭环",
+  "description": "该模板适用于运营类型的后台管理系统，内置列表管理页、表单新增编辑页及表单查看页，这三个页面可形成一个闭环",
   "author": "ice-admin@alibaba-inc.com",
   "dependencies": {
     "@icedesign/base": "^0.2.1",
@@ -41,8 +41,8 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "name": "rhino-design-app",
-    "title": "rhino-design-app",
+    "name": "ice-operation-platform",
+    "title": "ice-operation-platform",
     "snapshot": "https://g.alicdn.com/rhino-ui/nm-materials/rhino-design-app.png"
   }
 }

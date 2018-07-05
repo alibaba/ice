@@ -3,15 +3,15 @@
 
 const asideMenuConfig = [
   {
-    name: '型号管理',
+    name: '设备管理',
     path: '/',
   },
   {
-    name: '编辑页',
+    name: '设备编辑',
     path: '/edit',
   },
   {
-    name: '查看页',
+    name: '设备查看',
     path: '/view',
   },
 ];
