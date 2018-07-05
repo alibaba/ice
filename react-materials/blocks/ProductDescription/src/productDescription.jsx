@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-export default class ProductFeatureDark2 extends Component {
-  static displayName = 'ProductFeatureDark2';
+export default class productDescription extends Component {
+  static displayName = 'productDescription';
 
   render() {
     return (

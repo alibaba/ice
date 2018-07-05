@@ -1,4 +1,6 @@
-# ice-design-schools
+# ice-design-hospital
+
+该模板适用于医院类的后台管理系统
 
 > 使用文档
 
@@ -19,5 +21,4 @@
 - 页面文件: `src/pages`
 
 效果图:
-
-![screenshot](https://img.alicdn.com/tfs/TB1pCKVzDtYBeNjy1XdXXXXyVXa-2840-1596.png)
+![screenshot](https://img.alicdn.com/tfs/TB19u3vzf1TBuNjy0FjXXajyXXa-2840-1596.png)
