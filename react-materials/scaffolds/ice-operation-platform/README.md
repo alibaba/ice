@@ -19,4 +19,4 @@
 * 页面文件: `src/pages`
 
 效果图:
-![screenshot](https://g.alicdn.com/rhino-ui/nm-materials/rhino-design-app.png)
+![screenshot](https://img.alicdn.com/tfs/TB164CsCAyWBuNjy0FpXXassXXa-1266-800.png)
