@@ -1,0 +1,39 @@
+{
+  "name": "@icedesign/notice-summary-block",
+  "version": "1.0.0",
+  "description": "",
+  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "notice-summary",
+    "title": "通知摘要",
+    "categories": [
+      "信息展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1apyPCwmTBuNjy1XbXXaMrVXa-2814-274.png"
+  }
+}
