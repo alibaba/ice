@@ -68,7 +68,7 @@ export default class IntroBanner extends Component {
       <div className="intro-banner-wrap" style={style.introBannerWrapStyles}>
         <img
           className="intro-banner-img"
-          src={require('./images/TB1R9Ius1uSBuNjy1XcXXcYjFXa-3840-900.jpg"')}
+          src={require('./images/TB1R9Ius1uSBuNjy1XcXXcYjFXa-3840-900.jpg')}
           style={style.introBannerImgStyles}
           alt=""
         />
