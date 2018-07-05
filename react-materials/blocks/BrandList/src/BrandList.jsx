@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from '@icedesign/base';
 
 const brandlist = [
-  require('./images/TB14.LkieuSBuNjy1XcXXcYjFXa-226-78.png'),
+  require('./images/TB14LkieuSBuNjy1XcXXcYjFXa-226-78.png'),
   require('./images/TB1LgSMibuWBuNjSszgXXb8jVXa-206-72.png'),
   require('./images/TB1jFDwiamWBuNjy1XaXXXCbXXa-284-56.png'),
   require('./images/TB147fnikSWBuNjSszdXXbeSpXa-180-68.png'),
