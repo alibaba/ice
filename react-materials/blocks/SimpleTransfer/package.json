@@ -1,0 +1,40 @@
+{
+  "name": "@react-materials/simple-transfer-block",
+  "version": "1.0.0",
+  "description": "",
+  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3",
+    "@icedesign/container": "^0.1.2"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "simple-transfer",
+    "title": "穿梭框",
+    "categories": [
+      "数据展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1RpPQCAyWBuNjy0FpXXassXXa-2422-548.png"
+  }
+}
