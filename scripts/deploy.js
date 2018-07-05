@@ -66,8 +66,12 @@ function scanMaterials() {
     scanPackageJson('../vue-materials/*/*/package.json'),
     scanPackageJson('../angular-materials/*/*/package.json'),
   ])
-    .then(([reactMaterials, vueMaterials = []]) => {
-      const allMaterials = [...reactMaterials, ...vueMaterials];
+    .then(([reactMaterials = [], vueMaterials = [], angularMaterials = []]) => {
+      const allMaterials = [
+        ...reactMaterials,
+        ...vueMaterials,
+        ...angularMaterials,
+      ];
       return Promise.all(allMaterials.map(checkNpmPublish));
     })
     .then((publishCheck) => {
