@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/pro-scaffold",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "该模板内置了丰富的区块，主要用于展示现有区块的分类以及区块组合的效果，使用时需要根据需求进行删除和添加",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-pro.html",
   "dependencies": {
@@ -48,7 +48,8 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "src/index.js"
+    "entry": "src/index.js",
+    "localization": true
   },
   "scaffoldConfig": {
     "name": "ice-design-pro",
