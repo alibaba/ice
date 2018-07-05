@@ -2,8 +2,10 @@
 
 // Basic color variables
 $custom-layout-bg: hsl(226, 16%, 21%);
-$ice-aside-bg: #001529;
+$ice-aside-bg: #272a34;
 $ice-aside-text-color: rgba(204, 204, 204, 0.95);
+$ice-aside-selected-left-bg: #1b2125;
+$ice-aside-selected-left-bg: #192329;
 
 // Layout dark styles
 $ice-body-bg: $color-white !default;
@@ -15,16 +17,17 @@ $ice-logo-text-color: $color-brand1-5 !default;
 $ice-icon-down-color: $color-white !default;
 
 $ice-header-menu-bg: $color-transparent !default;
-$ice-header-text-color: $color-text1-3 !default;
-$ice-header-text-hover-color: $color-brand1-5 !default;
+$ice-header-text-color: $color-white !default;
+$ice-header-text-hover-color: $color-text1-1 !default;
+$ice-header-menu-text-hover-color: $color-brand1-5 !default;
 
 $ice-aside-bg: $ice-aside-bg !default;
 $ice-aside-menu-bg: $color-transparent !default;
 $ice-aside-text-color: $ice-aside-text-color !default;
 $ice-aside-sub-text-color: $color-text1-2 !default;
 $ice-aside-text-hover-color: $color-white !default;
-$ice-aside-menu-item-selected-gradient-left-bg: $color-brand1-9 !default;
-$ice-aside-menu-item-selected-gradient-right-bg: $color-brand1-5 !default;
+$ice-aside-menu-item-selected-gradient-left-bg: $ice-aside-selected-left-bg !default;
+$ice-aside-menu-item-selected-gradient-right-bg: $ice-aside-selected-left-bg !default;
 $ice-aside-menu-item-selected-text-color: $color-white !default;
 $ice-aside-menu-submenu-item-hover-bg: $color-transparent !default;
 $ice-aside-menu-submenu-vertical-bg: $color-white !default;

@@ -8,23 +8,9 @@ body {
 .ice-design-header-aside-footer-responsive-layout-#{$theme} {
   .logo {
     max-width: 340px;
-    height: 62px;
-    line-height: 62px;
     display: flex;
     align-items: center;
     justify-content: center;
-    .logo-text {
-      display: block;
-      max-width: 120px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      margin-left: 10px;
-      font-size: 28px;
-      color: $ice-logo-text-color;
-      font-weight: bold;
-      font-family: Helvetica, sans-serif;
-    }
   }
 
   /* LAYOUT */
@@ -63,10 +49,10 @@ body {
       padding: 10px 20px;
       margin: 0px auto;
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
-      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-      background: #fff;
+      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.4);
+      background: #3080fe;
       .user-avatar {
         margin-right: 12px;
         border-radius: 4px;
@@ -286,12 +272,6 @@ body {
       }
     }
   }
-
-  &.ice-design-aside-collapled {
-    .logo-text {
-      display: none;
-    }
-  }
 }
 
 .user-profile-menu {
@@ -305,7 +285,7 @@ body {
     color: #666;
     cursor: pointer;
     a:hover {
-      color: $ice-header-text-hover-color;
+      color: $ice-header-menu-text-hover-color;
     }
     i {
       margin-right: 5px;
@@ -315,13 +295,6 @@ body {
 
 @media screen and (max-width: 720px) {
   .ice-design-header-aside-footer-responsive-layout-#{$theme} {
-    .logo {
-      width: 80px;
-      .logo-text {
-        font-size: 22px;
-      }
-    }
-
     &.ice-design-layout {
       .ice-design-layout-header {
         .user-avatar {
