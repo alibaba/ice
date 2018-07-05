@@ -1,5 +1,5 @@
 {
-  "name": "@react-materials/ablity-items-block",
+  "name": "@icedesign/ablity-items-block",
   "version": "1.0.0",
   "description": "中间展示特点 特性的区块",
   "author": "muchen <tao360907796@gmail.com>",
@@ -32,6 +32,6 @@
       "信息展示",
       "欢迎页"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB10Ssgs41YBuNjy1zcXXbNcXXa-2518-450.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1TBcQCgmTBuNjy1XbXXaMrVXa-1683-293.png"
   }
 }
