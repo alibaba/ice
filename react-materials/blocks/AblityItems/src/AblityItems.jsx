@@ -9,12 +9,12 @@ export default class AblityItems extends Component {
 
   render() {
     return (
-      <div style={style.hyAbilityStyles}>
-        <div style={style.hyAbilityItemStyle}>
+      <div className="hy-ability" style={style.hyAbilityStyles}>
+        <div className="hy-ability-item" style={style.hyAbilityItemStyle}>
           <img
-            src="https://gw.alipayobjects.com/zos/rmsportal/aWimbMGxabytxrRqcnEU.svg"
-            style={style.hyAbilityItemImgStyle}
             alt=""
+            src={require('./images/aWimbMGxabytxrRqcnEU.svg')}
+            style={style.hyAbilityItemImgStyle}
           />
           <h3 style={style.hyAbilityItemTitleStyle}>能力输出</h3>
           <p style={style.hyAbilityItemSubtitleStyle}>
@@ -22,11 +22,11 @@ export default class AblityItems extends Component {
           </p>
         </div>
 
-        <div style={style.hyAbilityItemStyle}>
+        <div className="hy-ability-item" style={style.hyAbilityItemStyle}>
           <img
-            src="https://gw.alipayobjects.com/zos/rmsportal/neNAdNbBxUbWpbUQIsJA.svg"
-            style={style.hyAbilityItemImgStyle}
             alt=""
+            src={require('./images/neNAdNbBxUbWpbUQIsJA.svg')}
+            style={style.hyAbilityItemImgStyle}
           />
           <h3 style={style.hyAbilityItemTitleStyle}>政策扶持</h3>
           <p style={style.hyAbilityItemSubtitleStyle}>
@@ -34,11 +34,11 @@ export default class AblityItems extends Component {
           </p>
         </div>
 
-        <div style={style.hyAbilityItemStyle}>
+        <div className="hy-ability-item" style={style.hyAbilityItemStyle}>
           <img
-            src="https://gw.alipayobjects.com/zos/rmsportal/SsStefBxcUWayMyktAwz.svg"
-            style={style.hyAbilityItemImgStyle}
             alt=""
+            src={require('./images/SsStefBxcUWayMyktAwz.svg')}
+            style={style.hyAbilityItemImgStyle}
           />
           <h3 style={style.hyAbilityItemTitleStyle}>资源整合</h3>
           <p style={style.hyAbilityItemSubtitleStyle}>

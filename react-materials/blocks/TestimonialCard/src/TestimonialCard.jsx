@@ -10,8 +10,7 @@ const generatorData = (count) => {
       company: '就职公司/职务',
       description:
         '随着个人用户对于互联网内容获取的要求和口味越来越特别，怎样提供更加精准个性化的资讯订阅服务是提升用户体验的关键。虽然我们发现目前市面上有非常多的资讯类app 都标榜自己能够提供个人定制化的新闻阅读功能，但是本质上来说一般都是通过新闻源+兴趣点+智能推荐这样的组合实现的',
-      imgUrl:
-        'https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png',
+      imgUrl: require('./images/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png'),
     };
   });
 };
@@ -63,8 +62,7 @@ export default class TestimonialCard extends Component {
 
 const styles = {
   container: {
-    background:
-      'url(https://img.alicdn.com/tfs/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png)',
+    background: `url${require('./images/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png')}`,
     borderRadius: 0,
     width: '100%',
     padding: '80px 0',

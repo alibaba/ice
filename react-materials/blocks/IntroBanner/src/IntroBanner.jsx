@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 const style = {
   introBannerWrapStyles: {
@@ -53,38 +52,45 @@ const style = {
 };
 
 export default class IntroBanner extends Component {
-    static displayName = 'IntroBanner';
+  static displayName = 'IntroBanner';
 
-    static propTypes = {
-        href: PropTypes.string
-    };
+  static propTypes = {};
 
-    static defaultProps = {
-        value: 'string data'
-    };
+  static defaultProps = {};
 
-    constructor(props) {
-        super(props);
-        this.state = {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-        };
-    }
-
-    render() {
-        return (
-          <div
-            className="intro-banner-wrap"
-            style={style.introBannerWrapStyles}>
-            <img
-              className="intro-banner-img"
-              src="https://img.alicdn.com/tfs/TB1R9Ius1uSBuNjy1XcXXcYjFXa-3840-900.jpg"
-              style={style.introBannerImgStyles}/>
-            <div className="intro-banner-img-mask" style={style.introBannerImgMaskStyles}></div>
-            <div className="intro-banner-text" style={style.introBannerTextStyles}>
-              <h2 className="intro-banner-title" style={style.introBannerTitleStyles}>智慧社区，未来生活</h2>
-              <p className="intro-banner-subtitle" style={style.introBannerSubtitleStyles}>输出支付，账户体系，信用金融，电商，采购，文化公益和大数据等能力和资源，助力社区物业通过提升信息化、智能化水平，改善物业管理水平和服务品质，推动建设便利舒适、安全和谐的智慧社区</p>
-            </div>
-          </div>
-        );
-    }
+  render() {
+    return (
+      <div className="intro-banner-wrap" style={style.introBannerWrapStyles}>
+        <img
+          className="intro-banner-img"
+          src={require('./images/TB1R9Ius1uSBuNjy1XcXXcYjFXa-3840-900.jpg"')}
+          style={style.introBannerImgStyles}
+          alt=""
+        />
+        <div
+          className="intro-banner-img-mask"
+          style={style.introBannerImgMaskStyles}
+        />
+        <div className="intro-banner-text" style={style.introBannerTextStyles}>
+          <h2
+            className="intro-banner-title"
+            style={style.introBannerTitleStyles}
+          >
+            智慧社区，未来生活
+          </h2>
+          <p
+            className="intro-banner-subtitle"
+            style={style.introBannerSubtitleStyles}
+          >
+            输出支付，账户体系，信用金融，电商，采购，文化公益和大数据等能力和资源，助力社区物业通过提升信息化、智能化水平，改善物业管理水平和服务品质，推动建设便利舒适、安全和谐的智慧社区
+          </p>
+        </div>
+      </div>
+    );
+  }
 }

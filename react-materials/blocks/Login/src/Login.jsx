@@ -55,7 +55,7 @@ export default class Login extends Component {
           <a href="#" style={styles.meta}>
             <img
               style={styles.logo}
-              src="https://img.alicdn.com/tfs/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png"
+              src={require('./images/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png')}
               alt="logo"
             />
             <span style={styles.title}>飞冰</span>
@@ -148,8 +148,7 @@ const styles = {
     height: '100vh',
     paddingTop: '100px',
     background: '#f0f2f5',
-    backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png)',
+    backgroundImage: `url${require('./images/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png')}`,
   },
   header: {
     display: 'flex',

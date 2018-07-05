@@ -6,8 +6,7 @@ const { Row, Col } = Grid;
 const generatorData = (count) => {
   return Array.from({ length: count }).map(() => {
     return {
-      imgUrl:
-        'https://img.alicdn.com/tfs/TB1rnNcjr_I8KJjy1XaXXbsxpXa-603-474.png',
+      imgUrl: require('./images/TB1rnNcjr_I8KJjy1XaXXbsxpXa-603-474.png'),
     };
   });
 };

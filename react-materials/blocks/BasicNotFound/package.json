@@ -1,9 +1,14 @@
 {
   "name": "@icedesign/basic-not-found-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "404 报错提示",
   "main": "lib/index.js",
-  "files": ["src/", "demo/", "mock/", "lib/"],
+  "files": [
+    "src/",
+    "demo/",
+    "mock/",
+    "lib/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
@@ -13,7 +18,10 @@
     "url": "https://github.com/alibaba/ice"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
@@ -27,11 +35,12 @@
   },
   "blockConfig": {
     "name": "basic-not-found",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1.HyVgyqAXuNjy1XdXXaYcVXa-1914-1066.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1.HyVgyqAXuNjy1XdXXaYcVXa-1914-1066.png",
     "themePackage": "@icedesign/skin",
     "title": "404 报错提示",
-    "categories": ["异常"]
+    "categories": [
+      "异常"
+    ]
   },
   "publishConfig": {
     "access": "public",
