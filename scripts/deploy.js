@@ -64,6 +64,7 @@ function scanMaterials() {
   Promise.all([
     scanPackageJson('../react-materials/*/*/package.json'),
     scanPackageJson('../vue-materials/*/*/package.json'),
+    scanPackageJson('../angular-materials/*/*/package.json'),
   ])
     .then(([reactMaterials, vueMaterials = []]) => {
       const allMaterials = [...reactMaterials, ...vueMaterials];
