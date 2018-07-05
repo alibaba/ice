@@ -1,0 +1,37 @@
+{
+  "name": "@react-materials/map-with-a-marker",
+  "version": "0.1.0",
+  "description": "Map With A Marker",
+  "author": "yuanyan <yuanyan.cao@gmail.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^0.1.2",
+    "react": "^16.2.0",
+    "react-amap": "^1.2.7"
+  },
+  "blockConfig": {
+    "name": "map-with-a-marker",
+    "title": "地图位置标记",
+    "categories": [
+      "信息展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1rtgvCDtYBeNjy1XdXXXXyVXa-2058-802.png"
+  }
+}
