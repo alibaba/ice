@@ -3,8 +3,7 @@ import { Button } from '@icedesign/base';
 import './LandingIntroBanner.scss';
 
 // 寻找背景图片可以从 https://unsplash.com/ 寻找
-const backgroundImage =
-  'https://img.alicdn.com/tfs/TB1j9kWgvDH8KJjy1XcXXcpdXXa-1680-870.jpg';
+const backgroundImage = require('./images/TB1j9kWgvDH8KJjy1XcXXcpdXXa-1680-870.jpg');
 
 export default class LandingIntroBanner extends Component {
   static displayName = 'LandingIntroBanner';

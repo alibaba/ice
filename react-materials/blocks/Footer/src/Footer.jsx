@@ -52,12 +52,12 @@ export default class Footer extends Component {
             <Col xxs={24} m={6} style={styles.share}>
               <img
                 style={styles.shareIcon}
-                src="https://img.alicdn.com/tfs/TB1JkgmjnnI8KJjy0FfXXcdoVXa-60-48.png"
+                src={require('./images/TB1JkgmjnnI8KJjy0FfXXcdoVXa-60-48.png')}
                 alt=""
               />
               <img
                 style={{ ...styles.shareIcon, ...styles.weChart }}
-                src="https://img.alicdn.com/tfs/TB1hEz2jf6H8KJjy0FjXXaXepXa-60-48.png"
+                src={require('./images/TB1hEz2jf6H8KJjy0FjXXaXepXa-60-48.png')}
                 alt=""
               />
             </Col>

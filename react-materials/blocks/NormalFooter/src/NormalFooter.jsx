@@ -24,7 +24,7 @@ export default class NormalFooter extends Component {
             <Col l="4" xxs="24">
               <a href="#" style={styles.brand}>
                 <img
-                  src="https://img.alicdn.com/tfs/TB1saOBbYGYBuNjy0FoXXciBFXa-218-58.png"
+                  src={require('./images/TB1saOBbYGYBuNjy0FoXXciBFXa-218-58.png')}
                   alt=""
                   style={styles.logo}
                 />
@@ -56,14 +56,14 @@ export default class NormalFooter extends Component {
               <div style={styles.pullRight}>
                 <a href="#">
                   <img
-                    src="https://img.alicdn.com/tfs/TB1JkgmjnnI8KJjy0FfXXcdoVXa-60-48.png"
+                    src={require('./images/TB1JkgmjnnI8KJjy0FfXXcdoVXa-60-48.png')}
                     alt=""
                     style={{ ...styles.socialImg, marginRight: '16px' }}
                   />
                 </a>
                 <a href="#">
                   <img
-                    src="https://img.alicdn.com/tfs/TB1hEz2jf6H8KJjy0FjXXaXepXa-60-48.png"
+                    src={require('./images/TB1hEz2jf6H8KJjy0FjXXaXepXa-60-48.png')}
                     alt=""
                     style={styles.socialImg}
                   />

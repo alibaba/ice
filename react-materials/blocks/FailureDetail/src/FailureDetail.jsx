@@ -20,7 +20,7 @@ export default class FailureDetail extends Component {
           <div style={styles.successDetailHead}>
             <img
               style={styles.img}
-              src="https://img.alicdn.com/tfs/TB1LUMhhY_I8KJjy1XaXXbsxpXa-156-156.png"
+              src={require('./images/TB1LUMhhY_I8KJjy1XaXXbsxpXa-156-156.png')}
               alt=""
             />
             <h3 style={styles.title}>提交失败</h3>

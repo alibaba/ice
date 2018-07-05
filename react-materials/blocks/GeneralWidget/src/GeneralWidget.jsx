@@ -14,7 +14,7 @@ export default class GeneralWidget extends Component {
           <Col l="8" xxs="12" style={styles.widgetItem}>
             <a style={styles.widgetLink}>
               <img
-                src="https://img.alicdn.com/tfs/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png"
+                src={require('./images/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png')}
                 alt=""
                 style={styles.widgetImg}
               />
@@ -24,7 +24,7 @@ export default class GeneralWidget extends Component {
           <Col l="8" xxs="12" style={styles.widgetItem}>
             <a style={styles.widgetLink}>
               <img
-                src="https://img.alicdn.com/tfs/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png"
+                src={require('./images/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png')}
                 alt=""
                 style={styles.widgetImg}
               />
@@ -34,7 +34,7 @@ export default class GeneralWidget extends Component {
           <Col l="8" xxs="12" style={styles.widgetItem}>
             <a style={styles.widgetLink}>
               <img
-                src="https://img.alicdn.com/tfs/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png"
+                src={require('./images/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png')}
                 alt=""
                 style={styles.widgetImg}
               />
@@ -44,7 +44,7 @@ export default class GeneralWidget extends Component {
           <Col l="8" xxs="12" style={styles.widgetItem}>
             <a style={styles.widgetLink}>
               <img
-                src="https://img.alicdn.com/tfs/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png"
+                src={require('./images/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png')}
                 alt=""
                 style={styles.widgetImg}
               />
@@ -54,7 +54,7 @@ export default class GeneralWidget extends Component {
           <Col l="8" xxs="12" style={styles.widgetItem}>
             <a style={styles.widgetLink}>
               <img
-                src="https://img.alicdn.com/tfs/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png"
+                src={require('./images/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png')}
                 alt=""
                 style={styles.widgetImg}
               />
@@ -64,7 +64,7 @@ export default class GeneralWidget extends Component {
           <Col l="8" xxs="12" style={styles.widgetItem}>
             <a style={styles.widgetLink}>
               <img
-                src="https://img.alicdn.com/tfs/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png"
+                src={require('./images/TB1rDFsopuWBuNjSspnXXX1NVXa-200-200.png')}
                 alt=""
                 style={styles.widgetImg}
               />

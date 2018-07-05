@@ -34,7 +34,7 @@ export default class CollapseCard extends Component {
           <div style={styles.summaryInfo}>
             <img
               style={styles.itemLogo}
-              src="https://img.alicdn.com/tfs/TB1EBQ.hZLJ8KJjy0FnXXcFDpXa-300-300.png"
+              src={require('./images/TB1EBQ.hZLJ8KJjy0FnXXcFDpXa-300-300.png')}
               alt=""
             />
             <div style={styles.infoIntro}>

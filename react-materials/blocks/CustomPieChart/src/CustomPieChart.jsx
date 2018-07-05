@@ -23,10 +23,10 @@ export default class CustomPieChart extends Component {
     const city = 65;
     const coun = 35;
     const Icons = {
-      man: 'https://img.alicdn.com/tfs/TB1ek8heL9TBuNjy0FcXXbeiFXa-12-26.png',
-      woman: 'https://img.alicdn.com/tfs/TB1zi90eSBYBeNjy0FeXXbnmFXa-12-26.png',
-      city: 'https://img.alicdn.com/tfs/TB1fA8heL9TBuNjy0FcXXbeiFXa-24-21.png',
-      coun: 'https://img.alicdn.com/tfs/TB1fCxOeN9YBuNjy0FfXXXIsVXa-24-24.png',
+      man: require('./images/TB1ek8heL9TBuNjy0FcXXbeiFXa-12-26.png'),
+      woman: require('./images/TB1zi90eSBYBeNjy0FeXXbnmFXa-12-26.png'),
+      city: require('./images/TB1fA8heL9TBuNjy0FcXXbeiFXa-24-21.png'),
+      coun: require('./images/TB1fCxOeN9YBuNjy0FfXXXIsVXa-24-24.png'),
     };
     return {
       backgroundColor: '#fff',

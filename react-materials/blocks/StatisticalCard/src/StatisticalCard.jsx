@@ -11,7 +11,7 @@ const dataSource = [
     circle: {
       width: 36,
       height: 31,
-      icon: 'https://gw.alicdn.com/tfs/TB1YDjNh4rI8KJjy0FpXXb5hVXa-36-31.png',
+      icon: require('./images/TB1YDjNh4rI8KJjy0FpXXb5hVXa-36-31.png'),
     },
     helpURL: 'http://taobao.com',
   },
@@ -21,7 +21,7 @@ const dataSource = [
     circle: {
       width: 40,
       height: 43,
-      icon: 'https://gw.alicdn.com/tfs/TB1Vzv5h2DH8KJjy1XcXXcpdXXa-40-43.png',
+      icon: require('./images/TB1Vzv5h2DH8KJjy1XcXXcpdXXa-40-43.png'),
     },
     helpURL: 'http://taobao.com',
   },
@@ -31,7 +31,7 @@ const dataSource = [
     circle: {
       width: 42,
       height: 29,
-      icon: 'https://gw.alicdn.com/tfs/TB1uB_Fh9_I8KJjy0FoXXaFnVXa-42-29.png',
+      icon: require('./images/TB1uB_Fh9_I8KJjy0FoXXaFnVXa-42-29.png'),
     },
     helpURL: 'http://taobao.com',
   },
@@ -41,7 +41,7 @@ const dataSource = [
     circle: {
       width: 43,
       height: 42,
-      icon: 'https://gw.alicdn.com/tfs/TB186kphZLJ8KJjy0FnXXcFDpXa-43-42.png',
+      icon: require('./images/TB186kphZLJ8KJjy0FnXXcFDpXa-43-42.png'),
     },
     helpURL: 'http://taobao.com',
   },
@@ -77,7 +77,7 @@ export default class StatisticalCard extends Component {
               {data.text}
               <a href={data.helpURL} target="_blank">
                 <img
-                  src="https://gw.alicdn.com/tfs/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png"
+                  src={require('./images/TB1uR_Fh9_I8KJjy0FoXXaFnVXa-12-12.png')}
                   style={styles.itemHelp}
                   alt="图片"
                 />

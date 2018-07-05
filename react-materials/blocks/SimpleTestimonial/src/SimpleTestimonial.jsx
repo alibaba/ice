@@ -29,7 +29,7 @@ export default class SimpleTestimonial extends Component {
             <div style={styles.infoBox}>
               <img
                 style={styles.avatar}
-                src="https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png"
+                src={require('./images/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png')}
                 alt="图像"
               />
               <h5 style={styles.name}>人物名</h5>
