@@ -67,6 +67,10 @@
     {
       "directory": "vue-materials",
       "type": "vue"
+    },
+    {
+      "directory": "angular-materials",
+      "type": "angular"
     }
   ]
 }
