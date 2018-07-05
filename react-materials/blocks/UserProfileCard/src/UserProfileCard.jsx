@@ -142,7 +142,7 @@ export default class UserProfileCard extends Component {
                 </ul>
               </Col>
 
-              <Col l="16">
+              <Col l="15">
                 <ul style={styles.anchorLiveInfo}>
                   {item.priceList.map((live, id) => {
                     return (
