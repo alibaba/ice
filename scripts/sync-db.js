@@ -59,6 +59,8 @@ function sortScaffoldMaterials() {
     const materialsData = JSON.parse(readFileSync(materialsPath, 'utf-8'));
     // TODO: 需要根据接口进行维护
     const sortKeys = [
+      'ice-operation-platform',
+      'ice-design-hospital',
       'ice-design-hospital',
       'ice-design-schools',
       'ice-design-pro',
