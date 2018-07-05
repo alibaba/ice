@@ -25,10 +25,6 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
-  },
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.1",
@@ -45,7 +41,8 @@
     "name": "brand-list",
     "screenshot": "https://img.alicdn.com/tfs/TB1_tflieGSBuNjSspbXXciipXa-1234-487.png",
     "title": "品牌列表",
-    "categories": ["信息展示"
+    "categories": [
+      "信息展示"
     ],
     "themePackage": "@icedesign/skin"
   }
