@@ -55,6 +55,18 @@ module.exports = function(paths, options = {}, themeConfig = {}) {
         libraryName: /@ali\/ice-.*/,
         stylePath: 'style.js',
       },
+      {
+        libraryName: /^@alife\/next\/lib\/([^/]+)/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /^@alifd\/next\/lib\/([^/]+)/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /@alifd\/.*/,
+        stylePath: 'style.js',
+      }
     ]),
   ];
 
