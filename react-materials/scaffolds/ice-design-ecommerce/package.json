@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ecommerce-scaffold",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "该模板适用于电商类管理后台，布局方式采用左侧固定，右侧自适应方式，适合大量数据展示和界面操作",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-ecommerce.html",
@@ -32,7 +32,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.5.5-0"
+    "ice-scripts": "^1.6.0-next.3"
   },
   "scripts": {
     "start": "ice dev",
