@@ -1,5 +1,7 @@
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 const fs = require('fs');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
@@ -8,9 +10,9 @@ const WebpackPluginImport = require('webpack-plugin-import');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const getFaviconPath = require('../utils/getFaviconPath');
 
-module.exports = function(paths, options = {}, themeConfig = {}) {
+module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
   const defineVriables = {
     'process.env.NODE_ENV': JSON.stringify(
       process.env.NODE_ENV || 'development'
@@ -28,6 +30,7 @@ module.exports = function(paths, options = {}, themeConfig = {}) {
       templateParameters: {
         NODE_ENV: process.env.NODE_ENV,
       },
+      favicon: getFaviconPath([paths.appFaviconIco, paths.appFavicon]),
       template: paths.appHtml,
       minify: false,
     }),
@@ -70,7 +73,18 @@ module.exports = function(paths, options = {}, themeConfig = {}) {
     ]),
   ];
 
-  const themePackage = options.theme || options.themePackage;
+  const localization = buildConfig.localization || false;
+
+  if (localization) {
+    plugins.push(
+      new ExtractCssAssetsWebpackPlugin({
+        outputPath: 'assets',
+        relativeCssPath: '../',
+      })
+    );
+  }
+
+  const themePackage = buildConfig.theme || buildConfig.themePackage;
   let iconScssPath;
   let skinOverridePath;
   let variableFilePath;
