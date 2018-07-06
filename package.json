@@ -69,7 +69,4 @@
       "type": "vue"
     }
   ],
-  "dependencies": {
-    "vue-hot-reload-api": "^2.3.0"
-  }
 }
