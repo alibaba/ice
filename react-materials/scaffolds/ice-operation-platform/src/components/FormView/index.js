@@ -1,1 +1,3 @@
-export default from './FormView';
+import FormView from './FormView';
+
+export default FormView;
