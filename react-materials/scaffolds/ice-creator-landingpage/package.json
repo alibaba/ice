@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/creator-landingpage-scaffold",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "该模板适用于平台类登陆引导页，默认内置一个页面和五个不同风格的展示区块",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-creator-landingpage.html",
   "dependencies": {
@@ -22,7 +22,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.5.5-0"
+    "ice-scripts": "^1.6.0-next.3"
   },
   "scripts": {
     "start": "ice dev",
