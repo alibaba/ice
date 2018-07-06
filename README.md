@@ -13,19 +13,19 @@
 
 ---
 
-<a href="https://alibaba.github.io/ice/#/iceworks">
+<a href="https://alibaba.github.io/ice/iceworks">
   <img alt="飞冰" src="https://user-images.githubusercontent.com/677114/39990355-f806798e-579e-11e8-808e-222a4a7fc66e.png" width="420" align="right" style="max-width: 50%">
 </a>
 
-:zap: **[`海量高质量物料`](https://alibaba.github.io/ice/#/block)** 物料丰富：组件、区块、布局、模版，场景化分类，覆盖面广，官方与社区共同维护；专业视觉设计，`每周持续有新增`，满足日常开发之所需。
+:zap: **[`海量高质量物料`](https://alibaba.github.io/ice/block)** 物料丰富：组件、区块、布局、模版，场景化分类，覆盖面广，官方与社区共同维护；专业视觉设计，`每周持续有新增`，满足日常开发之所需。
 
-:dart: **[`ICEWORKS 桌面工具`](https://alibaba.github.io/ice/#/iceworks)** 极速上手，全链路工程支持：多项目管理、页面路由管理、包依赖管理、零配置本地构建、代理配置、一键发布等，`效率提升 100%`；插件化的工作台，可自定义插件启用，让前端开发得心应手。
+:dart: **[`ICEWORKS 桌面工具`](https://alibaba.github.io/ice/iceworks)** 极速上手，全链路工程支持：多项目管理、页面路由管理、包依赖管理、零配置本地构建、代理配置、一键发布等，`效率提升 100%`；插件化的工作台，可自定义插件启用，让前端开发得心应手。
 
 :art: **[`ICE DESIGN 设计语言`](https://alibaba.github.io/ice/design.html)** 传统平台界面的设计语言存在着的一些不足，比如色彩单一，大量线条的使用，分割化明显。将这些不足归类一下就是界面单调、雷同性明显、缺少惊喜。我们认为新的平台类视觉风格可以打破这些束缚，尝试一些新的探索，启发传统的设计认知,因此结合当下设计趋势，构思了平台产品设计语言 ICE DESIGN。
 
 ## 开始使用
 
-下载 [`ICEWORKS`](https://alibaba.github.io/ice/#/iceworks) 后创建或导入项目，详细步骤请浏览 [`快速上手指南`](https://alibaba.github.io/ice/#/docs/iceworks)。
+下载 [`ICEWORKS`](https://alibaba.github.io/ice/iceworks) 后创建或导入项目，详细步骤请浏览 [`快速上手指南`](https://alibaba.github.io/ice/docs/iceworks)。
 
 ## 参与物料建设
 
@@ -49,4 +49,4 @@
 
 扫码加入即刻交流与反馈：
 
-<img alt="Join the chat at dingtalk" src="https://img.alicdn.com/tfs/TB1HhSKsKuSBuNjy1XcXXcYjFXa-993-1280.jpg" width="200">
+<img alt="Join the chat at dingtalk" src="https://ice.alicdn.com/assets/images/ice-group.png" width="200">

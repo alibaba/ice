@@ -2,12 +2,18 @@ const oss = require('ali-oss');
 const co = require('co');
 const { readdirSync, readFileSync, writeFile } = require('fs');
 const { resolve, join } = require('path');
+const scaffolds = require('./scaffolds');
 
-if (process.env.TRAVIS_BRANCH !== 'master') {
+if (
+  process.env.TRAVIS_BRANCH !== 'master' &&
+  process.env.TRAVIS_BRANCH !== 'pre-depoly'
+) {
   console.log('当前分支非 Master, 不执行物料源同步脚本');
   console.log('TRAVIS_BRANCH=' + process.env.TRAVIS_BRANCH);
   process.exit(0);
 }
+
+const isPre = process.env.TRAVIS_BRANCH == 'pre-depoly';
 
 const bucket = 'iceworks';
 const accessKeyId = process.env.ACCESS_KEY_ID;
@@ -27,7 +33,7 @@ sortScaffoldMaterials()
     const files = readdirSync(resolve(__dirname, '../build')).map(
       (filename) => ({
         from: resolve(__dirname, '../build', filename),
-        to: join('assets', filename),
+        to: isPre ? join('pre-assets', filename) : join('assets', filename),
       })
     );
 
@@ -52,28 +58,11 @@ function sortScaffoldMaterials() {
   return new Promise((resolve, reject) => {
     const materialsPath = join(__dirname, '../build', 'react-materials.json');
     const materialsData = JSON.parse(readFileSync(materialsPath, 'utf-8'));
-    // TODO: 需要根据接口进行维护
-    const sortKeys = [
-      'ice-design-pro',
-      'ice-design-lite',
-      'ice-design-cms',
-      'ice-reviews-management',
-      'ice-design-ecommerce',
-      'ice-design-analysis',
-      'ice-design-login',
-      'ice-design-project-management',
-      'ice-website-homepage',
-      'iceworks-homepage',
-      'ice-creator-landingpage',
-      'ice-open-platform-landingpage',
-      'ice-design-docs',
-      'create-react-app',
-    ];
 
     const sortMaterialsData = [];
-    sortKeys.forEach((sortKey) => {
+    scaffolds.forEach((scaffold) => {
       materialsData.scaffolds.forEach((currentItem) => {
-        if (currentItem.name === sortKey) {
+        if (currentItem.name === scaffold) {
           sortMaterialsData.push(currentItem);
         }
       });
