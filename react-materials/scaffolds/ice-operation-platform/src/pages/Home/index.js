@@ -1,7 +1,3 @@
-import Loadable from 'react-loadable';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import Home from './Home';
 
-export default Loadable({
-  loader: () => import('./Home'),
-  loading: LoadingIndicator,
-});
+export default Home;
