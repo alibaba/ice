@@ -1,7 +1,3 @@
-import Loadable from 'react-loadable';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import View from './View';
 
-export default Loadable({
-  loader: () => import('./View'),
-  loading: LoadingIndicator,
-});
+export default View;
