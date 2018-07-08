@@ -1,0 +1,6 @@
+{
+  "name": "Page404",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Page404.js"
+}
