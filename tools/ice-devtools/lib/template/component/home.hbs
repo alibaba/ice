@@ -10,7 +10,13 @@
 </head>
 
 <body>
-  <pre>{{ demos }}</pre>
+  {{#if demos.length}}
+  <ul>
+    {{#each demos}}
+    <li><a href="/preview?demo={{this.filename}}">{{this.title}}</a></li>
+    {{/each}}
+  </ul>
+  {{/if}}
   <div id="container"></div>
   <script></script>
 </body>

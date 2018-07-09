@@ -11,24 +11,28 @@ const routes = require('./routes');
 
 module.exports = function startServer(opts) {
   const pkgPath = path.resolve(opts.cwd, 'package.json');
+  const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
 
   return Promise.resolve()
     .then(() => {
       const entry = {
-        __Component_Dev__: ['./src'],
+        init: ['./package.json'],
       };
 
-      if (existsSync(resolve(opts.cwd, 'src/main.scss'))) {
-        entry.__Component_Dev__.unshift('./src/main.scss');
-      }
-
-      entry.__Component_Dev__.unshift('webpack-hot-client/client');
+      // if (existsSync(resolve(opts.cwd, 'src/main.scss'))) {
+      //   entry.__Component_Dev__.unshift('./src/main.scss');
+      // }
 
       const config = getWebpackConfig(entry);
-      Object.assign(config.output, {
-        library: '__Component__',
-        libraryTarget: 'umd',
+      config.module.rules.push({
+        test: /\.md$/i,
+        use: require.resolve('./demo-loader')
       });
+      config.resolve.alias[pkg.name] = resolve(opts.cwd, 'src/index.js');
+      // Object.assign(config.output, {
+      //   library: '__Component__',
+      //   libraryTarget: 'umd',
+      // });
 
       return serve({
         config,
@@ -49,7 +53,7 @@ module.exports = function startServer(opts) {
           app.use(async function (ctx, next) {
             ctx.compiler = options.compiler;
             ctx.projectDir = opts.cwd;
-            ctx.componentPackage = JSON.parse(readFileSync(pkgPath, 'utf-8'));
+            ctx.componentPackage = pkg;
             await next();
           });
           app.use(

@@ -1,3 +1,20 @@
-module.exports = function getDemos() {
+const { readdirSync, readFileSync, existsSync } = require('fs');
+const { join } = require('path');
+const { parseMarkdownParts } = require('./utils');
 
-}
+module.exports = function getDemos(projectDir) {
+  const demoPath = join(projectDir, 'demo');
+  if (!existsSync(demoPath)) {
+    return [];
+  }
+
+  return readdirSync(demoPath)
+    .filter(file => /\.md$/.test(file))
+    .map((filename) => {
+      const content = readFileSync(join(demoPath, filename), 'utf-8');
+      // const { }
+      const { meta } = parseMarkdownParts(content);
+      filename = filename.replace(/\.md$/, '');
+      return { filename, ...meta };
+    });
+};
