@@ -5,7 +5,7 @@ import ColumnChart from './ColumnChart';
 const { Row, Col } = Grid;
 const mockData = [
   {
-    title: '页面预览',
+    title: 'PAGE VIEWS',
     amount: '1,293',
     percent: '15%',
     increase: true,
@@ -14,7 +14,7 @@ const mockData = [
     background: '#1BC98E',
   },
   {
-    title: '下载次数',
+    title: 'DOWNLOADS',
     amount: '758',
     percent: '1.3%',
     increase: false,
@@ -23,7 +23,7 @@ const mockData = [
     background: '#E64758',
   },
   {
-    title: '月活跃用户',
+    title: 'SIGN-UPS',
     amount: '3,659',
     percent: '20%',
     increase: true,
@@ -32,7 +32,7 @@ const mockData = [
     background: '#9F85FF',
   },
   {
-    title: '日活跃用户',
+    title: 'ACTIVE USERS',
     amount: '298',
     percent: '12%',
     increase: false,

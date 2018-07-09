@@ -25,27 +25,27 @@ const mockData = [
         value: '5.0%',
       },
       {
-        label: 'United States',
+        label: 'Russia',
         value: '4.5%',
       },
       {
-        label: 'United States',
+        label: 'Mexico',
         value: '2.3%',
       },
       {
-        label: 'United States',
+        label: 'Spain',
         value: '1.7%',
       },
       {
-        label: 'United States',
+        label: 'France',
         value: '1.5%',
       },
       {
-        label: 'United States',
+        label: 'South Africa',
         value: '1.4%',
       },
       {
-        label: 'United States',
+        label: 'Japan',
         value: '1.2%',
       },
     ],

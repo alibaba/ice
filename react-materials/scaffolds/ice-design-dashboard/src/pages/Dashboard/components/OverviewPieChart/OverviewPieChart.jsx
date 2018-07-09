@@ -16,7 +16,7 @@ const mockData = [
   },
   {
     chartData: [{ type: 'A', value: 90 }, { type: 'B', value: 10 }],
-    title: 'Traffic',
+    title: 'Tradeing',
     summary: 'News vs Returning',
   },
 ];
@@ -80,7 +80,7 @@ const styles = {
   },
   summary: {
     margin: '5px 0 0',
-    fontWeigth: 400,
+    fontWeigth: '400',
     fontSize: '16px',
     color: '#fff',
   },
