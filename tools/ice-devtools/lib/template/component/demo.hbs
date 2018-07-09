@@ -21,13 +21,13 @@
           return React;
         case 'react-dom':
           return ReactDOM;
-        case '${}':
+        case '{{ name }}':
           return __Component__.default;
         default:
           console.warn(`Can not resolve module ${mod}`);
       }
     }
-    {{ compiled }}
+    {{{ compiled }}}
   </script>
 </body>
 

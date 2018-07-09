@@ -3,7 +3,9 @@ const path = require('path');
 const fs = require('fs');
 const serve = require('webpack-serve');
 const { resolve } = require('path');
+const { readFileSync, existsSync } = require('fs');
 const views = require('koa-views');
+const bodyParser = require('koa-bodyparser');
 const getWebpackConfig = require('../config/getWebpackConfig');
 const routes = require('./routes');
 
@@ -13,8 +15,15 @@ module.exports = function startServer(opts) {
   return Promise.resolve()
     .then(() => {
       const entry = {
-        __Component_Dev__: './src'
+        __Component_Dev__: ['./src'],
       };
+
+      if (existsSync(resolve(opts.cwd, 'src/main.scss'))) {
+        entry.__Component_Dev__.unshift('./src/main.scss');
+      }
+
+      entry.__Component_Dev__.unshift('webpack-hot-client/client');
+
       const config = getWebpackConfig(entry);
       Object.assign(config.output, {
         library: '__Component__',
@@ -34,12 +43,13 @@ module.exports = function startServer(opts) {
         add: (app, middleware, options) => {
           // since we're manipulating the order of middleware added, we need to handle
           // adding these two internal middleware functions.
-          middleware.webpack();
+          app.use(bodyParser());
           middleware.content();
 
           app.use(async function (ctx, next) {
             ctx.compiler = options.compiler;
             ctx.projectDir = opts.cwd;
+            ctx.componentPackage = JSON.parse(readFileSync(pkgPath, 'utf-8'));
             await next();
           });
           app.use(
@@ -54,6 +64,8 @@ module.exports = function startServer(opts) {
           );
           // router *must* be the last middleware added
           app.use(routes);
+
+          middleware.webpack();
         },
       });
     })
