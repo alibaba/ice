@@ -1,0 +1,37 @@
+{
+  "name": "@react-materials/slide-banner-block",
+  "version": "1.0.0",
+  "description": "滑动banner 用于层叠展示",
+  "author": "muchen <tao360907796@gmail.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "slide-banner",
+    "title": "滑动Banner",
+    "categories": [
+      "信息展示",
+      "欢迎页"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1bNu1uDtYBeNjy1XdXXXXyVXa-2876-768.png"
+  }
+}

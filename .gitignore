@@ -5,6 +5,7 @@ npm-debug.log
 mochawesome-report
 .happypack
 package-lock.json
+yarn.lock
 */blocks/**/lib/
 */layouts/**/lib/
 .eslintcache
@@ -14,3 +15,5 @@ build
 tools/ice-scripts/lib/ICE_CA
 
 npmrc
+tools/extract-css-assets-webpack-plugin/test/actual/
+tools/extract-css-assets-webpack-plugin/lib/

@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {
@@ -67,6 +67,7 @@
     "tar": "^2.2.1",
     "tildify": "^1.2.0",
     "uppercamelcase": "^3.0.0",
+    "url-loader": "^1.0.1",
     "user-home": "^2.0.0",
     "uuid": "^3.0.1",
     "validate-npm-package-name": "^3.0.0",

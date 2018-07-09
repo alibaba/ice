@@ -1,23 +1,25 @@
 const { realpathSync } = require('fs');
 const { resolve } = require('path');
 const url = require('url');
+const pathExists = require('path-exists');
 
 function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
 }
 
-// We use `PUBLIC_URL` environment variable or "buildConfig.publicURL" or
-// "homepage" field to infer "public path" at which the app is served.
+// We use "buildConfig.publicURL" at which the app is served.
 const getPublicUrl = (appPackageJson) => {
+  // eslint-disable-next-line
   const appPackage = require(appPackageJson);
-  if (
-    appPackage.buildConfig &&
-    (appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl)
-  ) {
-    return appPackage.buildConfig.publicURL || appPackage.buildConfig.publicUrl;
+  const buildConfig = appPackage.buildConfig || {};
+  if (buildConfig && (buildConfig.publicURL || buildConfig.publicUrl)) {
+    return buildConfig.publicURL || buildConfig.publicUrl;
   }
-
-  return './';
+  if (buildConfig.localization) {
+    return './';
+  }
+  // 默认值为相对于当前域名绝对路径
+  return '/';
 };
 
 function ensureSlash(path, needsSlash) {
@@ -26,9 +28,8 @@ function ensureSlash(path, needsSlash) {
     return path.substr(path, path.length - 1);
   } else if (!hasSlash && needsSlash) {
     return `${path}/`;
-  } else {
-    return path;
   }
+  return path;
 }
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -50,6 +51,8 @@ module.exports = function getPaths(cwd) {
     appBuild: resolveApp('build'),
     appPublic: resolveApp('public'),
     appHtml: resolveApp('public/index.html'),
+    appFavicon: resolveApp('public/favicon.png'),
+    appFaviconIco: resolveApp('public/favicon.ico'),
     appPackageJson: resolveApp('package.json'),
     appAbcJson: resolveApp('abc.json'),
     appSrc: resolveApp('src'),

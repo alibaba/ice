@@ -25,12 +25,12 @@ const generateRootCA = require('./config/generateRootCA');
 
 /* eslint no-console:off */
 
-module.exports = async function (args, subprocess) {
+module.exports = async function(args, subprocess) {
   const cwd = process.cwd();
   const HOST = args.host || '0.0.0.0';
-  const PORT = args.port || 3333;
+  const PORT = args.port || 4444;
   let protocol = args.https ? 'https' : 'http';
-  const send = function (data) {
+  const send = function(data) {
     iceworksClient.send(data);
     if (subprocess && typeof subprocess.send === 'function') {
       subprocess.send(data);
@@ -71,6 +71,7 @@ module.exports = async function (args, subprocess) {
 
   let isFirstCompile = true;
   const compiler = webpack(webpackConfig);
+  // eslint-disable-next-line global-require
   let devServerConfig = require('./config/webpack.server.config')(paths, args);
   if ('devServer' in webpackConfig) {
     // merge user config
@@ -85,9 +86,11 @@ module.exports = async function (args, subprocess) {
         key: fs.readFileSync(ca.key),
         cert: fs.readFileSync(ca.cert),
       };
-      console.log(chalk.green('当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)'));
+      console.log(
+        chalk.green('当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)')
+      );
       console.log(chalk.green(ca.cert));
-    } catch(err) {
+    } catch (err) {
       protocol = 'http';
       delete devServerConfig.https;
       console.log(chalk.red('HTTPS 证书生成失败，已转换为HTTP'));
@@ -96,7 +99,7 @@ module.exports = async function (args, subprocess) {
 
   const devServer = new WebpackDevServer(compiler, devServerConfig);
 
-  devMiddleware(devServer);
+  devMiddleware(devServer.app);
 
   compiler.plugin('done', (stats) => {
     if (isInteractive) {
