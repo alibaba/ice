@@ -36,6 +36,16 @@ export default class Aside extends Component {
     return openKeys;
   };
 
+  /**
+   * 点击菜单项触发的事件，模板默认点击菜单都跳转首页
+   * 实际业务开发按需处理
+   */
+  onMenuClick = (selectedKeys) => {
+    if (selectedKeys !== '/') {
+      this.props.history.push('/');
+    }
+  };
+
   render() {
     const { location } = this.props;
     const { pathname } = location;

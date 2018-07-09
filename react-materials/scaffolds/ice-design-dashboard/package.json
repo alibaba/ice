@@ -14,7 +14,6 @@
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-markdown": "^3.3.2",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
@@ -44,6 +43,6 @@
   "scaffoldConfig": {
     "name": "ice-design-dashboard",
     "title": "ICE Design Dashboard",
-    "screenshot": "https://img.alicdn.com/tfs/TB1leZkDntYBeNjy1XdXXXXyVXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1Ohh7DgmTBuNjy1XbXXaMrVXa-2840-1596.png"
   }
 }
