@@ -1,7 +1,7 @@
 {
   "name": "@angular-materials/card-list",
   "version": "1.0.0",
-  "description": "图文卡片列表",
+  "description": "基于 Bootstrap 4 的卡片列表区块",
   "files": [
     "src/",
     "assets/"
@@ -23,7 +23,7 @@
   "blockConfig": {
     "name": "card-list",
     "screenshot": "https://img.alicdn.com/tfs/TB1EqygDr5YBuNjSspoXXbeNFXa-1122-493.png",
-    "title": "基础异常报错",
+    "title": "图文卡片列表",
     "categories": [
       "列表"
     ]
