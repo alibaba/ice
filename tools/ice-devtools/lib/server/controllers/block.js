@@ -38,7 +38,7 @@ module.exports = async (ctx) => {
     currentMaterial,
     'blocks',
     params.blockName,
-    'src/index.js'
+    'demo/index.jsx'
   );
 
   if (!existsSync(entryPath)) {

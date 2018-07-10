@@ -7,8 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   {{#if isReact}}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icedesign/skin/index.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icedesign/skin/override.css">
+  <link rel="stylesheet" href="//unpkg.alibaba-inc.com/@alife/next@1.5.6/dist/next.min.css"></link>
   {{/if}}
   {{#if isVue}}
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
@@ -37,6 +36,7 @@
   </div>
   {{#if isReact}}
   <script src="https://g.alicdn.com/code/npm/??react/16.2.0/umd/react.development.js,react-dom/16.2.0/umd/react-dom.development.js"></script>
+  <script src="https://g.alicdn.com/alife/lib/0.0.12/??moment/2.20.1/moment.min.js"></script>
   {{/if}}
   {{#if isVue}}
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -45,22 +45,4 @@
 </body>
 
 <script src="{{ blockJS }}"></script>
-<script>
-function getDefaultOrSelf(mod) {
-  if (mod && mod.default) {
-    return mod.default;
-  } else {
-    return mod;
-  }
-}
-
-  {{#if isReact}}
-    {{> initReact }}
-  {{/if}}
-
-  {{#if isVue}}
-    {{> initVue }}
-  {{/if}}
-</script>
-
 </html>
