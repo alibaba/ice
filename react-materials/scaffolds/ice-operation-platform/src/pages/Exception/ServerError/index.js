@@ -1,7 +1,3 @@
-import Loadable from 'react-loadable';
-import LoadingIndicator from '../../../components/LoadingIndicator';
+import ServerError from './ServerError';
 
-export default Loadable({
-  loader: () => import('./ServerError'),
-  loading: LoadingIndicator,
-});
+export default ServerError;
