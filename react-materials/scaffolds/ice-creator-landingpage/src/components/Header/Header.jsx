@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Balloon, Icon } from '@icedesign/base';
+import { Balloon, Icon } from '@icedesign/base';
 import Menu from '@icedesign/menu';
 import Logo from '../Logo';
 import './Header.scss';
@@ -56,8 +56,7 @@ const MENUS = [
       },
       {
         name: '万能群',
-        path:
-          'https://gw.alicdn.com/tfs/TB1iVfbe1SSBuNjy0FlXXbBpVXa-640-880.jpg',
+        path: require('./images/ice-group.png'),
       },
     ],
   },
@@ -82,9 +81,9 @@ export default class Header extends Component {
             </a>
           }
         >
-          {menu.children.map((subMenu, idx) => {
+          {menu.children.map((subMenu, index) => {
             return (
-              <a href="#" className="custom-sub-menu" key={idx}>
+              <a href="#" className="custom-sub-menu" key={index}>
                 {subMenu.name}
               </a>
             );
@@ -111,7 +110,7 @@ export default class Header extends Component {
     return (
       <div className="header-container">
         <div className="header-content">
-          <Logo isDark={true} />
+          <Logo isDark />
           <div className="header-navbar">
             <Menu className="header-navbar-menu" mode="horizontal">
               {this.renderMenuItem()}

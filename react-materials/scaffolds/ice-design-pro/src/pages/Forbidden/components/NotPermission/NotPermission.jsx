@@ -16,7 +16,7 @@ export default class NotPermission extends Component {
         <IceContainer>
           <div style={styles.content} className="exception-content">
             <img
-              src="https://img.alicdn.com/tfs/TB1Gy4Yjv6H8KJjy0FjXXaXepXa-780-780.png"
+              src={require('./images/TB1Gy4Yjv6H8KJjy0FjXXaXepXa-780-780.png')}
               style={styles.imgException}
               className="imgException"
               alt="prmission"

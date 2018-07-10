@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/intro-with-background-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "附带背景图片的信息介绍区块",
   "files": [
     "src/",
@@ -25,10 +25,6 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
-  },
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.1",
@@ -45,7 +41,8 @@
     "name": "intro-with-background",
     "screenshot": "https://img.alicdn.com/tfs/TB1yzD5iH1YBuNjSszhXXcUsFXa-2490-1240.png",
     "title": "附带背景图片的信息介绍",
-    "categories": ["信息展示"
+    "categories": [
+      "信息展示"
     ],
     "themePackage": "@icedesign/skin"
   }

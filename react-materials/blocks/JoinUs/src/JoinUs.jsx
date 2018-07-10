@@ -155,8 +155,7 @@ export default class JoinUs extends Component {
 
 const styles = {
   container: {
-    background:
-      'url(https://img.alicdn.com/tfs/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png)',
+    background: `url${require('./images/TB1JGoDi3vD8KJjy0FlXXagBFXa-5040-2811.png')}`,
     backgroundSize: 'cover',
   },
   content: {

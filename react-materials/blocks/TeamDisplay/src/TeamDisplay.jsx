@@ -8,8 +8,7 @@ const generatorData = (count) => {
     return {
       name: `成员${index + 1}`,
       description: '成员的相关描述',
-      imgUrl:
-        'https://img.alicdn.com/tfs/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png',
+      imgUrl: require('./images/TB1cUfViZrI8KJjy0FhXXbfnpXa-450-456.png'),
     };
   });
 };

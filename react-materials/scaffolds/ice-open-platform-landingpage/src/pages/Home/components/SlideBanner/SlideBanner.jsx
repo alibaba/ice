@@ -41,7 +41,7 @@ export default class SlideBanner extends Component {
           <img
             alt=""
             className="hy-friends-img"
-            src="https://gw.alipayobjects.com/zos/rmsportal/CdqiMTPofpGZyLcJkDHX.jpg"
+            src={require('./images/CdqiMTPofpGZyLcJkDHX.jpg')}
           />
           <h4>南都物业</h4>
           <span>适用场景：物业缴费</span>
@@ -51,7 +51,7 @@ export default class SlideBanner extends Component {
           <img
             alt=""
             className="hy-friends-qr"
-            src="https://gw.alipayobjects.com/zos/rmsportal/MhShJeukuJNkenGytSiq.svg"
+            src={require('./images/MhShJeukuJNkenGytSiq.svg')}
           />
         </a>
 
@@ -64,7 +64,7 @@ export default class SlideBanner extends Component {
           <img
             alt=""
             className="hy-friends-img"
-            src="https://gw.alipayobjects.com/zos/rmsportal/ZWoRmVSYImddLaRYyQog.jpg"
+            src={require('./images/ZWoRmVSYImddLaRYyQog.jpg')}
           />
           <h4>金地物业</h4>
           <span>适用场景：小区主页，物业缴费</span>
@@ -74,7 +74,7 @@ export default class SlideBanner extends Component {
           <img
             alt=""
             className="hy-friends-qr"
-            src="https://gw.alipayobjects.com/zos/rmsportal/cONkAwDeKdlzkcgchJLT.png"
+            src={require('./images/cONkAwDeKdlzkcgchJLT.png')}
           />
         </a>
 
@@ -87,7 +87,7 @@ export default class SlideBanner extends Component {
           <img
             alt=""
             className="hy-friends-img"
-            src="https://gw.alipayobjects.com/zos/rmsportal/MHiDpDgUNShsjTCQXKKd.jpg"
+            src={require('./images/MHiDpDgUNShsjTCQXKKd.jpg')}
           />
           <h4>宋都阳光</h4>
           <span>适用场景：智能门禁</span>
@@ -97,7 +97,7 @@ export default class SlideBanner extends Component {
           <img
             alt=""
             className="hy-friends-qr"
-            src="https://gw.alipayobjects.com/zos/rmsportal/cONkAwDeKdlzkcgchJLT.png"
+            src={require('./images/cONkAwDeKdlzkcgchJLT.png')}
           />
         </a>
 
@@ -110,7 +110,7 @@ export default class SlideBanner extends Component {
           <img
             alt=""
             className="hy-friends-img"
-            src="https://gw.alipayobjects.com/zos/rmsportal/JQBQcVBtAiyTGINHQNzh.jpg"
+            src={require('./images/JQBQcVBtAiyTGINHQNzh.jpg')}
           />
           <h4>融侨物业</h4>
           <span>适用场景：物业缴费、物业理财</span>
@@ -120,7 +120,7 @@ export default class SlideBanner extends Component {
           <img
             alt=""
             className="hy-friends-qr"
-            src="https://gw.alipayobjects.com/zos/rmsportal/cONkAwDeKdlzkcgchJLT.png"
+            src={require('./images/cONkAwDeKdlzkcgchJLT.png')}
           />
         </a>
       </div>
