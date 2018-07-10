@@ -1,8 +1,8 @@
 {
-  "name": "@angular-materials/angular-app",
+  "name": "@angular-materials/angular-lite",
   "version": "0.1.1",
   "description": "该模板基于 @angular/cli 创建，使用 ng 管理项目，主要适用于 0 到 1 开始搭建项目",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/angular-app.html",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/angular-lite.html",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -20,9 +20,9 @@
   },
   "scaffoldConfig": {
     "type": "angular",
-    "name": "angular-app",
-    "title": "Angular App",
-    "screenshot": "https://img.alicdn.com/tfs/TB1TRT0Cx9YBuNjy0FfXXXIsVXa-1600-900.jpg"
+    "name": "angular-lite",
+    "title": "Angular Lite",
+    "screenshot": "https://img.alicdn.com/tfs/TB1Mea_DTtYBeNjy1XdXXXXyVXa-1178-663.jpg"
   },
   "dependencies": {
     "@angular/animations": "^6.0.3",
