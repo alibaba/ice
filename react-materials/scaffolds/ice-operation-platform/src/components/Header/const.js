@@ -8,7 +8,7 @@ const config = [
   },
   {
     text: '帮助',
-    to: '//ice.alibaba-inc.com/docs/about',
+    to: '//alibaba.github.io/ice/',
     external: true,
     newWindow: true,
     icon: 'all',
