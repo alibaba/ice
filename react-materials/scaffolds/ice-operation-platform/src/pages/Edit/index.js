@@ -1,7 +1,3 @@
-import Loadable from 'react-loadable';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import Edit from './Edit';
 
-export default Loadable({
-  loader: () => import('./Edit'),
-  loading: LoadingIndicator,
-});
+export default Edit;
