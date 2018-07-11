@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { <%= name %>Component } from './<%= name %>.component';
+import { <%= upperName %>Component } from './<%= name %>.component';
 
 <%_ blocks.forEach(function(block) { _%>
 import { <%= block.className %>Component } from '<%= block.path %>/<%= block.name %>.component';
@@ -7,10 +7,10 @@ import { <%= block.className %>Component } from '<%= block.path %>/<%= block.nam
 
 @NgModule({
   declarations: [
-    <%= name %>Component,
+    <%= upperName %>Component,
     <%_ blocks.forEach(function(block) { _%>
     <%= block.className %>Component,
     <%_ }); _%>
   ],
 })
-export class <%= name %>Module {}
+export class <%= upperName %>Module {}

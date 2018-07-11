@@ -1,6 +1,6 @@
 {
   "name": "@angular-materials/angular-lite",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "该模板基于 @angular/cli 创建，使用 ng 管理项目，主要适用于 0 到 1 开始搭建项目",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/angular-lite/",
   "scripts": {
