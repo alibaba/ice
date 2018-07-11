@@ -1,6 +1,6 @@
 {
   "name": "@angular-materials/card-list",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "基于 Bootstrap 4 的卡片列表区块",
   "files": [
     "src/",
