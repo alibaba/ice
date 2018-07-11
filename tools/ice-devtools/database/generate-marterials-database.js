@@ -84,7 +84,7 @@ function generateBlocks(files, SPACE, type, done) {
 
       payload.features = {
         useComponents,
-      },
+      };
     }
 
     generatePartciple(payload, {
