@@ -1,0 +1,16 @@
+import { NgModule } from '@angular/core';
+import { <%= name %>Component } from './<%= name %>.component';
+
+<%_ blocks.forEach(function(block) { _%>
+import { <%= block.className %>Component } from '<%= block.path %>/<%= block.name %>.component';
+<%_ }); _%>
+
+@NgModule({
+  declarations: [
+    <%= name %>Component,
+    <%_ blocks.forEach(function(block) { _%>
+    <%= block.className %>Component,
+    <%_ }); _%>
+  ],
+})
+export class <%= name %>Module {}
