@@ -57,7 +57,7 @@ const MENUS = [
       {
         name: '万能群',
         path:
-          'https://gw.alicdn.com/tfs/TB1iVfbe1SSBuNjy0FlXXbBpVXa-640-880.jpg',
+          require('./images/ice-group.png'),
       },
     ],
   },

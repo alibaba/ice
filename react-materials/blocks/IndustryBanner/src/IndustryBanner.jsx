@@ -16,7 +16,7 @@ export default class IndustryBanner extends Component {
     return (
       <div style={styles.industryBannerContainer}>
         <img
-          src="https://img.alicdn.com/tfs/TB1_fTFs1OSBuNjy0FdXXbDnVXa-1894-198.png"
+          src={require('./images/TB1_fTFs1OSBuNjy0FdXXbDnVXa-1894-198.png')}
           style={styles.industryBannerImg}
           alt=""
         />

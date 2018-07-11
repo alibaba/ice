@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/product-intro-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "用于左文右图产品介绍模块",
   "files": [
     "src/",
@@ -25,10 +25,6 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
-  },
   "dependencies": {
     "@icedesign/base": "^0.1.0",
     "@icedesign/container": "^0.1.1",
@@ -45,7 +41,8 @@
     "name": "product-intro",
     "screenshot": "https://img.alicdn.com/tfs/TB1FiYUgGmWBuNjy1XaXXXCbXXa-1373-665.png",
     "title": "产品介绍区块",
-    "categories": ["信息展示"
+    "categories": [
+      "信息展示"
     ],
     "themePackage": "@icedesign/skin"
   }

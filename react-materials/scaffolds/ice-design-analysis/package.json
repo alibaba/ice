@@ -1,10 +1,8 @@
 {
   "name": "@icedesign/analysis-scaffold",
-  "version": "1.0.1",
-  "description":
-    "该模板适用于可视化实时数据的大屏展示，默认只有一个页面，内置饼图、柱状图等图形",
-  "homepage":
-    "https://alibaba.github.io/ice/scaffold-preview/ice-design-analysis.html",
+  "version": "1.2.0",
+  "description": "该模板适用于可视化实时数据的大屏展示，默认只有一个页面，内置饼图、柱状图等图形",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-analysis.html",
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
@@ -13,6 +11,8 @@
     "echarts": "^4.0.4",
     "echarts-for-react": "^2.0.8",
     "prop-types": "^15.5.8",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-router-dom": "^4.2.2",
     "react-text-loop": "^1.1.0"
   },
@@ -24,7 +24,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.1.1"
+    "ice-scripts": "^1.6.0-next.3"
   },
   "scripts": {
     "start": "ice dev",
@@ -37,12 +37,12 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "src/index.js"
+    "entry": "src/index.js",
+    "localization": true
   },
   "scaffoldConfig": {
     "name": "ice-design-analysis",
     "title": "ICE Design Analysis",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1_Xf8m_tYBeNjy1XdXXXXyVXa-1920-1080.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1_Xf8m_tYBeNjy1XdXXXXyVXa-1920-1080.png"
   }
 }

@@ -25,10 +25,6 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
-  },
   "dependencies": {
     "@antv/data-set": "^0.8.0",
     "@icedesign/base": "^0.1.5-1",

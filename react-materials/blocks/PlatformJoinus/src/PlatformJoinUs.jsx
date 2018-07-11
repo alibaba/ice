@@ -18,8 +18,7 @@ export default class PlatformJoinUs extends Component {
       <div
         style={{
           ...styles.wrapper,
-          backgroundImage:
-            'url(https://img.alicdn.com/tfs/TB1Iw2ZRVXXXXb4aFXXXXXXXXXX-2760-1544.png)',
+          backgroundImage: `url${require('./images/TB1Iw2ZRVXXXXb4aFXXXXXXXXXX-2760-1544.png')}`,
         }}
       >
         <div style={styles.body}>

@@ -16,10 +16,6 @@
     "type": "git",
     "url": "https://github.com/alibaba/ice"
   },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
-  },
   "license": "MIT",
   "keywords": [
     "ice",

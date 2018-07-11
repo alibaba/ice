@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/sort-card-list-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "拖拽排序卡片列表",
   "files": [
     "src/",
@@ -41,10 +41,6 @@
     "categories": [
       "列表"
     ]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

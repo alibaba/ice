@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/statistical-card-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "统计型卡片",
   "files": [
     "src/",
@@ -40,10 +40,6 @@
     "categories": [
       "数据展示"
     ]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/display-card-block",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "展示型卡片",
   "files": [
     "src/",
@@ -40,10 +40,6 @@
     "categories": [
       "数据展示"
     ]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",
