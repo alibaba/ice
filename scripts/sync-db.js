@@ -29,7 +29,7 @@ const store = oss({
 const assetsMap {
   "pre-depoly": "pre-assets",
   "beta": "beta-assets",
-  "master": "master"
+  "master": "assets"
 }
 
 console.log('start uploading');
