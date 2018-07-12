@@ -32,7 +32,7 @@
   },
   "blockConfig": {
     "name": "quill-rich-text-editor",
-    "title": "富文本编辑器",
+    "title": "Quill 富文本编辑器",
     "categories": [
       "富文本编辑器"
     ],
