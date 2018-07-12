@@ -26,7 +26,7 @@ const store = oss({
   time: '120s',
 });
 
-const assetsMap {
+const assetsMap = {
   "pre-depoly": "pre-assets",
   "beta": "beta-assets",
   "master": "assets"
