@@ -6,14 +6,13 @@ const scaffolds = require('./scaffolds');
 
 if (
   process.env.TRAVIS_BRANCH !== 'master' &&
+  process.env.TRAVIS_BRANCH !== 'beta' &&
   process.env.TRAVIS_BRANCH !== 'pre-depoly'
 ) {
   console.log('当前分支非 Master, 不执行物料源同步脚本');
   console.log('TRAVIS_BRANCH=' + process.env.TRAVIS_BRANCH);
   process.exit(0);
 }
-
-const isPre = process.env.TRAVIS_BRANCH == 'pre-depoly';
 
 const bucket = 'iceworks';
 const accessKeyId = process.env.ACCESS_KEY_ID;
@@ -27,13 +26,19 @@ const store = oss({
   time: '120s',
 });
 
+const assetsMap {
+  "pre-depoly": "pre-assets",
+  "beta": "beta-assets",
+  "master": "master"
+}
+
 console.log('start uploading');
 sortScaffoldMaterials()
   .then((res) => {
     const files = readdirSync(resolve(__dirname, '../build')).map(
       (filename) => ({
         from: resolve(__dirname, '../build', filename),
-        to: isPre ? join('pre-assets', filename) : join('assets', filename),
+        to:  join(assetsMap[process.env.TRAVIS_BRANCH], filename),
       })
     );
 
