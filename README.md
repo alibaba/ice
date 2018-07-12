@@ -29,7 +29,11 @@
 
 ## 参与物料建设
 
-参考[`物料贡献指南`](https://alibaba.github.io/ice/docs/materials/how-to-contribute)开发完成后 `PR` 到官方仓库。
+当前已接入以下类型物料，可参考[`物料贡献指南`](https://alibaba.github.io/ice/docs/materials/how-to-contribute)共建官方物料。
+
+|<img alt="React" src="https://user-images.githubusercontent.com/677114/42611693-f921fc7c-85c9-11e8-8de1-6d6013b92f69.png" width="48">| <img alt="Vue" src="https://user-images.githubusercontent.com/677114/42611543-44ef4502-85c9-11e8-9ef9-e9f98477c646.png" width="48">|<img alt="Angular" src="https://user-images.githubusercontent.com/677114/42611627-99ac22c2-85c9-11e8-845b-b8470452eb26.png" width="48">
+| :---: | :---: | :---: |
+| [React](https://github.com/alibaba/ice/tree/master/react-materials) | [Vue](https://github.com/alibaba/ice/tree/master/vue-materials) | [Angular](https://github.com/alibaba/ice/tree/master/angular-materials) | 
 
 ## 浏览器兼容性
 
