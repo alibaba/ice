@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import BraftEditor from 'braft-editor';
 import 'braft-editor/dist/braft.css';
@@ -7,13 +6,9 @@ import 'braft-editor/dist/braft.css';
 export default class CustomBraftEditor extends Component {
   static displayName = 'CustomBraftEditor';
 
-  static propTypes = {
-    value: PropTypes.string,
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-    value: 'string data',
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
