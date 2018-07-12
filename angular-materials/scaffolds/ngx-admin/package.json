@@ -1,6 +1,6 @@
 {
   "name": "@angular-materials/ngx-admin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "该模板基于 ngx-admin 创建，使用 @angular/cli 命令行工具管理项目，适合大型后台管理系统。",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ngx-admin/",
   "ngx_version": "2.3.0",
