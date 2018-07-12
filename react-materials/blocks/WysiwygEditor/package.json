@@ -25,9 +25,11 @@
     "@icedesign/base": "^0.2.3",
     "@icedesign/container": "^0.1.2",
     "draft-js": "^0.10.5",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
     "react-draft-wysiwyg": "^1.12.13"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
   },
   "blockConfig": {
     "name": "wysiwyg-editor",
