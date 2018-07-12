@@ -8,36 +8,31 @@ const { Row, Col } = Grid;
 const mockData = {
   users: [
     {
-      avatar:
-        'https://img.alicdn.com/tfs/TB1j159r21TBuNjy0FjXXajyXXa-499-498.png_80x80.jpg',
+      avatar: require('./images/TB1j159r21TBuNjy0FjXXajyXXa-499-498.png_80x80.jpg'),
       name: 'Susan Day',
       email: 'carol@example.com',
       access: 'vip',
     },
     {
-      avatar:
-        'https://img.alicdn.com/tfs/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
+      avatar: require('./images/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg'),
       name: 'Ryan Flores',
       email: 'smith@example.com',
       access: 'pro',
     },
     {
-      avatar:
-        'https://img.alicdn.com/tfs/TB1FWimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
+      avatar: require('./images/TB1FWimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg'),
       name: 'Jose Wagner',
       email: 'Jose@example.com',
       access: 'vip',
     },
     {
-      avatar:
-        'https://img.alicdn.com/tfs/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg',
+      avatar: require('./images/TB1FGimr1SSBuNjy0FlXXbBpVXa-499-498.png_80x80.jpg'),
       name: 'Lisa Jenkins',
       email: 'lori@example.com',
       access: 'vip',
     },
     {
-      avatar:
-        'https://img.alicdn.com/tfs/TB1j159r21TBuNjy0FjXXajyXXa-499-498.png_80x80.jpg',
+      avatar: require('./images/TB1j159r21TBuNjy0FjXXajyXXa-499-498.png_80x80.jpg'),
       name: 'Ralph Murray',
       email: 'Jack@example.com',
       access: 'free',

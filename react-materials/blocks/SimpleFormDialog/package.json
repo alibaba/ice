@@ -43,10 +43,6 @@
     "screenshot": "https://img.alicdn.com/tfs/TB1.65ri9_I8KJjy0FoXXaFnVXa-1270-628.png",
     "themePackage": "@icedesign/skin"
   },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"

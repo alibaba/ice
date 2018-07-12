@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/not-permission-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "files": [
     "src/",
@@ -41,10 +41,6 @@
     "categories": [
       "异常"
     ]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

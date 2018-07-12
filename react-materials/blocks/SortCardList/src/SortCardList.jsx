@@ -119,7 +119,7 @@ export default class SortCardList extends Component {
           <span>
             <img
               alt="icon"
-              src="https://gw.alicdn.com/tfs/TB1b8vJjlTH8KJjy0FiXXcRsXXa-22-22.png"
+              src={require('./images/TB1b8vJjlTH8KJjy0FiXXcRsXXa-22-22.png')}
               style={styles.icon}
             />
             {item.datetime}

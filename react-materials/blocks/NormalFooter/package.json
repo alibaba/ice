@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/normal-footer-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "files": [
     "src/",
@@ -25,10 +25,6 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
-  },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.1",
@@ -45,7 +41,9 @@
     "name": "normal-footer",
     "screenshot": "https://img.alicdn.com/tfs/TB1xQ1rov5TBuNjSspcXXbnGFXa-2400-328.png",
     "title": "普通页脚",
-    "categories": ["页脚"],
+    "categories": [
+      "页脚"
+    ],
     "themePackage": "@icedesign/skin"
   }
 }
