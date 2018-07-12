@@ -1,6 +1,6 @@
 {
   "name": "@angular-materials/table-list",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于 Bootstrap 4 的表格列表区块",
   "files": [
     "src/",

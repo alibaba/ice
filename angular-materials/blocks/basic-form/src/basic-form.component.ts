@@ -5,8 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './basic-form.component.html',
   styleUrls: ['./basic-form.style.css'],
 })
-export class TableListComponent implements OnInit {
-  title = 'Dashboard';
+export class BasicFormComponent implements OnInit {
 
   constructor() {}
 
