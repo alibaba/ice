@@ -4,7 +4,6 @@ import { Table, Icon, Button } from '@icedesign/base';
 
 const generatorData = () => {
   return Array.from({ length: 5 }).map((item, index) => {
-    console.log('item', item);
     return {
       todo: `待办事项 ${index}`,
       memo: `备注说明文案 ${index}`,
