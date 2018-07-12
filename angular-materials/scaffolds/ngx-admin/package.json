@@ -18,6 +18,16 @@
   "keywords": [
     "ice-scaffold"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "scaffoldConfig": {
+    "type": "angular",
+    "name": "ngx-admin",
+    "title": "ngx-admin",
+    "screenshot": "https://img.alicdn.com/tfs/TB1ubFBvTXYBeNkHFrdXXciuVXa-1200-675.jpg"
+  },
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
