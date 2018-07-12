@@ -45,6 +45,7 @@
     "webpack": "^4.10.2"
   },
   "dependencies": {
+    "file-type": "^8.1.0",
     "postcss": "^6.0.22",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
