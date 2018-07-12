@@ -49,7 +49,7 @@
     "deep-assign": "^2.0.0",
     "deepmerge": "^2.1.1",
     "detect-port": "^1.2.3",
-    "extract-css-assets-webpack-plugin": "^0.2.3",
+    "extract-css-assets-webpack-plugin": "^0.2.4",
     "file-loader": "^1.1.11",
     "gulp": "^3.9.1",
     "html-webpack-plugin": "^3.2.0",
