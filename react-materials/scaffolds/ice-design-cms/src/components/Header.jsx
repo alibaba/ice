@@ -76,7 +76,7 @@ export default class Header extends PureComponent {
                 <IceImg
                   height={40}
                   width={40}
-                  src="https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png"
+                  src={require('./images/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png')}
                   className="user-avatar"
                 />
                 <div className="user-profile">

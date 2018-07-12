@@ -33,7 +33,7 @@ export default class CardItems extends Component {
               >
                 <img
                   style={styles.thirdPartyDetailImg}
-                  src="https://gw.alipayobjects.com/zos/rmsportal/geocpIkIixaGovHECTdw.svg"
+                  src={require('./images/geocpIkIixaGovHECTdw.svg')}
                   alt=""
                 />
                 <h5 style={styles.thirdPartyName}>付呗物业</h5>
@@ -52,7 +52,7 @@ export default class CardItems extends Component {
               <div style={styles.thirdPartyDetailItem}>
                 <img
                   style={styles.thirdPartyDetailImg}
-                  src="https://gw.alipayobjects.com/zos/rmsportal/kMXuMYkLTCSkTnzoiRxs.png"
+                  src={require('./images/kMXuMYkLTCSkTnzoiRxs.png')}
                   alt=""
                 />
                 <h5 style={styles.thirdPartyName}>邻易联</h5>
@@ -71,7 +71,7 @@ export default class CardItems extends Component {
               <div style={styles.thirdPartyDetailItem}>
                 <img
                   style={styles.thirdPartyDetailImg}
-                  src="https://gw.alipayobjects.com/zos/rmsportal/TpqeamkGvHuXSWKsLOth.png"
+                  src={require('./images/TpqeamkGvHuXSWKsLOth.png')}
                   alt=""
                 />
                 <h5 style={styles.thirdPartyName}>云筑社区综合管理平台</h5>
@@ -95,7 +95,7 @@ export default class CardItems extends Component {
               >
                 <img
                   style={styles.thirdPartyDetailImg}
-                  src="https://gw.alipayobjects.com/zos/rmsportal/ykkPpNnSjuqpqBhxjTir.png"
+                  src={require('./images/ykkPpNnSjuqpqBhxjTir.png')}
                   alt=""
                 />
                 <h5 style={styles.thirdPartyName}>橙子生活</h5>

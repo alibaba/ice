@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/basic-detail-info-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "基础详情信息展示",
   "files": [
     "src/",
@@ -40,10 +40,6 @@
     "categories": [
       "信息展示"
     ]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

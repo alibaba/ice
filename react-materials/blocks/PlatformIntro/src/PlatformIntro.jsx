@@ -23,7 +23,7 @@ export default class PlatformIntro extends Component {
         </div>
         <img
           alt=""
-          src="https://img.alicdn.com/tfs/TB1kqzXqL1TBuNjy0FjXXajyXXa-2520-1040.jpg"
+          src={require('./images/TB1kqzXqL1TBuNjy0FjXXajyXXa-2520-1040.jpg')}
           width="1260"
           height="520"
           style={styles.image}

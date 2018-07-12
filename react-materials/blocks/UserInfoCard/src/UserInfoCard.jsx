@@ -25,7 +25,7 @@ export default class UserInfoCard extends Component {
             <div style={styles.content}>
               <div style={styles.head}>
                 <img
-                  src="https://img.alicdn.com/tfs/TB1nf.WjyqAXuNjy1XdXXaYcVXa-245-245.gif"
+                  src={require('./images/TB13xyECxGYBuNjy0FnXXX5lpXa-484-488.png')}
                   style={styles.avatar}
                   alt="头像"
                 />

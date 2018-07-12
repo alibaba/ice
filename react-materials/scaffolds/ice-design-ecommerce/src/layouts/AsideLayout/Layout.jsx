@@ -217,7 +217,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
               <IceImg
                 height={40}
                 width={40}
-                src="https://img.alicdn.com/tfs/TB1ONhloamWBuNjy1XaXXXCbXXa-200-200.png"
+                src={require('./images/TB1ONhloamWBuNjy1XaXXXCbXXa-200-200.png')}
                 className="user-avatar"
               />
               <div className="user-profile">

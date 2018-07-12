@@ -16,7 +16,7 @@ export default class EmptyContent extends Component {
         <IceContainer>
           <div style={styles.exceptionContent} className="exception-content">
             <img
-              src="https://img.alicdn.com/tfs/TB1WNNxjBHH8KJjy0FbXXcqlpXa-780-780.png"
+              src={require('./images/TB1WNNxjBHH8KJjy0FbXXcqlpXa-780-780.png')}
               style={styles.image}
               className="imgException"
               alt="empty"
