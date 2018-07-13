@@ -8,31 +8,31 @@ const asideMenuConfig = [
   },
   {
     name: 'invoices',
-    path: '/iceworks',
+    path: '/',
   },
   {
     name: 'clients',
-    path: '/clients',
+    path: '/',
   },
   {
     name: 'payments',
-    path: '/payments',
+    path: '/',
   },
   {
     name: 'profile',
-    path: '/profile',
+    path: '/',
   },
   {
     name: 'notifications',
-    path: '/notifications',
+    path: '/',
   },
   {
     name: 'settings',
-    path: '/settings',
+    path: '/',
   },
   {
     name: 'contact us',
-    path: '/contact',
+    path: '/',
   },
 ];
 

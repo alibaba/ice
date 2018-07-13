@@ -18,38 +18,7 @@ export default class Aside extends Component {
     this.state = {};
   }
 
-  /**
-   * 当前展开的菜单项
-   */
-  getOpenKeys = () => {
-    const { match } = this.props;
-    const matched = match.path;
-    let openKeys = [];
-
-    Array.isArray(asideMenuConfig) &&
-      asideMenuConfig.forEach((item, index) => {
-        if (matched.startsWith(item.path)) {
-          openKeys = [`${index}`];
-        }
-      });
-
-    return openKeys;
-  };
-
-  /**
-   * 点击菜单项触发的事件，模板默认点击菜单都跳转首页
-   * 实际业务开发按需处理
-   */
-  onMenuClick = (selectedKeys) => {
-    if (selectedKeys !== '/') {
-      this.props.history.push('/');
-    }
-  };
-
   render() {
-    const { location } = this.props;
-    const { pathname } = location;
-
     return (
       <div className="aside-content">
         <Logo style={{ marginBottom: '10px' }} />
@@ -65,9 +34,7 @@ export default class Aside extends Component {
         <Menu
           style={{ width: 200 }}
           onClick={this.onMenuClick}
-          selectedKeys={[pathname]}
-          defaultSelectedKeys={[pathname]}
-          defaultOpenKeys={[`${this.getOpenKeys()}`]}
+          defaultSelectedKeys={['0']}
           mode="inline"
         >
           {asideMenuConfig &&
@@ -76,7 +43,7 @@ export default class Aside extends Component {
               if (nav.children && nav.children.length > 0) {
                 return (
                   <SubMenu key={index} title={<span>{nav.name}</span>}>
-                    {nav.children.map((item) => {
+                    {nav.children.map((item, idx) => {
                       const linkProps = {};
                       if (item.newWindow) {
                         linkProps.href = item.path;
@@ -87,7 +54,7 @@ export default class Aside extends Component {
                         linkProps.to = item.path;
                       }
                       return (
-                        <MenuItem key={item.path}>
+                        <MenuItem key={idx}>
                           <Link {...linkProps}>{item.name}</Link>
                         </MenuItem>
                       );
@@ -105,7 +72,7 @@ export default class Aside extends Component {
                 linkProps.to = nav.path;
               }
               return (
-                <MenuItem key={nav.path}>
+                <MenuItem key={index}>
                   <Link {...linkProps}>
                     <span>{nav.name}</span>
                   </Link>
