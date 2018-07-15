@@ -2,7 +2,7 @@
   "name": "@icedesign/coreui-admin-template",
   "version": "1.0.0",
   "description": "该模板基于社区的 CoreUI 改造而成，支持 CoreUI 的所有功能，同时也支持飞冰基础组件和区块的使用， 支持 Iceworks 一键创建项目和完整的 GUI 操作",
-  "homepage": "https://coreui.io",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-coreui-admin",
   "license": "MIT",
   "dependencies": {
     "@coreui/coreui": "^2.0.4",
@@ -22,8 +22,6 @@
     "react": "^16.4.1",
     "react-chartjs-2": "^2.7.2",
     "react-dom": "^16.4.1",
-    "react-loadable": "^5.4.0",
-    "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.3.1",
     "react-test-renderer": "^16.4.1",
     "reactstrap": "^6.1.0",
@@ -35,6 +33,7 @@
     "babel-plugin-import": "^1.8.0",
     "eslint": "^4.13.1",
     "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
@@ -67,5 +66,10 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js"
+  },
+  "scaffoldConfig": {
+    "name": "ice-coreui-admin",
+    "title": "ICE CoreUi Admin",
+    "screenshot": "https://img.alicdn.com/tfs/TB1hoK.ETtYBeNjy1XdXXXXyVXa-2840-1596.png"
   }
 }

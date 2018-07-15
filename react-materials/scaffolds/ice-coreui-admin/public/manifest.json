@@ -1,6 +1,6 @@
 {
-  "short_name": "CoreUI-React",
-  "name": "CoreUI-React sample",
+  "short_name": "ICE-CoreUI-React",
+  "name": "ICE-CoreUI-React sample",
   "icons": [
     {
       "src": "./assets/favicon.png",

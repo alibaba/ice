@@ -1,3 +1,7 @@
+// 以下文件格式为描述路由的协议格式
+// 你可以调整 routerConfig 里的内容
+// 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
+
 import DefaultLayout from './containers/DefaultLayout';
 import Breadcrumbs from './pages/Base/Breadcrumbs';
 import Cards from './pages/Base/Cards';
@@ -35,8 +39,7 @@ import Widgets from './pages/Widgets/Widgets';
 import Users from './pages/Users/Users';
 import User from './pages/Users/User';
 
-// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
-const routes = [
+const routerConfig = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
@@ -101,4 +104,4 @@ const routes = [
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
 ];
 
-export default routes;
+export default routerConfig;

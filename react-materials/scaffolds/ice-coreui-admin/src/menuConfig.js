@@ -1,8 +1,12 @@
-export default {
+// 菜单配置
+// defaultMenuConfig：脚手架默认侧边栏配置
+// customMenuConfig：自定义侧边导航配置
+
+const defaultMenuConfig = {
   items: [
     {
       name: 'Dashboard',
-      url: '/dashboard',
+      path: '/dashboard',
       icon: 'icon-speedometer',
       badge: {
         variant: 'info',
@@ -21,12 +25,12 @@ export default {
     },
     {
       name: 'Colors',
-      url: '/theme/colors',
+      path: '/theme/colors',
       icon: 'icon-drop',
     },
     {
       name: 'Typography',
-      url: '/theme/typography',
+      path: '/theme/typography',
       icon: 'icon-pencil',
     },
     {
@@ -39,131 +43,131 @@ export default {
     },
     {
       name: 'Base',
-      url: '/base',
+      path: '/base',
       icon: 'icon-puzzle',
       children: [
         {
           name: 'Breadcrumbs',
-          url: '/base/breadcrumbs',
+          path: '/base/breadcrumbs',
           icon: 'icon-puzzle',
         },
         {
           name: 'Cards',
-          url: '/base/cards',
+          path: '/base/cards',
           icon: 'icon-puzzle',
         },
         {
           name: 'Carousels',
-          url: '/base/carousels',
+          path: '/base/carousels',
           icon: 'icon-puzzle',
         },
         {
           name: 'Collapses',
-          url: '/base/collapses',
+          path: '/base/collapses',
           icon: 'icon-puzzle',
         },
         {
           name: 'Dropdowns',
-          url: '/base/dropdowns',
+          path: '/base/dropdowns',
           icon: 'icon-puzzle',
         },
         {
           name: 'Forms',
-          url: '/base/forms',
+          path: '/base/forms',
           icon: 'icon-puzzle',
         },
         {
           name: 'Jumbotrons',
-          url: '/base/jumbotrons',
+          path: '/base/jumbotrons',
           icon: 'icon-puzzle',
         },
         {
           name: 'List groups',
-          url: '/base/list-groups',
+          path: '/base/list-groups',
           icon: 'icon-puzzle',
         },
         {
           name: 'Navs',
-          url: '/base/navs',
+          path: '/base/navs',
           icon: 'icon-puzzle',
         },
         {
           name: 'Paginations',
-          url: '/base/paginations',
+          path: '/base/paginations',
           icon: 'icon-puzzle',
         },
         {
           name: 'Popovers',
-          url: '/base/popovers',
+          path: '/base/popovers',
           icon: 'icon-puzzle',
         },
         {
           name: 'Progress Bar',
-          url: '/base/progress-bar',
+          path: '/base/progress-bar',
           icon: 'icon-puzzle',
         },
         {
           name: 'Switches',
-          url: '/base/switches',
+          path: '/base/switches',
           icon: 'icon-puzzle',
         },
         {
           name: 'Tables',
-          url: '/base/tables',
+          path: '/base/tables',
           icon: 'icon-puzzle',
         },
         {
           name: 'Tabs',
-          url: '/base/tabs',
+          path: '/base/tabs',
           icon: 'icon-puzzle',
         },
         {
           name: 'Tooltips',
-          url: '/base/tooltips',
+          path: '/base/tooltips',
           icon: 'icon-puzzle',
         },
       ],
     },
     {
       name: 'Buttons',
-      url: '/buttons',
+      path: '/buttons',
       icon: 'icon-cursor',
       children: [
         {
           name: 'Buttons',
-          url: '/buttons/buttons',
+          path: '/buttons/buttons',
           icon: 'icon-cursor',
         },
         {
           name: 'Button dropdowns',
-          url: '/buttons/button-dropdowns',
+          path: '/buttons/button-dropdowns',
           icon: 'icon-cursor',
         },
         {
           name: 'Button groups',
-          url: '/buttons/button-groups',
+          path: '/buttons/button-groups',
           icon: 'icon-cursor',
         },
         {
           name: 'Brand Buttons',
-          url: '/buttons/brand-buttons',
+          path: '/buttons/brand-buttons',
           icon: 'icon-cursor',
         },
       ],
     },
     {
       name: 'Charts',
-      url: '/charts',
+      path: '/charts',
       icon: 'icon-pie-chart',
     },
     {
       name: 'Icons',
-      url: '/icons',
+      path: '/icons',
       icon: 'icon-star',
       children: [
         {
           name: 'CoreUI Icons',
-          url: '/icons/coreui-icons',
+          path: '/icons/coreui-icons',
           icon: 'icon-star',
           badge: {
             variant: 'info',
@@ -172,12 +176,12 @@ export default {
         },
         {
           name: 'Flags',
-          url: '/icons/flags',
+          path: '/icons/flags',
           icon: 'icon-star',
         },
         {
           name: 'Font Awesome',
-          url: '/icons/font-awesome',
+          path: '/icons/font-awesome',
           icon: 'icon-star',
           badge: {
             variant: 'secondary',
@@ -186,36 +190,36 @@ export default {
         },
         {
           name: 'Simple Line Icons',
-          url: '/icons/simple-line-icons',
+          path: '/icons/simple-line-icons',
           icon: 'icon-star',
         },
       ],
     },
     {
       name: 'Notifications',
-      url: '/notifications',
+      path: '/notifications',
       icon: 'icon-bell',
       children: [
         {
           name: 'Alerts',
-          url: '/notifications/alerts',
+          path: '/notifications/alerts',
           icon: 'icon-bell',
         },
         {
           name: 'Badges',
-          url: '/notifications/badges',
+          path: '/notifications/badges',
           icon: 'icon-bell',
         },
         {
           name: 'Modals',
-          url: '/notifications/modals',
+          path: '/notifications/modals',
           icon: 'icon-bell',
         },
       ],
     },
     {
       name: 'Widgets',
-      url: '/widgets',
+      path: '/widgets',
       icon: 'icon-calculator',
       badge: {
         variant: 'info',
@@ -231,30 +235,55 @@ export default {
     },
     {
       name: 'Pages',
-      url: '/pages',
+      path: '/pages',
       icon: 'icon-star',
       children: [
         {
           name: 'Login',
-          url: '/login',
+          path: '/login',
           icon: 'icon-star',
         },
         {
           name: 'Register',
-          url: '/register',
+          path: '/register',
           icon: 'icon-star',
         },
         {
           name: 'Error 404',
-          url: '/404',
+          path: '/404',
           icon: 'icon-star',
         },
         {
           name: 'Error 500',
-          url: '/500',
+          path: '/500',
           icon: 'icon-star',
         },
       ],
     },
   ],
 };
+
+const customMenuConfig = [];
+
+/**
+ * 转化 name 为 url
+ * @param {Array} data
+ */
+function formatter(data) {
+  return data.map((item) => {
+    const result = {
+      ...item,
+      url: item.path,
+    };
+    if (item.children) {
+      result.children = formatter(item.children);
+    }
+    return result;
+  });
+}
+
+defaultMenuConfig.items = formatter(defaultMenuConfig.items).concat(
+  customMenuConfig
+);
+
+export default defaultMenuConfig;

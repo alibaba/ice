@@ -17,7 +17,7 @@ import {
 // sidebar nav config
 import menuConfig from '../../menuConfig';
 // routes config
-import routes from '../../routes';
+import routerConfig from '../../routerConfig';
 import DefaultAside from './DefaultAside';
 import DefaultFooter from './DefaultFooter';
 import DefaultHeader from './DefaultHeader';
@@ -38,10 +38,10 @@ class DefaultLayout extends Component {
             <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={routes} />
+            <AppBreadcrumb appRoutes={routerConfig} />
             <Container fluid>
               <Switch>
-                {routes.map((route, idx) => {
+                {routerConfig.map((route, idx) => {
                   return route.component ? (
                     <Route
                       key={idx}
