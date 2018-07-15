@@ -36,7 +36,7 @@ export default class ChartBubbleImage extends Component {
         });
         return container.addShape('image', {
           attrs: {
-            x: cfg.points[0].x - 12 * cfg.size / 2,
+            x: cfg.points[0].x - (12 * cfg.size) / 2,
             y: cfg.points[0].y - 12 * cfg.size,
             width: 12 * cfg.size,
             height: 12 * cfg.size,
@@ -56,18 +56,12 @@ export default class ChartBubbleImage extends Component {
     ];
 
     const imageMap = {
-      'Internet Explorer':
-        'https://gw.alipayobjects.com/zos/rmsportal/eOYRaLPOmkieVvjyjTzM.png',
-      Chrome:
-        'https://gw.alipayobjects.com/zos/rmsportal/dWJWRLWfpOEbwCyxmZwu.png',
-      Firefox:
-        'https://gw.alipayobjects.com/zos/rmsportal/ZEPeDluKmAoTioCABBTc.png',
-      Safari:
-        'https://gw.alipayobjects.com/zos/rmsportal/eZYhlLzqWLAYwOHQAXmc.png',
-      Opera:
-        'https://gw.alipayobjects.com/zos/rmsportal/vXiGOWCGZNKuVVpVYQAw.png',
-      Undetectable:
-        'https://gw.alipayobjects.com/zos/rmsportal/NjApYXminrnhBgOXyuaK.png',
+      'Internet Explorer': require('./images/eOYRaLPOmkieVvjyjTzM.png'),
+      Chrome: require('./images/dWJWRLWfpOEbwCyxmZwu.png'),
+      Firefox: require('./images/ZEPeDluKmAoTioCABBTc.png'),
+      Safari: require('./images/eZYhlLzqWLAYwOHQAXmc.png'),
+      Opera: require('./images/vXiGOWCGZNKuVVpVYQAw.png'),
+      Undetectable: require('./images/NjApYXminrnhBgOXyuaK.png'),
     };
 
     const cols = {

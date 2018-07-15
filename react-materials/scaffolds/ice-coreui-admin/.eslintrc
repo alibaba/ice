@@ -1,7 +1,7 @@
 {
   "root": true,
   "parser": "babel-eslint",
-  "extends": ["react-app", "airbnb"],
+  "extends": "airbnb",
   "parserOptions": {
     "ecmaVersion": 6,
     "ecmaFeatures": {

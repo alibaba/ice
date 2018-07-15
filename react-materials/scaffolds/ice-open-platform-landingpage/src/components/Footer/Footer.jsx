@@ -127,7 +127,7 @@ export default class FooterLinks extends Component {
             <div style={styles.footerBoxRightItem}>
               <img
                 style={styles.footerBoxRightItemImg}
-                src="https://img.alicdn.com/tfs/TB1J2tnuKSSBuNjy0FlXXbBpVXa-1060-1086.png"
+                src={require('./images/TB1J2tnuKSSBuNjy0FlXXbBpVXa-1060-1086.png')}
                 alt=""
               />
             </div>

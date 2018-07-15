@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 export default class PlatformIntro2 extends Component {
   static displayName = 'PlatformIntro2';
 
-  static propTypes = {
-    value: PropTypes.string,
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-    value: 'string data',
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -22,8 +17,7 @@ export default class PlatformIntro2 extends Component {
       <div
         style={{
           ...styles.wrapper,
-          backgroundImage:
-            'url(https://img.alicdn.com/tfs/TB1d..oRVXXXXX4XVXXXXXXXXXX-2760-1480.png)',
+          backgroundImage: `url(${require('./images/TB1d..oRVXXXXX4XVXXXXXXXXXX-2760-1480.png')})`,
         }}
       >
         <div style={styles.body}>
@@ -33,7 +27,7 @@ export default class PlatformIntro2 extends Component {
           </p>
         </div>
         <img
-          src="https://img.alicdn.com/tfs/TB1DzIrRVXXXXckXFXXXXXXXXXX-1740-800.png"
+          src={require('./images/TB1DzIrRVXXXXckXFXXXXXXXXXX-1740-800.png')}
           alt=""
           width="870"
           height="400"

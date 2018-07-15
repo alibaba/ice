@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Button } from '@icedesign/base';
 import './ExcellentHomePage.scss';
 
@@ -17,8 +16,7 @@ export default class ExcellentHomePage extends Component {
             right: 0,
             bottom: 0,
             backgroundSize: 'cover',
-            backgroundImage:
-              'url(https://gw.alicdn.com/tfs/TB1oJNKsFOWBuNjy0FiXXXFxVXa-1900-1010.svg)',
+            backgroundImage: `url(${require('./images/TB1oJNKsFOWBuNjy0FiXXXFxVXa-1900-1010.svg')})`,
             backgroundPosition: 'center',
           }}
         />

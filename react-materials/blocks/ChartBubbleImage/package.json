@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/chart-bubble-image-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "files": [
     "src/",
@@ -42,10 +42,6 @@
     "categories": [
       "图表"
     ]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

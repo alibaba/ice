@@ -21,7 +21,7 @@ export default class LandingIntroBanner extends Component {
           className="landing-intro-banner-background"
           style={{
             backgroundImage:
-              'url(https://img.alicdn.com/tfs/TB1cWGdnXGWBuNjy0FbXXb4sXXa-1900-898.png)',
+              `url(${require('./images/TB1cWGdnXGWBuNjy0FbXXb4sXXa-1900-898.png')})`,
             backgroundPosition: 'center',
           }}
         />

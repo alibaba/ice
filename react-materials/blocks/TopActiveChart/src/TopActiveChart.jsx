@@ -19,32 +19,28 @@ const activePages = [
 const ViewedProducts = [
   {
     id: 1,
-    pic:
-      'https://img.alicdn.com/imgextra/i3/2616970884/TB2_EHOgS3PL1JjSZFtXXclRVXa_!!2616970884.jpg_60x60q90.jpg',
+    pic: require('./images/TB2_EHOgS3PL1JjSZFtXXclRVXa_!!2616970884.jpg_60x60q90.jpg'),
     title: 'Apple/苹果',
     cate: '电子产品',
     amount: '38,600',
   },
   {
     id: 2,
-    pic:
-      'https://img.alicdn.com/imgextra/i2/1714128138/TB2NVRzcbMlyKJjSZFlXXbMoFXa_!!1714128138.jpg_60x60q90.jpg',
+    pic: require('./images/TB2NVRzcbMlyKJjSZFlXXbMoFXa_!!1714128138.jpg_60x60q90.jpg'),
     title: 'Xiaomi/小米5X',
     cate: '电子产品',
     amount: '33,779',
   },
   {
     id: 3,
-    pic:
-      'https://img.alicdn.com/imgextra/i3/3081047815/TB2i7McmHsTMeJjy1zcXXXAgXXa_!!3081047815.jpg_60x60q90.jpg',
+    pic: require('./images/TB2i7McmHsTMeJjy1zcXXXAgXXa_!!3081047815.jpg_60x60q90.jpg'),
     title: '天猫精灵',
     cate: '智能家居',
     amount: '29,588',
   },
   {
     id: 4,
-    pic:
-      'https://img.alicdn.com/imgextra/i1/1714128138/TB2ABOCcV5N.eBjSZFKXXX_QVXa_!!1714128138.jpg_60x60q90.jpg',
+    pic: require('./images/TB2ABOCcV5N.eBjSZFKXXX_QVXa_!!1714128138.jpg_60x60q90.jpg'),
     title: '小米盒子3',
     cate: '智能小家电',
     amount: '8,636',

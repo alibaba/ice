@@ -1,21 +1,22 @@
-import React, { Component } from 'react';
+/* eslint no-undef: 0 */
 import { Button } from '@icedesign/base';
+import React, { Component } from 'react';
 
 const brandlist = [
-  'https://img.alicdn.com/tfs/TB14.LkieuSBuNjy1XcXXcYjFXa-226-78.png',
-  'https://img.alicdn.com/tfs/TB1LgSMibuWBuNjSszgXXb8jVXa-206-72.png',
-  'https://img.alicdn.com/tfs/TB1jFDwiamWBuNjy1XaXXXCbXXa-284-56.png',
-  'https://img.alicdn.com/tfs/TB147fnikSWBuNjSszdXXbeSpXa-180-68.png',
-  'https://img.alicdn.com/tfs/TB1fdJliDtYBeNjy1XdXXXXyVXa-208-78.png',
-  'https://img.alicdn.com/tfs/TB19a2XikyWBuNjy0FpXXassXXa-244-68.png',
-  'https://img.alicdn.com/tfs/TB1m7veieuSBuNjSsziXXbq8pXa-262-62.png',
-  'https://img.alicdn.com/tfs/TB10Mjkib1YBuNjSszhXXcUsFXa-208-76.png',
-  'https://img.alicdn.com/tfs/TB1zdJliDtYBeNjy1XdXXXXyVXa-184-76.png',
-  'https://img.alicdn.com/tfs/TB1h9yEigaTBuNjSszfXXXgfpXa-298-70.png',
-  'https://img.alicdn.com/tfs/TB1DPSIibGYBuNjy0FoXXciBFXa-128-60.png',
-  'https://img.alicdn.com/tfs/TB1y9TNioR1BeNjy0FmXXb0wVXa-254-74.png',
-  'https://img.alicdn.com/tfs/TB1SpDwiamWBuNjy1XaXXXCbXXa-242-46.png',
-  'https://img.alicdn.com/tfs/TB1EkveieuSBuNjSsziXXbq8pXa-240-78.png',
+  require('./images/TB14.LkieuSBuNjy1XcXXcYjFXa-226-78.png'),
+  require('./images/TB1LgSMibuWBuNjSszgXXb8jVXa-206-72.png'),
+  require('./images/TB1jFDwiamWBuNjy1XaXXXCbXXa-284-56.png'),
+  require('./images/TB147fnikSWBuNjSszdXXbeSpXa-180-68.png'),
+  require('./images/TB1fdJliDtYBeNjy1XdXXXXyVXa-208-78.png'),
+  require('./images/TB19a2XikyWBuNjy0FpXXassXXa-244-68.png'),
+  require('./images/TB1m7veieuSBuNjSsziXXbq8pXa-262-62.png'),
+  require('./images/TB10Mjkib1YBuNjSszhXXcUsFXa-208-76.png'),
+  require('./images/TB1zdJliDtYBeNjy1XdXXXXyVXa-184-76.png'),
+  require('./images/TB1h9yEigaTBuNjSszfXXXgfpXa-298-70.png'),
+  require('./images/TB1DPSIibGYBuNjy0FoXXciBFXa-128-60.png'),
+  require('./images/TB1y9TNioR1BeNjy0FmXXb0wVXa-254-74.png'),
+  require('./images/TB1SpDwiamWBuNjy1XaXXXCbXXa-242-46.png'),
+  require('./images/TB1EkveieuSBuNjSsziXXbq8pXa-240-78.png'),
 ];
 
 export default class BrandList extends Component {

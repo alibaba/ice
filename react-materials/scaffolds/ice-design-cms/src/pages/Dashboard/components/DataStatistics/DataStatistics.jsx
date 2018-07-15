@@ -28,7 +28,7 @@ const dataSource = {
       img: {
         width: 35,
         height: 32,
-        url: 'https://img.alicdn.com/tfs/TB1fTidceuSBuNjy1XcXXcYjFXa-70-64.png',
+        url: require('./images/TB1fTidceuSBuNjy1XcXXcYjFXa-70-64.png'),
       },
     },
     {
@@ -37,7 +37,7 @@ const dataSource = {
       img: {
         width: 30,
         height: 31,
-        url: 'https://img.alicdn.com/tfs/TB1fnidceuSBuNjy1XcXXcYjFXa-60-62.png',
+        url: require('./images/TB1fnidceuSBuNjy1XcXXcYjFXa-60-62.png'),
       },
     },
     {
@@ -46,7 +46,7 @@ const dataSource = {
       img: {
         width: 28,
         height: 27,
-        url: 'https://img.alicdn.com/tfs/TB1gDidceuSBuNjy1XcXXcYjFXa-56-54.png',
+        url: require('./images/TB1gDidceuSBuNjy1XcXXcYjFXa-56-54.png'),
       },
     },
     {
@@ -55,7 +55,7 @@ const dataSource = {
       img: {
         width: 28,
         height: 26,
-        url: 'https://img.alicdn.com/tfs/TB1hDidceuSBuNjy1XcXXcYjFXa-56-52.png',
+        url: require('./images/TB1hDidceuSBuNjy1XcXXcYjFXa-56-52.png'),
       },
     },
     {
@@ -64,7 +64,7 @@ const dataSource = {
       img: {
         width: 35,
         height: 32,
-        url: 'https://img.alicdn.com/tfs/TB11FFTcgmTBuNjy1XbXXaMrVXa-70-64.png',
+        url: require('./images/TB11FFTcgmTBuNjy1XbXXaMrVXa-70-64.png'),
       },
     },
     {
@@ -73,7 +73,7 @@ const dataSource = {
       img: {
         width: 28,
         height: 28,
-        url: 'https://img.alicdn.com/tfs/TB1h_1jcamWBuNjy1XaXXXCbXXa-56-56.png',
+        url: require('./images/TB1h_1jcamWBuNjy1XaXXXCbXXa-56-56.png'),
       },
     },
   ],

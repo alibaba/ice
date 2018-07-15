@@ -1,0 +1,48 @@
+{
+  "name": "@icedesign/ice-design-dashboard",
+  "version": "1.0.2",
+  "description": "该模板适用于简单的数据概览类展示，搭配简洁的暗色主题风格和图表类展示",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-dashboard.html",
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "@icedesign/container": "^0.1.0",
+    "@icedesign/layout": "^0.1.2",
+    "@icedesign/menu": "^0.1.1",
+    "@icedesign/skin": "^0.1.0",
+    "bizcharts": "^3.1.10",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.8",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.1.1"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/skin",
+    "entry": "src/index.js",
+    "localization": true
+  },
+  "scaffoldConfig": {
+    "name": "ice-design-dashboard",
+    "title": "ICE Design Dashboard",
+    "screenshot": "https://img.alicdn.com/tfs/TB1Ohh7DgmTBuNjy1XbXXaMrVXa-2840-1596.png"
+  }
+}

@@ -21,14 +21,14 @@ export default class extends Component {
   render() {
     const down = (
       <img
-        src="https://gw.alicdn.com/tfs/TB1ReMsh3vD8KJjy0FlXXagBFXa-12-18.png"
+        src={require('./images/TB1ReMsh3vD8KJjy0FlXXagBFXa-12-18.png')}
         style={styles.down}
         alt=""
       />
     );
     const up = (
       <img
-        src="https://gw.alicdn.com/tfs/TB1Q1Msh3vD8KJjy0FlXXagBFXa-12-18.png"
+        src={require('./images/TB1Q1Msh3vD8KJjy0FlXXagBFXa-12-18.png')}
         style={styles.up}
         alt=""
       />
@@ -44,7 +44,7 @@ export default class extends Component {
                 <Balloon
                   trigger={
                     <img
-                      src="https://img.alicdn.com/tfs/TB1mfqwXFuWBuNjSszbXXcS7FXa-36-36.png"
+                      src={require('./images/TB1mfqwXFuWBuNjSszbXXcS7FXa-36-36.png')}
                       alt=""
                       width="12"
                       height="12"
@@ -72,7 +72,7 @@ export default class extends Component {
                 <Balloon
                   trigger={
                     <img
-                      src="https://img.alicdn.com/tfs/TB1mfqwXFuWBuNjSszbXXcS7FXa-36-36.png"
+                      src={require('./images/TB1mfqwXFuWBuNjSszbXXcS7FXa-36-36.png')}
                       alt=""
                       width="12"
                       height="12"
@@ -100,7 +100,7 @@ export default class extends Component {
                 <Balloon
                   trigger={
                     <img
-                      src="https://img.alicdn.com/tfs/TB1mfqwXFuWBuNjSszbXXcS7FXa-36-36.png"
+                      src={require('./images/TB1mfqwXFuWBuNjSszbXXcS7FXa-36-36.png')}
                       alt=""
                       width="12"
                       height="12"
@@ -128,7 +128,7 @@ export default class extends Component {
                 <Balloon
                   trigger={
                     <img
-                      src="https://img.alicdn.com/tfs/TB1mfqwXFuWBuNjSszbXXcS7FXa-36-36.png"
+                      src={require('./images/TB1mfqwXFuWBuNjSszbXXcS7FXa-36-36.png')}
                       alt=""
                       width="12"
                       height="12"
