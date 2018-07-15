@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icon-css-hn" width="512" height="512">
+  <path fill="#0073cf" d="M0 0h512v512H0z"/>
+  <path fill="#fff" d="M0 170.666h512v170.667H0z"/>
+  <g id="c" fill="#0073cf" transform="translate(256 256) scale(28.44446)">
+    <g id="b">
+      <path id="a" d="M0-1l-.31.95.477.156z"/>
+      <use width="100%" height="100%" transform="scale(-1 1)" xlink:href="#a"/>
+    </g>
+    <use width="100%" height="100%" transform="rotate(72)" xlink:href="#b"/>
+    <use width="100%" height="100%" transform="rotate(-72)" xlink:href="#b"/>
+    <use width="100%" height="100%" transform="rotate(144)" xlink:href="#b"/>
+    <use width="100%" height="100%" transform="rotate(-144)" xlink:href="#b"/>
+  </g>
+  <use width="100%" height="100%" transform="translate(142.223 -45.511)" xlink:href="#c"/>
+  <use width="100%" height="100%" transform="translate(142.223 39.822)" xlink:href="#c"/>
+  <use width="100%" height="100%" transform="translate(-142.223 -45.511)" xlink:href="#c"/>
+  <use width="100%" height="100%" transform="translate(-142.223 39.822)" xlink:href="#c"/>
+</svg>

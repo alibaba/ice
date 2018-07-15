@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="flag-icon-css-pl" width="512" height="512">
+  <g fill-rule="evenodd">
+    <path fill="#e9e8e7" d="M512 512H0V0h512z"/>
+    <path fill="#d4213d" d="M512 512H0V256h512z"/>
+  </g>
+</svg>
