@@ -17,7 +17,6 @@ import {
 } from 'reactstrap';
 
 class Navbars extends Component {
-
   constructor(props) {
     super(props);
 
@@ -46,9 +45,15 @@ class Navbars extends Component {
       <div className="animated fadeIn">
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong>Navbar</strong>
+            <i className="fa fa-align-justify" />
+            <strong>Navbar</strong>
             <div className="card-header-actions">
-              <a href="https://reactstrap.github.io/components/navbar/" rel="noreferrer noopener" target="_blank" className="card-header-action">
+              <a
+                href="https://reactstrap.github.io/components/navbar/"
+                rel="noreferrer noopener"
+                target="_blank"
+                className="card-header-action"
+              >
                 <small className="text-muted">docs</small>
               </a>
             </div>
@@ -63,25 +68,24 @@ class Navbars extends Component {
                     <NavLink href="#/components/navbars">Components</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="https://github.com/reactstrap/reactstrap" target="_blank">Github</NavLink>
+                    <NavLink
+                      href="https://github.com/reactstrap/reactstrap"
+                      target="_blank"
+                    >
+                      Github
+                    </NavLink>
                   </NavItem>
                   <UncontrolledDropdown nav inNavbar>
-                    {/*Warning: React does not recognize the `inNavbar` prop on a DOM element.*/}
-                    {/*waiting for reactstrap@5.0.0-alpha.5*/}
+                    {/* Warning: React does not recognize the `inNavbar` prop on a DOM element. */}
+                    {/* waiting for reactstrap@5.0.0-alpha.5 */}
                     <DropdownToggle nav caret>
                       Options
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem>
-                        Option 1
-                      </DropdownItem>
-                      <DropdownItem>
-                        Option 2
-                      </DropdownItem>
+                      <DropdownItem>Option 1</DropdownItem>
+                      <DropdownItem>Option 2</DropdownItem>
                       <DropdownItem divider />
-                      <DropdownItem>
-                        Reset
-                      </DropdownItem>
+                      <DropdownItem>Reset</DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </Nav>
@@ -91,11 +95,14 @@ class Navbars extends Component {
         </Card>
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong>Navbar Toggler</strong>
+            <i className="fa fa-align-justify" />
+            <strong>Navbar Toggler</strong>
           </CardHeader>
           <CardBody>
             <Navbar color="success" light>
-              <NavbarBrand href="/" className="mr-auto">Bootstrap</NavbarBrand>
+              <NavbarBrand href="/" className="mr-auto">
+                Bootstrap
+              </NavbarBrand>
               <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
               <Collapse isOpen={!this.state.collapsed} navbar>
                 <Nav navbar>
@@ -103,7 +110,9 @@ class Navbars extends Component {
                     <NavLink href="#/components/navbars">Components</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="https://github.com/reactstrap/reactstrap">Github</NavLink>
+                    <NavLink href="https://github.com/reactstrap/reactstrap">
+                      Github
+                    </NavLink>
                   </NavItem>
                 </Nav>
               </Collapse>

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, ButtonDropdown, Card, CardBody, CardHeader, Col, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
 
 class ButtonDropdowns extends Component {
-
   constructor(props) {
     super(props);
 
@@ -26,7 +25,7 @@ class ButtonDropdowns extends Component {
           <Col xs="12">
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Button Dropdown</strong>
+                <i className="fa fa-align-justify" /><strong>Button Dropdown</strong>
                 <div className="card-header-actions">
                   <a href="https://reactstrap.github.io/components/button-dropdown/" rel="noreferrer noopener" target="_blank" className="card-header-action">
                     <small className="text-muted">docs</small>
@@ -50,7 +49,7 @@ class ButtonDropdowns extends Component {
             </Card>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Single button dropdowns</strong>
+                <i className="fa fa-align-justify" /><strong>Single button dropdowns</strong>
               </CardHeader>
               <CardBody>
                 <ButtonDropdown className="mr-1" isOpen={this.state.dropdownOpen[1]} toggle={() => { this.toggle(1); }}>
@@ -129,7 +128,7 @@ class ButtonDropdowns extends Component {
             </Card>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Split button dropdowns</strong>
+                <i className="fa fa-align-justify" /><strong>Split button dropdowns</strong>
               </CardHeader>
               <CardBody>
                 <ButtonDropdown className="mr-1" isOpen={this.state.dropdownOpen[7]} toggle={() => { this.toggle(7); }}>
@@ -202,7 +201,7 @@ class ButtonDropdowns extends Component {
             </Card>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Dropdown directions</strong>
+                <i className="fa fa-align-justify" /><strong>Dropdown directions</strong>
               </CardHeader>
               <CardBody>
                 <ButtonDropdown direction="up" className="mr-1" isOpen={this.state.dropdownOpen[15]} toggle={() => { this.toggle(15); }}>
@@ -253,7 +252,7 @@ class ButtonDropdowns extends Component {
             </Card>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Button Dropdown sizing</strong>
+                <i className="fa fa-align-justify" /><strong>Button Dropdown sizing</strong>
               </CardHeader>
               <CardBody>
                 <ButtonDropdown className="mr-1" isOpen={this.state.dropdownOpen[13]} toggle={() => { this.toggle(13); }}>

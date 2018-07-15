@@ -1,8 +1,8 @@
-const getRules = (config) =>
-  config.module.rules.find((rule) => Object.keys(rule).includes('oneOf')).oneOf;
-const findFileLoaderRuleFn = (rule) =>
+const getRules = config =>
+  config.module.rules.find(rule => Object.keys(rule).includes('oneOf')).oneOf;
+const findFileLoaderRuleFn = rule =>
   typeof rule.loader === 'string' && rule.loader.includes('file-loader');
-const findStyleLoaderRuleFn = (rule) =>
+const findStyleLoaderRuleFn = rule =>
   rule.test.toString() === /\.css$/.toString();
 
 function rewireSass(config, env, sassOptions = {}) {

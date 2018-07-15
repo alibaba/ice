@@ -16,7 +16,7 @@ class Login extends Component {
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="icon-user"></i>
+                          <i className="icon-user" />
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input type="text" placeholder="Username" />
@@ -24,7 +24,7 @@ class Login extends Component {
                     <InputGroup className="mb-4">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="icon-lock"></i>
+                          <i className="icon-lock" />
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input type="password" placeholder="Password" />
@@ -39,12 +39,13 @@ class Login extends Component {
                     </Row>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
+                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: `${44}%` }}>
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>
                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
+                        labore et dolore magna aliqua.
+                      </p>
                       <Button color="primary" className="mt-3" active>Register Now!</Button>
                     </div>
                   </CardBody>

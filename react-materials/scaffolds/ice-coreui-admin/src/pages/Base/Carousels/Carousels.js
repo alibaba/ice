@@ -20,7 +20,6 @@ const items = [
 ];
 
 class Carousels extends Component {
-
   constructor(props) {
     super(props);
     this.state = { activeIndex: 0 };
@@ -86,7 +85,7 @@ class Carousels extends Component {
           <Col xs="12" xl="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Carousel</strong>
+                <i className="fa fa-align-justify" /><strong>Carousel</strong>
                 <div className="card-header-actions">
                   <a href="https://reactstrap.github.io/components/carousel/" rel="noreferrer noopener" target="_blank" className="card-header-action">
                     <small className="text-muted">docs</small>
@@ -103,7 +102,7 @@ class Carousels extends Component {
           <Col xs="12" xl="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Carousel</strong>
+                <i className="fa fa-align-justify" /><strong>Carousel</strong>
               </CardHeader>
               <CardBody>
                 <Carousel activeIndex={activeIndex} next={this.next} previous={this.previous}>

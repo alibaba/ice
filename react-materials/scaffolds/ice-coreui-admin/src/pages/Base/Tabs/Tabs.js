@@ -3,7 +3,6 @@ import { Badge, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'rea
 import classnames from 'classnames';
 
 class Tabs extends Component {
-
   constructor(props) {
     super(props);
 
@@ -83,7 +82,7 @@ class Tabs extends Component {
                   className={classnames({ active: this.state.activeTab === '1' })}
                   onClick={() => { this.toggle('1'); }}
                 >
-                  <i className="icon-calculator"></i>
+                  <i className="icon-calculator" />
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -91,7 +90,7 @@ class Tabs extends Component {
                   className={classnames({ active: this.state.activeTab === '2' })}
                   onClick={() => { this.toggle('2'); }}
                 >
-                  <i className="icon-basket-loaded"></i>
+                  <i className="icon-basket-loaded" />
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -99,7 +98,7 @@ class Tabs extends Component {
                   className={classnames({ active: this.state.activeTab === '3' })}
                   onClick={() => { this.toggle('3'); }}
                 >
-                  <i className="icon-pie-chart"></i>
+                  <i className="icon-pie-chart" />
                 </NavLink>
               </NavItem>
             </Nav>
@@ -134,7 +133,7 @@ class Tabs extends Component {
                   className={classnames({ active: this.state.activeTab === '1' })}
                   onClick={() => { this.toggle('1'); }}
                 >
-                  <i className="icon-calculator"></i> <span className={this.state.activeTab === '1' ? '' : 'd-none'}> Calculator</span>
+                  <i className="icon-calculator" /> <span className={this.state.activeTab === '1' ? '' : 'd-none'}> Calculator</span>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -142,8 +141,10 @@ class Tabs extends Component {
                   className={classnames({ active: this.state.activeTab === '2' })}
                   onClick={() => { this.toggle('2'); }}
                 >
-                  <i className="icon-basket-loaded"></i> <span
-                  className={this.state.activeTab === '2' ? '' : 'd-none'}> Shopping cart</span>
+                  <i className="icon-basket-loaded" /> <span
+                    className={this.state.activeTab === '2' ? '' : 'd-none'}
+                  > Shopping cart
+                  </span>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -151,7 +152,7 @@ class Tabs extends Component {
                   className={classnames({ active: this.state.activeTab === '3' })}
                   onClick={() => { this.toggle('3'); }}
                 >
-                  <i className="icon-pie-chart"></i> <span className={this.state.activeTab === '3' ? '' : 'd-none'}> Charts</span>
+                  <i className="icon-pie-chart" /> <span className={this.state.activeTab === '3' ? '' : 'd-none'}> Charts</span>
                 </NavLink>
               </NavItem>
             </Nav>
@@ -186,8 +187,10 @@ class Tabs extends Component {
                   className={classnames({ active: this.state.activeTab === '1' })}
                   onClick={() => { this.toggle('1'); }}
                 >
-                  <i className="icon-calculator"></i> <span className={this.state.activeTab === '1' ? '' : 'd-none'}> Calculator </span>{'\u00A0'}<Badge
-                  color="success">New</Badge>
+                  <i className="icon-calculator" /> <span className={this.state.activeTab === '1' ? '' : 'd-none'}> Calculator </span>{'\u00A0'}<Badge
+                    color="success"
+                  >New
+                  </Badge>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -195,8 +198,10 @@ class Tabs extends Component {
                   className={classnames({ active: this.state.activeTab === '2' })}
                   onClick={() => { this.toggle('2'); }}
                 >
-                  <i className="icon-basket-loaded"></i> <span
-                  className={this.state.activeTab === '2' ? '' : 'd-none'}> Shopping cart </span>{'\u00A0'}<Badge pill color="danger">29</Badge>
+                  <i className="icon-basket-loaded" /> <span
+                    className={this.state.activeTab === '2' ? '' : 'd-none'}
+                  > Shopping cart
+                  </span>{'\u00A0'}<Badge pill color="danger">29</Badge>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -204,7 +209,7 @@ class Tabs extends Component {
                   className={classnames({ active: this.state.activeTab === '3' })}
                   onClick={() => { this.toggle('3'); }}
                 >
-                  <i className="icon-pie-chart"></i> <span className={this.state.activeTab === '3' ? '' : 'd-none'}> Charts</span>
+                  <i className="icon-pie-chart" /> <span className={this.state.activeTab === '3' ? '' : 'd-none'}> Charts</span>
                 </NavLink>
               </NavItem>
             </Nav>

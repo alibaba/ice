@@ -9,7 +9,7 @@ class Badges extends Component {
           <Col xs="12" md="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Badges</strong>
+                <i className="fa fa-align-justify" /><strong>Badges</strong>
                 <div className="card-header-actions">
                   <a href="https://reactstrap.github.io/components/badge/" rel="noreferrer noopener" target="_blank" className="card-header-action">
                     <small className="text-muted">docs</small>
@@ -34,7 +34,7 @@ class Badges extends Component {
           <Col xs="12" md="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Badges</strong> <small>contextual variations</small>
+                <i className="fa fa-align-justify" /><strong>Badges</strong> <small>contextual variations</small>
               </CardHeader>
               <CardBody>
                 <Badge className="mr-1" color="primary">Primary</Badge>
@@ -49,7 +49,7 @@ class Badges extends Component {
             </Card>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Badges</strong> <small>pill badges</small>
+                <i className="fa fa-align-justify" /><strong>Badges</strong> <small>pill badges</small>
               </CardHeader>
               <CardBody>
                 <Badge className="mr-1" color="primary" pill>Primary</Badge>
@@ -64,7 +64,7 @@ class Badges extends Component {
             </Card>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Badges</strong> <small>links</small>
+                <i className="fa fa-align-justify" /><strong>Badges</strong> <small>links</small>
               </CardHeader>
               <CardBody>
                 <Badge className="mr-1" href="#" color="primary">Primary</Badge>

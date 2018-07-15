@@ -1,3 +1,4 @@
+/* eslint no-mixed-operators:0, no-plusplus:0 */
 import React, { Component } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import {
@@ -20,9 +21,10 @@ import {
   Row,
   Table,
 } from 'reactstrap';
-import Widget03 from '../../pages/Widgets/Widget03';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
+
+import Widget03 from '../../pages/Widgets/Widget03';
 
 const brandPrimary = getStyle('--primary');
 const brandSuccess = getStyle('--success');
@@ -70,8 +72,8 @@ const cardChartOpts1 = {
         display: false,
         ticks: {
           display: false,
-          min: Math.min.apply(Math, cardChartData1.datasets[0].data) - 5,
-          max: Math.max.apply(Math, cardChartData1.datasets[0].data) + 5,
+          min: Math.min(...cardChartData1.datasets[0].data) - 5,
+          max: Math.max(...cardChartData1.datasets[0].data) + 5,
         },
       },
     ],
@@ -128,8 +130,8 @@ const cardChartOpts2 = {
         display: false,
         ticks: {
           display: false,
-          min: Math.min.apply(Math, cardChartData2.datasets[0].data) - 5,
-          max: Math.max.apply(Math, cardChartData2.datasets[0].data) + 5,
+          min: Math.min(...cardChartData2.datasets[0].data) - 5,
+          max: Math.max(...cardChartData2.datasets[0].data) + 5,
         },
       },
     ],
@@ -331,7 +333,7 @@ const makeSparkLineData = (dataSetNo, variant) => {
     datasets: [
       {
         backgroundColor: 'transparent',
-        borderColor: variant ? variant : '#c2cfd6',
+        borderColor: variant || '#c2cfd6',
         data: dataset.data,
         label: dataset.label,
       },
@@ -377,17 +379,17 @@ const sparklineChartOpts = {
 
 // Main Chart
 
-//Random Numbers
+// Random Numbers
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-var elements = 27;
-var data1 = [];
-var data2 = [];
-var data3 = [];
+const elements = 27;
+const data1 = [];
+const data2 = [];
+const data3 = [];
 
-for (var i = 0; i <= elements; i++) {
+for (let i = 0; i <= elements; i++) {
   data1.push(random(50, 200));
   data2.push(random(80, 100));
   data3.push(65);
@@ -461,7 +463,7 @@ const mainChartOpts = {
     mode: 'index',
     position: 'nearest',
     callbacks: {
-      labelColor: function(tooltipItem, chart) {
+      labelColor(tooltipItem, chart) {
         return {
           backgroundColor:
             chart.data.datasets[tooltipItem.datasetIndex].borderColor,
@@ -523,7 +525,7 @@ class Dashboard extends Component {
 
   onRadioBtnClick(radioSelected) {
     this.setState({
-      radioSelected: radioSelected,
+      radioSelected,
     });
   }
 
@@ -713,7 +715,7 @@ class Dashboard extends Component {
                 </Row>
                 <div
                   className="chart-wrapper"
-                  style={{ height: 300 + 'px', marginTop: 40 + 'px' }}
+                  style={{ height: `${300}px`, marginTop: `${40}px` }}
                 >
                   <Line data={mainChart} options={mainChartOpts} height={300} />
                 </div>
@@ -1220,7 +1222,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <div className="avatar">
                           <img
-                            src={'assets/img/avatars/1.jpg'}
+                            src="assets/img/avatars/1.jpg"
                             className="img-avatar"
                             alt="admin@bootstrapmaster.com"
                           />
@@ -1260,7 +1262,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <i
                           className="fa fa-cc-mastercard"
-                          style={{ fontSize: 24 + 'px' }}
+                          style={{ fontSize: `${24}px` }}
                         />
                       </td>
                       <td>
@@ -1272,7 +1274,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <div className="avatar">
                           <img
-                            src={'assets/img/avatars/2.jpg'}
+                            src="assets/img/avatars/2.jpg"
                             className="img-avatar"
                             alt="admin@bootstrapmaster.com"
                           />
@@ -1312,7 +1314,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <i
                           className="fa fa-cc-visa"
-                          style={{ fontSize: 24 + 'px' }}
+                          style={{ fontSize: `${24}px` }}
                         />
                       </td>
                       <td>
@@ -1324,7 +1326,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <div className="avatar">
                           <img
-                            src={'assets/img/avatars/3.jpg'}
+                            src="assets/img/avatars/3.jpg"
                             className="img-avatar"
                             alt="admin@bootstrapmaster.com"
                           />
@@ -1364,7 +1366,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <i
                           className="fa fa-cc-stripe"
-                          style={{ fontSize: 24 + 'px' }}
+                          style={{ fontSize: `${24}px` }}
                         />
                       </td>
                       <td>
@@ -1376,7 +1378,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <div className="avatar">
                           <img
-                            src={'assets/img/avatars/4.jpg'}
+                            src="assets/img/avatars/4.jpg"
                             className="img-avatar"
                             alt="admin@bootstrapmaster.com"
                           />
@@ -1416,7 +1418,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <i
                           className="fa fa-paypal"
-                          style={{ fontSize: 24 + 'px' }}
+                          style={{ fontSize: `${24}px` }}
                         />
                       </td>
                       <td>
@@ -1428,7 +1430,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <div className="avatar">
                           <img
-                            src={'assets/img/avatars/5.jpg'}
+                            src="assets/img/avatars/5.jpg"
                             className="img-avatar"
                             alt="admin@bootstrapmaster.com"
                           />
@@ -1468,7 +1470,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <i
                           className="fa fa-google-wallet"
-                          style={{ fontSize: 24 + 'px' }}
+                          style={{ fontSize: `${24}px` }}
                         />
                       </td>
                       <td>
@@ -1480,7 +1482,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <div className="avatar">
                           <img
-                            src={'assets/img/avatars/6.jpg'}
+                            src="assets/img/avatars/6.jpg"
                             className="img-avatar"
                             alt="admin@bootstrapmaster.com"
                           />
@@ -1520,7 +1522,7 @@ class Dashboard extends Component {
                       <td className="text-center">
                         <i
                           className="fa fa-cc-amex"
-                          style={{ fontSize: 24 + 'px' }}
+                          style={{ fontSize: `${24}px` }}
                         />
                       </td>
                       <td>

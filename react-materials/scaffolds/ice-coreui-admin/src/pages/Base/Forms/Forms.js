@@ -34,7 +34,7 @@ class Forms extends Component {
     this.state = {
       collapse: true,
       fadeIn: true,
-      timeout: 300
+      timeout: 300,
     };
   }
 
@@ -43,7 +43,7 @@ class Forms extends Component {
   }
 
   toggleFade() {
-    this.setState((prevState) => { return { fadeIn: !prevState }});
+    this.setState((prevState) => { return { fadeIn: !prevState }; });
   }
 
   render() {
@@ -191,7 +191,7 @@ class Forms extends Component {
                       <Label htmlFor="email-input">Email Input</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="email" id="email-input" name="email-input" placeholder="Enter Email" autoComplete="email"/>
+                      <Input type="email" id="email-input" name="email-input" placeholder="Enter Email" autoComplete="email" />
                       <FormText className="help-block">Please enter your email</FormText>
                     </Col>
                   </FormGroup>
@@ -225,8 +225,12 @@ class Forms extends Component {
                       <Label htmlFor="textarea-input">Textarea</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="textarea" name="textarea-input" id="textarea-input" rows="9"
-                             placeholder="Content..." />
+                      <Input type="textarea"
+                        name="textarea-input"
+                        id="textarea-input"
+                        rows="9"
+                        placeholder="Content..."
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -399,15 +403,15 @@ class Forms extends Component {
                     <Col xs="12" md="9">
                       <Label className="custom-file">
                         <Input className="custom-file" type="file" id="custom-file-input" name="file-input" />
-                        <span className="custom-file-control"></span>
+                        <span className="custom-file-control" />
                       </Label>
                     </Col>
                   </FormGroup>
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o" /> Submit</Button>
+                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban" /> Reset</Button>
               </CardFooter>
             </Card>
             <Card>
@@ -427,8 +431,8 @@ class Forms extends Component {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o" /> Submit</Button>
+                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban" /> Reset</Button>
               </CardFooter>
             </Card>
           </Col>
@@ -453,15 +457,15 @@ class Forms extends Component {
                       <Label htmlFor="hf-password">Password</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="password" id="hf-password" name="hf-password" placeholder="Enter Password..." autoComplete="current-password"/>
+                      <Input type="password" id="hf-password" name="hf-password" placeholder="Enter Password..." autoComplete="current-password" />
                       <FormText className="help-block">Please enter your password</FormText>
                     </Col>
                   </FormGroup>
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o" /> Submit</Button>
+                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban" /> Reset</Button>
               </CardFooter>
             </Card>
             <Card>
@@ -472,19 +476,19 @@ class Forms extends Component {
                 <Form action="" method="post">
                   <FormGroup>
                     <Label htmlFor="nf-email">Email</Label>
-                    <Input type="email" id="nf-email" name="nf-email" placeholder="Enter Email.." autoComplete="email"/>
+                    <Input type="email" id="nf-email" name="nf-email" placeholder="Enter Email.." autoComplete="email" />
                     <FormText className="help-block">Please enter your email</FormText>
                   </FormGroup>
                   <FormGroup>
                     <Label htmlFor="nf-password">Password</Label>
-                    <Input type="password" id="nf-password" name="nf-password" placeholder="Enter Password.." autoComplete="current-password"/>
+                    <Input type="password" id="nf-password" name="nf-password" placeholder="Enter Password.." autoComplete="current-password" />
                     <FormText className="help-block">Please enter your password</FormText>
                   </FormGroup>
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o" /> Submit</Button>
+                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban" /> Reset</Button>
               </CardFooter>
             </Card>
             <Card>
@@ -546,8 +550,8 @@ class Forms extends Component {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" size="sm" color="primary"><i className="fa fa-user"></i> Login</Button>
-                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                <Button type="submit" size="sm" color="primary"><i className="fa fa-user" /> Login</Button>
+                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban" /> Reset</Button>
               </CardFooter>
             </Card>
             <Card>
@@ -577,8 +581,8 @@ class Forms extends Component {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o" /> Submit</Button>
+                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban" /> Reset</Button>
               </CardFooter>
             </Card>
           </Col>
@@ -639,7 +643,7 @@ class Forms extends Component {
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="fa fa-user"></i>
+                            <i className="fa fa-user" />
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input type="text" id="input1-group1" name="input1-group1" placeholder="Username" />
@@ -652,7 +656,7 @@ class Forms extends Component {
                         <Input type="email" id="input2-group1" name="input2-group1" placeholder="Email" />
                         <InputGroupAddon addonType="append">
                           <InputGroupText>
-                            <i className="fa fa-envelope-o"></i>
+                            <i className="fa fa-envelope-o" />
                           </InputGroupText>
                         </InputGroupAddon>
                       </InputGroup>
@@ -663,7 +667,7 @@ class Forms extends Component {
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="fa fa-euro"></i>
+                            <i className="fa fa-euro" />
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input type="text" id="input3-group1" name="input3-group1" placeholder=".." />
@@ -676,8 +680,8 @@ class Forms extends Component {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" size="sm" color="success"><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                <Button type="submit" size="sm" color="success"><i className="fa fa-dot-circle-o" /> Submit</Button>
+                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban" /> Reset</Button>
               </CardFooter>
             </Card>
           </Col>
@@ -692,7 +696,7 @@ class Forms extends Component {
                     <Col md="12">
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
-                          <Button type="button" color="primary"><i className="fa fa-search"></i> Search</Button>
+                          <Button type="button" color="primary"><i className="fa fa-search" /> Search</Button>
                         </InputGroupAddon>
                         <Input type="text" id="input1-group2" name="input1-group2" placeholder="Username" />
                       </InputGroup>
@@ -712,11 +716,11 @@ class Forms extends Component {
                     <Col md="12">
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
-                          <Button type="button" color="primary"><i className="fa fa-facebook"></i></Button>
+                          <Button type="button" color="primary"><i className="fa fa-facebook" /></Button>
                         </InputGroupAddon>
                         <Input type="text" id="input3-group2" name="input3-group2" placeholder="Search" />
                         <InputGroupAddon addonType="append">
-                          <Button type="button" color="primary"><i className="fa fa-twitter"></i></Button>
+                          <Button type="button" color="primary"><i className="fa fa-twitter" /></Button>
                         </InputGroupAddon>
                       </InputGroup>
                     </Col>
@@ -724,8 +728,8 @@ class Forms extends Component {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" size="sm" color="success"><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                <Button type="submit" size="sm" color="success"><i className="fa fa-dot-circle-o" /> Submit</Button>
+                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban" /> Reset</Button>
               </CardFooter>
             </Card>
           </Col>
@@ -741,7 +745,8 @@ class Forms extends Component {
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
                           <ButtonDropdown isOpen={this.state.first}
-                                          toggle={() => { this.setState({ first: !this.state.first }); }}>
+                            toggle={() => { this.setState({ first: !this.state.first }); }}
+                          >
                             <DropdownToggle caret color="primary">
                               Dropdown
                             </DropdownToggle>
@@ -764,7 +769,8 @@ class Forms extends Component {
                         <Input type="email" id="input2-group3" name="input2-group3" placeholder="Email" />
                         <InputGroupAddon addonType="append">
                           <ButtonDropdown isOpen={this.state.second}
-                                          toggle={() => { this.setState({ second: !this.state.second }); }}>
+                            toggle={() => { this.setState({ second: !this.state.second }); }}
+                          >
                             <DropdownToggle caret color="primary">
                               Dropdown
                             </DropdownToggle>
@@ -785,8 +791,9 @@ class Forms extends Component {
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
                           <ButtonDropdown isOpen={this.state.third}
-                                          toggle={() => { this.setState({ third: !this.state.third }); }}>
-                            {/*<Button id="caret" color="primary">Action</Button>*/}
+                            toggle={() => { this.setState({ third: !this.state.third }); }}
+                          >
+                            {/* <Button id="caret" color="primary">Action</Button> */}
                             <DropdownToggle caret color="primary">Action</DropdownToggle>
                             <DropdownMenu className={this.state.third ? 'show' : ''}>
                               <DropdownItem>Action</DropdownItem>
@@ -800,7 +807,8 @@ class Forms extends Component {
                         <Input type="text" id="input3-group3" name="input3-group3" placeholder=".." />
                         <InputGroupAddon addonType="append">
                           <ButtonDropdown isOpen={this.state.fourth}
-                                          toggle={() => { this.setState({ fourth: !this.state.fourth }); }}>
+                            toggle={() => { this.setState({ fourth: !this.state.fourth }); }}
+                          >
                             <DropdownToggle caret color="primary">
                               Dropdown
                             </DropdownToggle>
@@ -819,8 +827,8 @@ class Forms extends Component {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" size="sm" color="success"><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                <Button type="submit" size="sm" color="success"><i className="fa fa-dot-circle-o" /> Submit</Button>
+                <Button type="reset" size="sm" color="danger"><i className="fa fa-ban" /> Reset</Button>
               </CardFooter>
             </Card>
           </Col>
@@ -958,9 +966,9 @@ class Forms extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>Username</InputGroupText>
                       </InputGroupAddon>
-                      <Input type="email" id="username3" name="username3" autoComplete="name"/>
+                      <Input type="email" id="username3" name="username3" autoComplete="name" />
                       <InputGroupAddon addonType="append">
-                        <InputGroupText><i className="fa fa-user"></i></InputGroupText>
+                        <InputGroupText><i className="fa fa-user" /></InputGroupText>
                       </InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
@@ -969,9 +977,9 @@ class Forms extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>Email</InputGroupText>
                       </InputGroupAddon>
-                      <Input type="email" id="email3" name="email3" autoComplete="username"/>
+                      <Input type="email" id="email3" name="email3" autoComplete="username" />
                       <InputGroupAddon addonType="append">
-                        <InputGroupText><i className="fa fa-envelope"></i></InputGroupText>
+                        <InputGroupText><i className="fa fa-envelope" /></InputGroupText>
                       </InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
@@ -980,9 +988,9 @@ class Forms extends Component {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>Password</InputGroupText>
                       </InputGroupAddon>
-                      <Input type="password" id="password3" name="password3" autoComplete="current-password"/>
+                      <Input type="password" id="password3" name="password3" autoComplete="current-password" />
                       <InputGroupAddon addonType="append">
-                        <InputGroupText><i className="fa fa-asterisk"></i></InputGroupText>
+                        <InputGroupText><i className="fa fa-asterisk" /></InputGroupText>
                       </InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
@@ -1002,25 +1010,25 @@ class Forms extends Component {
                 <Form action="" method="post">
                   <FormGroup>
                     <InputGroup>
-                      <Input type="text" id="username2" name="username2" placeholder="Username" autoComplete="name"/>
+                      <Input type="text" id="username2" name="username2" placeholder="Username" autoComplete="name" />
                       <InputGroupAddon addonType="append">
-                        <InputGroupText><i className="fa fa-user"></i></InputGroupText>
+                        <InputGroupText><i className="fa fa-user" /></InputGroupText>
                       </InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
                     <InputGroup>
-                      <Input type="email" id="email2" name="email2" placeholder="Email" autoComplete="username"/>
+                      <Input type="email" id="email2" name="email2" placeholder="Email" autoComplete="username" />
                       <InputGroupAddon addonType="append">
-                        <InputGroupText><i className="fa fa-envelope"></i></InputGroupText>
+                        <InputGroupText><i className="fa fa-envelope" /></InputGroupText>
                       </InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
                     <InputGroup>
-                      <Input type="password" id="password2" name="password2" placeholder="Password" autoComplete="current-password"/>
+                      <Input type="password" id="password2" name="password2" placeholder="Password" autoComplete="current-password" />
                       <InputGroupAddon addonType="append">
-                        <InputGroupText><i className="fa fa-asterisk"></i></InputGroupText>
+                        <InputGroupText><i className="fa fa-asterisk" /></InputGroupText>
                       </InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
@@ -1041,25 +1049,25 @@ class Forms extends Component {
                   <FormGroup>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
-                        <InputGroupText><i className="fa fa-user"></i></InputGroupText>
+                        <InputGroupText><i className="fa fa-user" /></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" id="username1" name="username1" placeholder="Username" autoComplete="name"/>
+                      <Input type="text" id="username1" name="username1" placeholder="Username" autoComplete="name" />
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
-                        <InputGroupText><i className="fa fa-envelope"></i></InputGroupText>
+                        <InputGroupText><i className="fa fa-envelope" /></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="email" id="email1" name="email1" placeholder="Email" autoComplete="username"/>
+                      <Input type="email" id="email1" name="email1" placeholder="Email" autoComplete="username" />
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
-                        <InputGroupText><i className="fa fa-asterisk"></i></InputGroupText>
+                        <InputGroupText><i className="fa fa-asterisk" /></InputGroupText>
                       </InputGroupAddon>
-                      <Input type="password" id="password1" name="password1" placeholder="Password" autoComplete="current-password"/>
+                      <Input type="password" id="password1" name="password1" placeholder="Password" autoComplete="current-password" />
                     </InputGroup>
                   </FormGroup>
                   <FormGroup className="form-actions">
@@ -1075,11 +1083,11 @@ class Forms extends Component {
             <Fade timeout={this.state.timeout} in={this.state.fadeIn}>
               <Card>
                 <CardHeader>
-                  <i className="fa fa-edit"></i>Form Elements
+                  <i className="fa fa-edit" />Form Elements
                   <div className="card-header-actions">
-                    <Button color="link" className="card-header-action btn-setting"><i className="icon-settings"></i></Button>
-                    <Button color="link" className="card-header-action btn-minimize" data-target="#collapseExample" onClick={this.toggle}><i className="icon-arrow-up"></i></Button>
-                    <Button color="link" className="card-header-action btn-close" onClick={this.toggleFade}><i className="icon-close"></i></Button>
+                    <Button color="link" className="card-header-action btn-setting"><i className="icon-settings" /></Button>
+                    <Button color="link" className="card-header-action btn-minimize" data-target="#collapseExample" onClick={this.toggle}><i className="icon-arrow-up" /></Button>
+                    <Button color="link" className="card-header-action btn-close" onClick={this.toggleFade}><i className="icon-close" /></Button>
                   </div>
                 </CardHeader>
                 <Collapse isOpen={this.state.collapse} id="collapseExample">

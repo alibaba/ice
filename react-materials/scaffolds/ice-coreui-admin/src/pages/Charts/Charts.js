@@ -132,7 +132,7 @@ const polar = {
         '#E7E9ED',
         '#36A2EB',
       ],
-      label: 'My dataset' // for legend
+      label: 'My dataset', // for legend
     }],
   labels: [
     'Red',
@@ -146,10 +146,10 @@ const polar = {
 const options = {
   tooltips: {
     enabled: false,
-    custom: CustomTooltips
+    custom: CustomTooltips,
   },
-  maintainAspectRatio: false
-}
+  maintainAspectRatio: false,
+};
 
 class Charts extends Component {
   render() {
@@ -242,7 +242,7 @@ class Charts extends Component {
             </CardHeader>
             <CardBody>
               <div className="chart-wrapper">
-                <Polar data={polar} options={options}/>
+                <Polar data={polar} options={options} />
               </div>
             </CardBody>
           </Card>

@@ -9,64 +9,64 @@ class Tables extends Component {
           <Col xs="12" lg="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Simple Table
+                <i className="fa fa-align-justify" /> Simple Table
               </CardHeader>
               <CardBody>
                 <Table responsive>
                   <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Date registered</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                  </tr>
+                    <tr>
+                      <th>Username</th>
+                      <th>Date registered</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Samppa Nori</td>
-                    <td>2012/01/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Estavan Lykos</td>
-                    <td>2012/02/01</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="danger">Banned</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Chetan Mohamed</td>
-                    <td>2012/02/01</td>
-                    <td>Admin</td>
-                    <td>
-                      <Badge color="secondary">Inactive</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Derick Maximinus</td>
-                    <td>2012/03/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="warning">Pending</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Friderik Dávid</td>
-                    <td>2012/01/21</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>Samppa Nori</td>
+                      <td>2012/01/01</td>
+                      <td>Member</td>
+                      <td>
+                        <Badge color="success">Active</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Estavan Lykos</td>
+                      <td>2012/02/01</td>
+                      <td>Staff</td>
+                      <td>
+                        <Badge color="danger">Banned</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Chetan Mohamed</td>
+                      <td>2012/02/01</td>
+                      <td>Admin</td>
+                      <td>
+                        <Badge color="secondary">Inactive</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Derick Maximinus</td>
+                      <td>2012/03/01</td>
+                      <td>Member</td>
+                      <td>
+                        <Badge color="warning">Pending</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Friderik Dávid</td>
+                      <td>2012/01/21</td>
+                      <td>Staff</td>
+                      <td>
+                        <Badge color="success">Active</Badge>
+                      </td>
+                    </tr>
                   </tbody>
                 </Table>
                 <Pagination>
                   <PaginationItem>
-                    <PaginationLink previous tag="button"></PaginationLink>
+                    <PaginationLink previous tag="button" />
                   </PaginationItem>
                   <PaginationItem active>
                     <PaginationLink tag="button">1</PaginationLink>
@@ -81,7 +81,7 @@ class Tables extends Component {
                     <PaginationLink tag="button">4</PaginationLink>
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink next tag="button"></PaginationLink>
+                    <PaginationLink next tag="button" />
                   </PaginationItem>
                 </Pagination>
               </CardBody>
@@ -91,59 +91,59 @@ class Tables extends Component {
           <Col xs="12" lg="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Striped Table
+                <i className="fa fa-align-justify" /> Striped Table
               </CardHeader>
               <CardBody>
                 <Table responsive striped>
                   <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Date registered</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                  </tr>
+                    <tr>
+                      <th>Username</th>
+                      <th>Date registered</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Yiorgos Avraamu</td>
-                    <td>2012/01/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Avram Tarasios</td>
-                    <td>2012/02/01</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="danger">Banned</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Quintin Ed</td>
-                    <td>2012/02/01</td>
-                    <td>Admin</td>
-                    <td>
-                      <Badge color="secondary">Inactive</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Enéas Kwadwo</td>
-                    <td>2012/03/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="warning">Pending</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Agapetus Tadeáš</td>
-                    <td>2012/01/21</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>Yiorgos Avraamu</td>
+                      <td>2012/01/01</td>
+                      <td>Member</td>
+                      <td>
+                        <Badge color="success">Active</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Avram Tarasios</td>
+                      <td>2012/02/01</td>
+                      <td>Staff</td>
+                      <td>
+                        <Badge color="danger">Banned</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Quintin Ed</td>
+                      <td>2012/02/01</td>
+                      <td>Admin</td>
+                      <td>
+                        <Badge color="secondary">Inactive</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Enéas Kwadwo</td>
+                      <td>2012/03/01</td>
+                      <td>Member</td>
+                      <td>
+                        <Badge color="warning">Pending</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Agapetus Tadeáš</td>
+                      <td>2012/01/21</td>
+                      <td>Staff</td>
+                      <td>
+                        <Badge color="success">Active</Badge>
+                      </td>
+                    </tr>
                   </tbody>
                 </Table>
                 <Pagination>
@@ -166,59 +166,59 @@ class Tables extends Component {
           <Col xs="12" lg="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Condensed Table
+                <i className="fa fa-align-justify" /> Condensed Table
               </CardHeader>
               <CardBody>
                 <Table responsive size="sm">
                   <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Date registered</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                  </tr>
+                    <tr>
+                      <th>Username</th>
+                      <th>Date registered</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Carwyn Fachtna</td>
-                    <td>2012/01/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Nehemiah Tatius</td>
-                    <td>2012/02/01</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="danger">Banned</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Ebbe Gemariah</td>
-                    <td>2012/02/01</td>
-                    <td>Admin</td>
-                    <td>
-                      <Badge color="secondary">Inactive</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Eustorgios Amulius</td>
-                    <td>2012/03/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="warning">Pending</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Leopold Gáspár</td>
-                    <td>2012/01/21</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>Carwyn Fachtna</td>
+                      <td>2012/01/01</td>
+                      <td>Member</td>
+                      <td>
+                        <Badge color="success">Active</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Nehemiah Tatius</td>
+                      <td>2012/02/01</td>
+                      <td>Staff</td>
+                      <td>
+                        <Badge color="danger">Banned</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ebbe Gemariah</td>
+                      <td>2012/02/01</td>
+                      <td>Admin</td>
+                      <td>
+                        <Badge color="secondary">Inactive</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Eustorgios Amulius</td>
+                      <td>2012/03/01</td>
+                      <td>Member</td>
+                      <td>
+                        <Badge color="warning">Pending</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Leopold Gáspár</td>
+                      <td>2012/01/21</td>
+                      <td>Staff</td>
+                      <td>
+                        <Badge color="success">Active</Badge>
+                      </td>
+                    </tr>
                   </tbody>
                 </Table>
                 <Pagination>
@@ -238,59 +238,59 @@ class Tables extends Component {
           <Col xs="12" lg="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Bordered Table
+                <i className="fa fa-align-justify" /> Bordered Table
               </CardHeader>
               <CardBody>
                 <Table responsive bordered>
                   <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Date registered</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                  </tr>
+                    <tr>
+                      <th>Username</th>
+                      <th>Date registered</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Pompeius René</td>
-                    <td>2012/01/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Paĉjo Jadon</td>
-                    <td>2012/02/01</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="danger">Banned</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Micheal Mercurius</td>
-                    <td>2012/02/01</td>
-                    <td>Admin</td>
-                    <td>
-                      <Badge color="secondary">Inactive</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Ganesha Dubhghall</td>
-                    <td>2012/03/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="warning">Pending</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Hiroto Šimun</td>
-                    <td>2012/01/21</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>Pompeius René</td>
+                      <td>2012/01/01</td>
+                      <td>Member</td>
+                      <td>
+                        <Badge color="success">Active</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Paĉjo Jadon</td>
+                      <td>2012/02/01</td>
+                      <td>Staff</td>
+                      <td>
+                        <Badge color="danger">Banned</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Micheal Mercurius</td>
+                      <td>2012/02/01</td>
+                      <td>Admin</td>
+                      <td>
+                        <Badge color="secondary">Inactive</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ganesha Dubhghall</td>
+                      <td>2012/03/01</td>
+                      <td>Member</td>
+                      <td>
+                        <Badge color="warning">Pending</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Hiroto Šimun</td>
+                      <td>2012/01/21</td>
+                      <td>Staff</td>
+                      <td>
+                        <Badge color="success">Active</Badge>
+                      </td>
+                    </tr>
                   </tbody>
                 </Table>
                 <Pagination>
@@ -313,59 +313,59 @@ class Tables extends Component {
           <Col>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Combined All Table
+                <i className="fa fa-align-justify" /> Combined All Table
               </CardHeader>
               <CardBody>
                 <Table hover bordered striped responsive size="sm">
                   <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Date registered</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                  </tr>
+                    <tr>
+                      <th>Username</th>
+                      <th>Date registered</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Vishnu Serghei</td>
-                    <td>2012/01/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Zbyněk Phoibos</td>
-                    <td>2012/02/01</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="danger">Banned</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Einar Randall</td>
-                    <td>2012/02/01</td>
-                    <td>Admin</td>
-                    <td>
-                      <Badge color="secondary">Inactive</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Félix Troels</td>
-                    <td>2012/03/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="warning">Pending</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Aulus Agmundr</td>
-                    <td>2012/01/21</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>Vishnu Serghei</td>
+                      <td>2012/01/01</td>
+                      <td>Member</td>
+                      <td>
+                        <Badge color="success">Active</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Zbyněk Phoibos</td>
+                      <td>2012/02/01</td>
+                      <td>Staff</td>
+                      <td>
+                        <Badge color="danger">Banned</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Einar Randall</td>
+                      <td>2012/02/01</td>
+                      <td>Admin</td>
+                      <td>
+                        <Badge color="secondary">Inactive</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Félix Troels</td>
+                      <td>2012/03/01</td>
+                      <td>Member</td>
+                      <td>
+                        <Badge color="warning">Pending</Badge>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Aulus Agmundr</td>
+                      <td>2012/01/21</td>
+                      <td>Staff</td>
+                      <td>
+                        <Badge color="success">Active</Badge>
+                      </td>
+                    </tr>
                   </tbody>
                 </Table>
                 <nav>

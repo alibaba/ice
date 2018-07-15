@@ -16,7 +16,6 @@ const defaultProps = {
 
 class Widget03 extends Component {
   render() {
-
     // eslint-disable-next-line
     const { children, className, cssModule, dataBox, ...attributes } = this.props;
 
@@ -28,8 +27,8 @@ class Widget03 extends Component {
       return (null);
     }
 
-    const back = 'bg-' + variant;
-    const icon = 'fa fa-' + variant;
+    const back = `bg-${variant}`;
+    const icon = `fa fa-${variant}`;
     const keys = Object.keys(data);
     const vals = Object.values(data);
 
@@ -41,7 +40,7 @@ class Widget03 extends Component {
     return (
       <div className={classes}>
         <div className={classCardHeader}>
-          <i className={icon}></i>
+          <i className={icon} />
           {children}
         </div>
         <div className={classCardBody}>

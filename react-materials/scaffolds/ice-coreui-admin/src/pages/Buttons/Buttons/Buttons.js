@@ -144,7 +144,7 @@ class Buttons extends Component {
               <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0">
                 <Button block outline color="dark">Dark</Button>
               </Col>
-              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0"></Col>
+              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0" />
             </Row>
             <Row className="align-items-center mt-3">
               <Col col="12" xl className="mb-3 mb-xl-0">
@@ -174,7 +174,7 @@ class Buttons extends Component {
               <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0">
                 <Button block outline active color="dark" aria-pressed="true">Dark</Button>
               </Col>
-              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0"></Col>
+              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0" />
             </Row>
             <Row className="align-items-center mt-3">
               <Col col="12" xl className="mb-3 mb-xl-0">
@@ -204,7 +204,7 @@ class Buttons extends Component {
               <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0">
                 <Button block outline color="dark" disabled>Dark</Button>
               </Col>
-              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0"></Col>
+              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0" />
             </Row>
           </CardBody>
         </Card>
@@ -245,7 +245,7 @@ class Buttons extends Component {
               <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0">
                 <Button block color="ghost-dark">Dark</Button>
               </Col>
-              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0"></Col>
+              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0" />
             </Row>
             <Row className="align-items-center mt-3">
               <Col col="12" xl className="mb-3 mb-xl-0">
@@ -275,7 +275,7 @@ class Buttons extends Component {
               <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0">
                 <Button block active color="ghost-dark" aria-pressed="true">Dark</Button>
               </Col>
-              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0"></Col>
+              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0" />
             </Row>
             <Row className="align-items-center mt-3">
               <Col col="12" xl className="mb-3 mb-xl-0">
@@ -305,7 +305,7 @@ class Buttons extends Component {
               <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0">
                 <Button block color="ghost-dark" disabled>Dark</Button>
               </Col>
-              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0"></Col>
+              <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0" />
             </Row>
           </CardBody>
         </Card>
@@ -599,27 +599,27 @@ class Buttons extends Component {
             <Row className="align-items-center mt-3">
               <Col sm xs="12" className="text-center mt-3">
                 <Button color="primary">
-                  <i className="fa fa-lightbulb-o"></i>&nbsp;Standard Button
+                  <i className="fa fa-lightbulb-o" />&nbsp;Standard Button
                 </Button>
               </Col>
               <Col sm xs="12" className="text-center mt-3">
                 <Button color="secondary" outline>
-                  <i className="fa fa-lightbulb-o"></i>&nbsp;Outline Button
+                  <i className="fa fa-lightbulb-o" />&nbsp;Outline Button
                 </Button>
               </Col>
               <Col sm xs="12" className="text-center mt-3">
                 <Button color="ghost-success">
-                  <i className="fa fa-lightbulb-o"></i>&nbsp;Ghost Button
+                  <i className="fa fa-lightbulb-o" />&nbsp;Ghost Button
                 </Button>
               </Col>
               <Col sm xs="12" className="text-center mt-3">
                 <Button color="warning" className="btn-square">
-                  <i className="fa fa-lightbulb-o"></i>&nbsp;Square Button
+                  <i className="fa fa-lightbulb-o" />&nbsp;Square Button
                 </Button>
               </Col>
               <Col sm xs="12" className="text-center mt-3">
                 <Button color="danger" className="btn-pill">
-                  <i className="fa fa-lightbulb-o"></i>&nbsp;Pill Button
+                  <i className="fa fa-lightbulb-o" />&nbsp;Pill Button
                 </Button>
               </Col>
             </Row>

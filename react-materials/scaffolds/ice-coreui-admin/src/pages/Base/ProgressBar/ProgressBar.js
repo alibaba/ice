@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, Progress } from 'reactstrap';
 
 class ProgressBar extends Component {
-
   render() {
     return (
       <div className="animated fadeIn">
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong>Progress</strong>
+            <i className="fa fa-align-justify" />
+            <strong>Progress</strong>
             <div className="card-header-actions">
-              <a href="https://reactstrap.github.io/components/progress/" rel="noreferrer noopener" target="_blank" className="card-header-action">
+              <a
+                rel="noreferrer noopener"
+                target="_blank"
+                className="card-header-action"
+              >
                 <small className="text-muted">docs</small>
               </a>
             </div>
@@ -38,7 +42,8 @@ class ProgressBar extends Component {
         </Card>
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong>Progress</strong>
+            <i className="fa fa-align-justify" />
+            <strong>Progress</strong>
             <small> color variants</small>
           </CardHeader>
           <CardBody>
@@ -51,26 +56,46 @@ class ProgressBar extends Component {
         </Card>
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong>Progress</strong>
+            <i className="fa fa-align-justify" />
+            <strong>Progress</strong>
             <small> labels</small>
           </CardHeader>
           <CardBody>
-            <Progress value="25" className="mb-3">25%</Progress>
-            <Progress value={50} className="mb-3">1/2</Progress>
-            <Progress value={75} className="mb-3">You're almost there!</Progress>
-            <Progress color="success" value="100" className="mb-3">You did it!</Progress>
+            <Progress value="25" className="mb-3">
+              25%
+            </Progress>
+            <Progress value={50} className="mb-3">
+              1/2
+            </Progress>
+            <Progress value={75} className="mb-3">
+              You're almost there!
+            </Progress>
+            <Progress color="success" value="100" className="mb-3">
+              You did it!
+            </Progress>
             <Progress multi className="mb-3">
-              <Progress bar value="15">Meh</Progress>
-              <Progress bar color="success" value="30">Wow!</Progress>
-              <Progress bar color="info" value="25">Cool</Progress>
-              <Progress bar color="warning" value="20">20%</Progress>
-              <Progress bar color="danger" value="5">!!</Progress>
+              <Progress bar value="15">
+                Meh
+              </Progress>
+              <Progress bar color="success" value="30">
+                Wow!
+              </Progress>
+              <Progress bar color="info" value="25">
+                Cool
+              </Progress>
+              <Progress bar color="warning" value="20">
+                20%
+              </Progress>
+              <Progress bar color="danger" value="5">
+                !!
+              </Progress>
             </Progress>
           </CardBody>
         </Card>
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong>Progress</strong>
+            <i className="fa fa-align-justify" />
+            <strong>Progress</strong>
             <small> striped</small>
           </CardHeader>
           <CardBody>
@@ -89,7 +114,8 @@ class ProgressBar extends Component {
         </Card>
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong>Progress</strong>
+            <i className="fa fa-align-justify" />
+            <strong>Progress</strong>
             <small> animated</small>
           </CardHeader>
           <CardBody>
@@ -108,7 +134,8 @@ class ProgressBar extends Component {
         </Card>
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong>Progress</strong>
+            <i className="fa fa-align-justify" />
+            <strong>Progress</strong>
             <small> multiple bars / stacked</small>
           </CardHeader>
           <CardBody>
@@ -122,22 +149,37 @@ class ProgressBar extends Component {
             </Progress>
             <div className="text-center">With Labels</div>
             <Progress multi>
-              <Progress bar value="15">Meh</Progress>
-              <Progress bar color="success" value="35">Wow!</Progress>
-              <Progress bar color="warning" value="25">25%</Progress>
-              <Progress bar color="danger" value="25">LOOK OUT!!</Progress>
+              <Progress bar value="15">
+                Meh
+              </Progress>
+              <Progress bar color="success" value="35">
+                Wow!
+              </Progress>
+              <Progress bar color="warning" value="25">
+                25%
+              </Progress>
+              <Progress bar color="danger" value="25">
+                LOOK OUT!!
+              </Progress>
             </Progress>
             <div className="text-center">Stripes and Animations</div>
             <Progress multi>
-              <Progress bar striped value="15">Stripes</Progress>
-              <Progress bar animated color="success" value="30">Animated Stripes</Progress>
-              <Progress bar color="info" value="25">Plain</Progress>
+              <Progress bar striped value="15">
+                Stripes
+              </Progress>
+              <Progress bar animated color="success" value="30">
+                Animated Stripes
+              </Progress>
+              <Progress bar color="info" value="25">
+                Plain
+              </Progress>
             </Progress>
           </CardBody>
         </Card>
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong>Progress</strong>
+            <i className="fa fa-align-justify" />
+            <strong>Progress</strong>
             <small> max value</small>
           </CardHeader>
           <CardBody>
@@ -152,10 +194,18 @@ class ProgressBar extends Component {
 
             <div className="text-center">Various (40) of 55</div>
             <Progress multi>
-              <Progress bar value="5" max={55}>5</Progress>
-              <Progress bar color="success" value="15" max={55}>15</Progress>
-              <Progress bar color="warning" value="10" max={55}>10</Progress>
-              <Progress bar color="danger" value="10" max={55}>10</Progress>
+              <Progress bar value="5" max={55}>
+                5
+              </Progress>
+              <Progress bar color="success" value="15" max={55}>
+                15
+              </Progress>
+              <Progress bar color="warning" value="10" max={55}>
+                10
+              </Progress>
+              <Progress bar color="danger" value="10" max={55}>
+                10
+              </Progress>
             </Progress>
           </CardBody>
         </Card>

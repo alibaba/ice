@@ -1,6 +1,6 @@
 import React from 'react';
+import { shallow } from 'enzyme';
 import Colors from './Colors';
-import { shallow } from 'enzyme'
 
 it('renders without crashing', () => {
   shallow(<Colors />);

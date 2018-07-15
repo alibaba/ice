@@ -4,5 +4,5 @@ import Buttons from './Buttons';
 import BrandButtons from './BrandButtons';
 
 export {
-  ButtonDropdowns, ButtonGroups, Buttons, BrandButtons
-}
+  ButtonDropdowns, ButtonGroups, Buttons, BrandButtons,
+};

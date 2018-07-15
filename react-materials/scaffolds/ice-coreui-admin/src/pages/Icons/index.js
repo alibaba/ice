@@ -4,5 +4,5 @@ import FontAwesome from './FontAwesome';
 import SimpleLineIcons from './SimpleLineIcons';
 
 export {
-  CoreUIIcons, Flags, FontAwesome, SimpleLineIcons
+  CoreUIIcons, Flags, FontAwesome, SimpleLineIcons,
 };

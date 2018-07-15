@@ -29,14 +29,14 @@ class Widget04 extends Component {
     const { className, cssModule, header, icon, color, value, children, invert, ...attributes } = this.props;
 
     // demo purposes only
-    const progress = { style: '', color: color, value: value };
-    const card = { style: '', bgColor: '', icon: icon };
+    const progress = { style: '', color, value };
+    const card = { style: '', bgColor: '', icon };
 
     if (invert) {
       progress.style = 'progress-white';
       progress.color = '';
       card.style = 'text-white';
-      card.bgColor = 'bg-' + color;
+      card.bgColor = `bg-${color}`;
     }
 
     const classes = mapToCssModules(classNames(className, card.style, card.bgColor), cssModule);
@@ -46,7 +46,7 @@ class Widget04 extends Component {
       <Card className={classes} {...attributes}>
         <CardBody>
           <div className="h1 text-muted text-right mb-2">
-            <i className={card.icon}></i>
+            <i className={card.icon} />
           </div>
           <div className="h4 mb-0">{header}</div>
           <small className="text-muted text-uppercase font-weight-bold">{children}</small>
