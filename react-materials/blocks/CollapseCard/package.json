@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/collapse-card-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "折叠型卡片的信息展示",
   "files": [
     "src/",
@@ -41,10 +41,6 @@
     "categories": [
       "信息展示"
     ]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

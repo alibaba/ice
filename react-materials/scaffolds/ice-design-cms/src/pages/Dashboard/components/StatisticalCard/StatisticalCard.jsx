@@ -9,29 +9,25 @@ const dataSource = [
   {
     text: '昨日浏览次数',
     number: '6,657',
-    imgUrl:
-      'https://img.alicdn.com/tfs/TB1tlVMcgmTBuNjy1XbXXaMrVXa-140-140.png',
+    imgUrl: require('./images/TB1tlVMcgmTBuNjy1XbXXaMrVXa-140-140.png'),
     desc: '相关说明',
   },
   {
     text: '总访问数',
     number: '12,896',
-    imgUrl:
-      'https://img.alicdn.com/tfs/TB1Py4_ceuSBuNjy1XcXXcYjFXa-142-140.png',
+    imgUrl: require('./images//TB1Py4_ceuSBuNjy1XcXXcYjFXa-142-140.png'),
     desc: '相关说明',
   },
   {
     text: '总订阅数',
     number: '9,157',
-    imgUrl:
-      'https://img.alicdn.com/tfs/TB1Ni4_ceuSBuNjy1XcXXcYjFXa-142-140.png',
+    imgUrl: require('./images/TB1Ni4_ceuSBuNjy1XcXXcYjFXa-142-140.png'),
     desc: '相关说明',
   },
   {
     text: '总收入数',
     number: '6,682',
-    imgUrl:
-      'https://img.alicdn.com/tfs/TB1iFKccamWBuNjy1XaXXXCbXXa-140-140.png',
+    imgUrl: require('./images/TB1iFKccamWBuNjy1XaXXXCbXXa-140-140.png'),
     desc: '相关说明',
   },
 ];

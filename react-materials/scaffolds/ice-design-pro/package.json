@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/pro-scaffold",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "该模板内置了丰富的区块，主要用于展示现有区块的分类以及区块组合的效果，使用时需要根据需求进行删除和添加",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-pro.html",
   "dependencies": {
@@ -26,14 +26,14 @@
     "invariant": "^2.2.4",
     "lodash": "^4.17.10",
     "path-to-regexp": "^2.2.1",
-    "prop-types": "^15.5.8",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "5.0.0-alpha.6",
     "redux": "3.6.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "react": "^16.4.1",
+    "react-document-title": "^2.0.3",
+    "react-dom": "^16.4.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
@@ -44,7 +44,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.6.0-2"
+    "ice-scripts": "^1.6.0"
   },
   "scripts": {
     "start": "ice dev",
@@ -57,7 +57,8 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "src/index.js"
+    "entry": "src/index.js",
+    "localization": true
   },
   "scaffoldConfig": {
     "name": "ice-design-pro",

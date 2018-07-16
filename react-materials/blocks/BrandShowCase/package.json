@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/brand-show-case-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "files": [
     "src/",
@@ -42,10 +42,6 @@
       "信息展示",
       "欢迎页"
     ]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

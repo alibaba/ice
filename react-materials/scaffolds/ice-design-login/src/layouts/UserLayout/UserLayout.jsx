@@ -16,7 +16,7 @@ export default class UserLayout extends Component {
           <a href="#" className="meta">
             <img
               className="logo"
-              src="https://img.alicdn.com/tfs/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png"
+              src={require('./images/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png')}
               alt="logo"
             />
             <span className="title">飞冰</span>
@@ -38,7 +38,7 @@ const styles = {
     paddingTop: '100px',
     background: '#f0f2f5',
     backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png)',
+      `url(${require('./images/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png')})`,
     backgroundSize: 'contain',
   },
 };

@@ -12,10 +12,6 @@
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/ice"

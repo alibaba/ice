@@ -20,8 +20,7 @@ export default class SimpleVideoPlayer extends Component {
     this.state = {
       isMobile: false,
       currentVideo: {
-        poster:
-          'https://img.alicdn.com/tfs/TB1UctgfwmTBuNjy1XbXXaMrVXa-754-420.png',
+        poster: require('./images/TB1UctgfwmTBuNjy1XbXXaMrVXa-754-420.png'),
         title: '这里是示例视频1的视频标题',
         duration: '10:54',
         sources: [
@@ -121,8 +120,7 @@ const styles = {
 
 const mockVideoData = [
   {
-    poster:
-      'https://img.alicdn.com/tfs/TB1UctgfwmTBuNjy1XbXXaMrVXa-754-420.png',
+    poster: require('./images/TB1UctgfwmTBuNjy1XbXXaMrVXa-754-420.png'),
     title: '这里是示例视频1的视频标题',
     duration: '10:54',
     sources: [
@@ -133,8 +131,7 @@ const mockVideoData = [
     ],
   },
   {
-    poster:
-      'https://img.alicdn.com/tfs/TB1qEJ4fqmWBuNjy1XaXXXCbXXa-754-420.png',
+    poster: require('./images/TB1qEJ4fqmWBuNjy1XaXXXCbXXa-754-420.png'),
     title: '这里是示例视频2的视频标题',
     duration: '03:54',
     sources: [
@@ -145,8 +142,7 @@ const mockVideoData = [
     ],
   },
   {
-    poster:
-      'https://img.alicdn.com/tfs/TB1yHhWfuuSBuNjy1XcXXcYjFXa-754-420.png',
+    poster: require('./images/TB1yHhWfuuSBuNjy1XcXXcYjFXa-754-420.png'),
     title: '这里是示例视频3的视频标题',
     duration: '10:54',
     sources: [
@@ -157,8 +153,7 @@ const mockVideoData = [
     ],
   },
   {
-    poster:
-      'https://img.alicdn.com/tfs/TB1FdDTfDtYBeNjy1XdXXXXyVXa-754-420.png',
+    poster: require('./images/TB1FdDTfDtYBeNjy1XdXXXXyVXa-754-420.png'),
     title: '这里是示例视频4的视频标题',
     duration: '03:54',
     sources: [
