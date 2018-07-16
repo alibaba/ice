@@ -1,0 +1,41 @@
+{
+  "name": "@icedesign/masonry-block",
+  "version": "1.0.0",
+  "description": "自适应的动态瀑布流效果",
+  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3",
+    "@icedesign/container": "^0.1.2",
+    "react-masonry-component": "^6.2.1"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "masonry",
+    "title": "瀑布流",
+    "categories": [
+      "瀑布流"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1rz05EFmWBuNjSspdXXbugXXa-1908-953.png"
+  }
+}
