@@ -18,7 +18,7 @@ module.exports = (opts = {}) => {
 
       if (pkgData.proxyConfig) {
         console.log(
-          colors.blue('\nTIPS:'),
+          colors.blue('\nINFO:'),
           '读取 package.json 里 proxyConfig 代理配置.'
         );
 
