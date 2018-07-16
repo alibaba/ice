@@ -29,7 +29,7 @@ module.exports = function getEntry(cwd) {
     }
 
     if (entry) {
-      console.log(colors.blue('TIPS:'), 'package.json 存在 entry 配置');
+      console.log(colors.blue('INFO:'), 'package.json 存在 entry 配置');
       return entry;
     }
   }
