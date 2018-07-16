@@ -2310,6 +2310,10 @@ file-loader@^1.1.11:
     loader-utils "^1.0.2"
     schema-utils "^0.4.5"
 
+file-type@^8.1.0:
+  version "8.1.0"
+  resolved "http://registry.npm.alibaba-inc.com/file-type/download/file-type-8.1.0.tgz#244f3b7ef641bbe0cca196c7276e4b332399f68c"
+
 filename-regex@^2.0.0:
   version "2.0.1"
   resolved "http://registry.npm.alibaba-inc.com/filename-regex/download/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
