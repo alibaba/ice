@@ -17,8 +17,8 @@
 │   └── index.html   # html temlpate
 │
 ├── src/             # project root
-│   ├── assets/      # container source
-│   ├── containers/  # container source
+│   ├── assets/      # assets source
+│   ├── layouts/     # layouts source
 │   ├── pages/       # pages source
 │   ├── scss/        # user scss/css source
 │   ├── App.css

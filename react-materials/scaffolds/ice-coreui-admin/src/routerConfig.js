@@ -2,7 +2,7 @@
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
-import DefaultLayout from './containers/DefaultLayout';
+import DefaultLayout from './layouts/DefaultLayout';
 import Breadcrumbs from './pages/Base/Breadcrumbs';
 import Cards from './pages/Base/Cards';
 import Carousels from './pages/Base/Carousels';

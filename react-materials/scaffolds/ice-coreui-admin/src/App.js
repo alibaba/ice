@@ -15,8 +15,8 @@ import './App.css';
 // Import Main styles for this application
 import './scss/style.css';
 
-// Containers
-import DefaultLayout from './containers';
+// layouts
+import DefaultLayout from './layouts';
 // Pages
 import { Login, Page404, Page500, Register } from './pages/Pages';
 
