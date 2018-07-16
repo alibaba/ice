@@ -1,10 +1,12 @@
 {
   "name": "@icedesign/coreui-admin-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "该模板基于社区的 CoreUI 改造而成，支持 CoreUI 的所有功能，同时也支持飞冰基础组件和区块的使用， 支持 Iceworks 一键创建项目和完整的 GUI 操作",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-coreui-admin/index.html",
   "license": "MIT",
-  "keywords": ["ice-scaffold"],
+  "keywords": [
+    "ice-scaffold"
+  ],
   "dependencies": {
     "@coreui/coreui": "^2.0.4",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
