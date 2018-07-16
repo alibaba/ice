@@ -16,7 +16,10 @@ const URL_LOADER = require.resolve('url-loader');
 const URL_LOADER_LIMIT = 8192;
 
 function withCssHotLoader(loaders) {
-  if (process.env.NODE_ENV !== 'production') {
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    process.env.HOT_RELOAD !== 'false'
+  ) {
     return [CSS_HOT_LOADER].concat(loaders);
   }
   return loaders;
