@@ -5,6 +5,7 @@ const mkdirp = require('mkdirp');
 const moment = require('moment');
 const uppercamelcase = require('uppercamelcase');
 const rp = require('request-promise');
+const pathExists = require('path-exists');
 const depAnalyze = require('../shared/dep-analyze');
 const { checkAndQueryNpmTime } = require('../shared/utils');
 
@@ -32,28 +33,7 @@ function generateBlocks(files, SPACE, type, done) {
   const result = [];
   files.forEach((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
-    const componentDeps = depAnalyze(
-      path.resolve(SPACE, pkgPath, '../src/index.js')
-    );
-
-    const useComponents = componentDeps.map((mod) => {
-      let basePackage = '';
-      let className = '';
-      if (mod.startsWith('@icedesign/base')) {
-        basePackage = '@icedesign/base';
-        const subCom = /@icedesign\/base\/lib\/(.*)/.exec(mod)[1];
-        className = uppercamelcase(subCom);
-      } else {
-        basePackage = mod;
-        const subCom = /@icedesign\/(.*)/.exec(mod)[1];
-        className = uppercamelcase(subCom);
-      }
-
-      return {
-        basePackage,
-        className,
-      };
-    });
+    const indexPoint = path.resolve(SPACE, pkgPath, '../src/index.js');
 
     // blockConfig or layoutConfig
     const configKey = `${type}Config`;
@@ -79,10 +59,33 @@ function generateBlocks(files, SPACE, type, done) {
 
       categories: pkgConfig.categories || [],
       // publishTime: pkg.publishTime || new Date().toISOString(),
-      features: {
-        useComponents,
-      },
     };
+
+    if (pathExists.sync(indexPoint)) {
+      const componentDeps = depAnalyze(indexPoint);
+      const useComponents = componentDeps.map((mod) => {
+        let basePackage = '';
+        let className = '';
+        if (mod.startsWith('@icedesign/base')) {
+          basePackage = '@icedesign/base';
+          const subCom = /@icedesign\/base\/lib\/(.*)/.exec(mod)[1];
+          className = uppercamelcase(subCom);
+        } else {
+          basePackage = mod;
+          const subCom = /@icedesign\/(.*)/.exec(mod)[1];
+          className = uppercamelcase(subCom);
+        }
+
+        return {
+          basePackage,
+          className,
+        };
+      });
+
+      payload.features = {
+        useComponents,
+      };
+    }
 
     generatePartciple(payload, {
       title: pkgConfig.title,
@@ -275,8 +278,7 @@ function generateScaffolds(files, SPACE, done) {
 function gatherBlocksOrLayouts(pattern, SPACE, type) {
   return new Promise((resolve, reject) => {
     glob(
-      pattern,
-      {
+      pattern, {
         cwd: SPACE,
         nodir: true,
       },
@@ -300,8 +302,7 @@ function gatherBlocksOrLayouts(pattern, SPACE, type) {
 function gatherScaffolds(pattern, SPACE) {
   return new Promise((resolve, reject) => {
     glob(
-      pattern,
-      {
+      pattern, {
         cwd: SPACE,
         nodir: true,
       },
@@ -349,39 +350,39 @@ module.exports = function main(materialName, materialPath, options) {
 
   return (
     Promise.resolve(materialPath)
-      .then((space) => {
-        return Promise.all([
-          gatherBlocksOrLayouts('blocks/*/package.json', space, 'block'),
-          gatherBlocksOrLayouts('layouts/*/package.json', space, 'layout'),
-          gatherScaffolds('scaffolds/*/package.json', space),
-        ]);
-      })
-      // .then(([blocks, layouts, scaffolds]) => {
-      //   // 补充字段
-      //   return Promise.all([
-      //     Promise.all(blocks.map(appendFieldFromNpm)),
-      //     Promise.all(layouts.map(appendFieldFromNpm)),
-      //     Promise.all(scaffolds.map(appendFieldFromNpm)),
-      //   ]);
-      // })
-      .then(([blocks, layouts, scaffolds]) => {
-        const data = {
-          name: materialName, // 物料池名
-          type: options.type, // vue or react,...
-          blocks,
-          layouts,
-          scaffolds,
-        };
+    .then((space) => {
+      return Promise.all([
+        gatherBlocksOrLayouts('blocks/*/package.json', space, 'block'),
+        gatherBlocksOrLayouts('layouts/*/package.json', space, 'layout'),
+        gatherScaffolds('scaffolds/*/package.json', space),
+      ]);
+    })
+    // .then(([blocks, layouts, scaffolds]) => {
+    //   // 补充字段
+    //   return Promise.all([
+    //     Promise.all(blocks.map(appendFieldFromNpm)),
+    //     Promise.all(layouts.map(appendFieldFromNpm)),
+    //     Promise.all(scaffolds.map(appendFieldFromNpm)),
+    //   ]);
+    // })
+    .then(([blocks, layouts, scaffolds]) => {
+      const data = {
+        name: materialName, // 物料池名
+        type: options.type, // vue or react,...
+        blocks,
+        layouts,
+        scaffolds,
+      };
 
-        const file = path.join(distDir, materialName + '.json');
-        fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
+      const file = path.join(distDir, materialName + '.json');
+      fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
 
-        console.log(
-          `${materialName} 物料数据生成完毕. Marterials DB Generated.\n${file}`
-        );
-      })
-      .catch((err) => {
-        console.log('uncaught error:\n', err.stack);
-      })
+      console.log(
+        `${materialName} 物料数据生成完毕. Marterials DB Generated.\n${file}`
+      );
+    })
+    .catch((err) => {
+      console.log('uncaught error:\n', err.stack);
+    })
   );
 };

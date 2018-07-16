@@ -49,7 +49,8 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "semver-regex": "^1.0.0",
-    "uppercamelcase": "^3.0.0"
+    "uppercamelcase": "^3.0.0",
+    "path-exists": "^3.0.0"
   },
   "config": {
     "ghooks": {
@@ -67,6 +68,10 @@
     {
       "directory": "vue-materials",
       "type": "vue"
+    },
+    {
+      "directory": "angular-materials",
+      "type": "angular"
     }
   ]
 }

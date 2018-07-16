@@ -13,7 +13,7 @@ export default class AblityItems extends Component {
         <div className="hy-ability-item" style={style.hyAbilityItemStyle}>
           <img
             alt=""
-            src="https://gw.alipayobjects.com/zos/rmsportal/aWimbMGxabytxrRqcnEU.svg"
+            src={require('./images/aWimbMGxabytxrRqcnEU.svg')}
             style={style.hyAbilityItemImgStyle}
           />
           <h3 style={style.hyAbilityItemTitleStyle}>能力输出</h3>
@@ -25,7 +25,7 @@ export default class AblityItems extends Component {
         <div className="hy-ability-item" style={style.hyAbilityItemStyle}>
           <img
             alt=""
-            src="https://gw.alipayobjects.com/zos/rmsportal/neNAdNbBxUbWpbUQIsJA.svg"
+            src={require('./images/neNAdNbBxUbWpbUQIsJA.svg')}
             style={style.hyAbilityItemImgStyle}
           />
           <h3 style={style.hyAbilityItemTitleStyle}>政策扶持</h3>
@@ -37,7 +37,7 @@ export default class AblityItems extends Component {
         <div className="hy-ability-item" style={style.hyAbilityItemStyle}>
           <img
             alt=""
-            src="https://gw.alipayobjects.com/zos/rmsportal/SsStefBxcUWayMyktAwz.svg"
+            src={require('./images/SsStefBxcUWayMyktAwz.svg')}
             style={style.hyAbilityItemImgStyle}
           />
           <h3 style={style.hyAbilityItemTitleStyle}>资源整合</h3>

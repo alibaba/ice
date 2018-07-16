@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/tab-article-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "tab和文章列表组合",
   "files": [
     "src/",
@@ -41,10 +41,6 @@
     "categories": [
       "列表"
     ]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

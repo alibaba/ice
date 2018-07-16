@@ -143,7 +143,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                     width: '42px',
                     height: '42px',
                   }}
-                  src="https://img.alicdn.com/tfs/TB1EchcpeuSBuNjy1XcXXcYjFXa-200-200.png"
+                  src={require('./images/TB1EchcpeuSBuNjy1XcXXcYjFXa-200-200.png')}
                   alt=""
                 />
               </div>

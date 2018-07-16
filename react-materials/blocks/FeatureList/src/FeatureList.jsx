@@ -29,7 +29,7 @@ export default class FeatureList extends Component {
           <div style={styles.featureListWrapper}>
             <div style={styles.featureItem}>
               <img
-                src="https://img.alicdn.com/tfs/TB1b7O4if5TBuNjSspmXXaDRVXa-172-170.png"
+                src={require('./images/TB1b7O4if5TBuNjSspmXXaDRVXa-172-170.png')}
                 alt=""
                 style={{ width: 86, height: 85 }}
               />
@@ -38,7 +38,7 @@ export default class FeatureList extends Component {
             </div>
             <div style={styles.featureItem}>
               <img
-                src="https://img.alicdn.com/tfs/TB1PnOuik9WBuNjSspeXXaz5VXa-180-146.png"
+                src={require('./images/TB1PnOuik9WBuNjSspeXXaz5VXa-180-146.png')}
                 alt=""
                 style={{ width: 90, height: 73 }}
               />
@@ -47,7 +47,7 @@ export default class FeatureList extends Component {
             </div>
             <div style={styles.featureItem}>
               <img
-                src="https://img.alicdn.com/tfs/TB1GUF9ibSYBuNjSspiXXXNzpXa-160-136.png"
+                src={require('./images/TB1GUF9ibSYBuNjSspiXXXNzpXa-160-136.png')}
                 alt=""
                 style={{ width: 80, height: 68 }}
               />

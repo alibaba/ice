@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/join-us-block",
-  "version": "0.1.10",
+  "version": "0.1.2",
   "description": "",
   "files": [
     "src/",
@@ -42,10 +42,6 @@
     "categories": [
       "表单"
     ]
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
   },
   "publishConfig": {
     "access": "public",

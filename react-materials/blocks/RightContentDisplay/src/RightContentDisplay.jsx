@@ -14,7 +14,7 @@ export default class RightContentDisplay extends Component {
         <div className="right-content-display-content" style={styles.content}>
           <div style={styles.col}>
             <img
-              src="https://img.alicdn.com/tfs/TB1MgyDjsLJ8KJjy0FnXXcFDpXa-618-1046.png"
+              src={require('./images/TB1MgyDjsLJ8KJjy0FnXXcFDpXa-618-1046.png')}
               alt="img"
               style={styles.image}
             />
