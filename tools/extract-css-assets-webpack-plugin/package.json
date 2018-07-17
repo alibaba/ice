@@ -45,6 +45,7 @@
     "webpack": "^4.10.2"
   },
   "dependencies": {
+    "chalk": "^2.4.1",
     "file-type": "^8.1.0",
     "postcss": "^6.0.22",
     "request": "^2.87.0",
