@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/message-list-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "消息列表",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/MessageList"
   },
   "license": "MIT",
   "keywords": [

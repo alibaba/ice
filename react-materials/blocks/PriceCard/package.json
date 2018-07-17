@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/price-card-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PriceCard"
   },
   "license": "MIT",
   "keywords": [

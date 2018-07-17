@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/simple-fluency-form-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "SimpleFluencyForm",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SimpleFluencyForm"
   },
   "license": "MIT",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/content-list-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "筛选和列表组合",
   "author": {
     "name": "ICE Team",
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ContentList"
   },
   "license": "MIT",
   "keywords": [

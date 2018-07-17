@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/tree-card-list-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "树形卡片列表",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TreeCardList"
   },
   "license": "MIT",
   "keywords": [

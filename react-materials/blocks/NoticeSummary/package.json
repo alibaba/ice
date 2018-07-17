@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/notice-summary-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "用于通知摘要展示",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/NoticeSummary"
   },
   "license": "MIT",
   "keywords": [

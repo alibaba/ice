@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/sales-stat-chart-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "显示销售数据或者类似形式数据的图表模块",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SalesStatChart"
   },
   "license": "MIT",
   "keywords": [

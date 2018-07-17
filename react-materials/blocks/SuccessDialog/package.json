@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/success-dialog-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "提示框-成功",
   "main": "lib/index.js",
   "files": [
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SuccessDialog"
   },
   "license": "MIT",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/info-display-table-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "两栏信息展示型表格",
   "main": "lib/index.js",
   "files": [
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/InfoDisplayTable"
   },
   "license": "MIT",
   "keywords": [

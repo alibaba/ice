@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/display-card-block",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "展示型卡片",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/DisplayCard"
   },
   "license": "MIT",
   "keywords": [

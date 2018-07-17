@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/basic-tab-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "基础 Tab 组件",
   "main": "lib/index.js",
   "files": [
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BasicTab"
   },
   "license": "MIT",
   "keywords": [

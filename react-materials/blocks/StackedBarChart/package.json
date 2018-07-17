@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/stacked-bar-chart-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/StackedBarChart"
   },
   "license": "MIT",
   "keywords": [
