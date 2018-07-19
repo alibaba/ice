@@ -47,5 +47,6 @@
       "视频"
     ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/simple-video-player/preview"
 }

@@ -47,5 +47,6 @@
       "数据展示"
     ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/sales-stat-chart/preview"
 }

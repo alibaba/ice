@@ -44,5 +44,6 @@
       "信息展示"
     ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/asset-info-display/preview"
 }

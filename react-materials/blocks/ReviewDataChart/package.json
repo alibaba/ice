@@ -43,5 +43,6 @@
   },
   "devDependencies": {
     "babel-plugin-transform-remove-strict-mode": "^0.0.2"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/review-data-chart/preview"
 }
