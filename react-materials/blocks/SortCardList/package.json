@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/sort-card-list-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "拖拽排序卡片列表",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SortCardList"
   },
   "license": "MIT",
   "keywords": [
@@ -45,5 +45,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/sort-card-list/preview"
 }

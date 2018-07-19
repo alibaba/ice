@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/quill-rich-text-editor-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于 react-quill 的富文本编辑器",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/QuillRichTextEditor"
   },
   "license": "MIT",
   "keywords": [
@@ -37,5 +37,6 @@
       "富文本编辑器"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1aeYJD4GYBuNjy0FnXXX5lpXa-2866-752.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/quill-rich-text-editor/preview"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/overview-card-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "数据概览卡片",
   "author": {
     "name": "ICE Team",
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/verviewCard"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/OverviewCard"
   },
   "license": "MIT",
   "keywords": [
@@ -39,5 +39,6 @@
       "数据展示"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1np7YxKuSBuNjy1XcXXcYjFXa-2504-294.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/overview-card/preview"
 }

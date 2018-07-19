@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/text-search-list-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "文字搜索列表",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TextSearchList"
   },
   "license": "MIT",
   "keywords": [
@@ -44,5 +44,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/text-search-list/preview"
 }

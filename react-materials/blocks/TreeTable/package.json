@@ -1,18 +1,25 @@
 {
   "name": "@react-materials/tree-table-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "tree和选择混合表格",
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
-  "files": ["src/", "lib/"],
+  "files": [
+    "src/",
+    "lib/"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TreeTable"
   },
   "license": "MIT",
-  "keywords": ["ice", "react", "block"],
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -28,8 +35,10 @@
   "blockConfig": {
     "name": "tree-table",
     "title": "树状表格",
-    "categories": ["表格"],
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1xDkQuuySBuNjy1zdXXXPxFXa-2872-1096.png"
-  }
+    "categories": [
+      "表格"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1xDkQuuySBuNjy1zdXXXPxFXa-2872-1096.png"
+  },
+  "homepage": "https://alibaba.github.io/ice/block/tree-table/preview"
 }

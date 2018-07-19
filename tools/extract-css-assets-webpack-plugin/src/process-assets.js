@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import fileType from 'file-type';
 import path from 'path';
 import postcss from 'postcss';
 import request from 'request-promise';
@@ -54,8 +55,13 @@ export default postcss.plugin(
                 : `http:${originUrl}`;
               return request.get({ url, encoding: null }).then((res) => {
                 const buffer = Buffer.from(res, 'utf-8');
-                const ext = path.extname(url);
+                const fileExtName = path.extname(url);
+                const fileExtType = fileType(buffer);
                 const md5 = crypto.createHash('md5');
+                const ext =
+                  fileExtType && fileExtType.ext
+                    ? `.${fileExtType.ext}`
+                    : fileExtName;
                 const basename = md5.update(buffer).digest('hex') + ext;
 
                 const contextPath = path
