@@ -24,7 +24,6 @@
   "dependencies": {
     "@icedesign/base": "^0.2.3",
     "@icedesign/container": "^0.1.2",
-    "lodash": "^4.17.10",
     "react-grid-layout": "^0.16.6"
   },
   "peerDependencies": {
