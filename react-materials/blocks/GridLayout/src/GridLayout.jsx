@@ -2,15 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import { Button } from '@icedesign/base';
-import _ from 'lodash';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import './GridLayout.scss';
 
+function random(start, end) {
+  return Math.floor(Math.random() * (end - start) + start);
+}
+
 function generateLayout() {
-  return _.map(_.range(0, 25), function(item, i) {
+  const data = [...Array(25).keys()];
+
+  return data.map((item, i) => {
     var y = Math.ceil(Math.random() * 4) + 1;
     return {
-      x: (_.random(0, 5) * 2) % 12,
+      x: (random(0, 5) * 2) % 12,
       y: Math.floor(i / 6) * y,
       w: 2,
       h: y,
@@ -45,7 +50,7 @@ export default class BasicGridLayout extends Component {
   }
 
   generateDOM() {
-    return _.map(this.state.layouts.lg, function(l, i) {
+    return this.state.layouts.lg.map((l, i) => {
       return (
         <div key={i} className={l.static ? 'static' : ''}>
           {l.static ? (
