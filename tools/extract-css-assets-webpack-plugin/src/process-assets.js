@@ -49,24 +49,21 @@ export default postcss.plugin(
 
         if (Object.keys(networkRequestMap).length > 0) {
           Promise.all(
-            Object.entries(networkRequestMap).map(
-              ([urlIdentity, networkRequest]) => {
-                const originUrl = networkRequest.url;
-                const url = originUrl.startsWith('http')
-                  ? originUrl
-                  : `http:${originUrl}`;
-                return request
-                  .get({ url, encoding: null, ...options.requsetOptions })
-                  .then((res) => {
-                    const buffer = Buffer.from(res, 'utf-8');
-                    const fileExtName = path.extname(url);
-                    const fileExtType = fileType(buffer);
-                    const md5 = crypto.createHash('md5');
-                    const ext =
-                      fileExtType && fileExtType.ext
-                        ? `.${fileExtType.ext}`
-                        : fileExtName;
-                    const basename = md5.update(buffer).digest('hex') + ext;
+            Object.entries(networkRequestMap).map(([key, networkRequest]) => {
+              const originUrl = networkRequest.url;
+              const url = originUrl.startsWith('http')
+                ? originUrl
+                : `http:${originUrl}`;
+              return request.get({ url, encoding: null }).then((res) => {
+                const buffer = Buffer.from(res, 'utf-8');
+                const fileExtName = path.extname(url);
+                const fileExtType = fileType(buffer);
+                const md5 = crypto.createHash('md5');
+                const ext =
+                  fileExtType && fileExtType.ext
+                    ? `.${fileExtType.ext}`
+                    : fileExtName;
+                const basename = md5.update(buffer).digest('hex') + ext;
 
                     const contextPath = path
                       .join(

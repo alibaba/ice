@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/user-login-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/UserLogin"
   },
   "license": "MIT",
   "keywords": [
@@ -45,5 +45,6 @@
       "登录页"
     ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/user-login/preview"
 }

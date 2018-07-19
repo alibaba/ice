@@ -1,0 +1,6 @@
+{
+  "name": "Alerts",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Alerts.js"
+}
