@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/content-editor-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "内容编辑器",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ContentEditor"
   },
   "license": "MIT",
   "keywords": [
@@ -51,5 +51,6 @@
       "表单"
     ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/content-editor/preview"
 }

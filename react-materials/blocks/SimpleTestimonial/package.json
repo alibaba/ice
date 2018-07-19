@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/simple-testimonial-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SimpleTestimonial"
   },
   "license": "MIT",
   "keywords": [
@@ -45,5 +45,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/simple-testimonial/preview"
 }
