@@ -30,6 +30,7 @@ const switchRoutes = (
         return <Redirect from={prop.path} to={prop.to} key={key} />;
       return <Route path={prop.path} component={prop.component} key={key} />;
     })}
+    <Redirect from="/" to="/dashboard" />
   </Switch>
 );
 

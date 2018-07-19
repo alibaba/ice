@@ -1,6 +1,6 @@
 // 菜单配置
 // defaultMenuConfig：脚手架默认侧边栏配置
-// customMenuConfig：自定义侧边导航配置
+// asideMenuConfig：自定义侧边导航配置
 
 const defaultMenuConfig = {
   items: [
@@ -263,7 +263,7 @@ const defaultMenuConfig = {
   ],
 };
 
-const customMenuConfig = [];
+const asideMenuConfig = [];
 
 /**
  * 转化 name 为 url
@@ -283,7 +283,7 @@ function formatter(data) {
 }
 
 defaultMenuConfig.items = formatter(defaultMenuConfig.items).concat(
-  customMenuConfig
+  asideMenuConfig
 );
 
 export default defaultMenuConfig;

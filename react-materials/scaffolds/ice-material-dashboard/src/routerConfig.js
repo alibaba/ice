@@ -40,12 +40,6 @@ const routerConfig = [
     path: '/upgrade-to-pro',
     component: UpgradeToPro,
   },
-  {
-    redirect: true,
-    path: '/',
-    to: '/dashboard',
-    navbarName: 'Redirect',
-  },
 ];
 
 export default routerConfig;
