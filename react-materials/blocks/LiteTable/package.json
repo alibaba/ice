@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/lite-table-block",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "简单的附带状态的表格",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/LiteTable"
   },
   "license": "MIT",
   "keywords": [
@@ -45,5 +45,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/lite-table/preview"
 }
