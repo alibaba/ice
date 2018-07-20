@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/article-list-block",
-  "version": "0.1.6",
+  "version": "0.1.5",
   "description": "文章列表",
   "main": "lib/index.js",
   "files": [
