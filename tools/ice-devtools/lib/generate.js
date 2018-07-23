@@ -36,7 +36,7 @@ module.exports = function generate(name, src, dest, done) {
   const opts = getOptions(name, src);
 
   const metalsmith = Metalsmith(path.join(src, 'template'));
-
+  metalsmith.frontmatter(false)
   const data = Object.assign(metalsmith.metadata(), {
     name: kebabCase(name).replace(/^-/, ''),
     npmName: kebabCase(name).replace(/^-/, ''),
@@ -136,7 +136,7 @@ function renderTemplateFiles(skipInterpolation) {
   return (files, metalsmith, done) => {
     const keys = Object.keys(files);
     const metalsmithMetadata = metalsmith.metadata();
-    console.log(metalsmithMetadata)
+
     // HACK: need refactor
     Object.keys(metalsmithMetadata).forEach((key) => {
       if (key === 'type') {

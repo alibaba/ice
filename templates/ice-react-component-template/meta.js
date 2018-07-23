@@ -1,4 +1,17 @@
-const uppercamelcase = require('uppercamelcase');
+function camelize(str) {
+  return str
+    .trim()
+    .replace(/^[_.\- ]+/, '')
+    .toLowerCase()
+    .replace(/[_.\- ]+(\w|$)/g, function (m, p1) {
+      return p1.toUpperCase();
+    });
+}
+
+function uppercamelcase(str) {
+  const cased = camelize(str);
+  return cased.charAt(0).toUpperCase() + cased.slice(1);
+}
 
 module.exports = {
   prompts: {

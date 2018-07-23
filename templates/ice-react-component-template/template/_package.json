@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/{{name}}",
-  "version": "{{version}}",
+  "version": "0.0.1",
   "description": "{{description}}",
   "files": ["src/", "lib/"],
   "repository": {
