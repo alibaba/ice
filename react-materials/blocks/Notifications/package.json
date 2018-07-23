@@ -2,24 +2,28 @@
   "name": "@icedesign/notifications-block",
   "version": "0.1.0",
   "description": "",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/Notifications"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
   },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
@@ -35,10 +39,12 @@
   },
   "blockConfig": {
     "name": "notifications",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB14kHgm1uSBuNjSsplXXbe8pXa-2344-570.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB14kHgm1uSBuNjSsplXXbe8pXa-2344-570.png",
     "title": "消息提醒",
-    "categories": ["信息展示"],
+    "categories": [
+      "信息展示"
+    ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/notifications/preview"
 }

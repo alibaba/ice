@@ -14,11 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
-  },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ProgressDataList"
   },
   "license": "MIT",
   "keywords": [
@@ -51,5 +47,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/progress-data-list/preview"
 }

@@ -60,8 +60,7 @@ const styles = {
   wrapper: {
     overflow: 'hidden',
     height: 720,
-    backgroundImage:
-      'url("https://img.alicdn.com/tfs/TB1DgSmSpXXXXaJXpXXXXXXXXXX-2760-1480.jpg")',
+    backgroundImage: `url${require('./images/TB1DgSmSpXXXXaJXpXXXXXXXXXX-2760-1480.jpg')}`,
     position: 'relative',
     backgroundSize: 'cover',
     backgroundColor: '#66ABFF',

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/left-content-display-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/LeftContentDisplay"
   },
   "license": "MIT",
   "keywords": [
@@ -44,12 +44,9 @@
       "欢迎页"
     ]
   },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/left-content-display/preview"
 }

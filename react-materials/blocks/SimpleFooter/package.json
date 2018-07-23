@@ -1,25 +1,29 @@
 {
   "name": "@icedesign/simple-footer-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "LOGO和导航组合的页脚",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SimpleFooter"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
   },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
@@ -35,10 +39,12 @@
   },
   "blockConfig": {
     "name": "simple-footer",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1rnmNouuSBuNjy1XcXXcYjFXa-2390-170.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1rnmNouuSBuNjy1XcXXcYjFXa-2390-170.png",
     "title": "简单页脚",
-    "categories": ["页脚"],
+    "categories": [
+      "页脚"
+    ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/simple-footer/preview"
 }

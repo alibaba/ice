@@ -1,19 +1,27 @@
 {
   "name": "@icedesign/basic-exception-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "基础异常报错",
   "main": "lib/index.js",
-  "files": ["src/", "demo/", "mock/", "lib"],
+  "files": [
+    "src/",
+    "demo/",
+    "mock/",
+    "lib"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BasicException"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
@@ -27,14 +35,16 @@
   },
   "blockConfig": {
     "name": "basic-exception",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB197z8if2H8KJjy0FcXXaDlFXa-1786-914.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB197z8if2H8KJjy0FcXXaDlFXa-1786-914.png",
     "themePackage": "@icedesign/skin",
     "title": "基础异常报错",
-    "categories": ["异常"]
+    "categories": [
+      "异常"
+    ]
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/basic-exception/preview"
 }

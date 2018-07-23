@@ -8,7 +8,7 @@ const dataSource = () => {
     {
       condition: '校验条件',
       validate: true,
-      url: 'https://img.alicdn.com/tps/TB18NwoNFXXXXXoXXXXXXXXXXXX-132-132.png',
+      url: require('./images/TB18NwoNFXXXXXoXXXXXXXXXXXX-132-132.png'),
       operation: '查看',
       description:
         '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案',
@@ -16,7 +16,7 @@ const dataSource = () => {
     {
       condition: '校验条件',
       validate: false,
-      url: 'https://img.alicdn.com/tps/TB1VyMkNFXXXXc8XXXXXXXXXXXX-134-134.png',
+      url: require('./images/TB1VyMkNFXXXXc8XXXXXXXXXXXX-134-134.png'),
       operation: '解决方式链接',
       description:
         '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案',
@@ -24,7 +24,7 @@ const dataSource = () => {
     {
       condition: '身份认证',
       validate: true,
-      url: 'https://img.alicdn.com/tps/TB1QCMfNFXXXXaOXpXXXXXXXXXX-136-136.png',
+      url: require('./images/TB1QCMfNFXXXXaOXpXXXXXXXXXX-136-136.png'),
       operation: '查看',
       description:
         '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案',
@@ -32,7 +32,7 @@ const dataSource = () => {
     {
       condition: '非卖家',
       validate: false,
-      url: 'https://img.alicdn.com/tps/TB1mGnSNFXXXXbMaXXXXXXXXXXX-134-136.png',
+      url: require('./images/TB1mGnSNFXXXXbMaXXXXXXXXXXX-134-136.png'),
       operation: '解决方式链接',
       description:
         '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案',
@@ -40,7 +40,7 @@ const dataSource = () => {
     {
       condition: '18岁以上',
       validate: false,
-      url: 'https://img.alicdn.com/tps/TB1xwQiNFXXXXcfXXXXXXXXXXXX-136-134.png',
+      url: require('./images/TB1xwQiNFXXXXcfXXXXXXXXXXXX-136-134.png'),
       operation: '解决方式链接',
       description:
         '说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案说明以及解决方案',

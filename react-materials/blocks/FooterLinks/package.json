@@ -1,6 +1,6 @@
 {
   "name": "@react-materials/footer-links-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "通用的底部链接区块",
   "author": "muchen <tao360907796@gmail.com>",
   "files": [
@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/FooterLinks"
   },
   "license": "MIT",
   "keywords": [
@@ -33,5 +33,6 @@
       "欢迎页"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1.s1wtbSYBuNjSspfXXcZCpXa-2560-628.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/footer-links/preview"
 }

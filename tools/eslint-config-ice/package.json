@@ -1,0 +1,34 @@
+{
+  "name": "eslint-config-ice",
+  "version": "0.0.5",
+  "description": "React style guide for ice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "eslint",
+    "ice"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "license": "MIT",
+  "peerDevDependencies": {
+    "eslint": "^4.13.1",
+    "babel-eslint": "^8.0.3",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

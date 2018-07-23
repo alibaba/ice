@@ -2,24 +2,28 @@
   "name": "@icedesign/real-time-trade-chart-block",
   "version": "0.1.0",
   "description": "",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/RealTimeTradeChart"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
   },
   "dependencies": {
     "@icedesign/base": "^0.1.0",
@@ -37,10 +41,12 @@
   },
   "blockConfig": {
     "name": "real-time-trade-chart",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1fMHimuuSBuNjy1XcXXcYjFXa-1173-683.gif",
+    "screenshot": "https://img.alicdn.com/tfs/TB1fMHimuuSBuNjy1XcXXcYjFXa-1173-683.gif",
     "title": "实时交易图",
-    "categories": ["图表"],
+    "categories": [
+      "图表"
+    ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/real-time-trade-chart/preview"
 }

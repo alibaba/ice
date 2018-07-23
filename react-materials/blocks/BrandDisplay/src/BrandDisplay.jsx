@@ -10,34 +10,31 @@ const dataSource = [
     title: '飞利浦',
     subject:
       '一场内容营销活动获得超百万的进店点击，定位新广告的达人+积极迎接内容时代的品牌，如何刷新内容营销的定义？',
-    headPic:
-      'https://img.alicdn.com/tfs/TB1QMwlSXXXXXaUXXXXXXXXXXXX-122-122.png',
-    pic: 'https://img.alicdn.com/tfs/TB1n6H_SXXXXXc3XpXXXXXXXXXX-616-348.png',
+    headPic: require('./images/TB1QMwlSXXXXXaUXXXXXXXXXXXX-122-122.png'),
+    pic: require('./images/TB1n6H_SXXXXXc3XpXXXXXXXXXX-616-348.png'),
     url: 'https://alibaba.github.io/ice',
   },
   {
     title: '万家乐',
     subject:
       '策划『生活改造家』主题全案，联合一线大咖制作图文、直播、短视频全域引流，助力品牌升级和高端人群种草，结合行业活动割草。',
-    headPic: 'https://img.alicdn.com/tfs/TB1Z4CLSXXXXXcHXVXXXXXXXXXX-61-61.png',
-    pic: 'https://img.alicdn.com/tfs/TB1bHO6SXXXXXaiXFXXXXXXXXXX-308-174.png',
+    headPic: require('./images/TB1Z4CLSXXXXXcHXVXXXXXXXXXX-61-61.png'),
+    pic: require('./images/TB1bHO6SXXXXXaiXFXXXXXXXXXX-308-174.png'),
     url: 'https://alibaba.github.io/ice',
   },
   {
     title: '职场游乐园',
     subject: '2017年以“职场游乐园”为主题，全方位推动Lee牛仔专家与创新者形象。',
-    headPic:
-      'https://img.alicdn.com/tfs/TB1kX62SXXXXXXJXVXXXXXXXXXX-122-122.png',
-    pic: 'https://img.alicdn.com/tfs/TB17bzrSXXXXXbpaFXXXXXXXXXX-616-348.png',
+    headPic: require('./images/TB1kX62SXXXXXXJXVXXXXXXXXXX-122-122.png'),
+    pic: require('./images/TB17bzrSXXXXXbpaFXXXXXXXXXX-616-348.png'),
     url: 'https://alibaba.github.io/ice',
   },
   {
     title: '品味百味人生',
     subject:
       '吃货的世界你不懂，看着直播镜头里心仪的零食恨不得舔屏，从种草到剁手分分钟一气呵成。',
-    headPic:
-      'https://img.alicdn.com/tfs/TB19C_9SXXXXXc1XpXXXXXXXXXX-122-122.png',
-    pic: 'https://img.alicdn.com/tfs/TB1IkEjSXXXXXb1XXXXXXXXXXXX-616-348.png',
+    headPic: require('./images/TB19C_9SXXXXXc1XpXXXXXXXXXX-122-122.png'),
+    pic: require('./images/TB1IkEjSXXXXXb1XXXXXXXXXXXX-616-348.png'),
     url: 'https://alibaba.github.io/ice',
   },
 ];

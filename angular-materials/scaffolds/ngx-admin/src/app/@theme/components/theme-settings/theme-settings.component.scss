@@ -1,0 +1,71 @@
+@import '../../styles/themes';
+
+@include nb-install-component() {
+  h6 {
+    margin-bottom: 0.5rem;
+  }
+
+  .settings-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    width: 90%;
+    margin: 0 0 1rem;
+
+    a {
+      text-decoration: none;
+      font-size: 2.25rem;
+
+      color: nb-theme(color-fg);
+
+      &.selected {
+        color: nb-theme(color-success);
+      }
+
+      @include nb-for-theme(cosmic) {
+        &.selected {
+          color: nb-theme(link-color);
+        }
+      }
+    }
+  }
+
+  .settings {
+    margin-bottom: 1em;
+  }
+
+  .switcher {
+    margin-bottom: 1rem;
+
+    /deep/ ngx-switcher {
+      .switch-label span {
+        font-size: 1em;
+        font-weight: normal;
+      }
+
+      .switch {
+        height: 1.5em;
+        width: 3em;
+
+        .slider::before {
+          height: 1.5em;
+          width: 1.5em;
+        }
+
+        input:checked + .slider::before {
+          @include nb-ltr(transform, translateX(1.5rem)!important);
+          @include nb-rtl(transform, translateX(-1.5rem)!important);
+        }
+      }
+
+      @include nb-for-theme(cosmic) {
+        .switch .slider {
+          background-color: nb-theme(color-bg);
+        }
+      }
+    }
+  }
+}

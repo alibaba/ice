@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TabDialog"
   },
   "license": "MIT",
   "keywords": [
@@ -42,12 +42,9 @@
     "screenshot": "https://img.alicdn.com/tfs/TB19AF4gOqAXuNjy1XdXXaYcVXa-1262-812.png",
     "themePackage": "@icedesign/skin"
   },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/tab-dialog/preview"
 }

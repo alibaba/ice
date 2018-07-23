@@ -1,25 +1,29 @@
 {
   "name": "@icedesign/video-list-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/VideoList"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
   },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
@@ -35,10 +39,12 @@
   },
   "blockConfig": {
     "name": "video-list",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1DZ4rmQyWBuNjy0FpXXassXXa-2314-1016.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1DZ4rmQyWBuNjy0FpXXassXXa-2314-1016.png",
     "title": "视频列表",
-    "categories": ["数据展示"],
+    "categories": [
+      "数据展示"
+    ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/video-list/preview"
 }

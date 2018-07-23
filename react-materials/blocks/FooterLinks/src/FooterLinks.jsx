@@ -1,5 +1,320 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+
+export default class FooterLinks extends Component {
+  static displayName = 'FooterLinks';
+
+  static propTypes = {};
+
+  static defaultProps = {};
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="footer-box" style={styles.footerBox}>
+        <div className="footer-box-content" style={styles.footerBoxContent}>
+          <div className="footer-clearfix" style={styles.footerClearfix} />
+          <div className="footer-box-left" style={styles.footerBoxLeft}>
+            <ul
+              className="footer-box-content-ul"
+              style={styles.footerBoxContentUl}
+            >
+              <li
+                className="footer-box-content-li"
+                style={styles.footerBoxContentLi}
+              >
+                <div
+                  className="footer-box-content-item"
+                  style={styles.footerBoxContentItem}
+                >
+                  <div
+                    className="footer-box-content-name"
+                    style={styles.footerBoxContentName}
+                  >
+                    新手入门
+                  </div>
+                  <div className="footer-box-content-subitem">
+                    <ul>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          新手指南
+                        </a>
+                      </li>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          热门FAQ
+                        </a>
+                      </li>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          合作攻略
+                        </a>
+                      </li>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          平台规则
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li
+                className="footer-box-content-li"
+                style={styles.footerBoxContentLi}
+              >
+                <div
+                  className="footer-box-content-item"
+                  style={styles.footerBoxContentItem}
+                >
+                  <div
+                    className="footer-box-content-name"
+                    style={styles.footerBoxContentName}
+                  >
+                    服务支持
+                  </div>
+                  <div className="footer-box-content-subitem">
+                    <ul>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          开发文档
+                        </a>
+                      </li>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          业务文档
+                        </a>
+                      </li>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          物料模板下载
+                        </a>
+                      </li>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          蚂蚁开放日
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+
+              <li
+                className="footer-box-content-li"
+                style={styles.footerBoxContentLi}
+              >
+                <div
+                  className="footer-box-content-item"
+                  style={styles.footerBoxContentItem}
+                >
+                  <div
+                    className="footer-box-content-name"
+                    style={styles.footerBoxContentName}
+                  >
+                    客服帮助
+                  </div>
+                  <div className="footer-box-content-subitem">
+                    <ul>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          技术支持中心
+                        </a>
+                      </li>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          在线问答
+                        </a>
+                      </li>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <span>客服：0571-88158090</span>
+                      </li>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <span>（9:00-22:00）</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li
+                className="footer-box-content-li"
+                style={styles.footerBoxContentLi}
+              >
+                <div
+                  className="footer-box-content-item"
+                  style={styles.footerBoxContentItem}
+                >
+                  <div
+                    className="footer-box-content-name"
+                    style={styles.footerBoxContentName}
+                  >
+                    合作洽谈
+                  </div>
+                  <div className="footer-box-content-subitem">
+                    <ul>
+                      <li
+                        className="footer-box-content-subli"
+                        style={styles.footerBoxContentSubli}
+                      >
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="#"
+                          className="footer-box-content-item-link"
+                          style={styles.footerBoxContentItemLink}
+                        >
+                          点此与我联系
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li className="footer-clearfix" style={styles.footerClearfix} />
+            </ul>
+          </div>
+          <div className="footer-box-right" style={styles.footerBoxRight}>
+            <div
+              className="footer-box-right-title"
+              style={styles.footerBoxRightTitle}
+            >
+              关注我们
+            </div>
+            <div
+              style={{
+                ...styles.footerBoxRightItem,
+                ...styles.footerBoxRightItemOpacity,
+              }}
+              className="footer-box-right-item footer-box-right-item-opacity"
+            >
+              关注开放平台生活号
+            </div>
+            <div
+              style={styles.footerBoxRightItem}
+              className="footer-box-right-item"
+            >
+              <img
+                style={styles.footerBoxRightItemImg}
+                className="footer-box-right-item-img"
+                src={require('./images/HNblwDvJYEuHnbIvlhVy.png')}
+                alt=""
+              />
+            </div>
+            <div
+              style={{
+                ...styles.footerBoxRightItem,
+                ...styles.footerBoxRightItemOpacity,
+              }}
+              className="footer-box-right-item footer-box-right-item-opacity"
+            >
+              打开支付宝扫一扫
+            </div>
+          </div>
+          <div className="footer-clearfix" style={styles.footerClearfix} />
+        </div>
+      </div>
+    );
+  }
+}
 
 const styles = {
   footerBox: {
@@ -77,13 +392,13 @@ const styles = {
     fontSize: '22px',
     color: '#FFFFFF',
     boxSizing: 'border-box',
-  }, 
+  },
   footerBoxRightItem: {
     paddingTop: '12px',
     fontSize: '14px',
     color: '#FFFFFF',
     boxSizing: 'border-box',
-  }, 
+  },
   footerBoxRightItemOpacity: {
     opacity: 0.6,
   },
@@ -94,187 +409,3 @@ const styles = {
     boxSizing: 'border-box',
   },
 };
-
-
-export default class FooterLinks extends Component {
-  static displayName = 'FooterLinks';
-
-  static propTypes = {
-    value: PropTypes.string
-  };
-
-  static defaultProps = {
-    value: 'string data'
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-  }
-
-  render() {
-    return (
-    <div className="footer-box" style={styles.footerBox}>
-      <div className="footer-box-content" style={styles.footerBoxContent}>
-        <div className="footer-clearfix" style={styles.footerClearfix}></div>
-        <div className="footer-box-left" style={styles.footerBoxLeft}>
-          <ul className="footer-box-content-ul" style={styles.footerBoxContentUl}>
-            <li className="footer-box-content-li"
-              style={styles.footerBoxContentLi}>
-            <div className="footer-box-content-item" style={styles.footerBoxContentItem}>
-              <div className="footer-box-content-name"
-                style={styles.footerBoxContentName}>新手入门</div>
-              <div className="footer-box-content-subitem">
-                <ul>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://docs.open.alipay.com/300/106141/" 
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>新手指南</a>
-                    </li>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://tech.open.alipay.com/support/knowledge/index.htm?categoryId=20068&amp;scrollcheck=1#/?_k=cw3m8k"
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>热门FAQ</a>
-                    </li>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://docs.open.alipay.com/300"
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>合作攻略</a>
-                    </li>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://docs.open.alipay.com/rules"
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>平台规则</a>
-                    </li>
-                </ul>
-              </div>
-            </div>
-            </li>
-            <li className="footer-box-content-li"
-              style={styles.footerBoxContentLi}>
-            <div className="footer-box-content-item" style={styles.footerBoxContentItem}>
-              <div className="footer-box-content-name"
-                style={styles.footerBoxContentName}>服务支持</div>
-              <div className="footer-box-content-subitem">
-                <ul>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://open.alipay.com/developmentDocument.htm"
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>开发文档</a>
-                    </li>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://open.alipay.com/productDocument.htm"
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>业务文档</a>
-                    </li>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://open.alipay.com/isv/stuffTemplateDownload.htm?type=basicDomesticPayment"
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>物料模板下载</a>
-                    </li>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://openevent.alipay.com/anttalk/web.htm"
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>蚂蚁开放日</a>
-                    </li>
-                </ul>
-              </div>
-            </div>
-            </li>
-            
-            <li className="footer-box-content-li"
-              style={styles.footerBoxContentLi}>
-            <div className="footer-box-content-item" style={styles.footerBoxContentItem}>
-              <div className="footer-box-content-name"
-                style={styles.footerBoxContentName}>客服帮助</div>
-              <div className="footer-box-content-subitem">
-                <ul>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://opensupport.alipay.com/support/home.htm"
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>技术支持中心</a>
-                    </li>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://cschannel.alipay.com/newPortal.htm?scene=mysjbzzx" 
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>在线问答</a>
-                    </li>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <span>客服：0571-88158090</span>
-                    </li>         
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <span>（9:00-22:00）</span>
-                    </li>
-                </ul>
-              </div>
-            </div>
-            </li>     
-            <li className="footer-box-content-li"
-              style={styles.footerBoxContentLi}>
-            <div className="footer-box-content-item" style={styles.footerBoxContentItem}>
-              <div className="footer-box-content-name"
-                style={styles.footerBoxContentName}>合作洽谈</div>
-              <div className="footer-box-content-subitem">
-                <ul>
-                    <li className="footer-box-content-subli" style={styles.footerBoxContentSubli}>
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="https://docs.open.alipay.com/300/106148/"
-                        className="footer-box-content-item-link"
-                        style={styles.footerBoxContentItemLink}>点此与我联系</a>
-                    </li> 
-                </ul>
-              </div>
-            </div>
-            </li>
-            <li className="footer-clearfix" style={styles.footerClearfix}></li>
-          </ul>
-        </div>
-        <div className="footer-box-right" style={styles.footerBoxRight}>
-          <div className="footer-box-right-title" style={styles.footerBoxRightTitle}>关注我们</div>
-          <div  style={{...styles.footerBoxRightItem, ...styles.footerBoxRightItemOpacity}} className="footer-box-right-item footer-box-right-item-opacity">关注开放平台生活号</div>
-          <div  style={styles.footerBoxRightItem} className="footer-box-right-item">
-            <img style={styles.footerBoxRightItemImg} className="footer-box-right-item-img" src="https://zos.alipayobjects.com/rmsportal/HNblwDvJYEuHnbIvlhVy.png"/>
-          </div>
-          <div  style={{...styles.footerBoxRightItem, ...styles.footerBoxRightItemOpacity}} className="footer-box-right-item footer-box-right-item-opacity">打开支付宝扫一扫</div>
-        </div>
-        <div className="footer-clearfix" style={styles.footerClearfix}></div>
-      </div>
-    </div>
-    );
-  }
-}
-

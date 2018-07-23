@@ -112,7 +112,7 @@ const styles = {
     bottom: 0,
     right: 0,
     backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB18Na6iHSYBuNjSspiXXXNzpXa-3800-2026.jpg)',
+      `url(${require('./images/TB18Na6iHSYBuNjSspiXXXNzpXa-3800-2026.jpg')})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',

@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ReleaseIntro"
   },
   "license": "MIT",
   "keywords": [
@@ -33,5 +33,6 @@
       "信息展示"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB19OTopKuSBuNjy1XcXXcYjFXa-2624-1488.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/release-intro/preview"
 }

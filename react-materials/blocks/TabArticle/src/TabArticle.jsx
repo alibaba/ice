@@ -57,8 +57,8 @@ const dataSource = [
 ];
 
 const ICON = {
-  active: 'https://gw.alicdn.com/tfs/TB1bQQ4ihrI8KJjy0FpXXb5hVXa-20-24.png',
-  inactive: 'https://gw.alicdn.com/tfs/TB1PwspilfH8KJjy1XbXXbLdXXa-20-24.png',
+  active: require('./images/TB1bQQ4ihrI8KJjy0FpXXb5hVXa-20-24.png'),
+  inactive: require('./images/TB1PwspilfH8KJjy1XbXXbLdXXa-20-24.png'),
 };
 
 export default class TabArticle extends Component {

@@ -1,0 +1,42 @@
+{
+  "name": "@icedesign/quill-rich-text-editor-block",
+  "version": "1.0.0",
+  "description": "基于 react-quill 的富文本编辑器",
+  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/QuillRichTextEditor"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3",
+    "@icedesign/container": "^0.1.2",
+    "react-quill": "^1.3.1"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "quill-rich-text-editor",
+    "title": "Quill 富文本编辑器",
+    "categories": [
+      "富文本编辑器"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1aeYJD4GYBuNjy0FnXXX5lpXa-2866-752.png"
+  },
+  "homepage": "https://alibaba.github.io/ice/block/quill-rich-text-editor/preview"
+}

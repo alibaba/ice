@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/custom-pie-chart-block",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CustomPieChart"
   },
   "license": "MIT",
   "keywords": [
@@ -24,10 +24,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
   },
   "dependencies": {
     "@icedesign/base": "^0.1.0",
@@ -51,5 +47,6 @@
       "图表"
     ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/custom-pie-chart/preview"
 }

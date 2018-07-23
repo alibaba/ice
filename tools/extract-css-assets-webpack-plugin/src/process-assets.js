@@ -1,7 +1,9 @@
 import crypto from 'crypto';
+import fileType from 'file-type';
 import path from 'path';
 import postcss from 'postcss';
 import request from 'request-promise';
+import chalk from 'chalk';
 
 const urlReg = /url\(('|")?((?:http|\/\/)(?:[^"']+))(\1)\)/;
 
@@ -54,31 +56,52 @@ export default postcss.plugin(
                 : `http:${originUrl}`;
               return request.get({ url, encoding: null }).then((res) => {
                 const buffer = Buffer.from(res, 'utf-8');
-                const ext = path.extname(url);
+                const fileExtName = path.extname(url);
+                const fileExtType = fileType(buffer);
                 const md5 = crypto.createHash('md5');
+                const ext =
+                  fileExtType && fileExtType.ext
+                    ? `.${fileExtType.ext}`
+                    : fileExtName;
                 const basename = md5.update(buffer).digest('hex') + ext;
 
-                const contextPath = path
-                  .join(options.relativeCssPath, options.outputPath, basename)
-                  .replace(/\\/g, '/');
+                    const contextPath = path
+                      .join(
+                        options.relativeCssPath,
+                        options.outputPath,
+                        basename
+                      )
+                      .replace(/\\/g, '/');
 
-                const outputPath = path
-                  .join(options.outputPath, basename)
-                  .replace(/\\/g, '/');
+                    const outputPath = path
+                      .join(options.outputPath, basename)
+                      .replace(/\\/g, '/');
 
-                const asset = {
-                  contents: buffer,
-                  contextPath,
-                  outputPath,
-                  basename,
-                };
+                    const asset = {
+                      contents: buffer,
+                      contextPath,
+                      outputPath,
+                      basename,
+                    };
 
-                networkRequestMap[key] = asset;
+                    networkRequestMap[urlIdentity] = asset;
 
-                opts.emit(asset);
-                return Promise.resolve(asset);
-              });
-            })
+                    opts.emit(asset);
+                    return Promise.resolve(asset);
+                  })
+                  .catch((err) => {
+                    console.log(
+                      chalk.cyan('[ExtractCssAssetsWebpackPlugin]'),
+                      chalk.yellow('Warning:'),
+                      'Asset download failed',
+                      chalk.blue.underline(url)
+                    );
+                    console.log('   ', err.error.toString());
+
+                    delete networkRequestMap[urlIdentity];
+                  });
+              }
+            )
           ).then(() => {
             // 字体文件
             root.walkAtRules((atrule) => {
@@ -89,10 +112,16 @@ export default postcss.plugin(
                     .map((value) => {
                       if (urlReg.test(value)) {
                         const { urlIdentity } = getDeclUrl(value);
-                        return value.replace(urlReg, () => {
-                          return `url('${
+                        return value.replace(urlReg, (str) => {
+                          if (
+                            networkRequestMap[urlIdentity] &&
                             networkRequestMap[urlIdentity].contextPath
-                          }')`;
+                          ) {
+                            return `url('${
+                              networkRequestMap[urlIdentity].contextPath
+                            }')`;
+                          }
+                          return str;
                         });
                       }
                       return value;
@@ -111,10 +140,16 @@ export default postcss.plugin(
                 ) {
                   if (urlReg.test(decl.value)) {
                     const { urlIdentity } = getDeclUrl(decl.value);
-                    decl.value = decl.value.replace(urlReg, () => {
-                      return `url('${
+                    decl.value = decl.value.replace(urlReg, (str) => {
+                      if (
+                        networkRequestMap[urlIdentity] &&
                         networkRequestMap[urlIdentity].contextPath
-                      }')`;
+                      ) {
+                        return `url('${
+                          networkRequestMap[urlIdentity].contextPath
+                        }')`;
+                      }
+                      return str;
                     });
                   }
                 }

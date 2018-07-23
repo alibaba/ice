@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/review-detail-info-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "评论详细信息",
   "author": {
     "name": "ICE Team",
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ReviewDetailInfo"
   },
   "license": "MIT",
   "keywords": [
@@ -38,5 +38,6 @@
       "信息展示"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1pc9TsmBYBeNjy0FeXXbnmFXa-2030-616.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/review-detail-info/preview"
 }

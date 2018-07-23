@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/platform-landing-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "平台登陆引导页面",
   "author": {
     "name": "ICE Team",
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PlatformLanding"
   },
   "license": "MIT",
   "keywords": [
@@ -37,5 +37,6 @@
       "欢迎页"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1MWmjqNGYBuNjy0FnXXX5lpXa-2054-1134.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/platform-landing/preview"
 }

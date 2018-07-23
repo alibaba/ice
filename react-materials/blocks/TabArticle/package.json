@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/tab-article-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "tab和文章列表组合",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TabArticle"
   },
   "license": "MIT",
   "keywords": [
@@ -42,12 +42,9 @@
       "列表"
     ]
   },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/tab-article/preview"
 }

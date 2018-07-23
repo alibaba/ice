@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/login-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "author": {
     "name": "ICE Team",
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/Login"
   },
   "license": "MIT",
   "keywords": [
@@ -34,7 +34,10 @@
   "blockConfig": {
     "name": "login",
     "title": "登录页",
-    "categories": ["登录页"],
+    "categories": [
+      "登录页"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB14mtgq_tYBeNjy1XdXXXXyVXa-2780-1582.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/login/preview"
 }

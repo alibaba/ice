@@ -1,18 +1,25 @@
 {
   "name": "@icedesign/platform-tools-intro-block",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "平台工具介绍",
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
-  "files": ["src/", "lib/"],
+  "files": [
+    "src/",
+    "lib/"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PlatformToolsIntro"
   },
   "license": "MIT",
-  "keywords": ["ice", "react", "block"],
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -25,8 +32,11 @@
   "blockConfig": {
     "name": "platform-tools-intro",
     "title": "平台工具介绍",
-    "categories": ["信息展示", "欢迎页"],
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1mNG.qNSYBuNjSspjXXX73VXa-2072-1262.png"
-  }
+    "categories": [
+      "信息展示",
+      "欢迎页"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1mNG.qNSYBuNjSspjXXX73VXa-2072-1262.png"
+  },
+  "homepage": "https://alibaba.github.io/ice/block/platform-tools-intro/preview"
 }

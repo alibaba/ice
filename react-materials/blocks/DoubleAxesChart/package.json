@@ -2,24 +2,28 @@
   "name": "@icedesign/double-axes-chart-block",
   "version": "0.1.0",
   "description": "",
-  "files": ["src/", "demo/", "lib/", "mock/"],
+  "files": [
+    "src/",
+    "demo/",
+    "lib/",
+    "mock/"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/DoubleAxesChart"
   },
   "license": "MIT",
-  "keywords": ["ice", "ice-block"],
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
   },
   "dependencies": {
     "@antv/data-set": "^0.8.7",
@@ -37,10 +41,12 @@
   },
   "blockConfig": {
     "name": "double-axes-chart",
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB19B_poqmWBuNjy1XaXXXCbXXa-2398-1000.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB19B_poqmWBuNjy1XaXXXCbXXa-2398-1000.png",
     "title": "双轴图标",
-    "categories": ["图表"],
+    "categories": [
+      "图表"
+    ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/double-axes-chart/preview"
 }

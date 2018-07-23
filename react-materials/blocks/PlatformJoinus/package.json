@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/platform-joinus-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "加入平台区块",
   "author": {
     "name": "ICE Team",
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PlatformJoinus"
   },
   "license": "MIT",
   "keywords": [
@@ -37,5 +37,6 @@
       "欢迎页"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1ke8jqHGYBuNjy0FoXXciBFXa-1830-1064.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/platform-joinus/preview"
 }

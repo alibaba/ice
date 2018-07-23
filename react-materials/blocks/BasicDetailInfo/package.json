@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/basic-detail-info-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "基础详情信息展示",
   "files": [
     "src/",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BasicDetailInfo"
   },
   "license": "MIT",
   "keywords": [
@@ -41,12 +41,9 @@
       "信息展示"
     ]
   },
-  "scripts": {
-    "start": "../../node_modules/.bin/ice block dev",
-    "prepublish": "../../node_modules/.bin/ice block build"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/basic-detail-info/preview"
 }

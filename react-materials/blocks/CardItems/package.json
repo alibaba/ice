@@ -1,18 +1,25 @@
 {
   "name": "@icedesign/card-items-block",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "用卡片展示信息",
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
-  "files": ["src/", "lib/"],
+  "files": [
+    "src/",
+    "lib/"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CardItems"
   },
   "license": "MIT",
-  "keywords": ["ice", "react", "block"],
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
@@ -28,8 +35,11 @@
   "blockConfig": {
     "name": "card-items",
     "title": "卡片展示",
-    "categories": ["列表", "信息展示"],
-    "screenshot":
-      "https://img.alicdn.com/tfs/TB1Qy4EtuuSBuNjy1XcXXcYjFXa-2554-1198.png"
-  }
+    "categories": [
+      "列表",
+      "信息展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1Qy4EtuuSBuNjy1XcXXcYjFXa-2554-1198.png"
+  },
+  "homepage": "https://alibaba.github.io/ice/block/card-items/preview"
 }

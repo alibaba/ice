@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/MainData"
   },
   "license": "MIT",
   "keywords": [
@@ -24,10 +24,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  },
-  "scripts": {
-    "start": "ice block dev",
-    "prepublish": "ice block build"
   },
   "dependencies": {
     "@icedesign/base": "^0.1.0",
@@ -45,8 +41,11 @@
     "name": "main-data",
     "screenshot": "https://img.alicdn.com/tfs/TB1tmdQiAKWBuNjy1zjXXcOypXa-2058-426.png",
     "title": "主要数据",
-    "categories": ["数据展示","信息展示"
+    "categories": [
+      "数据展示",
+      "信息展示"
     ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/main-data/preview"
 }

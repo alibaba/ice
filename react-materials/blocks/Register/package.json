@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/register-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "author": {
     "name": "ICE Team",
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/Register"
   },
   "license": "MIT",
   "keywords": [
@@ -34,7 +34,10 @@
   "blockConfig": {
     "name": "register",
     "title": "注册页",
-    "categories": ["注册页"],
+    "categories": [
+      "注册页"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1XqmOqHGYBuNjy0FoXXciBFXa-2740-1556.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/register/preview"
 }

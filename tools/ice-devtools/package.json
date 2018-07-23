@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "1.0.2-0",
+  "version": "1.0.3",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {
@@ -58,6 +58,7 @@
     "ora": "^2.0.0",
     "prismjs": "^1.15.0",
     "props-schema-generator": "^0.1.1",
+    "path-exists": "^3.0.0",
     "read-metadata": "^1.0.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
