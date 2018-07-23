@@ -18,21 +18,13 @@ module.exports = function startServer(opts) {
       const entry = {
         init: ['./package.json'],
       };
-
-      // if (existsSync(resolve(opts.cwd, 'src/main.scss'))) {
-      //   entry.__Component_Dev__.unshift('./src/main.scss');
-      // }
-
+      
       const config = getWebpackConfig(entry);
       config.module.rules.push({
         test: /\.md$/i,
         use: require.resolve('./demo-loader')
       });
       config.resolve.alias[pkg.name] = resolve(opts.cwd, 'src/index.js');
-      // Object.assign(config.output, {
-      //   library: '__Component__',
-      //   libraryTarget: 'umd',
-      // });
 
       return serve({
         config,

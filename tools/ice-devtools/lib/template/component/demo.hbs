@@ -448,8 +448,8 @@
 
     .demo-list{background-color:#fff;position:fixed;top:20px;right:10px;width:180px;border:1px solid #ddd;padding:0;border-radius:5px;list-style:none}.demo-list li{border-bottom:1px solid #ddd;border-left:3px solid #fff;padding:0 10px;line-height:26px;font-size:12px}.demo-list li.current{border-left:3px solid #f40}.demo-list li.current a{font-weight:700;color:#333}.demo-list li a{color:#36c;text-decoration:none}
     .container li {
-      list-style: disc outside none;
-      font-size: 15px;
+      list-style: none;
+      font-size: 12px;
       color: #444;
     }
     .container ul {
@@ -490,7 +490,7 @@
     {{#if demos}}
       <ul class="demo-list" data-current="{{currentPath}}">
       {{#each demos}}
-        <li ><a href="{{href}}"></a></li>
+        <li><a href="{{href}}">{{title}}</a></li>
       {{/each}}
       </ul>
     {{/if}}

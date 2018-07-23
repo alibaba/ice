@@ -73,7 +73,8 @@ router.get('/', async (ctx) => {
   const demos = getDemos(ctx.projectDir);
 
   await ctx.render('component/home.hbs', {
-    demos
+    demos,
+    pkg: ctx.componentPackage,
   });
 });
 

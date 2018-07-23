@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "1.0.1",
+  "version": "1.0.2-0",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {
@@ -57,6 +57,7 @@
     "node-sass": "^4.8.3",
     "ora": "^2.0.0",
     "prismjs": "^1.15.0",
+    "props-schema-generator": "^0.1.1",
     "read-metadata": "^1.0.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
@@ -66,6 +67,7 @@
     "style-loader": "^0.20.3",
     "tar": "^2.2.1",
     "tildify": "^1.2.0",
+    "typescript-definition-generator": "^0.1.1",
     "uppercamelcase": "^3.0.0",
     "url-loader": "^1.0.1",
     "user-home": "^2.0.0",

@@ -15,6 +15,7 @@ module.exports = function getDemos(projectDir) {
       // const { }
       const { meta } = parseMarkdownParts(content);
       filename = filename.replace(/\.md$/, '');
-      return { filename, ...meta };
+      const href = `/preview/?demo=${filename}`;
+      return { href, filename, ...meta };
     });
 };

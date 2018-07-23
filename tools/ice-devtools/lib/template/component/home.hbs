@@ -10,7 +10,9 @@
 </head>
 
 <body>
+  <h1>飞冰组件开发服务 {{pkg.name}}</h1>
   {{#if demos.length}}
+  <h3>DEMO 列表</h3>
   <ul>
     {{#each demos}}
     <li><a href="/preview?demo={{this.filename}}">{{this.title}}</a></li>
