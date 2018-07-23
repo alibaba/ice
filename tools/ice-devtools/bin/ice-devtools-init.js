@@ -17,10 +17,11 @@ const download = require('../lib/download');
 
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
+
+
 /**
  * Usage.
  */
-
 program
   .usage('<template-name> [project-name]')
   .option('--offline', 'use cached template');
