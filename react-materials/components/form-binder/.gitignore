@@ -8,14 +8,4 @@ yarn-error.log
 node_modules/
 tmp/
 
-# 这是编译后的代码, 用于提交到 tnpm, git 仓库不需要此份代码
 lib/
-# 提供 start dev 的环境依赖
-demo/index.js
-# happypack 缓存
-.happypack
-
-# fusion 配置平台相关
-theme/build/
-theme/deps.json
-theme/index.html
