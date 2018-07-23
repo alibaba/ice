@@ -13,9 +13,8 @@ import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
-} from '@ali/ice-form-binder';
-import { Input, Button, Select } from '@alife/next';
-import { DatePicker } from "@alife/next";
+} from '@icedesign/form-binder';
+import { DatePicker, Input, Button, Select } from '@icedesign/base';
 
 class App extends Component {
   constructor(props) {

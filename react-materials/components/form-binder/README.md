@@ -1,8 +1,7 @@
 ---
-title: IceFormBinder
+title: FormBinder
 category: Components
 chinese: ICE 表单粘合剂
-repo: ice-components/ice-form-binder
 ---
 
 ICE 表单数据获取方案。
@@ -10,7 +9,7 @@ ICE 表单数据获取方案。
 ## 安装和升级
 
 ```bash
-def add @ali/ice-form-binder
+npm install @icedesign/form-binder
 ```
 
 ## 一张图了解技术实现方案
@@ -26,7 +25,7 @@ import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
-} from '@ali/ice-form-binder';
+} from '@icedesign/form-binder';
 
 ...
 
@@ -62,7 +61,7 @@ import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
-} from '@ali/ice-form-binder';
+} from '@icedesign/form-binder';
 
 ...
 
@@ -88,7 +87,7 @@ import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
-} from '@ali/ice-form-binder';
+} from '@icedesign/form-binder';
 
 ...
 
@@ -113,7 +112,7 @@ import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
-} from '@ali/ice-form-binder';
+} from '@icedesign/form-binder';
 
 ...
 

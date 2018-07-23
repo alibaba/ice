@@ -1,14 +1,11 @@
 @charset "UTF-8";
 
 // 全局变量(只有变量)
-@import '~@alife/next/lib/core/index.scss';
+@import '~@icedesign/base/lib/core/index.scss';
 
 // variables && mixins
 @import 'scss/variable';
 @import 'scss/mixin';
-
-#{$ice-form-binder-prefix} {
-}
 
 .this-field-has-error {
   border-color: red !important;

@@ -13,8 +13,8 @@ import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
-} from '@ali/ice-form-binder';
-import { Input, Button, Grid } from '@alife/next';
+} from '@icedesign/form-binder';
+import { Input, Button, Grid } from '@icedesign/base';
 const { Row, Col } = Grid;
 
 class App extends Component {
@@ -69,7 +69,6 @@ class App extends Component {
   };
 
   render() {
-
     return (
       <div>
         <IceFormBinderWrapper
