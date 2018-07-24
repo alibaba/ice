@@ -14,11 +14,13 @@ $ npm i ice-devtools -g
 
 // clone 官方仓库
 $ git clone git@github.com:alibaba/ice.git
-$ npm run bootstrap
-$ npm run start
+$ cd ice
+$ ice-devtools start
 ```
 
 通过上面的命令可以启动服务，支持预览 react-materials 和 vue-materials 目录下的所有区块和布局，启动主界面如下，可通过点击物料类型选择预览不同的物料。
+
+注：初次预览需要按需安装依赖
 
 ![](https://img.alicdn.com/tfs/TB17haCnKuSBuNjy1XcXXcYjFXa-2858-1586.png)
 
@@ -190,15 +192,15 @@ $ git push origin branch-name
 
 提交 commit 的类型，包括以下几种
 
-* feat: 新功能
-* fix: 修复问题
-* docs: 修改文档
-* style: 修改代码格式，不影响代码逻辑
-* refactor: 重构代码，理论上不影响现有功能
-* perf: 提升性能
-* test: 增加修改测试用例
-* chore: 修改工具相关（包括但不限于文档、代码生成等）
-* deps: 升级依赖
+- feat: 新功能
+- fix: 修复问题
+- docs: 修改文档
+- style: 修改代码格式，不影响代码逻辑
+- refactor: 重构代码，理论上不影响现有功能
+- perf: 提升性能
+- test: 增加修改测试用例
+- chore: 修改工具相关（包括但不限于文档、代码生成等）
+- deps: 升级依赖
 
 （2）scope
 
@@ -214,11 +216,11 @@ $ git push origin branch-name
 
 （5）footer
 
-* **当有非兼容修改(Breaking Change)时必须在这里描述清楚**
-* 关联相关 issue，如 `Closes #1, Closes #2, #3`
+- **当有非兼容修改(Breaking Change)时必须在这里描述清楚**
+- 关联相关 issue，如 `Closes #1, Closes #2, #3`
 
-- 查看具体[文档](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit)
-- [CONTRIBUTING.md](https://github.com/alibaba/ice/blob/master/.github/CONTRIBUTING.md)
+* 查看具体[文档](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit)
+* [CONTRIBUTING.md](https://github.com/alibaba/ice/blob/master/.github/CONTRIBUTING.md)
 
 ## 发布
 
