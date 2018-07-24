@@ -17,7 +17,7 @@ const zhTranslationMessages = require('./translations/zh.json');
 addLocaleData(enLocaleData);
 addLocaleData(zhLocaleData);
 
-const DEFAULT_LOCALE = 'zh';
+const DEFAULT_LOCALE = 'en';
 
 const appLocales = ['en', 'zh'];
 

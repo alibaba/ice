@@ -1,3 +1,7 @@
 {
-  "boilerplate.components.Footer.license.message": "Hello World"
+  "pro.components.Local.title.message": "Switch Language",
+  "pro.components.local.table.id": "Id",
+  "pro.components.local.table.time": "Time",
+  "pro.components.local.table.description": "Description",
+  "pro.components.local.table.content": "Dynamic data from the server: {value}"
 }

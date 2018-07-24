@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { FormattedMessage } from 'react-intl';
-
 import DisplayCard from './components/DisplayCard';
 
 import TabChart from './components/TabChart';
@@ -14,11 +12,7 @@ import EditableTable from './components/EditableTable';
 
 import ChartBar from './components/ChartBar';
 
-import messages from './messages';
-
 import './Dashboard.scss';
-
-console.log({ messages });
 
 export default class Dashboard extends Component {
   static displayName = 'Dashboard';
@@ -31,7 +25,6 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard-page">
-        <FormattedMessage {...messages.licenseMessage} />
         <DisplayCard />
 
         <TabChart />
