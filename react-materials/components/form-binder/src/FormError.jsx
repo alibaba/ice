@@ -35,12 +35,11 @@ export default class FormError extends Component {
       return render(errors);
     }
 
-    const className = this.props.className;
-    const style = this.props.style;
+    const { className, style } = this.props;
 
     return (
       <span
-        className={`${className || ''}`}
+        className={className}
         style={{ fontSize: 12, color: 'red', ...style }}
       >
         {errors.map(error => error.message).join('，')}

@@ -15,7 +15,7 @@
   "author": "ice-team",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/components/form-binder"
   },
   "license": "MIT",
   "keywords": [
