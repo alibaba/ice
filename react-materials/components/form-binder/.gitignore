@@ -1,0 +1,11 @@
+*.swp
+*.dia~
+.idea/
+.DS_Store
+
+npm-debug.log
+yarn-error.log
+node_modules/
+tmp/
+
+lib/
