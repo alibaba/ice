@@ -7,6 +7,11 @@ import { createHashHistory } from 'history';
 // 载入默认全局样式 normalize 、.clearfix 和一些 mixin 方法等
 import '@icedesign/base/reset.scss';
 
+import LanguageProvider from './components/LanguageProvider';
+
+// i18n 配置
+import { translationMessages } from './i18n';
+
 import router from './router';
 import configureStore from './configureStore';
 
@@ -22,7 +27,9 @@ if (!ICE_CONTAINER) {
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>{router()}</ConnectedRouter>
+    <LanguageProvider messages={translationMessages}>
+      <ConnectedRouter history={history}>{router()}</ConnectedRouter>
+    </LanguageProvider>
   </Provider>,
   ICE_CONTAINER
 );
