@@ -21,21 +21,30 @@
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
     "foundation-symbol": "^0.1.0",
-    "prop-types": "^15.5.8",
+    "history": "^4.7.2",
+    "hoist-non-react-statics": "^2.5.5",
+    "invariant": "^2.2.4",
+    "lodash": "^4.17.10",
+    "path-to-regexp": "^2.2.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "5.0.0-alpha.6",
+    "redux": "3.6.0",
+    "redux-thunk": "^2.3.0",
     "react": "^16.4.1",
     "react-document-title": "^2.0.3",
-    "react-dom": "^16.4.1",
-    "react-router-dom": "^4.2.2"
+    "react-dom": "^16.4.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "eslint": "^4.13.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.6.0-next.3"
+    "ice-scripts": "^1.6.0"
   },
   "scripts": {
     "start": "ice dev",
