@@ -1,0 +1,33 @@
+{
+  "name": "@icedesign/form-binder",
+  "version": "0.1.6",
+  "description": "ICE 表单数据获取方案",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
+  },
+  "files": [
+    "lib/",
+    "demo/"
+  ],
+  "author": "ice-team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/components/form-binder"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-component"
+  ],
+  "dependencies": {
+    "@icedesign/base": "0.x",
+    "async-validator": "^1.8.1",
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "ice-devtools": "^1.0.4-0"
+  }
+}
