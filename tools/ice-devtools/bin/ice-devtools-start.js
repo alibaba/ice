@@ -19,6 +19,7 @@ switch (type) {
     break;
 
   case 'component':
+    require('../lib/component-build')(cwd, { watch: true });
     require('../lib/component-dev-server')({
       cwd,
     });

@@ -3,6 +3,7 @@ const { createReadStream, createWriteStream, writeFileSync } = require('fs');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 const colors = require('colors');
+const chokidar = require('chokidar');
 const glob = require('glob');
 const babel = require('babel-core');
 const propsSchemaGenerator = require('props-schema-generator');
@@ -16,11 +17,31 @@ const babelOpt = getBabelConfig();
 /**
  * 构建项目
  */
-module.exports = function componentBuild(workDir) {
+module.exports = function componentBuild(workDir, opts) {
+  opts = opts || {};
+
   const srcDir = join(workDir, 'src');
   const libDir = join(workDir, 'lib');
   console.log('clean', libDir);
   rimraf.sync(libDir);
+
+  if (opts.watch) {
+    const watcher = chokidar.watch(GLOB_PATTERN, {
+      persistent: true,
+      cwd: srcDir
+    });
+    console.log(colors.bgGreen('Enable Watch Compile...'));
+    watcher
+      .on('change', (path) => {
+        switch (extname(path)) {
+          case '.js':
+          case '.jsx':
+            compileJS(path); break;
+          default:
+            copyTask(path); break;
+        }
+      });
+  }
 
   /* compile and copy */
   const globOpt = {
@@ -39,7 +60,6 @@ module.exports = function componentBuild(workDir) {
         copyTask(files[i]); break;
     }
   }
-
 
   /* style generate */
   const styleGenerator = new ComponentStyleGenerator({

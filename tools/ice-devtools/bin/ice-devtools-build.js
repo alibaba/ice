@@ -8,4 +8,7 @@ if (getType(cwd) !== 'component') {
   process.exit(1);
 }
 
-require('../lib/component-build')(cwd);
+const isWatchCompile = /\-\-watch/.test(process.argv.join(''));
+require('../lib/component-build')(cwd, {
+  watch: isWatchCompile
+});
