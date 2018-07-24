@@ -1,0 +1,29 @@
+{
+  "name": "@icedesign/{{name}}",
+  "version": "0.0.1",
+  "description": "{{description}}",
+  "files": ["src/", "lib/"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
+  },
+  "license": "MIT",
+  "keywords": ["ice", "react", "component"],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.0"
+  },
+  "devDependencies": {
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "ice-devtools": "latest"
+  }
+}
