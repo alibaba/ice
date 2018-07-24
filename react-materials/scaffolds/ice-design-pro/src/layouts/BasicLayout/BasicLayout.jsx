@@ -287,7 +287,6 @@ class BasicLayout extends Component {
 
               {/* 首页默认重定向到 /dashboard */}
               <Redirect exact from="/" to="/dashboard" />
-              {/* <Route path="/table/basic-table" component={BasicTable} /> */}
             </Switch>
           </Layout.Main>
         </Layout.Section>
