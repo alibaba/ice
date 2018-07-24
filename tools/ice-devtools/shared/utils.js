@@ -1,4 +1,4 @@
-const { resolve } = require('path');
+const { resolve, join } = require('path');
 const { readFileSync } = require('fs');
 const axios = require('axios');
 
@@ -50,7 +50,7 @@ function checkAndQueryNpmTime(
       if (
         !data.versions ||
         typeof data.versions[data['dist-tags'][version] || version] ===
-          'undefined'
+        'undefined'
       ) {
         console.log(packageRegistryUrl);
         throw new Error(`${npm}@${version} 未发布! 禁止提交!`);
@@ -77,3 +77,18 @@ function checkAndQueryNpmTime(
     });
 }
 exports.checkAndQueryNpmTime = checkAndQueryNpmTime;
+
+/**
+* 区分 组件 or 区块
+* component or block
+*/
+exports.getType = function getType(workDir) {
+  const pkg = require(join(workDir, 'package.json'));
+  let type = 'block';
+  if (Array.isArray(pkg.keywords) && pkg.keywords.some((kw) => {
+    return /component/.test(kw);
+  })) {
+    type = 'component';
+  }
+  return type;
+}
