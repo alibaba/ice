@@ -1,3 +1,4 @@
+/* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 import React, { PureComponent } from 'react';
 import { Balloon, Icon } from '@icedesign/base';
 import IceImg from '@icedesign/img';
@@ -6,13 +7,12 @@ import Menu from '@icedesign/menu';
 import FoundationSymbol from 'foundation-symbol';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
-import { headerMenuConfig } from './../menuConfig';
-import Logo from './Logo';
+import { headerMenuConfig } from '../../menuConfig';
+import Logo from '../Logo';
 
 export default class Header extends PureComponent {
   render() {
-    const { width, theme, isMobile, className, style } = this.props;
-
+    const { profile, isMobile, theme, width, className, style } = this.props;
     return (
       <Layout.Header
         theme={theme}
@@ -76,19 +76,22 @@ export default class Header extends PureComponent {
                 <IceImg
                   height={40}
                   width={40}
-                  src={require('./images/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png')}
+                  src={
+                    profile.avatar ||
+                    'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png'
+                  }
                   className="user-avatar"
                 />
                 <div className="user-profile">
                   <span className="user-name" style={{ fontSize: '13px' }}>
-                    淘小宝
+                    {profile.name}
                   </span>
                   <br />
                   <span
                     className="user-department"
                     style={{ fontSize: '12px', color: '#999' }}
                   >
-                    技术部
+                    {profile.department}
                   </span>
                 </div>
                 <Icon
@@ -103,19 +106,16 @@ export default class Header extends PureComponent {
           >
             <ul>
               <li className="user-profile-menu-item">
-                <Link to="/">
-                  <FoundationSymbol type="person" size="small" />我的主页
-                </Link>
+                <FoundationSymbol type="person" size="small" />我的主页
               </li>
               <li className="user-profile-menu-item">
-                <Link to="/">
-                  <FoundationSymbol type="repair" size="small" />设置
-                </Link>
+                <FoundationSymbol type="repair" size="small" />设置
               </li>
-              <li className="user-profile-menu-item">
-                <Link to="/">
-                  <FoundationSymbol type="compass" size="small" />退出
-                </Link>
+              <li
+                className="user-profile-menu-item"
+                onClick={this.props.handleLogout}
+              >
+                <FoundationSymbol type="compass" size="small" />退出
               </li>
             </ul>
           </Balloon>
