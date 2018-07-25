@@ -4,7 +4,7 @@ export default {
       name: 'Peter Brimer',
       color: '#f44336',
       random: 'r:0, c:3',
-      randomLong: 'In et mollis velit, accumsan volutpat libero.'
+      randomLong: 'In et mollis velit, accumsan volutpat libero.',
     },
     {
       name: 'Tera Gaona',
