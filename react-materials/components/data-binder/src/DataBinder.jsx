@@ -41,21 +41,25 @@ function initializeRequestStatus(
   return target;
 }
 
+const defaultOpts = {
+  requestClient: axios,
+};
+
 /**
  * DataBinder 的 HOC 创建函数，预先做一些数据整理
  *
- * @param  {Object} options 为各个模块的 DataSource 配置，详情参见 README.md 和 Demo
+ * @param  {Object} sourceConfig 为各个模块的 DataSource 配置，详情参见 README.md 和 Demo
  * @return {function}
  */
 
-export default function dataBinder(options) {
+export default function dataBinder(sourceConfig, opts = defaultOpts) {
   const requestOptions = {}; // 请求参数 map 数据结构
   // 请求数据 map 数据结构
   const defaultBindingDatas = initializeRequestStatus({});
 
   // 根据传入数据进行初始化
-  Object.keys(options).forEach((dataSourceKey) => {
-    const { defaultBindingData = {}, ...others } = options[dataSourceKey];
+  Object.keys(sourceConfig).forEach((dataSourceKey) => {
+    const { defaultBindingData = {}, ...others } = sourceConfig[dataSourceKey];
 
     defaultBindingDatas[dataSourceKey] = initializeRequestStatus(
       defaultBindingData
@@ -181,7 +185,7 @@ export default function dataBinder(options) {
           Toast.error('网络问题，请稍后重试！');
         };
 
-        axios({
+        opts.requestClient({
           // withCredentials: true,
           ...newRequestOptions,
         })
@@ -281,7 +285,7 @@ export default function dataBinder(options) {
       };
 
       getDataSource = (dataSourceKey) => {
-        return options[dataSourceKey];
+        return sourceConfig[dataSourceKey];
       };
 
       render() {

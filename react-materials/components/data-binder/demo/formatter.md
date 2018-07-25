@@ -14,13 +14,11 @@ importStyle: true
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import DataBinder from '@icedesign/data-binder';
-import {
-  Button
-} from '@icedesign/base';
+import { Button } from '@icedesign/base';
 
 @DataBinder({
   fooData: {
-    url: 'http://dip.alibaba-inc.com/api/v2/services/schema/mock/53146',
+    url: 'https://ice.alicdn.com/assets/mock/53146.json',
     // ajax 参数参见：https://github.com/axios/axios
     responseFormatter: (responseHandler, res, originResponse) => {
       // 拿到接口返回的 res 数据，做一些格式转换处理，使其符合 DataBinder 的要求

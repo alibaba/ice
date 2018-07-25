@@ -1,21 +1,36 @@
 ---
-title: 实际场景 Demo
-order: 2
+title: 自定义请求客户端
+order: 5
 importStyle: true
 ---
 
-演示一个实际场景。
+本 Demo 演示自定义 requestClient，使用 jsonp 的方法发送请求
 
 ````jsx
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import DataBinder from '@icedesign/data-binder';
 import { Pagination, Table } from '@icedesign/base';
 
+/**
+ * 自定义的 json request client
+ */
+function request(opts) {
+  const script = document.createElement('script');
+  script.src = opts.url;
+  return new Promise((resolve, reject) => {
+    window.callback = (data) => {
+      resolve({
+        data
+      });
+    };
+    document.body.appendChild(script);
+  });
+}
+
 @DataBinder({
   account: {
-    url: 'https://ice.alicdn.com/assets/mock/53141.json',
-    // ajax 参数参见：https://github.com/axios/axios
+    url: 'https://ice.alicdn.com/assets/mock/53141.jsonp.js',
     defaultBindingData: {
       pagination: {
         page: 1,
@@ -25,7 +40,7 @@ import { Pagination, Table } from '@icedesign/base';
       table: []
     }
   }
-})
+}, { requestClient: request })
 class App extends Component {
 
   componentDidMount() {

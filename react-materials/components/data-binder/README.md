@@ -12,11 +12,13 @@ ICE 前后端数据绑定、交互方案。
 
 灵感来源于 Webx，基于一定的**约定**帮你在组件上绑定一些数据和用来更新数据的 API，让你专注于 render 方法中界面显示逻辑，从而屏蔽掉 AJAX、state 管理等开发成本。
 
+如果你希望你的接口更自由，或者你希望自行把数据维护在组件 state 内，则都不推荐使用本方案。
+
 ### 15 分钟快速上手教程
 
 15 分钟视频演示快速对比 Data-Binder 与 AJAX 方案对比，详细文档在下面。
 
-[点击这里查看视频](http://cloud.video.taobao.com/play/u/654982961/p/1/e/6/t/1/50636752.mp4)
+[点击这里查看视频](https://cloud.video.taobao.com/play/u/654982961/p/1/e/6/t/1/50636752.mp4)
 
 ### 使用方法
 
@@ -31,7 +33,7 @@ DataBinder 采用 decorator（类似 Java 注解）的方式使用，即在 clas
   '模块名 key': {
     url: 'xxxx.json',
     method: 'post',
-    // 请求附带的 request 参数，method post 下是 data 参数，method get 下是 params
+    // 请求附带的 request 参数，method post 下是 data 参数
     data: {
       page: 1
     },
@@ -302,6 +304,43 @@ class ListView extends React.Component {
 }
 ```
 
+## 自定义 requestClient
+
+如果你的项目 ajax 模块进行了统一配置和通用处理的封装，或者使用 ws 或者其它的 RPC 手段进行网络通信，DataBinder 允许对请求客户端进行自定义。
+在 DataBinder 传递第二个参数对象，并指定 requestClient 为一个返回 promise 的请求函数。该 Promise resolve 的值为 response 对象，该 response 对象必须包含一个 data 字段，值为返回的数据。
+
+**DEMO**
+
+```jsx
+/**
+ * 自定义的 json request client
+ */
+function request(opts) {
+  const script = document.createElement('script');
+  script.src = opts.url;
+  return new Promise((resolve, reject) => {
+    window.callback = (data) => {
+      // 必须 resolve 一个包含 data 的对象
+      resolve({
+        data
+      });
+    };
+    document.body.appendChild(script);
+  });
+}
+
+@DataBinder({
+  account: {
+    // 这里的所有字段会作为参数传递给 requestClient
+    url: 'https://ice.alicdn.com/assets/mock/53141.jsonp.js',
+  }
+}, { requestClient: request })
+export default class extends React.Component {
+  // ...
+}
+```
+
+
 ## 常见需求
 
 #### 发送数组类型数据，key 自动加了 `[]` 怎么办？
@@ -343,24 +382,4 @@ class ...
 
 error callback 的参数和逻辑同 success。
 
-#### 0.3.x -> 0.4.x 的变更
 
-1.  response 的格式修改，通过使用 status: 'SUCCESS' 来判断是否请求成功，更具扩展性。
-2.  底层 AJAX 请求包从 kissy-io 更换成社区最为流行的包 [axios](https://github.com/axios/axios) 部分用法需要注意：
-
-* 指定请求类型，从 type: 'get' 换成了更为标准的 method: 'get'
-* 对于 get 类型的请求，传递参数使用 params: { page: 1 }。而对于 post 类型的请求，传递参数则需要使用 data: { page: 1 } 更加贴合 HTTP 请求规范中的概念
-
-#### 0.4.x -> 0.5.x 的变更
-
-1.  返回参数字段标准变更为
-
-```json
-{
-  "status": "SUCCESS",
-  "message": "this is message",
-  "data": {}
-}
-```
-
-​

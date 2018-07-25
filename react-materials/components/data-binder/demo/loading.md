@@ -21,7 +21,7 @@ import {
 
 @DataBinder({
   foo1Data: {
-    url: 'http://dip.alibaba-inc.com/api/v2/services/schema/mock/53138',
+    url: 'https://ice.alicdn.com/assets/mock/53138.json',
     // ajax 参数参见：https://github.com/axios/axios
     defaultBindingData: {
       foo: 'bar'
