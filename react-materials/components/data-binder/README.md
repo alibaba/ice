@@ -312,20 +312,20 @@ class ListView extends React.Component {
 **DEMO**
 
 ```jsx
+import jsonp from 'jsonp';
+
 /**
  * 自定义的 json request client
  */
 function request(opts) {
-  const script = document.createElement('script');
-  script.src = opts.url;
   return new Promise((resolve, reject) => {
-    window.callback = (data) => {
-      // 必须 resolve 一个包含 data 的对象
-      resolve({
-        data
-      });
-    };
-    document.body.appendChild(script);
+    jsonp(opts.url, { name: 'callback' }, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve({ data });
+      }
+    })
   });
 }
 
