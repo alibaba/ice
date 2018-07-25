@@ -30,8 +30,6 @@
     "pure-render-decorator": "^1.2.1"
   },
   "devDependencies": {
-    "@icedesign/skin": "^0.1.2",
-    "babel-eslint": "^8.0.3",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "express": "^4.14.0",
