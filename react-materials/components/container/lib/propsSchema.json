@@ -1,0 +1,81 @@
+{
+  "name": "Container",
+  "props": {
+    "loading": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "加载的loading",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      },
+      "docblock": "加载的loading"
+    },
+    "error": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "数据错误",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      },
+      "docblock": "数据错误"
+    },
+    "empty": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "数据为空",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      },
+      "docblock": "数据为空"
+    },
+    "style": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "样式",
+      "defaultValue": {
+        "value": "{}",
+        "computed": false
+      },
+      "docblock": "样式",
+      "properties": []
+    },
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "样式名",
+      "defaultValue": {
+        "value": "''",
+        "computed": false
+      },
+      "docblock": "样式名"
+    },
+    "title": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "标题",
+      "defaultValue": {
+        "value": "''",
+        "computed": false
+      },
+      "docblock": "标题"
+    }
+  },
+  "methods": [],
+  "subComponents": [],
+  "description": "区块容器组件"
+}
