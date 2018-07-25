@@ -168,7 +168,7 @@ function renderTemplateFiles(skipInterpolation) {
         if (!/{{([^{}]+)}}/g.test(str)) {
           return next();
         }
-        console.log(metalsmithMetadata)
+
         render(str, metalsmithMetadata, (err, res) => {
           if (err) {
             err.message = `[${file}] ${err.message}`;
