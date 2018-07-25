@@ -30,25 +30,23 @@ export default class InfiniteScrollList extends React.PureComponent {
     } = this.state;
 
     return (
-      <IceContainer>
-        <div className="InfiniteScrollList">
-          <AutoSizer disableHeight>
-            {({ width }) => (
-              <List
-                ref="List"
-                className="List"
-                height={listHeight}
-                overscanRowCount={overscanRowCount}
-                noRowsRenderer={this._noRowsRenderer}
-                rowCount={rowCount}
-                rowHeight={listRowHeight}
-                rowRenderer={this._rowRenderer}
-                scrollToIndex={scrollToIndex}
-                width={width}
-              />
-            )}
-          </AutoSizer>
-        </div>
+      <IceContainer className="InfiniteScrollList">
+        <AutoSizer disableHeight>
+          {({ width }) => (
+            <List
+              ref="List"
+              className="List"
+              height={listHeight}
+              overscanRowCount={overscanRowCount}
+              noRowsRenderer={this._noRowsRenderer}
+              rowCount={rowCount}
+              rowHeight={listRowHeight}
+              rowRenderer={this._rowRenderer}
+              scrollToIndex={scrollToIndex}
+              width={width}
+            />
+          )}
+        </AutoSizer>
       </IceContainer>
     );
   }
