@@ -37,28 +37,26 @@ export default class InfiniteScrollGrid extends React.PureComponent {
     } = this.state;
 
     return (
-      <IceContainer>
-        <div className="InfiniteScrollGrid">
-          <AutoSizer disableHeight>
-            {({ width }) => (
-              <Grid
-                cellRenderer={this._cellRenderer}
-                className="BodyGrid"
-                columnWidth={this._getColumnWidth}
-                columnCount={columnCount}
-                height={height}
-                noContentRenderer={this._noContentRenderer}
-                overscanColumnCount={overscanColumnCount}
-                overscanRowCount={overscanRowCount}
-                rowHeight={rowHeight}
-                rowCount={rowCount}
-                scrollToColumn={scrollToColumn}
-                scrollToRow={scrollToRow}
-                width={width}
-              />
-            )}
-          </AutoSizer>
-        </div>
+      <IceContainer className="InfiniteScrollGrid">
+        <AutoSizer disableHeight>
+          {({ width }) => (
+            <Grid
+              cellRenderer={this._cellRenderer}
+              className="BodyGrid"
+              columnWidth={this._getColumnWidth}
+              columnCount={columnCount}
+              height={height}
+              noContentRenderer={this._noContentRenderer}
+              overscanColumnCount={overscanColumnCount}
+              overscanRowCount={overscanRowCount}
+              rowHeight={rowHeight}
+              rowCount={rowCount}
+              scrollToColumn={scrollToColumn}
+              scrollToRow={scrollToRow}
+              width={width}
+            />
+          )}
+        </AutoSizer>
       </IceContainer>
     );
   }
