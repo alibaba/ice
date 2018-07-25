@@ -5,12 +5,10 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/",
-    "theme/"
+    "demo/"
   ],
   "scripts": {
-    "lint": "eslint . --ext '.js,.jsx' --fix",
-    "prepublish": "npm run lint"
+    "start": "ice-devtools start"
   },
   "author": {
     "name": "ICE Team",
@@ -20,13 +18,14 @@
     "type": "git",
     "url": "https://github.com/alibaba/ice"
   },
-  "license": "ISC",
+  "license": "MIT",
   "keywords": [
+    "ice",
     "ice-component"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.1.4",
-    "axios": "^0.17.1",
+    "@icedesign/base": "^0.2.0",
+    "axios": "^0.18.0",
     "deepmerge": "^2.0.1",
     "pure-render-decorator": "^1.2.1"
   },
@@ -35,19 +34,7 @@
     "babel-eslint": "^8.0.3",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
-    "eslint": "^4.13.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.5.1",
-    "express": "^4.14.0"
-  },
-  "typings": "lib/index.d.ts",
-  "fusionConfig": {
-    "docs": "demo/",
-    "variable": "lib/scss/variable.scss",
-    "entry": "lib/index.scss",
-    "deps": []
+    "express": "^4.14.0",
+    "ice-devtools": "^1.0.4"
   }
 }
