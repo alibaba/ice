@@ -1,0 +1,41 @@
+{
+  "name": "@icedesign/data-binder",
+  "version": "0.1.5",
+  "description": "ICE 前后端数据绑定、交互方案",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "demo/"
+  ],
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/components/data-binder"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-component"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "axios": "^0.18.0",
+    "deepmerge": "^2.0.1",
+    "pure-render-decorator": "^1.2.1"
+  },
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "ice-devtools": "^1.0.4",
+    "jsonp": "^0.2.1"
+  }
+}
