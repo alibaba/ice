@@ -7,6 +7,7 @@ module.exports = function getBabelrc() {
     babelrc: false,
     presets: ['es2015', 'stage-0', 'react'].map(createResolve('preset')),
     plugins: [
+      require.resolve('babel-plugin-transform-decorators-legacy'),
       [
         require.resolve('babel-plugin-component'),
         {
