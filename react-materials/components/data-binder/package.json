@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/data-binder",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "ICE 前后端数据绑定、交互方案",
   "main": "lib/index.js",
   "files": [
@@ -8,7 +8,9 @@
     "demo/"
   ],
   "scripts": {
-    "start": "ice-devtools start"
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
   },
   "author": {
     "name": "ICE Team",
