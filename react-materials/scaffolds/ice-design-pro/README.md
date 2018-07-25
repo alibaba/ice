@@ -17,11 +17,23 @@
 ## 特性
 
 - 专业的设计支持: [ICE Design](https://alibaba.github.io/ice/design.html)
-- 成熟的基础组件: [ICE Component](https://alibaba.github.io/ice/#/component/button)
-- 丰富的业务模块: [ICE Block](https://alibaba.github.io/ice/#/block)
-- 完善的开发工具: [iceworks](https://alibaba.github.io/ice/#/iceworks)
+- 成熟的基础组件: [ICE Component](https://alibaba.github.io/ice/component/button)
+- 丰富的业务模块: [ICE Block](https://alibaba.github.io/ice/block)
+- 完善的开发工具: [iceworks](https://alibaba.github.io/ice/iceworks)
 
-## 功能
+## 技术点
+
+- icedesign
+- react
+- redux
+- redux-thunk
+- react-router-dom v4
+- axios
+- webpack v4
+- mockjs
+- etc...
+
+## 页面
 
 > 按照 Dashboard 综合页和 Block 分类进行展示
 
