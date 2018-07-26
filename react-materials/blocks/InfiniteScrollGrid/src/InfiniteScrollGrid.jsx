@@ -1,12 +1,31 @@
 import cn from 'classnames';
-import * as React from 'react';
+import React, { PureComponent } from 'react';
 
 import './InfiniteScrollGrid.scss';
 import { Grid, AutoSizer } from 'react-virtualized';
 import IceContainer from '@icedesign/container';
-import data from './data';
 
-export default class InfiniteScrollGrid extends React.PureComponent {
+const data = {
+  list: [
+    {
+      name: 'Peter Brimer',
+      color: 'rgb(244, 67, 54)',
+      random: 'r:0, c:3',
+    },
+    {
+      name: 'Tera Gaona',
+      color: 'rgb(63, 81, 181)',
+      random: 'r:0, c:3',
+    },
+    {
+      name: 'Kandy Liston',
+      color: 'rgb(76, 175, 80)',
+      random: 'r:0, c:3',
+    },
+  ],
+};
+
+export default class InfiniteScrollGrid extends PureComponent {
   static displayName = 'InfiniteScrollGrid';
 
   constructor(props) {
@@ -37,16 +56,16 @@ export default class InfiniteScrollGrid extends React.PureComponent {
     } = this.state;
 
     return (
-      <IceContainer className="InfiniteScrollGrid">
+      <IceContainer className="infinite-scroll-grid">
         <AutoSizer disableHeight>
           {({ width }) => (
             <Grid
-              cellRenderer={this._cellRenderer}
+              cellRenderer={this.cellRenderer}
               className="BodyGrid"
-              columnWidth={this._getColumnWidth}
+              columnWidth={this.getColumnWidth}
               columnCount={columnCount}
               height={height}
-              noContentRenderer={this._noContentRenderer}
+              noContentRenderer={this.noContentRenderer}
               overscanColumnCount={overscanColumnCount}
               overscanRowCount={overscanRowCount}
               rowHeight={rowHeight}
@@ -61,15 +80,15 @@ export default class InfiniteScrollGrid extends React.PureComponent {
     );
   }
 
-  _cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
+  cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
     if (columnIndex === 0) {
-      return this._renderLeftSideCell({ columnIndex, key, rowIndex, style });
+      return this.renderLeftSideCell({ columnIndex, key, rowIndex, style });
     } else {
-      return this._renderBodyCell({ columnIndex, key, rowIndex, style });
+      return this.renderBodyCell({ columnIndex, key, rowIndex, style });
     }
   };
 
-  _getColumnWidth = ({ index }) => {
+  getColumnWidth = ({ index }) => {
     switch (index) {
       case 0:
         return 50;
@@ -82,23 +101,23 @@ export default class InfiniteScrollGrid extends React.PureComponent {
     }
   };
 
-  _getDatum(index) {
+  getDatum(index) {
     const { list } = data;
 
     return list[index % list.length];
   }
 
-  _getRowClassName = (row) => {
-    return row % 2 === 0 ? 'evenRow' : 'oddRow';
+  getRowClassName = (row) => {
+    return row % 2 === 0 ? 'even-row' : 'odd-row';
   };
 
-  _noContentRenderer = () => {
-    return <div className="noCells">No cells</div>;
+  noContentRenderer = () => {
+    return <div className="no-cells">No cells</div>;
   };
 
-  _renderBodyCell = ({ columnIndex, key, rowIndex, style }) => {
-    const rowClass = this._getRowClassName(rowIndex);
-    const datum = this._getDatum(rowIndex);
+  renderBodyCell = ({ columnIndex, key, rowIndex, style }) => {
+    const rowClass = this.getRowClassName(rowIndex);
+    const datum = this.getDatum(rowIndex);
 
     let content;
 
@@ -115,7 +134,7 @@ export default class InfiniteScrollGrid extends React.PureComponent {
     }
 
     const classNames = cn(rowClass, 'cell', {
-      centeredCell: columnIndex > 2,
+      'centered-cell': columnIndex > 2,
     });
 
     return (
@@ -125,10 +144,10 @@ export default class InfiniteScrollGrid extends React.PureComponent {
     );
   };
 
-  _renderLeftSideCell = ({ key, rowIndex, style }) => {
-    const datum = this._getDatum(rowIndex);
+  renderLeftSideCell = ({ key, rowIndex, style }) => {
+    const datum = this.getDatum(rowIndex);
 
-    const classNames = cn('cell', 'letterCell');
+    const classNames = cn('cell', 'letter-cell');
 
     // Don't modify styles.
     // These are frozen by React now (as of 16.0.0).

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Loading } from '@icedesign/base';
 import dataSource from './list-data';
 import ReactList from 'react-list';
-
+import IceContainer from '@icedesign/container';
 import avatar from './images/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png';
 
 const fetchDataMethod = () => {
@@ -17,7 +17,7 @@ export default class ScrollList extends Component {
   static displayName = 'ScrollList';
 
   static defaultProps = {
-    height: '100vh',
+    height: '300px',
   };
 
   constructor(props) {
@@ -80,23 +80,17 @@ export default class ScrollList extends Component {
 
   render() {
     return (
-      <Loading
-        visible={this.state.isLoading}
-        style={{ display: 'block' }}
-        shape="fusion-reactor"
+      <IceContainer
+        style={{ height: this.props.height, overflow: 'auto' }}
+        onScroll={this.handleScroll}
       >
-        <div
-          style={{ height: this.props.height, overflow: 'auto' }}
-          onScroll={this.handleScroll}
-        >
-          <ReactList
-            ref="list"
-            itemRenderer={this.renderItem}
-            length={this.state.total}
-            pageSize={this.state.pageSize}
-          />
-        </div>
-      </Loading>
+        <ReactList
+          ref="list"
+          itemRenderer={this.renderItem}
+          length={this.state.total}
+          pageSize={this.state.pageSize}
+        />
+      </IceContainer>
     );
   }
 }

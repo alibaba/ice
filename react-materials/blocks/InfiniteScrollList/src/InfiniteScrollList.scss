@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
-.InfiniteScrollList {
-  .List {
+.infinite-scroll-list {
+  .list {
     width: 100%;
     border: 1px solid #ddd;
     margin-top: 15px;
@@ -42,7 +42,7 @@
     font-weight: 100;
   }
 
-  .noRows {
+  .no-rows {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -54,17 +54,7 @@
     color: #bdbdbd;
   }
 
-  .checkboxLabel {
-    margin-left: 0.5rem;
-  }
-  .checkboxLabel:first-of-type {
-    margin-left: 0;
-  }
-  .checkbox {
-    margin-right: 5px;
-  }
-
-  .isScrollingPlaceholder {
+  .is-scrolling-placeholder {
     color: #ddd;
     font-style: italic;
   }

@@ -33,7 +33,7 @@
   },
   "blockConfig": {
     "name": "infinite-scroll-cell-measurer",
-    "title": "InfiniteScrollCellMeasurer",
+    "title": "无限滚动的表格",
     "categories": [
       "表格",
       "列表"
