@@ -80,17 +80,24 @@ export default class ScrollList extends Component {
 
   render() {
     return (
-      <IceContainer
-        style={{ height: this.props.height, overflow: 'auto' }}
-        onScroll={this.handleScroll}
+      <Loading
+        shape="fusion-reactor"
+        color="#66AAFF"
+        style={{ display: 'block' }}
+        visible={this.state.isLoading}
       >
-        <ReactList
-          ref="list"
-          itemRenderer={this.renderItem}
-          length={this.state.total}
-          pageSize={this.state.pageSize}
-        />
-      </IceContainer>
+        <IceContainer
+          style={{ height: this.props.height, overflow: 'auto' }}
+          onScroll={this.handleScroll}
+        >
+          <ReactList
+            ref="list"
+            itemRenderer={this.renderItem}
+            length={this.state.total}
+            pageSize={this.state.pageSize}
+          />
+        </IceContainer>
+      </Loading>
     );
   }
 }
