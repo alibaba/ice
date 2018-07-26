@@ -19,6 +19,8 @@ module.exports = (paths, options = {}) => {
       // todo add user's before
       // user.before(app);
       app.use((req, res, next) => {
+        // set cros for all served files
+        res.set('Access-Control-Allow-Origin', '*');
         // your custom code to check for any exceptions
         if (devType === 'project') {
           if (['/', '/index.html'].includes(req.url)) {
