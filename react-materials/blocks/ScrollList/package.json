@@ -26,12 +26,13 @@
   },
   "dependencies": {
     "@icedesign/base": "^0.2.3",
+    "@icedesign/container": "^0.1.3",
     "react": "^16.2.0",
     "react-list": "^0.8.10"
   },
   "blockConfig": {
     "name": "scroll-list",
-    "title": "ScrollList",
+    "title": "滚动分页列表",
     "categories": [
       "列表"
     ],

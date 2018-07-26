@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React, { PureComponent } from 'react';
 import IceContainer from '@icedesign/container';
 import { List, AutoSizer } from 'react-virtualized';
 import './InfiniteScrollList.scss';
 import data from './data';
 
-export default class InfiniteScrollList extends React.PureComponent {
+export default class InfiniteScrollList extends PureComponent {
   static displayName = 'InfiniteScrollList';
 
   constructor(props) {
@@ -30,18 +30,18 @@ export default class InfiniteScrollList extends React.PureComponent {
     } = this.state;
 
     return (
-      <IceContainer className="InfiniteScrollList">
+      <IceContainer className="infinite-scroll-list">
         <AutoSizer disableHeight>
           {({ width }) => (
             <List
               ref="List"
-              className="List"
+              className="list"
               height={listHeight}
               overscanRowCount={overscanRowCount}
-              noRowsRenderer={this._noRowsRenderer}
+              noRowsRenderer={this.noRowsRenderer}
               rowCount={rowCount}
               rowHeight={listRowHeight}
-              rowRenderer={this._rowRenderer}
+              rowRenderer={this.rowRenderer}
               scrollToIndex={scrollToIndex}
               width={width}
             />
@@ -51,27 +51,27 @@ export default class InfiniteScrollList extends React.PureComponent {
     );
   }
 
-  _getDatum(index) {
+  getDatum(index) {
     const { list } = data;
     return list[index % list.length];
   }
 
-  _noRowsRenderer = () => {
-    return <div className="noRows">No rows</div>;
+  noRowsRenderer = () => {
+    return <div className="no-rows">No rows</div>;
   };
 
-  _rowRenderer = ({ index, isScrolling, key, style }) => {
+  rowRenderer = ({ index, isScrolling, key, style }) => {
     const { showScrollingPlaceholder } = this.state;
 
     if (showScrollingPlaceholder && isScrolling) {
       return (
-        <div className="row isScrollingPlaceholder" key={key} style={style}>
+        <div className="row is-scrolling-placeholder" key={key} style={style}>
           Scrolling...
         </div>
       );
     }
 
-    const datum = this._getDatum(index);
+    const datum = this.getDatum(index);
 
     return (
       <div className="row" key={key} style={style}>
