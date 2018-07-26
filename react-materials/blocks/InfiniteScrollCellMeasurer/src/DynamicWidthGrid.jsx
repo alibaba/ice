@@ -20,26 +20,6 @@ export default class DynamicWidthGrid extends Component {
     });
   }
 
-  render() {
-    const { width } = this.props;
-
-    return (
-      <Grid
-        className="body-grid"
-        columnCount={1000}
-        columnWidth={this.cache.columnWidth}
-        deferredMeasurementCache={this.cache}
-        height={400}
-        overscanColumnCount={0}
-        overscanRowCount={2}
-        cellRenderer={this.cellRenderer}
-        rowCount={50}
-        rowHeight={35}
-        width={width}
-      />
-    );
-  }
-
   cellRenderer = ({ columnIndex, key, parent, rowIndex, style }) => {
     const { getClassName, getContent, list } = this.props;
 
@@ -68,4 +48,24 @@ export default class DynamicWidthGrid extends Component {
       </CellMeasurer>
     );
   };
+
+  render() {
+    const { width } = this.props;
+
+    return (
+      <Grid
+        className="body-grid"
+        columnCount={1000}
+        columnWidth={this.cache.columnWidth}
+        deferredMeasurementCache={this.cache}
+        height={400}
+        overscanColumnCount={0}
+        overscanRowCount={2}
+        cellRenderer={this.cellRenderer}
+        rowCount={50}
+        rowHeight={35}
+        width={width}
+      />
+    );
+  }
 }

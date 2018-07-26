@@ -33,6 +33,24 @@ export default class CellMeasurerExample extends Component {
     super(props);
   }
 
+  getClassName = ({ columnIndex, rowIndex }) => {
+    const rowClass = rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
+
+    return cn(rowClass, 'cell', {
+      centeredCell: columnIndex > 2,
+    });
+  };
+
+  getContent = ({ index, datum, long = true }) => {
+    switch (index % 3) {
+      case 0:
+        return datum.color;
+      case 1:
+        return datum.name;
+      case 2:
+        return long ? datum.randomLong : datum.random;
+    }
+  };
   render() {
     const { list } = data;
 
@@ -44,8 +62,8 @@ export default class CellMeasurerExample extends Component {
           {({ width }) => (
             <div style={{ width }}>
               <DemoComponent
-                getClassName={getClassName}
-                getContent={getContent}
+                getClassName={this.getClassName}
+                getContent={this.getContent}
                 list={list}
                 width={width}
               />
@@ -54,24 +72,5 @@ export default class CellMeasurerExample extends Component {
         </AutoSizer>
       </IceContainer>
     );
-  }
-}
-
-function getClassName({ columnIndex, rowIndex }) {
-  const rowClass = rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
-
-  return cn(rowClass, 'cell', {
-    centeredCell: columnIndex > 2,
-  });
-}
-
-function getContent({ index, datum, long = true }) {
-  switch (index % 3) {
-    case 0:
-      return datum.color;
-    case 1:
-      return datum.name;
-    case 2:
-      return long ? datum.randomLong : datum.random;
   }
 }

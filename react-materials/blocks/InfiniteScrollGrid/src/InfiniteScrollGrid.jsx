@@ -43,43 +43,6 @@ export default class InfiniteScrollGrid extends PureComponent {
     };
   }
 
-  render() {
-    const {
-      columnCount,
-      height,
-      overscanColumnCount,
-      overscanRowCount,
-      rowHeight,
-      rowCount,
-      scrollToColumn,
-      scrollToRow,
-    } = this.state;
-
-    return (
-      <IceContainer className="infinite-scroll-grid">
-        <AutoSizer disableHeight>
-          {({ width }) => (
-            <Grid
-              cellRenderer={this.cellRenderer}
-              className="BodyGrid"
-              columnWidth={this.getColumnWidth}
-              columnCount={columnCount}
-              height={height}
-              noContentRenderer={this.noContentRenderer}
-              overscanColumnCount={overscanColumnCount}
-              overscanRowCount={overscanRowCount}
-              rowHeight={rowHeight}
-              rowCount={rowCount}
-              scrollToColumn={scrollToColumn}
-              scrollToRow={scrollToRow}
-              width={width}
-            />
-          )}
-        </AutoSizer>
-      </IceContainer>
-    );
-  }
-
   cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
     if (columnIndex === 0) {
       return this.renderLeftSideCell({ columnIndex, key, rowIndex, style });
@@ -163,4 +126,41 @@ export default class InfiniteScrollGrid extends PureComponent {
       </div>
     );
   };
+
+  render() {
+    const {
+      columnCount,
+      height,
+      overscanColumnCount,
+      overscanRowCount,
+      rowHeight,
+      rowCount,
+      scrollToColumn,
+      scrollToRow,
+    } = this.state;
+
+    return (
+      <IceContainer className="infinite-scroll-grid">
+        <AutoSizer disableHeight>
+          {({ width }) => (
+            <Grid
+              cellRenderer={this.cellRenderer}
+              className="BodyGrid"
+              columnWidth={this.getColumnWidth}
+              columnCount={columnCount}
+              height={height}
+              noContentRenderer={this.noContentRenderer}
+              overscanColumnCount={overscanColumnCount}
+              overscanRowCount={overscanRowCount}
+              rowHeight={rowHeight}
+              rowCount={rowCount}
+              scrollToColumn={scrollToColumn}
+              scrollToRow={scrollToRow}
+              width={width}
+            />
+          )}
+        </AutoSizer>
+      </IceContainer>
+    );
+  }
 }
