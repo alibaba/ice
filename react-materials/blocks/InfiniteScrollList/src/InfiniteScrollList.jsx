@@ -20,37 +20,6 @@ export default class InfiniteScrollList extends PureComponent {
     };
   }
 
-  render() {
-    const {
-      listHeight,
-      listRowHeight,
-      overscanRowCount,
-      rowCount,
-      scrollToIndex,
-    } = this.state;
-
-    return (
-      <IceContainer className="infinite-scroll-list">
-        <AutoSizer disableHeight>
-          {({ width }) => (
-            <List
-              ref="List"
-              className="list"
-              height={listHeight}
-              overscanRowCount={overscanRowCount}
-              noRowsRenderer={this.noRowsRenderer}
-              rowCount={rowCount}
-              rowHeight={listRowHeight}
-              rowRenderer={this.rowRenderer}
-              scrollToIndex={scrollToIndex}
-              width={width}
-            />
-          )}
-        </AutoSizer>
-      </IceContainer>
-    );
-  }
-
   getDatum(index) {
     const { list } = data;
     return list[index % list.length];
@@ -90,4 +59,35 @@ export default class InfiniteScrollList extends PureComponent {
       </div>
     );
   };
+
+  render() {
+    const {
+      listHeight,
+      listRowHeight,
+      overscanRowCount,
+      rowCount,
+      scrollToIndex,
+    } = this.state;
+
+    return (
+      <IceContainer className="infinite-scroll-list">
+        <AutoSizer disableHeight>
+          {({ width }) => (
+            <List
+              ref="List"
+              className="list"
+              height={listHeight}
+              overscanRowCount={overscanRowCount}
+              noRowsRenderer={this.noRowsRenderer}
+              rowCount={rowCount}
+              rowHeight={listRowHeight}
+              rowRenderer={this.rowRenderer}
+              scrollToIndex={scrollToIndex}
+              width={width}
+            />
+          )}
+        </AutoSizer>
+      </IceContainer>
+    );
+  }
 }

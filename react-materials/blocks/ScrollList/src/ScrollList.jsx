@@ -4,15 +4,6 @@ import dataSource from './list-data';
 import ReactList from 'react-list';
 import IceContainer from '@icedesign/container';
 import avatar from './images/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png';
-
-const fetchDataMethod = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(dataSource);
-    }, 500);
-  });
-};
-
 export default class ScrollList extends Component {
   static displayName = 'ScrollList';
 
@@ -31,11 +22,19 @@ export default class ScrollList extends Component {
     };
   }
 
+  fetchDataMethod = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(dataSource);
+      }, 500);
+    });
+  };
+
   fetchData = () => {
     this.setState({
       isLoading: true,
     });
-    fetchDataMethod().then((res) => {
+    this.fetchDataMethod().then((res) => {
       if (res.status === 'SUCCESS') {
         this.setState((prevState) => {
           return {
