@@ -104,7 +104,16 @@ export default class Container extends Component {
   };
 
   render() {
-    const { loading, children, title, style, className, ...others } = this.props;
+    const {
+      loading,
+      children,
+      title,
+      style,
+      className,
+      error,
+      empty,
+      ...others
+    } = this.props;
 
     const containerStyle = {
       backgroundColor: '#fff',
@@ -121,7 +130,10 @@ export default class Container extends Component {
           color="#66AAFF"
           style={{ width: '100%' }}
         >
-          <div className={`container-block ${className}`} style={containerStyle}>
+          <div
+            className={`container-block ${className}`}
+            style={containerStyle}
+          >
             {children}
           </div>
         </Loading>
@@ -129,7 +141,11 @@ export default class Container extends Component {
     }
 
     return (
-      <div className={`container-block ${className}`} style={containerStyle} {...others}>
+      <div
+        className={`container-block ${className}`}
+        style={containerStyle}
+        {...others}
+      >
         {title && (
           <h4
             style={{
