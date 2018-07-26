@@ -60,7 +60,7 @@ class Container extends Component {
       <div style={styles.listContainer}>
         <div style={styles.list}>
           <div style={styles.listTitle}>List Source</div>
-          <div style={{ minHeight: '15rem', background: '#fff' }}>
+          <div style={{ minHeight: '15rem', padding: '15px', background: '#fff' }}>
             {this.renderSource()}
           </div>
         </div>
@@ -80,8 +80,10 @@ const styles = {
     display: 'flex',
   },
   list: {
-    padding: '10px',
-    background: 'lightgrey',
+    margin: '0 7.5px',
+    padding: '15px',
+    background: '#f7f7f7',
+    borderRadius: '4px',
     flex: 1,
   },
   listTitle: {

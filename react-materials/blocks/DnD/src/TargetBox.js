@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 
 const style = {
-  border: '1px solid gray',
   minHeight: '15rem',
+  padding: '15px',
   background: '#fff',
 };
 
