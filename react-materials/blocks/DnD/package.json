@@ -1,6 +1,6 @@
 {
   "name": "@react-materials/dn-d-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "元素拖拽放置",
   "author": {
     "name": "ICE Team",
@@ -28,7 +28,7 @@
     "@icedesign/container": "^0.1.4",
     "prop-types": "^15.5.8",
     "react": "^16.2.0",
-    "react-dnd": "^3.0.2",
+    "react-dnd": "3.0.2",
     "react-dnd-html5-backend": "^5.0.1"
   },
   "blockConfig": {
