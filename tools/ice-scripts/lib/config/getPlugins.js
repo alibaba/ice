@@ -7,6 +7,7 @@ const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
+const colors = require('chalk');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
@@ -69,13 +70,15 @@ module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
       {
         libraryName: /@alifd\/.*/,
         stylePath: 'style.js',
-      }
+      },
     ]),
   ];
 
-  const localization = buildConfig.localization || false;
-
-  if (localization) {
+  if (paths.publicUrl === './') {
+    console.log(
+      colors.yellow('Info:'),
+      '离线化构建项目，自动下载网络资源，请耐心等待'
+    );
     plugins.push(
       new ExtractCssAssetsWebpackPlugin({
         outputPath: 'assets',
@@ -131,7 +134,11 @@ module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
 
   if (skinOverridePath && fs.existsSync(skinOverridePath)) {
     // eslint-disable-next-line no-console
-    console.log('皮肤 override 文件存在, 添加...');
+    console.log(
+      colors.yellow('Info:'),
+      '皮肤 override 文件存在',
+      path.join(themePackage, 'override.scss')
+    );
     plugins.push(
       new AppendStyleWebpackPlugin({
         variableFile: variableFilePath,

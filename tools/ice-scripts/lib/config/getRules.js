@@ -46,7 +46,7 @@ module.exports = (paths, buildConfig = {}) => {
   const theme = buildConfig.theme || buildConfig.themePackage;
   if (theme) {
     // eslint-disable-next-line no-console
-    console.log(colors.cyan('Tip:'), '使用皮肤包', theme);
+    console.log(colors.yellow('Info:'), '使用皮肤包', theme);
     sassLoaders.push({
       loader: require.resolve('ice-skin-loader'),
       options: {
@@ -54,15 +54,30 @@ module.exports = (paths, buildConfig = {}) => {
       },
     });
   }
+
+  const cssPublicUrl = paths.publicUrl === './' ? '../' : paths.publicUrl;
   return [
     {
       test: /\.scss$/,
-      use: withCssHotLoader([MiniCssExtractPlugin.loader, ...sassLoaders]),
+      use: withCssHotLoader([
+        {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            publicPath: cssPublicUrl,
+          },
+        },
+        ...sassLoaders,
+      ]),
     },
     {
       test: /\.css$/,
       use: withCssHotLoader([
-        MiniCssExtractPlugin.loader,
+        {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            publicPath: cssPublicUrl,
+          },
+        },
         {
           loader: CSS_LOADER,
           options: {
@@ -78,7 +93,12 @@ module.exports = (paths, buildConfig = {}) => {
     {
       test: /\.less$/,
       use: withCssHotLoader([
-        MiniCssExtractPlugin.loader,
+        {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            publicPath: cssPublicUrl,
+          },
+        },
         {
           loader: CSS_LOADER,
           options: {

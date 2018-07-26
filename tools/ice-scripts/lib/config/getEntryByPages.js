@@ -44,7 +44,7 @@ module.exports = () => {
         entryObj[pageName] = filePath;
       }
     });
-    console.log(colors.blue('TIPS:'), 'entry 未指定，使用 pages 作为默认。');
+    console.log(colors.yellow('Info:'), 'entry 未指定，使用 pages 作为默认。');
     return entryObj;
   } catch (err) {
     throw err;

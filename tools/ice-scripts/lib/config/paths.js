@@ -1,7 +1,6 @@
 const { realpathSync } = require('fs');
 const { resolve } = require('path');
 const url = require('url');
-const pathExists = require('path-exists');
 
 function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
