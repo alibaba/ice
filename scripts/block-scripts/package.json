@@ -1,0 +1,14 @@
+{
+  "name": "block-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build-block.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "uppercamelcase": "^3.0.0"
+  }
+}

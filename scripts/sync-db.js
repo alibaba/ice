@@ -27,20 +27,47 @@ const store = oss({
 });
 
 const assetsMap = {
-  "pre-depoly": "pre-assets",
-  "beta": "beta-assets",
-  "master": "assets"
+  'pre-depoly': 'pre-assets',
+  beta: 'beta-assets',
+  master: 'assets',
+};
+
+function getBlockDistFiles() {
+  const blockDistPath = readdirSync(resolve(__dirname, '../block-dist'));
+  let blockDistFiles = [];
+  blockDistPath.map((blockName) => {
+    const distPath = resolve(__dirname, '../block-dist', blockName);
+    const distFiles = readdirSync(distPath);
+    distFiles.map((distFile) => {
+      blockDistFiles.push({
+        from: resolve(__dirname, '../block-dist', blockName, distFile),
+        to: join(
+          assetsMap[process.env.TRAVIS_BRANCH],
+          'blocks',
+          blockName,
+          distFile
+        ),
+      });
+    });
+  });
+  return blockDistFiles;
 }
 
 console.log('start uploading');
 sortScaffoldMaterials()
   .then((res) => {
-    const files = readdirSync(resolve(__dirname, '../build')).map(
+    // 物料 DB 数据
+    const materialFiles = readdirSync(resolve(__dirname, '../build')).map(
       (filename) => ({
         from: resolve(__dirname, '../build', filename),
-        to:  join(assetsMap[process.env.TRAVIS_BRANCH], filename),
+        to: join(assetsMap[process.env.TRAVIS_BRANCH], filename),
       })
     );
+
+    // 区块 dist 资源
+    const blockDistFiles = getBlockDistFiles();
+
+    const files = materialFiles.concat(blockDistFiles);
 
     const tasks = files.map(createUploadTask);
 
