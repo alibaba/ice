@@ -1,0 +1,59 @@
+// 主题名称
+$theme-name: 'tomorrow-night-blue';
+// 主题背景颜色
+$theme-bg-color: #002253;
+// 主题背景图片遮罩
+$theme-bg-mask: rgba(#000, 0);
+
+// container组件
+$theme-container-background-color: rgba(#FFF, 1);
+$theme-container-header-footer-background-color: #FFF;
+$theme-container-border-inner: 1px solid $color-border-1;
+$theme-container-border-outer: 1px solid #002253;
+
+$theme-multiple-page-control-color: #FFF;
+$theme-multiple-page-control-color-active: $color-text-normal;
+$theme-multiple-page-control-nav-prev-color: #FFF;
+$theme-multiple-page-control-nav-next-color: #FFF;
+$theme-multiple-page-control-border-color: #002253;
+$theme-multiple-page-control-border-color-active: #FFF;
+$theme-multiple-page-control-background-color: rgba(#FFF, .2);
+$theme-multiple-page-control-background-color-active: #FFF;
+
+// 顶栏和侧边栏中展开的菜单 hover 状态下
+$theme-menu-item-color-hover: #293849;
+$theme-menu-item-background-color-hover: #ecf5ff;
+
+// 顶栏上的文字颜色
+$theme-header-item-color: #FF929A;
+$theme-header-item-background-color: transparent;
+// 顶栏上的项目在 hover 时
+$theme-header-item-color-hover: #FFEBA4;
+$theme-header-item-background-color-hover: rgba(#FFF, .05);
+// 顶栏上的项目在 focus 时
+$theme-header-item-color-focus: #FFB870;
+$theme-header-item-background-color-focus: rgba(#FFF, .05);
+// 顶栏上的项目在 active 时
+$theme-header-item-color-active: #FFB870;
+$theme-header-item-background-color-active: rgba(#FFF, .05);
+
+// 侧边栏上的文字颜色
+$theme-aside-item-color: #FF929A;
+$theme-aside-item-background-color: transparent;
+// 侧边栏上的项目在 hover 时
+$theme-aside-item-color-hover: #FFEBA4;
+$theme-aside-item-background-color-hover: rgba(#FFF, .05);
+// 侧边栏上的项目在 focus 时
+$theme-aside-item-color-focus: #FFB870;
+$theme-aside-item-background-color-focus: rgba(#FFF, .05);
+// 侧边栏上的项目在 active 时
+$theme-aside-item-color-active: #FFB870;
+$theme-aside-item-background-color-active: rgba(#FFF, .05);
+
+// 侧边栏菜单为空的时候显示的元素
+$theme-aside-menu-empty-icon-color: #FFB870;
+$theme-aside-menu-empty-text-color: #FFB870;
+$theme-aside-menu-empty-background-color: rgba(#FFF, .1);
+$theme-aside-menu-empty-icon-color-hover: #FFEBA4;
+$theme-aside-menu-empty-text-color-hover: #FFEBA4;
+$theme-aside-menu-empty-background-color-hover: rgba(#FFF, .2);
