@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Layout from '@icedesign/layout';
-import Asdie from '../../components/Aside';
+import Aside from '../../components/Aside';
 import Footer from '../../components/Footer';
 
 export default class BasicLayout extends Component {
@@ -12,7 +12,7 @@ export default class BasicLayout extends Component {
     return (
       <Layout style={styles.wrapper}>
         <div style={styles.container}>
-          <Asdie />
+          <Aside />
           <div style={styles.content}>{this.props.children}</div>
         </div>
         <Footer />
