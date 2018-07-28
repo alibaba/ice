@@ -66,7 +66,7 @@ const styles = {
     margin: '0 0 20px',
     paddingBottom: '10px',
     fontSize: '28px',
-    fontWeigth: 'normal',
+    fontWeight: 'normal',
     color: '#fff',
     borderBottom: '1px solid #434857',
   },
@@ -80,7 +80,7 @@ const styles = {
   },
   summary: {
     margin: '5px 0 0',
-    fontWeigth: '400',
+    fontWeight: '400',
     fontSize: '16px',
     color: '#fff',
   },
