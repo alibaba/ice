@@ -1,0 +1,263 @@
+//== Buttons
+//
+//## For each of Bootstrap's buttons, define text, background and border color.
+
+$none:                       0   !default;
+$border-thin:                1px !default;
+$border-thick:               2px !default;
+
+$white-color:                #FFFFFF !default;
+$white-bg:                   #FFFFFF !default;
+
+$smoke-bg:                   #F5F5F5 !default;
+
+$black-bg:                   rgba(30,30,30,.97) !default;
+
+$black-color:                #333333 !default;
+$black-hr:                   #444444 !default;
+
+$light-gray:                 #E3E3E3 !default;
+$medium-gray:                #DDDDDD !default;
+$medium-dark-gray:           #AAAAAA !default;
+$dark-gray:                  #9A9A9A !default;
+
+$transparent-bg:             transparent !default;
+
+$default-color:              #888888 !default;
+$default-bg:                 #888888 !default;
+$default-states-color:       #777777 !default;
+
+$primary-color:              #3472F7 !default;
+$primary-bg:                 #3472F7 !default;
+$primary-states-color:       #1D62F0 !default;
+
+$success-color:              #87CB16 !default;
+$success-bg:                 #87CB16 !default;
+$success-states-color:       #049F0C !default;
+
+$info-color:                 #1DC7EA !default;
+$info-bg:                    #1DC7EA !default;
+$info-states-color:          lighten($info-color, 8%) !default;
+
+$warning-color:              #FF9500 !default;
+$warning-bg:                 #FF9500 !default;
+$warning-states-color:       #ED8D00 !default;
+
+
+$danger-color:               #FF4A55 !default;
+$danger-bg:                  #FF4A55 !default;
+$danger-states-color:        #EE2D20 !default;
+
+
+
+$link-disabled-color:        #666666 !default;
+
+
+/*      light colors         */
+$light-blue:                 rgba($primary-color, .2);
+$light-azure:                rgba($info-color, .2);
+$light-green:                rgba($success-color, .2);
+$light-orange:               rgba($warning-color, .2);
+$light-red:                  rgba($danger-color, .2);
+
+
+//== Components
+//
+
+$padding-base-vertical:         8px !default;
+$padding-base-horizontal:      16px !default;
+
+$padding-round-vertical:        9px !default;
+$padding-round-horizontal:     18px !default;
+
+$padding-simple-vertical:      10px !default;
+$padding-simple-horizontal:    18px !default;
+
+$padding-large-vertical:       14px !default;
+$padding-large-horizontal:     30px !default;
+
+$padding-small-vertical:        5px !default;
+$padding-small-horizontal:     10px !default;
+
+$padding-xs-vertical:           1px !default;
+$padding-xs-horizontal:         5px !default;
+
+$padding-label-vertical:        2px !default;
+$padding-label-horizontal:     12px !default;
+
+$margin-large-vertical:        30px !default;
+$margin-base-vertical:         15px !default;
+
+$padding-zero:                   0px !default;
+
+$margin-bottom:                0 0 10px 0 !default;
+$border-radius-small:           3px !default;
+$border-radius-base:            4px !default;
+$border-radius-large:           6px !default;
+$border-radius-extreme:        10px !default;
+
+$border-radius-large-top:      $border-radius-large $border-radius-large 0 0 !default;
+$border-radius-large-bottom:   0 0 $border-radius-large $border-radius-large !default;
+
+$btn-round-radius:             30px !default;
+
+$height-base:                  40px !default;
+
+$font-size-base:               14px !default;
+$font-size-small:              12px !default;
+$font-size-medium:             16px !default;
+$font-size-large:              18px !default;
+$font-size-large-navbar:       20px !default;
+
+$font-size-h1:                 52px !default;
+$font-size-h2:                 36px !default;
+$font-size-h3:                 28px !default;
+$font-size-h4:                 22px !default;
+$font-size-h5:                 16px !default;
+$font-size-h6:                 14px !default;
+$font-paragraph:               16px !default;
+$font-size-navbar:             16px !default;
+$font-size-small:              12px !default;
+
+$font-weight-light:          300 !default;
+$font-weight-normal:         400 !default;
+$font-weight-semi:           500 !default;
+$font-weight-bold:           600 !default;
+
+$line-height-general:          1.5 !default;
+$line-height:                 20px !default;
+$line-height-lg:              54px !default;
+
+$sidebar-width:               calc(100% - 260px) !default;
+
+
+$border-radius-top:        10px 10px 0 0 !default;
+$border-radius-bottom:     0 0 10px 10px !default;
+
+$dropdown-shadow:          1px 2px 3px rgba(0, 0, 0, 0.125);
+
+$general-transition-time:  300ms !default;
+
+$slow-transition-time:           370ms !default;
+$dropdown-coordinates:      29px -50px !default;
+
+$fast-transition-time:           150ms !default;
+
+$ultra-fast-transition-time:     100ms  !default;
+
+$select-coordinates:         50% -40px !default;
+
+$transition-linear:                                   linear !default;
+$transition-bezier:         cubic-bezier(0.34, 1.61, 0.7, 1) !default;
+$transition-ease:           ease 0s;
+$transition-ease-in:              ease-in !default;
+$transition-ease-out:             ease-out !default;
+
+
+$navbar-padding-a:               10px 15px;
+$navbar-margin-a:                10px  3px;
+
+$padding-social-a:               10px  5px;
+
+$navbar-margin-a-btn:            15px 3px;
+$navbar-margin-a-btn-round:      16px 3px;
+
+$navbar-padding-a-icons:         6px 15px;
+$navbar-margin-a-icons:          6px  3px;
+
+$navbar-padding-brand:           15px 15px;
+$navbar-margin-brand:             5px  0px;
+
+$navbar-margin-brand-icons:      12px auto;
+
+$navbar-margin-btn:              15px  3px;
+
+$height-icon:					 64px !default;
+$width-icon:					 64px !default;
+$padding-icon:					 12px !default;
+$border-radius-icon:		     15px !default;
+
+$size-icon: 					 64px;
+$size-icon-sm: 					 32px;
+
+
+$height-icon-sm:				 32px;
+$width-icon-sm:					 32px;
+$padding-icon-sm:			     4px;
+$border-radius-icon-sm:			 7px;
+
+$height-icon-message:			 40px;
+$width-icon-message:			 40px;
+
+$height-icon-message-sm: 		 20px;
+$width-icon-message-sm:			 20px;
+
+$default-color-top:	#d9d9d9 !default;
+$default-color-bottom: #909297 !default;
+
+$blue-color-top: 		            #4087ea;
+$blue-color-bottom: 	            #2632c1;
+
+$azure-color-top:   	            #45c0fd;
+$azure-color-bottom:            	#4091ff;
+
+$green-color-top: 	                #a1eb3a;
+$green-color-bottom: 	            #6dc030;
+
+$orange-color-top: 	                #ffb33b;
+$orange-color-bottom: 	            #ff5221;
+
+$red-color-top: 	                #ff3b30;
+$red-color-bottom: 	                #bb0502;
+
+$purple-color-top: 	                #df55e1;
+$purple-color-bottom: 	            #943bea;
+
+$pink-color-top: 		            #ff2a63;
+$pink-color-bottom: 	            #ff2e2e;
+
+$black-color-top:	 	            #282828;
+$black-color-bottom: 	            #111;
+
+$social-facebook: 			#3b5998;
+$social-twitter: 			#55acee;
+$social-pinterest: 			#cc2127;
+$social-google: 			#dd4b39;
+$social-linkedin: 			#0976b4;
+$social-dribbble: 			#ea4c89;
+$social-github: 			#333333;
+$social-youtube: 			#e52d27;
+$social-stumbleupon: 		#eb4924;
+$social-reddit: 			#ff4500;
+$social-tumblr: 			#35465c;
+$social-behance: 			#1769ff;
+
+
+$filter-blue:         darken($primary-color, 10%);
+$filter-azure:        darken($info-color, 10%);
+$filter-green:        darken($success-color, 10%);
+$filter-orange:       darken($warning-color, 10%);
+$filter-red:          darken($danger-color, 10%);
+
+
+$new-blue:            #1DC7EA;
+$new-purple:          #9368E9;
+$new-red:             #FB404B;
+$new-green:           #87CB16;
+$new-orange:          #FFA534;
+$new-dark-blue:       #1b8dff;
+$new-black:           #5e5e5e;
+
+
+$topbar-x:             topbar-x !default;
+$topbar-back:          topbar-back !default;
+$bottombar-x:          bottombar-x !default;
+$bottombar-back:       bottombar-back !default;
+
+
+$white-navbar:              rgba(#FFFFFF, .96);
+$blue-navbar:               lighten($new-dark-blue, 10%);
+$azure-navbar:              lighten($new-blue, 15%);
+$green-navbar:              lighten($new-green, 10%);
+$orange-navbar:             lighten($new-orange, 10%);
+$red-navbar:                lighten($new-red, 10%);

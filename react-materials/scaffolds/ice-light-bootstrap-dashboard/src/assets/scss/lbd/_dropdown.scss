@@ -1,0 +1,120 @@
+.dropdown-menu{
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+    border-radius: $border-radius-extreme;
+    display: block;
+    z-index: 9000;
+    position: absolute;
+    
+    @include opacity(0); 
+    @include box-shadow($dropdown-shadow);
+        
+    .open &{
+        @include opacity(1);
+        visibility: visible;
+    }    
+    .select &{
+       border-radius: $border-radius-bottom; 
+       @include box-shadow(none);
+       @include transform-origin($select-coordinates);
+       @include transform-scale(1);
+       @include transition($fast-transition-time, $transition-linear);
+       margin-top: -20px;
+    }
+    .select.open &{
+        margin-top: -1px;
+    }
+    
+    > li > a {
+       padding: $padding-base-vertical $padding-base-horizontal;
+       color: #333333;
+       
+       img{
+           margin-top: -3px;
+       }
+    }
+    > li > a:focus{
+        outline: 0 !important;
+    }
+
+    .btn-group.select &{
+        min-width: 100%;
+    }
+    
+    > li:first-child > a{
+       border-top-left-radius: $border-radius-extreme;
+       border-top-right-radius: $border-radius-extreme;
+    }
+    
+    > li:last-child > a{
+        border-bottom-left-radius: $border-radius-extreme;
+        border-bottom-right-radius: $border-radius-extreme;
+    }
+    
+    .select & > li:first-child > a{
+        border-radius: 0;
+        border-bottom: 0 none;
+    }
+    
+    > li > a:hover,
+    > li > a:focus {
+        background-color: $smoke-bg;
+        color: #333333;
+        opacity: 1;
+        text-decoration: none;
+    }
+    
+    &.dropdown-blue > li > a:hover,
+    &.dropdown-blue > li > a:focus{
+        background-color: $light-blue;
+    }
+    &.dropdown-azure > li > a:hover,
+    &.dropdown-azure > li > a:focus{
+        background-color: $light-azure;
+    }
+    &.ct-green > li > a:hover,
+    &.ct-green > li > a:focus{
+        background-color: $light-green;
+    }
+    &.dropdown-orange > li > a:hover,
+    &.dropdown-orange > li > a:focus{
+        background-color: $light-orange;
+    }
+    &.dropdown-red > li > a:hover,
+    &.dropdown-red > li > a:focus{
+        background-color: $light-red;
+    }
+
+}
+
+.dropdown-with-icons{
+    > li > a{
+        padding-left: 0px;
+        line-height: 28px;
+    }
+    i{
+        text-align: center;
+        line-height: 28px;
+        float: left;
+        
+        &[class^="pe-"]{
+             font-size: 24px;
+             width: 46px;
+        }
+        &[class^="fa"]{
+            font-size: 14px;
+            width: 38px;
+        }
+    }
+}
+
+//fix bug for the select items in btn-group 
+.btn-group.select{
+    overflow: hidden;
+}
+.btn-group.select.open{
+    overflow: visible;
+}
+
+
