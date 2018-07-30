@@ -207,7 +207,7 @@ const styles = {
     borderLeft: '1px solid #434857',
     borderRight: '1px solid #434857',
     padding: '10px 20px',
-    borderRaidus: '3px',
+    borderRadius: '3px',
   },
   label: {
     color: '#BFC1C9',
