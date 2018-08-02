@@ -37,7 +37,10 @@ export default class FormBinder extends Component {
      * 触发校验的事件，对于高频触发校验的 Input 可以设置为 'onBlur' 减少校验调用次数
      */
     triggerType: PropTypes.string,
-
+    /**
+     * value 属性的 key, 默认 `value`
+     */
+    valueKey: PropTypes.string,
     /**
      * 当前表单项是否必须有值
      */
@@ -200,6 +203,7 @@ export default class FormBinder extends Component {
     const FormItemProps = FormItem.props;
 
     const currentName = this.props.name || FormItem.props.name;
+    const valueKey = this.props.valueKey || 'value';
 
     // handle form field error
     let formValueErrorProps = {};
@@ -246,10 +250,10 @@ export default class FormBinder extends Component {
           this.context.validate(currentName, this.currentRules);
         }
       },
-      value: (() => {
+      [valueKey]: (() => {
         // formItems value has higher priority
-        if (FormItemProps.value) {
-          return FormItemProps.value;
+        if (FormItemProps[valueKey]) {
+          return FormItemProps[valueKey];
         } else {
           return this.context.getter(currentName);
         }
