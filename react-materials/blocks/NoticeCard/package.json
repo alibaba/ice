@@ -1,0 +1,39 @@
+{
+  "name": "@icedesign/notice-card-block",
+  "version": "1.0.0",
+  "description": "适用于顶部的消息提示",
+  "author": "",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "notice-card",
+    "title": "消息提示",
+    "categories": [
+      "信息展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1apCOIv1TBuNjy0FjXXajyXXa-2126-198.png"
+  }
+}
