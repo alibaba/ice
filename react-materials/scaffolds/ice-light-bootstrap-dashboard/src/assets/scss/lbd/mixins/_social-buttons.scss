@@ -1,0 +1,43 @@
+@mixin social-buttons-color ($color){
+
+  border-color: $color;
+  color: $color;
+  
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open > &.dropdown-toggle {
+    background-color: $transparent-bg;
+    color: $color;
+    border-color: $color;
+    opacity: 1;
+  }
+
+  &:disabled,
+  &[disabled],
+  &.disabled {
+    background-color: $transparent-bg;
+    border-color: $color;
+  }
+
+  &.btn-fill {
+    color: $white-color;
+    background-color: $color;
+    opacity: 0.9;
+    
+    &:hover,
+    &:focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle{
+        background-color: $color;
+        color: $white-color;
+        opacity: 1;
+    }
+    
+  }
+  
+  
+}
+			
