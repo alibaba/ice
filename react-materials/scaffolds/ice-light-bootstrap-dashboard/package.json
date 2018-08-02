@@ -1,10 +1,12 @@
 {
   "name": "@icedesign/ice-light-bootstrap-dashboard",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "该模板基于社区的 light-bootstrap-dashboard 改造而成，默认使用 react-bootstrap 组件，同时也支持飞冰基础组件和区块的使用，支持 Iceworks 一键创建项目和完整的 GUI 操作",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-material-dashboard/index.html",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-light-bootstrap-dashboard/index.html",
   "license": "MIT",
-  "keywords": ["ice-scaffold"],
+  "keywords": [
+    "ice-scaffold"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.2.3",
     "bootstrap": "3.3.7",
