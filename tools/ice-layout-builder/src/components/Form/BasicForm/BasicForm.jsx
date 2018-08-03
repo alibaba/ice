@@ -60,6 +60,12 @@ export default class BasicForm extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value: nextProps.value,
+    });
+  }
+
   /**
    * 表单改变时动态监听
    */
@@ -108,7 +114,6 @@ export default class BasicForm extends Component {
   };
 
   render() {
-    console.log('state:', this.state.value);
     const { value = {} } = this.state;
     return (
       <IceFormBinderWrapper value={value} onChange={this.formChange}>
