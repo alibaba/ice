@@ -1,9 +1,9 @@
 {
   "name": "@d2-admin/ice-scaffold",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "该模板默认支持多页模式，内置登陆验证、数据持久化、主题系统、字体图标库、多模式页面组件以及常用操作的封装等。",
   "author": "liyang <1711467488@qq.com>",
-  "homepage": "https://fairyever.gitee.io/d2-admin-preview/",
+  "homepage": "https://fairyever.gitee.io/d2-admin-ice-preview/",
   "main": "src/main.js",
   "scripts": {
     "serve": "vue-cli-service serve",
