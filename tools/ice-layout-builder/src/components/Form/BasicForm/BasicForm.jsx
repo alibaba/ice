@@ -11,7 +11,6 @@ import Tooltip from 'rc-tooltip';
 import ColorPicker from './ColorPicker';
 
 import 'rc-tooltip/assets/bootstrap.css';
-import { Z_BLOCK } from 'zlib';
 
 const { Group: RadioGroup } = Radio;
 const presetColors = [
