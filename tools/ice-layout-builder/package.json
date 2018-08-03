@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/layout-builder",
-  "version": "0.3.7",
+  "version": "0.3.9",
   "description": "",
   "main": "lib/index.js",
   "files": [
