@@ -1,0 +1,10 @@
+@import '~@icedesign/skin/variables.scss';
+
+$ice-header-menu-bg: transparent !default;
+$ice-header-text-color: $color-text1-3 !default;
+$ice-header-text-hover-color: $color-brand1-6 !default;
+$ice-header-icon-down-color: $color-text1-3 !default;
+
+$theme: 'light';
+
+@import './base.scss';

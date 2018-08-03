@@ -1,0 +1,36 @@
+{
+  "name": "@icedesign/container",
+  "version": "0.1.4",
+  "description": "",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "demo/"
+  ],
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/components/container"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-component"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "typings": "lib/index.d.ts",
+  "devDependencies": {
+    "ice-devtools": "^1.0.6"
+  }
+}

@@ -30,7 +30,12 @@ module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
             mangle: true,
           },
         }),
-        new OptimizeCSSAssetsPlugin({}),
+        new OptimizeCSSAssetsPlugin({
+          cssProcessorOptions: {
+            reduceIdents: false,
+            safe: true
+          },
+        }),
       ],
     },
   });

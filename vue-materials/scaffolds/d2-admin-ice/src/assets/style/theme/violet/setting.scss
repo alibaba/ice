@@ -1,0 +1,59 @@
+// 主题名称
+$theme-name: 'violet';
+// 主题背景颜色
+$theme-bg-color: #000;
+// 主题背景图片遮罩
+$theme-bg-mask: rgba(#000, 0);
+
+// container组件
+$theme-container-background-color: #FFF;
+$theme-container-header-footer-background-color: #FFF;
+$theme-container-border-inner: 1px solid $color-border-2;
+$theme-container-border-outer: 1px solid #8C40E2;
+
+$theme-multiple-page-control-color: #FFF;
+$theme-multiple-page-control-color-active: $color-text-normal;
+$theme-multiple-page-control-nav-prev-color: #FFF;
+$theme-multiple-page-control-nav-next-color: #FFF;
+$theme-multiple-page-control-border-color: #8C40E2;
+$theme-multiple-page-control-border-color-active: #FFF;
+$theme-multiple-page-control-background-color: rgba(#FFF, .3);
+$theme-multiple-page-control-background-color-active: #FFF;
+
+// 顶栏和侧边栏中展开的菜单 hover 状态下
+$theme-menu-item-color-hover: #293849;
+$theme-menu-item-background-color-hover: #ecf5ff;
+
+// 顶栏上的文字颜色
+$theme-header-item-color: #FFF;
+$theme-header-item-background-color: transparent;
+// 顶栏上的项目在 hover 时
+$theme-header-item-color-hover: #FFF;
+$theme-header-item-background-color-hover: linear-gradient(-180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.12) 100%);
+// 顶栏上的项目在 focus 时
+$theme-header-item-color-focus: #FFF;
+$theme-header-item-background-color-focus: linear-gradient(-180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.12) 100%);
+// 顶栏上的项目在 active 时
+$theme-header-item-color-active: #FFF;
+$theme-header-item-background-color-active: linear-gradient(-180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.12) 100%);
+
+// 侧边栏上的文字颜色
+$theme-aside-item-color: #FFF;
+$theme-aside-item-background-color: transparent;
+// 侧边栏上的项目在 hover 时
+$theme-aside-item-color-hover: #FFF;
+$theme-aside-item-background-color-hover: linear-gradient(90deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.00) 100%);
+// 侧边栏上的项目在 focus 时
+$theme-aside-item-color-focus: #FFF;
+$theme-aside-item-background-color-focus: linear-gradient(90deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.00) 100%);
+// 侧边栏上的项目在 active 时
+$theme-aside-item-color-active: #FFF;
+$theme-aside-item-background-color-active: linear-gradient(90deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.00) 100%);
+
+// 侧边栏菜单为空的时候显示的元素
+$theme-aside-menu-empty-icon-color: #FFF;
+$theme-aside-menu-empty-text-color: #FFF;
+$theme-aside-menu-empty-background-color: rgba(#000, .1);
+$theme-aside-menu-empty-icon-color-hover: #FFF;
+$theme-aside-menu-empty-text-color-hover: #FFF;
+$theme-aside-menu-empty-background-color-hover: rgba(#000, .15);

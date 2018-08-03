@@ -1,0 +1,38 @@
+/* GLOBAL */
+
+.ice-layout-builder {
+  &.ice-design-layout-#{$theme} {
+    &.ice-design-layout {
+      // min-height: 100vh;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .ice-layout {
+      height: 100%;
+      min-height: 100%;
+      max-height: 100%;
+      padding: 0 20px;
+      background: transparent;
+    }
+
+    .ice-layout-main {
+      padding: 0 0 0 20px;
+    }
+  }
+
+  &.ice-design-boxed-layout {
+    .ice-layout {
+      width: 80%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+
+  &.ice-design-fluid-layout {
+    .ice-layout {
+      width: 100%;
+    }
+  }
+}

@@ -2,13 +2,17 @@
  * 按照下载量和最新的规则对模板进行排序推荐
  */
 const scaffolds = [
-  'ice-design-dashboard',
-  'ice-design-cms',
+  'ice-light-bootstrap-dashboard',
   'ice-design-pro',
-  'ice-design-lite',
+  'ice-design-cms',
   'ice-design-schools',
-  'ice-design-login',
+  'ice-reviews-management',
   'ice-design-analysis',
+  'ice-design-login',
+  'ice-design-lite',
+  'ice-coreui-admin',
+  'ice-material-dashboard',
+  'ice-design-dashboard',
   'ice-design-hospital',
   'ice-design-ecommerce',
   'ice-design-project-management',
@@ -18,7 +22,6 @@ const scaffolds = [
   'ice-open-platform-landingpage',
   'ice-operation-platform',
   'ice-design-docs',
-  'ice-reviews-management',
   'create-react-app',
 ];
 

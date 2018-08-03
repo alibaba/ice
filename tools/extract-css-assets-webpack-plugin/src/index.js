@@ -10,6 +10,9 @@ class ExtractCssAssetsPlugin {
       {
         outputPath: '',
         relativeCssPath: '',
+        requsetOptions: {
+          timeout: 5000,
+        },
       },
       options
     );

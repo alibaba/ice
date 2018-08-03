@@ -1,0 +1,42 @@
+{
+  "name": "@icedesign/waterfall-block",
+  "version": "1.0.0",
+  "description": "自适应网格布局，可实现瀑布流效果",
+  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3",
+    "@icedesign/container": "^0.1.2",
+    "autoresponsive-react": "^1.1.31"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "react-dom": "^16.4.1"
+  },
+  "blockConfig": {
+    "name": "waterfall",
+    "title": "瀑布流",
+    "categories": [
+      "瀑布流"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1uLgRENGYBuNjy0FnXXX5lpXa-2862-1564.png"
+  }
+}

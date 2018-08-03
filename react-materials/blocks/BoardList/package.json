@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BoardList"
   },
   "license": "MIT",
   "keywords": [
@@ -33,7 +33,10 @@
   "blockConfig": {
     "name": "board-list",
     "title": "任务面板",
-    "categories": ["列表"],
+    "categories": [
+      "列表"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1XyG8qQyWBuNjy0FpXXassXXa-2288-1316.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/board-list/preview"
 }

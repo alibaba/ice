@@ -52,6 +52,8 @@
     "no-restricted-globals": 0,
     "react/jsx-no-bind": 0,
     "no-mixed-operators": 0,
+    "import/prefer-default-export": 0,
+    "arrow-parens": 0,
     "global-require": 0
   }
 }

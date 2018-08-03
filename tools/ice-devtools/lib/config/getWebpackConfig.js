@@ -5,6 +5,7 @@ const BABEL_LOADER = require.resolve('babel-loader');
 const STYLE_LOADER = require.resolve('style-loader');
 const CSS_LOADER = require.resolve('css-loader');
 const SASS_LOADER = require.resolve('sass-loader');
+const LESS_LOADER = require.resolve('less-loader');
 const VUE_STYLE_LOADER = require.resolve('vue-style-loader');
 const VUE_LOADER = require.resolve('vue-loader');
 const WebpackPluginImport = require('webpack-plugin-import');
@@ -43,6 +44,10 @@ const baseConfig = {
       {
         test: /\.scss$/,
         use: [STYLE_LOADER, CSS_LOADER, SASS_LOADER],
+      },
+      {
+        test: /\.less$/,
+        use: [STYLE_LOADER, CSS_LOADER, LESS_LOADER],
       },
       {
         test: /\.vue$/,

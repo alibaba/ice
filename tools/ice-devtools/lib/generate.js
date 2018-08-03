@@ -2,6 +2,7 @@
 const chalk = require('chalk');
 const Metalsmith = require('metalsmith');
 const Handlebars = require('handlebars');
+const uppercamelcase = require('uppercamelcase');
 const async = require('async');
 const render = require('consolidate').handlebars.render;
 const path = require('path');
@@ -35,11 +36,11 @@ module.exports = function generate(name, src, dest, done) {
   const opts = getOptions(name, src);
 
   const metalsmith = Metalsmith(path.join(src, 'template'));
-
+  metalsmith.frontmatter(false)
   const data = Object.assign(metalsmith.metadata(), {
     name: kebabCase(name).replace(/^-/, ''),
     npmName: kebabCase(name).replace(/^-/, ''),
-    className: name,
+    className: uppercamelcase(name),
     inPlace: dest === process.cwd(),
     noEscape: true,
   });
@@ -167,6 +168,7 @@ function renderTemplateFiles(skipInterpolation) {
         if (!/{{([^{}]+)}}/g.test(str)) {
           return next();
         }
+
         render(str, metalsmithMetadata, (err, res) => {
           if (err) {
             err.message = `[${file}] ${err.message}`;
@@ -194,15 +196,15 @@ function logMessage(message, data) {
     if (err) {
       console.error(
         '\n   Error when rendering template complete message: ' +
-          err.message.trim()
+        err.message.trim()
       );
     } else {
       console.log(
         '\n' +
-          res
-            .split(/\r?\n/g)
-            .map((line) => '   ' + line)
-            .join('\n')
+        res
+          .split(/\r?\n/g)
+          .map((line) => '   ' + line)
+          .join('\n')
       );
     }
   });
