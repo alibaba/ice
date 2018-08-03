@@ -1,0 +1,34 @@
+$prefixes: ('', '-moz-', '-webkit-', '-ms-') !default;
+
+@mixin circle-animation(){
+   @for $i from 0 to length($prefixes) {
+        @include circle-animation-details(nth($prefixes, $i + 1));
+   }  
+}
+
+@mixin circle-animation-details($name){
+    #{$name}animation-name: spin;
+    #{$name}animation-duration: 1250ms;
+    #{$name}animation-iteration-count: infinite;
+    #{$name}animation-timing-function: linear;
+
+}
+@keyframes spin {
+    from { transform:rotate(0deg); }
+    to { transform:rotate(360deg); }
+}
+
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+
+@-ms-keyframes spin {
+    from { -ms-transform: rotate(0deg); }
+    to { -ms-transform: rotate(360deg); }
+}

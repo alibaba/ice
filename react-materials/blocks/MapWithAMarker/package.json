@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/MapWithAMarker"
   },
   "license": "MIT",
   "keywords": [
@@ -33,5 +33,6 @@
       "信息展示"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1rtgvCDtYBeNjy1XdXXXXyVXa-2058-802.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/map-with-a-marker/preview"
 }

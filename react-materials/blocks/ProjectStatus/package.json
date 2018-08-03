@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ProjectStatus"
   },
   "license": "MIT",
   "keywords": [
@@ -40,5 +40,6 @@
       "数据展示"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1NuhFwDtYBeNjy1XdXXXXyVXa-1391-484.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/project-status/preview"
 }

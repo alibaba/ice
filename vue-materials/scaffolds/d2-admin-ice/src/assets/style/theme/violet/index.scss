@@ -1,0 +1,9 @@
+@import './setting.scss';
+@import '../theme.scss';
+
+.theme-#{$theme-name} {
+  .d2-layout-header-aside-group {
+    background: #bc00e3;
+    background: linear-gradient(120deg, #bc00e3 0%, #4EFFFB 100%);
+  }
+}

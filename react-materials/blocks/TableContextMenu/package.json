@@ -1,0 +1,41 @@
+{
+  "name": "@icedesign/table-context-menu-block",
+  "version": "1.0.0",
+  "description": "表格单元格支持右键菜单配置操作，可自定义风格",
+  "author": "",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3",
+    "@icedesign/container": "^0.1.4",
+    "react-contextmenu": "^2.9.3"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "table-context-menu",
+    "title": "表格",
+    "categories": [
+      "表格"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1jDldIAyWBuNjy0FpXXassXXa-2866-532.png"
+  }
+}

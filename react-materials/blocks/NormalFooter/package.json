@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/NormalFooter"
   },
   "license": "MIT",
   "keywords": [
@@ -45,5 +45,6 @@
       "页脚"
     ],
     "themePackage": "@icedesign/skin"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/normal-footer/preview"
 }

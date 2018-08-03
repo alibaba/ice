@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CodeSyntaxHighlight"
   },
   "license": "MIT",
   "keywords": [
@@ -37,5 +37,6 @@
       "代码编辑器"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1v_zvD9BYBeNjy0FeXXbnmFXa-2874-1068.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/code-syntax-highlight/preview"
 }

@@ -6,9 +6,9 @@ category: 物料
 
 ## 基础规范
 
-* 区块名称: 大驼峰写法, 如 `ExampleBlock`, 遵循简练能表达组件含义的原则
-* 基础编码码规范: [JavaScript Style Guide](https://github.com/airbnb/javascript)
-* CSS 规范: [CSS-in-JS](https://github.com/MicheleBertoli/css-in-js)
+- 区块名称: 大驼峰写法, 如 `ExampleBlock`, 遵循简练能表达组件含义的原则
+- 基础编码码规范: [JavaScript Style Guide](https://github.com/airbnb/javascript)
+- CSS 规范: [CSS-in-JS](https://github.com/MicheleBertoli/css-in-js)
 
 ## 安装物料开发工具
 
@@ -67,26 +67,26 @@ $ ice-devtools start
 
 区块主要按照中后台业务常见的功能类型进行分类，不同的分类对应不同的区块，分类如下：
 
-* 登录页
-* 欢迎页
-* 表格
-* 列表
-* 表单
-* 图表
-* 异常
-* 筛选
-* 视频
-* 模态框
-* 数据展示
-* 信息展示
+- 登录页
+- 欢迎页
+- 表格
+- 列表
+- 表单
+- 图表
+- 异常
+- 筛选
+- 视频
+- 模态框
+- 数据展示
+- 信息展示
 
 ### 添加区块
 
 进入初始化的项目，使用 `ice-devtools add` 添加区块，添加流程的规则如下：
 
-* 初始项目选择 react 类型，默认添加到 react 对应的 react-materials/blocks 物料目录下
-* 初始项目选择 vue 类型，默认添加到 vue 对应的 vue-materials/blocks 物料目录下
-* 初始项目同时选择 react、vue，添加物料的时候将会询问添加物料的类型，同时生成到对应的物料目录下
+- 初始项目选择 react 类型，默认添加到 react 对应的 react-materials/blocks 物料目录下
+- 初始项目选择 vue 类型，默认添加到 vue 对应的 vue-materials/blocks 物料目录下
+- 初始项目同时选择 react、vue，添加物料的时候将会询问添加物料的类型，同时生成到对应的物料目录下
 
 ```
 ➜ cd your-project
@@ -269,14 +269,9 @@ Iceworks 对于脚手架会将其直接下载解压到目录中。
 
 相关命令如下：
 
-通过 lerna 发布物料包：
-
 ```
-$ npm run bootstrap   // 初始 lerna
-$ npm run publish     // 发布 NPM 包
+$ npm run publish     // 发布 NPM 包，将对应的区块发布到 NPM 上
 ```
-
-lerna 批量发包会比较容易，但可能会出现一些异常。而且 lerna 的变更检测是通过 git tag 实现的，因此通过这种方式你必须创建一个 git 仓库在 github 或者 gitlab 等。
 
 其实只要将物料发包即可，因此你也可以选择普通的 npm 命令的方式发布，只是这样操作步骤会变多一些：
 

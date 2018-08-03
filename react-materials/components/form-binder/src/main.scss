@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+// 全局变量(只有变量)
+@import '~@icedesign/base/lib/core/index.scss';
+
+// variables && mixins
+@import 'scss/variable';
+@import 'scss/mixin';
+
+.this-field-has-error {
+  border-color: red !important;
+  * {
+    border-color: red !important;
+  }
+}

@@ -1,0 +1,108 @@
+.btn{
+    border-width: $border-thick;
+    background-color: $transparent-bg;
+    font-weight: $font-weight-normal;
+    
+    @include opacity(.8);
+    padding: $padding-base-vertical $padding-base-horizontal;
+    
+    @include btn-styles($default-color, $default-states-color);
+    
+    &:hover,
+    &:focus{
+        @include opacity(1);
+        outline: 0 !important;
+    }
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+         @include box-shadow(none);
+         outline: 0 !important;
+    }
+    
+    &.btn-icon{
+        padding: $padding-base-vertical;
+    }
+    
+}
+
+// Apply the mixin to the buttons
+//.btn-default { @include btn-styles($default-color, $default-states-color); }
+.btn-primary { @include btn-styles($primary-color, $primary-states-color); }
+.btn-success { @include btn-styles($success-color, $success-states-color); }
+.btn-info    { @include btn-styles($info-color, $info-states-color); }
+.btn-warning { @include btn-styles($warning-color, $warning-states-color); }
+.btn-danger  { @include btn-styles($danger-color, $danger-states-color); }
+.btn-neutral { 
+    @include btn-styles($white-color, $white-color);
+    
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle{
+         background-color: $white-color;
+         color: $default-color;
+    }    
+    
+    &.btn-fill,
+    &.btn-fill:hover,
+    &.btn-fill:focus{
+        color: $default-color;
+    }
+    
+    &.btn-simple:active,
+    &.btn-simple.active{
+        background-color: transparent;
+    }
+}
+
+.btn{
+     &:disabled,
+     &[disabled],
+     &.disabled{
+        @include opacity(.5);
+    }
+}
+.btn-round{
+    border-width: $border-thin;
+    border-radius: $btn-round-radius !important;
+    padding: $padding-round-vertical $padding-round-horizontal;
+    
+    &.btn-icon{
+        padding: $padding-round-vertical;
+    }
+}
+.btn-simple{
+    border: $none;
+    font-size: $font-size-medium;
+    padding: $padding-base-vertical $padding-base-horizontal;
+    
+    &.btn-icon{
+        padding: $padding-base-vertical;
+    }
+}
+.btn-lg{
+   @include btn-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $border-radius-large);
+   font-weight: $font-weight-normal;
+}
+.btn-sm{
+    @include btn-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $border-radius-small);    
+}
+.btn-xs {
+    @include btn-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $border-radius-small);
+}
+.btn-wd {
+    min-width: 140px;
+}
+
+.btn-group.select{
+    width: 100%;
+}
+.btn-group.select .btn{
+    text-align: left;
+}
+.btn-group.select .caret{
+    position: absolute;
+    top: 50%;
+    margin-top: -1px;
+    right: 8px;
+}

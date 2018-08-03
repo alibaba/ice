@@ -1,0 +1,13 @@
+@mixin icon-background ($icon-url){
+	background-image : url($icon-url);
+		
+}
+
+@mixin icon-shape ($size, $padding, $border-radius) {
+	height: $size;
+	width: $size;
+	padding: $padding;
+	border-radius: $border-radius;
+	display: inline-table;
+
+}
