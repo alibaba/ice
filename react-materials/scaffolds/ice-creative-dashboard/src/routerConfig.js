@@ -9,7 +9,7 @@ import TableList from 'pages/TableList';
 import Upgrade from 'pages/Upgrade';
 import UserPage from 'pages/UserPage';
 
-const dashRoutes = [
+const routerConfig = [
   {
     path: '/dashboard',
     name: 'Dashboard',
@@ -41,12 +41,13 @@ const dashRoutes = [
     name: 'Upgrade to PRO',
     component: Upgrade,
   },
-  {
-    redirect: true,
-    path: '/',
-    pathTo: '/dashboard',
-    name: 'Dashboard',
-  },
 ];
 
-export default dashRoutes;
+routerConfig.push({
+  redirect: true,
+  path: '/',
+  pathTo: '/dashboard',
+  name: 'Dashboard',
+});
+
+export default routerConfig;
