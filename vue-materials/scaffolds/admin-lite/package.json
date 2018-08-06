@@ -1,6 +1,6 @@
 {
   "name": "@vue-materials/admin-lite",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "该模板适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示。",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/admin-lite.html",
   "author": "ice-admin@alibaba-inc.com",
@@ -16,7 +16,16 @@
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/preset-stage-2": "^7.0.0-beta.54",
+    "@babel/core": "7.0.0-beta.54",
+    "@babel/plugin-proposal-class-properties": "7.0.0-beta.54",
+    "@babel/plugin-proposal-decorators": "7.0.0-beta.54",
+    "@babel/plugin-proposal-export-namespace-from": "7.0.0-beta.54",
+    "@babel/plugin-proposal-function-sent": "7.0.0-beta.54",
+    "@babel/plugin-proposal-json-strings": "7.0.0-beta.54",
+    "@babel/plugin-proposal-numeric-separator": "7.0.0-beta.54",
+    "@babel/plugin-proposal-throw-expressions": "7.0.0-beta.54",
+    "@babel/plugin-syntax-dynamic-import": "7.0.0-beta.54",
+    "@babel/plugin-syntax-import-meta": "7.0.0-beta.54",
     "@vue/cli-plugin-babel": "^3.0.0-beta.6",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.6",
     "@vue/cli-service": "^3.0.0-beta.6",

@@ -1,21 +1,36 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-      "targets": {
-        "browsers": [
-          "> 5%",
-          "last 2 versions",
-          "not ie <= 8"
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": [
+            "> 5%",
+            "last 2 versions",
+            "not ie <= 8"
+          ]
+        },
+        "modules": false,
+        "exclude": [
+          "transform-regenerator"
         ]
-      },
-      "modules": false,
-      "exclude": [
-        "transform-regenerator"
-      ]
-    }],
-    ["@babel/preset-stage-2", {
-      "useBuiltIns": true,
-      "decoratorsLegacy": true
-    }]
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-syntax-import-meta",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-json-strings",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    "@babel/plugin-proposal-function-sent",
+    "@babel/plugin-proposal-export-namespace-from",
+    "@babel/plugin-proposal-numeric-separator",
+    "@babel/plugin-proposal-throw-expressions"
   ]
 }
