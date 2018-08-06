@@ -24,7 +24,7 @@ module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
   return webpackMerge(baseConfig, {
     devtool: 'cheap-module-source-map',
     output: {
-      publicPath: '/build/',
+      publicPath: '/',
     },
     plugins,
   });
