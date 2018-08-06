@@ -60,6 +60,12 @@ export default class BasicForm extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value: nextProps.value,
+    });
+  }
+
   /**
    * 表单改变时动态监听
    */
@@ -108,7 +114,6 @@ export default class BasicForm extends Component {
   };
 
   render() {
-    console.log('state:', this.state.value);
     const { value = {} } = this.state;
     return (
       <IceFormBinderWrapper value={value} onChange={this.formChange}>
@@ -116,10 +121,37 @@ export default class BasicForm extends Component {
           {value.enableName ? (
             <div className="form-item" style={styles.formItem}>
               <span>布局名称：</span>
-              <IceFormBinder name="name" required message="布局名称必填">
+              <IceFormBinder
+                name="name"
+                rules={[
+                  {
+                    type: 'string',
+                    required: true,
+                    message: '布局名称必填',
+                  },
+                  {
+                    validator(rule, val, callback) {
+                      let errors = [];
+                      const reg = /^[A-Z]+[A-Za-z0-9]+$/;
+                      // 如果不符合规则，则输入 error
+                      if (!val) {
+                        return;
+                      }
+
+                      if (!reg.test(val)) {
+                        errors = ['请输入正确的布局名称(如:BasicLayout)'];
+                      }
+                      callback(errors);
+                    },
+                  },
+                ]}
+              >
                 <Input size="large" />
               </IceFormBinder>
-              <IceFormError style={{ marginLeft: 10 }} name="name" />
+              <IceFormError
+                style={{ marginLeft: 70, marginTop: 10, display: 'block' }}
+                name="name"
+              />
             </div>
           ) : null}
 

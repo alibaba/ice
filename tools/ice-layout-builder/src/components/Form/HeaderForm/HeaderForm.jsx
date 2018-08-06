@@ -19,6 +19,12 @@ export default class HeaderForm extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value: nextProps.value,
+    });
+  }
+
   /**
    * 表单改变时动态监听
    */
