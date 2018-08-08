@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/hospital-scaffold",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "该模板适用于医院类的后台管理系统",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-hospital.html",
   "keywords": [
@@ -26,6 +26,7 @@
   "scaffoldConfig": {
     "name": "ice-design-hospital",
     "title": "ICE Design Hospital",
+    "categories": ["行业领域"],
     "screenshot": "https://img.alicdn.com/tfs/TB19u3vzf1TBuNjy0FjXXajyXXa-2840-1596.png"
   },
   "dependencies": {
@@ -51,5 +52,8 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "ice-scripts": "^1.6.0-next.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }
