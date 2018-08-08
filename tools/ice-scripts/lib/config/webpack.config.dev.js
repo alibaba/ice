@@ -9,7 +9,11 @@ const env = process.env;
 module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
   const baseConfig = getWebpackConfigBasic(entry, paths, options);
 
-  const plugins = [new webpack.HotModuleReplacementPlugin()];
+  const plugins = [];
+
+  if (process.env.HOT_RELOAD !== 'false') {
+    plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
 
   if (options.webpackBundleAnalyzer !== false && env.ANALYZER_PORT) {
     plugins.push(
@@ -24,7 +28,7 @@ module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
   return webpackMerge(baseConfig, {
     devtool: 'cheap-module-source-map',
     output: {
-      publicPath: '/build/',
+      publicPath: '/',
     },
     plugins,
   });
