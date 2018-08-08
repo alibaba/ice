@@ -51,5 +51,8 @@
     "title": "ICE Design Lite",
     "categories": ["通用"],
     "screenshot": "https://img.alicdn.com/tfs/TB1IM1JmuuSBuNjy1XcXXcYjFXa-1920-1080.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

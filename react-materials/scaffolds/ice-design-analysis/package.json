@@ -45,5 +45,8 @@
     "title": "ICE Design Analysis",
     "categories": ["数据可视化"],
     "screenshot": "https://img.alicdn.com/tfs/TB1_Xf8m_tYBeNjy1XdXXXXyVXa-1920-1080.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

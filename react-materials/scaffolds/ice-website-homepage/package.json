@@ -49,5 +49,8 @@
     "title": "ICE Website HomePage",
     "categories": ["首页展示"],
     "screenshot": "https://img.alicdn.com/tfs/TB1lvtMpQOWBuNjSsppXXXPgpXa-2840-1596.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

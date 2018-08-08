@@ -36,5 +36,8 @@
     "title": "Create React App",
     "categories": ["通用"],
     "screenshot": "https://img.alicdn.com/tfs/TB1zu_AeCBYBeNjy0FeXXbnmFXa-1920-1080.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

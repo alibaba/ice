@@ -53,5 +53,8 @@
     "title": "ICE Design Schools",
     "categories": ["行业领域"],
     "screenshot": "https://img.alicdn.com/tfs/TB1pCKVzDtYBeNjy1XdXXXXyVXa-2840-1596.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }
