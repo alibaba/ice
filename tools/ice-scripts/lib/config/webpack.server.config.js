@@ -4,7 +4,7 @@ module.exports = (paths, options = {}) => {
     disableHostCheck: true,
     compress: true,
     clientLogLevel: 'none',
-    hot: true,
+    hot: process.env.HOT_RELOAD !== 'false',
     publicPath: '/',
     quiet: true,
     watchOptions: {
