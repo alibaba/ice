@@ -8,7 +8,7 @@ module.exports = (paths, options = {}) => {
     clientLogLevel: 'none',
     contentBase: paths.appDirectory,
     // contentBase: paths.appPublic,
-    hot: true,
+    hot: process.env.HOT_RELOAD !== 'false',
     publicPath: paths.devDistDir || DEV_DIST_DIR,
     quiet: true,
     watchOptions: {
