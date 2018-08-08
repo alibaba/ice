@@ -41,8 +41,14 @@ function initializeRequestStatus(
   return target;
 }
 
+/**
+ * merge array use override
+ */
+const overwriteMerge = (destArray, sourceArray) => sourceArray;
+
 const defaultOpts = {
   requestClient: axios,
+  arrayMerge: overwriteMerge,
 };
 
 /**
@@ -52,10 +58,15 @@ const defaultOpts = {
  * @return {function}
  */
 
-export default function dataBinder(sourceConfig, opts = defaultOpts) {
+export default function dataBinder(sourceConfig, opts = {}) {
+  opts.__proto__ = defaultOpts; // apply default opts
+
   const requestOptions = {}; // 请求参数 map 数据结构
   // 请求数据 map 数据结构
   const defaultBindingDatas = initializeRequestStatus({});
+  // initial merge option
+  // ref: https://www.npmjs.com/package/deepmerge
+  const mergeOption = { arrayMerge: opts.arrayMerge };
 
   // 根据传入数据进行初始化
   Object.keys(sourceConfig).forEach((dataSourceKey) => {
@@ -148,7 +159,8 @@ export default function dataBinder(sourceConfig, opts = defaultOpts) {
         const newRequestOptions = merge(
           // 参数每次跟初始化的配置进行 merge
           requestOptions[dataSourceKey],
-          newDataSource
+          newDataSource,
+          mergeOption
         );
 
         // 如果更新时同时附带 defaultBindingData 则先同步更新一次数据，再请求更新

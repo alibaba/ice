@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-material-dashboard-scaffold",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "该模板基于社区的 material-dashboard-react 改造而成，默认使用 material-ui 组件，同时也支持飞冰基础组件和区块的使用，支持 Iceworks 一键创建项目和完整的 GUI 操作",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-material-dashboard/index.html",
   "license": "MIT",
@@ -57,6 +57,7 @@
   "scaffoldConfig": {
     "name": "ice-material-dashboard",
     "title": "ICE Material Dashboard",
+    "categories": ["Dashboard"],
     "screenshot": "https://img.alicdn.com/tfs/TB1lJJDFntYBeNjy1XdXXXXyVXa-2840-1596.png"
   }
 }

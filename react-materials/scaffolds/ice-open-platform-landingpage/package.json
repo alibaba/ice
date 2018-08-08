@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/open-platform-scaffold",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "该模板适用于开放平台的引导页，默认内置一个页面和六个不同风格的展示区块",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-open-platform-landingpage.html",
   "dependencies": {
@@ -41,6 +41,7 @@
   "scaffoldConfig": {
     "name": "ice-open-platform-landingpage",
     "title": "ICE Open Platform LandingPage",
+    "categories": ["首页展示"],
     "screenshot": "https://img.alicdn.com/tfs/TB1F3SAuGmWBuNjy1XaXXXCbXXa-2840-1596.png"
   }
 }

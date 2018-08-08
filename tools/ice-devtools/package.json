@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {
@@ -51,6 +51,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "koa-views": "^6.1.4",
+    "less-loader": "^4.1.0",
     "marked": "^0.4.0",
     "metalsmith": "^2.3.0",
     "mkdirp": "^0.5.1",
@@ -61,6 +62,7 @@
     "path-exists": "^3.0.0",
     "prismjs": "^1.15.0",
     "props-schema-generator": "^0.1.1",
+    "puppeteer": "^1.6.2",
     "read-metadata": "^1.0.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",

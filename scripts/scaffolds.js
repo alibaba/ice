@@ -2,10 +2,11 @@
  * 按照下载量和最新的规则对模板进行排序推荐
  */
 const scaffolds = [
-  'ice-light-bootstrap-dashboard',
+  'ice-creative-dashboard',
   'ice-design-pro',
   'ice-design-cms',
   'ice-design-schools',
+  'ice-light-bootstrap-dashboard',
   'ice-reviews-management',
   'ice-design-analysis',
   'ice-design-login',
