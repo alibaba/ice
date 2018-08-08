@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/website-homepage-scaffold",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "该模板适用于产品类的首页介绍，默认内置一个页面和五个不同风格的展示区块",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-website-homepage.html",
   "dependencies": {
@@ -47,6 +47,7 @@
   "scaffoldConfig": {
     "name": "ice-website-homepage",
     "title": "ICE Website HomePage",
+    "categories": ["首页展示"],
     "screenshot": "https://img.alicdn.com/tfs/TB1lvtMpQOWBuNjSsppXXXPgpXa-2840-1596.png"
   }
 }
