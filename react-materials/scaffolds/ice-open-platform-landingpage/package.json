@@ -43,5 +43,8 @@
     "title": "ICE Open Platform LandingPage",
     "categories": ["首页展示"],
     "screenshot": "https://img.alicdn.com/tfs/TB1F3SAuGmWBuNjy1XaXXXCbXXa-2840-1596.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

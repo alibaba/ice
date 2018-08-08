@@ -66,5 +66,8 @@
     "categories": ["通用"],
     "screenshot": "https://img.alicdn.com/tfs/TB1_bulmpOWBuNjy0FiXXXFxVXa-1920-1080.png",
     "defaultLayout": "BasicLayout"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }
