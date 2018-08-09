@@ -27,23 +27,21 @@ export default class Card extends Component {
   render() {
     const { title, options } = this.props;
     return (
-      <div>
-        <IceContainer>
-          <div style={styles.cardHead}>
-            <h4 style={styles.cardTitle}>{title}</h4>
-            <Select size="large" defaultValue="day">
-              {options.map((option, index) => {
-                return (
-                  <Option key={index} value={option.value}>
-                    {option.label}
-                  </Option>
-                );
-              })}
-            </Select>
-          </div>
-          {this.props.children}
-        </IceContainer>
-      </div>
+      <IceContainer>
+        <div style={styles.cardHead}>
+          <h4 style={styles.cardTitle}>{title}</h4>
+          <Select size="large" defaultValue="day">
+            {options.map((option, index) => {
+              return (
+                <Option key={index} value={option.value}>
+                  {option.label}
+                </Option>
+              );
+            })}
+          </Select>
+        </div>
+        {this.props.children}
+      </IceContainer>
     );
   }
 }

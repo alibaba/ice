@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/infinite-card-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "适用于横向滚动的多数据展示卡片",
   "author": "",
   "files": [
@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/InfiniteCard"
   },
   "license": "MIT",
   "keywords": [
@@ -36,5 +36,6 @@
       "数据展示"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1YpBJc6rguuRjy0FeXXXcbFXa-2860-318.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/infinite-card/preview"
 }
