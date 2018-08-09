@@ -1,0 +1,41 @@
+{
+  "name": "@icedesign/co-branding-block",
+  "version": "1.0.1",
+  "description": "展示合作的品牌",
+  "author": "",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CoBranding"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3",
+    "@icedesign/container": "^0.1.4"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "co-branding",
+    "title": "品牌合作展示",
+    "categories": [
+      "信息展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1Qhf3J1uSBuNjy1XcXXcYjFXa-2864-380.png"
+  },
+  "homepage": "https://alibaba.github.io/ice/block/co-branding/preview"
+}
