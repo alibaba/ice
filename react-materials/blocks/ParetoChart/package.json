@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/pareto-chart-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于 highcharts 的柱状图和折线图组合区块",
   "author": "",
   "files": [
@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ParetoChart"
   },
   "license": "MIT",
   "keywords": [
@@ -38,5 +38,6 @@
       "图表"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1yYlvKhGYBuNjy0FnXXX5lpXa-2870-992.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/pareto-chart/preview"
 }
