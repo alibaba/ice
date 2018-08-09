@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/builder-platfrom-scaffold",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "该模板适用于云构建类的数据展示和管理后台",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-builder-platfrom.html",
   "keywords": [
