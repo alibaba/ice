@@ -96,7 +96,9 @@ export default class TaskTable extends Component {
   render() {
     return (
       <IceContainer>
-        <div style={styles.tableTitle}>构建任务</div>
+        <div style={styles.tableHead}>
+          <div style={styles.tableTitle}>构建器</div>
+        </div>
         <TableFilter />
         <CustomTable columns={this.columnsConfig()} dataSource={getData()} />
       </IceContainer>
@@ -105,8 +107,15 @@ export default class TaskTable extends Component {
 }
 
 const styles = {
+  tableHead: {
+    height: '32px',
+    lineHeight: '32px',
+    margin: '0 0 20px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   tableTitle: {
-    margin: '6px 0 20px',
     height: '20px',
     lineHeight: '20px',
     color: '#333',

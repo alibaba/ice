@@ -58,7 +58,6 @@ export default class BuilderTable extends Component {
         title: '构建对象',
         dataIndex: 'builder',
         key: 'builder',
-        sortable: true,
       },
       {
         title: '描述',
