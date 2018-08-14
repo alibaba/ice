@@ -34,6 +34,7 @@ function getVariableMappingString(key, value) {
 
     case 'icon-font-path':
     case 'icon-font-name':
+    case 'font-custom-path':
       return `$${key}: ${JSON.stringify(value)};`;
 
     default:
