@@ -1,0 +1,38 @@
+{
+  "name": "@react-materials/hot-rank-block",
+  "version": "1.0.0",
+  "description": "展示关键词、关键点热度",
+  "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3",
+    "@icedesign/container": "^0.1.4",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "hot-rank",
+    "title": "hot-rank",
+    "categories": [
+      "列表"
+    ],
+    "screenshot": ""
+  }
+}
