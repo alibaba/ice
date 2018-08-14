@@ -1,0 +1,37 @@
+{
+  "name": "@react-materials/post-category-block",
+  "version": "1.0.0",
+  "description": "文章创作类型列表",
+  "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PostCategory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "post-category",
+    "title": "post-category",
+    "categories": [
+      "列表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1OyxcoljTBKNjSZFDXXbVgVXa-2166-914.png"
+  }
+}
