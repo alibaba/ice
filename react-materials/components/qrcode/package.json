@@ -1,0 +1,35 @@
+{
+  "name": "@icedesign/qrcode",
+  "version": "0.1.0",
+  "description": "二维码 hover 组件",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "demo/"
+  ],
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/components/qrcode"
+  },
+  "license": "ISC",
+  "keywords": [
+    "ice-component"
+  ],
+  "dependencies": {
+    "@icedesign/base": "0.x",
+    "foundation-symbol": "^0.1.3",
+    "prop-types": "^15.6.0",
+    "qrcode.react": "^0.8.0"
+  },
+  "devDependencies": {},
+  "typings": "lib/index.d.ts"
+}
