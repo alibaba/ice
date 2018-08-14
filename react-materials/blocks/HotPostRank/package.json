@@ -1,7 +1,7 @@
 {
-  "name": "@react-materials/hot-rank-block",
+  "name": "@react-materials/hot-post-rank-block",
   "version": "1.0.0",
-  "description": "展示关键词、关键点热度",
+  "description": "展示文章阅读热度排行",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/HotRank"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/HotPostRank"
   },
   "license": "MIT",
   "keywords": [
@@ -33,6 +33,6 @@
     "categories": [
       "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1Zc4loEOWBKNjSZKzXXXfWFXa-2024-1158.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB16dHroBsmBKNjSZFsXXaXSVXa-2246-1120.png"
   }
 }
