@@ -1,6 +1,4 @@
-import { Progress } from '@icedesign/base';
 import React, { Component } from 'react';
-
 import './hot-item.scss';
 
 const rankStyle = [
@@ -23,12 +21,6 @@ class HotItem extends Component {
           {data.index}
         </span>
         <span style={styles.keyword}>{data.keyword}</span>
-        <Progress
-          type="progressive"
-          style={{ width: 60 }}
-          percent={data.percent}
-          showInfo={false}
-        />
         <span style={styles.total}>{data.total}</span>
         <span style={styles.link}>解读</span>
       </a>
