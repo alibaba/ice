@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const _kebab = require('kebab-case');
 const primaryColor = require('./primaryColor');
 const secondaryColor = require('./secondaryColor');
