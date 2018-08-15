@@ -23,21 +23,21 @@ ReactDOM.render(
         &nbsp;&nbsp;
         <span>上 </span>
         <Qrcode
-          value="https://ice.alibaba-inc.com"
+          value="https://alibaba.github.io/ice"
           text="进入 ICE 官网"
           align="top"
         />
         &nbsp;&nbsp;
         <span>下 </span>
         <Qrcode
-          value="https://ice.alibaba-inc.com"
+          value="https://alibaba.github.io/ice"
           text="进入 ICE 官网"
           align="bottom"
         />
         &nbsp;&nbsp;
         <span>右 </span>
         <Qrcode
-          value="https://ice.alibaba-inc.com"
+          value="https://alibaba.github.io/ice"
           text="进入 ICE 官网"
           align="right"
         />
@@ -47,49 +47,49 @@ ReactDOM.render(
       <p>支持通过 triggerSize props 设置 Icon 大小</p>
       <Qrcode
         triggerSize="xxs"
-        value="https://ice.alibaba-inc.com"
+        value="https://alibaba.github.io/ice"
         text="进入 ICE 官网"
         align="right"
       />
       <br />
       <Qrcode
         triggerSize="xs"
-        value="https://ice.alibaba-inc.com"
+        value="https://alibaba.github.io/ice"
         text="进入 ICE 官网"
         align="right"
       />
       <br />
       <Qrcode
         triggerSize="small"
-        value="https://ice.alibaba-inc.com"
+        value="https://alibaba.github.io/ice"
         text="进入 ICE 官网"
         align="right"
       />
       <br />
       <Qrcode
         triggerSize="medium"
-        value="https://ice.alibaba-inc.com"
+        value="https://alibaba.github.io/ice"
         text="进入 ICE 官网"
         align="right"
       />
       <br />
       <Qrcode
         triggerSize="large"
-        value="https://ice.alibaba-inc.com"
+        value="https://alibaba.github.io/ice"
         text="进入 ICE 官网"
         align="right"
       />
       <br />
       <Qrcode
         triggerSize="xl"
-        value="https://ice.alibaba-inc.com"
+        value="https://alibaba.github.io/ice"
         text="进入 ICE 官网"
         align="right"
       />
       <br />
       <Qrcode
         triggerSize="xxl"
-        value="https://ice.alibaba-inc.com"
+        value="https://alibaba.github.io/ice"
         text="进入 ICE 官网"
         align="right"
       />

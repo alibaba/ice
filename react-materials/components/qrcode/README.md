@@ -2,16 +2,10 @@
 title: Qrcode
 category: Components
 chinese: 二维码
-repo: ice-components/ice-qrcode
+npm: @icedesign/qrcode
 ---
 
-二维码 hover 组件
-
-## 安装和升级
-
-```bash
-def add @ali/ice-qrcode
-```
+二维码组件
 
 ## 参数（Props）
 
@@ -29,7 +23,7 @@ def add @ali/ice-qrcode
 
 ## 子组件
 
-### IceQrcode.Panel
+### Qrcode.Panel
 
 直接展示的二维码组件
 
