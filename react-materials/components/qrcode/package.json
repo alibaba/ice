@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/qrcode",
   "version": "0.1.0",
-  "description": "二维码 hover 组件",
+  "description": "飞冰 二维码组件",
   "main": "lib/index.js",
   "files": [
     "lib/",
@@ -20,7 +20,7 @@
     "type": "git",
     "url": "https://github.com/alibaba/ice/tree/master/react-materials/components/qrcode"
   },
-  "license": "ISC",
+  "license": "MIT",
   "keywords": [
     "ice-component"
   ],
