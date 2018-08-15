@@ -63,7 +63,9 @@ export default class AccountFeatures extends Component {
   render() {
     return (
       <Container>
-        <div style={styles.header}>功能状态</div>
+        <div style={styles.header}>
+          <h2 style={{ margin: 0, fontSize: 16 }}>功能状态</h2>
+        </div>
         <div style={styles.body}>
           {this.state.dataSource.map((item, index) => {
             return <FeatureItem data={item} key={index} />;
