@@ -1,0 +1,38 @@
+{
+  "name": "@react-materials/account-features-block",
+  "version": "1.0.0",
+  "description": "罗列账户功能列表",
+  "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/AccountFeatures"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.4",
+    "@icedesign/container": "^0.1.4",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "account-features",
+    "title": "账户特性",
+    "categories": [
+      "列表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1zCVIo7omBKNjSZFqXXXtqVXa-1862-1246.png"
+  }
+}
