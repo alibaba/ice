@@ -18,8 +18,7 @@
     "block"
   ],
   "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
+    "access": "public"
   },
   "dependencies": {
     "@icedesign/base": "^0.2.4",
