@@ -18,7 +18,6 @@
     "tinycolor2": "^1.4.1"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
+    "access": "public"
   }
 }

@@ -3,7 +3,7 @@ const {
   secondaryColorMap,
   secondaryLightDelta,
   secondaryLighterDelta,
-} = require('./CONSTRACT');
+} = require('./designTokens');
 const { transfromColor } = require('./utils');
 
 /**
