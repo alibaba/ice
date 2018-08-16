@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const _kebab = require('kebab-case');
 const primaryColor = require('./primaryColor');
 const secondaryColor = require('./secondaryColor');
@@ -34,6 +33,7 @@ function getVariableMappingString(key, value) {
 
     case 'icon-font-path':
     case 'icon-font-name':
+    case 'font-custom-path':
       return `$${key}: ${JSON.stringify(value)};`;
 
     default:
