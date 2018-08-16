@@ -1,4 +1,4 @@
-module.exports = (paths, options = {}) => {
+module.exports = (options = {}) => {
   return {
     // historyApiFallback: true,
     disableHostCheck: true,

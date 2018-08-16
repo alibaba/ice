@@ -1,8 +1,7 @@
 const fs = require('fs');
 
-const getPaths = require('./paths');
+const paths = require('./paths');
 
-const paths = getPaths(process.cwd());
 const pkg = {};
 
 try {

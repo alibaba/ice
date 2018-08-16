@@ -43,4 +43,3 @@ module.exports = function getRootCA() {
 
   return generateRootCA();
 };
-

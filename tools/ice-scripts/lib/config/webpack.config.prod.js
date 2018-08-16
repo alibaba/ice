@@ -6,8 +6,8 @@ const webpackMerge = require('webpack-merge');
 
 const getWebpackConfigBasic = require('./webpack.config.basic');
 
-module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
-  const baseConfig = getWebpackConfigBasic(entry, paths, options);
+module.exports = function getWebpackConfigDev(entry, options = {}) {
+  const baseConfig = getWebpackConfigBasic(entry, options);
 
   return webpackMerge(baseConfig, {
     devtool: 'none',
@@ -33,7 +33,7 @@ module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
             reduceIdents: false,
-            safe: true
+            safe: true,
           },
         }),
       ],
