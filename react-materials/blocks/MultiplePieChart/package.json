@@ -1,0 +1,43 @@
+{
+  "name": "@icedesign/multiple-pie-chart-block",
+  "version": "1.0.1",
+  "description": "基于 highCharts 的饼图组合",
+  "author": "",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/MultiplePieChart"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3",
+    "@icedesign/container": "^0.1.4",
+    "highcharts": "^6.1.1",
+    "react-highcharts": "^16.0.2"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "multiple-pie-chart",
+    "title": "饼图组合",
+    "categories": [
+      "图表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB170Sdc56guuRjy1XdXXaAwpXa-2868-860.png"
+  },
+  "homepage": "https://alibaba.github.io/ice/block/multiple-pie-chart/preview"
+}
