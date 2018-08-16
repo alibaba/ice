@@ -3,30 +3,33 @@ const path = require('path');
 const colors = require('chalk');
 
 const walk = function walk(dir) {
-  var results = [];
-  var list = fs.readdirSync(dir);
-  list.forEach(function(file) {
+  let results = [];
+  let list = fs.readdirSync(dir);
+  list.forEach((file) => {
     file = dir + '/' + file;
-    var stat = fs.statSync(file);
-    if (stat && stat.isDirectory()) results = results.concat(walk(file));
-    else results.push(file);
+    let stat = fs.statSync(file);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(walk(file));
+    } else {
+      results.push(file);
+    }
   });
   return results;
 };
 
 module.exports = () => {
-  var entryObj = {};
-  var entryDir = './src';
+  let entryObj = {};
+  let entryDir = './src';
 
   try {
     // 获取当前目录下所有文件
-    var files = walk(entryDir);
-    files.forEach(function(filePath) {
-      var fileExt = path.extname(filePath);
-      var fileBasename = path.basename(filePath, fileExt);
-      var pageFile = path.relative(entryDir, filePath);
+    let files = walk(entryDir);
+    files.forEach((filePath) => {
+      let fileExt = path.extname(filePath);
+      let fileBasename = path.basename(filePath, fileExt);
+      let pageFile = path.relative(entryDir, filePath);
 
-      var pageDirTree = pageFile.split(path.sep);
+      let pageDirTree = pageFile.split(path.sep);
 
       if (
         (fileExt === '.jsx' ||
@@ -39,7 +42,7 @@ module.exports = () => {
       ) {
         pageDirTree.pop();
         pageDirTree.push('index');
-        var pageName = pageDirTree.join('/');
+        let pageName = pageDirTree.join('/');
 
         entryObj[pageName] = filePath;
       }

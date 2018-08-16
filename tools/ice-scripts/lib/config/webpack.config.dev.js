@@ -1,13 +1,13 @@
-const webpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
+const webpackMerge = require('webpack-merge');
 const webpack = require('webpack');
 const getWebpackConfigBasic = require('./webpack.config.basic');
 
 const env = process.env;
 
-module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
-  const baseConfig = getWebpackConfigBasic(entry, paths, options);
+module.exports = function getWebpackConfigDev(entry, options = {}) {
+  const baseConfig = getWebpackConfigBasic(entry, options);
 
   const plugins = [];
 

@@ -39,27 +39,25 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
-module.exports = function getPaths(cwd) {
-  const appDirectory = realpathSync(cwd);
+const appDirectory = realpathSync(process.cwd());
 
-  function resolveApp(relativePath) {
-    return resolve(appDirectory, relativePath);
-  }
+function resolveApp(relativePath) {
+  return resolve(appDirectory, relativePath);
+}
 
-  return {
-    appBuild: resolveApp('build'),
-    appPublic: resolveApp('public'),
-    appHtml: resolveApp('public/index.html'),
-    appFavicon: resolveApp('public/favicon.png'),
-    appFaviconIco: resolveApp('public/favicon.ico'),
-    appPackageJson: resolveApp('package.json'),
-    appAbcJson: resolveApp('abc.json'),
-    appSrc: resolveApp('src'),
-    appNodeModules: resolveApp('node_modules'),
-    sdkNodeModules: resolveSDK('../../node_modules'),
-    publicUrl: getPublicUrl(resolveApp('package.json')),
-    servedPath: getServedPath(resolveApp('package.json')),
-    resolveApp,
-    appDirectory,
-  };
+module.exports = {
+  appBuild: resolveApp('build'),
+  appPublic: resolveApp('public'),
+  appHtml: resolveApp('public/index.html'),
+  appFavicon: resolveApp('public/favicon.png'),
+  appFaviconIco: resolveApp('public/favicon.ico'),
+  appPackageJson: resolveApp('package.json'),
+  appAbcJson: resolveApp('abc.json'),
+  appSrc: resolveApp('src'),
+  appNodeModules: resolveApp('node_modules'),
+  sdkNodeModules: resolveSDK('../../node_modules'),
+  publicUrl: getPublicUrl(resolveApp('package.json')),
+  servedPath: getServedPath(resolveApp('package.json')),
+  resolveApp,
+  appDirectory,
 };
