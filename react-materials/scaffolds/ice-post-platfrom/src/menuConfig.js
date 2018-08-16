@@ -31,22 +31,32 @@ const asideMenuConfig = [
     icon: 'home',
   },
   {
-    name: '用户管理',
-    path: '/user',
-    icon: 'yonghu',
-  },
-  {
-    name: '系统设置',
-    path: '/setting',
-    icon: 'shezhi',
+    name: '作品',
+    icon: 'publish',
+    path: '/post',
     children: [
       {
-        name: '基本设置',
-        path: '/base',
+        name: '发布新作品',
+        path: '/post/new',
       },
       {
-        name: '评论设置',
-        path: '/comment',
+        name: '阅读统计',
+        path: '/post/analysis',
+      },
+    ],
+  },
+  {
+    name: '账号',
+    icon: 'yonghu',
+    path: '/account',
+    children: [
+      {
+        name: '账号状态',
+        path: '/account/status',
+      },
+      {
+        name: '设置',
+        path: '/account/settings',
       },
     ],
   },
