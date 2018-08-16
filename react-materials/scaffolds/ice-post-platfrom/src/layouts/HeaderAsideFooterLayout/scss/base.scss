@@ -69,7 +69,9 @@ body {
         .ice-menu-item {
           height: 48px;
           line-height: 48px;
-          border-left: 4px solid transparent;
+        }
+        .ice-icon-stable:before {
+          font-weight: 400;
         }
       }
 
@@ -102,10 +104,19 @@ body {
 
       .ice-menu:not(.ice-menu-horizontal) .ice-menu-item-selected {
         background-color: $ice-aside-menu-item-selected-bg;
-        border-left: 4px solid $ice-aside-menu-item-selected-border-bg;
         border-radius: 0;
         background-image: none;
         color: #000;
+        &:after {
+          display: block;
+          content: ' ';
+          background-color: $ice-aside-menu-item-selected-border-bg;
+          width: 4px;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
       }
 
       .ice-menu .ice-menu-submenu-vertical > .ice-menu:after {

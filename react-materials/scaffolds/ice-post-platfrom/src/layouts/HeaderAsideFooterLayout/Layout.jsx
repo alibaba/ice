@@ -126,7 +126,6 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
     Array.isArray(asideMenuConfig) &&
       asideMenuConfig.forEach((item, index) => {
-        debugger;
         if (matched.startsWith(item.path)) {
           openKeys = [`${index}`];
         }
