@@ -18,6 +18,7 @@ const styles = {
   container: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   logoImg: {
     width: '160px',
