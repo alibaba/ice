@@ -26,10 +26,15 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
   constructor(props) {
     super(props);
+
+    const openKeys = this.getOpenKeys();
     this.state = {
+      collapse: false,
       openDrawer: false,
       isScreen: undefined,
+      openKeys,
     };
+    this.openKeysCache = openKeys;
   }
 
   componentDidMount() {
@@ -74,8 +79,18 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     return handler;
   };
 
+  toggleCollapse = () => {
+    const { collapse } = this.state;
+    const openKeys = !collapse ? [] : this.openKeysCache;
+
+    this.setState({
+      collapse: !collapse,
+      openKeys,
+    });
+  };
+
   /**
-   * 响应式通过抽屉形式切换菜单
+   * 左侧菜单收缩切换
    */
   toggleMenu = () => {
     const { openDrawer } = this.state;
@@ -85,14 +100,24 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
   };
 
   /**
-   * 左侧菜单收缩切换
+   * 当前展开的菜单项
+   */
+  onOpenChange = (openKeys) => {
+    this.setState({
+      openKeys,
+    });
+    this.openKeysCache = openKeys;
+  };
+
+  /**
+   * 响应式时点击菜单进行切换
    */
   onMenuClick = () => {
     this.toggleMenu();
   };
 
   /**
-   * 当前展开的菜单项
+   * 获取当前展开的菜单项
    */
   getOpenKeys = () => {
     const { match } = this.props;
@@ -101,6 +126,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
 
     Array.isArray(asideMenuConfig) &&
       asideMenuConfig.forEach((item, index) => {
+        debugger;
         if (matched.startsWith(item.path)) {
           openKeys = [`${index}`];
         }
@@ -135,20 +161,23 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
           <Layout.Aside
             width="auto"
             theme={theme}
+            style={{ marginBottom: 20 }}
             className={cx('ice-design-layout-aside', {
               'open-drawer': this.state.openDrawer,
             })}
           >
             {this.state.isScreen !== 'isDesktop' && <Logo />}
             <Menu
-              style={{ width: 200 }}
-              onClick={this.onMenuClick}
-              selectedKeys={[pathname]}
-              defaultSelectedKeys={[pathname]}
               defaultOpenKeys={[`${this.getOpenKeys()}`]}
+              defaultSelectedKeys={[pathname]}
               mode="inline"
+              selectedKeys={[pathname]}
+              openKeys={this.state.openKeys}
+              onOpenChange={this.onOpenChange}
+              onClick={this.onMenuClick}
+              style={{ width: 200 }}
             >
-              {asideMenuConfig &&
+              {Array.isArray(asideMenuConfig) &&
                 asideMenuConfig.length > 0 &&
                 asideMenuConfig.map((nav, index) => {
                   if (nav.children && nav.children.length > 0) {
