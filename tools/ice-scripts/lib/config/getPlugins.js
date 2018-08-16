@@ -1,19 +1,19 @@
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const colors = require('chalk');
 const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 const fs = require('fs');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
-const colors = require('chalk');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
-const getFaviconPath = require('../utils/getFaviconPath');
+const paths = require('./paths');
+const getEntryHtmlPlugins = require('./getEntryHtmlPlugins');
 
-module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
+module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
   const defineVriables = {
     'process.env.NODE_ENV': JSON.stringify(
       process.env.NODE_ENV || 'development'
@@ -26,15 +26,6 @@ module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
   }
 
   const plugins = [
-    new HtmlWebpackPlugin({
-      inject: true,
-      templateParameters: {
-        NODE_ENV: process.env.NODE_ENV,
-      },
-      favicon: getFaviconPath([paths.appFaviconIco, paths.appFavicon]),
-      template: paths.appHtml,
-      minify: false,
-    }),
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
       filename: process.env.BUILD_HASH
@@ -73,6 +64,9 @@ module.exports = function(paths, { buildConfig = {}, themeConfig = {} }) {
       },
     ]),
   ];
+
+  // 增加 html 输出，支持多页面应用
+  Array.prototype.push.apply(plugins, getEntryHtmlPlugins(entry));
 
   if (paths.publicUrl === './') {
     console.log(
