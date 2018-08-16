@@ -1,7 +1,8 @@
 {
   "name": "@react-materials/data-overview-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基础数据概览",
+  "homepage": "https://alibaba.github.io/ice/block/data-overview/preview",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
@@ -32,6 +33,6 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1jNzOoBsmBKNjSZFsXXaXSVXa-2112-558.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1.f71piAnBKNjSZFvXXaTKXXa-1868-454.png"
   }
 }

@@ -15,15 +15,16 @@ class StateItem extends Component {
           borderBottom: '1px solid #f4f4f4',
         }}
       >
-        <Col style={{ margin: '0 0 20px 0' }} l={2} s={4} xxs={24}>
+        <Col style={{ margin: '0 0 20px 0' }} l={3} s={4} xxs={24}>
           <div style={styles.cover}>
             <img
+              alt={data.title}
               style={{ width: 80, height: 80, display: 'block' }}
               src={data.icon}
             />
           </div>
         </Col>
-        <Col style={{ margin: '0 0 20px 0' }} l={18} s={14} xxs={24}>
+        <Col style={{ margin: '0 0 20px 0' }} l={17} s={14} xxs={24}>
           <h3 style={styles.title}>{data.title}</h3>
           <div style={styles.desc}>{data.desc}</div>
         </Col>

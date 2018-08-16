@@ -1,7 +1,7 @@
 import { Progress } from '@icedesign/base';
 import React, { Component } from 'react';
 
-import './hot-item.scss';
+import './HotRankItem.scss';
 
 const rankStyle = [
   { backgroundColor: '#f74444' },

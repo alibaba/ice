@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './hot-item.scss';
+
+import './HotPostRankItem.scss';
 
 const rankStyle = [
   { backgroundColor: '#f74444' },
@@ -7,7 +8,7 @@ const rankStyle = [
   { backgroundColor: '#f9a4a4' },
 ];
 
-class HotItem extends Component {
+class HotPostRankItem extends Component {
   render() {
     const { data } = this.props;
     return (
@@ -63,4 +64,4 @@ const styles = {
   },
 };
 
-export default HotItem;
+export default HotPostRankItem;

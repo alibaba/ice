@@ -29,7 +29,7 @@ class UserLanding extends Component {
         <div style={styles.userInfo}>
           <div style={styles.userDetail}>
             <a href="#">
-              <span style={styles.userName}>桥下小猫2</span>
+              <span style={styles.userName}>淘小宝</span>
             </a>
             <div style={styles.userLabel}>官方账号</div>
           </div>

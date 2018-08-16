@@ -4,4 +4,4 @@
 
 展示文章阅读热度排行
 
-![截图](https://img.alicdn.com/tfs/TB1WTQYoXooBKNjSZPhXXc2CXXa-2022-738.png)
+![截图](https://img.alicdn.com/tfs/TB1lOrNkwZC2uNjSZFnXXaxZpXa-1866-698.png)

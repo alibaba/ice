@@ -85,63 +85,67 @@ export default class PostCategory extends Component {
           navStyle={{ backgroundColor: '#fff' }}
           contentStyle={{ backgroundColor: '#fff', marginTop: 20 }}
         >
-          {tabs.map((item) => (
-            <Tab.TabPane
-              tabStyle={{ height: 60, padding: '0 15px' }}
-              key={item.key}
-              tab={
-                <div style={styles.navItemWraper}>
-                  <img
-                    alt={item.tab}
-                    src={item.icon}
-                    style={{ width: 30, marginRight: 8 }}
-                  />
-                  {item.tab}
-                </div>
-              }
-            >
-              <div style={styles.postCategoryList}>
-                {item.content.map((item) => {
-                  return (
-                    <div style={styles.postCategoryItem}>
-                      <div style={styles.coverWrapper}>
-                        <img
-                          alt={item.title}
-                          style={{ width: 140, display: 'block' }}
-                          src={item.cover}
-                        />
-                      </div>
-                      <div style={styles.blockDetail}>
-                        <h3 style={styles.blockTitle}>{item.title}</h3>
+          {tabs.map((item) => {
+            return (
+              <Tab.TabPane
+                tabStyle={{ height: 60, padding: '0 15px' }}
+                key={item.key}
+                tab={
+                  <div style={styles.navItemWraper}>
+                    <img
+                      alt={item.tab}
+                      src={item.icon}
+                      style={{ width: 30, marginRight: 8 }}
+                    />
+                    {item.tab}
+                  </div>
+                }
+              >
+                <div style={styles.postCategoryList}>
+                  {item.content.map((item, index) => {
+                    return (
+                      <div key={index} style={styles.postCategoryItem}>
+                        <div style={styles.coverWrapper}>
+                          <img
+                            alt={item.title}
+                            style={{ width: 140, display: 'block' }}
+                            src={item.cover}
+                          />
+                        </div>
+                        <div style={styles.blockDetail}>
+                          <h3 style={styles.blockTitle}>{item.title}</h3>
 
-                        {item.detail.map((desc) => {
-                          return (
-                            <div style={styles.blockItem}>
-                              <label style={styles.blockLable}>
-                                {desc.label}
-                              </label>
-                              <div
-                                style={styles.blockDesc}
-                                dangerouslySetInnerHTML={{ __html: desc.desc }}
-                              />
-                            </div>
-                          );
-                        })}
-                        <Button
-                          style={styles.blockBtn}
-                          type="primary"
-                          component="a"
-                          href={item.url}
-                        >
-                          立即创作
-                        </Button>
+                          {item.detail.map((desc, detailIndex) => {
+                            return (
+                              <div key={detailIndex} style={styles.blockItem}>
+                                <label style={styles.blockLable}>
+                                  {desc.label}
+                                </label>
+                                <div
+                                  style={styles.blockDesc}
+                                  dangerouslySetInnerHTML={{
+                                    __html: desc.desc,
+                                  }}
+                                />
+                              </div>
+                            );
+                          })}
+                          <Button
+                            style={styles.blockBtn}
+                            type="primary"
+                            component="a"
+                            href={item.url}
+                          >
+                            立即创作
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </Tab.TabPane>
-          ))}
+                    );
+                  })}
+                </div>
+              </Tab.TabPane>
+            );
+          })}
         </Tab>
       </div>
     );

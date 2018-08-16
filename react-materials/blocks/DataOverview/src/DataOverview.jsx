@@ -55,7 +55,14 @@ class DataOverview extends Component {
               <div style={styles.overviewItemIcon}>
                 <img alt={data.title} src={data.icon} style={{ width: 70 }} />
               </div>
-              <div style={{ paddingLeft: 10 }}>
+              <div
+                style={{
+                  paddingLeft: 10,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                }}
+              >
                 <div style={styles.overviewItemTitle}>{data.title}</div>
                 <div style={styles.overviewItemTotal}>{data.total}</div>
               </div>
@@ -76,7 +83,7 @@ const styles = {
   overviewItem: {
     flex: '0 0 25%',
     display: 'flex',
-    minHeight: 110,
+    padding: '10px 0',
   },
   overviewItemTitle: {
     fontSize: 12,

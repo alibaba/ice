@@ -2,6 +2,7 @@
   "name": "@react-materials/post-category-block",
   "version": "1.0.0",
   "description": "文章创作类型列表",
+  "homepage": "https://alibaba.github.io/ice/block/post-category/preview",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
@@ -32,6 +33,6 @@
     "categories": [
       "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1OyxcoljTBKNjSZFDXXbVgVXa-2166-914.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1e.V8pbwrBKNjSZPcXXXpapXa-1868-1458.png"
   }
 }
