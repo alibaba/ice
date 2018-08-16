@@ -14,7 +14,6 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Logo from '../../components/Logo';
 
-import './scss/dark.scss';
 import './scss/light.scss';
 
 // 设置默认的皮肤配置，支持 dark 和 light 两套皮肤配置

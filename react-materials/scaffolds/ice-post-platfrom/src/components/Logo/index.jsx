@@ -9,9 +9,6 @@ export default class Logo extends Component {
           style={styles.logoImg}
           alt="logo"
         />
-        <a href="/" style={styles.logoText}>
-          创作者平台
-        </a>
       </div>
     );
   }
@@ -21,20 +18,8 @@ const styles = {
   container: {
     display: 'flex',
     alignItems: 'center',
-    marginRight: '20px',
   },
   logoImg: {
-    width: '40px',
-  },
-  logoText: {
-    display: 'block',
-    maxWidth: '120px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    marginLeft: '10px',
-    fontSize: '22px',
-    color: '#6af',
-    fontWeight: 'bold',
+    width: '160px',
   },
 };
