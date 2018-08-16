@@ -6,24 +6,21 @@ const headerMenuConfig = [
   {
     name: '首页',
     path: '/',
-    icon: 'home2',
-  },
-  {
-    name: '构建器',
-    path: '/builder',
-    icon: 'cascades',
-  },
-  {
-    name: '构建任务',
-    path: '/task',
-    icon: 'repair',
+    icon: 'home',
   },
   {
     name: '反馈',
     path: 'https://github.com/alibaba/ice/issues/new',
-    icon: 'question2',
     external: true,
     newWindow: true,
+    icon: 'message',
+  },
+  {
+    name: '帮助',
+    path: 'https://alibaba.github.io/ice',
+    external: true,
+    newWindow: true,
+    icon: 'bangzhu',
   },
 ];
 

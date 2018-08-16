@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import UserLanding from './components/UserLanding/';
-import DataOverview from './components/DataOverview/';
-import NoticeList from './components/NoticeList/';
 
 export default class Home extends Component {
   static displayName = 'Home';
@@ -12,12 +9,6 @@ export default class Home extends Component {
   }
 
   render() {
-    return (
-      <div className="home-page">
-        <UserLanding />
-        <DataOverview />
-        <NoticeList />
-      </div>
-    );
+    return <div className="home-page" />;
   }
 }

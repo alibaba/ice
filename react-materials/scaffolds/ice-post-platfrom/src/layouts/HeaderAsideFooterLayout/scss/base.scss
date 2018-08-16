@@ -8,23 +8,6 @@ body {
 }
 
 .ice-design-header-aside-footer-layout-#{$theme} {
-  .logo {
-    max-width: 340px;
-    height: 42px;
-    line-height: 42px;
-    .logo-text {
-      display: block;
-      width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: 36px;
-      color: $ice-logo-text-color;
-      font-weight: bold;
-      font-family: Helvetica, sans-serif;
-    }
-  }
-
   /* LAYOUT */
   &.ice-design-layout {
     width: 100%;
@@ -75,11 +58,17 @@ body {
     /* ASIDE */
     .ice-design-layout-aside {
       background-color: $ice-body-bg;
+      border-radius: 6px;
+      padding-top: 20px;
 
       .ice-menu {
         background: $ice-aside-menu-bg;
         &.ice-menu-inline .ice-icon-stable {
           font-weight: normal;
+        }
+        .ice-menu-item {
+          height: 48px;
+          line-height: 48px;
         }
       }
 
@@ -101,7 +90,7 @@ body {
       .ice-menu.ice-menu-horizontal > .ice-menu-item:hover,
       .ice-menu.ice-menu-root > .ice-menu-item:hover {
         color: #fff;
-        background-color: $ice-aside-menu-item-selected-gradient-right-bg;
+        // background-color: transparent;
       }
 
       .ice-menu .ice-menu-item > a:hover,
@@ -111,8 +100,8 @@ body {
       }
 
       .ice-menu:not(.ice-menu-horizontal) .ice-menu-item-selected {
-        background-color: $ice-aside-menu-item-selected-gradient-right-bg;
-        border-left: 3px solid $ice-aside-menu-item-selected-gradient-left-bg;
+        background-color: $ice-aside-menu-item-selected-bg;
+        border-left: 4px solid $ice-aside-menu-item-selected-border-bg;
         border-radius: 0;
         background-image: none;
         color: #000;
@@ -195,12 +184,6 @@ body {
 
 @media screen and (max-width: 1199px) {
   .ice-design-header-aside-footer-layout-#{$theme} {
-    .logo {
-      width: 80px;
-      .logo-text {
-        font-size: 22px;
-      }
-    }
     .ice-design-layout-body {
       padding: 0 20px;
     }
@@ -233,9 +216,12 @@ body {
           left: -240px;
           top: 0px;
           bottom: 0;
-          padding: 0 20px;
-          background: #2e323e;
+          padding: 20px 0;
           z-index: 9999;
+          border-radius: 0;
+          .ice-menu-root {
+            margin-top: 20px;
+          }
         }
       }
 

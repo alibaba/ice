@@ -1,7 +1,7 @@
 {
-  "name": "ice-post-platfrom",
+  "name": "@icedesign/post-platfrom-scaffold",
   "version": "1.0.0",
-  "description": "改模板适用于帖子、文章管理后台",
+  "description": "该适用于帖子、文章管理后台",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "dependencies": {
     "@icedesign/base": "^0.2.3",
@@ -40,8 +40,7 @@
     "entry": "src/index.js"
   },
   "themeConfig": {
-    "theme": "light",
-    "primaryColor": "#6AF"
+    "theme": "light"
   },
   "scaffoldConfig": {
     "name": "ice-post-platfrom",
