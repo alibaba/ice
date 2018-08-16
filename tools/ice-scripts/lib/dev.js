@@ -15,7 +15,7 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const deepmerge = require('deepmerge');
 
-const getPaths = require('./config/paths');
+const paths = require('./config/paths');
 const getEntries = require('./config/getEntry');
 const getWebpackConfigDev = require('./config/webpack.config.dev');
 const devMiddleware = require('./devMiddleware');
@@ -41,7 +41,6 @@ module.exports = async function(args, subprocess) {
 
   const isInteractive = false; // process.stdout.isTTY;
   const entries = getEntries(cwd);
-  const paths = getPaths(cwd);
 
   const packageData = require(paths.appPackageJson);
   // get ice config by package.ice
@@ -75,7 +74,7 @@ module.exports = async function(args, subprocess) {
   let isFirstCompile = true;
   const compiler = webpack(webpackConfig);
   // eslint-disable-next-line global-require
-  let devServerConfig = require('./config/webpack.server.config')(paths, args);
+  let devServerConfig = require('./config/webpack.server.config')(args);
   if ('devServer' in webpackConfig) {
     // merge user config
     devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);
