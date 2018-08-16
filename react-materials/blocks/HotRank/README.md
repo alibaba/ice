@@ -4,4 +4,4 @@
 
 展示关键词、关键点热度
 
-![截图](https://img.alicdn.com/tfs/TB1Zc4loEOWBKNjSZKzXXXfWFXa-2024-1158.png)
+![截图](https://img.alicdn.com/tfs/TB1LJ08pcUrBKNjSZPxXXX00pXa-1866-1112.png)

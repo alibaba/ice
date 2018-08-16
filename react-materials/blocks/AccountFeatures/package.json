@@ -1,7 +1,8 @@
 {
   "name": "@react-materials/account-features-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "罗列账户功能列表",
+  "homepage": "https://alibaba.github.io/ice/block/account-features/preview",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
@@ -32,6 +33,6 @@
     "categories": [
       "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1zCVIo7omBKNjSZFqXXXtqVXa-1862-1246.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1Z_J9pj7nBKNjSZLeXXbxCFXa-1868-1218.png"
   }
 }

@@ -2,7 +2,7 @@ import Container from '@icedesign/container';
 import React, { Component } from 'react';
 import { Grid, Pagination } from '@icedesign/base';
 
-import HotItem from './HotItem';
+import HotPostRankItem from './HotPostRankItem';
 
 const { Row, Col } = Grid;
 
@@ -56,7 +56,7 @@ export default class HotPostRank extends Component {
                 return Math.floor(index / 5) % 3 == 0; // 前10个
               })
               .map((item, index) => {
-                return <HotItem key={index} data={item} />;
+                return <HotPostRankItem key={index} data={item} />;
               })}
           </Col>
           <Col style={{ borderRight: '1px solid #eee' }}>
@@ -65,7 +65,7 @@ export default class HotPostRank extends Component {
                 return Math.floor(index / 5) % 3 == 1; // 前20个
               })
               .map((item, key) => {
-                return <HotItem key={key} data={item} />;
+                return <HotPostRankItem key={key} data={item} />;
               })}
           </Col>
           <Col>
@@ -74,7 +74,7 @@ export default class HotPostRank extends Component {
                 return Math.floor(index / 5) % 3 == 2; // 前15个
               })
               .map((item, key) => {
-                return <HotItem key={key} data={item} />;
+                return <HotPostRankItem key={key} data={item} />;
               })}
           </Col>
         </Row>

@@ -4,4 +4,4 @@
 
 展示站点公告列表
 
-![截图](https://img.alicdn.com/tfs/TB1TaotorsrBKNjSZFpXXcXhFXa-2110-1416.png)
+![截图](https://img.alicdn.com/tfs/TB1PzsRpbZnBKNjSZFGXXbt3FXa-1868-1374.png)

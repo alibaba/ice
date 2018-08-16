@@ -15,7 +15,7 @@ class BadgeItem extends Component {
           borderBottom: '1px solid #f4f4f4',
         }}
       >
-        <Col style={{ margin: '0 0 20px 0' }} l={2} s={4} xxs={24}>
+        <Col style={{ margin: '0 0 20px 0' }} l={3} s={4} xxs={24}>
           <div style={styles.cover}>
             <img
               style={{ width: 80, height: 80, display: 'block' }}
@@ -23,7 +23,7 @@ class BadgeItem extends Component {
             />
           </div>
         </Col>
-        <Col style={{ margin: '0 0 20px 0' }} l={12} s={10} xxs={24}>
+        <Col style={{ margin: '0 0 20px 0' }} l={11} s={10} xxs={24}>
           <h3 style={styles.title}>{data.title}</h3>
           <div style={styles.desc}>{data.desc}</div>
         </Col>
