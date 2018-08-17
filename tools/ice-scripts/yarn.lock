@@ -1036,7 +1036,7 @@ acorn@^5.0.0, acorn@^5.3.0, acorn@^5.6.2:
   version "5.7.1"
   resolved "http://registry.npm.alibaba-inc.com/acorn/download/acorn-5.7.1.tgz#f095829297706a7c9776958c0afc8930a9b9d9d8"
 
-address@1.0.3, address@^1.0.1, address@^1.0.3:
+address@1.0.3, address@^1.0.1:
   version "1.0.3"
   resolved "http://registry.npm.alibaba-inc.com/address/download/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
 
@@ -1249,6 +1249,10 @@ assert-plus@1.0.0, assert-plus@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.alibaba-inc.com/assert-plus/download/assert-plus-1.0.0.tgz#f12e0f3c5d77b0b1cdd9146942e4e96c1e4dd525"
 
+assert-plus@^0.2.0:
+  version "0.2.0"
+  resolved "http://registry.npm.alibaba-inc.com/assert-plus/download/assert-plus-0.2.0.tgz#d74e1b87e7affc0db8aadb7021f3fe48101ab234"
+
 assert@^1.1.1:
   version "1.4.1"
   resolved "http://registry.npm.alibaba-inc.com/assert/download/assert-1.4.1.tgz#99912d591836b5a6f5b345c0f07eefc08fc65d91"
@@ -1293,20 +1297,28 @@ atob@^2.1.1:
   version "2.1.1"
   resolved "http://registry.npm.alibaba-inc.com/atob/download/atob-2.1.1.tgz#ae2d5a729477f289d60dd7f96a6314a22dd6c22a"
 
-autoprefixer@^8.6.4:
-  version "8.6.5"
-  resolved "http://registry.npm.alibaba-inc.com/autoprefixer/download/autoprefixer-8.6.5.tgz#343f3d193ed568b3208e00117a1b96eb691d4ee9"
+autoprefixer@8.6.4:
+  version "8.6.4"
+  resolved "http://registry.npm.alibaba-inc.com/autoprefixer/download/autoprefixer-8.6.4.tgz#6bf501de426a3b95973f5d237dbcc9181e9904d2"
   dependencies:
     browserslist "^3.2.8"
-    caniuse-lite "^1.0.30000864"
+    caniuse-lite "^1.0.30000859"
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
     postcss "^6.0.23"
     postcss-value-parser "^3.2.3"
 
+aws-sign2@~0.6.0:
+  version "0.6.0"
+  resolved "http://registry.npm.alibaba-inc.com/aws-sign2/download/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
+
 aws-sign2@~0.7.0:
   version "0.7.0"
   resolved "http://registry.npm.alibaba-inc.com/aws-sign2/download/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"
+
+aws4@^1.2.1:
+  version "1.8.0"
+  resolved "http://registry.npm.alibaba-inc.com/aws4/download/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
 
 aws4@^1.6.0:
   version "1.7.0"
@@ -1353,7 +1365,7 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-import@^1.8.0:
+babel-plugin-import@1.8.0:
   version "1.8.0"
   resolved "http://registry.npm.alibaba-inc.com/babel-plugin-import/download/babel-plugin-import-1.8.0.tgz#260deddd78f6fea0d110e1d106ba72a518d3c88c"
   dependencies:
@@ -1363,7 +1375,7 @@ babel-plugin-syntax-export-extensions@^6.8.0:
   version "6.13.0"
   resolved "http://registry.npm.alibaba-inc.com/babel-plugin-syntax-export-extensions/download/babel-plugin-syntax-export-extensions-6.13.0.tgz#70a1484f0f9089a4e84ad44bac353c95b9b12721"
 
-babel-plugin-transform-es2015-modules-commonjs@^6.26.2:
+babel-plugin-transform-es2015-modules-commonjs@6.26.2:
   version "6.26.2"
   resolved "http://registry.npm.alibaba-inc.com/babel-plugin-transform-es2015-modules-commonjs/download/babel-plugin-transform-es2015-modules-commonjs-6.26.2.tgz#58a793863a9e7ca870bdc5a881117ffac27db6f3"
   dependencies:
@@ -1372,14 +1384,14 @@ babel-plugin-transform-es2015-modules-commonjs@^6.26.2:
     babel-template "^6.26.0"
     babel-types "^6.26.0"
 
-babel-plugin-transform-es2015-object-super@^6.24.1:
+babel-plugin-transform-es2015-object-super@6.24.1:
   version "6.24.1"
   resolved "http://registry.npm.alibaba-inc.com/babel-plugin-transform-es2015-object-super/download/babel-plugin-transform-es2015-object-super-6.24.1.tgz#24cef69ae21cb83a7f8603dad021f572eb278f8d"
   dependencies:
     babel-helper-replace-supers "^6.24.1"
     babel-runtime "^6.22.0"
 
-babel-plugin-transform-export-extensions@^6.22.0:
+babel-plugin-transform-export-extensions@6.22.0:
   version "6.22.0"
   resolved "http://registry.npm.alibaba-inc.com/babel-plugin-transform-export-extensions/download/babel-plugin-transform-export-extensions-6.22.0.tgz#53738b47e75e8218589eea946cbbd39109bbe653"
   dependencies:
@@ -1545,6 +1557,12 @@ bonjour@^3.5.0:
 boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.alibaba-inc.com/boolbase/download/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
+
+boom@2.x.x:
+  version "2.10.1"
+  resolved "http://registry.npm.alibaba-inc.com/boom/download/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
+  dependencies:
+    hoek "2.x.x"
 
 brace-expansion@^1.0.0, brace-expansion@^1.1.7:
   version "1.1.11"
@@ -1754,17 +1772,21 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000876:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000859, caniuse-lite@^1.0.30000876:
   version "1.0.30000877"
   resolved "http://registry.npm.alibaba-inc.com/caniuse-lite/download/caniuse-lite-1.0.30000877.tgz#f189673b86ecc06436520e3e391de6a13ca923b4"
 
-caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30000864:
+caniuse-lite@^1.0.30000844:
   version "1.0.30000865"
   resolved "http://registry.npm.alibaba-inc.com/caniuse-lite/download/caniuse-lite-1.0.30000865.tgz#70026616e8afe6e1442f8bb4e1092987d81a2f25"
 
-case-sensitive-paths-webpack-plugin@^2.1.1:
-  version "2.1.2"
-  resolved "http://registry.npm.alibaba-inc.com/case-sensitive-paths-webpack-plugin/download/case-sensitive-paths-webpack-plugin-2.1.2.tgz#c899b52175763689224571dad778742e133f0192"
+case-sensitive-paths-webpack-plugin@2.1.1:
+  version "2.1.1"
+  resolved "http://registry.npm.alibaba-inc.com/case-sensitive-paths-webpack-plugin/download/case-sensitive-paths-webpack-plugin-2.1.1.tgz#3d29ced8c1f124bf6f53846fb3f5894731fdc909"
+
+caseless@~0.11.0:
+  version "0.11.0"
+  resolved "http://registry.npm.alibaba-inc.com/caseless/download/caseless-0.11.0.tgz#715b96ea9841593cc33067923f5ec60ebda4f7d7"
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -1791,7 +1813,7 @@ chalk@1.1.3, chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.3.2, chalk@^2.4.1:
+chalk@2.4.1, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.3.2, chalk@^2.4.1:
   version "2.4.1"
   resolved "http://registry.npm.alibaba-inc.com/chalk/download/chalk-2.4.1.tgz#18c49ab16a037b6eb0152cc83e3471338215b66e"
   dependencies:
@@ -1994,7 +2016,7 @@ colors@~1.1.2:
   version "1.1.2"
   resolved "http://registry.npm.alibaba-inc.com/colors/download/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
 
-combined-stream@1.0.6, combined-stream@~1.0.5:
+combined-stream@1.0.6, combined-stream@^1.0.5, combined-stream@~1.0.5:
   version "1.0.6"
   resolved "http://registry.npm.alibaba-inc.com/combined-stream/download/combined-stream-1.0.6.tgz#723e7df6e801ac5613113a7e445a9b69cb632818"
   dependencies:
@@ -2004,7 +2026,7 @@ commander@2.11.0:
   version "2.11.0"
   resolved "http://registry.npm.alibaba-inc.com/commander/download/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
 
-commander@2.16.x, commander@^2.13.0, commander@^2.16.0, commander@^2.9.0, commander@~2.16.0:
+commander@2.16.0, commander@2.16.x, commander@^2.13.0, commander@^2.9.0, commander@~2.16.0:
   version "2.16.0"
   resolved "http://registry.npm.alibaba-inc.com/commander/download/commander-2.16.0.tgz#f16390593996ceb4f3eeb020b31d78528f7f8a50"
 
@@ -2104,7 +2126,7 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "http://registry.npm.alibaba-inc.com/copy-descriptor/download/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
 
-copy-webpack-plugin@^4.5.2:
+copy-webpack-plugin@4.5.2:
   version "4.5.2"
   resolved "http://registry.npm.alibaba-inc.com/copy-webpack-plugin/download/copy-webpack-plugin-4.5.2.tgz#d53444a8fea2912d806e78937390ddd7e632ee5c"
   dependencies:
@@ -2208,6 +2230,12 @@ crypt@~0.0.1:
   version "0.0.2"
   resolved "http://registry.npm.alibaba-inc.com/crypt/download/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
 
+cryptiles@2.x.x:
+  version "2.0.5"
+  resolved "http://registry.npm.alibaba-inc.com/cryptiles/download/cryptiles-2.0.5.tgz#3bdfecdc608147c1c67202fa291e7dca59eaa3b8"
+  dependencies:
+    boom "2.x.x"
+
 crypto-browserify@^3.11.0:
   version "3.12.0"
   resolved "http://registry.npm.alibaba-inc.com/crypto-browserify/download/crypto-browserify-3.12.0.tgz#396cf9f3137f03e4b8e532c58f698254e00f80ec"
@@ -2235,7 +2263,7 @@ css-declaration-sorter@^3.0.0:
     postcss "^6.0.0"
     timsort "^0.3.0"
 
-css-hot-loader@^1.4.2:
+css-hot-loader@1.4.2:
   version "1.4.2"
   resolved "http://registry.npm.alibaba-inc.com/css-hot-loader/download/css-hot-loader-1.4.2.tgz#6fa7ae7b8e309bb8be3b7b586efd702073c68611"
   dependencies:
@@ -2243,7 +2271,7 @@ css-hot-loader@^1.4.2:
     lodash "^4.17.5"
     normalize-url "^1.9.1"
 
-css-loader@^1.0.0:
+css-loader@1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.alibaba-inc.com/css-loader/download/css-loader-1.0.0.tgz#9f46aaa5ca41dbe31860e3b62b8e23c42916bf56"
   dependencies:
@@ -2438,7 +2466,7 @@ decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "http://registry.npm.alibaba-inc.com/decode-uri-component/download/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
 
-deep-assign@^2.0.0:
+deep-assign@2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.alibaba-inc.com/deep-assign/download/deep-assign-2.0.0.tgz#ebe06b1f07f08dae597620e3dd1622f371a1c572"
   dependencies:
@@ -2456,7 +2484,7 @@ deep-is@~0.1.3:
   version "0.1.3"
   resolved "http://registry.npm.alibaba-inc.com/deep-is/download/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
 
-deepmerge@^2.1.1:
+deepmerge@2.1.1:
   version "2.1.1"
   resolved "http://registry.npm.alibaba-inc.com/deepmerge/download/deepmerge-2.1.1.tgz#e862b4e45ea0555072bf51e7fd0d9845170ae768"
 
@@ -2553,7 +2581,7 @@ detect-port-alt@1.1.6:
     address "^1.0.1"
     debug "^2.6.0"
 
-detect-port@^1.2.3:
+detect-port@1.2.3:
   version "1.2.3"
   resolved "http://registry.npm.alibaba-inc.com/detect-port/download/detect-port-1.2.3.tgz#15bf49820d02deb84bfee0a74876b32d791bf610"
   dependencies:
@@ -3011,6 +3039,10 @@ extend@^3.0.0, extend@~3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.alibaba-inc.com/extend/download/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
 
+extend@~3.0.0:
+  version "3.0.2"
+  resolved "http://registry.npm.alibaba-inc.com/extend/download/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
+
 external-editor@^2.0.4, external-editor@^2.1.0:
   version "2.2.0"
   resolved "http://registry.npm.alibaba-inc.com/external-editor/download/external-editor-2.2.0.tgz#045511cfd8d133f3846673d1047c154e214ad3d5"
@@ -3038,7 +3070,7 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-extract-css-assets-webpack-plugin@^0.2.5:
+extract-css-assets-webpack-plugin@0.2.5:
   version "0.2.5"
   resolved "http://registry.npm.alibaba-inc.com/extract-css-assets-webpack-plugin/download/extract-css-assets-webpack-plugin-0.2.5.tgz#b33fe69ef0482c492b2b8b2a701b8a58e28b5a1e"
   dependencies:
@@ -3103,7 +3135,7 @@ figures@^2.0.0:
   dependencies:
     escape-string-regexp "^1.0.5"
 
-file-loader@^1.1.11:
+file-loader@1.1.11:
   version "1.1.11"
   resolved "http://registry.npm.alibaba-inc.com/file-loader/download/file-loader-1.1.11.tgz#6fe886449b0f2a936e43cabaac0cdbfb369506f8"
   dependencies:
@@ -3254,6 +3286,14 @@ forever-agent@~0.6.1:
   version "0.6.1"
   resolved "http://registry.npm.alibaba-inc.com/forever-agent/download/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
 
+form-data@~2.1.1:
+  version "2.1.4"
+  resolved "http://registry.npm.alibaba-inc.com/form-data/download/form-data-2.1.4.tgz#33c183acf193276ecaa98143a69e94bfee1750d1"
+  dependencies:
+    asynckit "^0.4.0"
+    combined-stream "^1.0.5"
+    mime-types "^2.1.12"
+
 form-data@~2.3.1:
   version "2.3.2"
   resolved "http://registry.npm.alibaba-inc.com/form-data/download/form-data-2.3.2.tgz#4970498be604c20c005d4f5c23aecd21d6b49099"
@@ -3346,6 +3386,16 @@ gaze@^1.0.0:
   resolved "http://registry.npm.alibaba-inc.com/gaze/download/gaze-1.1.3.tgz#c441733e13b927ac8c0ff0b4c3b033f28812924a"
   dependencies:
     globule "^1.0.0"
+
+generate-function@^2.0.0:
+  version "2.0.0"
+  resolved "http://registry.npm.alibaba-inc.com/generate-function/download/generate-function-2.0.0.tgz#6858fe7c0969b7d4e9093337647ac79f60dfbe74"
+
+generate-object-property@^1.1.0:
+  version "1.2.0"
+  resolved "http://registry.npm.alibaba-inc.com/generate-object-property/download/generate-object-property-1.2.0.tgz#9c0e1c40308ce804f4783618b937fa88f99d50d0"
+  dependencies:
+    is-property "^1.0.0"
 
 get-caller-file@^1.0.1:
   version "1.0.3"
@@ -3581,7 +3631,7 @@ gulp-util@^3.0.0:
     through2 "^2.0.0"
     vinyl "^0.5.0"
 
-gulp@^3.9.1:
+gulp@3.9.1:
   version "3.9.1"
   resolved "http://registry.npm.alibaba-inc.com/gulp/download/gulp-3.9.1.tgz#571ce45928dd40af6514fc4011866016c13845b4"
   dependencies:
@@ -3635,6 +3685,15 @@ handlebars@^4.0.1:
 har-schema@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.alibaba-inc.com/har-schema/download/har-schema-2.0.0.tgz#a94c2224ebcac04782a0d9035521f24735b7ec92"
+
+har-validator@~2.0.6:
+  version "2.0.6"
+  resolved "http://registry.npm.alibaba-inc.com/har-validator/download/har-validator-2.0.6.tgz#cdcbc08188265ad119b6a5a7c8ab70eecfb5d27d"
+  dependencies:
+    chalk "^1.1.1"
+    commander "^2.9.0"
+    is-my-json-valid "^2.12.4"
+    pinkie-promise "^2.0.0"
 
 har-validator@~5.0.3:
   version "5.0.3"
@@ -3722,6 +3781,15 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
+hawk@~3.1.3:
+  version "3.1.3"
+  resolved "http://registry.npm.alibaba-inc.com/hawk/download/hawk-3.1.3.tgz#078444bd7c1640b0fe540d2c9b73d59678e8e1c4"
+  dependencies:
+    boom "2.x.x"
+    cryptiles "2.x.x"
+    hoek "2.x.x"
+    sntp "1.x.x"
+
 he@1.1.1, he@1.1.x, he@^1.1.1:
   version "1.1.1"
   resolved "http://registry.npm.alibaba-inc.com/he/download/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
@@ -3737,6 +3805,10 @@ hmac-drbg@^1.0.0:
     hash.js "^1.0.3"
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
+
+hoek@2.x.x:
+  version "2.16.3"
+  resolved "http://registry.npm.alibaba-inc.com/hoek/download/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
 hoist-non-react-statics@^2.5.0:
   version "2.5.5"
@@ -3789,7 +3861,7 @@ html-minifier@^3.2.3:
     relateurl "0.2.x"
     uglify-js "3.4.x"
 
-html-webpack-plugin@^3.2.0:
+html-webpack-plugin@3.2.0:
   version "3.2.0"
   resolved "http://registry.npm.alibaba-inc.com/html-webpack-plugin/download/html-webpack-plugin-3.2.0.tgz#b01abbd723acaaa7b37b6af4492ebda03d9dd37b"
   dependencies:
@@ -3836,7 +3908,7 @@ http-parser-js@>=0.4.0:
   version "0.4.13"
   resolved "http://registry.npm.alibaba-inc.com/http-parser-js/download/http-parser-js-0.4.13.tgz#3bd6d6fde6e3172c9334c3b33b6c193d80fe1137"
 
-http-proxy-middleware@^0.18.0, http-proxy-middleware@~0.18.0:
+http-proxy-middleware@0.18.0, http-proxy-middleware@~0.18.0:
   version "0.18.0"
   resolved "http://registry.npm.alibaba-inc.com/http-proxy-middleware/download/http-proxy-middleware-0.18.0.tgz#0987e6bb5a5606e5a69168d8f967a87f15dd8aab"
   dependencies:
@@ -3866,6 +3938,14 @@ http-server@^0.11.1:
     portfinder "^1.0.13"
     union "~0.4.3"
 
+http-signature@~1.1.0:
+  version "1.1.1"
+  resolved "http://registry.npm.alibaba-inc.com/http-signature/download/http-signature-1.1.1.tgz#df72e267066cd0ac67fb76adf8e134a8fbcf91bf"
+  dependencies:
+    assert-plus "^0.2.0"
+    jsprim "^1.2.2"
+    sshpk "^1.7.0"
+
 http-signature@~1.2.0:
   version "1.2.0"
   resolved "http://registry.npm.alibaba-inc.com/http-signature/download/http-signature-1.2.0.tgz#9aecd925114772f3d95b65a60abb8f7c18fbace1"
@@ -3878,7 +3958,7 @@ https-browserify@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.alibaba-inc.com/https-browserify/download/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
 
-ice-skin-loader@^0.1.4:
+ice-skin-loader@0.1.4:
   version "0.1.4"
   resolved "http://registry.npm.alibaba-inc.com/ice-skin-loader/download/ice-skin-loader-0.1.4.tgz#ee9ce7df8958e874987c55cafd0eea007d633251"
   dependencies:
@@ -4015,7 +4095,7 @@ inquirer@3.3.0:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-inquirer@^5.2.0:
+inquirer@5.2.0:
   version "5.2.0"
   resolved "http://registry.npm.alibaba-inc.com/inquirer/download/inquirer-5.2.0.tgz#db350c2b73daca77ff1243962e9f22f099685726"
   dependencies:
@@ -4221,6 +4301,20 @@ is-glob@^4.0.0:
   dependencies:
     is-extglob "^2.1.1"
 
+is-my-ip-valid@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.alibaba-inc.com/is-my-ip-valid/download/is-my-ip-valid-1.0.0.tgz#7b351b8e8edd4d3995d4d066680e664d94696824"
+
+is-my-json-valid@^2.12.4:
+  version "2.19.0"
+  resolved "http://registry.npm.alibaba-inc.com/is-my-json-valid/download/is-my-json-valid-2.19.0.tgz#8fd6e40363cd06b963fa877d444bfb5eddc62175"
+  dependencies:
+    generate-function "^2.0.0"
+    generate-object-property "^1.1.0"
+    is-my-ip-valid "^1.0.0"
+    jsonpointer "^4.0.0"
+    xtend "^4.0.0"
+
 is-number@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.alibaba-inc.com/is-number/download/is-number-2.1.0.tgz#01fcbbb393463a548f2f466cce16dece49db908f"
@@ -4278,6 +4372,10 @@ is-primitive@^2.0.0:
 is-promise@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.alibaba-inc.com/is-promise/download/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
+
+is-property@^1.0.0:
+  version "1.0.2"
+  resolved "http://registry.npm.alibaba-inc.com/is-property/download/is-property-1.0.2.tgz#57fe1c4e48474edd65b09911f26b1cd4095dda84"
 
 is-regex@^1.0.4:
   version "1.0.4"
@@ -4495,6 +4593,10 @@ jsonify@~0.0.0:
   version "0.0.0"
   resolved "http://registry.npm.alibaba-inc.com/jsonify/download/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
 
+jsonpointer@^4.0.0:
+  version "4.0.1"
+  resolved "http://registry.npm.alibaba-inc.com/jsonpointer/download/jsonpointer-4.0.1.tgz#4fd92cb34e0e9db3c89c8622ecf51f9b978c6cb9"
+
 jsprim@^1.2.2:
   version "1.4.1"
   resolved "http://registry.npm.alibaba-inc.com/jsprim/download/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
@@ -4553,15 +4655,15 @@ lcov-parse@^0.0.10:
   version "0.0.10"
   resolved "http://registry.npm.alibaba-inc.com/lcov-parse/download/lcov-parse-0.0.10.tgz#1b0b8ff9ac9c7889250582b70b71315d9da6d9a3"
 
-less-loader@^4.0.5:
-  version "4.1.0"
-  resolved "http://registry.npm.alibaba-inc.com/less-loader/download/less-loader-4.1.0.tgz#2c1352c5b09a4f84101490274fd51674de41363e"
+less-loader@4.0.5:
+  version "4.0.5"
+  resolved "http://registry.npm.alibaba-inc.com/less-loader/download/less-loader-4.0.5.tgz#ae155a7406cac6acd293d785587fcff0f478c4dd"
   dependencies:
     clone "^2.1.1"
     loader-utils "^1.1.0"
-    pify "^3.0.0"
+    pify "^2.3.0"
 
-less@^3.8.1:
+less@3.8.1:
   version "3.8.1"
   resolved "http://registry.npm.alibaba-inc.com/less/download/less-3.8.1.tgz#f31758598ef5a1930dd4caefa9e4340641e71e1d"
   dependencies:
@@ -4749,7 +4851,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "http://registry.npm.alibaba-inc.com/lodash.uniq/download/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@~4.17.10:
+lodash@4.17.10, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@~4.17.10:
   version "4.17.10"
   resolved "http://registry.npm.alibaba-inc.com/lodash/download/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
@@ -4962,11 +5064,21 @@ mime-db@~1.33.0:
   version "1.33.0"
   resolved "http://registry.npm.alibaba-inc.com/mime-db/download/mime-db-1.33.0.tgz#a3492050a5cb9b63450541e39d9788d2272783db"
 
+mime-db@~1.35.0:
+  version "1.35.0"
+  resolved "http://registry.npm.alibaba-inc.com/mime-db/download/mime-db-1.35.0.tgz#0569d657466491283709663ad379a99b90d9ab47"
+
 mime-types@^2.1.12, mime-types@~2.1.17, mime-types@~2.1.18:
   version "2.1.18"
   resolved "http://registry.npm.alibaba-inc.com/mime-types/download/mime-types-2.1.18.tgz#6f323f60a83d11146f831ff11fd66e2fe5503bb8"
   dependencies:
     mime-db "~1.33.0"
+
+mime-types@~2.1.7:
+  version "2.1.19"
+  resolved "http://registry.npm.alibaba-inc.com/mime-types/download/mime-types-2.1.19.tgz#71e464537a7ef81c15f2db9d97e913fc0ff606f0"
+  dependencies:
+    mime-db "~1.35.0"
 
 mime@1.4.1:
   version "1.4.1"
@@ -4990,7 +5102,7 @@ min-document@^2.19.0:
   dependencies:
     dom-walk "^0.1.0"
 
-mini-css-extract-plugin@^0.4.1:
+mini-css-extract-plugin@0.4.1:
   version "0.4.1"
   resolved "http://registry.npm.alibaba-inc.com/mini-css-extract-plugin/download/mini-css-extract-plugin-0.4.1.tgz#d2bcf77bb2596b8e4bd9257e43d3f9164c2e86cb"
   dependencies:
@@ -5192,7 +5304,7 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-node-easy-cert@^1.3.0:
+node-easy-cert@1.3.0:
   version "1.3.0"
   resolved "http://registry.npm.alibaba-inc.com/node-easy-cert/download/node-easy-cert-1.3.0.tgz#2d1f0f61d5fb195e4aba6fc56447a2312a56dabb"
   dependencies:
@@ -5210,7 +5322,7 @@ node-forge@^0.6.42:
   version "0.6.49"
   resolved "http://registry.npm.alibaba-inc.com/node-forge/download/node-forge-0.6.49.tgz#f1ee95d5d74623938fe19d698aa5a26d54d2f60f"
 
-node-gyp@^3.8.0:
+node-gyp@^3.3.1:
   version "3.8.0"
   resolved "http://registry.npm.alibaba-inc.com/node-gyp/download/node-gyp-3.8.0.tgz#540304261c330e80d0d5edce253a68cb3964218c"
   dependencies:
@@ -5227,7 +5339,7 @@ node-gyp@^3.8.0:
     tar "^2.0.0"
     which "1"
 
-node-ipc@^9.1.1:
+node-ipc@9.1.1:
   version "9.1.1"
   resolved "http://registry.npm.alibaba-inc.com/node-ipc/download/node-ipc-9.1.1.tgz#4e245ed6938e65100e595ebc5dc34b16e8dd5d69"
   dependencies:
@@ -5291,9 +5403,9 @@ node-releases@^1.0.0-alpha.11:
   dependencies:
     semver "^5.3.0"
 
-node-sass@^4.9.3:
-  version "4.9.3"
-  resolved "http://registry.npm.alibaba-inc.com/node-sass/download/node-sass-4.9.3.tgz#f407cf3d66f78308bb1e346b24fa428703196224"
+node-sass@4.9.0:
+  version "4.9.0"
+  resolved "http://registry.npm.alibaba-inc.com/node-sass/download/node-sass-4.9.0.tgz#d1b8aa855d98ed684d6848db929a20771cc2ae52"
   dependencies:
     async-foreach "^0.1.3"
     chalk "^1.1.1"
@@ -5308,9 +5420,9 @@ node-sass@^4.9.3:
     meow "^3.7.0"
     mkdirp "^0.5.1"
     nan "^2.10.0"
-    node-gyp "^3.8.0"
+    node-gyp "^3.3.1"
     npmlog "^4.0.0"
-    request "2.87.0"
+    request "~2.79.0"
     sass-graph "^2.2.4"
     stdout-stream "^1.4.0"
     "true-case-path" "^1.0.2"
@@ -5400,7 +5512,7 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "http://registry.npm.alibaba-inc.com/number-is-nan/download/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
-oauth-sign@~0.8.2:
+oauth-sign@~0.8.1, oauth-sign@~0.8.2:
   version "0.8.2"
   resolved "http://registry.npm.alibaba-inc.com/oauth-sign/download/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
@@ -5539,7 +5651,7 @@ optimist@0.6.x, optimist@^0.6.1:
     minimist "~0.0.1"
     wordwrap "~0.0.2"
 
-optimize-css-assets-webpack-plugin@^5.0.0:
+optimize-css-assets-webpack-plugin@5.0.0:
   version "5.0.0"
   resolved "http://registry.npm.alibaba-inc.com/optimize-css-assets-webpack-plugin/download/optimize-css-assets-webpack-plugin-5.0.0.tgz#8c9adf00e841871f627f82a8097a4f9fcc314de4"
   dependencies:
@@ -5710,15 +5822,15 @@ path-dirname@^1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.alibaba-inc.com/path-dirname/download/path-dirname-1.0.2.tgz#cc33d24d525e099a5388c0336c6e32b9160609e0"
 
+path-exists@3.0.0, path-exists@^3.0.0:
+  version "3.0.0"
+  resolved "http://registry.npm.alibaba-inc.com/path-exists/download/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
+
 path-exists@^2.0.0:
   version "2.1.0"
   resolved "http://registry.npm.alibaba-inc.com/path-exists/download/path-exists-2.1.0.tgz#0feb6c64f0fc518d9a754dd5efb62c7022761f4b"
   dependencies:
     pinkie-promise "^2.0.0"
-
-path-exists@^3.0.0:
-  version "3.0.0"
-  resolved "http://registry.npm.alibaba-inc.com/path-exists/download/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
 
 path-is-absolute@^1.0.0:
   version "1.0.1"
@@ -5778,7 +5890,7 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.alibaba-inc.com/performance-now/download/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
 
-pify@^2.0.0:
+pify@^2.0.0, pify@^2.3.0:
   version "2.3.0"
   resolved "http://registry.npm.alibaba-inc.com/pify/download/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
 
@@ -5871,7 +5983,7 @@ postcss-load-config@^2.0.0:
     cosmiconfig "^4.0.0"
     import-cwd "^2.0.0"
 
-postcss-loader@^3.0.0:
+postcss-loader@3.0.0:
   version "3.0.0"
   resolved "http://registry.npm.alibaba-inc.com/postcss-loader/download/postcss-loader-3.0.0.tgz#6b97943e47c72d845fa9e03f273773d4e8dd6c2d"
   dependencies:
@@ -6059,7 +6171,7 @@ postcss-reduce-transforms@^4.0.0:
     postcss "^6.0.0"
     postcss-value-parser "^3.0.0"
 
-postcss-safe-parser@^4.0.1:
+postcss-safe-parser@4.0.1:
   version "4.0.1"
   resolved "http://registry.npm.alibaba-inc.com/postcss-safe-parser/download/postcss-safe-parser-4.0.1.tgz#8756d9e4c36fdce2c72b091bbc8ca176ab1fcdea"
   dependencies:
@@ -6257,6 +6369,10 @@ qs@~2.3.3:
   version "2.3.3"
   resolved "http://registry.npm.alibaba-inc.com/qs/download/qs-2.3.3.tgz#e9e85adbe75da0bbe4c8e0476a086290f863b404"
 
+qs@~6.3.0:
+  version "6.3.2"
+  resolved "http://registry.npm.alibaba-inc.com/qs/download/qs-6.3.2.tgz#e75bd5f6e268122a2a0e0bda630b2550c166502c"
+
 query-string@^4.1.0:
   version "4.3.4"
   resolved "http://registry.npm.alibaba-inc.com/query-string/download/query-string-4.3.4.tgz#bbb693b9ca915c232515b228b1a02b609043dbeb"
@@ -6328,7 +6444,7 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dev-utils@^5.0.1:
+react-dev-utils@5.0.1:
   version "5.0.1"
   resolved "http://registry.npm.alibaba-inc.com/react-dev-utils/download/react-dev-utils-5.0.1.tgz#1f396e161fe44b595db1b186a40067289bf06613"
   dependencies:
@@ -6583,7 +6699,7 @@ request-promise@^4.2.2:
     stealthy-require "^1.1.0"
     tough-cookie ">=2.3.3"
 
-request@2.87.0, request@^2.83.0, request@^2.85.0, request@^2.87.0:
+request@^2.83.0, request@^2.85.0, request@^2.87.0:
   version "2.87.0"
   resolved "http://registry.npm.alibaba-inc.com/request/download/request-2.87.0.tgz#32f00235cd08d482b4d0d68db93a829c0ed5756e"
   dependencies:
@@ -6607,6 +6723,31 @@ request@2.87.0, request@^2.83.0, request@^2.85.0, request@^2.87.0:
     tough-cookie "~2.3.3"
     tunnel-agent "^0.6.0"
     uuid "^3.1.0"
+
+request@~2.79.0:
+  version "2.79.0"
+  resolved "http://registry.npm.alibaba-inc.com/request/download/request-2.79.0.tgz#4dfe5bf6be8b8cdc37fcf93e04b65577722710de"
+  dependencies:
+    aws-sign2 "~0.6.0"
+    aws4 "^1.2.1"
+    caseless "~0.11.0"
+    combined-stream "~1.0.5"
+    extend "~3.0.0"
+    forever-agent "~0.6.1"
+    form-data "~2.1.1"
+    har-validator "~2.0.6"
+    hawk "~3.1.3"
+    http-signature "~1.1.0"
+    is-typedarray "~1.0.0"
+    isstream "~0.1.2"
+    json-stringify-safe "~5.0.1"
+    mime-types "~2.1.7"
+    oauth-sign "~0.8.1"
+    qs "~6.3.0"
+    stringstream "~0.0.4"
+    tough-cookie "~2.3.0"
+    tunnel-agent "~0.4.1"
+    uuid "^3.0.0"
 
 require-directory@^2.1.1:
   version "2.1.1"
@@ -6680,7 +6821,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.2.8, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2:
+rimraf@2, rimraf@2.6.2, rimraf@^2.2.8, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2:
   version "2.6.2"
   resolved "http://registry.npm.alibaba-inc.com/rimraf/download/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
@@ -6748,7 +6889,7 @@ sass-graph@^2.2.4:
     scss-tokenizer "^0.2.3"
     yargs "^7.0.0"
 
-sass-loader@^7.1.0:
+sass-loader@7.1.0:
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/sass-loader/download/sass-loader-7.1.0.tgz#16fd5138cb8b424bf8a759528a1972d72aad069d"
   dependencies:
@@ -6974,6 +7115,12 @@ snapdragon@^0.8.1:
     source-map "^0.5.6"
     source-map-resolve "^0.5.0"
     use "^3.1.0"
+
+sntp@1.x.x:
+  version "1.0.9"
+  resolved "http://registry.npm.alibaba-inc.com/sntp/download/sntp-1.0.9.tgz#6541184cc90aeea6c6e7b35e2659082443c66198"
+  dependencies:
+    hoek "2.x.x"
 
 sockjs-client@1.1.4:
   version "1.1.4"
@@ -7222,6 +7369,10 @@ string_decoder@~0.10.x:
   version "0.10.31"
   resolved "http://registry.npm.alibaba-inc.com/string_decoder/download/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
 
+stringstream@~0.0.4:
+  version "0.0.6"
+  resolved "http://registry.npm.alibaba-inc.com/stringstream/download/stringstream-0.0.6.tgz#7880225b0d4ad10e30927d167a1d6f2fd3b33a72"
+
 strip-ansi@3.0.1, strip-ansi@^3.0.0, strip-ansi@^3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.alibaba-inc.com/strip-ansi/download/strip-ansi-3.0.1.tgz#6a385fb8853d952d5ff05d0e8aaf94278dc63dcf"
@@ -7439,7 +7590,7 @@ tough-cookie@>=2.3.3:
     psl "^1.1.24"
     punycode "^1.4.1"
 
-tough-cookie@~2.3.3:
+tough-cookie@~2.3.0, tough-cookie@~2.3.3:
   version "2.3.4"
   resolved "http://registry.npm.alibaba-inc.com/tough-cookie/download/tough-cookie-2.3.4.tgz#ec60cee38ac675063ffc97a5c18970578ee83655"
   dependencies:
@@ -7476,6 +7627,10 @@ tunnel-agent@^0.6.0:
   resolved "http://registry.npm.alibaba-inc.com/tunnel-agent/download/tunnel-agent-0.6.0.tgz#27a5dea06b36b04a0a9966774b290868f0fc40fd"
   dependencies:
     safe-buffer "^5.0.1"
+
+tunnel-agent@~0.4.1:
+  version "0.4.3"
+  resolved "http://registry.npm.alibaba-inc.com/tunnel-agent/download/tunnel-agent-0.4.3.tgz#6373db76909fe570e08d73583365ed828a74eeeb"
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
@@ -7525,9 +7680,9 @@ uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.alibaba-inc.com/uglify-to-browserify/download/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
 
-uglifyjs-webpack-plugin@^1.2.4:
-  version "1.2.7"
-  resolved "http://registry.npm.alibaba-inc.com/uglifyjs-webpack-plugin/download/uglifyjs-webpack-plugin-1.2.7.tgz#57638dd99c853a1ebfe9d97b42160a8a507f9d00"
+uglifyjs-webpack-plugin@1.3.0:
+  version "1.3.0"
+  resolved "http://registry.npm.alibaba-inc.com/uglifyjs-webpack-plugin/download/uglifyjs-webpack-plugin-1.3.0.tgz#75f548160858163a08643e086d5fefe18a5d67de"
   dependencies:
     cacache "^10.0.4"
     find-cache-dir "^1.0.0"
@@ -7538,9 +7693,9 @@ uglifyjs-webpack-plugin@^1.2.4:
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
 
-uglifyjs-webpack-plugin@^1.3.0:
-  version "1.3.0"
-  resolved "http://registry.npm.alibaba-inc.com/uglifyjs-webpack-plugin/download/uglifyjs-webpack-plugin-1.3.0.tgz#75f548160858163a08643e086d5fefe18a5d67de"
+uglifyjs-webpack-plugin@^1.2.4:
+  version "1.2.7"
+  resolved "http://registry.npm.alibaba-inc.com/uglifyjs-webpack-plugin/download/uglifyjs-webpack-plugin-1.2.7.tgz#57638dd99c853a1ebfe9d97b42160a8a507f9d00"
   dependencies:
     cacache "^10.0.4"
     find-cache-dir "^1.0.0"
@@ -7654,7 +7809,7 @@ url-join@^4.0.0:
   version "4.0.0"
   resolved "http://registry.npm.alibaba-inc.com/url-join/download/url-join-4.0.0.tgz#4d3340e807d3773bda9991f8305acdcc2a665d2a"
 
-url-loader@^1.1.1:
+url-loader@1.1.1:
   version "1.1.1"
   resolved "http://registry.npm.alibaba-inc.com/url-loader/download/url-loader-1.1.1.tgz#4d1f3b4f90dde89f02c008e662d604d7511167c1"
   dependencies:
@@ -7721,7 +7876,7 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.alibaba-inc.com/utils-merge/download/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
 
-uuid@^3.0.1, uuid@^3.1.0:
+uuid@^3.0.0, uuid@^3.0.1, uuid@^3.1.0:
   version "3.3.2"
   resolved "http://registry.npm.alibaba-inc.com/uuid/download/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
 
@@ -7808,7 +7963,7 @@ wbuf@^1.1.0, wbuf@^1.7.2:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-webpack-bundle-analyzer@^2.13.1:
+webpack-bundle-analyzer@2.13.1:
   version "2.13.1"
   resolved "http://registry.npm.alibaba-inc.com/webpack-bundle-analyzer/download/webpack-bundle-analyzer-2.13.1.tgz#07d2176c6e86c3cdce4c23e56fae2a7b6b4ad526"
   dependencies:
@@ -7837,7 +7992,7 @@ webpack-dev-middleware@3.1.3:
     url-join "^4.0.0"
     webpack-log "^1.0.1"
 
-webpack-dev-mock@^0.1.1:
+webpack-dev-mock@0.1.1:
   version "0.1.1"
   resolved "http://registry.npm.alibaba-inc.com/webpack-dev-mock/download/webpack-dev-mock-0.1.1.tgz#6bd95e8f7a98be23e9157a5f8a2ba180fe5ff78f"
   dependencies:
@@ -7847,7 +8002,7 @@ webpack-dev-mock@^0.1.1:
     debug "^3.1.0"
     express-http-proxy "^1.2.0"
 
-webpack-dev-server@^3.1.5:
+webpack-dev-server@3.1.5:
   version "3.1.5"
   resolved "http://registry.npm.alibaba-inc.com/webpack-dev-server/download/webpack-dev-server-3.1.5.tgz#87477252e1ac6789303fb8cd3e585fa5d508a401"
   dependencies:
@@ -7889,19 +8044,19 @@ webpack-log@^1.0.1, webpack-log@^1.1.2:
     loglevelnext "^1.0.1"
     uuid "^3.1.0"
 
-webpack-merge@^4.1.4:
+webpack-merge@4.1.4:
   version "4.1.4"
   resolved "http://registry.npm.alibaba-inc.com/webpack-merge/download/webpack-merge-4.1.4.tgz#0fde38eabf2d5fd85251c24a5a8c48f8a3f4eb7b"
   dependencies:
     lodash "^4.17.5"
 
-webpack-plugin-import@^0.1.2:
+webpack-plugin-import@0.1.2:
   version "0.1.2"
   resolved "http://registry.npm.alibaba-inc.com/webpack-plugin-import/download/webpack-plugin-import-0.1.2.tgz#10d0b123f04d399ffa7f7ecd05db774b029c6abb"
   dependencies:
     loader-utils "^1.1.0"
 
-webpack-simple-progress-plugin@^0.0.4:
+webpack-simple-progress-plugin@0.0.4:
   version "0.0.4"
   resolved "http://registry.npm.alibaba-inc.com/webpack-simple-progress-plugin/download/webpack-simple-progress-plugin-0.0.4.tgz#c4829137429cb673dfc6a61a262b955c35cc7ba2"
   dependencies:
@@ -7909,14 +8064,21 @@ webpack-simple-progress-plugin@^0.0.4:
     object-assign "^4.1.0"
     progress "^1.1.8"
 
-webpack-sources@^1.0.1, webpack-sources@^1.0.2, webpack-sources@^1.1.0:
+webpack-sources@1.0.2:
+  version "1.0.2"
+  resolved "http://registry.npm.alibaba-inc.com/webpack-sources/download/webpack-sources-1.0.2.tgz#d0148ec083b3b5ccef1035a6b3ec16442983b27a"
+  dependencies:
+    source-list-map "^2.0.0"
+    source-map "~0.6.1"
+
+webpack-sources@^1.0.1, webpack-sources@^1.1.0:
   version "1.1.0"
   resolved "http://registry.npm.alibaba-inc.com/webpack-sources/download/webpack-sources-1.1.0.tgz#a101ebae59d6507354d71d8013950a3a8b7a5a54"
   dependencies:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.16.5:
+webpack@4.16.5:
   version "4.16.5"
   resolved "http://registry.npm.alibaba-inc.com/webpack/download/webpack-4.16.5.tgz#29fb39462823d7eb8aefcab8b45f7f241db0d092"
   dependencies:
