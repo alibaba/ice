@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
+    "@icedesign/container": "^0.1.4",
     "@icedesign/img": "^0.1.1",
     "@icedesign/layout": "^0.1.2",
     "@icedesign/menu": "^0.1.1",
