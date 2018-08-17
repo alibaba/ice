@@ -19,7 +19,6 @@ const paths = require('./config/paths');
 const getEntries = require('./config/getEntry');
 const getWebpackConfigDev = require('./config/webpack.config.dev');
 const devMiddleware = require('./devMiddleware');
-// const npmUpdate = require('./helpers/npmUpdate');
 const iceworksClient = require('./iceworksClient');
 const generateRootCA = require('./config/generateRootCA');
 
@@ -48,12 +47,10 @@ module.exports = async function(args, subprocess) {
   if (process.env.HOT_RELOAD == 'false') {
     console.log(chalk.blue('Info:'), '关闭了 hot-reload');
   }
-  const webpackConfig = getWebpackConfigDev(
-    entries,
-    paths,
-    packageData.buildConfig || packageData.ice,
-    packageData.themeConfig
-  );
+  const webpackConfig = getWebpackConfigDev({
+    entry: entries,
+    buildConfig: packageData.buildConfig || packageData.ice,
+  });
 
   if (iceworksClient.available) {
     webpackConfig.plugins.push(
