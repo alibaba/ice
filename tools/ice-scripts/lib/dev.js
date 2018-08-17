@@ -21,6 +21,7 @@ const devMiddleware = require('./devMiddleware');
 const iceworksClient = require('./iceworksClient');
 const generateRootCA = require('./config/generateRootCA');
 const prepareUrLs = require('./utils/prepareURLs');
+const getProxyConfig = require('./config/getProxyConfig');
 
 /* eslint no-console:off */
 
@@ -32,10 +33,11 @@ module.exports = async function(args, subprocess) {
       subprocess.send(data);
     }
   };
-  let httpsConfig;
+
   const cwd = process.cwd();
   const HOST = args.host || '0.0.0.0';
   const PORT = args.port || 4444;
+  let httpsConfig;
   let protocol = args.https ? 'https' : 'http';
 
   try {
@@ -49,9 +51,10 @@ module.exports = async function(args, subprocess) {
     console.log(chalk.red('HTTPS 证书生成失败，已转换为HTTP'));
   }
 
-  const urls = prepareUrLs(protocol, HOST, PORT);
   const isInteractive = false; // process.stdout.isTTY;
+  const urls = prepareUrLs(protocol, HOST, PORT);
   const entries = getEntries(cwd);
+  const proxyConfig = getProxyConfig();
   // eslint-disable-next-line import/no-dynamic-require
   const packageData = require(paths.appPackageJson);
   // get ice config by package.ice
@@ -98,7 +101,7 @@ module.exports = async function(args, subprocess) {
 
   const devServer = new WebpackDevServer(compiler, devServerConfig);
 
-  devMiddleware(devServer.app);
+  devMiddleware(devServer.app, proxyConfig);
 
   compiler.plugin('done', (stats) => {
     if (isInteractive) {
