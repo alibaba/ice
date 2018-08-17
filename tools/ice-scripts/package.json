@@ -63,7 +63,7 @@
     "mkdirp": "0.5.1",
     "node-easy-cert": "1.3.0",
     "node-ipc": "9.1.1",
-    "node-sass": "4.9.3",
+    "node-sass": "4.9.0",
     "optimize-css-assets-webpack-plugin": "5.0.0",
     "path-exists": "3.0.0",
     "postcss-loader": "3.0.0",
