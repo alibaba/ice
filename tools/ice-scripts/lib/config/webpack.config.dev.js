@@ -2,20 +2,20 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const webpackMerge = require('webpack-merge');
 const webpack = require('webpack');
+
 const getWebpackConfigBasic = require('./webpack.config.basic');
 
 const env = process.env;
 
-module.exports = function getWebpackConfigDev(entry, options = {}) {
-  const baseConfig = getWebpackConfigBasic(entry, options);
-
+module.exports = function getWebpackConfigDev({ entry, buildConfig = {} }) {
   const plugins = [];
+  const baseConfig = getWebpackConfigBasic({ entry, buildConfig });
 
   if (process.env.HOT_RELOAD !== 'false') {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
-  if (options.webpackBundleAnalyzer !== false && env.ANALYZER_PORT) {
+  if (buildConfig.webpackBundleAnalyzer !== false && env.ANALYZER_PORT) {
     plugins.push(
       new BundleAnalyzerPlugin({
         // use a fixed port
@@ -24,7 +24,8 @@ module.exports = function getWebpackConfigDev(entry, options = {}) {
       })
     );
   }
-  // 开发环境下 publicPath 指定为 /build/ 与 webpack server 一致
+
+  // 开发环境下 publicPath 指定为 / 与 webpack server 一致
   return webpackMerge(baseConfig, {
     devtool: 'cheap-module-source-map',
     output: {

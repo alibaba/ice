@@ -1,5 +1,6 @@
 const { differenceWith } = require('lodash');
 const webpackMerge = require('webpack-merge');
+
 const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
@@ -39,7 +40,7 @@ const pluginsUnique = (uniques) => {
   };
 };
 
-module.exports = function getWebpackConfigBasic(entry, buildConfig = {}) {
+module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
   const { themeConfig = {} } = pkg;
   const hasExternalReact = checkTemplateHasReact(paths.appHtml);
   debug.info('hasExternalReact', hasExternalReact);
@@ -63,10 +64,7 @@ module.exports = function getWebpackConfigBasic(entry, buildConfig = {}) {
     },
     externals:
       buildConfig.externals || hasExternalReact
-        ? {
-          react: 'window.React',
-          'react-dom': 'window.ReactDOM',
-        }
+        ? { react: 'window.React', 'react-dom': 'window.ReactDOM' }
         : {},
     module: {
       rules: getRules(buildConfig),
