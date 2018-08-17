@@ -35,6 +35,7 @@ function ensureSlash(path, needsSlash) {
 // It requires a trailing slash, or the file assets will get an incorrect path.
 function getServedPath(appPackageJson) {
   const publicUrl = getPublicUrl(appPackageJson);
+  // publicUrl 不存在的情况下，则使用 homepage 作为部署路径
   const servedUrl = publicUrl ? url.parse(publicUrl).pathname : '/';
   return ensureSlash(servedUrl, true);
 }
