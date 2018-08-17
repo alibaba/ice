@@ -6,7 +6,6 @@
 
 process.env.NODE_ENV = 'development';
 
-const address = require('address');
 const chalk = require('chalk');
 const fs = require('fs');
 const clearConsole = require('react-dev-utils/clearConsole');
@@ -21,26 +20,39 @@ const getWebpackConfigDev = require('./config/webpack.config.dev');
 const devMiddleware = require('./devMiddleware');
 const iceworksClient = require('./iceworksClient');
 const generateRootCA = require('./config/generateRootCA');
+const prepareUrLs = require('./utils/prepareURLs');
 
 /* eslint no-console:off */
 
 module.exports = async function(args, subprocess) {
-  const cwd = process.cwd();
-  const HOST = args.host || '0.0.0.0';
-  const PORT = args.port || 4444;
-  let protocol = args.https ? 'https' : 'http';
+  // 与 iceworks 客户端通信
   const send = function(data) {
     iceworksClient.send(data);
     if (subprocess && typeof subprocess.send === 'function') {
       subprocess.send(data);
     }
   };
+  let httpsConfig;
+  const cwd = process.cwd();
+  const HOST = args.host || '0.0.0.0';
+  const PORT = args.port || 4444;
+  let protocol = args.https ? 'https' : 'http';
 
-  const LOCAL_IP = address.ip();
+  try {
+    const ca = await generateRootCA();
+    httpsConfig = {
+      key: fs.readFileSync(ca.key),
+      cert: fs.readFileSync(ca.cert),
+    };
+  } catch (err) {
+    protocol = 'http';
+    console.log(chalk.red('HTTPS 证书生成失败，已转换为HTTP'));
+  }
 
+  const urls = prepareUrLs(protocol, HOST, PORT);
   const isInteractive = false; // process.stdout.isTTY;
   const entries = getEntries(cwd);
-
+  // eslint-disable-next-line import/no-dynamic-require
   const packageData = require(paths.appPackageJson);
   // get ice config by package.ice
 
@@ -77,23 +89,11 @@ module.exports = async function(args, subprocess) {
     devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);
   }
 
-  // buffer与deepmerge有冲突，会被解析成乱码
-  if (protocol === 'https') {
-    try {
-      const ca = await generateRootCA();
-      devServerConfig.https = {
-        key: fs.readFileSync(ca.key),
-        cert: fs.readFileSync(ca.cert),
-      };
-      console.log(
-        chalk.green('当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)')
-      );
-      console.log(chalk.green(ca.cert));
-    } catch (err) {
-      protocol = 'http';
-      delete devServerConfig.https;
-      console.log(chalk.red('HTTPS 证书生成失败，已转换为HTTP'));
-    }
+  // buffer 与 deepmerge有冲突，会被解析成乱码
+  if (httpsConfig) {
+    devServerConfig.https = httpsConfig;
+  } else {
+    delete devServerConfig.https;
   }
 
   const devServer = new WebpackDevServer(compiler, devServerConfig);
@@ -110,14 +110,18 @@ module.exports = async function(args, subprocess) {
         message: 'server_finished',
         data: {
           statusDev: 'working',
-          serverUrl: `${protocol}://${LOCAL_IP}:${PORT}`,
+          serverUrl: urls.localUrlForTerminal,
         },
       });
 
       isFirstCompile = false;
       console.log(chalk.cyan('Starting the development server...'));
-      console.log('   ', chalk.yellow(`${protocol}://localhost:${PORT}`));
-      console.log('   ', chalk.yellow(`${protocol}://${LOCAL_IP}:${PORT}`));
+      console.log(
+        [
+          `    - Local:   ${chalk.yellow(urls.localUrlForTerminal)}`,
+          `    - Network: ${chalk.yellow(urls.lanUrlForTerminal)}`,
+        ].join('\n')
+      );
     }
 
     console.log(
@@ -181,7 +185,7 @@ module.exports = async function(args, subprocess) {
         message: 'compiler_success',
         data: {
           statusCompile: 'success',
-          serverUrl: `${protocol}://${LOCAL_IP}:${PORT}`,
+          serverUrl: urls.lanUrlForTerminal,
         },
       });
     } else {
@@ -191,7 +195,7 @@ module.exports = async function(args, subprocess) {
         message: 'compiler_failed',
         data: {
           statusCompile: 'failed',
-          serverUrl: `${protocol}://${LOCAL_IP}:${PORT}`,
+          serverUrl: urls.lanUrlForTerminal,
         },
       });
     }
@@ -211,7 +215,7 @@ module.exports = async function(args, subprocess) {
     });
   });
 
-  devServer.use(function(req, res, next) {
+  devServer.use((req, res, next) => {
     console.log('Time:', Date.now());
     next();
   });
@@ -234,7 +238,7 @@ module.exports = async function(args, subprocess) {
         message: 'server_success',
         data: {
           statusDev: 'working',
-          serverUrl: `${protocol}://${LOCAL_IP}:${PORT}`,
+          serverUrl: urls.lanUrlForTerminal,
         },
       });
     }
