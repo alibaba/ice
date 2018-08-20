@@ -53,5 +53,9 @@ module.exports = (entry) => {
     entries = entryApplyHotdev(entries);
   }
 
+  Object.keys(entries).forEach((key) => {
+    entries[key] = ['@babel/polyfill', entries[key]];
+  });
+
   return entries;
 };
