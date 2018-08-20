@@ -1,6 +1,6 @@
 {
   "name": "ice-scripts",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
@@ -27,7 +27,6 @@
     "@babel/core": "7.0.0-beta.49",
     "@babel/plugin-proposal-class-properties": "7.0.0-beta.49",
     "@babel/plugin-proposal-decorators": "7.0.0-beta.49",
-    "@babel/plugin-transform-runtime": "7.0.0-beta.49",
     "@babel/preset-env": "7.0.0-beta.49",
     "@babel/preset-react": "7.0.0-beta.49",
     "@babel/preset-stage-0": "7.0.0-beta.49",
