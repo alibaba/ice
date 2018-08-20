@@ -3,31 +3,31 @@ const path = require('path');
 const appDirectory = fs.realpathSync(process.cwd());
 const hotDevClientPath = require.resolve('react-dev-utils/webpackHotDevClient');
 
-function entryWithApp(item) {
-  if (typeof item === 'string') {
+function entryWithApp(entry) {
+  if (typeof entry === 'string') {
     // 绝对路径直接返回
-    if (path.isAbsolute(item)) {
-      return item;
+    if (path.isAbsolute(entry)) {
+      return entry;
     }
-    return path.resolve(appDirectory, item);
-  } else if (Array.isArray(item)) {
-    return item.map((file) => entryWithApp(file));
+    return path.resolve(appDirectory, entry);
+  } else if (Array.isArray(entry)) {
+    return entry.map((file) => entryWithApp(file));
   }
 }
 
-function unshiftHotClient(item) {
-  if (typeof item === 'string') {
-    return [hotDevClientPath, item];
-  } else if (Array.isArray(item)) {
-    return [hotDevClientPath, ...item];
+function unshiftEntryChunk(entry, chunk) {
+  if (typeof entry === 'string') {
+    return [chunk, entry];
+  } else if (Array.isArray(entry)) {
+    return [chunk, ...entry];
   }
 }
 
-function entryApplyHotdev(entries) {
+function enhanceEntries(entries, chunk) {
   const hotEntries = {};
 
   Object.keys(entries).forEach((key) => {
-    hotEntries[key] = unshiftHotClient(entries[key]);
+    hotEntries[key] = unshiftEntryChunk(entries[key], chunk);
   });
 
   return hotEntries;
@@ -50,12 +50,11 @@ module.exports = (entry) => {
     process.env.NODE_ENV !== 'production' &&
     process.env.HOT_RELOAD !== 'false'
   ) {
-    entries = entryApplyHotdev(entries);
+    entries = enhanceEntries(entries, hotDevClientPath);
   }
 
-  Object.keys(entries).forEach((key) => {
-    entries[key] = ['@babel/polyfill', entries[key]];
-  });
+  // Note：https://github.com/alibaba/ice/pull/834
+  entries = enhanceEntries(entries, '@babel/polyfill');
 
   return entries;
 };
