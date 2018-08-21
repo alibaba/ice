@@ -1,5 +1,6 @@
 const path = require('path');
 const EasyCert = require('node-easy-cert');
+const chalk = require('chalk');
 
 const rootDirPath = path.resolve(__dirname, '../ICE_CA');
 const options = {
@@ -34,13 +35,18 @@ function generateRootCA() {
 }
 
 module.exports = function getRootCA() {
-  if (easyCert.isRootCAFileExists()) {
-    return Promise.resolve({
-      key: path.join(rootDirPath, 'rootCA.key'),
-      cert: path.join(rootDirPath, 'rootCa.crt'),
-    });
-  }
-
-  return generateRootCA();
+  return (easyCert.isRootCAFileExists()
+    ? Promise.resolve({
+        key: path.join(rootDirPath, 'rootCA.key'),
+        cert: path.join(rootDirPath, 'rootCa.crt'),
+      })
+    : generateRootCA()
+  ).then((ca) => {
+    console.log(
+      chalk.green('Tips:'),
+      '当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)'
+    );
+    console.log('   ', chalk.cyan.underline(ca.cert));
+    return ca;
+  });
 };
-
