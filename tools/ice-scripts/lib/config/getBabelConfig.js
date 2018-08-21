@@ -12,6 +12,7 @@ module.exports = (buildConfig = {}) => {
         require.resolve('@babel/preset-env'),
         {
           modules: false,
+          useBuiltIns: 'entry',
           targets: {
             browsers: [
               'last 2 versions',
@@ -33,15 +34,6 @@ module.exports = (buildConfig = {}) => {
       [
         require.resolve('@babel/plugin-proposal-class-properties'),
         { loose: true },
-      ],
-      [
-        require.resolve('@babel/plugin-transform-runtime'),
-        {
-          helpers: false,
-          polyfill: true,
-          regenerator: true,
-          moduleName: 'babel-runtime',
-        },
       ],
       [
         babelPluginImport,
