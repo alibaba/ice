@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 const postcssConfig = require('./postcssConfig');
+const paths = require('./paths');
 
 const BABEL_LOADER = require.resolve('babel-loader');
 const CSS_LOADER = require.resolve('css-loader');
@@ -25,7 +26,7 @@ function withCssHotLoader(loaders) {
   return loaders;
 }
 
-module.exports = (paths, buildConfig = {}) => {
+module.exports = (buildConfig = {}) => {
   const babelConfig = getBabelConfig(buildConfig);
   const sassLoaders = [
     {

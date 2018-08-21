@@ -1,5 +1,4 @@
 // 读取需要编译的文件
-'use strict';
 const fs = require('fs');
 const colors = require('chalk');
 const path = require('path');
