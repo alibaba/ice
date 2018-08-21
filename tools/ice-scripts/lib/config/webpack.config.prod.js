@@ -1,13 +1,11 @@
-process.env.NODE_ENV = 'production';
-
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 
 const getWebpackConfigBasic = require('./webpack.config.basic');
 
-module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
-  const baseConfig = getWebpackConfigBasic(entry, paths, options);
+module.exports = function getWebpackConfigProd({ entry, buildConfig }) {
+  const baseConfig = getWebpackConfigBasic({ entry, buildConfig });
 
   return webpackMerge(baseConfig, {
     devtool: 'none',
@@ -33,7 +31,7 @@ module.exports = function getWebpackConfigDev(entry, paths, options = {}) {
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
             reduceIdents: false,
-            safe: true
+            parser: require('postcss-safe-parser'),
           },
         }),
       ],
