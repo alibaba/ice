@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/operation-platform-scaffold",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "该模板适用于运营类型的后台管理系统，内置列表管理页、表单新增编辑页及表单查看页，这三个页面可形成一个闭环",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-operation-platform.html",
   "author": "ice-admin@alibaba-inc.com",
@@ -44,6 +44,10 @@
   "scaffoldConfig": {
     "name": "ice-operation-platform",
     "title": "ICE Operation Platform",
+    "categories": ["行业领域"],
     "screenshot": "https://img.alicdn.com/tfs/TB1AR47CGmWBuNjy1XaXXXCbXXa-2840-1596.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

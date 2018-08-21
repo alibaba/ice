@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {
@@ -62,6 +62,7 @@
     "path-exists": "^3.0.0",
     "prismjs": "^1.15.0",
     "props-schema-generator": "^0.1.1",
+    "puppeteer": "^1.6.2",
     "read-metadata": "^1.0.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
@@ -99,6 +100,7 @@
   "devDependencies": {
     "@icedesign/demo-layout": "^0.1.7",
     "cross-spawn": "^6.0.5",
+    "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.1.0"
   }
 }

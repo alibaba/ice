@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/analysis-scaffold",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "该模板适用于可视化实时数据的大屏展示，默认只有一个页面，内置饼图、柱状图等图形",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-analysis.html",
   "dependencies": {
@@ -43,6 +43,10 @@
   "scaffoldConfig": {
     "name": "ice-design-analysis",
     "title": "ICE Design Analysis",
+    "categories": ["数据可视化"],
     "screenshot": "https://img.alicdn.com/tfs/TB1_Xf8m_tYBeNjy1XdXXXXyVXa-1920-1080.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

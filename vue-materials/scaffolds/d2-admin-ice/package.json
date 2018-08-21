@@ -1,0 +1,62 @@
+{
+  "name": "@d2-admin/ice-scaffold",
+  "version": "1.2.6",
+  "description": "该模板默认支持多页模式，内置登陆验证、数据持久化、主题系统、字体图标库、多模式页面组件以及常用操作的封装等。",
+  "author": "liyang <1711467488@qq.com>",
+  "homepage": "https://fairyever.gitee.io/d2-admin-ice-preview/",
+  "main": "src/main.js",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
+    "dev": "vue-cli-service serve --open",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint --fix",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "babel-polyfill": "^6.26.0",
+    "better-scroll": "^1.12.1",
+    "element-ui": "^2.4.4",
+    "js-cookie": "^2.2.0",
+    "lodash.uniqueid": "^4.0.1",
+    "lowdb": "^1.0.0",
+    "mockjs": "^1.0.1-beta3",
+    "particles.js": "^2.0.0",
+    "screenfull": "^3.3.2",
+    "ua-parser-js": "^0.7.18",
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.0-rc.4",
+    "@vue/cli-plugin-eslint": "^3.0.0-rc.4",
+    "@vue/cli-plugin-unit-jest": "^3.0.0-rc.4",
+    "@vue/cli-service": "^3.0.0-rc.4",
+    "@vue/eslint-config-standard": "^3.0.0-rc.3",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.0.1",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "svg-sprite-loader": "^3.8.0",
+    "vue-template-compiler": "^2.5.16"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "scaffoldConfig": {
+    "name": "D2Admin ICE",
+    "title": "D2Admin ICE",
+    "screenshot": "http://fairyever.qiniudn.com/20180803175340.png"
+  },
+  "keywords": [
+    "dashboard",
+    "vue.js",
+    "d2-admin"
+  ],
+  "license": "MIT"
+}
