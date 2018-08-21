@@ -12,6 +12,7 @@ module.exports = (buildConfig = {}) => {
         require.resolve('@babel/preset-env'),
         {
           modules: false,
+          useBuiltIns: 'entry',
           targets: {
             browsers: [
               'last 2 versions',
@@ -35,15 +36,10 @@ module.exports = (buildConfig = {}) => {
         { loose: true },
       ],
       [
-        require.resolve('@babel/plugin-transform-runtime'),
-        {
-          helpers: false,
-          polyfill: true,
-          regenerator: true,
-          moduleName: 'babel-runtime',
-        },
+        babelPluginImport,
+        { libraryName: '@icedesign/base' },
+        '@icedesign/base',
       ],
-      [babelPluginImport, { libraryName: '@icedesign/base' }, '@icedesign/base'],
       [babelPluginImport, { libraryName: '@alife/next' }, '@alife/next'],
       [babelPluginImport, { libraryName: '@alifd/next' }, '@alifd/next'],
     ],
