@@ -68,10 +68,6 @@ module.exports = {
   entry: {
     index: ['src/index.js'],
     app: ['src/index.js'],
-  },
-  output: {
-    path: resolve('dist'),
-    filename: '[name].[hash].js',
   }
 };
 ```
