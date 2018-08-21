@@ -7,18 +7,27 @@
  */
 
 const url = require('url');
+const chalk = require('chalk');
 const address = require('address');
 
 module.exports = function prepareUrls(protocol, host, port, pathname = '/') {
   const formatUrl = (hostname) =>
-    url.format({ protocol, hostname, port, pathname });
+    url.format({
+      protocol,
+      hostname,
+      port,
+      pathname,
+    });
   const prettyPrintUrl = (hostname) =>
-    url.format({ protocol, hostname, port, pathname });
+    url.format({
+      protocol,
+      hostname,
+      port: chalk.bold(port),
+      pathname,
+    });
 
   const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
-  let prettyHost;
-  let lanUrlForConfig;
-  let lanUrlForTerminal;
+  let prettyHost, lanUrlForConfig, lanUrlForTerminal;
   if (isUnspecifiedHost) {
     prettyHost = 'localhost';
     try {
