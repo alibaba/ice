@@ -190,7 +190,7 @@ module.exports = async function(args, subprocess) {
         message: 'compiler_success',
         data: {
           statusCompile: 'success',
-          serverUrl: urls.lanUrlForTerminal,
+          serverUrl: urls.lanUrlForTerminal || urls.localUrlForTerminal,
         },
       });
     } else {
@@ -200,7 +200,7 @@ module.exports = async function(args, subprocess) {
         message: 'compiler_failed',
         data: {
           statusCompile: 'failed',
-          serverUrl: urls.lanUrlForTerminal,
+          serverUrl: urls.lanUrlForTerminal || urls.localUrlForTerminal,
         },
       });
     }
@@ -243,7 +243,7 @@ module.exports = async function(args, subprocess) {
         message: 'server_success',
         data: {
           statusDev: 'working',
-          serverUrl: urls.lanUrlForTerminal,
+          serverUrl: urls.lanUrlForTerminal || urls.localUrlForTerminal,
         },
       });
     }
