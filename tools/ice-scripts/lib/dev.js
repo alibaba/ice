@@ -40,15 +40,17 @@ module.exports = async function(args, subprocess) {
   let httpsConfig;
   let protocol = args.https ? 'https' : 'http';
 
-  try {
-    const ca = await generateRootCA();
-    httpsConfig = {
-      key: fs.readFileSync(ca.key),
-      cert: fs.readFileSync(ca.cert),
-    };
-  } catch (err) {
-    protocol = 'http';
-    console.log(chalk.red('HTTPS 证书生成失败，已转换为HTTP'));
+  if (protocol == 'https') {
+    try {
+      const ca = await generateRootCA();
+      httpsConfig = {
+        key: fs.readFileSync(ca.key),
+        cert: fs.readFileSync(ca.cert),
+      };
+    } catch (err) {
+      protocol = 'http';
+      console.log(chalk.red('HTTPS 证书生成失败，已转换为HTTP'));
+    }
   }
 
   const isInteractive = false; // process.stdout.isTTY;
