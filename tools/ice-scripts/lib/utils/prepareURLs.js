@@ -27,7 +27,10 @@ module.exports = function prepareUrls(protocol, host, port, pathname = '/') {
     });
 
   const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
-  let prettyHost, lanUrlForConfig, lanUrlForTerminal;
+  let prettyHost;
+  let lanUrlForConfig;
+  let lanUrlForTerminal;
+  let lanUrlForBrowser;
   if (isUnspecifiedHost) {
     prettyHost = 'localhost';
     try {
@@ -43,6 +46,7 @@ module.exports = function prepareUrls(protocol, host, port, pathname = '/') {
         ) {
           // Address is private, format it for later use
           lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig);
+          lanUrlForBrowser = formatUrl(lanUrlForConfig);
         } else {
           // Address is not private, so we will discard it
           lanUrlForConfig = undefined;
@@ -59,6 +63,7 @@ module.exports = function prepareUrls(protocol, host, port, pathname = '/') {
   return {
     lanUrlForConfig,
     lanUrlForTerminal,
+    lanUrlForBrowser,
     localUrlForTerminal,
     localUrlForBrowser,
   };
