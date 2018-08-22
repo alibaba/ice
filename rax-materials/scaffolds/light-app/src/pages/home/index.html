@@ -1,0 +1,34 @@
+<style>
+  .container {
+    padding: 20 0;
+    text-align: center;
+    color: #666;
+  }
+</style>
+
+<template>
+  <view class="container">
+    <item></item>
+  </view>
+</template>
+
+<script>
+  import item from '../../components/item';
+  export default {
+    components: {
+      item
+    },
+    data() {
+      return {
+        // initial data
+      };
+    },
+    methods: {
+      goto() {
+        navigator.push({
+          url: '/new'
+        })
+      }
+    }
+  };
+</script>

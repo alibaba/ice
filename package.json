@@ -73,6 +73,10 @@
     {
       "directory": "angular-materials",
       "type": "angular"
+    },
+    {
+      "directory": "rax-materials",
+      "type": "rax"
     }
   ]
 }
