@@ -63,6 +63,7 @@ function checkNpmPublish(packagePath) {
 function scanMaterials() {
   Promise.all([
     scanPackageJson('../react-materials/*/*/package.json'),
+    scanPackageJson('../rax-materials/*/*/package.json'),
     scanPackageJson('../vue-materials/*/*/package.json'),
     scanPackageJson('../angular-materials/*/*/package.json'),
   ])

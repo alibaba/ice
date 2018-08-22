@@ -1,0 +1,25 @@
+{
+  "name": "@rax-materials/lite-app",
+  "version": "0.1.0",
+  "description": "lite app",
+  "keywords": [
+    "ice-scaffold"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "miniapp -p 6002",
+    "build": "node ./node_modules/.bin/tbo -p 6002"
+  },
+  "devDependencies": {
+    "@ali/miniapp-dev-server": "^0.1.10-0",
+    "@ali/tbo-server": "latest"
+  },
+  "scaffoldConfig": {
+    "name": "lite-app",
+    "title": "Lite App",
+    "type": "rax",
+    "snapshot": "https://img.alicdn.com/tfs/TB1gJHIFgmTBuNjy1XbXXaMrVXa-368-666.png"
+  }
+}
