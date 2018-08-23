@@ -1,11 +1,7 @@
-/* eslint no-param-reassign: 0 */
-
-// 打开一个url
+import util from '@/libs/util'
 
 export default {
-  install (Vue) {
-    Vue.prototype.$open = (url = 'https://github.com/d2-projects') => {
-      window.open(url)
-    }
+  install (Vue, options) {
+    Vue.prototype.$open = util.open
   }
 }
