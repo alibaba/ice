@@ -76,12 +76,12 @@ const styles = {
     border: '1px solid #9816f4',
   },
   border: {
-    height: '500px',
+    position: 'absolute',
+    top: '100px',
+    bottom: '100px',
+    right: '0',
     background: '#ffffff',
     width: '30px',
     boxShadow: '-19px 0 35px -7px #F5F5F5',
-    marginTop: '-100px',
-    position: 'absolute',
-    right: '0',
   },
 };
