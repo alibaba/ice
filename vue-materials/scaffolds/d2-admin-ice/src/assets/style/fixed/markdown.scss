@@ -1,0 +1,10 @@
+// markdown 样式补丁
+
+.markdown-body {
+  ul {
+    list-style: disc;
+  }
+  h1, h2 {
+    border-bottom: none;
+  }
+}
