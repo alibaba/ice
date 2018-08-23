@@ -13,7 +13,7 @@ const defaultErrorStatePropsGenerator = (errors, FormItemProps) => {
   return {
     className: FormItemProps.className
       ? FormItemProps.className + ' this-field-has-error'
-      : 'this-field-has-error'
+      : 'this-field-has-error',
   };
 };
 
@@ -92,7 +92,7 @@ export default class FormBinder extends Component {
     /**
      * 数组的方式配置当前表单校验规则，用于对一个表单执行多条校验规则
      */
-    rules: PropTypes.array
+    rules: PropTypes.array,
   };
 
   // due to the props getter logic in render, do not add default value here.
@@ -104,7 +104,7 @@ export default class FormBinder extends Component {
     validate: PropTypes.func,
     addValidate: PropTypes.func,
     removeValidate: PropTypes.func,
-    setter: PropTypes.func
+    setter: PropTypes.func,
   };
 
   currentRules = [];
@@ -156,7 +156,7 @@ export default class FormBinder extends Component {
   }
 
   // get form rules from props
-  getFormRules = props => {
+  getFormRules = (props) => {
     const FormItem = React.Children.only(props.children);
     const FormItemProps = FormItem.props;
 
@@ -179,9 +179,9 @@ export default class FormBinder extends Component {
       'transform',
       'message',
       'validator',
-      'type'
+      'type',
     ];
-    ruleKeys.forEach(ruleKey => {
+    ruleKeys.forEach((ruleKey) => {
       const ruleValue =
         ruleKey in props
           ? props[ruleKey]
@@ -190,7 +190,7 @@ export default class FormBinder extends Component {
         result[0]
           ? (result[0][ruleKey] = ruleValue)
           : result.push({
-              [ruleKey]: ruleValue
+              [ruleKey]: ruleValue,
             });
       }
     });
@@ -201,6 +201,7 @@ export default class FormBinder extends Component {
   render() {
     const FormItem = React.Children.only(this.props.children);
     const FormItemProps = FormItem.props;
+    const FormItemDefaultProps = FormItem.type.defaultProps;
 
     const currentName = this.props.name || FormItem.props.name;
     const valueKey = this.props.valueKey || 'value';
@@ -252,12 +253,15 @@ export default class FormBinder extends Component {
       },
       [valueKey]: (() => {
         // formItems value has higher priority
-        if (FormItemProps[valueKey]) {
+        if (
+          typeof FormItemProps[valueKey] === 'object' &&
+          FormItemProps[valueKey] !== FormItemDefaultProps[valueKey]
+        ) {
           return FormItemProps[valueKey];
         } else {
           return this.context.getter(currentName);
         }
-      })()
+      })(),
     });
 
     return NewFormItem;
