@@ -1,8 +1,8 @@
 {
   "name": "@icedesign/creative-login-scaffold",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "该模板适用于有注册登录类的管理后台，默认只内置了注册和登录页面，可根据实际业务场景选择其他物料进行开发。",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-creative-login.html",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-creative-login/index.html",
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
