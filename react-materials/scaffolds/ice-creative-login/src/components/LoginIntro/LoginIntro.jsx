@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class LoginIntro extends Component {
   static displayName = 'LoginIntro';
@@ -29,9 +30,9 @@ export default class LoginIntro extends Component {
           让沟通变得更加智能、高效、便捷
         </div>
         <p style={styles.description}>Amazing Stuff is Lorem Here.ICE Team</p>
-        <a href="#" style={styles.button}>
+        <Link to="/" style={styles.button}>
           进入首页
-        </a>
+        </Link>
         <div style={styles.border} />
       </div>
     );
