@@ -269,21 +269,20 @@ Iceworks 对于脚手架会将其直接下载解压到目录中。
 
 相关命令如下：
 
-```
-$ npm run publish     // 发布 NPM 包，将对应的区块发布到 NPM 上
-```
-
-其实只要将物料发包即可，因此你也可以选择普通的 npm 命令的方式发布，只是这样操作步骤会变多一些：
+1. 发布 npm 包
 
 ```
-$ cd 到对应物料目录
-$ npm publish
+$ npm publish // 进入到当前区块或者脚手架目录下执行
 ```
 
-之后生成物料 DB：
+2. 生成 DB 数据
 
 ```
-$ ice-devtools generate          // 生成 DB 数据
+$ npm run db       // 在项目根目录下执行
+
+或者
+
+$ ice-devtools generate
 ```
 
 此时将会在当前物料源下面新建 `build` 目录，并生成 json 文件。
