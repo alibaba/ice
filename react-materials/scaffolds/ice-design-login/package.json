@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/login-scaffold",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "该模板适用于有注册登录类的管理后台，默认只内置了注册和登录页面，可根据实际业务场景选择其他物料进行开发。",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-login.html",
   "dependencies": {
@@ -42,6 +42,10 @@
   "scaffoldConfig": {
     "name": "ice-design-login",
     "title": "ICE Design Login",
+    "categories": ["登录"],
     "screenshot": "https://img.alicdn.com/tfs/TB1JPCEqMmTBuNjy1XbXXaMrVXa-2840-1596.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

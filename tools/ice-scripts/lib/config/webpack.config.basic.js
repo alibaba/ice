@@ -1,5 +1,6 @@
 const { differenceWith } = require('lodash');
 const webpackMerge = require('webpack-merge');
+
 const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
@@ -8,6 +9,7 @@ const getEntryByPages = require('./getEntryByPages');
 const pkg = require('./packageJson');
 const checkTemplateHasReact = require('../utils/checkTemplateHasReact');
 const debug = require('../debug');
+const paths = require('./paths');
 
 /**
  * 可以在 buildConfig 中覆盖的配置项:
@@ -38,11 +40,7 @@ const pluginsUnique = (uniques) => {
   };
 };
 
-module.exports = function getWebpackConfigBasic(
-  entry,
-  paths,
-  buildConfig = {}
-) {
+module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
   const { themeConfig = {} } = pkg;
   const hasExternalReact = checkTemplateHasReact(paths.appHtml);
   debug.info('hasExternalReact', hasExternalReact);
@@ -66,15 +64,12 @@ module.exports = function getWebpackConfigBasic(
     },
     externals:
       buildConfig.externals || hasExternalReact
-        ? {
-            react: 'window.React',
-            'react-dom': 'window.ReactDOM',
-          }
+        ? { react: 'window.React', 'react-dom': 'window.ReactDOM' }
         : {},
     module: {
-      rules: getRules(paths, buildConfig),
+      rules: getRules(buildConfig),
     },
-    plugins: getPlugins(paths, { buildConfig, themeConfig }),
+    plugins: getPlugins({ entry, buildConfig, themeConfig }),
     optimization: {
       splitChunks: {
         cacheGroups: {

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-design-dashboard",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "该模板适用于简单的数据概览类展示，搭配简洁的暗色主题风格和图表类展示",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-dashboard.html",
   "dependencies": {
@@ -43,6 +43,10 @@
   "scaffoldConfig": {
     "name": "ice-design-dashboard",
     "title": "ICE Design Dashboard",
+    "categories": ["Dashboard"],
     "screenshot": "https://img.alicdn.com/tfs/TB1Ohh7DgmTBuNjy1XbXXaMrVXa-2840-1596.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }
