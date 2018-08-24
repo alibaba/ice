@@ -1,0 +1,42 @@
+{
+  "name": "react-umeditor-block",
+  "version": "1.0.0",
+  "description": "React Editor like Umeditor",
+  "author": "liuhong1happy <liuhong1.happy@163.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ReactUmeditor"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.3",
+    "@icedesign/container": "^0.1.2",
+    "react-umeditor": "^1.0.2"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "react-umeditor",
+    "title": "ReactUmeditor 富文本编辑器",
+    "categories": [
+      "富文本编辑器"
+    ],
+    "screenshot": "https://github.com/liuhong1happy/react-umeditor/blob/master/editor.png"
+  },
+  "homepage": "https://alibaba.github.io/ice/block/react-umeditor/preview"
+}
