@@ -14,28 +14,30 @@ const CreateFuncDialog = (WrapperElement) => {
         return;
       }
 
+      const originAfterClose = props.afterClose;
+
       container = document.createElement('div');
       document.body.appendChild(container);
       instance = ReactDOM.render(
-        <WrapperElement {...props} visible />,
-        container,
+        <WrapperElement
+          {...props}
+          afterClose={() => {
+            ReactDOM.unmountComponentAtNode(container);
+            instance = null;
+            container.parentNode.removeChild(container);
+            if (typeof originAfterClose === 'function') {
+              originAfterClose();
+            }
+          }}
+          visible
+        />,
+        container
       );
     },
     // 隐藏并销毁弹窗
     hide: () => {
       if (instance) {
-        instance.setState(
-          {
-            visible: false,
-          },
-          () => {
-            setTimeout(() => {
-              ReactDOM.unmountComponentAtNode(container);
-              instance = null;
-              container.parentNode.removeChild(container);
-            }, 1000);
-          },
-        );
+        instance.setState({ visible: false });
       }
     },
   };
