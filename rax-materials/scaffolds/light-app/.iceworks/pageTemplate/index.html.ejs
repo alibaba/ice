@@ -1,8 +1,6 @@
 <style>
   .container {
-    padding: 20 0;
-    text-align: center;
-    color: #666;
+    padding: 0;
   }
 </style>
 
@@ -16,12 +14,12 @@
 
 <script>
   <%_ blocks.forEach(function(block) { _%>
-  import <%= block.name %> from '<%= block.path %>';
+  import <%= block.className %> from '<%= block.path %>';
   <%_ }); _%>
   export default {
     components: {
       <%_ blocks.forEach(function(block) { _%>
-      <%= block.name %>,
+      <%= block.className %>,
       <%_ }); _%>
     },
     data() {
