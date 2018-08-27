@@ -20,6 +20,7 @@
     "name": "lite-app",
     "title": "Lite App",
     "type": "rax",
+    "appType": "rax",
     "snapshot": "https://img.alicdn.com/tfs/TB1gJHIFgmTBuNjy1XbXXaMrVXa-368-666.png"
   }
 }
