@@ -41,6 +41,7 @@ class FormDialog extends Component {
         title="编辑数据"
         onClose={this.props.onClose}
         onCancel={this.props.onCancel}
+        afterClose={this.props.afterClose}
         onOk={this.onOkHandler}
         visible={this.state.visible}
         style={{ width: 400 }}
