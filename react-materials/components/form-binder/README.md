@@ -157,6 +157,16 @@ return (
 
 通过修改 `triggerType` 来指定合适的触发事件。对于高频触发校验的 `Input` 可以设置为 `onBlur` 减少校验调用次数。
 
+### 修改默认 `onChange` 的值内容
+
+在 `DatePicker` 的使用场景中往往需要增加 `format="YYYY-MM-DD"` 格式化参数，由于 `onChange` 的默认返回值是 `[data, formatData]` 当需要第二个值绑定上 FormBinder 可以使用 `valueFormatter` API 来修改
+
+
+```
+<FormBinder>
+  <DatePicker format="YYYY-MM-DD" valueFormatter={(date, formatDate) => {return formatDate}} />
+</FormBinder>
+```
 
 ## 双向绑定协议
 
