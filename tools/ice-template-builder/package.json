@@ -1,0 +1,34 @@
+{
+  "name": "ice-template-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "node ./tests/index.js",
+    "start": "cd ./tests/app && tnpm install && npm run start",
+    "test": "npm run generate && npm run start"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "keywords": [
+    "ice"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "ejs": "^2.6.1",
+    "ejs-lint": "^0.3.0",
+    "fs-readdir-recursive": "^1.1.0",
+    "glob": "^7.1.2",
+    "ora": "^3.0.0",
+    "prettier": "^1.13.4",
+    "rimraf": "^2.6.2",
+    "write": "^1.0.3"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  }
+}
