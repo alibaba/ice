@@ -22,6 +22,7 @@ import List from './pages/List';
 import CardList from './pages/CardList';
 import BasicTable from './pages/BasicTable';
 import TableDisplay from './pages/TableDisplay';
+import Locale from './pages/Locale';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
@@ -93,6 +94,11 @@ const routerConfig = [
   {
     path: '/exception/404',
     component: NotFound,
+    layout: BasicLayout,
+  },
+  {
+    path: '/i18n/index',
+    component: Locale,
     layout: BasicLayout,
   },
   {

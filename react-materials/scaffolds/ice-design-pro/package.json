@@ -23,17 +23,19 @@
     "foundation-symbol": "^0.1.0",
     "history": "^4.7.2",
     "hoist-non-react-statics": "^2.5.5",
+    "intl": "^1.2.5",
     "invariant": "^2.2.4",
     "lodash": "^4.17.10",
     "path-to-regexp": "^2.2.1",
+    "react": "^16.4.1",
+    "react-document-title": "^2.0.3",
+    "react-dom": "^16.4.1",
+    "react-intl": "^2.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "5.0.0-alpha.6",
     "redux": "3.6.0",
-    "redux-thunk": "^2.3.0",
-    "react": "^16.4.1",
-    "react-document-title": "^2.0.3",
-    "react-dom": "^16.4.1"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
@@ -58,7 +60,7 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": true
+    "localization": false
   },
   "scaffoldConfig": {
     "name": "ice-design-pro",

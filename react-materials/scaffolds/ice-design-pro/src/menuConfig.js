@@ -124,6 +124,17 @@ const asideMenuConfig = [
       },
     ],
   },
+  {
+    name: '国际化',
+    path: '/i18n',
+    icon: 'activity',
+    children: [
+      {
+        name: 'i18n',
+        path: '/i18n/index',
+      },
+    ],
+  },
 ];
 
 export { headerMenuConfig, asideMenuConfig };
