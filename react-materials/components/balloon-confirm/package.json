@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/balloon-confirm",
-  "version": "",
-  "description": "",
+  "version": "0.1.0",
+  "description": "ICE 气泡确认框",
   "files": [
     "src/",
     "lib/"
