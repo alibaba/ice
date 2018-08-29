@@ -17,6 +17,8 @@
     "enquire-js": "^0.1.2",
     "foundation-symbol": "^0.1.0",
     "prop-types": "^15.5.8",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
