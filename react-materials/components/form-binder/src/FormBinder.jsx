@@ -9,6 +9,11 @@ const defaultValueFormatter = (...args) => {
   return args[0];
 };
 
+// default return the first value
+const defaultValueTransformer = (value) => {
+  return value;
+};
+
 const defaultErrorStatePropsGenerator = (errors, FormItemProps) => {
   return {
     className: FormItemProps.className
@@ -33,6 +38,10 @@ export default class FormBinder extends Component {
      * 数据格式化方法，表单组件 onChange 之后，支持对数据做一层转换再进行后续操作
      */
     valueFormatter: PropTypes.func,
+    /**
+     * 数据转换方法，表单组件接收值时可将其转换为其他类型
+     */
+    valueTransformer: PropTypes.func,
     /**
      * 触发校验的事件，对于高频触发校验的 Input 可以设置为 'onBlur' 减少校验调用次数
      */
@@ -227,6 +236,12 @@ export default class FormBinder extends Component {
       FormItem.props.valueFormatter ||
       defaultValueFormatter;
 
+    // handle value transform
+    const valueTransformer =
+      this.props.valueTransformer ||
+      FormItem.props.valueTransformer ||
+      defaultValueFormatter;
+
     const NewFormItem = React.cloneElement(FormItem, {
       ...formValueErrorProps,
       [currentValidateTriggerType]: () => {
@@ -252,14 +267,15 @@ export default class FormBinder extends Component {
         }
       },
       [valueKey]: (() => {
-        // formItems value has higher priority
+        // 受控模式，给组件指定了 value 的情况下，或者组件内部存在 bug 的时候
         if (
           typeof FormItemProps[valueKey] === 'object' &&
           FormItemProps[valueKey] !== FormItemDefaultProps[valueKey]
         ) {
-          return FormItemProps[valueKey];
+          return valueTransformer(FormItemProps[valueKey]);
         } else {
-          return this.context.getter(currentName);
+          const value = this.context.getter(currentName);
+          return valueTransformer(value);
         }
       })(),
     });
