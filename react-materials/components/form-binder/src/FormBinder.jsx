@@ -240,7 +240,7 @@ export default class FormBinder extends Component {
     const valueTransformer =
       this.props.valueTransformer ||
       FormItem.props.valueTransformer ||
-      defaultValueFormatter;
+      defaultValueTransformer;
 
     const NewFormItem = React.cloneElement(FormItem, {
       ...formValueErrorProps,
