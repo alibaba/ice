@@ -4,4 +4,4 @@
 
 左右布局的登录页
 
-![截图](https://img.alicdn.com/tfs/TB1wLE7r8jTBKNjSZFwXXcG4XXa-2840-1596.png)
+![截图](https://img.alicdn.com/tfs/TB17ah4uyMnBKNjSZFzXXc_qVXa-2640-1488.png)

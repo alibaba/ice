@@ -104,21 +104,18 @@ const styles = {
   },
   itemFull: {
     width: '100%',
-    backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1Ylpwn5OYBuNjSsD4XXbSkFXa-2884-720.png)',
+    backgroundImage: `url(${require('./images/TB1Ylpwn5OYBuNjSsD4XXbSkFXa-2884-720.png')})`,
     backgroundSize: 'cover',
   },
   itemLeft: {
     width: '46%',
-    backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1SQ5cwXOWBuNjy0FiXXXFxVXa-1340-720.png)',
+    backgroundImage: `url(${require('./images/TB1SQ5cwXOWBuNjy0FiXXXFxVXa-1340-720.png')})`,
     backgroundSize: 'cover',
   },
   itemRight: {
     width: '54%',
     backgroundSize: 'cover',
-    backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB15sxxwgmTBuNjy1XbXXaMrVXa-1556-720.png)',
+    backgroundImage: `url(${require('./images/TB15sxxwgmTBuNjy1XbXXaMrVXa-1556-720.png')})`,
   },
   itemBox: {
     position: 'absolute',

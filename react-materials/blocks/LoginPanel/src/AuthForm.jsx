@@ -116,15 +116,6 @@ class AuthForm extends Component {
 
     return (
       <div style={styles.formContainer}>
-        <div style={styles.logo}>
-          <a style={styles.logoLink}>
-            <img
-              src={require('./images/logo.png')}
-              alt="logo"
-              style={styles.logoImg}
-            />
-          </a>
-        </div>
         <h4 style={styles.formTitle}>{title}</h4>
         <IceFormBinderWrapper
           value={value}
@@ -153,22 +144,6 @@ class AuthForm extends Component {
 }
 
 const styles = {
-  logo: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  logoLink: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '68px',
-    height: '68px',
-    borderRadius: '50px',
-    background: '#555',
-  },
-  logoImg: {
-    width: '40px',
-  },
   formTitle: {
     marginBottom: '40px',
     fontWeight: '500',
