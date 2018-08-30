@@ -26,8 +26,8 @@ export default class LoginIntro extends Component {
         </div>
         <div style={styles.title}>让前端开发简单友好</div>
         <p style={styles.description}>Amazing Stuff is Lorem Here.ICE Team</p>
-        <a href="https://alibaba.github.io/ice" style={styles.button}>
-          进入首页
+        <a href="#" style={styles.button}>
+          注册
         </a>
       </div>
     );

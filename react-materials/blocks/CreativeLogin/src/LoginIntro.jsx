@@ -29,9 +29,6 @@ export default class LoginIntro extends Component {
           让沟通变得更加智能、高效、便捷
         </div>
         <p style={styles.description}>Amazing Stuff is Lorem Here.ICE Team</p>
-        <a href="#" style={styles.button}>
-          进入首页
-        </a>
         <div style={styles.border} />
       </div>
     );
@@ -65,15 +62,6 @@ const styles = {
     marginTop: '30px',
     fontSize: '13px',
     color: '#212529',
-  },
-  button: {
-    marginTop: '40px',
-    width: '180px',
-    height: '48px',
-    lineHeight: '48px',
-    textAlign: 'center',
-    borderRadius: '50px',
-    border: '1px solid #9816f4',
   },
   border: {
     position: 'absolute',

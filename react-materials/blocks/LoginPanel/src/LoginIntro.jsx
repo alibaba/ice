@@ -35,6 +35,7 @@ const styles = {
     zIndex: '1',
     height: '100vh',
     backgroundImage: `url(${require('./images/bg.jpg')})`,
+    backgroundSize: 'cover',
   },
   content: {
     display: 'flex',
