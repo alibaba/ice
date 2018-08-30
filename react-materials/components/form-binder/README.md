@@ -165,9 +165,25 @@ return (
 在 `DatePicker` 的使用场景中往往需要增加 `format="YYYY-MM-DD"` 格式化参数，由于 `onChange` 的默认返回值是 `[data, formatData]` 当需要第二个值绑定上 FormBinder 可以使用 `valueFormatter` API 来修改
 
 
-```
+```js
 <FormBinder>
   <DatePicker format="YYYY-MM-DD" valueFormatter={(date, formatDate) => {return formatDate}} />
+</FormBinder>
+```
+
+### 转换组件接收值的类型
+
+例如 FormBinderWrapper 上绑定了  `{selected: 0}` , 需要将 `0` 转换成 Boolean 类型 `false` 传给 `<Switch />` 组件，可以使用 `valueTransformer` API 转换
+
+
+```js
+<FormBinder>
+  <Switch
+    name="selected" 
+    valueKey="checked" // Switch 接收的属性是 `checked`
+    valueTransformer={(selected) => {return selected === 1}}
+    valueTransformer={(checked) => {return checked ? 1 : 0}}
+  />
 </FormBinder>
 ```
 
