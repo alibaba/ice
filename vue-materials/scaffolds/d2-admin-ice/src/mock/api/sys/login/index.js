@@ -1,5 +1,3 @@
-/* eslint no-unused-vars: 0 */
-
 import Mock from 'mockjs'
 
 const userDB = [
@@ -23,7 +21,7 @@ const userDB = [
   }
 ]
 
-Mock.mock('/login', 'post', ({ url, type, body }) => {
+Mock.mock('/login', 'post', ({url, type, body}) => {
   const bodyObj = JSON.parse(body)
   const user = userDB.find(
     (e) => e.username === bodyObj.username && e.password === bodyObj.password
@@ -37,9 +35,10 @@ Mock.mock('/login', 'post', ({ url, type, body }) => {
         token: 'd787syv8dys8cas80d9s0a0d8f79ads56f7s4d56f879a8as89fd980s7dg'
       }
     }
-  }
-  return {
-    code: 401,
-    msg: '用户名或密码错误'
+  } else {
+    return {
+      code: 401,
+      msg: '用户名或密码错误'
+    }
   }
 })

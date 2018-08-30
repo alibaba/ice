@@ -14,3 +14,7 @@
 .el-menu--horizontal {
   border-bottom: none !important;
 }
+
+.el-tabs__item:focus.is-active.is-focus:not(:active) {
+  box-shadow: none !important;
+}
