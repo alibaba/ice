@@ -1,0 +1,24 @@
+.guest-slider {
+  position: relative;
+  margin: 260px auto 0;
+  text-align: center;
+  .slick-center {
+    img {
+      position: relative;
+      opacity: 1;
+      transform: scale(1.2);
+      z-index: 10;
+    }
+  }
+  .slick-list {
+    overflow: initial;
+  }
+  .slick-prev {
+    left: 10px;
+    z-index: 9;
+  }
+  .slick-next {
+    right: 10px;
+    z-index: 9;
+  }
+}

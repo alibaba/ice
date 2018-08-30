@@ -1,0 +1,39 @@
+.header-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: #000;
+  min-width: 1200px;
+  .header-content {
+    position: relative;
+    height: 78px;
+    padding: 0 20px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav {
+    overflow: hidden;
+    display: flex;
+  }
+  .nav-list {
+    width: 100px;
+    height: 100%;
+    height: 78px;
+    line-height: 78px;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+  }
+  .nav-bar {
+    width: 100px;
+    position: absolute;
+    top: 78px;
+    left: 0;
+    height: 2px;
+    background: #fff;
+    transition: left 0.3s;
+  }
+}
