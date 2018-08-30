@@ -1,0 +1,53 @@
+.header-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: #000;
+  min-width: 1200px;
+  .header-content {
+    position: relative;
+    width: 1200px;
+    height: 78px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ice-menu {
+    background: transparent;
+    margin-right: 100px;
+    .ice-menu-item {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      &:hover,
+      a:hover {
+        color: hsla(0, 0%, 100%, 0.7);
+      }
+    }
+    .ice-menu-item-selected {
+      color: hsla(0, 0%, 100%, 0.7);
+    }
+  }
+
+  .ticket-button {
+    position: absolute;
+    right: 0;
+    display: block;
+    line-height: 28px;
+    transition: all 0.3s;
+    width: 82px;
+    padding: 0 16px;
+    color: #fff;
+    border: 1px solid #fff;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      background: #fff;
+      color: #236cff;
+    }
+  }
+}
