@@ -182,6 +182,7 @@ return (
     name="selected" 
     valueKey="checked" // Switch 接收的属性是 `checked`
     valueTransformer={(selected) => {return selected === 1}}
+    valueTransformer={(checked) => {return checked ? 1 : 0}}
   />
 </FormBinder>
 ```
