@@ -104,9 +104,18 @@ export default {
     // 初始化例子插件
     particlesJS('login', config)
   },
+  beforeDestroy () {
+    // 销毁 particlesJS
+    // thanks https://github.com/d2-projects/d2-admin/issues/65
+    // ref https://github.com/VincentGarreau/particles.js/issues/63
+    if (pJSDom && pJSDom.length > 0) {
+      pJSDom[0].pJS.fn.vendors.destroypJS()
+      pJSDom = []
+    }
+  },
   methods: {
-    ...mapActions([
-      'd2adminLogin'
+    ...mapActions('d2admin/account', [
+      'login'
     ]),
     /**
      * @description 接收选择一个用户快速登陆的事件
@@ -127,7 +136,7 @@ export default {
           // 登陆
           // 注意 这里的演示没有传验证码
           // 具体需要传递的数据请自行修改代码
-          this.d2adminLogin({
+          this.login({
             vm: this,
             username: this.formLogin.username,
             password: this.formLogin.password
