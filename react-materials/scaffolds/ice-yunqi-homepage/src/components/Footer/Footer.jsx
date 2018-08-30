@@ -41,7 +41,7 @@ export default () => {
           <Col l="6">
             <div style={styles.rightContent}>
               <img
-                src="http://img.alicdn.com/tfs/TB1fQ48QFXXXXc7XVXXXXXXXXXX-94-94.png"
+                src={require('./images/TB1fQ48QFXXXXc7XVXXXXXXXXXX-94-94.png')}
                 alt=""
                 style={styles.qrcode}
               />

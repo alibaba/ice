@@ -10,28 +10,6 @@ export default class UserRegister extends Component {
 
   static defaultProps = {};
 
-  checkPasswd = (rule, values, callback) => {
-    if (!values) {
-      callback('请输入正确的密码');
-    } else if (values.length < 8) {
-      callback('密码必须大于8位');
-    } else if (values.length > 16) {
-      callback('密码必须小于16位');
-    } else {
-      callback();
-    }
-  };
-
-  checkPasswd2 = (rule, values, callback, stateValues) => {
-    if (!values) {
-      callback('请输入正确的密码');
-    } else if (values && values !== stateValues.passwd) {
-      callback('两次输入密码不一致');
-    } else {
-      callback();
-    }
-  };
-
   formChange = (value) => {
     console.log('formChange:', value);
   };
@@ -86,7 +64,6 @@ export default class UserRegister extends Component {
         formBinderProps: {
           name: 'passwd',
           required: true,
-          validator: this.checkPasswd,
         },
       },
       {
@@ -100,8 +77,6 @@ export default class UserRegister extends Component {
         formBinderProps: {
           name: 'rePasswd',
           required: true,
-          validator: (rule, values, callback) =>
-            this.checkPasswd2(rule, values, callback, this.state.value),
         },
       },
       {

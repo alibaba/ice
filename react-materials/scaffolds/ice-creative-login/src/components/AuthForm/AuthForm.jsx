@@ -63,7 +63,7 @@ class AuthForm extends Component {
       >
         <CustomButton
           {...item.componentProps}
-          style={{ border: 0 }}
+          style={{ border: 0, background: '#2e73ff' }}
           onClick={this.handleSubmit}
         >
           {item.label}
@@ -80,7 +80,7 @@ class AuthForm extends Component {
             <CustomInput {...item.componentProps} />
           </IceFormBinder>
         </Col>
-        <Col>
+        <Col style={styles.errorCol}>
           <IceFormError name={item.formBinderProps.name} />
         </Col>
       </Row>
@@ -154,6 +154,10 @@ const styles = {
   },
   formItem: {
     marginBottom: '20px',
+  },
+  errorCol: {
+    display: 'flex',
+    alignItems: 'center',
   },
   submitButton: {
     justifyContent: 'center',
