@@ -9,11 +9,16 @@ const defaultValueFormatter = (...args) => {
   return args[0];
 };
 
+// default return the first value
+const defaultValueTransformer = (value) => {
+  return value;
+};
+
 const defaultErrorStatePropsGenerator = (errors, FormItemProps) => {
   return {
     className: FormItemProps.className
       ? FormItemProps.className + ' this-field-has-error'
-      : 'this-field-has-error'
+      : 'this-field-has-error',
   };
 };
 
@@ -33,6 +38,10 @@ export default class FormBinder extends Component {
      * 数据格式化方法，表单组件 onChange 之后，支持对数据做一层转换再进行后续操作
      */
     valueFormatter: PropTypes.func,
+    /**
+     * 数据转换方法，表单组件接收值时可将其转换为其他类型
+     */
+    valueTransformer: PropTypes.func,
     /**
      * 触发校验的事件，对于高频触发校验的 Input 可以设置为 'onBlur' 减少校验调用次数
      */
@@ -92,7 +101,7 @@ export default class FormBinder extends Component {
     /**
      * 数组的方式配置当前表单校验规则，用于对一个表单执行多条校验规则
      */
-    rules: PropTypes.array
+    rules: PropTypes.array,
   };
 
   // due to the props getter logic in render, do not add default value here.
@@ -104,7 +113,7 @@ export default class FormBinder extends Component {
     validate: PropTypes.func,
     addValidate: PropTypes.func,
     removeValidate: PropTypes.func,
-    setter: PropTypes.func
+    setter: PropTypes.func,
   };
 
   currentRules = [];
@@ -156,7 +165,7 @@ export default class FormBinder extends Component {
   }
 
   // get form rules from props
-  getFormRules = props => {
+  getFormRules = (props) => {
     const FormItem = React.Children.only(props.children);
     const FormItemProps = FormItem.props;
 
@@ -179,9 +188,9 @@ export default class FormBinder extends Component {
       'transform',
       'message',
       'validator',
-      'type'
+      'type',
     ];
-    ruleKeys.forEach(ruleKey => {
+    ruleKeys.forEach((ruleKey) => {
       const ruleValue =
         ruleKey in props
           ? props[ruleKey]
@@ -190,7 +199,7 @@ export default class FormBinder extends Component {
         result[0]
           ? (result[0][ruleKey] = ruleValue)
           : result.push({
-              [ruleKey]: ruleValue
+              [ruleKey]: ruleValue,
             });
       }
     });
@@ -201,6 +210,7 @@ export default class FormBinder extends Component {
   render() {
     const FormItem = React.Children.only(this.props.children);
     const FormItemProps = FormItem.props;
+    const FormItemDefaultProps = FormItem.type.defaultProps;
 
     const currentName = this.props.name || FormItem.props.name;
     const valueKey = this.props.valueKey || 'value';
@@ -224,6 +234,12 @@ export default class FormBinder extends Component {
     const valueFormatter =
       this.props.valueFormatter ||
       FormItem.props.valueFormatter ||
+      defaultValueFormatter;
+
+    // handle value transform
+    const valueTransformer =
+      this.props.valueTransformer ||
+      FormItem.props.valueTransformer ||
       defaultValueFormatter;
 
     const NewFormItem = React.cloneElement(FormItem, {
@@ -251,13 +267,17 @@ export default class FormBinder extends Component {
         }
       },
       [valueKey]: (() => {
-        // formItems value has higher priority
-        if (FormItemProps[valueKey]) {
-          return FormItemProps[valueKey];
+        // 受控模式，给组件指定了 value 的情况下，或者组件内部存在 bug 的时候
+        if (
+          typeof FormItemProps[valueKey] === 'object' &&
+          FormItemProps[valueKey] !== FormItemDefaultProps[valueKey]
+        ) {
+          return valueTransformer(FormItemProps[valueKey]);
         } else {
-          return this.context.getter(currentName);
+          const value = this.context.getter(currentName);
+          return valueTransformer(value);
         }
-      })()
+      })(),
     });
 
     return NewFormItem;
