@@ -119,7 +119,10 @@ return (
 | least     | 数组               | 数组长度大于等于 least                                       | 只针对数组                                     |
 | pattern   | 字符串、数字       | 格式正则                                                     |                                                |
 | format    | 字符串、数字       | 对常用 pattern 的总结，可选值：`url、email、tel、number`     |                                                |
-| validator | any                | 传入函数进行自定义验证，具体参数见 [async-validator#rules](https://github.com/yiminghe/async-validator#rules) |                                                |
+| valueKey | 字符串 | 声明组件的响应字段 |  |  |
+| validator | any | 传入函数进行自定义验证，具体参数见 [async-validator#rules](https://github.com/yiminghe/async-validator#rules) |                                                |
+
+
 更加具体的校验规则参见 https://github.com/yiminghe/async-validator 。
 
 **DEMO**
@@ -157,6 +160,16 @@ return (
 
 通过修改 `triggerType` 来指定合适的触发事件。对于高频触发校验的 `Input` 可以设置为 `onBlur` 减少校验调用次数。
 
+### 修改默认 `onChange` 的值内容
+
+在 `DatePicker` 的使用场景中往往需要增加 `format="YYYY-MM-DD"` 格式化参数，由于 `onChange` 的默认返回值是 `[data, formatData]` 当需要第二个值绑定上 FormBinder 可以使用 `valueFormatter` API 来修改
+
+
+```
+<FormBinder>
+  <DatePicker format="YYYY-MM-DD" valueFormatter={(date, formatDate) => {return formatDate}} />
+</FormBinder>
+```
 
 ## 双向绑定协议
 

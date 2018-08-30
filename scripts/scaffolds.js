@@ -2,6 +2,7 @@
  * 按照下载量和最新的规则对模板进行排序推荐
  */
 const scaffolds = [
+  'ice-creative-login',
   'ice-post-platfrom',
   'ice-builder-platform',
   'ice-creative-dashboard',

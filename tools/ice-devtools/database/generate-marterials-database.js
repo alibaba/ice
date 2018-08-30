@@ -48,6 +48,7 @@ function generateBlocks(files, SPACE, type, done) {
         type: 'npm',
         npm: pkg.name,
         version: pkg.version,
+        registry: 'http://registry.npmjs.com',
         // layout or block need src/
         sourceCodeDirectory: 'src/',
       },
@@ -187,6 +188,7 @@ function generateScaffolds(files, SPACE, done) {
         type: 'npm',
         npm: pkg.name,
         version: pkg.version,
+        registry: 'http://registry.npmjs.com',
       },
       // (必) 用于说明组件依赖关系
       dependencies: pkg.dependencies || {},
@@ -326,7 +328,7 @@ function gatherScaffolds(pattern, SPACE) {
  * @param {Object} appender 需要补充的字段, key 是返回的字段, 对应的 value 是 registry 返回的字段
  */
 function appendFieldFromNpm(item) {
-  const registry = 'http://registry.npm.taobao.org/';
+  const registry = 'http://registry.npmjs.com/';
   const { npm, version } = item;
   return rp({ uri: `${registry}${npm}`, json: true }).then((body) => {
     const latestVersionBody = body.versions[version];
