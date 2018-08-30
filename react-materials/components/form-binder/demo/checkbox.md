@@ -13,12 +13,13 @@ import FormBinderWrapper, {
   FormBinder,
   FormError
 } from '@icedesign/form-binder';
-import { Checkbox } from '@icedesign/base';
+import { Checkbox, Switch } from '@icedesign/base';
 
 class App extends Component {
 
   state = {
     checkbox: true,
+    switch: 1
   };
 
   formChange = (state) => this.setState(state);
@@ -26,17 +27,27 @@ class App extends Component {
   render() {
     return (
       <div>
-        <pre>{JSON.stringify(this.state, null, 2)}</pre>
         <FormBinderWrapper
           value={this.state}
           onChange={this.formChange}
         >
-          <div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <FormBinder name="checkbox" valueKey="checked">
               <Checkbox>Hello</Checkbox>
             </FormBinder>
+            <FormBinder 
+                name="switch"
+                valueKey="checked"
+                valueTransformer={(selected) => {return selected === 1}}
+                valueFormatter={(checked) => {return checked ? 1 : 0}}
+              >
+              <Switch>开关</Switch>
+            </FormBinder>
           </div>
         </FormBinderWrapper>
+        <div style={{paddingTop: 10}}>
+          <pre>{JSON.stringify(this.state, null, 2)}</pre>
+        </div>
       </div>
     )
   }
