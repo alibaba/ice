@@ -27,11 +27,15 @@
     background: $theme-menu-item-background-color-hover;
   }
   %el-menu-icon {
-    i.fa {
+    i {
       display: inline-block;
       width: 15px;
       text-align: center;
       margin-right: 5px;
+      svg {
+        height: 14px;
+        width: 14px;
+      }
     }
   }
   .el-submenu__title {
