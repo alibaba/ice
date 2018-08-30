@@ -21,7 +21,7 @@ const userDB = [
   }
 ]
 
-Mock.mock('/login', 'post', ({url, type, body}) => {
+Mock.mock('/login', 'post', ({ url, type, body }) => {
   const bodyObj = JSON.parse(body)
   const user = userDB.find(
     (e) => e.username === bodyObj.username && e.password === bodyObj.password
