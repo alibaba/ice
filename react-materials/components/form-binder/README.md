@@ -119,7 +119,10 @@ return (
 | least     | 数组               | 数组长度大于等于 least                                       | 只针对数组                                     |
 | pattern   | 字符串、数字       | 格式正则                                                     |                                                |
 | format    | 字符串、数字       | 对常用 pattern 的总结，可选值：`url、email、tel、number`     |                                                |
-| validator | any                | 传入函数进行自定义验证，具体参数见 [async-validator#rules](https://github.com/yiminghe/async-validator#rules) |                                                |
+| valueKey | 字符串 | 声明组件的响应字段 |  |  |
+| validator | any | 传入函数进行自定义验证，具体参数见 [async-validator#rules](https://github.com/yiminghe/async-validator#rules) |                                                |
+
+
 更加具体的校验规则参见 https://github.com/yiminghe/async-validator 。
 
 **DEMO**
