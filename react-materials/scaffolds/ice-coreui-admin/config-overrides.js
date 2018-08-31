@@ -8,6 +8,8 @@ module.exports = function override(config) {
     config
   );
 
+  config = injectBabelPlugin('transform-decorators-legacy', config);
+
   config.plugins.push(
     new WebpackPluginImport([
       {
