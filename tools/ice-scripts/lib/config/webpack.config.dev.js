@@ -11,7 +11,7 @@ module.exports = function getWebpackConfigDev({ entry, buildConfig = {} }) {
   const plugins = [];
   const baseConfig = getWebpackConfigBasic({ entry, buildConfig });
 
-  if (process.env.HOT_RELOAD !== 'false') {
+  if (process.env.HOT_RELOAD !== 'false' && process.env.DISABLED_RELOAD == 'false') {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
