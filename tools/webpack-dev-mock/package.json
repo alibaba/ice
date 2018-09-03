@@ -1,6 +1,6 @@
 {
   "name": "webpack-dev-mock",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Webpack devserver middleware mock server",
   "main": "index.js",
   "author": "noyobo<nongyoubao@alibaba-inc.com>",
@@ -15,5 +15,5 @@
   "devDependencies": {
     "express": "^4.16.3"
   },
-  "repository": "https://github.com/alibaba/ice/tree/master/tools/ice-scripts/webpack-dev-mock"
+  "repository": "https://github.com/alibaba/ice/tree/master/tools/webpack-dev-mock"
 }
