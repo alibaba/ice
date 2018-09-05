@@ -28,15 +28,15 @@
 
 <template>
   <scroll-view style="height: 100%" :scroll-y="true" scroll-with-animation>
-    <view class="scroll-view-item" v-for="item in items">
-      <navigator v-bind:url="item.url">
+    <navigator v-bind:url="item.url" v-for="item in items">
+      <view class="scroll-view-item">
         <view class="itemBody">
-          <image class="itemIcon" v-bind:src="item.icon">
-            <text>{{item.text}}</text>
+          <image class="itemIcon" v-bind:src="item.icon" />
+          <text>{{item.text}}</text>
         </view>
         <image class="arrowIcon" src="https://img.alicdn.com/tfs/TB14khkFqmWBuNjy1XaXXXCbXXa-200-200.png" />
-      </navigator>
-    </view>
+      </view>
+    </navigator>
   </scroll-view>
 </template>
 
