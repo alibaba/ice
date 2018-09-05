@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/layout-builder",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -32,14 +32,15 @@
     "@icedesign/menu": "^0.1.1",
     "@icedesign/skin": "^0.1.14",
     "classnames": "^2.2.6",
+    "ejs": "^2.6.1",
     "foundation-symbol": "^0.1.3",
-    "rc-tooltip": "^3.7.2",
-    "react-color": "^2.14.1",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "glob": "^7.1.3",
     "prettier": "^1.13.4",
-    "write": "^1.0.3",
-    "ejs": "^2.6.1"
+    "rc-tooltip": "^3.7.2",
+    "react": "^16.4.0",
+    "react-color": "^2.14.1",
+    "react-dom": "^16.4.0",
+    "write": "^1.0.3"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
