@@ -18,6 +18,10 @@
     "react",
     "block"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
   "dependencies": {
     "@antv/data-set": "^0.9.5",
     "@icedesign/base": "^0.2.5",
