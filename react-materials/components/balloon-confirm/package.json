@@ -31,11 +31,11 @@
   },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0"
   },
   "devDependencies": {
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
-    "ice-devtools": "latest"
+    "ice-devtools": "^1.0.9"
   }
 }
