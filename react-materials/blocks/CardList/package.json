@@ -12,6 +12,10 @@
     "type": "git",
     "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CardList"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
   "license": "MIT",
   "keywords": [
     "ice",
