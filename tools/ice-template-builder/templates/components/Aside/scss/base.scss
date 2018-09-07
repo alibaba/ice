@@ -68,6 +68,30 @@
       background: $ice-aside-menu-submenu-item-hover-bg;
       color: $ice-aside-text-hover-color;
     }
+
+    .ice-menu.ice-menu-collapse
+      > .ice-menu-submenu-selected
+      > .ice-menu-submenu-title,
+    .ice-menu.ice-menu-collapse
+      > .ice-menu-submenu-selected
+      > .ice-menu-submenu-title {
+      background-image: linear-gradient(
+        90deg,
+        $ice-aside-menu-item-selected-gradient-left-bg 0%,
+        $ice-aside-menu-item-selected-gradient-right-bg 100%
+      );
+    }
+
+    .ice-menu.ice-menu-collapse
+      .ice-menu:not(.ice-menu-horizontal)
+      .ice-menu-item-selected
+      a,
+    .ice-menu.ice-menu-collapse
+      .ice-menu:not(.ice-menu-horizontal)
+      .ice-menu-item-selected
+      a {
+      color: $ice-aside-menu-item-collapse-selected-text-color;
+    }
   }
 
   .collapse-btn {
@@ -104,7 +128,7 @@
   .ice-layout-theme-#{$theme} {
     .ice-design-layout-aside {
       position: fixed;
-      left: -240px;
+      left: -256px;
       top: 0px;
       bottom: 0;
       padding: 0 20px;
@@ -113,7 +137,7 @@
     }
 
     .open-drawer {
-      transform: translateX(240px);
+      transform: translateX(256px);
       .logo {
         width: 200px;
         margin: 20px 0;

@@ -2,7 +2,7 @@
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
-import { getRouterData } from './utils/utils';
+import { getRouterData } from './utils/formatter';
 import { asideMenuConfig } from './menuConfig';
 
 <% if (redux.enabled && redux.registerLoginModule) { %>

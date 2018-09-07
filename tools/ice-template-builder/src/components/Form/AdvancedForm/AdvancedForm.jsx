@@ -52,7 +52,7 @@ class AdvancedForm extends Component {
               </Tooltip>
               ：
             </span>
-            <IceFormBinder required name="redux.enabled">
+            <IceFormBinder name="redux.enabled">
               <Checkbox size="large" checked={redux.enabled} />
             </IceFormBinder>
           </div>
@@ -74,7 +74,7 @@ class AdvancedForm extends Component {
               </Tooltip>
             </span>
             ：
-            <IceFormBinder required name="redux.registerLoginModule">
+            <IceFormBinder name="redux.registerLoginModule">
               <Checkbox
                 size="large"
                 checked={redux.registerLoginModule}
@@ -101,7 +101,7 @@ class AdvancedForm extends Component {
               ：
             </span>
 
-            <IceFormBinder required name="redux.authorityModule">
+            <IceFormBinder name="redux.authorityModule">
               <Checkbox
                 size="large"
                 checked={redux.authorityModule}
@@ -127,7 +127,7 @@ class AdvancedForm extends Component {
               </Tooltip>
               ：
             </span>
-            <IceFormBinder required name="redux.mockModule">
+            <IceFormBinder name="redux.mockModule">
               <Checkbox
                 size="large"
                 checked={redux.mockModule}
