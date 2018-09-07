@@ -7,10 +7,10 @@ import {
 } from '@icedesign/form-binder';
 import { Radio, Input } from '@icedesign/base';
 import Tooltip from 'rc-tooltip';
-
-import ColorPicker from './ColorPicker';
-
 import 'rc-tooltip/assets/bootstrap.css';
+
+import CreateForm from '../CreateForm';
+import ColorPicker from './ColorPicker';
 
 const { Group: RadioGroup } = Radio;
 const presetColors = [
@@ -46,77 +46,14 @@ const presetColors = [
   },
 ];
 
-export default class BasicForm extends Component {
+class BasicForm extends Component {
   static displayName = 'BasicForm';
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.value,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.value,
-    });
-  }
-
-  /**
-   * 表单改变时动态监听
-   */
-  formChange = (value) => {
-    this.setState(
-      {
-        value,
-      },
-      () => {
-        this.props.onChange(this.state.value);
-      }
-    );
-  };
-
-  handleColorChange = (key, hex) => {
-    const { value } = this.state;
-    if (key === 'primary') {
-      value.themeConfig.primaryColor = hex;
-    } else {
-      value.themeConfig.secondaryColor = hex;
-    }
-
-    this.setState(
-      {
-        value,
-      },
-      () => {
-        this.props.onChange(this.state.value);
-      }
-    );
-  };
-
-  handlePresetColor = (color) => {
-    const { value } = this.state;
-    value.themeConfig.primaryColor = color.primaryColor;
-    value.themeConfig.secondaryColor = color.secondaryColor;
-
-    this.setState(
-      {
-        value,
-      },
-      () => {
-        this.props.onChange(this.state.value);
-      }
-    );
-  };
-
   render() {
-    const { value = {} } = this.state;
+    const { value = {} } = this.props;
+
     return (
-      <IceFormBinderWrapper value={value} onChange={this.formChange}>
+      <IceFormBinderWrapper value={value} onChange={this.props.formChange}>
         <div className="form-group">
           {value.enableName ? (
             <div style={styles.formItem}>
@@ -201,7 +138,9 @@ export default class BasicForm extends Component {
 
                 <ColorPicker
                   backgroundColor={value.themeConfig.primaryColor}
-                  onChange={this.handleColorChange.bind(this, 'primary')}
+                  onChange={(color) =>
+                    this.props.handleColorChange('primary', color)
+                  }
                 />
 
                 <span
@@ -211,7 +150,9 @@ export default class BasicForm extends Component {
                 </span>
                 <ColorPicker
                   backgroundColor={value.themeConfig.secondaryColor}
-                  onChange={this.handleColorChange.bind(this, 'secondary')}
+                  onChange={(color) =>
+                    this.props.handleColorChange('secondary', color)
+                  }
                 />
               </div>
 
@@ -234,7 +175,7 @@ export default class BasicForm extends Component {
                       overlay={<span>{c.title}</span>}
                     >
                       <div
-                        onClick={this.handlePresetColor.bind(this, c)}
+                        onClick={() => this.props.handlePresetColor(c)}
                         key={k}
                         style={{
                           cursor: 'pointer',
@@ -257,6 +198,8 @@ export default class BasicForm extends Component {
     );
   }
 }
+
+export default CreateForm(BasicForm);
 
 const styles = {
   formItem: {

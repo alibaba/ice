@@ -15,8 +15,12 @@ import Aside from './components/Aside';
 import Footer from './components/Footer';
 <% } %>
 
-<% if(type === 'redux' && redux.registerLoginModule) { %>
+<% if(redux.enabled && redux.registerLoginModule) { %>
 import BasicLayoutHoc from './BasicLayoutHoc';
+<% } %>
+
+<% if(aside) { %>
+import MainRoutes from './MainRoutes';
 <% } %>
 
 import './scss/index.scss';
@@ -25,7 +29,7 @@ import './scss/index.scss';
 const theme = '<%= themeConfig.theme %>';
 
 @withRouter
-<% if(type === 'redux' && redux.registerLoginModule) { %>
+<% if(redux.enabled && redux.registerLoginModule) { %>
 @BasicLayoutHoc
 export default class BasicLayout extends Component {
 <% } else { %>
@@ -92,6 +96,12 @@ export default class <%= name %> extends Component {
       const footer = <Footer />;
     <% } %>
 
+    <% if(aside) { %>
+      const content = <MainRoutes />
+    <% } else { %>
+      const content  = this.props.children;
+    <% } %>
+
     const layout = (
       <Layout
       <% if ((header && header.position === 'fixed') || (footer && footer.position === 'fixed') || (aside && aside.position === 'embed-fixed')) { %>
@@ -103,26 +113,26 @@ export default class <%= name %> extends Component {
             {header}
             <Layout.Section <% if(aside.position !== 'embed-fixed') { %>  scrollable <% } %>>
               {aside}
-              <Layout.Main <% if(aside.position === 'embed-fixed') { %>  scrollable <% } %>>{this.props.children}</Layout.Main>
+              <Layout.Main <% if(aside.position === 'embed-fixed') { %>  scrollable <% } %>>{content}</Layout.Main>
             </Layout.Section>
             {footer}
           <% } else if(header.width==="elastic-width" && footer.width ==='elastic-width') { %>
             {aside}
             <% if (header.position === 'static' && footer.position === 'static') { %>
               <Layout.Section scrollable>
-                <Layout.Main>{header}{this.props.children}{footer}</Layout.Main>
+                <Layout.Main>{header}{content}{footer}</Layout.Main>
               </Layout.Section>
             <% } %>
             <% if (header.position === 'fixed' && footer.position === 'static') { %>
               <Layout.Section>
                 {header}
-                <Layout.Main scrollable>{this.props.children}{footer}</Layout.Main>
+                <Layout.Main scrollable>{content}{footer}</Layout.Main>
               </Layout.Section>
             <% } %>
             <% if (header.position === 'fixed' && footer.position === 'fixed') { %>
               <Layout.Section>
                 {header}
-                <Layout.Main scrollable>{this.props.children}</Layout.Main>
+                <Layout.Main scrollable>{content}</Layout.Main>
                 {footer}
               </Layout.Section>
             <% } %>
@@ -131,7 +141,7 @@ export default class <%= name %> extends Component {
             <Layout.Section <% if(aside.position !== 'embed-fixed') { %>  scrollable <% } %>>
               {aside}
               <Layout.Main <% if(aside.position == 'embed-fixed') { %>  scrollable <% } %>>
-                {this.props.children}
+                {content}
                 {footer}
               </Layout.Main>
             </Layout.Section>
@@ -140,7 +150,7 @@ export default class <%= name %> extends Component {
               {aside}
               <Layout.Main <% if(aside.position == 'embed-fixed') { %>  scrollable <% } %>>
                 {header}
-                {this.props.children}
+                {content}
               </Layout.Main>
             </Layout.Section>
             {footer}
@@ -149,13 +159,13 @@ export default class <%= name %> extends Component {
           <% if (footer.width === 'full-width') { %>
             <Layout.Section <% if(aside.position !== 'embed-fixed') { %>  scrollable <% } %>>
               {aside}
-              <Layout.Main <% if(aside.position == 'embed-fixed') { %>  scrollable <% } %>>{this.props.children}</Layout.Main>
+              <Layout.Main <% if(aside.position == 'embed-fixed') { %>  scrollable <% } %>>{content}</Layout.Main>
             </Layout.Section>
             {footer}
           <% } else if(footer.width ==='elastic-width') { %>
             {aside}
             <Layout.Section <% if(aside.position !== 'embed-fixed') { %>  scrollable <% } %>>
-              <Layout.Main <% if(aside.position == 'embed-fixed') { %>  scrollable <% } %>>{this.props.children}</Layout.Main>
+              <Layout.Main <% if(aside.position == 'embed-fixed') { %>  scrollable <% } %>>{content}</Layout.Main>
               {footer}
             </Layout.Section>
           <% } %>
@@ -164,20 +174,20 @@ export default class <%= name %> extends Component {
             {header}
             <Layout.Section <% if(aside.position !== 'embed-fixed') { %>  scrollable <% } %>>
               {aside}
-              <Layout.Main <% if(aside.position == 'embed-fixed') { %>  scrollable <% } %>>{this.props.children}</Layout.Main>
+              <Layout.Main <% if(aside.position == 'embed-fixed') { %>  scrollable <% } %>>{content}</Layout.Main>
             </Layout.Section>
           <% } else if(header.width ==='elastic-width') { %>
             {aside}
             <Layout.Section <% if(header.position !== 'fixed') { %>  scrollable <% } %>>
               {header}
-              <Layout.Main <% if(header.position == 'fixed') { %>  scrollable <% } %>>{this.props.children}</Layout.Main>
+              <Layout.Main <% if(header.position == 'fixed') { %>  scrollable <% } %>>{content}</Layout.Main>
             </Layout.Section>
           <% } %>
         <% } else if(header && footer) { %>
           <% if ((header.position === 'fixed' && footer.position === 'fixed') || (header.position === 'static' && footer.position === 'static')) { %>
             <Layout.Section <% if(header.position === 'static' && footer.position === 'static') { %>  scrollable <% } %>>
               {header}
-              <Layout.Main <% if(header.position === 'fixed' && footer.position === 'fixed') { %>  scrollable <% } %>>{this.props.children}</Layout.Main>
+              <Layout.Main <% if(header.position === 'fixed' && footer.position === 'fixed') { %>  scrollable <% } %>>{content}</Layout.Main>
               {footer}
             </Layout.Section>
           <% } %>
@@ -185,7 +195,7 @@ export default class <%= name %> extends Component {
           <% if (header.position === 'fixed' && footer.position === 'static') { %>
             {header}
             <Layout.Section scrollable>
-              <Layout.Main>{this.props.children}</Layout.Main>
+              <Layout.Main>{content}</Layout.Main>
               {footer}
             </Layout.Section>
           <% } %>
@@ -193,7 +203,7 @@ export default class <%= name %> extends Component {
           <% if (header.position === 'static' && footer.position === 'fixed') { %>
             <Layout.Section scrollable>
               {header}
-              <Layout.Main>{this.props.children}</Layout.Main>
+              <Layout.Main>{content}</Layout.Main>
             </Layout.Section>
             {footer}
           <% } %>
@@ -201,21 +211,21 @@ export default class <%= name %> extends Component {
           <Layout.Section>
             {header}
             <Layout.Main scrollable>
-              {this.props.children}
+              {content}
             </Layout.Main>
           </Layout.Section>
         <% } else if(aside) { %>
           {aside}
           <Layout.Section>
-            <Layout.Main scrollable>{this.props.children}</Layout.Main>
+            <Layout.Main scrollable>{content}</Layout.Main>
           </Layout.Section>
         <% } else if(footer) { %>
           <Layout.Section>
-            <Layout.Main scrollable>{this.props.children}</Layout.Main>
+            <Layout.Main scrollable>{content}</Layout.Main>
           </Layout.Section>
           {footer}
         <% } else{ %>
-          <Layout.Main>{this.props.children}</Layout.Main>
+          <Layout.Main>{content}</Layout.Main>
         <% } %>
       </Layout>
     );

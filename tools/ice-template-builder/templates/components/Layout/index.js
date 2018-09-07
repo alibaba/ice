@@ -1,4 +1,3 @@
-//  <%= type %>
 <% if(type === 'redux') { %>
 import BasicLayout from './BasicLayout';
 

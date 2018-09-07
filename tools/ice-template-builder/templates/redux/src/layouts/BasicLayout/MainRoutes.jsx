@@ -5,7 +5,7 @@ import NotFound from '../../components/NotFound';
 import { asideMenuConfig } from '../../menuConfig';
 import { routerData } from '../../routerConfig';
 
-<% if (redux.authorityModule) { %>
+<% if (redux.enabled && redux.authorityModule) { %>
 import Authorized from '../../utils/Authorized';
 
 const { AuthorizedRoute } = Authorized;
@@ -39,7 +39,7 @@ class MainRoutes extends Component {
   };
 
 
-  <% if(redux.authorityModule){ %>
+  <% if(redux.enabled && redux.authorityModule){ %>
   /**
    * 渲染权限路由组件
    */
@@ -76,7 +76,7 @@ class MainRoutes extends Component {
     return (
       <Switch>
         {/* 渲染权限路由表 */}
-        <% if(redux.authorityModule) { %>
+        <% if(redux.enabled && redux.authorityModule) { %>
         {routerData.map(this.renderAuthorizedRoute)}
         <% } else { %>
         {routerData.map(this.renderNormalRoute)}

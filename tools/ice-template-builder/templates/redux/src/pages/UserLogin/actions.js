@@ -19,7 +19,7 @@ import { push } from 'react-router-redux';
 import { Feedback } from '@icedesign/base';
 import { login } from '../../api';
 
-<% if (redux.authorityModule) { %>
+<% if (redux.enabled && redux.authorityModule) { %>
 import { setAuthority } from '../../utils/authority';
 import { reloadAuthorized } from '../../utils/Authorized';
 <% } %>
@@ -69,7 +69,7 @@ export const userLogin = (params) => {
       dispatch(userLoginSuccess(response.data));
 
       if (response.data.status === 200) {
-        <% if (redux.authorityModule) { %>
+        <% if (redux.enabled && redux.authorityModule) { %>
         setAuthority(response.data.currentAuthority);
 
         reloadAuthorized();

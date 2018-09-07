@@ -4,61 +4,39 @@ import {
   FormBinder as IceFormBinder,
 } from '@icedesign/form-binder';
 import { Checkbox, Radio } from '@icedesign/base';
+import CreateForm from '../CreateForm';
 
 const { Group: RadioGroup } = Radio;
 
-export default class AsideForm extends Component {
+class AsideForm extends Component {
   static displayName = 'AsideForm';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.value,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.value,
-    });
-  }
-
-  /**
-   * 表单改变时动态监听
-   */
-  formChange = (value) => {
-    this.setState(
-      {
-        value,
-      },
-      () => {
-        this.props.onChange(value);
-      }
-    );
-  };
 
   render() {
     const {
       value: { aside },
-    } = this.state;
+    } = this.props;
+
     return (
-      <IceFormBinderWrapper value={this.state.value} onChange={this.formChange}>
+      <IceFormBinderWrapper
+        value={this.props.value}
+        onChange={this.props.formChange}
+      >
         <div style={styles.formGroup}>
           <div style={styles.formHead}>
             <span style={styles.title}>侧边导航：</span>
             <IceFormBinder required name="aside.enabled">
-              <Checkbox size="large" defaultChecked />
+              <Checkbox size="large" checked={aside.enabled} />
             </IceFormBinder>
           </div>
 
           <div style={styles.formItem}>
             <span>折叠：</span>
             <IceFormBinder required name="aside.collapsed">
-              <Checkbox size="large" disabled={!aside.enabled} />
+              <Checkbox
+                size="large"
+                checked={aside.collapsed}
+                disabled={!aside.enabled}
+              />
             </IceFormBinder>
           </div>
           <div style={styles.formItem}>
@@ -87,6 +65,8 @@ export default class AsideForm extends Component {
     );
   }
 }
+
+export default CreateForm(AsideForm);
 
 const styles = {
   formGroup: {

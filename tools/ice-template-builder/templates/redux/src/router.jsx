@@ -4,7 +4,7 @@
 import { Switch, Route } from 'react-router-dom';
 import React from 'react';
 
-<% if (redux.registerLoginModule) { %>
+<% if (redux.enabled && redux.registerLoginModule) { %>
 import UserLayout from './layouts/UserLayout';
 <% } %>
 
@@ -14,7 +14,7 @@ import BasicLayout from './layouts/BasicLayout';
 const router = () => {
   return (
     <Switch>
-      <% if (redux.registerLoginModule) { %>
+      <% if (redux.enabled && redux.registerLoginModule) { %>
       <Route path="/user" component={UserLayout} />
       <% } %>
       <Route path="/" component={BasicLayout} />

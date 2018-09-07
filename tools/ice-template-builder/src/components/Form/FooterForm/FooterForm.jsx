@@ -4,54 +4,28 @@ import {
   FormBinder as IceFormBinder,
 } from '@icedesign/form-binder';
 import { Checkbox, Radio } from '@icedesign/base';
+import CreateForm from '../CreateForm';
 
 const { Group: RadioGroup } = Radio;
 
-export default class FooterForm extends Component {
+class FooterForm extends Component {
   static displayName = 'FooterForm';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.value,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.value,
-    });
-  }
-
-  /**
-   * 表单改变时动态监听
-   */
-  formChange = (value) => {
-    this.setState(
-      {
-        value,
-      },
-      () => {
-        this.props.onChange(value);
-      }
-    );
-  };
 
   render() {
     const {
       value: { footer },
-    } = this.state;
+    } = this.props;
+
     return (
-      <IceFormBinderWrapper value={this.state.value} onChange={this.formChange}>
+      <IceFormBinderWrapper
+        value={this.props.value}
+        onChange={this.props.formChange}
+      >
         <div style={styles.formGroup}>
           <div style={styles.formHead}>
             <span style={styles.title}>页脚：</span>
             <IceFormBinder required name="footer.enabled">
-              <Checkbox size="large" defaultChecked />
+              <Checkbox size="large" checked={footer.enabled} />
             </IceFormBinder>
           </div>
 
@@ -103,6 +77,8 @@ export default class FooterForm extends Component {
     );
   }
 }
+
+export default CreateForm(FooterForm);
 
 const styles = {
   formHead: {
