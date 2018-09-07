@@ -5,10 +5,7 @@
 import { getRouterData } from './utils/utils';
 import { asideMenuConfig } from './menuConfig';
 
-import BasicLayout from './layouts/BasicLayout';
-
 <% if (redux.enabled && redux.registerLoginModule) { %>
-import UserLayout from './layouts/UserLayout';
 import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
 <% } %>
@@ -17,7 +14,7 @@ import Dashboard from './pages/Dashboard';
 
 const routerConfig = [
   {
-    path: '/dashboard',
+    path: '/dashboard/monitor',
     component: Dashboard,
   },
   <% if (redux.enabled && redux.registerLoginModule) { %>
