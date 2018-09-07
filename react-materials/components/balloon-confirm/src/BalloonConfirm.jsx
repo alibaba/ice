@@ -59,30 +59,24 @@ export default class BalloonConfirm extends Component {
     if (ref) {
       this.confirmRef = ref;
     }
-  }
+  };
 
   handleCanel = (e) => {
     this.props.onCancel(e);
     this.confirmRef.setState({
       visible: false,
     });
-  }
+  };
 
   handleOk = (e) => {
     this.props.onConfirm(e);
     this.confirmRef.setState({
       visible: false,
     });
-  }
+  };
 
   render() {
-    const {
-      children,
-      className,
-      title,
-      confirmText,
-      cancelText,
-    } = this.props;
+    const { children, className, title, confirmText, cancelText } = this.props;
 
     return (
       <Balloon
@@ -100,17 +94,10 @@ export default class BalloonConfirm extends Component {
           {title}
         </div>
         <div className="ice-ballon-confirm-btn-group">
-          <Button
-            size="small"
-            onClick={this.handleCanel}
-          >
+          <Button size="small" onClick={this.handleCanel}>
             {cancelText}
           </Button>
-          <Button
-            size="small"
-            type="primary"
-            onClick={this.handleOk}
-          >
+          <Button size="small" type="primary" onClick={this.handleOk}>
             {confirmText}
           </Button>
         </div>
@@ -118,4 +105,3 @@ export default class BalloonConfirm extends Component {
     );
   }
 }
-
