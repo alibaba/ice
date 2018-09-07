@@ -168,7 +168,6 @@ export default class IceFormBinderWrapper extends Component {
       needValidateValues[path] = this.getter(path);
     });
     validator.validate(needValidateValues, (errors) => {
-      console.log(errors, needValidateValues, this.validateRules)
       if (cb && typeof cb === 'function') {
         cb(errors, this.state.value);
       }
