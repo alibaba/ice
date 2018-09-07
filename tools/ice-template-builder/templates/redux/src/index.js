@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createHashHistory } from 'history';
-
 <% if(redux.enabled){ %>
+import { createHashHistory } from 'history';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 <% } else { %>
@@ -17,14 +16,18 @@ import router from './router';
 
 <% if (redux.enabled) { %>
 import configureStore from './configureStore';
-<% } %>
 
+// Create hashHistory
 const history = createHashHistory();
-<% if (redux.enabled) { %>
+
 // Create redux store with history
 const initialState = {};
+
+// Configure Store
 const store = configureStore(initialState, history);
 <% } %>
+
+
 const ICE_CONTAINER = document.getElementById('ice-container');
 
 if (!ICE_CONTAINER) {
