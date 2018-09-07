@@ -25,14 +25,14 @@ export default class IceFormBinderWrapper extends Component {
     /**
      * 当前表单元素变更时触发
      */
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
   };
 
   static defaultProps = {
     value: undefined,
     scrollErrorFieldTopOffset: 37.5,
     enableScrollErrorField: true,
-    onChange: () => {}
+    onChange: () => {},
   };
 
   static childContextTypes = {
@@ -41,7 +41,7 @@ export default class IceFormBinderWrapper extends Component {
     addValidate: PropTypes.func,
     removeValidate: PropTypes.func,
     setter: PropTypes.func,
-    validate: PropTypes.func
+    validate: PropTypes.func,
   };
 
   getChildContext() {
@@ -51,7 +51,7 @@ export default class IceFormBinderWrapper extends Component {
       addValidate: this.addValidate,
       removeValidate: this.removeValidate,
       getError: this.getError,
-      validate: this.validate
+      validate: this.validate,
     };
   }
 
@@ -65,15 +65,15 @@ export default class IceFormBinderWrapper extends Component {
 
     this.state = {
       formErrors: [],
-      value: props.value || {}
+      value: props.value || {},
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if ('value' in nextProps) {
       this.setState({
-        value: nextProps.value || {}
-      });
+        value: nextProps.value || {},
+      }, this.validateAll);
     }
   }
 
@@ -82,16 +82,15 @@ export default class IceFormBinderWrapper extends Component {
     this.validateRefs[path] = fieldDOM;
   };
 
-  removeValidate = path => {
+  removeValidate = (path) => {
     delete this.validateRules[path];
     delete this.validateRefs[path];
   };
 
-  getter = path => {
+  getter = (path) => {
     const value = this.state.value;
-
     // from happy getter https://github.com/happy-codes/happy-getter/blob/master/src/index.js
-    const pathArr = path.split(REG_KEY).filter(item => !!item);
+    const pathArr = path.split(REG_KEY).filter((item) => !!item);
     const result = pathArr.reduce(
       (result, currentPath, currentIndex) => {
         if (!result.errorPath) {
@@ -121,7 +120,7 @@ export default class IceFormBinderWrapper extends Component {
 
   setter = (path, newValue) => {
     let value = this.state.value;
-    const pathArr = path.split(REG_KEY).filter(item => !!item);
+    const pathArr = path.split(REG_KEY).filter((item) => !!item);
 
     pathArr.reduce((pointer, currentPath, currentIndex) => {
       if (pathArr.length === currentIndex + 1) {
@@ -138,45 +137,38 @@ export default class IceFormBinderWrapper extends Component {
   };
 
   validate = (path, rules = []) => {
-    let validator = new schema({
-      [path]: rules
-    });
+    let validator = new schema({ [path]: rules });
 
-    validator.validate(
-      {
-        [path]: this.getter(path)
-      },
-      errors => {
-        if (errors) {
-          this.setState({
-            formErrors: Array.from(
-              new Set(
-                this.state.formErrors
-                  .concat(errors)
-                  .map(error => JSON.stringify(error))
-              )
-            ).map(errorStr => JSON.parse(errorStr))
-          });
-        } else {
-          this.setState({
-            formErrors: this.state.formErrors.filter(
-              error => error.field !== path
-            )
-          });
-        }
-
-        validator = null;
+    validator.validate({ [path]: this.getter(path) }, (errors) => {
+      if (errors && errors.length > 0) {
+        this.setState((state) => {
+          let formErrors = state.formErrors;
+          formErrors = formErrors.filter(
+            (error) => error.field !== errors[0].field
+          );
+          Array.prototype.push.apply(formErrors, errors);
+          return { formErrors: formErrors };
+        });
+      } else {
+        this.setState({
+          formErrors: this.state.formErrors.filter(
+            (error) => error.field !== path
+          ),
+        });
       }
-    );
+
+      validator = null;
+    });
   };
 
-  validateAll = cb => {
+  validateAll = (cb) => {
     let validator = new schema(this.validateRules);
     let needValidateValues = {};
-    Object.keys(this.validateRules).forEach(path => {
+    Object.keys(this.validateRules).forEach((path) => {
       needValidateValues[path] = this.getter(path);
     });
-    validator.validate(needValidateValues, errors => {
+    validator.validate(needValidateValues, (errors) => {
+      console.log(errors, needValidateValues, this.validateRules)
       if (cb && typeof cb === 'function') {
         cb(errors, this.state.value);
       }
@@ -192,23 +184,19 @@ export default class IceFormBinderWrapper extends Component {
       }
 
       if (errors) {
-        this.setState({
-          formErrors: errors
-        });
+        this.setState({formErrors: errors});
       } else {
-        this.setState({
-          formErrors: []
-        });
+        this.setState({formErrors: []});
       }
     });
   };
 
-  getError = path => {
+  getError = (path) => {
     const formErrors = this.state.formErrors;
     if (!formErrors.length) {
       return [];
     }
-    return formErrors.filter(error => {
+    return formErrors.filter((error) => {
       return error.field === path;
     });
   };
