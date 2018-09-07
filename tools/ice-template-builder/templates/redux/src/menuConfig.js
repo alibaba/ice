@@ -24,6 +24,12 @@ const asideMenuConfig = [
     name: 'Dashboard',
     path: '/dashboard',
     icon: 'home2',
+    children: [
+      {
+        name: '监控页',
+        path: '/dashboard/monitor',
+      },
+    ],
   },
   {
     name: '图表页',

@@ -132,10 +132,35 @@ export default class Aside extends Component {
     this.openKeysCache = openKeys;
   };
 
-  getMenuItemPath = (item) => {
-    return <Link to={item.path}>{item.name}</Link>;
+
+  /**
+   * 获取菜单项数据
+   */
+  getNavMenuItems = (menusData) => {
+    if (!menusData) {
+      return [];
+    }
+
+    <% if(redux.enabled && redux.authorityModule) { %>
+      return menusData
+        .filter((item) => item.name && !item.hideInMenu)
+        .map((item, index) => {
+          const ItemDom = this.getSubMenuOrItem(item, index);
+          return this.checkPermissionItem(item.authority, ItemDom);
+        })
+        .filter((item) => item);
+    <% } else { %>
+      return menusData
+        .filter((item) => item.name && !item.hideInMenu)
+        .map((item, index) => {
+          return this.getSubMenuOrItem(item, index);
+        });
+    <% } %>
   };
 
+  /**
+   * 二级导航
+   */
   getSubMenuOrItem = (item, index) => {
     if (item.children && item.children.some((child) => child.name)) {
       const childrenItems = this.getNavMenuItems(item.children);
@@ -161,42 +186,16 @@ export default class Aside extends Component {
     }
     return (
       <MenuItem key={item.path}>
-        <Link to={item.path}>
-          <span>
-            {item.icon ? (
-              <FoundationSymbol size="small" type={item.icon} />
-            ) : null}
-            <span className="ice-menu-collapse-hide">{item.name}</span>
-          </span>
-        </Link>
+        <Link to={item.path}>{item.name}</Link>
       </MenuItem>
     );
   };
 
-  getNavMenuItems = (menusData) => {
-    if (!menusData) {
-      return [];
-    }
-
-    <% if(redux.enabled && redux.authorityModule) { %>
-      return menusData
-        .filter((item) => item.name && !item.hideInMenu)
-        .map((item, index) => {
-          const ItemDom = this.getSubMenuOrItem(item, index);
-          return this.checkPermissionItem(item.authority, ItemDom);
-        })
-        .filter((item) => item);
-    <% } else { %>
-      return menusData
-        .filter((item) => item.name && !item.hideInMenu)
-        .map((item, index) => {
-          return this.getSubMenuOrItem(item, index);
-        });
-    <% } %>
-  };
-
 
   <% if(redux.enabled && redux.authorityModule) { %>
+  /**
+   * 权限检查
+   */
   checkPermissionItem = (authority, ItemDom) => {
     if (Authorized.check) {
       const { check } = Authorized;
