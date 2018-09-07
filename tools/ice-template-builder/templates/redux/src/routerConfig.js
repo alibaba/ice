@@ -7,36 +7,27 @@ import { asideMenuConfig } from './menuConfig';
 
 import BasicLayout from './layouts/BasicLayout';
 
-<% if (redux.registerLoginModule) { %>
+<% if (redux.enabled && redux.registerLoginModule) { %>
 import UserLayout from './layouts/UserLayout';
 import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
 <% } %>
 
 import Dashboard from './pages/Dashboard';
-import NotFound from './pages/NotFound';
 
 const routerConfig = [
   {
     path: '/dashboard',
     component: Dashboard,
-    layout: BasicLayout,
   },
-  {
-    path: '/exception/404',
-    component: NotFound,
-    layout: BasicLayout,
-  },
-  <% if (redux.registerLoginModule) { %>
+  <% if (redux.enabled && redux.registerLoginModule) { %>
   {
     path: '/user/login',
     component: UserLogin,
-    layout: UserLayout,
   },
   {
     path: '/user/register',
     component: UserRegister,
-    layout: UserLayout,
   },
   <% } %>
 ];

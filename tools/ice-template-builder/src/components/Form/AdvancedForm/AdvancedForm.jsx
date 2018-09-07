@@ -6,8 +6,9 @@ import {
 import { Checkbox } from '@icedesign/base';
 import FoundationSymbol from 'foundation-symbol';
 import Tooltip from 'rc-tooltip';
+import CreateForm from '../CreateForm';
 
-export default class AdvancedForm extends Component {
+class AdvancedForm extends Component {
   static displayName = 'AdvancedForm';
 
   static propTypes = {};
@@ -16,37 +17,19 @@ export default class AdvancedForm extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      value: props.value,
-    };
+    this.state = {};
   }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.value,
-    });
-  }
-
-  /**
-   * 表单改变时动态监听
-   */
-  formChange = (value) => {
-    this.setState(
-      {
-        value,
-      },
-      () => {
-        this.props.onChange(value);
-      }
-    );
-  };
 
   render() {
     const {
       value: { redux },
-    } = this.state;
+    } = this.props;
+
     return (
-      <IceFormBinderWrapper value={this.state.value} onChange={this.formChange}>
+      <IceFormBinderWrapper
+        value={this.props.value}
+        onChange={this.props.formChange}
+      >
         <div className="form-group">
           <div style={styles.formHead}>
             <span style={styles.title}>
@@ -70,7 +53,7 @@ export default class AdvancedForm extends Component {
               ：
             </span>
             <IceFormBinder required name="redux.enabled">
-              <Checkbox size="large" defaultChecked />
+              <Checkbox size="large" checked={redux.enabled} />
             </IceFormBinder>
           </div>
 
@@ -92,7 +75,11 @@ export default class AdvancedForm extends Component {
             </span>
             ：
             <IceFormBinder required name="redux.registerLoginModule">
-              <Checkbox size="large" disabled={!redux.enabled} />
+              <Checkbox
+                size="large"
+                checked={redux.registerLoginModule}
+                disabled={!redux.enabled}
+              />
             </IceFormBinder>
           </div>
 
@@ -115,7 +102,11 @@ export default class AdvancedForm extends Component {
             </span>
 
             <IceFormBinder required name="redux.authorityModule">
-              <Checkbox size="large" disabled={!redux.enabled} />
+              <Checkbox
+                size="large"
+                checked={redux.authorityModule}
+                disabled={!redux.enabled}
+              />
             </IceFormBinder>
           </div>
 
@@ -137,7 +128,11 @@ export default class AdvancedForm extends Component {
               ：
             </span>
             <IceFormBinder required name="redux.mockModule">
-              <Checkbox size="large" disabled={!redux.enabled} />
+              <Checkbox
+                size="large"
+                checked={redux.mockModule}
+                disabled={!redux.enabled}
+              />
             </IceFormBinder>
           </div>
         </div>
@@ -145,6 +140,8 @@ export default class AdvancedForm extends Component {
     );
   }
 }
+
+export default CreateForm(AdvancedForm);
 
 const styles = {
   title: {

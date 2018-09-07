@@ -3,8 +3,6 @@ const ejs = require('ejs');
 const path = require('path');
 const fs = require('fs');
 const write = require('write');
-const chalk = require('chalk');
-const rimraf = require('rimraf');
 const ejsLint = require('ejs-lint');
 const read = require('fs-readdir-recursive');
 
@@ -39,6 +37,8 @@ module.exports = function generatorTemplate(templateConfig) {
         templateConfig.name = 'BasicLayout';
       }
     }
+
+    console.log('=============:', templateConfig);
 
     /**
      * 根据模板文件和用户配置自定义生成模板
@@ -362,24 +362,6 @@ function formatterTemplateConfig(templateConfig) {
 
   return templateConfig;
 }
-
-function upperCase(str) {
-  return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => {
-    return L.toUpperCase();
-  });
-}
-
-function getTemplateDependencies(sourceDirPath) {
-  const pkgPath = path.join(sourceDirPath, 'package.json');
-  const pkgData = require(pkgPath);
-  const allDependencies = Object.assign(
-    {},
-    pkgData.dependencies,
-    pkgData.devDependencies
-  );
-  return allDependencies;
-}
-
 function isEmpty(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }

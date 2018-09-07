@@ -4,52 +4,27 @@ import {
   FormBinder as IceFormBinder,
 } from '@icedesign/form-binder';
 import { Checkbox, Radio } from '@icedesign/base';
+import CreateForm from '../CreateForm';
 
 const { Group: RadioGroup } = Radio;
 
-export default class HeaderForm extends Component {
+class HeaderForm extends Component {
   static displayName = 'HeaderForm';
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.value,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.value,
-    });
-  }
-
-  /**
-   * 表单改变时动态监听
-   */
-  formChange = (value) => {
-    this.setState(
-      {
-        value,
-      },
-      () => {
-        this.props.onChange(value);
-      }
-    );
-  };
 
   render() {
     const {
       value: { header },
-    } = this.state;
+    } = this.props;
     return (
-      <IceFormBinderWrapper value={this.state.value} onChange={this.formChange}>
+      <IceFormBinderWrapper
+        value={this.props.value}
+        onChange={this.props.formChange}
+      >
         <div style={styles.formGroup}>
           <div style={styles.formHead}>
             <span style={styles.title}>顶部导航：</span>
             <IceFormBinder required name="header.enabled">
-              <Checkbox size="large" defaultChecked />
+              <Checkbox size="large" checked={header.enabled} />
             </IceFormBinder>
           </div>
 
@@ -101,6 +76,8 @@ export default class HeaderForm extends Component {
     );
   }
 }
+
+export default CreateForm(HeaderForm);
 
 const styles = {
   formGroup: {

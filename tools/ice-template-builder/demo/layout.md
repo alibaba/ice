@@ -11,7 +11,7 @@ importStyle: true
 ```jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { LayoutBuilder } from '@icedesign/layout-builder';
+import { LayoutBuilder } from '@icedesign/template-builder';
 
 class App extends Component {
   state = {};

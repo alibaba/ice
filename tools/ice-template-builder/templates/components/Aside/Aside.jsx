@@ -9,7 +9,7 @@ import { Icon } from '@icedesign/base';
 import Logo from '../Logo';
 import { asideMenuConfig } from '../../../../menuConfig';
 
-<% if(redux.authorityModule) { %>
+<% if(redux.enabled && redux.authorityModule) { %>
 import Authorized from '../../../../utils/Authorized';
 <% } %>
 
@@ -178,7 +178,7 @@ export default class Aside extends Component {
       return [];
     }
 
-    <% if(redux.authorityModule) { %>
+    <% if(redux.enabled && redux.authorityModule) { %>
       return menusData
         .filter((item) => item.name && !item.hideInMenu)
         .map((item, index) => {
@@ -196,7 +196,7 @@ export default class Aside extends Component {
   };
 
 
-  <% if(redux.authorityModule) { %>
+  <% if(redux.enabled && redux.authorityModule) { %>
   checkPermissionItem = (authority, ItemDom) => {
     if (Authorized.check) {
       const { check } = Authorized;
