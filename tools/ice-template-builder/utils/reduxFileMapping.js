@@ -43,7 +43,7 @@ const REDUX_TEMPLATE_FILE_MAPPING = {
     '_eslintignore',
     '_eslintrc',
     '_gitignore',
-    'package.json',
+    '_package.json',
     'README.md',
   ],
 };
