@@ -277,14 +277,7 @@ function getReduxTemplateFiles(templateConfig) {
       moduleFiles = moduleFiles.concat(files);
     });
 
-  const baseFiles = templateFiles
-    .filter((item) => !/\/\*$/.test(item))
-    .map((filename) => {
-      if (/^_/.test(filename)) {
-        filename = filename.replace(/^_/, '.');
-      }
-      return filename;
-    });
+  const baseFiles = templateFiles.filter((item) => !/\/\*$/.test(item));
   const projectFiles = [].concat(baseFiles, moduleFiles);
 
   return projectFiles;
@@ -326,6 +319,12 @@ function renderTemplateFile(sourceFile, filePath, data) {
               parser: 'babylon',
             });
           }
+        }
+
+        const filename = path.basename(filePath);
+        if (/^_/.test(filename)) {
+          const currentFile = filename.replace(/^_/, '.');
+          filePath = path.join(path.dirname(filePath), currentFile);
         }
 
         write(filePath, renderedContent, (err) => {
