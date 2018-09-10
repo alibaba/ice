@@ -51,7 +51,7 @@ const CONFIG = {
 
   // Redux 配置
   redux: {
-    enabled: false, // 生成基础的 redux 配置文件，默认会同步路由信息到 redux store
+    enabled: true, // 生成基础的 redux 配置文件，默认会同步路由信息到 redux store
     mockModule: true, // 生成简单的 Mock 示例代码
     authorityModule: true, // 生成权限管理的示例代码
     registerLoginModule: true, // 生成注册登录的示例代码

@@ -29,12 +29,7 @@ import './scss/index.scss';
 const theme = '<%= themeConfig.theme %>';
 
 @withRouter
-<% if(redux.enabled && redux.registerLoginModule) { %>
-@BasicLayoutHoc
 export default class BasicLayout extends Component {
-<% } else { %>
-export default class <%= name %> extends Component {
-<% } %>
   static propTypes = {};
 
   static defaultProps = {};
@@ -96,7 +91,7 @@ export default class <%= name %> extends Component {
       const footer = <Footer />;
     <% } %>
 
-    <% if(aside) { %>
+    <% if(aside || redux.enabled) { %>
       const content = <MainRoutes />
     <% } else { %>
       const content  = this.props.children;
