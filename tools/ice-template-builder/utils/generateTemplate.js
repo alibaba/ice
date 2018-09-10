@@ -38,15 +38,13 @@ module.exports = function generatorTemplate(templateConfig) {
       }
     }
 
-    console.log('=============:', templateConfig);
-
     /**
      * 根据模板文件和用户配置自定义生成模板
      * @param  {String} templateConfig  用户自定义模板的配置
      */
     return renderDirFiles(templateConfig)
       .then(() => {
-        resolve([]);
+        resolve();
       })
       .catch(reject);
   });
@@ -279,7 +277,14 @@ function getReduxTemplateFiles(templateConfig) {
       moduleFiles = moduleFiles.concat(files);
     });
 
-  const baseFiles = templateFiles.filter((item) => !/\/\*$/.test(item));
+  const baseFiles = templateFiles
+    .filter((item) => !/\/\*$/.test(item))
+    .map((filename) => {
+      if (/^_/.test(filename)) {
+        filename = filename.replace(/^_/, '.');
+      }
+      return filename;
+    });
   const projectFiles = [].concat(baseFiles, moduleFiles);
 
   return projectFiles;
