@@ -323,7 +323,12 @@ function renderTemplateFile(sourceFile, filePath, data) {
 
         const filename = path.basename(filePath);
         if (/^_/.test(filename)) {
-          const currentFile = filename.replace(/^_/, '.');
+          let currentFile;
+          if (filename === '_package.json') {
+            currentFile = 'package.json';
+          } else {
+            currentFile = filename.replace(/^_/, '.');
+          }
           filePath = path.join(path.dirname(filePath), currentFile);
         }
 
