@@ -1,8 +1,11 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { Feedback } from '@icedesign/base';
+import { withRouter } from 'react-router-dom';
+
 import AuthForm from '../../components/AuthForm';
 
+@withRouter
 export default class UserLogin extends Component {
   static displayName = 'UserLogin';
 
@@ -21,6 +24,7 @@ export default class UserLogin extends Component {
     }
     console.log('values:', values);
     Feedback.toast.success('登录成功');
+    this.props.history.push('/application');
     // 登录成功后做对应的逻辑处理
   };
 
