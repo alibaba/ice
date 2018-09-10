@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from '@icedesign/base';
+import { Link } from 'react-router-dom';
+
 import './Header.scss';
 
 export default class Header extends Component {
@@ -17,13 +19,13 @@ export default class Header extends Component {
   render() {
     return (
       <div style={styles.container}>
-        <a href="#" style={styles.logoLink}>
+        <Link to="/" style={styles.logoLink}>
           <img
             src={require('./images/logo.png')}
             alt=""
             style={styles.logoImg}
           />
-        </a>
+        </Link>
         <ul style={styles.navs}>
           <li className="nav-menu" style={styles.navMenu}>
             <a href="#" style={{ ...styles.navLink, ...styles.NavIconLink }}>
