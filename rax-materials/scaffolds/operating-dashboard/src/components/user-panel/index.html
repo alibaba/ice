@@ -1,0 +1,71 @@
+<style>
+  .wrapper {
+    background-color: #fff;
+    margin-bottom: 20;
+  }
+
+  .avatar {
+    width: 100;
+    height: 100;
+    display: block;
+  }
+
+  .user-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    padding-left: 10;
+    flex: auto;
+  }
+
+  .name {
+    font-size: 28;
+    color: #333;
+  }
+
+  .desc {
+    font-size: 24;
+    color: #999;
+  }
+
+  .enter {
+    width: 40;
+    height: 40;
+  }
+</style>
+
+<template>
+  <view class="wrapper">
+    <view class="user-panel">
+      <view>
+        <image class="avatar" :src="icons.avatar" />
+      </view>
+      <view class="user-info">
+        <text class="name">淘小宝</text>
+        <text class="desc">这个个家伙很懒什么都没留下</text>
+      </view>
+      <image class="enter" :src="icons.enter" />
+    </view>
+  </view>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        icons: {
+          avatar: require('./images/avatar.png'),
+          enter: require('./images/enter.png')
+        },
+      }
+    },
+  };
+</script>
