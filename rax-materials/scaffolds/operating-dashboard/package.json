@@ -1,6 +1,6 @@
 {
   "name": "@rax-materials/operating-dashboard",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "该模板适用于展示运营类数据后台、统计数据分类展示、商家运营类后台",
   "keywords": [
     "ice-scaffold"
