@@ -39,14 +39,14 @@
       {
         "pageName": "dashboard",
         "text": "工作台",
-        "iconPath": "https://gw.alicdn.com/tfs/TB1IwQbFhGYBuNjy0FnXXX5lpXa-200-200.png",
-        "selectedIconPath": "https://gw.alicdn.com/tfs/TB1IwQbFhGYBuNjy0FnXXX5lpXa-200-200.png"
+        "iconPath": "https://img.alicdn.com/tfs/TB1Q9OvXhnaK1RjSZFtXXbC2VXa-200-200.png",
+        "selectedIconPath": "https://img.alicdn.com/tfs/TB1Q9OvXhnaK1RjSZFtXXbC2VXa-200-200.png"
       },
       {
         "pageName": "user",
         "text": "我的",
-        "iconPath": "https://gw.alicdn.com/tfs/TB1IwQbFhGYBuNjy0FnXXX5lpXa-200-200.png",
-        "selectedIconPath": "https://gw.alicdn.com/tfs/TB1IwQbFhGYBuNjy0FnXXX5lpXa-200-200.png"
+        "iconPath": "https://img.alicdn.com/tfs/TB1taadXjDpK1RjSZFrXXa78VXa-200-200.png",
+        "selectedIconPath": "https://img.alicdn.com/tfs/TB1taadXjDpK1RjSZFrXXa78VXa-200-200.png"
       }
     ]
   }
