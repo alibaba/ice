@@ -1,6 +1,6 @@
 {
   "name": "@rax-materials/miniapp-lite",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "一个简单的小程序模板，包含 tabbar 定义、页面切换流程",
   "keywords": [
     "ice-scaffold"
@@ -20,6 +20,6 @@
     "title": "Miniapp Lite",
     "type": "rax",
     "appType": "rax",
-    "snapshot": "https://img.alicdn.com/tfs/TB1gJHIFgmTBuNjy1XbXXaMrVXa-368-666.png"
+    "snapshot": "https://img.alicdn.com/tfs/TB1Uk4rxXooBKNjSZPhXXc2CXXa-1242-2208.png"
   }
 }
