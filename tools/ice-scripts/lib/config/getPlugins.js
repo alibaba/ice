@@ -28,10 +28,8 @@ module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
   const plugins = [
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
-      filename: process.env.BUILD_HASH
-        ? 'css/[name].[hash:6].css'
-        : 'css/[name].css',
-      chunkFilename: process.env.BUILD_HASH
+      filename: process.env.HASH ? 'css/[name].[hash:6].css' : 'css/[name].css',
+      chunkFilename: process.env.HASH
         ? 'css/[id].[hash:6].css'
         : 'css/[id].css',
     }),

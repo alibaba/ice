@@ -10,7 +10,7 @@ module.exports = function getWebpackConfigProd({ entry, buildConfig }) {
   return webpackMerge(baseConfig, {
     devtool: 'none',
     optimization: {
-      minimize: !process.env.BUILD_DEBUG,
+      minimize: !process.env.DEBUG,
       minimizer: [
         new UglifyJsPlugin({
           cache: true,

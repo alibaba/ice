@@ -51,9 +51,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     output: Object.assign(
       {
         path: paths.appBuild,
-        filename: process.env.BUILD_HASH
-          ? 'js/[name].[hash:6].js'
-          : 'js/[name].js',
+        filename: process.env.HASH ? 'js/[name].[hash:6].js' : 'js/[name].js',
         publicPath: paths.servedPath,
       },
       buildConfig.output || {}
@@ -73,11 +71,18 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     optimization: {
       splitChunks: {
         cacheGroups: {
+          base: {
+            test: /[\\/]@icedesign\/base[\\/]/,
+            name: 'icedesign-base',
+            priority: -10,
+            chunks: 'all',
+          },
           commons: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendor',
             chunks: 'all',
             minChunks: 2,
+            priority: -20,
           },
         },
       },
