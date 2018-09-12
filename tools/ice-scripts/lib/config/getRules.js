@@ -17,10 +17,7 @@ const URL_LOADER = require.resolve('url-loader');
 const URL_LOADER_LIMIT = 8192;
 
 function withCssHotLoader(loaders) {
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    process.env.HOT_RELOAD !== 'false'
-  ) {
+  if (process.env.NODE_ENV !== 'production' && !process.env.DISABLED_RELOAD) {
     return [CSS_HOT_LOADER].concat(loaders);
   }
   return loaders;
@@ -50,7 +47,7 @@ module.exports = (buildConfig = {}) => {
   const theme = buildConfig.theme || buildConfig.themePackage;
   if (theme) {
     // eslint-disable-next-line no-console
-    console.log(colors.yellow('Info:'), '使用皮肤包', theme);
+    console.log(colors.green('Info:'), '使用皮肤包', theme);
     sassLoaders.push({
       loader: require.resolve('ice-skin-loader'),
       options: {
