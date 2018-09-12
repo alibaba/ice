@@ -5,6 +5,10 @@
   "scripts": {
     "test": "node ./tests/index.js"
   },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/tools/webpack-plugin-import"
+  },
   "keywords": [],
   "author": "ICE Team",
   "license": "MIT",
