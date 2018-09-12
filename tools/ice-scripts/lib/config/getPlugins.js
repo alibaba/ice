@@ -68,7 +68,7 @@ module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
 
   if (paths.publicUrl === './') {
     console.log(
-      colors.yellow('Info:'),
+      colors.green('Info:'),
       '离线化构建项目，自动下载网络资源，请耐心等待'
     );
     plugins.push(
@@ -127,7 +127,7 @@ module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
   if (skinOverridePath && fs.existsSync(skinOverridePath)) {
     // eslint-disable-next-line no-console
     console.log(
-      colors.yellow('Info:'),
+      colors.green('Info:'),
       '皮肤 override 文件存在',
       path.join(themePackage, 'override.scss')
     );
