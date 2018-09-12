@@ -95,9 +95,5 @@
   },
   "engines": {
     "node": ">=8.0.0"
-  },
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com",
-    "access": "public"
   }
 }
