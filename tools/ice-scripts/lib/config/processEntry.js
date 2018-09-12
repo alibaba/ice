@@ -46,10 +46,7 @@ module.exports = (entry) => {
     });
   }
 
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    process.env.HOT_RELOAD !== 'false'
-  ) {
+  if (process.env.NODE_ENV !== 'production' && !process.env.DISABLED_RELOAD) {
     entries = enhanceEntries(entries, hotDevClientPath);
   }
 

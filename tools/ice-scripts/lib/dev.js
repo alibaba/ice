@@ -61,8 +61,8 @@ module.exports = async function(args, subprocess) {
   const packageData = require(paths.appPackageJson);
   // get ice config by package.ice
 
-  if (process.env.HOT_RELOAD == 'false') {
-    console.log(chalk.blue('Info:'), '关闭了 hot-reload');
+  if (process.env.DISABLED_RELOAD) {
+    console.log(chalk.yellow('Warn:'), '关闭了热更新（hot-reload）功能');
   }
   const webpackConfig = getWebpackConfigDev({
     entry: entries,
