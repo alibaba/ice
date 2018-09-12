@@ -8066,9 +8066,9 @@ webpack-merge@4.1.4:
   dependencies:
     lodash "^4.17.5"
 
-webpack-plugin-import@0.1.2:
-  version "0.1.2"
-  resolved "http://registry.npm.alibaba-inc.com/webpack-plugin-import/download/webpack-plugin-import-0.1.2.tgz#10d0b123f04d399ffa7f7ecd05db774b029c6abb"
+webpack-plugin-import@0.2.1:
+  version "0.2.1"
+  resolved "http://registry.npm.alibaba-inc.com/webpack-plugin-import/download/webpack-plugin-import-0.2.1.tgz#5477726c6d4d1dc9fa013edcee714ed07bfb4fa4"
   dependencies:
     loader-utils "^1.1.0"
 

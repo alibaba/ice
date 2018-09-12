@@ -105,7 +105,7 @@ module.exports = async function(args, subprocess) {
 
   devMiddleware(devServer.app, proxyConfig);
 
-  compiler.plugin('done', (stats) => {
+  compiler.hooks.done.tap('done', (stats) => {
     if (isInteractive) {
       clearConsole();
     }
@@ -206,7 +206,7 @@ module.exports = async function(args, subprocess) {
     }
   });
 
-  compiler.plugin('invalid', () => {
+  compiler.hooks.invalid.tap('invalid', () => {
     if (isInteractive) {
       clearConsole();
     }
