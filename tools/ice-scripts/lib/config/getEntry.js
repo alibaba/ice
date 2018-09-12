@@ -28,7 +28,7 @@ module.exports = function getEntry(cwd) {
     }
 
     if (entry) {
-      console.log(colors.yellow('Info:'), 'package.json 存在 entry 配置');
+      console.log(colors.green('Info:'), 'package.json 存在 entry 配置');
       return entry;
     }
   }
