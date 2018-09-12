@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/qrcode",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "飞冰 二维码组件",
   "main": "lib/index.js",
   "files": [
@@ -15,6 +15,9 @@
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",
