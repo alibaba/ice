@@ -1,0 +1,110 @@
+<style>
+  .wrapper {
+    background-color: #fff;
+    margin-bottom: 20rpx;
+  }
+
+  .tools-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .tools-list-item {
+    width: 25%;
+    flex: 0 0 25%;
+    height: 140rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .icon {
+    width: 50rpx;
+    height: 50rpx;
+  }
+
+  .text {
+    font-size: 24rpx;
+    color: #666;
+  }
+
+  .count {
+    position: absolute;
+    top: 10rpx;
+    right: 30rpx;
+    background-color: #1296db;
+    border-radius: 15rem;
+    height: 30rpx;
+    display: flex;
+    align-items: center;
+    padding: 0rpx 8rpx;
+  }
+
+  .count-text {
+    font-size: 20rpx;
+    color: #fff;
+  }
+</style>
+
+<template>
+  <view class="wrapper">
+    <view class="body">
+      <view class="tools-list">
+        <view class="tools-list-item" v-for="task in tasks">
+          <image class="icon" :src="task.icon" />
+          <text class="text">{{task.text}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        tasks: [
+          {
+            icon: require('./images/alert.png'),
+            text: '违规词检测',
+          },
+          {
+            icon: require('./images/colum-height.png'),
+            text: '自动上下架',
+          },
+          {
+            icon: require('./images/edit-square.png'),
+            text: '批量修改',
+          },
+          {
+            icon: require('./images/issues-close.png'),
+            text: '异常订单',
+          },
+          {
+            icon: require('./images/mobile.png'),
+            text: '手机详情',
+          },
+          {
+            icon: require('./images/security-scan.png'),
+            text: '安全中心',
+          },
+          {
+            icon: require('./images/star.png'),
+            text: '爆款集合',
+          },
+          {
+            icon: require('./images/tag.png'),
+            text: '商品标签',
+          },
+          {
+            icon: require('./images/warning.png'),
+            text: '违规反馈',
+          },
+        ]
+      }
+    },
+  };
+</script>
