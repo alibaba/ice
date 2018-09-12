@@ -19,7 +19,8 @@ const URL_LOADER_LIMIT = 8192;
 function withCssHotLoader(loaders) {
   if (
     process.env.NODE_ENV !== 'production' &&
-    process.env.HOT_RELOAD !== 'false'
+    process.env.HOT_RELOAD !== 'false' &&
+    process.env.DISABLED_RELOAD == 'false'
   ) {
     return [CSS_HOT_LOADER].concat(loaders);
   }

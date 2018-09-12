@@ -10,6 +10,7 @@ program
   .option('-p, --port <port>', 'server port')
   .option('-h, --host <host>', 'server host')
   .option('--https', 'server https')
+  .option('--disabled-reload', 'disabled hot reload')
   .option('-s, --skip-install', 'skip install dependencies')
   .parse(process.argv);
 
@@ -19,6 +20,9 @@ const inquirer = require('inquirer');
 const isInteractive = process.stdout.isTTY;
 const DEFAULT_PORT = program.port || process.env.PORT || 4444;
 const HOST = program.host || process.env.HOST || '0.0.0.0';
+const disabledReload = program.disabledReload || false;
+
+process.env.DISABLED_RELOAD = disabledReload;
 
 const defaultPort = parseInt(DEFAULT_PORT, 10);
 
