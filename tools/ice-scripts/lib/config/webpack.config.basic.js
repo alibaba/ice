@@ -71,18 +71,11 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     optimization: {
       splitChunks: {
         cacheGroups: {
-          base: {
-            test: /[\\/]@icedesign\/base[\\/]/,
-            name: 'icedesign-base',
-            priority: -10,
-            chunks: 'all',
-          },
-          commons: {
+          vendor: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendor',
-            chunks: 'all',
+            chunks: 'initial',
             minChunks: 2,
-            priority: -20,
           },
         },
       },
