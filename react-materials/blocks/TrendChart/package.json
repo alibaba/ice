@@ -1,0 +1,40 @@
+{
+  "name": "@icedesign/trend-chart-block",
+  "version": "1.0.0",
+  "description": "适合展示趋势的场景图表",
+  "author": "",
+  "homepage": "https://alibaba.github.io/ice/block/trend-chart/preview",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TrendChart"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.5",
+    "@icedesign/container": "^0.1.6",
+    "bizcharts": "^3.2.2",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "trend-chart",
+    "title": "趋势图",
+    "categories": [
+      "图表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1EDNuXSrqK1RjSZK9XXXyypXa-2804-948.png"
+  }
+}
