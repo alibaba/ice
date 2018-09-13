@@ -1,0 +1,11 @@
+@import '../../variables.scss';
+@import '../../reset.scss';
+@import '../../markdown.scss';
+
+.blog-detail-page {
+  .blog-content {
+    padding: 80px 20%;
+    margin: $headerHeight auto 0;
+    max-width: 735px;
+  }
+}

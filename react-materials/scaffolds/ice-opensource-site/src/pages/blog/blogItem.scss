@@ -1,0 +1,57 @@
+.blog-item {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 40px;
+  background: #F8F8F8;
+  .title {
+    img {
+      width: 16px;
+      height: 20px;
+      margin-right: 8px;
+    }
+    span {
+      font-family: Avenir-Heavy;
+      font-size: 20px;
+      color: #666666;
+    }
+  }
+  .brief-info {
+    padding: 12px 0 20px;
+    .author {
+      font-family: Avenir-Heavy;
+      font-size: 14px;
+      color: #999;
+      margin-right: 8px;
+    }
+    img {
+      width: 14px;
+      height: 14px;
+    }
+    .date {
+      float: right;
+      font-family: Avenir-Medium;
+      font-size: 12px;
+      color: #999;
+    }
+  }
+  p {
+    font-family: Avenir-Medium;
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+  &:hover {
+    .title {
+      span {
+        color: #333;
+      }
+    }
+    .brief-info {
+      .author {
+        color: #666;
+      }
+    }
+  }
+}

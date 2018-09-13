@@ -1,0 +1,189 @@
+@import '../../variables.scss';
+@import '../../reset.scss';
+
+.community-page {
+  .events-section {
+    max-width: $contentWidth;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 80px 40px 60px;
+    @media screen and (max-width: $mobileWidth) {
+      padding: 0;
+    }
+    h3 {
+      font-family: Avenir-Heavy;
+      font-size: 36px;
+      color: #333;
+      text-align: center;
+      margin: 0 0 40px;
+    }
+    .event-card {
+      width: 373px;
+      font-size: 0;
+      img {
+        width: 373px;
+        height: 209px;
+      }
+      @media screen and (max-width: $mobileWidth / 2) {
+        width: 320px;
+        img {
+          width: 320px;
+          height: 179px;
+        }
+      }
+      .event-introduction {
+        padding: 20px;
+        background: #F8F8F8;
+        h4 {
+          font-family: Avenir-Heavy;
+          font-size: 20px;
+          color: #333;
+          margin: 0 0 10px;
+        }
+        p {
+          font-family: Avenir-Medium;
+          font-size: 14px;
+          color: #666;
+          margin: 0;
+        }
+        a {
+          display: inline-block;
+          width: 100%;
+          font-family: Avenir-Medium;
+          font-size: 12px;
+          color: #999;
+          margin-top: 10px;
+          .arrow {
+            width: 8px;
+            height: 13px;
+            float: right;
+          }
+        }
+      }
+    }
+  }
+  .contact-section {
+    max-width: $contentWidth;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 60px 40px 40px;
+    @media screen and (max-width: $mobileWidth) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    h3 {
+      font-family: Avenir-Heavy;
+      font-size: 36px;
+      color: #333;
+      text-align: center;
+      margin: 0 0 12px;
+    }
+    p {
+      font-family: Avenir-Medium;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+      margin: 0 0 40px;
+    }
+    .contact-list {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      .contact-item {
+        display: inline-block;
+        text-align: center;
+        padding: 0 20px;
+        // width: 82px;
+        font-family: Avenir-Heavy;
+        font-size: 18px;
+        color: #999;
+        &:hover {
+          color: $brandColor;
+        }
+        img {
+          width: 82px;
+          height: 86px;
+        }
+      }
+    }
+  }
+  .contributor-section {
+    max-width: $contentWidth;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 60px 40px 40px;
+    h3 {
+      font-family: Avenir-Heavy;
+      font-size: 36px;
+      color: #333;
+      text-align: center;
+      margin: 0 0 12px;
+    }
+    p {
+      font-family: Avenir-Medium;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+      margin: 0 0 40px;
+    }
+    .contributor-list {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      .contributor-item {
+        display: inline-block;
+        width: 240px;
+        text-align: center;
+        font-family: Avenir-Heavy;
+        font-size: 18px;
+        color: #999;
+        img {
+          width: 82px;
+          height: 86px;
+        }
+      }
+    }
+  }
+  .eco-section {
+    padding: 60px 20% 0;
+    max-width: 735px;
+    margin: 0 auto;
+    h3 {
+      font-family: Avenir-Heavy;
+      font-size: 36px;
+      color: #333;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .eco-item {
+      margin-bottom: 30px;
+      h4 {
+        font-family: Avenir-Heavy;
+        font-size: 18px;
+        color: #333;
+        margin: 0 0 10px;
+      }
+      p {
+        font-family: Avenir-Medium;
+        font-size: 14px;
+        color: #666;
+        text-align: justify;
+        margin: 12px 0;
+      }
+      .tags {
+        a {
+          font-family: Avenir-Medium;
+          font-size: 12px;
+          color: #fff;
+          display: inline-block;
+          height: 32px;
+          line-height: 32px;
+          padding: 0 16px;
+          border-radius: 2px;
+          text-align: center;
+          margin: 0 10px 10px 0;
+        }
+      }
+    }
+  }
+}
