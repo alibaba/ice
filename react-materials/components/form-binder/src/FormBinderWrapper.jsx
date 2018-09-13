@@ -73,7 +73,7 @@ export default class IceFormBinderWrapper extends Component {
     if ('value' in nextProps) {
       this.setState({
         value: nextProps.value || {},
-      }, this.validateAll);
+      });
     }
   }
 
