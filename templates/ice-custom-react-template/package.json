@@ -1,0 +1,47 @@
+{
+  "name": "@icedesign/custom-react-scaffold",
+  "version": "0.1.1",
+  "description": "自定义模板",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "@icedesign/container": "^0.1.2",
+    "@icedesign/img": "^0.1.1",
+    "@icedesign/layout": "^0.1.1",
+    "@icedesign/menu": "^0.1.1",
+    "@icedesign/skin": "^0.1.0",
+    "classnames": "^2.2.5",
+    "enquire-js": "^0.1.2",
+    "foundation-symbol": "^0.1.0",
+    "prop-types": "^15.5.8",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.1.1"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/skin",
+    "entry": "src/index.js"
+  }
+}
