@@ -1,0 +1,4 @@
+{
+  "filename": "demo3.md",
+  "__html": "<h1>demo for reference of md or image for relative path, across directory</h1>\n<p>if you want to reference to another md, the path can be written in the format of relative path under the circumstance of file system.\nclick here： <a href=\"../demo1.md\">demo1.md</a>。</p>\n<p>the same is to image.\n<img src=\"../img/brhtqqzh.jpeg\" alt=\"\"></p>\n"
+}
