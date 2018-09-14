@@ -7,9 +7,9 @@
         <img class="pic-404__child mid" :src="img_404_cloud" alt="404">
         <img class="pic-404__child right" :src="img_404_cloud" alt="404">
       </div>
-      <div class="bullshit">
-        <div class="bullshit__headline">抱歉，你访问的页面不存在</div>
-        <a href="/" class="bullshit__return-home">返回首页</a>
+      <div class="exception">
+        <div class="exception__headline">抱歉，你访问的页面不存在</div>
+        <a href="/" class="exception__return-home">返回首页</a>
       </div>
     </div>
   </div>
@@ -150,7 +150,7 @@ export default {
       }
     }
   }
-  .bullshit {
+  .exception {
     position: relative;
     float: left;
     width: 300px;
