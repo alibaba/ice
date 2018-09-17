@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/container",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -31,6 +31,6 @@
   },
   "typings": "lib/index.d.ts",
   "devDependencies": {
-    "ice-devtools": "^1.0.6"
+    "ice-devtools": "^1.1.12"
   }
 }
