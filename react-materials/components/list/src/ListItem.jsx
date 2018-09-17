@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 /**
  * List中每个单元对应组件
  */
-class ListItem extends Component {
+export default class ListItem extends Component {
   render() {
     const {children, width, spacing, style} = this.props;
     return (
@@ -24,4 +24,3 @@ class ListItem extends Component {
   }
 }
 
-export default ListItem;

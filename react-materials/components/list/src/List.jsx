@@ -1,11 +1,10 @@
 import React, {Component, cloneElement, Children} from 'react';
 import omit from 'lodash.omit';
-import ListItem from './ListItem';
 
 /**
  * List容器组件
  */
-class List extends Component {
+export default class List extends Component {
   render() {
     const {column, spacing = 10, style, children} = this.props;
     const {width} = style;
@@ -33,7 +32,3 @@ class List extends Component {
     );
   }
 }
-
-List.ListItem = ListItem;
-
-export default List;
