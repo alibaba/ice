@@ -1,0 +1,41 @@
+{
+  "name": "@icedesign/cost-overview-block",
+  "version": "1.0.0",
+  "description": "适用于环形图和概要展示组合的信息展示场景",
+  "author": "",
+  "homepage": "https://alibaba.github.io/ice/block/cost-overview/preview",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CostOverview"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@antv/data-set": "^0.9.5",
+    "@icedesign/base": "^0.2.5",
+    "@icedesign/container": "^0.1.6",
+    "bizcharts": "^3.2.2",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "cost-overview",
+    "title": "概览展示",
+    "categories": [
+      "数据展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1l5dzXNTpK1RjSZFMXXbG_VXa-2622-586.png"
+  }
+}
