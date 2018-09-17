@@ -25,7 +25,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
     "lodash.omit": "^4.5.0"
   },
   "devDependencies": {
