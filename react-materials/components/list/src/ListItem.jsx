@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 /**
- * List中Item组件
+ * List中每个单元对应组件
  */
 class ListItem extends Component {
   render() {
