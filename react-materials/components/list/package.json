@@ -2,7 +2,10 @@
   "name": "@icedesign/list",
   "version": "0.0.1",
   "description": "",
-  "files": ["src/", "lib/"],
+  "files": [
+    "src/",
+    "lib/"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/ice"
@@ -13,13 +16,18 @@
     "prepublish": "npm run build"
   },
   "license": "MIT",
-  "keywords": ["ice", "react", "component"],
+  "keywords": [
+    "ice",
+    "react",
+    "component"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0"
+    "@icedesign/base": "^0.2.0",
+    "lodash.omit": "^4.5.0"
   },
   "devDependencies": {
     "react": "^16.3.0",
