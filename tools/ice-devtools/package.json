@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {
@@ -95,9 +95,5 @@
   },
   "engines": {
     "node": ">=8.0.0"
-  },
-  "publishConfig": {
-    "registry": "http://registry.npmjs.com",
-    "access": "public"
   }
 }
