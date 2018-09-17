@@ -35,6 +35,6 @@
     "react-dom": "^16.5.0"
   },
   "devDependencies": {
-    "ice-devtools": "^1.0.9"
+    "ice-devtools": "^1.1.12"
   }
 }
