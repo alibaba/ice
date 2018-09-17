@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/balloon-confirm",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "ICE 气泡确认框",
   "files": [
     "src/",
@@ -35,6 +35,6 @@
     "react-dom": "^16.5.0"
   },
   "devDependencies": {
-    "ice-devtools": "^1.0.9"
+    "ice-devtools": "^1.1.12"
   }
 }
