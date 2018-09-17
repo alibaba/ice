@@ -4,21 +4,58 @@ order: 1
 importStyle: true
 ---
 
-本 Demo 演示一行文字的用法。
+本 Demo 演示List组件的用法。
 
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import List from '@icedesign/list';
 
+const {ListItem} = List;
 
 class App extends Component {
 
   render() {
-
+    const dataSource = [
+      {text: 'Apple'},
+      {text: 'Samsung'},
+      {text: 'Sony'},
+      {text: 'Huawei'},
+      {text: 'Xiaomi'}
+    ];
     return (
       <div>
-        <List />
+        <List
+          column={2}
+          spacing={20}
+          style={{
+            width: 450,
+            backgroundColor: '#ccc'
+          }}
+        >
+          {dataSource.map((value, index) => {
+            return (
+              <ListItem
+                key={index}
+                style={{
+                  background: '#4aa',
+                  height: 150
+                }}
+              >
+                <div
+                  style={{
+                    lineHeight: '150px',
+                    textAlign: 'center',
+                    color: '#fff',
+                    fontSize: '24px',
+                  }}
+                >
+                  {value.text}
+                </div>
+              </ListItem>
+            );
+          })}
+        </List>
       </div>
     );
   }
