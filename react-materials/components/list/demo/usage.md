@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import List from '@icedesign/list';
 
-const {ListItem} = List;
+const ListItem = List.Item;
 
 class App extends Component {
 
