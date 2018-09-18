@@ -10,7 +10,8 @@
     "ice-devtools-start": "bin/ice-devtools-start.js",
     "ice-devtools-generate": "bin/ice-devtools-generate.js",
     "ice-devtools-build": "bin/ice-devtools-build.js",
-    "ice-devtools-publish": "bin/ice-devtools-publish.js"
+    "ice-devtools-publish": "bin/ice-devtools-publish.js",
+    "ice-devtools-buildblock": "bin/ice-devtools-build-block.js"
   },
   "author": {
     "name": "ICE Team",
