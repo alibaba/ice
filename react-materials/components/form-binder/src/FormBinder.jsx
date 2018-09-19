@@ -210,7 +210,7 @@ export default class FormBinder extends Component {
   render() {
     const FormItem = React.Children.only(this.props.children);
     const FormItemProps = FormItem.props;
-    const FormItemDefaultProps = FormItem.type.defaultProps;
+    const FormItemDefaultProps = FormItem.type.defaultProps || {};
 
     const currentName = this.props.name || FormItem.props.name;
     const valueKey = this.props.valueKey || 'value';
@@ -267,11 +267,8 @@ export default class FormBinder extends Component {
         }
       },
       [valueKey]: (() => {
-        // 受控模式，给组件指定了 value 的情况下，或者组件内部存在 bug 的时候
-        if (
-          typeof FormItemProps[valueKey] === 'object' &&
-          FormItemProps[valueKey] !== FormItemDefaultProps[valueKey]
-        ) {
+        const componentValue = FormItemProps[valueKey];
+        if (componentValue && componentValue !== FormItemDefaultProps[valueKey] ) {
           return valueTransformer(FormItemProps[valueKey]);
         } else {
           const value = this.context.getter(currentName);
