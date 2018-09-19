@@ -5,13 +5,11 @@ module.exports = function generate({ cwd }) {
   const materialList = findMaterials();
 
   for (let i = 0; i < materialList.length; i++) {
-    const { directory, type } = materialList[i];
+    const { directory, ...options } = materialList[i];
     generateDatabase({
       name: directory,
       path: resolve(cwd, directory),
-      options: {
-        type,
-      },
+      options: options,
     });
   }
 };
