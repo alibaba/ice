@@ -9,4 +9,5 @@ require('commander')
   .command('build', 'Build Component')
   .command('screenshot', 'Create screenshot.png')
   .command('generate', 'Generate database json')
+  .command('build-block', 'Build block demo')
   .parse(process.argv);

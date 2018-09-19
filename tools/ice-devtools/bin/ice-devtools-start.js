@@ -11,6 +11,7 @@ const { getType } = require('../shared/utils');
 
 const cwd = process.cwd();
 const type = getType(cwd);
+
 switch (type) {
   case 'block':
     require('../lib/server')({

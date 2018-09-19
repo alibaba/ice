@@ -18,10 +18,9 @@ module.exports = function(opts) {
 
   (async () => {
     const server = localServer(opts.cwd, port);
-
     // 截取页面中某个元素的快照
     await screenshot.screenshotDOMElement(
-      `http://127.0.0.1:8080/react-materials/block/DemoBlock`,
+      `http://127.0.0.1:${port}/build/index.html`,
       '#mountNode',
       screenshotPath,
       pkgInfo.blockConfig
