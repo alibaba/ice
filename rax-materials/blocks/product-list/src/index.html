@@ -53,9 +53,14 @@
     justify-content: space-between;
   }
 
+  .titleWrapper {
+    line-height: 40rpx;
+    margin-bottom: 6rpx;
+  }
+
   .title {
     font-size: 28rpx;
-    line-height: 36rpx;
+    line-height: 40rpx;
     text-align: left;
   }
 
@@ -85,7 +90,7 @@
 
   .button {
     width: 200rpx;
-    border: 1rpx solid #eee;
+    border: 2rpx solid #eee;
     border-radius: 10rpx;
   }
 
@@ -114,7 +119,9 @@
               <image class="pic" :src="item.picUrl" />
             </view>
             <view class="product-detail">
-              <text class="title">{{item.title}}</text>
+              <view class="titleWrapper">
+                <text class="title">{{item.title}}</text>
+              </view>
               <view class="row">
                 <text class="code">{{item.code}}</text>
                 <text class="count">库存{{item.count}}</text>

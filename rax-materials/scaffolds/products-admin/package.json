@@ -1,6 +1,6 @@
 {
   "name": "@rax-materials/products-admin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "商品管理后台适用于宝贝商品的上下架管理、单品操作等",
   "keywords": [
     "ice-scaffold"
