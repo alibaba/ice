@@ -1,10 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
 const WebpackPluginImport = require('../');
 
 const config = {
-  entry: require.resolve('./entry.js'),
+  mode: 'development',
+  context: __dirname,
+  entry: {
+    index: './entry.js',
+  },
   module: {
     rules: [
       {
@@ -13,12 +19,16 @@ const config = {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader'],
-        }),
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          'css-loader',
+          'sass-loader',
+        ],
       },
     ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '.html'],
   },
   externals: {
     react: 'window.React',
@@ -29,7 +39,11 @@ const config = {
     filename: 'dist.js',
   },
   plugins: [
-    new ExtractTextPlugin('style.css'),
+    new BundleAnalyzerPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
     new WebpackPluginImport([
       {
         libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
@@ -44,8 +58,10 @@ const config = {
 };
 
 webpack(config, (err, stats) => {
-  console.log(stats.toString({
-    colors: true,
-    modules: false,
-  }));
+  console.log(
+    stats.toString({
+      colors: true,
+      modules: false,
+    })
+  );
 });

@@ -3,22 +3,19 @@
 'use strict';
 
 const program = require('commander');
+const optionsAttachToEnv = require('../lib/utils/optionsAttachToEnv');
 
 program
   .option('--debug', 'debug 模式下不压缩')
   .option('--hash', '构建后的资源带 hash 版本')
+  .option('-s, --skip-install', '跳过安装依赖')
   .parse(process.argv);
 
+optionsAttachToEnv(program);
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 
 validationSassAvailable()
   .then(() => {
-    if (program.debug) {
-      process.env.BUILD_DEBUG = true;
-    }
-    if (program.hash) {
-      process.env.BUILD_HASH = true;
-    }
     // eslint-disable-next-line
     const build = require('../lib/build');
     build();
