@@ -267,8 +267,8 @@ export default class FormBinder extends Component {
         }
       },
       [valueKey]: (() => {
-        const componentValue = FormItemProps[valueKey];
-        if (componentValue && componentValue !== FormItemDefaultProps[valueKey] ) {
+        const formItemValue = FormItemProps[valueKey];
+        if (formItemValue && formItemValue !== FormItemDefaultProps[valueKey] ) {
           return valueTransformer(FormItemProps[valueKey]);
         } else {
           const value = this.context.getter(currentName);
