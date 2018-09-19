@@ -5,12 +5,15 @@
 const program = require('commander');
 
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
+const optionsAttachToEnv = require('../lib/utils/optionsAttachToEnv');
 
 program
-  .option('-p, --port <port>', 'server port')
-  .option('-h, --host <host>', 'server host')
-  .option('--https', 'server https')
-  .option('-s, --skip-install', 'skip install dependencies')
+  .option('-p, --port <port>', '服务端口号')
+  .option('-h, --host <host>', '服务主机名')
+  .option('--https', '开启 https ')
+  .option('--analyzer', '开启构建分析')
+  .option('--analyzer-port', '设置分析端口号')
+  .option('--disabled-reload', '关闭 hot reload')
   .parse(process.argv);
 
 const detect = require('detect-port');
@@ -21,6 +24,8 @@ const DEFAULT_PORT = program.port || process.env.PORT || 4444;
 const HOST = program.host || process.env.HOST || '0.0.0.0';
 
 const defaultPort = parseInt(DEFAULT_PORT, 10);
+
+optionsAttachToEnv(program);
 
 validationSassAvailable()
   .then(() => {
