@@ -28,7 +28,11 @@ npm install @icedesign/list
 
 ## 子组件
 
-### List.ListItem
+### Item
+
+```js
+const { Item } from '@icedesign/list'
+```
 
 列表的每个单元
 
