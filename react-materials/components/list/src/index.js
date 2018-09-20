@@ -1,6 +1,7 @@
 import List from './List';
-import ListItem from './ListItem';
-
-List.Item = ListItem;
+import Item from './Item';
 
 export default List;
+export {
+  Item,
+};
