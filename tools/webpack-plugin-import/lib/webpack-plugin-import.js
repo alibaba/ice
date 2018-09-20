@@ -30,39 +30,41 @@ module.exports = class WebpackPluginImport {
     if (opt.libraryName instanceof RegExp) {
       return opt.libraryName.test(result.rawRequest);
     }
-
     if (result.rawRequest.match(opt.libraryName)) {
       return true;
     }
-
     return false;
   }
 
   apply(compiler) {
-    compiler.plugin('normal-module-factory', (nmf) => {
-      nmf.plugin('after-resolve', (result, callback) => {
-        if (!result) {
-          return callback();
-        }
+    compiler.hooks.normalModuleFactory.tap(
+      'normal-module-factory',
+      (NormalModuleFactory) => {
+        NormalModuleFactory.hooks.afterResolve.tapPromise(
+          'after-resolve',
+          (result = {}) => {
+            return new Promise((resolve) => {
+              if (result.loaders && /\.jsx?$/i.test(result.resource)) {
+                this.options.forEach((opt) => {
+                  if (this.needAdditionalStyle(result, opt)) {
+                    const modPath = path.join(
+                      path.dirname(result.resource),
+                      opt.stylePath || 'style.js'
+                    );
 
-        // only enable for .js or .jsx
-        if (result.loaders && /\.jsx?$/i.test(result.resource)) {
-          this.options.forEach((opt) => {
-            if (this.needAdditionalStyle(result, opt)) {
-              const modPath = path.join(
-                path.dirname(result.resource),
-                opt.stylePath || 'style.js'
-              );
-
-              if (fileExists(modPath)) {
-                result.loaders.push(`${webpackLoaderRequire}?mod=${modPath}`);
+                    if (fileExists(modPath)) {
+                      result.loaders.push(
+                        `${webpackLoaderRequire}?mod=${modPath}`
+                      );
+                    }
+                  }
+                });
               }
-            }
-          });
-        }
-
-        return callback(null, result);
-      });
-    });
+              resolve(result);
+            });
+          }
+        );
+      }
+    );
   }
 };

@@ -1,19 +1,11 @@
 {
-  "name": "@react-materials/{{name}}",
+  "name": "{{name}}",
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
   "files": ["src/", "lib/"],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice"
-  },
   "license": "MIT",
   "keywords": ["ice", "react", "layout"],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
   "dependencies": {
     "react": "^16.2.0",
     "prop-types": "^15.5.8"

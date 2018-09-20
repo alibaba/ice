@@ -37,12 +37,12 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.afterEach((to) => {
+router.afterEach(to => {
   // 需要的信息
-  const { app } = router
+  const app = router.app
   const { name, params, query } = to
   // 多页控制 打开新的页面
-  app.$store.commit('d2adminPageOpenNew', { name, params, query })
+  app.$store.commit('d2admin/page/open', { name, params, query })
   // 更改标题
   util.title(to.meta.title)
 })

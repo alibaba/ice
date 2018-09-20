@@ -1,0 +1,40 @@
+{
+  "name": "@icedesign/balloon-confirm",
+  "version": "0.1.2",
+  "description": "ICE 气泡确认框",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/components/balloon-confirm"
+  },
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "component"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "prop-types": "^15.5.8",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
+  },
+  "devDependencies": {
+    "ice-devtools": "^1.1.12"
+  }
+}
