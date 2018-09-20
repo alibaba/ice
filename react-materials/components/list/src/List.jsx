@@ -15,7 +15,7 @@ export default class List extends Component {
           display: 'flex',
           flexFlow: 'row wrap',
           justifyContent: 'flex-start',
-          border: '1px solid #fff',
+          border: '1px solid transparent',
           paddingTop: `${spacing}px`,
           paddingLeft: `${spacing}px`,
           ...style
