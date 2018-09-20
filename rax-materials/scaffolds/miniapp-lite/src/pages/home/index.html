@@ -4,23 +4,42 @@
     color: #666;
     height: 100%;
   }
+
+  .header {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20rpx;
+  }
+
+  .title {
+    font-size: 32rpx;
+  }
+
+  .logo {
+    width: 120rpx;
+    height: 120rpx;
+  }
 </style>
 
 <template>
-  <view class="container">
-    <item></item>
-  </view>
+  <scroll-view class="container">
+    <view class="header">
+      <image class="logo" :src="logo"></image>
+      <text class="title">Welcome to Miniapp</text>
+    </view>
+
+  </scroll-view>
 </template>
 
 <script>
-  import item from '../../components/item';
   export default {
-    components: {
-      item
-    },
+    components: {},
     data() {
       return {
-        // initial data
+        logo: require('./logo.png')
       };
     },
   };
