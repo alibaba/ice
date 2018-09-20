@@ -1,7 +1,8 @@
 {
   "name": "@rax-materials/operating-dashboard",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "该模板适用于展示运营类数据后台、统计数据分类展示、商家运营类后台",
+  "homepage": "https://alibaba.github.io/ice/rax-materials/operating-dashboard/index.html",
   "keywords": [
     "ice-scaffold"
   ],
@@ -10,10 +11,10 @@
   },
   "scripts": {
     "start": "rax-scripts start --port 6002 --type=miniapp",
-    "build": "rax-scripts build --type=miniapp"
+    "build": "rax-scripts build --type=miniapp --public-path=https://alibaba.github.io/ice/rax-materials/operating-dashboard/"
   },
   "devDependencies": {
-    "rax-scripts": "^0.6.6-beta.0"
+    "rax-scripts": "^0.6.6-beta.1"
   },
   "scaffoldConfig": {
     "name": "operating-dashboard",
