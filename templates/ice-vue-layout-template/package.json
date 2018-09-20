@@ -1,6 +1,6 @@
 {
   "name": "ice-vue-layout-template",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "ice vue layout template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

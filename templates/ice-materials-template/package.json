@@ -1,11 +1,14 @@
 {
   "name": "ice-materials-template",
-  "version": "1.0.0-beta.14",
+  "version": "1.0.0-beta.15",
   "description": "ice materials template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["ice", "ice-template"],
+  "keywords": [
+    "ice",
+    "ice-template"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"

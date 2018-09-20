@@ -28,23 +28,11 @@
     @extend %full;
     $d2-theme-header-height: 60px;
     .d2-theme-header {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      right: 0px;
       height: $d2-theme-header-height;
     }
     .d2-theme-container {
-      position: absolute;
-      top: $d2-theme-header-height;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-      display: flex;
-      flex-direction: row;
       .d2-theme-container-aside {
         transition: width .3s;
-        flex-grow: 0;
         position: relative;
         .d2-layout-header-aside-menu-side {
           @extend %full;
@@ -52,18 +40,11 @@
         }
       }
       .d2-theme-container-main {
-        flex-grow: 1;
         padding: 0px;
         position: relative;
         overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        .d2-theme-container-main-header {
-          flex-grow: 0;
-        }
         .d2-theme-container-main-body {
           flex-grow: 1;
-          margin-top: 1px;
           position: relative;
         }
       }
@@ -192,10 +173,6 @@
           margin: 10px;
           margin-top: 0px;
           border-radius: 4px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
           @extend %unable-select;
           i {
             font-size: 30px;
@@ -219,15 +196,11 @@
         .d2-theme-container-main-header {
           // 多页面控制器
           .d2-multiple-page-control-group {
-            display: flex;
-            margin-right: 20px;
+            padding-right: 20px;
             .d2-multiple-page-control-content {
-              flex-grow: 1;
+              overflow: auto;
               position: relative;
               .d2-multiple-page-control-content-inner {
-                position: absolute;
-                left: 0px;
-                right: 0px;
                 .d2-multiple-page-control {
                   .el-tabs__header.is-top {
                     margin: 0px;
