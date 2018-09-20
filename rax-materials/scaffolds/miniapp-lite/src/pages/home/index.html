@@ -6,8 +6,7 @@
   }
 
   .header {
-    height: 320rpx;
-    background-color: #36c;
+    height: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,22 +15,12 @@
   }
 
   .title {
-    color: #fff;
-    font-size: 16rpx;
+    font-size: 32rpx;
   }
 
   .logo {
-    width: 100rpx;
-    height: 100rpx;
-  }
-
-  .tips {
-    padding: 10rpx 0;
-    line-height: 20rpx;
-  }
-
-  .intro {
-    font-size: 24rpx;
+    width: 120rpx;
+    height: 120rpx;
   }
 </style>
 
@@ -41,15 +30,7 @@
       <image class="logo" :src="logo"></image>
       <text class="title">Welcome to Miniapp</text>
     </view>
-    <view class="tips">
-      <text class="intro">manifest.json 描述页面信息</text>
-    </view>
-    <view class="tips">
-      <text class="intro">pages 字段声明页面</text>
-    </view>
-    <view class="tips">
-      <text class="intro">tabBar.list 字段声明 TabBar</text>
-    </view>
+
   </scroll-view>
 </template>
 
