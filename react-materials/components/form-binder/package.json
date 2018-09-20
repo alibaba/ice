@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/form-binder",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "ICE 表单数据获取方案",
   "main": "lib/index.js",
   "scripts": {
