@@ -1,0 +1,39 @@
+{
+  "name": "@icedesign/custom-table-block",
+  "version": "1.0.0",
+  "description": "适用于简单的自定义表格展示场景",
+  "homepage": "https://alibaba.github.io/ice/block/custom-table/preview",
+  "author": "",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CustomTable"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.2.5",
+    "@icedesign/container": "^0.1.7",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "custom-table",
+    "title": "表格",
+    "categories": [
+      "表格"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB14KIKbQvoK1RjSZPfXXXPKFXa-2058-550.png"
+  }
+}
