@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Banner extends Component {
   static displayName = 'Banner';
@@ -21,9 +22,9 @@ export default class Banner extends Component {
             支持 TensorFlow、PMML 模型的一键部署线上服务
           </div>
           <div style={styles.caption}>快捷、简约、稳定</div>
-          <a style={styles.quickStart} href="/#/model/performance">
+          <Link style={styles.quickStart} to="/model/performance">
             马上使用
-          </a>
+          </Link>
         </div>
       </div>
     );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Logo extends Component {
   render() {
@@ -9,9 +10,9 @@ export default class Logo extends Component {
           style={styles.logoImg}
           alt="logo"
         />
-        <a href="/" style={styles.logoText}>
+        <Link to="/" style={styles.logoText}>
           算法模型服务平台
-        </a>
+        </Link>
       </div>
     );
   }

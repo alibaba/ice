@@ -31,7 +31,7 @@ const Footer = () => {
             />
           </Col>
         </Row>
-        <p style={styles.copyRight}>© 2018 Copyright</p>
+        <p style={styles.copyRight}>阿里巴巴集团 © 2018 版权所有</p>
       </div>
     </div>
   );
