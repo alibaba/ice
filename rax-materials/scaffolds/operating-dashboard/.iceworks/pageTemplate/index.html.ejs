@@ -1,15 +1,16 @@
 <style>
   .container {
     padding: 0;
+    height: 100%;
   }
 </style>
 
 <template>
-  <view class="container">
+  <scroll-view class="container" :scroll-y="true">
     <%_ blocks.forEach(function(block) { _%>
     <<%= block.name %>></<%= block.name %>>
     <%_ }); _%>
-  </view>
+  </scroll-view>
 </template>
 
 <script>
