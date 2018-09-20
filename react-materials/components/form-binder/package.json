@@ -26,7 +26,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@icedesign/base": "0.x",
     "async-validator": "^1.8.1",
     "prop-types": "^15.5.8"
   },
