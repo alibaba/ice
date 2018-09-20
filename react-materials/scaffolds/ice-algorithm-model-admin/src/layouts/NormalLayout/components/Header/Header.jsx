@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
   static displayName = 'Header';
@@ -16,20 +17,20 @@ export default class Header extends Component {
     return (
       <div style={styles.header}>
         <div style={styles.logo}>
-          <a href="/" style={styles.logoLink}>
+          <Link to="/" style={styles.logoLink}>
             算法模型服务平台
-          </a>
+          </Link>
         </div>
         <ul style={styles.nav}>
           <li style={styles.navItem}>
-            <a href="/" style={{ ...styles.navItemLink, ...styles.active }}>
+            <Link to="/" style={{ ...styles.navItemLink, ...styles.active }}>
               首页
-            </a>
+            </Link>
           </li>
           <li style={styles.navItem}>
-            <a href="/#/model/performance" style={styles.navItemLink}>
+            <Link to="/model/performance" style={styles.navItemLink}>
               模型服务
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
