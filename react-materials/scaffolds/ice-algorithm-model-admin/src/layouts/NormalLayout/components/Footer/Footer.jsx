@@ -25,7 +25,7 @@ const Footer = () => {
           <Col l="8">
             <h3 style={styles.title}>使用答疑群</h3>
             <img
-              src="https://img.alicdn.com/tfs/TB1id_cbHvpK1RjSZPiXXbmwXXa-993-1280.png"
+              src="https://yunqi.youku.com/2018/hangzhou/schedule?day=4&performanceId=85"
               alt="qr-code"
               style={styles.qrcode}
             />
