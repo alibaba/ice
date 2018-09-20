@@ -1,0 +1,69 @@
+<style>
+  .category-window {
+    display: flex;
+    flex-direction: row;
+    padding-top: 40rem;
+    position: relative;
+  }
+
+  .category-title-wrapper {
+    position: absolute;
+    top: 20rem;
+    left: 0rem;
+    z-index: 10;
+    background-image: linear-gradient(to right, #2fe8ba 0%, #02cd9a 100%);
+    height: 58rem;
+    line-height: 58rem;
+    color: #fff;
+    font-size: 32rem;
+    padding: 0 40rem;
+    border-top-right-radius: 29rem;
+    border-bottom-right-radius: 29rem;
+  }
+
+  .cover-wrapper {
+    width: 500rem;
+    height: 250rem;
+    position: relative;
+  }
+
+  .cover {
+    width: 500rem;
+    height: 250rem;
+  }
+
+  .cover-title {
+    position: absolute;
+    color: #fff;
+    bottom: 20rem;
+    left: 20rem;
+    z-index: 10;
+    font-size: 24rem;
+  }
+
+  .topic-wrapper {
+    width: 250rem;
+    height: 250rem;
+  }
+
+  .topic {
+    width: 250rem;
+    height: 250rem;
+  }
+</style>
+
+<template>
+  <view class="category-window">
+    <view class="category-title-wrapper">
+      每日好店
+    </view>
+    <view class="cover-wrapper">
+      <image class="cover" src="https://gw.alicdn.com/tfscom/img.alicdn.com/imgextra/i2/927694817/TB2UEBAmLNNTKJjSspeXXaSwpXa_!!927694817-0-beehive-scenes.jpg"></image>
+      <text class="cover-title">先别买苹果X，更大的屏幕来了</text>
+    </view>
+    <view class="topic-wrapper">
+      <image class="topic" src="https://gw.alicdn.com/tfscom/img.alicdn.com/imgextra/i1/119252480/TB27z.XbUMgYeJjSZFGXXXsMXXa_!!119252480-0-beehive-scenes.jpg"></image>
+    </view>
+  </view>
+
+</template>
