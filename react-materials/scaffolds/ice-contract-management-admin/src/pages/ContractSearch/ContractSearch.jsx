@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import SearchFilter from './components/SearchFilter';
+import SearchFilter from '../../components/SearchFilter';
 import ContractTable from '../../components/ContractTable';
 
 export default class ContractSearch extends Component {
