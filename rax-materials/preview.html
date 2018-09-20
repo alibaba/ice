@@ -62,8 +62,22 @@
 
 <body>
   <div class="iphone">
-    <iframe src="https://alibaba.github.io/ice/rax-materials/miniapp-lite/index.html"></iframe>
+    <iframe id="iframe" src=""></iframe>
   </div>
+  <script>
+    function getUrlParameter(name) {
+      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+      var results = regex.exec(location.search);
+      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+    var href = getUrlParameter('href');
+    if (href) {
+      var iframe = document.getElementById('iframe');
+      iframe.src = href;
+    }
+
+  </script>
 </body>
 
 </html>
