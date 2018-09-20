@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <!-- Manifest -->
+  <link rel="manifest" href="<%= webpackConfig.output.publicPath %>manifest.json">
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="<%= webpackConfig.output.publicPath %>favicon.png">
+  <!-- Apply touch icon -->
+  <link rel="apple-touch-icon" sizes="128x128" href="<%= webpackConfig.output.publicPath %>images/icons/icon-128x128.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="<%= webpackConfig.output.publicPath %>images/icons/icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="<%= webpackConfig.output.publicPath %>images/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="<%= webpackConfig.output.publicPath %>images/icons/icon-192x192.png">
+  <link rel="apple-touch-icon" sizes="384x384" href="<%= webpackConfig.output.publicPath %>images/icons/icon-384x384.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="<%= webpackConfig.output.publicPath %>images/icons/icon-512x512.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="<%= webpackConfig.output.publicPath %>images/icons/icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="96x96" href="<%= webpackConfig.output.publicPath %>images/icons/icon-96x96.png">
+  <!-- msapplication  -->
+  <meta name="msapplication-TileImage" content="<%= webpackConfig.output.publicPath %>images/icons/icon-144x144.png">
+  <meta name="msapplication-TileColor" content="#3080fe">
+  <title>Rax Miniapp App</title>
+  <style>
+    html {
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      line-height: 1.6;
+      font-family: -apple-system-font, "Helvetica Neue", sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0;
+    }
+
+    a img {
+      border: 0;
+    }
+
+    a {
+      text-decoration: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <%= htmlWebpackPlugin.options.registerServiceWorker %>
+</body>
+
+</html>
