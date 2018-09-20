@@ -1,0 +1,29 @@
+{
+  "name": "nested-tables-block",
+  "version": "1.0.0",
+  "description": "嵌套表格",
+  "author": "tangjinzhou <415800467@qq.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "vue",
+    "block"
+  ],
+  "dependencies": {
+    "@vue-materials/basic-container": "^1.0.0",
+    "vue": "^2.5.16",
+    "ant-design-vue": "^1.1.2"
+  },
+  "blockConfig": {
+    "name": "nested-tables",
+    "title": "嵌套表格",
+    "categories": [
+      "表格"
+    ],
+    "screenshot": "https://user-images.githubusercontent.com/6937879/45798142-34882f00-bcdb-11e8-93c3-c020e87d6e60.png"
+  }
+}
