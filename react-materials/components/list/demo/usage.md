@@ -9,9 +9,8 @@ importStyle: true
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import List from '@icedesign/list';
+import List, { Item } from '@icedesign/list';
 
-const ListItem = List.Item;
 
 class App extends Component {
 
@@ -35,7 +34,7 @@ class App extends Component {
         >
           {dataSource.map((value, index) => {
             return (
-              <ListItem
+              <Item
                 key={index}
                 style={{
                   background: '#4aa',
@@ -52,7 +51,7 @@ class App extends Component {
                 >
                   {value.text}
                 </div>
-              </ListItem>
+              </Item>
             );
           })}
         </List>

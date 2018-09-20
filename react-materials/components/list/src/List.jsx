@@ -4,11 +4,12 @@ import omit from 'lodash.omit';
 /**
  * List容器组件
  */
-const List = ({ column, spacing = 10, style, children }) => {
+const List = (props) => {
+  const { column, spacing = 10, style, children } = props;
   const { width } = style;
   return (
     <div
-      {...omit(this.props, ['column', 'spacing'])}
+      {...omit(props, ['column', 'spacing'])}
       style={{
         display: 'flex',
         flexFlow: 'row wrap',
