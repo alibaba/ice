@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/list",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "列表组件",
   "files": [
     "src/",
