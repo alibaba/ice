@@ -71,12 +71,11 @@
       var results = regex.exec(location.search);
       return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     };
-    var href = getUrlParameter('href');
-    if (href) {
+    var href = getUrlParameter('page');
+    if (page) {
       var iframe = document.getElementById('iframe');
-      iframe.src = href;
+      iframe.src = page;
     }
-
   </script>
 </body>
 
