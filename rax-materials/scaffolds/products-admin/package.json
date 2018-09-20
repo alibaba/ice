@@ -1,7 +1,8 @@
 {
   "name": "@rax-materials/products-admin",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "商品管理后台适用于宝贝商品的上下架管理、单品操作等",
+  "homepage": "https://alibaba.github.io/ice/rax-materials/operating-dashboard/index.html",
   "keywords": [
     "ice-scaffold"
   ],
@@ -10,10 +11,10 @@
   },
   "scripts": {
     "start": "rax-scripts start --port 6002 --type=miniapp",
-    "build": "rax-scripts build --type=miniapp"
+    "build": "rax-scripts build --type=miniapp --public-path=https://alibaba.github.io/ice/rax-materials/operating-dashboard/"
   },
   "devDependencies": {
-    "rax-scripts": "^0.6.6-beta.0"
+    "rax-scripts": "^0.6.6-beta.1"
   },
   "scaffoldConfig": {
     "name": "products-admin",
