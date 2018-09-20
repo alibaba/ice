@@ -1,4 +1,4 @@
-# D2Admin ICE
+# D2Admin 项目起始模板
 
 只保留了基础功能，例如
 
@@ -9,7 +9,7 @@
 * 菜单和路由逻辑
 * ...
 
-[中文文档](http://d2admin.fairyever.com/zh/)
+[中文文档](http://app.d3collection.cn/d2-admin-doc/lastest/zh/)
 
 **完整版**
 
@@ -22,4 +22,3 @@
 [Github 仓库](https://github.com/d2-projects/d2-admin-start-kit) | 
 [码云仓库](https://gitee.com/fairyever/d2-admin-start-kit) | 
 [在线预览地址](https://fairyever.gitee.io/d2-admin-start-kit-preview/#/index)
-

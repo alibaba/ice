@@ -1,0 +1,8 @@
+// vue-splitpane 样式补丁
+
+@import '~@/assets/style/unit/color.scss';
+
+.splitter-pane-resizer {
+  background-color: $color-border-1 !important;
+  opacity: 1 !important;
+}

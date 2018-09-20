@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/vue-materials/blocks/BarChart"
   },
   "license": "MIT",
   "keywords": [
