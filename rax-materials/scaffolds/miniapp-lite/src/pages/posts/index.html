@@ -1,0 +1,141 @@
+<style>
+  .container {
+    margin-bottom: 20;
+    background: #fff;
+    width: 750;
+    height: 1334;
+  }
+
+  .swiper {
+    height: 225;
+  }
+
+  .swiperImage {
+    width: 750;
+  }
+
+  .content {
+    padding: 0 30;
+  }
+
+  .contentHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10 0;
+  }
+
+  .headTitle {
+    color: #333;
+  }
+
+  .headLink {
+    display: flex;
+    font-size: 24;
+    color: #999;
+  }
+
+  .arrowIcon {
+    width: 30;
+  }
+
+  .postItem {
+    display: flex;
+    justify-content: space-between;
+    height: 140;
+    padding: 20 0;
+    border-bottom: 1rem solid #f5f5f5;
+    background: #fff;
+  }
+
+  .itemBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .itemIntro {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .itemTitle {
+    font-size: 28;
+  }
+
+  .itemDesc {
+    color: #666;
+    font-size: 22;
+  }
+
+  .itemPrice {
+    color: red;
+    font-size: 24;
+  }
+
+  .itemImage {
+    width: 198;
+    height: 124;
+  }
+</style>
+
+<template>
+  <view class="container">
+    <swiper class="swiper">
+      <swiper-item v-for="item in items">
+        <image class="swiperImage" v-bind:src="item">
+      </swiper-item>
+    </swiper>
+    <view class="content">
+      <view class="contentHead">
+        <text class="headTitle">文章列表</text>
+        <text class="headLink">查看全部
+          <image class="arrowIcon" src="https://img.alicdn.com/tfs/TB14khkFqmWBuNjy1XaXXXCbXXa-200-200.png" /></text>
+      </view>
+      <view class="postItem" v-for="post in posts">
+        <view class="itemBody">
+          <view class="itemIntro">
+            <text class="itemTitle">{{post.title}}</text>
+            <text class="itemDesc">{{post.desc}}</text>
+          </view>
+          <text class="itemPrice">{{post.price}}</text>
+        </view>
+        <image class="itemImage" v-bind:src="post.image" />
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        items: [
+          "https://img.alicdn.com/tps/TB1ikP.NVXXXXaYXpXXXXXXXXXX-1000-300.jpg",
+          "https://img.alicdn.com/tps/TB1bewbNVXXXXc5XXXXXXXXXXXX-1000-300.png",
+          "https://img.alicdn.com/tps/TB1s1_JNVXXXXbhaXXXXXXXXXXX-1000-300.jpg"
+        ],
+        posts: [
+          {
+            title: "淘宝小程序教程",
+            desc: "服务移动开发者的平台",
+            price: "￥199.00",
+            image: "https://img.alicdn.com/tfs/TB1z0hiFqmWBuNjy1XaXXXCbXXa-394-246.png"
+          },
+          {
+            title: "设计指南",
+            desc: "提供一致的用户体验",
+            price: "￥299.00",
+            image: "https://img.alicdn.com/tfs/TB1z0hiFqmWBuNjy1XaXXXCbXXa-394-246.png"
+          },
+          {
+            title: "开发者工具",
+            desc: "让应用开发变的得心应手",
+            price: "￥399.00",
+            image: "https://img.alicdn.com/tfs/TB1z0hiFqmWBuNjy1XaXXXCbXXa-394-246.png"
+          }
+        ]
+      }
+    }
+  }
+</script>

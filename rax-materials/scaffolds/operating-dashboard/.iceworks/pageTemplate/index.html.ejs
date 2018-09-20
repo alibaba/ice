@@ -1,0 +1,37 @@
+<style>
+  .container {
+    padding: 0;
+  }
+</style>
+
+<template>
+  <view class="container">
+    <%_ blocks.forEach(function(block) { _%>
+    <<%= block.name %>></<%= block.name %>>
+    <%_ }); _%>
+  </view>
+</template>
+
+<script>
+  <%_ blocks.forEach(function(block) { _%>
+  import <%= block.className %> from '<%= block.path %>';
+  <%_ }); _%>
+  export default {
+    components: {
+      <%_ blocks.forEach(function(block) { _%>
+      <%= block.className %>,
+      <%_ }); _%>
+    },
+    data() {
+      return {
+        // initial data
+      };
+    },
+    methods: {
+      goto() {
+        console.log('history push');
+      }
+    }
+  };
+</script>
+

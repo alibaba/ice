@@ -1,0 +1,39 @@
+<style>
+  .container {
+    text-align: center;
+    color: #666;
+    height: 100%;
+  }
+</style>
+
+<template>
+  <scroll-view class="container" :scroll-y="true">
+    <search-input></search-input>
+    <banner></banner>
+    <data-overview></data-overview>
+    <todo-task></todo-task>
+    <fund-center></fund-center>
+  </scroll-view>
+</template>
+
+<script>
+  import searchInput from '../../components/search-input';
+  import banner from '../../components/banner';
+  import dataOverview from '../../components/data-overview';
+  import todoTask from '../../components/todo-task';
+  import fundCenter from '../../components/fund-center';
+  export default {
+    components: {
+      searchInput,
+      banner,
+      dataOverview,
+      todoTask,
+      fundCenter,
+    },
+    data() {
+      return {
+        // initial data
+      };
+    },
+  };
+</script>
