@@ -78,7 +78,7 @@
     },
     {
       "directory": "rax-materials",
-      "isMobile": true,
+      "platform": "mobile",
       "type": "rax"
     }
   ]

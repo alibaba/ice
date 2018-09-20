@@ -1,6 +1,6 @@
 <template>
   <el-dropdown class="d2-mr">
-    <span class="btn-text">你好 {{userInfo.name}}</span>
+    <span class="btn-text">你好 {{info.name}}</span>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item @click.native="logOff">
         <d2-icon name="power-off" class="d2-mr-5"/>
@@ -12,22 +12,21 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-
 export default {
   computed: {
-    ...mapState({
-      userInfo: state => state.d2admin.userInfo
-    })
+    ...mapState('d2admin/user', [
+      'info'
+    ])
   },
   methods: {
-    ...mapActions([
-      'd2adminLogout'
+    ...mapActions('d2admin/account', [
+      'logout'
     ]),
     /**
      * @description 登出
      */
     logOff () {
-      this.d2adminLogout({
+      this.logout({
         vm: this,
         confirm: true
       })

@@ -1,31 +1,41 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Icon } from '@icedesign/base';
+import { Table, Pagination, Icon, Feedback } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
-import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
 
 import EditorInfoDialog from './EditorInfoDialog';
 
-@DataBinder({
-  tableData: {
-    // 详细请求配置请参见 https://github.com/axios/axios
-    url: '/mock/operation-table-list.json',
-    params: {
-      page: 1,
-    },
-    defaultBindingData: {
-      list: [],
-      total: 100,
-      pageSize: 10,
-      currentPage: 1,
-    },
-  },
-  updateTableData: {
-    url: '/mock/update-table-item.json',
-  },
-})
+function mockList() {
+  function random(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  }
+  return Array.from({ length: 10 }).map((i, index) => {
+    return {
+      id: index + 1,
+      cover: random([
+        '//img.alicdn.com/bao/uploaded/i3/120976213/TB2O4nSnblmpuFjSZFlXXbdQXXa_!!120976213.jpg_240x240.jpg',
+        '//img.alicdn.com/bao/uploaded/i4/TB1GiPSinJ_SKJjSZPiYXH3LpXa_M2.SS2_100x100.jpg',
+        '//img.alicdn.com/bao/uploaded/i7/TB1QpMvk3n.PuJjSZFkYXI_lpXa_M2.SS2_100x100.jpg',
+      ]),
+      title: random([
+        '于momo2017秋冬新款背带裙复古格子连衣裙清新背心裙a字裙短裙子',
+        '日式天然玉米皮草编碗垫锅垫隔热垫茶垫加厚餐垫GD-29',
+        '日碗垫锅垫隔热垫茶垫加厚',
+      ]),
+      url: 'https://item.taobao.com/item.htm?id=558559528377',
+      type: random(['清单', '帖子', '搭配']),
+      publishTime: '17-04-28 20:29:20',
+      publishStatus: random(['已发布', '未发布']),
+      pushStatus: '已推送至订阅号',
+      operation: {
+        edit: true,
+      },
+    };
+  });
+}
+
 export default class OperationTable extends Component {
   static displayName = 'OperationTable';
 
@@ -35,7 +45,15 @@ export default class OperationTable extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      tableData: {
+        total: 100,
+        pageSize: 10,
+        currentPage: 1,
+        list: [],
+        __loading: true,
+      },
+    };
   }
 
   componentDidMount() {
@@ -45,10 +63,17 @@ export default class OperationTable extends Component {
   }
 
   fetchData = ({ page }) => {
-    this.props.updateBindingData('tableData', {
-      data: {
-        page,
-      },
+    const tableData = this.state.tableData;
+    tableData.currentPage = page;
+    tableData.__loading = true;
+
+    // 模拟请求 500 毫秒的效果，实际使用中只需要在请求完成后设置值即可
+    this.setState({ tableData: tableData }, () => {
+      setTimeout(() => {
+        tableData.__loading = false;
+        tableData.list = mockList();
+        this.setState({ tableData: tableData });
+      }, 500);
     });
   };
 
@@ -69,24 +94,9 @@ export default class OperationTable extends Component {
       value: record,
       onOk: (value) => {
         // 更新数据
-        this.props.updateBindingData(
-          'updateTableData',
-          {
-            params: {
-              // 复杂数据结构需要 JSON stringify
-              newItem: JSON.stringify(value),
-            },
-          },
-          () => {
-            // 更新完成之后，可以重新刷新列表接口
-            this.props.updateBindingData('tableData', {
-              data: {
-                page: 1,
-              },
-            });
-            EditorInfoDialog.hide();
-          }
-        );
+        console.log(value);
+        Feedback.toast.success('更新成功');
+        EditorInfoDialog.hide();
       },
       onClose: () => {
         EditorInfoDialog.hide();
@@ -126,13 +136,11 @@ export default class OperationTable extends Component {
   };
 
   changePage = (currentPage) => {
-    this.fetchData({
-      page: currentPage,
-    });
+    this.fetchData({ page: currentPage });
   };
 
   render() {
-    const tableData = this.props.bindingData.tableData;
+    const tableData = this.state.tableData;
 
     return (
       <div className="operation-table">

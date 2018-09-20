@@ -1,19 +1,11 @@
 {
-  "name": "@vue-materials/{{name}}-block",
+  "name": "{{name}}-block",
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
   "files": ["src/","lib/"],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice"
-  },
   "license": "MIT",
   "keywords": ["ice", "vue", "block"],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
   "dependencies": {
     "@vue-materials/basic-container": "^1.0.0",
     "vue": "^2.5.16"

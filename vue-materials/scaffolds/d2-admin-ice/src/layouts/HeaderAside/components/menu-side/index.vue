@@ -1,17 +1,17 @@
 <template>
   <div class="d2-layout-header-aside-menu-side">
     <el-menu
-      :collapse="isMenuAsideCollapse"
+      :collapse="asideCollapse"
       :unique-opened="true"
       :default-active="active"
       ref="menu"
       @select="handleMenuSelect">
-      <template v-for="(menu, menuIndex) in menuAside">
+      <template v-for="(menu, menuIndex) in aside">
         <d2-layout-header-aside-menu-item v-if="menu.children === undefined" :menu="menu" :key="menuIndex"/>
         <d2-layout-header-aside-menu-sub v-else :menu="menu" :key="menuIndex"/>
       </template>
     </el-menu>
-    <div v-if="menuAside.length === 0 && !isMenuAsideCollapse" class="d2-layout-header-aside-menu-empty">
+    <div v-if="aside.length === 0 && !asideCollapse" class="d2-layout-header-aside-menu-empty" flex="dir:top main:center cross:center">
       <d2-icon name="inbox"/>
       <span>没有侧栏菜单</span>
     </div>
@@ -19,12 +19,11 @@
 </template>
 
 <script>
-import BScroll from 'better-scroll'
 import { mapState } from 'vuex'
 import menuMixin from '../mixin/menu'
 import d2LayoutMainMenuItem from '../components/menu-item/index.vue'
 import d2LayoutMainMenuSub from '../components/menu-sub/index.vue'
-
+import BScroll from 'better-scroll'
 export default {
   name: 'd2-layout-header-aside-menu-side',
   mixins: [
@@ -42,14 +41,14 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      menuAside: state => state.d2admin.menuAside,
-      isMenuAsideCollapse: state => state.d2admin.isMenuAsideCollapse
-    })
+    ...mapState('d2admin/menu', [
+      'aside',
+      'asideCollapse'
+    ])
   },
   watch: {
     // 折叠和展开菜单的时候销毁 better scroll
-    isMenuAsideCollapse () {
+    asideCollapse (val) {
       this.scrollDestroy()
       setTimeout(() => {
         this.scrollInit()
@@ -60,7 +59,7 @@ export default {
       handler (val) {
         this.active = val[val.length - 1].path
         this.$nextTick(() => {
-          if (this.menuAside.length > 0) {
+          if (this.aside.length > 0) {
             this.$refs.menu.activeIndex = this.active
           }
         })
@@ -86,8 +85,12 @@ export default {
       })
     },
     scrollDestroy () {
-      if (this.BS) {
+      // https://github.com/d2-projects/d2-admin/issues/75
+      try {
         this.BS.destroy()
+      } catch (e) {
+        delete this.BS
+        this.BS = null
       }
     }
   }

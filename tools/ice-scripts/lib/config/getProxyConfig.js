@@ -18,7 +18,7 @@ module.exports = (opts = {}) => {
 
       if (pkgData.proxyConfig) {
         console.log(
-          colors.yellow('Info:'),
+          colors.green('Info:'),
           'package.json 存在 proxyConfig 代理配置'
         );
 
