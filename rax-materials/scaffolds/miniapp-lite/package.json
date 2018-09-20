@@ -1,8 +1,8 @@
 {
   "name": "@rax-materials/miniapp-lite",
   "version": "0.2.4",
-  "description": "一个简单的小程序模板，包含 tabbar 定义、页面切换流程",
-  "homepage": "https://alibaba.github.io/ice/rax-materials/miniapp-lite/index.html",
+  "description": "该模板适用于从 0 到 1 开始搭建小程序应用，含基础页面及 TabBar 设置",
+  "homepage": "https://alibaba.github.io/ice/rax-materials/preview.html?href=https://alibaba.github.io/ice/rax-materials/miniapp-lite/index.html",
   "keywords": [
     "ice-scaffold"
   ],
@@ -18,9 +18,9 @@
   },
   "scaffoldConfig": {
     "name": "miniapp-lite",
-    "title": "Miniapp Lite",
+    "title": "Miniapp lite",
     "type": "rax",
     "appType": "rax",
-    "snapshot": "https://img.alicdn.com/tfs/TB1Uk4rxXooBKNjSZPhXXc2CXXa-1242-2208.png"
+    "snapshot": "https://img.alicdn.com/tfs/TB1pDH_bQvoK1RjSZPfXXXPKFXa-750-1334.png"
   }
 }
