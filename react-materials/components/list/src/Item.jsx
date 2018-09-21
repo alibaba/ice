@@ -1,27 +1,24 @@
-import React from 'react';
-
-/**
+import React, { Component } from 'react';
+ /**
  * List中每个单元对应组件
  */
-const Item = ({ children, width, spacing, style }) => {
-  return (
-    <div
-      style={{
+export default class ListItem extends Component {
+  render() {
+    const {children, width, spacing, style} = this.props;
+    return (
+      <div style={{
         position: 'relative',
         overflow: 'hidden',
         marginRight: `${spacing}px`,
-        marginBottom: `${spacing}px`,
-      }}
-    >
-      <div
-        style={{
+        marginBottom: `${spacing}px`
+      }}>
+        <div style={{
           ...style,
-          width,
-        }}
-      >
-        {children}
+          width
+        }}>
+          {children}
+        </div>
       </div>
-    </div>
-  );
-};
-export default Item;
+    );
+  }
+}
