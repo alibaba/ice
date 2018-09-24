@@ -30,10 +30,10 @@
 
 <template>
   <scroll-view style="height: 100%" :scroll-y="true" scroll-with-animation>
-    <navigator v-bind:url="item.url" v-for="item in items">
+    <navigator :url="item.url" v-for="item in items">
       <view class="scroll-view-item">
         <view class="itemBody">
-          <image class="itemIcon" v-bind:src="item.icon" />
+          <image class="itemIcon" :src="item.icon" />
           <text>{{item.text}}</text>
         </view>
         <image class="arrowIcon" src="https://img.alicdn.com/tfs/TB14khkFqmWBuNjy1XaXXXCbXXa-200-200.png" />
