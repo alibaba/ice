@@ -181,8 +181,8 @@ return (
   <Switch
     name="selected" 
     valueKey="checked" // Switch 接收的属性是 `checked`
-    valueFormatter={(selected) => {return selected === 1}} // 转换为 boolean 传给 switch
-    valueTransformer={(checked) => {return checked ? 1 : 0}} //  返回值转换为 number 给表单
+    valueTransformer={(selected) => {return selected === 1}} // 转换为 boolean 传给 switch
+    valueFormatter={(checked) => {return checked ? 1 : 0}} //  返回值转换为 number 给表单
   />
 </FormBinder>
 ```
