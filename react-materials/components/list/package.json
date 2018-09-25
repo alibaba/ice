@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/list",
-  "version": "0.1.3",
+  "version": "0.1.6",
   "description": "列表组件",
   "files": [
     "src/",
@@ -28,8 +28,8 @@
     "lodash.omit": "^4.5.0"
   },
   "devDependencies": {
+    "ice-devtools": "latest",
     "react": "^16.3.0",
-    "react-dom": "^16.3.0",
-    "ice-devtools": "latest"
+    "react-dom": "^16.3.0"
   }
 }

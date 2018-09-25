@@ -1,0 +1,34 @@
+<style>
+  .container {
+    text-align: center;
+    color: #666;
+    height: 100%;
+  }
+</style>
+
+<template>
+  <scroll-view class="container" :scroll-y="true">
+    <account-shop></account-shop>
+    <product-detail></product-detail>
+    <shop-tools></shop-tools>
+  </scroll-view>
+</template>
+
+<script>
+  import accountShop from './blocks/accountShop';
+  import productDetail from './blocks/productDetail';
+  import shopTools from './blocks/shopTools';
+
+  export default {
+    components: {
+      accountShop,
+      productDetail,
+      shopTools,
+    },
+    data() {
+      return {
+        // initial data
+      };
+    },
+  };
+</script>

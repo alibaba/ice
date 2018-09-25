@@ -1,4 +1,4 @@
-import React, {Component, cloneElement, Children} from 'react';
+import React, { Component, cloneElement, Children } from 'react';
 import omit from 'lodash.omit';
 
 /**
@@ -6,29 +6,29 @@ import omit from 'lodash.omit';
  */
 export default class List extends Component {
   render() {
-    const {column, spacing = 10, style, children} = this.props;
-    const {width} = style;
-
+    const { column, spacing = 10, style, children } = this.props;
+    const { width } = style;
     return (
-      <div {...omit(this.props, ['column', 'spacing'])}
+      <div
+        {...omit(this.props, ['column', 'spacing'])}
         style={{
           display: 'flex',
           flexFlow: 'row wrap',
           justifyContent: 'flex-start',
-          border: '1px solid #fff',
+          border: '1px solid transparent',
           paddingTop: `${spacing}px`,
           paddingLeft: `${spacing}px`,
-          ...style
+          ...style,
         }}
       >
         {Children.map(children, (child, index) => {
           const cloneChildren = cloneElement(child, {
             width: (width - spacing * (column + 1) - 2) / column,
-            spacing
+            spacing,
           });
           return cloneChildren;
         })}
       </div>
     );
   }
-}
+};

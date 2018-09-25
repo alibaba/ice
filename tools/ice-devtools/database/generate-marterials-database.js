@@ -346,7 +346,7 @@ function appendFieldFromNpm(item) {
 }
 
 // entry and run
-module.exports = function main(materialName, materialPath, options) {
+module.exports = function generateMaterialsDatabases(materialName, materialPath, options) {
   const distDir = path.resolve(process.cwd(), 'build');
   mkdirp.sync(distDir);
 
@@ -370,7 +370,7 @@ module.exports = function main(materialName, materialPath, options) {
     .then(([blocks, layouts, scaffolds]) => {
       const data = {
         name: materialName, // 物料池名
-        type: options.type, // vue or react,...
+        ...options,
         blocks,
         layouts,
         scaffolds,

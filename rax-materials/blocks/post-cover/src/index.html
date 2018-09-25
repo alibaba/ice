@@ -1,0 +1,67 @@
+<style>
+  .cover-wrapper {
+    width: 750rpx;
+    height: 422rpx;
+    position: relative;
+  }
+
+  .cover {
+    width: 750rpx;
+    height: 422rpx;
+  }
+
+  .title {
+    position: absolute;
+    font-size: 32rpx;
+    bottom: 20rpx;
+    left: 20rpx;
+    z-index: 10;
+    color: #fff;
+  }
+
+  .title-background {
+    position: absolute;
+    z-index: 9;
+    bottom: 0;
+    left: 0;
+    width: 750rpx;
+    height: 120rpx;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%);
+  }
+
+  .post-intro {
+    line-height: 42rpx;
+    padding: 10rpx 20rpx;
+  }
+
+  .intro-text {
+    font-size: 28rpx;
+    color: #666;
+  }
+
+  .read-wrapper {
+    text-align: right;
+    padding: 0 20rpx;
+  }
+
+  .read-text {
+    font-size: 24rpx;
+    color: #999;
+  }
+</style>
+
+<template>
+  <view class="post-cover">
+    <view class="cover-wrapper">
+      <image class="cover" src="https://gw.alicdn.com/imgextra/i2/614775745/TB25pyJX0qgF1JjSsppXXaBNXXa_!!614775745-0-beehive-scenes.jpg"></image>
+      <text class="title">夏日衬衫时髦有范又有型，还充满设计感</text>
+      <view class="title-background"></view>
+    </view>
+    <view class="post-intro">
+      <text class="intro-text">不管在什么季节呀~衬衫总是永恒的时尚经典，不知道什么潮流单品适合自己的时候，衬衫总能恰</text>
+    </view>
+    <view class="read-wrapper">
+      <text class="read-text">阅读数2000</text>
+    </view>
+  </view>
+</template>
