@@ -86,7 +86,7 @@
   <view class="container">
     <swiper class="swiper">
       <swiper-item v-for="item in items">
-        <image class="swiperImage" v-bind:src="item">
+        <image class="swiperImage" :src="item">
       </swiper-item>
     </swiper>
     <view class="content">
@@ -103,7 +103,7 @@
           </view>
           <text class="itemPrice">{{post.price}}</text>
         </view>
-        <image class="itemImage" v-bind:src="post.image" />
+        <image class="itemImage" :src="post.image" />
       </view>
     </view>
   </view>
