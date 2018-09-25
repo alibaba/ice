@@ -1,0 +1,62 @@
+{
+  "name": "@icedesign/custom-react-template",
+  "version": "1.0.0",
+  "description": "custom react template",
+  "dependencies": {
+    "@antv/data-set": "^0.8.5",
+    "@icedesign/base": "^0.2.0",
+    "@icedesign/container": "^0.1.2",
+    "@icedesign/data-binder": "^0.1.1",
+    "@icedesign/ellipsis": "^0.1.1",
+    "@icedesign/form-binder": "^0.1.2",
+    "@icedesign/img": "^0.1.1",
+    "@icedesign/label": "^0.1.1",
+    "@icedesign/layout": "^0.1.1",
+    "@icedesign/menu": "^0.1.1",
+    "@icedesign/skin": "^0.1.0",
+    "@icedesign/styled-menu": "^0.1.1",
+    "axios": "^0.17.1",
+    "bizcharts": "latest",
+    "classnames": "^2.2.5",
+    "enquire-js": "^0.1.2",
+    "foundation-symbol": "^0.1.0",
+    "history": "^4.7.2",
+    "hoist-non-react-statics": "^2.5.5",
+    "invariant": "^2.2.4",
+    "lodash": "^4.17.10",
+    "path-to-regexp": "^2.2.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "5.0.0-alpha.6",
+    "redux": "3.6.0",
+    "redux-thunk": "^2.3.0",
+    "react": "^16.4.1",
+    "react-document-title": "^2.0.3",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.6.0"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/skin",
+    "entry": "src/index.js",
+    "localization": false
+  }
+}

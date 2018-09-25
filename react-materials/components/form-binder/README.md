@@ -181,11 +181,13 @@ return (
   <Switch
     name="selected" 
     valueKey="checked" // Switch 接收的属性是 `checked`
-    valueTransformer={(selected) => {return selected === 1}}
-    valueTransformer={(checked) => {return checked ? 1 : 0}}
+    valueTransformer={(selected) => {return selected === 1}} // 转换为 boolean 传给 switch
+    valueFormatter={(checked) => {return checked ? 1 : 0}} //  返回值转换为 number 给表单
   />
 </FormBinder>
 ```
+
+在线实例： <https://codesandbox.io/embed/w78wrkx81l>
 
 ## 双向绑定协议
 

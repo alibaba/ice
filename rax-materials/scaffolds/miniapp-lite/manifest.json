@@ -1,0 +1,46 @@
+{
+  "name": "miniapp",
+  "short_name": "App",
+  "icons": [
+    {
+      "src": "/images/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#3080fe",
+  "background_color": "#f4f4f4",
+  "manifest_version": 1,
+  "pages": {
+    "home": "src/pages/home/index"
+  },
+  "homepage": "home",
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ff5000",
+    "navigationBarTitleText": "小程序",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#515151",
+    "selectedColor": "#8742fa",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "#999999",
+    "position": "bottom",
+    "list": [
+      {
+        "pageName": "home",
+        "text": "首页",
+        "iconPath": "https://gw.alicdn.com/tfs/TB1GIB9XpzqK1RjSZFoXXbfcXXa-200-200.png",
+        "selectedIconPath": "https://gw.alicdn.com/tfs/TB1GIB9XpzqK1RjSZFoXXbfcXXa-200-200.png"
+      }
+    ]
+  }
+}

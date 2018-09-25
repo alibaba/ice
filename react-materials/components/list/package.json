@@ -1,0 +1,35 @@
+{
+  "name": "@icedesign/list",
+  "version": "0.1.6",
+  "description": "列表组件",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "component"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "lodash.omit": "^4.5.0"
+  },
+  "devDependencies": {
+    "ice-devtools": "latest",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  }
+}
