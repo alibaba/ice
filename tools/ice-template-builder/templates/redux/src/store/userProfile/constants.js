@@ -1,0 +1,9 @@
+/*
+ *
+ * userProfile constants
+ *
+ */
+
+export const USER_PROFILE_REQUEST = 'PRO/USER_PROFILE_REQUEST';
+export const USER_PROFILE_FAILURE = 'PRO/USER_PROFILE_FAILURE';
+export const USER_PROFILE_SUCCESS = 'PRO/USER_PROFILE_SUCCESS';

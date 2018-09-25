@@ -3,7 +3,14 @@ import { Icon, Tab } from '@icedesign/base';
 import cx from 'classnames';
 
 import PreviewLayout from '../PreviewLayout';
+
+// import BasicForm from '../Form/BasicForm';
+// import AsideForm from '../Form/AsideForm';
+// import HeaderForm from '../Form/HeaderForm';
+// import FooterForm from '../Form/FooterForm';
+
 import * as BuilderForm from '../Form';
+
 import './LayoutBuilder.scss';
 
 const TabPane = Tab.TabPane;
@@ -25,33 +32,64 @@ export default class LayoutBuilder extends Component {
 
   defaultLayoutConfig = () => {
     return {
-      name: 'CustomLayout',
-      directory: 'layouts',
-      layout: 'fluid-layout', // boxed、fluid
+      // 模板名称
+      name: 'app',
+
+      // 模板类型: layout、redux、mobx
+      type: 'redux',
+
+      // 下载到指定的目录
+      directory: __dirname,
+
+      // 是否启用自定义模板名称
       enableName: true,
+
+      // 是否启用主题
       enableTheme: true,
+
+      // 布局方式: fluid-layout、boxed-layout
+      layout: 'fluid-layout',
+
+      // 主题配置
       themeConfig: {
         theme: 'dark',
         primaryColor: 'red',
         secondaryColor: '#3080fe',
       },
+
+      // 是否启用 Header
       header: {
+        position: 'static',
+        width: 'full-width',
         enabled: true,
-        position: 'fixed', // fixed、 static
-        width: 'full-width', // full、elastic
       },
+
+      // 是否启用 Aside
       aside: {
-        enabled: true,
-        position: 'static', // embed-fixed、overlay-fixed、 static
-        mode: 'vertical', // vertical、horizontal
+        position: 'embed-fixed',
+        mode: 'vertical',
         width: 200,
         collapsed: false,
-      },
-      footer: {
         enabled: true,
-        position: 'fixed', // fixed, static
-        width: 'full-width', // full、elastic
       },
+
+      // 是否启用 Footer
+      footer: {
+        position: 'fixed',
+        width: 'full-width',
+        enabled: true,
+      },
+
+      // Redux 配置
+      redux: {
+        enabled: true,
+        mockModule: true,
+        authorityModule: true,
+        registerLoginModule: true,
+      },
+
+      // Mobx 配置
+      mobx: {},
     };
   };
 
@@ -92,17 +130,16 @@ export default class LayoutBuilder extends Component {
             <Icon type="set" className="fa-spin" />
           </div>
           <Tab onChange={this.handleChange}>
-            <TabPane key="1" tab="基础配置">
+            <TabPane key="1" tab="主题">
               <BuilderForm.BasicForm {...formProps} />
             </TabPane>
-            <TabPane key="2" tab="顶部导航配置">
+            <TabPane key="2" tab="布局">
               <BuilderForm.HeaderForm {...formProps} />
-            </TabPane>
-            <TabPane key="3" tab="侧边导航配置">
               <BuilderForm.AsideForm {...formProps} />
-            </TabPane>
-            <TabPane key="4" tab="页脚配置">
               <BuilderForm.FooterForm {...formProps} />
+            </TabPane>
+            <TabPane key="5" tab="高级">
+              <BuilderForm.AdvancedForm {...formProps} />
             </TabPane>
           </Tab>
         </div>
