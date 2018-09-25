@@ -1,7 +1,5 @@
 /*
- *
  * profile actions
- *
  */
 
 import {

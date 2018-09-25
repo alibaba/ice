@@ -1,7 +1,5 @@
 /*
- *
  * userLogout actions
- *
  */
 
 import { push } from 'react-router-redux';
