@@ -1,0 +1,29 @@
+<style>
+  .container {
+    text-align: center;
+    margin-top: 25;
+    margin-bottom: 35;
+  }
+
+  .title {
+    color: #8c8c8c;
+    border-bottom: 1 solid #8c8c8c;
+    display: inline;
+    padding: 10;
+    font-weight: 200;
+    font-size: 44;
+
+  }
+</style>
+
+<template>
+  <view class="container">
+    <text class="title">{{title}}</text>
+  </view>
+</template>
+
+<script>
+  export default {
+    props: ['title']
+  }
+</script>

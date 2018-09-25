@@ -1,13 +1,14 @@
-const { join, extname, dirname } = require('path');
 const { createReadStream, createWriteStream, writeFileSync } = require('fs');
-const rimraf = require('rimraf');
-const mkdirp = require('mkdirp');
-const colors = require('colors');
-const chokidar = require('chokidar');
-const glob = require('glob');
 const babel = require('babel-core');
-const propsSchemaGenerator = require('props-schema-generator');
+const chokidar = require('chokidar');
+const colors = require('colors');
 const dtsGenerator = require('typescript-definition-generator');
+const glob = require('glob');
+const mkdirp = require('mkdirp');
+const path = require('path');
+const propsSchemaGenerator = require('props-schema-generator');
+const rimraf = require('rimraf');
+
 const getBabelConfig = require('./config/getBabelConfig');
 const ComponentStyleGenerator = require('../shared/ComponentStyleGenerator');
 
@@ -20,27 +21,28 @@ const babelOpt = getBabelConfig();
 module.exports = function componentBuild(workDir, opts) {
   opts = opts || {};
 
-  const srcDir = join(workDir, 'src');
-  const libDir = join(workDir, 'lib');
+  const srcDir = path.join(workDir, 'src');
+  const libDir = path.join(workDir, 'lib');
   console.log('clean', libDir);
   rimraf.sync(libDir);
 
   if (opts.watch) {
     const watcher = chokidar.watch(GLOB_PATTERN, {
       persistent: true,
-      cwd: srcDir
+      cwd: srcDir,
     });
     console.log(colors.bgGreen('Enable Watch Compile...'));
-    watcher
-      .on('change', (path) => {
-        switch (extname(path)) {
-          case '.js':
-          case '.jsx':
-            compileJS(path); break;
-          default:
-            copyTask(path); break;
-        }
-      });
+    watcher.on('change', (filePath) => {
+      switch (path.extname(filePath)) {
+        case '.js':
+        case '.jsx':
+          compileJS(filePath);
+          break;
+        default:
+          copyTask(filePath);
+          break;
+      }
+    });
   }
 
   /* compile and copy */
@@ -52,19 +54,21 @@ module.exports = function componentBuild(workDir, opts) {
   const files = glob.sync(GLOB_PATTERN, globOpt);
 
   for (let i = 0, l = files.length; i < l; i++) {
-    switch (extname(files[i])) {
+    switch (path.extname(files[i])) {
       case '.js':
       case '.jsx':
-        compileJS(files[i]); break;
+        compileJS(files[i]);
+        break;
       default:
-        copyTask(files[i]); break;
+        copyTask(files[i]);
+        break;
     }
   }
 
   /* style generate */
   const styleGenerator = new ComponentStyleGenerator({
     destPath: libDir,
-    absoulte: false
+    absoulte: false,
   });
   const styleJSPath = styleGenerator.writeStyleJS();
   console.log(colors.green('Write style.js'));
@@ -73,37 +77,40 @@ module.exports = function componentBuild(workDir, opts) {
 
   /* propsSchema and d.ts */
   const propsSchema = propsSchemaGenerator('./src');
-  const propsSchemaDist = join(libDir, 'propsSchema.json');
+  const propsSchemaDist = path.join(libDir, 'propsSchema.json');
   if (propsSchema) {
     writeFileSync(propsSchemaDist, JSON.stringify(propsSchema, null, 2) + '\n');
     console.log(colors.green('Write propsSchema.json'));
-    dtsGenerator(propsSchema)
-      .then((dts) => {
-        // 生成 d.ts
-        const dtsDist = join(libDir, 'index.d.ts');
-        if (dts !== null) {
-          writeFileSync(dtsDist, dts.message);
-          console.log(colors.green('Write index.d.ts'));
-        }
-      });
+    dtsGenerator(propsSchema).then((dts) => {
+      // 生成 d.ts
+      const dtsDist = path.join(libDir, 'index.d.ts');
+      if (dts !== null) {
+        writeFileSync(dtsDist, dts.message);
+        console.log(colors.green('Write index.d.ts'));
+      }
+    });
   }
 
   function compileJS(file) {
-    const source = join(srcDir, file);
-    const dest = join(libDir, file);
-    // make sure dir exists
-    mkdirp.sync(dirname(dest));
+    const source = path.join(srcDir, file);
+    const dest = path.join(libDir, file);
+    const destData = path.parse(dest);
 
-    const { code, map } = babel.transformFileSync(source, babelOpt);
-    writeFileSync(dest, code, 'utf-8');
+    delete destData.base;
+    destData.ext = '.js';
+
+    // make sure dir exists
+    mkdirp.sync(destData.dir);
+    const { code } = babel.transformFileSync(source, babelOpt);
+    writeFileSync(path.format(destData), code, 'utf-8');
     console.log(colors.green(`Compile ${file}`));
   }
 
   function copyTask(file) {
-    const source = join(srcDir, file);
-    const dest = join(libDir, file);
+    const source = path.join(srcDir, file);
+    const dest = path.join(libDir, file);
     // make sure dir exists
-    mkdirp.sync(dirname(dest));
+    mkdirp.sync(path.dirname(dest));
 
     createReadStream(source)
       .pipe(createWriteStream(dest))
@@ -111,5 +118,4 @@ module.exports = function componentBuild(workDir, opts) {
         console.log(colors.green(`Copy ${file}`));
       });
   }
-}
-
+};
