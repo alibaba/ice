@@ -69,7 +69,7 @@ export default class Header extends PureComponent {
                 <IceImg
                   height={40}
                   width={40}
-                  src="https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png"
+                  src={require('./images/avatar.png')}
                   className="user-avatar"
                 />
                 <div className="user-profile">
@@ -90,17 +90,20 @@ export default class Header extends PureComponent {
             <ul>
               <li className="user-profile-menu-item">
                 <Link to="/">
-                  <FoundationSymbol type="person" size="small" />我的主页
+                  <FoundationSymbol type="person" size="small" />
+                  我的主页
                 </Link>
               </li>
               <li className="user-profile-menu-item">
                 <Link to="/">
-                  <FoundationSymbol type="repair" size="small" />设置
+                  <FoundationSymbol type="repair" size="small" />
+                  设置
                 </Link>
               </li>
               <li className="user-profile-menu-item">
                 <Link to="/">
-                  <FoundationSymbol type="compass" size="small" />退出
+                  <FoundationSymbol type="compass" size="small" />
+                  退出
                 </Link>
               </li>
             </ul>
