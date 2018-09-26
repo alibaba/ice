@@ -11,7 +11,8 @@
     "ice-devtools-generate": "bin/ice-devtools-generate.js",
     "ice-devtools-build": "bin/ice-devtools-build.js",
     "ice-devtools-publish": "bin/ice-devtools-publish.js",
-    "ice-devtools-buildblock": "bin/ice-devtools-build-block.js"
+    "ice-devtools-buildblock": "bin/ice-devtools-build-block.js",
+    "ice-devtools-sync": "bin/ice-devtools-sync.js"
   },
   "author": {
     "name": "ICE Team",
