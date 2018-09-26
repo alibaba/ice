@@ -1,6 +1,6 @@
 {
   "name": "ice-koa-react-scaffold",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "server/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "client/src/index.js",
+    "entry": "client/index.js",
     "localization": false
   },
   "proxyConfig": {
