@@ -13,7 +13,8 @@ databases
 build
 .vscode/
 tools/ice-scripts/lib/ICE_CA
-
+tools/ice-devtools/chore/**
+!tools/ice-devtools/chore/.gitkeep
 npmrc
 tools/extract-css-assets-webpack-plugin/test/actual/
 tools/extract-css-assets-webpack-plugin/lib/
