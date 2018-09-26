@@ -21,9 +21,7 @@ try {
     basicPackage: ['@alifd/next', '@icedesign/base'], // 主体包名称
     kit: 'ice-scripts', // 统计的来源
   });
-} catch (e) {
-  console.error(e);
-}
+} catch (e) {}
 
 validationSassAvailable()
   .then(() => {
