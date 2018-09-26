@@ -10,7 +10,7 @@ const BASE_URL = 'http://localhost:7001';
 const AUTH_HEADER_KEY = 'x-auth-token';
 const BLOCK_URL = `http://${BASE_URL}/auth_api/v1/npm/block`;
 const SCALLFOLD_URL = `http://${BASE_URL}/auth_api/v1/npm/scaffold`;
-const TOKEN_PATH = path.join(__dirname, '../shared/.token');
+const TOKEN_PATH = path.join(__dirname, '../chore/.token');
 async function tokenPrepare() {
   let token;
   const tokenExists = await pathExists(TOKEN_PATH);
@@ -18,6 +18,9 @@ async function tokenPrepare() {
     return await writeToken();
   }
   token = await readFile(TOKEN_PATH, 'utf-8');
+  if (!token) {
+
+  }
 
 }
 
