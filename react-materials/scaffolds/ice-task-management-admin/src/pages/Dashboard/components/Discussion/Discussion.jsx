@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import ContainerTitle from '../../../../components/ContainerTitle';
 import LineChart from '../LineChart';
 
 const data = [
@@ -55,13 +54,10 @@ export default class Commits extends Component {
   render() {
     return (
       <div>
-        <IceContainer style={styles.container}>
-          <ContainerTitle title="本周讨论" />
+        <IceContainer title="本周讨论">
           <LineChart cols={cols} data={data} axisdate="date" />
         </IceContainer>
       </div>
     );
   }
 }
-
-const styles = {};
