@@ -30,6 +30,7 @@ module.exports = function getWebpackConfigProd({ entry, buildConfig }) {
         }),
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
+            cssDeclarationSorter: false,
             reduceIdents: false,
             parser: require('postcss-safe-parser'),
           },
