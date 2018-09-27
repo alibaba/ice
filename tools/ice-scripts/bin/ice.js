@@ -10,6 +10,7 @@ program
   .version(packageInfo.version)
   .command('build', 'build project')
   .command('dev', 'start server')
+  .command('server', 'start a static assets server, alias `http-server`')
   .parse(process.argv);
 
 const proc = program.runningCommand;
