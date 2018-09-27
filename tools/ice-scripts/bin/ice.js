@@ -15,7 +15,6 @@ program
 program
   .command('build', 'build project')
   .command('dev', 'start server')
-  .command('server', 'start a static assets server, alias `http-server`');
 
 // output help information on unknown commands
 program.arguments('<command>').action((cmd) => {
