@@ -13,7 +13,7 @@ module.exports = function(opts) {
     throw new Error('package.json not exists.');
   }
 
-  const screenshotPath = 'screenshot.png';
+  const screenshotPath = path.join(opts.cwd, 'screenshot.png');
   const pkgInfo = require(pkgPath);
 
   (async () => {
@@ -32,8 +32,9 @@ module.exports = function(opts) {
           }
     );
 
-    console.info(path.resolve('screenshot.png'), 'created');
+    console.info(screenshotPath, 'created');
 
     server.close();
+    opts.cb && opts.cb();
   })();
 };

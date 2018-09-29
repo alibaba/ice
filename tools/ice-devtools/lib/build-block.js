@@ -21,14 +21,16 @@ function getconfig(cwd) {
 
   jsxfiles.forEach((item) => {
     const file = item.replace('.jsx', '');
-    entry[file] = path.resolve(item);
+    entry[file] = path.join(cwd, item);
     console.log('demo:', file);
   });
 
   const config = getWebpackConfig();
+  const outPath = path.join(cwd, process.env.BUILD_DEST || './');
+  console.log(outPath);
   config.entry = entry;
   config.output = {
-    path: path.resolve(process.env.BUILD_DEST || './'),
+    path: outPath,
     publicPath: './',
     filename: '[name].js',
   };
@@ -43,7 +45,7 @@ module.exports = function(opts) {
   if (!fs.existsSync(pkgPath)) {
     throw new Error('package.json not exists.');
   }
-
+  console.log(opts.cwd)
   const config = getconfig(opts.cwd);
   const spinner = ora('Building ...').start();
   webpack(config).run((error) => {
@@ -52,6 +54,7 @@ module.exports = function(opts) {
       console.log(error);
     } else {
       spinner.succeed('build success');
+      opts.cb && opts.cb();
     }
   });
 };
