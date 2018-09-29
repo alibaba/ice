@@ -10,4 +10,5 @@ require('commander')
   .command('screenshot', 'Create screenshot.png')
   .command('generate', 'Generate database json')
   .command('build-block', 'Build block demo')
+  .command('build-blocks', 'Build All block demos')
   .parse(process.argv);
