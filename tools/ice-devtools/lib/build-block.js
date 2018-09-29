@@ -22,12 +22,11 @@ function getconfig(cwd) {
   jsxfiles.forEach((item) => {
     const file = item.replace('.jsx', '');
     entry[file] = path.join(cwd, item);
-    console.log('demo:', file);
+    // console.log('demo:', file);
   });
 
   const config = getWebpackConfig();
   const outPath = path.join(cwd, process.env.BUILD_DEST || './');
-  console.log(outPath);
   config.entry = entry;
   config.output = {
     path: outPath,
@@ -45,7 +44,7 @@ module.exports = function(opts) {
   if (!fs.existsSync(pkgPath)) {
     throw new Error('package.json not exists.');
   }
-  console.log(opts.cwd)
+
   const config = getconfig(opts.cwd);
   const spinner = ora('Building ...').start();
   webpack(config).run((error) => {
