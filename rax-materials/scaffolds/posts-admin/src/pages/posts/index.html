@@ -1,5 +1,5 @@
 <style>
-  .container {
+  .posts-container {
     margin-bottom: 20rpx;
     background: #fff;
     width: 750rpx;
@@ -13,21 +13,25 @@
   .swiperImage {
     width: 750rpx;
     height: 225rpx;
+    display: block;
   }
 
   .content {
-    padding: 0
+    padding: 0;
   }
 
   .contentHead {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10
+    padding: 10rpx;
+    height: 51.2rpx;
   }
 
   .headTitle {
     color: #333;
+    font-size: 32rpx;
+    line-height: 51.2rpx;
   }
 
   .headLink {
@@ -63,11 +67,13 @@
 
   .itemTitle {
     font-size: 28rpx;
+    line-height: 45rpx;
   }
 
   .itemDesc {
     color: #666;
     font-size: 22rpx;
+    line-height: 35.2rpx;
   }
 
   .itemPrice {
@@ -83,13 +89,12 @@
 </style>
 
 <template>
-  <view class="container">
+  <view class="posts-container">
     <swiper class="swiper">
       <swiper-item v-for="item in items">
         <image class="swiperImage" :src="item">
       </swiper-item>
-    </swiper>
-    <view class="content">
+    </swiper><view class="content">
       <view class="contentHead">
         <text class="headTitle">文章列表</text>
         <text class="headLink">查看全部
