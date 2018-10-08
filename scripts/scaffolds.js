@@ -2,12 +2,13 @@
  * 按照下载量和最新的规则对模板进行排序推荐
  */
 const scaffolds = [
+  'ice-voice-chat-admin',
+  'ice-asset-management-admin',
   'ice-application-management-admin',
   'ice-task-management-admin',
   'ice-monitor-dashboard',
   'ice-algorithm-model-admin',
   'ice-contract-management-admin',
-  'ice-asset-management-admin',
   'ice-aliyun-login',
   'ice-usertrack-admin',
   'ice-yunqi-homepage',
