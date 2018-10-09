@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import ToolbarButton from '../../ToolbarButton'
+import ToolbarButton from '../../components/ToolbarButton'
 
 const hasAlign = (value, foundAlign) => {
   return value.blocks.some(node => node.data.get('align') === foundAlign)
@@ -18,7 +17,6 @@ const alignStrategy = (change, align) => {
 }
 
 const createButton = (align, icon) => {
-    console.log(align, icon)
   return ({value, onChange}) => {
     return (
       <ToolbarButton

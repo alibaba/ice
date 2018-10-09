@@ -9,7 +9,7 @@ import { isKeyHotkey } from 'is-hotkey'
 import { injectGlobal } from 'emotion'
 import InsertImages from 'slate-drop-or-paste-images'
 import flatten from 'lodash.flatten';
-import Button from './ToolbarButton';
+import ToolbarButton from './components/ToolbarButton';
 import plugins from './plugins';
 
 injectGlobal`
@@ -36,18 +36,6 @@ injectGlobal`
     -webkit-font-smoothing: antialiased;
   }
 `
-// Add the plugin to your set of plugins...
-const editorPlugins = [
-  InsertImages({
-    insertImage: (transform, file) => {
-      return transform.insertBlock({
-        type: 'image',
-        isVoid: true,
-        data: { file }
-      })
-    }
-  })
-]
 
 const Icon = styled(({ className, ...rest }) => {
   return <span className={`material-icons ${className}`} {...rest} />
@@ -211,11 +199,29 @@ const RULES = [
   {
     deserialize(el, next) {
       const mark = MARK_TAGS[el.tagName.toLowerCase()]
+      let data = {};
+
+      if (el.style.backgroundColor) {
+        data.color = el.style.backgroundColor;
+      }
+
+      if (el.style.color) {
+        data.color = el.style.color;
+      }
+
+      if (el.style.fontSize) {
+        data.fontSize = el.style.fontSize;
+      }
+
+      if (el.style.letterSpacing) {
+        data.letterSpacing = el.style.letterSpacing;
+      }
 
       if (mark) {
         return {
           object: 'mark',
           type: mark,
+          data,
           nodes: next(el.childNodes),
         }
       }
@@ -231,6 +237,9 @@ const RULES = [
             return <u>{children}</u>
           case 'code':
             return <code>{children}</code>
+          case 'FONTCOLOR':
+            const style = {color: obj.data.get('color')}
+            return <span style={style}>{children}</span>
         }
       }
     },
@@ -319,7 +328,30 @@ const isCodeHotkey = isKeyHotkey('mod+`')
  * @type {Component}
  */
 
-class RichTextExample extends Component {
+class RichText extends Component {
+  constructor(props) {
+    super(props);
+
+    const customPlugins = flatten(
+      plugins
+        .map(plugin => plugin.plugins)
+        .filter(plugin => plugin)
+    );
+
+    // Add the plugin to your set of plugins...
+    this.plugins = [
+      InsertImages({
+        insertImage: (transform, file) => {
+          return transform.insertBlock({
+            type: 'image',
+            isVoid: true,
+            data: { file }
+          })
+        }
+      }),
+    ].concat(customPlugins)
+
+  }
   /**
    * Deserialize the initial editor value.
    *
@@ -327,7 +359,6 @@ class RichTextExample extends Component {
    */
 
   state = {
-    // value: Value.fromJSON(initialValue),
     value: serializer.deserialize(this.props.value)
   }
 
@@ -382,7 +413,6 @@ class RichTextExample extends Component {
         .map(plugin => plugin.toolbarButtons)
         .filter(buttons => buttons)
     );
-
     return (
       <div>
         <Toolbar>
@@ -395,10 +425,12 @@ class RichTextExample extends Component {
           {this.renderBlockButton('block-quote', 'format_quote')}
           {this.renderBlockButton('numbered-list', 'format_list_numbered')}
           {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
-          {pluginToolbarButtons.map((ToolbarButton) => {
+          {pluginToolbarButtons.map((ToolbarButton, index) => {
             return (
               <ToolbarButton
+                key={index}
                 value={value}
+                change={value.change()}
                 onChange={this.onChange}
               />
             )
@@ -407,7 +439,6 @@ class RichTextExample extends Component {
         <Editor
           spellCheck
           autoFocus
-          placeholder="Enter some rich text..."
           value={this.state.value}
           schema={this.schema}
           onPaste={this.onPaste}
@@ -415,8 +446,7 @@ class RichTextExample extends Component {
           onKeyDown={this.onKeyDown}
           renderNode={this.renderNode}
           renderMark={this.renderMark}
-          renderPlaceholder={this.renderPlaceholder}
-          plugins={editorPlugins}
+          plugins={this.plugins}
         />
       </div>
     )
@@ -434,7 +464,7 @@ class RichTextExample extends Component {
     const isActive = this.hasMark(type)
 
     return (
-      <Button
+      <ToolbarButton
         icon={icon}
         active={isActive}
         onMouseDown={event => this.onClickMark(event, type)}
@@ -462,7 +492,7 @@ class RichTextExample extends Component {
     }
 
     return (
-      <Button
+      <ToolbarButton
         icon={icon}
         active={isActive}
         onMouseDown={event => this.onClickBlock(event, type)}
@@ -531,15 +561,6 @@ class RichTextExample extends Component {
     }
   }
 
-  renderPlaceholder = props => {
-    const {node, editor} = props;
-    if (node.object !== 'block') return;
-    return (
-      <span>
-      </span>
-    );
-  }
-
   /**
    * Render a Slate mark.
    *
@@ -549,7 +570,6 @@ class RichTextExample extends Component {
 
   renderMark = props => {
     const { children, mark, attributes } = props
-
     switch (mark.type) {
       case 'bold':
         return <strong {...attributes}>{children}</strong>
@@ -691,4 +711,4 @@ class RichTextExample extends Component {
  * Export.
  */
 
-export default RichTextExample
+export default RichText
