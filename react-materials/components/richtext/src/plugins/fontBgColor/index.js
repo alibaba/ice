@@ -8,18 +8,18 @@ import "rc-color-picker/assets/index.css";
 import addMarkOverwrite from "../../changes/mark-addoverwrite";
 import { haveMarks } from "../../utils/have";
 import { getMarkType } from "../../utils/get";
-import { fontColor } from "../../constants/marks";
+import { fontBgColor } from "../../constants/marks";
 import commonMark from "../../renderer/commonMark";
 
 import "rc-color-picker/assets/index.css";
 
-class FontColorButton extends Component {
+class FontBgColorButton extends Component {
 
   typeName = '';
 
   constructor(props) {
     super(props);
-    this.typeName = this.props.type || fontColor;
+    this.typeName = this.props.type || fontBgColor;
   }
 
   static defaultProps = {
@@ -65,7 +65,7 @@ class FontColorButton extends Component {
         placement="bottomRight"
       >
         <ToolbarButton
-          icon="format_color_text"
+          icon="format_color_fill"
           active={isActive}
           style={colorStyle}
           onClick={e => e.preventDefault()}
@@ -76,19 +76,19 @@ class FontColorButton extends Component {
 
 }
 
-function FontColorPlugin(opt) {
+function FontBgColorPlugin(opt) {
   const options = Object.assign(
     {
-      type: fontColor,
+      type: fontBgColor,
       tagName: "span",
-      color: mark => mark.data.getIn(["color", "color"])
+      backgroundColor: mark => mark.data.getIn(["color", "color"])
     },
     opt
   );
 
   return {
     toolbarButtons: [
-      FontColorButton
+      FontBgColorButton
     ],
     plugins: [
       {
@@ -103,4 +103,4 @@ function FontColorPlugin(opt) {
   };
 }
 
-export default FontColorPlugin;
+export default FontBgColorPlugin;

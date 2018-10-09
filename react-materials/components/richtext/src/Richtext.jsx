@@ -199,8 +199,17 @@ const RULES = [
           case 'code':
             return <code>{children}</code>
           case 'fontColor':
-            const style = {color: obj.data.get('color')}
-            return <span style={style}>{children}</span>
+            return (
+              <span style={{color: obj.data.get('color').color}}>
+                {children}
+              </span>
+            )
+          case 'fontBgColor':
+            return (
+              <span style={{backgroundColor: obj.data.get('color').color}}>
+                {children}
+              </span>
+            )
         }
       }
     },
