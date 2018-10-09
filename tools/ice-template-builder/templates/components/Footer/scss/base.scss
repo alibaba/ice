@@ -1,0 +1,32 @@
+$page-container-width: 100%;
+
+/* FOOTER */
+.ice-design-layout-footer {
+  width: $page-container-width;
+  margin: 0 auto;
+  .ice-design-layout-footer-body {
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .copyright {
+      color: $ice-copyright-text-color;
+      line-height: 1.5;
+      font-size: 12px;
+      text-align: left;
+    }
+    .copyright-link {
+      color: $ice-copyright-text-color;
+      &:hover {
+        color: $ice-copyright-text-hover-color;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .ice-design-layout-footer {
+    width: 100%;
+  }
+}

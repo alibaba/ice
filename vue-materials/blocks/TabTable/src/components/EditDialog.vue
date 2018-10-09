@@ -1,6 +1,6 @@
 <template> 
   <div :style="style.editDialog">
-    <el-button @click="handleColumnClick(row)" type="primary" size="mini" round v-if="key === 'action'">编辑</el-button>
+    <el-button @click="handleColumnClick(row)" type="primary" size="mini" round v-if="keyName === 'action'">编辑</el-button>
     <el-dialog title="编辑" :visible.sync="dialogFormVisible">
       <el-form :model="formRow" :rules="rules" ref="ruleForm">
         <el-form-item label="标题" :label-width="formLabelWidth" prop="title">
@@ -62,7 +62,7 @@ export default {
       type: Object,
       default: {},
     },
-    key: {
+    keyName: {
       type: String,
       default: '',
     },

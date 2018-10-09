@@ -3,6 +3,7 @@
 'use strict';
 
 const program = require('commander');
+const { collectDetail } = require('@alifd/fusion-collector');
 const optionsAttachToEnv = require('../lib/utils/optionsAttachToEnv');
 
 program
@@ -13,6 +14,14 @@ program
 
 optionsAttachToEnv(program);
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
+
+try {
+  collectDetail({
+    rootDir: process.cwd(), // 项目根地址
+    basicPackage: ['@alifd/next', '@icedesign/base'], // 主体包名称
+    kit: 'ice-scripts', // 统计的来源
+  });
+} catch (e) {}
 
 validationSassAvailable()
   .then(() => {

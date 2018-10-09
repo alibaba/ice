@@ -11,15 +11,15 @@
             :data="dataSource[tab.key]"
             style="width: 100%">
             <el-table-column
-              v-for="item, index in columns"
+              v-for="item in columns"
+              :key="item.key"
               :label="item.title"
               :prop="item.dataIndex"
-              :key="item.key"
               :width="item.key !== 'action' ? (item.width || 150) : item.width">
               <template slot-scope="scope">
                 <span v-if="item.key !== 'action'">{{scope.row[item.dataIndex]}}</span>
-                <edit-dialog :row="scope.row" :key.sync="item.key" :index="scope.$index" :tabKey="tabKey" @handleMod="handleMod"></edit-dialog>
-                <delete-balloon :key.sync="item.key" :index="scope.$index" :tabKey="tabKey" @handleRemove="handleRemove"></delete-balloon>
+                <edit-dialog :row="scope.row" :key-name.sync="item.key" :index="scope.$index" :tabKey="tabKey" @handleMod="handleMod"></edit-dialog>
+                <delete-balloon :key-name.sync="item.key" :index="scope.$index" :tabKey="tabKey" @handleRemove="handleRemove"></delete-balloon>
               </template>
             </el-table-column>
           </el-table>
