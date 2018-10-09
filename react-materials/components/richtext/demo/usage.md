@@ -14,13 +14,26 @@ import Richtext from '@icedesign/richtext';
 
 class App extends Component {
 
-  render() {
+  state = {
+    html: '<p></p>'
+  }
 
+  render() {
+    const {html} = this.state;
     return (
       <div>
-        <Richtext />
+        <Richtext
+          value={html}
+          onChange={this.onChange}
+        />
       </div>
     );
+  }
+
+  onChange = (value) => {
+    this.setState({
+      html: value
+    });
   }
 }
 

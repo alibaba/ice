@@ -5,10 +5,12 @@ import Html from 'slate-html-serializer'
 import { Editor, getEventTransfer } from 'slate-react'
 import { Value } from 'slate'
 import styled from 'react-emotion'
-
 import { isKeyHotkey } from 'is-hotkey'
 import { injectGlobal } from 'emotion'
 import InsertImages from 'slate-drop-or-paste-images'
+import flatten from 'lodash.flatten';
+import Button from './ToolbarButton';
+import plugins from './plugins';
 
 injectGlobal`
   @font-face {
@@ -35,7 +37,7 @@ injectGlobal`
   }
 `
 // Add the plugin to your set of plugins...
-const plugins = [
+const editorPlugins = [
   InsertImages({
     insertImage: (transform, file) => {
       return transform.insertBlock({
@@ -46,14 +48,6 @@ const plugins = [
     }
   })
 ]
-
-const Button = styled('span')`
-  cursor: pointer;
-  color: ${props =>
-    props.reversed
-      ? props.active ? 'white' : '#aaa'
-      : props.active ? 'black' : '#ccc'};
-`
 
 const Icon = styled(({ className, ...rest }) => {
   return <span className={`material-icons ${className}`} {...rest} />
@@ -114,18 +108,6 @@ const MARK_TAGS = {
   code: 'code',
 }
 
-// #<{(|*
-//  * A styled image block component.
-//  *
-//  * @type {Component}
-//  |)}>#
-//
-// const Image = styled('img')`
-//   display: block;
-//   max-width: 100%;
-//   max-height: 20em;
-//   box-shadow: ${props => (props.selected ? '0 0 0 2px blue;' : 'none')};
-// `
 /**
  * Image node renderer.
  *
@@ -187,40 +169,41 @@ const RULES = [
     },
     serialize(obj, children) {
       if (obj.object == 'block') {
+        const style = { textAlign: obj.data.get('align') }
         switch (obj.type) {
           case 'code':
             return (
-              <pre>
+              <pre style={style}>
                 <code>{children}</code>
               </pre>
             )
           case 'paragraph':
-            return <p className={obj.data.get('className')}>{children}</p>
+            return <p className={obj.data.get('className')} style={style}>{children}</p>
           case 'quote':
-            return <blockquote>{children}</blockquote>
+            return <blockquote style={style}>{children}</blockquote>
           case 'block-quote':
-            return <blockquote>{children}</blockquote>
+            return <blockquote style={style}>{children}</blockquote>
           case 'bulleted-list':
-            return <ul>{children}</ul>
+            return <ul style={style}>{children}</ul>
           case 'heading-one':
-            return <h1>{children}</h1>
+            return <h1 style={style}>{children}</h1>
           case 'heading-two':
-            return <h2>{children}</h2>
+            return <h2 style={style}>{children}</h2>
           case 'heading-three':
-            return <h3>{children}</h3>
+            return <h3 style={style}>{children}</h3>
           case 'heading-four':
-            return <h4>{children}</h4>
+            return <h4 style={style}>{children}</h4>
           case 'heading-five':
-            return <h5>{children}</h5>
+            return <h5 style={style}>{children}</h5>
           case 'heading-six':
-            return <h6>{children}</h6>
+            return <h6 style={style}>{children}</h6>
           case 'list-item':
-            return <li>{children}</li>
+            return <li style={style}>{children}</li>
           case 'numbered-list':
-            return <ol>{children}</ol>
+            return <ol style={style}>{children}</ol>
           case 'image':
             const src = obj.data.get('src')
-            return <Image src={src} />
+            return <Image src={src} style={style}/>
         }
       }
     },
@@ -310,114 +293,6 @@ const RULES = [
 
 const serializer = new Html({ rules: RULES })
 
-// const initialValue = {
-//   "document": {
-//     "nodes": [
-//       {
-//         "object": "block",
-//         "type": "paragraph",
-//         "nodes": [
-//           {
-//             "object": "text",
-//             "leaves": [
-//               {
-//                 "text": "This is editable "
-//               },
-//               {
-//                 "text": "rich",
-//                 "marks": [
-//                   {
-//                     "type": "bold"
-//                   }
-//                 ]
-//               },
-//               {
-//                 "text": " text, "
-//               },
-//               {
-//                 "text": "much",
-//                 "marks": [
-//                   {
-//                     "type": "italic"
-//                   }
-//                 ]
-//               },
-//               {
-//                 "text": " better than a "
-//               },
-//               {
-//                 "text": "<textarea>",
-//                 "marks": [
-//                   {
-//                     "type": "code"
-//                   }
-//                 ]
-//               },
-//               {
-//                 "text": "!"
-//               }
-//             ]
-//           }
-//         ]
-//       },
-//       {
-//         "object": "block",
-//         "type": "paragraph",
-//         "nodes": [
-//           {
-//             "object": "text",
-//             "leaves": [
-//               {
-//                 "text":
-//                   "Since it's rich text, you can do things like turn a selection of text "
-//               },
-//               {
-//                 "text": "bold",
-//                 "marks": [
-//                   {
-//                     "type": "bold"
-//                   }
-//                 ]
-//               },
-//               {
-//                 "text":
-//                   ", or add a semantically rendered block quote in the middle of the page, like this:"
-//               }
-//             ]
-//           }
-//         ]
-//       },
-//       {
-//         "object": "block",
-//         "type": "block-quote",
-//         "nodes": [
-//           {
-//             "object": "text",
-//             "leaves": [
-//               {
-//                 "text": "A wise quote."
-//               }
-//             ]
-//           }
-//         ]
-//       },
-//       {
-//         "object": "block",
-//         "type": "paragraph",
-//         "nodes": [
-//           {
-//             "object": "text",
-//             "leaves": [
-//               {
-//                 "text": "Try it out for yourself!"
-//               }
-//             ]
-//           }
-//         ]
-//       }
-//     ]
-//   }
-// };
 
 /**
  * Define the default node type.
@@ -439,7 +314,7 @@ const isUnderlinedHotkey = isKeyHotkey('mod+u')
 const isCodeHotkey = isKeyHotkey('mod+`')
 
 /**
- * The rich text example.
+ * Richtext
  *
  * @type {Component}
  */
@@ -501,6 +376,13 @@ class RichTextExample extends Component {
    */
 
   render() {
+    const {value} = this.state;
+    const pluginToolbarButtons = flatten(
+      plugins
+        .map(plugin => plugin.toolbarButtons)
+        .filter(buttons => buttons)
+    );
+
     return (
       <div>
         <Toolbar>
@@ -513,6 +395,14 @@ class RichTextExample extends Component {
           {this.renderBlockButton('block-quote', 'format_quote')}
           {this.renderBlockButton('numbered-list', 'format_list_numbered')}
           {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
+          {pluginToolbarButtons.map((ToolbarButton) => {
+            return (
+              <ToolbarButton
+                value={value}
+                onChange={this.onChange}
+              />
+            )
+          })}
         </Toolbar>
         <Editor
           spellCheck
@@ -525,7 +415,8 @@ class RichTextExample extends Component {
           onKeyDown={this.onKeyDown}
           renderNode={this.renderNode}
           renderMark={this.renderMark}
-          plugins={plugins}
+          renderPlaceholder={this.renderPlaceholder}
+          plugins={editorPlugins}
         />
       </div>
     )
@@ -544,11 +435,10 @@ class RichTextExample extends Component {
 
     return (
       <Button
+        icon={icon}
         active={isActive}
         onMouseDown={event => this.onClickMark(event, type)}
-      >
-        <Icon>{icon}</Icon>
-      </Button>
+      />
     )
   }
 
@@ -573,11 +463,10 @@ class RichTextExample extends Component {
 
     return (
       <Button
+        icon={icon}
         active={isActive}
         onMouseDown={event => this.onClickBlock(event, type)}
-      >
-        <Icon>{icon}</Icon>
-      </Button>
+      />
     )
   }
 
@@ -591,39 +480,41 @@ class RichTextExample extends Component {
   renderNode = props => {
     const { attributes, children, node, isFocused } = props
 
+    const style = { textAlign: node.data.get('align') }
+
     switch (node.type) {
       case 'quote':
-        return <blockquote {...attributes}>{children}</blockquote>
+        return <blockquote {...attributes} style={style}>{children}</blockquote>
       case 'code':
         return (
-          <pre>
+          <pre style={style}>
             <code {...attributes}>{children}</code>
           </pre>
         )
       case 'paragraph':
         return (
-          <p {...props.attributes} className={node.data.get('className')}>
+          <p {...props.attributes} className={node.data.get('className')} style={style}>
             {props.children}
           </p>
         )
       case 'bulleted-list':
-        return <ul {...attributes}>{children}</ul>
+        return <ul {...attributes} style={style}>{children}</ul>
       case 'heading-one':
-        return <h1 {...attributes}>{children}</h1>
+        return <h1 {...attributes} style={style}>{children}</h1>
       case 'heading-two':
-        return <h2 {...attributes}>{children}</h2>
+        return <h2 {...attributes} style={style}>{children}</h2>
       case 'heading-three':
-        return <h3 {...attributes}>{children}</h3>
+        return <h3 {...attributes} style={style}>{children}</h3>
       case 'heading-four':
-        return <h4 {...attributes}>{children}</h4>
+        return <h4 {...attributes} style={style}>{children}</h4>
       case 'heading-five':
-        return <h5 {...attributes}>{children}</h5>
+        return <h5 {...attributes} style={style}>{children}</h5>
       case 'heading-six':
-        return <h6 {...attributes}>{children}</h6>
+        return <h6 {...attributes} style={style}>{children}</h6>
       case 'list-item':
-        return <li {...attributes}>{children}</li>
+        return <li {...attributes} style={style}>{children}</li>
       case 'numbered-list':
-        return <ol {...attributes}>{children}</ol>
+        return <ol {...attributes} style={style}>{children}</ol>
       case 'link': {
         const { data } = node
         const href = data.get('href')
@@ -639,6 +530,16 @@ class RichTextExample extends Component {
       }
     }
   }
+
+  renderPlaceholder = props => {
+    const {node, editor} = props;
+    if (node.object !== 'block') return;
+    return (
+      <span>
+      </span>
+    );
+  }
+
   /**
    * Render a Slate mark.
    *
