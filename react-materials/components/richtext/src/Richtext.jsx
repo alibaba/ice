@@ -4,13 +4,15 @@ import React, {Component} from 'react'
 import Html from 'slate-html-serializer'
 import { Editor, getEventTransfer } from 'slate-react'
 import { Value } from 'slate'
+import { injectGlobal } from 'emotion'
 import styled from 'react-emotion'
 import { isKeyHotkey } from 'is-hotkey'
-import { injectGlobal } from 'emotion'
 import InsertImages from 'slate-drop-or-paste-images'
 import flatten from 'lodash.flatten';
 import ToolbarButton from './components/ToolbarButton';
 import plugins from './plugins';
+import BLOCK_TAGS from './constants/blocks';
+import MARK_TAGS from './constants/marks';
 
 injectGlobal`
   @font-face {
@@ -37,12 +39,6 @@ injectGlobal`
   }
 `
 
-const Icon = styled(({ className, ...rest }) => {
-  return <span className={`material-icons ${className}`} {...rest} />
-})`
-  font-size: 18px;
-  vertical-align: text-bottom;
-`
 
 const Menu = styled('div')`
   & > * {
@@ -60,41 +56,6 @@ export const Toolbar = styled(Menu)`
   border-bottom: 2px solid #eee;
   margin-bottom: 20px;
 `
-
-/**
- * Tags to blocks.
- *
- * @type {Object}
- */
-
-const BLOCK_TAGS = {
-  p: 'paragraph',
-  li: 'list-item',
-  ul: 'bulleted-list',
-  ol: 'numbered-list',
-  blockquote: 'quote',
-  pre: 'code',
-  h1: 'heading-one',
-  h2: 'heading-two',
-  h3: 'heading-three',
-  h4: 'heading-four',
-  h5: 'heading-five',
-  h6: 'heading-six',
-}
-
-/**
- * Tags to marks.
- *
- * @type {Object}
- */
-
-const MARK_TAGS = {
-  strong: 'bold',
-  em: 'italic',
-  u: 'underline',
-  s: 'strikethrough',
-  code: 'code',
-}
 
 /**
  * Image node renderer.
@@ -237,7 +198,7 @@ const RULES = [
             return <u>{children}</u>
           case 'code':
             return <code>{children}</code>
-          case 'FONTCOLOR':
+          case 'fontColor':
             const style = {color: obj.data.get('color')}
             return <span style={style}>{children}</span>
         }

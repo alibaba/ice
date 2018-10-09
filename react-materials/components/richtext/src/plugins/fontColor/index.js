@@ -8,7 +8,7 @@ import "rc-color-picker/assets/index.css";
 import addMarkOverwrite from "../../changes/mark-addoverwrite";
 import { haveMarks } from "../../utils/have";
 import { getMarkType } from "../../utils/get";
-import { FONTCOLOR } from "../../constant/marks";
+import { fontColor } from "../../constants/marks";
 import commonMark from "../../renderer/commonMark";
 
 import "rc-color-picker/assets/index.css";
@@ -19,7 +19,7 @@ class FontButton extends Component {
 
   constructor(props) {
     super(props);
-    this.typeName = this.props.type || FONTCOLOR;
+    this.typeName = this.props.type || fontColor;
   }
 
   static defaultProps = {
@@ -80,7 +80,7 @@ class FontButton extends Component {
 function FontColorPlugin(opt) {
   const options = Object.assign(
     {
-      type: FONTCOLOR,
+      type: fontColor,
       tagName: "span",
       color: mark => mark.data.getIn(["color", "color"])
     },
