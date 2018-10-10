@@ -1,4 +1,4 @@
-import { List } from "immutable";
+import { List } from 'immutable';
 
 export const whatMarkTypes = ({ value }) => {
   if (value.marks) {

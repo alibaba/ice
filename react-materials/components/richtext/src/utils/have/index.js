@@ -27,7 +27,7 @@ export const haveInlines = ({ value }, type) => {
 export const haveDataKeyInSomeBlocks = ({ value }, dataKey) => {
   if (value.blocks.size > 0) {
     return value.blocks.some(
-      block => block.get("data").has(dataKey) && block.get("data").get(dataKey)
+      block => block.get('data').has(dataKey) && block.get('data').get(dataKey)
     );
   }
 
@@ -37,7 +37,7 @@ export const haveDataKeyInSomeBlocks = ({ value }, dataKey) => {
 export const haveDataKeyInSomeMarks = ({ value }, dataKey) => {
   if (value.marks.size > 0) {
     return value.marks.some(
-      mark => mark.get("data").has(dataKey) && mark.get("data").get(dataKey)
+      mark => mark.get('data').has(dataKey) && mark.get('data').get(dataKey)
     );
   }
 
@@ -52,8 +52,8 @@ export const haveDataKeyEqualValueInSomeBlocks = (
   if (value.blocks.size > 0) {
     return value.blocks.some(
       block =>
-        block.get("data").has(dataKey) &&
-        block.get("data").get(dataKey) === dataValue
+        block.get('data').has(dataKey) &&
+        block.get('data').get(dataKey) === dataValue
     );
   }
 

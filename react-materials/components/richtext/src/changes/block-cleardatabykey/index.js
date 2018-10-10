@@ -12,10 +12,10 @@ export default (change, dataKey) => {
   // if have blocks
   if (blocks) {
     blocks.forEach(type => {
-      const typeOriginalData = type.get("data");
+      const typeOriginalData = type.get('data');
       const newData = typeOriginalData.delete(dataKey);
 
-      const newType = type.set("data", newData);
+      const newType = type.set('data', newData);
       // reset current type with new data
       change.setBlocks(newType);
     });

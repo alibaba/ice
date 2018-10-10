@@ -18,7 +18,7 @@ class Button extends Component {
         onClick={onClick}
       >
         <span
-          className={`material-icons`}
+          className={'material-icons'}
           style={{
             fontSize: '18px',
             verticalAlign: 'textBottom',

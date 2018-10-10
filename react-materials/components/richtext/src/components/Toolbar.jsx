@@ -18,4 +18,4 @@ const style = {
     borderBottom: '2px solid #eee',
     marginBottom: '20px'
   }
-}
+};

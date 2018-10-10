@@ -1,20 +1,20 @@
-import AlignPlugin from './align';
-import FontColorPlugin from './fontColor';
-import FontBgColorPlugin from './fontBgColor';
-import FontSizePlugin from './fontSize';
-import LineHeightPlugin from './lineHeight';
+import alignPlugin from './align';
+import fontColorPlugin from './fontColor';
+import fontBgColorPlugin from './fontBgColor';
+import fontSizePlugin from './fontSize';
+import lineHeightPlugin from './lineHeight';
 
 const plugins = [
-  AlignPlugin(),
-  FontColorPlugin({
-    color: mark => mark.data.get("color") && mark.data.get("color").color
+  alignPlugin(),
+  fontColorPlugin({
+    color: mark => mark.data.get('color') && mark.data.get('color').color
   }),
-  FontBgColorPlugin({
+  fontBgColorPlugin({
     backgroundColor: mark =>
-      mark.data.get("color") && mark.data.get("color").color
+      mark.data.get('color') && mark.data.get('color').color
   }),
-  FontSizePlugin(),
-  LineHeightPlugin()
+  fontSizePlugin(),
+  lineHeightPlugin()
 ];
 
 export default plugins;

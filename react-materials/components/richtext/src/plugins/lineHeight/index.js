@@ -1,10 +1,10 @@
-import {Component} from "react";
-import omit from "lodash.omit";
-import { Button, Dropdown, Menu } from "@icedesign/base";
+import {Component} from 'react';
+import omit from 'lodash.omit';
+import { Button, Dropdown, Menu } from '@icedesign/base';
 import ToolbarButton from '../../components/ToolbarButton';
-import { fontSize } from "../../constants/marks";
-import SharedBlockSelectorDecoration from "../shared/blockSelectorDecoration";
-import commonMark from "../../renderer/commonMark";
+import { fontSize } from '../../constants/marks';
+import SharedBlockSelectorDecoration from '../shared/blockSelectorDecoration';
+import commonMark from '../../renderer/commonMark';
 
 const SplitButton = Button.Split;
 
@@ -12,7 +12,7 @@ const SplitButton = Button.Split;
 class LineHeightButton extends Component {
   static defaultProps = {
     options: [1, 1.5, 2, 2.5, 3, 3.5, 4],
-    displayType: "button"
+    displayType: 'button'
   };
 
   render() {
@@ -28,7 +28,7 @@ class LineHeightButton extends Component {
 
     const menu = (
       <Menu onClick={(value) => {
-        onChange({value})
+        onChange({value});
       }}>
         {opt.map(item => (
           <Menu.Item onMouseDown={e => e.preventDefault()} key={item}>
@@ -70,7 +70,7 @@ class LineHeightButton extends Component {
   }
 }
 
-function LineHeightPlugin (opt) {
+function LineHeightPlugin(opt) {
   return {
     toolbarButtons: [
       LineHeightButton

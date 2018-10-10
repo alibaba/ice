@@ -1,8 +1,8 @@
-import {Component} from "react";
-import removeType from "../../changes/mark-removetype";
-import addMarkOverwrite from "../../changes/mark-addoverwrite";
-import { haveMarks } from "../../utils/have";
-import { getMarkType } from "../../utils/get";
+import {Component} from 'react';
+import removeType from '../../changes/mark-removetype';
+import addMarkOverwrite from '../../changes/mark-addoverwrite';
+import { haveMarks } from '../../utils/have';
+import { getMarkType } from '../../utils/get';
 
 export default (type) => (Selector) => {
   return class SharedSelector extends Component {
@@ -17,7 +17,7 @@ export default (type) => (Selector) => {
       this.setState({ value });
 
       // if select `default` remove font size settings
-      if (value.label === "Default") {
+      if (value.label === 'Default') {
         return onChange(removeType(change, this.typeName));
       }
       onChange(
@@ -39,7 +39,7 @@ export default (type) => (Selector) => {
       if (isActive) {
         const first = getMarkType(change, this.typeName)
           .first()
-          .get("data");
+          .get('data');
         defaultFont = first.get(this.typeName);
       }
 

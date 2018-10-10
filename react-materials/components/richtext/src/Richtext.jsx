@@ -1,11 +1,9 @@
-'use strict';
-
-import React, {Component} from 'react'
-import Html from 'slate-html-serializer'
-import { Editor, getEventTransfer } from 'slate-react'
-import { Value } from 'slate'
-import { isKeyHotkey } from 'is-hotkey'
-import InsertImages from 'slate-drop-or-paste-images'
+import React, {Component} from 'react';
+import Html from 'slate-html-serializer';
+import { Editor, getEventTransfer } from 'slate-react';
+import { Value } from 'slate';
+import { isKeyHotkey } from 'is-hotkey';
+import insertImages from 'slate-drop-or-paste-images';
 import flatten from 'lodash.flatten';
 import Toolbar from './components/Toolbar';
 import ToolbarButton from './components/ToolbarButton';
@@ -24,21 +22,21 @@ class Image extends React.Component {
   state = {}
 
   componentDidMount() {
-    const { node } = this.props
-    const { data } = node
-    const file = data.get('file')
-    this.load(file)
+    const { node } = this.props;
+    const { data } = node;
+    const file = data.get('file');
+    this.load(file);
   }
 
   load(file) {
-    const reader = new FileReader()
-    reader.addEventListener('load', () => this.setState({ src: reader.result }))
-    reader.readAsDataURL(file)
+    const reader = new FileReader();
+    reader.addEventListener('load', () => this.setState({ src: reader.result }));
+    reader.readAsDataURL(file);
   }
 
   render() {
-    const { attributes, selected } = this.props
-    const { src } = this.state
+    const { attributes, selected } = this.props;
+    const { src } = this.state;
     return src ?
       <img
         {...attributes}
@@ -50,7 +48,7 @@ class Image extends React.Component {
           boxShadow: selected ? '0 0 0 2px blue' : 'none'
         }}
       /> :
-      <span>Loading...</span>
+      <span>Loading...</span>;
   }
 }
 
@@ -63,7 +61,7 @@ class Image extends React.Component {
 const RULES = [
   {
     deserialize(el, next) {
-      const block = BLOCK_TAGS[el.tagName.toLowerCase()]
+      const block = BLOCK_TAGS[el.tagName.toLowerCase()];
       let data = {};
 
       if (el.style.textAlign) {
@@ -76,7 +74,7 @@ const RULES = [
 
       if (Object.keys(data).length > 0) {
         return {
-          object: "block",
+          object: 'block',
           type: block,
           data,
           nodes: next(el.childNodes)
@@ -88,7 +86,7 @@ const RULES = [
           object: 'block',
           type: block,
           nodes: next(el.childNodes),
-        }
+        };
       }
     },
     serialize(obj, children) {
@@ -103,39 +101,39 @@ const RULES = [
               <pre style={style}>
                 <code>{children}</code>
               </pre>
-            )
+            );
           case 'paragraph':
-            return <p className={obj.data.get('className')} style={style}>{children}</p>
+            return <p className={obj.data.get('className')} style={style}>{children}</p>;
           case 'blockquote':
-            return <blockquote style={style}>{children}</blockquote>
+            return <blockquote style={style}>{children}</blockquote>;
           case 'bulleted-list':
-            return <ul style={style}>{children}</ul>
+            return <ul style={style}>{children}</ul>;
           case 'heading-one':
-            return <h1 style={style}>{children}</h1>
+            return <h1 style={style}>{children}</h1>;
           case 'heading-two':
-            return <h2 style={style}>{children}</h2>
+            return <h2 style={style}>{children}</h2>;
           case 'heading-three':
-            return <h3 style={style}>{children}</h3>
+            return <h3 style={style}>{children}</h3>;
           case 'heading-four':
-            return <h4 style={style}>{children}</h4>
+            return <h4 style={style}>{children}</h4>;
           case 'heading-five':
-            return <h5 style={style}>{children}</h5>
+            return <h5 style={style}>{children}</h5>;
           case 'heading-six':
-            return <h6 style={style}>{children}</h6>
+            return <h6 style={style}>{children}</h6>;
           case 'list-item':
-            return <li style={style}>{children}</li>
+            return <li style={style}>{children}</li>;
           case 'numbered-list':
-            return <ol style={style}>{children}</ol>
+            return <ol style={style}>{children}</ol>;
           case 'image':
-            const src = obj.data.get('src')
-            return <Image src={src} style={style}/>
+            const src = obj.data.get('src');
+            return <Image src={src} style={style} />;
         }
       }
     },
   },
   {
     deserialize(el, next) {
-      const mark = MARK_TAGS[el.tagName.toLowerCase()]
+      const mark = MARK_TAGS[el.tagName.toLowerCase()];
       let data = {};
 
       if (el.style.backgroundColor) {
@@ -156,40 +154,40 @@ const RULES = [
           type: mark,
           data,
           nodes: next(el.childNodes),
-        }
+        };
       }
     },
     serialize(obj, children) {
       if (obj.object == 'mark') {
         switch (obj.type) {
           case 'bold':
-            return <strong>{children}</strong>
+            return <strong>{children}</strong>;
           case 'italic':
-            return <em>{children}</em>
+            return <em>{children}</em>;
           case 'underline':
-            return <u>{children}</u>
+            return <u>{children}</u>;
           case 'strikethrough':
-            return <s>{children}</s>
+            return <s>{children}</s>;
           case 'code':
-            return <code>{children}</code>
+            return <code>{children}</code>;
           case 'fontColor':
             return (
               <span style={{color: obj.data.get('color').color}}>
                 {children}
               </span>
-            )
+            );
           case 'fontBgColor':
             return (
               <span style={{backgroundColor: obj.data.get('color').color}}>
                 {children}
               </span>
-            )
+            );
           case 'fontSize':
             return (
               <span style={{fontSize: obj.data.get('fontSize')}}>
                 {children}
               </span>
-            )
+            );
         }
       }
     },
@@ -198,17 +196,17 @@ const RULES = [
     // Special case for code blocks, which need to grab the nested childNodes.
     deserialize(el, next) {
       if (el.tagName.toLowerCase() == 'pre') {
-        const code = el.childNodes[0]
+        const code = el.childNodes[0];
         const childNodes =
           code && code.tagName.toLowerCase() == 'code'
             ? code.childNodes
-            : el.childNodes
+            : el.childNodes;
 
         return {
           object: 'block',
           type: 'code',
           nodes: next(childNodes),
-        }
+        };
       }
     },
   },
@@ -223,7 +221,7 @@ const RULES = [
           data: {
             src: el.getAttribute('src'),
           },
-        }
+        };
       }
     },
   },
@@ -238,11 +236,11 @@ const RULES = [
           data: {
             href: el.getAttribute('href'),
           },
-        }
+        };
       }
     },
   },
-]
+];
 
 /**
  * Create a new HTML serializer with `RULES`.
@@ -250,7 +248,7 @@ const RULES = [
  * @type {Html}
  */
 
-const serializer = new Html({ rules: RULES })
+const serializer = new Html({ rules: RULES });
 
 
 /**
@@ -259,7 +257,7 @@ const serializer = new Html({ rules: RULES })
  * @type {String}
  */
 
-const DEFAULT_NODE = 'paragraph'
+const DEFAULT_NODE = 'paragraph';
 
 /**
  * Richtext
@@ -279,16 +277,16 @@ class RichText extends Component {
 
     // Add the plugin to your set of plugins...
     this.plugins = [
-      InsertImages({
+      insertImages({
         insertImage: (transform, file) => {
           return transform.insertBlock({
             type: 'image',
             isVoid: true,
             data: { file }
-          })
+          });
         }
       }),
-    ].concat(customPlugins)
+    ].concat(customPlugins);
 
   }
   /**
@@ -323,8 +321,8 @@ class RichText extends Component {
    */
 
   hasMark = type => {
-    const { value } = this.state
-    return value.activeMarks.some(mark => mark.type == type)
+    const { value } = this.state;
+    return value.activeMarks.some(mark => mark.type == type);
   }
 
   /**
@@ -335,8 +333,8 @@ class RichText extends Component {
    */
 
   hasBlock = type => {
-    const { value } = this.state
-    return value.blocks.some(node => node.type == type)
+    const { value } = this.state;
+    return value.blocks.some(node => node.type == type);
   }
 
   /**
@@ -375,7 +373,7 @@ class RichText extends Component {
                 change={value.change()}
                 onChange={this.onChange}
               />
-            )
+            );
           })}
         </Toolbar>
         <Editor
@@ -391,7 +389,7 @@ class RichText extends Component {
           plugins={this.plugins}
         />
       </div>
-    )
+    );
   }
 
   /**
@@ -403,7 +401,7 @@ class RichText extends Component {
    */
 
   renderMarkButton = (type, icon, title) => {
-    const isActive = this.hasMark(type)
+    const isActive = this.hasMark(type);
 
     return (
       <ToolbarButton
@@ -412,7 +410,7 @@ class RichText extends Component {
         active={isActive}
         onMouseDown={event => this.onClickMark(event, type)}
       />
-    )
+    );
   }
 
   /**
@@ -424,13 +422,13 @@ class RichText extends Component {
    */
 
   renderBlockButton = (type, icon, title) => {
-    let isActive = this.hasBlock(type)
+    let isActive = this.hasBlock(type);
 
     if (['numbered-list', 'bulleted-list'].includes(type)) {
-      const { value } = this.state
+      const { value } = this.state;
       if (value.blocks.first()) {
-        const parent = value.document.getParent(value.blocks.first().key)
-        isActive = this.hasBlock('list-item') && parent && parent.type === type
+        const parent = value.document.getParent(value.blocks.first().key);
+        isActive = this.hasBlock('list-item') && parent && parent.type === type;
       }
     }
 
@@ -441,7 +439,7 @@ class RichText extends Component {
         active={isActive}
         onMouseDown={event => this.onClickBlock(event, type)}
       />
-    )
+    );
   }
 
   /**
@@ -452,7 +450,7 @@ class RichText extends Component {
    */
 
   renderNode = props => {
-    const { attributes, children, node, isFocused } = props
+    const { attributes, children, node, isFocused } = props;
 
     const style = {
       textAlign: node.data.get('align'),
@@ -461,49 +459,49 @@ class RichText extends Component {
 
     switch (node.type) {
       case 'blockquote':
-        return <blockquote {...attributes} style={style}>{children}</blockquote>
+        return <blockquote {...attributes} style={style}>{children}</blockquote>;
       case 'code':
         return (
           <pre style={style}>
             <code {...attributes}>{children}</code>
           </pre>
-        )
+        );
       case 'paragraph':
         return (
           <p {...props.attributes} className={node.data.get('className')} style={style}>
             {props.children}
           </p>
-        )
+        );
       case 'bulleted-list':
-        return <ul {...attributes} style={style}>{children}</ul>
+        return <ul {...attributes} style={style}>{children}</ul>;
       case 'heading-one':
-        return <h1 {...attributes} style={style}>{children}</h1>
+        return <h1 {...attributes} style={style}>{children}</h1>;
       case 'heading-two':
-        return <h2 {...attributes} style={style}>{children}</h2>
+        return <h2 {...attributes} style={style}>{children}</h2>;
       case 'heading-three':
-        return <h3 {...attributes} style={style}>{children}</h3>
+        return <h3 {...attributes} style={style}>{children}</h3>;
       case 'heading-four':
-        return <h4 {...attributes} style={style}>{children}</h4>
+        return <h4 {...attributes} style={style}>{children}</h4>;
       case 'heading-five':
-        return <h5 {...attributes} style={style}>{children}</h5>
+        return <h5 {...attributes} style={style}>{children}</h5>;
       case 'heading-six':
-        return <h6 {...attributes} style={style}>{children}</h6>
+        return <h6 {...attributes} style={style}>{children}</h6>;
       case 'list-item':
-        return <li {...attributes} style={style}>{children}</li>
+        return <li {...attributes} style={style}>{children}</li>;
       case 'numbered-list':
-        return <ol {...attributes} style={style}>{children}</ol>
+        return <ol {...attributes} style={style}>{children}</ol>;
       case 'link': {
-        const { data } = node
-        const href = data.get('href')
+        const { data } = node;
+        const href = data.get('href');
         return (
           <a href={href} {...attributes}>
             {children}
           </a>
-        )
+        );
       }
       case 'image': {
-        const src = node.data.get('src')
-        return <Image src={src} selected={isFocused} {...props} />
+        const src = node.data.get('src');
+        return <Image src={src} selected={isFocused} {...props} />;
       }
     }
   }
@@ -516,18 +514,18 @@ class RichText extends Component {
    */
 
   renderMark = props => {
-    const { children, mark, attributes } = props
+    const { children, mark, attributes } = props;
     switch (mark.type) {
       case 'bold':
-        return <strong {...attributes}>{children}</strong>
+        return <strong {...attributes}>{children}</strong>;
       case 'code':
-        return <code {...attributes}>{children}</code>
+        return <code {...attributes}>{children}</code>;
       case 'italic':
-        return <em {...attributes}>{children}</em>
+        return <em {...attributes}>{children}</em>;
       case 'underline':
-        return <u {...attributes}>{children}</u>
+        return <u {...attributes}>{children}</u>;
       case 'strikethrough':
-        return <s {...attributes}>{children}</s>
+        return <s {...attributes}>{children}</s>;
     }
   }
 
@@ -540,10 +538,10 @@ class RichText extends Component {
   onChange = ({ value }) => {
     // When the document changes, save the serialized HTML to Local Storage.
     if (value.document != this.state.value.document) {
-      const string = serializer.serialize(value)
-      this.props.onChange(string)
+      const string = serializer.serialize(value);
+      this.props.onChange(string);
     }
-    this.setState({ value })
+    this.setState({ value });
   }
 
   /**
@@ -554,11 +552,11 @@ class RichText extends Component {
    */
 
   onPaste = (event, change) => {
-    const transfer = getEventTransfer(event)
-    if (transfer.type != 'html') return
-    const { document } = serializer.deserialize(transfer.html)
-    change.insertFragment(document)
-    return true
+    const transfer = getEventTransfer(event);
+    if (transfer.type != 'html') return;
+    const { document } = serializer.deserialize(transfer.html);
+    change.insertFragment(document);
+    return true;
   }
 
   /**
@@ -570,7 +568,7 @@ class RichText extends Component {
    */
 
   onKeyDown = (event, change) => {
-    let mark
+    let mark;
 
     /**
      * Define hotkey matchers.
@@ -578,26 +576,26 @@ class RichText extends Component {
      * @type {Function}
      */
 
-    const isBoldHotkey = isKeyHotkey('mod+b')
-    const isItalicHotkey = isKeyHotkey('mod+i')
-    const isUnderlineHotkey = isKeyHotkey('mod+u')
-    const isCodeHotkey = isKeyHotkey('mod+`')
+    const isBoldHotkey = isKeyHotkey('mod+b');
+    const isItalicHotkey = isKeyHotkey('mod+i');
+    const isUnderlineHotkey = isKeyHotkey('mod+u');
+    const isCodeHotkey = isKeyHotkey('mod+`');
 
     if (isBoldHotkey(event)) {
-      mark = 'bold'
+      mark = 'bold';
     } else if (isItalicHotkey(event)) {
-      mark = 'italic'
+      mark = 'italic';
     } else if (isUnderlineHotkey(event)) {
-      mark = 'underline'
+      mark = 'underline';
     } else if (isCodeHotkey(event)) {
-      mark = 'code'
+      mark = 'code';
     } else {
-      return
+      return;
     }
 
-    event.preventDefault()
-    change.toggleMark(mark)
-    return true
+    event.preventDefault();
+    change.toggleMark(mark);
+    return true;
   }
 
   /**
@@ -608,10 +606,10 @@ class RichText extends Component {
    */
 
   onClickMark = (event, type) => {
-    event.preventDefault()
-    const { value } = this.state
-    const change = value.change().toggleMark(type)
-    this.onChange(change)
+    event.preventDefault();
+    const { value } = this.state;
+    const change = value.change().toggleMark(type);
+    this.onChange(change);
   }
 
   /**
@@ -622,48 +620,48 @@ class RichText extends Component {
    */
 
   onClickBlock = (event, type) => {
-    event.preventDefault()
-    const { value } = this.state
-    const change = value.change()
-    const { document } = value
+    event.preventDefault();
+    const { value } = this.state;
+    const change = value.change();
+    const { document } = value;
 
     // Handle everything but list buttons.
     if (type != 'bulleted-list' && type != 'numbered-list') {
-      const isActive = this.hasBlock(type)
-      const isList = this.hasBlock('list-item')
+      const isActive = this.hasBlock(type);
+      const isList = this.hasBlock('list-item');
 
       if (isList) {
         change
           .setBlocks(isActive ? DEFAULT_NODE : type)
           .unwrapBlock('bulleted-list')
-          .unwrapBlock('numbered-list')
+          .unwrapBlock('numbered-list');
       } else {
-        change.setBlocks(isActive ? DEFAULT_NODE : type)
+        change.setBlocks(isActive ? DEFAULT_NODE : type);
       }
     } else {
       // Handle the extra wrapping required for list buttons.
-      const isList = this.hasBlock('list-item')
+      const isList = this.hasBlock('list-item');
       const isType = value.blocks.some(block => {
-        return !!document.getClosest(block.key, parent => parent.type == type)
-      })
+        return !!document.getClosest(block.key, parent => parent.type == type);
+      });
 
       if (isList && isType) {
         change
           .setBlocks(DEFAULT_NODE)
           .unwrapBlock('bulleted-list')
-          .unwrapBlock('numbered-list')
+          .unwrapBlock('numbered-list');
       } else if (isList) {
         change
           .unwrapBlock(
             type == 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
           )
-          .wrapBlock(type)
+          .wrapBlock(type);
       } else {
-        change.setBlocks('list-item').wrapBlock(type)
+        change.setBlocks('list-item').wrapBlock(type);
       }
     }
 
-    this.onChange(change)
+    this.onChange(change);
   }
 }
 
@@ -671,4 +669,4 @@ class RichText extends Component {
  * Export.
  */
 
-export default RichText
+export default RichText;

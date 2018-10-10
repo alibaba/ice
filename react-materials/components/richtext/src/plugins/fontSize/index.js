@@ -1,10 +1,10 @@
-import {Component} from "react";
-import omit from "lodash.omit";
-import { Button, Dropdown, Menu } from "@icedesign/base";
+import {Component} from 'react';
+import omit from 'lodash.omit';
+import { Button, Dropdown, Menu } from '@icedesign/base';
 import ToolbarButton from '../../components/ToolbarButton';
-import { fontSize } from "../../constants/marks";
-import SharedMarkSelectorDecoration from "../shared/markSelectorDecoration";
-import commonMark from "../../renderer/commonMark";
+import { fontSize } from '../../constants/marks';
+import SharedMarkSelectorDecoration from '../shared/markSelectorDecoration';
+import commonMark from '../../renderer/commonMark';
 
 const SplitButton = Button.Split;
 
@@ -12,7 +12,7 @@ const SplitButton = Button.Split;
 class FontSizeButton extends Component {
   static defaultProps = {
     options: [12, 16, 20, 24, 28, 32],
-    displayType: "button"
+    displayType: 'button'
   };
 
   render() {
@@ -28,7 +28,7 @@ class FontSizeButton extends Component {
 
     const menu = (
       <Menu onClick={(value) => {
-        onChange({value})
+        onChange({value});
       }}>
         {opt.map(item => (
           <Menu.Item onMouseDown={e => e.preventDefault()} key={item}>
@@ -70,11 +70,11 @@ class FontSizeButton extends Component {
   }
 }
 
-function FontSizePlugin (opt) {
+function FontSizePlugin(opt) {
   const options = Object.assign(
     {
       type: fontSize,
-      tagName: "span",
+      tagName: 'span',
       fontSize: mark => mark.data.get(fontSize)
     },
     opt
@@ -88,7 +88,7 @@ function FontSizePlugin (opt) {
       {
         renderMark: props => {
           if (props.mark.type === options.type)
-            return commonMark(options.tagName, omit(options, ["type", "tagName"]))(
+            return commonMark(options.tagName, omit(options, ['type', 'tagName']))(
               props
             );
         }

@@ -1,4 +1,4 @@
-import mapValues from "lodash.mapvalues";
+import mapValues from 'lodash.mapvalues';
 
 export default function(Tag, stylesAttr) {
   const MarkComponent = ({ attributes, children, mark }) => {

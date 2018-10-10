@@ -1,20 +1,20 @@
-import ToolbarButton from '../../components/ToolbarButton'
+import ToolbarButton from '../../components/ToolbarButton';
 
 const hasAlign = (value, foundAlign) => {
-  return value.blocks.some(node => node.data.get('align') === foundAlign)
-}
+  return value.blocks.some(node => node.data.get('align') === foundAlign);
+};
 
 // If we have an alignment, clear out the data attribute
 const alignStrategy = (change, align) => {
   if (hasAlign(change.value, align)) {
     return change.setBlocks({
       data: { align: null },
-    }).focus()
+    }).focus();
   }
   return change.setBlocks({
     data: { align },
-  }).focus()
-}
+  }).focus();
+};
 
 const createButton = (align, icon, title) => {
   return ({value, onChange}) => {
@@ -23,12 +23,12 @@ const createButton = (align, icon, title) => {
         icon={icon}
         title={title}
         onMouseDown={e => {
-          return onChange(alignStrategy(value.change(), align))
+          return onChange(alignStrategy(value.change(), align));
         }}
         active={hasAlign(value, align)}
       />
     );
-  }
+  };
 };
 
 function AlignPlugin() {

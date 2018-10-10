@@ -1,7 +1,7 @@
-import {Component} from "react";
-import blockAddData from "../../changes/block-adddata";
-import clearDataKey from "../../changes/block-cleardatabykey";
-import { haveDataKeyInSomeBlocks } from "../../utils/have";
+import {Component} from 'react';
+import blockAddData from '../../changes/block-adddata';
+import clearDataKey from '../../changes/block-cleardatabykey';
+import { haveDataKeyInSomeBlocks } from '../../utils/have';
 
 export default (type) => (Selector) => {
   return class SharedSelector extends Component {
@@ -16,7 +16,7 @@ export default (type) => (Selector) => {
       this.setState({ value });
 
       // if select `default` remove font size settings
-      if (value === "Default") {
+      if (value === 'Default') {
         return onChange(clearDataKey(change, type).select());
       }
 
