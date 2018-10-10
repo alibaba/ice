@@ -37,8 +37,8 @@ const asideMenuConfig = [
     icon: 'home2',
   },
   {
-    name: '分案管理',
-    path: '/manage',
+    name: '案款账号分配',
+    path: '/allocation',
     icon: 'cascades',
   },
   {

@@ -5,6 +5,7 @@
 import BasicLayout from './layouts/BasicLayout';
 import Analysis from './pages/Analysis';
 import NotFound from './pages/NotFound';
+import Dismantling from './pages/Dismantling';
 
 const routerConfig = [
   {
@@ -13,10 +14,15 @@ const routerConfig = [
     component: Analysis,
   },
   {
+    path: '/dismantling',
+    layout: BasicLayout,
+    component: Dismantling
+  },
+  {
     path: '*',
     layout: BasicLayout,
     component: NotFound,
-  },
+  }
 ];
 
 export default routerConfig;
