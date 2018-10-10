@@ -9,6 +9,7 @@ const {promisify} = require('util');
 const [readFile, writeFile] = [fs.readFile, fs.writeFile].map(fn => promisify(fn));
 
 const BASE_URL = 'http://localhost:7001';
+// const BASE_URL = 'https://pre-fusionmc.alibaba.com';
 const AUTH_HEADER_KEY = 'x-auth-token';
 const BLOCK_URL = `${BASE_URL}/auth_api/v1/npm/block`;
 const SCALLFOLD_URL = `${BASE_URL}/auth_api/v1/npm/scaffold`;
@@ -131,7 +132,7 @@ async function syncMaterials(opt) {
 
   const {blocks, scaffolds} = db;
   const requestData = [
-    ...blocks.map(block => ({url: BLOCK_URL, token, data: block, name: block.name})),
+    // ...blocks.map(block => ({url: BLOCK_URL, token, data: block, name: block.name})),
     ...scaffolds.map(scaffold => ({url: SCALLFOLD_URL, token, data: scaffold, name: scaffold.name}))
   ];
 
