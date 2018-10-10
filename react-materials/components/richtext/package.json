@@ -1,7 +1,8 @@
 {
   "name": "@icedesign/richtext",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "富文本组件",
+  "main": "lib/index.js",
   "files": [
     "src/",
     "lib/"
