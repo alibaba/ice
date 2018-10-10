@@ -38,7 +38,7 @@ const asideMenuConfig = [
   },
   {
     name: '案款账号分配',
-    path: '/allocation',
+    path: '/dismantling',
     icon: 'cascades',
   },
   {
