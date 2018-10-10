@@ -132,7 +132,7 @@ async function syncMaterials(opt) {
 
   const {blocks, scaffolds} = db;
   const requestData = [
-    // ...blocks.map(block => ({url: BLOCK_URL, token, data: block, name: block.name})),
+    ...blocks.map(block => ({url: BLOCK_URL, token, data: block, name: block.name})),
     ...scaffolds.map(scaffold => ({url: SCALLFOLD_URL, token, data: scaffold, name: scaffold.name}))
   ];
 
