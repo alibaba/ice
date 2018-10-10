@@ -13,12 +13,14 @@ const RULES = [
       const block = BLOCK_TAGS[el.tagName.toLowerCase()];
       let data = {};
 
-      if (el.style.textAlign) {
-        data.align = el.style.textAlign;
-      }
+      if (el.style) {
+        if (el.style.textAlign) {
+          data.align = el.style.textAlign;
+        }
 
-      if (el.style.lineHeight) {
-        data.lineHeight = el.style.lineHeight;
+        if (el.style.lineHeight) {
+          data.lineHeight = el.style.lineHeight;
+        }
       }
 
       if (Object.keys(data).length > 0) {
@@ -85,16 +87,18 @@ const RULES = [
       const mark = MARK_TAGS[el.tagName.toLowerCase()];
       let data = {};
 
-      if (el.style.backgroundColor) {
-        data.color = el.style.backgroundColor;
-      }
+      if (el.style) {
+        if (el.style.backgroundColor) {
+          data.color = el.style.backgroundColor;
+        }
 
-      if (el.style.color) {
-        data.color = el.style.color;
-      }
+        if (el.style.color) {
+          data.color = el.style.color;
+        }
 
-      if (el.style.fontSize) {
-        data.fontSize = el.style.fontSize;
+        if (el.style.fontSize) {
+          data.fontSize = el.style.fontSize;
+        }
       }
 
       if (mark) {

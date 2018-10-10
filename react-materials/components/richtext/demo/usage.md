@@ -15,7 +15,7 @@ import Richtext from '@icedesign/richtext';
 class App extends Component {
 
   state = {
-    html: '<p></p>'
+    html: '<p>测试文本</p>'
   }
 
   render() {
