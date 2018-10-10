@@ -21,7 +21,7 @@ class App extends Component {
   render() {
     const {html} = this.state;
     return (
-      <div>
+      <div style={{margin: '65px 0 0'}}>
         <Richtext
           value={html}
           onChange={this.onChange}

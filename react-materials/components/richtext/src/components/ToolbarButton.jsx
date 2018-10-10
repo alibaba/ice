@@ -5,23 +5,19 @@ class Button extends Component {
     const {reversed, active, icon, title, onMouseDown, onClick, iconStyle} = this.props;
     return (
       <span
+        className="toolbar-button"
         style={{
-          display: 'inline-block',
-          marginRight: '15px',
-          cursor: 'pointer',
           color: reversed
-              ? active ? 'white' : '#aaa'
-              : active ? 'black' : '#ccc',
+              ? active ? 'white' : '#ccc'
+              : active ? 'black' : '#999',
         }}
         title={title}
         onMouseDown={onMouseDown}
         onClick={onClick}
       >
         <span
-          className={'material-icons'}
+          className="material-icons"
           style={{
-            fontSize: '18px',
-            verticalAlign: 'textBottom',
             ...iconStyle
           }}
         >

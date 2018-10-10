@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/richtext",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "富文本组件",
   "files": [
     "src/",
@@ -36,6 +36,7 @@
     "rc-color-picker": "^1.2.6",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-draggable": "^3.0.5",
     "slate": "^0.41.1",
     "slate-drop-or-paste-images": "^0.8.4",
     "slate-html-serializer": "^0.7.6",

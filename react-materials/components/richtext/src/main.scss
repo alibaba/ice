@@ -22,13 +22,35 @@
 }
 
 .ice-richtext-container {
+  position: relative;
 
   .ice-richtext-toolbar {
-    position: relative;
-    padding: 1px 18px 17px;
-    margin: 0 -20px;
-    border-bottom: 2px solid #eee;
-    margin-bottom: 20px;
+    position: absolute;
+    top: -65px;
+    left: 0;
+    border: 1px solid #eee;
+    width: 400px;
+    .toolbar-button {
+      display: inline-block;
+      height: 30px;
+      line-height: 30px;
+      width: 30px;
+      text-align: center;
+      cursor: pointer;
+      &:hover {
+        background-color: #ebebeb;
+      }
+      .material-icons {
+        font-size: 18px;
+        line-height: 30px;
+        vertical-align: textBottom;
+      }
+    }
+  }
+
+  p {
+    line-height: 1;
+    margin: 0;
   }
 
   blockquote {
