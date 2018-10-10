@@ -37,13 +37,13 @@ const asideMenuConfig = [
     icon: 'home2',
   },
   {
-    name: '案款账号分配',
+    name: '拆预收案',
     path: '/dismantling',
     icon: 'cascades',
   },
   {
-    name: '案件办理',
-    path: '/transaction',
+    name: '案款账号分配',
+    path: '/allocation',
     icon: 'person',
   },
   {

@@ -6,12 +6,13 @@ import BasicLayout from './layouts/BasicLayout';
 import Analysis from './pages/Analysis';
 import NotFound from './pages/NotFound';
 import Dismantling from './pages/Dismantling';
+import Allocation from './pages/Allocation';
 
 const routerConfig = [
   {
     path: '/',
     layout: BasicLayout,
-    component: Analysis,
+    component: Analysis
   },
   {
     path: '/dismantling',
@@ -19,9 +20,14 @@ const routerConfig = [
     component: Dismantling
   },
   {
+    path: '/allocation',
+    layout: BasicLayout,
+    component: Allocation
+  },
+  {
     path: '*',
     layout: BasicLayout,
-    component: NotFound,
+    component: NotFound
   }
 ];
 

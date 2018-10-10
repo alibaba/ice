@@ -6,49 +6,49 @@ const mockData = [
     number: '沪执77号',
     reason: '拆迁',
     date: '2018-10-10',
-    Holder: '农商银行',
+    holder: '农商银行',
     department: '执行局'
   }, {
     number: '沪执78号',
     reason: '拆迁',
     date: '2018-10-10',
-    Holder: '农商银行',
+    holder: '农商银行',
     department: '执行局'
   }, {
     number: '沪执79号',
     reason: '拆迁',
     date: '2018-10-10',
-    Holder: '农商银行',
+    holder: '农商银行',
     department: '执行局'
   }, {
     number: '沪执80号',
     reason: '拆迁',
     date: '2018-10-10',
-    Holder: '农商银行',
+    holder: '农商银行',
     department: '执行局'
   }, {
     number: '沪执81号',
     reason: '拆迁',
     date: '2018-10-10',
-    Holder: '农商银行',
+    holder: '农商银行',
     department: '执行局'
   }, {
     number: '沪执82号',
     reason: '拆迁',
     date: '2018-10-10',
-    Holder: '农商银行',
+    holder: '农商银行',
     department: '执行局'
   }, {
     number: '沪执83号',
     reason: '拆迁',
     date: '2018-10-10',
-    Holder: '农商银行',
+    holder: '农商银行',
     department: '执行局'
   }, {
     number: '沪执84号',
     reason: '拆迁',
     date: '2018-10-10',
-    Holder: '农商银行',
+    holder: '农商银行',
     department: '执行局'
   }
 ];
@@ -120,11 +120,11 @@ export default class DismantlingTable extends Component {
           primaryKey="number"
           style={styles.table}
         >
-          <Table.Column title="案号" dataIndex="number" />
-          <Table.Column title="案由" dataIndex="reason" />
-          <Table.Column title="立案日期" dataIndex="date" />
-          <Table.Column title="立案人" dataIndex="holder" />
-          <Table.Column title="承办部门" dataIndex="department" />
+          <Table.Column align="center" title="案号" dataIndex="number" />
+          <Table.Column align="center" title="案由" dataIndex="reason" />
+          <Table.Column align="center" title="立案日期" dataIndex="date" />
+          <Table.Column align="center" title="立案人" dataIndex="holder" />
+          <Table.Column align="center" title="承办部门" dataIndex="department" />
         </Table>
         <div style={styles.pagination}>
           <Pagination
@@ -146,7 +146,9 @@ const styles = {
   button: {
     background: 'linear-gradient(90deg, #006fff 25%, #fff 150%)',
     color: 'white',
-    margin: '0 8px'
+    margin: '0 8px',
+    padding: '0 16px',
+    letterSpacing: '2px'
   },
   table: {
     margin: '20px 0'

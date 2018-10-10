@@ -17,7 +17,7 @@ export default class SearchBar extends Component {
             )
           </label>
           <Select
-            placeholder="沪高拆预"
+            placeholder="沪执"
             style={{...styles.select, ...styles.input}}
             size="small"
           >
@@ -32,25 +32,12 @@ export default class SearchBar extends Component {
           />
           号
         </span>
-        <span style={styles.date}>
-          <label>
-            立案日期:
-            <DatePicker
-              placeholder="Start"
-              size="small"
-              style={styles.shortInput}
-            />
-          </label>
-        </span>
         <span>
           <Button size="small" style={styles.button}>
             查询
           </Button>
           <Button size="small" style={styles.button}>
             重置
-          </Button>
-          <Button size="small" style={styles.button}>
-            新增案件
           </Button>
         </span>
       </div>
@@ -76,9 +63,6 @@ const styles = {
   },
   caseNumber: {
     marginRight: '20px'
-  },
-  date: {
-    marginRight: '40px'
   },
   button: {
     background: 'linear-gradient(90deg, #006fff 25%, #fff 150%)',
