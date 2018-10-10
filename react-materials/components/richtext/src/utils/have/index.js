@@ -1,3 +1,12 @@
+
+export const haveActiveMarks = ({ value }, type) => {
+  if (value.activeMarks.size > 0) {
+    return value.activeMarks.some(mark => mark.type === type);
+  }
+
+  return false;
+};
+
 export const haveMarks = ({ value }, type) => {
   if (value.marks.size > 0) {
     return value.marks.some(mark => mark.type === type);

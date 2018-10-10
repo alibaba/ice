@@ -5,259 +5,22 @@ import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 import insertImages from 'slate-drop-or-paste-images';
 import flatten from 'lodash.flatten';
-import Toolbar from './components/Toolbar';
-import ToolbarButton from './components/ToolbarButton';
 import plugins from './plugins';
 import BLOCK_TAGS from './constants/blocks';
-import MARK_TAGS from './constants/marks';
+import Image from './components/Image';
+import ToolbarButton from './components/ToolbarButton';
+import SERIALIZER_RULES from './serializer';
+import {haveActiveMarks, haveBlocks} from './utils/have';
 import './main.scss';
 
-/**
- * Image node renderer.
- *
- * @type {Component}
- */
-
-class Image extends React.Component {
-  state = {}
-
-  componentDidMount() {
-    const { node } = this.props;
-    const { data } = node;
-    const file = data.get('file');
-    this.load(file);
-  }
-
-  load(file) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => this.setState({ src: reader.result }));
-    reader.readAsDataURL(file);
-  }
-
-  render() {
-    const { attributes, selected } = this.props;
-    const { src } = this.state;
-    return src ?
-      <img
-        {...attributes}
-        src={src}
-        style={{
-          display: 'block',
-          maxWidth: '100%',
-          maxHeight: '20em',
-          boxShadow: selected ? '0 0 0 2px blue' : 'none'
-        }}
-      /> :
-      <span>Loading...</span>;
-  }
-}
 
 /**
- * Serializer rules.
- *
- * @type {Array}
- */
-
-const RULES = [
-  {
-    deserialize(el, next) {
-      const block = BLOCK_TAGS[el.tagName.toLowerCase()];
-      let data = {};
-
-      if (el.style.textAlign) {
-        data.align = el.style.textAlign;
-      }
-
-      if (el.style.lineHeight) {
-        data.lineHeight = el.style.lineHeight;
-      }
-
-      if (Object.keys(data).length > 0) {
-        return {
-          object: 'block',
-          type: block,
-          data,
-          nodes: next(el.childNodes)
-        };
-      }
-
-      if (block) {
-        return {
-          object: 'block',
-          type: block,
-          nodes: next(el.childNodes),
-        };
-      }
-    },
-    serialize(obj, children) {
-      if (obj.object == 'block') {
-        const style = {
-          textAlign: obj.data.get('align'),
-          lineHeight: obj.data.get('lineHeight')
-        };
-        switch (obj.type) {
-          case 'code':
-            return (
-              <pre style={style}>
-                <code>{children}</code>
-              </pre>
-            );
-          case 'paragraph':
-            return <p className={obj.data.get('className')} style={style}>{children}</p>;
-          case 'blockquote':
-            return <blockquote style={style}>{children}</blockquote>;
-          case 'bulleted-list':
-            return <ul style={style}>{children}</ul>;
-          case 'heading-one':
-            return <h1 style={style}>{children}</h1>;
-          case 'heading-two':
-            return <h2 style={style}>{children}</h2>;
-          case 'heading-three':
-            return <h3 style={style}>{children}</h3>;
-          case 'heading-four':
-            return <h4 style={style}>{children}</h4>;
-          case 'heading-five':
-            return <h5 style={style}>{children}</h5>;
-          case 'heading-six':
-            return <h6 style={style}>{children}</h6>;
-          case 'list-item':
-            return <li style={style}>{children}</li>;
-          case 'numbered-list':
-            return <ol style={style}>{children}</ol>;
-          case 'image':
-            const src = obj.data.get('src');
-            return <Image src={src} style={style} />;
-        }
-      }
-    },
-  },
-  {
-    deserialize(el, next) {
-      const mark = MARK_TAGS[el.tagName.toLowerCase()];
-      let data = {};
-
-      if (el.style.backgroundColor) {
-        data.color = el.style.backgroundColor;
-      }
-
-      if (el.style.color) {
-        data.color = el.style.color;
-      }
-
-      if (el.style.fontSize) {
-        data.fontSize = el.style.fontSize;
-      }
-
-      if (mark) {
-        return {
-          object: 'mark',
-          type: mark,
-          data,
-          nodes: next(el.childNodes),
-        };
-      }
-    },
-    serialize(obj, children) {
-      if (obj.object == 'mark') {
-        switch (obj.type) {
-          case 'bold':
-            return <strong>{children}</strong>;
-          case 'italic':
-            return <em>{children}</em>;
-          case 'underline':
-            return <u>{children}</u>;
-          case 'strikethrough':
-            return <s>{children}</s>;
-          case 'code':
-            return <code>{children}</code>;
-          case 'fontColor':
-            return (
-              <span style={{color: obj.data.get('color').color}}>
-                {children}
-              </span>
-            );
-          case 'fontBgColor':
-            return (
-              <span style={{backgroundColor: obj.data.get('color').color}}>
-                {children}
-              </span>
-            );
-          case 'fontSize':
-            return (
-              <span style={{fontSize: obj.data.get('fontSize')}}>
-                {children}
-              </span>
-            );
-        }
-      }
-    },
-  },
-  {
-    // Special case for code blocks, which need to grab the nested childNodes.
-    deserialize(el, next) {
-      if (el.tagName.toLowerCase() == 'pre') {
-        const code = el.childNodes[0];
-        const childNodes =
-          code && code.tagName.toLowerCase() == 'code'
-            ? code.childNodes
-            : el.childNodes;
-
-        return {
-          object: 'block',
-          type: 'code',
-          nodes: next(childNodes),
-        };
-      }
-    },
-  },
-  {
-    // Special case for images, to grab their src.
-    deserialize(el, next) {
-      if (el.tagName.toLowerCase() == 'img') {
-        return {
-          object: 'block',
-          type: 'image',
-          nodes: next(el.childNodes),
-          data: {
-            src: el.getAttribute('src'),
-          },
-        };
-      }
-    },
-  },
-  {
-    // Special case for links, to grab their href.
-    deserialize(el, next) {
-      if (el.tagName.toLowerCase() == 'a') {
-        return {
-          object: 'inline',
-          type: 'link',
-          nodes: next(el.childNodes),
-          data: {
-            href: el.getAttribute('href'),
-          },
-        };
-      }
-    },
-  },
-];
-
-/**
- * Create a new HTML serializer with `RULES`.
+ * Create a new HTML serializer
  *
  * @type {Html}
  */
 
-const serializer = new Html({ rules: RULES });
-
-
-/**
- * Define the default node type.
- *
- * @type {String}
- */
-
-const DEFAULT_NODE = 'paragraph';
+const serializer = new Html({ rules: SERIALIZER_RULES });
 
 /**
  * Richtext
@@ -266,6 +29,7 @@ const DEFAULT_NODE = 'paragraph';
  */
 
 class RichText extends Component {
+
   constructor(props) {
     super(props);
 
@@ -289,6 +53,7 @@ class RichText extends Component {
     ].concat(customPlugins);
 
   }
+
   /**
    * Deserialize the initial editor value.
    *
@@ -314,30 +79,6 @@ class RichText extends Component {
   }
 
   /**
-   * Check if the current selection has a mark with `type` in it.
-   *
-   * @param {String} type
-   * @return {Boolean}
-   */
-
-  hasMark = type => {
-    const { value } = this.state;
-    return value.activeMarks.some(mark => mark.type == type);
-  }
-
-  /**
-   * Check if the any of the currently selected blocks are of `type`.
-   *
-   * @param {String} type
-   * @return {Boolean}
-   */
-
-  hasBlock = type => {
-    const { value } = this.state;
-    return value.blocks.some(node => node.type == type);
-  }
-
-  /**
    * Render.
    *
    * @return {Element}
@@ -352,7 +93,7 @@ class RichText extends Component {
     );
     return (
       <div className="ice-richtext-container">
-        <Toolbar>
+        <div className="ice-richtext-toolbar">
           {this.renderMarkButton('bold', 'format_bold', '粗体')}
           {this.renderMarkButton('italic', 'format_italic', '斜体')}
           {this.renderMarkButton('underline', 'format_underline', '下划线')}
@@ -375,7 +116,7 @@ class RichText extends Component {
               />
             );
           })}
-        </Toolbar>
+        </div>
         <Editor
           spellCheck
           autoFocus
@@ -401,7 +142,9 @@ class RichText extends Component {
    */
 
   renderMarkButton = (type, icon, title) => {
-    const isActive = this.hasMark(type);
+    const {value} = this.state;
+    const change = value.change();
+    const isActive = haveActiveMarks(change, type);
 
     return (
       <ToolbarButton
@@ -422,13 +165,15 @@ class RichText extends Component {
    */
 
   renderBlockButton = (type, icon, title) => {
-    let isActive = this.hasBlock(type);
+    const {value} = this.state;
+    const change = value.change();
+    let isActive = haveBlocks(change, type);
 
     if (['numbered-list', 'bulleted-list'].includes(type)) {
       const { value } = this.state;
       if (value.blocks.first()) {
         const parent = value.document.getParent(value.blocks.first().key);
-        isActive = this.hasBlock('list-item') && parent && parent.type === type;
+        isActive = haveBlocks(change, 'list-item') && parent && parent.type === type;
       }
     }
 
@@ -621,14 +366,23 @@ class RichText extends Component {
 
   onClickBlock = (event, type) => {
     event.preventDefault();
+
+    /**
+     * Define the default node type.
+     *
+     * @type {String}
+     */
+
+    const DEFAULT_NODE = BLOCK_TAGS.p;
+
     const { value } = this.state;
     const change = value.change();
     const { document } = value;
 
     // Handle everything but list buttons.
     if (type != 'bulleted-list' && type != 'numbered-list') {
-      const isActive = this.hasBlock(type);
-      const isList = this.hasBlock('list-item');
+      const isActive = haveBlocks(change, type);
+      const isList = haveBlocks(change, 'list-item');
 
       if (isList) {
         change
@@ -640,7 +394,7 @@ class RichText extends Component {
       }
     } else {
       // Handle the extra wrapping required for list buttons.
-      const isList = this.hasBlock('list-item');
+      const isList = haveBlocks(change, 'list-item');
       const isType = value.blocks.some(block => {
         return !!document.getClosest(block.key, parent => parent.type == type);
       });
