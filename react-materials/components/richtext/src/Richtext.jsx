@@ -64,6 +64,24 @@ const RULES = [
   {
     deserialize(el, next) {
       const block = BLOCK_TAGS[el.tagName.toLowerCase()]
+      let data = {};
+
+      if (el.style.textAlign) {
+        data.align = el.style.textAlign;
+      }
+
+      if (el.style.lineHeight) {
+        data.lineHeight = el.style.lineHeight;
+      }
+
+      if (Object.keys(data).length > 0) {
+        return {
+          object: "block",
+          type: block,
+          data,
+          nodes: next(el.childNodes)
+        };
+      }
 
       if (block) {
         return {
@@ -75,7 +93,10 @@ const RULES = [
     },
     serialize(obj, children) {
       if (obj.object == 'block') {
-        const style = { textAlign: obj.data.get('align') }
+        const style = {
+          textAlign: obj.data.get('align'),
+          lineHeight: obj.data.get('lineHeight')
+        };
         switch (obj.type) {
           case 'code':
             return (
@@ -341,6 +362,8 @@ class RichText extends Component {
           {this.renderMarkButton('code', 'code', '代码')}
           {this.renderBlockButton('heading-one', 'looks_one', '1级标题')}
           {this.renderBlockButton('heading-two', 'looks_two', '2级标题')}
+          {this.renderBlockButton('heading-three', 'looks_3', '3级标题')}
+          {this.renderBlockButton('heading-four', 'looks_4', '4级标题')}
           {this.renderBlockButton('blockquote', 'format_quote', '引用')}
           {this.renderBlockButton('numbered-list', 'format_list_numbered', '有序列表')}
           {this.renderBlockButton('bulleted-list', 'format_list_bulleted', '无序列表')}
@@ -431,7 +454,10 @@ class RichText extends Component {
   renderNode = props => {
     const { attributes, children, node, isFocused } = props
 
-    const style = { textAlign: node.data.get('align') }
+    const style = {
+      textAlign: node.data.get('align'),
+      lineHeight: node.data.get('lineHeight')
+    };
 
     switch (node.type) {
       case 'blockquote':

@@ -54,8 +54,7 @@ class FontBgColorButton extends Component {
       const alpha = first.get("alpha");
 
       colorStyle = {
-        stroke: color,
-        opacity: alpha
+        color: color.color
       };
     }
 
@@ -68,7 +67,7 @@ class FontBgColorButton extends Component {
           icon="format_color_fill"
           title="背景颜色"
           active={isActive}
-          style={colorStyle}
+          iconStyle={colorStyle}
           onClick={e => e.preventDefault()}
         />
       </ColorPicker>

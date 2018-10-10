@@ -1,38 +1,32 @@
 import {Component} from 'react';
 
-class Icon extends Component {
-  render() {
-    const { className, ...rest } = this.props;
-    return (
-      <span
-        className={`material-icons ${className}`}
-        style={{
-          fontSize: '18px',
-          verticalAlign: 'textBottom'
-        }}
-        {...rest}
-      />
-    );
-  }
-}
-
 class Button extends Component {
   render() {
-    const {reversed, active, icon, title, onMouseDown, onClick} = this.props;
+    const {reversed, active, icon, title, onMouseDown, onClick, iconStyle} = this.props;
     return (
-      <span style={{
-        display: 'inline-block',
-        marginRight: '15px',
-        cursor: 'pointer',
-        color: reversed
-            ? active ? 'white' : '#aaa'
-            : active ? 'black' : '#ccc'
+      <span
+        style={{
+          display: 'inline-block',
+          marginRight: '15px',
+          cursor: 'pointer',
+          color: reversed
+              ? active ? 'white' : '#aaa'
+              : active ? 'black' : '#ccc',
         }}
         title={title}
         onMouseDown={onMouseDown}
         onClick={onClick}
       >
-        <Icon>{icon}</Icon>
+        <span
+          className={`material-icons`}
+          style={{
+            fontSize: '18px',
+            verticalAlign: 'textBottom',
+            ...iconStyle
+          }}
+        >
+          {icon}
+        </span>
       </span>
     );
   }
