@@ -18,14 +18,17 @@ class Icon extends Component {
 
 class Button extends Component {
   render() {
-    const {reversed, active, icon, onMouseDown, onClick} = this.props;
+    const {reversed, active, icon, title, onMouseDown, onClick} = this.props;
     return (
       <span style={{
+        display: 'inline-block',
+        marginRight: '15px',
         cursor: 'pointer',
         color: reversed
             ? active ? 'white' : '#aaa'
             : active ? 'black' : '#ccc'
         }}
+        title={title}
         onMouseDown={onMouseDown}
         onClick={onClick}
       >

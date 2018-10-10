@@ -66,6 +66,7 @@ class FontBgColorButton extends Component {
       >
         <ToolbarButton
           icon="format_color_fill"
+          title="背景颜色"
           active={isActive}
           style={colorStyle}
           onClick={e => e.preventDefault()}

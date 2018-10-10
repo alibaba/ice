@@ -16,11 +16,12 @@ const alignStrategy = (change, align) => {
   }).focus()
 }
 
-const createButton = (align, icon) => {
+const createButton = (align, icon, title) => {
   return ({value, onChange}) => {
     return (
       <ToolbarButton
         icon={icon}
+        title={title}
         onMouseDown={e => {
           return onChange(alignStrategy(value.change(), align))
         }}
@@ -33,10 +34,10 @@ const createButton = (align, icon) => {
 function AlignPlugin() {
   return {
     toolbarButtons: [
-      createButton('left', 'format_align_left'),
-      createButton('center', 'format_align_center'),
-      createButton('right', 'format_align_right'),
-      createButton('justify', 'format_align_justify'),
+      createButton('left', 'format_align_left', '左对齐'),
+      createButton('center', 'format_align_center', '居中对齐'),
+      createButton('right', 'format_align_right', '右对齐'),
+      createButton('justify', 'format_align_justify', '两端对齐'),
     ]
   };
 }

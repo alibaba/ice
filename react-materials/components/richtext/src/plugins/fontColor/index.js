@@ -66,6 +66,7 @@ class FontColorButton extends Component {
       >
         <ToolbarButton
           icon="format_color_text"
+          title="字体颜色"
           active={isActive}
           style={colorStyle}
           onClick={e => e.preventDefault()}

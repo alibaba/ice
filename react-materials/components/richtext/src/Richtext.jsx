@@ -4,58 +4,15 @@ import React, {Component} from 'react'
 import Html from 'slate-html-serializer'
 import { Editor, getEventTransfer } from 'slate-react'
 import { Value } from 'slate'
-import { injectGlobal } from 'emotion'
-import styled from 'react-emotion'
 import { isKeyHotkey } from 'is-hotkey'
 import InsertImages from 'slate-drop-or-paste-images'
 import flatten from 'lodash.flatten';
+import Toolbar from './components/Toolbar';
 import ToolbarButton from './components/ToolbarButton';
 import plugins from './plugins';
 import BLOCK_TAGS from './constants/blocks';
 import MARK_TAGS from './constants/marks';
-
-injectGlobal`
-  @font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
-  }
-
-  .material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
-  }
-`
-
-
-const Menu = styled('div')`
-  & > * {
-    display: inline-block;
-  }
-  & > * + * {
-    margin-left: 15px;
-  }
-`
-
-export const Toolbar = styled(Menu)`
-  position: relative;
-  padding: 1px 18px 17px;
-  margin: 0 -20px;
-  border-bottom: 2px solid #eee;
-  margin-bottom: 20px;
-`
+import './main.scss';
 
 /**
  * Image node renderer.
@@ -128,9 +85,7 @@ const RULES = [
             )
           case 'paragraph':
             return <p className={obj.data.get('className')} style={style}>{children}</p>
-          case 'quote':
-            return <blockquote style={style}>{children}</blockquote>
-          case 'block-quote':
+          case 'blockquote':
             return <blockquote style={style}>{children}</blockquote>
           case 'bulleted-list':
             return <ul style={style}>{children}</ul>
@@ -174,10 +129,6 @@ const RULES = [
         data.fontSize = el.style.fontSize;
       }
 
-      if (el.style.letterSpacing) {
-        data.letterSpacing = el.style.letterSpacing;
-      }
-
       if (mark) {
         return {
           object: 'mark',
@@ -194,8 +145,10 @@ const RULES = [
             return <strong>{children}</strong>
           case 'italic':
             return <em>{children}</em>
-          case 'underlined':
+          case 'underline':
             return <u>{children}</u>
+          case 'strikethrough':
+            return <s>{children}</s>
           case 'code':
             return <code>{children}</code>
           case 'fontColor':
@@ -207,6 +160,12 @@ const RULES = [
           case 'fontBgColor':
             return (
               <span style={{backgroundColor: obj.data.get('color').color}}>
+                {children}
+              </span>
+            )
+          case 'fontSize':
+            return (
+              <span style={{fontSize: obj.data.get('fontSize')}}>
                 {children}
               </span>
             )
@@ -280,17 +239,6 @@ const serializer = new Html({ rules: RULES })
  */
 
 const DEFAULT_NODE = 'paragraph'
-
-/**
- * Define hotkey matchers.
- *
- * @type {Function}
- */
-
-const isBoldHotkey = isKeyHotkey('mod+b')
-const isItalicHotkey = isKeyHotkey('mod+i')
-const isUnderlinedHotkey = isKeyHotkey('mod+u')
-const isCodeHotkey = isKeyHotkey('mod+`')
 
 /**
  * Richtext
@@ -384,17 +332,18 @@ class RichText extends Component {
         .filter(buttons => buttons)
     );
     return (
-      <div>
+      <div className="ice-richtext-container">
         <Toolbar>
-          {this.renderMarkButton('bold', 'format_bold')}
-          {this.renderMarkButton('italic', 'format_italic')}
-          {this.renderMarkButton('underlined', 'format_underlined')}
-          {this.renderMarkButton('code', 'code')}
-          {this.renderBlockButton('heading-one', 'looks_one')}
-          {this.renderBlockButton('heading-two', 'looks_two')}
-          {this.renderBlockButton('block-quote', 'format_quote')}
-          {this.renderBlockButton('numbered-list', 'format_list_numbered')}
-          {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
+          {this.renderMarkButton('bold', 'format_bold', '粗体')}
+          {this.renderMarkButton('italic', 'format_italic', '斜体')}
+          {this.renderMarkButton('underline', 'format_underline', '下划线')}
+          {this.renderMarkButton('strikethrough', 'format_strikethrough', '删除线')}
+          {this.renderMarkButton('code', 'code', '代码')}
+          {this.renderBlockButton('heading-one', 'looks_one', '1级标题')}
+          {this.renderBlockButton('heading-two', 'looks_two', '2级标题')}
+          {this.renderBlockButton('blockquote', 'format_quote', '引用')}
+          {this.renderBlockButton('numbered-list', 'format_list_numbered', '有序列表')}
+          {this.renderBlockButton('bulleted-list', 'format_list_bulleted', '无序列表')}
           {pluginToolbarButtons.map((ToolbarButton, index) => {
             return (
               <ToolbarButton
@@ -430,12 +379,13 @@ class RichText extends Component {
    * @return {Element}
    */
 
-  renderMarkButton = (type, icon) => {
+  renderMarkButton = (type, icon, title) => {
     const isActive = this.hasMark(type)
 
     return (
       <ToolbarButton
         icon={icon}
+        title={title}
         active={isActive}
         onMouseDown={event => this.onClickMark(event, type)}
       />
@@ -450,7 +400,7 @@ class RichText extends Component {
    * @return {Element}
    */
 
-  renderBlockButton = (type, icon) => {
+  renderBlockButton = (type, icon, title) => {
     let isActive = this.hasBlock(type)
 
     if (['numbered-list', 'bulleted-list'].includes(type)) {
@@ -464,6 +414,7 @@ class RichText extends Component {
     return (
       <ToolbarButton
         icon={icon}
+        title={title}
         active={isActive}
         onMouseDown={event => this.onClickBlock(event, type)}
       />
@@ -483,7 +434,7 @@ class RichText extends Component {
     const style = { textAlign: node.data.get('align') }
 
     switch (node.type) {
-      case 'quote':
+      case 'blockquote':
         return <blockquote {...attributes} style={style}>{children}</blockquote>
       case 'code':
         return (
@@ -547,8 +498,10 @@ class RichText extends Component {
         return <code {...attributes}>{children}</code>
       case 'italic':
         return <em {...attributes}>{children}</em>
-      case 'underlined':
+      case 'underline':
         return <u {...attributes}>{children}</u>
+      case 'strikethrough':
+        return <s {...attributes}>{children}</s>
     }
   }
 
@@ -593,12 +546,23 @@ class RichText extends Component {
   onKeyDown = (event, change) => {
     let mark
 
+    /**
+     * Define hotkey matchers.
+     *
+     * @type {Function}
+     */
+
+    const isBoldHotkey = isKeyHotkey('mod+b')
+    const isItalicHotkey = isKeyHotkey('mod+i')
+    const isUnderlineHotkey = isKeyHotkey('mod+u')
+    const isCodeHotkey = isKeyHotkey('mod+`')
+
     if (isBoldHotkey(event)) {
       mark = 'bold'
     } else if (isItalicHotkey(event)) {
       mark = 'italic'
-    } else if (isUnderlinedHotkey(event)) {
-      mark = 'underlined'
+    } else if (isUnderlineHotkey(event)) {
+      mark = 'underline'
     } else if (isCodeHotkey(event)) {
       mark = 'code'
     } else {

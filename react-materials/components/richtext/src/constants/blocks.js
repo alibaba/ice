@@ -3,7 +3,7 @@ module.exports = {
   li: 'list-item',
   ul: 'bulleted-list',
   ol: 'numbered-list',
-  blockquote: 'quote',
+  blockquote: 'blockquote',
   pre: 'code',
   h1: 'heading-one',
   h2: 'heading-two',

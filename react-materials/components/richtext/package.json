@@ -26,7 +26,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "emotion": "^9.2.10",
+    "@icedesign/base": "0.2.5",
     "hex-rgb": "^3.0.0",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.3",
@@ -37,7 +37,6 @@
     "rc-color-picker": "^1.2.6",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-emotion": "^9.2.10",
     "slate": "^0.41.1",
     "slate-drop-or-paste-images": "^0.8.4",
     "slate-html-serializer": "^0.7.6",

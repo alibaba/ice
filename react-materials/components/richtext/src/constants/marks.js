@@ -8,6 +8,5 @@ module.exports = {
   // mark styles
   fontColor: "fontColor",
   fontBgColor: "fontBgColor",
-  FONTSIZE: "FONTSIZE",
-  LETTERSPACING: "LETTERSPACING"
+  fontSize: "fontSize",
 };
