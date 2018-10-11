@@ -12,31 +12,31 @@ export default class SearchBar extends Component {
             案号: (
             <Input
               style={{...styles.input, ...styles.shortInput}}
-              size="small"
+              size="large"
             />
             )
           </label>
           <Select
-            placeholder="沪执"
+            placeholder="浙执"
             style={{...styles.select, ...styles.input}}
-            size="small"
+            size="large"
           >
-            <Option value="small">option1</Option>
-            <Option value="medium">option2</Option>
-            <Option value="large">option3</Option>
+            <Option value="small">浙执1</Option>
+            <Option value="medium">浙执2</Option>
+            <Option value="large">浙执3</Option>
           </Select>
           字第
           <Input
             style={{...styles.input, ...styles.shortInput}}
-            size="small"
+            size="large"
           />
           号
         </span>
         <span>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             查询
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             重置
           </Button>
         </span>

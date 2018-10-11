@@ -5,25 +5,25 @@
 const headerMenuConfig = [
   {
     name: '我的工作台',
-    path: '/workbench',
+    path: '/',
     external: true,
     newWindow: true,
   },
   {
     name: '业务办理',
-    path: '/business',
+    path: '/',
     external: true,
     newWindow: true,
   },
   {
     name: '案件查询',
-    path: '/case',
+    path: '/',
     external: true,
     newWindow: true,
   },
   {
     name: '统计分析',
-    path: '/analysis',
+    path: '/',
     external: true,
     newWindow: true,
   },

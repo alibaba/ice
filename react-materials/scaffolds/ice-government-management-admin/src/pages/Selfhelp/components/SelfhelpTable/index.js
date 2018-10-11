@@ -4,51 +4,33 @@ import SearchBar from './SearchBar';
 
 const mockData = [
   {
-    number: '沪执77号',
+    number: '浙执77号',
     resource: '执行',
-    applicant: '孙志茂',
+    applicant: '淘小宝',
     date: '2018-10-10',
     status: '申请立案'
   }, {
-    number: '沪执78号',
+    number: '浙执78号',
     resource: '执行',
-    applicant: '孙志茂',
+    applicant: '淘小宝',
+    date: '2018-10-10',
+    status: '诉前调解'
+  }, {
+    number: '浙执79号',
+    resource: '执行',
+    applicant: '淘小宝',
+    date: '2018-10-10',
+    status: '诉前调解'
+  }, {
+    number: '浙执80号',
+    resource: '执行',
+    applicant: '淘小宝',
     date: '2018-10-10',
     status: '申请立案'
   }, {
-    number: '沪执79号',
+    number: '浙执81号',
     resource: '执行',
-    applicant: '孙志茂',
-    date: '2018-10-10',
-    status: '申请立案'
-  }, {
-    number: '沪执80号',
-    resource: '执行',
-    applicant: '孙志茂',
-    date: '2018-10-10',
-    status: '申请立案'
-  }, {
-    number: '沪执81号',
-    resource: '执行',
-    applicant: '孙志茂',
-    date: '2018-10-10',
-    status: '申请立案'
-  }, {
-    number: '沪执82号',
-    resource: '执行',
-    applicant: '孙志茂',
-    date: '2018-10-10',
-    status: '申请立案'
-  }, {
-    number: '沪执83号',
-    resource: '执行',
-    applicant: '孙志茂',
-    date: '2018-10-10',
-    status: '申请立案'
-  }, {
-    number: '沪执84号',
-    resource: '执行',
-    applicant: '孙志茂',
+    applicant: '淘小宝',
     date: '2018-10-10',
     status: '申请立案'
   }
@@ -73,7 +55,7 @@ export default class SelfhelpTable extends Component {
   render() {
     const actionRender = () => {
       return (
-        <Button size="small" style={styles.button}>
+        <Button size="large" style={styles.button}>
           办理
         </Button>
       );
@@ -98,7 +80,7 @@ export default class SelfhelpTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-            size="small"
+            size="large"
           />
         </div>
       </div>
@@ -123,6 +105,6 @@ const styles = {
   },
   pagination: {
     textAlign: 'center',
-    marginBottom: '200px'
+    marginBottom: '20px'
   }
 };

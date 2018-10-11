@@ -15,20 +15,23 @@ import {
   Util
 } from "bizcharts";
 
-const mock = [
-  {
-    index: "收案数",
-    number: 290
-  },
-  {
-    index: "结案数",
-    number: 400
-  },
-  {
-    index: "存案数",
-    number: 200
-  }
-];
+const mock = {
+  index: [
+    {
+      index: "收案数",
+      number: 290
+    },
+    {
+      index: "结案数",
+      number: 400
+    },
+    {
+      index: "存案数",
+      number: 200
+    }
+  ],
+  average: '45'
+};
 
 const cols = {
   number: {
@@ -38,33 +41,82 @@ const cols = {
 
 export default class BarChart extends Component {
 
+  formatAxis = (text) => {
+    return `${text}件`;
+  };
+
+  formatTooltip = (index, number) => {
+    return {
+      name: index,
+      title: index,
+      value: number + '件'
+    };
+  };
+
   render() {
     return(
-      <Chart
-        height={200}
-        width={270}
-        data={mock}
-        scale={cols}
-
-        padding={40}
-      >
-        <Axis name="index" />
-        <Axis name="number" />
-        <Tooltip
-          crosshairs={{
+      <div style={styles.container}>
+        <h4 style={styles.average}>平均执行天数: <span style={styles.number}>{mock.average}</span></h4>
+        <Chart
+          width={220}
+          height={220}
+          data={mock.index}
+          scale={cols}
+          padding={[40, 10, 40, 60]}
+        >
+          <Axis
+            name="index"
+            label={{
+            offset: 4,
+            textStyle: {
+              textAlign: 'center',
+              fill: '#404040',
+              fontSize: '12',
+              fontWeight: 'normal',
+              rotate: 0,
+              textBaseline: 'top'
+            },
+            autoRotate: false
+          }}
+          />
+          <Axis
+            name="number"
+            label={{
+              formatter: this.formatAxis
+            }}
+          />
+          <Tooltip
+            crosshairs={{
               type: "y"
             }}
-        />
-        <Legend />
-        <Geom type="interval" position="index*number" shape={['index', ['circle', 'rect']]} />
-      </Chart>
+          />
+          <Geom
+            type="interval"
+            position="index*number"
+            shape={['index', ['circle', 'rect']]}
+            tooltip={['index*number', this.formatTooltip]}
+          />
+        </Chart>
+      </div>
+
     );
   }
 }
 
 const styles = {
-  chart: {
-    width: '50%',
-    boxSizing: 'border-box'
+  container: {
+    position: 'relative'
+  },
+  average: {
+    position: 'absolute',
+    top: '-10px',
+    textAlign: 'center',
+    width: '100%',
+    fontSize: '12px',
+    textIndent: '20px',
+    color: '#423f68',
+  },
+  number: {
+    color: '#0052f4'
   }
 };

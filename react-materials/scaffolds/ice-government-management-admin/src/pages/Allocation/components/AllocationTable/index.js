@@ -3,46 +3,46 @@ import { Button, Table, Pagination } from '@icedesign/base';
 
 const mockData = [
   {
-    number: '沪执77号',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
+    number: '( 2018 ) 浙执77号',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
     department: '执行局',
-    holder: '毛泽宇',
+    holder: '淘小宝',
+    status: '业务庭分案'
+  }, {
+    number: '( 2018 ) 浙执78号',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    department: '执行局',
+    holder: '淘小宝',
     status: '办理中'
   }, {
-    number: '沪执78号',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
+    number: '( 2018 ) 浙执79号',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
     department: '执行局',
-    holder: '毛泽宇',
-    status: '办理中'
+    holder: '淘小宝',
+    status: '申请归档'
   }, {
-    number: '沪执79号',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
+    number: '( 2018 ) 浙执80号',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
     department: '执行局',
-    holder: '毛泽宇',
-    status: '办理中'
+    holder: '淘小宝',
+    status: '申请报结'
   }, {
-    number: '沪执80号',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
+    number: '( 2018 ) 浙执81号',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
     department: '执行局',
-    holder: '毛泽宇',
-    status: '办理中'
+    holder: '淘小宝',
+    status: '立案'
   }, {
-    number: '沪执81号',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
+    number: '( 2018 ) 浙执82号',
+    applicant: '淘小宝',
+    execution: '某某科技公司',
     department: '执行局',
-    holder: '毛泽宇',
-    status: '办理中'
-  }, {
-    number: '沪执82号',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
-    department: '执行局',
-    holder: '毛泽宇',
+    holder: '淘小宝',
     status: '办理中'
   }
 ];
@@ -66,7 +66,7 @@ export default class AllocationTable extends Component {
   render() {
     const actionRender = () => {
       return (
-        <Button size="small" style={styles.button}>
+        <Button size="large" style={styles.button}>
           分配账号
         </Button>
       );
@@ -91,7 +91,7 @@ export default class AllocationTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-            size="small"
+            size="large"
           />
         </div>
       </div>

@@ -11,10 +11,7 @@ export default class Selfhelp extends Component {
     return (
       <div>
         <div style={styles.nav}>
-          <Breadcrumb style={styles.breadcrumb}>
-            <Breadcrumb.Item link="javascript:void(0);">立案管理</Breadcrumb.Item>
-            <Breadcrumb.Item link="javascript:void(0);">当事人自助收案</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={styles.breadcrumb}>当事人自助收案</h2>
         </div>
         <Container style={styles.container}>
           <CountBar />

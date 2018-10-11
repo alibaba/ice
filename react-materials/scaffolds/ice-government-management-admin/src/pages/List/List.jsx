@@ -11,10 +11,7 @@ export default class List extends Component {
     return (
       <div>
         <div style={styles.nav}>
-          <Breadcrumb style={styles.breadcrumb}>
-            <Breadcrumb.Item link="javascript:void(0);">立案管理</Breadcrumb.Item>
-            <Breadcrumb.Item link="javascript:void(0);">在办案件列表</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={styles.breadcrumb}>在办案件列表</h2>
         </div>
         <SearchBar />
         <Container style={styles.container}>

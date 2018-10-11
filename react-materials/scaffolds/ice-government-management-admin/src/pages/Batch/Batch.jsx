@@ -11,10 +11,7 @@ export default class Batch extends Component {
     return (
       <div>
         <div style={styles.nav}>
-          <Breadcrumb style={styles.breadcrumb}>
-            <Breadcrumb.Item link="javascript:void(0);">立案管理</Breadcrumb.Item>
-            <Breadcrumb.Item link="javascript:void(0);">批量操作</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={styles.breadcrumb}>批量操作</h2>
         </div>
         <Container style={styles.container}>
           <SelectBar />

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Breadcrumb } from '@icedesign/base';
 import Container from '@icedesign/container';
 import SearchBar from './components/SearchBar';
 import AllocationTable from './components/AllocationTable';
@@ -11,10 +10,7 @@ export default class Allocation extends Component {
     return (
       <div>
         <div style={styles.nav}>
-          <Breadcrumb style={styles.breadcrumb}>
-            <Breadcrumb.Item link="javascript:void(0);">立案管理</Breadcrumb.Item>
-            <Breadcrumb.Item link="javascript:void(0);">案款账号分配</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={styles.breadcrumb}>案款账号分配</h2>
         </div>
         <SearchBar />
         <Container style={styles.container}>

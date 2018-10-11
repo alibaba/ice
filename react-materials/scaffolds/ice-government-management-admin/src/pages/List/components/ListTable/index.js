@@ -3,47 +3,47 @@ import { Button, Table, Pagination } from '@icedesign/base';
 
 const mockData = [
   {
-    number: '沪执77号',
-    date: '2018-10-10',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
-    holder: '毛泽宇',
+    number: '浙执77号',
+    date: '2017-10-16',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    holder: '淘小宝',
+    license: '余70天',
+  }, {
+    number: '浙执78号',
+    date: '2017-10-16',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    holder: '淘小宝',
     license: '余65天',
   }, {
-    number: '沪执77号',
-    date: '2018-10-10',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
-    holder: '毛泽宇',
-    license: '余65天',
+    number: '浙执79号',
+    date: '2018-03-118',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    holder: '淘小宝',
+    license: '余82天',
   }, {
-    number: '沪执77号',
-    date: '2018-10-10',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
-    holder: '毛泽宇',
-    license: '余65天',
+    number: '浙执80号',
+    date: '2017-09-25',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    holder: '淘小宝',
+    license: '余77天',
   }, {
-    number: '沪执77号',
-    date: '2018-10-10',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
-    holder: '毛泽宇',
-    license: '余65天',
+    number: '浙执81号',
+    date: '2017-10-16',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    holder: '淘小宝',
+    license: '余90天',
   }, {
-    number: '沪执77号',
-    date: '2018-10-10',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
-    holder: '毛泽宇',
-    license: '余65天',
-  }, {
-    number: '沪执77号',
-    date: '2018-10-10',
-    applicant: '农商银行',
-    execution: '上海摩乐服务咨询有限公司',
-    holder: '毛泽宇',
-    license: '余65天',
+    number: '浙执82号',
+    date: '2017-11-17',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    holder: '淘小宝',
+    license: '余30天',
   }
 ];
 
@@ -66,7 +66,7 @@ export default class ListTable extends Component {
   render() {
     const actionRender = () => {
       return (
-        <Button size="small" style={styles.button}>
+        <Button size="large" style={styles.button}>
           办理
         </Button>
       );
@@ -93,7 +93,7 @@ export default class ListTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-            size="small"
+            size="large"
           />
         </div>
       </div>

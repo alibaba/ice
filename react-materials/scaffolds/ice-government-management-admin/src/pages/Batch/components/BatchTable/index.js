@@ -4,40 +4,34 @@ import FormPanel from './FormPanel';
 
 const mockData = [
   {
-    number: '沪执78号',
-    applicant: '孙志茂',
-    execution: '上海摩乐服务咨询有限公司',
-    contracting: '毛泽宇',
+    number: '浙执78号',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    contracting: '淘小宝',
     date: '2018-10-10'
   }, {
-    number: '沪执79号',
-    applicant: '孙志茂',
-    execution: '上海摩乐服务咨询有限公司',
-    contracting: '毛泽宇',
+    number: '浙执79号',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    contracting: '淘小宝',
     date: '2018-10-10'
   }, {
-    number: '沪执80号',
-    applicant: '孙志茂',
-    execution: '上海摩乐服务咨询有限公司',
-    contracting: '毛泽宇',
+    number: '浙执80号',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    contracting: '淘小宝',
     date: '2018-10-10'
   }, {
-    number: '沪执81号',
-    applicant: '孙志茂',
-    execution: '上海摩乐服务咨询有限公司',
-    contracting: '毛泽宇',
+    number: '浙执81号',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    contracting: '淘小宝',
     date: '2018-10-10'
   }, {
-    number: '沪执82号',
-    applicant: '孙志茂',
-    execution: '上海摩乐服务咨询有限公司',
-    contracting: '毛泽宇',
-    date: '2018-10-10'
-  }, {
-    number: '沪执83号',
-    applicant: '孙志茂',
-    execution: '上海摩乐服务咨询有限公司',
-    contracting: '毛泽宇',
+    number: '浙执82号',
+    applicant: '淘小宝',
+    execution: '某某有限公司',
+    contracting: '淘小宝',
     date: '2018-10-10'
   }
 ];
@@ -78,7 +72,7 @@ export default class BatchTable extends Component {
   render() {
     const actionRender = () => {
       return (
-        <Button size="small" style={styles.button}>
+        <Button size="large" style={styles.button}>
           查看
         </Button>
       );
@@ -103,7 +97,7 @@ export default class BatchTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-            size="small"
+            size="large"
           />
         </div>
         <FormPanel />

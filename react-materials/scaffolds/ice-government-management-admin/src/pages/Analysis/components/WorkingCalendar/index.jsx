@@ -24,7 +24,7 @@ const styles = {
   container: {
     width: '50%',
     boxSizing: 'border-box',
-    padding: '12px'
+    padding: '10px'
   },
   card: {
     width: '100%',
@@ -33,8 +33,6 @@ const styles = {
     fontSize: '16px',
     backgroundColor: 'white',
     borderRadius: '16px',
-    overflow: 'hidden',
-    position: 'relative',
     height: '286px'
   },
   title: {
@@ -42,10 +40,9 @@ const styles = {
     borderLeft: '5px solid #0056f4',
     paddingLeft: '10px',
     lineHeight: '20px',
-    position: 'relative',
-    zIndex: '1'
+    display: 'inline-block'
   },
   calendar: {
-    marginTop: '-30px'
+    marginTop: '-30px',
   }
 };

@@ -68,11 +68,11 @@ const styles = {
   container: {
     width: '50%',
     boxSizing: 'border-box',
-    padding: '12px'
+    padding: '10px'
   },
   card: {
     width: '100%',
-    padding: '24px',
+    padding: '20px',
     color: '#42436b',
     backgroundColor: 'white',
     borderRadius: '16px',
@@ -98,7 +98,7 @@ const styles = {
     width: '25%',
     height: '24px',
     lineHeight: '24px',
-    padding: '0 8px',
+    padding: '0 4px',
     boxSizing: 'border-box',
   },
   itemTitle: {
@@ -107,7 +107,10 @@ const styles = {
     fontSize: '12px',
     textAlign: 'center',
     borderRadius: '12px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
   },
   count: {
     color: '#ff363b'

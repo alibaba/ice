@@ -3,52 +3,40 @@ import { Button, Table, Pagination } from '@icedesign/base';
 
 const mockData = [
   {
-    number: '沪执77号',
+    number: '( 2018 ) 浙执77号',
     reason: '拆迁',
     date: '2018-10-10',
-    holder: '农商银行',
+    holder: '淘小宝',
     department: '执行局'
   }, {
-    number: '沪执78号',
-    reason: '拆迁',
+    number: '( 2018 ) 浙执78号',
+    reason: '赔偿',
     date: '2018-10-10',
-    holder: '农商银行',
+    holder: '淘小宝',
     department: '执行局'
   }, {
-    number: '沪执79号',
-    reason: '拆迁',
+    number: '( 2018 ) 浙执79号',
+    reason: '绿化',
     date: '2018-10-10',
-    holder: '农商银行',
+    holder: '淘小宝',
     department: '执行局'
   }, {
-    number: '沪执80号',
+    number: '( 2018 ) 浙执80号',
     reason: '拆迁',
     date: '2018-10-10',
-    holder: '农商银行',
+    holder: '淘小宝',
     department: '执行局'
   }, {
-    number: '沪执81号',
+    number: '( 2018 ) 浙执81号',
     reason: '拆迁',
     date: '2018-10-10',
-    holder: '农商银行',
+    holder: '淘小宝',
     department: '执行局'
   }, {
-    number: '沪执82号',
-    reason: '拆迁',
+    number: '( 2018 ) 浙执82号',
+    reason: '赔偿',
     date: '2018-10-10',
-    holder: '农商银行',
-    department: '执行局'
-  }, {
-    number: '沪执83号',
-    reason: '拆迁',
-    date: '2018-10-10',
-    holder: '农商银行',
-    department: '执行局'
-  }, {
-    number: '沪执84号',
-    reason: '拆迁',
-    date: '2018-10-10',
-    holder: '农商银行',
+    holder: '淘小宝',
     department: '执行局'
   }
 ];
@@ -92,25 +80,25 @@ export default class DismantlingTable extends Component {
     return (
       <div style={styles.container}>
         <div>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             编辑
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             补正
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             材料退回
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             申请人主动撤回
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             立案前化解
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             发送办理
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             删除
           </Button>
         </div>
@@ -130,7 +118,7 @@ export default class DismantlingTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-            size="small"
+            size="large"
           />
         </div>
       </div>

@@ -26,16 +26,16 @@ const styles = {
   container: {
     width: '50%',
     boxSizing: 'border-box',
-    padding: '12px',
+    padding: '10px',
   },
   card: {
     width: '100%',
-    padding: '24px',
+    padding: '20px',
     color: '#44426e',
     fontSize: '16px',
     backgroundColor: 'white',
     borderRadius: '16px',
-    overflow: 'hidden',
+    overflow: 'scroll',
     position: 'relative',
     height: '286px'
   },
@@ -48,6 +48,6 @@ const styles = {
   charts: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-around'
   }
 };

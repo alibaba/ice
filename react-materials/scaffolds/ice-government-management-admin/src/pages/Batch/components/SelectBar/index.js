@@ -69,7 +69,8 @@ const styles = {
     width: '240px',
     height: '120px',
     borderRadius: '10px',
-    padding: '10px'
+    padding: '10px',
+    cursor: 'pointer'
   },
   unselectedCard: {
     border: '1px solid #edeef0',

@@ -68,11 +68,11 @@ const styles = {
   container: {
     width: '50%',
     boxSizing: 'border-box',
-    padding: '12px'
+    padding: '10px'
   },
   card: {
     width: '100%',
-    padding: '24px',
+    padding: '20px',
     color: '#42436b',
     backgroundColor: 'white',
     borderRadius: '16px',
@@ -89,11 +89,12 @@ const styles = {
   },
   content: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     height: '200px',
-    margin: '0 -10px'
+    margin: '0 -10px',
+    paddingTop: '56px'
   },
   item: {
     width: '20%',
@@ -111,7 +112,8 @@ const styles = {
     position: 'relative'
   },
   itemTitle: {
-    fontSize: '12px'
+    fontSize: '12px',
+    textAlign: 'center'
   },
   iconImage: {
     width: '30px',

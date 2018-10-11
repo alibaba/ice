@@ -12,23 +12,23 @@ export default class SearchBar extends Component {
             案号: (
             <Input
               style={{...styles.input, ...styles.shortInput}}
-              size="small"
+              size="large"
             />
             )
           </label>
           <Select
-            placeholder="沪高拆预"
+            placeholder="浙高拆预"
             style={{...styles.select, ...styles.input}}
-            size="small"
+            size="large"
           >
-            <Option value="small">option1</Option>
-            <Option value="medium">option2</Option>
-            <Option value="large">option3</Option>
+            <Option value="small">浙执1</Option>
+            <Option value="medium">浙执2</Option>
+            <Option value="large">浙执3</Option>
           </Select>
           字第
           <Input
             style={{...styles.input, ...styles.shortInput}}
-            size="small"
+            size="large"
           />
           号
         </span>
@@ -37,19 +37,19 @@ export default class SearchBar extends Component {
             立案日期:
             <DatePicker
               placeholder="Start"
-              size="small"
+              size="large"
               style={styles.shortInput}
             />
           </label>
         </span>
         <span>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             查询
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             重置
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             新增案件
           </Button>
         </span>
@@ -72,18 +72,18 @@ const styles = {
     width: '200px'
   },
   shortInput: {
-    width: '100px'
+    width: '110px'
   },
   caseNumber: {
-    marginRight: '20px'
+    marginRight: '16px'
   },
   date: {
-    marginRight: '40px'
+    marginRight: '24px'
   },
   button: {
     background: 'linear-gradient(90deg, #006fff 25%, #fff 150%)',
     color: 'white',
-    margin: '0 8px',
+    margin: '0 4px',
     padding: '0 16px',
     letterSpacing: '2px'
   }

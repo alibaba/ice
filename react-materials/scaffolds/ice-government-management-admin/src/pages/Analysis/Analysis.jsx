@@ -28,6 +28,6 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     letterSpacing: '1px',
-    padding: '20px'
+    padding: '16px'
   }
 };

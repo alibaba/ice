@@ -42,41 +42,60 @@ dv.transform({
 
 export default class GroupedBarChart extends Component {
 
+  formatAxis = (text) => {
+    return `${text}%`;
+  };
+
+  onTooltipChange = (event)=>{
+    event.items.forEach((item) => {
+      item.value += '%';
+    });
+  };
+
   render() {
     return(
       <Chart
-        height={200}
-        width={270}
+        width={280}
+        height={220}
         data={dv}
-        padding={48}
+        padding={[40, 8, 40, 40]}
+        onTooltipChange={this.onTooltipChange}
       >
-        <Axis name="工作指标"/>
-        <Axis name="完成率"/>
-        <Legend position="top-center"/>
-        <Tooltip
-          crosshairs={{
-              type: "y"
-            }}
+        <Axis
+          name="工作指标"
+          label={{
+            offset: 4,
+            textStyle: {
+              textAlign: 'center',
+              fill: '#404040',
+              fontSize: '12',
+              fontWeight: 'normal',
+              rotate: 0,
+              textBaseline: 'top'
+            },
+            autoRotate: false
+          }}
         />
+        <Axis
+          name="完成率"
+          label={{
+            formatter: this.formatAxis
+          }}
+        />
+        <Legend position="top-center"/>
+        <Tooltip crosshairs={{type: "y"}}/>
         <Geom
           type="interval"
           position="工作指标*完成率"
           color={"name"}
-          adjust={[
-              {
-                type: "dodge",
-                marginRatio: 1 / 32
-              }
-            ]}
+          adjust={[{
+            type: "dodge",
+            marginRatio: 1 / 32
+          }]}
         />
       </Chart>
     );
   }
 }
 
-const styles = {
-  chart: {
-    width: '50%',
-    boxSizing: 'border-box'
-  }
-};
+const styles = {};

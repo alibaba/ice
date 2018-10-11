@@ -7,52 +7,52 @@ export default class FormPanel extends Component {
   render() {
     return (
       <div style={styles.container}>
-        <div>
+        <div style={styles.form}>
           <label style={styles.label}>
             承办组:
             <Select
               style={{...styles.select, ...styles.input}}
-              size="small"
+              size="large"
             >
-              <Option value="small">option1</Option>
-              <Option value="medium">option2</Option>
-              <Option value="large">option3</Option>
+              <Option value="small">淘小宝1</Option>
+              <Option value="medium">淘小宝2</Option>
+              <Option value="large">淘小宝3</Option>
             </Select>
           </label>
           <label style={styles.label}>
             承办组组长:
             <Input
               style={styles.input}
-              size="small"
+              size="large"
             />
           </label>
           <label style={styles.label}>
             承办人:
             <Select
               style={{...styles.select, ...styles.input}}
-              size="small"
+              size="large"
             >
-              <Option value="small">option1</Option>
-              <Option value="medium">option2</Option>
-              <Option value="large">option3</Option>
+              <Option value="small">淘小宝1</Option>
+              <Option value="medium">淘小宝2</Option>
+              <Option value="large">淘小宝3</Option>
             </Select>
           </label>
           <label style={styles.label}>
             书记员:
             <Select
               style={{...styles.select, ...styles.input}}
-              size="small"
+              size="large"
             >
-              <Option value="small">option1</Option>
-              <Option value="medium">option2</Option>
-              <Option value="large">option3</Option>
+              <Option value="small">淘小宝1</Option>
+              <Option value="medium">淘小宝2</Option>
+              <Option value="large">淘小宝3</Option>
             </Select>
           </label>
           <label style={styles.label}>
             发放时间:
             <DatePicker
               placeholder="Start"
-              size="small"
+              size="large"
               style={styles.input}
             />
           </label>
@@ -60,19 +60,19 @@ export default class FormPanel extends Component {
             排期时间:
             <DatePicker
               placeholder="Start"
-              size="small"
+              size="large"
               style={styles.input}
             />
           </label>
         </div>
         <div>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             保存
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             重置
           </Button>
-          <Button size="small" style={styles.button}>
+          <Button size="large" style={styles.button}>
             取消
           </Button>
         </div>
@@ -83,22 +83,25 @@ export default class FormPanel extends Component {
 
 const styles = {
   container: {
-    margin: '20px',
+    margin: '20px 0',
     letterSpacing: '2px',
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '20px',
+    padding: '20px 0',
     alignItems: 'center',
-    flexDirection: 'column',
-    border: '1px solid #095ef3',
-    height: '120px'
+    flexDirection: 'column'
+  },
+  form: {
+    textAlign: 'center',
+    marginBottom: '16px',
+    wordBreak: 'keep-all'
   },
   input: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
-    width: '100px'
+    width: '110px'
   },
   label: {
-    margin: '0 10px',
+    margin: '0 6px',
     fontSize: '12px'
   },
   select: {
