@@ -9,7 +9,7 @@ import sendIcon from './images/send.svg';
 import checkinIcon from './images/checkin.svg';
 import sendMailIcon from './images/send-mail.svg';
 
-const mock = [
+const mockData = [
   {
     img: goalIcon,
     title: '终本案件',
@@ -63,7 +63,7 @@ export default class Transaction extends Component {
         <div style={styles.card}>
           <h4 style={styles.title}>任务区</h4>
           <div style={styles.content}>
-            {mock.map((item, index) => {
+            {mockData.map((item, index) => {
               return (
                 <div style={styles.item} key={index}>
                   <div

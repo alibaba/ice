@@ -47,10 +47,20 @@ const asideMenuConfig = [
     icon: 'person',
   },
   {
-    name: '法律文书',
-    path: '/instrument',
-    icon: 'copy',
+    name: '当事人自助收案',
+    path: '/selfhelp',
+    icon: 'exchange',
   },
+  {
+    name: '在办案件列表',
+    path: '/list',
+    icon: 'ol-list',
+  },
+  {
+    name: '批量处理',
+    path: '/batch',
+    icon: 'copy',
+  }
 ];
 
 export { headerMenuConfig, asideMenuConfig };
