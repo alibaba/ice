@@ -19,6 +19,16 @@ export default class Header extends Component {
     this.state = {};
   }
 
+  /**
+   * 默认重定向到主页
+   */
+  handleClick = (selectedKeys) => {
+    const { history } = this.props;
+    if (selectedKeys.key !== '/') {
+      history.push('/');
+    }
+  };
+
   render() {
     const { location = {} } = this.props;
     const { pathname } = location;
@@ -31,6 +41,7 @@ export default class Header extends Component {
             selectedKeys={[pathname]}
             defaultSelectedKeys={[pathname]}
             mode="horizontal"
+            onClick={this.handleClick}
           >
             {headerMenuConfig &&
               headerMenuConfig.length > 0 &&

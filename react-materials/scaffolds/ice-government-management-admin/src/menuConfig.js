@@ -6,26 +6,18 @@ const headerMenuConfig = [
   {
     name: '我的工作台',
     path: '/',
-    external: true,
-    newWindow: true,
   },
   {
     name: '业务办理',
-    path: '/',
-    external: true,
-    newWindow: true,
+    path: '/business',
   },
   {
     name: '案件查询',
-    path: '/',
-    external: true,
-    newWindow: true,
+    path: '/case',
   },
   {
     name: '统计分析',
-    path: '/',
-    external: true,
-    newWindow: true,
+    path: '/statistic',
   },
 ];
 
@@ -60,7 +52,7 @@ const asideMenuConfig = [
     name: '批量处理',
     path: '/batch',
     icon: 'copy',
-  }
+  },
 ];
 
 export { headerMenuConfig, asideMenuConfig };
