@@ -18,16 +18,16 @@ import DataSet from "@antv/data-set";
 
 const mock = [
   {
-    name: "London",
-    "Jun.": 20.3,
-    "Jul.": 24,
-    "Aug.": 35.6
+    name: "实际指标",
+    "执限内执结率": 40,
+    "实际执行率": 71,
+    "执行终结率": 40
   },
   {
-    name: "Berlin",
-    "Jun.": 35.5,
-    "Jul.": 37.4,
-    "Aug.": 42.4
+    name: "平均指标",
+    "执限内执结率": 36,
+    "实际执行率": 60,
+    "执行终结率": 52
   }
 ];
 
@@ -35,18 +35,10 @@ const ds = new DataSet();
 const dv = ds.createView().source(mock);
 dv.transform({
   type: "fold",
-  fields: ["Jun.", "Jul.", "Aug."],
-  // 展开字段集
-  key: "月份",
-  // key字段
-  value: "月均降雨量" // value字段
+  fields: ["执限内执结率", "实际执行率", "执行终结率"],
+  key: "工作指标",
+  value: "完成率"
 });
-
-const cols = {
-  sales: {
-    tickInterval: 100
-  }
-};
 
 export default class GroupedBarChart extends Component {
 
@@ -56,11 +48,11 @@ export default class GroupedBarChart extends Component {
         height={200}
         width={270}
         data={dv}
-        padding={40}
+        padding={48}
       >
-        <Axis name="月份" />
-        <Axis name="月均降雨量" />
-        <Legend />
+        <Axis name="工作指标"/>
+        <Axis name="完成率"/>
+        <Legend position="top-center"/>
         <Tooltip
           crosshairs={{
               type: "y"
@@ -68,7 +60,7 @@ export default class GroupedBarChart extends Component {
         />
         <Geom
           type="interval"
-          position="月份*月均降雨量"
+          position="工作指标*完成率"
           color={"name"}
           adjust={[
               {

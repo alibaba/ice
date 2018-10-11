@@ -20,13 +20,33 @@ const mockData = [
 export default class SelectBar extends Component {
   static displayName = 'SelectBar';
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedCard: 0
+    }
+  }
+
+  handleCardClick = (index) => {
+    this.setState({
+      selectedCard: index
+    });
+  };
+
   render() {
     return (
       <div style={styles.container}>
         {mockData.map((item, index) => {
           return (
-            <div style={styles.card} key={index}>
-              <h2 style={styles.icon}><Icon type={item.icon} size="xl" /></h2>
+            <div
+              style={{...styles.card, ...(this.state.selectedCard === index ? styles.selectedCard : styles.unselectedCard)}}
+              key={index}
+              onClick={this.handleCardClick.bind(this, index)}
+            >
+              <h2 style={this.state.selectedCard === index ? styles.selectedIcon : styles.icon}>
+                <Icon type={item.icon} size="xl"/>
+              </h2>
               <h3 style={styles.title}>{item.title}</h3>
               <p style={styles.instrument}>说明: {item.instrument}</p>
             </div>
@@ -46,15 +66,26 @@ const styles = {
     alignItems: 'center'
   },
   card: {
-    background: 'linear-gradient(90deg, #0055f3 50%, #fff 150%)',
     width: '240px',
     height: '120px',
     borderRadius: '10px',
+    padding: '10px'
+  },
+  unselectedCard: {
+    border: '1px solid #edeef0',
+    backgroundColor: 'white',
+    color: '#4c4a72'
+  },
+  selectedCard: {
+    boxShadow: '2px 2px 10px 0 hsla(0,0%,40%,.3)',
     color: 'white',
-    padding: '10px',
-    boxShadow: '2px 2px 10px 0 hsla(0,0%,40%,.3)'
+    background: 'linear-gradient(90deg, #0055f3 50%, #fff 150%)'
   },
   icon: {
+    color: '#0054f1',
+    margin: '8px'
+  },
+  selectedIcon: {
     color: 'white',
     margin: '8px'
   },

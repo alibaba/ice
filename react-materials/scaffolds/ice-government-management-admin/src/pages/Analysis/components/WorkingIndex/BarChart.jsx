@@ -17,21 +17,21 @@ import {
 
 const mock = [
   {
-    year: "1959 年",
-    sales: 38
+    index: "收案数",
+    number: 290
   },
   {
-    year: "1960 年",
-    sales: 38
+    index: "结案数",
+    number: 400
   },
   {
-    year: "1962 年",
-    sales: 38
+    index: "存案数",
+    number: 200
   }
 ];
 
 const cols = {
-  sales: {
+  number: {
     tickInterval: 100
   }
 };
@@ -48,14 +48,15 @@ export default class BarChart extends Component {
 
         padding={40}
       >
-        <Axis name="year" />
-        <Axis name="sales" />
+        <Axis name="index" />
+        <Axis name="number" />
         <Tooltip
           crosshairs={{
               type: "y"
             }}
         />
-        <Geom type="interval" position="year*sales" shape={['year', ['circle', 'rect']]} />
+        <Legend />
+        <Geom type="interval" position="index*number" shape={['index', ['circle', 'rect']]} />
       </Chart>
     );
   }
