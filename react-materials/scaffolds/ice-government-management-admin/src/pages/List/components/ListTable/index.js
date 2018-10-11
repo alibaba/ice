@@ -123,6 +123,6 @@ const styles = {
   },
   pagination: {
     textAlign: 'center',
-    marginBottom: '200px',
+    marginBottom: '20px',
   },
 };

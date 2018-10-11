@@ -129,6 +129,6 @@ const styles = {
   },
   pagination: {
     textAlign: 'center',
-    marginBottom: '40px',
+    marginBottom: '20px',
   },
 };
