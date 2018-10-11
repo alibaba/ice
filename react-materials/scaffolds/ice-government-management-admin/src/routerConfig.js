@@ -5,18 +5,48 @@
 import BasicLayout from './layouts/BasicLayout';
 import Analysis from './pages/Analysis';
 import NotFound from './pages/NotFound';
+import Dismantling from './pages/Dismantling';
+import Allocation from './pages/Allocation';
+import Selfhelp from './pages/Selfhelp';
+import List from './pages/List';
+import Batch from './pages/Batch';
 
 const routerConfig = [
   {
     path: '/',
     layout: BasicLayout,
-    component: Analysis,
+    component: Analysis
+  },
+  {
+    path: '/dismantling',
+    layout: BasicLayout,
+    component: Dismantling
+  },
+  {
+    path: '/allocation',
+    layout: BasicLayout,
+    component: Allocation
+  },
+  {
+    path: '/selfHelp',
+    layout: BasicLayout,
+    component: Selfhelp
+  },
+  {
+    path: '/list',
+    layout: BasicLayout,
+    component: List
+  },
+  {
+    path: '/batch',
+    layout: BasicLayout,
+    component: Batch
   },
   {
     path: '*',
     layout: BasicLayout,
-    component: NotFound,
-  },
+    component: NotFound
+  }
 ];
 
 export default routerConfig;

@@ -5,25 +5,25 @@
 const headerMenuConfig = [
   {
     name: '我的工作台',
-    path: '/workbench',
+    path: '/',
     external: true,
     newWindow: true,
   },
   {
     name: '业务办理',
-    path: '/business',
+    path: '/',
     external: true,
     newWindow: true,
   },
   {
     name: '案件查询',
-    path: '/case',
+    path: '/',
     external: true,
     newWindow: true,
   },
   {
     name: '统计分析',
-    path: '/analysis',
+    path: '/',
     external: true,
     newWindow: true,
   },
@@ -37,20 +37,30 @@ const asideMenuConfig = [
     icon: 'home2',
   },
   {
-    name: '分案管理',
-    path: '/manage',
+    name: '拆预收案',
+    path: '/dismantling',
     icon: 'cascades',
   },
   {
-    name: '案件办理',
-    path: '/transaction',
+    name: '案款账号分配',
+    path: '/allocation',
     icon: 'person',
   },
   {
-    name: '法律文书',
-    path: '/instrument',
-    icon: 'copy',
+    name: '当事人自助收案',
+    path: '/selfhelp',
+    icon: 'exchange',
   },
+  {
+    name: '在办案件列表',
+    path: '/list',
+    icon: 'ol-list',
+  },
+  {
+    name: '批量处理',
+    path: '/batch',
+    icon: 'copy',
+  }
 ];
 
 export { headerMenuConfig, asideMenuConfig };
