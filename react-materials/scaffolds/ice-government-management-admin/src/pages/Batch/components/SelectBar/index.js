@@ -49,7 +49,7 @@ export default class SelectBar extends Component {
                   : styles.unselectedCard),
               }}
               key={index}
-              onClick={this.handleCardClick.bind(this, index)}
+              onClick={() => this.handleCardClick(index)}
             >
               <h2
                 style={

@@ -15,38 +15,38 @@ const routerConfig = [
   {
     path: '/',
     layout: BasicLayout,
-    component: Analysis
+    component: Analysis,
   },
   {
     path: '/dismantling',
     layout: BasicLayout,
-    component: Dismantling
+    component: Dismantling,
   },
   {
     path: '/allocation',
     layout: BasicLayout,
-    component: Allocation
+    component: Allocation,
   },
   {
     path: '/selfHelp',
     layout: BasicLayout,
-    component: Selfhelp
+    component: Selfhelp,
   },
   {
     path: '/list',
     layout: BasicLayout,
-    component: List
+    component: List,
   },
   {
     path: '/batch',
     layout: BasicLayout,
-    component: Batch
+    component: Batch,
   },
   {
     path: '*',
     layout: BasicLayout,
-    component: NotFound
-  }
+    component: NotFound,
+  },
 ];
 
 export default routerConfig;
