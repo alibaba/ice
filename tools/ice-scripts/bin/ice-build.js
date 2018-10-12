@@ -10,7 +10,12 @@ program
   .option('--debug', 'debug 模式下不压缩')
   .option('--hash', '构建后的资源带 hash 版本')
   .option('-s, --skip-install', '跳过安装依赖')
-  .option('--disabled-polyfill', '关闭 babel-polyfill')
+  .option(
+    '--inject-babel <type>',
+    '注入 babel 运行环境, Enum: polyfill|runtime',
+    /^(polyfill|runtime)$/,
+    'polyfill'
+  )
   .parse(process.argv);
 
 optionsAttachToEnv(program);

@@ -4,7 +4,7 @@
  */
 
 function resolvePlugin(plugins) {
-  return plugins.map((plugin) => {
+  return plugins.filter(Boolean).map((plugin) => {
     if (Array.isArray(plugin)) {
       const [pluginName, ...args] = plugin;
       return [require.resolve(pluginName), ...args];
@@ -57,6 +57,17 @@ module.exports = (buildConfig = {}) => {
       '@babel/plugin-syntax-import-meta',
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       '@babel/plugin-proposal-json-strings',
+      process.env.INJECT_BABEL == 'runtime'
+        ? [
+            '@babel/plugin-transform-runtime',
+            {
+              corejs: false,
+              helpers: true,
+              regenerator: true,
+              useESModules: false,
+            },
+          ]
+        : null,
       [
         'babel-plugin-import',
         { libraryName: '@icedesign/base' },
