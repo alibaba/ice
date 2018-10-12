@@ -10,7 +10,7 @@ module.exports = function generate({ cwd }) {
     // debug('material params index: %s, directory: %s', i, directory);
 
     generateDatabase({
-      name: directory || `${type}-materials`,
+      name: directory || (type ? `${type}-materials` : 'db'),
       path: resolve(cwd, directory),
       options: options,
     });
