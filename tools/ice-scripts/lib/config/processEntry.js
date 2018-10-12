@@ -52,7 +52,9 @@ module.exports = (entry) => {
 
   // Note：https://github.com/alibaba/ice/pull/834
   const polyfill = require.resolve('@babel/polyfill');
-  entries = enhanceEntries(entries, polyfill);
+  if (!process.env.DISABLED_POLYFILL) {
+    entries = enhanceEntries(entries, polyfill);
+  }
 
   return entries;
 };
