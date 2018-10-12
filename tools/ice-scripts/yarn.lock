@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@alifd/fusion-collector@^0.0.6":
-  version "0.0.6"
-  resolved "http://registry.npm.alibaba-inc.com/@alifd/fusion-collector/download/@alifd/fusion-collector-0.0.6.tgz#a2a6d373339563c1df342c3660caa44b385acaeb"
-  integrity sha1-oqbTczOVY8HfNCw2YMqkSzhayus=
+"@alifd/fusion-collector@^1.0.0":
+  version "1.0.0"
+  resolved "http://registry.npm.alibaba-inc.com/@alifd/fusion-collector/download/@alifd/fusion-collector-1.0.0.tgz#fc9f57788fcd693b8c9796ec49c12c04193bc6a3"
+  integrity sha1-/J9XeI/NaTuMl5bsScEsBBk7xqM=
   dependencies:
     babel-runtime "^6.26.0"
     babylon "^6.18.0"
@@ -22,18 +22,18 @@
   dependencies:
     "@babel/highlight" "^7.0.0"
 
-"@babel/core@7.0.1":
-  version "7.0.1"
-  resolved "http://registry.npm.alibaba-inc.com/@babel/core/download/@babel/core-7.0.1.tgz#406658caed0e9686fa4feb5c2f3cefb6161c0f41"
-  integrity sha1-QGZYyu0Olob6T+tcLzzvthYcD0E=
+"@babel/core@7.1.2":
+  version "7.1.2"
+  resolved "http://registry.npm.alibaba-inc.com/@babel/core/download/@babel/core-7.1.2.tgz#f8d2a9ceb6832887329a7b60f9d035791400ba4e"
+  integrity sha1-+NKpzraDKIcymntg+dA1eRQAuk4=
   dependencies:
     "@babel/code-frame" "^7.0.0"
-    "@babel/generator" "^7.0.0"
-    "@babel/helpers" "^7.0.0"
-    "@babel/parser" "^7.0.0"
-    "@babel/template" "^7.0.0"
-    "@babel/traverse" "^7.0.0"
-    "@babel/types" "^7.0.0"
+    "@babel/generator" "^7.1.2"
+    "@babel/helpers" "^7.1.2"
+    "@babel/parser" "^7.1.2"
+    "@babel/template" "^7.1.2"
+    "@babel/traverse" "^7.1.0"
+    "@babel/types" "^7.1.2"
     convert-source-map "^1.1.0"
     debug "^3.1.0"
     json5 "^0.5.0"
@@ -48,6 +48,17 @@
   integrity sha1-Hv1Yv/qVHchGRJ5YzjodfwLTk6o=
   dependencies:
     "@babel/types" "^7.0.0"
+    jsesc "^2.5.1"
+    lodash "^4.17.10"
+    source-map "^0.5.0"
+    trim-right "^1.0.1"
+
+"@babel/generator@^7.1.2":
+  version "7.1.3"
+  resolved "http://registry.npm.alibaba-inc.com/@babel/generator/download/@babel/generator-7.1.3.tgz#2103ec9c42d9bdad9190a6ad5ff2d456fd7b8673"
+  integrity sha1-IQPsnELZva2RkKatX/LUVv17hnM=
+  dependencies:
+    "@babel/types" "^7.1.3"
     jsesc "^2.5.1"
     lodash "^4.17.10"
     source-map "^0.5.0"
@@ -102,7 +113,7 @@
     "@babel/traverse" "^7.1.0"
     "@babel/types" "^7.0.0"
 
-"@babel/helper-function-name@^7.0.0", "@babel/helper-function-name@^7.1.0":
+"@babel/helper-function-name@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/helper-function-name/download/@babel/helper-function-name-7.1.0.tgz#a0ceb01685f73355d4360c1247f582bfafc8ff53"
   integrity sha1-oM6wFoX3M1XUNgwSR/WCv6/I/1M=
@@ -181,7 +192,7 @@
     "@babel/traverse" "^7.1.0"
     "@babel/types" "^7.0.0"
 
-"@babel/helper-replace-supers@^7.0.0", "@babel/helper-replace-supers@^7.1.0":
+"@babel/helper-replace-supers@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/helper-replace-supers/download/@babel/helper-replace-supers-7.1.0.tgz#5fc31de522ec0ef0899dc9b3e7cf6a5dd655f362"
   integrity sha1-X8Md5SLsDvCJncmz589qXdZV82I=
@@ -206,7 +217,7 @@
   dependencies:
     "@babel/types" "^7.0.0"
 
-"@babel/helper-wrap-function@^7.0.0", "@babel/helper-wrap-function@^7.1.0":
+"@babel/helper-wrap-function@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/helper-wrap-function/download/@babel/helper-wrap-function-7.1.0.tgz#8cf54e9190706067f016af8f75cb3df829cc8c66"
   integrity sha1-jPVOkZBwYGfwFq+Pdcs9+CnMjGY=
@@ -216,14 +227,14 @@
     "@babel/traverse" "^7.1.0"
     "@babel/types" "^7.0.0"
 
-"@babel/helpers@^7.0.0":
-  version "7.1.0"
-  resolved "http://registry.npm.alibaba-inc.com/@babel/helpers/download/@babel/helpers-7.1.0.tgz#429bf0f0020be56a4242883432084e3d70a8a141"
-  integrity sha1-Qpvw8AIL5WpCQog0MghOPXCooUE=
+"@babel/helpers@^7.1.2":
+  version "7.1.2"
+  resolved "http://registry.npm.alibaba-inc.com/@babel/helpers/download/@babel/helpers-7.1.2.tgz#ab752e8c35ef7d39987df4e8586c63b8846234b5"
+  integrity sha1-q3UujDXvfTmYffToWGxjuIRiNLU=
   dependencies:
-    "@babel/template" "^7.1.0"
+    "@babel/template" "^7.1.2"
     "@babel/traverse" "^7.1.0"
-    "@babel/types" "^7.0.0"
+    "@babel/types" "^7.1.2"
 
 "@babel/highlight@^7.0.0":
   version "7.0.0"
@@ -234,12 +245,17 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.0.0", "@babel/parser@^7.1.0":
+"@babel/parser@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/parser/download/@babel/parser-7.1.0.tgz#a7cd42cb3c12aec52e24375189a47b39759b783e"
   integrity sha1-p81CyzwSrsUuJDdRiaR7OXWbeD4=
 
-"@babel/plugin-proposal-async-generator-functions@^7.0.0":
+"@babel/parser@^7.1.2":
+  version "7.1.3"
+  resolved "http://registry.npm.alibaba-inc.com/@babel/parser/download/@babel/parser-7.1.3.tgz#2c92469bac2b7fbff810b67fca07bd138b48af77"
+  integrity sha1-LJJGm6wrf7/4ELZ/yge9E4tIr3c=
+
+"@babel/plugin-proposal-async-generator-functions@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-proposal-async-generator-functions/download/@babel/plugin-proposal-async-generator-functions-7.1.0.tgz#41c1a702e10081456e23a7b74d891922dd1bb6ce"
   integrity sha1-QcGnAuEAgUVuI6e3TYkZIt0bts4=
@@ -248,25 +264,27 @@
     "@babel/helper-remap-async-to-generator" "^7.1.0"
     "@babel/plugin-syntax-async-generators" "^7.0.0"
 
-"@babel/plugin-proposal-class-properties@7.0.0":
-  version "7.0.0"
-  resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-proposal-class-properties/download/@babel/plugin-proposal-class-properties-7.0.0.tgz#a16b5c076ba6c3d87df64d2480a380e979543731"
-  integrity sha1-oWtcB2umw9h99k0kgKOA6XlUNzE=
+"@babel/plugin-proposal-class-properties@7.1.0":
+  version "7.1.0"
+  resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-proposal-class-properties/download/@babel/plugin-proposal-class-properties-7.1.0.tgz#9af01856b1241db60ec8838d84691aa0bd1e8df4"
+  integrity sha1-mvAYVrEkHbYOyIONhGkaoL0ejfQ=
   dependencies:
-    "@babel/helper-function-name" "^7.0.0"
+    "@babel/helper-function-name" "^7.1.0"
     "@babel/helper-member-expression-to-functions" "^7.0.0"
     "@babel/helper-optimise-call-expression" "^7.0.0"
     "@babel/helper-plugin-utils" "^7.0.0"
-    "@babel/helper-replace-supers" "^7.0.0"
+    "@babel/helper-replace-supers" "^7.1.0"
     "@babel/plugin-syntax-class-properties" "^7.0.0"
 
-"@babel/plugin-proposal-decorators@7.0.0":
-  version "7.0.0"
-  resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-proposal-decorators/download/@babel/plugin-proposal-decorators-7.0.0.tgz#33e7e683ca9f8ec3f72104ed11096839d48df502"
-  integrity sha1-M+fmg8qfjsP3IQTtEQloOdSN9QI=
+"@babel/plugin-proposal-decorators@7.1.2":
+  version "7.1.2"
+  resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-proposal-decorators/download/@babel/plugin-proposal-decorators-7.1.2.tgz#79829bd75fced6581ec6c7ab1930e8d738e892e7"
+  integrity sha1-eYKb11/O1lgexserGTDo1zjokuc=
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
-    "@babel/plugin-syntax-decorators" "^7.0.0"
+    "@babel/helper-replace-supers" "^7.1.0"
+    "@babel/helper-split-export-declaration" "^7.0.0"
+    "@babel/plugin-syntax-decorators" "^7.1.0"
 
 "@babel/plugin-proposal-do-expressions@7.0.0":
   version "7.0.0"
@@ -300,13 +318,13 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-syntax-function-bind" "^7.0.0"
 
-"@babel/plugin-proposal-function-sent@7.0.0":
-  version "7.0.0"
-  resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-proposal-function-sent/download/@babel/plugin-proposal-function-sent-7.0.0.tgz#61ce7f009f4e80cea70b96ac6a91b433e035bb6f"
-  integrity sha1-Yc5/AJ9OgM6nC5asapG0M+A1u28=
+"@babel/plugin-proposal-function-sent@7.1.0":
+  version "7.1.0"
+  resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-proposal-function-sent/download/@babel/plugin-proposal-function-sent-7.1.0.tgz#1c4eb7748812c89b772a2d699cf6a9c074f3e166"
+  integrity sha1-HE63dIgSyJt3Ki1pnPapwHTz4WY=
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
-    "@babel/helper-wrap-function" "^7.0.0"
+    "@babel/helper-wrap-function" "^7.1.0"
     "@babel/plugin-syntax-function-sent" "^7.0.0"
 
 "@babel/plugin-proposal-json-strings@7.0.0", "@babel/plugin-proposal-json-strings@^7.0.0":
@@ -404,7 +422,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-syntax-decorators@^7.0.0":
+"@babel/plugin-syntax-decorators@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-syntax-decorators/download/@babel/plugin-syntax-decorators-7.1.0.tgz#2fa7c1a7905a299c9853ebcef340306675f9cbdc"
   integrity sha1-L6fBp5BaKZyYU+vO80AwZnX5y9w=
@@ -537,7 +555,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-async-to-generator@^7.0.0":
+"@babel/plugin-transform-async-to-generator@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-transform-async-to-generator/download/@babel/plugin-transform-async-to-generator-7.1.0.tgz#109e036496c51dd65857e16acab3bafdf3c57811"
   integrity sha1-EJ4DZJbFHdZYV+FqyrO6/fPFeBE=
@@ -561,7 +579,7 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     lodash "^4.17.10"
 
-"@babel/plugin-transform-classes@^7.0.0":
+"@babel/plugin-transform-classes@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-transform-classes/download/@babel/plugin-transform-classes-7.1.0.tgz#ab3f8a564361800cbc8ab1ca6f21108038432249"
   integrity sha1-qz+KVkNhgAy8irHKbyEQgDhDIkk=
@@ -605,7 +623,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-exponentiation-operator@^7.0.0":
+"@babel/plugin-transform-exponentiation-operator@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-transform-exponentiation-operator/download/@babel/plugin-transform-exponentiation-operator-7.1.0.tgz#9c34c2ee7fd77e02779cfa37e403a2e1003ccc73"
   integrity sha1-nDTC7n/XfgJ3nPo35AOi4QA8zHM=
@@ -620,7 +638,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-function-name@^7.0.0":
+"@babel/plugin-transform-function-name@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-transform-function-name/download/@babel/plugin-transform-function-name-7.1.0.tgz#29c5550d5c46208e7f730516d41eeddd4affadbb"
   integrity sha1-KcVVDVxGII5/cwUW1B7t3Ur/rbs=
@@ -635,7 +653,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-modules-amd@^7.0.0":
+"@babel/plugin-transform-modules-amd@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-transform-modules-amd/download/@babel/plugin-transform-modules-amd-7.1.0.tgz#f9e0a7072c12e296079b5a59f408ff5b97bf86a8"
   integrity sha1-+eCnBywS4pYHm1pZ9Aj/W5e/hqg=
@@ -643,7 +661,7 @@
     "@babel/helper-module-transforms" "^7.1.0"
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-modules-commonjs@^7.0.0":
+"@babel/plugin-transform-modules-commonjs@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-transform-modules-commonjs/download/@babel/plugin-transform-modules-commonjs-7.1.0.tgz#0a9d86451cbbfb29bd15186306897c67f6f9a05c"
   integrity sha1-Cp2GRRy7+ym9FRhjBol8Z/b5oFw=
@@ -660,7 +678,7 @@
     "@babel/helper-hoist-variables" "^7.0.0"
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-modules-umd@^7.0.0":
+"@babel/plugin-transform-modules-umd@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-transform-modules-umd/download/@babel/plugin-transform-modules-umd-7.1.0.tgz#a29a7d85d6f28c3561c33964442257cc6a21f2a8"
   integrity sha1-opp9hdbyjDVhwzlkRCJXzGoh8qg=
@@ -675,7 +693,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-object-super@^7.0.0":
+"@babel/plugin-transform-object-super@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-transform-object-super/download/@babel/plugin-transform-object-super-7.1.0.tgz#b1ae194a054b826d8d4ba7ca91486d4ada0f91bb"
   integrity sha1-sa4ZSgVLgm2NS6fKkUhtStoPkbs=
@@ -683,7 +701,7 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/helper-replace-supers" "^7.1.0"
 
-"@babel/plugin-transform-parameters@^7.0.0":
+"@babel/plugin-transform-parameters@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/plugin-transform-parameters/download/@babel/plugin-transform-parameters-7.1.0.tgz#44f492f9d618c9124026e62301c296bf606a7aed"
   integrity sha1-RPSS+dYYyRJAJuYjAcKWv2Bqeu0=
@@ -795,14 +813,14 @@
     core-js "^2.5.7"
     regenerator-runtime "^0.11.1"
 
-"@babel/preset-env@7.0.0":
-  version "7.0.0"
-  resolved "http://registry.npm.alibaba-inc.com/@babel/preset-env/download/@babel/preset-env-7.0.0.tgz#f450f200c14e713f98cb14d113bf0c2cfbb89ca9"
-  integrity sha1-9FDyAMFOcT+YyxTRE78MLPu4nKk=
+"@babel/preset-env@7.1.0":
+  version "7.1.0"
+  resolved "http://registry.npm.alibaba-inc.com/@babel/preset-env/download/@babel/preset-env-7.1.0.tgz#e67ea5b0441cfeab1d6f41e9b5c79798800e8d11"
+  integrity sha1-5n6lsEQc/qsdb0HptceXmIAOjRE=
   dependencies:
     "@babel/helper-module-imports" "^7.0.0"
     "@babel/helper-plugin-utils" "^7.0.0"
-    "@babel/plugin-proposal-async-generator-functions" "^7.0.0"
+    "@babel/plugin-proposal-async-generator-functions" "^7.1.0"
     "@babel/plugin-proposal-json-strings" "^7.0.0"
     "@babel/plugin-proposal-object-rest-spread" "^7.0.0"
     "@babel/plugin-proposal-optional-catch-binding" "^7.0.0"
@@ -811,25 +829,25 @@
     "@babel/plugin-syntax-object-rest-spread" "^7.0.0"
     "@babel/plugin-syntax-optional-catch-binding" "^7.0.0"
     "@babel/plugin-transform-arrow-functions" "^7.0.0"
-    "@babel/plugin-transform-async-to-generator" "^7.0.0"
+    "@babel/plugin-transform-async-to-generator" "^7.1.0"
     "@babel/plugin-transform-block-scoped-functions" "^7.0.0"
     "@babel/plugin-transform-block-scoping" "^7.0.0"
-    "@babel/plugin-transform-classes" "^7.0.0"
+    "@babel/plugin-transform-classes" "^7.1.0"
     "@babel/plugin-transform-computed-properties" "^7.0.0"
     "@babel/plugin-transform-destructuring" "^7.0.0"
     "@babel/plugin-transform-dotall-regex" "^7.0.0"
     "@babel/plugin-transform-duplicate-keys" "^7.0.0"
-    "@babel/plugin-transform-exponentiation-operator" "^7.0.0"
+    "@babel/plugin-transform-exponentiation-operator" "^7.1.0"
     "@babel/plugin-transform-for-of" "^7.0.0"
-    "@babel/plugin-transform-function-name" "^7.0.0"
+    "@babel/plugin-transform-function-name" "^7.1.0"
     "@babel/plugin-transform-literals" "^7.0.0"
-    "@babel/plugin-transform-modules-amd" "^7.0.0"
-    "@babel/plugin-transform-modules-commonjs" "^7.0.0"
+    "@babel/plugin-transform-modules-amd" "^7.1.0"
+    "@babel/plugin-transform-modules-commonjs" "^7.1.0"
     "@babel/plugin-transform-modules-systemjs" "^7.0.0"
-    "@babel/plugin-transform-modules-umd" "^7.0.0"
+    "@babel/plugin-transform-modules-umd" "^7.1.0"
     "@babel/plugin-transform-new-target" "^7.0.0"
-    "@babel/plugin-transform-object-super" "^7.0.0"
-    "@babel/plugin-transform-parameters" "^7.0.0"
+    "@babel/plugin-transform-object-super" "^7.1.0"
+    "@babel/plugin-transform-parameters" "^7.1.0"
     "@babel/plugin-transform-regenerator" "^7.0.0"
     "@babel/plugin-transform-shorthand-properties" "^7.0.0"
     "@babel/plugin-transform-spread" "^7.0.0"
@@ -853,13 +871,6 @@
     "@babel/plugin-transform-react-jsx-self" "^7.0.0"
     "@babel/plugin-transform-react-jsx-source" "^7.0.0"
 
-"@babel/runtime@7.0.0":
-  version "7.0.0"
-  resolved "http://registry.npm.alibaba-inc.com/@babel/runtime/download/@babel/runtime-7.0.0.tgz#adeb78fedfc855aa05bc041640f3f6f98e85424c"
-  integrity sha1-ret4/t/IVaoFvAQWQPP2+Y6FQkw=
-  dependencies:
-    regenerator-runtime "^0.12.0"
-
 "@babel/runtime@^7.1.2":
   version "7.1.2"
   resolved "http://registry.npm.alibaba-inc.com/@babel/runtime/download/@babel/runtime-7.1.2.tgz#81c89935f4647706fc54541145e6b4ecfef4b8e3"
@@ -867,7 +878,7 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/template@^7.0.0", "@babel/template@^7.1.0":
+"@babel/template@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/template/download/@babel/template-7.1.0.tgz#58cc9572e1bfe24fe1537fdf99d839d53e517e22"
   integrity sha1-WMyVcuG/4k/hU3/fmdg51T5RfiI=
@@ -876,7 +887,16 @@
     "@babel/parser" "^7.1.0"
     "@babel/types" "^7.0.0"
 
-"@babel/traverse@^7.0.0", "@babel/traverse@^7.1.0":
+"@babel/template@^7.1.2":
+  version "7.1.2"
+  resolved "http://registry.npm.alibaba-inc.com/@babel/template/download/@babel/template-7.1.2.tgz#090484a574fef5a2d2d7726a674eceda5c5b5644"
+  integrity sha1-CQSEpXT+9aLS13JqZ07O2lxbVkQ=
+  dependencies:
+    "@babel/code-frame" "^7.0.0"
+    "@babel/parser" "^7.1.2"
+    "@babel/types" "^7.1.2"
+
+"@babel/traverse@^7.1.0":
   version "7.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@babel/traverse/download/@babel/traverse-7.1.0.tgz#503ec6669387efd182c3888c4eec07bcc45d91b2"
   integrity sha1-UD7GZpOH79GCw4iMTuwHvMRdkbI=
@@ -900,6 +920,15 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
+"@babel/types@^7.1.2", "@babel/types@^7.1.3":
+  version "7.1.3"
+  resolved "http://registry.npm.alibaba-inc.com/@babel/types/download/@babel/types-7.1.3.tgz#3a767004567060c2f40fca49a304712c525ee37d"
+  integrity sha1-OnZwBFZwYML0D8pJowRxLFJe430=
+  dependencies:
+    esutils "^2.0.2"
+    lodash "^4.17.10"
+    to-fast-properties "^2.0.0"
+
 "@icedesign/base@^0.2.2":
   version "0.2.5"
   resolved "http://registry.npm.alibaba-inc.com/@icedesign/base/download/@icedesign/base-0.2.5.tgz#48ba11faa62f8b33a343efa6c2e46a9381563307"
@@ -918,151 +947,147 @@
   resolved "http://registry.npm.alibaba-inc.com/@icedesign/skin/download/@icedesign/skin-0.1.14.tgz#be8e62f467a5a2eabe79f54de23b0925e830dae2"
   integrity sha1-vo5i9Gelouq+efVN4jsJJegw2uI=
 
-"@webassemblyjs/ast@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/ast/download/@webassemblyjs/ast-1.7.6.tgz#3ef8c45b3e5e943a153a05281317474fef63e21e"
-  integrity sha1-PvjEWz5elDoVOgUoExdHT+9j4h4=
+"@webassemblyjs/ast@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/ast/download/@webassemblyjs/ast-1.7.8.tgz#f31f480debeef957f01b623f27eabc695fa4fe8f"
+  integrity sha1-8x9IDevu+VfwG2I/J+q8aV+k/o8=
   dependencies:
-    "@webassemblyjs/helper-module-context" "1.7.6"
-    "@webassemblyjs/helper-wasm-bytecode" "1.7.6"
-    "@webassemblyjs/wast-parser" "1.7.6"
-    mamacro "^0.0.3"
+    "@webassemblyjs/helper-module-context" "1.7.8"
+    "@webassemblyjs/helper-wasm-bytecode" "1.7.8"
+    "@webassemblyjs/wast-parser" "1.7.8"
 
-"@webassemblyjs/floating-point-hex-parser@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/floating-point-hex-parser/download/@webassemblyjs/floating-point-hex-parser-1.7.6.tgz#7cb37d51a05c3fe09b464ae7e711d1ab3837801f"
-  integrity sha1-fLN9UaBcP+CbRkrn5xHRqzg3gB8=
+"@webassemblyjs/floating-point-hex-parser@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/floating-point-hex-parser/download/@webassemblyjs/floating-point-hex-parser-1.7.8.tgz#1b3ed0e27e384032254e9322fc646dd3e70ef1b9"
+  integrity sha1-Gz7Q4n44QDIlTpMi/GRt0+cO8bk=
 
-"@webassemblyjs/helper-api-error@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-api-error/download/@webassemblyjs/helper-api-error-1.7.6.tgz#99b7e30e66f550a2638299a109dda84a622070ef"
-  integrity sha1-mbfjDmb1UKJjgpmhCd2oSmIgcO8=
+"@webassemblyjs/helper-api-error@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-api-error/download/@webassemblyjs/helper-api-error-1.7.8.tgz#a2b49c11f615e736f815ec927f035dcfa690d572"
+  integrity sha1-orScEfYV5zb4FeySfwNdz6aQ1XI=
 
-"@webassemblyjs/helper-buffer@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-buffer/download/@webassemblyjs/helper-buffer-1.7.6.tgz#ba0648be12bbe560c25c997e175c2018df39ca3e"
-  integrity sha1-ugZIvhK75WDCXJl+F1wgGN85yj4=
+"@webassemblyjs/helper-buffer@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-buffer/download/@webassemblyjs/helper-buffer-1.7.8.tgz#3fc66bfa09c1c60e824cf3d5887826fac062877d"
+  integrity sha1-P8Zr+gnBxg6CTPPViHgm+sBih30=
 
-"@webassemblyjs/helper-code-frame@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-code-frame/download/@webassemblyjs/helper-code-frame-1.7.6.tgz#5a94d21b0057b69a7403fca0c253c3aaca95b1a5"
-  integrity sha1-WpTSGwBXtpp0A/ygwlPDqsqVsaU=
+"@webassemblyjs/helper-code-frame@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-code-frame/download/@webassemblyjs/helper-code-frame-1.7.8.tgz#cc5a7e9522b70e7580df056dfd34020cf29645b0"
+  integrity sha1-zFp+lSK3DnWA3wVt/TQCDPKWRbA=
   dependencies:
-    "@webassemblyjs/wast-printer" "1.7.6"
+    "@webassemblyjs/wast-printer" "1.7.8"
 
-"@webassemblyjs/helper-fsm@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-fsm/download/@webassemblyjs/helper-fsm-1.7.6.tgz#ae1741c6f6121213c7a0b587fb964fac492d3e49"
-  integrity sha1-rhdBxvYSEhPHoLWH+5ZPrEktPkk=
+"@webassemblyjs/helper-fsm@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-fsm/download/@webassemblyjs/helper-fsm-1.7.8.tgz#fe4607430af466912797c21acafd3046080182ea"
+  integrity sha1-/kYHQwr0ZpEnl8Iayv0wRggBguo=
 
-"@webassemblyjs/helper-module-context@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-module-context/download/@webassemblyjs/helper-module-context-1.7.6.tgz#116d19a51a6cebc8900ad53ca34ff8269c668c23"
-  integrity sha1-EW0ZpRps68iQCtU8o0/4JpxmjCM=
+"@webassemblyjs/helper-module-context@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-module-context/download/@webassemblyjs/helper-module-context-1.7.8.tgz#3c2e7ee93d14ff4768ba66fb1be42fdc9dc7160a"
+  integrity sha1-PC5+6T0U/0doumb7G+Qv3J3HFgo=
+
+"@webassemblyjs/helper-wasm-bytecode@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-bytecode/download/@webassemblyjs/helper-wasm-bytecode-1.7.8.tgz#89bdb78cd6dd5209ae2ed2925de78d0f0e00b6f0"
+  integrity sha1-ib23jNbdUgmuLtKSXeeNDw4AtvA=
+
+"@webassemblyjs/helper-wasm-section@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-section/download/@webassemblyjs/helper-wasm-section-1.7.8.tgz#c68ef7d26a6fc12421b2e6e56f9bc810dfb33e87"
+  integrity sha1-xo730mpvwSQhsublb5vIEN+zPoc=
   dependencies:
-    mamacro "^0.0.3"
+    "@webassemblyjs/ast" "1.7.8"
+    "@webassemblyjs/helper-buffer" "1.7.8"
+    "@webassemblyjs/helper-wasm-bytecode" "1.7.8"
+    "@webassemblyjs/wasm-gen" "1.7.8"
 
-"@webassemblyjs/helper-wasm-bytecode@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-bytecode/download/@webassemblyjs/helper-wasm-bytecode-1.7.6.tgz#98e515eaee611aa6834eb5f6a7f8f5b29fefb6f1"
-  integrity sha1-mOUV6u5hGqaDTrX2p/j1sp/vtvE=
-
-"@webassemblyjs/helper-wasm-section@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/helper-wasm-section/download/@webassemblyjs/helper-wasm-section-1.7.6.tgz#783835867bdd686df7a95377ab64f51a275e8333"
-  integrity sha1-eDg1hnvdaG33qVN3q2T1GidegzM=
-  dependencies:
-    "@webassemblyjs/ast" "1.7.6"
-    "@webassemblyjs/helper-buffer" "1.7.6"
-    "@webassemblyjs/helper-wasm-bytecode" "1.7.6"
-    "@webassemblyjs/wasm-gen" "1.7.6"
-
-"@webassemblyjs/ieee754@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/ieee754/download/@webassemblyjs/ieee754-1.7.6.tgz#c34fc058f2f831fae0632a8bb9803cf2d3462eb1"
-  integrity sha1-w0/AWPL4MfrgYyqLuYA88tNGLrE=
+"@webassemblyjs/ieee754@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/ieee754/download/@webassemblyjs/ieee754-1.7.8.tgz#1f37974b13cb486a9237e73ce04cac7a2f1265ed"
+  integrity sha1-HzeXSxPLSGqSN+c84Eysei8SZe0=
   dependencies:
     "@xtuc/ieee754" "^1.2.0"
 
-"@webassemblyjs/leb128@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/leb128/download/@webassemblyjs/leb128-1.7.6.tgz#197f75376a29f6ed6ace15898a310d871d92f03b"
-  integrity sha1-GX91N2op9u1qzhWJijENhx2S8Ds=
+"@webassemblyjs/leb128@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/leb128/download/@webassemblyjs/leb128-1.7.8.tgz#1bee83426819192db2ea1a234b84c7ebc6d34c1f"
+  integrity sha1-G+6DQmgZGS2y6hojS4TH68bTTB8=
   dependencies:
     "@xtuc/long" "4.2.1"
 
-"@webassemblyjs/utf8@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/utf8/download/@webassemblyjs/utf8-1.7.6.tgz#eb62c66f906af2be70de0302e29055d25188797d"
-  integrity sha1-62LGb5Bq8r5w3gMC4pBV0lGIeX0=
+"@webassemblyjs/utf8@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/utf8/download/@webassemblyjs/utf8-1.7.8.tgz#2b489d5cf43e0aebb93d8e2d792aff9879c61f05"
+  integrity sha1-K0idXPQ+Cuu5PY4teSr/mHnGHwU=
 
-"@webassemblyjs/wasm-edit@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-edit/download/@webassemblyjs/wasm-edit-1.7.6.tgz#fa41929160cd7d676d4c28ecef420eed5b3733c5"
-  integrity sha1-+kGSkWDNfWdtTCjs70IO7Vs3M8U=
+"@webassemblyjs/wasm-edit@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-edit/download/@webassemblyjs/wasm-edit-1.7.8.tgz#f8bdbe7088718eca27b1c349bb7c06b8a457950c"
+  integrity sha1-+L2+cIhxjsonscNJu3wGuKRXlQw=
   dependencies:
-    "@webassemblyjs/ast" "1.7.6"
-    "@webassemblyjs/helper-buffer" "1.7.6"
-    "@webassemblyjs/helper-wasm-bytecode" "1.7.6"
-    "@webassemblyjs/helper-wasm-section" "1.7.6"
-    "@webassemblyjs/wasm-gen" "1.7.6"
-    "@webassemblyjs/wasm-opt" "1.7.6"
-    "@webassemblyjs/wasm-parser" "1.7.6"
-    "@webassemblyjs/wast-printer" "1.7.6"
+    "@webassemblyjs/ast" "1.7.8"
+    "@webassemblyjs/helper-buffer" "1.7.8"
+    "@webassemblyjs/helper-wasm-bytecode" "1.7.8"
+    "@webassemblyjs/helper-wasm-section" "1.7.8"
+    "@webassemblyjs/wasm-gen" "1.7.8"
+    "@webassemblyjs/wasm-opt" "1.7.8"
+    "@webassemblyjs/wasm-parser" "1.7.8"
+    "@webassemblyjs/wast-printer" "1.7.8"
 
-"@webassemblyjs/wasm-gen@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-gen/download/@webassemblyjs/wasm-gen-1.7.6.tgz#695ac38861ab3d72bf763c8c75e5f087ffabc322"
-  integrity sha1-aVrDiGGrPXK/djyMdeXwh/+rwyI=
+"@webassemblyjs/wasm-gen@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-gen/download/@webassemblyjs/wasm-gen-1.7.8.tgz#7e8abf1545eae74ac6781d545c034af3cfd0c7d5"
+  integrity sha1-foq/FUXq50rGeB1UXANK88/Qx9U=
   dependencies:
-    "@webassemblyjs/ast" "1.7.6"
-    "@webassemblyjs/helper-wasm-bytecode" "1.7.6"
-    "@webassemblyjs/ieee754" "1.7.6"
-    "@webassemblyjs/leb128" "1.7.6"
-    "@webassemblyjs/utf8" "1.7.6"
+    "@webassemblyjs/ast" "1.7.8"
+    "@webassemblyjs/helper-wasm-bytecode" "1.7.8"
+    "@webassemblyjs/ieee754" "1.7.8"
+    "@webassemblyjs/leb128" "1.7.8"
+    "@webassemblyjs/utf8" "1.7.8"
 
-"@webassemblyjs/wasm-opt@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-opt/download/@webassemblyjs/wasm-opt-1.7.6.tgz#fbafa78e27e1a75ab759a4b658ff3d50b4636c21"
-  integrity sha1-+6+njifhp1q3WaS2WP89ULRjbCE=
+"@webassemblyjs/wasm-opt@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-opt/download/@webassemblyjs/wasm-opt-1.7.8.tgz#7ada6e211914728fce02ff0ff9c344edc6d41f26"
+  integrity sha1-etpuIRkUco/OAv8P+cNE7cbUHyY=
   dependencies:
-    "@webassemblyjs/ast" "1.7.6"
-    "@webassemblyjs/helper-buffer" "1.7.6"
-    "@webassemblyjs/wasm-gen" "1.7.6"
-    "@webassemblyjs/wasm-parser" "1.7.6"
+    "@webassemblyjs/ast" "1.7.8"
+    "@webassemblyjs/helper-buffer" "1.7.8"
+    "@webassemblyjs/wasm-gen" "1.7.8"
+    "@webassemblyjs/wasm-parser" "1.7.8"
 
-"@webassemblyjs/wasm-parser@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-parser/download/@webassemblyjs/wasm-parser-1.7.6.tgz#84eafeeff405ad6f4c4b5777d6a28ae54eed51fe"
-  integrity sha1-hOr+7/QFrW9MS1d31qKK5U7tUf4=
+"@webassemblyjs/wasm-parser@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wasm-parser/download/@webassemblyjs/wasm-parser-1.7.8.tgz#dac47c291fb6a3e63529aecd647592cd34afbf94"
+  integrity sha1-2sR8KR+2o+Y1Ka7NZHWSzTSvv5Q=
   dependencies:
-    "@webassemblyjs/ast" "1.7.6"
-    "@webassemblyjs/helper-api-error" "1.7.6"
-    "@webassemblyjs/helper-wasm-bytecode" "1.7.6"
-    "@webassemblyjs/ieee754" "1.7.6"
-    "@webassemblyjs/leb128" "1.7.6"
-    "@webassemblyjs/utf8" "1.7.6"
+    "@webassemblyjs/ast" "1.7.8"
+    "@webassemblyjs/helper-api-error" "1.7.8"
+    "@webassemblyjs/helper-wasm-bytecode" "1.7.8"
+    "@webassemblyjs/ieee754" "1.7.8"
+    "@webassemblyjs/leb128" "1.7.8"
+    "@webassemblyjs/utf8" "1.7.8"
 
-"@webassemblyjs/wast-parser@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wast-parser/download/@webassemblyjs/wast-parser-1.7.6.tgz#ca4d20b1516e017c91981773bd7e819d6bd9c6a7"
-  integrity sha1-yk0gsVFuAXyRmBdzvX6BnWvZxqc=
+"@webassemblyjs/wast-parser@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wast-parser/download/@webassemblyjs/wast-parser-1.7.8.tgz#f8aab9a450c048c1f9537695c89faeb92fabfba5"
+  integrity sha1-+Kq5pFDASMH5U3aVyJ+uuS+r+6U=
   dependencies:
-    "@webassemblyjs/ast" "1.7.6"
-    "@webassemblyjs/floating-point-hex-parser" "1.7.6"
-    "@webassemblyjs/helper-api-error" "1.7.6"
-    "@webassemblyjs/helper-code-frame" "1.7.6"
-    "@webassemblyjs/helper-fsm" "1.7.6"
+    "@webassemblyjs/ast" "1.7.8"
+    "@webassemblyjs/floating-point-hex-parser" "1.7.8"
+    "@webassemblyjs/helper-api-error" "1.7.8"
+    "@webassemblyjs/helper-code-frame" "1.7.8"
+    "@webassemblyjs/helper-fsm" "1.7.8"
     "@xtuc/long" "4.2.1"
-    mamacro "^0.0.3"
 
-"@webassemblyjs/wast-printer@1.7.6":
-  version "1.7.6"
-  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wast-printer/download/@webassemblyjs/wast-printer-1.7.6.tgz#a6002c526ac5fa230fe2c6d2f1bdbf4aead43a5e"
-  integrity sha1-pgAsUmrF+iMP4sbS8b2/SurUOl4=
+"@webassemblyjs/wast-printer@1.7.8":
+  version "1.7.8"
+  resolved "http://registry.npm.alibaba-inc.com/@webassemblyjs/wast-printer/download/@webassemblyjs/wast-printer-1.7.8.tgz#e7e965782c1912f6a965f14a53ff43d8ad0403a5"
+  integrity sha1-5+lleCwZEvapZfFKU/9D2K0EA6U=
   dependencies:
-    "@webassemblyjs/ast" "1.7.6"
-    "@webassemblyjs/wast-parser" "1.7.6"
+    "@webassemblyjs/ast" "1.7.8"
+    "@webassemblyjs/wast-parser" "1.7.8"
     "@xtuc/long" "4.2.1"
 
 "@xtuc/ieee754@^1.2.0":
@@ -1474,10 +1499,10 @@ babel-helper-replace-supers@^6.24.1:
     babel-traverse "^6.24.1"
     babel-types "^6.24.1"
 
-babel-loader@8.0.2:
-  version "8.0.2"
-  resolved "http://registry.npm.alibaba-inc.com/babel-loader/download/babel-loader-8.0.2.tgz#2079b8ec1628284a929241da3d90f5b3de2a5ae5"
-  integrity sha1-IHm47BYoKEqSkkHaPZD1s94qWuU=
+babel-loader@8.0.4:
+  version "8.0.4"
+  resolved "http://registry.npm.alibaba-inc.com/babel-loader/download/babel-loader-8.0.4.tgz#7bbf20cbe4560629e2e41534147692d3fecbdce6"
+  integrity sha1-e78gy+RWBini5BU0FHaS0/7L3OY=
   dependencies:
     find-cache-dir "^1.0.0"
     loader-utils "^1.0.2"
@@ -1885,6 +1910,26 @@ cacache@^10.0.4:
     promise-inflight "^1.0.1"
     rimraf "^2.6.2"
     ssri "^5.2.4"
+    unique-filename "^1.1.0"
+    y18n "^4.0.0"
+
+cacache@^11.2.0:
+  version "11.2.0"
+  resolved "http://registry.npm.alibaba-inc.com/cacache/download/cacache-11.2.0.tgz#617bdc0b02844af56310e411c0878941d5739965"
+  integrity sha1-YXvcCwKESvVjEOQRwIeJQdVzmWU=
+  dependencies:
+    bluebird "^3.5.1"
+    chownr "^1.0.1"
+    figgy-pudding "^3.1.0"
+    glob "^7.1.2"
+    graceful-fs "^4.1.11"
+    lru-cache "^4.1.3"
+    mississippi "^3.0.0"
+    mkdirp "^0.5.1"
+    move-concurrently "^1.0.1"
+    promise-inflight "^1.0.1"
+    rimraf "^2.6.2"
+    ssri "^6.0.0"
     unique-filename "^1.1.0"
     y18n "^4.0.0"
 
@@ -2359,10 +2404,10 @@ copy-descriptor@^0.1.0:
   resolved "http://registry.npm.alibaba-inc.com/copy-descriptor/download/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
-copy-webpack-plugin@4.5.2:
-  version "4.5.2"
-  resolved "http://registry.npm.alibaba-inc.com/copy-webpack-plugin/download/copy-webpack-plugin-4.5.2.tgz#d53444a8fea2912d806e78937390ddd7e632ee5c"
-  integrity sha1-1TREqP6ikS2AbniTc5Dd1+Yy7lw=
+copy-webpack-plugin@4.5.3:
+  version "4.5.3"
+  resolved "http://registry.npm.alibaba-inc.com/copy-webpack-plugin/download/copy-webpack-plugin-4.5.3.tgz#14a224d205e46f7a79f7956028e1da6df2225ff2"
+  integrity sha1-FKIk0gXkb3p595VgKOHabfIiX/I=
   dependencies:
     cacache "^10.0.4"
     find-cache-dir "^1.0.0"
@@ -3523,6 +3568,11 @@ faye-websocket@~0.11.0:
   dependencies:
     websocket-driver ">=0.5.1"
 
+figgy-pudding@^3.1.0, figgy-pudding@^3.5.1:
+  version "3.5.1"
+  resolved "http://registry.npm.alibaba-inc.com/figgy-pudding/download/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
+  integrity sha1-hiRwESkBxyeg5JWoB0S9W6odZ5A=
+
 figures@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.alibaba-inc.com/figures/download/figures-2.0.0.tgz#3ab1a2d2a62c8bfb431a0c94cb797a2fce27c962"
@@ -3600,6 +3650,15 @@ find-cache-dir@^1.0.0:
     commondir "^1.0.1"
     make-dir "^1.0.0"
     pkg-dir "^2.0.0"
+
+find-cache-dir@^2.0.0:
+  version "2.0.0"
+  resolved "http://registry.npm.alibaba-inc.com/find-cache-dir/download/find-cache-dir-2.0.0.tgz#4c1faed59f45184530fb9d7fa123a4d04a98472d"
+  integrity sha1-TB+u1Z9FGEUw+51/oSOk0EqYRy0=
+  dependencies:
+    commondir "^1.0.1"
+    make-dir "^1.0.0"
+    pkg-dir "^3.0.0"
 
 find-index@^0.1.1:
   version "0.1.1"
@@ -4322,7 +4381,7 @@ hoek@2.x.x:
   resolved "http://registry.npm.alibaba-inc.com/hoek/download/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
   integrity sha1-ILt0A9POo5jpHcRxCo/xuCdKJe0=
 
-hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
+hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "http://registry.npm.alibaba-inc.com/hoist-non-react-statics/download/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha1-xZA89AnA39kI84jmGdhrnBF0y0c=
@@ -5593,12 +5652,7 @@ lodash.uniq@^4.5.0:
   resolved "http://registry.npm.alibaba-inc.com/lodash.uniq/download/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@4.17.10:
-  version "4.17.10"
-  resolved "http://registry.npm.alibaba-inc.com/lodash/download/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
-  integrity sha1-G3eTz3JZ6jj7NmHU04syYK+K5Oc=
-
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@~4.17.10:
+lodash@4.17.11, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@~4.17.10:
   version "4.17.11"
   resolved "http://registry.npm.alibaba-inc.com/lodash/download/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha1-s56mIp72B+zYniyN8SU2iRysm40=
@@ -5625,7 +5679,7 @@ loose-envify@^1.0.0, loose-envify@^1.3.1:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
-loud-rejection@^1.0.0, loud-rejection@^1.6.0:
+loud-rejection@^1.0.0:
   version "1.6.0"
   resolved "http://registry.npm.alibaba-inc.com/loud-rejection/download/loud-rejection-1.6.0.tgz#5b46f80147edee578870f086d04821cf998e551f"
   integrity sha1-W0b4AUft7leIcPCG0Eghz5mOVR8=
@@ -5643,7 +5697,7 @@ lru-cache@2:
   resolved "http://registry.npm.alibaba-inc.com/lru-cache/download/lru-cache-2.7.3.tgz#6d4524e8b955f95d4f5b58851ce21dd72fb4e952"
   integrity sha1-bUUk6LlV+V1PW1iFHOId1y+06VI=
 
-lru-cache@^4.0.1, lru-cache@^4.1.1:
+lru-cache@^4.0.1, lru-cache@^4.1.1, lru-cache@^4.1.3:
   version "4.1.3"
   resolved "http://registry.npm.alibaba-inc.com/lru-cache/download/lru-cache-4.1.3.tgz#a1175cf3496dfc8436c156c334b4955992bce69c"
   integrity sha1-oRdc80lt/IQ2wVbDNLSVWZK85pw=
@@ -5664,11 +5718,6 @@ make-iterator@^1.0.0:
   integrity sha1-KbM/MSqo9UfEpeSQ9Wr87JkTOtY=
   dependencies:
     kind-of "^6.0.2"
-
-mamacro@^0.0.3:
-  version "0.0.3"
-  resolved "http://registry.npm.alibaba-inc.com/mamacro/download/mamacro-0.0.3.tgz#ad2c9576197c9f1abf308d0787865bd975a3f3e4"
-  integrity sha1-rSyVdhl8nxq/MI0Hh4Zb2XWj8+Q=
 
 map-age-cleaner@^0.1.1:
   version "0.1.2"
@@ -5854,10 +5903,10 @@ min-document@^2.19.0:
   dependencies:
     dom-walk "^0.1.0"
 
-mini-css-extract-plugin@0.4.2:
-  version "0.4.2"
-  resolved "http://registry.npm.alibaba-inc.com/mini-css-extract-plugin/download/mini-css-extract-plugin-0.4.2.tgz#b3ecc0d6b1bbe5ff14add42b946a7b200cf78651"
-  integrity sha1-s+zA1rG75f8UrdQrlGp7IAz3hlE=
+mini-css-extract-plugin@0.4.4:
+  version "0.4.4"
+  resolved "http://registry.npm.alibaba-inc.com/mini-css-extract-plugin/download/mini-css-extract-plugin-0.4.4.tgz#c10410a004951bd3cedac1da69053940fccb625d"
+  integrity sha1-wQQQoASVG9PO2sHaaQU5QPzLYl0=
   dependencies:
     loader-utils "^1.1.0"
     schema-utils "^1.0.0"
@@ -5948,6 +5997,22 @@ mississippi@^2.0.0:
     stream-each "^1.1.0"
     through2 "^2.0.0"
 
+mississippi@^3.0.0:
+  version "3.0.0"
+  resolved "http://registry.npm.alibaba-inc.com/mississippi/download/mississippi-3.0.0.tgz#ea0a3291f97e0b5e8776b363d5f0a12d94c67022"
+  integrity sha1-6goykfl+C16HdrNj1fChLZTGcCI=
+  dependencies:
+    concat-stream "^1.5.0"
+    duplexify "^3.4.2"
+    end-of-stream "^1.1.0"
+    flush-write-stream "^1.0.0"
+    from2 "^2.1.0"
+    parallel-transform "^1.1.0"
+    pump "^3.0.0"
+    pumpify "^1.3.3"
+    stream-each "^1.1.0"
+    through2 "^2.0.0"
+
 mixin-deep@^1.2.0:
   version "1.3.1"
   resolved "http://registry.npm.alibaba-inc.com/mixin-deep/download/mixin-deep-1.3.1.tgz#a49e7268dce1a0d9698e45326c5626df3543d0fe"
@@ -5970,18 +6035,6 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
-
-mobx-preact@3.0.0:
-  version "3.0.0"
-  resolved "http://registry.npm.alibaba-inc.com/mobx-preact/download/mobx-preact-3.0.0.tgz#683f1805e4727570c8ece1561a25f34773b7b601"
-  integrity sha1-aD8YBeRydXDI7OFWGiXzR3O3tgE=
-  dependencies:
-    hoist-non-react-statics "^2.3.1"
-
-mobx@5.1.0:
-  version "5.1.0"
-  resolved "http://registry.npm.alibaba-inc.com/mobx/download/mobx-5.1.0.tgz#ae772ca8eb0c1dd93341ffce375f44a80050014d"
-  integrity sha1-rncsqOsMHdkzQf/ON19EqABQAU0=
 
 mocha@^4.0.1:
   version "4.1.0"
@@ -7326,6 +7379,14 @@ pump@^2.0.0, pump@^2.0.1:
     end-of-stream "^1.1.0"
     once "^1.3.1"
 
+pump@^3.0.0:
+  version "3.0.0"
+  resolved "http://registry.npm.alibaba-inc.com/pump/download/pump-3.0.0.tgz#b4a2116815bde2f4e1ea602354e8c75565107a64"
+  integrity sha1-tKIRaBW94vTh6mAjVOjHVWUQemQ=
+  dependencies:
+    end-of-stream "^1.1.0"
+    once "^1.3.1"
+
 pumpify@^1.3.3:
   version "1.5.1"
   resolved "http://registry.npm.alibaba-inc.com/pumpify/download/pumpify-1.5.1.tgz#36513be246ab27570b1a374a5ce278bfd74370ce"
@@ -8396,6 +8457,13 @@ ssri@^5.2.4:
   dependencies:
     safe-buffer "^5.1.1"
 
+ssri@^6.0.0:
+  version "6.0.1"
+  resolved "http://registry.npm.alibaba-inc.com/ssri/download/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
+  integrity sha1-KjxBso3UW2K2Nnbst0ABJlrp7dg=
+  dependencies:
+    figgy-pudding "^3.5.1"
+
 stable@~0.1.6:
   version "0.1.8"
   resolved "http://registry.npm.alibaba-inc.com/stable/download/stable-0.1.8.tgz#836eb3c8382fe2936feaf544631017ce7d47a3cf"
@@ -8634,7 +8702,7 @@ symbol-observable@1.0.1:
   resolved "http://registry.npm.alibaba-inc.com/symbol-observable/download/symbol-observable-1.0.1.tgz#8340fc4702c3122df5d22288f88283f513d3fdd4"
   integrity sha1-g0D8RwLDEi310iKI+IKD9RPT/dQ=
 
-tapable@^1.0.0:
+tapable@^1.0.0, tapable@^1.1.0:
   version "1.1.0"
   resolved "http://registry.npm.alibaba-inc.com/tapable/download/tapable-1.1.0.tgz#0d076a172e3d9ba088fd2272b2668fb8d194b78c"
   integrity sha1-DQdqFy49m6CI/SJysmaPuNGUt4w=
@@ -8865,7 +8933,7 @@ uglify-es@^3.3.4:
     commander "~2.13.0"
     source-map "~0.6.1"
 
-uglify-js@3.4.x, uglify-js@^3.1.4:
+uglify-js@3.4.x, uglify-js@^3.0.0, uglify-js@^3.1.4:
   version "3.4.9"
   resolved "http://registry.npm.alibaba-inc.com/uglify-js/download/uglify-js-3.4.9.tgz#af02f180c1207d76432e473ed24a28f4a782bae3"
   integrity sha1-rwLxgMEgfXZDLkc+0koo9KeCuuM=
@@ -8873,7 +8941,21 @@ uglify-js@3.4.x, uglify-js@^3.1.4:
     commander "~2.17.1"
     source-map "~0.6.1"
 
-uglifyjs-webpack-plugin@1.3.0, uglifyjs-webpack-plugin@^1.2.4:
+uglifyjs-webpack-plugin@2.0.1:
+  version "2.0.1"
+  resolved "http://registry.npm.alibaba-inc.com/uglifyjs-webpack-plugin/download/uglifyjs-webpack-plugin-2.0.1.tgz#f346af53ed496ce72fef462517d417f62bec3010"
+  integrity sha1-80avU+1JbOcv70YlF9QX9ivsMBA=
+  dependencies:
+    cacache "^11.2.0"
+    find-cache-dir "^2.0.0"
+    schema-utils "^1.0.0"
+    serialize-javascript "^1.4.0"
+    source-map "^0.6.1"
+    uglify-js "^3.0.0"
+    webpack-sources "^1.1.0"
+    worker-farm "^1.5.2"
+
+uglifyjs-webpack-plugin@^1.2.4:
   version "1.3.0"
   resolved "http://registry.npm.alibaba-inc.com/uglifyjs-webpack-plugin/download/uglifyjs-webpack-plugin-1.3.0.tgz#75f548160858163a08643e086d5fefe18a5d67de"
   integrity sha1-dfVIFghYFjoIZD4IbV/v4YpdZ94=
@@ -9006,15 +9088,10 @@ url-join@^2.0.5:
   resolved "http://registry.npm.alibaba-inc.com/url-join/download/url-join-2.0.5.tgz#5af22f18c052a000a48d7b82c5e9c2e2feeda728"
   integrity sha1-WvIvGMBSoACkjXuCxenC4v7tpyg=
 
-url-join@^4.0.0:
-  version "4.0.0"
-  resolved "http://registry.npm.alibaba-inc.com/url-join/download/url-join-4.0.0.tgz#4d3340e807d3773bda9991f8305acdcc2a665d2a"
-  integrity sha1-TTNA6AfTdzvamZH4MFrNzCpmXSo=
-
-url-loader@1.1.1:
-  version "1.1.1"
-  resolved "http://registry.npm.alibaba-inc.com/url-loader/download/url-loader-1.1.1.tgz#4d1f3b4f90dde89f02c008e662d604d7511167c1"
-  integrity sha1-TR87T5Dd6J8CwAjmYtYE11ERZ8E=
+url-loader@1.1.2:
+  version "1.1.2"
+  resolved "http://registry.npm.alibaba-inc.com/url-loader/download/url-loader-1.1.2.tgz#b971d191b83af693c5e3fea4064be9e1f2d7f8d8"
+  integrity sha1-uXHRkbg69pPF4/6kBkvp4fLX+Ng=
   dependencies:
     loader-utils "^1.1.0"
     mime "^2.0.3"
@@ -9188,13 +9265,11 @@ wbuf@^1.1.0, wbuf@^1.7.2:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-webpack-bundle-analyzer@3.0.1:
-  version "3.0.1"
-  resolved "http://registry.npm.alibaba-inc.com/webpack-bundle-analyzer/download/webpack-bundle-analyzer-3.0.1.tgz#5d54d5767265fbd862872bc5db2c0499272b3230"
-  integrity sha1-XVTVdnJl+9hihyvF2ywEmScrMjA=
+webpack-bundle-analyzer@3.0.2:
+  version "3.0.2"
+  resolved "http://registry.npm.alibaba-inc.com/webpack-bundle-analyzer/download/webpack-bundle-analyzer-3.0.2.tgz#22f19ea6d1b5a15fd7a90baae0bc0f39bd1e4d48"
+  integrity sha1-IvGeptG1oV/XqQuq4LwPOb0eTUg=
   dependencies:
-    "@babel/polyfill" "7.0.0"
-    "@babel/runtime" "7.0.0"
     acorn "^5.7.3"
     bfj "^6.1.1"
     chalk "^2.4.1"
@@ -9203,24 +9278,19 @@ webpack-bundle-analyzer@3.0.1:
     express "^4.16.3"
     filesize "^3.6.1"
     gzip-size "^5.0.0"
-    lodash "4.17.10"
+    lodash "^4.17.10"
     mkdirp "^0.5.1"
-    mobx "5.1.0"
-    mobx-preact "3.0.0"
     opener "^1.5.1"
     ws "^6.0.0"
 
-webpack-dev-middleware@3.2.0:
-  version "3.2.0"
-  resolved "http://registry.npm.alibaba-inc.com/webpack-dev-middleware/download/webpack-dev-middleware-3.2.0.tgz#a20ceef194873710052da678f3c6ee0aeed92552"
-  integrity sha1-ogzu8ZSHNxAFLaZ488buCu7ZJVI=
+webpack-dev-middleware@3.4.0:
+  version "3.4.0"
+  resolved "http://registry.npm.alibaba-inc.com/webpack-dev-middleware/download/webpack-dev-middleware-3.4.0.tgz#1132fecc9026fd90f0ecedac5cbff75d1fb45890"
+  integrity sha1-ETL+zJAm/ZDw7O2sXL/3XR+0WJA=
   dependencies:
-    loud-rejection "^1.6.0"
     memory-fs "~0.4.1"
     mime "^2.3.1"
-    path-is-absolute "^1.0.0"
     range-parser "^1.0.3"
-    url-join "^4.0.0"
     webpack-log "^2.0.0"
 
 webpack-dev-mock@0.1.2:
@@ -9234,10 +9304,10 @@ webpack-dev-mock@0.1.2:
     debug "^3.1.0"
     express-http-proxy "^1.2.0"
 
-webpack-dev-server@3.1.8:
-  version "3.1.8"
-  resolved "http://registry.npm.alibaba-inc.com/webpack-dev-server/download/webpack-dev-server-3.1.8.tgz#eb7a95945d1108170f902604fb3b939533d9daeb"
-  integrity sha1-63qVlF0RCBcPkCYE+zuTlTPZ2us=
+webpack-dev-server@3.1.9:
+  version "3.1.9"
+  resolved "http://registry.npm.alibaba-inc.com/webpack-dev-server/download/webpack-dev-server-3.1.9.tgz#8b32167624d2faff40dcedc2cbce17ed1f34d3e0"
+  integrity sha1-izIWdiTS+v9A3O3Cy84X7R800+A=
   dependencies:
     ansi-html "0.0.7"
     bonjour "^3.5.0"
@@ -9264,7 +9334,7 @@ webpack-dev-server@3.1.8:
     spdy "^3.4.1"
     strip-ansi "^3.0.0"
     supports-color "^5.1.0"
-    webpack-dev-middleware "3.2.0"
+    webpack-dev-middleware "3.4.0"
     webpack-log "^2.0.0"
     yargs "12.0.2"
 
@@ -9299,15 +9369,7 @@ webpack-simple-progress-plugin@0.0.4:
     object-assign "^4.1.0"
     progress "^1.1.8"
 
-webpack-sources@1.2.0:
-  version "1.2.0"
-  resolved "http://registry.npm.alibaba-inc.com/webpack-sources/download/webpack-sources-1.2.0.tgz#18181e0d013fce096faf6f8e6d41eeffffdceac2"
-  integrity sha1-GBgeDQE/zglvr2+ObUHu///c6sI=
-  dependencies:
-    source-list-map "^2.0.0"
-    source-map "~0.6.1"
-
-webpack-sources@^1.1.0, webpack-sources@^1.2.0:
+webpack-sources@1.3.0, webpack-sources@^1.1.0, webpack-sources@^1.3.0:
   version "1.3.0"
   resolved "http://registry.npm.alibaba-inc.com/webpack-sources/download/webpack-sources-1.3.0.tgz#2a28dcb9f1f45fe960d8f1493252b5ee6530fa85"
   integrity sha1-KijcufH0X+lg2PFJMlK17mUw+oU=
@@ -9315,15 +9377,15 @@ webpack-sources@^1.1.0, webpack-sources@^1.2.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@4.18.0:
-  version "4.18.0"
-  resolved "http://registry.npm.alibaba-inc.com/webpack/download/webpack-4.18.0.tgz#7dafaaf309c12e63080d3960fba7ed94afdcbe84"
-  integrity sha1-fa+q8wnBLmMIDTlg+6ftlK/cvoQ=
+webpack@4.20.2:
+  version "4.20.2"
+  resolved "http://registry.npm.alibaba-inc.com/webpack/download/webpack-4.20.2.tgz#89f6486b6bb276a91b0823453d377501fc625b5a"
+  integrity sha1-ifZIa2uydqkbCCNFPTd1AfxiW1o=
   dependencies:
-    "@webassemblyjs/ast" "1.7.6"
-    "@webassemblyjs/helper-module-context" "1.7.6"
-    "@webassemblyjs/wasm-edit" "1.7.6"
-    "@webassemblyjs/wasm-parser" "1.7.6"
+    "@webassemblyjs/ast" "1.7.8"
+    "@webassemblyjs/helper-module-context" "1.7.8"
+    "@webassemblyjs/wasm-edit" "1.7.8"
+    "@webassemblyjs/wasm-parser" "1.7.8"
     acorn "^5.6.2"
     acorn-dynamic-import "^3.0.0"
     ajv "^6.1.0"
@@ -9340,10 +9402,10 @@ webpack@4.18.0:
     neo-async "^2.5.0"
     node-libs-browser "^2.0.0"
     schema-utils "^0.4.4"
-    tapable "^1.0.0"
+    tapable "^1.1.0"
     uglifyjs-webpack-plugin "^1.2.4"
     watchpack "^1.5.0"
-    webpack-sources "^1.2.0"
+    webpack-sources "^1.3.0"
 
 websocket-driver@>=0.5.1:
   version "0.7.0"
