@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="82px" height="85px" viewBox="0 0 82 85" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>迭代</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="51.1021672 26.1199087 0.611406756 26.1199087 9.75340951 58.7407078 41.5985346 58.7407078"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="产品-洞察-研发大盘" transform="translate(-174.000000, -242.000000)">
+            <g id="详情简介" transform="translate(175.000000, 243.000000)">
+                <g id="迭代">
+                    <path d="M49.9410831,80.3812557 L49.9338505,80.3957991 C49.4637316,81.8646804 48.1184686,82.8536301 46.585158,82.8536301 L13.1560941,82.8536301 C11.6300162,82.8536301 10.2485901,81.8355936 9.80740168,80.3812557 L9.80740168,80.373984 C9.7784713,80.2794521 7.32662087,71.4443493 4.91093344,62.6892352 C0,44.917226 0,44.7936073 0,44.6918037 L0,25.9744749 C0,24.0111187 1.59840396,22.411347 3.55843778,22.411347 L56.5589094,22.411347 C58.5189432,22.411347 60.1173472,24.0111187 60.1173472,25.9672032 L60.1607428,45.2589954 L49.9410831,80.3812557 Z" id="Shape" stroke="#404040" stroke-width="1.15068493" fill="#FFFFFF" transform="translate(30.080371, 52.632489) scale(1, -1) translate(-30.080371, -52.632489) "></path>
+                    <polygon id="Path" stroke="#404040" stroke-width="1.15068493" fill="#FFFFFF" points="55.5463458 78.3306393 55.5463458 64.2962785 4.57100137 64.2962785 4.57100137 78.3306393"></polygon>
+                    <g id="Group-4" transform="translate(4.198270, 0.000000)">
+                        <g id="Path-4">
+                            <ellipse id="Oval-6" fill="#404040" cx="28.0787542" cy="71.2944587" rx="1.48970882" ry="1.48623951"></ellipse>
+                            <ellipse id="Oval-6" fill="#404040" cx="22.4810604" cy="71.2944587" rx="1.48970882" ry="1.48623951"></ellipse>
+                            <ellipse id="Oval-6" fill="#404040" cx="15.4839432" cy="71.2944587" rx="1.48970882" ry="1.48623951"></ellipse>
+                            <ellipse id="Oval-6" fill="#404040" cx="8.48682603" cy="71.2944587" rx="1.48970882" ry="1.48623951"></ellipse>
+                            <g id="Group" transform="translate(13.994234, 0.000000)" stroke-width="1.15068493">
+                                <path d="M8.39654065,44.6772603 L16.7930813,27.9232877" id="Path-2" stroke="#979797"></path>
+                                <polyline id="Path-3" stroke="#0F0E0E" points="40.5832798 41.8849315 54.5775142 26.5271233 55.9769376 5.58465753"></polyline>
+                                <path d="M16.7930813,27.9232877 L39.1838564,43.2810959" id="Path-5" stroke="#979797"></path>
+                                <ellipse id="Oval-8" stroke="#404040" fill="#FFFFFF" cx="5.59769376" cy="48.8657534" rx="5.59769376" ry="5.58465753"></ellipse>
+                                <ellipse id="Oval-8" stroke="#404040" fill="#56A7F7" cx="40.5832798" cy="43.2810959" rx="5.59769376" ry="5.58465753"></ellipse>
+                                <ellipse id="Oval-8" stroke="#404040" fill="#D9D9D9" cx="54.5775142" cy="26.5271233" rx="4.19827032" ry="4.18849315"></ellipse>
+                                <ellipse id="Oval-8" stroke="#404040" fill="#56A7F7" cx="55.9769376" cy="5.58465753" rx="5.59769376" ry="5.58465753"></ellipse>
+                            </g>
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Mask" fill-opacity="0.1" fill="#404040" transform="translate(25.856787, 42.430308) scale(1, -1) translate(-25.856787, -42.430308) " xlink:href="#path-1"></use>
+                        </g>
+                    </g>
+                    <polygon id="Path" stroke="#404040" stroke-width="1.15068493" transform="translate(30.055057, 42.430308) scale(1, -1) translate(-30.055057, -42.430308) " points="55.3004375 26.1199087 4.80967708 26.1199087 13.9516798 58.7407078 45.7968049 58.7407078"></polygon>
+                    <ellipse id="Oval-8" stroke="#404040" stroke-width="1.15068493" fill="#FFFFFF" cx="36.3850095" cy="29.3194521" rx="6.99711721" ry="6.98082192"></ellipse>
+                    <ellipse id="Oval-7" stroke="#404040" stroke-width="1.15068493" fill="#FFFFFF" cx="40.5832798" cy="71.2043836" rx="2.79884688" ry="2.79232877"></ellipse>
+                    <ellipse id="Oval-7" stroke="#404040" stroke-width="1.15068493" fill="#56A7F7" cx="48.9798204" cy="71.2043836" rx="2.79884688" ry="2.79232877"></ellipse>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
