@@ -54,10 +54,10 @@ export default class DismantlingTable extends Component {
     this.state = {
       rowSelection: {
         onChange: this.onTableChange.bind(this),
-        onSelect: function(selected, record, records) {
+        onSelect(selected, record, records) {
           console.log('onSelect', selected, record, records);
         },
-        onSelectAll: function(selected, records) {
+        onSelectAll(selected, records) {
           console.log('onSelectAll', selected, records);
         },
         selectedRowKeys: [],
@@ -68,7 +68,7 @@ export default class DismantlingTable extends Component {
   }
 
   onTableChange = (ids, records) => {
-    let { rowSelection } = this.state;
+    const { rowSelection } = this.state;
     rowSelection.selectedRowKeys = ids;
     console.log('onChange', ids, records);
     this.setState({ rowSelection });

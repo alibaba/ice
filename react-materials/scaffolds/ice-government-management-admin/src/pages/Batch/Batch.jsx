@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Breadcrumb } from '@icedesign/base';
 import Container from '@icedesign/container';
 import SelectBar from './components/SelectBar';
 import BatchTable from './components/BatchTable';

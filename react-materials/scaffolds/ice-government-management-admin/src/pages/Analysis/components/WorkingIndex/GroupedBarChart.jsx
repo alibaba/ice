@@ -72,7 +72,7 @@ export default class GroupedBarChart extends Component {
         <Geom
           type="interval"
           position="工作指标*完成率"
-          color={'name'}
+          color="name"
           adjust={[
             {
               type: 'dodge',

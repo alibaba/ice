@@ -75,13 +75,12 @@ export default class Transaction extends Component {
                   <div
                     style={{
                       ...styles.image,
-                      background:
-                        'linear-gradient(45deg, ' +
-                        item.backgroundColor +
-                        ' 50%, #fff 150%)',
+                      background: `linear-gradient(45deg, ${
+                        item.backgroundColor
+                      } 50%, #fff 150%)`,
                     }}
                   >
-                    <img src={item.img} style={styles.iconImage} />
+                    <img src={item.img} style={styles.iconImage} alt="" />
                   </div>
                   <p style={styles.itemTitle}>
                     {item.title} <span style={styles.count}>{item.count}</span>

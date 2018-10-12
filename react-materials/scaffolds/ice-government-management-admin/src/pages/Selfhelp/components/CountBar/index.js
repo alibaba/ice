@@ -59,10 +59,9 @@ export default class CountBar extends Component {
                 </div>
                 <div
                   style={{
-                    background:
-                      'linear-gradient(270deg, ' +
-                      item.rightColor +
-                      ' 50%, #fff 150%)',
+                    background: `linear-gradient(270deg, ${
+                      item.rightColor
+                    } 50%, #fff 150%)`,
                     ...styles.cardRight,
                   }}
                 >

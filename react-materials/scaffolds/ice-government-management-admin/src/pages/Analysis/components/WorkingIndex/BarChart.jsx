@@ -34,7 +34,7 @@ export default class BarChart extends Component {
     return {
       name: index,
       title: index,
-      value: number + '件',
+      value: `${number}件`,
     };
   };
 

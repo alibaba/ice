@@ -45,9 +45,9 @@ export default class Warning extends Component {
                     style={{
                       ...styles.image,
                       background:
-                        'linear-gradient(45deg, ' +
-                        item.backgroundColor +
-                        ' 50%, #fff 150%)',
+                        `linear-gradient(45deg, ${
+                        item.backgroundColor
+                        } 50%, #fff 150%)`,
                     }}
                   >
                     <img
@@ -55,7 +55,7 @@ export default class Warning extends Component {
                       src={timeIcon}
                       style={{
                         ...styles.iconImage,
-                        transform: 'rotate(' + index * 72 + 'deg)',
+                        transform: `rotate(${index * 72}deg)`,
                       }}
                     />
                     <div style={styles.count}>{item.count}</div>
