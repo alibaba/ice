@@ -37,7 +37,6 @@
     "rc-color-picker": "^1.2.6",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-draggable": "^3.0.5",
     "slate": "^0.42.2",
     "slate-drop-or-paste-images": "^0.8.4",
     "slate-html-serializer": "^0.7.11",

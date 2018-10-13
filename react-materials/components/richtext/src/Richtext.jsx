@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Draggable from 'react-draggable';
 import Html from 'slate-html-serializer';
 import { Editor, getEventTransfer } from 'slate-react';
 import { Value } from 'slate';
@@ -94,31 +93,29 @@ class RichText extends Component {
     );
     return (
       <div className="ice-richtext-container">
-        <Draggable>
-          <div className="ice-richtext-toolbar">
-            {this.renderMarkButton('bold', 'format_bold', '粗体')}
-            {this.renderMarkButton('italic', 'format_italic', '斜体')}
-            {this.renderMarkButton('underline', 'format_underline', '下划线')}
-            {this.renderMarkButton('strikethrough', 'format_strikethrough', '删除线')}
-            {this.renderMarkButton('code', 'code', '代码')}
-            {this.renderBlockButton('heading-one', 'looks_one', '1级标题')}
-            {this.renderBlockButton('heading-two', 'looks_two', '2级标题')}
-            {this.renderBlockButton('heading-three', 'looks_3', '3级标题')}
-            {this.renderBlockButton('heading-four', 'looks_4', '4级标题')}
-            {this.renderBlockButton('blockquote', 'format_quote', '引用')}
-            {this.renderBlockButton('numbered-list', 'format_list_numbered', '有序列表')}
-            {this.renderBlockButton('bulleted-list', 'format_list_bulleted', '无序列表')}
-            {pluginToolbarButtons.map((ToolbarButton, index) => {
-              return (
-                <ToolbarButton
-                  key={index}
-                  value={value}
-                  editor={this.editor}
-                />
-              );
-            })}
-          </div>
-        </Draggable>
+        <div className="ice-richtext-toolbar">
+          {this.renderMarkButton('bold', 'format_bold', '粗体')}
+          {this.renderMarkButton('italic', 'format_italic', '斜体')}
+          {this.renderMarkButton('underline', 'format_underline', '下划线')}
+          {this.renderMarkButton('strikethrough', 'format_strikethrough', '删除线')}
+          {this.renderMarkButton('code', 'code', '代码')}
+          {this.renderBlockButton('heading-one', 'looks_one', '1级标题')}
+          {this.renderBlockButton('heading-two', 'looks_two', '2级标题')}
+          {this.renderBlockButton('heading-three', 'looks_3', '3级标题')}
+          {this.renderBlockButton('heading-four', 'looks_4', '4级标题')}
+          {this.renderBlockButton('blockquote', 'format_quote', '引用')}
+          {this.renderBlockButton('numbered-list', 'format_list_numbered', '有序列表')}
+          {this.renderBlockButton('bulleted-list', 'format_list_bulleted', '无序列表')}
+          {pluginToolbarButtons.map((ToolbarButton, index) => {
+            return (
+              <ToolbarButton
+                key={index}
+                value={value}
+                editor={this.editor}
+              />
+            );
+          })}
+        </div>
 
         <Editor
           spellCheck
