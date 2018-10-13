@@ -89,7 +89,7 @@ const RULES = [
 
       if (el.style) {
         if (el.style.backgroundColor) {
-          data.color = el.style.backgroundColor;
+          data.backgroundColor = el.style.backgroundColor;
         }
 
         if (el.style.color) {

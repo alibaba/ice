@@ -11,7 +11,7 @@ import BLOCK_TAGS from './constants/blocks';
 import Image from './components/Image';
 import ToolbarButton from './components/ToolbarButton';
 import SERIALIZER_RULES from './serializer';
-import {haveActiveMarks, haveBlocks} from './utils/have';
+import {haveActiveMarks, haveBlocks} from './queries/have';
 import './main.scss';
 
 
@@ -113,8 +113,7 @@ class RichText extends Component {
                 <ToolbarButton
                   key={index}
                   value={value}
-                  change={value.change()}
-                  onChange={this.onChange}
+                  editor={this.editor}
                 />
               );
             })}
@@ -132,6 +131,7 @@ class RichText extends Component {
           renderNode={this.renderNode}
           renderMark={this.renderMark}
           plugins={this.plugins}
+          ref={(editor) => {this.editor = editor;}}
         />
       </div>
     );
@@ -147,8 +147,7 @@ class RichText extends Component {
 
   renderMarkButton = (type, icon, title) => {
     const {value} = this.state;
-    const change = value.change();
-    const isActive = haveActiveMarks(change, type);
+    const isActive = haveActiveMarks({value}, type);
 
     return (
       <ToolbarButton
@@ -170,14 +169,13 @@ class RichText extends Component {
 
   renderBlockButton = (type, icon, title) => {
     const {value} = this.state;
-    const change = value.change();
-    let isActive = haveBlocks(change, type);
+    let isActive = haveBlocks({value}, type);
 
     if (['numbered-list', 'bulleted-list'].includes(type)) {
       const { value } = this.state;
       if (value.blocks.first()) {
         const parent = value.document.getParent(value.blocks.first().key);
-        isActive = haveBlocks(change, 'list-item') && parent && parent.type === type;
+        isActive = haveBlocks({value}, 'list-item') && parent && parent.type === type;
       }
     }
 
@@ -198,7 +196,7 @@ class RichText extends Component {
    * @return {Element}
    */
 
-  renderNode = props => {
+  renderNode = (props, next) => {
     const { attributes, children, node, isFocused } = props;
 
     const style = {
@@ -252,6 +250,8 @@ class RichText extends Component {
         const src = node.data.get('src');
         return <Image src={src} selected={isFocused} {...props} />;
       }
+      default:
+        return next();
     }
   }
 
@@ -262,7 +262,7 @@ class RichText extends Component {
    * @return {Element}
    */
 
-  renderMark = props => {
+  renderMark = (props, next) => {
     const { children, mark, attributes } = props;
     switch (mark.type) {
       case 'bold':
@@ -275,6 +275,8 @@ class RichText extends Component {
         return <u {...attributes}>{children}</u>;
       case 'strikethrough':
         return <s {...attributes}>{children}</s>;
+      default:
+        return next();
     }
   }
 
@@ -290,6 +292,7 @@ class RichText extends Component {
       const string = serializer.serialize(value);
       this.props.onChange(string);
     }
+
     this.setState({ value });
   }
 
@@ -316,7 +319,7 @@ class RichText extends Component {
    * @return {Change}
    */
 
-  onKeyDown = (event, change) => {
+  onKeyDown = (event, change, next) => {
     let mark;
 
     /**
@@ -339,12 +342,11 @@ class RichText extends Component {
     } else if (isCodeHotkey(event)) {
       mark = 'code';
     } else {
-      return;
+      return next();
     }
 
     event.preventDefault();
     change.toggleMark(mark);
-    return true;
   }
 
   /**
@@ -356,9 +358,9 @@ class RichText extends Component {
 
   onClickMark = (event, type) => {
     event.preventDefault();
-    const { value } = this.state;
-    const change = value.change().toggleMark(type);
-    this.onChange(change);
+    this.editor.change(change => {
+      change.toggleMark(type);
+    });
   }
 
   /**
@@ -377,49 +379,48 @@ class RichText extends Component {
      * @type {String}
      */
 
-    const DEFAULT_NODE = BLOCK_TAGS.p;
+    this.editor.change(change => {
+      const DEFAULT_NODE = BLOCK_TAGS.p;
 
-    const { value } = this.state;
-    const change = value.change();
-    const { document } = value;
+      const { value } = this.state;
+      const { document } = value;
 
-    // Handle everything but list buttons.
-    if (type != 'bulleted-list' && type != 'numbered-list') {
-      const isActive = haveBlocks(change, type);
-      const isList = haveBlocks(change, 'list-item');
+      // Handle everything but list buttons.
+      if (type != 'bulleted-list' && type != 'numbered-list') {
+        const isActive = haveBlocks(change, type);
+        const isList = haveBlocks(change, 'list-item');
 
-      if (isList) {
-        change
-          .setBlocks(isActive ? DEFAULT_NODE : type)
-          .unwrapBlock('bulleted-list')
-          .unwrapBlock('numbered-list');
+        if (isList) {
+          change
+            .setBlocks(isActive ? DEFAULT_NODE : type)
+            .unwrapBlock('bulleted-list')
+            .unwrapBlock('numbered-list');
+        } else {
+          change.setBlocks(isActive ? DEFAULT_NODE : type);
+        }
       } else {
-        change.setBlocks(isActive ? DEFAULT_NODE : type);
-      }
-    } else {
-      // Handle the extra wrapping required for list buttons.
-      const isList = haveBlocks(change, 'list-item');
-      const isType = value.blocks.some(block => {
-        return !!document.getClosest(block.key, parent => parent.type == type);
-      });
+        // Handle the extra wrapping required for list buttons.
+        const isList = haveBlocks(change, 'list-item');
+        const isType = value.blocks.some(block => {
+          return !!document.getClosest(block.key, parent => parent.type == type);
+        });
 
-      if (isList && isType) {
-        change
-          .setBlocks(DEFAULT_NODE)
-          .unwrapBlock('bulleted-list')
-          .unwrapBlock('numbered-list');
-      } else if (isList) {
-        change
-          .unwrapBlock(
-            type == 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
-          )
-          .wrapBlock(type);
-      } else {
-        change.setBlocks('list-item').wrapBlock(type);
+        if (isList && isType) {
+          change
+            .setBlocks(DEFAULT_NODE)
+            .unwrapBlock('bulleted-list')
+            .unwrapBlock('numbered-list');
+        } else if (isList) {
+          change
+            .unwrapBlock(
+              type == 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
+            )
+            .wrapBlock(type);
+        } else {
+          change.setBlocks('list-item').wrapBlock(type);
+        }
       }
-    }
-
-    this.onChange(change);
+    });
   }
 }
 

@@ -38,10 +38,10 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-draggable": "^3.0.5",
-    "slate": "^0.41.1",
+    "slate": "^0.42.2",
     "slate-drop-or-paste-images": "^0.8.4",
-    "slate-html-serializer": "^0.7.6",
-    "slate-react": "^0.18.9"
+    "slate-html-serializer": "^0.7.11",
+    "slate-react": "^0.19.3"
   },
   "devDependencies": {
     "ice-devtools": "latest"

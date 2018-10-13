@@ -1,8 +1,8 @@
 import {Component} from 'react';
-import removeType from '../../changes/mark-removetype';
-import addMarkOverwrite from '../../changes/mark-addoverwrite';
-import { haveMarks } from '../../utils/have';
-import { getMarkType } from '../../utils/get';
+import removeType from '../../commands/mark-removetype';
+import addMarkOverwrite from '../../commands/mark-addoverwrite';
+import { haveMarks } from '../../queries/have';
+import { getMarkType } from '../../queries/get';
 
 export default (type) => (Selector) => {
   return class SharedSelector extends Component {
@@ -12,32 +12,32 @@ export default (type) => (Selector) => {
       this.typeName = this.props.type || type;
     }
 
-    onChange = value => {
-      let { change, onChange } = this.props;
-      this.setState({ value });
+    onChange = ({value}) => {
+      let { editor } = this.props;
 
-      // if select `default` remove font size settings
-      if (value.label === 'Default') {
-        return onChange(removeType(change, this.typeName));
-      }
-      onChange(
+      editor.change(change => {
+        // if select `default` remove font size settings
+        if (value === 'Default') {
+          return removeType(change, this.typeName);
+        }
+
         addMarkOverwrite(change, {
           type: this.typeName,
           data: {
-            [this.typeName]: value.value
+            [this.typeName]: value
           }
-        })
-      );
+        });
+      });
     };
 
     render() {
       // eslint-disable-next-line
-      const { options, change, onChange, ...rest } = this.props;
-      const isActive = haveMarks(change, this.typeName);
+      const { options, value, ...rest } = this.props;
+      const isActive = haveMarks({value}, this.typeName);
       let defaultFont;
 
       if (isActive) {
-        const first = getMarkType(change, this.typeName)
+        const first = getMarkType({value}, this.typeName)
           .first()
           .get('data');
         defaultFont = first.get(this.typeName);

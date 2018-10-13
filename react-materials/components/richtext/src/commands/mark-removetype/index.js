@@ -1,5 +1,5 @@
-import { whatMarkTypes } from '../../utils/what';
-import { getMarkType } from '../../utils/get';
+import { whatMarkTypes } from '../../queries/what';
+import { getMarkType } from '../../queries/get';
 
 export default (change, type) => {
   // if type exist, remove same type mark

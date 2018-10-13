@@ -1,31 +1,61 @@
+import {Component} from 'react';
 import ToolbarButton from '../../components/ToolbarButton';
+import { haveDataKeyEqualValueInSomeBlocks } from '../../queries/have';
+import blockAddData from '../../commands/block-adddata';
+import blockClearDataByKey from '../../commands/block-cleardatabykey';
+import { ALIGN } from '../../constants/marks';
 
-const hasAlign = (value, foundAlign) => {
-  return value.blocks.some(node => node.data.get('align') === foundAlign);
+export const applyChange = (change, type, align) => {
+  const isActive = haveDataKeyEqualValueInSomeBlocks(change, type, align);
+
+  if (isActive) return change.call(blockClearDataByKey, type);
+  return change.call(blockAddData, { data: { [type]: align } });
 };
 
-// If we have an alignment, clear out the data attribute
-const alignStrategy = (change, align) => {
-  if (hasAlign(change.value, align)) {
-    return change.setBlocks({
-      data: { align: null },
-    }).focus();
+class AlignButton extends Component {
+
+  typeName = '';
+
+  constructor(props) {
+    super(props);
+    this.typeName = this.props.type || ALIGN;
   }
-  return change.setBlocks({
-    data: { align },
-  }).focus();
-};
 
-const createButton = (align, icon, title) => {
-  return ({value, onChange}) => {
+  onClick = (e) => {
+    e.preventDefault();
+    let { editor, align } = this.props;
+
+    editor.change(change => {
+      applyChange(change, this.typeName, align);
+    });
+  };
+
+  render() {
+    const { value, icon, title, align, type, ...rest } = this.props;
+    const onClick = e => this.onClick(e);
+    const isActive = haveDataKeyEqualValueInSomeBlocks({value}, type, align);
+
     return (
       <ToolbarButton
         icon={icon}
         title={title}
-        onMouseDown={e => {
-          return onChange(alignStrategy(value.change(), align));
-        }}
-        active={hasAlign(value, align)}
+        onClick={onClick}
+        active={isActive}
+      />
+    );
+  }
+}
+
+const createButton = (align, icon, title) => {
+  return ({value, editor, onChange}) => {
+    return (
+      <AlignButton
+        icon={icon}
+        title={title}
+        align={align}
+        value={value}
+        editor={editor}
+        onChange={onChange}
       />
     );
   };

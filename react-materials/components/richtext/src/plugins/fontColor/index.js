@@ -3,10 +3,10 @@ import ColorPicker from 'rc-color-picker';
 import hexRgb from 'hex-rgb';
 import omit from 'lodash.omit';
 import ToolbarButton from '../../components/ToolbarButton';
-import addMarkOverwrite from '../../changes/mark-addoverwrite';
-import { haveMarks } from '../../utils/have';
-import { getMarkType } from '../../utils/get';
-import { fontColor } from '../../constants/marks';
+import addMarkOverwrite from '../../commands/mark-addoverwrite';
+import { haveMarks } from '../../queries/have';
+import { getMarkType } from '../../queries/get';
+import { FONTCOLOR } from '../../constants/marks';
 import commonMark from '../../renderer/commonMark';
 
 import 'rc-color-picker/assets/index.css';
@@ -17,7 +17,7 @@ class FontColorButton extends Component {
 
   constructor(props) {
     super(props);
-    this.typeName = this.props.type || fontColor;
+    this.typeName = this.props.type || FONTCOLOR;
   }
 
   static defaultProps = {
@@ -25,27 +25,27 @@ class FontColorButton extends Component {
   };
 
   onChange = (color) => {
-    let { change, onChange, colorKey } = this.props;
+    let { editor, colorKey } = this.props;
 
     color.rgba = `rgba(${hexRgb(color.color, { format: 'array' }).join(
       ','
     )}, ${color.alpha / 100})`;
-    this.setState({ color });
-    onChange(
+
+    editor.change(change => {
       addMarkOverwrite(change, {
         type: this.typeName,
         data: { [colorKey]: color }
-      })
-    );
+      });
+    });
   };
 
   render() {
-    const { icon, change, ...rest } = this.props;
-    const isActive = haveMarks(change, this.typeName);
+    const { icon, value, ...rest } = this.props;
+    const isActive = haveMarks({value}, this.typeName);
     let colorStyle = {};
 
     if (isActive) {
-      const first = getMarkType(change, this.typeName)
+      const first = getMarkType({value}, this.typeName)
         .first()
         .get('data');
       const color = first.get('color');
@@ -77,7 +77,7 @@ class FontColorButton extends Component {
 function FontColorPlugin(opt) {
   const options = Object.assign(
     {
-      type: fontColor,
+      type: FONTCOLOR,
       tagName: 'span',
       color: mark => mark.data.getIn(['color', 'color'])
     },
@@ -90,11 +90,13 @@ function FontColorPlugin(opt) {
     ],
     plugins: [
       {
-        renderMark: props => {
-          if (props.mark.type === options.type)
+        renderMark: (props, next) => {
+          if (props.mark.type === options.type) {
             return commonMark(options.tagName, omit(options, ['type', 'tagName']))(
               props
             );
+          }
+          return next();
         }
       }
     ]

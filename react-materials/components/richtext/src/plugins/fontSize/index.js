@@ -2,13 +2,13 @@ import {Component} from 'react';
 import omit from 'lodash.omit';
 import { Button, Dropdown, Menu } from '@icedesign/base';
 import ToolbarButton from '../../components/ToolbarButton';
-import { fontSize } from '../../constants/marks';
+import { FONTSIZE } from '../../constants/marks';
 import SharedMarkSelectorDecoration from '../shared/markSelectorDecoration';
 import commonMark from '../../renderer/commonMark';
 
 const SplitButton = Button.Split;
 
-@SharedMarkSelectorDecoration(fontSize)
+@SharedMarkSelectorDecoration(FONTSIZE)
 class FontSizeButton extends Component {
   static defaultProps = {
     options: [12, 16, 20, 24, 28, 32],
@@ -73,9 +73,9 @@ class FontSizeButton extends Component {
 function FontSizePlugin(opt) {
   const options = Object.assign(
     {
-      type: fontSize,
+      type: FONTSIZE,
       tagName: 'span',
-      fontSize: mark => mark.data.get(fontSize)
+      fontSize: mark => mark.data.get(FONTSIZE)
     },
     opt
   );
