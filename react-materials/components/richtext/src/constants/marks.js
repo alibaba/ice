@@ -1,14 +1,12 @@
 module.exports = {
-  strong: 'bold',
-  em: 'italic',
-  u: 'underline',
-  s: 'strikethrough',
-  code: 'code',
+  BOLD: "bold",
+  ITALIC: "italic",
+  CODE: "code",
+  STRIKETHROUGH: "strikethrough",
+  UNDERLINE: "underline",
 
   // mark styles
-  ALIGN: 'align',
   FONTCOLOR: 'fontColor',
   FONTBGCOLOR: 'fontBgColor',
   FONTSIZE: 'fontSize',
-  LINEHEIGHT: 'lineHeight',
 };

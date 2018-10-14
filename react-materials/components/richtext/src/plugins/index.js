@@ -6,13 +6,8 @@ import lineHeightPlugin from './lineHeight';
 
 const plugins = [
   alignPlugin(),
-  fontColorPlugin({
-    color: mark => mark.data.get('color') && mark.data.get('color').color
-  }),
-  fontBgColorPlugin({
-    backgroundColor: mark =>
-      mark.data.get('color') && mark.data.get('color').color
-  }),
+  fontColorPlugin(),
+  fontBgColorPlugin(),
   fontSizePlugin(),
   lineHeightPlugin()
 ];

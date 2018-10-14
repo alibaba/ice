@@ -15,7 +15,7 @@ import Richtext from '@icedesign/richtext';
 class App extends Component {
 
   state = {
-    html: '<p>测试</p><p></p><p><span style="color:#d12b2b;">文本</span></p>'
+    html: '<p><span style="color:rgb(255, 68, 0);">测</span><span style="font-size:20px;"><span style="color:rgb(255, 68, 0);">试</span></span><span style="font-size:20px;"><span style="background-color:rgb(255, 68, 0);">文</span></span><span style="background-color:rgb(255, 68, 0);">本</span></p>'
   }
 
   render() {
@@ -31,6 +31,7 @@ class App extends Component {
   }
 
   onChange = (value) => {
+    // console.log(value)
     this.setState({
       html: value
     });

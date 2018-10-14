@@ -3,7 +3,6 @@ import ToolbarButton from '../../components/ToolbarButton';
 import { haveDataKeyEqualValueInSomeBlocks } from '../../queries/have';
 import blockAddData from '../../commands/block-adddata';
 import blockClearDataByKey from '../../commands/block-cleardatabykey';
-import { ALIGN } from '../../constants/marks';
 
 export const applyChange = (change, type, align) => {
   const isActive = haveDataKeyEqualValueInSomeBlocks(change, type, align);
@@ -18,7 +17,7 @@ class AlignButton extends Component {
 
   constructor(props) {
     super(props);
-    this.typeName = this.props.type || ALIGN;
+    this.typeName = this.props.type || 'align';
   }
 
   onClick = (e) => {

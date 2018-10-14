@@ -26,15 +26,15 @@ class FontColorButton extends Component {
 
   onChange = (color) => {
     let { editor, colorKey } = this.props;
-
-    color.rgba = `rgba(${hexRgb(color.color, { format: 'array' }).join(
-      ','
-    )}, ${color.alpha / 100})`;
+    let rgba = hexRgb(color.color, { format: 'array' });
+    rgba.pop();
+    rgba.push(color.alpha / 100);
+    color.rgba = `rgba(${rgba.join(',')})`;
 
     editor.change(change => {
       addMarkOverwrite(change, {
         type: this.typeName,
-        data: { [colorKey]: color }
+        data: { [colorKey]: color.rgba }
       });
     });
   };
@@ -49,10 +49,9 @@ class FontColorButton extends Component {
         .first()
         .get('data');
       const color = first.get('color');
-      const alpha = first.get('alpha');
 
       colorStyle = {
-        color: color.color
+        color
       };
     }
 
@@ -79,7 +78,7 @@ function FontColorPlugin(opt) {
     {
       type: FONTCOLOR,
       tagName: 'span',
-      color: mark => mark.data.getIn(['color', 'color'])
+      color: mark => mark.data.get("color")
     },
     opt
   );

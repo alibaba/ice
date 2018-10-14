@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/richtext",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "富文本组件",
   "main": "lib/index.js",
   "files": [
@@ -38,7 +38,6 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "slate": "^0.42.2",
-    "slate-drop-or-paste-images": "^0.8.4",
     "slate-html-serializer": "^0.7.11",
     "slate-react": "^0.19.3"
   },

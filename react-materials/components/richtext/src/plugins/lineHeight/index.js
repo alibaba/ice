@@ -2,13 +2,12 @@ import {Component} from 'react';
 import omit from 'lodash.omit';
 import { Button, Dropdown, Menu } from '@icedesign/base';
 import ToolbarButton from '../../components/ToolbarButton';
-import { LINEHEIGHT } from '../../constants/marks';
 import SharedBlockSelectorDecoration from '../shared/blockSelectorDecoration';
 import commonMark from '../../renderer/commonMark';
 
 const SplitButton = Button.Split;
 
-@SharedBlockSelectorDecoration(LINEHEIGHT)
+@SharedBlockSelectorDecoration('lineHeight')
 class LineHeightButton extends Component {
   static defaultProps = {
     options: [1, 1.5, 2, 2.5, 3, 3.5, 4],

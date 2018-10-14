@@ -21,20 +21,20 @@ class FontBgColorButton extends Component {
   }
 
   static defaultProps = {
-    colorKey: 'color'
+    colorKey: 'backgroundColor'
   };
 
   onChange = (color) => {
     let { editor, colorKey } = this.props;
-
-    color.rgba = `rgba(${hexRgb(color.color, { format: 'array' }).join(
-      ','
-    )}, ${color.alpha / 100})`;
+    let rgba = hexRgb(color.color, { format: 'array' });
+    rgba.pop();
+    rgba.push(color.alpha / 100);
+    color.rgba = `rgba(${rgba.join(',')})`;
 
     editor.change(change => {
       addMarkOverwrite(change, {
         type: this.typeName,
-        data: { [colorKey]: color }
+        data: { [colorKey]: color.rgba }
       });
     });
   };
@@ -48,11 +48,10 @@ class FontBgColorButton extends Component {
       const first = getMarkType({value}, this.typeName)
         .first()
         .get('data');
-      const color = first.get('color');
-      const alpha = first.get('alpha');
+      const backgroundColor = first.get('backgroundColor');
 
       colorStyle = {
-        color: color.color
+        color: backgroundColor
       };
     }
 
@@ -79,7 +78,7 @@ function FontBgColorPlugin(opt) {
     {
       type: FONTBGCOLOR,
       tagName: 'span',
-      backgroundColor: mark => mark.data.getIn(['color', 'color'])
+      backgroundColor: mark => mark.data.get('backgroundColor')
     },
     opt
   );

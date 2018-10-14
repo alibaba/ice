@@ -3,13 +3,11 @@ import Html from 'slate-html-serializer';
 import { Editor, getEventTransfer } from 'slate-react';
 import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
-import insertImages from 'slate-drop-or-paste-images';
 import flatten from 'lodash.flatten';
 import plugins from './plugins';
 import BLOCK_TAGS from './constants/blocks';
-import Image from './components/Image';
 import ToolbarButton from './components/ToolbarButton';
-import SERIALIZER_RULES from './serializer';
+import {DEFAULT_RULES} from './serializer';
 import {haveActiveMarks, haveBlocks} from './queries/have';
 import './main.scss';
 
@@ -20,7 +18,7 @@ import './main.scss';
  * @type {Html}
  */
 
-const serializer = new Html({ rules: SERIALIZER_RULES });
+const serializer = new Html({ rules: DEFAULT_RULES });
 
 /**
  * Richtext
@@ -40,18 +38,14 @@ class RichText extends Component {
     );
 
     // Add the plugin to your set of plugins...
-    this.plugins = [
-      insertImages({
-        insertImage: (transform, file) => {
-          return transform.insertBlock({
-            type: 'image',
-            isVoid: true,
-            data: { file }
-          });
-        }
-      }),
-    ].concat(customPlugins);
+    this.plugins = customPlugins;
 
+    const value = serializer.deserialize(this.props.value);
+
+    // console.log(JSON.stringify(value.toJSON(), null, '  '))
+    this.state = {
+      value
+    };
   }
 
   /**
@@ -61,7 +55,7 @@ class RichText extends Component {
    */
 
   state = {
-    value: serializer.deserialize(this.props.value)
+    value: ''
   }
 
   /**
@@ -98,14 +92,14 @@ class RichText extends Component {
           {this.renderMarkButton('italic', 'format_italic', '斜体')}
           {this.renderMarkButton('underline', 'format_underline', '下划线')}
           {this.renderMarkButton('strikethrough', 'format_strikethrough', '删除线')}
-          {this.renderMarkButton('code', 'code', '代码')}
-          {this.renderBlockButton('heading-one', 'looks_one', '1级标题')}
-          {this.renderBlockButton('heading-two', 'looks_two', '2级标题')}
-          {this.renderBlockButton('heading-three', 'looks_3', '3级标题')}
-          {this.renderBlockButton('heading-four', 'looks_4', '4级标题')}
+          {/* {this.renderMarkButton('code', 'code', '代码')} */}
+          {this.renderBlockButton('heading_one', 'looks_one', '1级标题')}
+          {this.renderBlockButton('heading_two', 'looks_two', '2级标题')}
+          {this.renderBlockButton('heading_three', 'looks_3', '3级标题')}
+          {this.renderBlockButton('heading_four', 'looks_4', '4级标题')}
           {this.renderBlockButton('blockquote', 'format_quote', '引用')}
-          {this.renderBlockButton('numbered-list', 'format_list_numbered', '有序列表')}
-          {this.renderBlockButton('bulleted-list', 'format_list_bulleted', '无序列表')}
+          {this.renderBlockButton('ordered_list', 'format_list_numbered', '有序列表')}
+          {this.renderBlockButton('unordered_list', 'format_list_bulleted', '无序列表')}
           {pluginToolbarButtons.map((ToolbarButton, index) => {
             return (
               <ToolbarButton
@@ -168,11 +162,11 @@ class RichText extends Component {
     const {value} = this.state;
     let isActive = haveBlocks({value}, type);
 
-    if (['numbered-list', 'bulleted-list'].includes(type)) {
+    if (['ordered_list', 'unordered_list'].includes(type)) {
       const { value } = this.state;
       if (value.blocks.first()) {
         const parent = value.document.getParent(value.blocks.first().key);
-        isActive = haveBlocks({value}, 'list-item') && parent && parent.type === type;
+        isActive = haveBlocks({value}, 'list_item') && parent && parent.type === type;
       }
     }
 
@@ -216,23 +210,23 @@ class RichText extends Component {
             {props.children}
           </p>
         );
-      case 'bulleted-list':
+      case 'unordered_list':
         return <ul {...attributes} style={style}>{children}</ul>;
-      case 'heading-one':
+      case 'heading_one':
         return <h1 {...attributes} style={style}>{children}</h1>;
-      case 'heading-two':
+      case 'heading_two':
         return <h2 {...attributes} style={style}>{children}</h2>;
-      case 'heading-three':
+      case 'heading_three':
         return <h3 {...attributes} style={style}>{children}</h3>;
-      case 'heading-four':
+      case 'heading_four':
         return <h4 {...attributes} style={style}>{children}</h4>;
-      case 'heading-five':
+      case 'heading_five':
         return <h5 {...attributes} style={style}>{children}</h5>;
-      case 'heading-six':
+      case 'heading_six':
         return <h6 {...attributes} style={style}>{children}</h6>;
-      case 'list-item':
+      case 'list_item':
         return <li {...attributes} style={style}>{children}</li>;
-      case 'numbered-list':
+      case 'ordered_list':
         return <ol {...attributes} style={style}>{children}</ol>;
       case 'link': {
         const { data } = node;
@@ -242,10 +236,6 @@ class RichText extends Component {
             {children}
           </a>
         );
-      }
-      case 'image': {
-        const src = node.data.get('src');
-        return <Image src={src} selected={isFocused} {...props} />;
       }
       default:
         return next();
@@ -289,7 +279,7 @@ class RichText extends Component {
       const string = serializer.serialize(value);
       this.props.onChange(string);
     }
-
+    // console.log(JSON.stringify(value.toJSON(), null, '  '))
     this.setState({ value });
   }
 
@@ -377,27 +367,27 @@ class RichText extends Component {
      */
 
     this.editor.change(change => {
-      const DEFAULT_NODE = BLOCK_TAGS.p;
+      const DEFAULT_NODE = BLOCK_TAGS.DEFAULT;
 
       const { value } = this.state;
       const { document } = value;
 
       // Handle everything but list buttons.
-      if (type != 'bulleted-list' && type != 'numbered-list') {
+      if (type != 'ordered_list' && type != 'unordered_list') {
         const isActive = haveBlocks(change, type);
-        const isList = haveBlocks(change, 'list-item');
+        const isList = haveBlocks(change, 'list_item');
 
         if (isList) {
           change
             .setBlocks(isActive ? DEFAULT_NODE : type)
-            .unwrapBlock('bulleted-list')
-            .unwrapBlock('numbered-list');
+            .unwrapBlock('unordered_list')
+            .unwrapBlock('ordered_list');
         } else {
           change.setBlocks(isActive ? DEFAULT_NODE : type);
         }
       } else {
         // Handle the extra wrapping required for list buttons.
-        const isList = haveBlocks(change, 'list-item');
+        const isList = haveBlocks(change, 'list_item');
         const isType = value.blocks.some(block => {
           return !!document.getClosest(block.key, parent => parent.type == type);
         });
@@ -405,16 +395,16 @@ class RichText extends Component {
         if (isList && isType) {
           change
             .setBlocks(DEFAULT_NODE)
-            .unwrapBlock('bulleted-list')
-            .unwrapBlock('numbered-list');
+            .unwrapBlock('unordered_list')
+            .unwrapBlock('ordered_list');
         } else if (isList) {
           change
             .unwrapBlock(
-              type == 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
+              type == 'unordered_list' ? 'ordered_list' : 'unordered_list'
             )
             .wrapBlock(type);
         } else {
-          change.setBlocks('list-item').wrapBlock(type);
+          change.setBlocks('list_item').wrapBlock(type);
         }
       }
     });
