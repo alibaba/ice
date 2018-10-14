@@ -59,20 +59,6 @@ class RichText extends Component {
   }
 
   /**
-   * The editor's schema.
-   *
-   * @type {Object}
-   */
-
-  schema = {
-    blocks: {
-      image: {
-        isVoid: true,
-      },
-    },
-  }
-
-  /**
    * Render.
    *
    * @return {Element}
@@ -115,7 +101,6 @@ class RichText extends Component {
           spellCheck
           autoFocus
           value={this.state.value}
-          schema={this.schema}
           onPaste={this.onPaste}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
