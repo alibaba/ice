@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/richtext",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "富文本组件",
   "main": "lib/index.js",
   "files": [
@@ -33,6 +33,7 @@
     "lodash.flatten": "^4.4.0",
     "lodash.mapvalues": "^4.6.0",
     "lodash.omit": "^4.5.0",
+    "material-icons": "^0.2.3",
     "prop-types": "^15.5.8",
     "rc-color-picker": "^1.2.6",
     "react": "^15.3.2",

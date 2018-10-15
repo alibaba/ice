@@ -30,6 +30,7 @@
     left: 0;
     border: 1px solid #eee;
     width: 400px;
+
     .toolbar-button {
       display: inline-block;
       height: 30px;
@@ -43,8 +44,12 @@
       .material-icons {
         font-size: 18px;
         line-height: 30px;
-        vertical-align: textBottom;
+        vertical-align: text-bottom;
       }
+    }
+
+    .rc-color-picker-wrap {
+      float: none;
     }
   }
 
@@ -62,22 +67,9 @@
     font-style: italic;
   }
 
-  pre {
-    padding: 10px;
-    background-color: #eee;
-    white-space: pre-wrap;
-  }
-
-  :not(pre) > code {
-    font-family: monospace;
-    background-color: #eee;
-    padding: 3px;
-  }
-
   ul, ol {
     display: block;
     list-style: disc outside none;
-    margin: 1em 0;
     padding: 0 0 0 40px;
   }
   ol {

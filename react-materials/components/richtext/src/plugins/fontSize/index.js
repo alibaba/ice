@@ -11,7 +11,7 @@ const SplitButton = Button.Split;
 @SharedMarkSelectorDecoration(FONTSIZE)
 class FontSizeButton extends Component {
   static defaultProps = {
-    options: [12, 16, 20, 24, 28, 32],
+    options: [12, 14, 16, 18, 20, 24, 28, 32],
     displayType: 'button'
   };
 

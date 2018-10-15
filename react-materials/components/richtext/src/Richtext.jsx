@@ -9,6 +9,7 @@ import BLOCK_TAGS from './constants/blocks';
 import ToolbarButton from './components/ToolbarButton';
 import {DEFAULT_RULES} from './serializer';
 import {haveActiveMarks, haveBlocks} from './queries/have';
+// import 'material-icons/iconfont/material-icons.scss';
 import './main.scss';
 
 
