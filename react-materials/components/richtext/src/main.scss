@@ -53,32 +53,39 @@
     }
   }
 
-  p {
-    line-height: 1;
-    margin: 0;
-  }
+  .ice-richtext-editor {
+    * {
+      color: #333;
+      line-height: 1;
+    }
 
-  blockquote {
-    border-left: 2px solid #ddd;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 10px;
-    color: #aaa;
-    font-style: italic;
-  }
+    p {
+      line-height: 1;
+      margin: 0;
+    }
 
-  ul, ol {
-    display: block;
-    list-style: disc outside none;
-    padding: 0 0 0 40px;
-  }
-  ol {
-    list-style-type: decimal;
-  }
+    blockquote {
+      border-left: 2px solid #ddd;
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 10px;
+      color: #aaa;
+      font-style: italic;
+    }
 
-  li {
-    display: list-item;
-    list-style: inherit;
-    font-size: inherit;
+    ul, ol {
+      display: block;
+      list-style: disc outside none;
+      padding: 0 0 0 40px;
+    }
+    ol {
+      list-style-type: decimal;
+    }
+
+    li {
+      display: list-item;
+      list-style: inherit;
+      font-size: inherit;
+    }
   }
 }

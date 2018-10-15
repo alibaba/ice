@@ -79,7 +79,6 @@ class RichText extends Component {
           {this.renderMarkButton('italic', 'format_italic', '斜体')}
           {this.renderMarkButton('underline', 'format_underline', '下划线')}
           {this.renderMarkButton('strikethrough', 'format_strikethrough', '删除线')}
-          {/* {this.renderMarkButton('code', 'code', '代码')} */}
           {this.renderBlockButton('heading_one', 'looks_one', '1级标题')}
           {this.renderBlockButton('heading_two', 'looks_two', '2级标题')}
           {this.renderBlockButton('heading_three', 'looks_3', '3级标题')}
@@ -98,18 +97,20 @@ class RichText extends Component {
           })}
         </div>
 
-        <Editor
-          spellCheck
-          autoFocus
-          value={this.state.value}
-          onPaste={this.onPaste}
-          onChange={this.onChange}
-          onKeyDown={this.onKeyDown}
-          renderNode={this.renderNode}
-          renderMark={this.renderMark}
-          plugins={this.plugins}
-          ref={(editor) => {this.editor = editor;}}
-        />
+        <div className="ice-richtext-editor">
+          <Editor
+            spellCheck
+            autoFocus
+            value={this.state.value}
+            onPaste={this.onPaste}
+            onChange={this.onChange}
+            onKeyDown={this.onKeyDown}
+            renderNode={this.renderNode}
+            renderMark={this.renderMark}
+            plugins={this.plugins}
+            ref={(editor) => {this.editor = editor;}}
+          />
+        </div>
       </div>
     );
   }
