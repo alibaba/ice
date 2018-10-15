@@ -67,7 +67,7 @@ class LineHeightButton extends Component {
   }
 }
 
-function LineHeightPlugin(opt) {
+function LineHeightPlugin() {
   return {
     toolbarButtons: [
       LineHeightButton

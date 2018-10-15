@@ -8,6 +8,7 @@ import { haveMarks } from '../../queries/have';
 import { getMarkType } from '../../queries/get';
 import { FONTCOLOR } from '../../constants/marks';
 import commonMark from '../../renderer/commonMark';
+import {markAttrs} from '../../utils/getAttrs';
 
 import 'rc-color-picker/assets/index.css';
 
@@ -75,16 +76,7 @@ class FontColorButton extends Component {
 
 }
 
-function FontColorPlugin(opt) {
-  const options = Object.assign(
-    {
-      type: FONTCOLOR,
-      tagName: 'span',
-      color: mark => mark.data.get("color")
-    },
-    opt
-  );
-
+function FontColorPlugin() {
   return {
     toolbarButtons: [
       FontColorButton
@@ -92,8 +84,8 @@ function FontColorPlugin(opt) {
     plugins: [
       {
         renderMark: (props, next) => {
-          if (props.mark.type === options.type) {
-            return commonMark(options.tagName, omit(options, ['type', 'tagName']))(
+          if (props.mark.type === FONTCOLOR) {
+            return commonMark('span', {color: markAttrs.color})(
               props
             );
           }

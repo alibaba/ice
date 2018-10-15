@@ -5,6 +5,7 @@ import ToolbarButton from '../../components/ToolbarButton';
 import { FONTSIZE } from '../../constants/marks';
 import SharedMarkSelectorDecoration from '../shared/markSelectorDecoration';
 import commonMark from '../../renderer/commonMark';
+import {markAttrs} from '../../utils/getAttrs';
 
 const SplitButton = Button.Split;
 
@@ -68,16 +69,7 @@ class FontSizeButton extends Component {
   }
 }
 
-function FontSizePlugin(opt) {
-  const options = Object.assign(
-    {
-      type: FONTSIZE,
-      tagName: 'span',
-      fontSize: mark => mark.data.get(FONTSIZE)
-    },
-    opt
-  );
-
+function FontSizePlugin() {
   return {
     toolbarButtons: [
       FontSizeButton
@@ -85,8 +77,8 @@ function FontSizePlugin(opt) {
     plugins: [
       {
         renderMark: props => {
-          if (props.mark.type === options.type)
-            return commonMark(options.tagName, omit(options, ['type', 'tagName']))(
+          if (props.mark.type === FONTSIZE)
+            return commonMark('span', {fontSize: markAttrs.fontSize})(
               props
             );
         }
