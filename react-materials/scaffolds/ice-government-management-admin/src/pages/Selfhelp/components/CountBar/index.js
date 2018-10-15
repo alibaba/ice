@@ -81,7 +81,7 @@ const styles = {
     display: 'flex',
     overflow: 'hidden',
     boxShadow: '0 1px 2px rgba(0,0,0,.05), 0 0 0 1px rgba(63,63,68,.1)',
-    color: '#333333'
+    color: '#333333',
   },
   cardLeft: {
     lineHeight: '80px',
