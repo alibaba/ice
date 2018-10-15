@@ -9,7 +9,7 @@ import BLOCK_TAGS from './constants/blocks';
 import ToolbarButton from './components/ToolbarButton';
 import {DEFAULT_RULES} from './serializer';
 import {haveActiveMarks, haveBlocks} from './queries/have';
-// import 'material-icons/iconfont/material-icons.scss';
+import 'material-icons/iconfont/material-icons.scss';
 import './main.scss';
 
 
@@ -49,14 +49,9 @@ class RichText extends Component {
     };
   }
 
-  /**
-   * Deserialize the initial editor value.
-   *
-   * @type {Object}
-   */
-
   state = {
-    value: ''
+    value: '', // Editor value, deserialized from html
+    isToolbarExpanded: false // whether toolbar is expanded
   }
 
   /**
@@ -66,35 +61,56 @@ class RichText extends Component {
    */
 
   render() {
-    const {value} = this.state;
+    const {value, isToolbarExpanded} = this.state;
     const pluginToolbarButtons = flatten(
       plugins
         .map(plugin => plugin.toolbarButtons)
         .filter(buttons => buttons)
     );
+
     return (
       <div className="ice-richtext-container">
-        <div className="ice-richtext-toolbar">
-          {this.renderMarkButton('bold', 'format_bold', '粗体')}
-          {this.renderMarkButton('italic', 'format_italic', '斜体')}
-          {this.renderMarkButton('underline', 'format_underline', '下划线')}
-          {this.renderMarkButton('strikethrough', 'format_strikethrough', '删除线')}
-          {this.renderBlockButton('heading_one', 'looks_one', '1级标题')}
-          {this.renderBlockButton('heading_two', 'looks_two', '2级标题')}
-          {this.renderBlockButton('heading_three', 'looks_3', '3级标题')}
-          {this.renderBlockButton('heading_four', 'looks_4', '4级标题')}
-          {this.renderBlockButton('blockquote', 'format_quote', '引用')}
-          {this.renderBlockButton('ordered_list', 'format_list_numbered', '有序列表')}
-          {this.renderBlockButton('unordered_list', 'format_list_bulleted', '无序列表')}
-          {pluginToolbarButtons.map((ToolbarButton, index) => {
-            return (
-              <ToolbarButton
-                key={index}
-                value={value}
-                editor={this.editor}
-              />
-            );
-          })}
+        <div className="ice-richtext-toolbar"
+          style={{
+            top: isToolbarExpanded ? '-70px' : '-40px'
+          }}
+        >
+          <div>
+            {this.renderMarkButton('bold', 'format_bold', '粗体')}
+            {this.renderMarkButton('italic', 'format_italic', '斜体')}
+            {this.renderMarkButton('underline', 'format_underline', '下划线')}
+            {this.renderMarkButton('strikethrough', 'format_strikethrough', '删除线')}
+            {/* {this.renderBlockButton('blockquote', 'format_quote', '引用')} */}
+            {pluginToolbarButtons.map((ToolbarButton, index) => {
+              return (
+                <ToolbarButton
+                  key={index}
+                  value={value}
+                  editor={this.editor}
+                />
+              );
+            })}
+            <span className="toolbar-button"
+              onClick={this.toggleToolbar}
+            >
+              <span
+                className="material-icons"
+                title={isToolbarExpanded ? '收起' : '更多'}>
+                {isToolbarExpanded ? 'expand_less' : 'expand_more'}
+              </span>
+            </span>
+          </div>
+
+          <div style={{
+            display: isToolbarExpanded ? 'block' : 'none'
+          }}>
+            {this.renderBlockButton('heading_one', 'looks_one', '1级标题')}
+            {this.renderBlockButton('heading_two', 'looks_two', '2级标题')}
+            {this.renderBlockButton('heading_three', 'looks_3', '3级标题')}
+            {this.renderBlockButton('heading_four', 'looks_4', '4级标题')}
+            {this.renderBlockButton('ordered_list', 'format_list_numbered', '有序列表')}
+            {this.renderBlockButton('unordered_list', 'format_list_bulleted', '无序列表')}
+          </div>
         </div>
 
         <div className="ice-richtext-editor">
@@ -113,6 +129,16 @@ class RichText extends Component {
         </div>
       </div>
     );
+  }
+
+  /**
+   * Toggle toolbar's expand status
+   */
+  toggleToolbar = () => {
+    const {isToolbarExpanded} = this.state;
+    this.setState({
+      isToolbarExpanded: !isToolbarExpanded
+    });
   }
 
   /**

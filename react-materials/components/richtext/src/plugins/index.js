@@ -5,11 +5,11 @@ import fontSizePlugin from './fontSize';
 import lineHeightPlugin from './lineHeight';
 
 const plugins = [
-  alignPlugin(),
   fontColorPlugin(),
   fontBgColorPlugin(),
   fontSizePlugin(),
-  lineHeightPlugin()
+  lineHeightPlugin(),
+  alignPlugin(),
 ];
 
 export default plugins;

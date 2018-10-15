@@ -53,14 +53,12 @@ class LineHeightButton extends Component {
     return (
       <Dropdown triggerType="click"
         trigger={
-          <span>
-            <ToolbarButton
-              icon="format_line_spacing"
-              title="行间距"
-              isActive={defaultValue || false}
-              {...rest}
-            />
-          </span>
+          <ToolbarButton
+            icon="format_line_spacing"
+            title="行间距"
+            isActive={defaultValue || false}
+            {...rest}
+          />
         }
       >
         {menu}

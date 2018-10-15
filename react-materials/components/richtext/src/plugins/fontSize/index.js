@@ -54,14 +54,12 @@ class FontSizeButton extends Component {
     return (
       <Dropdown triggerType="click"
         trigger={
-          <span>
-            <ToolbarButton
-              icon="format_size"
-              title="字体大小"
-              isActive={defaultValue || false}
-              {...rest}
-            />
-          </span>
+          <ToolbarButton
+            icon="format_size"
+            title="字体大小"
+            isActive={defaultValue || false}
+            {...rest}
+          />
         }
       >
         {menu}
