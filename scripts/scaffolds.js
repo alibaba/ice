@@ -8,6 +8,7 @@ const scaffolds = [
   'ice-asset-management-admin',
   'ice-application-management-admin',
   'ice-task-management-admin',
+  'ice-government-management-admin',
   'ice-monitor-dashboard',
   'ice-algorithm-model-admin',
   'ice-contract-management-admin',
