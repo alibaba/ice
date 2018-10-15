@@ -90,8 +90,6 @@ const styles = {
     verticalAlign: 'middle',
   },
   button: {
-    background: 'linear-gradient(90deg, #006fff 25%, #fff 150%)',
-    color: 'white',
     margin: '0 8px',
     padding: '0 16px',
     letterSpacing: '2px',

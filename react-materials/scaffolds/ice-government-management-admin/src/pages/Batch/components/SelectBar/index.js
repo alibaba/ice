@@ -93,7 +93,7 @@ const styles = {
   selectedCard: {
     boxShadow: '2px 2px 10px 0 hsla(0,0%,40%,.3)',
     color: 'white',
-    background: 'linear-gradient(90deg, #0055f3 50%, #fff 150%)',
+    background: '#46b3ff',
   },
   icon: {
     color: '#0054f1',
