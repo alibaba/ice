@@ -66,7 +66,6 @@ const styles = {
     letterSpacing: '2px',
   },
   input: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
     margin: '0 4px',
   },
   select: {
@@ -83,8 +82,6 @@ const styles = {
     marginRight: '24px',
   },
   button: {
-    background: 'linear-gradient(90deg, #006fff 25%, #fff 150%)',
-    color: 'white',
     margin: '0 4px',
     padding: '0 16px',
     letterSpacing: '2px',
