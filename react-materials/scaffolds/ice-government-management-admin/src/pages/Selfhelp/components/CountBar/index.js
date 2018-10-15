@@ -10,32 +10,24 @@ const mockData = [
     title: '预检后收案登记',
     count: 12,
     instrument: '对材料预检登记案件进行收案登记',
-    leftColor: '#61bcfd',
-    rightColor: '#1a8bfe',
   },
   {
     icon: addIcon,
     title: '已收案待当事人补全信息',
     count: 3,
     instrument: '对当事人正在登记或正在更正的执行案件进行查询',
-    leftColor: '#ffde4a',
-    rightColor: '#ffad35',
   },
   {
     icon: uploadIcon,
     title: '当事人已提交待确认',
     count: 1,
     instrument: '对当事人完成的执行案件进行登记',
-    leftColor: '#ff9ea9',
-    rightColor: '#ff263a',
   },
   {
     icon: pcIcon,
     title: '已确认代办理',
     count: 12,
     instrument: '对已确认通过的执行案件进行立案确认',
-    leftColor: '#5eb2ff',
-    rightColor: '#ae59ff',
   },
 ];
 
@@ -49,21 +41,11 @@ export default class CountBar extends Component {
           return (
             <div style={styles.counter} key={index}>
               <div style={styles.card}>
-                <div
-                  style={{
-                    backgroundColor: item.leftColor,
-                    ...styles.cardLeft,
-                  }}
-                >
+                <div style={styles.cardLeft}>
                   <img src={item.icon} style={styles.icon} alt="" />
                 </div>
                 <div
-                  style={{
-                    background: `linear-gradient(270deg, ${
-                      item.rightColor
-                    } 50%, #fff 150%)`,
-                    ...styles.cardRight,
-                  }}
+                  style={styles.cardRight}
                 >
                   <h3 style={styles.countTitle}>{item.title}</h3>
                   <span>{item.count}</span>
@@ -96,9 +78,10 @@ const styles = {
     width: '240px',
     height: '80px',
     borderRadius: '10px',
-    color: 'white',
     display: 'flex',
     overflow: 'hidden',
+    boxShadow: '0 1px 2px rgba(0,0,0,.05), 0 0 0 1px rgba(63,63,68,.1)',
+    color: '#333333'
   },
   cardLeft: {
     lineHeight: '80px',
