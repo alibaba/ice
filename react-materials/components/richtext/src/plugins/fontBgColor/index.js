@@ -1,7 +1,7 @@
 import {Component} from 'react';
-import ColorPicker from 'rc-color-picker';
-import hexRgb from 'hex-rgb';
 import omit from 'lodash.omit';
+import { Dropdown } from '@icedesign/base';
+import { SketchPicker } from 'react-color';
 import ToolbarButton from '../../components/ToolbarButton';
 import addMarkOverwrite from '../../commands/mark-addoverwrite';
 import { haveMarks } from '../../queries/have';
@@ -26,15 +26,13 @@ class FontBgColorButton extends Component {
 
   onChange = (color) => {
     let { editor, colorKey } = this.props;
-    let rgba = hexRgb(color.color, { format: 'array' });
-    rgba.pop();
-    rgba.push(color.alpha / 100);
-    color.rgba = `rgba(${rgba.join(',')})`;
+    const {r, g, b, a} = color.rgb;
+    const rgba = `rgba(${r}, ${g}, ${b}, ${a})`;
 
     editor.change(change => {
       addMarkOverwrite(change, {
         type: this.typeName,
-        data: { [colorKey]: color.rgba }
+        data: { [colorKey]: rgba }
       });
     });
   };
@@ -56,18 +54,22 @@ class FontBgColorButton extends Component {
     }
 
     return (
-      <ColorPicker
-        onChange={this.onChange}
-        placement="bottomRight"
+      <Dropdown triggerType="click"
+        trigger={
+          <ToolbarButton
+            icon="format_color_fill"
+            title="背景颜色"
+            active={isActive}
+            iconStyle={colorStyle}
+            onClick={e => e.preventDefault()}
+          />
+        }
       >
-        <ToolbarButton
-          icon="format_color_fill"
-          title="背景颜色"
-          active={isActive}
-          iconStyle={colorStyle}
-          onClick={e => e.preventDefault()}
+        <SketchPicker
+          color={colorStyle.color}
+          onChangeComplete={this.onChange}
         />
-      </ColorPicker>
+      </Dropdown>
     );
   }
 
