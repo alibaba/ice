@@ -148,14 +148,15 @@ function run(templateName, templateType) {
   const templateAsk = ask();
   const templatePath = getTemplatePath(templateName);
   const defaultData = getDefaultData();
-
   inquirer.prompt([templateAsk[templateType]]).then((answers) => {
     name = answers.name;
-
+    const materialsConfig = defaultData[materialType];
+    const directory = typeof materialsConfig.directory === 'string' ? materialsConfig.directory : `${materialType}-materials`;
     // similar react-materials/blocks/ExampleBlock
-    to = path.resolve(
+    to = path.join(
       process.cwd(),
-      `./${materialType}-materials/${templateType}s/${name}`
+      directory,
+      `${templateType}s/${name}`
     );
 
     if (isLocalPath(templateName)) {
@@ -191,12 +192,12 @@ function getDefaultData() {
   // material type
   let type = [];
   Object.keys(materials).forEach((key) => {
-    type.push(materials[key]['type']);
+    const materialType = materials[key]['type'];
+    type.push(materialType);
+    defaultData[materialType] = materials[key];
   });
 
-  return Object.assign({}, defaultData, {
-    materialType: type,
-  });
+  return Object.assign({ materialType: type}, defaultData);
 }
 
 /**
