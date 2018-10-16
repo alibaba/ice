@@ -50,7 +50,7 @@ class FontColorButton extends Component {
       const color = first.get('color');
 
       colorStyle = {
-        color
+        fill: color
       };
     }
 

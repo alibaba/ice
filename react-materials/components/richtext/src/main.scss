@@ -21,11 +21,11 @@
       &:hover {
         background-color: #ebebeb;
       }
-      .material-icons {
-        font-size: 18px;
-        line-height: 30px;
-        vertical-align: text-bottom;
-      }
+    }
+    .material-icons {
+      font-size: 18px;
+      line-height: 30px;
+      vertical-align: middle;
     }
 
     .toolbar-select-input {
@@ -37,13 +37,20 @@
         width: 42px;
         height: 22px;
         vertical-align: top;
+        border-radius: 0;
         input {
           height: 20px;
         }
       }
+      .icon-wrap {
+        display: inline-block;
+        cursor: pointer;
+      }
       .select-icon {
         vertical-align: top;
-        font-size: 20px;
+        font-size: 18px;
+        width: 22px;
+        height: 22px;
         border-width: 1px 1px 1px 0;
         border-style: solid;
         border-color: #C4C6CF;

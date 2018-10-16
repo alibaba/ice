@@ -50,7 +50,7 @@ class FontBgColorButton extends Component {
       const backgroundColor = first.get('backgroundColor');
 
       colorStyle = {
-        color: backgroundColor
+        fill: backgroundColor
       };
     }
 
