@@ -1,17 +1,14 @@
 import {Component} from 'react';
 import omit from 'lodash.omit';
-import { Button, Dropdown, Menu } from '@icedesign/base';
+import { Dropdown, Menu } from '@icedesign/base';
 import ToolbarButton from '../../components/ToolbarButton';
 import SharedBlockSelectorDecoration from '../shared/blockSelectorDecoration';
 import commonMark from '../../renderer/commonMark';
 
-const SplitButton = Button.Split;
-
 @SharedBlockSelectorDecoration('lineHeight')
 class LineHeightButton extends Component {
   static defaultProps = {
-    options: [1, 1.5, 2, 2.5, 3, 3.5, 4],
-    displayType: 'button'
+    options: [1, 1.2, 1.5, 2]
   };
 
   render() {
@@ -19,7 +16,6 @@ class LineHeightButton extends Component {
       options,
       defaultValue,
       onChange,
-      displayType,
       icon,
       ...rest
     } = this.props;
@@ -36,19 +32,6 @@ class LineHeightButton extends Component {
         ))}
       </Menu>
     );
-
-    // if (displayType === 'button') {
-    //   return (
-    //     <SplitButton menu={menu}>
-    //       <ToolbarButton
-    //         icon="format_size"
-    //         type="fontSize"
-    //         isActive={defaultValue || false}
-    //         {...rest}
-    //       />
-    //     </SplitButton>
-    //   );
-    // }
 
     return (
       <Dropdown triggerType="click"
