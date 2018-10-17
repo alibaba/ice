@@ -79,7 +79,6 @@ class RichText extends Component {
             {this.renderMarkButton('italic', 'format_italic', '斜体')}
             {this.renderMarkButton('underline', 'format_underline', '下划线')}
             {this.renderMarkButton('strikethrough', 'format_strikethrough', '删除线')}
-            {/* {this.renderBlockButton('blockquote', 'format_quote', '引用')} */}
             {pluginToolbarButtons.map((ToolbarButton, index) => {
               return (
                 <ToolbarButton
