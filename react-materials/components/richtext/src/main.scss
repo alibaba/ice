@@ -1,3 +1,26 @@
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
 .ice-richtext-container {
   position: relative;
 
@@ -51,6 +74,8 @@
         font-size: 18px;
         width: 22px;
         height: 22px;
+        line-height: 20px;
+        text-align: center;
         border-width: 1px 1px 1px 0;
         border-style: solid;
         border-color: #C4C6CF;

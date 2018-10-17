@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import omit from 'lodash.omit';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Select, Input, Dropdown, Menu } from '@icedesign/base';
 import ToolbarButton from '../../components/ToolbarButton';
 import { FONTSIZE } from '../../constants/marks';
@@ -42,10 +41,8 @@ class FontSizeButton extends Component {
     } = this.state;
 
     return (
-      <span
-        className="toolbar-select-input"
-        title="字体大小"
-      >
+      <span title="字体大小"
+        className="toolbar-select-input">
         <Input
           className="select-input"
           value={inputValue}
@@ -66,10 +63,8 @@ class FontSizeButton extends Component {
         <Dropdown triggerType="click"
           align="tr br"
           trigger={
-            <span className="icon-wrap">
-              <ExpandMoreIcon
-                className="select-icon material-icons"
-              />
+            <span className="select-icon material-icons">
+              expand_more
             </span>
           }
         >

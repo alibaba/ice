@@ -9,8 +9,7 @@ import BLOCK_TAGS from './constants/blocks';
 import ToolbarButton from './components/ToolbarButton';
 import {DEFAULT_RULES} from './serializer';
 import {haveActiveMarks, haveBlocks} from './queries/have';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import 'material-icons/iconfont/material-icons.scss';
 import './main.scss';
 
 
@@ -95,14 +94,10 @@ class RichText extends Component {
               title={isToolbarExpanded ? '收起' : '更多'}
               onClick={this.toggleToolbar}
             >
-              {isToolbarExpanded ?
-                <ExpandLessIcon
-                  className="material-icons"
-                /> :
-                <ExpandMoreIcon
-                  className="material-icons"
-                />
-              }
+              <span
+                className="material-icons">
+                {isToolbarExpanded ? 'expand_less' : 'expand_more'}
+              </span>
             </span>
           </div>
 
