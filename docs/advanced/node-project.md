@@ -10,8 +10,6 @@ category: 进阶指南
 
 基于 Iceworks 能够一键生成 ice 和 Node 的前后端分离的项目；前端使用 React 技术栈，后端使用 Koa 2.x 作为服务端开发框架。
 
-![](https://img.alicdn.com/tfs/TB1EcEWimrqK1RjSZK9XXXyypXa-982-712.png "")
-
 ### 特性
 
 - 一键生成项目
@@ -21,8 +19,6 @@ category: 进阶指南
 ### 目录结构
 
 目录结构采用分层设计，主体分为 client 和 server 两部分，即 client 对应前端工程，server 对应服务端工程，提供 RESTful API 和 client 端进行数据通信；脚手架默认只提供最简的的 RESTful API 接口，因为在实际场景中，Node 层可能只是用来作为微服务架构中的 API 转发层，并不需要 ORM、数据库等功能。但可以通过插件化来进行支持，在创建项目的时候进行自定义选择生成项目的类型。
-
-在实际项目中，你也可以根据实际需求自定义自己的目录规范，但需要符合 Iceworks 的 [基本规范](https://)，以确保能使用 Iceworks 新建页面和启动服务。如在一些工程中会有 `client`、`admin`、`server` 三个目录，client 对应客户端系统，admin 对应后台管理系统，server 作为服务端的 API 分发。
 
 ```makedown
 project
@@ -74,7 +70,11 @@ build 目录是 client 构建后的前端静态资源，Node 服务器启动的�
 
 ### 基本操作
 
-利用 Iceworks 管理 Node 项目的操作与前端项目完全一致，用户可以在项目页面对你的项目进行添加页面、添加区块、依赖管理、布局管理、启动调试服务等操作。
+在模板页面创建项目的表单中,勾选 `创建 Node 项目` 即可生成对应模板的 Node 项目
+
+![](https://img.alicdn.com/tfs/TB1EcEWimrqK1RjSZK9XXXyypXa-982-712.png "")
+
+使用 Iceworks 管理 Node 项目的操作与前端项目完全一致，在项目页面支持添加页面、添加区块、依赖管理、布局管理、启动调试服务等操作。
 
 ![](https://img.alicdn.com/tfs/TB16.dzixjaK1RjSZKzXXXVwXXa-982-712.png "")
 
@@ -84,13 +84,13 @@ build 目录是 client 构建后的前端静态资源，Node 服务器启动的�
 
 ![](https://img.alicdn.com/tfs/TB1jqRkiq6qK1RjSZFmXXX0PFXa-982-712.png "")
 
-客户端的调试服务的默认端口是 `4444`，服务端的默认端口是 `3000`，客户端的启动端口可以通过 `ice dev --type=node --port=端口号` 命令更改，服务端的启动端口可以在项目目录下的 `server/app.js` 文件修改。
+客户端的调试服务的默认端口是 `4444`，服务端的默认端口是 `3000`，客户端的启动端口可以通过 `ice dev --project-type=node --port=端口号` 命令更改，服务端的启动端口可以在项目目录下的 `server/app.js` 文件修改。
 
 ```jsx
 const Koa = require('koa');
 
 const app = new Koa();
-const port = 3001;
+const port = 3000;
 
 app.listen(port);
 ```
@@ -103,7 +103,7 @@ app.listen(port);
 
 本节的环境配置步骤在项目模板中已经为我们配置完毕，如果需要对参数进行修改，可以参考以下步骤
 
-在 `package.json` 中配置代理，使客户端能够访问到服务端的端口。
+在 `package.json` 中配置代理，允许客户端跨域访问服务端的 API 端口。
 
 ```jsx
 "proxyConfig": {
@@ -124,7 +124,7 @@ const path = require('path');
 
 const app = new Koa();
 
-app.use(serve(path.join(__dirname, 'build')));
+app.use(serve(path.join(__dirname, '..', 'build')));
 ```
 
 ### 添加依赖
