@@ -20,15 +20,6 @@ export default function(Tag, blockType, stylesAttr = nodeAttrs) {
           data.indent = el.style.paddingLeft;
         }
 
-        // if (Object.keys(data).length > 0) {
-        //   return {
-        //     object: "block",
-        //     type: blockType,
-        //     data,
-        //     nodes: next(el.childNodes)
-        //   };
-        // }
-
         return {
           object: "block",
           type: blockType,
