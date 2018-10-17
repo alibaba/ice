@@ -1,6 +1,6 @@
 {
   "name": "ice-koa-react-scaffold",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "server/index.js",
   "scripts": {
@@ -40,7 +40,6 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
-    "chalk": "^2.4.1",
     "eslint": "^4.13.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-babel": "^4.1.1",
