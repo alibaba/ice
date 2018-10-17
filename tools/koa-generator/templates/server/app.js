@@ -7,7 +7,6 @@ const respond = require('koa-respond');
 const logger = require('koa-logger');
 const serve = require('koa-static');
 const path = require('path');
-const chalk = require('chalk');
 
 const app = new Koa();
 const router = new Router();
@@ -25,8 +24,8 @@ app
   .use(router.allowedMethods())
   .use(serve(path.join(__dirname, 'build')))
   .listen(port, () => {
-    console.log(chalk.cyan('The server is running at:'));
+    console.log('The server is running at:');
     console.log(
-      `    - Local:  ${chalk.yellow('http://localhost:')}${chalk.yellow(port)}`
+      `    - Local:  'http://localhost:${port}`
     );
   });
