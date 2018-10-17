@@ -10,8 +10,6 @@ import { FONTBGCOLOR } from '../../constants/marks';
 import commonMark from '../../renderer/commonMark';
 import {markAttrs} from '../../utils/getAttrs';
 
-import 'rc-color-picker/assets/index.css';
-
 class FontBgColorButton extends Component {
 
   typeName = '';
