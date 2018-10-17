@@ -114,7 +114,6 @@ class RichText extends Component {
 
         <div className="ice-richtext-editor">
           <Editor
-            spellCheck
             autoFocus
             value={this.state.value}
             onPaste={this.onPaste}
@@ -123,7 +122,9 @@ class RichText extends Component {
             renderNode={this.renderNode}
             renderMark={this.renderMark}
             plugins={this.plugins}
-            ref={(editor) => {this.editor = editor;}}
+            ref={(editor) => {
+              this.editor = editor;
+            }}
           />
         </div>
       </div>
@@ -302,12 +303,11 @@ class RichText extends Component {
    * @param {Change} change
    */
 
-  onPaste = (event, change) => {
+  onPaste = (event, change, next) => {
     const transfer = getEventTransfer(event);
-    if (transfer.type != 'html') return;
+    if (transfer.type != 'html') return next();
     const { document } = serializer.deserialize(transfer.html);
     change.insertFragment(document);
-    return true;
   }
 
   /**

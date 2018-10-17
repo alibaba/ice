@@ -1,7 +1,7 @@
-import React from "react";
-import mapValues from "lodash.mapvalues";
+import React from 'react';
+import mapValues from 'lodash.mapvalues';
 import MARKS from '../constants/marks';
-import { markAttrs } from "../utils/getAttrs";
+import { markAttrs } from '../utils/getAttrs';
 
 export default function(Tag, markType, stylesAttr = markAttrs) {
   return {
@@ -32,7 +32,7 @@ export default function(Tag, markType, stylesAttr = markAttrs) {
         }
 
         return {
-          object: "mark",
+          object: 'mark',
           type: markType,
           data,
           nodes: next(el.childNodes)
@@ -40,7 +40,7 @@ export default function(Tag, markType, stylesAttr = markAttrs) {
       }
     },
     serialize(obj, children) {
-      if (obj.object == "mark" && obj.type === markType) {
+      if (obj.object == 'mark' && obj.type === markType) {
         return (
           <Tag style={mapValues(stylesAttr, val => val && val(obj))}>
             {children}

@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 const DEFAULT_OPT = {
-  getHref: node => node.data.get("href")
+  getHref: node => node.data.get('href')
 };
 
 export default function(Tag, inlineType, options = DEFAULT_OPT) {
@@ -14,7 +14,7 @@ export default function(Tag, inlineType, options = DEFAULT_OPT) {
           data.href = el.href;
         }
         return {
-          object: "inline",
+          object: 'inline',
           type: inlineType,
           data,
           nodes: next(el.childNodes)
@@ -22,7 +22,7 @@ export default function(Tag, inlineType, options = DEFAULT_OPT) {
       }
     },
     serialize(obj, children) {
-      if (obj.object == "inline" && obj.type === inlineType) {
+      if (obj.object == 'inline' && obj.type === inlineType) {
         const href = options.getHref(obj);
         const props = {
           href

@@ -1,6 +1,6 @@
-import React from "react";
-import mapValues from "lodash.mapvalues";
-import { nodeAttrs } from "../utils/getAttrs";
+import React from 'react';
+import mapValues from 'lodash.mapvalues';
+import { nodeAttrs } from '../utils/getAttrs';
 
 export default function(Tag, blockType, stylesAttr = nodeAttrs) {
   return {
@@ -21,7 +21,7 @@ export default function(Tag, blockType, stylesAttr = nodeAttrs) {
         }
 
         return {
-          object: "block",
+          object: 'block',
           type: blockType,
           data,
           nodes: next(el.childNodes)
@@ -29,7 +29,7 @@ export default function(Tag, blockType, stylesAttr = nodeAttrs) {
       }
     },
     serialize(obj, children) {
-      if (obj.object == "block" && obj.type === blockType) {
+      if (obj.object == 'block' && obj.type === blockType) {
         return (
           <Tag style={mapValues(stylesAttr, val => val && val(obj))}>
             {children}

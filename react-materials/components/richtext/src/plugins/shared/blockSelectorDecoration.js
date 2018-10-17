@@ -20,7 +20,7 @@ export default (type) => (Selector) => {
           return clearDataKey(change, type).select();
         }
 
-       blockAddData(change, { data: { [type]: value } }).select();
+        blockAddData(change, { data: { [type]: value } }).select();
       });
     };
 
