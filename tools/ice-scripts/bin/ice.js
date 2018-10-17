@@ -3,7 +3,6 @@
 'use strict';
 
 const program = require('commander');
-const chalk = require('chalk');
 
 const packageInfo = require('../package.json');
 
@@ -11,23 +10,8 @@ console.log(packageInfo.name, packageInfo.version);
 program
   .version(packageInfo.version)
   .usage('<command> [options]')
-
-program
   .command('build', 'build project')
-  .command('dev', 'start server')
-
-// output help information on unknown commands
-program.arguments('<command>').action((cmd) => {
-  const commandNames = program.commands.map((c) => {
-    return c.name();
-  });
-
-  if (!commandNames.includes(cmd)) {
-    program.outputHelp();
-    console.log(`\n  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}.`));
-    console.log();
-  }
-});
+  .command('dev', 'start server');
 
 program.parse(process.argv);
 
