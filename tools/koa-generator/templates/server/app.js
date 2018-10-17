@@ -22,10 +22,10 @@ app
   .use(respond())
   .use(router.routes())
   .use(router.allowedMethods())
-  .use(serve(path.join(__dirname, 'build')))
+  .use(serve(path.join(process.cwd(), 'build')))
   .listen(port, () => {
     console.log('The server is running at:');
     console.log(
-      `    - Local:  'http://localhost:${port}`
+      `    - Local:  http://localhost:${port}`
     );
   });
