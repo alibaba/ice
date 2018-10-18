@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -12,17 +10,17 @@ export default class FormError extends Component {
      */
     render: PropTypes.func,
     className: PropTypes.string,
-    style: PropTypes.object
+    style: PropTypes.object,
   };
 
   static defaultProps = {
     render: undefined,
     className: '',
-    style: {}
+    style: {},
   };
 
   static contextTypes = {
-    getError: PropTypes.func
+    getError: PropTypes.func,
   };
 
   render() {
@@ -42,7 +40,7 @@ export default class FormError extends Component {
         className={className}
         style={{ fontSize: 12, color: 'red', ...style }}
       >
-        {errors.map(error => error.message).join('，')}
+        {errors.map((error) => error.message).join('，')}
       </span>
     );
   }
