@@ -8,7 +8,7 @@ category: 进阶指南
 
 ### 简介
 
-基于 Iceworks 能够一键生成 Ice 和 Node 的前后端分离的项目；前端使用 React 技术栈，后端使用 Koa 2.x 作为服务端开发框架。
+基于 Iceworks 能够一键生成 Ice 和 Koa2 的前后端分离的项目；前端使用 React 技术栈，后端使用 Koa2 作为服务端开发框架。
 
 ### 特性
 
@@ -74,7 +74,7 @@ build 目录是 client 构建后的前端静态资源，Node 服务器启动的�
 
 ![](https://img.alicdn.com/tfs/TB1eoIYiMHqK1RjSZFPXXcwapXa-982-712.png "")
 
-使用 Iceworks 管理 Koa 项目的操作与前端项目完全一致，在项目页面支持添加页面、添加区块、依赖管理、布局管理、启动调试服务等操作。
+使用 Iceworks 管理 Koa2 项目的操作与前端项目完全一致，在项目页面支持添加页面、添加区块、依赖管理、布局管理、启动调试服务等操作。
 
 ![](https://img.alicdn.com/tfs/TB16.dzixjaK1RjSZKzXXXVwXXa-982-712.png "")
 
@@ -99,11 +99,20 @@ app.listen(port);
 
 这部分将以一个简单的示例介绍如何开发一个基于 Koa 框架的前后端分离项目。
 
-### 配置环境
+### 初始化项目
 
-本节的环境配置步骤在项目模板中已经为我们配置完毕，如果需要对参数进行修改，可以参考以下步骤
+先选择一个模板进行初始化，这里我们选择了 ice-builder-platform 这个模板进行初始化：
 
-在 `package.json` 中配置代理，允许客户端跨域访问服务端的 API 端口。
+![](https://img.alicdn.com/tfs/TB1Gxs9iNTpK1RjSZFKXXa2wXXa-1909-1368.png)
+
+
+项目初始化完成后，可进行依赖安装并进行预览和调试，默认前端端口 [http://localhost:4444/#/](http://localhost:4444/#/)
+
+### 跨域配置
+
+由于是前后端分离项目，我们需要配置跨域来进行访问后端接口服务
+
+在 `package.json` 中配置代理，允许客户端跨域访问服务端的 API 端口：
 
 ```jsx
 "proxyConfig": {
@@ -124,7 +133,12 @@ const path = require('path');
 
 const app = new Koa();
 
+...
+
+// 默认为根目录下的 build 文件夹
 app.use(serve(path.join(__dirname, '..', 'build')));
+
+...
 ```
 
 ### 添加依赖
@@ -144,11 +158,7 @@ app.use(serve(path.join(__dirname, '..', 'build')));
 之后我们只要在客户端调用这些提供好的接口就可以了，我们打开项目目录下的 `client/components/Header/index.js` 文件，在用户的下拉列表中增加一项 `用户信息`。
 
 ```jsx
-<li 
-	className="user-profile-menu-item"
-	onClick={this.getUserProfile}
->
-	<FoundationSymbol type="home2" size="small" />
+<li onClick={this.getUserProfile}>
 	用户信息
 </li>
 ```
@@ -170,6 +180,10 @@ getUserProfile = () => {
 
 最后点击用户信息，实现的效果如下图所示。
 
-![](https://img.alicdn.com/tfs/TB1g8zQiwHqK1RjSZFkXXX.WFXa-209-244.png "")
-
 ![](https://img.alicdn.com/tfs/TB1fvrQipzqK1RjSZFoXXbfcXXa-1506-143.png "")
+
+### 构建
+
+在完成开发后，在 iceworks 项目面板点击构建，既可对前端资源进行构建，静态资源默认输出到项目根目录下的 `build` 目录，而服务端则会以根目录下的 `build` 作为静态资源的入口，这时我们在访问后端的 [http://localhost:3000](http://localhost:3000) 即可看到构建之后的前端页面。
+
+![](https://img.alicdn.com/tfs/TB1uaA6iMDqK1RjSZSyXXaxEVXa-1507-1190.png)
