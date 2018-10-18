@@ -6,7 +6,7 @@ export default (change, options) => {
 
   // if type exist, remove same type mark
   if (whatMarkTypes(change).has(type)) {
-    getMarkType(change, type).forEach(mark => {
+    getMarkType(change, type).forEach((mark) => {
       change.removeMark(mark);
     });
   }

@@ -10,5 +10,5 @@ module.exports = {
   FOOTNOTE_REF: 'footnote-ref',
   MATH: 'math',
   TEMPLATE: 'template',
-  EMOJI: 'emoji'
+  EMOJI: 'emoji',
 };

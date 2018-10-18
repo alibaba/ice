@@ -2,7 +2,7 @@ import { List } from 'immutable';
 
 export const whatMarkTypes = ({ value }) => {
   if (value.marks) {
-    return value.marks.map(mark => mark.type);
+    return value.marks.map((mark) => mark.type);
   }
 
   return new List();
@@ -10,7 +10,7 @@ export const whatMarkTypes = ({ value }) => {
 
 export const whatBlockTypes = ({ value }) => {
   if (value.blocks) {
-    return value.blocks.map(block => block.type);
+    return value.blocks.map((block) => block.type);
   }
 
   return new List();
@@ -18,7 +18,7 @@ export const whatBlockTypes = ({ value }) => {
 
 export const whatInlineTypes = ({ value }) => {
   if (value.inlines) {
-    return value.inlines.map(block => block.type);
+    return value.inlines.map((block) => block.type);
   }
 
   return new List();

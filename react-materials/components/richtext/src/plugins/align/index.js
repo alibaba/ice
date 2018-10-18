@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, { Component } from 'react';
 import ToolbarButton from '../../components/ToolbarButton';
 import { haveDataKeyEqualValueInSomeBlocks } from '../../queries/have';
 import blockAddData from '../../commands/block-adddata';
@@ -12,7 +12,6 @@ export const applyChange = (change, type, align) => {
 };
 
 class AlignButton extends Component {
-
   typeName = '';
 
   constructor(props) {
@@ -22,17 +21,17 @@ class AlignButton extends Component {
 
   onClick = (e) => {
     e.preventDefault();
-    let { editor, align } = this.props;
+    const { editor, align } = this.props;
 
-    editor.change(change => {
+    editor.change((change) => {
       applyChange(change, this.typeName, align);
     });
   };
 
   render() {
-    const { value, icon, title, align, type, ...rest } = this.props;
-    const onClick = e => this.onClick(e);
-    const isActive = haveDataKeyEqualValueInSomeBlocks({value}, type, align);
+    const { value, icon, title, align, type } = this.props;
+    const onClick = (e) => this.onClick(e);
+    const isActive = haveDataKeyEqualValueInSomeBlocks({ value }, type, align);
 
     return (
       <ToolbarButton
@@ -46,7 +45,7 @@ class AlignButton extends Component {
 }
 
 const createButton = (align, icon, title) => {
-  return ({value, editor, onChange}) => {
+  return ({ value, editor, onChange }) => {
     return (
       <AlignButton
         icon={icon}
@@ -67,7 +66,7 @@ function AlignPlugin() {
       createButton('center', 'format_align_center', '居中对齐'),
       createButton('right', 'format_align_right', '右对齐'),
       createButton('justify', 'format_align_justify', '两端对齐'),
-    ]
+    ],
   };
 }
 

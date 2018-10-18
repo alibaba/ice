@@ -1,11 +1,12 @@
+import React from 'react';
 import mapValues from 'lodash.mapvalues';
 
-export default function(Tag, stylesAttr) {
+export default function (Tag, stylesAttr) {
   const MarkComponent = ({ attributes, children, mark }) => {
     return (
       <Tag
         {...attributes}
-        style={mapValues(stylesAttr, val => val && val(mark))}
+        style={mapValues(stylesAttr, (val) => val && val(mark))}
         data-slate-type={Tag}
       >
         {children}

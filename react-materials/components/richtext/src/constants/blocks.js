@@ -31,5 +31,5 @@ module.exports = {
 
   // Special
   IMAGE: 'image',
-  VIDEO: 'video'
+  VIDEO: 'video',
 };

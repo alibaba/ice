@@ -1,5 +1,4 @@
-import {Component} from 'react';
-import omit from 'lodash.omit';
+import React, { Component } from 'react';
 import { Dropdown } from '@icedesign/base';
 import { SketchPicker } from 'react-color';
 import ToolbarButton from '../../components/ToolbarButton';
@@ -8,10 +7,9 @@ import { haveMarks } from '../../queries/have';
 import { getMarkType } from '../../queries/get';
 import { FONTCOLOR } from '../../constants/marks';
 import commonMark from '../../renderer/commonMark';
-import {markAttrs} from '../../utils/getAttrs';
+import { markAttrs } from '../../utils/getAttrs';
 
 class FontColorButton extends Component {
-
   typeName = '';
 
   constructor(props) {
@@ -20,35 +18,35 @@ class FontColorButton extends Component {
   }
 
   static defaultProps = {
-    colorKey: 'color'
+    colorKey: 'color',
   };
 
   onChange = (color) => {
-    let { editor, colorKey } = this.props;
-    const {r, g, b, a} = color.rgb;
+    const { editor, colorKey } = this.props;
+    const { r, g, b, a } = color.rgb;
     const rgba = `rgba(${r}, ${g}, ${b}, ${a})`;
 
-    editor.change(change => {
+    editor.change((change) => {
       addMarkOverwrite(change, {
         type: this.typeName,
-        data: { [colorKey]: rgba }
+        data: { [colorKey]: rgba },
       });
     });
   };
 
   render() {
-    const { icon, value, ...rest } = this.props;
-    const isActive = haveMarks({value}, this.typeName);
+    const { value } = this.props;
+    const isActive = haveMarks({ value }, this.typeName);
     let colorStyle = {};
 
     if (isActive) {
-      const first = getMarkType({value}, this.typeName)
+      const first = getMarkType({ value }, this.typeName)
         .first()
         .get('data');
       const color = first.get('color');
 
       colorStyle = {
-        color
+        color,
       };
     }
 
@@ -60,7 +58,7 @@ class FontColorButton extends Component {
             title="字体颜色"
             active={isActive}
             iconStyle={colorStyle}
-            onClick={e => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           />
         }
       >
@@ -71,26 +69,25 @@ class FontColorButton extends Component {
       </Dropdown>
     );
   }
-
 }
 
 function FontColorPlugin() {
   return {
     toolbarButtons: [
-      FontColorButton
+      FontColorButton,
     ],
     plugins: [
       {
         renderMark: (props, next) => {
           if (props.mark.type === FONTCOLOR) {
-            return commonMark('span', {color: markAttrs.color})(
+            return commonMark('span', { color: markAttrs.color })(
               props
             );
           }
           return next();
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
 }
 

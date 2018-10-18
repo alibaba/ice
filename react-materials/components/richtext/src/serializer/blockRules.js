@@ -2,11 +2,11 @@ import React from 'react';
 import mapValues from 'lodash.mapvalues';
 import { nodeAttrs } from '../utils/getAttrs';
 
-export default function(Tag, blockType, stylesAttr = nodeAttrs) {
+export default function (Tag, blockType, stylesAttr = nodeAttrs) {
   return {
     deserialize(el, next) {
       if (blockType && el.tagName && el.tagName.toLowerCase() === Tag) {
-        let data = {};
+        const data = {};
 
         if (el.style.textAlign) {
           data.align = el.style.textAlign;
@@ -24,18 +24,18 @@ export default function(Tag, blockType, stylesAttr = nodeAttrs) {
           object: 'block',
           type: blockType,
           data,
-          nodes: next(el.childNodes)
+          nodes: next(el.childNodes),
         };
       }
     },
     serialize(obj, children) {
-      if (obj.object == 'block' && obj.type === blockType) {
+      if (obj.object === 'block' && obj.type === blockType) {
         return (
-          <Tag style={mapValues(stylesAttr, val => val && val(obj))}>
+          <Tag style={mapValues(stylesAttr, (val) => val && val(obj))}>
             {children}
           </Tag>
         );
       }
-    }
+    },
   };
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 
 const DEFAULT_OPT = {
-  getHref: node => node.data.get('href')
+  getHref: (node) => node.data.get('href'),
 };
 
-export default function(Tag, inlineType, options = DEFAULT_OPT) {
+export default function (Tag, inlineType, options = DEFAULT_OPT) {
   return {
     deserialize(el, next) {
       if (inlineType && el.tagName && el.tagName.toLowerCase() === Tag) {
-        let data = {};
+        const data = {};
 
         if (el.href) {
           data.href = el.href;
@@ -17,19 +17,19 @@ export default function(Tag, inlineType, options = DEFAULT_OPT) {
           object: 'inline',
           type: inlineType,
           data,
-          nodes: next(el.childNodes)
+          nodes: next(el.childNodes),
         };
       }
     },
     serialize(obj, children) {
-      if (obj.object == 'inline' && obj.type === inlineType) {
+      if (obj.object === 'inline' && obj.type === inlineType) {
         const href = options.getHref(obj);
         const props = {
-          href
+          href,
         };
 
         return <Tag {...props}>{children}</Tag>;
       }
-    }
+    },
   };
 }

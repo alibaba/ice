@@ -1,7 +1,7 @@
 
 export const haveActiveMarks = ({ value }, type) => {
   if (value.activeMarks.size > 0) {
-    return value.activeMarks.some(mark => mark.type === type);
+    return value.activeMarks.some((mark) => mark.type === type);
   }
 
   return false;
@@ -9,7 +9,7 @@ export const haveActiveMarks = ({ value }, type) => {
 
 export const haveMarks = ({ value }, type) => {
   if (value.marks.size > 0) {
-    return value.marks.some(mark => mark.type === type);
+    return value.marks.some((mark) => mark.type === type);
   }
 
   return false;
@@ -18,7 +18,7 @@ export const haveMarks = ({ value }, type) => {
 export const haveBlocks = ({ value }, type) => {
   if (value.blocks.size > 0) {
     return value.blocks.some(
-      node => node.type === type || node.type.indexOf(`${type}`) === 0
+      (node) => node.type === type || node.type.indexOf(`${type}`) === 0
     );
   }
 
@@ -27,7 +27,7 @@ export const haveBlocks = ({ value }, type) => {
 
 export const haveInlines = ({ value }, type) => {
   if (value.inlines.size > 0) {
-    return value.inlines.some(inline => inline.type === type);
+    return value.inlines.some((inline) => inline.type === type);
   }
 
   return false;
@@ -36,7 +36,7 @@ export const haveInlines = ({ value }, type) => {
 export const haveDataKeyInSomeBlocks = ({ value }, dataKey) => {
   if (value.blocks.size > 0) {
     return value.blocks.some(
-      block => block.get('data').has(dataKey) && block.get('data').get(dataKey)
+      (block) => block.get('data').has(dataKey) && block.get('data').get(dataKey)
     );
   }
 
@@ -46,7 +46,7 @@ export const haveDataKeyInSomeBlocks = ({ value }, dataKey) => {
 export const haveDataKeyInSomeMarks = ({ value }, dataKey) => {
   if (value.marks.size > 0) {
     return value.marks.some(
-      mark => mark.get('data').has(dataKey) && mark.get('data').get(dataKey)
+      (mark) => mark.get('data').has(dataKey) && mark.get('data').get(dataKey)
     );
   }
 
@@ -60,7 +60,7 @@ export const haveDataKeyEqualValueInSomeBlocks = (
 ) => {
   if (value.blocks.size > 0) {
     return value.blocks.some(
-      block =>
+      (block) =>
         block.get('data').has(dataKey) &&
         block.get('data').get(dataKey) === dataValue
     );

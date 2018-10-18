@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, { Component } from 'react';
 import removeType from '../../commands/mark-removetype';
 import addMarkOverwrite from '../../commands/mark-addoverwrite';
 import { haveMarks } from '../../queries/have';
@@ -12,10 +12,10 @@ export default (type) => (Selector) => {
       this.typeName = this.props.type || type;
     }
 
-    onChange = ({value}) => {
-      let { editor } = this.props;
+    onChange = ({ value }) => {
+      const { editor } = this.props;
 
-      editor.change(change => {
+      editor.change((change) => {
         // if select `default` remove font size settings
         if (value === 'Default') {
           return removeType(change, this.typeName);
@@ -24,8 +24,8 @@ export default (type) => (Selector) => {
         addMarkOverwrite(change, {
           type: this.typeName,
           data: {
-            [this.typeName]: value
-          }
+            [this.typeName]: value,
+          },
         });
       });
     };
@@ -33,11 +33,11 @@ export default (type) => (Selector) => {
     render() {
       // eslint-disable-next-line
       const { options, value, ...rest } = this.props;
-      const isActive = haveMarks({value}, this.typeName);
+      const isActive = haveMarks({ value }, this.typeName);
       let defaultFont;
 
       if (isActive) {
-        const first = getMarkType({value}, this.typeName)
+        const first = getMarkType({ value }, this.typeName)
           .first()
           .get('data');
         defaultFont = first.get(this.typeName);

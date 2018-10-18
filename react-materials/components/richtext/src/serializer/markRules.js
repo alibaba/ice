@@ -3,11 +3,11 @@ import mapValues from 'lodash.mapvalues';
 import MARKS from '../constants/marks';
 import { markAttrs } from '../utils/getAttrs';
 
-export default function(Tag, markType, stylesAttr = markAttrs) {
+export default function (Tag, markType, stylesAttr = markAttrs) {
   return {
     deserialize(el, next) {
       if (markType && el.tagName && el.tagName.toLowerCase() === Tag) {
-        let data = {};
+        const data = {};
 
         if (el.style.backgroundColor) {
           data.backgroundColor = el.style.backgroundColor;
@@ -35,18 +35,18 @@ export default function(Tag, markType, stylesAttr = markAttrs) {
           object: 'mark',
           type: markType,
           data,
-          nodes: next(el.childNodes)
+          nodes: next(el.childNodes),
         };
       }
     },
     serialize(obj, children) {
-      if (obj.object == 'mark' && obj.type === markType) {
+      if (obj.object === 'mark' && obj.type === markType) {
         return (
-          <Tag style={mapValues(stylesAttr, val => val && val(obj))}>
+          <Tag style={mapValues(stylesAttr, (val) => val && val(obj))}>
             {children}
           </Tag>
         );
       }
-    }
+    },
   };
 }

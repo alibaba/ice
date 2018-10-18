@@ -1,14 +1,12 @@
-import {Component} from 'react';
-import omit from 'lodash.omit';
+import React, { Component } from 'react';
 import { Dropdown, Menu } from '@icedesign/base';
 import ToolbarButton from '../../components/ToolbarButton';
 import SharedBlockSelectorDecoration from '../shared/blockSelectorDecoration';
-import commonMark from '../../renderer/commonMark';
 
 @SharedBlockSelectorDecoration('lineHeight')
 class LineHeightButton extends Component {
   static defaultProps = {
-    options: [1, 1.2, 1.5, 2]
+    options: [1, 1.2, 1.5, 2],
   };
 
   render() {
@@ -19,14 +17,14 @@ class LineHeightButton extends Component {
       icon,
       ...rest
     } = this.props;
-    const opt = [...options.map(opt => `${opt}`)];
 
     const menu = (
       <Menu onClick={(value) => {
-        onChange({value});
-      }}>
-        {opt.map(item => (
-          <Menu.Item onMouseDown={e => e.preventDefault()} key={item}>
+        onChange({ value });
+      }}
+      >
+        {options.map((item) => (
+          <Menu.Item onMouseDown={(e) => e.preventDefault()} key={item}>
             {item}
           </Menu.Item>
         ))}
@@ -53,7 +51,7 @@ class LineHeightButton extends Component {
 function LineHeightPlugin() {
   return {
     toolbarButtons: [
-      LineHeightButton
+      LineHeightButton,
     ],
   };
 }

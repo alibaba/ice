@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, { Component } from 'react';
 import blockAddData from '../../commands/block-adddata';
 import clearDataKey from '../../commands/block-cleardatabykey';
 import { haveDataKeyInSomeBlocks } from '../../queries/have';
@@ -12,9 +12,9 @@ export default (type) => (Selector) => {
     }
 
     onChange = ({ value }) => {
-      let { editor } = this.props;
+      const { editor } = this.props;
 
-      editor.change(change => {
+      editor.change((change) => {
         // if select `default` remove font size settings
         if (value === 'Default') {
           return clearDataKey(change, type).select();
@@ -27,12 +27,12 @@ export default (type) => (Selector) => {
     render() {
       // eslint-disable-next-line
       const { options, value, ...rest } = this.props;
-      const isActive = haveDataKeyInSomeBlocks({value}, type);
+      const isActive = haveDataKeyInSomeBlocks({ value }, type);
       let defaultValue;
 
       if (isActive) {
         const first = value.blocks
-          .filter(block => {
+          .filter((block) => {
             if (block.data && block.data.get(type)) return true;
             return false;
           })

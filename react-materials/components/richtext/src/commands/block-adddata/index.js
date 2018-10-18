@@ -1,6 +1,6 @@
 /**
  * this update current type with additional data, this could be useful in align...
- **/
+ * */
 import { Map } from 'immutable';
 
 export default (change, { data }) => {
@@ -9,7 +9,7 @@ export default (change, { data }) => {
 
   // if have blocks
   if (blocks) {
-    blocks.forEach(type => {
+    blocks.forEach((type) => {
       // eslint-disable-next-line
       const mapData = Map(data);
       // eslint-disable-next-line

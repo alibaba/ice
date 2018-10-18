@@ -4,14 +4,14 @@
  * @param {Slate.state} state
  * @param {Datakey} dataKey
  * @return {Slate.state}
- **/
+ * */
 export default (change, dataKey) => {
   const { value } = change;
   const { blocks } = value;
 
   // if have blocks
   if (blocks) {
-    blocks.forEach(type => {
+    blocks.forEach((type) => {
       const typeOriginalData = type.get('data');
       const newData = typeOriginalData.delete(dataKey);
 
