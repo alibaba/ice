@@ -1,7 +1,8 @@
 {
   "name": "@icedesign/list",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "列表组件",
+  "main": "lib/index.js",
   "files": [
     "src/",
     "lib/"
