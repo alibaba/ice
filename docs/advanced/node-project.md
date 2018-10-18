@@ -1,5 +1,5 @@
 ---
-title: Node 项目
+title: Koa 项目
 order: 5
 category: 进阶指南
 ---
@@ -8,7 +8,7 @@ category: 进阶指南
 
 ### 简介
 
-基于 Iceworks 能够一键生成 ice 和 Node 的前后端分离的项目；前端使用 React 技术栈，后端使用 Koa 2.x 作为服务端开发框架。
+基于 Iceworks 能够一键生成 Ice 和 Node 的前后端分离的项目；前端使用 React 技术栈，后端使用 Koa 2.x 作为服务端开发框架。
 
 ### 特性
 
@@ -70,17 +70,17 @@ build 目录是 client 构建后的前端静态资源，Node 服务器启动的�
 
 ### 基本操作
 
-在模板页面创建项目的表单中,勾选 `创建 Node 项目` 即可生成对应模板的 Node 项目
+在模板页面创建项目的表单中,勾选 `添加 Koa2` 即可生成对应模板的 Koa 项目
 
-![](https://img.alicdn.com/tfs/TB1EcEWimrqK1RjSZK9XXXyypXa-982-712.png "")
+![](https://img.alicdn.com/tfs/TB1eoIYiMHqK1RjSZFPXXcwapXa-982-712.png "")
 
-使用 Iceworks 管理 Node 项目的操作与前端项目完全一致，在项目页面支持添加页面、添加区块、依赖管理、布局管理、启动调试服务等操作。
+使用 Iceworks 管理 Koa 项目的操作与前端项目完全一致，在项目页面支持添加页面、添加区块、依赖管理、布局管理、启动调试服务等操作。
 
 ![](https://img.alicdn.com/tfs/TB16.dzixjaK1RjSZKzXXXVwXXa-982-712.png "")
 
 ### 启动调试
 
-在终端执行 `npm run start` 命令启动 Node 项目的调试服务，命令会分为 `npm run client` 和 `npm run server` 两部分执行，也可以分别执行这两条命令来启动调试。
+在终端执行 `npm run start` 命令启动 Koa 项目的调试服务，命令会分为 `npm run client` 和 `npm run server` 两部分执行，也可以分别执行这两条命令来启动调试。
 
 ![](https://img.alicdn.com/tfs/TB1jqRkiq6qK1RjSZFmXXX0PFXa-982-712.png "")
 
