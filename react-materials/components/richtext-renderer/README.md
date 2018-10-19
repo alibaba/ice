@@ -1,8 +1,7 @@
 ---
-title: richtext-renderer
+title: RichtextRenderer
 category: Components
 chinese: 富文本组件HTML渲染器
-npm: \@icedesign/richtext-renderer
 ---
 
 富文本组件html渲染器
