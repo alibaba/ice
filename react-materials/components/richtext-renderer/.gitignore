@@ -1,0 +1,8 @@
+*.swp
+*.dia~
+.idea/
+.DS_Store
+npm-debug.log
+node_modules/
+tmp/
+lib/

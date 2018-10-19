@@ -1,0 +1,33 @@
+{
+  "name": "@icedesign/richtext-renderer",
+  "version": "0.1.3",
+  "description": "富文本组件HTML渲染器",
+  "files": [
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "component"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  },
+  "devDependencies": {
+    "ice-devtools": "latest"
+  }
+}
