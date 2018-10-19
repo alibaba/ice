@@ -1,7 +1,7 @@
 ---
 title: richtext-renderer
 category: Components
-chinese: 富文本组件html渲染器
+chinese: 富文本组件HTML渲染器
 npm: \@icedesign/richtext-renderer
 ---
 
@@ -15,7 +15,7 @@ npm install @icedesign/richtext-renderer
 
 ### 何时使用
 
-- 结合ICE富文本组件使用，可以用来渲染富文本输出的HTML字符串
+- 结合ICELAND富文本组件使用，用来渲染富文本输出的HTML字符串
 
 ## 参数（Props）
 
