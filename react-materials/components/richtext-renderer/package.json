@@ -1,9 +1,8 @@
 {
   "name": "@icedesign/richtext-renderer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "富文本组件HTML渲染器",
   "files": [
-    "src/",
     "lib/"
   ],
   "repository": {
