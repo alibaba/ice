@@ -9,23 +9,24 @@ module.exports = {
   /**
    * 从 register 获取 npm 的信息
    */
-  getNpmInfo: (npm) => {
+  getNpmInfo: function(npm) {
     if (cacheData[npm]) {
       return Promise.resolve(cacheData[npm]);
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise(function(resolve, reject) {
       request(
         {
           url: `http://registry.npmjs.com/${npm}`,
           json: true,
         },
-        (err, res, body) => {
+        function(err, res, body) {
           if (err || body.error) {
             return reject(err || new Error(body.error));
+          } else {
+            cacheData[npm] = body;
+            return resolve(body);
           }
-          cacheData[npm] = body;
-          return resolve(body);
         }
       );
     });
@@ -34,8 +35,8 @@ module.exports = {
   /**
    * 获取某个 npm 的所有版本号
    */
-  getVersions: (npm) => {
-    return this.getNpmInfo(npm).then((body) => {
+  getVersions: function(npm) {
+    return this.getNpmInfo(npm).then(function(body) {
       const versions = Object.keys(body.versions);
       return versions;
     });
@@ -47,7 +48,7 @@ module.exports = {
    * @param {String} baseVersion 指定的基准 version
    * @param {Array} versions
    */
-  getLatestSemverVersion: (baseVersion, versions) => {
+  getLatestSemverVersion: function(baseVersion, versions) {
     versions = versions
       .filter((version) => semver.satisfies(version, `^${baseVersion}`))
       .sort((a, b) => {
@@ -62,9 +63,9 @@ module.exports = {
    * @param {String} npm 包名
    * @param {String} baseVersion 指定的基准 version
    */
-  getNpmLatestSemverVersion: (npm, baseVersion) => {
+  getNpmLatestSemverVersion: function(npm, baseVersion) {
     const self = this;
-    return this.getVersions(npm).then((versions) => {
+    return this.getVersions(npm).then(function(versions) {
       return self.getLatestSemverVersion(baseVersion, versions);
     });
   },
@@ -74,8 +75,8 @@ module.exports = {
    *
    * @param {String} npm
    */
-  getLatestVersion: (npm) => {
-    return this.getNpmInfo(npm).then((data) => {
+  getLatestVersion: function(npm) {
+    return this.getNpmInfo(npm).then(function(data) {
       if (!data['dist-tags'] || !data['dist-tags'].latest) {
         console.error(chalk.red('没有 latest 版本号', data));
         return Promise.reject(new Error('没有 latest 版本号'));
