@@ -49,7 +49,7 @@ function generateBlocks(files, SPACE, type, done) {
       // (必)中文描述
       title: pkgConfig.title,
       source: {
-        type: pkgConfig.type || 'npm',
+        type: 'npm',
         npm: pkg.name,
         version: pkg.version,
         registry,
@@ -140,9 +140,9 @@ function generateBlocks(files, SPACE, type, done) {
 
   Promise.all(
     result.map((item) => {
-      // if (item.source.type !== 'npm') {
-      //   return Promise.resolve();
-      // }
+      if (item.source.type !== 'npm') {
+        return Promise.resolve();
+      }
       return checkAndQueryNpmTime(
         item.source.npm,
         item.source.version,
@@ -192,7 +192,7 @@ function generateScaffolds(files, SPACE, done) {
       // (必)中文描述
       title: pkg.scaffoldConfig.title,
       source: {
-        type: pkg.scaffoldConfig.type || 'npm',
+        type: 'npm',
         npm: pkg.name,
         version: pkg.version,
         registry,
@@ -364,41 +364,31 @@ module.exports = function generateMaterialsDatabases(
   const distDir = path.resolve(process.cwd(), 'build');
   mkdirp.sync(distDir);
 
-  return (
-    Promise.resolve(materialPath)
-      .then((space) => {
-        return Promise.all([
-          gatherBlocksOrLayouts('blocks/*/package.json', space, 'block'),
-          gatherBlocksOrLayouts('layouts/*/package.json', space, 'layout'),
-          gatherScaffolds('scaffolds/*/package.json', space),
-        ]);
-      })
-      // .then(([blocks, layouts, scaffolds]) => {
-      //   // 补充字段
-      //   return Promise.all([
-      //     Promise.all(blocks.map(appendFieldFromNpm)),
-      //     Promise.all(layouts.map(appendFieldFromNpm)),
-      //     Promise.all(scaffolds.map(appendFieldFromNpm)),
-      //   ]);
-      // })
-      .then(([blocks, layouts, scaffolds]) => {
-        const data = {
-          name: materialName, // 物料池名
-          ...options,
-          blocks,
-          layouts,
-          scaffolds,
-        };
+  return Promise.resolve(materialPath)
+    .then((space) => {
+      return Promise.all([
+        gatherBlocksOrLayouts('blocks/*/package.json', space, 'block'),
+        gatherBlocksOrLayouts('layouts/*/package.json', space, 'layout'),
+        gatherScaffolds('scaffolds/*/package.json', space),
+      ]);
+    })
+    .then(([blocks, layouts, scaffolds]) => {
+      const data = {
+        name: materialName, // 物料池名
+        ...options,
+        blocks,
+        layouts,
+        scaffolds,
+      };
 
-        const file = path.join(distDir, materialName + '.json');
-        fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
+      const file = path.join(distDir, materialName + '.json');
+      fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
 
-        console.log(
-          `${materialName} 物料数据生成完毕. Marterials DB Generated.\n${file}`
-        );
-      })
-      .catch((err) => {
-        console.log('uncaught error:\n', err.stack);
-      })
-  );
+      console.log(
+        `${materialName} 物料数据生成完毕. Marterials DB Generated.\n${file}`
+      );
+    })
+    .catch((err) => {
+      console.log('uncaught error:\n', err.stack);
+    });
 };
