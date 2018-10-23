@@ -1,6 +1,6 @@
 {
   "name": "@rax-materials/todo-task-block",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "description": "待办事项提醒",
   "author": "noyobo<noyobo@gmail.com>",
   "files": [

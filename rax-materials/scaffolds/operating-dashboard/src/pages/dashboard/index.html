@@ -1,4 +1,8 @@
 <style>
+  page {
+    background-color: #f4f4f4;
+  }
+
   .container {
     text-align: center;
     color: #666;
@@ -24,11 +28,11 @@
   import fundCenter from '../../components/fund-center/index';
   export default {
     components: {
-      searchInput,
-      banner,
-      dataOverview,
-      todoTask,
-      fundCenter,
+      'search-input': searchInput,
+      'banner': banner,
+      'todo-task': todoTask,
+      'data-overview': dataOverview,
+      'fund-center': fundCenter,
     },
     data() {
       return {

@@ -1,6 +1,6 @@
 {
   "name": "@rax-materials/posts-admin",
-  "version": "0.2.7",
+  "version": "0.2.9",
   "description": "该模板适用于论坛站点类管理后台，含常用 Tabbar 以及用户信息设置",
   "homepage": "https://alibaba.github.io/ice/preview/index.html?page=https://alibaba.github.io/ice/rax-materials/posts-admin/index.html",
   "keywords": [

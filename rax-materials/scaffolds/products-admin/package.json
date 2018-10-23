@@ -1,6 +1,6 @@
 {
   "name": "@rax-materials/products-admin",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "商品管理后台适用于宝贝商品的上下架管理、单品操作等",
   "homepage": "https://alibaba.github.io/ice/preview/index.html?page=https://alibaba.github.io/ice/rax-materials/products-admin/index.html",
   "keywords": [

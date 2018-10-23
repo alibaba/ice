@@ -1,6 +1,4 @@
 <style>
-  .wrapper {}
-
   .tab-wrapper {
     display: flex;
     flex-direction: row;
@@ -13,11 +11,11 @@
     height: 96rpx;
     text-align: center;
     line-height: 96rpx;
-    border-bottom: 1rpx solid #eee;
+    border-bottom: 2rpx solid #eee;
   }
 
   .tab-item-current {
-    border-bottom: 1rpx solid #36c;
+    border-bottom: 2rpx solid #36c;
   }
 
   .tab-text {
@@ -52,6 +50,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    line-height: 38rpx;
   }
 
   .titleWrapper {
@@ -91,9 +90,10 @@
 
   .button {
     width: 200rpx;
-   text-align: center;
+    text-align: center;
     border: 2rpx solid #eee;
     border-radius: 10rpx;
+    line-height: 54rpx;
   }
 
   .button-text {
@@ -103,13 +103,13 @@
 <template>
   <view class="wrapper">
     <view class="tab-wrapper">
-      <view @click="tabActivate('tab1')" :class="{'tab-item': true, 'tab-item-current': current == 'tab1'} ">
+      <view @click="tabActivate" data-tab-key='tab1' v-bind:class="current == 'tab1' ? 'tab-item tab-item-current' : 'tab-item'">
         <text class="tab-text">出售中 123</text>
       </view>
-      <view @click="tabActivate('tab2')" :class="{'tab-item': true, 'tab-item-current': current == 'tab2'} ">
+      <view @click="tabActivate" data-tab-key='tab2' v-bind:class="current == 'tab2' ? 'tab-item tab-item-current' : 'tab-item'">
         <text class="tab-text">仓库中 33</text>
       </view>
-      <view @click="tabActivate('tab3')" :class="{'tab-item': true, 'tab-item-current': current == 'tab3'} ">
+      <view @click="tabActivate" data-tab-key='tab3' v-bind:class="current == 'tab3' ? 'tab-item tab-item-current' : 'tab-item'">
         <text class="tab-text">已售完 455</text>
       </view>
     </view>
@@ -195,8 +195,9 @@
       };
     },
     methods: {
-      tabActivate(key) {
-        this.$data.current = key
+      tabActivate(event) {
+        const key = event.currentTarget.dataset.tabKey
+        this.current = key
       }
     }
   }

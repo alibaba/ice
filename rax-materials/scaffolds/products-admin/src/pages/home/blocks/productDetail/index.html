@@ -1,5 +1,5 @@
 <style>
-  .wrapper {
+  .product-detail-wrapper {
     background-color: #fff;
     margin-bottom: 20rpx;
   }
@@ -12,6 +12,7 @@
     background-color: #eee;
     font-size: 28rpx;
     height: 56rpx;
+    width: 100%;
     line-height: 56rpx;
     border-radius: 4rpx;
     text-align: center;
@@ -25,8 +26,8 @@
   }
 
   .detail-item {
-    width: '33.33%';
-    flex: '0 0 33.33%';
+    width: 33.33%;
+    flex: 0 0 33.33%;
     height: 140rpx;
     display: flex;
     flex-direction: column;
@@ -34,23 +35,23 @@
     justify-content: center;
   }
 
-  .count {
+  .product-detail__count {
     font-size: 36rpx;
   }
 
-  .text {
+  .product-detail__text {
     font-size: 24rpx;
   }
 </style>
 <template>
-  <view class="wrapper">
+  <view class="product-detail-wrapper">
     <view class="search-wrapper">
       <input class="search-input" placeholder="搜索我的宝贝" @input="onInput" />
     </view>
     <view class="detail-list">
       <view class="detail-item" v-for="item in tasks">
-        <text class="count">{{item.count}}</text>
-        <text class="text">{{item.text}}</text>
+        <text class="product-detail__count">{{item.count}}</text>
+        <text class="product-detail__text">{{item.text}}</text>
       </view>
     </view>
   </view>

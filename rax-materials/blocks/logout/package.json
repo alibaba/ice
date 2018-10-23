@@ -1,6 +1,6 @@
 {
   "name": "@rax-materials/logout-block",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "description": "退出登录按钮",
   "author": "noyobo<noyobo@gmail.com>",
   "files": [

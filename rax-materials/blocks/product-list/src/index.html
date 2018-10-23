@@ -1,6 +1,4 @@
 <style>
-  .wrapper {}
-
   .tab-wrapper {
     display: flex;
     flex-direction: row;
@@ -52,6 +50,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    line-height: 38rpx;
   }
 
   .titleWrapper {
@@ -94,6 +93,7 @@
     text-align: center;
     border: 2rpx solid #eee;
     border-radius: 10rpx;
+    line-height: 54rpx;
   }
 
   .button-text {
@@ -103,13 +103,13 @@
 <template>
   <view class="wrapper">
     <view class="tab-wrapper">
-      <view @click="tabActivate('tab1')" v-bind:class="{'tab-item': true, 'tab-item-current': current == 'tab1'} ">
+      <view @click="tabActivate('tab1')" v-bind:class="{'tab-item': true, 'tab-item-current': current == 'tab1'}">
         <text class="tab-text">出售中 123</text>
       </view>
-      <view @click="tabActivate('tab2')" v-bind:class="{'tab-item': true, 'tab-item-current': current == 'tab2'} ">
+      <view @click="tabActivate('tab2')" v-bind:class="{'tab-item': true, 'tab-item-current': current == 'tab2'}">
         <text class="tab-text">仓库中 33</text>
       </view>
-      <view @click="tabActivate('tab3')" v-bind:class="{'tab-item': true, 'tab-item-current': current == 'tab3'} ">
+      <view @click="tabActivate('tab3')" v-bind:class="{'tab-item': true, 'tab-item-current': current == 'tab3'}">
         <text class="tab-text">已售完 455</text>
       </view>
     </view>

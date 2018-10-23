@@ -1,6 +1,6 @@
 {
   "name": "@rax-materials/item-list-block",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "description": "循环展示商品列表",
   "author": "noyobo<noyobo@gmail.com>",
   "files": [
