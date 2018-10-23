@@ -1,6 +1,6 @@
 {
   "name": "@rax-materials/product-list-block",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "description": "宝贝商品列表，带 tab 切换",
   "author": "noyobo<noyobo@gmail.com>",
   "files": [
