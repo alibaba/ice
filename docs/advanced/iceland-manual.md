@@ -20,7 +20,7 @@ Iceland 是一个搭建产品，帮助搭建者基于丰富的物料快速拖拽
 
 ### 新建区块
 
-首先启动 <a href="https://alibaba.github.io/ice/">Iceworks</a> ，打开【区块】页面，选择【自定义区块】选项卡；
+首先启动 Iceworks ，打开【区块】页面，选择【自定义区块】选项卡；
 
 
 <img src="https://img.alicdn.com/tfs/TB1NuHEjG6qK1RjSZFmXXX0PFXa-982-712.png">
