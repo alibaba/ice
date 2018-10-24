@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 const fs = require('fs');
 const request = require('request');
@@ -9,7 +7,6 @@ const home = require('user-home');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 const npmUtils = require('./npm');
-const os = require('os');
 
 module.exports = (options = {}) => {
   const template = options.template;
@@ -17,7 +14,7 @@ module.exports = (options = {}) => {
   const templateTmpDirPath = path.join(home, '.ice-templates', template);
 
   let templateVersion = '';
-  return getNpmVersion(template, options.version).then(function(npmVersion) {
+  return getNpmVersion(template, options.version).then((npmVersion) => {
     templateVersion = npmVersion;
 
     deleteDir(templateTmpDirPath);
@@ -44,7 +41,7 @@ function deleteDir(destDir) {
  * @param {Object} options npm, version, destDir
  */
 function downloadAndFilterNpmFiles(npm, version, destDir) {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     const taskComplete = {
       // foo: false
     };
@@ -60,12 +57,12 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
     taskComplete.entryPipe = false;
     request
       .get(npmTarball)
-      .on('error', function(err) {
+      .on('error', (err) => {
         reject(err);
       })
       .pipe(zlib.Unzip())
       .pipe(tar.Parse())
-      .on('entry', function(entry) {
+      .on('entry', (entry) => {
         const templatePathReg = new RegExp(`(package\/template\/)`);
 
         let realPath;
@@ -86,7 +83,7 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
           end();
         });
       })
-      .on('end', function() {
+      .on('end', () => {
         taskComplete.entryPipe = true;
         end();
       });
@@ -102,7 +99,6 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
 function getNpmVersion(npm, version) {
   if (version) {
     return npmUtils.getNpmLatestSemverVersion(npm, version);
-  } else {
-    return npmUtils.getLatestVersion(npm);
   }
+  return npmUtils.getLatestVersion(npm);
 }
