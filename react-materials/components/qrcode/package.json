@@ -4,8 +4,7 @@
   "description": "飞冰 二维码组件",
   "main": "lib/index.js",
   "files": [
-    "lib/",
-    "demo/"
+    "lib/"
   ],
   "scripts": {
     "start": "ice-devtools start",
@@ -27,8 +26,11 @@
   "keywords": [
     "ice-component"
   ],
+  "peerDependencies": {
+    "react": "^16.5.0"
+  },
   "dependencies": {
-    "@icedesign/base": "0.2.5",
+    "@icedesign/base": "^0.2.5",
     "foundation-symbol": "^0.1.4",
     "prop-types": "^15.6.0",
     "qrcode.react": "^0.8.0"

@@ -3,15 +3,14 @@
   "version": "0.1.16",
   "description": "ICE 表单数据获取方案",
   "main": "lib/index.js",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
     "prepublish": "npm run build"
   },
-  "files": [
-    "lib/",
-    "demo/"
-  ],
   "author": "ice-team",
   "repository": {
     "type": "git",
@@ -24,6 +23,10 @@
   ],
   "publishConfig": {
     "access": "public"
+  },
+  "peerDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
   },
   "dependencies": {
     "async-validator": "^1.8.1",

@@ -7,8 +7,8 @@ export default class RichtextRenderer extends Component {
 
     return (
       <div
-        className={(className ? className + ' ' : '') + 'ice-richtext'}
         {...others}
+        className={(className ? className + ' ' : '') + 'ice-richtext'}
         dangerouslySetInnerHTML={{__html: html}}
       />
     );

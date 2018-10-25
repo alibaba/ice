@@ -2,8 +2,8 @@
   "name": "@icedesign/balloon-confirm",
   "version": "0.1.2",
   "description": "ICE 气泡确认框",
+  "main": "lib/index.js",
   "files": [
-    "src/",
     "lib/"
   ],
   "author": {
@@ -28,11 +28,12 @@
   "publishConfig": {
     "access": "public"
   },
+  "peerDependencies": {
+    "react": "^16.5.0"
+  },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
-    "prop-types": "^15.5.8",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "ice-devtools": "^1.1.12"

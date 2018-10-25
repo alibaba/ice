@@ -4,12 +4,11 @@
   "description": "列表组件",
   "main": "lib/index.js",
   "files": [
-    "src/",
     "lib/"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ice"
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/components/list"
   },
   "scripts": {
     "start": "ice-devtools start",
@@ -25,8 +24,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "peerDependencies": {
+    "react": "^16.5.0"
+  },
   "dependencies": {
-    "lodash.omit": "^4.5.0"
   },
   "devDependencies": {
     "ice-devtools": "latest",

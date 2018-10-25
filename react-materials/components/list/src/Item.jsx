@@ -4,9 +4,9 @@ import React, { Component } from 'react';
  */
 export default class ListItem extends Component {
   render() {
-    const {children, width, spacing, style} = this.props;
+    const {children, width, spacing, style, ...others} = this.props;
     return (
-      <div style={{
+      <div {...others} style={{
         position: 'relative',
         overflow: 'hidden',
         marginRight: `${spacing}px`,
