@@ -4,8 +4,7 @@
   "description": "ICE 前后端数据绑定、交互方案",
   "main": "lib/index.js",
   "files": [
-    "lib/",
-    "demo/"
+    "lib/"
   ],
   "scripts": {
     "start": "ice-devtools start",
@@ -25,6 +24,9 @@
     "ice",
     "ice-component"
   ],
+  "peerDependencies": {
+    "react": "^16.5.0"
+  },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "axios": "^0.18.0",
