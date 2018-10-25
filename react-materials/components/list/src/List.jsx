@@ -1,16 +1,15 @@
 import React, { Component, cloneElement, Children } from 'react';
-import omit from 'lodash.omit';
 
 /**
  * List容器组件
  */
 export default class List extends Component {
   render() {
-    const { column, spacing = 10, style, children } = this.props;
+    const { column, spacing = 10, style, children, ...others } = this.props;
     const { width } = style;
     return (
       <div
-        {...omit(this.props, ['column', 'spacing'])}
+        {...others}
         style={{
           display: 'flex',
           flexFlow: 'row wrap',
