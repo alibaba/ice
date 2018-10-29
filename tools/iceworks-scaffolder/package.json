@@ -9,6 +9,9 @@
   "files": [
     "src/"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "jest",
     "lint": "ejslint ./example/.iceworks/scaffold/page/*"
