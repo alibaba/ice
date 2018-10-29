@@ -125,6 +125,8 @@ export default class FormBinder extends Component {
         this.rules,
         ReactDOM.findDOMNode(this)
       );
+    } else {
+      this.context.removeValidate(this.props.name);
     }
   }
 
@@ -136,12 +138,9 @@ export default class FormBinder extends Component {
   }
 
   /**
-   * 从 FormBinder 和 FormField 收集表单的校验规则
-   * 优先级：FormField > FormBinder
+   * 从 FormBinder 收集表单的校验规则
    */
   getRules = (props) => {
-    const FormItem = React.Children.only(props.children);
-    const FormItemProps = FormItem.props;
     const rules = []; // [{required: true, max: 10, ...}]
     const ruleKeys = [
       'required',
@@ -156,15 +155,17 @@ export default class FormBinder extends Component {
       'message',
       'validator',
       'type',
+      'range',
     ];
 
-    // TODO: rule 是否都来自 FormBinder，还是允许来自 FormBinder 和 FormField
     ruleKeys.forEach((ruleKey) => {
       let ruleValue;
       if (ruleKey in props) {
         ruleValue = props[ruleKey];
-      } else if (ruleKey in FormItemProps) {
-        ruleValue = FormItemProps[ruleKey];
+      } else {
+        console.warn(
+          'Unknown prop rule in <FormBinder> component，For Details，see https://github.com/yiminghe/async-validator'
+        );
       }
 
       if (ruleValue !== undefined && ruleValue !== null) {
@@ -182,8 +183,6 @@ export default class FormBinder extends Component {
   render() {
     const FormItem = React.Children.only(this.props.children);
     const FormItemProps = FormItem.props;
-    const FormItemDefaultProps = FormItem.type.defaultProps || {};
-
     const name = this.props.name;
 
     // 提供受控属性 value 或其它与 valuePropName 的值同名的属性，如 Switch 的是 'checked'
@@ -200,20 +199,12 @@ export default class FormBinder extends Component {
 
     const NewFormItem = React.cloneElement(FormItem, {
       [valuePropName]: (() => {
-        const formItemValue = FormItemProps[valuePropName];
-        if (
-          formItemValue &&
-          formItemValue !== FormItemDefaultProps[valuePropName]
-        ) {
-          return setFieldValue(FormItemProps[valuePropName]);
-        }
-
         const value = this.context.getter(name);
         return setFieldValue(value);
       })(),
 
       [validateTriggerType]: () => {
-        if (validateTriggerType !== 'onChange' && this.rules.length > 0) {
+        if (this.rules.length > 0) {
           this.context.validate(name, this.rules);
         }
       },

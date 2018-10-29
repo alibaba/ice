@@ -21,11 +21,11 @@ npm install @icedesign/form-binder
 
 ## 表单元素
 
-表单元素指的是 ICE 基础组件以及业务组件中的 `Input` 、 `Checkbox` 、 `Select` 、 `Range` 、 `DatePicker` 、 `TimePicker` 、 `NumberPicker` 、 `Switch` 、 `Upload` 等以及用户自定义的组件，它能够响应 `value` 、`onChange` 等用来获取用户输入
+表单元素指的是 ICE 基础组件以及业务组件中的 `Input` 、 `Checkbox` 、 `Select` 、 `Range` 、 `DatePicker` 、 `TimePicker` 、 `NumberPicker` 、 `Switch` 、 `Upload` 等以及用户自定义的组件，它能够响应 `onChange` 等用来获取用户输入
 
 ## API
 
-| 参数           | 说明                                                                     | 类型                                                     | 默认值 |
+| 方法名           | 说明                                                                     | 类型                                                     | 默认值 |
 | :------------- | :----------------------------------------------------------------------- | :------------------------------------------------------- | :----- |
 | validateFields | 校验并获取一组输入域的值与 Error，若 fieldNames 参数为空，则校验全部组件 | ([fieldNames: string[]],callback(errors,values)) => void |        |
 
@@ -39,7 +39,7 @@ npm install @icedesign/form-binder
 2. 你不能使用组件的表单元素的 `value`、 `defaultValue` 等属性来设置表单元素的值，但可以通过初始的 value 进行设置
 3. 你不需要通过 setState 来动态更新表单的值，因为表单默认支持双向数据通信，但可以通过 setFieldValue 和 getFieldValue 来设置或者更新表单域的值
 
-| 参数                      | 说明                                                                  | 类型            | 默认值   |
+| 属性参数                      | 说明                                                                  | 类型            | 默认值   |
 | :------------------------ | :-------------------------------------------------------------------- | :-------------- | :------- |
 | value                     | 表单值                                                                | object          | {}       |
 | onChange                  | 任一表单域的值发生改变时的回调                                        | function(value) | () => {} |
@@ -57,7 +57,7 @@ FormBinder 支持的属性包含以下两部分：
 
 **自定义规则**
 
-| 参数          | 说明                 | 类型                        | 默认值     |
+| 属性参数          | 说明                 | 类型                        | 默认值     |
 | :------------ | :------------------- | :-------------------------- | :--------- |
 | name​         | 表单域名称           | string                      |            |
 | setFieldValue | 设置一个输入控件的值 | Function(fieldName: string) |            |

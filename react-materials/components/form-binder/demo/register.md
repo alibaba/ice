@@ -70,9 +70,10 @@ class Register extends Component {
   }
 
   formChange = value => {
-    this.setState({
-      value
-    });
+    // 说明：
+    //  1. 表单是双向通行的，所有表单的响应数据都会同步更新 value
+    //  2. 这里 setState 只是为了实时展示当前表单数据的演示使用
+    this.setState({ value });
   };
 
   checkPassword = (rule, values, callback) => {
