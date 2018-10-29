@@ -105,7 +105,7 @@ class Register extends Component {
       console.log({ errors })
 
       if (!errors) {
-        Feedback.toast.success('登录成功')
+        Feedback.toast.success('注册成功')
       }
     });
   }

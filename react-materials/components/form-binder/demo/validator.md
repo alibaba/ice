@@ -24,13 +24,14 @@ class CustomValidator extends Component {
     };
   }
 
+  // 说明：
+  //  1. 表单是双向通行的，所有表单的响应数据都会同步更新 value
+  //  2. 这里 setState 只是为了实时展示当前表单数据的演示使用
   formChange = (value) => {
-    // 说明：
-    //  1. 表单是双向通行的，所有表单的响应数据都会同步更新 value
-    //  2. 这里 setState 只是为了实时展示当前表单数据的演示使用
     this.setState({ value })
   }
 
+  // 通过 validator 自定义校验规则，更多用法参考 https://github.com/yiminghe/async-validator#usage
   inputValidator = (rule, value, callback) => {
     const errors = [];
     console.log(value)

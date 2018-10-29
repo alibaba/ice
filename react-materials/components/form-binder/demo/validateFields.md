@@ -58,7 +58,7 @@ class App extends Component {
           <div>
             <div style={styles.formItem}>
               <span style={styles.formLabel}>名称：</span>
-              <FormBinder name="name" required message="请输入名称" >
+              <FormBinder name="name" required message="请输入正确的名称" >
                 <Input placeholder="淘小宝" /> 
               </FormBinder>
               <FormError style={styles.formError} name="name" />
@@ -66,7 +66,7 @@ class App extends Component {
 
             <div style={styles.formItem}>
               <span style={styles.formLabel}>邮箱：</span>
-              <FormBinder name="email" required message="请输入邮箱">
+              <FormBinder name="email" type="email" required message="请输入正确的邮箱">
                 <Input placeholder="ice-admin@alibaba-inc.com" /> 
               </FormBinder>
               <FormError style={styles.formError} name="email" />
@@ -74,7 +74,7 @@ class App extends Component {
 
             <div style={styles.formItem}>
               <span style={styles.formLabel}>设置密码：</span>
-              <FormBinder name="password" required message="请输入名称" >
+              <FormBinder name="password" required message="请输入新密码" >
                 <Input htmlType="password" placeholder="设置新密码"  /> 
               </FormBinder>
               <FormError style={styles.formError} name="password" />
@@ -84,11 +84,11 @@ class App extends Component {
         </FormBinderWrapper>
         
         <div style={{marginTop: 20}}>
+        <Button type="primary" style={{marginRight: 10}} onClick={() => this.validateFields(['name', 'email'])}>
+            先校验名称和邮箱
+          </Button>
           <Button type="secondary" onClick={this.validateFields}>
             校验整个表单
-          </Button>
-          <Button type="primary" style={{marginLeft: 10}} onClick={() => this.validateFields(['name', 'email'])}>
-            只校验名称和邮箱
           </Button>
         </div>
 
