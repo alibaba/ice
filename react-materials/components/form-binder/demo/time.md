@@ -113,7 +113,7 @@ class Time extends Component {
           </div>
 
           <Button type="primary" style={{marginLeft: '80px'}}  onClick={this.validateFields}>
-            确 人
+            确 认
           </Button>
         </FormBinderWrapper>
         

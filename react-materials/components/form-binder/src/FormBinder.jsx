@@ -125,8 +125,6 @@ export default class FormBinder extends Component {
         this.rules,
         ReactDOM.findDOMNode(this)
       );
-    } else {
-      this.context.removeValidate(this.props.name);
     }
   }
 
