@@ -23,7 +23,7 @@ module.exports = (opts = {}) => {
         );
 
         if (
-          Object.prototype.toString.apply(pkgData.proxyConfig) ==
+          Object.prototype.toString.apply(pkgData.proxyConfig) ===
           '[object Object]'
         ) {
           return pkgData.proxyConfig;
