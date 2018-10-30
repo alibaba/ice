@@ -1,6 +1,6 @@
 {
   "name": "ice-scripts",
-  "version": "1.7.6-beta.1",
+  "version": "1.7.7-beta.0",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
@@ -100,12 +100,12 @@
     "webpack-merge": "4.1.4",
     "webpack-plugin-import": "0.2.1",
     "webpack-simple-progress-plugin": "0.0.4",
-    "webpack-sources": "1.3.0"
+    "webpack-sources": "1.3.0",
+    "css-prefix-plugin": "^0.0.1"
   },
   "devDependencies": {
     "@icedesign/base": "^0.2.5",
     "coveralls": "^3.0.0",
-    "css-prefix-plugin": "^0.0.1",
     "del": "^3.0.0",
     "expect": "^23.2.0",
     "glob": "^7.0.6",
