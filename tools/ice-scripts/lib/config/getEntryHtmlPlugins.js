@@ -4,7 +4,7 @@ const paths = require('./paths');
 const getFaviconPath = require('../utils/getFaviconPath');
 
 module.exports = function getEntryHtmlPlugins(entries) {
-  if (typeof entries == 'string' || Array.isArray(entries)) {
+  if (typeof entries === 'string' || Array.isArray(entries)) {
     return [
       new HtmlWebpackPlugin({
         inject: true,

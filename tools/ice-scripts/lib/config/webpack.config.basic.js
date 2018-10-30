@@ -27,11 +27,11 @@ const paths = require('./paths');
 const pluginsUnique = (uniques) => {
   const getter = (plugin) => plugin.constructor && plugin.constructor.name;
   return (a, b, k) => {
-    if (k == 'plugins') {
+    if (k === 'plugins') {
       return [
         ...differenceWith(a, b, (item, item2) => {
           return (
-            uniques.indexOf(getter(item)) >= 0 && getter(item) == getter(item2)
+            uniques.indexOf(getter(item)) >= 0 && getter(item) === getter(item2)
           );
         }),
         ...b,
@@ -87,6 +87,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     customizeArray: pluginsUnique(['HtmlWebpackPlugin']),
   })(webpackConfig, userConfig);
 
+  // 单页应用 or 多页应用
   if (finalWebpackConfig.entry) {
     finalWebpackConfig.entry = processEntry(finalWebpackConfig.entry);
   } else {
