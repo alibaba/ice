@@ -4,15 +4,20 @@
 const path = require('path');
 const fs = require('fs');
 const colors = require('chalk');
+const getEntry = require('./getEntry');
 
 // const jsonConfigFile = '.webpackrc';
 const jsConfigFile = '.webpackrc.js';
 
 module.exports = (opts = {}) => {
   const { cwd = process.cwd() } = opts;
+  
+  const entry = getEntry(cwd);
+
+  const entryDirname = path.dirname(entry || '');
 
   // const webpackRCPath = path.resolve(cwd, jsonConfigFile);
-  const webpackRCJSPath = path.resolve(cwd, jsConfigFile);
+  const webpackRCJSPath = path.resolve(cwd, entryDirname, jsConfigFile);
 
   const userConfig = {};
 
