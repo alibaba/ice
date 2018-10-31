@@ -41,9 +41,9 @@ class Scaffolder {
     return pathExists.sync(path.join(this.cwd, '.iceworks', 'scaffoldrc.json'));
   }
 
-  async createPage({ name: pageNmae, layout, blocks, preview = false }) {
+  async createPage({ name: pageNmae, layout, blocks, preview = false, isNodeProject }) {
     const pageResult = await addPage(
-      { cwd: this.cwd, name: pageNmae, blocks, preview },
+      { cwd: this.cwd, name: pageNmae, blocks, preview, isNodeProject },
       { scaffoldRuntimeConfig: this.scaffoldRuntimeConfig },
       this.interpreter
     );
@@ -51,7 +51,7 @@ class Scaffolder {
     if (layout) {
       // 本地化 layout 不创建
       if (!layout.customLayout && !layout.localization) {
-        const createResult = await addLayout({ cwd: this.cwd, layout });
+        const createResult = await addLayout({ cwd: this.cwd, layout, isNodeProject });
         pageResult.append(createResult);
       } else {
         const layoutPaths = material.getLayoutPaths({ cwd: this.cwd, layout });
@@ -65,6 +65,7 @@ class Scaffolder {
       name: pageNmae,
       blocks,
       preview,
+      isNodeProject
     });
     pageResult.append(blocksResult);
     return pageResult;
@@ -126,6 +127,7 @@ class Scaffolder {
     pagePath,
     layoutName = '',
     layoutPath,
+    isNodeProject
   }) {
     if (this.scaffoldRuntimeConfig.routerConfigFilePath) {
       const routerContent = await appendRouter({
@@ -149,6 +151,7 @@ class Scaffolder {
         path: routerPath,
         pagePath,
         manifestFilePath: this.scaffoldRuntimeConfig.manifestFilePath,
+        isNodeProject
       });
       if (manifestContent !== false) {
         fs.writeFileSync(
@@ -178,6 +181,7 @@ class Scaffolder {
   async removePreviewPage({
     menuPath = '/IceworksPreviewPage',
     routerPath = '/IceworksPreviewPage',
+    isNodeProject = false
   } = {}) {
     if (this.scaffoldRuntimeConfig.menuConfigFilePath) {
       const menuContent = await removeMenu({
@@ -218,9 +222,11 @@ class Scaffolder {
       }
     }
     // 先删除 menu 等配置，后删除文件夹，否则服务会找不到文件而失败
+    const feFolder = isNodeProject ? 'client' : 'src';
     const previewPagePath = path.join(
       this.cwd,
-      'src/pages/IceworksPreviewPage'
+      feFolder,
+      'pages/IceworksPreviewPage'
     );
     rimraf.sync(previewPagePath);
   }

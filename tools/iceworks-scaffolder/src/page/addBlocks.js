@@ -3,7 +3,7 @@ const project = require('../project');
 const material = require('../material');
 const ScaffoldResult = require('../ScaffoldResult');
 
-module.exports = async function addBlocks({ cwd, name: pageName, blocks, preview = false }) {
+module.exports = async function addBlocks({ cwd, name: pageName, blocks, preview = false, isNodeProject }) {
   await project.checkExists(cwd);
   const pkgData = await project.getPackageData(cwd);
   const packageDependencies = pkgData.dependencies || {};
@@ -35,13 +35,14 @@ module.exports = async function addBlocks({ cwd, name: pageName, blocks, preview
         name: pageName,
         block,
         preview,
+        isNodeProject
       });
       if (block.type != 'custom') {
         const tarballURL = await material.getTarball(block);
         blockExtractedFiles = await material.extractTarball({
           url: tarballURL,
           output: blockPaths.outputPath,
-          srcPath: blockPaths.srcPath,
+          fePath: blockPaths.fePath,
           source: block.source,
         });
       } else {

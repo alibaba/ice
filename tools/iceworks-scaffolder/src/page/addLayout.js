@@ -6,7 +6,7 @@ const project = require('../project');
 const material = require('../material');
 const ScaffoldResult = require('../ScaffoldResult');
 
-module.exports = async function addLayout({ cwd, layout }) {
+module.exports = async function addLayout({ cwd, layout, isNodeProject }) {
   await project.checkExists(cwd);
 
   const pkgData = await project.getPackageData(cwd);
@@ -27,7 +27,7 @@ module.exports = async function addLayout({ cwd, layout }) {
 
   layoutResult.appendDependencies(layoutAppendDependencies);
 
-  const layoutPaths = material.getLayoutPaths({ cwd, layout });
+  const layoutPaths = material.getLayoutPaths({ cwd, layout, isNodeProject });
 
   const lyaoutExists = pathExists.sync(layoutPaths.outputPath);
 

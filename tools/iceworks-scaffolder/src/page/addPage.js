@@ -10,7 +10,7 @@ const project = require('../project');
 const material = require('../material');
 const utils = require('../utils');
 
-module.exports = async function({ cwd, name, blocks, preview }, { scaffoldRuntimeConfig }, interpreter) {
+module.exports = async function({ cwd, name, blocks, preview, isNodeProject = false }, { scaffoldRuntimeConfig }, interpreter) {
   const pageResult = new ScaffoldResult();
   await project.checkExists(cwd);
 
@@ -50,7 +50,8 @@ module.exports = async function({ cwd, name, blocks, preview }, { scaffoldRuntim
       basename = material.parseFilename(basename, templateData);
 
       const pageOutput = './pages/' + pageFolderName;
-      const outputFilePath = path.join(cwd, 'src', pageOutput, basename);
+      const feFolder = isNodeProject ? 'client' : 'src';
+      const outputFilePath = path.join(cwd, feFolder, pageOutput, basename);
       logger.info('outputFilePath', outputFilePath);
       await write(outputFilePath, outputTemplateContent);
 
