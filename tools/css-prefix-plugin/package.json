@@ -1,6 +1,6 @@
 {
   "name": "css-prefix-plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A webpack plugin for adding css prefix of component package.",
   "main": "index.js",
   "scripts": {
