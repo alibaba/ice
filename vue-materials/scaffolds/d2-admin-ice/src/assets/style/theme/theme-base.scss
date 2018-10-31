@@ -1,0 +1,445 @@
+// 减小弹出菜单的项目高度
+.el-menu--popup {
+  .el-menu-item {
+    height: 36px;
+    line-height: 36px;
+  }
+  .el-submenu__title {
+    height: 36px;
+    line-height: 36px;
+  }
+}
+
+// 整体框架结构
+.d2-layout-header-aside-group {
+  height: 100%;
+  width: 100%;
+  min-width: 900px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  position: relative;
+  // 背景上面的半透明遮罩
+  .d2-layout-header-aside-mask {
+    @extend %full;
+  }
+  // 内容层
+  .d2-layout-header-aside-content {
+    @extend %full;
+    .d2-theme-header {
+      height: 60px;
+      .d2-theme-header-menu {
+        overflow: hidden;
+        &.is-scrollable {
+          position: relative;
+          padding: 0 20px;
+          .d2-theme-header-menu__prev, .d2-theme-header-menu__next {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+          }
+        }
+        .d2-theme-header-menu__content {
+          overflow: hidden;
+          .d2-theme-header-menu__scroll {
+            white-space: nowrap;
+            position: relative;
+            -webkit-transition: -webkit-transform .3s;
+            transition: -webkit-transform .3s;
+            transition: transform .3s;
+            transition: transform .3s, -webkit-transform .3s;
+            transition: transform .3s,-webkit-transform .3s;
+            float: left;
+          }
+        }
+        .d2-theme-header-menu__prev, .d2-theme-header-menu__next {
+          height: 60px;
+          position: absolute;
+          top: 0;
+          font-size: 20px;
+          cursor: pointer;
+          display: none;
+        }
+        .d2-theme-header-menu__prev {
+          left: 0;
+          border-top-left-radius: 2px;
+          border-bottom-left-radius: 2px;
+        }
+        .d2-theme-header-menu__next {
+          right: 0;
+          border-top-right-radius: 2px;
+          border-bottom-right-radius: 2px;
+        }
+      }
+    }
+    .d2-theme-container {
+      .d2-theme-container-aside {
+        transition: width .3s;
+        position: relative;
+        .d2-layout-header-aside-menu-side {
+          @extend %full;
+          overflow: hidden;
+        }
+      }
+      .d2-theme-container-main {
+        padding: 0px;
+        position: relative;
+        overflow: hidden;
+        .d2-theme-container-main-layer {
+          position: absolute;
+          top: 0px;
+          bottom: 0px;
+          left: 0px;
+          right: 0px;
+        }
+        .d2-theme-container-main-body {
+          position: relative;
+        }
+      }
+    }
+  }
+}
+
+// 主题公用
+.d2-layout-header-aside-group {
+  &.grayMode {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
+  }
+  // 主体
+  .d2-layout-header-aside-content {
+    // [布局] 顶栏
+    .d2-theme-header {
+      // logo区域
+      .logo-group {
+        transition: width .3s;
+        float: left;
+        text-align: center;
+        img {
+          height: 60px;
+        }
+      }
+      // 折叠侧边栏切换按钮
+      .toggle-aside-btn {
+        float: left;
+        height: 60px;
+        width: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @extend %unable-select;
+        i {
+          font-size: 20px;
+          margin-top: 4px;
+        }
+      }
+      // [菜单] 顶栏
+      .el-menu {
+        float: left;
+        border-bottom: none;
+        background-color: transparent;
+        %header-menu-item {
+          @extend %unable-select;
+          i.fa {
+            font-size: 16px;
+            margin-right: 4px;
+          }
+        }
+        .el-menu-item {
+          @extend %header-menu-item;
+          border-bottom: none;
+        }
+        .el-submenu {
+          @extend %header-menu-item;
+          .el-submenu__title {
+            border-bottom: none;
+          }
+        }
+      }
+      // 顶栏右侧的按钮
+      .d2-header-right {
+        float: right;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        .btn-text {
+          padding: 14px 12px;
+          border-radius: 4px;
+          margin: 0px !important;
+        }
+        .el-dropdown {
+          @extend %unable-select;
+        }
+      }
+    }
+    // [布局] 顶栏下面
+    .d2-theme-container {
+      // 侧边栏
+      .d2-theme-container-aside {
+        %d2-theme-container-aside-menu-icon {
+          width: 20px;
+          text-align: center;
+          font-size: 16px;
+        }
+        // [菜单] 正常状态
+        .el-menu {
+          @extend %unable-select;
+          background-color: transparent;
+          border-right: none;
+          .el-menu-item {
+            i {
+              @extend %d2-theme-container-aside-menu-icon;
+            }
+          }
+        }
+        .el-submenu {
+          @extend %unable-select;
+          .el-submenu__title {
+            i {
+              @extend %d2-theme-container-aside-menu-icon;
+            }
+            .el-submenu__icon-arrow {
+              margin-top: -10px;
+            }
+          }
+        }
+        // 菜单为空的时候显示的信息
+        .d2-layout-header-aside-menu-empty {
+          height: 160px;
+          margin: 10px;
+          margin-top: 0px;
+          border-radius: 4px;
+          @extend %unable-select;
+          i {
+            font-size: 30px;
+            margin-bottom: 10px;
+          }
+          span {
+            font-size: 14px;
+          }
+        }
+        // [菜单] 折叠状态
+        .el-menu--collapse {
+          background-color: transparent;
+          .el-submenu__title {
+            text-align: center;
+          }
+        }
+      }
+      // 右下 主体
+      .d2-theme-container-main {
+        // 主体部分分为多页面控制器 和主体
+        .d2-theme-container-main-header {
+          // 多页面控制器
+          .d2-multiple-page-control-group {
+            padding-right: 20px;
+            .d2-multiple-page-control-content {
+              overflow: auto;
+              position: relative;
+              .d2-multiple-page-control-content-inner {
+                .d2-multiple-page-control {
+                  .el-tabs__header.is-top {
+                    margin: 0px;
+                  }
+                  .el-tabs__nav {
+                    overflow: hidden;
+                  }
+                }
+              }
+            }
+            .d2-multiple-page-control-btn {
+              position: relative;
+              bottom: -1px;
+              .el-dropdown {
+                .el-button-group {
+                  .el-button:first-child {
+                    border-bottom-left-radius: 0px;
+                  }
+                  .el-button:last-child {
+                    border-bottom-right-radius: 0px;
+                  }
+                }
+              }
+            }
+          }
+        }
+        // 主体
+        .d2-theme-container-main-body {
+          // 布局组件
+          .container-component {
+            @extend %full;
+            overflow: hidden;
+            // 填充式布局组件
+            .d2-container-full {
+              position: absolute;
+              top: 0px;
+              right: 20px;
+              bottom: 0px;
+              left: 0px;
+              display: flex;
+              flex-direction: column;
+              overflow: hidden;
+              .d2-container-full__header {
+                padding: 20px;
+              }
+              .d2-container-full__body {
+                flex-grow: 1;
+                padding: 20px 20px;
+                overflow: auto;
+                position: relative;
+              }
+              .d2-container-full__footer {
+                padding: 20px;
+              }
+            }
+            // 填充式布局组件 - 滚动优化
+            .d2-container-full-bs {
+              position: absolute;
+              top: 0px;
+              right: 20px;
+              bottom: 0px;
+              left: 0px;
+              display: flex;
+              flex-direction: column;
+              overflow: hidden;
+              .d2-container-full-bs__header {
+                padding: 20px;
+              }
+              .d2-container-full-bs__body {
+                flex-grow: 1;
+                overflow: hidden;
+                position: relative;
+                .d2-container-full-bs__body-wrapper-inner {
+                  padding: 20px;
+                  position: relative;
+                }
+              }
+              .d2-container-full-bs__footer {
+                padding: 20px;
+              }
+            }
+            // 隐形布局组件
+            .d2-container-ghost {
+              position: absolute;
+              top: 0px;
+              right: 20px;
+              bottom: 0px;
+              left: 0px;
+              display: flex;
+              flex-direction: column;
+              overflow: hidden;
+              .d2-container-ghost__header {
+                padding: 20px;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+              }
+              .d2-container-ghost__body {
+                flex-grow: 1;
+                overflow: auto;
+                position: relative;
+              }
+              .d2-container-ghost__footer {
+                padding: 20px;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+              }
+            }
+            // 隐形布局组件 - 滚动优化
+            .d2-container-ghost-bs {
+              position: absolute;
+              top: 0px;
+              right: 20px;
+              bottom: 0px;
+              left: 0px;
+              display: flex;
+              flex-direction: column;
+              overflow: hidden;
+              .d2-container-ghost-bs__header {
+                padding: 20px;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+              }
+              .d2-container-ghost-bs__body {
+                flex-grow: 1;
+                overflow: hidden;
+                position: relative;
+              }
+              .d2-container-ghost-bs__footer {
+                padding: 20px;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+              }
+            }
+            // 卡片式布局组件
+            .d2-container-card {
+              position: absolute;
+              top: 0px;
+              right: 20px;
+              bottom: 0px;
+              left: 0px;
+              display: flex;
+              flex-direction: column;
+              overflow: hidden;
+              .d2-container-card__header {
+                padding: 20px;
+              }
+              .d2-container-card__body {
+                flex-grow: 1;
+                overflow: auto;
+                .d2-container-card__body-card {
+                  position: relative;
+                  margin-bottom: 20px;
+                  padding: 20px;
+                  border-bottom-left-radius: 4px;
+                  border-bottom-right-radius: 4px;
+                }
+              }
+              .d2-container-card__footer {
+                padding: 20px;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+              }
+            }
+            // 卡片式布局组件 - 滚动优化
+            .d2-container-card-bs {
+              position: absolute;
+              top: 0px;
+              right: 20px;
+              bottom: 0px;
+              left: 0px;
+              display: flex;
+              flex-direction: column;
+              overflow: hidden;
+              .d2-container-card-bs__header {
+                padding: 20px;
+              }
+              .d2-container-card-bs__body {
+                position: relative;
+                flex-grow: 1;
+                overflow: hidden;
+                .d2-container-card-bs__body-wrapper-inner {
+                  padding-bottom: 20px;
+                }
+                .d2-container-card-bs__body-card {
+                  position: relative;
+                  padding: 20px;
+                  border-bottom-left-radius: 4px;
+                  border-bottom-right-radius: 4px;
+                }
+              }
+              .d2-container-card-bs__footer {
+                padding: 20px;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
