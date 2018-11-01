@@ -27,7 +27,7 @@
   "dependencies": {
     "prop-types": "^15.5.8",
     "react": "^16.2.0",
-    "react-trello": "^1.31.0",
+    "react-trello": "^1.33.0",
     "styled-components": "^3.2.6"
   },
   "blockConfig": {

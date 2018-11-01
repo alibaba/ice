@@ -39,5 +39,6 @@
   },
   "engines": {
     "node": ">=8.0.0"
-  }
+  },
+  "templateType": "react"
 }
