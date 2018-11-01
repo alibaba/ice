@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 export const throttle = (fn, delay) => {
   let timer = null;
-  return function(...args) {
+  return function (...args) {
     const context = this;
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -20,7 +20,7 @@ export const getScrollTop = () => {
   return scrollTop;
 };
 
-export const getLink = link => {
+export const getLink = (link) => {
   if (`${link}`.length > 1 && /^\/[^/]/.test(`${link}`)) {
     return `${window.rootPath}${link}`;
   }

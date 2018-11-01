@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const entry = {};
 const targetPath = path.join(__dirname, './src/pages');
-fs.readdirSync(targetPath).forEach(page => {
+fs.readdirSync(targetPath).forEach((page) => {
   if (
     fs.statSync(path.join(targetPath, page)).isDirectory() &&
     fs.existsSync(path.join(targetPath, page, 'index.jsx'))
