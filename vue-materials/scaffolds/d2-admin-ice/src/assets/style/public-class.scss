@@ -4,14 +4,8 @@
 @import '~@/assets/style/fixed/base.scss';
 // 补丁 element
 @import '~@/assets/style/fixed/element.scss';
-// 补丁 markdown
-@import '~@/assets/style/fixed/markdown.scss';
-// 补丁 vue-splitpane
-@import '~@/assets/style/fixed/vue-splitpane.scss';
-// 补丁 vue-grid-layout
-@import '~@/assets/style/fixed/vue-grid-layout.scss';
-// 补丁 tree-view
-@import '~@/assets/style/fixed/tree-view.scss';
+// 补丁 n-progress
+@import '~@/assets/style/fixed/n-progress.scss';
 
 // 动画
 @import '~@/assets/style/animate/vue-transition.scss';

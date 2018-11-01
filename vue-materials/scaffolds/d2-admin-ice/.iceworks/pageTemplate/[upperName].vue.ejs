@@ -1,5 +1,5 @@
 <template>
-  <!-- d2-container 文档 http://app.d3collection.cn/d2-admin-doc/lastest/zh/sys-components/container.html -->
+  <!-- d2-container 文档 https://doc.d2admin.fairyever.com/zh/sys-components/container.html -->
   <d2-container class="page-<%= name %>">
     <template slot="header"><%= name %></template>
     <%_ blocks.forEach(function(block) { _%>
@@ -10,8 +10,6 @@
 </template>
 
 <script>
-// mixin
-import mixinPage from '@/mixins/page'
 // 组件
 <%_ blocks.forEach(function(block) { _%>
 import <%= block.className %> from '<%= block.path %>'
@@ -24,10 +22,6 @@ export default {
     <%= block.className %><%= index !== blocks.length - 1 ? ',' : '' %>
     <%_ }); _%>
   },
-  // 组合
-  mixins: [
-    'mixinPage'
-  ],
   // 数据
   data () {
     return {}
