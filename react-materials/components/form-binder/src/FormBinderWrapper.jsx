@@ -216,6 +216,6 @@ export default class IceFormBinderWrapper extends Component {
   };
 
   render() {
-    return this.props.children;
+    return React.Children.only(this.props.children);
   }
 }

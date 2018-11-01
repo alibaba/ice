@@ -35,24 +35,26 @@ class App extends Component {
           value={this.state.value}
           onChange={this.formChange}
         >
-          <div style={styles.formItem}>
-            <span>复选框：</span>
-            <FormBinder name="checkbox" valuePropName="checked">
-              <Checkbox />
-            </FormBinder>
-          </div>
+          <div>
+            <div style={styles.formItem}>
+              <span>复选框：</span>
+              <FormBinder name="checkbox" valuePropName="checked">
+                <Checkbox />
+              </FormBinder>
+            </div>
 
-          <div style={styles.formItem}>
-            <span>开关：</span>
-            <FormBinder 
-              name="switch"
-              valuePropName="checked"  // Switch 接收的属性是 `checked`
-              setFieldValue={(selected) => { return selected === 1 }}  // 转换为 boolean 传给 switch
-              getFieldValue={(checked) => { return checked ? 1 : 0 }}  // 返回值转换为 number 给表单值
-            >
-              <Switch size="small" />
-            </FormBinder>
-          </div>
+            <div style={styles.formItem}>
+              <span>开关：</span>
+              <FormBinder 
+                name="switch"
+                valuePropName="checked"  // Switch 接收的属性是 `checked`
+                setFieldValue={(selected) => { return selected === 1 }}  // 转换为 boolean 传给 switch
+                getFieldValue={(checked) => { return checked ? 1 : 0 }}  // 返回值转换为 number 给表单值
+              >
+                <Switch size="small" />
+              </FormBinder>
+            </div>
+         </div>
         </FormBinderWrapper>
         <div style={styles.preview}>
           <pre>{JSON.stringify(this.state, null, 2)}</pre>
