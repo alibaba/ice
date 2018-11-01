@@ -15,7 +15,7 @@
             <d2-icon name="github" class="d2-mr-5"/>
             主页
           </el-button>
-          <el-button @click="$open('http://app.d3collection.cn/d2-admin-doc/lastest/zh/')">
+          <el-button @click="$open('https://doc.d2admin.fairyever.com/zh/')">
             <d2-icon name="book" class="d2-mr-5"/>
             中文文档
           </el-button>
@@ -30,11 +30,11 @@
         </el-button-group>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-alert :closable="false" type="info" title="扫码进 QQ 群 [ 推荐 ]" class="d2-mb"/>
+            <el-alert :closable="false" type="info" title="2000人QQ群 [ 推荐 ]" class="d2-mb"/>
             <img src="./image/qq.jpg" style="width: 100%;">
           </el-col>
           <el-col :span="12">
-            <el-alert :closable="false" type="info" title="作者微信 加好友后邀请进微信群" class="d2-mb"/>
+            <el-alert :closable="false" type="info" title="与作者成为微信好友 邀请进微信群" class="d2-mb"/>
             <img src="./image/we.jpg" style="width: 100%;">
           </el-col>
         </el-row>
