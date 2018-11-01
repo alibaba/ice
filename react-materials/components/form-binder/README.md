@@ -6,6 +6,8 @@ chinese: ICE 表单粘合剂
 
 ICE 表单数据获取方案。
 
+> 说明：如果使用的是 FormBinder 0.x 的版本，请移步到 [0.x 参考文档](https://github.com/alibaba/ice/wiki/IceFormBinder-0.x)
+
 ## 安装和升级
 
 ```bash
