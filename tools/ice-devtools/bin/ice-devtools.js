@@ -11,4 +11,5 @@ require('commander')
   .command('generate', 'Generate database json')
   .command('build-block', 'Build block demo')
   .command('build-blocks', 'Build All block demos')
+  .command('sync', 'Sync materials to https://mc.fusion.design')
   .parse(process.argv);
