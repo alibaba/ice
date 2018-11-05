@@ -1,0 +1,20 @@
+@import '~@icedesign/skin/variables.scss';
+
+$ice-aside-bg: transparent !default;
+$ice-aside-menu-bg: transparent !default;
+$ice-aside-text-color: $color-text1-3 !default;
+$ice-aside-sub-text-color: $color-text1-3 !default;
+$ice-aside-text-hover-color: $color-white !default;
+$ice-aside-menu-item-selected-gradient-left-bg: $color-brand1-9 !default;
+$ice-aside-menu-item-selected-gradient-right-bg: $color-brand1-6 !default;
+$ice-aside-menu-item-selected-text-color: $color-white !default;
+$ice-aside-menu-submenu-item-hover-bg: transparent !default;
+$ice-aside-menu-submenu-vertical-bg: $color-white !default;
+
+$ice-toggle-btn-bg: $color-brand1-6 !default;
+$ice-toggle-btn-text-color: $color-white !default;
+$ice-collapse-btn-text-color: $color-text1-3 !default;
+
+$theme: 'light';
+
+@import './base.scss';

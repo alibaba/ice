@@ -1,0 +1,32 @@
+{
+  "name": "@rax-materials/post-cover-block",
+  "version": "0.2.6",
+  "description": "文章展示入口",
+  "author": "noyobo<noyobo@gmail.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/rax-materials/blocks/post-cover"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "miniapp",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "blockConfig": {
+    "name": "post-cover",
+    "title": "文章封面",
+    "categories": [
+      "列表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1a9RstborBKNjSZFjXXc_SpXa-750-584.png"
+  }
+}

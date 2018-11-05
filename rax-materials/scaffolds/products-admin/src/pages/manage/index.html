@@ -1,0 +1,26 @@
+<style>
+  .container {
+    color: #666;
+    height: 100%;
+  }
+</style>
+
+<template>
+  <scroll-view class="container" :scroll-y="true">
+    <product-list></product-list>
+  </scroll-view>
+</template>
+
+<script>
+  import productList from './blocks/productList/index';
+  export default {
+    components: {
+      productList
+    },
+    data() {
+      return {
+        // initial data
+      };
+    },
+  };
+</script>

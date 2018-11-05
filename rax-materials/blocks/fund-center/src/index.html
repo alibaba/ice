@@ -1,0 +1,100 @@
+<style>
+  .wrapper {
+    background-color: #fff;
+    margin-bottom: 20rpx;
+  }
+
+  .title {
+    font-size: 24rpx;
+    color: #666;
+  }
+
+  .header {
+    height: 60rpx;
+    line-height: 60rpx;
+    text-align: left;
+    padding: 0rpx 20rpx;
+    border-bottom: 1rpx solid #eee;
+  }
+
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    height: 100rpx;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rpx 20rpx;
+  }
+
+  .icon-wraper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .icon {
+    width: 50rpx;
+    height: 50rpx;
+  }
+
+  .icon-title {
+    font-size: 24rpx;
+    color: #333;
+    padding-left: 10rpx;
+  }
+
+  .name {
+    font-size: 24rpx;
+    color: #999;
+  }
+
+  .total {
+    font-size: 28rpx;
+    color: #333;
+    padding-left: 10rpx;
+  }
+</style>
+
+<template>
+  <view class="wrapper">
+    <view class="header">
+      <text class="title">资金中心</text>
+    </view>
+    <view class="body">
+      <view class="row">
+        <view class="icon-wraper">
+          <image class="icon" :src="icons.bank" />
+          <text class="icon-title">余利宝</text>
+        </view>
+        <view>
+          <text class="name">七日年化收益率</text>
+          <text class="total">3.123%</text>
+        </view>
+      </view>
+      <view class="row">
+        <view class="icon-wraper">
+          <image class="icon" :src="icons.shop" />
+          <text class="icon-title">店铺资产</text>
+        </view>
+        <view>
+          <text class="name">您的店铺总资产</text>
+          <text class="total">888.88</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        icons: {
+          bank: 'https://gw.alicdn.com/tfs/TB1dpv0ihTpK1RjSZFKXXa2wXXa-200-200.png',
+          shop: 'https://gw.alicdn.com/tfs/TB1rh_4ikzoK1RjSZFlXXai4VXa-200-200.png'
+        }
+      }
+    }
+  };
+</script>

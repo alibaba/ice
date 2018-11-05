@@ -6,12 +6,13 @@ const path = require('path');
 /**
  * 获取项目中符合 src/pages/xxxx/index.jsx 的文件
  *
- * @return {Object}           entry 的 kv 对象
+ * @return {Object} entry 的 kv 对象
  */
 
 module.exports = function getEntry(cwd) {
   const appDirectory = fs.realpathSync(cwd);
   const packageFilePath = path.resolve(appDirectory, 'package.json');
+  // eslint-disable-next-line import/no-dynamic-require
   const packageData = require(packageFilePath);
 
   // 需要区分项目类型，新版的项目直接返回 src/index.js
@@ -28,7 +29,8 @@ module.exports = function getEntry(cwd) {
     }
 
     if (entry) {
-      console.log(colors.yellow('Info:'), 'package.json 存在 entry 配置');
+      // eslint-disable-next-line no-console
+      console.log(colors.green('Info:'), 'package.json 存在 entry 配置');
       return entry;
     }
   }

@@ -1,0 +1,36 @@
+<style>
+  page {
+    background-color: #f4f4f4;
+  }
+
+  .container {
+    text-align: center;
+    color: #666;
+    height: 100%;
+  }
+</style>
+
+<template>
+  <scroll-view class="container" :scroll-y="true">
+    <user-panel></user-panel>
+    <menus></menus>
+    <logout></logout>
+</template>
+
+<script>
+  import menus from '../../components/menus/index';
+  import userPanel from '../../components/user-panel/index';
+  import logout from '../../components/logout/index';
+  export default {
+    components: {
+      menus,
+      userPanel,
+      logout,
+    },
+    data() {
+      return {
+        // initial data
+      };
+    },
+  };
+</script>

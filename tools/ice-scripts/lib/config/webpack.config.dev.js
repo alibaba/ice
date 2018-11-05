@@ -5,22 +5,20 @@ const webpack = require('webpack');
 
 const getWebpackConfigBasic = require('./webpack.config.basic');
 
-const env = process.env;
-
 module.exports = function getWebpackConfigDev({ entry, buildConfig = {} }) {
   const plugins = [];
   const baseConfig = getWebpackConfigBasic({ entry, buildConfig });
 
-  if (process.env.HOT_RELOAD !== 'false') {
+  if (!process.env.DISABLED_RELOAD) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
-  if (buildConfig.webpackBundleAnalyzer !== false && env.ANALYZER_PORT) {
+  if (process.env.ANALYZER) {
     plugins.push(
       new BundleAnalyzerPlugin({
         // use a fixed port
         // http://127.0.0.1:$PORT/report.html
-        analyzerPort: env.ANALYZER_PORT,
+        analyzerPort: process.env.ANALYZER_PORT || '9000',
       })
     );
   }

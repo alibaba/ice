@@ -1,10 +1,10 @@
-module.exports = (options = {}) => {
+module.exports = () => {
   return {
     // historyApiFallback: true,
     disableHostCheck: true,
     compress: true,
     clientLogLevel: 'none',
-    hot: process.env.HOT_RELOAD !== 'false',
+    hot: !process.env.DISABLED_RELOAD,
     publicPath: '/',
     quiet: true,
     watchOptions: {

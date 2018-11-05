@@ -1,0 +1,32 @@
+{
+  "name": "@rax-materials/account-shop-block",
+  "version": "0.2.6",
+  "description": "账户店铺信息",
+  "author": "noyobo<noyobo@gmail.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/rax-materials/blocks/account-shop"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "miniapp",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "blockConfig": {
+    "name": "account-shop",
+    "title": "账户店铺信息",
+    "categories": [
+      "信息展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB14UeuXAzoK1RjSZFlXXai4VXa-750-161.png"
+  }
+}

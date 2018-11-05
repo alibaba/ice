@@ -1,0 +1,32 @@
+{
+  "name": "@rax-materials/todo-task-block",
+  "version": "0.2.6",
+  "description": "待办事项提醒",
+  "author": "noyobo<noyobo@gmail.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/rax-materials/blocks/todo-task"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "miniapp",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "blockConfig": {
+    "name": "todo-task",
+    "title": "待办事项",
+    "categories": [
+      "列表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1VbahXgTqK1RjSZPhXXXfOFXa-750-222.png"
+  }
+}

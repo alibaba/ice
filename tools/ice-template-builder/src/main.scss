@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+// 全局变量(只有变量)
+@import '~@icedesign/base/reset.scss';
+
+// variables && mixins
+@import 'scss/variable';
+@import 'scss/mixin';
+
+#{$layout-builder-prefix} {
+}

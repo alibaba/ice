@@ -1,0 +1,41 @@
+{
+  "name": "@icedesign/table-chart-card-block",
+  "version": "1.0.0",
+  "description": "适用于图表和表格组合的展示场景",
+  "author": "",
+  "homepage": "https://alibaba.github.io/ice/block/table-chart-card/preview",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TableChartCard"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@antv/data-set": "^0.9.5",
+    "@icedesign/base": "^0.2.5",
+    "@icedesign/container": "^0.1.6",
+    "bizcharts": "^3.2.2",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "table-chart-card",
+    "title": "表格图表组合卡片",
+    "categories": [
+      "表格"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1lDBFXFzqK1RjSZFvXXcB7VXa-2866-1142.png"
+  }
+}

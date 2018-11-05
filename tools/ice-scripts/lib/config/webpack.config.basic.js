@@ -51,9 +51,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     output: Object.assign(
       {
         path: paths.appBuild,
-        filename: process.env.BUILD_HASH
-          ? 'js/[name].[hash:6].js'
-          : 'js/[name].js',
+        filename: process.env.HASH ? 'js/[name].[hash:6].js' : 'js/[name].js',
         publicPath: paths.servedPath,
       },
       buildConfig.output || {}
@@ -73,10 +71,10 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     optimization: {
       splitChunks: {
         cacheGroups: {
-          commons: {
+          vendor: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendor',
-            chunks: 'all',
+            chunks: 'initial',
             minChunks: 2,
           },
         },

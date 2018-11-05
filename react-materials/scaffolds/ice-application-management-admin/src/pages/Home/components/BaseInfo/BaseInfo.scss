@@ -1,0 +1,19 @@
+.base-info-table {
+  width: 100%;
+  tr {
+    border: 1px solid #eee;
+    &:nth-child(2n) {
+      background: #fbfbfb;
+    }
+    td {
+      padding: 10px 20px;
+      border-right: 1px solid #eee;
+      &:nth-child(2n-1) {
+        font-weight: 500;
+      }
+      &:last-child {
+        border-right: 0;
+      }
+    }
+  }
+}

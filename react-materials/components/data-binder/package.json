@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/data-binder",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "ICE 前后端数据绑定、交互方案",
   "main": "lib/index.js",
   "files": [
-    "lib/",
-    "demo/"
+    "lib/"
   ],
   "scripts": {
     "start": "ice-devtools start",
@@ -25,6 +24,9 @@
     "ice",
     "ice-component"
   ],
+  "peerDependencies": {
+    "react": "^16.5.0"
+  },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "axios": "^0.18.0",
@@ -35,7 +37,7 @@
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "express": "^4.14.0",
-    "ice-devtools": "^1.0.4",
+    "ice-devtools": "^1.1.12",
     "jsonp": "^0.2.1"
   }
 }

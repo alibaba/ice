@@ -1,0 +1,109 @@
+<style>
+  .wrapper {
+    background-color: #fff;
+    margin-bottom: 20rpx;
+  }
+
+  .header {
+    height: 60rpx;
+    line-height: 60rpx;
+    text-align: left;
+    padding: 0rpx 20rpx;
+    border-bottom: 1rpx solid #eee;
+
+  }
+
+  .title {
+    font-size: 24rpx;
+    color: #666;
+  }
+
+  .task-list {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .task-list-item {
+    width: 20%;
+    height: 140rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .icon {
+    width: 50rpx;
+    height: 50rpx;
+  }
+
+  .text {
+    font-size: 24rpx;
+    color: #666;
+  }
+
+  .count {
+    position: absolute;
+    top: 10rpx;
+    right: 30rpx;
+    background-color: #1296db;
+    border-radius: 15rpx;
+    height: 30rpx;
+    display: flex;
+    align-items: center;
+    padding: 0rpx 8rpx;
+  }
+
+  .count-text {
+    font-size: 20rpx;
+    color: #fff;
+  }
+</style>
+
+<template>
+  <view class="wrapper">
+    <view class="header">
+      <text class="title">待办事项</text>
+    </view>
+    <view class="body">
+      <view class="task-list">
+        <view class="task-list-item" v-for="task in tasks">
+          <image class="icon" :src="task.icon" />
+          <text class="text">{{task.text}}</text>
+          <view class="count" v-if="task.count !== 0"><text class="count-text">{{task.count}}</text></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        tasks: [{
+          icon: 'https://gw.alicdn.com/tfs/TB1SOHZiXzqK1RjSZFvXXcB7VXa-200-200.png',
+          text: '待付款',
+          count: 0
+        }, {
+          icon: 'https://gw.alicdn.com/tfs/TB1aaD1ikvoK1RjSZFwXXciCFXa-200-200.png',
+          text: '待发货',
+          count: 3
+        }, {
+          icon: 'https://gw.alicdn.com/tfs/TB1Anv0ikvoK1RjSZPfXXXPKFXa-200-200.png',
+          text: '待退款售后',
+          count: 4
+        }, {
+          icon: 'https://gw.alicdn.com/tfs/TB1IArZikvoK1RjSZFNXXcxMVXa-200-200.png',
+          text: '待评价',
+          count: 0
+        }, {
+          icon: 'https://gw.alicdn.com/tfs/TB1MzTUib2pK1RjSZFsXXaNlXXa-200-200.png',
+          text: '物流异常',
+          count: 0
+        }]
+      }
+    },
+  };
+</script>

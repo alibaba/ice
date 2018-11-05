@@ -63,17 +63,12 @@ class ShowTheLocation extends React.Component {
     history.push('/new-path');
   };
 
-  handleHistoryReplace = () => {
-    history.replace('/new-path');
-  };
-
   render() {
     const { location } = this.props;
     return (
       <div>
         <div>当前路径： {location.pathname}</div>
         <button onClick={this.handleHistoryPush}>点击跳转新页面</button>
-        <button onClick={this.handleHistoryReplace}>点击替换页面</button>
       </div>
     );
   }

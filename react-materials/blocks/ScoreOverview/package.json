@@ -1,0 +1,39 @@
+{
+  "name": "@icedesign/score-overview-block",
+  "version": "1.0.0",
+  "description": "适用于评分类的概要展示场景",
+  "author": "",
+  "homepage": "https://alibaba.github.io/ice/block/score-overview/preview",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ScoreOverview"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.5",
+    "@icedesign/container": "^0.1.6",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "score-overview",
+    "title": "评分概要",
+    "categories": [
+      "数据展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB10YFCXNTpK1RjSZFKXXa2wXXa-2832-532.png"
+  }
+}

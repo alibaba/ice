@@ -1,0 +1,14 @@
+@import '~@icedesign/skin/variables.scss';
+
+// Basic color variables
+$custom-layout-bg: #2e323f;
+$ice-body-bg: $color-white !default;
+
+.ice-design-layout-dark.ice-design-layout {
+  background-image: url('../images/dark_bg.png');
+  background-color: $custom-layout-bg;
+}
+
+$theme: 'dark';
+
+@import './base.scss';

@@ -3,6 +3,16 @@
  */
 const scaffolds = [
   'ice-opensource-site',
+  'ice-customer-analysis-admin',
+  'ice-voice-chat-admin',
+  'ice-library-management-admin',
+  'ice-asset-management-admin',
+  'ice-application-management-admin',
+  'ice-task-management-admin',
+  'ice-government-management-admin',
+  'ice-monitor-dashboard',
+  'ice-algorithm-model-admin',
+  'ice-contract-management-admin',
   'ice-aliyun-login',
   'ice-usertrack-admin',
   'ice-yunqi-homepage',

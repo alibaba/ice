@@ -88,20 +88,27 @@ module.exports = class AppendStylePlugin {
       return;
     }
 
-    compiler.plugin('compilation', (compilation) => {
-      compilation.plugin('optimize-chunk-assets', (chunks, done) => {
-        chunks.forEach((chunk) => {
-          chunk.files.forEach((fileName) => {
-            if (
-              distMatch(fileName, compilerEntry, compilation._preparedEntrypoints)
-            ) {
-              const css = this.compileToCSS(srcFile, variableFile);
-              this.wrapFile(compilation, fileName, css);
-            }
+    compiler.hooks.compilation.tap('compilation', (compilation) => {
+      compilation.hooks.optimizeChunkAssets.tapAsync(
+        'optimize-chunk-assets',
+        (chunks, done) => {
+          chunks.forEach((chunk) => {
+            chunk.files.forEach((fileName) => {
+              if (
+                distMatch(
+                  fileName,
+                  compilerEntry,
+                  compilation._preparedEntrypoints
+                )
+              ) {
+                const css = this.compileToCSS(srcFile, variableFile);
+                this.wrapFile(compilation, fileName, css);
+              }
+            });
           });
-        });
-        done();
-      });
+          done();
+        }
+      );
     });
   }
 

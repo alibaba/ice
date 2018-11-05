@@ -1,10 +1,10 @@
 ---
-title: 如何开启项目懒加载
+title: 开启动态加载后如何部署
 category: 项目开发手册
 order: 7
 ---
 
-# 如何开启项目懒加载
+# 开启动态加载后如何部署
 
 [公共路径(public path)](https://webpack.docschina.org/guides/public-path/#src/components/Sidebar/Sidebar.jsx)
 

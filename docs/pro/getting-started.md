@@ -4,17 +4,6 @@ order: 1
 category: ICE Design Pro
 ---
 
-# 开始使用
-
-<p align="center">
-  <a href="https://alibaba.github.io/ice">
-    <img alt="飞冰" src="https://user-images.githubusercontent.com/677114/40338709-3c75fe4a-5da9-11e8-9874-c17445ed673b.png" width="140">
-  </a>
-</p>
-<p align="center">让前端开发简单而友好</p>
-
----
-
 ## 简介
 
 基于海量高质量可复用区块，通过 GUI 工具快速搭建的一套中后台模板。

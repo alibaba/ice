@@ -1,0 +1,47 @@
+<style>
+  .container {
+    text-align: center;
+    color: #666;
+    width: 750rpx;
+    height: 1334rpx;
+  }
+
+  .header {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20rpx;
+  }
+
+  .title {
+    font-size: 32rpx;
+    color: #333;
+  }
+
+  .logo {
+    width: 120rpx;
+    height: 120rpx;
+  }
+</style>
+
+<template>
+  <scroll-view class="container">
+    <view class="header">
+      <image class="logo" :src="logo"></image>
+      <text class="title">Welcome to Miniapp</text>
+    </view>
+  </scroll-view>
+</template>
+
+<script>
+  export default {
+    components: {},
+    data() {
+      return {
+        logo: 'https://gw.alicdn.com/tfs/TB1h5v2ikvoK1RjSZFwXXciCFXa-256-256.png',
+      };
+    },
+  };
+</script>

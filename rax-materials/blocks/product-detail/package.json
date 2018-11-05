@@ -1,0 +1,32 @@
+{
+  "name": "@rax-materials/product-detail-block",
+  "version": "0.2.6",
+  "description": "程序应用列表",
+  "author": "noyobo<noyobo@gmail.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/rax-materials/blocks/product-detail"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "miniapp",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "blockConfig": {
+    "name": "product-detail",
+    "title": "程序应用列表",
+    "categories": [
+      "信息展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1aESrXwHqK1RjSZFEXXcGMXXa-750-276.png"
+  }
+}

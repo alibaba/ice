@@ -1,0 +1,65 @@
+<style>
+  .category-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .category-item {
+    width: 20%;
+    height: 134rpx;
+    padding: 6rpx 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cover-wrapper {
+    height: 96rpx;
+    padding-bottom: 10rpx;
+  }
+
+  .cover {
+    width: 122rpx;
+    height: 96rpx;
+  }
+
+  .text {
+    font-size: 24rpx;
+    color: #666;
+  }
+</style>
+
+<template>
+  <view class="category-list">
+    <view class="category-item" v-for="item in items">
+      <view class="cover-wrapper">
+        <image class="cover" v-bind:src="item.icon"></image>
+      </view>
+      <text class="text">{{item.text}}</text>
+    </view>
+  </view>
+</template>
+
+<script>
+
+  export default {
+    data() {
+      return {
+        items: [
+          { text: '天猫', url: 'new', icon: 'https://gw.alicdn.com/tps/TB1d30fPVXXXXbGXXXXXXXXXXXX-183-144.png' },
+          { text: '聚划算', url: 'new', icon: 'https://gw.alicdn.com/tfs/TB1lZyXcQyWBuNjy0FpXXassXXa-183-144.png' },
+          { text: '天猫国际', url: 'new', icon: 'https://gw.alicdn.com/tfs/TB163FbPVXXXXcKXXXXXXXXXXXX-183-144.png' },
+          { text: '外卖', url: 'new', icon: 'https://gw.alicdn.com/tps/TB1eXc7PFXXXXb4XpXXXXXXXXXX-183-144.png' },
+          { text: '天猫超市', url: 'new', icon: 'https://gw.alicdn.com/tfs/TB1PDDqetzJ8KJjSspkXXbF7VXa-183-144.png' },
+          { text: '充值中心', url: 'new', icon: 'https://gw.alicdn.com/tfs/TB1282DexGYBuNjy0FnXXX5lpXa-183-144.png' },
+          { text: '飞猪旅行', url: 'new', icon: 'https://gw.alicdn.com/tfs/TB19RMHvqmWBuNjy1XaXXXCbXXa-183-144.png' },
+          { text: '领金币', url: 'new', icon: 'https://gw.alicdn.com/tfs/TB18leuChGYBuNjy0FnXXX5lpXa-183-144.png' },
+          { text: '拍卖', url: 'new', icon: 'https://gw.alicdn.com/tfs/TB1JEfbQFXXXXaGXVXXXXXXXXXX-183-144.png' },
+          { text: '分类', url: 'new', icon: 'https://gw.alicdn.com/tfs/TB11MUWSpXXXXa2apXXXXXXXXXX-183-144.png' },
+        ]
+      }
+    },
+  };
+</script>

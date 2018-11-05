@@ -1,0 +1,32 @@
+{
+  "name": "@rax-materials/category-window-block",
+  "version": "0.2.6",
+  "description": "分类应用橱窗",
+  "author": "noyobo<noyobo@gmail.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/rax-materials/blocks/category-window"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "miniapp",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "blockConfig": {
+    "name": "category-window",
+    "title": "分类橱窗",
+    "categories": [
+      "信息展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB17MFftiMnBKNjSZFoXXbOSFXa-750-292.png"
+  }
+}

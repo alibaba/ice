@@ -28,10 +28,8 @@ module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
   const plugins = [
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
-      filename: process.env.BUILD_HASH
-        ? 'css/[name].[hash:6].css'
-        : 'css/[name].css',
-      chunkFilename: process.env.BUILD_HASH
+      filename: process.env.HASH ? 'css/[name].[hash:6].css' : 'css/[name].css',
+      chunkFilename: process.env.HASH
         ? 'css/[id].[hash:6].css'
         : 'css/[id].css',
     }),
@@ -70,7 +68,7 @@ module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
 
   if (paths.publicUrl === './') {
     console.log(
-      colors.yellow('Info:'),
+      colors.green('Info:'),
       '离线化构建项目，自动下载网络资源，请耐心等待'
     );
     plugins.push(
@@ -129,7 +127,7 @@ module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
   if (skinOverridePath && fs.existsSync(skinOverridePath)) {
     // eslint-disable-next-line no-console
     console.log(
-      colors.yellow('Info:'),
+      colors.green('Info:'),
       '皮肤 override 文件存在',
       path.join(themePackage, 'override.scss')
     );

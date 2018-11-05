@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Loading } from '@icedesign/base';
-import './main.scss';
 
 export default class Container extends Component {
   static displayName = 'Container';

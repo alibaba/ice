@@ -1,8 +1,8 @@
-'use strict';
-
+/* eslint new-cap:0, no-unused-expressions:0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import schema from 'async-validator';
+import { getParams } from './utils';
 
 const REG_KEY = /\[(['"a-z_A-Z0-9]*)\]|\./gi;
 
@@ -23,24 +23,23 @@ export default class IceFormBinderWrapper extends Component {
      */
     value: PropTypes.object,
     /**
-     * 当前表单元素变更时触发
-     */
+     * 当前表单元素变更时触发 */
     onChange: PropTypes.func,
   };
 
   static defaultProps = {
-    value: undefined,
-    scrollErrorFieldTopOffset: 37.5,
-    enableScrollErrorField: true,
+    value: {},
+    scrollErrorFieldTopOffset: 0,
+    enableScrollErrorField: false,
     onChange: () => {},
   };
 
   static childContextTypes = {
     getter: PropTypes.func,
+    setter: PropTypes.func,
     getError: PropTypes.func,
     addValidate: PropTypes.func,
     removeValidate: PropTypes.func,
-    setter: PropTypes.func,
     validate: PropTypes.func,
   };
 
@@ -58,14 +57,13 @@ export default class IceFormBinderWrapper extends Component {
   constructor(props) {
     super(props);
 
-    // all rules cache
     this.validateRules = {};
-    // scroll to the position when error happened
+
     this.validateRefs = {};
 
     this.state = {
-      formErrors: [],
       value: props.value || {},
+      errors: [],
     };
   }
 
@@ -73,7 +71,7 @@ export default class IceFormBinderWrapper extends Component {
     if ('value' in nextProps) {
       this.setState({
         value: nextProps.value || {},
-      }, this.validateAll);
+      });
     }
   }
 
@@ -87,91 +85,107 @@ export default class IceFormBinderWrapper extends Component {
     delete this.validateRefs[path];
   };
 
-  getter = (path) => {
-    const value = this.state.value;
-    // from happy getter https://github.com/happy-codes/happy-getter/blob/master/src/index.js
-    const pathArr = path.split(REG_KEY).filter((item) => !!item);
-    const result = pathArr.reduce(
-      (result, currentPath, currentIndex) => {
-        if (!result.errorPath) {
-          // get value
-          let key = currentPath.replace(/[\'\"]/gi, '');
-          result.value = result.value[key];
-
-          // check value
-          if (currentIndex !== pathArr.length - 1) {
-            // can not get the next value
-            const currentValueType = Object.prototype.toString.call(
-              result.value
-            );
+  getter = (name) => {
+    if (!name) {
+      throw new Error(
+        'The name attribute is required in <FormBinder> component'
+      );
+    }
+    const { value } = this.state;
+    const arr = name.split(REG_KEY).filter((item) => !!item);
+    const result = arr.reduce(
+      (prev, curr, currIndex) => {
+        if (!prev.errorName) {
+          const key = curr.replace(/[\'\"]/gi, '');
+          prev.value = prev.value[key];
+          if (currIndex !== arr.length - 1) {
+            const currentValueType = Object.prototype.toString.call(prev.value);
             if (/String|Number|Boolean|Null|Undefined/.test(currentValueType)) {
-              result.errorPath = currentPath;
+              prev.errorName = curr;
             }
           }
         }
 
-        return result;
+        return prev;
       },
-      { value, errorPath: null }
+      { value, errorName: null }
     );
 
     return result.value;
   };
 
-  setter = (path, newValue) => {
-    let value = this.state.value;
-    const pathArr = path.split(REG_KEY).filter((item) => !!item);
+  setter = (name, newValue) => {
+    const { value } = this.state;
+    const arr = name.split(REG_KEY).filter((item) => !!item);
 
-    pathArr.reduce((pointer, currentPath, currentIndex) => {
-      if (pathArr.length === currentIndex + 1) {
-        // last one
-        pointer[currentPath] = newValue;
+    arr.reduce((prev, curr, currentIndex) => {
+      if (arr.length === currentIndex + 1) {
+        prev[curr] = newValue;
       }
-      return pointer[currentPath];
+
+      return prev[curr];
     }, value);
 
-    // state already update
     this.setState({}, () => {
-      this.props.onChange && this.props.onChange(this.state.value);
+      if (this.props.onChange) {
+        this.props.onChange(value);
+      }
     });
   };
 
-  validate = (path, rules = []) => {
-    let validator = new schema({ [path]: rules });
+  validate = (name, rules = []) => {
+    const validator = new schema({ [name]: rules });
 
-    validator.validate({ [path]: this.getter(path) }, (errors) => {
+    validator.validate({ [name]: this.getter(name) }, (errors) => {
       if (errors && errors.length > 0) {
         this.setState((state) => {
-          let formErrors = state.formErrors;
-          formErrors = formErrors.filter(
+          const formErrors = state.errors.filter(
             (error) => error.field !== errors[0].field
           );
           Array.prototype.push.apply(formErrors, errors);
-          return { formErrors: formErrors };
+          return { errors: formErrors };
         });
       } else {
         this.setState({
-          formErrors: this.state.formErrors.filter(
-            (error) => error.field !== path
-          ),
+          errors: this.state.errors.filter((error) => error.field !== name),
         });
       }
-
-      validator = null;
     });
   };
 
   validateAll = (cb) => {
-    let validator = new schema(this.validateRules);
-    let needValidateValues = {};
-    Object.keys(this.validateRules).forEach((path) => {
-      needValidateValues[path] = this.getter(path);
+   this.validateFields(cb);
+  };
+
+  validateFields = (ns, opt, cb) => {
+    const { names, callback, options } = getParams(ns, opt, cb);
+    const needValidateValues = {};
+
+    let needValidateRules = {};
+    if (Array.isArray(names)) {
+      Object.keys(this.validateRules).forEach((name) => {
+        if (names.includes(name)) {
+          needValidateRules[name] = this.validateRules[name];
+        }
+      });
+    } else {
+      needValidateRules = this.validateRules;
+    }
+
+    Object.keys(needValidateRules).forEach((name) => {
+      needValidateValues[name] = this.getter(name);
     });
+
+    // 当数据不符合校验规则时，在 validator.validate 的回调函数中，就可以得到相应的错误信息
+    // https://github.com/yiminghe/async-validator#usage
+    const validator = new schema(needValidateRules);
     validator.validate(needValidateValues, (errors) => {
-      if (cb && typeof cb === 'function') {
-        cb(errors, this.state.value);
+      // 校验时的回调
+      if (callback && typeof callback === 'function') {
+        callback(errors, this.state.value);
       }
 
+      // 报错后滚动到对应的错误位置
       if (this.props.enableScrollErrorField && errors && errors.length > 0) {
         // todo 默认定位到第一个，最好有报错动效
         this.validateRefs[errors[0].field].scrollIntoView &&
@@ -182,25 +196,26 @@ export default class IceFormBinderWrapper extends Component {
         );
       }
 
+      // 表单域错误处理
       if (errors) {
-        this.setState({formErrors: errors});
+        this.setState({ errors });
       } else {
-        this.setState({formErrors: []});
+        this.setState({ errors: [] });
       }
     });
   };
 
   getError = (path) => {
-    const formErrors = this.state.formErrors;
-    if (!formErrors.length) {
+    const { errors } = this.state;
+    if (!errors.length) {
       return [];
     }
-    return formErrors.filter((error) => {
+    return errors.filter((error) => {
       return error.field === path;
     });
   };
 
   render() {
-    return React.Children.only(this.props.children);
+    return this.props.children;
   }
 }
