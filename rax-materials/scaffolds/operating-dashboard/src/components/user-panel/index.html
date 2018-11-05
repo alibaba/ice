@@ -1,0 +1,71 @@
+<style>
+  .wrapper {
+    background-color: #fff;
+    margin-bottom: 20rpx;
+  }
+
+  .avatar {
+    width: 100rpx;
+    height: 100rpx;
+    display: block;
+  }
+
+  .user-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20rpx;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    padding-left: 10rpx;
+    flex: auto;
+  }
+
+  .name {
+    font-size: 28rpx;
+    color: #333;
+  }
+
+  .desc {
+    font-size: 24rpx;
+    color: #999;
+  }
+
+  .enter {
+    width: 40rpx;
+    height: 40rpx;
+  }
+</style>
+
+<template>
+  <view class="wrapper">
+    <view class="user-panel">
+      <view>
+        <image class="avatar" :src="icons.avatar" />
+      </view>
+      <view class="user-info">
+        <text class="name">淘小宝</text>
+        <text class="desc">这个个家伙很懒什么都没留下</text>
+      </view>
+      <image class="enter" :src="icons.enter" />
+    </view>
+  </view>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        icons: {
+          avatar: 'https://gw.alicdn.com/tfs/TB1wyvUimzqK1RjSZPcXXbTepXa-80-80.png',
+          enter: 'https://gw.alicdn.com/tfs/TB1yzzWihTpK1RjSZFGXXcHqFXa-200-200.png'
+        },
+      }
+    },
+  };
+</script>

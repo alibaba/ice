@@ -1,0 +1,36 @@
+{
+  "name": "@icedesign/list",
+  "version": "0.1.9",
+  "description": "列表组件",
+  "main": "lib/index.js",
+  "files": [
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/components/list"
+  },
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "component"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "^16.5.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "ice-devtools": "latest",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  }
+}

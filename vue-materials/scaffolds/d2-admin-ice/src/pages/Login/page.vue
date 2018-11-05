@@ -9,7 +9,7 @@
       <!-- 表单部分 -->
       <div class="form-group">
         <el-card>
-          <el-form ref="loginForm" label-position="top" :rules="rules" :model="formLogin">
+          <el-form ref="loginForm" label-position="top" :rules="rules" :model="formLogin" size="default">
             <el-form-item  prop="username">
               <el-input type="text" v-model="formLogin.username" placeholder="用户名">
                 <i slot="prepend" class="fa fa-user-circle-o"></i>
@@ -28,12 +28,12 @@
                 </template>
               </el-input>
             </el-form-item>
-            <el-button @click="submit" type="primary" class="button-login">登录</el-button>
+            <el-button size="default" @click="submit" type="primary" class="button-login">登录</el-button>
           </el-form>
         </el-card>
       </div>
-      <!-- 快速登陆按钮 -->
-      <el-button type="info" class="button-help" @click="dialogVisible = true">
+      <!-- 快速登录按钮 -->
+      <el-button size="default" type="info" class="button-help" @click="dialogVisible = true">
         快速选择用户（测试功能）
       </el-button>
     </div>
@@ -118,7 +118,7 @@ export default {
       'login'
     ]),
     /**
-     * @description 接收选择一个用户快速登陆的事件
+     * @description 接收选择一个用户快速登录的事件
      * @param {Object} user 用户信息
      */
     handleUserBtnClick (user) {
@@ -129,11 +129,11 @@ export default {
     /**
      * @description 提交表单
      */
-    // 提交登陆信息
+    // 提交登录信息
     submit () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          // 登陆
+          // 登录
           // 注意 这里的演示没有传验证码
           // 具体需要传递的数据请自行修改代码
           this.login({
@@ -142,7 +142,7 @@ export default {
             password: this.formLogin.password
           })
         } else {
-          // 登陆表单校验失败
+          // 登录表单校验失败
           this.$message.error('表单校验失败')
         }
       })

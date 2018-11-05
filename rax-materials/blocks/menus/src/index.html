@@ -1,0 +1,79 @@
+<style>
+  .menus {
+    background-color: #fff;
+    margin-bottom: 20rpx;
+  }
+
+  .menu-item {
+    height: 80rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1rpx solid #eee;
+    padding: 0rpx 20rpx;
+  }
+
+  .menu-item-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .icon {
+    width: 50rpx;
+    height: 50rpx;
+  }
+
+  .enter {
+    width: 40rpx;
+    height: 40rpx;
+  }
+
+  .name {
+    font-size: 24rpx;
+    padding-left: 10rpx;
+  }
+</style>
+
+<template>
+  <view class="menus">
+    <view class="menu-item" v-for="menu in menus">
+      <view class="menu-item-name">
+        <image class="icon" :src="menu.icon" />
+        <text class="name">{{menu.name}}</text>
+      </view>
+      <image class="enter" :src="icons.enter" />
+    </view>
+  </view>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        icons: {
+          enter: 'https://gw.alicdn.com/tfs/TB1M72ZikvoK1RjSZPfXXXPKFXa-200-200.png'
+        },
+        menus: [{
+          icon: 'https://gw.alicdn.com/tfs/TB1d.H1iirpK1RjSZFhXXXSdXXa-200-200.png',
+          name: '账号与安全',
+        }, {
+          icon: 'https://gw.alicdn.com/tfs/TB1z4rTib2pK1RjSZFsXXaNlXXa-200-200.png',
+          name: '旺旺聊天设置',
+        }, {
+          icon: 'https://gw.alicdn.com/tfs/TB1KxYYikvoK1RjSZFNXXcxMVXa-200-200.png',
+          name: '消息提醒及订阅',
+        }, {
+          icon: 'https://gw.alicdn.com/tfs/TB1yWTZilLoK1RjSZFuXXXn0XXa-200-200.png',
+          name: '工作台设置',
+        }]
+      }
+    },
+    methods: {
+      onInput(event) {
+        console.log(event.detail.value)
+      }
+    }
+  };
+</script>

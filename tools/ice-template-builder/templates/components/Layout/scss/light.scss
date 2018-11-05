@@ -1,0 +1,14 @@
+@import '~@icedesign/skin/variables.scss';
+
+// Basic color variables
+$custom-layout-bg: #fafafa;
+$ice-body-bg: $color-white !default;
+
+.ice-design-layout-light.ice-design-layout {
+  background-image: url('../images/light_bg.png');
+  background-color: $custom-layout-bg;
+}
+
+$theme: 'light';
+
+@import './base.scss';

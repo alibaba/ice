@@ -10,22 +10,29 @@ export default class RegisterForm extends Component {
 
   static defaultProps = {};
 
-  checkPasswd = (rule, values, callback) => {
-    if (!values) {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: {},
+    };
+  }
+
+  checkPasswd = (rule, value, callback) => {
+    if (!value) {
       callback('请输入正确的密码');
-    } else if (values.length < 8) {
+    } else if (value.length < 8) {
       callback('密码必须大于8位');
-    } else if (values.length > 16) {
+    } else if (value.length > 16) {
       callback('密码必须小于16位');
     } else {
       callback();
     }
   };
 
-  checkPasswd2 = (rule, values, callback, stateValues) => {
-    if (!values) {
+  checkPasswd2 = (rule, value, callback, source) => {
+    if (!value) {
       callback('请输入正确的密码');
-    } else if (values && values !== stateValues.passwd) {
+    } else if (value && this.state.value.passwd !== source.rePasswd) {
       callback('两次输入密码不一致');
     } else {
       callback();
@@ -34,6 +41,9 @@ export default class RegisterForm extends Component {
 
   formChange = (value) => {
     console.log('formChange:', value);
+    this.setState({
+      value,
+    });
   };
 
   handleSubmit = (errors, values) => {
@@ -47,6 +57,7 @@ export default class RegisterForm extends Component {
   };
 
   render() {
+    const self = this;
     const config = [
       {
         label: '用户名',
@@ -86,7 +97,9 @@ export default class RegisterForm extends Component {
         formBinderProps: {
           name: 'passwd',
           required: true,
-          validator: this.checkPasswd,
+          validator(rule, value, callback, source) {
+            self.checkPasswd(rule, value, callback, source);
+          },
         },
       },
       {
@@ -100,8 +113,9 @@ export default class RegisterForm extends Component {
         formBinderProps: {
           name: 'rePasswd',
           required: true,
-          validator: (rule, values, callback) =>
-            this.checkPasswd2(rule, values, callback, this.state.value),
+          validator(rule, value, callback, source) {
+            self.checkPasswd2(rule, value, callback, source);
+          },
         },
       },
       {

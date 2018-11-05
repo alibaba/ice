@@ -3,14 +3,7 @@ import { Icon, Tab } from '@icedesign/base';
 import cx from 'classnames';
 
 import PreviewLayout from '../PreviewLayout';
-
-// import BasicForm from '../Form/BasicForm';
-// import AsideForm from '../Form/AsideForm';
-// import HeaderForm from '../Form/HeaderForm';
-// import FooterForm from '../Form/FooterForm';
-
 import * as BuilderForm from '../Form';
-
 import './LayoutBuilder.scss';
 
 const TabPane = Tab.TabPane;

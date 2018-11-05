@@ -46,15 +46,14 @@ module.exports = (entry) => {
     });
   }
 
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    process.env.HOT_RELOAD !== 'false'
-  ) {
+  if (process.env.NODE_ENV !== 'production' && !process.env.DISABLED_RELOAD) {
     entries = enhanceEntries(entries, hotDevClientPath);
   }
 
   // Note：https://github.com/alibaba/ice/pull/834
-  entries = enhanceEntries(entries, '@babel/polyfill');
+  if (process.env.INJECT_BABEL !== 'runtime') {
+    entries = enhanceEntries(entries, require.resolve('@babel/polyfill'));
+  }
 
   return entries;
 };

@@ -1,0 +1,32 @@
+{
+  "name": "@rax-materials/product-list-block",
+  "version": "0.2.7",
+  "description": "宝贝商品列表，带 tab 切换",
+  "author": "noyobo<noyobo@gmail.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/rax-materials/blocks/product-list"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "miniapp",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "blockConfig": {
+    "name": "product-list",
+    "title": "宝贝商品列表",
+    "categories": [
+      "列表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1teyuXAvoK1RjSZFNXXcxMVXa-750-680.png"
+  }
+}

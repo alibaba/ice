@@ -1,0 +1,62 @@
+{
+  "name": "@icedesign/government-management-admin",
+  "version": "1.0.0",
+  "description": "该模板内置了丰富的区块，适用于政府类风格的管理类系统，使用时需要根据需求进行删除和添加",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-government-management-admin/index.html",
+  "dependencies": {
+    "@antv/data-set": "^0.9.6",
+    "@icedesign/base": "^0.2.5",
+    "@icedesign/container": "^0.1.4",
+    "@icedesign/form-binder": "^0.1.7",
+    "@icedesign/icon": "^0.1.1",
+    "@icedesign/img": "^0.1.0",
+    "@icedesign/layout": "^0.1.0",
+    "@icedesign/menu": "^0.1.0",
+    "@icedesign/skin": "^0.1.0",
+    "bizcharts": "^3.2.4",
+    "classnames": "^2.2.5",
+    "foundation-symbol": "^0.1.0",
+    "prop-types": "^15.5.8",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.7.1"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/skin",
+    "entry": "src/index.js",
+    "localization": false
+  },
+  "themeConfig": {
+    "primaryColor": "#385af5"
+  },
+  "scaffoldConfig": {
+    "name": "ice-government-management-admin",
+    "title": "ICE Government Management Admin",
+    "categories": [
+      "行业领域"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1CXaEhkvoK1RjSZFNXXcxMVXa-2860-1520.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

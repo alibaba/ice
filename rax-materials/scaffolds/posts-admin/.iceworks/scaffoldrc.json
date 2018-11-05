@@ -1,0 +1,7 @@
+{
+  "version": "0.1.0",
+  "manifestFilePath": "${workspaceRoot}/manifest.json",
+  "templates": {
+    "pageFolder": "${workspaceRoot}/.iceworks/pageTemplate/"
+  }
+}

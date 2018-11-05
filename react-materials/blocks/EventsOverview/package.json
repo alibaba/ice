@@ -1,0 +1,39 @@
+{
+  "name": "@icedesign/events-overview-block",
+  "version": "1.0.0",
+  "description": "适用于展示活动数据概览",
+  "homepage": "https://alibaba.github.io/ice/block/events-overview/preview",
+  "author": "",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/EventsOverview"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.2.5",
+    "@icedesign/container": "^0.1.7",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "events-overview",
+    "title": "活动概览",
+    "categories": [
+      "数据展示"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1G1eihgHqK1RjSZJnXXbNLpXa-2704-272.png"
+  }
+}

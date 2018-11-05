@@ -1,0 +1,32 @@
+{
+  "name": "@rax-materials/app-list-block",
+  "version": "0.2.6",
+  "description": "程序应用列表",
+  "author": "noyobo<noyobo@gmail.com>",
+  "files": [
+    "src/",
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/rax-materials/blocks/app-list"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "miniapp",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "blockConfig": {
+    "name": "app-list",
+    "title": "程序应用列表",
+    "categories": [
+      "列表"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB14IyatiMnBKNjSZFzXXc_qVXa-750-884.png"
+  }
+}

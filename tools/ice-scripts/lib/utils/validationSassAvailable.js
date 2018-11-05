@@ -10,8 +10,8 @@ module.exports = function() {
       console.error(err.message);
       console.log('');
       console.log(colors.red('Error:'), 'ice-scripts 已终止');
-      console.log(colors.yellow('Info:'), '当前 node-sass 无法运行');
-      console.log(colors.yellow('Info:'), '您可以尝试执行以下命令重装修复:');
+      console.log(colors.green('Info:'), '当前 node-sass 无法运行');
+      console.log(colors.green('Info:'), '您可以尝试执行以下命令重装修复:');
       console.log('    ', colors.magenta('npm install node-sass'));
       console.log('');
       reject();

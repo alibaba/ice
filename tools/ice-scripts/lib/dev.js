@@ -61,8 +61,8 @@ module.exports = async function(args, subprocess) {
   const packageData = require(paths.appPackageJson);
   // get ice config by package.ice
 
-  if (process.env.HOT_RELOAD == 'false') {
-    console.log(chalk.blue('Info:'), '关闭了 hot-reload');
+  if (process.env.DISABLED_RELOAD) {
+    console.log(chalk.yellow('Warn:'), '关闭了热更新（hot-reload）功能');
   }
   const webpackConfig = getWebpackConfigDev({
     entry: entries,
@@ -105,7 +105,7 @@ module.exports = async function(args, subprocess) {
 
   devMiddleware(devServer.app, proxyConfig);
 
-  compiler.plugin('done', (stats) => {
+  compiler.hooks.done.tap('done', (stats) => {
     if (isInteractive) {
       clearConsole();
     }
@@ -206,7 +206,7 @@ module.exports = async function(args, subprocess) {
     }
   });
 
-  compiler.plugin('invalid', () => {
+  compiler.hooks.invalid.tap('invalid', () => {
     if (isInteractive) {
       clearConsole();
     }

@@ -1,0 +1,41 @@
+/* GLOBAL */
+html,
+body {
+  background-color: $ice-body-bg;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ice-design-layout-#{$theme} {
+  &.ice-design-layout {
+    min-height: 100vh;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  .ice-layout {
+    padding: 0 20px;
+    background: transparent;
+  }
+
+  .ice-layout-main {
+    padding: 0 0 0 20px;
+  }
+
+  .ice-layout-section {
+    margin: 20px 0 0;
+  }
+}
+
+.ice-design-boxed-layout {
+  .ice-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+.ice-design-fluid-layout {
+  .ice-layout {
+    width: 100%;
+  }
+}

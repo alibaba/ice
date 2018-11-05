@@ -1,6 +1,14 @@
 import { version } from '../package'
 
-const setting = {
+export default {
+  // 快捷键
+  // 支持快捷键 例如 ctrl+shift+s
+  hotkey: {
+    search: {
+      open: 's',
+      close: 'esc'
+    }
+  },
   // 侧边栏默认折叠状态
   menu: {
     asideCollapse: false
@@ -19,8 +27,11 @@ const setting = {
   },
   // 版本
   releases: {
-    version: version,
-    api: 'https://api.github.com/repos/FairyEver/d2-admin/releases/latest'
+    version
+  },
+  // 菜单搜索
+  search: {
+    enable: true
   },
   // 注册的主题
   theme: {
@@ -65,5 +76,3 @@ const setting = {
     }
   }
 }
-
-export default setting

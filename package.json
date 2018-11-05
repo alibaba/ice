@@ -7,7 +7,9 @@
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
     "sync": "node scripts/sync-db.js",
-    "generate": "ice-devtools generate && node ./scripts/generate-docs-database",
+    "generate:materials": "ice-devtools generate",
+    "generate:docs": "node ./scripts/generate-docs-database",
+    "generate": "npm run generate:materials && npm run generate:docs",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js .vue .jsx react-materials vue-materials",
     "format": "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffolds/*/src/**/*.js scaffolds/*/src/**/*.jsx tools/**/*.js --write"
@@ -73,6 +75,11 @@
     {
       "directory": "angular-materials",
       "type": "angular"
+    },
+    {
+      "directory": "rax-materials",
+      "platform": "mobile",
+      "type": "rax"
     }
   ]
 }

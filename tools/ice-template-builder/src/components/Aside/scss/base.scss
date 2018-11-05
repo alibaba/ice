@@ -1,0 +1,69 @@
+/* ASIDE */
+.ice-layout-builder {
+  .ice-layout-theme-#{$theme} {
+    &.ice-layout-aside {
+      margin-top: 20px;
+      background: $ice-aside-bg;
+
+      .ice-menu {
+        background: $ice-aside-menu-bg;
+        &.ice-menu-inline .ice-icon-stable {
+          font-weight: normal;
+        }
+      }
+
+      .ice-menu.ice-menu-root.ice-menu-inline
+        > .ice-menu-submenu
+        > .ice-menu-submenu-title,
+      .ice-menu.ice-menu-root.ice-menu-inline > .ice-menu-item {
+        margin-bottom: 1px;
+        color: $ice-aside-text-color;
+        font-weight: bold;
+      }
+
+      .ice-menu.ice-menu-root .ice-menu-inline > .ice-menu-item {
+        margin-bottom: 1px;
+        color: $ice-aside-sub-text-color;
+      }
+
+      .ice-menu .ice-menu-item > a:hover,
+      .ice-menu.ice-menu-horizontal > .ice-menu-item:hover,
+      .ice-menu.ice-menu-root > .ice-menu-item > a:hover {
+        color: $ice-aside-text-hover-color;
+      }
+
+      .ice-menu:not(.ice-menu-horizontal)
+        .ice-menu-item-selected:not(:first-child) {
+        border-radius: 6px;
+        background: transparent !important;
+      }
+
+      .ice-menu .ice-menu-submenu-vertical > .ice-menu:after {
+        background: $ice-aside-menu-submenu-vertical-bg;
+      }
+
+      .ice-menu:not(.ice-menu-horizontal) .ice-menu-item-selected:before,
+      .ice-menu-sub .ice-menu-item:hover:before {
+        width: 0;
+      }
+
+      .ice-menu-item-selected > a {
+        color: $ice-aside-menu-item-selected-text-color;
+      }
+
+      .ice-menu-item:hover {
+        background: $ice-aside-menu-submenu-item-hover-bg;
+        color: $ice-aside-text-hover-color;
+      }
+    }
+
+    .collapse-btn {
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+      color: $ice-collapse-btn-text-color;
+    }
+  }
+}

@@ -1,0 +1,86 @@
+<style>
+  .container {
+    margin-bottom: 20rpx;
+    width: 750rpx;
+    height: 1334rpx;
+  }
+
+  .draftItem {
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    padding: 20rpx 30rpx;
+    margin: 30rpx 0;
+  }
+
+  .itemBody {
+    display: flex;
+    flex-direction: column;
+    width: 67%;
+  }
+
+  .itemTitle {
+    font-size: 28rpx;
+    margin-bottom: 16rpx;
+  }
+
+  .itemDesc {
+    color: #666;
+    font-size: 22rpx;
+  }
+
+  .itemImage {
+    width: 198rpx;
+    height: 124rpx;
+  }
+</style>
+
+<template>
+  <view class="container">
+    <view class="content">
+      <title title="草稿箱" />
+      <view class="draftItem" v-for="post in posts">
+        <view class="itemBody">
+          <text class="itemTitle">{{post.title}}</text>
+          <text class="itemDesc">{{post.desc}}</text>
+        </view>
+        <image class="itemImage" :src="post.image" />
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import title from '../../components/title/index';
+  export default {
+    components: {
+      title
+    },
+    data() {
+      return {
+        posts: [
+          {
+            title: "开发指引",
+            desc: "帮助开发者快速了解淘宝开放平台的功能",
+            image: "https://img.alicdn.com/tfs/TB1kGNFFDtYBeNjy1XdXXXXyVXa-620-380.png"
+          },
+          {
+            title: "设计指南",
+            desc: "帮助轻应用实现简单友好、一致的用户体验",
+            image: "https://img.alicdn.com/tfs/TB1RvC2FkyWBuNjy0FpXXassXXa-620-380.png"
+          },
+          {
+            title: "组件体系",
+            desc: "提供了一系列基础组件，通过组合进行高效开发",
+            image: "https://img.alicdn.com/tfs/TB1AJNFFDtYBeNjy1XdXXXXyVXa-620-380.png"
+          },
+          {
+            title: "框架设计",
+            desc: "帮助开发者构建灵活、可扩展的应用程序",
+            image: "https://img.alicdn.com/tfs/TB1cZLXFeuSBuNjy1XcXXcYjFXa-620-380.png"
+          }
+        ]
+      }
+    }
+  }
+</script>
