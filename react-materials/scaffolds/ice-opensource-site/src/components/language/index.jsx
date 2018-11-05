@@ -15,17 +15,12 @@ class Language extends React.Component {
       oldLang = 'zh-cn';
     }
     const newPathname = pathname.replace(`${window.rootPath}/${oldLang}`, `${window.rootPath}/${language}`);
-    cookie.set('docsite_language', language, { expires: 365, path: '' });
+    cookie.set('docsite_language', language, { expires: 365 });
     window.location = newPathname;
   }
 
   getLanguage() {
-    let urlLang;
-    if (window.rootPath) {
-      urlLang = window.location.pathname.split('/')[2];
-    } else {
-      urlLang = window.location.pathname.split('/')[1];
-    }
+    const urlLang = window.location.pathname.replace(window.rootPath || '', '').split('/')[1];
     let language = this.props.lang || urlLang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
     // 防止链接被更改导致错误的cookie存储
     if (language !== 'en-us' && language !== 'zh-cn') {
@@ -33,7 +28,7 @@ class Language extends React.Component {
     }
     // 同步cookie语言版本
     if (language !== cookie.get('docsite_language')) {
-      cookie.set('docsite_language', language, { expires: 365, path: '' });
+      cookie.set('docsite_language', language, { expires: 365 });
     }
     return language;
   }
