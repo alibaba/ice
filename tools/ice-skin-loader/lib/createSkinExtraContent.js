@@ -39,9 +39,8 @@ function getVariableMappingString(key, value) {
     default:
       if (/icon\-content\-/.test(key)) {
         return `$${key}: ${JSON.stringify(value)};`;
-      } else {
-        return `$${key}: ${value};`;
       }
+      return `$${key}: ${value};`;
   }
 }
 
@@ -52,7 +51,8 @@ function createSkinExtraContent() {
   try {
     const pkg = getPackageContent();
     const themeConfig = Object.assign({}, pkg.themeConfig);
-    delete themeConfig.theme; // no need of theme
+    delete themeConfig.theme; // theme 由 webpack 的环境变量全局注入
+    delete themeConfig.cssPrefix; // cssPrefix 由 cssPrefixPlugin 注入
 
     const appendVariables = Object.keys(themeConfig)
       .map((key) => {
@@ -60,6 +60,7 @@ function createSkinExtraContent() {
         return getVariableMappingString(key, value);
       })
       .join('\n');
+
     return appendVariables;
   } catch (err) {
     console.log(err);
