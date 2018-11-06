@@ -56,6 +56,7 @@ module.exports = (buildConfig = {}) => {
     });
   }
 
+  // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
   const cssPublicUrl = paths.publicUrl === './' ? '../' : paths.publicUrl;
   return [
     {

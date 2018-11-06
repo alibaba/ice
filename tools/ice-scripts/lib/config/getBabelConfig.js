@@ -57,7 +57,7 @@ module.exports = (buildConfig = {}) => {
       '@babel/plugin-syntax-import-meta',
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       '@babel/plugin-proposal-json-strings',
-      process.env.INJECT_BABEL == 'runtime'
+      process.env.INJECT_BABEL === 'runtime'
         ? [
             '@babel/plugin-transform-runtime',
             {
