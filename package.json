@@ -7,9 +7,10 @@
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
     "sync": "node scripts/sync-db.js",
+    "generate:bizcomponents": "node scripts/generate-biz-components.js",
     "generate:materials": "ice-devtools generate",
     "generate:docs": "node ./scripts/generate-docs-database",
-    "generate": "npm run generate:materials && npm run generate:docs",
+    "generate": "npm run generate:materials && npm run generate:docs && npm run generate:bizcomponents",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js .vue .jsx react-materials vue-materials",
     "format": "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffolds/*/src/**/*.js scaffolds/*/src/**/*.jsx tools/**/*.js --write"

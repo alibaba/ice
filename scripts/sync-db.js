@@ -1,7 +1,7 @@
 const oss = require('ali-oss');
 const co = require('co');
 const { readdirSync, readFileSync, writeFile } = require('fs');
-const { resolve, join } = require('path');
+const path = require('path');
 const scaffolds = require('./scaffolds');
 
 if (
@@ -10,7 +10,7 @@ if (
   process.env.TRAVIS_BRANCH !== 'pre-depoly'
 ) {
   console.log('当前分支非 Master, 不执行物料源同步脚本');
-  console.log('TRAVIS_BRANCH=' + process.env.TRAVIS_BRANCH);
+  console.log(`TRAVIS_BRANCH=${process.env.TRAVIS_BRANCH}`);
   process.exit(0);
 }
 
@@ -27,18 +27,18 @@ const store = oss({
 });
 
 const assetsMap = {
-  "pre-depoly": "pre-assets",
-  "beta": "beta-assets",
-  "master": "assets"
-}
+  'pre-depoly': 'pre-assets',
+  beta: 'beta-assets',
+  master: 'assets',
+};
 
 console.log('start uploading');
 sortScaffoldMaterials()
-  .then((res) => {
-    const files = readdirSync(resolve(__dirname, '../build')).map(
+  .then(() => {
+    const files = readdirSync(path.resolve(__dirname, '../build')).map(
       (filename) => ({
-        from: resolve(__dirname, '../build', filename),
-        to:  join(assetsMap[process.env.TRAVIS_BRANCH], filename),
+        from: path.resolve(__dirname, '../build', filename),
+        to: path.join(assetsMap[process.env.TRAVIS_BRANCH], filename),
       })
     );
 
@@ -61,7 +61,11 @@ sortScaffoldMaterials()
  */
 function sortScaffoldMaterials() {
   return new Promise((resolve, reject) => {
-    const materialsPath = join(__dirname, '../build', 'react-materials.json');
+    const materialsPath = path.join(
+      __dirname,
+      '../build',
+      'react-materials.json'
+    );
     const materialsData = JSON.parse(readFileSync(materialsPath, 'utf-8'));
 
     const sortMaterialsData = [];
@@ -95,11 +99,10 @@ function createUploadTask(opts) {
   const { from, to } = opts;
 
   return co(store.put(to, from)).then((object = {}) => {
-    if (object.res && object.res.status == 200) {
+    if (object.res && object.res.status === 200) {
       console.log('upload ok', object.url);
       return true;
-    } else {
-      throw new Error('upload err:' + to);
     }
+    throw new Error(`upload err:${to}`);
   });
 }
