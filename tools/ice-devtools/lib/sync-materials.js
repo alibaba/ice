@@ -4,7 +4,7 @@ const pathExists = require('path-exists');
 const path = require('path');
 const fs = require('fs');
 const ora = require('ora');
-
+const colors = require('colors/safe')
 const {promisify} = require('util');
 const [readFile, writeFile] = [fs.readFile, fs.writeFile].map(fn => promisify(fn));
 
@@ -91,7 +91,7 @@ function requestAPI(materials) {
       return rp(options).then(function (body) {
         const {code} = body;
         if (code === 1) {
-          spin.stopAndPersist({symbol: '(￣▽￣)~* ', text: `${element.name} sync success`});
+          spin.stopAndPersist({symbol: colors.green('(￣▽￣)~* '), text: `${element.name} sync success`});
           return;
         }
         return Promise.reject({statusCode: 200, body});
@@ -100,9 +100,9 @@ function requestAPI(materials) {
           const {statusCode, response} = err;
           if (statusCode === 403 && response.body && response.body.code === 403) {
             clearToken();
-            spin.stopAndPersist({symbol: '(╯°□°）╯︵┻━┻ ', text: `token authorization fail, you can find your token at https://fusion.design`});
+            spin.stopAndPersist({symbol: colors.red('(╯°□°）╯︵┻━┻ '), text: `token authorization fail, you can find your token at https://fusion.design`});
           } else if (statusCode === 200) {
-            spin.stopAndPersist({symbol: '(╯°□°）╯︵┻━┻ ', text: `${element.name} sync fail for season: ${body.message}`});
+            spin.stopAndPersist({symbol: colors.red('(╯°□°）╯︵┻━┻ '), text: `${element.name} sync fail for season: ${body.message}`});
           } else {
             console.error('\n', err);
             spin.fail(`${element.name} sync fail: \n`);
