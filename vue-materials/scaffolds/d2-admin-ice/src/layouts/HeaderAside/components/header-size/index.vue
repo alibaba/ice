@@ -40,10 +40,7 @@ export default {
           // 清空缓存设置
           this.pageKeepAliveClean()
           // 刷新此页面
-          const { path, query } = this.$route
-          this.$router.replace({
-            path: '/redirect/' + JSON.stringify({ path, query })
-          })
+          this.$router.replace('/refresh')
         }
       },
       immediate: true
