@@ -8,12 +8,14 @@ const colors = require('colors/safe')
 const {promisify} = require('util');
 const [readFile, writeFile] = [fs.readFile, fs.writeFile].map(fn => promisify(fn));
 
-const BASE_URL = 'http://localhost:7001';
-// const BASE_URL = 'https://mc.fusion.design';
+// const BASE_URL = 'http://localhost:7001';
+const BASE_URL = 'https://mc.fusion.design';
 const AUTH_HEADER_KEY = 'x-auth-token';
 const BLOCK_URL = `${BASE_URL}/auth_api/v1/npm/block`;
 const SCALLFOLD_URL = `${BASE_URL}/auth_api/v1/npm/scaffold`;
 const TOKEN_PATH = path.join(__dirname, '../chore/.token');
+const debug = require('debug')('ice:sync-materials');
+
 async function tokenPrepare() {
   let token;
   const tokenExists = await pathExists(TOKEN_PATH);
@@ -88,13 +90,15 @@ function requestAPI(materials) {
         },
         json: true // Automatically stringifies the body to JSON
       }
+      debug('index: %s, \noptions: %j',index, options);
       return rp(options).then(function (body) {
+        debug('index: %s, body: %j', index, body);
         const {code} = body;
         if (code === 1) {
           spin.stopAndPersist({symbol: colors.green('(￣▽￣)~* '), text: `${element.name} sync success`});
           return;
         }
-        return Promise.reject({statusCode: 200, body});
+        return Promise.reject({statusCode: 200, response: {body}});
 
       }).catch(err => {
           const {statusCode, response} = err;
@@ -102,7 +106,7 @@ function requestAPI(materials) {
             clearToken();
             spin.stopAndPersist({symbol: colors.red('(╯°□°）╯︵┻━┻ '), text: `token authorization fail, you can find your token at https://fusion.design`});
           } else if (statusCode === 200) {
-            spin.stopAndPersist({symbol: colors.red('(╯°□°）╯︵┻━┻ '), text: `${element.name} sync fail for season: ${body.message}`});
+            spin.stopAndPersist({symbol: colors.red('(╯°□°）╯︵┻━┻ '), text: `${element.name} sync fail for season: ${response.body.message}`});
           } else {
             console.error('\n', err);
             spin.fail(`${element.name} sync fail: \n`);
@@ -113,7 +117,9 @@ function requestAPI(materials) {
     });
   }
 
-  return promise.then(() => spin.succeed('all done')).catch(() => spin.fail('sync fail'));
+  return promise.then(() => spin.succeed('all done')).catch((err) => {
+    spin.fail('sync fail')
+  });
 }
 
 
