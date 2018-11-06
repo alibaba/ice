@@ -2,6 +2,7 @@
  * 按照下载量和最新的规则对模板进行排序推荐
  */
 const scaffolds = [
+  'ice-opensource-site',
   'ice-customer-analysis-admin',
   'ice-voice-chat-admin',
   'ice-library-management-admin',

@@ -1,0 +1,104 @@
+@import '../../variables.scss';
+
+.footer-container {
+  background: #F8F8F8;
+  .footer-body {
+    max-width: $contentWidth;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 40px 40px 0;
+    @media screen and (max-width: $mobileWidth) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    img {
+      // display: block;
+      width: 125px;
+      height: 26px;
+      margin-bottom: 28px;
+      margin-right: 20px;
+      vertical-align: middle;
+    }
+    .cols-container {
+      margin-bottom: 60px;
+      .col {
+        display: inline-block;
+        box-sizing: border-box;
+        vertical-align: top;
+      }
+      .col-12 {
+        width: 50%;
+        padding-right: 125px;
+      }
+      .col-6 {
+        width: 25%;
+      }
+      h3 {
+        font-family: Avenir-Heavy;
+        font-size: 18px;
+        color: #333;
+        line-height: 18px;
+        margin-bottom: 20px;
+      }
+      p {
+        font-family: Avenir-Medium;
+        font-size: 12px;
+        color: #999;
+        line-height: 18px;
+      }
+      dl {
+        font-family: Avenir-Heavy;
+        line-height: 18px;
+      }
+      dt {
+        font-weight: bold;
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      dd {
+        padding: 0;
+        margin: 0;
+        a {
+          text-decoration: none;
+          display: block;
+          font-size: 14px;
+          color: #999;
+          margin: 10px 0;
+        }
+        a:hover {
+          color: $brandColor;
+        }
+      }
+    }
+    .copyright {
+      border-top: 1px solid #ccc;
+      min-height: 60px;
+      line-height: 20px;
+      text-align: center;
+      font-family: Avenir-Medium;
+      font-size: 12px;
+      color: #999;
+      display: flex;
+      align-items: center;
+      span {
+        display: inline-block;
+        margin: 0 auto;
+      } 
+    }
+  }
+}
+
+@media screen and (max-width: $mobileWidth) {
+  .footer-container {
+    .footer-body {
+      .cols-container {
+        .col {
+          width: 100%;
+          text-align: center;
+          padding: 0;
+        }
+      }
+    }
+  }
+}

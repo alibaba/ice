@@ -1,0 +1,121 @@
+@import '../../variables.scss';
+.sidemenu {
+  background: $sideMenuBgColor;
+  width: $sideMenuWidth;
+  position: relative;
+  display: inline-block;
+  padding: 20px 0;
+  .sidemenu-toggle {
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    width: 40px;
+    right: -40px;
+    height: 30px;
+    line-height: 30px;
+    background: $sideMenuBgColor;
+    border-radius: 0 4px 4px 0;
+    display: none;
+    img {
+      width: 16px;
+      text-align: center;
+      vertical-align: middle;
+    }
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    line-height: 0;
+  }
+  span, a {
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .menu-item-selected {
+    a {
+      background: white;
+    }
+    a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background-image:linear-gradient(0deg, $startColor 0%, $intermediateColor 51%, $endColor 100%);
+    }
+  }
+  .menu-item-level-1 {
+    & > span {
+      font-family: Avenir-Heavy;
+      font-size: 18px;
+      color: #333;
+      padding-left: 20px;
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+
+  .menu-item-level-2, .menu-item-level-3 {
+    cursor: pointer;
+    & > span, & > a {
+      font-family: Avenir-Medium;
+      font-size: 14px;
+      color: #666;
+      &:hover {
+        background: white;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 4px;
+          height: 100%;
+          background-image:linear-gradient(0deg, $startColor 0%, $intermediateColor 51%, $endColor 100%);
+        }
+      }
+    }
+  }
+
+  .menu-item-level-2 {
+    & > span, & > a {
+      padding-left: 40px;
+      height: 36px;
+      line-height: 36px;
+      img.menu-toggle {
+        float: right;
+        width: 13px;
+        height: 8px;
+        margin: 14px 20px 14px 0;
+      }
+    }
+  }
+  .menu-item-level-3 {
+    & > a {
+      padding-left: 60px;
+      height: 36px;
+      line-height: 36px;
+    }
+  }
+}
+
+@media screen and (max-width: $mobileWidth) {
+  .sidemenu {
+    width: 0;
+    .sidemenu-toggle {
+      display: inline-block;
+    }
+    &.sidemenu-open {
+      width: $sideMenuWidth;
+    }
+  }
+}
