@@ -1,0 +1,55 @@
+@import '../../variables.scss';
+@import '../../reset.scss';
+
+.blog-list-page {
+  .blog-container {
+    max-width: $contentWidth;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 50px 8% 80px;
+    .col {
+      display: inline-block;
+      box-sizing: border-box;
+      &-18 {
+        width: 75%;
+        border-right: 1px solid #CBCCCD;
+        padding-right: 6%;
+      }
+      &-6 {
+        width: 25%;
+        padding-left: 20px;
+        vertical-align: top;
+        h4 {
+          font-family: Avenir-Heavy;
+          font-size: 18px;
+          color: #333;
+          margin: 0 0 20px;
+        }
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          li {
+            width: 100%;
+            margin-bottom: 14px;
+            span {
+              font-family: Avenir-Medium;
+              font-size: 12px;
+              color: #666;
+            }
+          }
+        }
+      }
+    }
+    @media screen and (max-width: $mobileWidth){
+      .left-part {
+        width: 100%;
+        border-right: none;
+        padding-right: 0;
+      }
+      .right-part {
+        display: none;
+      }
+    }
+  }
+}
