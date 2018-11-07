@@ -22,16 +22,16 @@ function getconfig(cwd) {
     const templateContent = fs.readFileSync(templateJsPath, 'utf-8');
     const jsString = handerbars.compile(templateContent)({});
     const buildPath =  path.join(cwd, './build');
-    fs.mkdirSync(buildPath);
+    if (!fs.existsSync(buildPath)) {
+      fs.mkdirSync(buildPath);
+    }
     const buildIndexJsxPath =  path.join(buildPath, 'index.jsx');
     fs.writeFileSync(buildIndexJsxPath, jsString);
     jsxfiles.push(buildIndexJsxPath);
   }
 
   const buildIndexHTMLPath =  path.join(cwd, './build/index.html');
-  try {
-    fs.accessSync(buildIndexHTMLPath, fs.constants.W_OK)
-  } catch (error) {
+  if (!fs.existsSync(buildIndexHTMLPath)) {
     const templateHTMLPath = path.join(__dirname, './template/block-demo.hbs');
     console.log('templateHTMLPath: ', templateHTMLPath);
     const templateContent = fs.readFileSync(templateHTMLPath, 'utf-8');
@@ -44,6 +44,7 @@ function getconfig(cwd) {
     console.log('buildIndexHTMLPath: ', buildIndexHTMLPath);
     fs.writeFileSync(buildIndexHTMLPath, htmlString);
   }
+
 
 
   jsxfiles.forEach((item) => {
