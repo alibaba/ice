@@ -18,7 +18,6 @@ function getconfig(cwd) {
   const jsxfiles = glob.sync('build/*.jsx', { cwd });
   if (!jsxfiles.length) {
     const templateJsPath = path.join(__dirname, './template/block-demo.indexjsx.hbs');
-    console.log('templateJsPath: ', templateJsPath);
     const templateContent = fs.readFileSync(templateJsPath, 'utf-8');
     const jsString = handerbars.compile(templateContent)({});
     const buildPath =  path.join(cwd, './build');
@@ -27,13 +26,12 @@ function getconfig(cwd) {
     }
     const buildIndexJsxPath =  path.join(buildPath, 'index.jsx');
     fs.writeFileSync(buildIndexJsxPath, jsString);
-    jsxfiles.push(buildIndexJsxPath);
+    jsxfiles.push('build/index.jsx');
   }
 
   const buildIndexHTMLPath =  path.join(cwd, './build/index.html');
   if (!fs.existsSync(buildIndexHTMLPath)) {
     const templateHTMLPath = path.join(__dirname, './template/block-demo.hbs');
-    console.log('templateHTMLPath: ', templateHTMLPath);
     const templateContent = fs.readFileSync(templateHTMLPath, 'utf-8');
     const htmlString = handerbars.compile(templateContent)({
       isReact: true,
@@ -41,16 +39,13 @@ function getconfig(cwd) {
       blockJS: './index.js',
     });
     const buildIndexHTMLPath =  path.join(cwd, './build/index.html');
-    console.log('buildIndexHTMLPath: ', buildIndexHTMLPath);
     fs.writeFileSync(buildIndexHTMLPath, htmlString);
   }
-
 
 
   jsxfiles.forEach((item) => {
     const file = item.replace('.jsx', '');
     entry[file] = path.join(cwd, item);
-    // console.log('demo:', file);
   });
 
   const config = getWebpackConfig();
