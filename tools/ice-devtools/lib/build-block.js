@@ -4,6 +4,7 @@ const fs = require('fs');
 const webpack = require('webpack');
 const glob = require('glob');
 const ora = require('ora');
+const handerbars = require('handlebars');
 
 const getWebpackConfig = require('./config/getWebpackConfig');
 
@@ -16,8 +17,34 @@ function getconfig(cwd) {
   const entry = {};
   const jsxfiles = glob.sync('build/*.jsx', { cwd });
   if (!jsxfiles.length) {
-    throw new Error('demo 目录下面没有 .jsx 文件');
+    const templateJsPath = path.join(__dirname, './template/block-demo.indexjsx.hbs');
+    console.log('templateJsPath: ', templateJsPath);
+    const templateContent = fs.readFileSync(templateJsPath, 'utf-8');
+    const jsString = handerbars.compile(templateContent)({});
+    const buildPath =  path.join(cwd, './build');
+    fs.mkdirSync(buildPath);
+    const buildIndexJsxPath =  path.join(buildPath, 'index.jsx');
+    fs.writeFileSync(buildIndexJsxPath, jsString);
+    jsxfiles.push(buildIndexJsxPath);
   }
+
+  const buildIndexHTMLPath =  path.join(cwd, './build/index.html');
+  try {
+    fs.accessSync(buildIndexHTMLPath, fs.constants.W_OK)
+  } catch (error) {
+    const templateHTMLPath = path.join(__dirname, './template/block-demo.hbs');
+    console.log('templateHTMLPath: ', templateHTMLPath);
+    const templateContent = fs.readFileSync(templateHTMLPath, 'utf-8');
+    const htmlString = handerbars.compile(templateContent)({
+      isReact: true,
+      isBlock: true,
+      blockJS: './index.js',
+    });
+    const buildIndexHTMLPath =  path.join(cwd, './build/index.html');
+    console.log('buildIndexHTMLPath: ', buildIndexHTMLPath);
+    fs.writeFileSync(buildIndexHTMLPath, htmlString);
+  }
+
 
   jsxfiles.forEach((item) => {
     const file = item.replace('.jsx', '');
@@ -44,7 +71,6 @@ module.exports = function(opts) {
   if (!fs.existsSync(pkgPath)) {
     throw new Error('package.json not exists.');
   }
-
   const config = getconfig(opts.cwd);
   const spinner = ora('Building ...').start();
   webpack(config).run((error) => {

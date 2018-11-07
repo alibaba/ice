@@ -64,7 +64,6 @@
     "mkdirp": "^0.5.1",
     "moment": "^2.22.0",
     "multimatch": "^2.1.0",
-    "mz": "^2.7.0",
     "node-sass": "^4.8.3",
     "npminstall": "^3.12.0",
     "ora": "^2.0.0",
