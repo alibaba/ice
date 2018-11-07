@@ -9,13 +9,6 @@
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
   },
-  "files": [
-        "src/",
-        "build/",
-        "lib/",
-        "mock/",
-        "screenshot.png"
-   ],
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",
