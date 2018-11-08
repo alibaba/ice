@@ -27,11 +27,38 @@ import HeaderAside from './layouts/HeaderAside'
 // 下面两个页面就是对比 你可以分别观察两个页面上显示的路由数据差异
 
 const routerConfig = [
+  // 首页 必须 name:index
   {
     path: '/',
     name: 'index',
     layout: HeaderAside,
     component: Index
+  },
+  // 刷新页面 必须保留
+  {
+    path: '/refresh',
+    name: 'refresh',
+    layout: HeaderAside,
+    hidden: true,
+    component: {
+      beforeRouteEnter (to, from, next) {
+        next(vm => vm.$router.replace(from.fullPath))
+      },
+      render: h => h()
+    }
+  },
+  // 页面重定向 必须保留
+  {
+    path: '/redirect/:route*',
+    name: 'redirect',
+    layout: HeaderAside,
+    hidden: true,
+    component: {
+      beforeRouteEnter (to, from, next) {
+        next(vm => vm.$router.replace(JSON.parse(from.params.route)))
+      },
+      render: h => h()
+    }
   },
   {
     path: '/demo1',
@@ -56,19 +83,6 @@ const routerConfig = [
 // 处理规则同 routerConfig
 
 const routerConfigMenuOut = [
-  // 页面重定向使用 必须保留
-  {
-    path: '/redirect/:path*',
-    component: {
-      beforeCreate () {
-        const path = this.$route.params.path
-        this.$router.replace(JSON.parse(path))
-      },
-      render: function (h) {
-        return h()
-      }
-    }
-  },
   // 登录
   {
     path: '/login',
@@ -101,6 +115,7 @@ export const frameInRoutes = util.recursiveRouterConfig(routerConfig).map(e => {
   return {
     path: e.path,
     name: route.name,
+    hidden: route.hidden,
     meta: route.meta
   }
 })

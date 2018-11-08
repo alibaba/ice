@@ -1,0 +1,59 @@
+@import '../../variables.scss';
+
+.bar {
+  margin-top: $headerHeight;
+  background-image: linear-gradient(-90deg, $startColor 0%, $intermediateColor 51%, $endColor 100%);
+  .bar-body {
+    max-width: $contentWidth;
+    margin: 0 auto;
+    height: $barHeight;
+    line-height: $barHeight;
+    font-family: Avenir-Heavy;
+    font-size: 36px;
+    color: #FFF;
+    position: relative;
+    &::before {
+      content: '';
+      height: 100%;
+      position: absolute;
+      left: 42px;
+      top: 0;
+      opacity: 0.3;
+      border-left: 1px solid #FFFFFF;
+    }
+    &::after {
+      content: '';
+      height: 16px;
+      position: absolute;
+      left: 40px;
+      top: 50%;
+      margin: auto 0;
+      border-left: 4px solid #FFFFFF;
+    }
+    .front-img {
+      width: 80px;
+      height: 80px;
+      vertical-align: middle;
+      margin: 0 28px 0 70px;
+    }
+    .back-img {
+      width: 160px;
+      height: 160px;
+      position: absolute;
+      right: 168px;
+      bottom: 0;
+      opacity: 0.15;
+    }
+    @media screen and (max-width: $mobileWidth){
+      &::before {
+        left: 22px;
+      }
+      &::after {
+        left: 20px;
+      }
+      .front-img {
+        margin-left: 50px;
+      }
+    }
+  }
+}
