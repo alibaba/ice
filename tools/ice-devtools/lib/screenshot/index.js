@@ -34,6 +34,10 @@ module.exports = function(opts) {
 
     console.info(screenshotPath, 'created');
 
+    pkgInfo.blockConfig = Object.assign({}, pkgInfo.blockConfig || {}, {
+      screenshot: `https://cdn.jsdelivr.net/npm/${pkgInfo.name}@latest/screenshot.png`
+    })
+    fs.writeFileSync(pkgPath, JSON.stringify(pkgInfo, null, 4), 'utf-8')
     server.close();
     opts.cb && opts.cb();
   })();
