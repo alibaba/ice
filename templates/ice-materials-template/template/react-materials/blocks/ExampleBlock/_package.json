@@ -6,7 +6,7 @@
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
-  "files": ["src/", "lib/"],
+  "files": ["src/","build/","lib/","screenshot.png"],
   "dependencies": {
     "react": "^16.2.0",
     "prop-types": "^15.5.8"
