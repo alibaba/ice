@@ -1,11 +1,14 @@
 {
   "name": "ice-react-block-template",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "ice react block template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["ice", "ice-template"],
+  "keywords": [
+    "ice",
+    "ice-template"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
