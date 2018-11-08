@@ -3,7 +3,7 @@
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
-  "files": ["src/","lib/"],
+  "files": ["src/","build/","lib/","screenshot.png"],
   "license": "MIT",
   "keywords": ["ice","react","block"],
   "dependencies": {
