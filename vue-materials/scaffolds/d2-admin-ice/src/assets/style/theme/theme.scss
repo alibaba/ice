@@ -188,6 +188,7 @@
           }
           &:hover {
             color: $theme-aside-item-color-hover;
+            fill: $theme-aside-item-color-hover;
             background: $theme-aside-item-background-color-hover;
             i {
               color: $theme-aside-item-color-hover;
@@ -195,6 +196,7 @@
           }
           &:focus {
             color: $theme-aside-item-color-focus;
+            fill: $theme-aside-item-color-focus;
             background: $theme-aside-item-background-color-focus;
             i {
               color: $theme-aside-item-color-focus;
@@ -202,6 +204,7 @@
           }
           &.is-active {
             color: $theme-aside-item-color-active;
+            fill: $theme-aside-item-color-active;
             background: $theme-aside-item-background-color-active;
             i {
               color: $theme-aside-item-color-active;
