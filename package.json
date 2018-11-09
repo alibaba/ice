@@ -35,6 +35,7 @@
     "babel-plugin-transform-lib-import": "^0.1.0",
     "chalk": "^2.4.1",
     "co": "^4.6.0",
+    "component-docs-generator": "^1.0.0",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
