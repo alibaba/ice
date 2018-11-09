@@ -13,7 +13,7 @@ const logger = require('../logger');
  * @param {string} source 源码对象描述
  *                 source.sourceCodeDirectory 源码存放的位置
  */
-module.exports = function extractTarball({ url, output, fePath, source = {} }) {
+module.exports = function extractTarball({ url, output, srcPath, source = {} }) {
   // 保证目录存在
   // mkdirp.sync(dest);
   return new Promise((resolve, reject) => {
@@ -45,7 +45,7 @@ module.exports = function extractTarball({ url, output, fePath, source = {} }) {
           destPath = path.join(output, realPath);
         } else if (isAssetsFile) {
           realPath = realPath.replace(sourceCodeDirectory, '');
-          destPath = path.join(fePath, realPath);
+          destPath = path.join(srcPath, realPath);
         }
 
         // deal with _ started file

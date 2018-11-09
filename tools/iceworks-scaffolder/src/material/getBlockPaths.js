@@ -3,24 +3,25 @@
  */
 const path = require('path');
 const uppercamelcase = require('uppercamelcase');
+const { getClientFolderName } = require('../utils');
 
 module.exports = function getBlockPaths({ cwd, name, block, preview, isNodeProject = false }) {
   const blockFolderName = block.alias || block.className || uppercamelcase(block.name); // block 目录名
 
   const pageFolderName = name;
 
-  const feFolder = isNodeProject ? 'client' : 'src';
+  const clientFolder = getClientFolderName(isNodeProject);
 
-  let outputPath = path.join(feFolder, 'pages', pageFolderName, 'components');
+  let outputPath = path.join(clientFolder, 'pages', pageFolderName, 'components');
   let componentPath = `./components/${blockFolderName}/index`; // block 的相对路径，用于 page 里生成的地址
   // /index 要求模块必须包含 index.js | index.html 文件
   // 预览页面
   if (preview) {
     componentPath = `./blocks/${blockFolderName}/index`;
-    outputPath = path.join(feFolder, 'pages/IceworksPreviewPage/blocks');
+    outputPath = path.join(clientFolder, 'pages/IceworksPreviewPage/blocks');
   } else if (block.common) {
     componentPath = `../../components/${blockFolderName}/index`;
-    outputPath = path.join(feFolder, 'components');
+    outputPath = path.join(clientFolder, 'components');
   }
 
   const blockClassName = uppercamelcase(block.alias || block.className || block.name);
@@ -32,6 +33,6 @@ module.exports = function getBlockPaths({ cwd, name, block, preview, isNodeProje
     name: basename,
     outputPath: path.join(cwd, outputPath, blockFolderName),
     path: componentPath,
-    fePath: path.join(cwd, feFolder),
+    srcPath: path.join(cwd, clientFolder),
   };
 };

@@ -20,6 +20,8 @@ const normalizeScaffoldrc = require('./normalizeScaffoldrc');
 
 const material = require('./material');
 
+const { getClientFolderName } = require('./utils');
+
 /**
  * 模板操作对象
  */
@@ -222,10 +224,10 @@ class Scaffolder {
       }
     }
     // 先删除 menu 等配置，后删除文件夹，否则服务会找不到文件而失败
-    const feFolder = isNodeProject ? 'client' : 'src';
+    const clientFolder = getClientFolderName(isNodeProject);
     const previewPagePath = path.join(
       this.cwd,
-      feFolder,
+      clientFolder,
       'pages/IceworksPreviewPage'
     );
     rimraf.sync(previewPagePath);

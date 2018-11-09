@@ -42,7 +42,7 @@ module.exports = async function addBlocks({ cwd, name: pageName, blocks, preview
         blockExtractedFiles = await material.extractTarball({
           url: tarballURL,
           output: blockPaths.outputPath,
-          fePath: blockPaths.fePath,
+          srcPath: blockPaths.srcPath,
           source: block.source,
         });
       } else {
