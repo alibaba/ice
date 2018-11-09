@@ -31,6 +31,9 @@
   "devDependencies": {
     "ice-devtools": "^1.1.14-beta.2"
   },
+  "peerDependencies": {
+    "react": "^16.5.0"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
