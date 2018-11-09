@@ -9,13 +9,13 @@ const mockData = [
   },
   {
     icon: 'process',
-    title: '批量操作(首次分案)',
+    title: '批量操作(普通阶段分案)',
     instrument: '对一批待分案案件进行分案',
   },
   {
     icon: 'history',
-    title: '批量操作(首次分案)',
-    instrument: '对一批待分案案件进行分案',
+    title: '批量申请延期',
+    instrument: '对一批办理案件进行批量申请延期',
   },
 ];
 
