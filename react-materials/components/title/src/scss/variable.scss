@@ -1,0 +1,52 @@
+// ice-title variables
+// --------------------------------------------------
+
+////
+/// @module @icedesign/title: ICE 标题组件
+/// @tag IceTitle
+/// @category custom
+/// @family ice
+/// @varPrefix $ice-title
+/// @classPrefix ice-title
+////
+
+@import '~@icedesign/base/lib/core/index.scss';
+
+// -------------- variable --------------
+$ice-title-prefix: '.ice-title';
+
+// Statement: Normal
+// ----------------------------------------
+
+/// 主题色
+/// @namespace statement/normal
+/// @type color
+$border-color: $color-b1-6 !default;
+
+/// 主标题字号大小
+/// @namespace statement/normal
+/// @type size
+$title-size: $font-size-base-title !default;
+
+/// 主标题字体颜色
+/// @namespace statement/normal
+/// @type color
+$title-color: $color-n2-4 !default;
+
+$margin-left: $s10 !default;
+
+$margin-right: $s5 !default;
+
+$padding-left: $s3 !default;
+
+/// 副标题字体颜色
+/// @namespace statement/normal
+/// @type color
+$subtitle-color: $color-n2-3 !default;
+
+/// 副标题字号大小
+/// @namespace statement/normal
+/// @type size
+$subtitle-size: $font-size-base-body1 !default;
+
+$subtitle-margin-left: $s3 !default;
