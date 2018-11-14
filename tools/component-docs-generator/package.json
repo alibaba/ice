@@ -1,0 +1,11 @@
+{
+  "name": "component-docs-generator",
+  "version": "1.0.0",
+  "description": "component docs generator for ice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chenbin92",
+  "license": "MIT"
+}
