@@ -2,15 +2,6 @@
 
 基于 Iceworks 能够一键生成 ice 和 Node 的前后端分离的项目；前端使用 React 技术栈，后端使用 Koa 2.x 作为服务端开发框架。
 
-## 特性
-
-- 【一期】一键生成项目
-- 【一期】基于飞冰海量物料快速组装页面
-- 【一期】可视化工程管理
-- 【二期】Sequelize + MySQL 插件化配置 https://github.com/sequelize/sequelize
-- 【二期】GraphQL 插件化配置 https://github.com/chentsulin/koa-graphql
-- 【二期】API 接口可视化(Iceworks 插件面板支持)
-
 ## 目录结构
 
 目录结构采用分层设计，主体分为 client 和 server 两部分，即 client 对应前端工程，server 对应服务端工程，提供 RESTful API 和 client 端进行数据通信；脚手架默认只提供最简的的 RESTful API 接口，因为在实际场景中，Node 层可能只是用来作为微服务架构中的 API 转发层，并不需要 ORM、数据库等功能。但可以通过插件化来进行支持，在创建项目的时候进行自定义选择生成项目的类型。
@@ -66,17 +57,3 @@ build 目录是 client 构建后的前端静态资源，Node 服务器启动的�
 #### 公共配置
 
 公共配置包含代码风格、eslint 等基础配置，在整个应用中，前后端共用一套公共的基础配置。
-
-## TODO
-
-- [x] 通过一个命令同时启动 `npm run server` 和 `npm run client`
-- [x] API 示例（model/service/controller/router）
-- [x] 目录规范说明
-- [x] 代理配置
-- [x] 构建配置(自定义 webpackrc 配置，默认输出到 build)
-- [x] 静态文件启动
-- [ ] eslint 共享配置
-- [ ] 前端和后端开发方式文档
-- [ ] 数据库配置和 sequeslize 配置说明
-- [ ] 部署说明
-- [ ] 在 Iceworks 创建项目时添加 node 选项
