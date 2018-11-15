@@ -6,11 +6,11 @@ module.exports = function generate({ cwd }) {
 
   for (let i = 0; i < materialList.length; i++) {
 
-    const { directory, type, ...options } = materialList[i];
+    const { directory, ...options } = materialList[i];
     // debug('material params index: %s, directory: %s', i, directory);
 
     generateDatabase({
-      name: directory || (type ? `${type}-materials` : 'db'),
+      name: directory || (options.type ? `${options.type}-materials` : 'db'),
       path: resolve(cwd, directory),
       options: options,
     });
