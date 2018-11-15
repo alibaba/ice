@@ -1,6 +1,6 @@
 {
   "name": "ice-materials-template",
-  "version": "1.0.0-beta.15",
+  "version": "1.0.1",
   "description": "ice materials template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
