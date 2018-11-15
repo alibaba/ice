@@ -1,6 +1,6 @@
 {
   "name": "ice-koa-react-scaffold",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "server/index.js",
   "scripts": {
