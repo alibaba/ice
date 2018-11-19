@@ -49,7 +49,9 @@
   "scaffoldConfig": {
     "name": "ice-design-lite",
     "title": "ICE Design Lite",
-    "categories": ["通用"],
+    "categories": [
+      "基础模板"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1IM1JmuuSBuNjy1XcXXcYjFXa-1920-1080.png"
   },
   "engines": {
