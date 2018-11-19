@@ -12,7 +12,7 @@ npm: \@icedesign/notification
 ## 安装和升级
 
 ```bash
-def add @ali/ice-notification
+def add @icedesign/notification
 ```
 
 ## API
