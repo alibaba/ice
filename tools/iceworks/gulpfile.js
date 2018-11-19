@@ -1,0 +1,441 @@
+const chalk = require('chalk');
+const cleancss = require('gulp-clean-css');
+const co = require('co');
+const es = require('event-stream');
+const filter = require('gulp-filter');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const inquirer = require('inquirer');
+const oss = require('ali-oss');
+const path = require('path');
+const pathExists = require('path-exists');
+const replace = require('gulp-replace');
+const shelljs = require('shelljs');
+const spawn = require('cross-spawn');
+const UglifyJS = require('uglify-es');
+const writeFile = require('write');
+
+const colors = gutil.colors;
+const isMac = process.platform === 'darwin';
+// eslint-disable-next-line
+const isWin32_x64 = process.platform === 'win32' && process.arch === 'x64';
+// eslint-disable-next-line
+const isLinux_x64 = process.platform === 'linux' && process.arch === 'x64';
+
+const appPkg = require('./app/package.json');
+
+const productName = appPkg.productName;
+
+const SOURCES = {
+  main: 'app/main',
+  renderer: './renderer',
+};
+
+const OUTPUTS = {
+  main: 'out/main',
+  renderer: 'out/renderer',
+};
+
+function swallowError(error) {
+  console.log(
+    chalk.cyan(`${error.plugin} (${error.message.line}:${error.message.col})`)
+  );
+  console.log('   ', chalk.red(error.message.message));
+  this.emit('end');
+}
+/**
+ * 压缩 js
+ */
+function esuglify() {
+  return es.map((chunk, callback) => {
+    const code = String(chunk.contents);
+    const result = UglifyJS.minify(code, {
+      warnings: 'verbose',
+      mangle: {
+        toplevel: true,
+      },
+      output: {
+        ascii_only: true,
+      },
+      compress: {
+        unused: true,
+      },
+    });
+    if (result.error) {
+      console.error(chunk.path);
+      callback(
+        new gutil.PluginError({
+          plugin: chunk.path,
+          message: result.error.stack,
+        })
+      );
+    } else {
+      callback(
+        null,
+        new gutil.File({
+          path: chunk.path,
+          base: chunk.base,
+          cwd: chunk.cwd,
+          contents: Buffer.from(result.code),
+        })
+      );
+    }
+  });
+}
+/**
+ * copy 文件
+ */
+function copyMainFiles() {
+  return es.map((chunk, callback) => {
+    callback(
+      null,
+      new gutil.File({
+        path: chunk.path,
+        base: chunk.base,
+        cwd: chunk.cwd,
+        contents: chunk.contents,
+      })
+    );
+  });
+}
+
+gulp.task('compile:after:css', ['compile:prod'], () => {
+  return gulp
+    .src(`${OUTPUTS.renderer}/*.css`)
+    .pipe(replace(/\/\/([a-z]*)\.alicdn.com/g, 'https://$1.alicdn.com'))
+    .pipe(cleancss())
+    .pipe(gulp.dest(OUTPUTS.renderer));
+});
+
+const mainInput = `./${SOURCES.main}/**/*.*`;
+// 构建 main 文件
+gulp.task('babel:main', ['clean'], () => {
+  const js = filter('**/*.js', { restore: true });
+  return gulp
+    .src(mainInput)
+    .pipe(js)
+    .pipe(esuglify())
+    .pipe(js.restore)
+    .pipe(copyMainFiles())
+    .pipe(gulp.dest(OUTPUTS.main));
+});
+
+// 清空
+gulp.task('clean', () => {
+  gutil.log('移除 ./dist/ ./out/ 文件夹');
+  shelljs.rm('-rf', ['dist', 'out']);
+});
+
+// webpack 编译
+const WebpackDevServer = require('webpack-dev-server');
+const webpack = require('webpack');
+
+gulp.task('compile:dev', (done) => {
+  process.env.NODE_ENV = 'development';
+
+  const config = require('./webpack.development.js');
+  const compiler = webpack(config);
+
+  compiler.apply(new webpack.ProgressPlugin());
+
+  const devServer = new WebpackDevServer(compiler, {
+    contentBase: path.join(__dirname, 'renderer/src'),
+    watchContentBase: true,
+    publicPath: '/',
+    compress: true,
+    historyApiFallback: true,
+    hot: true,
+    https: false,
+    port: 7001,
+    stats: {
+      colors: true,
+      assetsSort: 'size',
+      warnings: false,
+      chunks: false,
+      entrypoints: false,
+      modules: false,
+    },
+  });
+
+  // Launch WebpackDevServer.
+  devServer.listen(7001, '0.0.0.0', (err) => {
+    if (err) {
+      gutil.log(err);
+    } else {
+      gutil.log(`\n      webpack dev server at: http://localhost:${7001} \n`);
+    }
+    done(err);
+  });
+});
+
+gulp.task('compile:prod', ['clean'], (done) => {
+  process.env.NODE_ENV = 'production';
+  const config = require('./webpack.production.js');
+  const compiler = webpack(config);
+  compiler.apply(new webpack.ProgressPlugin());
+
+  compiler.run((err, stats) => {
+    // eslint-disable-next-line
+    console.log(
+      stats.toString({
+        assetsSort: 'size',
+        warnings: false,
+        colors: true,
+        chunks: false,
+        entrypoints: false,
+        modules: false,
+      })
+    );
+    done(err);
+  });
+});
+// 调试服务, 区分平台
+gulp.task('dev', () => {
+  // TODO paltfrom check
+  gulp.start(['compile:dev']);
+});
+gulp.task('dev:win', ['binary:win'], () => {
+  gulp.start(['compile:dev', 'watch:dev']);
+});
+
+// build
+const builder = require.resolve('electron-builder/out/cli/cli.js');
+gulp.task('dist:mac', (done) => {
+  const ls = spawn(
+    builder,
+    ['--config', '.buildrc', '--mac', '--publish', 'always'],
+    {
+      stdio: 'inherit',
+    }
+  );
+  ls.on('close', (code) => {
+    if (code == 0) {
+      gutil.log(colors.green('dmg 打包完成'));
+    } else {
+      gutil.log(colors.red('dmg 打包失败'));
+    }
+    done(code);
+  });
+});
+
+gulp.task('electron-rebuild', (done) => {
+  const ls = spawn('yarn', ['rebuild-node-pty:out'], {
+    stdio: 'inherit',
+  });
+  ls.on('close', (code) => {
+    if (code == 0) {
+      gutil.log(colors.green('rebuild 打包完成'));
+    } else {
+      gutil.log(colors.red('rebuild 打包失败'));
+    }
+    done(code);
+  });
+});
+
+gulp.task('dist:win', (done) => {
+  const ls = spawn(
+    builder,
+    ['--config', '.buildrc', '--win', '--publish', 'always'],
+    {
+      stdio: 'inherit',
+    }
+  );
+  ls.on('close', (code) => {
+    if (code == 0) {
+      gutil.log(colors.green('exe 打包完成'));
+    } else {
+      gutil.log(colors.red('exe 打包失败'));
+    }
+    done(code);
+  });
+});
+
+// 生成 updates.js 文件，提供给站点下载
+gulp.task('publish', (done) => {
+  const now = gutil.date(new Date(), 'yyyy-mm-dd');
+  const version = appPkg.version;
+
+  const template = {
+    'darwin-x64-prod': {
+      name: 'iceworks',
+      description: 'ICE Desktop Application.',
+      install: `http://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/${productName}-${version}.dmg`,
+      version: appPkg.version,
+      releaseDate: now,
+    },
+    'win-x64-prod': {
+      name: 'iceworks',
+      description: 'ICE Desktop Application.',
+      install: encodeURI(
+        `http://iceworks.oss-cn-hangzhou.aliyuncs.com/win/${productName}-setup-${version}.exe`
+      ),
+      version: appPkg.version,
+      releaseDate: now,
+    },
+  };
+
+  writeFile(
+    './dist/updates.js',
+    `callback(${JSON.stringify(template, null, 2)})`
+  )
+    .then(() => {
+      return writeFile(
+        './dist/updates.json',
+        JSON.stringify(template, null, 2)
+      );
+    })
+    .then(() => {
+      done();
+    });
+});
+// 生成应用所需要文件
+gulp.task('build', ['babel:main', 'compile:after:css'], (done) => {
+  gutil.log(colors.green('拷贝 yanr.lock package.json 到 out/'));
+  shelljs.cp('./app/yarn.lock', './out/yarn.lock');
+  shelljs.cp('./app/package.json', './out/package.json');
+
+  gutil.log(colors.green('拷贝 static 静态文件'));
+
+  shelljs.cp('-R', './app/static', './out/static/');
+
+  gutil.log(colors.green('在 out/ 安装应用所需依赖'));
+  const yarnInsall = spawn('yarn', ['install'], {
+    cwd: path.join(process.cwd(), 'out'),
+    stdio: 'inherit',
+  });
+  yarnInsall.on('close', (code) => {
+    if (code == 0) {
+      gutil.log(colors.green('out 依赖安装完成'));
+    } else {
+      gutil.log(colors.red('out 依赖安装失败'));
+    }
+    shelljs.cp('-R', './out/node_modules/.bin', './out/node_modules/_bin');
+    done(code);
+  });
+});
+
+gulp.task('dist', () => {
+  if (isMac) {
+    gutil.log(colors.green('darwin 打包'));
+    gulp.start(['dist:mac']);
+  } else if (isWin32_x64) {
+    gutil.log(colors.green(' win32 打包'));
+    gulp.start(['dist:win']);
+  }
+});
+
+gulp.task('oss', async function() {
+  gutil.log('Access Key 请在 oss 平台查询');
+  const accessKey = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: '请输入 Access KeyId',
+      default: 'LTAIpfdX8L8sa98T',
+    },
+    {
+      type: 'input',
+      name: 'secret',
+      message: '请输入 Access Key Secret (默认值读取: process.env.SECRET)',
+      default: process.env.SECRET || '',
+    },
+    {
+      name: 'bucket',
+      type: 'list',
+      choices: ['iceworks', 'iceworks-beta', 'iceworks-next'],
+      message: '请选择 bucket',
+    },
+  ]);
+
+  var iceworksStore = oss({
+    bucket: accessKey.bucket,
+    endpoint: 'oss-cn-hangzhou.aliyuncs.com',
+    accessKeyId: accessKey.id,
+    accessKeySecret: accessKey.secret,
+    time: '120s',
+  });
+
+  function upload2oss(paths, file) {
+    if (!pathExists.sync(file)) {
+      gutil.log(colors.red('不存在文件'), file);
+      return 1;
+    }
+    gutil.log(
+      colors.yellow('开始上传'),
+      path.relative(__dirname, file),
+      '=>',
+      paths.join('/')
+    );
+
+    return co(iceworksStore.put(paths.join('/'), file))
+      .then((object = {}) => {
+        if (object.res && object.res.status == 200) {
+          gutil.log(colors.green('上传成功'), object.url);
+          return 0;
+        } else {
+          gutil.log(colors.red('上传失败'), file);
+          return 1;
+        }
+      })
+      .catch(() => {
+        gutil.log(colors.red('上传失败'), file);
+        return 1;
+      });
+  }
+  const version = require('./out/package.json').version;
+  const distDir = path.join(__dirname, 'dist');
+
+  let channel = 'latest';
+
+  const versionPatch = version.split('.')[2];
+  if (versionPatch.indexOf('-') !== -1) {
+    channel = versionPatch.split('-')[1];
+  }
+
+  gutil.log('channel', channel);
+
+  if (isMac) {
+    const macDist = [
+      `${productName}-${version}.dmg`,
+      `${productName}-${version}-mac.zip`,
+      `${channel}-mac.json`,
+      `${channel}-mac.yml`,
+    ];
+
+    for (const name of macDist) {
+      const filepath = path.join(distDir, name);
+      const code = await upload2oss(['mac', name], filepath);
+      if (code !== 0) {
+        break;
+      }
+    }
+  } else if (isWin32_x64) {
+    const winDist = [`${productName}-setup-${version}.exe`, `${channel}.yml`];
+
+    for (const name of winDist) {
+      const filepath = path.join(distDir, name);
+      const code = await upload2oss(['win', name], filepath);
+      if (code !== 0) {
+        break;
+      }
+    }
+  } else if (isLinux_x64) {
+    const linuxDist = [
+      `${productName}-amd64-${version}.deb`,
+      `${productName}-x86_64-${version}.AppImage`,
+      `${channel}-linux.yml`,
+    ];
+
+    for (const name of linuxDist) {
+      const filepath = path.join(distDir, name);
+      const code = await upload2oss(['linux', name], filepath);
+      if (code !== 0) {
+        break;
+      }
+    }
+  }
+});
+
+gulp.task('build-dist', ['build'], () => {
+  gulp.start(['dist']);
+});

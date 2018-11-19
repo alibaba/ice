@@ -1,0 +1,10 @@
+{
+  "log": [
+    "新增：自定义模板新增自定义布局功能",
+    "新增：构建资源结果展示插件",
+    "新增：阿里云 OSS 上传插件 <a href='https://github.com/alibaba/ice/wiki/%E9%98%BF%E9%87%8C%E4%BA%91-OSS'>查看详情</a>",
+    "新增：项目插件面板可拖拽排序",
+    "优化：依赖管理插件，使用 Tab 形式管理依赖",
+    "bugfix: <a href='https://github.com/alibaba/ice/issues/618'>#618</a> <a href='https://github.com/alibaba/ice/issues/600'>#600</a>"
+  ]
+}

@@ -1,0 +1,11 @@
+.next-form-item {
+  margin-bottom: 0 !important;
+}
+
+.next-form {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  .next-form-item + .next-form-item {
+    margin-top: 20px !important;
+  }
+}

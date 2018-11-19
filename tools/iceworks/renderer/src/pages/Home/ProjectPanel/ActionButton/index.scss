@@ -1,0 +1,10 @@
+.action-button-item {
+  margin: 0 10px;
+  padding: 5px 0;
+  text-align: center;
+  cursor: pointer;
+  color: #666;
+  &:hover {
+    color: $color-brand1-5;
+  }
+}

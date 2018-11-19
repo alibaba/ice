@@ -1,0 +1,49 @@
+.sortable-extensions {
+  display: block;
+  min-height: 100%;
+  max-height: 100%;
+  white-space: nowrap;
+  overflow-y: auto;
+  user-select: none;
+  padding: 10px 0 10px 10px;
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: ' ';
+    clear: both;
+    height: 0;
+  }
+}
+.sortable-extension-item-sorting {
+  pointer-events: none;
+}
+
+.sortable-extension-item-draging {
+  cursor: move;
+}
+
+.sortable-extension-item {
+  float: left;
+  width: calc(50% - 10px);
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 10px;
+  position: relative;
+  @media (min-width: 1200px) {
+    & {
+      width: calc(33.3% - 3.33px);
+    }
+  }
+
+  .sortable-extension-item-handle {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    height: 45px;
+    width: 100%;
+    cursor: move;
+    width: calc(100% - 20px);
+    z-index: 1;
+  }
+}

@@ -1,0 +1,64 @@
+.materials {
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  .material-item {
+    position: relative;
+    display: flex;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background-color: #fefefe;
+    box-shadow: 0px 0px 2px 1px rgba(47, 53, 55, 0.1);
+    transition: all 0.1s ease-in;
+    &:hover {
+      background-color: #fff;
+      box-shadow: 0px 0px 2px 1px rgba(48, 128, 254, 1);
+    }
+    .material-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 6px;
+      img {
+        max-width: 80%;
+      }
+    }
+    .material-body {
+      padding-left: 10px;
+      .material-info {
+        display: flex;
+        margin: 2px 0 4px;
+      }
+      .material-tags {
+        margin-left: 10px;
+        font-size: 12;
+      }
+      .material-tag {
+        color: #3080fe;
+        background-color: #e2edff;
+        padding: 2px 4px;
+        font-size: 10px;
+        border-radius: 3px;
+        margin-right: 10px;
+      }
+      .material-name {
+        line-height: 18px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #111;
+      }
+      .material-description {
+        line-height: 18px;
+        font-size: 12px;
+        color: #666;
+      }
+    }
+    .material-extra {
+      position: absolute;
+      top: 18px;
+      right: 10px;
+    }
+  }
+}
