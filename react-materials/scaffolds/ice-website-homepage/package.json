@@ -47,7 +47,9 @@
   "scaffoldConfig": {
     "name": "ice-website-homepage",
     "title": "ICE Website HomePage",
-    "categories": ["首页展示"],
+    "categories": [
+      "官网模板"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1lvtMpQOWBuNjSsppXXXPgpXa-2840-1596.png"
   },
   "engines": {
