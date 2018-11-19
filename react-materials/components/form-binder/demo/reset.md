@@ -1,6 +1,6 @@
 ---
-title: 重置表单组件的用法
-order: 3
+title: 重置表单
+order: 4
 importStyle: true
 ---
 
@@ -9,44 +9,34 @@ importStyle: true
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {
-  FormBinderWrapper as IceFormBinderWrapper,
-  FormBinder as IceFormBinder,
-  FormError as IceFormError,
-} from '@icedesign/form-binder';
+import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
 import { Select, Button, Grid } from '@icedesign/base';
 const { Row, Col } = Grid;
 
 const dataSource = [];
 
-class App extends Component {
+class Reset extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       value: {
-        ip: undefined,
+        bu: 'taobao',
       },
     };
   }
 
   formChange = value => {
-    console.log('value', value);
-    this.setState({
-      value,
-    });
-  };
-
-  validateAllFormField = () => {
-    this.refs.form.validateAll((errors, values) => {
-      console.log('errors', errors, 'values', values);
-    });
+    // 说明：
+    //  1. 表单是双向通行的，所有表单的响应数据都会同步更新 value
+    //  2. 这里 setState 只是为了实时展示当前表单数据的演示使用
+    this.setState({ value });
   };
 
   handleReset = () => {
     this.setState({
       value: {
-        ip: undefined,
+        bu: 'taobao',
       },
     });
   };
@@ -54,53 +44,64 @@ class App extends Component {
   render() {
     return (
       <div>
-        <IceFormBinderWrapper
-          value={this.state.value}
-          onChange={this.formChange}
-          ref="form"
-        >
-          <div>
-            <div>
-              <span>请选择 IP（数字累加要超过 200）：</span>
-              {/* rules 作为 descriptor 透传给 async-validator 详细书写方式请参见 https://github.com/yiminghe/async-validator  */}
-              <IceFormBinder>
-                <Select
-                  name="ip"
-                  dataSource={[
-                    {
-                      value: 1,
-                      label: '第一个选项',
-                    },
-                    {
-                      value: 2,
-                      label: '第二个选项',
-                    },
-                  ]}
-                  placeholder="请选择"
-                  autoWidth={false}
-                />
-              </IceFormBinder>
-              <div><IceFormError name="ip" /></div>
-            </div>
+        <FormBinderWrapper value={this.state.value} onChange={this.formChange} ref="form">
+          <div style={styles.formItem}>
+            <span>请选择：</span>
+            <FormBinder name="bu" required message="请选择">
+              <Select
+                dataSource={[
+                  {
+                    value: 'taobao',
+                    label: '淘宝',
+                  },
+                  {
+                    value: 'tmall',
+                    label: '天猫',
+                  },
+                  {
+                    value: 'aliyun',
+                    label: '阿里云',
+                  },
+                  {
+                    value: 'alitrip',
+                    label: '飞猪',
+                  },
+                ]}
+                placeholder="请选择"
+                autoWidth={false}
+              />
+            </FormBinder>
+            <FormError name="bu" />
           </div>
-        </IceFormBinderWrapper>
-        <div
-          style={{
-            border: '1px solid #ccc',
-            background: '#cacaca',
-            marginTop: 20,
-            padding: 10,
-          }}
-        >
+          <Button type="primary" onClick={this.handleReset} style={styles.resetButton}>重 置</Button>
+        </FormBinderWrapper>
+
+        <div style={styles.preview}>
           <strong>当前表单数据：</strong>
           <pre>
             {JSON.stringify(this.state.value, null, 2)}
           </pre>
         </div>
-        <Button onClick={this.handleReset}>Reset</Button>
       </div>
     );
   }
 }
-ReactDOM.render(<App />, mountNode);
+
+const styles = {
+  formItem: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '20px',
+  },
+  resetButton: {
+    marginLeft: '56px',
+  },
+  preview: {
+    border: '1px solid #eee', 
+    margin: '20px 0',
+    padding: '10px'
+  }
+}
+
+ReactDOM.render(<Reset />, mountNode);
 ````

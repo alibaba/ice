@@ -1,0 +1,20 @@
+.button {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 48px;
+  line-height: 48px;
+  min-width: 140px;
+  font-family: Avenir-Heavy;
+  font-size: 16px;
+  color: #FFF;
+  text-align: center;
+  border-radius: 4px;
+  text-decoration: none;
+  &-primary {
+    background: #4190FF;
+  }
+  &-normal {
+    background: transparent;
+    border: 1px solid #fff;
+  }
+}

@@ -1,25 +1,14 @@
-'use strict';
-
+/* eslint react/require-default-props:0, react/no-unused-prop-types:0, react/no-find-dom-node:0 */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-// default return the first value
-const defaultValueFormatter = (...args) => {
+const defaultSetFieldValue = (...args) => {
   return args[0];
 };
 
-// default return the first value
-const defaultValueTransformer = (value) => {
+const defaultGetFieldValue = (value) => {
   return value;
-};
-
-const defaultErrorStatePropsGenerator = (errors, FormItemProps) => {
-  return {
-    className: FormItemProps.className
-      ? FormItemProps.className + ' this-field-has-error'
-      : 'this-field-has-error',
-  };
 };
 
 export default class FormBinder extends Component {
@@ -31,17 +20,13 @@ export default class FormBinder extends Component {
      */
     name: PropTypes.string,
     /**
-     * 当表单报错的时候，你可能要对报错的表单组件上面添加特殊的 props（比如报错的 className、style 等），此时就可以通过这个 function 来自定义返回的报错状态 props
-     */
-    errorStatePropsGenerator: PropTypes.func,
-    /**
      * 数据格式化方法，表单组件 onChange 之后，支持对数据做一层转换再进行后续操作
      */
-    valueFormatter: PropTypes.func,
+    setFieldValue: PropTypes.func,
     /**
      * 数据转换方法，表单组件接收值时可将其转换为其他类型
      */
-    valueTransformer: PropTypes.func,
+    getFieldValue: PropTypes.func,
     /**
      * 触发校验的事件，对于高频触发校验的 Input 可以设置为 'onBlur' 减少校验调用次数
      */
@@ -49,7 +34,7 @@ export default class FormBinder extends Component {
     /**
      * value 属性的 key, 默认 `value`
      */
-    valueKey: PropTypes.string,
+    valuePropName: PropTypes.string,
     /**
      * 当前表单项是否必须有值
      */
@@ -104,78 +89,57 @@ export default class FormBinder extends Component {
     rules: PropTypes.array,
   };
 
-  // due to the props getter logic in render, do not add default value here.
   static defaultProps = {};
 
   static contextTypes = {
-    getError: PropTypes.func,
+    setter: PropTypes.func,
     getter: PropTypes.func,
     validate: PropTypes.func,
     addValidate: PropTypes.func,
     removeValidate: PropTypes.func,
-    setter: PropTypes.func,
+    getError: PropTypes.func,
   };
 
-  currentRules = [];
+  rules = [];
 
   componentDidMount() {
-    this.currentRules = this.getFormRules(this.props);
-    // this form item need validate
-    if (this.currentRules.length) {
-      const FormItem = React.Children.only(this.props.children);
-      const currentName = this.props.name || FormItem.props.name;
-
+    this.rules = this.getRules(this.props);
+    if (this.rules.length) {
       this.context.addValidate(
-        currentName,
-        this.currentRules,
+        this.props.name,
+        this.rules,
+        ReactDOM.findDOMNode(this)
+      );
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const nextRules = this.getRules(nextProps);
+    if (
+      nextRules.length > 0 &&
+      JSON.stringify(nextRules) !== JSON.stringify(this.rules)
+    ) {
+      this.rules = nextRules;
+      this.context.addValidate(
+        this.props.name,
+        this.rules,
         ReactDOM.findDOMNode(this)
       );
     }
   }
 
   componentWillUnmount() {
-    this.currentRules = this.getFormRules(this.props);
-    // this form item need validate
-    if (this.currentRules.length) {
-      const FormItem = React.Children.only(this.props.children);
-      const currentName = this.props.name || FormItem.props.name;
-
-      this.context.removeValidate(currentName);
+    this.rules = this.getRules(this.props);
+    if (this.rules.length) {
+      this.context.removeValidate(this.props.name);
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const nextRules = this.getFormRules(nextProps);
-    // this form item need validate
-    if (
-      nextRules.length > 0 &&
-      JSON.stringify(nextRules) !== JSON.stringify(this.currentRules)
-    ) {
-      this.currentRules = nextRules;
-
-      const FormItem = React.Children.only(this.props.children);
-      const currentName = this.props.name || FormItem.props.name;
-
-      this.context.addValidate(
-        currentName,
-        this.currentRules,
-        ReactDOM.findDOMNode(this)
-      );
-    }
-  }
-
-  // get form rules from props
-  getFormRules = (props) => {
-    const FormItem = React.Children.only(props.children);
-    const FormItemProps = FormItem.props;
-
-    // rules has higher priority
-    const rules = props.rules || FormItemProps.rules;
-    if (rules) {
-      return rules;
-    }
-
-    let result = [];
+  /**
+   * 从 FormBinder 收集表单的校验规则
+   */
+  getRules = (props) => {
+    const rules = []; // [{required: true, max: 10, ...}]
     const ruleKeys = [
       'required',
       'pattern',
@@ -189,92 +153,72 @@ export default class FormBinder extends Component {
       'message',
       'validator',
       'type',
+      'range',
     ];
+
     ruleKeys.forEach((ruleKey) => {
-      const ruleValue =
-        ruleKey in props
-          ? props[ruleKey]
-          : ruleKey in FormItemProps ? FormItemProps[ruleKey] : undefined;
+      let ruleValue;
+      if (ruleKey in props) {
+        ruleValue = props[ruleKey];
+      } else {
+        console.warn(
+          'Unknown prop rule in <FormBinder> component，For Details，see https://github.com/yiminghe/async-validator'
+        );
+      }
+
       if (ruleValue !== undefined && ruleValue !== null) {
-        result[0]
-          ? (result[0][ruleKey] = ruleValue)
-          : result.push({
-              [ruleKey]: ruleValue,
-            });
+        if (rules[0]) {
+          rules[0][ruleKey] = ruleValue;
+        } else {
+          rules.push({ [ruleKey]: ruleValue });
+        }
       }
     });
 
-    return result;
+    return rules;
   };
 
   render() {
     const FormItem = React.Children.only(this.props.children);
     const FormItemProps = FormItem.props;
-    const FormItemDefaultProps = FormItem.type.defaultProps || {};
+    const name = this.props.name;
 
-    const currentName = this.props.name || FormItem.props.name;
-    const valueKey = this.props.valueKey || 'value';
+    // 提供受控属性 value 或其它与 valuePropName 的值同名的属性，如 Switch 的是 'checked'
+    const valuePropName = this.props.valuePropName || 'value';
 
-    // handle form field error
-    let formValueErrorProps = {};
-    const errors = this.context.getError(currentName);
-    if (errors.length !== 0) {
-      const errorStatePropsGenerator =
-        this.props.errorStatePropsGenerator ||
-        FormItem.props.errorStatePropsGenerator ||
-        defaultErrorStatePropsGenerator;
+    // 自定义验证触发时机
+    const validateTriggerType = this.props.triggerType || 'onChange';
 
-      formValueErrorProps = errorStatePropsGenerator(errors, FormItemProps);
-    }
+    // 设置单个表单域的值
+    const setFieldValue = this.props.setFieldValue || defaultSetFieldValue;
 
-    const currentValidateTriggerType =
-      this.props.triggerType || FormItemProps.triggerType || 'onChange';
-
-    // handle value format
-    const valueFormatter =
-      this.props.valueFormatter ||
-      FormItem.props.valueFormatter ||
-      defaultValueFormatter;
-
-    // handle value transform
-    const valueTransformer =
-      this.props.valueTransformer ||
-      FormItem.props.valueTransformer ||
-      defaultValueTransformer;
+    // 获取单个表单域的值
+    const getFieldValue = this.props.getFieldValue || defaultGetFieldValue;
 
     const NewFormItem = React.cloneElement(FormItem, {
-      ...formValueErrorProps,
-      [currentValidateTriggerType]: () => {
-        FormItemProps[currentValidateTriggerType] &&
-          FormItemProps[currentValidateTriggerType]();
-
-        if (
-          currentValidateTriggerType !== 'onChange' &&
-          this.currentRules.length > 0
-        ) {
-          this.context.validate(currentName, this.currentRules);
-        }
-      },
-      // sync invoke onChange on formItems
-      onChange: (...args) => {
-        FormItemProps.onChange && FormItemProps.onChange.apply(this, args);
-        this.context.setter(currentName, valueFormatter(...args));
-        if (
-          currentValidateTriggerType === 'onChange' &&
-          this.currentRules.length > 0
-        ) {
-          this.context.validate(currentName, this.currentRules);
-        }
-      },
-      [valueKey]: (() => {
-        const formItemValue = FormItemProps[valueKey];
-        if (formItemValue && formItemValue !== FormItemDefaultProps[valueKey] ) {
-          return valueTransformer(FormItemProps[valueKey]);
-        } else {
-          const value = this.context.getter(currentName);
-          return valueTransformer(value);
-        }
+      [valuePropName]: (() => {
+        const value = this.context.getter(name);
+        return setFieldValue(value);
       })(),
+
+      [validateTriggerType]: () => {
+        if (this.rules.length > 0) {
+          this.context.validate(name, this.rules);
+        }
+      },
+
+      onChange: (...args) => {
+        if (FormItemProps.onChange) {
+          FormItemProps.onChange.apply(this, args);
+        }
+
+        const newValue = getFieldValue(...args);
+        this.context.setter(name, newValue);
+
+        if (validateTriggerType === 'onChange' && this.rules.length > 0) {
+          this.context.validate(name, this.rules);
+        }
+      },
     });
 
     return NewFormItem;
