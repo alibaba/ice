@@ -1,0 +1,30 @@
+@import '../../variables.scss';
+
+.slider {
+  overflow: hidden;
+  .slider-list {
+    overflow: visible;
+    .slider-screen {
+      display: inline-flex;
+      justify-content: space-around;
+      overflow: hidden;
+    }
+  }
+  .slider-control {
+    text-align: center;
+    margin-top: 20px;
+    .slider-control-item {
+      cursor: pointer;
+      display: inline-block;
+      width: 20px;
+      height: 4px;
+      margin-right: 4px;
+      background: #ccc;
+      &-active {
+        width: 40px;
+        height: 6px;
+        background-image: linear-gradient(-90deg, $startColor 0%, $intermediateColor 51%, $endColor 100%);
+      }
+    }
+  }
+}

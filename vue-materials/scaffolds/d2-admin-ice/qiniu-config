@@ -1,0 +1,18 @@
+{
+  "src_dir"            :   "/home/travis/build/d2-projects/d2-admin-ice/vue-materials/scaffolds/d2-admin-ice/dist",
+  "bucket"             :   "d2-admin-ice",
+  "ignore_dir"         :   false,
+  "overwrite"          :   true,
+  "check_exists"       :   true,
+  "check_hash"         :   true,
+  "check_size"         :   true,
+  "rescan_local"       :   true,
+  "skip_file_prefixes" :   "test,demo,",
+  "skip_path_prefixes" :   "hello/,temp/",
+  "skip_fixed_strings" :   ".svn,.git",
+  "skip_suffixes"      :   ".DS_Store,.exe",
+  "log_file"           :   "upload.log",
+  "log_level"          :   "info",
+  "log_rotate"         :   1,
+  "log_stdout"         :   false
+}

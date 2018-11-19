@@ -29,13 +29,15 @@
   %el-menu-icon {
     i {
       display: inline-block;
-      width: 15px;
+      width: 14px;
       text-align: center;
       margin-right: 5px;
-      svg {
-        height: 14px;
-        width: 14px;
-      }
+    }
+    svg {
+      margin: 0px;
+      height: 14px;
+      width: 14px;
+      margin-right: 5px;
     }
   }
   .el-submenu__title {
@@ -61,6 +63,17 @@
   
   // 顶栏
   .d2-theme-header {
+    // 顶栏菜单空间不足时显示的滚动控件
+    .d2-theme-header-menu {
+      .d2-theme-header-menu__prev, .d2-theme-header-menu__next {
+        color: $theme-header-item-color;
+        background: $theme-header-item-background-color;
+        &:hover {
+          color: $theme-header-item-color-hover;
+          background: $theme-header-item-background-color-hover;
+        }
+      }
+    }
     // 切换按钮
     .toggle-aside-btn {
       i {
@@ -95,6 +108,13 @@
         }
       }
       .el-submenu {
+        &.is-active {
+          .el-submenu__title {
+            color: $theme-header-item-color-active;
+            background: $theme-header-item-background-color-active;
+            i.fa { color: inherit; }
+          }
+        }
         .el-submenu__title {
           transition: border-top-color 0s;
           color: $theme-header-item-color;
@@ -168,6 +188,7 @@
           }
           &:hover {
             color: $theme-aside-item-color-hover;
+            fill: $theme-aside-item-color-hover;
             background: $theme-aside-item-background-color-hover;
             i {
               color: $theme-aside-item-color-hover;
@@ -175,6 +196,7 @@
           }
           &:focus {
             color: $theme-aside-item-color-focus;
+            fill: $theme-aside-item-color-focus;
             background: $theme-aside-item-background-color-focus;
             i {
               color: $theme-aside-item-color-focus;
@@ -182,6 +204,7 @@
           }
           &.is-active {
             color: $theme-aside-item-color-active;
+            fill: $theme-aside-item-color-active;
             background: $theme-aside-item-background-color-active;
             i {
               color: $theme-aside-item-color-active;

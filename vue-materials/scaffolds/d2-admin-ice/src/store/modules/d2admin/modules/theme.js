@@ -18,40 +18,50 @@ export default {
       return state.list.find(theme => theme.name === state.activeName)
     }
   },
-  mutations: {
+  actions: {
     /**
      * @description 激活一个主题
      * @param {Object} state vuex state
      * @param {String} themeValue 需要激活的主题名称
      */
-    set (state, themeName) {
-      // 检查这个主题在主题列表里是否存在
-      state.activeName = state.list.find(e => e.name === themeName) ? themeName : state.list[0].name
-      // 将 vuex 中的主题应用到 dom
-      this.commit('d2admin/theme/dom')
-      // 持久化
-      this.dispatch('d2admin/db/set', {
-        dbName: 'sys',
-        path: 'theme.activeName',
-        value: state.activeName,
-        user: true
+    set ({ state, commit, dispatch }, themeName) {
+      return new Promise(async resolve => {
+        // 检查这个主题在主题列表里是否存在
+        state.activeName = state.list.find(e => e.name === themeName) ? themeName : state.list[0].name
+        // 将 vuex 中的主题应用到 dom
+        commit('dom')
+        // 持久化
+        await dispatch('d2admin/db/set', {
+          dbName: 'sys',
+          path: 'theme.activeName',
+          value: state.activeName,
+          user: true
+        }, { root: true })
+        // end
+        resolve()
       })
     },
     /**
      * @description 从持久化数据加载主题设置
      * @param {Object} state vuex state
      */
-    async load (state) {
-      // store 赋值
-      state.activeName = await this.dispatch('d2admin/db/get', {
-        dbName: 'sys',
-        path: 'theme.activeName',
-        defaultValue: state.list[0].name,
-        user: true
+    load ({ state, commit, dispatch }) {
+      return new Promise(async resolve => {
+        // store 赋值
+        state.activeName = await dispatch('d2admin/db/get', {
+          dbName: 'sys',
+          path: 'theme.activeName',
+          defaultValue: state.list[0].name,
+          user: true
+        }, { root: true })
+        // 将 vuex 中的主题应用到 dom
+        commit('dom')
+        // end
+        resolve()
       })
-      // 更新到页面
-      this.commit('d2admin/theme/dom')
-    },
+    }
+  },
+  mutations: {
     /**
      * @description 将 vuex 中的主题应用到 dom
      * @param {Object} state vuex state

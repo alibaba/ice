@@ -1,14 +1,26 @@
 {
   "name": "@d2-admin/ice-scaffold",
-  "version": "1.2.8",
-  "description": "该模板默认支持多页模式，内置登陆验证、数据持久化、主题系统、字体图标库、多模式页面组件以及常用操作的封装等。",
+  "version": "1.3.7",
+  "description": "支持多页模式，提供网络请求封装和假数据模拟，Cookie封装，数据持久化系统，主题系统，多国语，超过600个图标以及支持svg图标扩充。",
   "author": "liyang <1711467488@qq.com>",
-  "homepage": "https://fairyever.gitee.io/d2-admin-ice-preview/",
+  "homepage": "https://ice.d2admin.fairyever.com",
+  "scaffoldConfig": {
+    "type": "vue",
+    "name": "D2Admin ICE",
+    "title": "D2Admin ICE",
+    "screenshot": "https://qiniucdn.fairyever.com/20181031190420.png"
+  },
+  "keywords": [
+    "ice-scaffold",
+    "dashboard",
+    "vue.js",
+    "d2-admin"
+  ],
   "main": "src/main.js",
   "scripts": {
     "serve": "vue-cli-service serve --open",
-    "start": "vue-cli-service serve --open",
-    "dev": "vue-cli-service serve --open",
+    "start": "npm run serve",
+    "dev": "npm run serve",
     "build": "vue-cli-service build",
     "build:travis": "vue-cli-service build --mode travis",
     "lint": "vue-cli-service lint --fix",
@@ -18,14 +30,16 @@
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
     "better-scroll": "^1.12.1",
-    "clipboard-polyfill": "^2.4.1",
     "dayjs": "^1.6.7",
     "element-ui": "^2.4.4",
     "flex.css": "^1.1.7",
+    "fuse.js": "^3.2.1",
+    "hotkeys-js": "^3.3.6",
     "js-cookie": "^2.2.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "lowdb": "^1.0.0",
     "mockjs": "^1.0.1-beta3",
+    "nprogress": "^0.2.0",
     "particles.js": "^2.0.0",
     "screenfull": "^3.3.2",
     "ua-parser-js": "^0.7.18",
@@ -61,15 +75,5 @@
       "git add"
     ]
   },
-  "scaffoldConfig": {
-    "name": "D2Admin ICE",
-    "title": "D2Admin ICE",
-    "screenshot": "http://fairyever.qiniudn.com/20180803175340.png"
-  },
-  "keywords": [
-    "dashboard",
-    "vue.js",
-    "d2-admin"
-  ],
   "license": "MIT"
 }

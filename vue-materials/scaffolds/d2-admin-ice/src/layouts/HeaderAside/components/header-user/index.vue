@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown class="d2-mr">
+  <el-dropdown size="small" class="d2-mr">
     <span class="btn-text">你好 {{info.name}}</span>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item @click.native="logOff">

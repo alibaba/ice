@@ -26,9 +26,51 @@
   // 内容层
   .d2-layout-header-aside-content {
     @extend %full;
-    $d2-theme-header-height: 60px;
     .d2-theme-header {
-      height: $d2-theme-header-height;
+      height: 60px;
+      .d2-theme-header-menu {
+        overflow: hidden;
+        &.is-scrollable {
+          position: relative;
+          padding: 0 20px;
+          .d2-theme-header-menu__prev, .d2-theme-header-menu__next {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+          }
+        }
+        .d2-theme-header-menu__content {
+          overflow: hidden;
+          .d2-theme-header-menu__scroll {
+            white-space: nowrap;
+            position: relative;
+            -webkit-transition: -webkit-transform .3s;
+            transition: -webkit-transform .3s;
+            transition: transform .3s;
+            transition: transform .3s, -webkit-transform .3s;
+            transition: transform .3s,-webkit-transform .3s;
+            float: left;
+          }
+        }
+        .d2-theme-header-menu__prev, .d2-theme-header-menu__next {
+          height: 60px;
+          position: absolute;
+          top: 0;
+          font-size: 20px;
+          cursor: pointer;
+          display: none;
+        }
+        .d2-theme-header-menu__prev {
+          left: 0;
+          border-top-left-radius: 2px;
+          border-bottom-left-radius: 2px;
+        }
+        .d2-theme-header-menu__next {
+          right: 0;
+          border-top-right-radius: 2px;
+          border-bottom-right-radius: 2px;
+        }
+      }
     }
     .d2-theme-container {
       .d2-theme-container-aside {
@@ -43,21 +85,20 @@
         padding: 0px;
         position: relative;
         overflow: hidden;
+        .d2-theme-container-main-layer {
+          position: absolute;
+          top: 0px;
+          bottom: 0px;
+          left: 0px;
+          right: 0px;
+        }
         .d2-theme-container-main-body {
-          flex-grow: 1;
           position: relative;
         }
       }
     }
   }
 }
-
-
-
-
-
-
-
 
 // 主题公用
 .d2-layout-header-aside-group {
@@ -129,7 +170,6 @@
           padding: 14px 12px;
           border-radius: 4px;
           margin: 0px !important;
-          margin-left: 10px !important;
         }
         .el-dropdown {
           @extend %unable-select;

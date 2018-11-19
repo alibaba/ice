@@ -7,174 +7,52 @@
     <link rel="icon" href="<%= BASE_URL %>icon.ico">
     <title><%= VUE_APP_TITLE %></title>
     <style>
-      html, body, #app {
-        height: 100%;
-        margin: 0px;
-        padding: 0px;
-      }
-      .d2-app-loading-group {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; 
-        background-blend-mode: multiply,multiply;
-      }
-      .d2-app-loading-title {
-        color: #FFF;
-        font-weight: bold;
-        font-size: 14px;
-        margin-top: 40px;
-        margin-bottom: 10px;
-        letter-spacing: 0.2em;
-      }
-      .d2-app-loading-sub-title {
-        color: #FFF;
-        font-size: 10px;
-        margin-bottom: 10px;
-      }
-      .d2-app-loading-sub-info {
-        color: #FFF;
-        font-size: 10px;
-        opacity: .8;
-        margin-bottom: 4px;
-      }
-      .d2-app-loading-btn {
-        text-decoration: none;
-        display: inline-block;
-        line-height: 1;
-        white-space: nowrap;
-        cursor: pointer;
-        background: #fff;
-        border: 1px solid #dcdfe6;
-        border-color: #dcdfe6;
-        color: #606266;
-        -webkit-appearance: none;
-        text-align: center;
-        box-sizing: border-box;
-        outline: none;
-        margin: 0;
-        transition: .1s;
-        font-weight: 500;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        padding: 12px 20px;
-        font-size: 14px;
-        border-radius: 4px;
-        /* 圆角 */
-        padding: 7px 15px;
-        border-radius: 20px;
-        font-size: 12px;
-      }
-      .d2-app-loading-grid {
-        width: 30px;
-        height: 30px;
-      }
-      .d2-app-loading-grid .d2-app-loading {
-        width: 10px;
-        height: 10px;
-        background-color: #FFF;
-        float: left;
-        -webkit-animation: d2-app-loading-grid-scale-delay 1.3s infinite ease-in-out;
-                animation: d2-app-loading-grid-scale-delay 1.3s infinite ease-in-out; 
-      }
-      .d2-app-loading-grid .d2-app-loading1 {
-        border-top-left-radius: 4px;
-        -webkit-animation-delay: 0.2s;
-                animation-delay: 0.2s; }
-      .d2-app-loading-grid .d2-app-loading2 {
-        -webkit-animation-delay: 0.3s;
-                animation-delay: 0.3s; }
-      .d2-app-loading-grid .d2-app-loading3 {
-        border-top-right-radius: 4px;
-        -webkit-animation-delay: 0.4s;
-                animation-delay: 0.4s; }
-      .d2-app-loading-grid .d2-app-loading4 {
-        -webkit-animation-delay: 0.1s;
-                animation-delay: 0.1s; }
-      .d2-app-loading-grid .d2-app-loading5 {
-        -webkit-animation-delay: 0.2s;
-                animation-delay: 0.2s; }
-      .d2-app-loading-grid .d2-app-loading6 {
-        -webkit-animation-delay: 0.3s;
-                animation-delay: 0.3s; }
-      .d2-app-loading-grid .d2-app-loading7 {
-        border-bottom-left-radius: 4px;
-        -webkit-animation-delay: 0s;
-                animation-delay: 0s; }
-      .d2-app-loading-grid .d2-app-loading8 {
-        -webkit-animation-delay: 0.1s;
-                animation-delay: 0.1s; }
-      .d2-app-loading-grid .d2-app-loading9 {
-        border-bottom-right-radius: 4px;
-        -webkit-animation-delay: 0.2s;
-                animation-delay: 0.2s; }
-
-      @-webkit-keyframes d2-app-loading-grid-scale-delay {
-        0%, 70%, 100% {
-          -webkit-transform: scale3D(1, 1, 1);
-                  transform: scale3D(1, 1, 1);
-        } 35% {
-          -webkit-transform: scale3D(0, 0, 1);
-                  transform: scale3D(0, 0, 1); 
-        }
-      }
-
-      @keyframes d2-app-loading-grid-scale-delay {
-        0%, 70%, 100% {
-          -webkit-transform: scale3D(1, 1, 1);
-                  transform: scale3D(1, 1, 1);
-        } 35% {
-          -webkit-transform: scale3D(0, 0, 1);
-                  transform: scale3D(0, 0, 1);
-        } 
-      }
+      html, body, #app { height: 100%; margin: 0px; padding: 0px; }
+      .d2-home { background-color: #303133; height: 100%; display: flex; flex-direction: column; }
+      .d2-home__main { user-select: none; width: 100%; flex-grow: 1; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+      .d2-home__footer { width: 100%; flex-grow: 0; text-align: center; padding: 1em 0; }
+      .d2-home__footer > a { font-size: 12px; color: #ABABAB; text-decoration: none; }
+      .d2-home__loading { height: 32px; width: 32px; margin-bottom: 20px; }
+      .d2-home__title { color: #FFF; font-size: 14px; margin-bottom: 10px; }
+      .d2-home__sub-title { color: #ABABAB; font-size: 12px; }
     </style>
     <script>
-      // 感谢您使用 D2Admin
-      // D2Admin 完全开源免费，并且长期更新维护
-      // 下面的百度统计代码不会拖慢您的应用速度也不会占用多少网络带宽，我们只是想统计一下我们的用户量
-      // 所以希望您不要删除我们的统计代码，让我们知道有更多人的在使用，给我们继续开发的动力
       var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b69a52ce3eea32178dcf7e16e46003ef";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
+      var hmid = "2825bdd3a1bb999241ba693d9947e755";
+      (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?" + hmid; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();
     </script>
-    <script src="./script/ua-parser.min.js"></script>
-    <script src="./script/ua.js"></script>
+    <!-- ua -->
+    <script src="<%= BASE_URL %>script/ua-parser.min.js"></script>
+    <script src="<%= BASE_URL %>script/ua.js"></script>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but d2-admin-start-kit-cli3 doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>
+        很抱歉，如果没有 JavaScript 支持，D2Admin 将不能正常工作。请启用浏览器的 JavaScript 然后继续。
+      </strong>
     </noscript>
     <div id="app">
-      <div class="d2-app-loading-group">
-        <div class="d2-app-loading-grid">
-          <div class="d2-app-loading d2-app-loading1"></div>
-          <div class="d2-app-loading d2-app-loading2"></div>
-          <div class="d2-app-loading d2-app-loading3"></div>
-          <div class="d2-app-loading d2-app-loading4"></div>
-          <div class="d2-app-loading d2-app-loading5"></div>
-          <div class="d2-app-loading d2-app-loading6"></div>
-          <div class="d2-app-loading d2-app-loading7"></div>
-          <div class="d2-app-loading d2-app-loading8"></div>
-          <div class="d2-app-loading d2-app-loading9"></div>
+      <div class="d2-home">
+        <div class="d2-home__main">
+          <img
+            class="d2-home__loading"
+            src="./image/loading/loading-spin.svg"
+            alt="loading">
+          <div class="d2-home__title">
+            正在加载资源
+          </div>
+          <div class="d2-home__sub-title">
+            初次加载资源可能需要较多时间 请耐心等待
+          </div>
         </div>
-        <div class="d2-app-loading-title">加载中</div>
-        <div class="d2-app-loading-sub-title">欢迎使用 D2Admin 进行你的开发，初次加载会比较慢，请耐心等待</div>
-        <div class="d2-app-loading-sub-info">如果很久很久都没有加载成功，请清空缓存重新加载页面</div>
-        <div style="margin-top: 10px;">
-          <a class="d2-app-loading-btn" href="https://github.com/d2-projects/d2-admin" target="blank">Github仓库</a>
-          <a class="d2-app-loading-btn" href="http://app.d3collection.cn/d2-admin-doc/lastest/zh/" target="blank">中文文档</a>
+        <div class="d2-home__footer">
+          <a
+            href="https://github.com/d2-projects/d2-admin"
+            target="_blank">
+            https://github.com/d2-projects/d2-admin
+          </a>
         </div>
       </div>
     </div>
-    <!-- built files will be auto injected -->
   </body>
 </html>
