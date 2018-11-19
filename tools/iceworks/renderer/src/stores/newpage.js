@@ -1,5 +1,6 @@
 import { observable, action, computed } from 'mobx';
 import path from 'path';
+import { ipcRenderer } from 'electron';
 
 import { scanPages } from '../lib/project-utils';
 import projects from './projects';
@@ -31,6 +32,19 @@ class NewPage {
   savePageVisible = false; // 控制 page 保存 dialog 的显示
   @observable
   isCreatingValue = false; // 用于控制 pageConfig 确定按钮 loading 状态
+  @observable
+  createProcess = '';
+  @observable
+  progressVisible = false;
+
+  constructor() {
+    ipcRenderer.on('processTracking', (event, process) => {
+      this.createProcess = process;
+    });
+    ipcRenderer.on('progressVisible', (event, visible) => {
+      this.progressVisible = visible;
+    });
+  }
 
   @computed
   get isCreating() {
@@ -39,6 +53,9 @@ class NewPage {
 
   set isCreating(value) {
     this.isCreatingValue = value;
+    if (!value) {
+      this.createProcess = '';
+    }
   }
 
   @action

@@ -6,6 +6,7 @@ const request = require('request');
 const tar = require('tar');
 const uppercamelcase = require('uppercamelcase');
 const zlib = require('zlib');
+const requestProgress = require('request-progress');
 
 const config = require('../../config');
 
@@ -156,12 +157,20 @@ function extractTarball(tarballURL, destDir) {
  * @param ignoreFiles
  * @returns {Promise<any>}
  */
-function extractBlock(destDir, tarballURL, projectDir, ignoreFiles) {
+function extractBlock(destDir, tarballURL, projectDir, ignoreFiles, progressFunc = () => {}) {
   return new Promise((resolve, reject) => {
     debug('npmTarball', tarballURL);
     const allFiles = [];
-    request
-      .get(tarballURL)
+    const req = requestProgress(
+      request({
+        url: tarballURL,
+        timeout: 5000
+      })
+    );
+    req
+      .on('progress', (state) => {
+        progressFunc(state);
+      })
       .on('error', reject)
       .pipe(zlib.Unzip()) // eslint-disable-line
       .pipe(tar.Parse()) // eslint-disable-line
@@ -203,6 +212,9 @@ function extractBlock(destDir, tarballURL, projectDir, ignoreFiles) {
         allFiles.push(destPath);
       })
       .on('end', () => {
+        progressFunc({
+          percent: 1,
+        });
         resolve(allFiles);
       });
   });
