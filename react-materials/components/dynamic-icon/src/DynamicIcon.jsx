@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 const linkTagCache = {};
 
 export default class DynamicIcon extends Component {
@@ -22,12 +23,12 @@ export default class DynamicIcon extends Component {
       'large',
       'xl',
       'xxl',
-      'xxxl'
-    ])
+      'xxxl',
+    ]),
   };
 
   static defaultProps = {
-    size: 'medium'
+    size: 'medium',
   };
 
   static create = ({ fontFamily, prefix: uniquePrefix, css }) => {
@@ -46,7 +47,7 @@ export default class DynamicIcon extends Component {
         [`${uniquePrefix}-${size}`]: !!size,
         [`${fontFamily}`]: true,
         [`${uniquePrefix}-${type}`]: !!type,
-        [className]: !!className
+        [className]: !!className,
       });
       return <i {...other} className={classes} />;
     };
@@ -104,11 +105,6 @@ export default class DynamicIcon extends Component {
 
     return render;
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
 
   shouldComponentUpdate() {
     return false;

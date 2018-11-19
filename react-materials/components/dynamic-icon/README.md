@@ -12,13 +12,13 @@ DynamicIcon 组件，相比 Icon，可以从 [http://iconfont.cn](iconfont.cn) �
 ```jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import DynamicIcon from 'dynamic-icon';
+import DynamicIcon from '@icedesign/dynamic-icon';
 
 // 使用 custom 生成自定义 ICON 组件
 const CustomIcon = DynamicIcon.create({
   fontFamily: 'iconfont',
   prefix: 'icon',
-  css: 'https://at.alicdn.com/t/font_1472628097_7496383.css'
+  css: 'https://at.alicdn.com/t/font_1472628097_7496383.css',
 });
 
 class App extends Component {
@@ -34,9 +34,9 @@ ReactDOM.render(<App />, mountNode);
 
 #### custom 方法参数说明
 
-* fontFamily：[http://iconfont.cn](iconfont.cn) 项目的 font-family，详见项目配置
-* prefix：[http://iconfont.cn](iconfont.cn) 项目中的 Symbol 前缀，详见项目配置
-* css：[http://iconfont.cn](iconfont.cn) 项目生成的在线 CSS CDN 地址
+- fontFamily：[http://iconfont.cn](iconfont.cn) 项目的 font-family，详见项目配置
+- prefix：[http://iconfont.cn](iconfont.cn) 项目中的 Symbol 前缀，详见项目配置
+- css：[http://iconfont.cn](iconfont.cn) 项目生成的在线 CSS CDN 地址
 
 #### 自定义类型 type 说明
 

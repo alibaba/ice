@@ -4,7 +4,8 @@
   "description": "面板组件：虽然不总是必须，但是某些时候你可能需要将某些 DOM 内容放到一个盒子里。对于这种情况，可以试试面板组件",
   "main": "lib/index.js",
   "files": [
-    "lib/"
+    "lib/",
+    "demo/"
   ],
   "scripts": {
     "start": "ice-devtools start",

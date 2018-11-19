@@ -4,7 +4,8 @@
   "description": "多行文字控制展示组件",
   "main": "lib/index.js",
   "files": [
-    "lib/"
+    "lib/",
+    "demo/"
   ],
   "scripts": {
     "start": "ice-devtools start",

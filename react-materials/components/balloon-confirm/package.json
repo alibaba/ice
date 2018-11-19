@@ -4,7 +4,8 @@
   "description": "ICE 气泡确认框",
   "main": "lib/index.js",
   "files": [
-    "lib/"
+    "lib/",
+    "demo/"
   ],
   "author": {
     "name": "ICE Team",

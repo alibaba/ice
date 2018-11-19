@@ -4,7 +4,8 @@
   "description": "ICE 前后端数据绑定、交互方案",
   "main": "lib/index.js",
   "files": [
-    "lib/"
+    "lib/",
+    "demo/"
   ],
   "scripts": {
     "start": "ice-devtools start",

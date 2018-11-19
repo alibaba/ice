@@ -1,10 +1,11 @@
 {
   "name": "@icedesign/title",
   "version": "0.1.2",
-  "description": "标题组件，可以用在动态表单里面作为表单分隔符。",
+  "description": "标题组件",
   "main": "lib/index.js",
   "files": [
-    "lib/"
+    "lib/",
+    "demo/"
   ],
   "keywords": [
     "ice",
@@ -22,7 +23,7 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-   },
+  },
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build"

@@ -4,7 +4,8 @@
   "description": "创建标签组件用来突出所要显示的信息",
   "main": "lib/index.js",
   "files": [
-    "lib/"
+    "lib/",
+    "demo/"
   ],
   "scripts": {
     "start": "ice-devtools start",
