@@ -1,0 +1,8 @@
+{
+  "log": [
+    "特性：新增官方推荐物料集合，推出 Bizcharts 图表类物料源供你选择",
+    "优化：初次使用项目界面增加项目创建引导项",
+    "修复：自定义物料源在 scaffolds 的情况下卡死的问题",
+    "<a href='https://zhuanlan.zhihu.com/p/43360913' _target='_blank'>点击查看详情</a>"
+  ]
+}

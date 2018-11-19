@@ -1,0 +1,19 @@
+.page-item {
+  padding: 4px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  a:link {
+    color: #999;
+  }
+}
+
+.page-tip-content {
+  width: 152px;
+  .page-info-item {
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

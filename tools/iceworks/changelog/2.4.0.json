@@ -1,0 +1,8 @@
+{
+  "log": [
+    "特性：接入 Angular 项目工程，增加 Angular 物料源",
+    "特性：默认支持本地离线化构建 <a href='https://github.com/alibaba/ice/wiki/%E7%A6%BB%E7%BA%BF%E5%8C%96%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE' target='_blank'>文档参考<a/>",
+    "优化：自定义布局交互体验与自定义模板保持一致",
+    "修复：修复项目功能造成项目运行错误，修改为用户手动适配"
+  ]
+}
