@@ -1,4 +1,10 @@
 import { computed, toJS, observable } from 'mobx';
+import services from '../services';
+
+const isAlibaba = services.settings.get('isAlibaba');
+const excludeScaffold = (provider) => {
+  return isAlibaba && provider === 'community';
+};
 
 class AdditionalScaffolds {
   @observable
@@ -11,7 +17,7 @@ class AdditionalScaffolds {
 
   additionalIsNew = (scaffolds) => {
     const sortScaffolds = scaffolds.filter((scaffold) => {
-      return !!scaffold.publishTime;
+      return !!scaffold.publishTime || !excludeScaffold(scaffold.provider);
     });
 
     if (sortScaffolds.length == 0) {
@@ -33,7 +39,7 @@ class AdditionalScaffolds {
         item._isNew = _isNew;
       });
     }
-    return scaffolds;
+    return sortScaffolds;
   };
 
   /**
@@ -55,9 +61,11 @@ class AdditionalScaffolds {
   @computed
   get categories() {
     // 默认展示全部
-    let categories = [];
+    const categories = [];
 
     this.scaffoldsValue.forEach((item) => {
+      if (excludeScaffold(item.provider)) return;
+
       if (Array.isArray(item.categories)) {
         item.categories.forEach((currentValue) => {
           if (!categories.includes(currentValue)) {
