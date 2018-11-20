@@ -6,6 +6,7 @@ mochawesome-report
 .happypack
 package-lock.json
 yarn.lock
+!tools/iceworks/**/yarn.lock
 */blocks/**/lib/
 */layouts/**/lib/
 .eslintcache
