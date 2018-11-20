@@ -3,6 +3,7 @@ const colors = require('chalk');
 const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 const fs = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
@@ -33,6 +34,10 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
       chunkFilename: process.env.HASH
         ? 'css/[id].[hash:6].css'
         : 'css/[id].css',
+    }),
+    // FIX ISSUE: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
+    new FilterWarningsPlugin({
+      exclude: /chunk vendor \[mini-css-extract-plugin]\nConflicting order between:/,
     }),
     new SimpleProgressPlugin(),
     new CaseSensitivePathsPlugin(),
