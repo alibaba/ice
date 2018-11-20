@@ -27,9 +27,8 @@ const store = oss({
 });
 
 const assetsMap = {
-  "pre-depoly": "pre-assets",
-  "beta": "beta-assets",
-  "master": "assets"
+  "production": "assets",
+  "master": "pre-assets"
 }
 
 console.log('start uploading');
