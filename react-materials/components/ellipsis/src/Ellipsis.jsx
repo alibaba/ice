@@ -3,10 +3,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Balloon } from '@icedesign/base';
-const Tooltip = Balloon.Tooltip;
-import { getWidthFromDOM } from './utils';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import { getWidthFromDOM } from './utils';
+
+const Tooltip = Balloon.Tooltip;
 
 export default class IceEllipsis extends Component {
   static displayName = 'IceEllipsis';
@@ -29,7 +30,7 @@ export default class IceEllipsis extends Component {
     /**
      * 针对 tooltip 模式下，Tooltip 组件的自定义 props
      */
-    tooltipProps: PropTypes.object
+    tooltipProps: PropTypes.object,
   };
 
   static defaultProps = {
@@ -38,7 +39,7 @@ export default class IceEllipsis extends Component {
     showTooltip: false,
     // 设置内容
     text: '',
-    tooltipProps: {}
+    tooltipProps: {},
   };
 
   constructor(props) {
@@ -59,7 +60,7 @@ export default class IceEllipsis extends Component {
     this.state = {
       isSupportLineClamp,
       wrapWidth: 'auto',
-      fontSize: 16
+      fontSize: 16,
     };
   }
 
@@ -73,7 +74,7 @@ export default class IceEllipsis extends Component {
 
     this.setState({
       wrapWidth: wrapWidth,
-      fontSize: fontSize
+      fontSize: fontSize,
     });
   }
 
@@ -83,10 +84,10 @@ export default class IceEllipsis extends Component {
 
     const cls = classnames({
       ['ice-ellipsis']: true,
-      [this.props.className]: this.props.className
+      [this.props.className]: this.props.className,
     });
     const style = {
-      ...this.props.style
+      ...this.props.style,
     };
 
     const { wrapWidth, isSupportLineClamp, fontSize } = this.state;
@@ -101,7 +102,7 @@ export default class IceEllipsis extends Component {
             display: 'inline-block',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
-            ...style
+            ...style,
           }}
         >
           {text}
@@ -120,7 +121,7 @@ export default class IceEllipsis extends Component {
               display: '-webkit-box',
               WebkitLineClamp: lineLimit,
               WebkitBoxOrient: 'vertical',
-              ...style
+              ...style,
             }}
           >
             {text}
@@ -149,7 +150,7 @@ export default class IceEllipsis extends Component {
             className={cls}
             style={{
               width: wrapWidth,
-              ...style
+              ...style,
             }}
           >
             {textList}

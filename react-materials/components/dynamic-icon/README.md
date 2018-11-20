@@ -2,7 +2,7 @@
 title: DynamicIcon
 category: BizComponents
 chinese: 自定义 Iconfont 图标组件
-npm: dynamic-icon
+npm: \@icedesign/dynamic-icon
 ---
 
 DynamicIcon 组件，相比 Icon，可以从 [http://iconfont.cn](iconfont.cn) 自定义图标集，同时内置了一些扩展的图标集合。

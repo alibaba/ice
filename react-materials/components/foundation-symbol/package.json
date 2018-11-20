@@ -1,7 +1,7 @@
 {
   "name": "@icedesign/foundation-symbol",
   "version": "0.1.3",
-  "description": "",
+  "description": "基础符号表",
   "main": "lib/index.js",
   "files": [
     "lib/",

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import './main.scss';
+
 const linkTagCache = {};
 
 export default class DynamicIcon extends Component {
@@ -23,12 +23,12 @@ export default class DynamicIcon extends Component {
       'large',
       'xl',
       'xxl',
-      'xxxl'
-    ])
+      'xxxl',
+    ]),
   };
 
   static defaultProps = {
-    size: 'medium'
+    size: 'medium',
   };
 
   constructor(props) {
@@ -46,7 +46,7 @@ export default class DynamicIcon extends Component {
       [`ice-icon-stable-${size}`]: !!size,
       ['ice-icon-stable']: true,
       [`ice-icon-stable-${type}`]: !!type,
-      [className]: !!className
+      [className]: !!className,
     });
     return <i {...others} className={classes} />;
   }

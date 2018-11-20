@@ -27,12 +27,12 @@
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "classnames": "^2.2.5",
-    "prop-types": "^15.5.10",
-    "@icedesign/img": "^0.1.0",
-    "@icedesign/menu": "^0.1.0",
-    "@icedesign/title": "^0.1.0"
+    "prop-types": "^15.5.10"
   },
   "devDependencies": {
+    "@icedesign/img": "^0.1.0",
+    "@icedesign/menu": "^0.1.0",
+    "@icedesign/title": "^0.1.0",
     "ice-devtools": "^1.1.14-beta.2"
   },
   "peerDependencies": {

@@ -24,7 +24,7 @@ class App extends Component {
   renderCover = (value, index, record) => {
     let type = 'cover';
     if (index % 3 === 0) {
-      type = "contain";
+      type = 'contain';
     }
     return (
       <div>
