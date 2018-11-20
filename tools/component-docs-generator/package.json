@@ -1,0 +1,17 @@
+{
+  "name": "component-docs-generator",
+  "version": "1.0.0",
+  "description": "component docs generator for ice",
+  "main": "index.js",
+  "author": "chenbin92",
+  "license": "MIT",
+  "dependencies": {
+    "@alifd/api-extractor": "^3.3.2",
+    "@alifd/doc-parser": "^1.0.1",
+    "glob": "^7.1.3"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/tools/component-docs-generator"
+  }
+}

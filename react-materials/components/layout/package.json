@@ -1,0 +1,42 @@
+{
+  "name": "@icedesign/layout",
+  "version": "0.1.4",
+  "description": "提供页面框架性的 layout 组件",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "demo/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-components"
+  ],
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build"
+  },
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.10"
+  },
+  "devDependencies": {
+    "@icedesign/img": "^0.1.0",
+    "@icedesign/menu": "^0.1.0",
+    "@icedesign/title": "^0.1.0",
+    "ice-devtools": "^1.1.14-beta.2"
+  },
+  "peerDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
+  }
+}
