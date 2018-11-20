@@ -2,19 +2,19 @@
 @import './scss/variable';
 
 #{$ice-title-prefix} {
-  border-left-color: $border-color;
-  font-size: $title-size;
-  color: $title-color;
+  border-left-color: $ice-title-border-color;
+  font-size: $ice-title-title-size;
+  color: $ice-title-title-color;
   vertical-align: baseline;
-  margin: $margin-left 0 $margin-right 0;
+  margin: $ice-title-margin-left 0 $margin-right 0;
   padding-left: $padding-left;
   line-height: 1.3;
 
   #{$ice-title-prefix}-subtitle {
-    color: $subtitle-color;
-    font-size: $subtitle-size;
+    color: $ice-title-subtitle-color;
+    font-size: $ice-title-subtitle-size;
     vertical-align: baseline;
-    margin-left: $subtitle-margin-left;
+    margin-left: $ice-title-subtitle-margin-left;
     display:inline-block;
   }
 }

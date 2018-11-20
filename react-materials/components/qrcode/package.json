@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
-    "foundation-symbol": "^0.1.4",
+    "@icedesign/foundation-symbol": "^0.1.4",
     "prop-types": "^15.6.0",
     "qrcode.react": "^0.8.0"
   },

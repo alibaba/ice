@@ -9,7 +9,7 @@ importStyle: true
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import DynamicIcon from 'dynamic-icon';
+import DynamicIcon from '@icedesign/dynamic-icon';
 import { Button } from '@icedesign/base';
 
 const CustomIcon = DynamicIcon.create({

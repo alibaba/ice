@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { Feedback } from '@icedesign/base';
-import DynamicIcon from 'dynamic-icon';
+import DynamicIcon from '@icedesign/dynamic-icon';
 
 const CustomIcon = DynamicIcon.create({
   fontFamily: 'iceicon2',

@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { Feedback } from '@icedesign/base';
-import FoundationSymbol from 'foundation-symbol';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 
 const all = [
   'bangzhu',

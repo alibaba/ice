@@ -2,11 +2,11 @@
 @import 'scss/variable';
 
 @mixin layout-theme ($theme, $bgColor, $textColor) {
-  #{$component-prifix}-theme-#{$theme} {
-    &#{$component-prifix}-header {
+  #{$ice-layout-prefix}-theme-#{$theme} {
+    &#{$ice-layout-prefix}-header {
       background-color: $bgColor;
     }
-    &#{$component-prifix}-aside {
+    &#{$ice-layout-prefix}-aside {
       background-color: $bgColor;
     }
   }
@@ -14,7 +14,7 @@
 @include layout-theme('dark', #404040, #FFF);
 @include layout-theme('light', #FFF, #404040);
 
-#{$component-prifix} {
+#{$ice-layout-prefix} {
   display: flex;
   flex-direction: column;
   flex: auto;
@@ -27,7 +27,7 @@
     max-height: 100vh;
     min-height: 100vh; // @hack flex-grow not working in ie 11
     overflow: hidden;
-    & #{$component-prifix}-section {
+    & #{$ice-layout-prefix}-section {
       overflow: hidden; // @hack flex-grow not working in firefox
     }
   }
@@ -35,51 +35,51 @@
     overflow: auto !important;
     display: block !important;
   }
-  #{$component-prifix}-section {
+  #{$ice-layout-prefix}-section {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
     min-height: 0;
     &-has-aside {
       flex-direction: row;
-      #{$component-prifix}-section-inner {
+      #{$ice-layout-prefix}-section-inner {
         flex-direction: row;
       }
     }
   }
-  #{$component-prifix}-section-inner {
+  #{$ice-layout-prefix}-section-inner {
     display: flex;
     flex-direction: column;
     align-items: stretch;
   }
-  #{$component-prifix}-header {
+  #{$ice-layout-prefix}-header {
     display: flex;
     flex: none;
     box-shadow: 3px 0 3px rgba(0, 0, 0, 0.3);
     z-index: 1; // shadow 盖住 main
   }
-  #{$component-prifix}-header-right {
+  #{$ice-layout-prefix}-header-right {
     display: flex;
     flex: auto;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
   }
-  #{$component-prifix}-footer {
+  #{$ice-layout-prefix}-footer {
     flex: none;
     display: block;
   }
-  #{$component-prifix}-main {
+  #{$ice-layout-prefix}-main {
     flex: auto;
     display: block;
   }
-  #{$component-prifix}-aside {
+  #{$ice-layout-prefix}-aside {
     display: block;
     transition: all 0.2s linear;
     flex: 0 0 200px;
-    &#{$component-prifix}-aside-has-trigger {
+    &#{$ice-layout-prefix}-aside-has-trigger {
       position: relative;
-      #{$component-prifix}-aside-trigger {
+      #{$ice-layout-prefix}-aside-trigger {
         height: 40px;
         overflow: hidden;
         position: absolute;
@@ -88,7 +88,7 @@
         width: 100%;
       }
     }
-    #{$component-prifix}-aside-trigger {
+    #{$ice-layout-prefix}-aside-trigger {
       background-color: rgba(0, 0, 0, 0.4);
       cursor: pointer;
       height: 40px;
@@ -97,7 +97,7 @@
       .next-icon {
         transition: all 0.2s linear;
       }
-      &#{$component-prifix}-aside-trigger-collapsed {
+      &#{$ice-layout-prefix}-aside-trigger-collapsed {
         .next-icon {
           transform: rotate(180deg);
         }
