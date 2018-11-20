@@ -46,8 +46,10 @@
   },
   "scaffoldConfig": {
     "name": "ice-reviews-management",
-    "title": "ICE Reviews Management",
-    "categories": ["行业领域"],
+    "title": "客户反馈系统",
+    "categories": [
+      "行业领域"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1FrmItDtYBeNjy1XdXXXXyVXa-2840-1596.png"
   },
   "engines": {

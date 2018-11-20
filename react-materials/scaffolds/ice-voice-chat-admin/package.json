@@ -51,7 +51,7 @@
   },
   "scaffoldConfig": {
     "name": "ice-voice-chat-admin",
-    "title": "ICE Voice Chat Admin",
+    "title": "语音对话系统",
     "categories": [
       "行业领域"
     ],
