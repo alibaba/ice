@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+@import '~@icedesign/base/lib/core/index.scss';
+@import 'scss/variable';
+
+@mixin bt-label-variant($color) {
+  background-color: $color;
+  &[href] {
+    &:hover,
+    &:focus {
+      background-color: darken($color, 10%);
+    }
+  }
+}
+
+.#{$ice-label-prefix} {
+  display: inline-block;
+  padding: 0.3em 0.6em;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1;
+  color: $color-n1-1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25em;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &:empty {
+    display: none;
+  }
+
+  &.#{$ice-label-prefix}-default {
+    @include bt-label-variant($color-n1-8);
+    &.#{$ice-label-prefix}-no-inverse {
+      color: $color-n1-8;
+      @include bt-label-variant($color-n1-3);
+    }
+  }
+
+  &.#{$ice-label-prefix}-primary {
+    @include bt-label-variant($color-b1-6);
+    &.#{$ice-label-prefix}-no-inverse {
+      color: $color-b1-6;
+      @include bt-label-variant($color-b1-1);
+    }
+  }
+
+  &.#{$ice-label-prefix}-success {
+    @include bt-label-variant($color-f3-1);
+    &.#{$ice-label-prefix}-no-inverse {
+      color: $color-f3-1;
+      @include bt-label-variant($color-f3-2);
+    }
+  }
+
+  &.#{$ice-label-prefix}-info {
+    @include bt-label-variant($color-f5-1);
+    &.#{$ice-label-prefix}-no-inverse {
+      color: $color-f5-1;
+      @include bt-label-variant($color-f5-2);
+    }
+  }
+
+  &.#{$ice-label-prefix}-warning {
+    @include bt-label-variant($color-f1-1);
+    &.#{$ice-label-prefix}-no-inverse {
+      color: $color-f1-1;
+      @include bt-label-variant($color-f1-2);
+    }
+  }
+
+  &.#{$ice-label-prefix}-danger {
+    @include bt-label-variant($color-f2-1);
+    &.#{$ice-label-prefix}-no-inverse {
+      color: $color-f2-1;
+      @include bt-label-variant($color-f2-2);
+    }
+  }
+}
+
+//相邻的之间的加个 5 像素的 margin
+.#{$ice-label-prefix} + .#{$ice-label-prefix} {
+  margin-left: 5px;
+}
