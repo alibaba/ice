@@ -58,8 +58,8 @@
   },
   "scaffoldConfig": {
     "type": "react",
-    "name": "ice-light-bootstrap-dashboard",
-    "title": "ICE Light Bootstrap Dashboard",
+    "name": "light-bootstrap-dashboard",
+    "title": "Light Bootstrap Dashboard",
     "categories": [
       "Dashboard"
     ],

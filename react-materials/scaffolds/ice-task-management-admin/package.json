@@ -50,7 +50,7 @@
   },
   "scaffoldConfig": {
     "name": "ice-task-management-admin",
-    "title": "ICE Task Management Admin",
+    "title": "任务管理系统",
     "categories": [
       "行业领域"
     ],

@@ -1,4 +1,4 @@
-# ice-light-bootstrap-dashboard
+# light-bootstrap-dashboard
 
 ## 简介说明
 

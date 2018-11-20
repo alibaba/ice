@@ -52,7 +52,7 @@
   },
   "scaffoldConfig": {
     "name": "ice-contract-management-admin",
-    "title": "ICE Contract Management Admin",
+    "title": "合同管理系统",
     "categories": [
       "行业领域"
     ],

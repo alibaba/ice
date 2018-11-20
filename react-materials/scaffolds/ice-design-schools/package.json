@@ -50,8 +50,10 @@
   },
   "scaffoldConfig": {
     "name": "ice-design-schools",
-    "title": "ICE Design Schools",
-    "categories": ["行业领域"],
+    "title": "学校管理系统",
+    "categories": [
+      "行业领域"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1pCKVzDtYBeNjy1XdXXXXyVXa-2840-1596.png"
   },
   "engines": {
