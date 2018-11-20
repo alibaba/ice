@@ -6,10 +6,9 @@ const scaffolds = require('./scaffolds');
 
 if (
   process.env.TRAVIS_BRANCH !== 'master' &&
-  process.env.TRAVIS_BRANCH !== 'beta' &&
-  process.env.TRAVIS_BRANCH !== 'pre-depoly'
+  process.env.TRAVIS_BRANCH !== 'production' &&
 ) {
-  console.log('当前分支非 Master, 不执行物料源同步脚本');
+  console.log('当前分支非 master / production, 不执行物料源同步脚本');
   console.log('TRAVIS_BRANCH=' + process.env.TRAVIS_BRANCH);
   process.exit(0);
 }
