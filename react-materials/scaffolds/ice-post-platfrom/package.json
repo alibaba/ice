@@ -48,6 +48,7 @@
     "theme": "light"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-post-platfrom",
     "title": "ICE Post Platfrom",
     "categories": [

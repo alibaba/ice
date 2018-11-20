@@ -54,6 +54,7 @@
     "primaryColor": "#236cff"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-scroll-screen-homepage",
     "title": "ICE Scroll Screen Homepage",
     "categories": [

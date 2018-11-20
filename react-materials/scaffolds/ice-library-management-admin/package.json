@@ -47,6 +47,7 @@
     "primaryColor": "#40b370"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-library-management-admin",
     "title": "ICE Library Management Admin",
     "categories": [

@@ -2,8 +2,8 @@ import { computed, toJS, observable } from 'mobx';
 import services from '../services';
 
 const isAlibaba = services.settings.get('isAlibaba');
-const excludeScaffold = (provider) => {
-  return isAlibaba && provider === 'community';
+const excludeScaffold = (powered) => {
+  return isAlibaba && powered !== 'icedesign';
 };
 
 class AdditionalScaffolds {
@@ -17,10 +17,10 @@ class AdditionalScaffolds {
 
   additionalIsNew = (scaffolds) => {
     const sortScaffolds = scaffolds.filter((scaffold) => {
-      return !!scaffold.publishTime || !excludeScaffold(scaffold.provider);
+      return !!scaffold.publishTime || !excludeScaffold(scaffold.powered);
     });
 
-    if (sortScaffolds.length == 0) {
+    if (sortScaffolds.length === 0) {
       return scaffolds;
     }
 
@@ -64,7 +64,7 @@ class AdditionalScaffolds {
     const categories = [];
 
     this.scaffoldsValue.forEach((item) => {
-      if (excludeScaffold(item.provider)) return;
+      if (excludeScaffold(item.powered)) return;
 
       if (Array.isArray(item.categories)) {
         item.categories.forEach((currentValue) => {

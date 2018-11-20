@@ -49,6 +49,7 @@
     "primaryColor": "#385af5"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-government-management-admin",
     "title": "ICE Government Management Admin",
     "categories": [

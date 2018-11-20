@@ -42,9 +42,12 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "iceworks-homepage",
     "title": "Iceworks HomePage",
-    "categories": ["首页展示"],
+    "categories": [
+      "首页展示"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1hRY5qqmWBuNjy1XaXXXCbXXa-2840-1596.png"
   },
   "engines": {

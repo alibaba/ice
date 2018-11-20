@@ -47,9 +47,12 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-design-lite",
     "title": "ICE Design Lite",
-    "categories": ["通用"],
+    "categories": [
+      "通用"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1IM1JmuuSBuNjy1XcXXcYjFXa-1920-1080.png"
   },
   "engines": {

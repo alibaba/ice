@@ -50,6 +50,7 @@
     "primaryColor": "#1890FF"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-usertrack-admin",
     "title": "ICE UserTrack Admin",
     "categories": [

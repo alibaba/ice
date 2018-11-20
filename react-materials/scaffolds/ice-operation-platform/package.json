@@ -42,9 +42,12 @@
     "localization": false
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-operation-platform",
     "title": "ICE Operation Platform",
-    "categories": ["行业领域"],
+    "categories": [
+      "行业领域"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1AR47CGmWBuNjy1XaXXXCbXXa-2840-1596.png"
   },
   "engines": {

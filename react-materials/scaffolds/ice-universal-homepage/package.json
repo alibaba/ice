@@ -47,6 +47,7 @@
     "primaryColor": "#09f"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-universal-homepage",
     "title": "ICE Universal HomePage",
     "categories": [

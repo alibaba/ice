@@ -52,6 +52,7 @@
     "primaryColor": "#236cff"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-yunqi-homepage",
     "title": "ICE YunQi Homepage",
     "categories": [

@@ -50,6 +50,7 @@
     "primaryColor": "#4a90e2"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-monitor-dashboard",
     "title": "ICE Monitor Dashboard",
     "categories": [

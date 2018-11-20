@@ -50,6 +50,7 @@
     "primaryColor": "#f0824c"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-builder-platform",
     "title": "ICE Builder Platform",
     "categories": [

@@ -24,9 +24,12 @@
     "primaryColor": "#00b7eb"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-design-hospital",
     "title": "ICE Design Hospital",
-    "categories": ["行业领域"],
+    "categories": [
+      "行业领域"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB19u3vzf1TBuNjy0FjXXajyXXa-2840-1596.png"
   },
   "dependencies": {

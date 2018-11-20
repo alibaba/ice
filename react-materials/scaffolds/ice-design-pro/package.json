@@ -61,9 +61,12 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-design-pro",
     "title": "ICE Design Pro",
-    "categories": ["通用"],
+    "categories": [
+      "通用"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1_bulmpOWBuNjy0FiXXXFxVXa-1920-1080.png",
     "defaultLayout": "BasicLayout"
   },

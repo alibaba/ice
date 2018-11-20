@@ -71,14 +71,12 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "type": "react",
     "name": "ice-coreui-admin",
     "title": "ICE CoreUI Admin",
     "categories": [
       "Dashboard"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1hoK.ETtYBeNjy1XdXXXXyVXa-2840-1596.png",
-    "provider": "community"
+    "screenshot": "https://img.alicdn.com/tfs/TB1hoK.ETtYBeNjy1XdXXXXyVXa-2840-1596.png"
   },
   "engines": {
     "node": ">=8.0.0"

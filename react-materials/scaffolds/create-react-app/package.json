@@ -32,9 +32,12 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "create-react-app",
     "title": "Create React App",
-    "categories": ["通用"],
+    "categories": [
+      "通用"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1zu_AeCBYBeNjy0FeXXbnmFXa-1920-1080.png"
   },
   "engines": {

@@ -47,6 +47,7 @@
     "primaryColor": "#00c1de"
   },
   "scaffoldConfig": {
+    "powered": "icedesign",
     "name": "ice-aliyun-login",
     "title": "ICE Aliyun Login",
     "categories": [
