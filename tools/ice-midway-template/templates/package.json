@@ -1,0 +1,64 @@
+{
+  "name": "ice-koa-react-scaffold",
+  "version": "1.0.4",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "client": "ice dev --project-type=node",
+    "server": "NODE_ENV=local midway-bin dev --ts",
+    "dev": "npm run client & npm run server",
+    "lint": "eslint . --ext '.js,.jsx' --fix",
+    "build": "ice build --project-type=node && npm run server-build",
+    "start": "npm run client & npm run server-start",
+    "server-debug": "cd server && NODE_ENV=local midway-bin debug --ts",
+    "server-test": "cd server && npm run lint -- --fix && midway-bin test --ts",
+    "server-lint": "cd server && tslint -c tslint.json --project .",
+    "server-cov": "cd server && midway-bin cov --ts",
+    "server-ci": "cd server && midway-bin cov --ts",
+    "server-build": "cd server && midway-bin build -c",
+    "server-start": "cd server && egg-scripts start --daemon --title=egg-server-ice-koa-react-scaffold --framework=midway",
+    "server-stop": "cd server && egg-scripts stop --title=egg-server-ice-koa-react-scaffold"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/skin",
+    "entry": "client/index.js",
+    "localization": false
+  },
+  "proxyConfig": {
+    "/api": {
+      "enable": true,
+      "target": "http://127.0.0.1:3000"
+    }
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "midway": "*"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.2",
+    "babel-eslint": "^8.0.3",
+    "egg-ci": "^1.8.0",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "koa-logger": "^3.2.0",
+    "midway-bin": "*",
+    "midway-mock": "*",
+    "nodemon": "^1.18.4",
+    "ts-node": "^7.0.1",
+    "tslib": "^1.8.1",
+    "tslint": "^5.9.1",
+    "typescript": "^2.8.0",
+    "webstorm-disable-index": "^1.2.0"
+  }
+}
