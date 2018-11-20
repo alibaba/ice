@@ -34,8 +34,6 @@ let SASS_BINARY_PATH = isDev
       `${process.platform}-x64-57_binding.node`
     );
 
-const ICELAND_COMPONENTS_PATH = path.join(APP_PATH, 'node_modules', '@ali', 'iceland-components');
-
 module.exports = {
   APP_BIN_PATH,
   APP_PATH,
@@ -43,5 +41,4 @@ module.exports = {
   SASS_BINARY_PATH,
   NODE_PATH,
   WIN_NPM_CMD,
-  ICELAND_COMPONENTS_PATH
 };
