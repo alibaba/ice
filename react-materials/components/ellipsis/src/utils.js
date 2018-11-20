@@ -1,19 +1,22 @@
+/* eslint prefer-rest-params:0, no-multi-assign:0 */
 export const throttle = (func, wait, options) => {
   // from underscore
-  var context, args, result;
-  var timeout = null;
-  var previous = 0;
+  let context;
+  let args;
+  let result;
+  let timeout = null;
+  let previous = 0;
   if (!options) options = {};
-  var later = function() {
+  const later = function () {
     previous = options.leading === false ? 0 : new Date().getTime();
     timeout = null;
     result = func.apply(context, args);
     if (!timeout) context = args = null;
   };
-  return function() {
-    var now = new Date().getTime();
+  return function () {
+    const now = new Date().getTime();
     if (!previous && options.leading === false) previous = now;
-    var remaining = wait - (now - previous);
+    const remaining = wait - (now - previous);
     context = this;
     args = arguments;
     if (remaining <= 0 || remaining > wait) {
@@ -31,7 +34,7 @@ export const throttle = (func, wait, options) => {
   };
 };
 
-export const getWidthFromDOM = dom => {
+export const getWidthFromDOM = (dom) => {
   const styles = window.getComputedStyle(dom);
   const width = dom.offsetWidth;
   const borderLeftWidth = parseFloat(styles.borderLeftWidth);

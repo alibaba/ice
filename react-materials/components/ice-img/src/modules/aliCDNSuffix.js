@@ -199,11 +199,11 @@ const aliCDNCropSuffix = [
 ];
 
 function getBestMatchSize(width, height) {
-  const currentDevicePixelRatio = parseInt(window.devicePixelRatio) || 1;
+  const currentDevicePixelRatio = parseInt(window.devicePixelRatio, 10) || 1;
   const matches = aliCDNCropSuffix.filter((item) => {
     const splited = item.split('x');
-    const itemWidth = parseInt(splited[0]);
-    const itemHeight = parseInt(splited[1]);
+    const itemWidth = parseInt(splited[0], 10);
+    const itemHeight = parseInt(splited[1], 10);
     // for retina
     return (
       itemWidth >= width * currentDevicePixelRatio &&
