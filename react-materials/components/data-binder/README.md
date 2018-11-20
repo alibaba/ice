@@ -187,8 +187,8 @@ const { accountTable } = this.props.bindingData;
 你也可以使用 `Loading` 组件进行 loading 效果的模拟，参照文档可以写出如下代码：
 
 ```jsx
-import DataBinder from '@ali/ice-data-binder';
-import { Loading } from '@alife/next';
+import DataBinder from '@icedesign/data-binder';
+import { Loading } from '@icedesign/base';
 
 @DataBinder({
   account: {

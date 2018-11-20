@@ -9,15 +9,15 @@ const headerMenuConfig = [
   },
   {
     name: '业务办理',
-    path: '/business',
+    path: '/',
   },
   {
     name: '案件查询',
-    path: '/case',
+    path: '/',
   },
   {
     name: '统计分析',
-    path: '/statistic',
+    path: '/',
   },
 ];
 
