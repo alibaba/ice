@@ -61,7 +61,8 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1d1QqXwHqK1RjSZFEXXcGMXXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1d1QqXwHqK1RjSZFEXXcGMXXa-2840-1596.png",
+    "provider": "community"
   },
   "engines": {
     "node": ">=8.0.0"
