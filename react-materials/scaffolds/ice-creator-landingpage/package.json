@@ -40,8 +40,10 @@
   },
   "scaffoldConfig": {
     "name": "ice-creator-landingpage",
-    "title": "ICE Creator LandingPage",
-    "categories": ["首页展示"],
+    "title": "创作平台官网",
+    "categories": [
+      "首页展示"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1WcWtqMmTBuNjy1XbXXaMrVXa-2840-1596.png"
   },
   "engines": {

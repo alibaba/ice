@@ -51,7 +51,7 @@
   },
   "scaffoldConfig": {
     "name": "ice-customer-analysis-admin",
-    "title": "ICE Customer Analysis Admin",
+    "title": "客源分析管理系统",
     "categories": [
       "行业领域"
     ],

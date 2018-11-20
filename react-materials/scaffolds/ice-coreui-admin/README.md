@@ -1,4 +1,4 @@
-# ice-coreui-admin
+# coreui-admin
 
 ## 说明
 
