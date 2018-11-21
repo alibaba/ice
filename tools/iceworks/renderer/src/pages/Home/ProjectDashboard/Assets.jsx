@@ -13,6 +13,7 @@ import EmptyTips from '../../../components/EmptyTips/';
 import ExtraButton from '../../../components/ExtraButton/';
 import Icon from '../../../components/Icon';
 import services from '../../../services';
+import projectScripts from '../../../lib/project-scripts';
 
 const { folder } = services;
 
@@ -94,6 +95,11 @@ class Assets extends Component {
     } else {
       Feedback.toast.error('项目不存在');
     }
+  };
+
+  handleBuildProject = () => {
+    const { projects } = this.props;
+    projectScripts.build(projects.currentProject);
   };
 
   recursiveReaddirSync = (dirPath, rootDir) => {
@@ -240,6 +246,14 @@ class Assets extends Component {
             )}
           </div>
           <div>
+            <ExtraButton
+              style={{ color: '#3080FE' }}
+              placement={'top'}
+              tipText={'构建项目'}
+              onClick={this.handleBuildProject}
+            >
+              <Icon type="build" style={{ fontSize: 18 }} />
+            </ExtraButton>
             <ExtraButton
               style={{ color: '#3080FE' }}
               placement={'top'}
