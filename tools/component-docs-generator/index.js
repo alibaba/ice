@@ -6,13 +6,14 @@ const extractor = require('@alifd/api-extractor');
 
 const docParser = createDocParser();
 
-const docsGen = (sourceDir, destDir) => {
+const docsGen = (sourceDir, destDir, outputFilename) => {
   if (!sourceDir) {
     throw new Error('must specify the sourceDir parameter');
   }
 
   if (!destDir) {
     destDir = destDir || process.cwd();
+    outputFilename = outputFilename || 'biz-components.json';
   }
 
   return new Promise((resolve) => {
@@ -121,7 +122,7 @@ const docsGen = (sourceDir, destDir) => {
         const jsonStringResult = `${JSON.stringify(result, null, 2)}\n`;
 
         fs.writeFileSync(
-          path.join(destDir, 'biz-components.json'),
+          path.join(destDir, outputFilename),
           jsonStringResult
             .replace(/@alife\/next/g, '@icedesign/base')
             .replace(/@(ali)\/([^'"]+)/g, ($1, $2, $3) => {
