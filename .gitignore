@@ -6,7 +6,7 @@ mochawesome-report
 .happypack
 package-lock.json
 yarn.lock
-!tools/iceworks/**/yarn.lock
+
 */blocks/**/lib/
 */layouts/**/lib/
 .eslintcache
@@ -19,3 +19,9 @@ react-materials/components/**/lib
 npmrc
 tools/extract-css-assets-webpack-plugin/test/actual/
 tools/extract-css-assets-webpack-plugin/lib/
+
+# iceworks
+!tools/iceworks/**/yarn.lock
+!tools/iceworks/build
+tools/iceworks/out
+tools/iceworks/dist
