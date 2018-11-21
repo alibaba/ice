@@ -37,7 +37,7 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
     }),
     // FIX ISSUE: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
     new FilterWarningsPlugin({
-      exclude: /chunk vendor \[mini-css-extract-plugin]\nConflicting order between:/,
+      exclude: /Conflicting order between:/,
     }),
     new SimpleProgressPlugin(),
     new CaseSensitivePathsPlugin(),
