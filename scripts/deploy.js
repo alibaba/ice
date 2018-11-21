@@ -61,23 +61,14 @@ function checkNpmPublish(packagePath) {
 
 // 搜索所有物料文件
 function scanMaterials() {
-  Promise.all([
-    scanPackageJson('../react-materials/*/*/package.json'),
-    scanPackageJson('../rax-materials/*/*/package.json'),
-    scanPackageJson('../vue-materials/*/*/package.json'),
-    scanPackageJson('../angular-materials/*/*/package.json'),
-  ])
-    .then(([reactMaterials = [], vueMaterials = [], angularMaterials = []]) => {
-      const allMaterials = [
-        ...reactMaterials,
-        ...vueMaterials,
-        ...angularMaterials,
-      ];
+  const pattern =
+    '../?(react|rax|vue|angular)-materials/!(components)/*/package.json';
+  scanPackageJson(pattern)
+    .then((allMaterials = []) => {
       return Promise.all(allMaterials.map(checkNpmPublish));
     })
     .then((publishCheck) => {
       const unpublished = publishCheck.filter((n) => !!n);
-
       if (unpublished.length > 0) {
         publishQueue(unpublished);
       }
