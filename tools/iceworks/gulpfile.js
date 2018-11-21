@@ -274,40 +274,53 @@ gulp.task('publish', (done) => {
     });
 });
 
-const DEF_CLIENT_VERSION = '@ali/def-pub-client@2.1.10';
-const ALI_NPM_REGISTRY = 'http://r.npm.alibaba-inc.com';
+// 以下环境变量可忽略
+// 仅为飞冰团队发布所需
+
+process.env.DEF_CLIENT = process.env.DEF_CLIENT || 'unsupport-def';
+process.env.DEF_CLIENT_VERSION = process.env.DEF_CLIENT_VERSION || '0.0.0';
+
+const DEF_CLIENT_PACKAGE = `${process.env.DEF_CLIENT}@${
+  process.env.DEF_CLIENT_VERSION
+}`;
+const ALI_NPM_REGISTRY = process.env.ALI_NPM_REGISTRY;
 
 // 调试环境仅安装依赖，不生成 dependencies
 gulp.task('def-install:dev', (done) => {
-  execa(
-    'yarn',
-    [
-      'add',
-      DEF_CLIENT_VERSION,
-      '--optional',
-      '--no-lockfile',
-      '--registry',
-      ALI_NPM_REGISTRY,
-    ].filter(Boolean),
-    {
-      cwd: path.join(__dirname, 'app'),
-    }
-  )
-    .then(() => {
-      gutil.log(DEF_CLIENT_VERSION, '安装完成');
-      const appPackageJson = require('./app/package.json');
-      delete appPackageJson.optionalDependencies;
-      writeFile(
-        path.join(__dirname, './app/package.json'),
-        JSON.stringify(appPackageJson, null, 2)
-      ).then(() => {
+  if (ALI_NPM_REGISTRY) {
+    execa(
+      'yarn',
+      [
+        'add',
+        DEF_CLIENT_PACKAGE,
+        '--optional',
+        '--no-lockfile',
+        '--registry',
+        ALI_NPM_REGISTRY,
+      ].filter(Boolean),
+      {
+        cwd: path.join(__dirname, 'app'),
+      }
+    )
+      .then(() => {
+        gutil.log(DEF_CLIENT_PACKAGE, '安装完成');
+        const appPackageJson = require('./app/package.json');
+        delete appPackageJson.optionalDependencies;
+        writeFile(
+          path.join(__dirname, './app/package.json'),
+          JSON.stringify(appPackageJson, null, 2)
+        ).then(() => {
+          done();
+        });
+      })
+      .catch(() => {
+        gutil.log(DEF_CLIENT_PACKAGE, '安装失败');
         done();
       });
-    })
-    .catch(() => {
-      gutil.log(DEF_CLIENT_VERSION, '安装失败');
-      done();
-    });
+  } else {
+    gutil.log('已跳过 DEF 环境');
+    done();
+  }
 });
 
 gulp.task('dev', ['def-install:dev'], () => {
@@ -317,16 +330,20 @@ gulp.task('dev', ['def-install:dev'], () => {
 // 打包构建时，需要声明 depenencies
 // electron 构建时会以 depenencies 作为过滤项
 gulp.task('def-install:pro', ['copy-app-assets'], (done) => {
-  execa('yarn', ['add', DEF_CLIENT_VERSION, '--registry', ALI_NPM_REGISTRY], {
-    cwd: path.join(__dirname, 'out'),
-  })
-    .then(() => {
-      gutil.log(DEF_CLIENT_VERSION, '安装完成');
-      done();
+  if (ALI_NPM_REGISTRY) {
+    execa('yarn', ['add', DEF_CLIENT_PACKAGE, '--registry', ALI_NPM_REGISTRY], {
+      cwd: path.join(__dirname, 'out'),
     })
-    .catch(() => {
-      done();
-    });
+      .then(() => {
+        gutil.log(DEF_CLIENT_PACKAGE, '安装完成');
+        done();
+      })
+      .catch(() => {
+        done();
+      });
+  } else {
+    done();
+  }
 });
 
 // 拷贝打包所需的项目依赖声明，静态文件等

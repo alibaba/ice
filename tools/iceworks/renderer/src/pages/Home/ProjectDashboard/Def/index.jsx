@@ -1,7 +1,7 @@
 import { Button, Feedback, Dialog, Input } from '@icedesign/base';
 import { EventEmitter } from 'events';
 import { inject, observer } from 'mobx-react';
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import { StringDecoder } from 'string_decoder';
 import gitPromie from 'simple-git/promise';
 import React, { Component } from 'react';
@@ -17,26 +17,10 @@ import spc from '../../../../spc';
 import dialog from '../../../../components/dialog';
 import projects from '../../../../stores/projects';
 
+import Client from './Client';
+
 const { shared } = services;
 const decoder = new StringDecoder('utf8');
-let Client;
-try {
-  Client = remote.require('@ali/def-pub-client');
-} catch (e) {
-  console.error('Can not found `@ali/def-pub-client` dependencies');
-  Client = {
-    Client: class A {
-      on() {}
-      run() {
-        Dialog.alert({
-          title: '提示',
-          content: <div style={{ width: 400 }}>{'不支持 DEF 环境'}</div>,
-        });
-      }
-    },
-  };
-}
-
 class ClientEmiter extends EventEmitter {
   constructor() {
     super();
