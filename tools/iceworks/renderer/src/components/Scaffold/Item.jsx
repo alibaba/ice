@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import { observer } from 'mobx-react';
 import handleViewport from 'react-in-viewport';
+import services from '../../services';
+import dialog from '../../components/dialog';
 
 const shell = electron.shell;
 
@@ -21,9 +23,29 @@ class ScaffoldItem extends Component {
   };
 
   createProject = () => {
-    if (this.props.createProject) {
-      const { data } = this.props;
-      this.props.createProject(data);
+    const { data, createProject } = this.props;
+    const isAlibaba = services.settings.get('isAlibaba');
+    if (
+      isAlibaba &&
+      data.devDependencies &&
+      !data.devDependencies.hasOwnProperty('ice-scripts')
+    ) {
+      dialog.confirm(
+        {
+          title: '提示',
+          content: (
+            <div>
+              当前模板非飞冰官方提供的模板，接入 DEF
+              发布流程需要单独处理，请慎重使用
+            </div>
+          ),
+        },
+        () => {
+          createProject(data);
+        }
+      );
+    } else {
+      createProject(data);
     }
   };
 
