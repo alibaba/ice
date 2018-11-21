@@ -63,12 +63,10 @@ module.exports = {
     }, selector);
 
     if (!rect) {
-      // 没有找到就截图全屏
-      opts.noClip = true;
-      // throw Error(`Could not find element that matches selector: ${selector}.`);
+      throw Error(`Could not find element that matches selector: ${selector}.`);
     }
 
-    await new Promise(resl => setTimeout(resl, 5e3));
+
     // 页面渲染完毕后，开始截图
     return await page.screenshot({
       path,
