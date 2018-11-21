@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/img",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "ICE 图片组件。",
   "main": "lib/index.js",
   "files": [
