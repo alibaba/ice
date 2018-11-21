@@ -1,6 +1,6 @@
 {
   "name": "component-docs-generator",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "component docs generator for ice",
   "main": "index.js",
   "author": "chenbin92",
