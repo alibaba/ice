@@ -21,10 +21,6 @@
     "url": "https://github.com/alibaba/ice.git"
   },
   "license": "MIT",
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
   "keywords": [
     "ice",
     "ice-component"
