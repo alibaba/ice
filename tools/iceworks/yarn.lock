@@ -3824,6 +3824,19 @@ execa@^0.7.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
+execa@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.antfin-inc.com/execa/download/execa-1.0.0.tgz#c6236a5bb4df6d6f15e88e7f017798216749ddd8"
+  integrity sha1-xiNqW7TfbW8V6I5/AXeYIWdJ3dg=
+  dependencies:
+    cross-spawn "^6.0.0"
+    get-stream "^4.0.0"
+    is-stream "^1.1.0"
+    npm-run-path "^2.0.0"
+    p-finally "^1.0.0"
+    signal-exit "^3.0.0"
+    strip-eof "^1.0.0"
+
 exif-parser@^0.1.9:
   version "0.1.12"
   resolved "http://registry.npmjs.com/exif-parser/download/exif-parser-0.1.12.tgz#58a9d2d72c02c1f6f02a0ef4a9166272b7760922"
@@ -4452,6 +4465,13 @@ get-stream@^3.0.0:
   version "3.0.0"
   resolved "http://registry.npmjs.com/get-stream/download/get-stream-3.0.0.tgz#8e943d1358dc37555054ecbe2edb05aa174ede14"
   integrity sha1-jpQ9E1jcN1VQVOy+LtsFqhdO3hQ=
+
+get-stream@^4.0.0:
+  version "4.1.0"
+  resolved "http://registry.antfin-inc.com/get-stream/download/get-stream-4.1.0.tgz#c1b255575f3dc21d59bfc79cd3d2b46b1c3a54b5"
+  integrity sha1-wbJVV189wh1Zv8ec09K0axw6VLU=
+  dependencies:
+    pump "^3.0.0"
 
 get-uri@^2.0.0:
   version "2.0.2"

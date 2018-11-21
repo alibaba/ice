@@ -1,7 +1,7 @@
-const chalk = require('chalk');
 const cleancss = require('gulp-clean-css');
 const co = require('co');
 const es = require('event-stream');
+const execa = require('execa');
 const filter = require('gulp-filter');
 const gulp = require('gulp');
 const gutil = require('gulp-util');
@@ -36,13 +36,6 @@ const OUTPUTS = {
   renderer: 'out/renderer',
 };
 
-function swallowError(error) {
-  console.log(
-    chalk.cyan(`${error.plugin} (${error.message.line}:${error.message.col})`)
-  );
-  console.log('   ', chalk.red(error.message.message));
-  this.emit('end');
-}
 /**
  * 压缩 js
  */
@@ -189,14 +182,6 @@ gulp.task('compile:prod', ['clean'], (done) => {
     done(err);
   });
 });
-// 调试服务, 区分平台
-gulp.task('dev', () => {
-  // TODO paltfrom check
-  gulp.start(['compile:dev']);
-});
-gulp.task('dev:win', ['binary:win'], () => {
-  gulp.start(['compile:dev', 'watch:dev']);
-});
 
 // build
 const builder = require.resolve('electron-builder/out/cli/cli.js');
@@ -288,30 +273,88 @@ gulp.task('publish', (done) => {
       done();
     });
 });
-// 生成应用所需要文件
-gulp.task('build', ['babel:main', 'compile:after:css'], (done) => {
+
+const DEF_CLIENT_VERSION = '@ali/def-pub-client@2.1.10';
+const ALI_NPM_REGISTRY = 'http://r.npm.alibaba-inc.com';
+
+// 调试环境仅安装依赖，不生成 dependencies
+gulp.task('def-install:dev', (done) => {
+  execa(
+    'yarn',
+    [
+      'add',
+      DEF_CLIENT_VERSION,
+      '--optional',
+      '--no-lockfile',
+      '--registry',
+      ALI_NPM_REGISTRY,
+    ].filter(Boolean),
+    {
+      cwd: path.join(__dirname, 'app'),
+    }
+  )
+    .then(() => {
+      gutil.log(DEF_CLIENT_VERSION, '安装完成');
+      const appPackageJson = require('./app/package.json');
+      delete appPackageJson.optionalDependencies;
+      writeFile(
+        path.join(__dirname, './app/package.json'),
+        JSON.stringify(appPackageJson, null, 2)
+      ).then(() => {
+        done();
+      });
+    })
+    .catch(() => {
+      gutil.log(DEF_CLIENT_VERSION, '安装失败');
+      done();
+    });
+});
+
+gulp.task('dev', ['def-install:dev'], () => {
+  gulp.start(['compile:dev']);
+});
+
+// 打包构建时，需要声明 depenencies
+// electron 构建时会以 depenencies 作为过滤项
+gulp.task('def-install:pro', ['copy-app-assets'], (done) => {
+  execa('yarn', ['add', DEF_CLIENT_VERSION, '--registry', ALI_NPM_REGISTRY], {
+    cwd: path.join(__dirname, 'out'),
+  })
+    .then(() => {
+      gutil.log(DEF_CLIENT_VERSION, '安装完成');
+      done();
+    })
+    .catch(() => {
+      done();
+    });
+});
+
+// 拷贝打包所需的项目依赖声明，静态文件等
+gulp.task('copy-app-assets', (done) => {
   gutil.log(colors.green('拷贝 yanr.lock package.json 到 out/'));
   shelljs.cp('./app/yarn.lock', './out/yarn.lock');
   shelljs.cp('./app/package.json', './out/package.json');
-
   gutil.log(colors.green('拷贝 static 静态文件'));
-
   shelljs.cp('-R', './app/static', './out/static/');
-
   gutil.log(colors.green('在 out/ 安装应用所需依赖'));
-  const yarnInsall = spawn('yarn', ['install'], {
+  execa('yarn', ['install'], {
     cwd: path.join(process.cwd(), 'out'),
     stdio: 'inherit',
-  });
-  yarnInsall.on('close', (code) => {
-    if (code == 0) {
+  })
+    .then(() => {
       gutil.log(colors.green('out 依赖安装完成'));
-    } else {
+      shelljs.cp('-R', './out/node_modules/.bin', './out/node_modules/_bin');
+      done();
+    })
+    .catch((err) => {
       gutil.log(colors.red('out 依赖安装失败'));
-    }
-    shelljs.cp('-R', './out/node_modules/.bin', './out/node_modules/_bin');
-    done(code);
-  });
+      done(err);
+    });
+});
+
+// 生成应用所需要文件
+gulp.task('build', ['babel:main', 'compile:after:css'], () => {
+  gulp.start(['def-install:pro']);
 });
 
 gulp.task('dist', () => {
