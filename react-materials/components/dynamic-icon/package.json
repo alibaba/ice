@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/dynamic-icon",
-  "version": "0.1.4",
+  "version": "0.1.0",
   "description": "动态 Icon 组件",
   "main": "lib/index.js",
   "files": [
@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "start": "ice-devtools start",
-    "build": "ice-devtools build"
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
   },
   "author": {
     "name": "ICE Team",

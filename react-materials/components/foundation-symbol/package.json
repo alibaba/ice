@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/foundation-symbol",
-  "version": "0.1.4",
+  "version": "0.1.0",
   "description": "基础符号表",
   "main": "lib/index.js",
   "files": [
@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "start": "ice-devtools start",
-    "build": "ice-devtools build"
+    "build": "ice-devtools build",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "ice",
