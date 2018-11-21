@@ -12,9 +12,9 @@ import ReactDOM from 'react-dom';
 
 import {
   Balloon,
+  Icon
 } from '@icedesign/base';
 import IceTitle from '@icedesign/title';
-import IceIcon from '@icedesign/icon';
 
 class App extends Component {
 
