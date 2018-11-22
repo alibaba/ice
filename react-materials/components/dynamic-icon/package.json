@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/dynamic-icon",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "动态 Icon 组件",
   "main": "lib/index.js",
   "files": [
