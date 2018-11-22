@@ -1,6 +1,6 @@
 {
   "name": "ice-scripts",
-  "version": "1.7.7-beta.1",
+  "version": "1.7.7",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
@@ -98,6 +98,7 @@
     "webpack-bundle-analyzer": "3.0.3",
     "webpack-dev-mock": "0.1.2",
     "webpack-dev-server": "3.1.9",
+    "webpack-filter-warnings-plugin": "1.2.0",
     "webpack-merge": "4.1.4",
     "webpack-plugin-import": "0.2.1",
     "webpack-simple-progress-plugin": "0.0.4",
