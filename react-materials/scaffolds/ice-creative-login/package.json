@@ -40,7 +40,7 @@
     "localization": true
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-creative-login",
     "title": "ICE Creative Login",
     "categories": [

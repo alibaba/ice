@@ -50,7 +50,7 @@
     "primaryColor": "#1890ff"
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-voice-chat-admin",
     "title": "ICE Voice Chat Admin",
     "categories": [

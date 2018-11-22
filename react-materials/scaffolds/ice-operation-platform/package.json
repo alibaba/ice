@@ -42,7 +42,7 @@
     "localization": false
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-operation-platform",
     "title": "ICE Operation Platform",
     "categories": [

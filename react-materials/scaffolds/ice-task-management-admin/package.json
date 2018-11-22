@@ -49,7 +49,7 @@
     "primaryColor": "#0079f2"
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-task-management-admin",
     "title": "ICE Task Management Admin",
     "categories": [

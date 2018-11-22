@@ -1,27 +1,31 @@
 import { computed, toJS, observable } from 'mobx';
 import services from '../services';
 
-const isAlibaba = services.settings.get('isAlibaba');
-const excludeScaffold = (powered) => {
-  return isAlibaba && powered !== 'icedesign';
-};
-
 class AdditionalScaffolds {
   @observable
   activeCategory = '全部';
 
-  constructor(scaffolds) {
+  constructor(scaffolds, material) {
+    this.material = material || '';
     this.scaffoldsValue = this.additionalIsNew(scaffolds);
     this.startRecommendScaffolds = this.startRecommendScaffolds(scaffolds);
   }
 
+  excludeScaffold = (builder) => {
+    const isAlibaba = services.settings.get('isAlibaba');
+    const isOfficialSource = this.material.source.indexOf(
+      '//ice.alicdn.com/assets/react-materials.json'
+    );
+    return isAlibaba && isOfficialSource && builder !== 'ice-scripts';
+  };
+
   additionalIsNew = (scaffolds) => {
     const sortScaffolds = scaffolds.filter((scaffold) => {
-      return !!scaffold.publishTime || !excludeScaffold(scaffold.powered);
+      return !!scaffold.publishTime && !this.excludeScaffold(scaffold.builder);
     });
 
     if (sortScaffolds.length === 0) {
-      return scaffolds;
+      return sortScaffolds;
     }
 
     let isNewlyScaffold = [];
@@ -64,7 +68,7 @@ class AdditionalScaffolds {
     const categories = [];
 
     this.scaffoldsValue.forEach((item) => {
-      if (excludeScaffold(item.powered)) return;
+      if (this.excludeScaffold(item.builder)) return;
 
       if (Array.isArray(item.categories)) {
         item.categories.forEach((currentValue) => {

@@ -45,7 +45,7 @@
     "localization": true
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-website-homepage",
     "title": "ICE Website HomePage",
     "categories": [

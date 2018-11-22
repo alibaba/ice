@@ -32,7 +32,6 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
     "name": "create-react-app",
     "title": "Create React App",
     "categories": [

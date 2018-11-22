@@ -51,7 +51,7 @@
     "primaryColor": "#6ac8f3"
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-algorithm-model-admin",
     "title": "ICE Algorithm Model Admin",
     "categories": [

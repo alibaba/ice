@@ -39,7 +39,7 @@
     "localization": true
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-creator-landingpage",
     "title": "ICE Creator LandingPage",
     "categories": [

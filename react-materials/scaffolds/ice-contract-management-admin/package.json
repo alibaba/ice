@@ -51,7 +51,7 @@
     "primaryColor": "#0079f2"
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-contract-management-admin",
     "title": "ICE Contract Management Admin",
     "categories": [

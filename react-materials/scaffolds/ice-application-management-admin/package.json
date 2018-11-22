@@ -45,7 +45,7 @@
     "primaryColor": "#09f"
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-application-management-admin",
     "title": "ICE Application Management Admin",
     "categories": [

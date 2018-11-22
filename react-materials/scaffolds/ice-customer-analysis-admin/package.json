@@ -50,7 +50,7 @@
     "primaryColor": "#0079f2"
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-customer-analysis-admin",
     "title": "ICE Customer Analysis Admin",
     "categories": [

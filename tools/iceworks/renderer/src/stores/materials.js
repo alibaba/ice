@@ -153,7 +153,7 @@ class Materials {
 
           // 双向绑定数据
           material.blocks = new AdditionalBlocks(blocks);
-          material.scaffolds = new AdditionalScaffolds(scaffolds);
+          material.scaffolds = new AdditionalScaffolds(scaffolds, material);
 
           material.loaded = true;
           material.data = body;

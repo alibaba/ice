@@ -41,7 +41,7 @@
     "localization": true
   },
   "scaffoldConfig": {
-    "powered": "icedesign",
+    "builder": "ice-scripts",
     "name": "ice-design-dashboard",
     "title": "ICE Design Dashboard",
     "categories": [
