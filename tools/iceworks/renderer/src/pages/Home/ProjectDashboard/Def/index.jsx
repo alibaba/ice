@@ -1,7 +1,7 @@
 import { Button, Feedback, Dialog, Input, CascaderSelect } from '@icedesign/base';
 import { EventEmitter } from 'events';
 import { inject, observer } from 'mobx-react';
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer, remote, shell } from 'electron';
 import { StringDecoder } from 'string_decoder';
 import gitPromie from 'simple-git/promise';
 import React, { Component } from 'react';
@@ -86,9 +86,10 @@ class Def extends Component {
       commitMessage: '',
       pushLoading: false,
       loading: true,
+      isGit: false,
       isRepo: false,
       remote: {},
-      currentBranch: {},
+      currentBranch: '',
       status: {},
       gitIniting: false,
       remoteAddVisible: false,
@@ -186,7 +187,8 @@ class Def extends Component {
           const branches = await this.getBranches();
           const status = await this.gitStatus();
           this.setState({
-            isRepo: isGit,
+            isGit,
+            isRepo,
             loading: false,
             originRemote: originRemote[0] || {},
             currentBranch: branches.current,
@@ -194,7 +196,8 @@ class Def extends Component {
           });
         } else {
           this.setState({
-            isRepo: isGit,
+            isGit,
+            isRepo,
             loading: false,
             originRemote: {},
             currentBranch: {},
@@ -204,7 +207,7 @@ class Def extends Component {
       })
       .catch((err) => {
         console.error('gitCheckIsRepo', err);
-        this.setState({ isRepo: false, loading: false });
+        this.setState({ isGit: false, loading: false });
       });
   };
 
@@ -221,6 +224,10 @@ class Def extends Component {
   };
 
   handleGitcommitOpen = () => {
+    if (!this.state.originRemote.refs) {
+      Feedback.toast.error('当前项目未设置 git remote 地址');
+      return;
+    }
     this.setState({ commitVisible: true, commitMessage: '' });
   };
 
@@ -272,6 +279,10 @@ class Def extends Component {
   };
 
   handleGitpush = () => {
+    if (!this.state.originRemote.refs) {
+      Feedback.toast.error('当前项目未设置 git remote 地址');
+      return;
+    }
     const { currentBranch } = this.state;
     this.setState({ pushLoading: true });
     this.git()
@@ -318,12 +329,26 @@ class Def extends Component {
       });
   };
 
+  gitFormReset = () => {
+    this.setState({
+      remoteUrl: '',
+      branches: [],
+      checkoutBranch: '',
+      branchOrigin: '',
+      branchType: '',
+      newBranch: '',
+    })
+  };
+
   handleGitRemoteAddOpen = () => {
     this.setState({ remoteAddVisible: true });
   };
 
   handleGitRemoteAddClose = () => {
-    this.setState({ remoteAddVisible: false });
+    this.setState(
+      { remoteAddVisible: false },
+      this.gitFormReset
+    );
   };
 
   handleGitRemoteUrl = (value) => {
@@ -345,7 +370,10 @@ class Def extends Component {
               </div>
             ),
           });
-          this.setState({ gitRemoteAdding: false });
+          this.setState(
+            { gitRemoteAdding: false },
+            this.gitFormReset
+          );
         })
     } else {
       this.addRemote()
@@ -358,8 +386,9 @@ class Def extends Component {
       .then(() => {
         this.setState({
           gitRemoteAdding: false,
-          remoteAddVisible: false
+          remoteAddVisible: false,
         }, this.handleReload);
+        this.gitFormReset();
       })
       .catch((err) => {
         Dialog.alert({
@@ -370,11 +399,23 @@ class Def extends Component {
             </div>
           ),
         });
-        this.setState({ gitRemoteAdding: false });
+        this.setState(
+          { gitRemoteAdding: false },
+          this.gitFormReset
+        );
       })
   };
 
   handleGitBranchesOpen = () => {
+    if (!this.state.originRemote.refs) {
+      Feedback.toast.error('当前项目未设置 git remote 地址');
+      return;
+    }
+
+    Feedback.toast.show({
+      type: "loading",
+      content: "Git fetching",
+    });
     this.git()
       .fetch()
       .then(() => {
@@ -390,15 +431,26 @@ class Def extends Component {
                 const origin = originBranches.all.map((value) => {
                   return { label: value, value };
                 });
-                const branches = [{
-                  label: 'local',
-                  value: 'local',
-                  children: local,
-                }, {
-                  label: 'origin',
-                  value: 'origin',
-                  children: origin,
-                }];
+                const branches = [];
+                if (local.length > 0) {
+                  branches.push({
+                    label: 'local',
+                    value: 'local',
+                    children: local,
+                  });
+                }
+                if (origin.length > 0) {
+                  branches.push({
+                    label: 'origin',
+                    value: 'origin',
+                    children: origin,
+                  });
+                }
+                Feedback.toast.hide();
+                if (branches.length === 0) {
+                  Feedback.toast.error('本地和远程仓库均无分支，请先 push');
+                  return;
+                }
                 this.setState({
                   branches,
                   branchesVisible: true
@@ -414,6 +466,7 @@ class Def extends Component {
                 </div>
               ),
             });
+            Feedback.toast.hide();
             this.setState({ branchesVisible: false });
           });
       })
@@ -431,7 +484,10 @@ class Def extends Component {
   };
 
   handleGitBranchesClose = () => {
-    this.setState({ branchesVisible: false });
+    this.setState(
+      { branchesVisible: false },
+      this.gitFormReset
+    );
   };
 
   handleSelectBranch = (value, data, extra) => {
@@ -460,12 +516,11 @@ class Def extends Component {
       this.git()
         .checkout(checkoutBranch)
         .then(() => {
-          this.setState({
-            branchOrigin: '',
-            checkoutBranch: '',
-            branchType: '',
-            branchesVisible: false
-          }, this.handleReload);
+          this.setState(
+            { branchesVisible: false },
+            this.handleReload
+          );
+          this.gitFormReset();
         })
         .catch((err) => {
           Dialog.alert({
@@ -476,23 +531,20 @@ class Def extends Component {
               </div>
             ),
           });
-          this.setState({
-            branchOrigin: '',
-            checkoutBranch: '',
-            branchType: '',
-            branchesVisible: false
-          });
+          this.setState(
+            { branchesVisible: false },
+            this.gitFormReset()
+          );
         })
     } else {
       this.git()
         .checkoutBranch(checkoutBranch, branchOrigin)
         .then(() => {
-          this.setState({
-            branchOrigin: '',
-            checkoutBranch: '',
-            branchType: '',
-            branchesVisible: false
-          }, this.handleReload);
+          this.setState(
+            { branchesVisible: false },
+            this.handleReload
+          );
+          this.gitFormReset();
         })
         .catch((err) => {
           Dialog.alert({
@@ -503,12 +555,10 @@ class Def extends Component {
               </div>
             ),
           });
-          this.setState({
-            branchOrigin: '',
-            checkoutBranch: '',
-            branchType: '',
-            branchesVisible: false
-          });
+          this.setState(
+            { branchesVisible: false },
+            this.gitFormReset
+          );
         });
     }
   };
@@ -518,11 +568,18 @@ class Def extends Component {
   };
 
   handleGitNewBranchOpen = () => {
-    this.setState({ newBranchVisible: true });
+    if (this.state.originRemote.refs) {
+      this.setState({ newBranchVisible: true });
+    } else {
+      Feedback.toast.error('当前项目未设置 git remote 地址');
+    }
   };
 
   handleGitNewBranchClose = () => {
-    this.setState({ newBranchVisible: false });
+    this.setState(
+      { newBranchVisible: false },
+      this.gitFormReset
+    );
   };
 
   handleGitNewBranch = (value) => {
@@ -533,10 +590,11 @@ class Def extends Component {
     this.git()
       .checkoutLocalBranch(this.state.newBranch)
       .then(() => {
-        this.setState({
-          newBranch: '',
-          newBranchVisible: false
-        }, this.handleReload);
+        this.setState(
+          { newBranchVisible: false },
+          this.handleReload
+        );
+        this.gitFormReset();
       })
       .catch((err) => {
         Dialog.alert({
@@ -547,16 +605,31 @@ class Def extends Component {
             </div>
           ),
         });
-        this.setState({
-          newBranch: '',
-          newBranchVisible: false
-        });
+        this.setState(
+          { newBranchVisible: false },
+          this.gitFormReset()
+        );
       });
   };
 
+  handleOpenDocument = () => {
+    shell.openExternal(
+      'http://def.alibaba-inc.com/doc/start/intro'
+    );
+  };
+
   cloudPublish = async (target) => {
-    await this.setState({ defPublishing: true });
     const { originRemote, currentBranch } = this.state;
+    if (!currentBranch) {
+      Feedback.toast.show({
+        type: 'error',
+        content: '请先建立 Git 远程分支再进行 DEF 发布',
+        duration: 3000
+      });
+      return;
+    }
+
+    await this.setState({ defPublishing: true });
     const user = this.getUserInfo();
     const lastCommit = await this.gitLastCommit([currentBranch]);
 
@@ -666,7 +739,7 @@ class Def extends Component {
     const { projects } = this.props;
     const { currentProject } = projects;
 
-    if (this.state.isRepo) {
+    if (this.state.isGit) {
       return (
         <div>
           <div style={styles.item}>
@@ -689,7 +762,7 @@ class Def extends Component {
                     <ExtraButton
                       style={{ color: '#3080FE' }}
                       placement={'top'}
-                      tipText="Git add remote"
+                      tipText="修改仓库地址"
                       onClick={this.handleGitRemoteAddOpen}
                     >
                       <Icon type="edit" />
@@ -851,6 +924,14 @@ class Def extends Component {
         <DashboardCard.Header>
           <div>DEF 前端发布</div>
           <div>
+            <ExtraButton
+              style={{ color: '#3080FE' }}
+              placement={'top'}
+              tipText={'DEF 文档'}
+              onClick={this.handleOpenDocument}
+            >
+              <Icon type="help" style={{ fontSize: 18 }} />
+            </ExtraButton>
             <ExtraButton
               style={{ color: '#3080FE' }}
               placement={'top'}
