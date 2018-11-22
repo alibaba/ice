@@ -22,6 +22,7 @@ const iceworksClient = require('./iceworksClient');
 const generateRootCA = require('./config/generateRootCA');
 const prepareUrLs = require('./utils/prepareURLs');
 const getProxyConfig = require('./config/getProxyConfig');
+const openBrowser = require('react-dev-utils/openBrowser');
 
 /* eslint no-console:off */
 
@@ -127,6 +128,7 @@ module.exports = async function(args, subprocess) {
           `    - Network: ${chalk.yellow(urls.lanUrlForTerminal)}`,
         ].join('\n')
       );
+      openBrowser(urls.localUrlForBrowser);
     }
 
     console.log(
