@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import Cover from './modules/Cover';
 import Contain from './modules/Contain';
 
-export default class IceImg extends Component {
-  static displayName = 'IceImg';
+export default class Img extends Component {
+  static displayName = 'Img';
 
   static propTypes = {
     /**
@@ -48,7 +48,7 @@ export default class IceImg extends Component {
     /**
      * 启用阿里 CDN 图片优化压缩后缀
      */
-    enableAliCDNSuffix: PropTypes.bool
+    enableAliCDNSuffix: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -58,21 +58,21 @@ export default class IceImg extends Component {
     errorImgSrc: '',
     className: '',
     shape: 'sharp',
-    enableAliCDNSuffix: false
+    enableAliCDNSuffix: false,
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      src: props.src
+      src: props.src,
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if ('src' in nextProps) {
       this.setState({
-        src: nextProps.src
+        src: nextProps.src,
       });
     }
   }
@@ -80,7 +80,7 @@ export default class IceImg extends Component {
   handleImgLoadError = () => {
     if (this.props.errorImgSrc) {
       this.setState({
-        src: this.props.errorImgSrc
+        src: this.props.errorImgSrc,
       });
     }
     this.props.onError && this.props.onError();
