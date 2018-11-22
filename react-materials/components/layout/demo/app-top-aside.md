@@ -13,11 +13,11 @@ import Layout from '@icedesign/layout';
 import { Breadcrumb, Icon } from '@icedesign/base';
 import Img from '@icedesign/img';
 
-import Menu, {
+import StyledMenu, {
   SubMenu,
   ItemGroup as MenuItemGroup,
   Item as MenuItem
-} from '@icedesign/menu';
+} from '@icedesign/styled-menu';
 
 class App extends Component {
   state = {
@@ -35,7 +35,7 @@ class App extends Component {
       <Layout style={{ minHeight: '100vh' }}>
         <Layout.Header style={{ padding: '12px 50px' }} theme="dark">
           <Logo />
-          <Menu
+          <StyledMenu
             theme="dark"
             onClick={this.handleNavClick}
             selectedKeys={[this.state.current]}
@@ -66,7 +66,7 @@ class App extends Component {
                 ICE 官网
               </a>
             </MenuItem>
-          </Menu>
+          </StyledMenu>
         </Layout.Header>
         <Layout.Section style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '12px 0' }}>
@@ -82,7 +82,7 @@ class App extends Component {
           </Breadcrumb>
           <Layout.Section style={{ background: '#fff', minHeight: 280 }}>
             <Layout.Aside theme="light">
-              <Menu
+              <StyledMenu
                 mode="inline"
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
@@ -135,7 +135,7 @@ class App extends Component {
                   <MenuItem key="11">子菜单三</MenuItem>
                   <MenuItem key="12">子菜单四</MenuItem>
                 </SubMenu>
-              </Menu>
+              </StyledMenu>
             </Layout.Aside>
             <Layout.Main style={{ padding: 24 }}>
               Main

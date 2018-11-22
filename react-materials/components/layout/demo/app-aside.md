@@ -13,11 +13,11 @@ import Layout from '@icedesign/layout';
 import { Breadcrumb, Icon, Button, Dropdown, Select } from '@icedesign/base';
 import Img from '@icedesign/img';
 
-import Menu, {
+import StyledMenu, {
   SubMenu,
   ItemGroup as MenuItemGroup,
   Item as MenuItem
-} from '@icedesign/menu';
+} from '@icedesign/styled-menu';
 
 class App extends Component {
   state = {
@@ -53,7 +53,7 @@ class App extends Component {
       <Layout style={{ minHeight: '100vh' }}>
         <Layout.Aside theme={this.state.asideTheme} color={this.state.asideColor}>
           <Logo {...getDefaultFontColor(this.state.asideTheme)} />
-          <Menu theme={this.state.asideTheme} color={this.state.asideColor} mode={this.state.mode}>
+          <StyledMenu theme={this.state.asideTheme} color={this.state.asideColor} mode={this.state.mode}>
             <SubMenu
               key="sub1"
               title={
@@ -99,7 +99,7 @@ class App extends Component {
               <MenuItem key="11">子菜单三</MenuItem>
               <MenuItem key="12">子菜单四</MenuItem>
             </SubMenu>
-          </Menu>
+          </StyledMenu>
         </Layout.Aside>
         <Layout.Section>
           <Layout.Header
@@ -111,7 +111,7 @@ class App extends Component {
               justifyContent: 'space-between'
             }}
           >
-            <Menu
+            <StyledMenu
               theme={this.state.headerTheme}
               color={this.state.headerColor}
               onClick={this.handleClick}
@@ -143,7 +143,7 @@ class App extends Component {
                   ICE 官网
                 </a>
               </MenuItem>
-            </Menu>
+            </StyledMenu>
             <div className="ice-layout-header-right" {...getDefaultFontColor(this.state.headerTheme)}>
               <span style={{ paddingRight: 12 }}>
                 下午好，内容管理后台。
@@ -156,7 +156,7 @@ class App extends Component {
                 avatar="//img.alicdn.com/tfs/TB1JLbBQXXXXXcUapXXXXXXXXXX-215-185.png"
               >
                 <div>
-                  <Menu
+                  <StyledMenu
                     style={{
                       minWidth: 120,
                       boxShadow: '0 0 2px #ccc'
@@ -171,7 +171,7 @@ class App extends Component {
                     <MenuItem>
                       <a href="/">退出</a>
                     </MenuItem>
-                  </Menu>
+                  </StyledMenu>
                 </div>
               </UserPanel>
             </div>

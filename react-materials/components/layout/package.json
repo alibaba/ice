@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/layout",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "提供页面框架性的 layout 组件",
   "main": "lib/index.js",
   "files": [
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@icedesign/img": "^0.1.0",
-    "@icedesign/menu": "^0.1.0",
+    "@icedesign/styled-menu": "^0.1.1",
     "@icedesign/title": "^0.1.0",
     "ice-devtools": "^1.1.14-beta.2"
   },

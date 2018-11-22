@@ -12,9 +12,9 @@ import ReactDOM from 'react-dom';
 
 import {
   Balloon,
+  Icon
 } from '@icedesign/base';
 import IceTitle from '@icedesign/title';
-import IceIcon from '@icedesign/icon';
 
 class App extends Component {
 
@@ -27,7 +27,7 @@ class App extends Component {
       <div>
         <IceTitle>
           基本数据 &nbsp;
-          <Balloon trigger={<IceIcon style={{position: 'relative', color:'#666666'}} type="question" size="medium" />} align="r" triggerType="hover">
+          <Balloon trigger={<Icon type="help" style={{position: 'relative', color:'#666666'}} />} align="r" triggerType="hover">
             这里是基本数据的更多描述信息。
           </Balloon>
         </IceTitle>
