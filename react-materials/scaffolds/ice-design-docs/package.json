@@ -41,9 +41,12 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-docs",
     "title": "ICE Design Docs",
-    "categories": ["行业领域"],
+    "categories": [
+      "行业领域"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1ruv9sQyWBuNjy0FpXXassXXa-2840-1596.png"
   },
   "engines": {

@@ -52,6 +52,7 @@
     "primaryColor": "#236cff"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-yunqi-homepage",
     "title": "ICE YunQi Homepage",
     "categories": [
