@@ -17,10 +17,10 @@ import spc from '../../../../spc';
 import dialog from '../../../../components/dialog';
 import projects from '../../../../stores/projects';
 
+import Client from './Client';
+
 const { shared } = services;
 const decoder = new StringDecoder('utf8');
-const Client = remote.require('@ali/def-pub-client');
-
 class ClientEmiter extends EventEmitter {
   constructor() {
     super();
@@ -634,12 +634,15 @@ class Def extends Component {
     const lastCommit = await this.gitLastCommit([currentBranch]);
 
     if (!user || !user.workid) {
-      dialog.confirm({
-        title: '请先登录内网账号！',
-        content: '是否立即登录，登录完成后请重新发布'
-      }, (ok) => {
-        if (ok) {
-          this.props.user.open();
+      dialog.confirm(
+        {
+          title: '请先登录内网账号！',
+          content: '是否立即登录，登录完成后请重新发布',
+        },
+        (ok) => {
+          if (ok) {
+            this.props.user.open();
+          }
         }
       });
       this.setState({ defPublishing: false });
