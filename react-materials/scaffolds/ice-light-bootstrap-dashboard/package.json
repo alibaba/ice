@@ -57,7 +57,6 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "type": "react",
     "name": "ice-light-bootstrap-dashboard",
     "title": "ICE Light Bootstrap Dashboard",
     "categories": [

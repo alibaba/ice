@@ -71,7 +71,6 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "type": "react",
     "name": "ice-coreui-admin",
     "title": "ICE CoreUI Admin",
     "categories": [

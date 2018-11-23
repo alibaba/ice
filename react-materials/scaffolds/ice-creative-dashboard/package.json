@@ -59,7 +59,6 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "type": "react",
     "name": "ice-creative-dashboard",
     "title": "ICE Creative Dashboard",
     "categories": [

@@ -50,6 +50,7 @@
     "primaryColor": "#908ce1"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-asset-management-admin",
     "title": "ICE Asset Management Admin",
     "categories": [
