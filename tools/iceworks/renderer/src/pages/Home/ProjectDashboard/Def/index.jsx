@@ -1,7 +1,7 @@
-import { Button, Feedback, Dialog, Input } from '@icedesign/base';
+import { Button, Feedback, Dialog, Input, CascaderSelect } from '@icedesign/base';
 import { EventEmitter } from 'events';
 import { inject, observer } from 'mobx-react';
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer, remote, shell } from 'electron';
 import { StringDecoder } from 'string_decoder';
 import gitPromie from 'simple-git/promise';
 import React, { Component } from 'react';
@@ -17,10 +17,10 @@ import spc from '../../../../spc';
 import dialog from '../../../../components/dialog';
 import projects from '../../../../stores/projects';
 
+import Client from './Client';
+
 const { shared } = services;
 const decoder = new StringDecoder('utf8');
-const Client = remote.require('@ali/def-pub-client');
-
 class ClientEmiter extends EventEmitter {
   constructor() {
     super();
@@ -86,10 +86,23 @@ class Def extends Component {
       commitMessage: '',
       pushLoading: false,
       loading: true,
+      isGit: false,
       isRepo: false,
       remote: {},
-      currentBranch: {},
+      currentBranch: '',
       status: {},
+      gitIniting: false,
+      remoteAddVisible: false,
+      remoteUrl: '',
+      gitRemoteAdding: false,
+      branchesVisible: false,
+      branches: [],
+      checkoutBranch: '',
+      branchOrigin: '',
+      branchType: '',
+      newBranchVisible: false,
+      newBranch: '',
+      defPublishing: false,
     };
   }
 
@@ -174,7 +187,8 @@ class Def extends Component {
           const branches = await this.getBranches();
           const status = await this.gitStatus();
           this.setState({
-            isRepo: isGit,
+            isGit,
+            isRepo,
             loading: false,
             originRemote: originRemote[0] || {},
             currentBranch: branches.current,
@@ -182,7 +196,8 @@ class Def extends Component {
           });
         } else {
           this.setState({
-            isRepo: isGit,
+            isGit,
+            isRepo,
             loading: false,
             originRemote: {},
             currentBranch: {},
@@ -192,7 +207,7 @@ class Def extends Component {
       })
       .catch((err) => {
         console.error('gitCheckIsRepo', err);
-        this.setState({ isRepo: false, loading: false });
+        this.setState({ isGit: false, loading: false });
       });
   };
 
@@ -209,6 +224,10 @@ class Def extends Component {
   };
 
   handleGitcommitOpen = () => {
+    if (!this.state.originRemote.refs) {
+      Feedback.toast.error('当前项目未设置 git remote 地址');
+      return;
+    }
     this.setState({ commitVisible: true, commitMessage: '' });
   };
 
@@ -229,7 +248,11 @@ class Def extends Component {
         this.git()
           .commit(commitMessage)
           .then(() => {
-            Feedback.toast.success('commit 成功');
+            Feedback.toast.show({
+              type: 'success',
+              content: 'commit 成功，请确认文件状态更新后再进行其他操作',
+              duration: 5000
+            });
             this.setState({ commitVisible: false });
           })
           .catch((err) => {
@@ -256,6 +279,10 @@ class Def extends Component {
   };
 
   handleGitpush = () => {
+    if (!this.state.originRemote.refs) {
+      Feedback.toast.error('当前项目未设置 git remote 地址');
+      return;
+    }
     const { currentBranch } = this.state;
     this.setState({ pushLoading: true });
     this.git()
@@ -277,31 +304,361 @@ class Def extends Component {
       });
   };
 
+  handleGitInit = () => {
+    this.setState({
+      gitIniting: true
+    });
+    this.git()
+      .init()
+      .then(() => {
+        this.setState(
+          { gitIniting: false },
+          this.handleReload
+        );
+      })
+      .catch((err) => {
+        Dialog.alert({
+          title: '提示',
+          content: (
+            <div style={{ width: 400 }}>
+              {(err && err.message) || 'git init 失败请重试'}
+            </div>
+          ),
+        });
+        this.setState({ gitIniting: false });
+      });
+  };
+
+  gitFormReset = () => {
+    this.setState({
+      remoteUrl: '',
+      branches: [],
+      checkoutBranch: '',
+      branchOrigin: '',
+      branchType: '',
+      newBranch: '',
+    })
+  };
+
+  handleGitRemoteAddOpen = () => {
+    this.setState({ remoteAddVisible: true });
+  };
+
+  handleGitRemoteAddClose = () => {
+    this.setState(
+      { remoteAddVisible: false },
+      this.gitFormReset
+    );
+  };
+
+  handleGitRemoteUrl = (value) => {
+    this.setState({ remoteUrl: value });
+  };
+
+  handleGitRemoteAddOk = () => {
+    this.setState({ gitRemoteAdding: true });
+    if (this.state.originRemote.refs && this.state.originRemote.refs.push) {
+      this.git()
+        .removeRemote('origin')
+        .then(this.addRemote)
+        .catch((err) => {
+          Dialog.alert({
+            title: '提示',
+            content: (
+              <div style={{ width: 400 }}>
+                {(err && err.message) || 'git remote remove 失败请重试'}
+              </div>
+            ),
+          });
+          this.setState(
+            { gitRemoteAdding: false },
+            this.gitFormReset
+          );
+        })
+    } else {
+      this.addRemote()
+    }
+  };
+
+  addRemote = () => {
+    this.git()
+      .addRemote('origin', this.state.remoteUrl)
+      .then(() => {
+        this.setState({
+          gitRemoteAdding: false,
+          remoteAddVisible: false,
+        }, this.handleReload);
+        this.gitFormReset();
+      })
+      .catch((err) => {
+        Dialog.alert({
+          title: '提示',
+          content: (
+            <div style={{ width: 400 }}>
+              {(err && err.message) || 'git remote add 失败请重试'}
+            </div>
+          ),
+        });
+        this.setState(
+          { gitRemoteAdding: false },
+          this.gitFormReset
+        );
+      })
+  };
+
+  handleGitBranchesOpen = () => {
+    if (!this.state.originRemote.refs) {
+      Feedback.toast.error('当前项目未设置 git remote 地址');
+      return;
+    }
+
+    Feedback.toast.show({
+      type: "loading",
+      content: "Git fetching",
+    });
+    this.git()
+      .fetch()
+      .then(() => {
+        this.git()
+          .branch(['--remotes', '--list', '-v'])
+          .then(originBranches => {
+            this.git()
+              .branchLocal()
+              .then(localBranches => {
+                const local = localBranches.all.map((value) => {
+                  return { label: value, value };
+                });
+                const origin = originBranches.all.map((value) => {
+                  return { label: value, value };
+                });
+                const branches = [];
+                if (local.length > 0) {
+                  branches.push({
+                    label: 'local',
+                    value: 'local',
+                    children: local,
+                  });
+                }
+                if (origin.length > 0) {
+                  branches.push({
+                    label: 'origin',
+                    value: 'origin',
+                    children: origin,
+                  });
+                }
+                Feedback.toast.hide();
+                if (branches.length === 0) {
+                  Feedback.toast.error('本地和远程仓库均无分支，请先 push');
+                  return;
+                }
+                this.setState({
+                  branches,
+                  branchesVisible: true
+                });
+              });
+          })
+          .catch((err) => {
+            Dialog.alert({
+              title: '提示',
+              content: (
+                <div style={{ width: 400 }}>
+                  {(err && err.message) || 'git branch 失败请重试'}
+                </div>
+              ),
+            });
+            Feedback.toast.hide();
+            this.setState({ branchesVisible: false });
+          });
+      })
+      .catch((err) => {
+        Dialog.alert({
+          title: '提示',
+          content: (
+            <div style={{ width: 400 }}>
+              {(err && err.message) || 'git fetch 失败请重试'}
+            </div>
+          ),
+        });
+        this.setState({ branchesVisible: false });
+      })
+  };
+
+  handleGitBranchesClose = () => {
+    this.setState(
+      { branchesVisible: false },
+      this.gitFormReset
+    );
+  };
+
+  handleSelectBranch = (value, data, extra) => {
+    if (extra.selectedPath[0].label === 'local') {
+      this.setState({
+        branchOrigin: value,
+        checkoutBranch: value,
+        branchType: 'local'
+      })
+    } else {
+      this.setState({
+        branchOrigin: value,
+        checkoutBranch: '',
+        branchType: 'origin'
+      })
+    }
+  };
+
+  handleGitLocalBranch = (value) => {
+    this.setState({ checkoutBranch: value });
+  };
+
+  handleGitBranchesOk = () => {
+    const { branchOrigin, checkoutBranch, branchType } = this.state;
+    if (branchOrigin === checkoutBranch && branchType === 'local') {
+      this.git()
+        .checkout(checkoutBranch)
+        .then(() => {
+          this.setState(
+            { branchesVisible: false },
+            this.handleReload
+          );
+          this.gitFormReset();
+        })
+        .catch((err) => {
+          Dialog.alert({
+            title: '提示',
+            content: (
+              <div style={{ width: 400 }}>
+                {(err && err.message) || 'git checkout 失败请重试'}
+              </div>
+            ),
+          });
+          this.setState(
+            { branchesVisible: false },
+            this.gitFormReset()
+          );
+        })
+    } else {
+      this.git()
+        .checkoutBranch(checkoutBranch, branchOrigin)
+        .then(() => {
+          this.setState(
+            { branchesVisible: false },
+            this.handleReload
+          );
+          this.gitFormReset();
+        })
+        .catch((err) => {
+          Dialog.alert({
+            title: '提示',
+            content: (
+              <div style={{ width: 400 }}>
+                {(err && err.message) || 'git checkout -b 失败请重试'}
+              </div>
+            ),
+          });
+          this.setState(
+            { branchesVisible: false },
+            this.gitFormReset
+          );
+        });
+    }
+  };
+
+  displayBranch = (label) => {
+    return label[1];
+  };
+
+  handleGitNewBranchOpen = () => {
+    if (this.state.originRemote.refs) {
+      this.setState({ newBranchVisible: true });
+    } else {
+      Feedback.toast.error('当前项目未设置 git remote 地址');
+    }
+  };
+
+  handleGitNewBranchClose = () => {
+    this.setState(
+      { newBranchVisible: false },
+      this.gitFormReset
+    );
+  };
+
+  handleGitNewBranch = (value) => {
+    this.setState({ newBranch: value });
+  };
+
+  handleGitNewBranchOk = () => {
+    this.git()
+      .checkoutLocalBranch(this.state.newBranch)
+      .then(() => {
+        this.setState(
+          { newBranchVisible: false },
+          this.handleReload
+        );
+        this.gitFormReset();
+      })
+      .catch((err) => {
+        Dialog.alert({
+          title: '提示',
+          content: (
+            <div style={{ width: 400 }}>
+              {(err && err.message) || 'git checkout -b 失败请重试'}
+            </div>
+          ),
+        });
+        this.setState(
+          { newBranchVisible: false },
+          this.gitFormReset()
+        );
+      });
+  };
+
+  handleOpenDocument = () => {
+    shell.openExternal(
+      'http://def.alibaba-inc.com/doc/start/intro'
+    );
+  };
+
   cloudPublish = async (target) => {
     const { originRemote, currentBranch } = this.state;
+    if (!currentBranch) {
+      Feedback.toast.show({
+        type: 'error',
+        content: '请先建立 Git 远程分支再进行 DEF 发布',
+        duration: 3000
+      });
+      return;
+    }
+
+    await this.setState({ defPublishing: true });
     const user = this.getUserInfo();
     const lastCommit = await this.gitLastCommit([currentBranch]);
 
     if (!user || !user.workid) {
-      dialog.confirm({
-        title: '请先登录内网账号！',
-        content: '是否立即登录，登录完成后请重新发布'
-      }, (ok) => {
-        if (ok) {
-          this.props.user.open();
+      dialog.confirm(
+        {
+          title: '请先登录内网账号！',
+          content: '是否立即登录，登录完成后请重新发布',
+        },
+        (ok) => {
+          if (ok) {
+            this.props.user.open();
+          }
         }
-      });
+      );
+      this.setState({ defPublishing: false });
       return;
     }
     if (!/[^\/]+\/\d+\.\d+\.\d+/i.test(currentBranch)) {
       Feedback.toast.error(
         '云构建要求分支名为： prefix/x.y.z 格式，例如：daily/1.0.0'
       );
+      this.setState({ defPublishing: false });
       return;
     }
 
     if (!(originRemote.refs && originRemote.refs.push)) {
       Feedback.toast.error('当前项目未设置 git remote 地址');
+      this.setState({ defPublishing: false });
       return;
     }
 
@@ -331,6 +688,7 @@ class Def extends Component {
           commit_id: lastCommit.latest.hash, // 当前发布的 commit id 值
           env: shared.defEnv, // (可选)DEF 发布系统的环境, daily: 日常，prepub: 预发，prod: 线上；联调时可使用
         });
+        this.setState({ defPublishing: false });
       })
       .catch((err) => {
         Dialog.alert({
@@ -341,6 +699,7 @@ class Def extends Component {
             </div>
           ),
         });
+        this.setState({ defPublishing: false });
       });
   };
 
@@ -383,20 +742,95 @@ class Def extends Component {
     const { projects } = this.props;
     const { currentProject } = projects;
 
-    if (this.state.isRepo) {
+    if (this.state.isGit) {
       return (
         <div>
           <div style={styles.item}>
             <div style={styles.itemTitle}>Repo 地址:</div>
-            <div style={styles.itemContent}>
-              {(this.state.originRemote.refs &&
-                this.state.originRemote.refs.push) ||
-                '未设置'}
-            </div>
+            {(this.state.originRemote.refs &&
+              (
+                <div style={{
+                  ...styles.itemContent,
+                  justifyContent: 'space-between'
+                }}>
+                  <p style={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    margin: 0,
+                  }}>
+                    {this.state.originRemote.refs.push}
+                  </p>
+                  <div style={{ width: 24 }}>
+                    <ExtraButton
+                      style={{ color: '#3080FE' }}
+                      placement={'top'}
+                      tipText="修改仓库地址"
+                      onClick={this.handleGitRemoteAddOpen}
+                    >
+                      <Icon type="edit" />
+                    </ExtraButton>
+                  </div>
+                </div>
+              )
+            ) || (
+              <div style={{
+                ...styles.itemContent,
+                justifyContent: 'space-between'
+              }}>
+                <div>未设置</div>
+                <div style={{ width: 24 }}>
+                  <ExtraButton
+                    style={{ color: '#3080FE' }}
+                    placement={'top'}
+                    tipText="关联仓库"
+                    onClick={this.handleGitRemoteAddOpen}
+                  >
+                    <Icon type="edit" />
+                  </ExtraButton>
+                </div>
+              </div>
+            )}
           </div>
           <div style={styles.item}>
             <div style={styles.itemTitle}>当前分支:</div>
-            <div style={styles.itemContent}>{this.state.currentBranch}</div>
+            <div style={{
+              ...styles.itemContent,
+              justifyContent: 'space-between'
+            }}>
+              <p style={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                margin: 0,
+              }}>
+                {this.state.currentBranch}
+              </p>
+              <div
+                style={{
+                  width: 48,
+                  display: 'flex',
+                  justifyContent: 'space-around'
+                }}
+              >
+                <ExtraButton
+                  style={{ color: '#3080FE' }}
+                  placement={'top'}
+                  tipText={'新建分支'}
+                  onClick={this.handleGitNewBranchOpen}
+                >
+                  <Icon type="plus-o" />
+                </ExtraButton>
+                <ExtraButton
+                  style={{ color: '#3080FE' }}
+                  placement={'top'}
+                  tipText="切换分支"
+                  onClick={this.handleGitBranchesOpen}
+                >
+                  <Icon type="edit" />
+                </ExtraButton>
+              </div>
+            </div>
           </div>
           <div style={styles.item}>
             <div style={styles.itemTitle}>文件状态:</div>
@@ -446,6 +880,7 @@ class Def extends Component {
                 size="small"
                 type="secondary"
                 onClick={this.handlePublishToDaily}
+                loading={this.state.defPublishing}
                 disabled={currentProject.statusCloudBuild == 'start'}
               >
                 日常发布
@@ -466,7 +901,24 @@ class Def extends Component {
         </div>
       );
     }
-    return <EmptyTips>当前项目不是一个 Git 仓库</EmptyTips>;
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <EmptyTips>当前项目不是一个 Git 仓库</EmptyTips>
+        <Button
+          type="secondary"
+          onClick={this.handleGitInit}
+          loading={this.state.gitIniting}
+        >
+          Git init
+        </Button>
+      </div>
+    );
   };
 
   render() {
@@ -475,6 +927,14 @@ class Def extends Component {
         <DashboardCard.Header>
           <div>DEF 前端发布</div>
           <div>
+            <ExtraButton
+              style={{ color: '#3080FE' }}
+              placement={'top'}
+              tipText={'DEF 文档'}
+              onClick={this.handleOpenDocument}
+            >
+              <Icon type="help" style={{ fontSize: 18 }} />
+            </ExtraButton>
             <ExtraButton
               style={{ color: '#3080FE' }}
               placement={'top'}
@@ -511,6 +971,92 @@ class Def extends Component {
               style={{ width: 400 }}
             />
           </Dialog>
+          <Dialog
+            visible={this.state.remoteAddVisible}
+            title="Git remote add"
+            onClose={this.handleGitRemoteAddClose}
+            footer={
+              <div>
+                <Button
+                  disabled={this.state.remoteUrl.length == 0}
+                  onClick={this.handleGitRemoteAddOk}
+                  type="primary"
+                  loading={this.state.gitRemoteAdding}
+                >
+                  确定
+                </Button>
+                <Button onClick={this.handleGitRemoteAddClose}>取消</Button>
+              </div>
+            }
+          >
+            <Input
+              onChange={this.handleGitRemoteUrl}
+              placeholder="请输入 git 仓库 URL"
+              value={this.state.remoteUrl}
+              style={{ width: 400 }}
+            />
+          </Dialog>
+          <Dialog
+            visible={this.state.branchesVisible}
+            title="Git Branches"
+            onClose={this.handleGitBranchesClose}
+            footer={
+              <div>
+                <Button
+                  disabled={this.state.checkoutBranch.length == 0}
+                  onClick={this.handleGitBranchesOk}
+                  type="primary"
+                >
+                  确定
+                </Button>
+                <Button onClick={this.handleGitBranchesClose}>取消</Button>
+              </div>
+            }
+          >
+            <div style={{ lineHeight: '28px', height: 20 }}>
+              <span style={{ margin: '0 8px'}}>Checkout</span>
+              <CascaderSelect
+                placeholder="选择分支"
+                onChange={this.handleSelectBranch}
+                dataSource={this.state.branches}
+                style={{ verticalAlign: 'middle' }}
+                displayRender={this.displayBranch}
+              />
+              <span style={{ margin: '0 8px'}}>as</span>
+              <Input
+                onChange={this.handleGitLocalBranch}
+                placeholder="请输入本地分支名称"
+                value={this.state.checkoutBranch}
+                disabled={this.state.branchOrigin === ''}
+              />
+            </div>
+          </Dialog>
+          <Dialog
+            visible={this.state.newBranchVisible}
+            title="New Branch"
+            onClose={this.handleGitNewBranchClose}
+            footer={
+              <div>
+                <Button
+                  disabled={this.state.newBranch.length == 0}
+                  onClick={this.handleGitNewBranchOk}
+                  type="primary"
+                >
+                  确定
+                </Button>
+                <Button onClick={this.handleGitNewBranchClose}>取消</Button>
+              </div>
+            }
+          >
+            <div style={{ lineHeight: '28px', height: 20 }}>
+              <Input
+                onChange={this.handleGitNewBranch}
+                placeholder="请输入分支名称"
+                value={this.state.newBranch}
+                style={{ width: 400 }}
+              />
+            </div>
+          </Dialog>
         </DashboardCard.Body>
       </DashboardCard>
     );
@@ -519,7 +1065,7 @@ class Def extends Component {
 
 const styles = {
   statusTag: {
-    padding: '2px 4px',
+    padding: '0 4px',
     color: '#fff',
     fontSize: 10,
     borderRadius: 2,
@@ -542,11 +1088,15 @@ const styles = {
     padding: 4,
     textAlign: 'right',
     boxSizing: 'border-box',
+    lineHeight: '20px',
   },
   itemContent: {
-    flex: '1 1 auto',
+    display: 'flex',
     padding: 4,
     boxSizing: 'border-box',
+    overflow: 'hidden',
+    lineHeight: '20px',
+    flex: 1,
   },
 };
 
