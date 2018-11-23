@@ -239,15 +239,6 @@
     rc-menu "^5.0.9"
     react "*"
 
-"@icedesign/panel@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@icedesign/panel/-/panel-0.1.2.tgz#b8510f140c733df32e3978a077603f06b37d7d17"
-  integrity sha512-1HA7NirHkcMiW70ejdMJ3/YDAiCEebW/VLYFAcE7OUbhGFzQYEKhNb8AC8dQYcRmPWeLanFtD8bIB837EqY69w==
-  dependencies:
-    "@icedesign/base" "^0.1.0"
-    classnames "^2.2.5"
-    prop-types "^15.6.0"
-
 "@icedesign/skin@^0.1.14":
   version "0.1.14"
   resolved "http://registry.npmjs.com/@icedesign/skin/download/@icedesign/skin-0.1.14.tgz#be8e62f467a5a2eabe79f54de23b0925e830dae2"
@@ -278,15 +269,6 @@
     react-dom "^16.4.0"
     rimraf "^2.6.2"
     write "^1.0.3"
-
-"@iceland/components@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@iceland/components/-/components-1.0.0.tgz#3b939680d8a2d3ba82981e37be63764ec20f8e20"
-  integrity sha512-BFEdtaKMmnmrfd+2krLuY0PAjHl948RQIdx021v61zywcx3PhgqF7pNn/g74itEgyEqSXYWZcyPOKmLrUu1ErA==
-  dependencies:
-    "@icedesign/base" "0.x"
-    "@icedesign/panel" "^0.1.2"
-    lodash.omit "^4.5.0"
 
 "@iceland/dsl2code@^1.0.0":
   version "1.0.0"
@@ -4129,11 +4111,6 @@ lodash.keys@^3.1.2:
     lodash._getnative "^3.0.0"
     lodash.isarguments "^3.0.0"
     lodash.isarray "^3.0.0"
-
-lodash.omit@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.omit/-/lodash.omit-4.5.0.tgz#6eb19ae5a1ee1dd9df0b969e66ce0b7fa30b5e60"
-  integrity sha1-brGa5aHuHdnfC5aeZs4Lf6MLXmA=
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
