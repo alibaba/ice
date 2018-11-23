@@ -49,7 +49,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-aliyun-login",
-    "title": "ICE Aliyun Login",
+    "title": "阿里云官网登录",
     "categories": [
       "登录"
     ],
