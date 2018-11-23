@@ -88,7 +88,7 @@ class CustomBlocks {
       this.progressTitle = '下载物料数据';
       requestProgress(
         request(
-          'http://ice.alicdn.com/iceland-assets/material-engine-daily.json',
+          'http://ice.alicdn.com/iceland-assets/material-engine-production.json',
           (error, response, body) => {
             if (!error) {
               this.materialData = body;
