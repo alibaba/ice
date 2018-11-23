@@ -1,4 +1,4 @@
-const dsl2code = require('@ali/iceland-dsl2code').default;
+const dsl2code = require('@iceland/dsl2code').default;
 const { ICELAND_COMPONENTS_PATH } = require('../../paths');
 const codeFormat = require('../../utils/codeFormat');
 const logger = require('../../logger');
@@ -14,10 +14,7 @@ module.exports = (json, materialEngine, callback) => {
     json,
     {
       format: false,
-      useFlexbox: false,
-      useSemantic: false,
       componentMode: true,
-      injectIcelandComponents: ICELAND_COMPONENTS_PATH,
       packageAlias: [{
         npmName: '@alife/next',
         npmAlias: '@icedesign/base',

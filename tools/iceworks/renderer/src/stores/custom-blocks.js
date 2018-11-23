@@ -11,8 +11,7 @@ import services from '../services';
 
 const defaultWorkspacePath = path.join(os.homedir(), '.iceworks');
 const devWorkbenchPath = 'http://127.0.0.1:3333/src/pages/workbench/index.html';
-const onlineWorkbenchPath = 'http://ice.alicdn.com/iceland-assets/workbench/v21200/pages/workbench/index.html';
-const preWorkbenchPath = 'http://ice.alicdn.com/iceland-assets/workbench/pre/pages/workbench/index.html';
+const onlineWorkbenchPath = 'http://ice.alicdn.com/iceland-assets/workbench/v21300/pages/workbench/index.html';
 const presentWorkbenchPath = onlineWorkbenchPath;
 
 /**
@@ -87,24 +86,27 @@ class CustomBlocks {
     if(!this.materialData) {
       this.dataLoading = true;
       this.progressTitle = '下载物料数据';
-      requestProgress(request('http://ice.alicdn.com/iceland-assets/material-engine-production.json', (error, response, body) => {
-        console.log(response, error);
-        if (!error) {
-          this.materialData = body;
-          this.getEngine('react');
-          this.loadIconData();
-        } else {
-          if (this.requestCount < 3) {
-            this.requestCount ++;
-            this.loadMaterialData();
-          } else {
-            this.requestCount = 0;
-            this.errorVisible = true;
-            this.dataLoading = false;
-            this.progressVisible = false;
-          }
-        }
-      }), {})
+      requestProgress(
+        request(
+          'http://ice.alicdn.com/iceland-assets/material-engine-daily.json',
+          (error, response, body) => {
+            if (!error) {
+              this.materialData = body;
+              this.getEngine('react');
+              this.loadIconData();
+            } else {
+              if (this.requestCount < 3) {
+                this.requestCount++;
+                this.loadMaterialData();
+              } else {
+                this.requestCount = 0;
+                this.errorVisible = true;
+                this.dataLoading = false;
+                this.progressVisible = false;
+              }
+            }
+          }),
+        {})
       .on('progress', (state) => {
         this.materialProgress = Math.ceil(state.percentage * 50);
         this.progressSpeed = Math.floor(state.speed / 1024);
@@ -115,25 +117,28 @@ class CustomBlocks {
   loadIconData() {
     if(!this.iconData){
       this.progressTitle = '下载 Iconfont 数据';
-      requestProgress(request('http://ice.alicdn.com/iceland-assets/iconData.json', (error, response, body) => {
-        if (!error) {
-          this.materialProgress = 100;
-          this.iconData = body;
-          this.dataLoading = false;
-          this.progressVisible = false;
-          this.dataTest();
-        } else {
-          if (this.requestCount < 3) {
-            this.requestCount ++;
-            this.loadIconData();
-          } else {
-            this.requestCount = 0;
-            this.errorVisible = true;
-            this.dataLoading = false;
-            this.progressVisible = false;
-          }
-        }
-      }), {})
+      requestProgress(
+        request('http://ice.alicdn.com/iceland-assets/iconData.json',
+          (error, response, body) => {
+            if (!error) {
+              this.materialProgress = 100;
+              this.iconData = body;
+              this.dataLoading = false;
+              this.progressVisible = false;
+              this.dataTest();
+            } else {
+              if (this.requestCount < 3) {
+                this.requestCount++;
+                this.loadIconData();
+              } else {
+                this.requestCount = 0;
+                this.errorVisible = true;
+                this.dataLoading = false;
+                this.progressVisible = false;
+              }
+            }
+          }),
+        {})
         .on('progress', (state) => {
           this.materialProgress = Math.ceil(state.percentage * 50) + 50;
           this.progressSpeed = Math.floor(state.speed / 1024);
@@ -274,12 +279,12 @@ class CustomBlocks {
 
   @action
   refactorBlock() {
-    if(this.renameBlock != this.renameBlockName || this.renameBlockAlias != this.blocksStorage[this.renameBlockName].alias) {
+    if(this.renameBlock !== this.renameBlockName || this.renameBlockAlias !== this.blocksStorage[this.renameBlockName].alias) {
       this.blockEditing = true;
       this.refactorBlockFiles(this.renameBlock);
       this.blocksStorage[this.renameBlockName] = this.deepClone(this.blocksStorage[this.renameBlock]);
       this.blocksStorage[this.renameBlockName].alias = this.renameBlockAlias;
-      if(this.renameBlock != this.renameBlockName) {
+      if(this.renameBlock !== this.renameBlockName) {
         this.deleteBlock(this.renameBlock);
       }
       this.blockEditing = false;
@@ -353,19 +358,19 @@ class CustomBlocks {
     //回调参数和官方文档描述不符
     this.workBenchWindow.webContents.on('console-message', (level, sourceId, message, line) => {
       console.log(message, line);
-      if(line == 132 || line == 124){
+      if(line == 133 || line == 125){
         const passBackData = JSON.parse(message);
         if(passBackData){
-          if (passBackData.type == 'icon') {
+          if (passBackData.type === 'icon') {
             this.workBenchWindow.webContents.executeJavaScript("window.IceLand.iconData = " + this.iconData, true);
-          } else if (passBackData.type == 'offset') {
+          } else if (passBackData.type === 'offset') {
             this.paintOffset = passBackData.value;
-          } else if (passBackData.type == 'height') {
+          } else if (passBackData.type === 'height') {
             this.paintHeight = passBackData.value + 72;
-          } else if (passBackData.type == 'width') {
+          } else if (passBackData.type === 'width') {
             this.paintWidth = passBackData.value + 72;
             this.capture = true;
-          } else if (passBackData.type == 'Group') {
+          } else if (passBackData.type === 'Group') {
             this.blockSaving = true;
             let JSONObj = passBackData;
             JSONObj.props.style.position = 'relative';

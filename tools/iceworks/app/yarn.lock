@@ -7,13 +7,6 @@
   resolved "http://registry.npm.alibaba-inc.com/7zip/download/7zip-0.0.6.tgz#9cafb171af82329490353b4816f03347aa150a30"
   integrity sha1-nK+xca+CMpSQNTtIFvAzR6oVCjA=
 
-"@ali/color-cal@~1.0.4":
-  version "1.0.6"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/color-cal/download/@ali/color-cal-1.0.6.tgz#141b6a7bf854023ee1b82af0d072411382da09ce"
-  integrity sha1-FBtqe/hUAj7huCrw0HJBE4LaCc4=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
-
 "@ali/def-login-client@1.1.0":
   version "1.1.0"
   resolved "http://registry.npm.alibaba-inc.com/@ali/def-login-client/download/@ali/def-login-client-1.1.0.tgz#786506b9e3ba257b3ea4e500d226c28c6c080b3d"
@@ -51,526 +44,10 @@
     tar-stream "^1.5.2"
     ws "^2.2.3"
 
-"@ali/g-actived@~1.1.0":
-  version "1.1.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-actived/download/@ali/g-actived-1.1.1.tgz#8a17bbd4551297fc57fb205be8bb218984b1639e"
-  integrity sha1-ihe71FUSl/xX+yBb6LshiYSxY54=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-adjust@~1.0.4":
-  version "1.0.8"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-adjust/download/@ali/g-adjust-1.0.8.tgz#b5f6843ff06ef338f501614bd29de346fba98672"
-  integrity sha1-tfaEP/Bu8zj1AWFL0p3jRvuphnI=
-  dependencies:
-    "@ali/g-frame" "~1.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-animate@~1.3.0":
-  version "1.3.0"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-animate/download/@ali/g-animate-1.3.0.tgz#b376ff9f871586f0f1b735d9c745ca19865c1855"
-  integrity sha1-s3b/n4cVhvDxtzXZx0XKGYZcGFU=
-  dependencies:
-    "@ali/g-base" "~1.0.0"
-    "@ali/g-matrix" "~0.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-attr@~2.0.0":
-  version "2.0.6"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-attr/download/@ali/g-attr-2.0.6.tgz#bddc0577472db3ae400d387b1d81f512ec358df8"
-  integrity sha1-vdwFd0cts65ADTh7HYH1Euw1jfg=
-  dependencies:
-    "@ali/color-cal" "~1.0.4"
-    "@ali/g-base" "~1.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-auto@~1.1.0", "@ali/g-auto@~1.1.1":
-  version "1.1.7"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-auto/download/@ali/g-auto-1.1.7.tgz#8013970de4ae9b5346b9e7e574740bdb43d9c824"
-  integrity sha1-gBOXDeSum1NGuefldHQL20PZyCQ=
-  dependencies:
-    "@ali/g-date" "~1.0.0"
-    "@ali/g-math" "~1.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-base@~1.0.0":
-  version "1.0.3"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-base/download/@ali/g-base-1.0.3.tgz#e70169f66892eea8bd9eaae6484a28eaf469fdc6"
-  integrity sha1-5wFp9miS7qi9nqrmSEoo6vRp/cY=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-canvas-components@~1.1.0":
-  version "1.1.4"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-canvas-components/download/@ali/g-canvas-components-1.1.4.tgz#8bf799349d2731cfa822b28289fdea77cb3b09bd"
-  integrity sha1-i/eZNJ0nMc+oIrKCif3qd8s7Cb0=
-  dependencies:
-    "@ali/g-color" "~0.0.7"
-    "@ali/g-event" "~0.0.0"
-    "@ali/g-math" "~1.0.0"
-    "@ali/g-matrix" "~0.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-canvas@~1.8.2":
-  version "1.8.5"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-canvas/download/@ali/g-canvas-1.8.5.tgz#0306b8cd64dc9203b80b59b4eae1ff8843e94ef3"
-  integrity sha1-Awa4zWTckgO4C1m06uH/iEPpTvM=
-  dependencies:
-    "@ali/g-color" "~0.0.7"
-    "@ali/g-event" "~0.0.0"
-    "@ali/g-interpolation" "~0.0.0"
-    "@ali/g-math" "~1.0.0"
-    "@ali/g-matrix" "~0.0.0"
-    "@ali/g-path-util" "~1.0.0"
-    "@ali/g-tween" "~0.3.1-beta.1"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-cloud@^1.0.2":
-  version "1.0.2"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-cloud/download/@ali/g-cloud-1.0.2.tgz#6a79eb5ff252ab3e200b868c070611d97c347c3b"
-  integrity sha1-annrX/JSqz4gC4aMBwYR2Xw0fDs=
-  dependencies:
-    "@ali/g-util" "~1.0.7"
-
-"@ali/g-color@~0.0.0", "@ali/g-color@~0.0.7":
-  version "0.0.7"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-color/download/@ali/g-color-0.0.7.tgz#6340fcf7988619f12108353279e45c02cdc86add"
-  integrity sha1-Y0D895iGGfEhCDUyeeRcAs3Iat0=
-  dependencies:
-    "@ali/g-math" "~1.0.5"
-    "@ali/g-util" "~1.0.6"
-
-"@ali/g-contour@~1.0.0":
-  version "1.0.3"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-contour/download/@ali/g-contour-1.0.3.tgz#9f2a12c27fbd72a2482f1c3fe312298f00bafec5"
-  integrity sha1-nyoSwn+9cqJILxw/4xIpjwC6/sU=
-
-"@ali/g-coord@~1.2.3":
-  version "1.2.6"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-coord/download/@ali/g-coord-1.2.6.tgz#5ed25520a57e94b433bba46d5c84a15ae072ca1b"
-  integrity sha1-XtJVIKV+lLQzu6RtXIShWuByyhs=
-  dependencies:
-    "@ali/g-map-projection" "1.0.0"
-    "@ali/g-math" "~1.0.6"
-    "@ali/g-matrix" "~0.0.6"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-date@~1.0.0":
-  version "1.0.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-date/download/@ali/g-date-1.0.1.tgz#db8379263461c1ce4afe02a225f34ff4341f7006"
-  integrity sha1-24N5JjRhwc5K/gKiJfNP9DQfcAY=
-
-"@ali/g-event@~0.0.0":
-  version "0.0.2"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-event/download/@ali/g-event-0.0.2.tgz#7d3a12439a523793c00405c2495cec662d7236d3"
-  integrity sha1-fToSQ5pSN5PABAXCSVzsZi1yNtM=
-  dependencies:
-    "@ali/g-util" "~1.0.6"
-
-"@ali/g-facet@~1.0.10":
-  version "1.0.11"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-facet/download/@ali/g-facet-1.0.11.tgz#99b8b05f060da0699298a874eea36e07218bdf62"
-  integrity sha1-mbiwXwYNoGmSmKh07qNuByGL32I=
-  dependencies:
-    "@ali/g-frame" "~1.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-frame@~1.0.0":
-  version "1.0.15"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-frame/download/@ali/g-frame-1.0.15.tgz#15798432d62fcda73e3906f1acc4facba531dc78"
-  integrity sha1-FXmEMtYvzac+OQbxrMT6y6Ux3Hg=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
-    spm-simple-statistics "~0.9.0"
-
-"@ali/g-guass@~1.0.0", "@ali/g-guass@~1.0.2":
-  version "1.0.4"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-guass/download/@ali/g-guass-1.0.4.tgz#38d9c4318690f0f3d12ff1ed26ed8d434944d1c4"
-  integrity sha1-ONnEMYaQ8PPRL/HtJu2NQ0lE0cQ=
-
-"@ali/g-guide@~1.2.0":
-  version "1.2.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-guide/download/@ali/g-guide-1.2.1.tgz#1266ccb91388477b65a9e20b48c5a9463f4c62f5"
-  integrity sha1-EmbMuROIR3tlqeILSMWpRj9MYvU=
-  dependencies:
-    "@ali/g-matrix" "~0.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-heatmap@~1.0.0":
-  version "1.0.6"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-heatmap/download/@ali/g-heatmap-1.0.6.tgz#1d04e2d93c76c302c1e8a2dcb50cebafe252ee64"
-  integrity sha1-HQTi2Tx2wwLB6KLctQzrr+JS7mQ=
-  dependencies:
-    "@ali/g-util" "~1.0.6"
-    color-cal "~1.0.0"
-
-"@ali/g-interpolation@~0.0.0":
-  version "0.0.5"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-interpolation/download/@ali/g-interpolation-0.0.5.tgz#65a7f8498365f4f915a7eb7fed5b411c5348b8e6"
-  integrity sha1-Zaf4SYNl9PkVp+t/7VtBHFNIuOY=
-  dependencies:
-    "@ali/g-color" "~0.0.0"
-    "@ali/g-matrix" "~0.0.8"
-    "@ali/g-path-util" "~1.0.0"
-    "@ali/g-util" "~1.0.7"
-
-"@ali/g-kernel@~1.0.1":
-  version "1.0.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-kernel/download/@ali/g-kernel-1.0.1.tgz#3f954e21ce0b920a3660fc15e3e530bef259117c"
-  integrity sha1-P5VOIc4Lkgo2YPwV4+UwvvJZEXw=
-
-"@ali/g-layout@~1.0.4":
-  version "1.0.9"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-layout/download/@ali/g-layout-1.0.9.tgz#d5299dc3471709edec47573538810a02b151451f"
-  integrity sha1-1Smdw0cXCe3sR1c1OIEKArFRRR8=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-map-projection@1.0.0":
-  version "1.0.0"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-map-projection/download/@ali/g-map-projection-1.0.0.tgz#483e7cb6f96a33574f76dab58c3e421a4f20e050"
-  integrity sha1-SD58tvlqM1dPdtq1jD5CGk8g4FA=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-math@~1.0.0", "@ali/g-math@~1.0.2", "@ali/g-math@~1.0.5", "@ali/g-math@~1.0.6":
-  version "1.0.6"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-math/download/@ali/g-math-1.0.6.tgz#ef8a719d29f50602e147c2cd0d72162c3a118c34"
-  integrity sha1-74pxnSn1BgLhR8LNDXIWLDoRjDQ=
-
-"@ali/g-matrix@~0.0.0", "@ali/g-matrix@~0.0.6", "@ali/g-matrix@~0.0.8":
-  version "0.0.12"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-matrix/download/@ali/g-matrix-0.0.12.tgz#d2f2327295ad59f083ae608525ae2330434f1d35"
-  integrity sha1-0vIycpWtWfCDrmCFJa4jMENPHTU=
-  dependencies:
-    "@ali/g-math" "~1.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-path-util@~1.0.0":
-  version "1.0.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-path-util/download/@ali/g-path-util-1.0.1.tgz#9c8360b915b807b7805ae6def76ee2c44db983c8"
-  integrity sha1-nINguRW4B7eAWube927ixE25g8g=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-scale@~1.2.0":
-  version "1.2.5"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-scale/download/@ali/g-scale-1.2.5.tgz#e24d3726c2c215ec8e2bcdef126afc0cb082c551"
-  integrity sha1-4k03JsLCFeyOK83vEmr8DLCCxVE=
-  dependencies:
-    "@ali/g-auto" "~1.1.0"
-    "@ali/g-date" "~1.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-shapeFactory@~0.0.0":
-  version "0.0.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-shapeFactory/download/@ali/g-shapeFactory-0.0.1.tgz#5b9796bf30eea92b4a2bf3c07e67fff33b402665"
-  integrity sha1-W5eWvzDuqStKK/PAfmf/8ztAJmU=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-spline@~0.0.0":
-  version "0.0.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-spline/download/@ali/g-spline-0.0.1.tgz#481b411b1f9806735bdf726aee4f184edbb67ce2"
-  integrity sha1-SBtBGx+YBnNb33Jq7k8YTtu2fOI=
-  dependencies:
-    "@ali/g-matrix" "~0.0.8"
-
-"@ali/g-stat-link@~1.0.2":
-  version "1.0.5"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-stat-link/download/@ali/g-stat-link-1.0.5.tgz#ab5cf1bd8f684f5333ef6cf944909d683d62047f"
-  integrity sha1-q1zxvY9oT1Mz72z5RJCdaD1iBH8=
-  dependencies:
-    "@ali/g-frame" "~1.0.0"
-    "@ali/g-stat" "~1.2.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-stat-map@~1.2.0":
-  version "1.2.2"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-stat-map/download/@ali/g-stat-map-1.2.2.tgz#820b6b6920f698354541832c0c4c82db8000bd4d"
-  integrity sha1-ggtraSD2mDVFQYMsDEyC24AAvU0=
-  dependencies:
-    "@ali/g-frame" "~1.0.0"
-    "@ali/g-stat" "~1.2.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-stat-tree@~0.1.0":
-  version "0.1.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-stat-tree/download/@ali/g-stat-tree-0.1.1.tgz#37f1d03beaf04976099c10b9bc90f9fe3f5d2bfb"
-  integrity sha1-N/HQO+rwSXYJnBC5vJD5/j9dK/s=
-  dependencies:
-    "@ali/g-frame" "~1.0.0"
-    "@ali/g-stat" "~1.2.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-stat-treemap@~0.2.0":
-  version "0.2.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-stat-treemap/download/@ali/g-stat-treemap-0.2.1.tgz#128e990c441114f155efde6048f973c7d786c0ca"
-  integrity sha1-Eo6ZDEQRFPFV795gSPlzx9eGwMo=
-  dependencies:
-    "@ali/g-frame" "~1.0.0"
-    "@ali/g-stat" "~1.2.0"
-    "@ali/g-treemap" "~0.0.1"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-stat@~1.2.0":
-  version "1.2.2"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-stat/download/@ali/g-stat-1.2.2.tgz#b7ad138a5b8d122958309dd1999d094f14442ebd"
-  integrity sha1-t60TiluNEilYMJ3RmZ0JTxRELr0=
-  dependencies:
-    "@ali/g-frame" "~1.0.0"
-    "@ali/g-guass" "~1.0.0"
-    "@ali/g-kernel" "~1.0.1"
-    "@ali/g-util" "~1.0.0"
-    spm-regression "~1.2.1"
-
-"@ali/g-treemap@~0.0.1":
-  version "0.0.4"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-treemap/download/@ali/g-treemap-0.0.4.tgz#989c9bb2cc1e56a6349ee5b6d64ce3e8dc7d2fdd"
-  integrity sha1-mJybssweVqY0nuW21kzj6Nx9L90=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-tween@~0.3.1-beta.1":
-  version "0.3.9"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-tween/download/@ali/g-tween-0.3.9.tgz#83de0187500712c0ccec386ba5692628258b89d8"
-  integrity sha1-g94Bh1AHEsDM7DhrpWkmKCWLidg=
-  dependencies:
-    "@ali/g-base" "~1.0.0"
-    "@ali/g-interpolation" "~0.0.0"
-    "@ali/g-matrix" "~0.0.0"
-    "@ali/g-path-util" "~1.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g-util-base@~1.0.0":
-  version "1.0.4"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-util-base/download/@ali/g-util-base-1.0.4.tgz#13f0d311470274f45f43b2b5423edef14ed871b8"
-  integrity sha1-E/DTEUcCdPRfQ7K1Qj7e8U7Ycbg=
-
-"@ali/g-util@~1.0.0", "@ali/g-util@~1.0.6", "@ali/g-util@~1.0.7":
-  version "1.0.10"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g-util/download/@ali/g-util-1.0.10.tgz#dd59ad0a1275550820b853073ed8527e16b445a7"
-  integrity sha1-3VmtChJ1VQgguFMHPthSfha0Rac=
-  dependencies:
-    "@ali/g-util-base" "~1.0.0"
-
-"@ali/g2-core@~0.0.23":
-  version "0.0.31"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g2-core/download/@ali/g2-core-0.0.31.tgz#54c3f6ed21891127bb7acaeca49ea839e1b38cc4"
-  integrity sha1-VMP27SGJESe7esrspJ6oOeGzjMQ=
-  dependencies:
-    "@ali/g-base" "~1.0.0"
-    "@ali/g-frame" "~1.0.0"
-    "@ali/g-shapeFactory" "~0.0.0"
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g2-monitor@~0.0.2":
-  version "0.0.6"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g2-monitor/download/@ali/g2-monitor-0.0.6.tgz#548b37728a1f8ceff1eb97d4fd7ebedd24ab364e"
-  integrity sha1-VIs3coofjO/x65fU/X6+3SSrNk4=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
-
-"@ali/g2@^2.2.2":
-  version "2.3.13"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/g2/download/@ali/g2-2.3.13.tgz#76bd76b9c623137f62e18890a6ff872dd093a38b"
-  integrity sha1-dr12ucYjE39i4YiQpv+HLdCTo4s=
-  dependencies:
-    "@ali/color-cal" "~1.0.4"
-    "@ali/g-actived" "~1.1.0"
-    "@ali/g-adjust" "~1.0.4"
-    "@ali/g-animate" "~1.3.0"
-    "@ali/g-attr" "~2.0.0"
-    "@ali/g-auto" "~1.1.1"
-    "@ali/g-base" "~1.0.0"
-    "@ali/g-canvas" "~1.8.2"
-    "@ali/g-canvas-components" "~1.1.0"
-    "@ali/g-contour" "~1.0.0"
-    "@ali/g-coord" "~1.2.3"
-    "@ali/g-date" "~1.0.0"
-    "@ali/g-event" "~0.0.0"
-    "@ali/g-facet" "~1.0.10"
-    "@ali/g-frame" "~1.0.0"
-    "@ali/g-guass" "~1.0.2"
-    "@ali/g-guide" "~1.2.0"
-    "@ali/g-heatmap" "~1.0.0"
-    "@ali/g-layout" "~1.0.4"
-    "@ali/g-math" "~1.0.2"
-    "@ali/g-matrix" "~0.0.0"
-    "@ali/g-scale" "~1.2.0"
-    "@ali/g-shapeFactory" "~0.0.0"
-    "@ali/g-spline" "~0.0.0"
-    "@ali/g-stat" "~1.2.0"
-    "@ali/g-stat-link" "~1.0.2"
-    "@ali/g-stat-map" "~1.2.0"
-    "@ali/g-stat-tree" "~0.1.0"
-    "@ali/g-stat-treemap" "~0.2.0"
-    "@ali/g-util" "~1.0.0"
-    "@ali/g2-core" "~0.0.23"
-    "@ali/g2-monitor" "~0.0.2"
-
-"@ali/ice-chart@^0.2.4":
-  version "0.2.8"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/ice-chart/download/@ali/ice-chart-0.2.8.tgz#a134b6412d42bd56cdabd405f45d65be78f2fb25"
-  integrity sha1-oTS2QS1CvVbNq9QF9F1lvnjy+yU=
-  dependencies:
-    "@ali/g-cloud" "^1.0.2"
-    "@ali/g2" "^2.2.2"
-    prop-types "^15.6.2"
-
-"@ali/ice-colors@^0.1.0":
-  version "0.1.0"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/ice-colors/download/@ali/ice-colors-0.1.0.tgz#66b7b5cf8361a2217fad9a56baa057e3ff92411a"
-  integrity sha1-Zre1z4NhoiF/rZpWuqBX4/+SQRo=
-
-"@ali/ice-icon@^0.3.4":
-  version "0.3.6"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/ice-icon/download/@ali/ice-icon-0.3.6.tgz#de27474777fb85305695ac606e5136315bcd504b"
-  integrity sha1-3idHR3f7hTBWlaxgblE2MVvNUEs=
-  dependencies:
-    "@alife/next" "0.x"
-    classnames "^2.2.5"
-    prop-types "^15.5.10"
-    react "15.x"
-
-"@ali/ice-img@^0.2.0":
-  version "0.2.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/ice-img/download/@ali/ice-img-0.2.1.tgz#0bb6c76223e496be02d2560130f20365e6355354"
-  integrity sha1-C7bHYiPklr4C0lYBMPIDZeY1U1Q=
-  dependencies:
-    "@alife/next" "0.x"
-    classnames "^2.2.5"
-    prop-types "^15.5.10"
-    react "*"
-
-"@ali/ice-layout@^0.7.0":
-  version "0.7.10"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/ice-layout/download/@ali/ice-layout-0.7.10.tgz#82da2a38faa7101babda26b1c09ebe7b591c8fd4"
-  integrity sha1-gtoqOPqnEBur2iaxwJ6+e1kcj9Q=
-  dependencies:
-    "@ali/ice-colors" "^0.1.0"
-    "@alife/next" "0.x.x"
-    classnames "^2.2.5"
-    prop-types "^15.5.10"
-    react "*"
-
-"@ali/ice-menu@^0.2.4":
-  version "0.2.4"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/ice-menu/download/@ali/ice-menu-0.2.4.tgz#9b69015c6638a813ea8b22b3766f8bea70f465c6"
-  integrity sha1-m2kBXGY4qBPqiyKzdm+L6nD0ZcY=
-  dependencies:
-    "@ali/ice-colors" "^0.1.0"
-    "@ali/ice-icon" "^0.3.4"
-    "@alife/next" "0.x.x"
-    classnames "^2.2.5"
-    prop-types "^15.5.10"
-    rc-menu "^5.0.9"
-    react "*"
-
-"@ali/ice-panel@^0.3.0":
-  version "0.3.1"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/ice-panel/download/@ali/ice-panel-0.3.1.tgz#82474b64c438923e9952ba2c180365243d4b31c0"
-  integrity sha1-gkdLZMQ4kj6ZUrosGANlJD1LMcA=
-  dependencies:
-    "@alife/next" "0.x"
-    classnames "^2.2.5"
-    prop-types "^15.6.0"
-
-"@ali/iceland-components@^0.20.16", "@ali/iceland-components@^0.20.16-alpha.1":
-  version "0.20.20"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/iceland-components/download/@ali/iceland-components-0.20.20.tgz#725496fc75466e67160c67f7030da9b41da0c3cf"
-  integrity sha1-clSW/HVGbmcWDGf3Aw2ptB2gw88=
-  dependencies:
-    "@ali/ice-chart" "^0.2.4"
-    "@ali/ice-icon" "^0.3.4"
-    "@ali/ice-img" "^0.2.0"
-    "@ali/ice-layout" "^0.7.0"
-    "@ali/ice-menu" "^0.2.4"
-    "@ali/ice-panel" "^0.3.0"
-    "@alife/next" "0.x"
-    lodash.omit "^4.5.0"
-
-"@ali/iceland-dsl2code@^0.8.21":
-  version "0.8.25"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/iceland-dsl2code/download/@ali/iceland-dsl2code-0.8.25.tgz#2664964228559b9e43117dffedbcc99ac90844fb"
-  integrity sha1-JmSWQihVm55DEX3/7bzJmskIRPs=
-  dependencies:
-    "@ali/iceland-components" "^0.20.16"
-    "@ali/iceland-intelligent-code" "^0.6.8"
-    "@ali/iceland-intelligent-layout" "^0.3.3"
-    "@ali/iceland-intelligent-semantics" "^0.5.3"
-    debug "^3.0.1"
-    lodash "^4.17.11"
-    lodash.clonedeep "^4.5.0"
-    lodash.pick "^4.4.0"
-    uuid "^3.3.2"
-
-"@ali/iceland-intelligent-code@^0.6.8":
-  version "0.6.8"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/iceland-intelligent-code/download/@ali/iceland-intelligent-code-0.6.8.tgz#0bc2f5bcf8e97a1e22c129808932e458cf5a5585"
-  integrity sha1-C8L1vPjpeh4iwSmAiTLkWM9aVYU=
-  dependencies:
-    babel-generator "^6.26.1"
-    babylon "^6.18.0"
-    lodash "^4.17.11"
-    match-require "^2.1.0"
-    prettier "^1.7.4"
-
-"@ali/iceland-intelligent-layout@^0.3.3":
-  version "0.3.3"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/iceland-intelligent-layout/download/@ali/iceland-intelligent-layout-0.3.3.tgz#ceb4b0620c1acca48b4374146ba0c8e0dd965e81"
-  integrity sha1-zrSwYgwazKSLQ3QUa6DI4N2WXoE=
-  dependencies:
-    debug "^3.1.0"
-    lodash.clonedeep "^4.5.0"
-    lodash.orderby "^4.6.0"
-    uuid "^3.2.1"
-
-"@ali/iceland-intelligent-semantics@^0.5.3":
-  version "0.5.3"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/iceland-intelligent-semantics/download/@ali/iceland-intelligent-semantics-0.5.3.tgz#7863dcbfdc64ab8394ee6535a71638ac334c652a"
-  integrity sha1-eGPcv9xkq4OU7mU1pxY4rDNMZSo=
-  dependencies:
-    debug "^3.1.0"
-    lodash.camelcase "^4.3.0"
-    lodash.clonedeep "^4.5.0"
-    lodash.get "^4.4.2"
-    request "^2.83.0"
-
-"@ali/iceland-material-engine@^0.2.14":
-  version "0.2.17"
-  resolved "http://registry.npm.alibaba-inc.com/@ali/iceland-material-engine/download/@ali/iceland-material-engine-0.2.17.tgz#57fd2d3db2d536905747d4c1516e9440ac62971b"
-  integrity sha1-V/0tPbLVNpBXR9TBUW6UQKxilxs=
-  dependencies:
-    babel-core "^6.26.3"
-    babel-generator "^6.26.1"
-    babel-plugin-transform-class-properties "^6.24.1"
-    babel-plugin-transform-decorators-legacy "^1.3.5"
-    babel-plugin-transform-object-rest-spread "^6.26.0"
-    babel-preset-es2015 "^6.24.1"
-    babel-preset-react "^6.24.1"
-    babel-traverse "^6.26.0"
-    babylon "^6.18.0"
-    css "^2.2.4"
-    lodash "^4.17.11"
-
 "@ali/res_obj@1.0.2":
   version "1.0.2"
   resolved "http://registry.npm.alibaba-inc.com/@ali/res_obj/download/@ali/res_obj-1.0.2.tgz#ecd0245769327ad2d4c9e7c3c6918d78d2f7be7c"
   integrity sha1-7NAkV2kyetLUyefDxpGNeNL3vnw=
-
-"@alife/next@0.x", "@alife/next@0.x.x":
-  version "0.19.63"
-  resolved "http://registry.npm.alibaba-inc.com/@alife/next/download/@alife/next-0.19.63.tgz#db527ae812ebf368e589d60fb3eae53dd1c3ac73"
-  integrity sha1-21J66BLr82jlidYPs+rlPdHDrHM=
-  dependencies:
-    async-validator "^1.6.7"
-    classnames "^2.2.3"
-    cropperjs "^0.7.1"
-    enquire.js "^2.1.6"
-    object-assign "^4.1.0"
-    prop-types "^15.5.10"
-    react-transition-group "^1.2.1"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0"
@@ -834,6 +311,45 @@
     react-dom "^16.4.0"
     rimraf "^2.6.2"
     write "^1.0.3"
+
+"@iceland/dsl2code@^1.0.0":
+  version "1.0.1"
+  resolved "http://registry.antfin-inc.com/@iceland/dsl2code/download/@iceland/dsl2code-1.0.1.tgz#3f6b49fb4578cbd63873b777e895148c612dd38a"
+  integrity sha1-P2tJ+0V4y9Y4c7d36JUUjGEt04o=
+  dependencies:
+    "@iceland/intelligent-code" "^1.0.0"
+    debug "^3.0.1"
+    lodash "^4.17.11"
+    uuid "^3.3.2"
+
+"@iceland/intelligent-code@^1.0.0":
+  version "1.0.1"
+  resolved "http://registry.antfin-inc.com/@iceland/intelligent-code/download/@iceland/intelligent-code-1.0.1.tgz#99f27eb65344196fac3e51b3bd8e59da5993133a"
+  integrity sha1-mfJ+tlNEGW+sPlGzvY5Z2lmTEzo=
+  dependencies:
+    babel-generator "^6.26.1"
+    babylon "^6.18.0"
+    debug "^3.0.1"
+    lodash "^4.17.11"
+    match-require "^2.1.0"
+    prettier "^1.7.4"
+
+"@iceland/material-engine@^1.0.0":
+  version "1.0.1"
+  resolved "http://registry.antfin-inc.com/@iceland/material-engine/download/@iceland/material-engine-1.0.1.tgz#20f235e253998b03b09758c56a6483098570154d"
+  integrity sha1-IPI14lOZiwOwl1jFamSDCYVwFU0=
+  dependencies:
+    babel-core "^6.26.3"
+    babel-generator "^6.26.1"
+    babel-plugin-transform-class-properties "^6.24.1"
+    babel-plugin-transform-decorators-legacy "^1.3.5"
+    babel-plugin-transform-object-rest-spread "^6.26.0"
+    babel-preset-es2015 "^6.24.1"
+    babel-preset-react "^6.24.1"
+    babel-traverse "^6.26.0"
+    babylon "^6.18.0"
+    css "^2.2.4"
+    lodash "^4.17.11"
 
 JSONStream@^1.3.2:
   version "1.3.4"
@@ -2203,13 +1719,6 @@ collection-visit@^1.0.0:
   dependencies:
     map-visit "^1.0.0"
     object-visit "^1.0.0"
-
-color-cal@~1.0.0:
-  version "1.0.3"
-  resolved "http://registry.npm.alibaba-inc.com/color-cal/download/color-cal-1.0.3.tgz#a58fa4d5ac9290736bb4c6ab0f68a5d0dbd0264f"
-  integrity sha1-pY+k1aySkHNrtMarD2il0NvQJk8=
-  dependencies:
-    "@ali/g-util" "~1.0.0"
 
 color-convert@^1.9.0:
   version "1.9.3"
@@ -4752,12 +4261,7 @@ lodash._root@~3.0.0:
   resolved "http://registry.npm.alibaba-inc.com/lodash._root/download/lodash._root-3.0.1.tgz#fba1c4524c19ee9a5f8136b4609f017cf4ded692"
   integrity sha1-+6HEUkwZ7ppfgTa0YJ8BfPTe1pI=
 
-lodash.camelcase@^4.3.0:
-  version "4.3.0"
-  resolved "http://registry.npm.alibaba-inc.com/lodash.camelcase/download/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
-  integrity sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
-
-lodash.clonedeep@^4.5.0, lodash.clonedeep@~4.5.0:
+lodash.clonedeep@~4.5.0:
   version "4.5.0"
   resolved "http://registry.npm.alibaba-inc.com/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
@@ -4790,21 +4294,6 @@ lodash.keys@^3.1.2:
     lodash._getnative "^3.0.0"
     lodash.isarguments "^3.0.0"
     lodash.isarray "^3.0.0"
-
-lodash.omit@^4.5.0:
-  version "4.5.0"
-  resolved "http://registry.npm.alibaba-inc.com/lodash.omit/download/lodash.omit-4.5.0.tgz#6eb19ae5a1ee1dd9df0b969e66ce0b7fa30b5e60"
-  integrity sha1-brGa5aHuHdnfC5aeZs4Lf6MLXmA=
-
-lodash.orderby@^4.6.0:
-  version "4.6.0"
-  resolved "http://registry.npm.alibaba-inc.com/lodash.orderby/download/lodash.orderby-4.6.0.tgz#e697f04ce5d78522f54d9338b32b81a3393e4eb3"
-  integrity sha1-5pfwTOXXhSL1TZM4syuBozk+TrM=
-
-lodash.pick@^4.4.0:
-  version "4.4.0"
-  resolved "http://registry.npm.alibaba-inc.com/lodash.pick/download/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
-  integrity sha1-UvBWEP/53tQiYRRB7R/BI6AwAbM=
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
@@ -6600,7 +6089,7 @@ request-promise@^4.2.1:
     stealthy-require "^1.1.0"
     tough-cookie ">=2.3.3"
 
-request@^2.74.0, request@^2.81.0, request@^2.83.0, request@^2.85.0, request@^2.87.0:
+request@^2.74.0, request@^2.81.0, request@^2.85.0, request@^2.87.0:
   version "2.88.0"
   resolved "http://registry.npm.alibaba-inc.com/request/download/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha1-nC/KT301tZLv5Xx/ClXoEFIST+8=
@@ -7059,16 +6548,6 @@ split-string@^3.0.1, split-string@^3.0.2:
   integrity sha1-fLCd2jqGWFcFxks5pkZgOGguj+I=
   dependencies:
     extend-shallow "^3.0.0"
-
-spm-regression@~1.2.1:
-  version "1.2.1"
-  resolved "http://registry.npm.alibaba-inc.com/spm-regression/download/spm-regression-1.2.1.tgz#f4ae0b56f6dcc4710ecfca15533fe45f1d450349"
-  integrity sha1-9K4LVvbcxHEOz8oVUz/kXx1FA0k=
-
-spm-simple-statistics@~0.9.0:
-  version "0.9.0"
-  resolved "http://registry.npm.alibaba-inc.com/spm-simple-statistics/download/spm-simple-statistics-0.9.0.tgz#9d473322dd33b724286e11005f9279e1d227f275"
-  integrity sha1-nUczIt0ztyQobhEAX5J54dIn8nU=
 
 sprintf-js@~1.0.2:
   version "1.0.3"
