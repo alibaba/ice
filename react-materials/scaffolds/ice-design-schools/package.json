@@ -51,7 +51,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-design-schools",
-    "title": "ICE Design Schools",
+    "title": "学校管理系统",
     "categories": [
       "行业领域"
     ],

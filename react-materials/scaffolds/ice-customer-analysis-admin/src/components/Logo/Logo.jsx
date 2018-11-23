@@ -13,7 +13,7 @@ export default class Logo extends Component {
         />
         */}
         <Link to="/" style={styles.logoText}>
-          客源分析系统
+          客源分析管理系统
         </Link>
       </div>
     );

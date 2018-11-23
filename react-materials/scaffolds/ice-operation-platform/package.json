@@ -44,7 +44,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-operation-platform",
-    "title": "ICE Operation Platform",
+    "title": "运营平台",
     "categories": [
       "行业领域"
     ],

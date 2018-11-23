@@ -1,0 +1,20 @@
+// 组件如有皮肤功能，请从该文件引用 scss 变量
+@import './scss/variable';
+
+#{$ice-title-prefix} {
+  border-left-color: $ice-title-border-color;
+  font-size: $ice-title-title-size;
+  color: $ice-title-title-color;
+  vertical-align: baseline;
+  margin: $ice-title-margin-left 0 $margin-right 0;
+  padding-left: $padding-left;
+  line-height: 1.3;
+
+  #{$ice-title-prefix}-subtitle {
+    color: $ice-title-subtitle-color;
+    font-size: $ice-title-subtitle-size;
+    vertical-align: baseline;
+    margin-left: $ice-title-subtitle-margin-left;
+    display:inline-block;
+  }
+}

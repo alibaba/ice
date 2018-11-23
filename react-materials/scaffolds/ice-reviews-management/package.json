@@ -47,7 +47,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-reviews-management",
-    "title": "ICE Reviews Management",
+    "title": "客户反馈系统",
     "categories": [
       "行业领域"
     ],

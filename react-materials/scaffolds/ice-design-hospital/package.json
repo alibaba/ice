@@ -26,7 +26,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-design-hospital",
-    "title": "ICE Design Hospital",
+    "title": "医院管理系统",
     "categories": [
       "行业领域"
     ],

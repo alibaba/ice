@@ -47,7 +47,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-design-ecommerce",
-    "title": "ICE Design Ecommerce",
+    "title": "电商管理系统",
     "categories": [
       "行业领域"
     ],

@@ -1,5 +1,5 @@
 import { Balloon } from '@icedesign/base';
-import FoundationSymbol from 'foundation-symbol';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 

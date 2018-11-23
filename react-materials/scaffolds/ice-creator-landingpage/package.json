@@ -41,7 +41,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-creator-landingpage",
-    "title": "ICE Creator LandingPage",
+    "title": "创作平台官网",
     "categories": [
       "首页展示"
     ],

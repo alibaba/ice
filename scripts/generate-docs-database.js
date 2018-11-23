@@ -1,9 +1,9 @@
 const fs = require('fs');
-const mkdirp = require('mkdirp');
 const path = require('path');
 const glob = require('glob');
 const markTwain = require('mark-twain');
 const { cut } = require('./participle');
+
 const destDir = path.join(__dirname, '../build');
 const dest = path.join(destDir, 'docs.json');
 const sourceDir = path.join(__dirname, '../docs');

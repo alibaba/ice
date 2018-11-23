@@ -44,7 +44,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "iceworks-homepage",
-    "title": "Iceworks HomePage",
+    "title": "Iceworks 官网",
     "categories": [
       "首页展示"
     ],

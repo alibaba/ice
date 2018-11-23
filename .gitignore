@@ -14,6 +14,7 @@ databases
 build
 .vscode/
 tools/ice-scripts/lib/ICE_CA
+.tmp/
 react-materials/components/**/lib
 
 npmrc

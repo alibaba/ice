@@ -52,7 +52,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-monitor-dashboard",
-    "title": "ICE Monitor Dashboard",
+    "title": "数据监控系统",
     "categories": [
       "行业领域"
     ],
