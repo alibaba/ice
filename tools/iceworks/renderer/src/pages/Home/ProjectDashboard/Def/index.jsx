@@ -644,7 +644,7 @@ class Def extends Component {
             this.props.user.open();
           }
         }
-      });
+      );
       this.setState({ defPublishing: false });
       return;
     }
