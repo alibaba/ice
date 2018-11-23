@@ -14,11 +14,9 @@ $scaffold-item-width-mobile: 174px;
   background: #fff;
   border-radius: 6px;
   box-shadow: 0px 0px 2px 1px rgba(47, 53, 55, 0.1);
-  height: $scaffold-item-width / 16 * 9 + $scaffold-item-title-height;
   margin: 10px;
   position: relative;
   transition: all 0.1s ease-in;
-  width: $scaffold-item-width;
   overflow: hidden;
   .platform-win32 & {
     margin: 6px;
@@ -29,6 +27,11 @@ $scaffold-item-width-mobile: 174px;
       display: block;
     }
   }
+}
+
+.scaffold-item-pc {
+  width: $scaffold-item-width;
+  height: $scaffold-item-width / 16 * 9 + $scaffold-item-title-height;
 }
 
 .scaffold-item-mobile {
