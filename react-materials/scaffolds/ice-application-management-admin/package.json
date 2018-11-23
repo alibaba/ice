@@ -45,6 +45,7 @@
     "primaryColor": "#09f"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-application-management-admin",
     "title": "应用管理系统",
     "categories": [

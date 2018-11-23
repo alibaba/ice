@@ -54,6 +54,7 @@
     "primaryColor": "#236cff"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-scroll-screen-homepage",
     "title": "云栖极客派官网",
     "categories": [

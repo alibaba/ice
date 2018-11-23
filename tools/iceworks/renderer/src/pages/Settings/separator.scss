@@ -1,0 +1,17 @@
+.separator-line {
+  position: relative;
+  &:after {
+    display: block;
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.separator-additional {
+  font-size: 12px;
+  color: #666;
+}
+

@@ -54,6 +54,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-cms",
     "title": "CMS 内容管理系统",
     "categories": [

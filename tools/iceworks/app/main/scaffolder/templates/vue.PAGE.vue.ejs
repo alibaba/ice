@@ -1,0 +1,22 @@
+<template>
+  <div className="<%= pageName %>-page">
+    <% for(var i = 0; i < blocks.length; i++){ -%>
+    <<%= blocks[i].className -%> />
+    <% } -%>
+  </div>
+</template>
+
+<script>
+  <% for(var i = 0; i < blocks.length; i++) { -%>
+  import <%= blocks[i].className %> from '<%= blocks[i].relativePath -%>';
+  <% } -%>
+
+  export default {
+    name: '<%= className %>',
+    components: {
+      <% for(var i = 0; i < blocks.length; i++) { -%>
+      <%= blocks[i].className %>,
+      <% } -%>
+    },
+  };
+</script>

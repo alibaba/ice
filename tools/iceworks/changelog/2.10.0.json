@@ -1,0 +1,9 @@
+{
+  "log": [
+    "特性：ICELAND 可视化区块搭建 Beta 版本发布，一键生成代码，直观简单",
+    "<a href='https://github.com/alibaba/ice/issues/973' target='_blank'>点击查看 ICELAND 使用手册</a>",
+    "修复：向已有页面添加区块的弹窗的样式问题",
+    "修复：导航页面创建项目弹窗的样式问题",
+    "修复：无项目时,改变窗口大小产生的报错"
+  ]
+}

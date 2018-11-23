@@ -1,0 +1,9 @@
+{
+  "log": [
+    "特性：增加 Koa 模板生成过程中的错误捕获",
+    "修复：Windows 用户生成 Koa 项目报错的问题",
+    "修复：部分用户生成的 Koa 模板代码截断的问题",
+    "修复: Ice Design Pro 模板 .webpackrc.js 文件在 client 目录下的问题",
+    "<a href='https://alibaba.github.io/ice/docs/advanced/webpackrc'>用户可以参考此文档自定义项目的 webpack 配置</a>"
+  ]
+}

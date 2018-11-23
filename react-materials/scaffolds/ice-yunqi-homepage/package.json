@@ -52,6 +52,7 @@
     "primaryColor": "#236cff"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-yunqi-homepage",
     "title": "云栖大会官网",
     "categories": [

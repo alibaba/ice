@@ -50,6 +50,7 @@
     "primaryColor": "#0079f2"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-customer-analysis-admin",
     "title": "客源分析管理系统",
     "categories": [
