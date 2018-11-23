@@ -36,6 +36,7 @@ class ScaffoldItem extends Component {
         className={classnames({
           'scaffold-item': true,
           'scaffold-item-mobile': mobile,
+          'scaffold-item-pc': !mobile,
         })}
       >
         {showInviewport && (
