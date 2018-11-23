@@ -107,6 +107,8 @@ class ProjectDashboard extends Component {
     if (orderByName.length > 0) {
       const extensionComponents = orderByName.map((name) => {
         return { Component: ExtensionMap[name] };
+      }).filter((extension) => {
+        return !!extension.Component;
       });
       return (
         <div className={this.props.className}>
