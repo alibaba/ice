@@ -13,9 +13,12 @@ module.exports = (json, materialEngine, callback) => {
     json,
     {
       format: false,
-      useFlexbox: false,
-      useSemantic: false,
       componentMode: true,
+      packageAlias: [{
+        npmName: '@alife/next',
+        npmAlias: '@icedesign/base',
+        version: '^0.2.3'
+      }]
     },
     materialEngine,
     'react'

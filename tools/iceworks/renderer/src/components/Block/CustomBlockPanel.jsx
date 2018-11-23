@@ -12,7 +12,7 @@ export default class CustomBlockPanel extends Component {
 
   editBlock = (name) => {
     if (this.operationValidation()) {
-      this.customBlocks.editBlock(name);
+      this.props.customBlocks.editBlock(name);
     }
   };
 

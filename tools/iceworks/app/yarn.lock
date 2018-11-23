@@ -271,9 +271,9 @@
     write "^1.0.3"
 
 "@iceland/dsl2code@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@iceland/dsl2code/-/dsl2code-1.0.0.tgz#b90192b6a2cd914afce942d513359e30d2d4f1ff"
-  integrity sha512-28mJolRuxobD2+uBQsZ/ITTigoaJqDGeK2po7F5EsjsYdZ3Th3km4RLnuxl89vEoAi5hluxFYPO5RtzFX+nPVw==
+  version "1.0.1"
+  resolved "http://registry.antfin-inc.com/@iceland/dsl2code/download/@iceland/dsl2code-1.0.1.tgz#3f6b49fb4578cbd63873b777e895148c612dd38a"
+  integrity sha1-P2tJ+0V4y9Y4c7d36JUUjGEt04o=
   dependencies:
     "@iceland/intelligent-code" "^1.0.0"
     debug "^3.0.1"
@@ -281,9 +281,9 @@
     uuid "^3.3.2"
 
 "@iceland/intelligent-code@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@iceland/intelligent-code/-/intelligent-code-1.0.0.tgz#7f9f8d94a9998634e45b72db2a814cf413a20552"
-  integrity sha512-CEpNGefK8KKPQhLGi40vDn8BNWXkLIYCJtbvb18tU16vesu5BIuchYQkXI8eu27Du5LcXCuBKyayFR/a8eT8mQ==
+  version "1.0.1"
+  resolved "http://registry.antfin-inc.com/@iceland/intelligent-code/download/@iceland/intelligent-code-1.0.1.tgz#99f27eb65344196fac3e51b3bd8e59da5993133a"
+  integrity sha1-mfJ+tlNEGW+sPlGzvY5Z2lmTEzo=
   dependencies:
     babel-generator "^6.26.1"
     babylon "^6.18.0"
@@ -293,9 +293,9 @@
     prettier "^1.7.4"
 
 "@iceland/material-engine@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@iceland/material-engine/-/material-engine-1.0.0.tgz#4e71f94cd5ee7b7b5acbf3d2eb17d4efbc7f0680"
-  integrity sha512-nhvty2dkCbQ+eRpQutn32WVu7OLZzKS2Bi1LX+BF/uybJeqS3/jtwHZBKHwH2SCt2O9YzH6OAiKOPtktXj1iaA==
+  version "1.0.1"
+  resolved "http://registry.antfin-inc.com/@iceland/material-engine/download/@iceland/material-engine-1.0.1.tgz#20f235e253998b03b09758c56a6483098570154d"
+  integrity sha1-IPI14lOZiwOwl1jFamSDCYVwFU0=
   dependencies:
     babel-core "^6.26.3"
     babel-generator "^6.26.1"
