@@ -71,8 +71,9 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "name": "ice-coreui-admin",
-    "title": "ICE CoreUI Admin",
+    "type": "react",
+    "name": "coreui-admin",
+    "title": "CoreUI Admin",
     "categories": [
       "Dashboard"
     ],

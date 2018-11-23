@@ -47,7 +47,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-website-homepage",
-    "title": "ICE Website HomePage",
+    "title": "飞冰官网",
     "categories": [
       "首页展示"
     ],

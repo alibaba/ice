@@ -52,7 +52,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-usertrack-admin",
-    "title": "ICE UserTrack Admin",
+    "title": "应用监控系统",
     "categories": [
       "行业领域"
     ],

@@ -1,4 +1,4 @@
-# ice-creative-dashboard
+# creative-dashboard
 
 ## 简介说明
 

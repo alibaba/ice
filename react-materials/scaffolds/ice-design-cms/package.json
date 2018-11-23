@@ -56,7 +56,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-design-cms",
-    "title": "ICE Design CMS",
+    "title": "CMS 内容管理系统",
     "categories": [
       "行业领域"
     ],

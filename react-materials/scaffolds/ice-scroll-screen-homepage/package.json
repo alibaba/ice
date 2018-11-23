@@ -56,7 +56,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-scroll-screen-homepage",
-    "title": "ICE Scroll Screen Homepage",
+    "title": "云栖极客派官网",
     "categories": [
       "首页展示"
     ],

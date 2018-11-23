@@ -52,7 +52,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-design-project-management",
-    "title": "ICE Design Project Management",
+    "title": "项目管理后台",
     "categories": [
       "行业领域"
     ],

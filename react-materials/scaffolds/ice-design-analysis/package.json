@@ -43,7 +43,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-design-analysis",
-    "title": "ICE Design Analysis",
+    "title": "电商类数据大盘",
     "categories": [
       "数据可视化"
     ],

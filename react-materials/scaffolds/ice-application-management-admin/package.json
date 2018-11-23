@@ -47,7 +47,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-application-management-admin",
-    "title": "ICE Application Management Admin",
+    "title": "应用管理系统",
     "categories": [
       "行业领域"
     ],
