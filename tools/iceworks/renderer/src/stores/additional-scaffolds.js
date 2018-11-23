@@ -14,9 +14,7 @@ class AdditionalScaffolds {
   excludeScaffold = (builder) => {
     const isAlibaba = services.settings.get('isAlibaba');
     const isOfficialSource =
-      this.material.source.indexOf(
-        '//ice.alicdn.com/assets/react-materials.json'
-      ) !== -1;
+      /ice\.alicdn\.com\/(pre-)assets\/react-materials\.json/.test(this.material.source) !== -1;
     return isAlibaba && isOfficialSource && builder !== 'ice-scripts';
   };
 
