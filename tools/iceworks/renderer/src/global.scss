@@ -1,0 +1,337 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 100vw;
+  min-height: 100vh;
+  user-select: none;
+  cursor: default;
+}
+#root {
+  background-color: #f3f3f3;
+}
+
+.react-tooltip {
+  z-index: 99999999;
+}
+
+.next-dialog-header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+body.platform-win32 {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    cursor: pointer;
+
+    &-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      border-color: transparent;
+      border-style: solid;
+      border-width: 3px;
+      background-clip: padding-box;
+
+      &:active {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      &:hover,
+      &:active {
+        border-width: 1px;
+        background-color: rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// overwrite
+.fullscreen-dialog {
+  .next-dialog-body {
+    padding: 0;
+    border-radius: 6px;
+  }
+  .next-dialog-footer {
+    padding: 0;
+  }
+}
+
+.next-input-group.medium .next-input-addon {
+  line-height: inherit !important;
+}
+
+.ice-notification-notice-message {
+  font-size: 12px !important;
+}
+
+.notice-dialog .next-dialog-body {
+  padding: 0 0 16px 0 !important;
+}
+
+// ==================================================
+
+// fix dialog alert with feedback color
+.next-dialog-body .next-dialog-alert .next-feedback.next-feedback-prompt {
+  .next-feedback-symbol {
+    color: #ff0f0f;
+  }
+  .next-feedback-title {
+    color: #666;
+  }
+}
+
+// xterm 3.3.0
+/**
+ * Copyright (c) 2014 The xterm.js authors. All rights reserved.
+ * Copyright (c) 2012-2013, Christopher Jeffrey (MIT License)
+ * https://github.com/chjj/term.js
+ * @license MIT
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * Originally forked from (with the author's permission):
+ *   Fabrice Bellard's javascript vt100 for jslinux:
+ *   http://bellard.org/jslinux/
+ *   Copyright (c) 2011 Fabrice Bellard
+ *   The original design remains. The terminal itself
+ *   has been extended to include xterm CSI codes, among
+ *   other features.
+ */
+
+/**
+ *  Default styles for xterm.js
+ */
+
+.xterm {
+  font-family: courier-new, courier, monospace;
+  font-feature-settings: 'liga' 0;
+  position: relative;
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+}
+
+.xterm.focus,
+.xterm:focus {
+  outline: none;
+}
+
+.xterm .xterm-helpers {
+  position: absolute;
+  top: 0;
+  /**
+   * The z-index of the helpers must be higher than the canvases in order for
+   * IMEs to appear on top.
+   */
+  z-index: 10;
+}
+
+.xterm .xterm-helper-textarea {
+  /*
+   * HACK: to fix IE's blinking cursor
+   * Move textarea out of the screen to the far left, so that the cursor is not visible.
+   */
+  position: absolute;
+  opacity: 0;
+  left: -9999em;
+  top: 0;
+  width: 0;
+  height: 0;
+  z-index: -10;
+  /** Prevent wrapping so the IME appears against the textarea at the correct position */
+  white-space: nowrap;
+  overflow: hidden;
+  resize: none;
+}
+
+.xterm .composition-view {
+  /* TODO: Composition position got messed up somewhere */
+  background: #000;
+  color: #fff;
+  display: none;
+  position: absolute;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.xterm .composition-view.active {
+  display: block;
+}
+
+.xterm .xterm-viewport {
+  /* On OS X this is required in order for the scroll bar to appear fully opaque */
+  background-color: #000;
+  overflow-y: scroll;
+  cursor: default;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.xterm .xterm-screen {
+  position: relative;
+}
+
+.xterm .xterm-screen canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.xterm .xterm-scroll-area {
+  visibility: hidden;
+}
+
+.xterm-char-measure-element {
+  display: inline-block;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: -9999em;
+  line-height: normal;
+}
+
+.xterm.enable-mouse-events {
+  /* When mouse events are enabled (eg. tmux), revert to the standard pointer cursor */
+  cursor: default;
+}
+
+.xterm:not(.enable-mouse-events) {
+  cursor: text;
+}
+
+.xterm .xterm-accessibility,
+.xterm .xterm-message {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  color: transparent;
+}
+
+.xterm .live-region {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.xterm-cursor-pointer {
+  cursor: pointer;
+}
+
+// ==================== new ======================
+
+.ribbon {
+  position: absolute;
+  top: 3px;
+  width: 80px;
+  padding: 1px 0;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  background-color: $color-brand1-5;
+  right: -28px;
+  transform: rotate(45deg);
+  span {
+    display: block;
+    font-size: 12px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.31);
+  }
+}
+
+.global-new-tag {
+  color: #ffa000;
+  padding: 0px 2px;
+  border-radius: 4px;
+  font-size: 12;
+  height: 18px;
+  line-height: 16px;
+  border: 1px solid #ffa000;
+  transform: scale(0.8333); // 10px 字号
+}
+
+// //******************** 全局 tab 样式覆盖 ****************** //
+
+.tab-fullscreen {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  > .next-tabs-content {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    > .next-tabs-tabpane.active {
+      display: flex !important;
+      flex: auto;
+      flex-direction: column;
+      overflow: auto;
+    }
+  }
+}
+
+.tab-empty {
+  display: flex;
+  flex: 0 0 49px;
+  flex-direction: column;
+  > .next-tabs-content {
+    display: flex;
+    height: 0;
+    flex: 0 0 0px;
+    flex-direction: column;
+    > .next-tabs-tabpane.active {
+      display: flex !important;
+      flex: auto;
+      flex-direction: column;
+    }
+  }
+}
+
+// .custom-material-tab {
+//   border-radius: 3px !important;
+//   background-color: #f3f3f3 !important;
+//   color: #333 !important;
+//   margin-right: 10px;
+//   &::before {
+//     display: none;
+//   }
+//   .next-tabs-tab-inner {
+//     height: 30px !important;
+//     line-height: 30px !important;
+//     padding: 0 10px;
+//   }
+// }
+// .custom-material-tab.active {
+//   background-color: $color-brand1-5 !important;
+//   color: #fff !important;
+// }

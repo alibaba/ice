@@ -49,6 +49,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-schools",
     "title": "学校管理系统",
     "categories": [

@@ -45,6 +45,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-reviews-management",
     "title": "客户反馈系统",
     "categories": [

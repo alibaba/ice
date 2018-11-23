@@ -1,0 +1,16 @@
+.scaffold-cate-menu {
+  display: flex;
+  margin: 20px 20px 0;
+  .scaffold-cate-menu-item {
+    margin-right: 10px;
+    padding: 6px 12px;
+    border-radius: 24px;
+    background: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    &.active {
+      background: #1b73ff;
+      color: #fff;
+    }
+  }
+}

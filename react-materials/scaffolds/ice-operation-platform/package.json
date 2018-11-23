@@ -42,6 +42,7 @@
     "localization": false
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-operation-platform",
     "title": "运营平台",
     "categories": [

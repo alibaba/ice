@@ -1,0 +1,230 @@
+@font-face {
+  font-family: 'iceworks';
+  src: url('./iconfont.ttf?t=1540979842512') format('truetype'),
+    /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      url('./iconfont.svg?t=1540979842512#iceworks') format('svg'); /* iOS 4.1- */
+}
+
+.iceworks {
+  font-family: 'iceworks' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.iceworks-plus:before {
+  content: '\ea35';
+}
+
+.iceworks-wrencha:before {
+  content: '\e646';
+}
+
+.iceworks-add1:before {
+  content: '\e612';
+}
+
+.iceworks-clear:before {
+  content: '\e6d1';
+}
+
+.iceworks-time:before {
+  content: '\e629';
+}
+
+.iceworks-addtolist:before {
+  content: '\e625';
+}
+
+.iceworks-folderplus:before {
+  content: '\e84c';
+}
+
+.iceworks-tip:before {
+  content: '\e691';
+}
+
+.iceworks-remove:before {
+  content: '\e65d';
+}
+
+.iceworks-bad:before {
+  content: '\e69c';
+}
+
+.iceworks-edit-o:before {
+  content: '\e645';
+}
+
+.iceworks-mobile:before {
+  content: '\e72f';
+}
+
+.iceworks-debug:before {
+  content: '\e67b';
+}
+
+.iceworks-02magnifyingglasspluszoom:before {
+  content: '\e615';
+}
+
+.iceworks-edit:before {
+  content: '\e60d';
+}
+
+.iceworks-info:before {
+  content: '\e644';
+}
+
+.iceworks-pc:before {
+  content: '\e81b';
+}
+
+.iceworks-folderopen:before {
+  content: '\e627';
+}
+
+.iceworks-package_org:before {
+  content: '\e707';
+}
+
+.iceworks-package:before {
+  content: '\e70c';
+}
+
+.iceworks-good:before {
+  content: '\e61f';
+}
+
+.iceworks-block-add:before {
+  content: '\e630';
+}
+
+.iceworks-puzzle:before {
+  content: '\e865';
+}
+
+.iceworks-code:before {
+  content: '\e654';
+}
+
+.iceworks-ipad:before {
+  content: '\e664';
+}
+
+.iceworks-terminal:before {
+  content: '\e6a6';
+}
+
+.iceworks-history:before {
+  content: '\e619';
+}
+
+.iceworks-pencil:before {
+  content: '\e600';
+}
+
+.iceworks-warning:before {
+  content: '\e601';
+}
+
+.iceworks-github:before {
+  content: '\ea0a';
+}
+
+.iceworks-qr-code:before {
+  content: '\e603';
+}
+
+.iceworks-reload:before {
+  content: '\e6e1';
+}
+
+.iceworks-blocks:before {
+  content: '\e6bd';
+}
+
+.iceworks-start:before {
+  content: '\e632';
+}
+
+.iceworks-build:before {
+  content: '\e633';
+}
+
+.iceworks-template:before {
+  content: '\e634';
+}
+
+.iceworks-trash:before {
+  content: '\e635';
+}
+
+.iceworks-help:before {
+  content: '\e636';
+}
+
+.iceworks-settings:before {
+  content: '\e638';
+}
+
+.iceworks-paper-plane:before {
+  content: '\e639';
+}
+
+.iceworks-up-arrow:before {
+  content: '\e63a';
+}
+
+.iceworks-down-arrow:before {
+  content: '\e63b';
+}
+
+.iceworks-eye:before {
+  content: '\e63c';
+}
+
+.iceworks-new-page:before {
+  content: '\e63d';
+}
+
+.iceworks-stop:before {
+  content: '\e63e';
+}
+
+.iceworks-projects:before {
+  content: '\e63f';
+}
+
+.iceworks-close:before {
+  content: '\e640';
+}
+
+.iceworks-search:before {
+  content: '\e641';
+}
+
+.iceworks-add:before {
+  content: '\e642';
+}
+
+.iceworks-down-triangle:before {
+  content: '\e643';
+}
+
+.iceworks-plus-o:before {
+  content: '\e602';
+}
+
+.iceworks-book:before {
+  content: '\e620';
+}
+
+.iceworks-info-circle:before {
+  content: '\e77e';
+}
+
+.iceworks-time1:before {
+  content: '\e614';
+}

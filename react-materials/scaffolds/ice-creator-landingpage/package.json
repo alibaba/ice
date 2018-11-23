@@ -39,6 +39,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-creator-landingpage",
     "title": "创作平台官网",
     "categories": [

@@ -50,6 +50,7 @@
     "primaryColor": "#1890ff"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-voice-chat-admin",
     "title": "语音对话系统",
     "categories": [

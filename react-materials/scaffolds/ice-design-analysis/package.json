@@ -41,6 +41,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-analysis",
     "title": "电商类数据大盘",
     "categories": [

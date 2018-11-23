@@ -50,6 +50,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-project-management",
     "title": "项目管理后台",
     "categories": [

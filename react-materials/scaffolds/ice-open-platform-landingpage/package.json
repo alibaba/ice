@@ -39,6 +39,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-open-platform-landingpage",
     "title": "开放平台官网",
     "categories": [

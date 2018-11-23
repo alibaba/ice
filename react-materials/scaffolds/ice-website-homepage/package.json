@@ -45,6 +45,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-website-homepage",
     "title": "飞冰官网",
     "categories": [
