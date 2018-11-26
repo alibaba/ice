@@ -50,9 +50,12 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-project-management",
-    "title": "ICE Design Project Management",
-    "categories": ["行业领域"],
+    "title": "项目管理后台",
+    "categories": [
+      "行业领域"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1PIDhpntYBeNjy1XdXXXXyVXa-2840-1596.png"
   },
   "engines": {

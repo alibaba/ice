@@ -1,21 +1,30 @@
 import { computed, toJS, observable } from 'mobx';
+import services from '../services';
 
 class AdditionalScaffolds {
   @observable
   activeCategory = '全部';
 
-  constructor(scaffolds) {
+  constructor(scaffolds, material) {
+    this.material = material || '';
     this.scaffoldsValue = this.additionalIsNew(scaffolds);
     this.startRecommendScaffolds = this.startRecommendScaffolds(scaffolds);
   }
 
+  excludeScaffold = (builder) => {
+    const isAlibaba = services.settings.get('isAlibaba');
+    const isOfficialSource =
+      /ice\.alicdn\.com\/(pre-)?assets\/react-materials\.json/.test(this.material.source);
+    return isAlibaba && isOfficialSource && builder !== 'ice-scripts';
+  };
+
   additionalIsNew = (scaffolds) => {
     const sortScaffolds = scaffolds.filter((scaffold) => {
-      return !!scaffold.publishTime;
+      return !!scaffold.publishTime && !this.excludeScaffold(scaffold.builder);
     });
 
-    if (sortScaffolds.length == 0) {
-      return scaffolds;
+    if (sortScaffolds.length === 0) {
+      return sortScaffolds;
     }
 
     let isNewlyScaffold = [];
@@ -33,7 +42,7 @@ class AdditionalScaffolds {
         item._isNew = _isNew;
       });
     }
-    return scaffolds;
+    return sortScaffolds;
   };
 
   /**
@@ -55,9 +64,11 @@ class AdditionalScaffolds {
   @computed
   get categories() {
     // 默认展示全部
-    let categories = [];
+    const categories = [];
 
     this.scaffoldsValue.forEach((item) => {
+      if (this.excludeScaffold(item.builder)) return;
+
       if (Array.isArray(item.categories)) {
         item.categories.forEach((currentValue) => {
           if (!categories.includes(currentValue)) {

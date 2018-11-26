@@ -252,11 +252,16 @@ class Project {
     const reactWithoutIce =
       this.pkgData.templateType &&
       this.pkgData.templateType === 'react';
+    const customIceMaterial =
+      this.pkgData.templateType &&
+      this.pkgData.templateType === 'custom';
     const hasAngularCli = angularDeps.some((d) => allDeps.includes(d));
 
     if (hasVue) {
       defaultType = 'ice';
     } else if (hasReact) {
+      defaultType = 'ice';
+    } else if (customIceMaterial) {
       defaultType = 'ice';
     } else if (reactWithoutIce) {
       defaultType = 'react';

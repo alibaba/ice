@@ -54,9 +54,12 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-cms",
-    "title": "ICE Design CMS",
-    "categories": ["行业领域"],
+    "title": "CMS 内容管理系统",
+    "categories": [
+      "行业领域"
+    ],
     "screenshot": "https://img.alicdn.com/tfs/TB1ai53mqmWBuNjy1XaXXXCbXXa-1920-1080.png"
   },
   "engines": {

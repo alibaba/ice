@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/simple-table-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "基础的表格",
   "main": "lib/index.js",
   "files": [

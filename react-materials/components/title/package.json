@@ -1,0 +1,43 @@
+{
+  "name": "@icedesign/title",
+  "version": "0.1.4",
+  "description": "标题组件",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "demo/"
+  ],
+  "keywords": [
+    "ice",
+    "ice-component"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.10",
+    "@icedesign/base": "^0.2.0"
+  },
+  "devDependencies": {
+    "ice-devtools": "^1.1.14-beta.2"
+  },
+  "peerDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
+  }
+}

@@ -202,6 +202,10 @@ const homeConfig = merge({}, commonConfig, {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      DEF_CLIENT: JSON.stringify(process.env.DEF_CLIENT),
+      DEF_CLIENT_VERSION: JSON.stringify(process.env.DEF_CLIENT_VERSION),
+    }),
     new HtmlWebpackPlugin({
       title: '',
       excludeChunks: Object.keys(etnry).filter((n) => n != 'index'),
