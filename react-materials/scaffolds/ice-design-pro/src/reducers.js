@@ -23,7 +23,6 @@ const routeInitialState = {
  */
 function routeReducer(state = routeInitialState, action) {
   switch (action.type) {
-    /* istanbul ignore next */
     case LOCATION_CHANGE:
       return Object.assign({}, state, { location: action.payload });
     default:

@@ -45,7 +45,7 @@ const getRedirect = (item) => {
 asideMenuConfig.forEach(getRedirect);
 
 // 设置默认的皮肤配置，支持 dark 和 light 两套皮肤配置
-const theme = typeof THEME === 'undefined' ? 'dark' : THEME;
+const theme = typeof THEME === 'undefined' ? 'light' : THEME;
 @withRouter
 class BasicLayout extends Component {
   static displayName = 'BasicLayout';
@@ -58,7 +58,7 @@ class BasicLayout extends Component {
     super(props);
     this.state = {
       openDrawer: false,
-      isScreen: undefined,
+      isScreen: null,
     };
   }
 

@@ -1,19 +1,9 @@
-
-
 import React, { Component } from 'react';
-
 import DisplayCard from './components/DisplayCard';
-
 import TabChart from './components/TabChart';
-
 import PieDoughnutChart from './components/PieDoughnutChart';
-
-import ProgressTable from './components/ProgressTable';
-
 import EditableTable from './components/EditableTable';
-
-import ChartBar from './components/ChartBar';
-
+import LatestActivity from './components/LatestActivity';
 import './Dashboard.scss';
 
 export default class Dashboard extends Component {
@@ -28,16 +18,10 @@ export default class Dashboard extends Component {
     return (
       <div className="dashboard-page">
         <DisplayCard />
-
         <TabChart />
-
-        <PieDoughnutChart />
-
-        <ProgressTable />
-
+        <LatestActivity />
         <EditableTable />
-
-        <ChartBar />
+        <PieDoughnutChart />
       </div>
     );
   }

@@ -32,7 +32,7 @@ const asideMenuConfig = [
     children: [
       {
         name: '常用图表',
-        path: '/chart/chart-list',
+        path: '/chart/list',
         authority: 'admin',
       },
     ],
@@ -45,13 +45,13 @@ const asideMenuConfig = [
     children: [
       {
         name: '基础表格',
-        path: '/table/basic-table',
-        authority: 'admin',
+        path: '/table/basic',
+        // authority: 'admin',
       },
       {
-        name: '常用竖向表格',
-        path: '/table/table-display',
-        authority: 'user',
+        name: '通用表格',
+        path: '/table/general',
+        // authority: 'user',
       },
     ],
   },
@@ -61,12 +61,12 @@ const asideMenuConfig = [
     icon: 'ul-list',
     children: [
       {
-        name: '搜索列表',
-        path: '/list/article-list',
+        name: '基础列表',
+        path: '/list/basic',
       },
       {
         name: '卡片列表',
-        path: '/list/card-list',
+        path: '/list/card',
       },
     ],
   },
@@ -104,7 +104,7 @@ const asideMenuConfig = [
     name: '异常页',
     path: '/exception',
     icon: 'gaojingxinxi',
-    authority: 'admin',
+    // authority: 'admin',
     children: [
       {
         name: '204',

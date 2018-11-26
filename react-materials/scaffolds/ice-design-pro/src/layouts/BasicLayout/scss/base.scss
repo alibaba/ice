@@ -1,4 +1,4 @@
-$page-container-width: 1200px;
+$page-container-width: 100%;
 
 /* GLOBAL */
 html,
@@ -67,8 +67,7 @@ body {
     /* HEADER */
     .ice-design-layout-header {
       width: $page-container-width;
-      padding: 20px 0;
-      margin: 0px auto;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -176,7 +175,7 @@ body {
     /* BODY */
     .ice-design-layout-body {
       width: $page-container-width;
-      margin: 0 auto;
+      padding: 0 20px;
       .ice-layout-main {
         padding: 0 0 0 20px;
         overflow: hidden;
@@ -186,7 +185,7 @@ body {
     /* FOOTER */
     .ice-design-layout-footer {
       width: $page-container-width;
-      margin: 0 auto;
+      padding: 0 20px;
       .ice-design-layout-footer-body {
         margin: 20px auto;
         display: flex;

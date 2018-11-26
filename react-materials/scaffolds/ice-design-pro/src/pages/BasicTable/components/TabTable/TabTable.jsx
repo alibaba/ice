@@ -10,8 +10,8 @@ const TabPane = Tab.TabPane;
 
 const tabs = [
   { tab: '全部', key: 'all' },
-  { tab: '已发布', key: 'inreview' },
-  { tab: '审核中', key: 'released' },
+  { tab: '审核中', key: 'review' },
+  { tab: '已发布', key: 'released' },
   { tab: '已拒绝', key: 'rejected' },
 ];
 
@@ -72,7 +72,7 @@ export default class TabTable extends Component {
 
   componentDidMount() {
     axios
-      .get('/mock/tab-table.json')
+      .get('/api/tab-table')
       .then((response) => {
         console.log(response.data.data);
         this.setState({

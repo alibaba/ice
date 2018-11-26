@@ -59,8 +59,3 @@ const styles = {
     backgroundSize: 'contain',
   },
 };
-
-// <Switch>
-//   <Route path="/user/login" exact component={UserLogin} />
-//   <Redirect to="/user/login" />
-// </Switch>

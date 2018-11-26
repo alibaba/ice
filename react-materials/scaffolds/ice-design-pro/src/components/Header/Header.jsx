@@ -105,17 +105,26 @@ export default class Header extends PureComponent {
             className="user-profile-menu"
           >
             <ul>
-              <li className="user-profile-menu-item">
-                <FoundationSymbol type="person" size="small" />我的主页
+              <li
+                className="user-profile-menu-item"
+                style={{ cursor: 'initial' }}
+              >
+                <FoundationSymbol type="person" size="small" />
+                我的主页
               </li>
-              <li className="user-profile-menu-item">
-                <FoundationSymbol type="repair" size="small" />设置
+              <li
+                className="user-profile-menu-item"
+                style={{ cursor: 'initial' }}
+              >
+                <FoundationSymbol type="repair" size="small" />
+                设置
               </li>
               <li
                 className="user-profile-menu-item"
                 onClick={this.props.handleLogout}
               >
-                <FoundationSymbol type="compass" size="small" />退出
+                <FoundationSymbol type="compass" size="small" />
+                退出
               </li>
             </ul>
           </Balloon>
