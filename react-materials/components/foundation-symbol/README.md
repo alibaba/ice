@@ -2,7 +2,6 @@
 title: FoundationSymbol
 category: BizComponents
 chinese: 基础符号表
-npm: @icedesign/foundation-symbol
 ---
 
 基本图标集合。
