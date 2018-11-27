@@ -45,35 +45,37 @@ class Reset extends Component {
     return (
       <div>
         <FormBinderWrapper value={this.state.value} onChange={this.formChange} ref="form">
-          <div style={styles.formItem}>
-            <span>请选择：</span>
-            <FormBinder name="bu" required message="请选择">
-              <Select
-                dataSource={[
-                  {
-                    value: 'taobao',
-                    label: '淘宝',
-                  },
-                  {
-                    value: 'tmall',
-                    label: '天猫',
-                  },
-                  {
-                    value: 'aliyun',
-                    label: '阿里云',
-                  },
-                  {
-                    value: 'alitrip',
-                    label: '飞猪',
-                  },
-                ]}
-                placeholder="请选择"
-                autoWidth={false}
-              />
-            </FormBinder>
-            <FormError name="bu" />
+          <div style={styles.content}>
+            <div style={styles.formItem}>
+              <span>请选择：</span>
+              <FormBinder name="bu" required message="请选择">
+                <Select
+                  dataSource={[
+                    {
+                      value: 'taobao',
+                      label: '淘宝',
+                    },
+                    {
+                      value: 'tmall',
+                      label: '天猫',
+                    },
+                    {
+                      value: 'aliyun',
+                      label: '阿里云',
+                    },
+                    {
+                      value: 'alitrip',
+                      label: '飞猪',
+                    },
+                  ]}
+                  placeholder="请选择"
+                  autoWidth={false}
+                />
+              </FormBinder>
+              <FormError name="bu" />
+            </div>
+            <Button type="primary" onClick={this.handleReset} style={styles.resetButton}>重 置</Button>
           </div>
-          <Button type="primary" onClick={this.handleReset} style={styles.resetButton}>重 置</Button>
         </FormBinderWrapper>
 
         <div style={styles.preview}>
