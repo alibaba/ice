@@ -63,7 +63,7 @@ function getRouterData(routerConfig, menuConfig) {
     // 匹配菜单中的路由，当路由的 path 能在 menuData 中找到匹配（即菜单项对应的路由），则获取菜单项中当前 path 的配置 menuItem
     // eg.  router /product/:id === /product/123
     const pathRegexp = pathToRegexp(item.path);
-    const menuKey = Object.keys(menuData).find((key) =>
+    const menuKey = Object.keys(menuData).find(key =>
       pathRegexp.test(`${key}`)
     );
 

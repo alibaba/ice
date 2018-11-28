@@ -83,7 +83,7 @@ export default class Aside extends Component {
     }
 
     return menusData
-      .filter((item) => item.name && !item.hideInMenu)
+      .filter(item => item.name && !item.hideInMenu)
       .map((item, index) => {
         return this.getSubMenuOrItem(item, index);
       });
@@ -93,7 +93,7 @@ export default class Aside extends Component {
    * 二级导航
    */
   getSubMenuOrItem = (item, index) => {
-    if (item.children && item.children.some((child) => child.name)) {
+    if (item.children && item.children.some(child => child.name)) {
       const childrenItems = this.getNavMenuItems(item.children);
 
       if (childrenItems && childrenItems.length > 0) {
