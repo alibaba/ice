@@ -61,6 +61,7 @@ FormBinder 支持的属性包含以下两部分：
 
 | 属性参数          | 说明                 | 类型                        | 默认值     |
 | :------------ | :------------------- | :-------------------------- | :--------- |
+| rules         | 校验规则，参考下方文档          | object[]                      |            |
 | name​         | 表单域名称           | string                      |            |
 | setFieldValue | 设置一个输入控件的值 | Function(fieldName: string) |            |
 | getFieldValue | 获取一个输入控件的值 | Function(fieldName: string) |            |
