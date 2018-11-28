@@ -139,6 +139,11 @@ export default class FormBinder extends Component {
    * 从 FormBinder 收集表单的校验规则
    */
   getRules = (props) => {
+    // rules 优先级最高
+    if (props.rules && Array.isArray(props.rules)) {
+      return props.rules;
+    }
+
     const rules = []; // [{required: true, max: 10, ...}]
     const ruleKeys = [
       'required',
@@ -160,10 +165,6 @@ export default class FormBinder extends Component {
       let ruleValue;
       if (ruleKey in props) {
         ruleValue = props[ruleKey];
-      } else {
-        console.warn(
-          'Unknown prop rule in <FormBinder> component，For Details，see https://github.com/yiminghe/async-validator'
-        );
       }
 
       if (ruleValue !== undefined && ruleValue !== null) {
