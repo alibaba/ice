@@ -25,8 +25,6 @@ npm install @icedesign/form-binder
 
 表单元素指的是 ICE 基础组件以及业务组件中的 `Input` 、 `Checkbox` 、 `Select` 、 `Range` 、 `DatePicker` 、 `TimePicker` 、 `NumberPicker` 、 `Switch` 、 `Upload` 等以及用户自定义的组件，它能够响应 `onChange` 等用来获取用户输入
 
-## API
-
 ### 参数（Props）
 
 | 方法名           | 说明                                                                     | 类型                                                     | 默认值 |
