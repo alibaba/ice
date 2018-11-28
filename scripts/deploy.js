@@ -6,7 +6,7 @@ const npmRequestJson = require('npm-request-json');
 const path = require('path');
 const queue = require('queue');
 
-//1. 创建 npmrc 文件
+// 1. 创建 npmrc 文件
 
 const cwd = process.cwd();
 const npmrc = path.join(cwd, 'npmrc');
@@ -15,14 +15,14 @@ const NPM_EMAIL = process.env.NPM_EMAIL;
 const NPM_TOKEN = process.env.NPM_TOKEN;
 const NPM_REGISTRY = process.env.NPM_REGISTRY || 'registry.npmjs.com';
 
-const registry = 'https://' + NPM_REGISTRY;
+const registry = `https://${NPM_REGISTRY}`;
 
 const npmrcContext = `email=${NPM_EMAIL}
 registry=http://${NPM_REGISTRY}/
 //${NPM_REGISTRY}/:_authToken=${NPM_TOKEN}
 `;
 
-fs.writeFile(npmrc, npmrcContext, function(error) {
+fs.writeFile(npmrc, npmrcContext, (error) => {
   if (error) {
     console.error(error);
     process.exit(1);
@@ -48,9 +48,9 @@ function checkNpmPublish(packagePath) {
   return npmRequestJson({
     name: packageData.name,
     version: packageData.version,
-    registry: registry,
+    registry,
   })
-    .then((data) => {
+    .then(() => {
       return null;
     })
     .catch(() => {
@@ -61,25 +61,15 @@ function checkNpmPublish(packagePath) {
 
 // 搜索所有物料文件
 function scanMaterials() {
-  Promise.all([
-    scanPackageJson('../react-materials/*/*/package.json'),
-    scanPackageJson('../rax-materials/*/*/package.json'),
-    scanPackageJson('../vue-materials/*/*/package.json'),
-    scanPackageJson('../angular-materials/*/*/package.json'),
-  ])
-    .then(([reactMaterials = [], vueMaterials = [], angularMaterials = []]) => {
-      const allMaterials = [
-        ...reactMaterials,
-        ...vueMaterials,
-        ...angularMaterials,
-      ];
+  const pattern =
+    '../?(react|rax|vue|angular)-materials/!(components)/*/package.json';
+  scanPackageJson(pattern)
+    .then((allMaterials = []) => {
       return Promise.all(allMaterials.map(checkNpmPublish));
     })
     .then((publishCheck) => {
       const unpublished = publishCheck.filter((n) => !!n);
-
       if (unpublished.length > 0) {
-        console.log(chalk.red('未发布的包：'), unpublished.length);
         publishQueue(unpublished);
       }
     });
@@ -93,7 +83,7 @@ function publishQueue(unpublishedPackageJson) {
 
   unpublishedPackageJson.forEach((packageJson) => {
     const publishCwd = path.dirname(packageJson);
-    q.push(function() {
+    q.push(() => {
       return new Promise((resolve, reject) => {
         const ps = spawn('npm', ['publish'], {
           cwd: publishCwd,
@@ -102,20 +92,21 @@ function publishQueue(unpublishedPackageJson) {
             NPM_CONFIG_GLOBALCONFIG: npmrc, // 定义 npm 发布权限认证 rc 文件
           }),
         });
-      });
-      ps.on('close', (code) => {
-        if (code == 0) {
-          console.log(chalk.green('发布成功：'), packageJson);
-          resolve();
-        } else {
-          reject(new Error(packageJson + ' 发布失败'));
-        }
+
+        ps.on('close', (code) => {
+          if (code === 0) {
+            console.log(chalk.green('发布成功：'), packageJson);
+            resolve();
+          } else {
+            reject(new Error(`发布失败：${packageJson}`));
+          }
+        });
       });
     });
 
     q.start();
 
-    q.end(function(err) {
+    q.end((err) => {
       if (err) throw err;
       console.log(chalk.green('所有未发布的物料已发布完成'));
     });

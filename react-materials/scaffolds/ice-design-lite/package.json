@@ -47,6 +47,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-lite",
     "title": "ICE Design Lite",
     "categories": [

@@ -42,6 +42,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "iceworks-homepage",
     "title": "Iceworks HomePage",
     "categories": [

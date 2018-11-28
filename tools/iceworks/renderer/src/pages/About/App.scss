@@ -1,0 +1,31 @@
+body {
+  padding: 0;
+  margin: 0;
+  user-select: none;
+  cursor: pointer;
+  -webkit-app-region: drag;
+  app-region: drag;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Tahoma, Arial, FZLanTingHeiS-L-G, "PingFang SC", "Microsoft YaHei";
+}
+
+.about-body {
+  text-align: center;
+  height: 100vh;
+  overflow: hidden;
+  .logo {
+    margin: 12px 0;
+  }
+  .appname {
+    margin-bottom: 12px;
+    b {
+      font-size: 16px;
+      line-height: 16px;
+      font-weight: 500;
+    }
+  }
+  .version, .copyright {
+    margin-bottom: 12px;
+    font-size: 10px;
+    line-height: 10px;
+  }
+}

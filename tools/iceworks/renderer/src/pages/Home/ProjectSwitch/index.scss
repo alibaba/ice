@@ -1,0 +1,104 @@
+.project-switch {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+  .project-list {
+    // border-top: 1px solid #ddd;
+    background-color: #fff;
+    position: absolute;
+    bottom: 0px;
+    left: 68px;
+    top: 60px - 1px;
+    width: 200px;
+    li.project-item {
+      position: relative;
+      a.project-title {
+        display: block;
+        line-height: 28px;
+        font-size: 12px;
+        padding: 0 40px 0 20px;
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        &:link {
+          color: $color-text1-3;
+        }
+      }
+
+      .status-working {
+        background-color: #00cc00;
+        width: 8px;
+        height: 8px;
+        border-radius: 8px;
+        position: absolute;
+        right: 36px;
+        top: (28px - 8px) / 2;
+      }
+      &:hover {
+        background-color: #fcfcfc;
+        .project-delete-btn {
+          display: block;
+        }
+      }
+      .project-delete-btn {
+        display: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 0;
+        line-height: 28px;
+        color: #999;
+        text-decoration: none;
+        padding: 0 4px;
+        box-sizing: border-box;
+        &:hover {
+          color: $color-brand1-5;
+        }
+      }
+    }
+    li.project-item-active {
+      a.project-title:link {
+        color: $color-brand1-5;
+      }
+    }
+  }
+
+  .project-list-body {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    bottom: 106px;
+    overflow-y: auto;
+  }
+
+  .project-operation-wrapper {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 0;
+    height: 106px;
+    button + button {
+      margin-top: 10px;
+    }
+
+    button:first-child {
+      background-color: #fff;
+      color: $color-link-1;
+      border: 1px solid $color-link-1;
+    }
+  }
+}
+
+.remove-project-check {
+  .next-checkbox-label {
+    color: #888;
+    font-size: 12px;
+  }
+}

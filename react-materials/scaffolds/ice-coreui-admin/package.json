@@ -72,8 +72,8 @@
   },
   "scaffoldConfig": {
     "type": "react",
-    "name": "ice-coreui-admin",
-    "title": "ICE CoreUI Admin",
+    "name": "coreui-admin",
+    "title": "CoreUI Admin",
     "categories": [
       "社区模板"
     ],

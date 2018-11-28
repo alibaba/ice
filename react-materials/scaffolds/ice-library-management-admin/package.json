@@ -47,8 +47,9 @@
     "primaryColor": "#40b370"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-library-management-admin",
-    "title": "ICE Library Management Admin",
+    "title": "图书馆管理系统",
     "categories": [
       "行业领域"
     ],

@@ -45,10 +45,12 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-website-homepage",
-    "title": "ICE Website HomePage",
+    "title": "飞冰官网",
     "categories": [
       "官网模板"
+
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1lvtMpQOWBuNjSsppXXXPgpXa-2840-1596.png"
   },

@@ -61,6 +61,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-pro",
     "title": "ICE Design Pro",
     "categories": [

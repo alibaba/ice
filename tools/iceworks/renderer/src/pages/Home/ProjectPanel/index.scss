@@ -1,0 +1,167 @@
+.project-panel {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-is-null {
+  flex: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .buttons {
+    button + button {
+      margin-left: 10px;
+    }
+    button:first-child {
+      background-color: #fff;
+      color: $color-link-1;
+      border: 1px solid $color-link-1;
+    }
+  }
+}
+
+.project-title-wrapper {
+  background-color: #fff;
+  border: none;
+  height: 69px;
+  margin-top: -10px;
+  padding: 10px 26px 0px 20px;
+  position: fixed;
+  text-align: left;
+  width: 200px;
+  z-index: 99;
+  &:focus {
+    outline: none;
+  }
+  .title {
+    font-size: 24px;
+    line-height: 59px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .switch-btn {
+    position: absolute;
+    right: 10px;
+    top: 28px;
+    color: #999;
+    cursor: pointer;
+  }
+}
+
+.project-header {
+  // -webkit-app-region: drag;
+  // app-region: drag;
+  z-index: 1;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 1);
+  border-bottom: 0.5px solid $color-line1-1;
+  display: flex;
+  flex-direction: row;
+  flex: none;
+  height: 60px;
+  justify-content: space-between;
+  padding: 0px 20px 0 200px;
+  user-select: none;
+  width: 100%;
+  .scripts {
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+    padding-left: 10px;
+  }
+
+  .external {
+    font-size: 12px;
+    a {
+      cursor: pointer;
+      color: #666;
+      &:hover {
+        color: $color-brand1-5;
+      }
+    }
+    a + a {
+      margin-left: 10px;
+    }
+  }
+}
+
+.project-overview {
+  align-items: center;
+  background-color: #fcfcfc;
+  color: #666;
+  display: flex;
+  flex-direction: row;
+  flex: none;
+  font-size: 12px;
+  height: 50px;
+  z-index: 1;
+  padding: 0 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+  .server {
+    padding-left: 10px;
+  }
+
+  .status {
+    display: flex;
+    // flex: auto;
+    justify-content: flex-end;
+  }
+
+  .extra-action {
+    display: flex;
+    flex: auto;
+    justify-content: flex-end;
+    font-size: 12px;
+  }
+}
+
+// 项目状态
+.project-status {
+  font-size: 10px;
+  padding: 3px 6px;
+  background-color: #ddd;
+  color: #fff;
+  border-radius: 2px;
+  margin-left: 10px;
+
+  &-notexist,
+  &-illegal,
+  &-failed {
+    background-color: $color-error-2;
+  }
+
+  &-working {
+    background-color: $color-notice-2;
+  }
+
+  &-building,
+  &-starting {
+    background-color: $color-help-2;
+  }
+
+  &-stop {
+    background-color: $color-warning-2;
+  }
+
+  &-done {
+    background-color: $color-success-2;
+  }
+}
+
+// 项目 dashboard
+.project-dashboard {
+  flex: 1;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #f3f3f3;
+}
+
+.project-dashboard-empty {
+  text-align: center;
+  padding-top: 100px;
+}

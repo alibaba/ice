@@ -56,8 +56,8 @@
     "access": "public"
   },
   "scaffoldConfig": {
-    "name": "ice-opensource-site",
-    "title": "ICE Open Source Site",
+    "name": "opensource-site",
+    "title": "Docsite",
     "categories": [
       "社区模板"
     ],

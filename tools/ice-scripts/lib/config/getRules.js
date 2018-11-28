@@ -57,29 +57,21 @@ module.exports = (buildConfig = {}) => {
   }
 
   // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
-  const cssPublicUrl = paths.publicUrl === './' ? '../' : paths.publicUrl;
+  const miniCssExtractPluginLoader = { loader: MiniCssExtractPlugin.loader };
+
+  if (paths.publicUrl === './') {
+    miniCssExtractPluginLoader.options = { publicPath: '../' };
+  }
+
   return [
     {
       test: /\.scss$/,
-      use: withCssHotLoader([
-        {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            publicPath: cssPublicUrl,
-          },
-        },
-        ...sassLoaders,
-      ]),
+      use: withCssHotLoader([miniCssExtractPluginLoader, ...sassLoaders]),
     },
     {
       test: /\.css$/,
       use: withCssHotLoader([
-        {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            publicPath: cssPublicUrl,
-          },
-        },
+        miniCssExtractPluginLoader,
         {
           loader: CSS_LOADER,
           options: {
@@ -95,12 +87,7 @@ module.exports = (buildConfig = {}) => {
     {
       test: /\.less$/,
       use: withCssHotLoader([
-        {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            publicPath: cssPublicUrl,
-          },
-        },
+        miniCssExtractPluginLoader,
         {
           loader: CSS_LOADER,
           options: {

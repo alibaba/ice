@@ -60,8 +60,8 @@
   },
   "scaffoldConfig": {
     "type": "react",
-    "name": "ice-creative-dashboard",
-    "title": "ICE Creative Dashboard",
+    "name": "creative-dashboard",
+    "title": "Creative Dashboard",
     "categories": [
       "社区模板"
     ],

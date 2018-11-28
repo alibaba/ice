@@ -1,0 +1,205 @@
+// 组件如有皮肤功能，请从该文件引用 scss 变量
+@import '~@icedesign/base/lib/core/index.scss';
+@import 'scss/variable';
+
+$bt-line-height-computed: floor(
+  ($font-size-base-body1 * $font-lineheight-base)
+);
+$bt-gray-darker: lighten($color-n1-9, 13.5%);
+$bt-gray-dark: lighten($color-n1-9, 20%);
+$bt-gray: lighten($color-n1-9, 33.5%);
+$bt-gray-light: lighten($color-n1-9, 46.7%);
+$bt-gray-lighter: lighten($color-n1-9, 93.5%);
+
+$bt-brand-primary: $color-f4-1;
+$bt-brand-success: $color-f3-1;
+$bt-brand-info: $color-f5-1;
+$bt-brand-warning: $color-f1-1;
+$bt-brand-danger: $color-f2-1;
+
+$bt-state-success-text: $color-f3-3;
+$bt-state-success-bg: $color-f3-2;
+$bt-state-success-border: darken(adjust-hue($bt-state-success-bg, -10), 5%);
+
+$bt-state-info-text: $color-f5-3;
+$bt-state-info-bg: $color-f5-2;
+$bt-state-info-border: darken(adjust-hue($bt-state-info-bg, -10), 7%);
+
+$bt-state-warning-text: $color-f1-3;
+$bt-state-warning-bg: $color-f1-2;
+$bt-state-warning-border: darken(adjust-hue($bt-state-warning-bg, -10), 5%);
+
+$bt-state-danger-text: $color-f2-3;
+$bt-state-danger-bg: $color-f2-2;
+$bt-state-danger-border: darken(adjust-hue($bt-state-danger-bg, -10), 5%);
+
+$bt-panel-inner-border: $color-n1-6;
+$bt-panel-footer-bg: $color-n1-6;
+
+$bt-panel-default-text: $bt-gray-dark;
+$bt-panel-default-border: $color-n1-6;
+$bt-panel-default-heading-bg: $color-n1-6;
+
+$bt-panel-primary-text: $color-n1-1;
+$bt-panel-primary-border: $bt-brand-primary;
+$bt-panel-primary-heading-bg: $bt-brand-primary;
+
+$bt-panel-success-text: $bt-state-success-text;
+$bt-panel-success-border: $bt-state-success-border;
+$bt-panel-success-heading-bg: $bt-state-success-bg;
+
+$bt-panel-info-text: $bt-state-info-text;
+$bt-panel-info-border: $bt-state-info-border;
+$bt-panel-info-heading-bg: $bt-state-info-bg;
+
+$bt-panel-warning-text: $bt-state-warning-text;
+$bt-panel-warning-border: $bt-state-warning-border;
+$bt-panel-warning-heading-bg: $bt-state-warning-bg;
+
+$bt-panel-danger-text: $bt-state-danger-text;
+$bt-panel-danger-border: $bt-state-danger-border;
+$bt-panel-danger-heading-bg: $bt-state-danger-bg;
+
+@mixin bt-panel-variant(
+  $bt-border,
+  $bt-heading-text-color,
+  $bt-heading-bg-color,
+  $bt-heading-border
+) {
+  border-color: $bt-border;
+
+  & > .ice-panel-heading {
+    color: $bt-heading-text-color;
+    background-color: $bt-heading-bg-color;
+    border-color: $bt-heading-border;
+  }
+}
+
+@mixin bt-border-top-radius($bt-radius) {
+  border-top-right-radius: $bt-radius;
+  border-top-left-radius: $bt-radius;
+}
+@mixin bt-border-right-radius($bt-radius) {
+  border-bottom-right-radius: $bt-radius;
+  border-top-right-radius: $bt-radius;
+}
+@mixin bt-border-bottom-radius($bt-radius) {
+  border-bottom-right-radius: $bt-radius;
+  border-bottom-left-radius: $bt-radius;
+}
+@mixin bt-border-left-radius($bt-radius) {
+  border-bottom-left-radius: $bt-radius;
+  border-top-left-radius: $bt-radius;
+}
+@mixin bt-box-shadow($bt-shadow...) {
+  -webkit-box-shadow: $bt-shadow; // iOS <4.3 & Android <4.1
+  box-shadow: $bt-shadow;
+}
+@mixin bt-clearfix() {
+  &:before,
+  &:after {
+    content: ' '; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.ice-panel {
+  background-color: $color-n1-1;
+  border: 1px solid transparent;
+  border-radius: $corner-radius-r3;
+  @include bt-box-shadow(0 1px 1px rgba(0, 0, 0, 0.05));
+
+  .ice-panel-body {
+    padding: $s3;
+    @include bt-clearfix;
+  }
+
+  .ice-panel-heading {
+    padding: $s2 $s3;
+    border-bottom: 1px solid transparent;
+    @include bt-border-top-radius(($corner-radius-r3 - 1));
+
+    > .ice-dropdown .ice-dropdown-toggle {
+      color: inherit;
+    }
+  }
+
+  .ice-panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: ceil(($font-size-base-body1 * 1.125));
+    color: inherit;
+
+    > a,
+    > small,
+    > .small,
+    > small > a,
+    > .small > a {
+      color: inherit;
+    }
+  }
+
+  .ice-panel-footer {
+    padding: $s2 $s3;
+    background-color: $bt-panel-footer-bg;
+    border-top: 1px solid $bt-panel-inner-border;
+    @include bt-border-bottom-radius(($corner-radius-r3 - 1));
+  }
+
+  &.ice-panel-default {
+    @include bt-panel-variant(
+      $bt-panel-default-border,
+      $bt-panel-default-text,
+      $bt-panel-default-heading-bg,
+      $bt-panel-default-border
+    );
+  }
+
+  &.ice-panel-primary {
+    @include bt-panel-variant(
+      $bt-panel-primary-border,
+      $bt-panel-primary-text,
+      $bt-panel-primary-heading-bg,
+      $bt-panel-primary-border
+    );
+  }
+
+  &.ice-panel-success {
+    @include bt-panel-variant(
+      $bt-panel-success-border,
+      $bt-panel-success-text,
+      $bt-panel-success-heading-bg,
+      $bt-panel-success-border
+    );
+  }
+
+  &.ice-panel-info {
+    @include bt-panel-variant(
+      $bt-panel-info-border,
+      $bt-panel-info-text,
+      $bt-panel-info-heading-bg,
+      $bt-panel-info-border
+    );
+  }
+
+  &.ice-panel-warning {
+    @include bt-panel-variant(
+      $bt-panel-warning-border,
+      $bt-panel-warning-text,
+      $bt-panel-warning-heading-bg,
+      $bt-panel-warning-border
+    );
+  }
+
+  &.ice-panel-danger {
+    @include bt-panel-variant(
+      $bt-panel-danger-border,
+      $bt-panel-danger-text,
+      $bt-panel-danger-heading-bg,
+      $bt-panel-danger-border
+    );
+  }
+}

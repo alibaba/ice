@@ -55,8 +55,8 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "name": "ice-material-dashboard",
-    "title": "ICE Material Dashboard",
+    "name": "material-dashboard",
+    "title": "Material Dashboard",
     "categories": [
       "社区模板"
     ],

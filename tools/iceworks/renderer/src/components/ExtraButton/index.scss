@@ -1,0 +1,18 @@
+.extra-button {
+  cursor: pointer;
+  color: #666;
+  // margin-left: 10px;
+  text-decoration: none;
+  vertical-align: baseline;
+  padding: 2px 4px;
+  border-radius: 2px;
+  z-index: 2;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    color: $color-brand1-5;
+    text-decoration: none;
+  }
+  &.active {
+    color: $color-brand1-5;
+  }
+}
