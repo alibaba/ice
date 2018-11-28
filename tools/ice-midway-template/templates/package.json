@@ -1,8 +1,8 @@
 {
-  "name": "ice-koa-react-scaffold",
-  "version": "1.0.4",
+  "name": "ice-midway-react-scaffold",
+  "version": "1.0.2",
   "description": "",
-  "main": "server/index.js",
+  "main": "src/index.js",
   "scripts": {
     "client": "ice dev --project-type=node",
     "server": "NODE_ENV=local midway-bin dev --ts",
