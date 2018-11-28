@@ -55,6 +55,8 @@ class Scaffold {
   workspacePath = localStorage.getItem(WORKSPACE_KEY) || defaultWorkspacePath;
   @observable
   nodeFramework = '';
+  @observable
+  isNode = false;
 
   get currentScaffoldName() {
     return toJS(this.scaffoldValue).name;
@@ -75,12 +77,18 @@ class Scaffold {
     this.progressRemainingValue = 0;
     this.visible = false;
     this.nodeFramework = '';
+    this.isNode = false;
   }
 
   // 更新本地缓存项目信息
   @action
   addNewProjectToProjects = (targetPath, needInstallDeps) => {
     this.projects.add(targetPath, needInstallDeps);
+  };
+
+  @action
+  toggleNodeSelect = (checked) => {
+    this.isNode = checked;
   };
 
   // 修改路由跳转到首页

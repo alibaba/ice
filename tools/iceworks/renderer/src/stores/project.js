@@ -397,7 +397,15 @@ class Project {
   }
 
   validateNodeProject() {
-    return this.pkgData && (this.pkgData.templateType || '');
+    if (this.pkgData) {
+      if (this.pkgData === 'Koa' || this.pkgData === 'koa') {
+        return 'koa';
+      } else if (this.pkgData === 'midway') {
+        return 'midway';
+      } else {
+        return '';
+      }
+    }
   }
 }
 

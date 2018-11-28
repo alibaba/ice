@@ -6,6 +6,8 @@ import services from '../../services';
 
 import CustomIcon from '../Icon';
 
+const { Option } = Select;
+
 /**
  * 模板生成表单项目
  */
@@ -13,13 +15,6 @@ import CustomIcon from '../Icon';
 @inject('scaffold')
 @observer
 export default class ScaffoldForm extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      isNode: false
-    };
-  }
 
   openProjectDirectory = () => {
     if (!this.props.scaffold.isCreating) {
@@ -39,9 +34,7 @@ export default class ScaffoldForm extends Component {
   };
 
   toggleNodeProject = (checked) => {
-    this.setState({
-      isNode: checked
-    });
+    this.props.scaffold.toggleNodeSelect(checked);
 
     if (!checked) {
       this.props.scaffold.toggleNodeProject('');
@@ -57,7 +50,8 @@ export default class ScaffoldForm extends Component {
     const hasIce =
       this.props.scaffold.scaffold.devDependencies
       && this.props.scaffold.scaffold.devDependencies.hasOwnProperty('ice-scripts');
-    const showKoa = hasIce && !isAlibaba;
+
+    const showNode = !isAlibaba && hasIce;
 
     return (
       <div className="project-config-form">
@@ -111,24 +105,28 @@ export default class ScaffoldForm extends Component {
             onChange={this.changeProjectName}
           />
         </div>
-        { hasIce && (
-          <div className="project-config-form-item">
+        { showNode && (
+          <div
+            className="project-config-form-item"
+            style={{ lineHeight: '28px' }}
+          >
             <label>
               添加服务端开发框架
               <Checkbox
                 disabled={this.props.scaffold.isCreating}
                 onChange={this.toggleNodeProject}
-                style={{ margin: '0 4px', verticalAlign: 'top' }}
+                style={{ margin: '0 4px', verticalAlign: 'middle' }}
               />
             </label>
             {
-              this.state.isNode && (
+              this.props.scaffold.isNode && (
                 <Select
                   placeholder="选择框架"
                   onChange={this.handleNodeFrameSelect}
+                  style={{ verticalAlign: 'middle' }}
                 >
                   <Option value="midway">Midway</Option>
-                  { showKoa && <Option value="koa">Koa</Option> }
+                  <Option value="koa">Koa</Option>
                 </Select>
               )
             }

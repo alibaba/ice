@@ -33,12 +33,12 @@ module.exports = (_options, afterCreateRequest) => {
     needCreateDefflow = nodeFramework ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
     if (nodeFramework) {
       // @TODO afterCreateRequest
-      fn = template.createProject(getOptions(_options), afterCreateRequest);
+      fn = template.createProject(
+        getOptions(_options, nodeFramework, true),
+        afterCreateRequest
+      );
       createClient = template.createProject(
-        getOptions(
-          _options,
-          nodeFramework
-        ),
+        getOptions(_options, nodeFramework),
         afterCreateRequest
       );
     } else {
@@ -80,17 +80,17 @@ module.exports = (_options, afterCreateRequest) => {
     });
 };
 
-function getOptions(_options, nodeFramework) {
-  const clientPath = nodeFramework
+function getOptions(_options, nodeFramework = '', isNode = false) {
+  const clientPath = (!isNode && nodeFramework)
     ? getClientPath(_options.targetPath, nodeFramework)
     : '';
   return {
     destDir: clientPath || _options.targetPath,
-    scaffold: ( _options.nodeFramework && !nodeFramework )
+    scaffold: ( nodeFramework && isNode )
       ? nodeScaffoldInfo[nodeFramework].tarball
       : _options.scaffold,
     projectName: _options.projectName,
-    progressFunc: ( _options.nodeFramework && !nodeFramework )
+    progressFunc: ( nodeFramework && isNode )
       ? _options.progressFunc.server
       : _options.progressFunc.client,
     commonBlock: true,
