@@ -51,7 +51,7 @@ $ npm stop
 ├── dist                                ---- 编译后后端代码目录
 │
 │   // 客户端代码
-├── assert
+├── assets
 │   ├── components                      ---- 公共组件
 │   ├── layouts                         ---- 通用布局
 │   ├── pages                           ---- 页面
