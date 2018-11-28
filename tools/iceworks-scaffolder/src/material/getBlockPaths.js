@@ -5,12 +5,12 @@ const path = require('path');
 const uppercamelcase = require('uppercamelcase');
 const { getClientFolderName } = require('../utils');
 
-module.exports = function getBlockPaths({ cwd, name, block, preview, isNodeProject = false }) {
+module.exports = function getBlockPaths({ cwd, name, block, preview, nodeFramework = '' }) {
   const blockFolderName = block.alias || block.className || uppercamelcase(block.name); // block 目录名
 
   const pageFolderName = name;
 
-  const clientFolder = getClientFolderName(isNodeProject);
+  const clientFolder = getClientFolderName(nodeFramework);
 
   let outputPath = path.join(clientFolder, 'pages', pageFolderName, 'components');
   let componentPath = `./components/${blockFolderName}/index`; // block 的相对路径，用于 page 里生成的地址

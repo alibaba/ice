@@ -27,7 +27,16 @@ exports.unicodeUnescape = (str) => {
   });
 };
 
-exports.getClientFolderName = (isNodeProject) => {
-
-  return isNodeProject ? 'client' : 'src';
+exports.getClientFolderName = (nodeFramework) => {
+  if (nodeFramework) {
+    if (nodeFramework === 'koa') {
+      return 'client';
+    } else if (nodeFramework === 'midway') {
+      return 'assert';
+    } else {
+      return 'src';
+    }
+  } else {
+    return 'src';
+  }
 };
