@@ -11,6 +11,9 @@ import './index.scss';
 
 function withAlicdnImage(url) {
   if (url && url.indexOf('.alicdn.com') !== -1) {
+    if (url.indexOf('alifd') !== -1) {
+      return url;
+    }
     return url + '_250x250.jpg';
   }
   return url;
