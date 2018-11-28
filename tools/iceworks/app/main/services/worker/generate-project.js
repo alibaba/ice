@@ -6,33 +6,8 @@ const template = require('../../template');
 const log = require('../../logger');
 const settings = require('../settings');
 const logger = require('../../logger');
-const tempTarballScaffold = {
-  name: 'ice-koa-react-scaffold',
-  title: 'ICE Koa Template',
-  source:
-  {
-    type: 'npm',
-    npm: 'ice-koa-react-scaffold',
-    registry: 'http://registry.npmjs.com'
-  }
-};
-const pendingFields = {
-  dotFiles: [
-    '.editorconfig',
-    '.eslintignore',
-    '.eslintrc',
-    '.gitignore',
-    '.gitkeep'
-  ],
-  extractDirs: [
-    'src',
-    'public'
-  ],
-  pkgAttrs: [
-    'dependencies',
-    'devDependencies'
-  ]
-};
+const nodeScaffoldInfo = require('../../config/nodeScaffold');
+const { getClientPath } = require('../../paths');
 
 module.exports = (_options, afterCreateRequest) => {
   const {
@@ -41,7 +16,7 @@ module.exports = (_options, afterCreateRequest) => {
     isCustomScaffold,
     targetPath,
     projectName,
-    isNodeProject
+    nodeFramework
   } = _options;
   const isAlibaba = settings.get('isAlibaba');
 
@@ -55,14 +30,14 @@ module.exports = (_options, afterCreateRequest) => {
     fn = templateBuilderUtils.generateTemplate(layoutConfig);
   } else {
     const scaffoldDevDeps = (scaffold && scaffold.devDependencies) || {};
-    needCreateDefflow = isNodeProject ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
-    if (isNodeProject) {
+    needCreateDefflow = nodeFramework ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
+    if (nodeFramework) {
       // @TODO afterCreateRequest
       fn = template.createProject(getOptions(_options), afterCreateRequest);
       createClient = template.createProject(
         getOptions(
           _options,
-          path.join(targetPath, 'client')
+          nodeFramework
         ),
         afterCreateRequest
       );
@@ -73,7 +48,7 @@ module.exports = (_options, afterCreateRequest) => {
 
   return fn
     .then(() => {
-      if(isNodeProject) {
+      if(nodeFramework) {
         return new Promise((resolve) => {
           createClient.then(() => {resolve()});
         });
@@ -89,15 +64,15 @@ module.exports = (_options, afterCreateRequest) => {
       updateScaffoldConfig(isCustomScaffold, layoutConfig);
     })
     .then(() => {
-      if (isNodeProject) {
-        processNodeProject(targetPath);
+      if (nodeFramework) {
+        processNodeProject(targetPath, nodeFramework);
       }
     })
     .then(() => {
       log.report('app', {
         action: isCustomScaffold
           ? 'custom-generator-project'
-          : ( isNodeProject ? 'node-project' : 'generator-project' ),
+          : ( nodeFramework ? nodeFramework : 'generator-project' ),
         scaffold: scaffold.name || 'custom-react-template',
         group: isAlibaba ? 'alibaba' : 'outer',
       });
@@ -105,16 +80,17 @@ module.exports = (_options, afterCreateRequest) => {
     });
 };
 
-function getOptions(_options, clientTargetPath) {
+function getOptions(_options, nodeFramework) {
+  const clientPath = nodeFramework
+    ? getClientPath(_options.targetPath, nodeFramework)
+    : '';
   return {
-    destDir: clientTargetPath
-      ? clientTargetPath
-      : _options.targetPath,
-    scaffold: ( _options.isNodeProject && !clientTargetPath )
-      ? tempTarballScaffold
+    destDir: clientPath || _options.targetPath,
+    scaffold: ( _options.nodeFramework && !nodeFramework )
+      ? nodeScaffoldInfo[nodeFramework].tarball
       : _options.scaffold,
     projectName: _options.projectName,
-    progressFunc: ( _options.isNodeProject && !clientTargetPath )
+    progressFunc: ( _options.nodeFramework && !nodeFramework )
       ? _options.progressFunc.server
       : _options.progressFunc.client,
     commonBlock: true,
@@ -246,17 +222,20 @@ function updateScaffoldConfig(isCustomScaffold, layoutConfig) {
  * 处理Node模板和前端模板的文件
  * @param {String} targetPath
  */
-function processNodeProject(destDir) {
+function processNodeProject(destDir, nodeFramework) {
+  const clientPath = getClientPath(destDir, nodeFramework);
+
+  const { pendingFields } = nodeScaffoldInfo[nodeFramework];
 
   //删除client中点不需要的文件
   pendingFields.dotFiles.forEach((currentValue) => {
-    fs.removeSync(path.join(destDir, 'client', currentValue));
+    fs.removeSync(path.join(clientPath, currentValue));
   });
 
-  extractClientFiles(destDir);
+  extractClientFiles(clientPath, pendingFields);
 
   pendingFields.extractDirs.forEach((currentValue) => {
-    fs.removeSync(path.join(destDir, 'client', currentValue));
+    fs.removeSync(path.join(clientPath, currentValue));
   });
 
   //将koa模板中_打头的文件改为.
@@ -270,27 +249,27 @@ function processNodeProject(destDir) {
           path.join(destDir, refactorName)
         );
       }
-    })
+    });
   });
 
-  compoundDeps(destDir);
+  compoundDeps(destDir, nodeFramework, pendingFields);
 
-  fs.removeSync(path.join(destDir, 'client', 'package.json'));
+  fs.removeSync(path.join(clientPath, 'package.json'));
 }
 
 /**
  * 移动src和public内的文件到外部
  * @param {String} targetPath
  */
-function extractClientFiles(destDir) {
+function extractClientFiles(clientPath, pendingFields) {
   pendingFields.extractDirs.forEach((currentValue) => {
     fs
       .readdirSync(
-        path.join(destDir, 'client', currentValue)
+        path.join(clientPath, currentValue)
       )
       .forEach((fileName) => {
-        const originPath = path.join(destDir, 'client', currentValue, fileName);
-        const targetPath = path.join(destDir, 'client', fileName);
+        const originPath = path.join(clientPath, currentValue, fileName);
+        const targetPath = path.join(clientPath, fileName);
         if (fs.existsSync(targetPath)) {
           recursionMerge(originPath, targetPath);
         } else {
@@ -311,7 +290,7 @@ function recursionMerge(originPath, targetPath) {
     let originFolder = fs.readdirSync(originPath);
     originFolder.forEach((originFile) => {
       targetFolder.forEach((targetFile) => {
-        if (originFile == targetFile) {
+        if (originFile === targetFile) {
           recursionMerge(
             path.join(originPath, originFile),
             path.join(targetPath, targetFile)
@@ -339,9 +318,10 @@ function recursionMerge(originPath, targetPath) {
  * @param {String} targetPath
  */
 
-function compoundDeps(destDir) {
+function compoundDeps(destDir, nodeFramework, pendingFields) {
+  const clientPath = getClientPath(destDir, nodeFramework);
   const serverPackage = fs.readJsonSync(path.join(destDir, 'package.json'));
-  const clientPackage = fs.readJsonSync(path.join(destDir, 'client', 'package.json'));
+  const clientPackage = fs.readJsonSync(path.join(clientPath, 'package.json'));
   const versionReg = /^[\^>>(?==)<<(?==)~]?([0-9]+(?=\.)[0-9]+)/;
   if (clientPackage.hasOwnProperty('themeConfig')) {
     serverPackage.themeConfig = clientPackage.themeConfig;
@@ -349,7 +329,7 @@ function compoundDeps(destDir) {
   if (clientPackage.hasOwnProperty('keywords')) {
     serverPackage.keywords = clientPackage.keywords;
   }
-  serverPackage.templateType = 'Koa';
+  serverPackage.templateType = nodeFramework;
   pendingFields.pkgAttrs.forEach((attrName) => {
     Object
       .keys(clientPackage[attrName])

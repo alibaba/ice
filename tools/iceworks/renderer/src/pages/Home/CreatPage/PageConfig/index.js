@@ -75,7 +75,7 @@ class PageConfig extends Component {
           name: libraryType == 'react' ? uppercamelcase(pageName) : pageName,
           layout: layout,
           blocks: blocks,
-          isNodeProject: currentProject.isNodeProject
+          nodeFramework: currentProject.nodeFramework
         };
         console.info('createPage config:', config);
         let createResult;
@@ -178,7 +178,7 @@ class PageConfig extends Component {
               this.props.newpage.isCreating = false;
             })
             .then(() => {
-              return currentProject.scaffold.removePreviewPage({ isNodeProject: currentProject.isNodeProject });
+              return currentProject.scaffold.removePreviewPage({ nodeFramework: currentProject.nodeFramework });
             })
             .then(() => {
               log.debug('移除临时页面成功');
@@ -204,7 +204,7 @@ class PageConfig extends Component {
               excludeLayout: applicationType == 'react', // hack react 的模板不生成 layout
               // hack vue
               libary: this.props.libary,
-              isNodeProject: currentProject.isNodeProject,
+              nodeFramework: currentProject.nodeFramework,
               interpreter: ({ type, message, data }, next) => {
                 console.log(type, message);
                 switch (type) {
@@ -307,7 +307,7 @@ class PageConfig extends Component {
                 // 移除 previewPage 临时文件
                 return scaffolder.removePreviewPage({
                   destDir: this.props.newpage.targetPath,
-                  isNodeProject: currentProject.isNodeProject
+                  nodeFramework: currentProject.nodeFramework
                 });
               }
             })

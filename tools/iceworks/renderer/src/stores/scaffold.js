@@ -54,7 +54,7 @@ class Scaffold {
   @observable
   workspacePath = localStorage.getItem(WORKSPACE_KEY) || defaultWorkspacePath;
   @observable
-  isNodeProject = false;
+  nodeFramework = '';
 
   get currentScaffoldName() {
     return toJS(this.scaffoldValue).name;
@@ -74,7 +74,7 @@ class Scaffold {
     this.progressSpeedValue = 0;
     this.progressRemainingValue = 0;
     this.visible = false;
-    this.isNodeProject = false;
+    this.nodeFramework = '';
   }
 
   // 更新本地缓存项目信息
@@ -367,8 +367,8 @@ class Scaffold {
   }
 
   @action
-  toggleNodeProject(isChecked) {
-    this.isNodeProject = isChecked;
+  toggleNodeProject(value) {
+    this.nodeFramework = value;
   }
 
   getProjectPathWithWorkspace() {

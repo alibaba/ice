@@ -15,7 +15,8 @@ import LayoutBuilderPreview from '../../../../components/Scaffold/Preview';
 import scanLayout from '../../../../datacenter/scanLayout';
 import services from '../../../../services';
 
-const { templateBuilderUtils } = services;
+const { templateBuilderUtils, paths } = services;
+const { getClientPath } = paths;
 
 import './Layouts.scss';
 
@@ -104,8 +105,8 @@ export default class LayoutBuilder extends Component {
 
     if (currentProject && currentProject.fullPath) {
       const type = projects.currentProject.getLibraryType();
-      const targetPath = currentProject.isNodeProject
-        ? path.join(currentProject.fullPath, 'client')
+      const targetPath = currentProject.nodeFramework
+        ? getClientPath(currentProject.fullPath, currentProject.nodeFramework)
         : path.join(currentProject.fullPath, 'src');
       scanLayout({
         targetPath,

@@ -58,7 +58,7 @@ class Project {
   @observable
   needInstallDeps = false; // 是否为新项目? 新项目首次打开提示安装依赖
   @observable
-  isNodeProject = false; //是否为 koa 项目
+  nodeFramework = ''; //服务端模板类型
 
   // data
   @observable
@@ -90,7 +90,7 @@ class Project {
       this.pkgData.scripts.build
     );
 
-    this.isNodeProject = this.validateNodeProject();
+    this.nodeFramework = this.validateNodeProject();
 
     this.scaffold = new IceworksScaffolder({
       cwd: this.root,
@@ -397,7 +397,7 @@ class Project {
   }
 
   validateNodeProject() {
-    return this.pkgData && this.pkgData.templateType === 'Koa';
+    return this.pkgData && (this.pkgData.templateType || '');
   }
 }
 

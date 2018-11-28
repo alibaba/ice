@@ -56,7 +56,7 @@ class PageBlockPicker extends Component {
   handleOk = () => {
     const { pageBlockPicker, blocks = {} } = this.props;
     const { pageName, projectPath } = pageBlockPicker;
-    const { isNodeProject } = this.props.projects.currentProject;
+    const { nodeFramework } = this.props.projects.currentProject;
     // 检测 block 是否存在冲突等
     if (pageBlockPicker.blockHasConflict(blocks.selected)) {
       Feedback.toast.error(
@@ -72,7 +72,7 @@ class PageBlockPicker extends Component {
         destDir: projectPath,
         blocks: blocks.selected,
         pageName: pageName,
-        isNodeProject,
+        nodeFramework,
       })
       .catch((err) => {
         pageBlockPicker.downloadDone();

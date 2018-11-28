@@ -1,5 +1,5 @@
 import { inject, observer } from 'mobx-react';
-import { Input, Progress, Checkbox } from '@icedesign/base';
+import { Input, Progress, Checkbox, Select } from '@icedesign/base';
 import React, { Component } from 'react';
 import Tooltip from 'rc-tooltip';
 import services from '../../services';
@@ -13,6 +13,13 @@ import CustomIcon from '../Icon';
 @inject('scaffold')
 @observer
 export default class ScaffoldForm extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isNode: false
+    };
+  }
 
   openProjectDirectory = () => {
     if (!this.props.scaffold.isCreating) {
@@ -32,7 +39,17 @@ export default class ScaffoldForm extends Component {
   };
 
   toggleNodeProject = (checked) => {
-    this.props.scaffold.toggleNodeProject(checked);
+    this.setState({
+      isNode: checked
+    });
+
+    if (!checked) {
+      this.props.scaffold.toggleNodeProject('');
+    }
+  };
+
+  handleNodeFrameSelect = (value) => {
+    this.props.scaffold.toggleNodeProject(value);
   };
 
   render() {
@@ -40,7 +57,7 @@ export default class ScaffoldForm extends Component {
     const hasIce =
       this.props.scaffold.scaffold.devDependencies
       && this.props.scaffold.scaffold.devDependencies.hasOwnProperty('ice-scripts');
-    const showNodeCheckbox = hasIce && !isAlibaba;
+    const showKoa = hasIce && !isAlibaba;
 
     return (
       <div className="project-config-form">
@@ -94,18 +111,29 @@ export default class ScaffoldForm extends Component {
             onChange={this.changeProjectName}
           />
         </div>
-        { showNodeCheckbox
-          &&
-          (<div className="project-config-form-item">
+        { hasIce && (
+          <div className="project-config-form-item">
             <label>
-              添加 Koa2
+              添加服务端开发框架
               <Checkbox
                 disabled={this.props.scaffold.isCreating}
                 onChange={this.toggleNodeProject}
                 style={{ margin: '0 4px', verticalAlign: 'top' }}
               />
             </label>
-          </div>)}
+            {
+              this.state.isNode && (
+                <Select
+                  placeholder="选择框架"
+                  onChange={this.handleNodeFrameSelect}
+                >
+                  <Option value="midway">Midway</Option>
+                  { showKoa && <Option value="koa">Koa</Option> }
+                </Select>
+              )
+            }
+          </div>)
+        }
         {this.props.scaffold.isCreating && (
           <div className="project-config-form-item">
             <span style={{ fontSize: 12, color: '#999' }}>

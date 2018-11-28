@@ -178,7 +178,7 @@ export default {
               cwd: project.fullPath,
               shell: 'npm',
               shellArgs: shellArgs,
-              env: project.isNodeProject
+              env: project.nodeFramework
                 ? {}
                 : { PORT: port },
             },

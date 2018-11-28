@@ -14,6 +14,10 @@ import DashboardCard from '../../../../components/DashboardCard/';
 import ExtraButton from '../../../../components/ExtraButton/';
 import Icon from '../../../../components/Icon';
 import EmptyTips from '../../../../components/EmptyTips';
+import services from '../../../../services';
+
+const { paths } = services;
+const { getClientPath } = paths;
 
 import './index.scss';
 
@@ -76,9 +80,12 @@ class PagesCard extends Component {
     const { currentProject } = projects;
 
     if (currentProject && currentProject.fullPath) {
-      const pagesDirectory = currentProject.isNodeProject
-        ? path.join(currentProject.fullPath, 'client/pages')
-        : path.join(currentProject.fullPath, 'src/pages');
+      const pagesDirectory = currentProject.nodeFramework ?
+        path.join(
+          getClientPath(currentProject.fullPath, currentProject.nodeFramework),
+          'pages'
+        ) :
+        path.join(currentProject.fullPath, 'src/pages');
       const pages = recursivePagesSync(pagesDirectory, pagesDirectory);
       this.setState({ pages: pages });
     } else {

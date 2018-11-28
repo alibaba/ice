@@ -9,6 +9,10 @@ import { inject, observer } from 'mobx-react';
 import { readdirSync } from '../../../lib/file-system';
 import DashboardCard from '../../../components/DashboardCard';
 import EmptyTips from '../../../components/EmptyTips';
+import services from '../../../services';
+
+const { paths } = services;
+const { getClientPath, getClientFolder } = paths;
 
 function recursiveReaddirSync(dirPath, rootDir) {
   let list = [];
@@ -141,9 +145,8 @@ class Todo extends Component {
     // TODO 监听目录文件变更
     const { currentProject } = this.props.projects;
     if (currentProject && currentProject.fullPath) {
-      const srcDir = currentProject.isNodeProject
-        ? path.join(currentProject.fullPath, 'client')
-        : path.join(currentProject.fullPath, 'src');
+      const srcDir = getClientPath(currentProject.fullPath, currentProject.nodeFramework)
+
       const files = recursiveReaddirSync(srcDir, srcDir);
       this.state.files = []; // fixme: 不能通过赋值方式修改 state
 
@@ -232,10 +235,11 @@ class Todo extends Component {
    * @property  {String}  messagesInfo.totalLines Total number of lines in the file.
    */
   renderMessages(messagesInfo) {
-    const { isNodeProject } = this.props.projects.currentProject;
+    const { nodeFramework } = this.props.projects.currentProject;
+    const clientFolder = getClientFolder(nodeFramework);
     return (
       <td style={{ lineHeight: '20px' }}>
-        <div>{isNodeProject ? 'client/' + messagesInfo.path : 'src/' + messagesInfo.path}</div>
+        <div>{ clientFolder + '/' + messagesInfo.path }</div>
         <ul style={{ paddingLeft: '2em', fontSize: '0.8em', color: '#666' }}>
           {messagesInfo.messages.map((message, index) => {
             return (
