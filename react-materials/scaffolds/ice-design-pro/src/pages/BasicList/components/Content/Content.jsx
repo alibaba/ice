@@ -23,13 +23,13 @@ export default class Content extends Component {
   render() {
     const { data, isLoading } = this.props;
     return (
-      <IceContainer>
+      <IceContainer style={styles.container}>
         <h4 style={styles.cardTitle}>试卷列表</h4>
         <Loading
           visible={isLoading}
           style={{ width: '100%' }}
-          shape="fusion-reactor"
-          color="#999"
+          shape="flower"
+          color="#333"
         >
           <div style={styles.contentList}>
             {data.map((item, index) => {
@@ -110,6 +110,10 @@ export default class Content extends Component {
 }
 
 const styles = {
+  container: {
+    minWidth: '980px',
+    overflowX: 'scroll',
+  },
   cardTitle: {
     height: '16px',
     lineHeight: '16px',

@@ -37,7 +37,7 @@ export default class ServiceCard extends Component {
       <Row wrap gutter="20">
         {mockData.map((item, index) => {
           return (
-            <Col l="8" key={index}>
+            <Col xxs="24" s="12" l="8" key={index}>
               <IceContainer style={styles.container}>
                 <div style={styles.body}>
                   <h5 style={styles.name}>{item.name}</h5>
@@ -93,7 +93,7 @@ const styles = {
     margin: '12px 0',
   },
   tag: {
-    background: '#fff0f6',
+    background: '#f5f5f5',
     border: '1px solid #ffadd2',
     color: '#eb2f96',
     position: 'absolute',

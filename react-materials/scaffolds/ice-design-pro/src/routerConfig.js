@@ -24,12 +24,8 @@ import NotFound from './pages/NotFound';
 
 const routerConfig = [
   {
-    path: '/dashboard',
+    path: '/dashboard/monitor',
     component: Dashboard,
-  },
-  {
-    path: '/table/basic',
-    component: BasicTable,
   },
   {
     path: '/table/general',
@@ -56,12 +52,16 @@ const routerConfig = [
     component: Fail,
   },
   {
-    path: '/portlets/base',
-    component: Portlets,
+    path: '/table/basic',
+    component: BasicTable,
   },
   {
     path: '/portlets/terms',
     component: Terms,
+  },
+  {
+    path: '/portlets/base',
+    component: Portlets,
   },
   {
     path: '/exception/500',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Layout from '@icedesign/layout';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Footer from './components/Footer';
+import Footer from './Footer';
 import { routerData } from '../../routerConfig';
 import './UserLayout.scss';
 
@@ -14,7 +14,7 @@ export default class UserLayout extends Component {
 
   render() {
     return (
-      <Layout className="user-layout" style={styles.container}>
+      <Layout className="user-layout">
         <div className="header">
           <a href="#" className="meta">
             <img
@@ -46,16 +46,3 @@ export default class UserLayout extends Component {
     );
   }
 }
-
-const styles = {
-  container: {
-    position: 'relative',
-    width: '100%',
-    height: '100vh',
-    paddingTop: '100px',
-    background: '#f0f2f5',
-    backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png)',
-    backgroundSize: 'contain',
-  },
-};

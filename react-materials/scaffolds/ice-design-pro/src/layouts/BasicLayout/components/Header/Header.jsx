@@ -7,23 +7,25 @@ import Menu from '@icedesign/menu';
 import FoundationSymbol from 'foundation-symbol';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
-import { headerMenuConfig } from '../../menuConfig';
+import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
+
+import './scss/dark.scss';
+import './scss/light.scss';
 
 export default class Header extends PureComponent {
   render() {
-    const { profile, isMobile, theme, width, className, style } = this.props;
+    const { theme, profile, isMobile, className, style } = this.props;
+
     return (
       <Layout.Header
         theme={theme}
         className={cx('ice-design-layout-header', className)}
-        style={{ ...style, width }}
+        style={{ ...style }}
       >
         <Logo />
-        <div
-          className="ice-design-layout-header-menu"
-          style={{ display: 'flex' }}
-        >
+
+        <div className="ice-design-layout-header-menu">
           {/* Header 菜单项 begin */}
           {headerMenuConfig && headerMenuConfig.length > 0 ? (
             <Menu mode="horizontal" selectedKeys={[]}>
@@ -62,17 +64,9 @@ export default class Header extends PureComponent {
           {/* Header 菜单项 end */}
 
           {/* Header 右侧内容块 */}
-
           <Balloon
             trigger={
-              <div
-                className="ice-design-header-userpannel"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  fontSize: 12,
-                }}
-              >
+              <div className="ice-design-header-userpannel">
                 <IceImg
                   height={40}
                   width={40}
@@ -83,15 +77,10 @@ export default class Header extends PureComponent {
                   className="user-avatar"
                 />
                 <div className="user-profile">
-                  <span className="user-name" style={{ fontSize: '13px' }}>
-                    {profile.name}
-                  </span>
+                  <span className="user-name">{profile.name || '淘小宝'}</span>
                   <br />
-                  <span
-                    className="user-department"
-                    style={{ fontSize: '12px', color: '#999' }}
-                  >
-                    {profile.department}
+                  <span className="user-department">
+                    {profile.department || '技术部'}
                   </span>
                 </div>
                 <Icon
@@ -105,17 +94,11 @@ export default class Header extends PureComponent {
             className="user-profile-menu"
           >
             <ul>
-              <li
-                className="user-profile-menu-item"
-                style={{ cursor: 'initial' }}
-              >
+              <li className="user-profile-menu-item">
                 <FoundationSymbol type="person" size="small" />
                 我的主页
               </li>
-              <li
-                className="user-profile-menu-item"
-                style={{ cursor: 'initial' }}
-              >
+              <li className="user-profile-menu-item">
                 <FoundationSymbol type="repair" size="small" />
                 设置
               </li>

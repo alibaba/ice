@@ -24,6 +24,12 @@ const asideMenuConfig = [
     name: 'Dashboard',
     path: '/dashboard',
     icon: 'home2',
+    children: [
+      {
+        name: '监控页',
+        path: '/dashboard/monitor',
+      },
+    ],
   },
   {
     name: '图表页',
@@ -33,7 +39,6 @@ const asideMenuConfig = [
       {
         name: '常用图表',
         path: '/chart/list',
-        authority: 'admin',
       },
     ],
   },
@@ -41,7 +46,6 @@ const asideMenuConfig = [
     name: '表格页',
     path: '/table',
     icon: 'table',
-    // authority: 'admin',
     children: [
       {
         name: '基础表格',
@@ -104,7 +108,6 @@ const asideMenuConfig = [
     name: '异常页',
     path: '/exception',
     icon: 'gaojingxinxi',
-    // authority: 'admin',
     children: [
       {
         name: '204',

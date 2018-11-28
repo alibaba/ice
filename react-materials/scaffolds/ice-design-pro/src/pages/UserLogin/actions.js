@@ -65,10 +65,9 @@ export const userLogin = (params) => {
       dispatch(userLoginSuccess(response.data));
 
       if (response.data.status === 200) {
+        Feedback.toast.success('登录成功');
         setAuthority(response.data.currentAuthority);
-
         reloadAuthorized();
-
         dispatch(push('/'));
       } else {
         Feedback.toast.error('账号或者密码错误');

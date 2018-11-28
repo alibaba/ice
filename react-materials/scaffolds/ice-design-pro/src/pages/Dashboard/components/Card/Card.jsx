@@ -51,6 +51,8 @@ export default class Card extends Component {
 
 const styles = {
   container: {
+    minWidth: '1080px',
+    overflow: 'scroll',
     padding: '0',
   },
   content: {

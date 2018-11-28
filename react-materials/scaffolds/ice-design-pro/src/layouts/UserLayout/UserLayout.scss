@@ -1,6 +1,13 @@
 @charset "UTF-8";
 
 .user-layout {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding-top: 100px;
+  background: #f0f2f5;
+  background-image: 'url(https://img.alicdn.com/tfs/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png)';
+  background-size: contain;
   .header {
     display: flex;
     flex-direction: column;

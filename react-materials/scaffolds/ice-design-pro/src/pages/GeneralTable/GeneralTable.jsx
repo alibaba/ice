@@ -45,7 +45,7 @@ export default class GeneralTable extends Component {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(mockData());
-      }, 1000);
+      }, 600);
     });
   };
 

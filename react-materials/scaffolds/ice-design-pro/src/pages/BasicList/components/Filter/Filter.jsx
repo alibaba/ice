@@ -85,6 +85,10 @@ export default class Filter extends Component {
 }
 
 const styles = {
+  filterContent: {
+    minWidth: '980px',
+    overflowX: 'scroll',
+  },
   filterItem: {
     display: 'flex',
     alignItems: 'center',

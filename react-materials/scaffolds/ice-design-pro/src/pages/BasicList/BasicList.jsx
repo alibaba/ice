@@ -36,7 +36,7 @@ export default class BaiscList extends Component {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(mockData());
-      }, 1000);
+      }, 600);
     });
   };
 

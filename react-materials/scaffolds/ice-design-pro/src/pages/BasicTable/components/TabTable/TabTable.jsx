@@ -74,7 +74,6 @@ export default class TabTable extends Component {
     axios
       .get('/api/tab-table')
       .then((response) => {
-        console.log(response.data.data);
         this.setState({
           dataSource: response.data.data,
         });
