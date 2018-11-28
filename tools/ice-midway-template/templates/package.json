@@ -1,10 +1,10 @@
 {
   "name": "ice-midway-react-scaffold",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "client": "ice dev --project-type=node",
+    "client": "ice dev --project-type=midway",
     "server": "NODE_ENV=local midway-bin dev --ts",
     "start": "npm run client & npm run server",
     "lint": "eslint . --ext '.js,.jsx' --fix",
