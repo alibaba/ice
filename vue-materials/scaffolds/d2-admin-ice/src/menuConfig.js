@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import utilIce from './libs/util-ice'
+import util from './libs/util.ice'
 
 // 菜单配置
 
@@ -82,7 +82,7 @@ const headerMenuConfig = [
 // 你可以在任何地方使用上述方法修改顶栏和侧边栏菜单
 
 // 导出顶栏菜单
-export const menuHeader = utilIce.recursiveMenuConfig(headerMenuConfig)
+export const menuHeader = util.recursiveMenuConfig(headerMenuConfig)
 
 // 导出侧边栏菜单
-export const menuAside = utilIce.recursiveMenuConfig(asideMenuConfig)
+export const menuAside = util.recursiveMenuConfig(asideMenuConfig)

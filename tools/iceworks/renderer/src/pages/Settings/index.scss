@@ -1,0 +1,24 @@
+.settings {
+  max-height: 100vh;
+  overflow: auto;
+}
+.settings-body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.settings-item {
+  .next-form-item-label {
+    line-height: 40px !important;
+  }
+  .next-form-item-control {
+    display: flex !important;
+    align-items: center !important;
+  }
+  .next-radio-group {
+    label {
+      display: block;
+      line-height: 40px;
+    }
+  }
+}

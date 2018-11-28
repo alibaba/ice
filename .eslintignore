@@ -5,7 +5,6 @@ demo/
 react-materials/layouts/**/lib/
 react-materials/blocks/**/lib/
 node_modules/
-scripts/
 
 # node 覆盖率文件
 coverage/

@@ -15,6 +15,3 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
-
-# d2admin
-dev/design

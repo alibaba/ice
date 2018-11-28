@@ -1,10 +1,11 @@
 {
   "name": "@icedesign/list",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "列表组件",
   "main": "lib/index.js",
   "files": [
-    "lib/"
+    "lib/",
+    "demo/"
   ],
   "repository": {
     "type": "git",
@@ -27,8 +28,7 @@
   "peerDependencies": {
     "react": "^16.5.0"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "ice-devtools": "latest",
     "react": "^16.3.0",

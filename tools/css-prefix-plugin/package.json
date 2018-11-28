@@ -1,0 +1,20 @@
+{
+  "name": "css-prefix-plugin",
+  "version": "0.0.2",
+  "description": "A webpack plugin for adding css prefix of component package.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/tools/css-prefix-plugin"
+  },
+  "keywords": [],
+  "author": "chenbin92",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "loader-utils": "^1.1.0"
+  }
+}

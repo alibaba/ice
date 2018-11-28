@@ -46,22 +46,19 @@ module.exports = function(source) {
   if (skinContentCache[filePathHash]) {
     return skinContentCache[filePathHash] + '\n' + extraContent + '\n' + source;
   }
+
   // 缓存 skinLoader
   if (pathExists.sync(themeFile)) {
     const themeFileContent = fs.readFileSync(themeFile).toString();
     skinContentCache[filePathHash] = deleteEmptyLine(themeFileContent);
     return skinContentCache[filePathHash] + '\n' + extraContent + '\n' + source;
-  } else {
-    // only tip once
-    if (!hasEmittedHelp) {
-      console.log(chalk.red('\n[Error] 不存在皮肤文件:'), themeFile);
-      console.log(
-        chalk.green('[Info] 可参考皮肤配置文档:'),
-        'http://ice.alibaba-inc.com/docs/addons/skin'
-      );
-      hasEmittedHelp = true;
-    }
-
-    return source;
   }
+
+  // only tip once
+  if (!hasEmittedHelp) {
+    console.log(chalk.red('\n[Error] 不存在皮肤文件:'), themeFile);
+    hasEmittedHelp = true;
+  }
+
+  return source;
 };

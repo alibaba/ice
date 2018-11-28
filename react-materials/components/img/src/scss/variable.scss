@@ -1,0 +1,22 @@
+// ice-img variables
+// --------------------------------------------------
+
+////
+/// @module @icedesign/img: ICE 图片组件
+/// @tag IceImg
+/// @category custom
+/// @family ice
+/// @varPrefix $ice-img
+/// @classPrefix ice-img
+////
+
+// -------------- variable --------------
+$ice-img-prefix: '.ice-img';
+
+// Statement: Normal
+// ----------------------------------------
+
+/// 圆角半径
+/// @namespace statement/normal
+/// @type size
+$ice-img-border-radius: 5px;

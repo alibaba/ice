@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "ice 开发者工具",
   "main": "index.js",
   "bin": {

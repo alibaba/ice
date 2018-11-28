@@ -197,6 +197,7 @@ function generateScaffolds(files, SPACE, done) {
         version: pkg.version,
         registry,
       },
+      builder: pkg.scaffoldConfig.builder || '',
       // (必) 用于说明组件依赖关系
       dependencies: pkg.dependencies || {},
       devDependencies: pkg.devDependencies || {},

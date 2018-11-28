@@ -50,8 +50,9 @@
     "primaryColor": "#908ce1"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-asset-management-admin",
-    "title": "ICE Asset Management Admin",
+    "title": "资产管理系统",
     "categories": [
       "行业领域"
     ],

@@ -1,4 +1,4 @@
-# ice-material-dashboard
+# material-dashboard
 
 ## 说明
 

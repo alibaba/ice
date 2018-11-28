@@ -1,0 +1,16 @@
+.custom-materials {
+  margin-bottom: 20px;
+  .material-table {
+    width: 100%;
+    th {
+      font-weight: 500;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    th,
+    td {
+      color: #555;
+      font-size: 14px;
+      padding: 5px 4px;
+    }
+  }
+}

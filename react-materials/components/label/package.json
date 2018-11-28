@@ -1,0 +1,38 @@
+{
+  "name": "@icedesign/label",
+  "version": "0.1.5",
+  "description": "创建标签组件用来突出所要显示的信息",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "demo/"
+  ],
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-component"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "prop-types": "^15.6.0"
+  },
+  "devDependencies": {
+    "ice-devtools": "^1.1.14-beta.2"
+  },
+  "peerDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
+  }
+}

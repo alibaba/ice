@@ -12,7 +12,6 @@ const scaffolds = [
   'ice-monitor-dashboard',
   'ice-algorithm-model-admin',
   'ice-contract-management-admin',
-  'ice-aliyun-login',
   'ice-usertrack-admin',
   'ice-yunqi-homepage',
   'ice-scroll-screen-homepage',
@@ -22,11 +21,9 @@ const scaffolds = [
   'ice-design-analysis',
   'ice-design-schools',
   'ice-design-lite',
-  'ice-creative-login',
   'ice-post-platfrom',
   'ice-light-bootstrap-dashboard',
   'ice-reviews-management',
-  'ice-design-login',
   'ice-creative-dashboard',
   'ice-coreui-admin',
   'ice-material-dashboard',
@@ -39,8 +36,8 @@ const scaffolds = [
   'ice-creator-landingpage',
   'ice-open-platform-landingpage',
   'ice-operation-platform',
-  'ice-design-docs',
   'create-react-app',
+  'ice-opensource-site',
 ];
 
 module.exports = scaffolds;

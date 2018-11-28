@@ -1,0 +1,17 @@
+.custom-scaffold {
+  width: 740px;
+  display: flex;
+  flex-direction: row;
+  padding: 20px 20px 10px 20px;
+  box-sizing: border-box;
+}
+
+.custom-scaffold-form {
+  width: calc(100% - 370px);
+}
+
+.custom-scaffold-preview {
+  width: 370px;
+  flex: 0 0 370px;
+  padding-left: 20px;
+}

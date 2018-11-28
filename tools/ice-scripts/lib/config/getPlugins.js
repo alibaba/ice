@@ -3,17 +3,19 @@ const colors = require('chalk');
 const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 const fs = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
+const CssPrefixPlugin = require('css-prefix-plugin');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
 const paths = require('./paths');
 const getEntryHtmlPlugins = require('./getEntryHtmlPlugins');
 
-module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
+module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
   const defineVriables = {
     'process.env.NODE_ENV': JSON.stringify(
       process.env.NODE_ENV || 'development'
@@ -32,6 +34,10 @@ module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
       chunkFilename: process.env.HASH
         ? 'css/[id].[hash:6].css'
         : 'css/[id].css',
+    }),
+    // FIX ISSUE: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
+    new FilterWarningsPlugin({
+      exclude: /Conflicting order between:/,
     }),
     new SimpleProgressPlugin(),
     new CaseSensitivePathsPlugin(),
@@ -62,6 +68,14 @@ module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
       },
     ]),
   ];
+
+  if (themeConfig.cssPrefix) {
+    plugins.push(
+      new CssPrefixPlugin({
+        '$css-prefix': `${themeConfig.cssPrefix}`,
+      })
+    );
+  }
 
   // 增加 html 输出，支持多页面应用
   Array.prototype.push.apply(plugins, getEntryHtmlPlugins(entry));
@@ -135,7 +149,7 @@ module.exports = function({ buildConfig = {}, themeConfig = {}, entry }) {
       new AppendStyleWebpackPlugin({
         variableFile: variableFilePath,
         appendPosition: 'footer',
-        type: 'sass',
+        // type: 'sass', // 不需要指定 type，与 distMatch 互斥
         srcFile: skinOverridePath,
         distMatch: /\.css/,
       })

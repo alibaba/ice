@@ -1,0 +1,113 @@
+$scaffold-item-width: 235px;
+$scaffold-item-title-height: 40px;
+
+$scaffold-item-width-mobile: 174px;
+
+.scaffold-items-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0 10px 10px;
+  overflow: auto;
+}
+
+.scaffold-item {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 0px 2px 1px rgba(47, 53, 55, 0.1);
+  margin: 10px;
+  position: relative;
+  transition: all 0.1s ease-in;
+  overflow: hidden;
+  .platform-win32 & {
+    margin: 6px;
+  }
+  &:hover {
+    box-shadow: 0px 0px 2px 1px rgba(48, 128, 254, 1);
+    .scaffold-flipcard {
+      display: block;
+    }
+  }
+}
+
+.scaffold-item-pc {
+  width: $scaffold-item-width;
+  height: $scaffold-item-width / 16 * 9 + $scaffold-item-title-height;
+}
+
+.scaffold-item-mobile {
+  width: $scaffold-item-width-mobile;
+  height: $scaffold-item-width-mobile / 9 * 16 + $scaffold-item-title-height;
+
+  .scaffold-image {
+    width: $scaffold-item-width-mobile;
+    height: $scaffold-item-width-mobile / 9 * 16;
+  }
+}
+
+.scaffold-image {
+  width: $scaffold-item-width;
+  height: $scaffold-item-width / 16 * 9;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  background-color: #fefefe;
+  border-bottom: 1px solid #eee;
+}
+
+.scaffold-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+.scaffold-title {
+  height: $scaffold-item-title-height;
+  line-height: $scaffold-item-title-height;
+  font-size: 14px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.scaffold-flipcard {
+  display: none;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.scaffold-flipcard-body {
+  font-size: 12px;
+  color: #666666;
+  padding: 14px;
+  padding-bottom: 0;
+  h2 {
+    font-size: 14px;
+    color: #333333;
+    margin: 0;
+  }
+  p {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0;
+  }
+}
+.scaffold-flipcard-button {
+  position: absolute;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  left: 0;
+}
+
+.scaffold-flipcard-preview {
+  margin-left: 10px;
+  font-size: 12px;
+}
