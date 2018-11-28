@@ -21,8 +21,8 @@ export default function configureStore(initialState = {}, history) {
     typeof window === 'object' &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
       ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-          shouldHotReload: false,
-        })
+        shouldHotReload: false,
+      })
       : compose;
   /* eslint-enable */
 

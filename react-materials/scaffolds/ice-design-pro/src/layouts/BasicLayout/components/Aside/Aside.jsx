@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { enquire } from 'enquire-js';
 import { withRouter } from 'react-router';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import cx from 'classnames';
