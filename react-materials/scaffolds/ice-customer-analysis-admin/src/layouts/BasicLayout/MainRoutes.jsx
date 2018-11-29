@@ -19,7 +19,6 @@ class MainRoutes extends Component {
   };
 
   render() {
-    console.log(routerData);
     return (
       <Switch>
         {/* 渲染路由表 */}

@@ -1,3 +1,4 @@
+/* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Balloon, Icon } from '@icedesign/base';
@@ -18,6 +19,10 @@ export default class Header extends Component {
     super(props);
     this.state = {};
   }
+
+  handleLogout = () => {
+    this.props.history.push('/user/login');
+  };
 
   render() {
     const { location = {} } = this.props;
@@ -155,7 +160,10 @@ export default class Header extends Component {
                   <FoundationSymbol type="repair" size="small" />
                   设置
                 </li>
-                <li className="user-profile-menu-item">
+                <li
+                  className="user-profile-menu-item"
+                  onClick={this.handleLogout}
+                >
                   <FoundationSymbol type="compass" size="small" />
                   退出
                 </li>

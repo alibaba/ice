@@ -4,11 +4,21 @@
 import { getRouterData } from './utils';
 import { asideMenuConfig } from './menuConfig';
 
+import UserLogin from './pages/UserLogin';
+import UserRegister from './pages/UserRegister';
 import Analysis from './pages/Analysis';
 import Schedule from './pages/Schedule';
 import Conversion from './pages/Conversion';
 
 const routerConfig = [
+  {
+    path: '/user/login',
+    component: UserLogin,
+  },
+  {
+    path: '/user/register',
+    component: UserRegister,
+  },
   {
     path: '/analysis',
     component: Analysis,
