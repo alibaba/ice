@@ -1,0 +1,10 @@
+{
+  "name": "ice-workspace",
+  "version": "0.0.2",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  }
+}
