@@ -1,7 +1,7 @@
 .ice-menu-custom.ice-menu-root {
-  box-shadow: 4px 1px 12px rgba(0, 55, 107, 0.04);
+  box-shadow: 0px 0px 8px rgba(0, 55, 107, 0.1);
   height: 100vh;
-  background: #eff5f8 !important;
+  background: #fff !important;
   .ice-menu-item {
     height: auto;
     line-height: normal;
@@ -11,7 +11,8 @@
       align-items: center;
       justify-content: center;
       padding: 20px 0;
-      color: #a3b1bf;
+      color: #666;
+      font-size: 14px;
       .ice-icon-stable {
         margin-right: 0;
       }
@@ -22,6 +23,7 @@
   }
   .ice-menu-item-selected {
     border-radius: 0 !important;
+    background: #5e83fb !important;
     .ice-menu-link {
       color: #fff;
     }

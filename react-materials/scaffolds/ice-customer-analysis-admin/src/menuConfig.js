@@ -33,7 +33,7 @@ const asideMenuConfig = [
   {
     name: '影片排期',
     path: '/schedule',
-    icon: 'copy',
+    icon: 'directory',
   },
   {
     name: '卖品转化',

@@ -64,19 +64,11 @@ class GenderChart extends React.Component {
         return rect;
       },
     });
-    const COLORS = ['#1890ff', '#f04864'];
+    const COLORS = ['#447eff', '#ee706d'];
     return (
       <div>
         <ChartTitle title="性别分布" />
-        <Chart
-          height={240}
-          data={data}
-          padding={[10]}
-          // plotBackground={{
-          //   stroke: '#eee',
-          // }}
-          forceFit
-        >
+        <Chart height={240} data={data} padding={[10]} forceFit>
           <Coord type="theta" radius={0.8} />
           <Tooltip showTitle={false} />
           <Geom
@@ -91,8 +83,8 @@ class GenderChart extends React.Component {
               htmlTemplate={(text, item) => {
                 const isFemale = item.point.sex === '女';
                 const src = isFemale
-                  ? 'https://gw.alipayobjects.com/zos/rmsportal/mweUsJpBWucJRixSfWVP.png'
-                  : 'https://gw.alipayobjects.com/zos/rmsportal/oeCxrAewtedMBYOETCln.png';
+                  ? 'https://img.alicdn.com/tfs/TB17DcgsAzoK1RjSZFlXXai4VXa-128-160.png'
+                  : 'https://img.alicdn.com/tfs/TB1R1kfsrvpK1RjSZFqXXcXUVXa-128-158.png';
                 const color = isFemale ? COLORS[1] : COLORS[0];
                 const IMG = `<img style="width:40px" src="${src}" /><br/>`;
                 return `<div style="text-align:center;color:${color}">${IMG}${(

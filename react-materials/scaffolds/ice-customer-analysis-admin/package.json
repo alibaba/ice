@@ -47,7 +47,7 @@
     "localization": false
   },
   "themeConfig": {
-    "primaryColor": "#0079f2"
+    "primaryColor": "#5e83fb"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
