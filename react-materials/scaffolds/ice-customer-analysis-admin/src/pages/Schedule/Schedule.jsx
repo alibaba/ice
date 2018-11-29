@@ -50,9 +50,9 @@ export default class Schedule extends Component {
 
   renderId = (value, index) => {
     const ranking = {
-      1: { color: '#ee706d' },
-      2: { color: '#f7da47' },
-      3: { color: '#58ca9a' },
+      1: { color: 'red' },
+      2: { color: 'rgba(255, 0, 0, 0.8)' },
+      3: { color: 'rgba(255, 0, 0, 0.6)' },
     };
     return (
       <div style={{ ...styles.ranking, ...ranking[index + 1] }}>
@@ -242,7 +242,7 @@ const styles = {
     marginRight: '5px',
   },
   score: {
-    color: '#5e83fb',
+    color: '#a2d1fe',
     fontSize: '15px',
     fontWeight: 'bold',
     fontStyle: 'italic',

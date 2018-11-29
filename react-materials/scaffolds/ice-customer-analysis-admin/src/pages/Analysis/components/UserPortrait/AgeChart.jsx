@@ -44,9 +44,9 @@ class Columnmarked extends React.Component {
       },
     ];
     const colorSet = {
-      YOUNG: '#5e83fb',
-      MIDDLE: '#ee706d',
-      OLD: '#58ca9a',
+      YOUNG: '#1890ff',
+      MIDDLE: '#f04864',
+      OLD: '#FED46B',
     };
     Shape.registerShape('interval', 'textInterval', {
       drawShape(cfg, group) {
@@ -131,7 +131,7 @@ class Columnmarked extends React.Component {
       <div>
         <ChartTitle title="年龄分布" />
         <Chart
-          height="240"
+          height={240}
           data={data}
           padding={[60, 20, 40, 60]}
           scale={scale}

@@ -50,35 +50,26 @@ export default class AreaChart extends React.Component {
       },
     };
     return (
-      <Chart height={500} data={data} scale={cols} forceFit padding={[40]}>
-        <Axis name="month" />
-        <Axis
-          name="value"
-          label={{
-            formatter: (val) => {
-              return (val / 10000).toFixed(1) + 'k';
-            },
-          }}
-        />
-        <Tooltip
-          crosshairs={{
-            type: 'line',
-          }}
-        />
-        <Geom
-          type="area"
-          color="#5e83fb"
-          position="month*value"
-          shape="smooth"
-        />
-        <Geom
-          type="line"
-          color="#447eff"
-          position="month*value"
-          shape="smooth"
-          size={2}
-        />
-      </Chart>
+      <div>
+        <Chart height={500} data={data} scale={cols} forceFit padding={[40]}>
+          <Axis name="month" />
+          <Axis
+            name="value"
+            label={{
+              formatter: (val) => {
+                return (val / 10000).toFixed(1) + 'k';
+              },
+            }}
+          />
+          <Tooltip
+            crosshairs={{
+              type: 'line',
+            }}
+          />
+          <Geom type="area" position="month*value" shape="smooth" />
+          <Geom type="line" position="month*value" shape="smooth" size={2} />
+        </Chart>
+      </div>
     );
   }
 }

@@ -1,4 +1,3 @@
-/* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import React, { Component } from 'react';
 import Menu, { Item as MenuItem } from '@icedesign/menu';
 import { withRouter, Link } from 'react-router-dom';

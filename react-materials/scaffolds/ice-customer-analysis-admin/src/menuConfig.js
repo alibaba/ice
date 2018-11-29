@@ -27,13 +27,13 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: '客流分析',
-    path: '/',
+    path: '/analysis',
     icon: 'home2',
   },
   {
     name: '影片排期',
     path: '/schedule',
-    icon: 'directory',
+    icon: 'copy',
   },
   {
     name: '卖品转化',

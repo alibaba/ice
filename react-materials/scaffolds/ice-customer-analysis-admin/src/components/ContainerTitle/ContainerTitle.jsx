@@ -30,7 +30,7 @@ const styles = {
     margin: '0',
     padding: '0',
     fonSize: '16px',
-    color: '#333',
+    color: 'rgba(0, 0, 0, 0.85)',
     fontWeight: '500',
   },
 };

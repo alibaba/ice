@@ -3,7 +3,7 @@
   left: 0;
   right: 0;
   z-index: 999;
-  background: #2f323f;
+  background: #0f2238;
   min-width: 1200px;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   .header-content {
@@ -20,10 +20,13 @@
     flex-direction: row;
     .ice-menu {
       background: transparent;
-      color: #fff;
+      color: #ffffff;
       .ice-menu-submenu-title,
       .ice-menu-item {
         font-size: 14px;
+        a:hover {
+          color: #2077ff;
+        }
       }
     }
   }
