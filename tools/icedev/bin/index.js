@@ -44,9 +44,9 @@ Object.entries(supportCommands).forEach(entry => {
     command = command.option(opt.name, opt.desc);
   });
 
-  command.action(function (cmd) {
+  command.action(function () {
     const fn = require(`../lib/${entry[0]}`);
-    const args = [cwd, cmd];
+    const args = [cwd].concat(Array.prototype.slice.call(arguments));
     fn.apply(global, args);
   });
 });

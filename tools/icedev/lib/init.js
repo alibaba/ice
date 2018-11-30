@@ -9,16 +9,18 @@ const home = require('user-home');
 const inquirer = require('inquirer');
 const rm = require('rimraf').sync;
 const spawn = require('cross-spawn');
-const logger = require('../../util/logger');
-const generate = require('../../util/generate');
-const localPath = require('../../util/local-path');
-const download = require('../../util/download');
+const logger = require('../util/logger');
+const generate = require('../util/generate');
+const localPath = require('../util/local-path');
+const download = require('../util/download');
 const validateName = require('validate-npm-package-name');
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
 
 
 function run(opt, argOpt) {
+  console.log({opt, argOpt});
+  return;
   let {template, name} = opt;
   const {offline, cwd} = argOpt;
   if (fs.readdirSync(cwd).length) {
