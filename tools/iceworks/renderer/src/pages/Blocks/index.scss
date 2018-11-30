@@ -1,0 +1,84 @@
+.blocks-page {
+  position: relative;
+  min-height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.blocks-header {
+  font-size: 24px;
+  height: 60px;
+  line-height: 60px;
+  background-color: #fff;
+  font-weight: 700;
+  padding-left: 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.blocks-body {
+  overflow: auto;
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.blocks-items-title {
+  padding: 0 10px;
+}
+
+.poject-config-dialog {
+  width: 500px;
+  height: 306px;
+  .next-dialog-footer {
+    padding: 0;
+  }
+}
+
+.project-config-footer {
+  background: #f3f3f3;
+  padding: 18px 0;
+  text-align: center;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.project-config-path {
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 24px;
+}
+.project-config-form-item-error-message {
+  font-size: 12px;
+  color: #fa7070;
+  margin-top: 6px;
+}
+
+.scaffold-items-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+.project-config-form {
+  .project-config-form-item {
+    margin-bottom: 10px;
+    .next-input {
+      width: 100%;
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+      cursor: pointer;
+      input {
+        cursor: pointer;
+      }
+    }
+    h3 {
+      font-size: 14px;
+      color: #333333;
+    }
+  }
+}
+
+.progress-dialog {
+  padding-bottom: 10px;
+}

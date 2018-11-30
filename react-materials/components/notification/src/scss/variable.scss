@@ -1,0 +1,90 @@
+// ice-notification variables
+// --------------------------------------------------
+
+////
+/// @module @icedesign/notification: ICE notification
+/// @tag IceNotification
+/// @category custom
+/// @family ice
+/// @varPrefix $ice-notification
+/// @classPrefix ice-notification
+////
+
+// -------------- variable --------------
+@import '~@icedesign/base/lib/core/index.scss';
+$notification-prefix-cls: '.ice-notification';
+
+// Statement: Normal
+// ----------------------------------------
+
+/// notification width
+/// @namespace statement/normal
+/// @type size
+$notification-width: 335px !default;
+
+/// notification padding
+/// @namespace statement/normal
+/// @type size
+$notification-padding: 16px !default;
+
+/// notification-margin-bottom
+/// @namespace statement/normal
+/// @type size
+$notification-margin-bottom: 10px !default;
+
+/// z-index
+/// @namespace statement/normal
+/// @type size
+$zindex-notification: 1101 !default; // 因为 next overlay 是 1001
+
+/// border-radius
+/// @namespace statement/normal
+/// @type size
+$border-radius-base: $corner-3;
+
+/// background color
+/// @namespace statement/normal
+/// @type color
+$component-background: #fff;
+
+/// font-size-base
+/// @namespace statement/normal
+/// @type size
+$font-size-base: $font-size-body-2;
+
+/// font-size-lg
+/// @namespace statement/normal
+/// @type size
+$font-size-lg: $font-size-subhead;
+
+/// heading color
+/// @namespace statement/normal
+/// @type color
+$heading-color: $color-text1-3;
+
+/// text-color-secondary
+/// @namespace statement/normal
+/// @type color
+$text-color-secondary: $color-text1-2;
+
+/// info-color
+/// @namespace statement/normal
+/// @type color
+$info-color: $color-notice-2;
+
+/// success-color
+/// @namespace statement/normal
+/// @type color
+$success-color: $color-success-2;
+
+/// error-color
+/// @namespace statement/normal
+/// @type color
+$error-color: $color-error-2;
+
+/// warning-color
+/// @namespace statement/normal
+/// @type color
+$warning-color: $color-warning-2;
+
+$ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);

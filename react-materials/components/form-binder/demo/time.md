@@ -64,57 +64,59 @@ class Time extends Component {
           onChange={this.formChange}
           ref="form"
         >
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>日期选择：</span>
-            <FormBinder name="datePicker" {...config}>
-              <DatePicker formater={["YYYY-MM-DD"]} style={{...style}} />
-            </FormBinder>
-            <FormError style={styles.formItemError} name="datePicker" />
-          </div>
+          <div style={styles.content}>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>日期选择：</span>
+              <FormBinder name="datePicker" {...config}>
+                <DatePicker formater={["YYYY-MM-DD"]} style={{...style}} />
+              </FormBinder>
+              <FormError style={styles.formItemError} name="datePicker" />
+            </div>
 
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>日期时间：</span>
-            <FormBinder name="dateTimePicker" {...config}>
-              <DatePicker showTime formater={["YYYY-MM-DD"]} style={{...style}} />
-            </FormBinder>
-            <FormError style={styles.formItemError} name="dateTimePicker" />
-          </div>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>日期时间：</span>
+              <FormBinder name="dateTimePicker" {...config}>
+                <DatePicker showTime formater={["YYYY-MM-DD"]} style={{...style}} />
+              </FormBinder>
+              <FormError style={styles.formItemError} name="dateTimePicker" />
+            </div>
 
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>月份选择：</span>
-            <FormBinder name="monthPicker" {...config}>
-              <MonthPicker formater={["YYYY-MM"]} style={{...style}} />
-            </FormBinder>
-            <FormError style={styles.formItemError} name="monthPicker" />
-          </div>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>月份选择：</span>
+              <FormBinder name="monthPicker" {...config}>
+                <MonthPicker formater={["YYYY-MM"]} style={{...style}} />
+              </FormBinder>
+              <FormError style={styles.formItemError} name="monthPicker" />
+            </div>
 
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>区间选择：</span>
-            <FormBinder name="rangePicker" {...config}>
-              <RangePicker formater={["YYYY-MM-DD"]} style={{...style}} />
-            </FormBinder>
-            <FormError style={styles.formItemError} name="rangePicker" />
-          </div>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>区间选择：</span>
+              <FormBinder name="rangePicker" {...config}>
+                <RangePicker formater={["YYYY-MM-DD"]} style={{...style}} />
+              </FormBinder>
+              <FormError style={styles.formItemError} name="rangePicker" />
+            </div>
 
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>区间时间：</span>
-            <FormBinder name="rangeRimePicker" {...config}>
-              <RangePicker showTime formater={["YYYY-MM-DD"]} />
-            </FormBinder>
-            <FormError style={styles.formItemError} name="rangeRimePicker" />
-          </div>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>区间时间：</span>
+              <FormBinder name="rangeRimePicker" {...config}>
+                <RangePicker showTime formater={["YYYY-MM-DD"]} />
+              </FormBinder>
+              <FormError style={styles.formItemError} name="rangeRimePicker" />
+            </div>
 
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>时间选择：</span>
-            <FormBinder name="timePicker" {...config}>
-              <TimePicker format="HH:mm:ss" style={{...style}} />
-            </FormBinder>
-            <FormError style={styles.formItemError} name="timePicker" />
-          </div>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>时间选择：</span>
+              <FormBinder name="timePicker" {...config}>
+                <TimePicker format="HH:mm:ss" style={{...style}} />
+              </FormBinder>
+              <FormError style={styles.formItemError} name="timePicker" />
+            </div>
 
-          <Button type="primary" style={{marginLeft: '80px'}}  onClick={this.validateFields}>
-            确 认
-          </Button>
+            <Button type="primary" style={{marginLeft: '80px'}}  onClick={this.validateFields}>
+              确 认
+            </Button>
+          </div>
         </FormBinderWrapper>
         
         <div style={styles.preview}>

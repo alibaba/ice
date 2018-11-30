@@ -1,0 +1,25 @@
+import React, { Component } from 'react';
+<%_ blocks.forEach(function(block) { _%>
+import <%= block.className %> from '<%= block.path %>';
+<%_ }); _%>
+
+import './idnex.scss';
+
+export default class <%= name %> extends Component {
+  static displayName = '<%= name %>';
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="<%= name %>-page">
+        <%_ blocks.forEach(function(block) { _%>
+        <<%= block.className %> />
+        <%_ }); _%>
+      </div>
+    );
+  }
+}

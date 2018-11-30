@@ -1,0 +1,61 @@
+{
+  "name": "@icedesign/iceworks-scaffolder",
+  "version": "0.3.0",
+  "description": "用于操作项目模板的工具集",
+  "main": "src/index.js",
+  "repository": "http://github.com/alibaba/ice/tools/iceworks-scaffolder",
+  "author": "宝码",
+  "license": "MIT",
+  "files": [
+    "src/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "jest",
+    "lint": "ejslint ./example/.iceworks/scaffold/page/*"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.0.0",
+    "@babel/template": "^7.1.0",
+    "@babel/traverse": "^7.1.0",
+    "@babel/types": "^7.0.0",
+    "babylon": "^7.0.0-beta.47",
+    "chalk": "^2.4.1",
+    "debug": "^3.1.0",
+    "deepmerge": "^2.1.1",
+    "ejs": "^2.6.1",
+    "is-plain-obj": "^1.1.0",
+    "jest": "^23.6.0",
+    "junk": "^2.1.0",
+    "lodash.get": "^4.4.2",
+    "mkdirp": "^0.5.1",
+    "npm-request-json": "^1.0.4",
+    "path-exists": "^3.0.0",
+    "prettier": "^1.13.7",
+    "request": "^2.87.0",
+    "rimraf": "^2.6.2",
+    "tar": "2.x",
+    "uppercamelcase": "^3.0.0",
+    "write": "^1.0.3"
+  },
+  "devDependencies": {
+    "babel-jest": "^23.6.0",
+    "ejs-lint": "^0.3.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "verbose": true,
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/lib/",
+      "/example/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "lib",
+      "example"
+    ]
+  }
+}

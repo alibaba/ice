@@ -1,0 +1,94 @@
+.iceworks-layout.ice-admin__layout {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-origin: center;
+  background-color: #f3f3f3;
+
+  & > .ice-admin__layout__body {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+
+    & > .ice-layout-aside {
+      background-color: $color-brand1-5;
+      user-select: none;
+      -webkit-app-region: drag;
+      app-region: drag;
+      z-index: 1;
+    }
+  }
+
+  // menu
+  .iceworks-menu {
+    padding-top: 35px;
+    a {
+      display: block;
+      text-align: center;
+      cursor: pointer;
+      padding: 10px 0;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7);
+      position: relative;
+      .menu-icon {
+        font-size: 18px;
+      }
+      .menu-tip {
+        padding-top: 4px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.7);
+        display: block;
+      }
+      &.active {
+        color: rgba(255, 255, 255, 1);
+        // border-left: 4px solid #fff;
+        span.menu-tip {
+          color: rgba(255, 255, 255, 1);
+        }
+        &:before {
+          content: '';
+          display: block;
+          width: 4px;
+          height: 38px;
+          position: absolute;
+          top: 10px;
+          left: 0;
+          border-radius: 2px;
+          background-color: #fff;
+        }
+      }
+    }
+    a:hover {
+      &:before {
+        content: '';
+        display: block;
+        width: 4px;
+        height: 38px;
+        position: absolute;
+        top: 10px;
+        left: 0;
+        border-radius: 2px;
+        background-color: rgba(255, 255, 255, 0.6);
+      }
+    }
+  }
+
+  .iceworks-help-menu {
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    text-align: center;
+    width: 68px;
+    padding: 10px;
+    box-sizing: border-box;
+    span {
+      display: block;
+      font-size: 12px;
+    }
+  }
+}
+
+.iceworks-aside {
+  position: relative;
+}

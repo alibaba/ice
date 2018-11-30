@@ -2,7 +2,6 @@
 title: Qrcode
 category: Components
 chinese: 二维码
-npm: \@icedesign/qrcode
 ---
 
 二维码组件

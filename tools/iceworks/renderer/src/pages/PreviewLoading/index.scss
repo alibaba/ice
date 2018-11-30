@@ -1,0 +1,87 @@
+body {
+  margin: 0;
+}
+.loading-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 12px;
+}
+.loading-text {
+  color: #999;
+  font-size: 12px;
+  margin: 0;
+}
+.previewer-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+.previewer-wrapper-mobile {
+  .previewer-content {
+    width: 375px;
+    height: 667px;
+  }
+}
+.previewer-wrapper-pad {
+  .previewer-content {
+    width: 768px * 0.75;
+    height: 1024px * 0.75;
+  }
+}
+.previewer-wrapper-desktop {
+  .previewer-content {
+    border: none;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+  }
+}
+.previewer-header {
+  background-color: #fff;
+  display: flex;
+  height: 50px;
+  flex: 0 0 50px;
+  align-content: center;
+  justify-content: space-between;
+  z-index: 1;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.previewer-switcher,
+.previewer-debugger {
+  display: flex;
+  flex-direction: row;
+}
+
+.previewer-body {
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  align-items: center;
+  justify-content: center;
+  .previewer-content {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.previewer-tools-item {
+  &:hover {
+    .iceworks {
+      color: #333;
+    }
+  }
+  .iceworks {
+    cursor: pointer;
+    padding: 0 20px;
+    color: #999;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

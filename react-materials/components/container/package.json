@@ -1,10 +1,11 @@
 {
   "name": "@icedesign/container",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "main": "lib/index.js",
   "files": [
-    "lib/"
+    "lib/",
+    "demo/"
   ],
   "scripts": {
     "start": "ice-devtools start",
