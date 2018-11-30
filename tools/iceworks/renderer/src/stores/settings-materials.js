@@ -15,6 +15,7 @@ class SettingsMaterials {
   @observable
   customMaterialsValue = [];
 
+  // 记录编辑时的自定义物料数据，用于编辑后取消逻辑
   beforeEditCustomMaterialsValue = [];
 
   constructor() {
@@ -146,24 +147,8 @@ class SettingsMaterials {
 
   @action
   switchCustomMaterial(checked, selectedMaterial) {
-    this.customMaterialsValue = this.customMaterialsValue.map((m) => {
-      if (equalSource(m.source, selectedMaterial.source)) {
-        m.checked = checked;
-      }
-      return m;
-    });
-
+    this.customMaterialsValue = this.filterMaterialsByChecked(checked, selectedMaterial, this.customMaterialsValue);
     this.save();
-  }
-
-  @action
-  changeBuiltInMaterial(checked, selectedMaterial) {
-    this.builtInMaterialsValue = this.builtInMaterialsValue.map((m) => {
-      if (equalSource(m.source, selectedMaterial.source)) {
-        m.checked = checked;
-      }
-      return m;
-    });
   }
 
   checkSwitch(checked, selectedMaterial) {
@@ -195,7 +180,7 @@ class SettingsMaterials {
   switchBuitInMaterial(checked, selectedMaterial) {
     this.checkSwitch(checked, selectedMaterial)
       .then(() => {
-        this.changeBuiltInMaterial(checked, selectedMaterial);
+        this.builtInMaterialsValue = this.filterMaterialsByChecked(checked, selectedMaterial, this.builtInMaterials);
         this.save();
       })
       .catch(() => {});
@@ -218,7 +203,7 @@ class SettingsMaterials {
   getSaveBuiltInMaterials() {
     return this.builtInMaterials
       .filter((m) => {
-        return m.checked == true;
+        return m.checked === true;
       })
       .map((item) => {
         return {
@@ -230,9 +215,18 @@ class SettingsMaterials {
       });
   }
 
-  filterBuiltInMaterials(materials) {
+  filterMaterialsByChecked = (checked, selectedMaterial, materials) => {
+    return materials.map((m) => {
+      if (equalSource(m.source, selectedMaterial.source)) {
+        m.checked = checked;
+      }
+      return m;
+    });
+  }
+
+  filterBuiltInMaterials = (materials) => {
     // 如果用户物料源配置是否在推荐的物料源集合里，如果在则默认打开推荐列表的选项
-    let builtInMaterialsValue = RECOMMEND_MATERIALS.map((recommendMaterial) => {
+    const builtInMaterialsValue = RECOMMEND_MATERIALS.map((recommendMaterial) => {
       const hasInUserMaterials = materials.some((userMaterial) => {
         return (
           equalSource(recommendMaterial.source, userMaterial.source) &&
@@ -245,7 +239,7 @@ class SettingsMaterials {
     return filterMaterial(builtInMaterialsValue); // 过滤内网用户可见
   }
 
-  filterCustomMaterials(materials) {
+  filterCustomMaterials = (materials) => {
     return materials.filter((material) => {
       return !material.builtIn;
     });
