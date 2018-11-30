@@ -57,9 +57,9 @@ const RECOMMEND_MATERIALS = [
     builtIn: true,
     logo: 'https://img.alicdn.com/tfs/TB1V78io_mWBKNjSZFBXXXxUFXa-400-400.png',
     description:
-      'Fusion 官方默认站点物料源，http://fusion.design 的自定义物料源能力即将在10月份开放，敬请期待！',
+      'Fusion官方物料源。聚合，极致，效率尽在 https://fusion.design',
     source:
-      'http://alifd.oss-cn-hangzhou.aliyuncs.com/assets/react-materials.json',
+      'https://fusion.design/api/v1/sites/1/materials',
     tags: ['推荐', 'React', 'Fusion'],
     type: 'react',
   },
