@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 const program = require('commander');
-const colors = require('colors');
+const chalk = require('chalk');
 const cwd = process.cwd();
+const checkVersion = require('../util/check-version');
 
 const supportCommands = {
   init: 'generate a new project from a template',
@@ -19,7 +20,7 @@ program
 Object.entries(supportCommands).forEach(entry => {
   program
     .command(entry[0])
-    .description(entry[1])
+    .description(chalk.green(entry[1]))
     .action(function() {
       const fn = require(`../lib/${entry[0]}`);
       const args = [cwd].concat(Array.prototype.slice.call(arguments))
@@ -27,9 +28,10 @@ Object.entries(supportCommands).forEach(entry => {
     });
 });
 
-program.command('*').description('help').action(function() {
-  console.log(colors.red('No sub command matched, please use --help'));
+program.command('*').description(chalk.gray('help')).action(function() {
+  console.log(chalk.red('No sub command matched, please use --help'));
 })
 
-
-program.parse(process.argv);
+checkVersion(function() {
+  program.parse(process.argv);
+});
