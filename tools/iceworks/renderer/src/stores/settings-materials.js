@@ -19,7 +19,6 @@ class SettingsMaterials {
 
   constructor() {
     let materials = settings.get('materials') || [];
-    debugger
     materials = materials
       .filter((material) => {
         return material.source && material.name;
