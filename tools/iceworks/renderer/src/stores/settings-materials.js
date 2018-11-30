@@ -1,7 +1,7 @@
 import { Feedback } from '@icedesign/base';
 import { observable, action, computed, toJS } from 'mobx';
 import Notification from '@icedesign/notification';
-
+import cloneDeep from 'lodash.clonedeep';
 import equalSource from '../lib/equal-source';
 import filterMaterial from '../lib/filter-material';
 import RECOMMEND_MATERIALS from '../datacenter/recommendMaterials';
@@ -15,8 +15,11 @@ class SettingsMaterials {
   @observable
   customMaterialsValue = [];
 
+  beforeEditCustomMaterialsValue = [];
+
   constructor() {
     let materials = settings.get('materials') || [];
+    debugger
     materials = materials
       .filter((material) => {
         return material.source && material.name;
@@ -72,13 +75,12 @@ class SettingsMaterials {
     });
   }
 
-  reset() {
+  resetBuiltInMaterials() {
     const { defaultMaterials } = shared;
     const saveMaterials = defaultMaterials.map((item) => ({ ...item }));
-    this.customMaterialsValue = this.filterCustomMaterials(saveMaterials);
     this.builtInMaterialsValue = this.filterBuiltInMaterials(saveMaterials);
     settings.set('materials', saveMaterials);
-    this.notification('设置变更已保存');
+    this.notification('官方物料源重置成功');
   }
 
   save() {
@@ -104,6 +106,7 @@ class SettingsMaterials {
       source: '',
       builtIn: false,
       editing: true,
+      type: 'add',
     });
   }
 
@@ -114,8 +117,22 @@ class SettingsMaterials {
   }
 
   @action
-  updateCustomMaterial(index) {
+  editCustomMaterial(index) {
+    this.beforeEditCustomMaterialsValue[index] = toJS(this.customMaterialsValue[index]);
     this.customMaterialsValue[index].update = true;
+    this.customMaterialsValue[index].type = 'edit';
+  }
+
+  @action
+  cancelEditCustomMaterial(index) {
+    if (this.customMaterialsValue[index].type === 'add') {
+      // 新增后取消
+      this.customMaterialsValue.splice(index, 1);
+    } else {
+      // 编辑后取消
+      this.customMaterialsValue[index] = this.beforeEditCustomMaterialsValue[index];
+      this.customMaterialsValue[index].update = false;
+    }
   }
 
   @action
@@ -127,6 +144,18 @@ class SettingsMaterials {
   updateCustomMaterialSource = (index, value) => {
     this.customMaterialsValue[index].source = value;
   };
+
+  @action
+  switchCustomMaterial(checked, selectedMaterial) {
+    this.customMaterialsValue = this.customMaterialsValue.map((m) => {
+      if (equalSource(m.source, selectedMaterial.source)) {
+        m.checked = checked;
+      }
+      return m;
+    });
+
+    this.save();
+  }
 
   @action
   changeBuiltInMaterial(checked, selectedMaterial) {
