@@ -22,6 +22,7 @@
     "inquirer": "^6.2.0",
     "kebab-case": "^1.0.0",
     "metalsmith": "^2.3.0",
+    "minimatch": "^3.0.4",
     "mkdirp": "^0.5.1",
     "ora": "^3.0.0",
     "request": "^2.88.0",
