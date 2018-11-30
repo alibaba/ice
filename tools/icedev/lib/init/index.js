@@ -1,88 +1,52 @@
 
 const exists = require('fs').existsSync;
 const path = require('path');
+const fs = require('fs');
 const ora = require('ora');
 const home = require('user-home');
-const tildify = require('tildify');
-const chalk = require('chalk');
+// const tildify = require('tildify');
+// const chalk = require('chalk');
 const inquirer = require('inquirer');
 const rm = require('rimraf').sync;
 const spawn = require('cross-spawn');
 const logger = require('../../util/logger');
-const generate = require('../lib/generate');
+const generate = require('../../util/generate');
 const localPath = require('../../util/local-path');
 const download = require('../../util/download');
-
+const validateName = require('validate-npm-package-name');
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
 
 
+function run(opt, argOpt) {
+  let {template, name} = opt;
+  const {offline, cwd} = argOpt;
+  if (fs.readdirSync(cwd).length) {
+    logger.fatal('Workdir %s is not empty.', cwd);
+    return;
+  }
 
-
-/**
- * Settings.
- */
-program.parse(process.argv);
-let template = program.args[0];
-const rawName = program.args[1];
-const inPlace = !rawName || rawName === '.';
-const name = inPlace ? path.relative('../', process.cwd()) : rawName;
-const to = path.resolve(rawName || '.');
-const tmp = path.join(home, '.ice-templates', template);
-if (program.offline) {
-  console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`);
-  template = tmp;
-}
-
-/**
- * Padding.
- */
-
-process.on('exit', () => {
-  console.log();
-});
-
-if (inPlace || exists(to)) {
-  inquirer
-    .prompt([
-      {
-        type: 'confirm',
-        message: inPlace
-          ? 'Generate project in current directory?'
-          : 'Target directory exists. Continue?',
-        name: 'ok',
-      },
-    ])
-    .then((answers) => {
-      if (answers.ok) {
-        run();
-      }
-    })
-    .catch(logger.fatal);
-} else {
-  run();
-}
-
-/**
- * Check, download and generate the project.
- */
-
-function run() {
+  const tmp = path.join(home, '.ice-templates', template);
+  if (offline) {
+    template = tmp;
+  }
+  console.log('template', template, isLocalPath(template));
   // check if template is local
   if (isLocalPath(template)) {
     const templatePath = getTemplatePath(template);
+    console.log('templatePath', templatePath);
     if (exists(templatePath)) {
-      generate(name, templatePath, to, (err, callback) => {
+      generate(name, templatePath, cwd, (err, callback) => {
         if (err) logger.fatal(err);
         console.log();
         logger.success('Generated "%s".', name);
-        tryNPMInstall({ to, callback });
+        tryNPMInstall({ to: cwd, callback });
       });
     } else {
       logger.fatal('Local template "%s" not found.', template);
     }
   } else {
-    downloadAndGenerate(template);
+    downloadAndGenerate({template, tmp, to:cwd, name});
   }
 }
 
@@ -92,7 +56,7 @@ function run() {
  * @param {String} template
  */
 
-function downloadAndGenerate(template) {
+function downloadAndGenerate({template, tmp, to, name}) {
   const spinner = ora('downloading template');
   spinner.start();
 
@@ -110,7 +74,8 @@ function downloadAndGenerate(template) {
     })
     .catch((err) => {
       spinner.stop();
-      logger.fatal(`Failed to download repo ${template} : ${err.message}`);
+      logger.fatal(`Failed to download repo ${template} : ${err.stack}`);
+
     });
 }
 
@@ -146,6 +111,35 @@ function tryNPMInstall({ to, callback }) {
 }
 
 
-module.exports = function init(cwd) {
-  console.log(cwd);
+module.exports = function init(cwd, opt) {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        message: 'what is your project name?',
+        name: 'name',
+        validate: function(input) {
+          return validateName(input).validForNewPackages;
+        },
+      },
+      {
+        type: 'list',
+        message: 'Which template do you wanna use?',
+        name: 'template',
+        choices: ['ice-materials-template', 'vue', 'universal'],
+      },
+    ])
+    .then((answers) => {
+      if (answers.template !== 'universal') {
+        // react/ vue 跳过第三问
+        return answers;
+      }
+      return inquirer.prompt([{
+        type: 'input',
+        message: 'what is your template name?',
+        name: 'template',
+      },]).then(ans => Object.assign(answers, ans));
+    }).then(answers => {
+      run(answers, Object.assign({cwd}, opt));
+    }).catch(logger.fatal);
 }

@@ -36,17 +36,17 @@ program
   .version(require('../package').version).usage('[command] [options]');
 
 Object.entries(supportCommands).forEach(entry => {
-  const command = program
+  let command = program
     .command(entry[0])
     .description(chalk.green(entry[1].desc));
 
   entry[1].options && entry[1].options.forEach(opt => {
-    command.option(opt.name, opt.desc);
+    command = command.option(opt.name, opt.desc);
   });
 
-  command.action(function () {
+  command.action(function (cmd) {
     const fn = require(`../lib/${entry[0]}`);
-    const args = [cwd].concat(Array.prototype.slice.call(arguments))
+    const args = [cwd, cmd];
     fn.apply(global, args);
   });
 });

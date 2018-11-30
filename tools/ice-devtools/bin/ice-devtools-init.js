@@ -49,17 +49,17 @@ help();
 /**
  * Settings.
  */
-program.parse(process.argv);
-let template = program.args[0];
-const rawName = program.args[1];
-const inPlace = !rawName || rawName === '.';
-const name = inPlace ? path.relative('../', process.cwd()) : rawName;
-const to = path.resolve(rawName || '.');
-const tmp = path.join(home, '.ice-templates', template);
-if (program.offline) {
-  console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`);
-  template = tmp;
-}
+// program.parse(process.argv);
+// let template = program.args[0];
+// const rawName = program.args[1];
+// const inPlace = !rawName || rawName === '.';
+// const name = inPlace ? path.relative('../', process.cwd()) : rawName;
+// const to = path.resolve(rawName || '.');
+// const tmp = path.join(home, '.ice-templates', template);
+// if (program.offline) {
+//   console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`);
+//   template = tmp;
+// }
 
 /**
  * Padding.
