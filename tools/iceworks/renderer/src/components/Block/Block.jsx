@@ -10,7 +10,7 @@ import handleViewport from 'react-in-viewport';
 import './index.scss';
 
 function withAlicdnImage(url) {
-  if (url && url.indexOf('.alicdn.com') !== -1) {
+  if (url && url.indexOf('img.alicdn.com') !== -1) {
     return url + '_250x250.jpg';
   }
   return url;
