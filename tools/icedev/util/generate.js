@@ -13,6 +13,7 @@ const ask = require('./ask');
 const filter = require('./filter');
 const transform = require('./transform');
 const logger = require('./logger');
+const debug = require('debug')('ice:generate');
 
 // register handlebars helper
 Handlebars.registerHelper('if_eq', (a, b, opts) => {
@@ -34,7 +35,7 @@ Handlebars.registerHelper('unless_eq', (a, b, opts) => {
 
 module.exports = function generate(name, src, dest, done) {
   const opts = getOptions(name, src);
-
+  debug('%j', {name, src, dest});
   const metalsmith = Metalsmith(path.join(src, 'template'));
   metalsmith.frontmatter(false)
   const data = Object.assign(metalsmith.metadata(), {
@@ -60,7 +61,8 @@ module.exports = function generate(name, src, dest, done) {
     .use(askQuestions(opts.prompts))
     .use(filterFiles(opts.filters))
     .use(renderTemplateFiles(opts.skipInterpolation))
-    .use(transformFile(opts));
+    .use(transformFile(opts))
+    .ignore(['*.jsx', '*.js']);
 
   if (typeof opts.metalsmith === 'function') {
     opts.metalsmith(metalsmith, opts, helpers);
