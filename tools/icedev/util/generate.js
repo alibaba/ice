@@ -62,7 +62,7 @@ module.exports = function generate(name, src, dest, done) {
     .use(filterFiles(opts.filters))
     .use(renderTemplateFiles(opts.skipInterpolation))
     .use(transformFile(opts))
-    .ignore(['*.jsx', '*.js']);
+    // .ignore(['*.jsx', '*.js']);
 
   if (typeof opts.metalsmith === 'function') {
     opts.metalsmith(metalsmith, opts, helpers);

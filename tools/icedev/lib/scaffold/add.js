@@ -41,36 +41,36 @@ function downloadTemplate(template) {
  * @param{Object} opt 参数
  */
 module.exports = async function addBlock(type, cwd, opt) {
-  const templateName = `ice-${type}-block-template`;
+  const templateName = `ice-${type}-app-template`;
   const answer = await inquirer.prompt([{
     type: 'input',
     name: 'name',
-    message: 'block name:',
+    message: 'scaffold name:',
     validate: (value) => {
       if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
-        return 'Name must be a Upper Camel Case word, e.g. ExampleBlock.';
+        return 'Name must be a Upper Camel Case word, e.g. ExampleApp.';
       }
       return true;
     },
   }]);
-  const blockName = answer.name;
+  const scaffold = answer.name;
 
-  const blockPath = path.join(cwd, 'blocks', blockName);
+  const blockPath = path.join(cwd, 'scaffolds', scaffold);
   let templatePath = getTemplatePath(templateName);
 
-  debug('name: %j', {templateName, blockName, templatePath});
+  debug('name: %j', {templateName, scaffold, templatePath});
   let p = Promise.resolve();
   if (!isLocalPath(templatePath) || !exists(templatePath)) {
     p = p.then(() => downloadTemplate(templateName));
     templatePath = await p;
   }
 
-  generate(blockName, templatePath, blockPath, (err, callback) => {
+  generate(scaffold, templatePath, blockPath, (err, callback) => {
     if (err) {
       console.log(err);
       logger.fatal(err);
     }
-    logger.success('Generated "%s".', blockName);
+    logger.success('Generated "%s".', scaffold);
     callback();
   });
 }
