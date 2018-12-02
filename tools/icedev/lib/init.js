@@ -4,8 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const ora = require('ora');
 const home = require('user-home');
-// const tildify = require('tildify');
-// const chalk = require('chalk');
+
 const inquirer = require('inquirer');
 const rm = require('rimraf').sync;
 const spawn = require('cross-spawn');
@@ -19,8 +18,7 @@ const getTemplatePath = localPath.getTemplatePath;
 
 
 function run(opt, argOpt) {
-  console.log({opt, argOpt});
-  return;
+
   let {template, name} = opt;
   const {offline, cwd} = argOpt;
   if (fs.readdirSync(cwd).length) {
@@ -128,7 +126,7 @@ module.exports = function init(cwd, opt) {
         type: 'list',
         message: 'Which template do you wanna use?',
         name: 'template',
-        choices: ['ice-materials-template', 'vue', 'universal'],
+        choices: ['ice-react-materials-template', 'ice-vue-materials-template', 'universal'],
       },
     ])
     .then((answers) => {
