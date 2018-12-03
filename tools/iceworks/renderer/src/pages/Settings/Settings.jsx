@@ -34,7 +34,6 @@ const registries = filterRegistry(originRegistries).concat([
 const FormItem = Form.Item;
 const { Group: RadioGroup } = Radio;
 
-@inject('settingsMaterials')
 @observer
 class Setting extends Component {
   constructor(props) {
@@ -114,18 +113,6 @@ class Setting extends Component {
     }
   };
 
-  handleSaveMaterials = (dataSource) => {
-    this.udpateSettings('materials', dataSource);
-  };
-
-  handleAddMaterial = () => {
-    this.props.settingsMaterials.addCustomMaterials();
-  };
-
-  handleResetMaterials = () => {
-    this.props.settingsMaterials.reset();
-  };
-
   render() {
     const formItemLayout = {
       className: 'settings-item',
@@ -157,19 +144,6 @@ class Setting extends Component {
     return (
       <div className="settings">
         <div key="r1" className="settings-body">
-          <Separator
-            title="官方推荐物料源"
-            additional={
-              <span>
-                <Button size="small" onClick={this.handleAddMaterial}>
-                  新增
-                </Button>{' '}
-                <Button size="small" onClick={this.handleResetMaterials}>
-                  重置
-                </Button>
-              </span>
-            }
-          />
           <RecommendMaterials />
           <CustomMaterials />
           <Separator title="通用" />
