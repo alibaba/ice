@@ -4,8 +4,7 @@
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
-    "ice": "./bin/ice.js",
-    "ice-scripts": "./bin/ice.js"
+    "ice": "./bin/ice.js"
   },
   "scripts": {
     "cover": "http-server ./ -o -c-1",
