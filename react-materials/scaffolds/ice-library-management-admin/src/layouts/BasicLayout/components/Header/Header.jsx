@@ -4,7 +4,7 @@ import { Balloon, Icon } from '@icedesign/base';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import FoundationSymbol from 'foundation-symbol';
 import IceImg from '@icedesign/img';
-import { headerMenuConfig } from '../../menuConfig';
+import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 import './Header.scss';
 
@@ -149,19 +149,15 @@ export default class Header extends Component {
             >
               <ul>
                 <li className="user-profile-menu-item">
-                  <Link to="/">
-                    <FoundationSymbol type="person" size="small" />
-                    我的主页
-                  </Link>
+                  <FoundationSymbol type="person" size="small" />
+                  我的主页
                 </li>
                 <li className="user-profile-menu-item">
-                  <Link to="/">
-                    <FoundationSymbol type="repair" size="small" />
-                    设置
-                  </Link>
+                  <FoundationSymbol type="repair" size="small" />
+                  设置
                 </li>
                 <li className="user-profile-menu-item">
-                  <Link to="/">
+                  <Link to="/user/login">
                     <FoundationSymbol type="compass" size="small" />
                     退出
                   </Link>

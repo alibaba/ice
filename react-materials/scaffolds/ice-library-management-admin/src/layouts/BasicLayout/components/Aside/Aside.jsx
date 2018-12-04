@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Menu, { Item as MenuItem } from '@icedesign/menu';
 import { withRouter, Link } from 'react-router-dom';
 import FoundationSymbol from 'foundation-symbol';
-import { asideMenuConfig } from '../../menuConfig';
+import { asideMenuConfig } from '../../../../menuConfig';
 
 import './Aside.scss';
 
