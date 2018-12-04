@@ -1,0 +1,28 @@
+{
+  "name": "@icedesign/greeting-block-example",
+  "version": "1.0.0",
+  "description": "示例区块",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": ["src/", "lib/"],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "keywords": ["ice", "block"],
+  "dependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "peerDependencies": {
+    "ice-devtool": "^2.0.0"
+  },
+  "blockConfig": {
+    "name": "greeting-block",
+    "title": "示例区块",
+    "categories": ["其他"]
+  }
+}
