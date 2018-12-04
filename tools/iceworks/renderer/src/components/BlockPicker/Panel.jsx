@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 
 import BlockCategory from '../BlockCategory/';
 import CustomBlockCategory from '../BlockCategory/Custom';
+import BlockGroupCategory from '../BlockGroupCategory/';
 import BlockSlider from '../BlockSlider/';
 
 @inject('newpage', 'blocks', 'customBlocks')
@@ -24,6 +25,7 @@ class BlockPicker extends Component {
     super(props);
 
     this.idPrefix = 'Block-' + Date.now().toString(32) + '-';
+    this.iceMaterialsSource = 'ice.alicdn.com/assets/react-materials.json';
   }
 
   UNSAFE_componentWillMount() {
@@ -50,9 +52,16 @@ class BlockPicker extends Component {
     });
   };
 
+  handleTabChange = (key) => {
+    this.props.newpage.setCurrentTabKey(key);
+  };
+
   render() {
     const { materials, isLoading, type } = this.props.blocks;
     const { style = {} } = this.props;
+    const hasIceMaterials = materials.some( material => 
+      material.source.includes(this.iceMaterialsSource) 
+    );
     if (!isLoading && materials.length == 0) {
       return (
         <div
@@ -90,6 +99,7 @@ class BlockPicker extends Component {
             }}
             size="small"
             type="bar"
+            onChange={this.handleTabChange}
             tabBarExtraContent={
               <div
                 style={{
@@ -143,6 +153,17 @@ class BlockPicker extends Component {
                 tabClassName="custom-material-tab"
               >
                 <CustomBlockCategory />
+              </Tab.TabPane>
+            )}
+            {/* 区块组合，目前只在有飞冰物料源时展示 */}
+            {hasIceMaterials && (
+              <Tab.TabPane
+                tab="区块组合"
+                key="-2"
+                contentStyle={{ position: 'relative' }}
+                tabClassName="custom-material-tab"
+              >
+                <BlockGroupCategory />
               </Tab.TabPane>
             )}
           </Tab>

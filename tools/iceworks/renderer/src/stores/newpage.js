@@ -31,6 +31,8 @@ class NewPage {
   savePageVisible = false; // 控制 page 保存 dialog 的显示
   @observable
   isCreatingValue = false; // 用于控制 pageConfig 确定按钮 loading 状态
+  @observable
+  currentTabKey = "1"; // 记录当前选中的Tab
 
   @computed
   get isCreating() {
@@ -143,6 +145,11 @@ class NewPage {
   @action
   setCurrentLayout(layout) {
     this.currentLayout = layout;
+  }
+
+  @action
+  setCurrentTabKey(key) {
+    this.currentTabKey = key;
   }
 }
 

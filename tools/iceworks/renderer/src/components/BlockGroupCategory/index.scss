@@ -1,0 +1,15 @@
+.blcoks-wrapper {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+
+.block-groups {
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-left: 14px;
+  padding-top: 10px;
+}

@@ -379,8 +379,9 @@ class CreatePage extends Component {
   };
 
   render() {
-    const { projects } = this.props;
+    const { projects, newpage } = this.props;
     const currentProject = projects.currentProject;
+    const currentTabKey = newpage.currentTabKey;
     // 当前项目为空，则不渲染新建页面的组件
     if (!currentProject) return null;
     // 脚手架类型
@@ -410,7 +411,12 @@ class CreatePage extends Component {
                 }}
               />
             </div>
-            <BlockPickerPreviewer title="已选区块" />
+            {
+              // 当前tab为区块组合时，不展示
+              currentTabKey !== "-2" && (
+                <BlockPickerPreviewer title="已选区块" />
+              )
+            }
           </div>
           <div className="create-page-footer">
             <Button onClick={this.handleCancelCreate}>
