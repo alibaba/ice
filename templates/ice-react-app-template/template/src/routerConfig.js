@@ -3,11 +3,16 @@
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
 import Home from './pages/Home';
+import About from './pages/About';
 
 const routerConfig = [
   {
     path: '/',
     component: Home,
+  },
+  {
+    path: '/about',
+    component: About,
   },
 ];
 

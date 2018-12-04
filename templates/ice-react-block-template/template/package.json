@@ -1,5 +1,5 @@
 {
-  "name": "{{name}}-block",
+  "name": "{{name}}",
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
@@ -17,7 +17,6 @@
       {{#each categories}}
         "{{@key}}"{{#if @last}} {{else}},{{/if}}
       {{/each}}
-    ],
-    "screenshot": ""
+    ]
   }
 }

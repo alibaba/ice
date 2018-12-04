@@ -1,3 +1,4 @@
+// 默认配置
 const BLOCK_CATEGORIES = [
   '表格',
   '表单',
@@ -60,4 +61,5 @@ module.exports = {
       },
     },
   },
+  completeMessage: '区块添加完成',
 };

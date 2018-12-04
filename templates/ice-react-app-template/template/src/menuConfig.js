@@ -2,8 +2,8 @@
 // headerMenuConfig：头部导航配置
 // asideMenuConfig：侧边导航配置
 
-const headerMenuConfig = [];
+// const headerMenuConfig = [];
 
-const asideMenuConfig = [];
+// const asideMenuConfig = [];
 
-export { headerMenuConfig, asideMenuConfig };
+// export { headerMenuConfig, asideMenuConfig };
