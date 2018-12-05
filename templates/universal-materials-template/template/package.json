@@ -1,0 +1,20 @@
+{
+  "name": "{{name}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "author": "{{author}}",
+  "scripts": {
+    "deploy": "npm run generate && npm run sync",
+    "generate": "ice-devtools generate",
+    "sync": "ice-devtools sync",
+    "lint": "npm run lint:nofix -- --fix",
+    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "ice-devtools": "^2.0.0"
+  },
+  "materialConfig": {
+    "type": "react"
+  }
+}
