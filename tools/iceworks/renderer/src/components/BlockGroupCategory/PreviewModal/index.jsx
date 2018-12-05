@@ -6,13 +6,13 @@ import Icon from '../../Icon';
 
 import './index.scss';
 
-@inject('blocks')
+@inject('blockGroups')
 @observer
 class BlockGroupPreviewModal extends Component {
   static displayName = 'PreviewModal';
 
   static propTypes = {
-    blocks: PropTypes.object.isRequired,
+    blockGroups: PropTypes.object.isRequired,
   };
 
   UNSAFE_componentWillMount() {
@@ -20,25 +20,31 @@ class BlockGroupPreviewModal extends Component {
   }
 
   render() {
-    const { blocks } = this.props;
-    return null;
-    // return (
-    //   <Modal
-    //     isOpen={blocks.showModal}
-    //     onRequestClose={blocks.closeModal}
-    //     className="preview-modal"
-    //     style={{ overlay: { background: '#fff', zIndex: '10000' } }}
-    //   >
-    //     <img
-    //       className="preview-block-img"
-    //       src={blocks.previewBlock.screenshot}
-    //       alt={blocks.previewBlock.name}
-    //     />
-    //     <div className="preview-block-close" onClick={blocks.closeModal}>
-    //       <Icon type="close" className="preview-block-close-icon" />
-    //     </div>
-    //   </Modal>
-    // );
+    const { blockGroups } = this.props;
+    return (
+      <Modal
+        isOpen={blockGroups.showModal}
+        onRequestClose={blockGroups.closeModal}
+        className="preview-modal"
+        style={{ overlay: { background: '#fff', zIndex: '10000' } }}
+      >
+        {
+          blockGroups.previewBlocks.map( (block, index) => {
+            return (
+              <img
+                key={index}
+                className="preview-block-img"
+                src={block.screenshot}
+                alt={block.name}
+              />
+            )
+          })
+        }
+        <div className="preview-block-close" onClick={blockGroups.closeModal}>
+          <Icon type="close" className="preview-block-close-icon" />
+        </div>
+      </Modal>
+    );
   }
 }
 

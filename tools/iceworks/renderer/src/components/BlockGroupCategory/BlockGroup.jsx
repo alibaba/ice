@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import Tooltip from 'rc-tooltip';
+import PropTypes from 'prop-types';
 
 import Icon from '../Icon';
 
 import './BlockGroup.scss';
 
-import { inject, observer } from 'mobx-react';
 
 @inject('blocks', 'blockGroups')
 @observer
-export default class BlockGroup extends Component {
+class BlockGroup extends Component {
+
+  static propTypes = {
+    handleOpenPreviewPage: PropTypes.func,
+    generatePage:  PropTypes.func
+  };
+
+  static defaultProps = {
+    handleOpenPreviewPage: () => {},
+    generatePage: () => {}
+  };
 
   constructor(props) {
     super(props);
     this.iceMaterialsSource = 'ice.alicdn.com/assets/react-materials.json';
   }
 
-  // openBlockImgPreview = (event, blocks) => {
-  //   event.stopPropagation();
-  //   blockGroups.openModal(blocks);
-  // };
+  openBlockImgPreview = (event, blocks) => {
+    event.stopPropagation();
+    const { blockGroups } = this.props;
+    blockGroups.openModal(blocks);
+  };
 
   /**
    * 根据区块组合的name，获取对应的区块对象。
@@ -41,10 +53,10 @@ export default class BlockGroup extends Component {
   }
 
   render() {
-    const { blockGroup } = this.props;
+    const { blockGroup, handleOpenPreviewPage, generatePage } = this.props;
     const blocks = this.getBlocks();
     return (
-      <div className="block-group" onClick={this.handleClick}>
+      <div className="block block-group" onClick={this.handleClick}>
         <div className="screenshot">
           {
             blocks.map( (block, index) => {
@@ -77,8 +89,24 @@ export default class BlockGroup extends Component {
                 <Icon type="02magnifyingglasspluszoom" />
               </Tooltip>
             </span>
+            <span className="preview" onClick={() => {
+              handleOpenPreviewPage(blocks);
+            }}>
+              <Tooltip placement={'bottom'} overlay={'预览页面'}>
+                <Icon type="eye" />
+              </Tooltip>
+            </span>
+            <span className="preview" onClick={() => {
+              generatePage(blocks);
+            }}>
+              <Tooltip placement={'bottom'} overlay={'生成页面'}>
+                <Icon type="paper-plane" />
+              </Tooltip>
+            </span>
           </div>
       </div>
     );
   }
 }
+
+export default BlockGroup

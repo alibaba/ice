@@ -15,10 +15,14 @@ class BlockPicker extends Component {
 
   static propTypes = {
     onSelected: PropTypes.func,
+    handleOpenPreviewPage: PropTypes.func,
+    generatePage:  PropTypes.func
   };
 
   static defaultProps = {
     onSelected: () => {},
+    handleOpenPreviewPage: () => {},
+    generatePage: () => {}
   };
 
   constructor(props) {
@@ -58,10 +62,11 @@ class BlockPicker extends Component {
 
   render() {
     const { materials, isLoading, type } = this.props.blocks;
-    const { style = {} } = this.props;
+    const { style = {}, handleOpenPreviewPage, generatePage, newpage } = this.props;
     const hasIceMaterials = materials.some( material => 
       material.source.includes(this.iceMaterialsSource) 
     );
+    console.log(newpage.currentTabKey)
     if (!isLoading && materials.length == 0) {
       return (
         <div
@@ -88,6 +93,28 @@ class BlockPicker extends Component {
         </div>
       );
     }
+    const tabBarExtraContent = newpage.currentTabKey !== "-2" ? (
+      <div
+        style={{
+          height: 39,
+          padding: '0 10px 0 0',
+          lineHeight: '24px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <Input
+          size="medium"
+          style={{ width: 160 }}
+          hasClear
+          placeholder="输入关键字"
+          value={this.props.blocks.originKeywords}
+          onChange={this.handleSearchBlock}
+          addonAfter="搜索"
+        />
+      </div>
+    ) : null;
+
     return (
       <div className="block-picker-panel" style={style}>
         <div className="block-picker-panel-wrapper">
@@ -100,27 +127,7 @@ class BlockPicker extends Component {
             size="small"
             type="bar"
             onChange={this.handleTabChange}
-            tabBarExtraContent={
-              <div
-                style={{
-                  height: 39,
-                  padding: '0 10px 0 0',
-                  lineHeight: '24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <Input
-                  size="medium"
-                  style={{ width: 160 }}
-                  hasClear
-                  placeholder="输入关键字"
-                  value={this.props.blocks.originKeywords}
-                  onChange={this.handleSearchBlock}
-                  addonAfter="搜索"
-                />
-              </div>
-            }
+            tabBarExtraContent={tabBarExtraContent}
           >
             {materials.map((material, index) => {
               const blocksWithCategory = material.blocksWithCategory;
@@ -163,7 +170,10 @@ class BlockPicker extends Component {
                 contentStyle={{ position: 'relative' }}
                 tabClassName="custom-material-tab"
               >
-                <BlockGroupCategory />
+                <BlockGroupCategory 
+                  generatePage={generatePage}
+                  handleOpenPreviewPage={handleOpenPreviewPage}
+                />
               </Tab.TabPane>
             )}
           </Tab>

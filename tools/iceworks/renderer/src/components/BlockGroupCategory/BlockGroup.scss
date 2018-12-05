@@ -1,3 +1,5 @@
+@import "../Block/index.scss";
+
 $block-width: 261px;
 $block-padding: 3px;
 $block-screenshot-width: $block-width - $block-padding * 2;
@@ -5,75 +7,20 @@ $block-screenshot-height: $block-screenshot-width / 16 * 9 * 2;
 $block-screenshot-img-width: $block-screenshot-width - 6px;
 $block-screenshot-img-height: $block-screenshot-height - 6px;
 
-.block-group {
-  background-color: #fff;
-  border-radius: 3px;
-  box-shadow: 0px 0px 2px 1px rgba(47, 53, 55, 0.1);
-  margin-bottom: 12px;
-  margin-left: 6px;
-  margin-right: 6px;
-  overflow: hidden;
-  position: relative;
+.block.block-group {
   width: $block-width;
   height: $block-screenshot-height + 44px + 6px;
   padding: $block-padding;
-  cursor: pointer;
-  transition: all 0.1s ease-in;
-  &:hover {
-    box-shadow: 0px 0px 2px 1px rgba(48, 128, 254, 1);
-  }
   .screenshot {
     width: $block-screenshot-width;
     height: $block-screenshot-height;
-    background-color: #f1f1f1;
-    padding: 3px;
-    border-radius: 2px;
-    text-align: center;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow-y: auto;
     .screenshot-img {
       width: $block-screenshot-img-width;
-      // height: $block-screenshot-img-width / 16 * 9;
-      display: block;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: 50% 50%;
-    }
-  }
-  .title-wrapper {
-    font-size: 12px;
-    height: 44px;
-    padding-top: 5px;
-    color: #666;
-    overflow: hidden;
-    .title-body {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .title {
-      flex: auto;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .class-name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .title {
-      font-size: 14px;
-      height: 20px;
-      line-height: 20px;
-    }
-    .class-name {
-      font-size: 12px;
-      height: 18px;
-      line-height: 18px;
-      color: #999;
+      height: auto;
     }
   }
 }

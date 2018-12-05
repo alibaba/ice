@@ -15,15 +15,14 @@ class BlockGroups {
   @observable isLoading = true;
   @observable blocks = []; // 单个区块组合中包含的区块列表
   @observable showModal = false; // 图片预览弹窗
-  @observable previewBlockGroup = {}; // 当前预览的区块
+  @observable previewBlocks = []; // 当前预览的区块组合
   @observable blockGroups = [
     {
       name: 'blockGroup1',                 // 区块组合名称
       description: 'some description...',  // 区块组合描述
       blocks: [                            // 包含的区块
           "ability-introduction",   
-          "ablity-items",                  // 对应物料源数据区块的 block.name
-          "about"
+          "ablity-items"                  // 对应物料源数据区块的 block.name
       ]
     },
     {
@@ -69,9 +68,9 @@ class BlockGroups {
   }
 
   @action
-  openModal = (blockGroup) => {
+  openModal = (blocks) => {
     this.showModal = true;
-    this.previewBlockGroup = blockGroup;
+    this.previewBlocks = blocks;
   };
 
   @action

@@ -12,13 +12,18 @@ import './index.scss';
 @observer
 class BlockGroupCategory extends Component {
   static propTypes = {
+    handleOpenPreviewPage: PropTypes.func,
+    generatePage:  PropTypes.func
   };
 
   static defaultProps = {
+    handleOpenPreviewPage: () => {},
+    generatePage: () => {}
   };
 
   render() {
     const { blockGroups } = this.props.blockGroups;
+    const { generatePage, handleOpenPreviewPage } = this.props;
     return (
       <div className="blcoks-wrapper">
         <div className="block-groups">
@@ -27,6 +32,8 @@ class BlockGroupCategory extends Component {
               <BlockGroup
                 key={index}
                 blockGroup={blockGroup}
+                handleOpenPreviewPage={handleOpenPreviewPage}
+                generatePage={generatePage}
               />
             )})
           }
