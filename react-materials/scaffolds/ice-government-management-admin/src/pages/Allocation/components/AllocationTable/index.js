@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table, Pagination } from '@icedesign/base';
+import { Button, Table, Pagination, Feedback } from '@icedesign/base';
 
 const mockData = [
   {
@@ -53,12 +53,14 @@ const mockData = [
 ];
 
 export default class AllocationTable extends Component {
-  static displayName = 'AllocationTable';
+  handleClick = () => {
+    Feedback.toast.success('需要管理员账户才能分配账号');
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-      current: 2,
+      current: 1,
     };
   }
 
@@ -71,7 +73,7 @@ export default class AllocationTable extends Component {
   render() {
     const actionRender = () => {
       return (
-        <Button size="large" style={styles.button}>
+        <Button size="large" style={styles.button} onClick={this.handleClick}>
           分配账号
         </Button>
       );
@@ -111,7 +113,6 @@ const styles = {
   },
   button: {
     margin: '0 8px',
-    padding: '0 16px',
     letterSpacing: '2px',
   },
   table: {
