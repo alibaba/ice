@@ -1,16 +1,71 @@
 ---
-title: 定制构建器
-order: 3
+title: ice-scripts 使用指南
+order: 1
 category: 进阶指南
 ---
 
-ICE 应用的工程 [ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts) 使用了 `webpack` 作为构建的基石，并且提供了零配置的构建，ice-scripts 是一个包含 dev 和 build 的命令行工具，默认提供了最佳实践的工程配置，支持开发和构建飞冰体系的工程项目，同时也支持自定配置 webpack，你可以想象他为可配置版的 create-react-app。
+飞冰项目默认使用 [ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts) 作为开发工具，ice-scripts 提供了丰富的功能帮助我们提高开发效率：
 
-但是如果你对 `webpack` 配置有特别的需求，可以参考本文对默认配置进行定制。
+- 命令行工具
+- 主题配置
+- 代理配置
+- 自定义 webpack 配置
+- Mock
+- ……
 
-## 要求
+本文会讲述 ice-scripts 完整的使用指南。PS: 请保证 ice-scripts 版本为 1.1.0 及以上。
 
-- ice-scripts 依赖版本号为 1.1.0 及以上。
+## 命令行工具
+
+ice-scripts 提供了 `dev/build` 的开发命令，如果使用 Iceworks 开发，那么大多数时候你不需要关心这些命令。
+
+### ice dev
+
+启动调试服务
+
+```bash
+$ ice dev --help
+
+Usage: ice-dev [options]
+
+Options:
+  -p, --port <port>      服务端口号
+  -h, --host <host>      服务主机名
+  --https                开启 https
+  --analyzer             开启构建分析
+  --analyzer-port        设置分析端口号
+  --disabled-reload      关闭 hot reload
+  --project-type <type>  项目类型, node|web (default: "web")
+  --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime (default: "polyfill")
+```
+
+比如使用 3000 端口启动 dev server，
+
+```bash
+$ ice dev -p=3000
+```
+
+比如开启 https
+
+```bash
+$ ice dev --https
+```
+
+### ice build
+
+构建代码
+
+```plain
+$ ice build --help
+
+Usage: ice-dev [options]
+
+Options:
+  --debug                debug 模式下不压缩
+  --hash                 构建后的资源带 hash 版本
+  --project-type <type>  项目类型, node|web (default: "web")
+  --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime (default: "polyfill")
+```
 
 ## 主题配置 - themeConfig
 
@@ -40,16 +95,16 @@ ICE 提供了主题功能，以满足业务和品牌多样化的视觉需求，�
 
 ## 代理配置 - proxyConfig
 
-代理功能是前后端分离项目中最常见的需求，在 ice-scripts 工程中，也提供了快速配置的入口，只需要在 package.json 中新增 proxyConfig 字段即可进行代理配置。
+代理功能是前后端联调时很常见的需求，为了代码维护性考虑前端请求后端接口时写的都是相对路径如 `/api/getFoo.json`，此时如果我们在本地通过访问`http://127.0.0.1:4444` 来调试页面，所有相对路径的 API 最终都会变成 `http://127.0.0.1:4444/api/getFoo.json`，因为我们调试服务并没有提供这些接口，这些请求自然都会以 404 而结束。这时候我们就需要代理功能出场了，在 package.json 中新增 proxyConfig 字段即可进行代理配置：
 
 #### 配置示例
 
 ```json
 {
   "proxyConfig": {
-    "/**": {
+    "/api/**": {
       "enable": true,
-      "target": "http://127.0.0.1:6001"
+      "target": "http://example.com/api"
     }
   }
 }
@@ -78,11 +133,12 @@ axios({
   .catch((err) => {});
 ```
 
-请求发出后将会被代理到  `http://127.0.0.1:6001/api/proxy`
+请求发出后将会被代理到  `http://example.com/api/proxy`
 
 #### 注意事项
 
-代理并不解决跨域问题，代理目标需要开启 CORS 配置 [HTTP 访问控制（CORS）](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS)
+- 代理之后我们可以通过相对路径的接口正常请求到后端服务，但是如果后端接口做了帐号登录鉴权之类的事情请求一样回失败，因为此时调试页面里并没有登录相关的 cookie 信息
+- 代理之后可以理解为请求是从服务端发出，因此绕过了浏览器的同源策略，一定程度可以解决跨域问题，但一样无法绕过上文提到的 cookie 鉴权等相关问题
 
 ## 构建配置 - buildConfig
 
@@ -125,6 +181,8 @@ axios({
 
 ice-scripts 除了提供 buildConfig 用于快速的配置入口之外，也支持自定义配置需求，几乎可完全自定义 webpack 的所有配置项；在项目根目录新建 `.webpackrc.js` 文件对默认配置进行定制和覆盖。`.webpackrc.js` 文件需要导出一个函数，其支持的参数可以参考 `webpack` [官方文档](https://webpack.js.org/concepts/output/)。
 
+**正常情况下，我们不推荐使用 `.webpackrc.js` 的方式自定义配置，因为这可能给项目的长期维护带来负担。**如有需求可以先反馈给飞冰团队评估是否可以直接内置到 ice-scripts 或者通过 buildConfig 的方式支持。
+
 `.webpackrc.js` 文件采用操作系统中安装的 Node.js 所支持的语法，所以可以使用除了 `import`, `export` 等之外的几乎所有 ES6 语法。
 
 ```js
@@ -142,7 +200,9 @@ module.exports = (context) => {
 };
 ```
 
-### 如修改编译的路径为 dist
+以下为一些常见的自定义需求：
+
+### 修改编译的路径为 dist
 
 ```js
 const path = require('path');
@@ -158,7 +218,7 @@ module.exports = (context) => {
 
 ### 字体本地化配置
 
-@icedesign/base@0.2.4 版本后字体文件已添加到包中。默认使用网络 cdn 字体文件，如果需要将字体本地化的，按照如下配置修改即可。
+`@icedesign/base@0.2.4` 版本后字体文件已添加到包中。默认使用网络 cdn 字体文件，如果需要将字体本地化的，按照如下配置修改即可。
 
 1. 修改 webpackrc.js 增加一个 alias 指定字体文件目录。
 
@@ -190,44 +250,7 @@ font-custom-path 变量名自定义字体文件路径, 修改 package.json 文�
 
 配置好后重启服务即可, 务必确认 @icedesign/base 版本大于 0.2.4
 
-### 配置索引
-
-> 给出常用的配置示例
-
-- entry
-- outputPath
-- publicPath
-- define
-- externals
-- alias
-
-#### entry
-
-除了在 package.json 的 buildConfig 里配置 entry 之外，你也可以在 `.webpackrc.js` 按照 webpack 的配置方式配置 entry 入口文件.
-
-```js
-module.exports = (context) => {
-  return {
-    entry: 'src/index.js',
-  };
-};
-```
-
-### outputPath
-
-配置 webpack 的 [output.path](https://webpack.js.org/configuration/output/#output-path) 属性。
-
-```js
-module.exports = (context) => {
-  return {
-    output: {
-      path: path.resolve(__dirname, 'public/assets'),
-    },
-  };
-};
-```
-
-### publicPath
+### 修改 publicPath
 
 配置 webpack 的 [output.publicPath](https://webpack.js.org/configuration/output/#output-publicpath) 属性。
 
@@ -242,7 +265,7 @@ module.exports = (context) => {
 };
 ```
 
-### definePlugin
+### DefinePlugin
 
 [官方文档](https://webpack.js.org/plugins/define-plugin/)
 
@@ -258,7 +281,7 @@ module.exports = (context) => {
     plugins: [
       new webpack.DefinePlugin({
         // 此处不能省略 JSON.stringify，否则构建过程会出现语法问题
-        ASSETS_VERSION: JSON.stringify(''),
+        ASSETS_VERSION: JSON.stringify('0.0.1'),
       }),
     ],
   };
@@ -269,23 +292,6 @@ module.exports = (context) => {
 
 ```javascript
 console.log(ASSETS_VERSION);
-```
-
-### externals
-
-配置 webpack 的 [externals](https://webpack.js.org/configuration/externals/) 属性。
-比如：
-
-```js
-// 配置 react 和 react-dom 不进行构建
-module.exports = (context) => {
-  return {
-    externals: {
-      react: 'window.React',
-      'react-dom': 'window.ReactDOM',
-    },
-  };
-};
 ```
 
 ### alias
@@ -318,61 +324,9 @@ import Utility from '../../utilities/utility';
 import Utility from 'Utilities/utility';
 ```
 
-## 环境变量
-
-### ice dev
-
-可通过环境变量配置一些参数，包括：
-
-```bash
-$ ice dev --help
-
-Usage: ice-dev [options]
-
-Options:
-  -p, --port <port>      服务端口号
-  -h, --host <host>      服务主机名
-  --https                开启 https
-  --analyzer             开启构建分析
-  --analyzer-port        设置分析端口号
-  --disabled-reload      关闭 hot reload
-  --project-type <type>  项目类型, node|web (default: "web")
-  --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime (default: "polyfill")
-```
-
-比如使用 3000 端口启动 dev server，
-
-```bash
-$ ice dev -p=3000
-```
-
-比如开启 https
-
-```bash
-$ ice dev --https
-```
-
-### ice build
-
-可通过环境变量配置一些参数，包括：
-
-```plain
-$ ice build --help
-
-Usage: ice-dev [options]
-
-Options:
-  --debug                debug 模式下不压缩
-  --hash                 构建后的资源带 hash 版本
-  --project-type <type>  项目类型, node|web (default: "web")
-  --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime (default: "polyfill")
-```
-
-## 其他
-
 ### Mock
 
-ice dev 支持 mock 功能，在项目根目录的 `mock/index.js` 中进行配置，支持基于 require 动态分析的实时刷新，支持 ES6 语法，以及友好的出错提示：
+ice-scripts 支持 mock 功能，在项目根目录的 `mock/index.js` 中进行配置，支持基于 require 动态分析的实时刷新，支持 ES6 语法，以及友好的出错提示：
 
 ```js
 export default {
