@@ -24,19 +24,29 @@ npm start
 
 ## 引入组件
 
-根据组件文档，安装对应的组件。
-
 ```bash
+# 根据组件文档，安装对应的组件。
 npm install @icedesign/base @icedesign/img --save
+
+# create-react-app 支持 sass https://facebook.github.io/create-react-app/docs/adding-a-sass-stylesheet
+tnpm install node-sass --save-dev
 ```
 
 修改 `src/App.js`，引入 `Button` 和 `Img` 组件。
 
 ```jsx
 import React, { Component } from 'react';
+// 全量引入基础组件样式
+import '@icedesign/base/index.scss';
+// 引入基础组件脚本，无工程辅助情况下 import { Button } from '@icedesign/base'; 会引入所有 js
 import Button from '@icedesign/base/lib/button';
+// 引入业务组件脚本
 import Img from '@icedesign/img';
+// 引入业务组件样式
+import '@icedesign/img/lib/style.js';
+
 import './App.css';
+
 
 const image =
   'https://img.alicdn.com/tfs/TB1saOBbYGYBuNjy0FoXXciBFXa-218-58.png';
@@ -55,19 +65,6 @@ class App extends Component {
 export default App;
 ```
 
-修改 `src/App.css`，在文件顶部引入组件的样式。
-
-```css
-@import '~@icedesign/base/index.scss';
-@import '~@icedesign/img/main.css';
-
-.App {
-  text-align: center;
-}
-
-...
-```
-
 现在你应该能看到页面上已经有了蓝色的 `Button` 组件，接下来就可以继续选用其他组件开发应用了。
 
 其他开发流程你可以参考 `create-react-app` 的官方文档。
@@ -78,9 +75,9 @@ export default App;
 
 上面的方法虽然能够正常运行组件，但是可以发现几个问题：
 
-- 基础组件的样式是全量引入的
-- 引入基础组件需要额外增加 `lib/button` 的二级路径
-- 业务组件需要分开引入 js 和 sass
+- 基础组件的样式需要全量引入的
+- 引入基础组件需要额外增加 `lib/button` 的二级路径并且每个组件都需要单独 import
+- 业务组件需要分开引入脚本和样式
 
 要解决这些问题，我们需要对 `create-react-app` 进行一些工程定制。我们建议使用社区流行的 [react-app-rewired](https://github.com/timarney/react-app-rewired) 进行自定义配置。
 
