@@ -29,7 +29,7 @@ module.exports = (opts = {}) => {
     config = config.default || config;
 
     if (typeof config === 'function') {
-      // 支持 .webpack.rc.js 导出一个 function，用于向用户传递一些上下文环境
+      // 支持 .webpackrc.js 导出一个 function，用于向用户传递一些上下文环境
 
       // 提供给开发者的上下文
       const context = {
