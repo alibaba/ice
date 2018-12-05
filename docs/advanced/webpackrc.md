@@ -265,6 +265,8 @@ module.exports = (context) => {
 };
 ```
 
+[详细说明](https://github.com/alibaba/ice/wiki/%E8%AE%BE%E7%BD%AE%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E8%B7%AF%E5%BE%84-publicPath)
+
 ### DefinePlugin
 
 [官方文档](https://webpack.js.org/plugins/define-plugin/)
