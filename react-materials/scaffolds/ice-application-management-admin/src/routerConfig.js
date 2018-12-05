@@ -4,18 +4,12 @@
 
 import BasicLayout from './layouts/BasicLayout';
 import Home from './pages/Home';
-import NotFound from './pages/NotFound';
 
 const routerConfig = [
   {
     path: '/',
     layout: BasicLayout,
     component: Home,
-  },
-  {
-    path: '*',
-    layout: BasicLayout,
-    component: NotFound,
   },
 ];
 

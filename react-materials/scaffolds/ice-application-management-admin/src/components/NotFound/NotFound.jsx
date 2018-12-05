@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import IceContainer from '@icedesign/container';
-import './BasicNotFound.scss';
+import './NotFound.scss';
 
-export default class BasicNotFound extends Component {
-  static displayName = 'BasicNotFound';
+export default class NotFound extends Component {
+  static displayName = 'NotFound';
 
   render() {
     return (

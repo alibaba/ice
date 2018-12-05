@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { Link, withRouter } from 'react-router-dom';
-import { asideMenuConfig } from '../../menuConfig';
+import { asideMenuConfig } from '../../../../menuConfig';
 
 @withRouter
 export default class Aside extends Component {
