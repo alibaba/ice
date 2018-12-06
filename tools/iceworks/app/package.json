@@ -6,7 +6,6 @@
   "version": "2.13.0",
   "author": {
     "name": "Alibaba Group Holding Limited",
-    "email": "ice-admin@alibaba-inc.com",
     "url": "http://alibaba.github.io/ice"
   },
   "repository": {
