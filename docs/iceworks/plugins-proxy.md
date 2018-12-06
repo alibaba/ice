@@ -4,8 +4,6 @@ category: Iceworks
 order: 2
 ---
 
-# 插件-代理配置
-
 Iceworks 提供代理配置功能，该功能可将匹配的路径代理到目标路径上。
 
 ## 代理设置

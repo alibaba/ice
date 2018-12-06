@@ -4,8 +4,6 @@ category: 项目开发手册
 order: 2
 ---
 
-# 组件 Upload 接口数据格式约定
-
 #### onChange
 
 文件状态改变的回调，返回为：

@@ -4,6 +4,7 @@
 const path = require('path');
 const fs = require('fs');
 const colors = require('chalk');
+const webpack = require('webpack');
 
 // const jsonConfigFile = '.webpackrc';
 const jsConfigFile = '.webpackrc.js';
@@ -22,10 +23,19 @@ module.exports = (opts = {}) => {
     console.log(colors.green('Info:'), '注入 .webpackrc.js 的配置');
     // no cache
     delete require.cache[webpackRCJSPath];
-    const config = require(webpackRCJSPath); // eslint-disable-line
+    let config = require(webpackRCJSPath); // eslint-disable-line
+
     // support es module
-    if (config.default) {
-      Object.assign(userConfig, config.default);
+    config = config.default || config;
+
+    if (typeof config === 'function') {
+      // 支持 .webpackrc.js 导出一个 function，用于向用户传递一些上下文环境
+
+      // 提供给开发者的上下文
+      const context = {
+        webpack,
+      };
+      Object.assign(userConfig, config(context));
     } else {
       Object.assign(userConfig, config);
     }
