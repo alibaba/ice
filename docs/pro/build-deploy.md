@@ -4,8 +4,6 @@ order: 9
 category: ICE Design Pro
 ---
 
-# 打包发布
-
 点击项目面板上的构建项目按钮，将开发的构建出最终的  `js` 、 `css` 、 `images`  等资源。
 
 ![](https://cdn.yuque.com/lark/0/2018/png/71071/1530782919320-e60c5f7d-bbab-40fc-8531-3e5e589fc420.png)

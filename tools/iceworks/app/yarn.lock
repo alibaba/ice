@@ -272,7 +272,7 @@
 
 "@iceland/dsl2code@^1.0.0":
   version "1.0.1"
-  resolved "http://registry.antfin-inc.com/@iceland/dsl2code/download/@iceland/dsl2code-1.0.1.tgz#3f6b49fb4578cbd63873b777e895148c612dd38a"
+  resolved "http://registry.npmjs.com/@iceland/dsl2code/download/@iceland/dsl2code-1.0.1.tgz#3f6b49fb4578cbd63873b777e895148c612dd38a"
   integrity sha1-P2tJ+0V4y9Y4c7d36JUUjGEt04o=
   dependencies:
     "@iceland/intelligent-code" "^1.0.0"
@@ -282,7 +282,7 @@
 
 "@iceland/intelligent-code@^1.0.0":
   version "1.0.1"
-  resolved "http://registry.antfin-inc.com/@iceland/intelligent-code/download/@iceland/intelligent-code-1.0.1.tgz#99f27eb65344196fac3e51b3bd8e59da5993133a"
+  resolved "http://registry.npmjs.com/@iceland/intelligent-code/download/@iceland/intelligent-code-1.0.1.tgz#99f27eb65344196fac3e51b3bd8e59da5993133a"
   integrity sha1-mfJ+tlNEGW+sPlGzvY5Z2lmTEzo=
   dependencies:
     babel-generator "^6.26.1"
@@ -294,7 +294,7 @@
 
 "@iceland/material-engine@^1.0.0":
   version "1.0.1"
-  resolved "http://registry.antfin-inc.com/@iceland/material-engine/download/@iceland/material-engine-1.0.1.tgz#20f235e253998b03b09758c56a6483098570154d"
+  resolved "http://registry.npmjs.com/@iceland/material-engine/download/@iceland/material-engine-1.0.1.tgz#20f235e253998b03b09758c56a6483098570154d"
   integrity sha1-IPI14lOZiwOwl1jFamSDCYVwFU0=
   dependencies:
     babel-core "^6.26.3"
