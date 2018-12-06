@@ -6,7 +6,9 @@ chinese: ICE 表单粘合剂
 
 ICE 表单数据获取方案。
 
-> 说明：如果使用的是 FormBinder 0.x 的版本，请移步到 [0.x 参考文档](https://github.com/alibaba/ice/wiki/IceFormBinder-0.x)
+**说明：**
+1. 如果使用的是 FormBinder 0.x 的版本，请移步到 [0.x 参考文档](https://github.com/alibaba/ice/wiki/IceFormBinder-0.x)。
+2. 如果使用的是 FormBinder 1.x 的版本，需要确保依赖的 react 版本在 [16.2.0](https://github.com/facebook/react/releases/tag/v16.2.0) 以上，1.x 版本使用了 React.Fragments API，支持 FormBinderWrapper 组件返回多个节点。
 
 ## 安装和升级
 
@@ -27,7 +29,7 @@ npm install @icedesign/form-binder
 
 ### 参数（Props）
 
-| 方法名           | 说明                                                                     | 类型                                                     | 默认值 |
+| 方法名         | 说明                                                                     | 类型                                                     | 默认值 |
 | :------------- | :----------------------------------------------------------------------- | :------------------------------------------------------- | :----- |
 | validateFields | 校验并获取一组输入域的值与 Error，若 fieldNames 参数为空，则校验全部组件 | ([fieldNames: string[]],callback(errors,values)) => void |        |
 
@@ -43,7 +45,7 @@ npm install @icedesign/form-binder
 
 ### 参数（Props）
 
-| 属性参数                      | 说明                                                                  | 类型            | 默认值   |
+| 属性参数                  | 说明                                                                  | 类型            | 默认值   |
 | :------------------------ | :-------------------------------------------------------------------- | :-------------- | :------- |
 | value                     | 表单值                                                                | object          | {}       |
 | onChange                  | 任一表单域的值发生改变时的回调                                        | function(value) | () => {} |
@@ -63,36 +65,40 @@ FormBinder 支持的属性包含以下两部分：
 
 ### 参数（Props）
 
-| 属性参数          | 说明                 | 类型                        | 默认值     |
-| :------------ | :------------------- | :-------------------------- | :--------- |
-| rules         | 校验规则，参考下方文档          | object[]                      |            |
-| name​         | 表单域名称           | string                      |            |
-| setFieldValue | 设置一个输入控件的值 | Function(fieldName: string) |            |
-| getFieldValue | 获取一个输入控件的值 | Function(fieldName: string) |            |
-| triggerType   | 指定合适的触发事件   | string                      | 'onChange' |
+| 属性参数      | 说明                   | 类型                        | 默认值     |
+| :------------ | :--------------------- | :-------------------------- | :--------- |
+| rules         | 校验规则，参考下方文档 | object[]                    |            |
+| name​         | 表单域名称             | string                      |            |
+| setFieldValue | 设置一个输入控件的值   | Function(fieldName: string) |            |
+| getFieldValue | 获取一个输入控件的值   | Function(fieldName: string) |            |
+| triggerType   | 指定合适的触发事件     | string                      | 'onChange' |
 
 **校验规则**
 
 ### 参数（Props）
 
-| 参数       | 说明                                                                                            | 类型                                    | 默认值    |
-| :--------- | :---------------------------------------------------------------------------------------------- | :-------------------------------------- | :-------- |
-| enum       | 枚举类型                                                                                        | string                                  |           |
-| len        | 字段长度                                                                                        | number                                  |           |
-| max        | 最大长度                                                                                        | number                                  |           |
-| message    | 校验文案                                                                                        | string                                  | ReactNode |  |
-| min        | 最小长度                                                                                        | number                                  |           |
-| pattern    | 正则表达式校验                                                                                  | RegExp                                  |           |
-| required   | 是否必选                                                                                        | boolean                                 | `false`   |
-| transform  | 校验前转换字段值                                                                                | function(value) => transformedValue:any |           |
-| type       | 内建校验类型，[可选项](https://github.com/yiminghe/async-validator#type)                        | string                                  | 'string'  |
-| validator  | 自定义校验（注意，[callback 必须被调用](https://github.com/ant-design/ant-design/issues/5155)） | function(rule, value, callback)         |           |
-| whitespace | 必选时，空格是否会被视为错误                                                                    | boolean                                 | `false`   |
+| 参数       | 说明                         | 类型                                    | 默认值   |
+| :--------- | :--------------------------- | :-------------------------------------- | :------- |
+| enum       | 枚举类型                     | string                                  |          |
+| len        | 字段长度                     | number                                  |          |
+| max        | 最大长度                     | number                                  |          |
+| message    | 校验文案                     | string                                  |          |
+| min        | 最小长度                     | number                                  |          |
+| pattern    | 正则表达式校验               | RegExp                                  |          |
+| required   | 是否必选                     | boolean                                 | `false`  |
+| transform  | 校验前转换字段值             | function(value) => transformedValue:any |          |
+| type       | 内建校验类型                 | string                                  | 'string' |
+| validator  | 自定义校验                   | function(rule, value, callback)         |          |
+| whitespace | 必选时，空格是否会被视为错误 | boolean                                 | `false`  |
+
+> 内建校验类型，[可选项](https://github.com/yiminghe/async-validator#type)
+> 自定义校验（注意，[callback 必须被调用](https://github.com/yiminghe/async-validator#validate)）
 
 **推荐：**
 
-1. 建议统一使用 async-validator 的校验规则，尽量不要使用表单元素的相关检验属性，这样做有利于代码的可维护性和优雅
-2. 更多高级用法可参考 [async-validator](https://github.com/yiminghe/async-validator)。
+1. 建议统一使用 async-validator 的校验规则，尽量不要使用表单元素的相关检验属性，这样做有利于代码的可维护性和优雅。
+2. 内建校验类型，[可选项](https://github.com/yiminghe/async-validator#type)。
+3. 更多高级用法可参考 [async-validator](https://github.com/yiminghe/async-validator)。
 
 ### FormError
 
