@@ -8,7 +8,7 @@ import CustomBlockCategory from '../BlockCategory/Custom';
 import BlockGroupCategory from '../BlockGroupCategory/';
 import BlockSlider from '../BlockSlider/';
 
-@inject('newpage', 'blocks', 'customBlocks')
+@inject('newpage', 'blocks', 'customBlocks', 'blockGroups')
 @observer
 class BlockPicker extends Component {
   static displayName = 'BlockPicker';
@@ -29,7 +29,6 @@ class BlockPicker extends Component {
     super(props);
 
     this.idPrefix = 'Block-' + Date.now().toString(32) + '-';
-    this.iceMaterialsSource = 'ice.alicdn.com/assets/react-materials.json';
   }
 
   UNSAFE_componentWillMount() {
@@ -62,11 +61,8 @@ class BlockPicker extends Component {
 
   render() {
     const { materials, isLoading, type } = this.props.blocks;
+    const { blockGroups } = this.props.blockGroups;
     const { style = {}, handleOpenPreviewPage, generatePage, newpage } = this.props;
-    const hasIceMaterials = materials.some( material => 
-      material.source.includes(this.iceMaterialsSource) 
-    );
-    console.log(newpage.currentTabKey)
     if (!isLoading && materials.length == 0) {
       return (
         <div
@@ -163,7 +159,7 @@ class BlockPicker extends Component {
               </Tab.TabPane>
             )}
             {/* 区块组合，目前只在有飞冰物料源时展示 */}
-            {hasIceMaterials && (
+            {blockGroups.length > 0 && (
               <Tab.TabPane
                 tab="区块组合"
                 key="-2"

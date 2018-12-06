@@ -4,6 +4,7 @@ import uuid from 'uuid';
 
 import { getBlocks } from '../datacenter/materials';
 import projects from './projects';
+import blockGroups from './block-groups';
 
 import BlocksSearch from './blocks-search';
 
@@ -41,6 +42,7 @@ class Blocks {
         this.reset();
       }
     });
+    this.iceMaterialsSource = 'ice.alicdn.com/assets/react-materials.json';
   }
 
   @action
@@ -66,8 +68,11 @@ class Blocks {
     if (Array.isArray(materials) && materials.length > 0) {
       materials.forEach((material) => {
         materialsValue.push(new BlocksSearch(material));
+        // 当有飞冰物料源时，fetch组合推荐；
+        if( material.source.includes(this.iceMaterialsSource) ) {
+          blockGroups.fetch();
+        }
       });
-
       this.reset();
       this.materialsValue = materialsValue; // 所有 blocks 数据
       this.isLoading = false;

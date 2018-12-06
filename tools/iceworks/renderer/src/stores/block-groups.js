@@ -1,6 +1,7 @@
 import { observable, action, computed, autorun } from 'mobx';
 import uppercamelcase from 'uppercamelcase';
 import uuid from 'uuid';
+import request from 'request';
 
 import { getBlocks } from '../datacenter/materials';
 import blocks from './blocks';
@@ -65,6 +66,43 @@ class BlockGroups {
 
   constructor() {
   
+  }
+
+  getBlockGroups() { 
+    return new Promise((resolve) => {
+      request('https://ice.alicdn.com/pre-assets/block-group.json', (err, res, body) => {
+        if (err) {
+          console.error('区块组合请求失败', uri); // eslint-disable-line
+          resolve(null); // 总数是返回值
+        } else {
+          resolve(body);
+        }
+      });
+    });
+  }
+
+  @action
+  fetch() {
+    this.isLoading = true;
+    this.getBlockGroups()
+      .then(this.fetchSuccess)
+      .catch(this.fetchFailed);
+  }
+
+  @action.bound
+  fetchSuccess(body) {
+    const blockGroups = JSON.parse(body);
+    if (Array.isArray(blockGroups) && blockGroups.length > 0) {
+      this.blockGroups = blockGroups;
+    } else {
+      this.blockGroups = [];
+    }
+    this.isLoading = false;
+  }
+
+  @action.bound
+  fetchFailed() {
+    this.isLoading = false;
   }
 
   @action

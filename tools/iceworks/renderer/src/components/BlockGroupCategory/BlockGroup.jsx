@@ -48,7 +48,8 @@ class BlockGroup extends Component {
     });
     const iceBlocks = iceMaterial.originBlocks || [];
     return iceBlocks.filter( iceBlock => {
-      return blockGroup.blocks.includes(iceBlock.name);
+      const npm = iceBlock.source && iceBlock.source.npm;
+      return blockGroup.blocks.includes(npm);
     })
   }
 
