@@ -8,7 +8,7 @@ ICE 的组件统一使用 NPM 进行管理，所有的组件包都可以通过 n
 
 ## 检索组件
 
-ICE 所有组件文档说明都部署在[物料 - 组件](https://alibaba.github.io/ice/#/components)上，同时你也可以在全局搜索框输入你想要的的组件名称进行查找。
+ICE 所有组件文档说明都部署在[物料 - 组件](https://alibaba.github.io/ice/components)上，同时你也可以在全局搜索框输入你想要的的组件名称进行查找。
 
 ## 安装与更新
 

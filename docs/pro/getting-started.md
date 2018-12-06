@@ -4,8 +4,6 @@ order: 1
 category: ICE Design Pro
 ---
 
-## 简介
-
 基于海量高质量可复用区块，通过 GUI 工具快速搭建的一套中后台模板。
 
 ![](https://img.alicdn.com/tfs/TB1mHIID29TBuNjy0FcXXbeiFXa-1920-1080.png)

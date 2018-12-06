@@ -177,7 +177,6 @@ if (
   process.env.BUILD_ENV === 'cloud' &&
   /^([^\\/]+)\\/(\\d+\\.\\d+\\.\\d+)$/.test(process.env.BUILD_GIT_BRANCH)
 ) {
-  // 云构建分支名规则： http://def.alibaba-inc.com/doc/publish/branch_name
   publicPathCdn =
     [
       '//g.alicdn.com', // alicdn 地址
