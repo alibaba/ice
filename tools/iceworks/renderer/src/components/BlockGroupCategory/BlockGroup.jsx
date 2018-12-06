@@ -3,6 +3,8 @@ import { inject, observer } from 'mobx-react';
 import Tooltip from 'rc-tooltip';
 import PropTypes from 'prop-types';
 import Icon from '../Icon';
+import services from '../../services';
+const { log } = services;
 
 import './BlockGroup.scss';
 
@@ -97,6 +99,13 @@ class BlockGroup extends Component {
             </span>
             <span className="preview" onClick={() => {
               generatePage(blocks);
+              // 埋点
+              log.report('app', { 
+                action: 'download-block-groups',
+                data: {
+                  name: blockGroup.name,
+                },
+              });
             }}>
               <Tooltip placement={'bottom'} overlay={'生成页面'}>
                 <Icon type="paper-plane" />
