@@ -8,7 +8,8 @@
   "keywords": ["ice","react","block"],
   "dependencies": {
     "react": "^16.2.0",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.11.2"
   },
   "blockConfig": {
     "name": "{{name}}",

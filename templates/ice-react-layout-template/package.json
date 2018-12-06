@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-react-layout-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ice react layout template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

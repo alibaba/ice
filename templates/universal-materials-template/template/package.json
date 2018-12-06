@@ -11,9 +11,6 @@
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
   },
   "devDependencies": {},
-  "peerDependencies": {
-    "ice-devtools": "^2.0.0"
-  },
   "materialConfig": {
     "type": "react"
   }
