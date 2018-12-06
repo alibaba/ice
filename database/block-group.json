@@ -1,0 +1,53 @@
+[
+  {
+    "name": "团队展示首页",
+    "description": "适用于团队类的官网首页",
+    "blocks": [
+      "@icedesign/our-team-block",
+      "@icedesign/brand-show-case-block",
+      "@icedesign/testimonial-block",
+      "@icedesign/footer-block"
+    ]
+  },
+  {
+    "name": "产品展示首页",
+    "description": "适用于产品类的官网首页",
+    "blocks": [
+      "@icedesign/product-intro-block",
+      "@icedesign/feature-list-block",
+      "@icedesign/brand-list-block",
+      "@icedesign/simple-testimonial-block",
+      "@icedesign/footer-info-block"
+    ]
+  },
+  {
+    "name": "工具展示首页",
+    "description": "适用于工具类的官网首页",
+    "blocks": [
+      "@icedesign/release-intro-block",
+      "@icedesign/product-feature-dark-block",
+      "@icedesign/product-description-block",
+      "@icedesign/footer-block"
+    ]
+  },
+  {
+    "name": "通用数据展示",
+    "description": "适用于数据展示的 Dashboard",
+    "blocks": [
+      "@icedesign/events-overview-block",
+      "@icedesign/tab-chart-block",
+      "@icedesign/data-statistics-block",
+      "@icedesign/footer-block"
+    ]
+  },
+  {
+    "name": "销售数据展示",
+    "description": "适用于销售类的数据展示 Dashboard",
+    "blocks": [
+      "@icedesign/overview-chart-card-block",
+      "@icedesign/order-status-chart-block",
+      "@icedesign/project-status-block",
+      "@icedesign/chart-type-line-block"
+    ]
+  }
+]
