@@ -39,7 +39,7 @@ Options:
   --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime (default: "polyfill")
 ```
 
-比如使用 3000 端口启动 dev server，
+比如使用 3000 端口启动 dev server
 
 ```bash
 $ ice dev -p=3000
@@ -58,7 +58,7 @@ $ ice dev --https
 ```plain
 $ ice build --help
 
-Usage: ice-dev [options]
+Usage: ice-build [options]
 
 Options:
   --debug                debug 模式下不压缩
@@ -220,7 +220,7 @@ module.exports = (context) => {
 
 `@icedesign/base@0.2.4` 版本后字体文件已添加到包中。默认使用网络 cdn 字体文件，如果需要将字体本地化的，按照如下配置修改即可。
 
-1. 修改 webpackrc.js 增加一个 alias 指定字体文件目录。
+修改 webpackrc.js 增加一个 alias 指定字体文件目录。
 
 ```js
 const path = require('path');
@@ -236,7 +236,7 @@ module.exports = (context) => {
 };
 ```
 
-2. 通过 themeConfig 修改 sass 中的字体默认值
+通过 themeConfig 修改 sass 中的字体默认值
 
 font-custom-path 变量名自定义字体文件路径, 修改 package.json 文件下的 themeConfig 字段内容：
 
@@ -276,8 +276,6 @@ module.exports = (context) => {
 比如需要在代码里使用当前仓库的版本号：
 
 ```js
-const webpack = require('webpack');
-
 module.exports = (context) => {
   return {
     plugins: [
