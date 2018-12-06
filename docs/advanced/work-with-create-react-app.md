@@ -1,16 +1,16 @@
 ---
-title: 在 create-react-app 中使用
-order: 1
+title: 在 create-react-app 中使用飞冰组件
+order: 3
 category: 进阶指南
 ---
 
-[create-react-app](https://github.com/facebook/create-react-app) 是社区广泛使用的 React 开发工具，本文讲述如何在使用 create-react-app 创建的项目中使用飞冰，以及如何通过 Iceworks 生成 create-react-app 项目。
+Iceworks 默认提供了基于 `create-react-app` 的模板，该模板可以无缝使用飞冰组件、区块、模板等能力，[参见文档](https://alibaba.github.io/ice/docs/advanced/work-with-create-react-app)。
 
-# 如何在使用 create-react-app 创建的项目中使用
+如果上述模板不能满足你的需求，请参考本篇文章，本文讲述如何在使用 create-react-app 创建的项目中使用飞冰相关的物料。PS: 其他工程工具原理相同。
 
 ## 初始化项目
 
-使用 `npx` 命令执行 `create-react-app` 创建一个项目
+使用 `npx` 命令执行 `create-react-app` 创建一个项目：
 
 ```bash
 npx create-react-app my-app
@@ -24,19 +24,29 @@ npm start
 
 ## 引入组件
 
-根据组件文档，安装对应的组件。
-
 ```bash
+# 根据组件文档，安装对应的组件。
 npm install @icedesign/base @icedesign/img --save
+
+# create-react-app 支持 sass https://facebook.github.io/create-react-app/docs/adding-a-sass-stylesheet
+tnpm install node-sass --save-dev
 ```
 
 修改 `src/App.js`，引入 `Button` 和 `Img` 组件。
 
 ```jsx
 import React, { Component } from 'react';
+// 全量引入基础组件样式
+import '@icedesign/base/index.scss';
+// 引入基础组件脚本，无工程辅助情况下 import { Button } from '@icedesign/base'; 会引入所有 js
 import Button from '@icedesign/base/lib/button';
+// 引入业务组件脚本
 import Img from '@icedesign/img';
+// 引入业务组件样式
+import '@icedesign/img/lib/style.js';
+
 import './App.css';
+
 
 const image =
   'https://img.alicdn.com/tfs/TB1saOBbYGYBuNjy0FoXXciBFXa-218-58.png';
@@ -55,28 +65,19 @@ class App extends Component {
 export default App;
 ```
 
-修改 `src/App.css`，在文件顶部引入组件的样式。
-
-```css
-@import '~@icedesign/base/dist/ICEDesignBase.css';
-@import '~@icedesign/img/dist/Img.css';
-
-.App {
-  text-align: center;
-}
-
-...
-```
-
 现在你应该能看到页面上已经有了蓝色的 `Button` 组件，接下来就可以继续选用其他组件开发应用了。
 
 其他开发流程你可以参考 `create-react-app` 的官方文档。
 
-这种方式引入的基础组件样式为全量引入，如果需要按需引入请看下面。
+这种方式引入的基础组件样式为全量引入，如果需要按需引入请看下面文档。
 
 ## 自定义按需引入
 
-上面的方法虽然能够正常运行组件，但是可以发现样式是全量引入的，`Button` 的引入需要额外增加 `lib/button` 的二级路径。
+上面的方法虽然能够正常运行组件，但是可以发现几个问题：
+
+- 基础组件的样式需要全量引入的
+- 引入基础组件需要额外增加 `lib/button` 的二级路径并且每个组件都需要单独 import
+- 业务组件需要分开引入脚本和样式
 
 要解决这些问题，我们需要对 `create-react-app` 进行一些工程定制。我们建议使用社区流行的 [react-app-rewired](https://github.com/timarney/react-app-rewired) 进行自定义配置。
 
@@ -150,7 +151,7 @@ module.exports = function override(config, env) {
 
 ### 配置 sass-loader 和 ice-skin-loader
 
-`ICE` 官方提供的组件依赖了 Sass 作为 CSS 预处理器，所以您需要手动配置并引入 `sass-loader`。同时 `ICE` 使用了 `ice-skin-loader` 支持自定义皮肤的定制。首先安装以下依赖。
+`ICE` 官方提供的组件依赖了 Sass 作为 CSS 预处理器，所以您需要手动配置并引入 `sass-loader`。同时 `ICE` 使用了 `ice-skin-loader` 支持自定义皮肤的定制。首先安装以下依赖：
 
 ```bash
 npm i @icedesign/skin --save
@@ -218,7 +219,7 @@ module.exports = function override(config, env) {
 };
 ```
 
-### 如何使用
+### 使用组件
 
 在项目的任意 `js` 文件中，您都可以使用类似如下的方法直接按需引入某一组件，不用担心全量引入和样式缺失的问题。
 
