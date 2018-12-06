@@ -6,7 +6,9 @@ chinese: ICE 表单粘合剂
 
 ICE 表单数据获取方案。
 
-> 说明：如果使用的是 FormBinder 0.x 的版本，请移步到 [0.x 参考文档](https://github.com/alibaba/ice/wiki/IceFormBinder-0.x)
+**说明：**
+1. 如果使用的是 FormBinder 0.x 的版本，请移步到 [0.x 参考文档](https://github.com/alibaba/ice/wiki/IceFormBinder-0.x)。
+2. 如果使用的是 FormBinder 1.x 的版本，需要确保依赖的 react 版本在 [16.2.0](https://github.com/facebook/react/releases/tag/v16.2.0) 以上，1.x 版本使用了 React.Fragments API，支持 FormBinderWrapper 组件返回多个节点。
 
 ## 安装和升级
 
@@ -90,13 +92,13 @@ FormBinder 支持的属性包含以下两部分：
 | whitespace | 必选时，空格是否会被视为错误 | boolean                                 | `false`  |
 
 > 内建校验类型，[可选项](https://github.com/yiminghe/async-validator#type)
-> 自定义校验（注意，[callback 必须被调用](https://github.com/ant-design/ant-design/issues/5155)）
+> 自定义校验（注意，[callback 必须被调用](https://github.com/yiminghe/async-validator#validate)）
 
 **推荐：**
 
-1. 建议统一使用 async-validator 的校验规则，尽量不要使用表单元素的相关检验属性，这样做有利于代码的可维护性和优雅
-2. 更多高级用法可参考 [async-validator](https://github.com/yiminghe/async-validator)。
-3. 内建校验类型，[可选项](https://github.com/yiminghe/async-validator#type)
+1. 建议统一使用 async-validator 的校验规则，尽量不要使用表单元素的相关检验属性，这样做有利于代码的可维护性和优雅。
+2. 内建校验类型，[可选项](https://github.com/yiminghe/async-validator#type)。
+3. 更多高级用法可参考 [async-validator](https://github.com/yiminghe/async-validator)。
 
 ### FormError
 
