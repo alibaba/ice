@@ -1,8 +1,6 @@
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-
-
 import BlockGroupPreviewModal from './PreviewModal'
 import BlockGroup from './BlockGroup'
 

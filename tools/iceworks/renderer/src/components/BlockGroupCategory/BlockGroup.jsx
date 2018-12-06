@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import Tooltip from 'rc-tooltip';
 import PropTypes from 'prop-types';
-
 import Icon from '../Icon';
 
 import './BlockGroup.scss';
-
 
 @inject('blocks', 'blockGroups')
 @observer

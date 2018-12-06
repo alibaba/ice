@@ -1,12 +1,6 @@
-import { observable, action, computed, autorun } from 'mobx';
+import { observable, action } from 'mobx';
 import uppercamelcase from 'uppercamelcase';
-import uuid from 'uuid';
 import request from 'request';
-
-import { getBlocks } from '../datacenter/materials';
-import blocks from './blocks';
-
-import BlocksSearch from './blocks-search';
 
 /**
  * 用于管理 block group 的 store 管理
@@ -17,56 +11,7 @@ class BlockGroups {
   @observable blocks = []; // 单个区块组合中包含的区块列表
   @observable showModal = false; // 图片预览弹窗
   @observable previewBlocks = []; // 当前预览的区块组合
-  @observable blockGroups = [
-    {
-      name: 'blockGroup1',                 // 区块组合名称
-      description: 'some description...',  // 区块组合描述
-      blocks: [                            // 包含的区块
-          "ability-introduction",   
-          "ablity-items"                  // 对应物料源数据区块的 block.name
-      ]
-    },
-    {
-      name: 'blockGroup2',                 // 区块组合名称
-      description: 'some description...',  // 区块组合描述
-      blocks: [                            // 包含的区块
-          "about",   
-          "ablity-items",                  // 对应物料源数据区块的 block.name
-          "ability-introduction"
-      ]
-    },
-    {
-      name: 'blockGroup2',                 // 区块组合名称
-      description: 'some description...',  // 区块组合描述
-      blocks: [                            // 包含的区块
-          "about",   
-          "ablity-items",                  // 对应物料源数据区块的 block.name
-          "ability-introduction"
-      ]
-    },
-    {
-      name: 'blockGroup2',                 // 区块组合名称
-      description: 'some description...',  // 区块组合描述
-      blocks: [                            // 包含的区块
-          "about",   
-          "ablity-items",                  // 对应物料源数据区块的 block.name
-          "ability-introduction"
-      ]
-    },
-    {
-      name: 'blockGroup2',                 // 区块组合名称
-      description: 'some description...',  // 区块组合描述
-      blocks: [                            // 包含的区块
-          "about",   
-          "ablity-items",                  // 对应物料源数据区块的 block.name
-          "ability-introduction"
-      ]
-    }
-  ]; // 区块组合列表
-
-  constructor() {
-  
-  }
+  @observable blockGroups = []; // 区块组合列表
 
   getBlockGroups() { 
     return new Promise((resolve) => {
@@ -79,7 +24,7 @@ class BlockGroups {
         }
       });
     });
-  }
+  };
 
   @action
   fetch() {
@@ -87,7 +32,7 @@ class BlockGroups {
     this.getBlockGroups()
       .then(this.fetchSuccess)
       .catch(this.fetchFailed);
-  }
+  };
 
   @action.bound
   fetchSuccess(body) {
@@ -98,12 +43,12 @@ class BlockGroups {
       this.blockGroups = [];
     }
     this.isLoading = false;
-  }
+  };
 
   @action.bound
   fetchFailed() {
     this.isLoading = false;
-  }
+  };
 
   @action
   openModal = (blocks) => {
