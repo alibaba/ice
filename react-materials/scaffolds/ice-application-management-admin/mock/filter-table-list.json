@@ -1,0 +1,106 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "total": 100,
+    "pageSize": 10,
+    "currentPage": 1,
+    "list": [
+      {
+        "id": 1,
+        "title": "ice-contract-management-admin",
+        "url": "https://github.com/alibaba/ice",
+        "type": "核心应用",
+        "publishTime": "17-04-28 20:29:20",
+        "publishStatus": "已上线",
+        "owner": "淘小宝",
+        "operation": {
+          "edit": false
+        }
+      },
+      {
+        "id": 2,
+        "title": "ice-reviews-management",
+        "url": "https://github.com/alibaba/ice",
+        "type": "非核心应用",
+        "publishTime": "17-04-28 20:29:20",
+        "publishStatus": "已上线",
+        "owner": "淘小宝",
+        "operation": {
+          "edit": true
+        }
+      },
+      {
+        "id": 3,
+        "title": "ice-design-ecommerce",
+        "url": "https://github.com/alibaba/ice",
+        "type": "非核心应用",
+        "publishTime": "17-04-28 20:29:20",
+        "publishStatus": "已上线",
+        "owner": "淘小宝",
+        "operation": {
+          "edit": false
+        }
+      },
+      {
+        "id": 4,
+        "title": "ice-usertrack-admin",
+        "url": "https://github.com/alibaba/ice",
+        "type": "非核心应用",
+        "publishTime": "17-04-28 20:29:20",
+        "publishStatus": "已发布",
+        "owner": "淘小宝",
+        "operation": {
+          "edit": true
+        }
+      },
+      {
+        "id": 5,
+        "title": "ice-scaffold-cms",
+        "url": "https://github.com/alibaba/ice",
+        "type": "非核心应用",
+        "publishTime": "17-04-28 20:29:20",
+        "publishStatus": "已上线",
+        "owner": "淘小宝",
+        "operation": {
+          "edit": true
+        }
+      },
+      {
+        "id": 6,
+        "title": "ice-contract-management-admin",
+        "url": "https://github.com/alibaba/ice",
+        "type": "非核心应用",
+        "publishTime": "17-04-28 20:29:20",
+        "publishStatus": "已上线",
+        "owner": "淘小宝",
+        "operation": {
+          "edit": true
+        }
+      },
+      {
+        "id": 7,
+        "title": "ice-yunqi-homepage",
+        "url": "https://github.com/alibaba/ice",
+        "type": "非核心应用",
+        "publishTime": "17-04-28 20:29:20",
+        "publishStatus": "已上线",
+        "owner": "淘小宝",
+        "operation": {
+          "edit": true
+        }
+      },
+      {
+        "id": 8,
+        "title": "coreui-admin",
+        "url": "https://github.com/alibaba/ice",
+        "type": "非核心应用",
+        "publishTime": "17-04-28 20:29:20",
+        "publishStatus": "已上线",
+        "owner": "淘小宝",
+        "operation": {
+          "edit": true
+        }
+      }
+    ]
+  }
+}

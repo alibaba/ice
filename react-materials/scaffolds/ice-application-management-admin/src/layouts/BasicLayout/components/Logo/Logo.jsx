@@ -1,16 +1,26 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 
-const LIGHT = require('./images/TB1saOBbYGYBuNjy0FoXXciBFXa-218-58.png');
-const DARK = require('./images/TB1saOBbYGYBuNjy0FoXXciBFXa-218-58.png');
-
-export default class Logo extends Component {
+export default class Logo extends PureComponent {
   render() {
-    const { isDark } = this.props;
-    const logo = isDark ? DARK : LIGHT;
     return (
-      <a href="/" style={{ display: 'block', marginTop: '6px' }}>
-        <img src={logo} width="114" alt="logo" />
-      </a>
+      <Link to="/" style={{ ...styles.logoStyle, ...this.props.style }}>
+        应用管理系统
+      </Link>
     );
   }
 }
+
+const styles = {
+  logoStyle: {
+    display: 'block',
+    maxWidth: '180px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    fontSize: '20px',
+    color: '#333',
+    fontWeight: 'bold',
+    textDecoration: 'none',
+  },
+};

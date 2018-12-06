@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Overview from './components/Overview';
 import CustomTab from './components/CustomTab';
 import BaseInfo from './components/BaseInfo';
+import ServiceCard from './components/ServiceCard';
+import LineBarChart from './components/LineBarChart';
+import PublishHitory from './components/PublishHitory';
 
 export default class Home extends Component {
   static displayName = 'Home';
@@ -14,9 +17,9 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <Overview />
-        <CustomTab />
-        <BaseInfo />
+        <ServiceCard />
+        <LineBarChart />
+        <PublishHitory />
       </div>
     );
   }
