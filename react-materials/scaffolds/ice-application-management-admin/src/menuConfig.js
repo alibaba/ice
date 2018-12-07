@@ -39,10 +39,10 @@ const asideMenuConfig = [
     icon: 'home',
   },
   {
-    name: '发布记录',
+    name: '发布大盘',
     path: '/history',
     icon: 'home',
-  }
+  },
 ];
 
 export { headerMenuConfig, asideMenuConfig };

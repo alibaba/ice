@@ -11,6 +11,8 @@
         "type": "publish",
         "env": "pub",
         "statue": "success",
+        "progress": 100,
+        "errorRate": 0,
         "publisher": "淘小宝",
         "publishTime": "17-07-03 09:17:08"
       },
@@ -20,6 +22,8 @@
         "type": "publish",
         "env": "pre",
         "statue": "success",
+        "progress": 100,
+        "errorRate": 0,
         "publisher": "淘小宝",
         "publishTime": "17-04-28 20:29:20"
       },
@@ -29,6 +33,8 @@
         "type": "publish",
         "env": "pre",
         "statue": "error",
+        "progress": 100,
+        "errorRate": 100,
         "publisher": "淘小宝",
         "publishTime": "17-05-02 12:19:20"
       },
@@ -38,23 +44,72 @@
         "type": "publish",
         "env": "pub",
         "statue": "success",
+        "progress": 100,
+        "errorRate": 0,
         "publisher": "淘小宝",
         "publishTime": "17-04-29 23:29:20"
       },
       {
-        "id": 2135340,
+        "id": 2134040,
         "app": "contract-management",
         "type": "publish",
         "env": "pre",
         "statue": "success",
+        "progress": 100,
+        "errorRate": 0,
         "publisher": "淘小宝",
         "publishTime": "17-04-28 20:29:20"
       },      {
-        "id": 2135343,
+        "id": 2133343,
         "app": "contract-management",
         "type": "publish",
         "env": "pub",
         "statue": "success",
+        "progress": 100,
+        "errorRate": 0,
+        "publisher": "淘小宝",
+        "publishTime": "16-04-28 20:29:20"
+      },
+      {
+        "id": 2125344,
+        "app": "contract-management",
+        "type": "publish",
+        "env": "pre",
+        "statue": "error",
+        "progress": 100,
+        "errorRate": 100,
+        "publisher": "淘小宝",
+        "publishTime": "17-05-02 12:19:20"
+      },
+      {
+        "id": 2138349,
+        "app": "contract-management",
+        "type": "publish",
+        "env": "pub",
+        "statue": "success",
+        "progress": 100,
+        "errorRate": 0,
+        "publisher": "淘小宝",
+        "publishTime": "17-04-29 23:29:20"
+      },
+      {
+        "id": 2195340,
+        "app": "contract-management",
+        "type": "publish",
+        "env": "pre",
+        "statue": "success",
+        "progress": 100,
+        "errorRate": 0,
+        "publisher": "淘小宝",
+        "publishTime": "17-04-28 20:29:20"
+      },      {
+        "id": 2145343,
+        "app": "contract-management",
+        "type": "publish",
+        "env": "pub",
+        "statue": "success",
+        "progress": 100,
+        "errorRate": 0,
         "publisher": "淘小宝",
         "publishTime": "16-04-28 20:29:20"
       }

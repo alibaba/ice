@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
-import Table from './conponents/Table';
+import { Grid } from '@icedesign/base';
 
+import PublishTime from './components/PublishTime';
+import PublishCount from './components/PublishCount';
+import AccuracyRate from './components/AccuracyRate';
+
+import PublishList from './components/PublishList';
+
+import './History.scss';
+
+const { Row, Col } = Grid;
 export default class History extends Component {
   static displayName = 'History';
 
@@ -12,7 +21,18 @@ export default class History extends Component {
   render() {
     return (
       <div className="history-page" >
-        <Table />
+        <Row wrap gutter="20">
+          <Col l="8">
+            <PublishTime />
+          </Col>
+          <Col l="8">
+            <PublishCount />
+          </Col>
+          <Col l="8">
+            <AccuracyRate />
+          </Col>
+        </Row>
+        <PublishList />
       </div>
     );
   }

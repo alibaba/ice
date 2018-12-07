@@ -22,3 +22,7 @@
 
 效果图:
 ![screenshot](https://img.alicdn.com/tfs/TB13ay8dH2pK1RjSZFsXXaNlXXa-2840-1580.png)
+
+#1861D5 #2F7FFC #DFECFC
+
+#333 #666 #999

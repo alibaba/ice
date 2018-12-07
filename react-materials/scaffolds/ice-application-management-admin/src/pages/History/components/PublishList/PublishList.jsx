@@ -1,14 +1,13 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Feedback } from '@icedesign/base';
+import { Table, Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
+import { Progress } from "@icedesign/base";
 import axios from 'axios';
 
-const Toast = Feedback.toast;
-
-export default class EnhanceTable extends Component {
-  static displayName = 'EnhanceTable';
+export default class PublishList extends Component {
+  static displayName = 'PublishList';
 
   static defaultProps = {};
 
@@ -88,6 +87,18 @@ export default class EnhanceTable extends Component {
     );
   };
 
+  renderProgress = (value) => {
+    return (
+      <Progress percent={value} size="large" />
+    );
+  }
+
+  renderErrorRate = (value) => {
+    return (
+      <span style={value ? {color: '#FA7070'} : {}}>{value + '%'}</span>
+    );
+  }
+
   changePage = (currentPage) => {
     this.fetchData({
       page: currentPage
@@ -100,57 +111,67 @@ export default class EnhanceTable extends Component {
       currentPage,
       pageSize,
       total,
-      filterFormValue,
       __loading
     } = this.state;
 
     return (
-      <div className="filter-table">
-        <IceContainer>
-          <Table
-            dataSource={list}
-            isLoading={__loading}
-            className="basic-table"
-            style={styles.basicTable}
-            hasBorder={false}
-          >
-            <Table.Column title="ID" dataIndex="id" width={80} />
-            <Table.Column
-              title="应用名"
-              cell={this.renderTitle}
-              width={180}
-            />
-            <Table.Column
-              title="类型"
-              dataIndex="type"
-              cell={this.renderType}
-              width={80}
-            />
-            <Table.Column
-              title="环境"
-              dataIndex="env"
-              cell={this.renderEnv}
-              width={80}
-            />
-            <Table.Column
-              title="状态"
-              dataIndex="statue"
-              width={80}
-              cell={this.renderStatus}
-            />
-            <Table.Column title="发布者" dataIndex="publisher" width={100} />
-            <Table.Column title="发布时间" dataIndex="publishTime" width={150} />
-          </Table>
-          <div style={styles.paginationWrapper}>
-            <Pagination
-              current={currentPage}
-              pageSize={pageSize}
-              total={total}
-              onChange={this.changePage}
-            />
-          </div>
-        </IceContainer>
-      </div>
+      <IceContainer title="我的发布单">
+        <Table
+          dataSource={list}
+          isLoading={__loading}
+          className="basic-table"
+          style={styles.basicTable}
+          hasBorder={false}
+          isZebra={true}
+        >
+          <Table.Column title="发布单ID" dataIndex="id" width={60} />
+          <Table.Column
+            title="应用名"
+            cell={this.renderTitle}
+            width={120}
+          />
+          <Table.Column
+            title="类型"
+            dataIndex="type"
+            cell={this.renderType}
+            width={80}
+          />
+          <Table.Column
+            title="发布环境"
+            dataIndex="env"
+            cell={this.renderEnv}
+            width={80}
+          />
+          <Table.Column
+            title="状态"
+            dataIndex="statue"
+            width={80}
+            cell={this.renderStatus}
+          />
+          <Table.Column
+            title="进度"
+            dataIndex="progress"
+            cell={this.renderProgress}
+            width={120}
+          />
+          <Table.Column title="发布者" dataIndex="publisher" width={80} />
+          <Table.Column 
+            title="失败机器占比" 
+            dataIndex="errorRate"
+            cell={this.renderErrorRate} 
+            width={100} 
+          />
+          <Table.Column title="发布时间" dataIndex="publishTime" width={120} />
+        </Table>
+        <div style={styles.paginationWrapper}>
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={total}
+            onChange={this.changePage}
+          />
+        </div>
+      </IceContainer>
     );
   }
 }
@@ -169,7 +190,6 @@ const styles = {
     flexDirection: 'row',
   },
   title: {
-    marginLeft: '10px',
     lineHeight: '20px',
   },
   paginationWrapper: {
