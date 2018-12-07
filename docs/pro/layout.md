@@ -4,8 +4,6 @@ order: 2
 category: ICE Design Pro
 ---
 
-# 布局
-
 布局是一个应用的关键骨架所在，在飞冰中，我们将布局进行了抽象化，根据不同场景提供了常见的[四种布局](https://alibaba.github.io/ice/layout)方式，在使用 Iceworks 创建项目之后，默认使用模板自带的布局，如果当前模板布局不能满足您的需求，您还是使用 Iceworks 提供的自定义布局功能，添加布局到已创建的项目进行替换。
 
 ## 基础布局

@@ -1,5 +1,10 @@
 # ice-scripts Changelog
 
+## 1.7.9
+
+- [feat] build 支持 `customWebpackConfig` 参数
+- [chore] 移除 ice-scripts 命令
+
 ## 1.7.8
 
 - [chore] dev模式下第一次编译成功后自动用本地浏览器打开对应地址

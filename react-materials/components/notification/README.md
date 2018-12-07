@@ -2,7 +2,6 @@
 title: Notification
 category: Components
 chinese: 通知提醒框
-npm: \@icedesign/notification
 ---
 
 全局展示通知提醒信息。
