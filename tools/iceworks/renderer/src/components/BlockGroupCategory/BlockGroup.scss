@@ -9,7 +9,7 @@ $block-screenshot-img-height: $block-screenshot-height;
 
 .block.block-group {
   width: $block-width;
-  height: $block-screenshot-height + 28;
+  height: $block-screenshot-height + 36;
   padding: 0;
   .screenshot {
     width: $block-screenshot-width;
@@ -34,28 +34,29 @@ $block-screenshot-img-height: $block-screenshot-height;
     bottom: 0;
     width: 100%;
     text-align: center;
-    line-height: 28px;
+    line-height: 36px;
     font-size: 14px;
-    height: 28px;
+    height: 36px;
     margin: 0;
     font-weight: 700;
     transition: transform .3s cubic-bezier(.215,.61,.355,1);
     background: hsla(0,0%,100%,.75);
   }
   .handle {
-    background: #2f54eb;
+    background: rgb(48, 128, 254);
     transform: translateY(100%);
     position: absolute;
     bottom: 0;
     width: 100%;
     text-align: center;
     transition: transform .3s cubic-bezier(.215,.61,.355,1);
-    line-height: 28px;
+    line-height: 36px;
     font-size: 14px;
-    height: 28px;
+    height: 36px;
     margin: 0;
     .handle-btn {
       width: 50%;
+      height: 36px;
       float: left;
       display: block;
       box-sizing: border-box;
@@ -65,7 +66,6 @@ $block-screenshot-img-height: $block-screenshot-height;
       border: none;
       background: inherit;
       span {
-        font-weight: 700;
         margin-left: 5px;
       }
     }
