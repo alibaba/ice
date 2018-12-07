@@ -1,5 +1,6 @@
 import { Dialog, Button, Feedback } from '@icedesign/base';
 import { inject, observer } from 'mobx-react';
+import { toJS } from 'mobx';
 import fs from 'fs';
 import Notification from '@icedesign/notification';
 import path from 'path';
@@ -53,16 +54,23 @@ class PageBlockPicker extends Component {
   /**
    * 开始下载区块
    */
-  handleOk = () => {
-    const { pageBlockPicker, blocks = {} } = this.props;
+  handleOk = (blocks) => {
+    
+    const { pageBlockPicker } = this.props;
     const { pageName, projectPath } = pageBlockPicker;
     const { isNodeProject } = this.props.projects.currentProject;
-    // 检测 block 是否存在冲突等
-    if (pageBlockPicker.blockHasConflict(blocks.selected)) {
-      Feedback.toast.error(
-        `区块名 ${pageBlockPicker.blockHasConflict()} 存在冲突，请修改后重试`
-      );
-      return false;
+
+    if (Array.isArray(blocks)) {
+      blocks = toJS(blocks);
+    } else {
+      blocks = toJS(this.props.blocks.selected);
+      // 检测 block 是否存在冲突等
+      if (pageBlockPicker.blockHasConflict(blocks)) {
+        Feedback.toast.error(
+          `区块名 ${pageBlockPicker.blockHasConflict()} 存在冲突，请修改后重试`
+        );
+        return false;
+      }
     }
 
     pageBlockPicker.downloadStart();
@@ -70,7 +78,7 @@ class PageBlockPicker extends Component {
     scaffolder.utils
       .downloadBlocksToPage({
         destDir: projectPath,
-        blocks: blocks.selected,
+        blocks: blocks,
         pageName: pageName,
         isNodeProject,
       })
@@ -161,41 +169,50 @@ class PageBlockPicker extends Component {
           </div>
           <div className="page-block-picker-body">
             <div className="page-block-picker-panel">
-              <BlockPickerPanel onSelected={this.handleSelectedBlock} />
+              <BlockPickerPanel 
+                onSelected={this.handleSelectedBlock}
+                handleDownBlocks={this.handleOk}
+              />
             </div>
-            <div className="page-block-picker-preview">
-              {this.props.pageBlockPicker.existBlocks.length ? (
-                <PreviewTitle
-                  title="已有区块"
-                  count={this.props.pageBlockPicker.existBlocks.length}
-                />
-              ) : null}
-
-              {this.props.pageBlockPicker.existBlocks &&
-                this.props.pageBlockPicker.existBlocks.map((blockName) => {
-                  return (
-                    <div className="block-item" key={blockName}>
-                      {blockName}
-                    </div>
-                  );
-                })}
-              <div className="page-block-picker-added">
-                <BlockPreview title="新增区块" text="请从左侧选择区块" />
+            {/* 当已选为0时，且tab为区块组合时，不展示 */}
+            {this.props.blocks.currentTabKey === '-2' && 
+              !this.props.pageBlockPicker.existBlocks.length ? null : (
+              <div className="page-block-picker-preview">
+                {this.props.pageBlockPicker.existBlocks.length ? (
+                  <PreviewTitle
+                    title="已有区块"
+                    count={this.props.pageBlockPicker.existBlocks.length}
+                  />
+                ) : null}
+                {this.props.pageBlockPicker.existBlocks &&
+                  this.props.pageBlockPicker.existBlocks.map((blockName) => {
+                    return (
+                      <div className="block-item" key={blockName}>
+                        {blockName}
+                      </div>
+                    );
+                  })}
+                {this.props.blocks.currentTabKey !== '-2' && (
+                  <div className="page-block-picker-added">
+                    <BlockPreview title="新增区块" text="请从左侧选择区块" />
+                  </div>
+                )}
               </div>
-            </div>
+            )}
           </div>
           <div className="page-block-picker-footer">
-            <Button
-              disabled={this.props.blocks.selected.length == 0}
-              loading={this.props.pageBlockPicker.isDownloading}
-              type="primary"
-              onClick={this.handleOk}
-            >
-              {this.props.pageBlockPicker.isDownloading
-                ? '正在下载区块...'
-                : '开始下载'}
-            </Button>
-
+            {this.props.blocks.currentTabKey !== '-2' && (
+              <Button
+                disabled={this.props.blocks.selected.length == 0}
+                loading={this.props.pageBlockPicker.isDownloading}
+                type="primary"
+                onClick={this.handleOk}
+              >
+                {this.props.pageBlockPicker.isDownloading
+                  ? '正在下载区块...'
+                  : '开始下载'}
+              </Button>
+            )}
             <Button
               disabled={this.props.pageBlockPicker.isDownloading}
               onClick={this.handleClose}

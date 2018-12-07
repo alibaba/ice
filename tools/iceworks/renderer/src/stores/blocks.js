@@ -34,6 +34,8 @@ class Blocks {
   showModal = false; // 图片预览弹窗
   @observable
   previewBlock = {}; // 当前预览的区块
+  @observable
+  currentTabKey = '0'; // 记录当前选中的Tab
 
   constructor() {
     autorun(() => {
@@ -50,6 +52,7 @@ class Blocks {
     this.selected = [];
     this.keywords = [];
     this.originKeywords = '';
+    this.currentTabKey = '0'; // tab重置
   }
 
   @action
@@ -232,6 +235,11 @@ class Blocks {
       confilict = pageName;
     }
     return confilict;
+  }
+
+  @action
+  setCurrentTabKey(key) {
+    this.currentTabKey = key;
   }
 }
 

@@ -16,19 +16,22 @@ class BlockPicker extends Component {
   static propTypes = {
     onSelected: PropTypes.func,
     handleOpenPreviewPage: PropTypes.func,
-    generatePage:  PropTypes.func
+    generatePage: PropTypes.func,
+    handleDownBlocks: PropTypes.func,
   };
 
   static defaultProps = {
     onSelected: () => {},
     handleOpenPreviewPage: () => {},
-    generatePage: () => {}
+    generatePage: () => {},
+    handleDownBlocks: () => {}
   };
 
   constructor(props) {
     super(props);
 
     this.idPrefix = 'Block-' + Date.now().toString(32) + '-';
+    this.iceMaterialsSource = 'ice.alicdn.com/assets/react-materials.json';
   }
 
   UNSAFE_componentWillMount() {
@@ -56,13 +59,32 @@ class BlockPicker extends Component {
   };
 
   handleTabChange = (key) => {
-    this.props.newpage.setCurrentTabKey(key);
+    this.props.blocks.setCurrentTabKey(key);
   };
 
+  formatMaterials = (materials) => {
+    let iceIndex = -1;
+    materials.forEach( (material, index) => {
+      // 当有飞冰物料源时，fetch组合推荐；
+      if( material.source.includes(this.iceMaterialsSource) ) {
+        iceIndex = index;
+      }
+    });
+    if (iceIndex !== -1) {
+      const formatMaterials = materials.slice();
+      formatMaterials.splice(iceIndex+1, 0 , {
+        name: '飞冰区块组合',
+        key: '-2'
+      })
+      return formatMaterials;
+    }
+    return materials;
+  }
+
   render() {
-    const { materials, isLoading, type } = this.props.blocks;
+    const { materials, isLoading, type, currentTabKey } = this.props.blocks;
     const { blockGroups } = this.props.blockGroups;
-    const { style = {}, handleOpenPreviewPage, generatePage, newpage } = this.props;
+    const { style = {}, handleOpenPreviewPage, generatePage, handleDownBlocks } = this.props;
     if (!isLoading && materials.length == 0) {
       return (
         <div
@@ -89,7 +111,7 @@ class BlockPicker extends Component {
         </div>
       );
     }
-    const tabBarExtraContent = newpage.currentTabKey !== "-2" ? (
+    const tabBarExtraContent = currentTabKey !== "-2" ? (
       <div
         style={{
           height: 39,
@@ -111,6 +133,9 @@ class BlockPicker extends Component {
       </div>
     ) : null;
 
+    // materials 中有飞冰物料时，加赛飞冰组合推荐
+    const formatMaterials = this.formatMaterials(materials);
+
     return (
       <div className="block-picker-panel" style={style}>
         <div className="block-picker-panel-wrapper">
@@ -125,9 +150,26 @@ class BlockPicker extends Component {
             onChange={this.handleTabChange}
             tabBarExtraContent={tabBarExtraContent}
           >
-            {materials.map((material, index) => {
-              const blocksWithCategory = material.blocksWithCategory;
+            {formatMaterials.map((material, index) => {
+              // 区块组合，目前只在有飞冰物料源时展示
+              if (material.key === '-2') {
+                return (
+                  <Tab.TabPane
+                    tab={material.name}
+                    key={material.key}
+                    contentStyle={{ position: 'relative' }}
+                    tabClassName="custom-material-tab"
+                  >
+                    <BlockGroupCategory 
+                      generatePage={generatePage}
+                      handleOpenPreviewPage={handleOpenPreviewPage}
+                      handleDownBlocks={handleDownBlocks}
+                    />
+                  </Tab.TabPane>
+                )
+              }
 
+              const blocksWithCategory = material.blocksWithCategory;
               return (
                 <Tab.TabPane
                   tab={material.name}
@@ -156,20 +198,6 @@ class BlockPicker extends Component {
                 tabClassName="custom-material-tab"
               >
                 <CustomBlockCategory />
-              </Tab.TabPane>
-            )}
-            {/* 区块组合，目前只在有飞冰物料源时展示 */}
-            {blockGroups.length > 0 && (
-              <Tab.TabPane
-                tab="区块组合"
-                key="-2"
-                contentStyle={{ position: 'relative' }}
-                tabClassName="custom-material-tab"
-              >
-                <BlockGroupCategory 
-                  generatePage={generatePage}
-                  handleOpenPreviewPage={handleOpenPreviewPage}
-                />
               </Tab.TabPane>
             )}
           </Tab>

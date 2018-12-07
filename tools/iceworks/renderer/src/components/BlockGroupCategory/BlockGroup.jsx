@@ -4,22 +4,26 @@ import Tooltip from 'rc-tooltip';
 import PropTypes from 'prop-types';
 import Icon from '../Icon';
 import services from '../../services';
+import { Button } from '@icedesign/base';
+
 const { log } = services;
 
 import './BlockGroup.scss';
 
-@inject('blocks', 'blockGroups')
+@inject('blocks', 'blockGroups', 'pageBlockPicker', 'newpage')
 @observer
 class BlockGroup extends Component {
 
   static propTypes = {
     handleOpenPreviewPage: PropTypes.func,
-    generatePage:  PropTypes.func
+    generatePage: PropTypes.func,
+    handleDownBlocks: PropTypes.func
   };
 
   static defaultProps = {
     handleOpenPreviewPage: () => {},
-    generatePage: () => {}
+    generatePage: () => {},
+    handleDownBlocks: () => {}
   };
 
   constructor(props) {
@@ -54,50 +58,39 @@ class BlockGroup extends Component {
   }
 
   render() {
-    const { blockGroup, handleOpenPreviewPage, generatePage } = this.props;
+    const { 
+      blockGroup, handleOpenPreviewPage, generatePage, 
+      newpage, pageBlockPicker, handleDownBlocks 
+    } = this.props;
     const blocks = this.getBlocks();
+
     return (
       <div className="block block-group" onClick={this.handleClick}>
         <div className="screenshot">
-          {
-            blocks.map( (block, index) => {
-              return (
-                <img
-                  key={index}
-                  className="screenshot-img"
-                  src={block.screenshot}
-                />
-              )
-            })
-          }
+          <div className="screenshot-wrapper">
+            {
+              blocks.map( (block, index) => {
+                return (
+                  <img
+                    key={index}
+                    className="screenshot-img"
+                    src={block.screenshot}
+                  />
+                )
+              })
+            } 
+          </div>
         </div>
-        <div className="title-wrapper">
-            <div className="title-body">
-              <div
-                className="title"
-                dangerouslySetInnerHTML={{ __html: blockGroup.name }}
-              />
-            </div>
-        </div>
-        <div className="panel">
-            <span className="preview" onClick={(event) => {
+        <p>{blockGroup.name}</p>
+        <div className="handle">
+          <Button className="handle-btn" onClick={(event) => {
               this.openBlockImgPreview(event, blocks);
             }}>
-              <Tooltip
-                placement={'bottom'}
-                overlay={'预览效果图'}
-              >
-                <Icon type="02magnifyingglasspluszoom" />
-              </Tooltip>
-            </span>
-            <span className="preview" onClick={() => {
-              handleOpenPreviewPage(blocks);
-            }}>
-              <Tooltip placement={'bottom'} overlay={'预览页面'}>
-                <Icon type="eye" />
-              </Tooltip>
-            </span>
-            <span className="preview" onClick={() => {
+            <Icon size="small" type="02magnifyingglasspluszoom" /> 预览效果
+          </Button>
+          {/* 创建页面时展示 */}
+          {newpage.visible && (
+            <Button className="handle-btn" onClick={() => {
               generatePage(blocks);
               // 埋点
               log.report('app', { 
@@ -107,11 +100,25 @@ class BlockGroup extends Component {
                 },
               });
             }}>
-              <Tooltip placement={'bottom'} overlay={'生成页面'}>
-                <Icon type="paper-plane" />
-              </Tooltip>
-            </span>
-          </div>
+              <Icon size="small" type="paper-plane" /> 生成页面
+            </Button>
+          )}
+          {/* 添加区块时展示 */}
+          {pageBlockPicker.visible && (
+            <Button className="handle-btn" onClick={() => {
+              handleDownBlocks(blocks);
+              // 埋点
+              log.report('app', { 
+                action: 'download-block-groups',
+                data: {
+                  name: blockGroup.name,
+                },
+              });
+            }}>
+              <Icon size="small" type="paper-plane" /> 开始下载
+            </Button>
+          )}
+        </div>
       </div>
     );
   }

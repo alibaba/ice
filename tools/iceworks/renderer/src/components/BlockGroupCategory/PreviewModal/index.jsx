@@ -28,6 +28,7 @@ class BlockGroupPreviewModal extends Component {
         className="preview-modal"
         style={{ overlay: { background: '#fff', zIndex: '10000' } }}
       >
+        <div style={{ width: '100%', height: '100%' }}>
         {
           blockGroups.previewBlocks.map( (block, index) => {
             return (
@@ -40,6 +41,7 @@ class BlockGroupPreviewModal extends Component {
             )
           })
         }
+        </div>
         <div className="preview-block-close" onClick={blockGroups.closeModal}>
           <Icon type="close" className="preview-block-close-icon" />
         </div>

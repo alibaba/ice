@@ -405,9 +405,9 @@ class CreatePage extends Component {
   };
 
   render() {
-    const { projects, newpage } = this.props;
+    const { projects, newpage, blocks } = this.props;
     const currentProject = projects.currentProject;
-    const currentTabKey = newpage.currentTabKey;
+    const currentTabKey = blocks.currentTabKey;
     // 当前项目为空，则不渲染新建页面的组件
     if (!currentProject) return null;
     // 脚手架类型
