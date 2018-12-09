@@ -6,7 +6,7 @@
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"
   },
-  "files": ["src/", "lib/"],
+  "files": ["src/", "build/", "screenshot.png"],
   "repository": {
     "type": "git",
     "url": ""
@@ -21,6 +21,7 @@
   "blockConfig": {
     "name": "greeting-block",
     "title": "示例区块",
-    "categories": ["其他"]
+    "categories": ["其他"],
+    "screenshot": ""
   }
 }
