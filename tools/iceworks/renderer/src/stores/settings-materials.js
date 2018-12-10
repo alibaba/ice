@@ -15,7 +15,7 @@ class SettingsMaterials {
   @observable
   customMaterialsValue = [];
 
-  // 记录编辑时的自定义物料数据
+  // 记录正在编辑的自定义物料源数据
   @observable
   edittingCustomMaterialValue = null;
 
