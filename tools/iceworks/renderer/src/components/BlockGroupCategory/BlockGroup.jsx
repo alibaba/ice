@@ -39,26 +39,23 @@ class BlockGroup extends Component {
    * 根据区块组合的name，获取对应的区块对象。
    */
   getBlocks = () => {
-    const { blockGroup } = this.props;
+    const { blocks = [] } = this.props.blockGroup;
     const { materials, getIceMaterial } = this.props.blocks;
     // 目前支持飞冰物料源
     const { iceMaterial }  = getIceMaterial() || {};
     const iceBlocks = iceMaterial.originBlocks || [];
-    return iceBlocks.filter( iceBlock => {
-      const npm = iceBlock.source && iceBlock.source.npm;
-      return blockGroup.blocks.includes(npm);
-    })
+    return blocks.map( block => {
+      return iceBlocks.find( iceBlock => {
+        const npm = iceBlock.source && iceBlock.source.npm;
+        return block.includes(npm);
+      })
+    } )
   }
 
   onBlockGroupClick = () => {
-    const { handleBlocksAdd, newpage } = this.props;
-    // 如果当前是新建页面，return;
-    if (newpage.visible) {
-      return;
-    } else {
-      const blocks = this.getBlocks();
-      handleBlocksAdd(blocks);
-    }
+    const { handleBlocksAdd } = this.props;
+    const blocks = this.getBlocks();
+    handleBlocksAdd(blocks);
   }
 
   render() {
