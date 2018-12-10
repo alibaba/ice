@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import SearchFilter from '../../components/SearchFilter';
 import ContractTable from '../../components/ContractTable';
 
 export default class ContractSearch extends Component {
@@ -12,14 +11,24 @@ export default class ContractSearch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      searchQuery: {}
+    };
+  }
+
+  onSearch = (searchQuery) => {
+    this.setState({
+      searchQuery,
+    });
   }
 
   render() {
+
+    const { searchQuery } = this.state;
+
     return (
       <IceContainer>
-        <SearchFilter />
-        <ContractTable />
+        <ContractTable searchQuery={searchQuery} />
       </IceContainer>
     );
   }
