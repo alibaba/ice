@@ -10,15 +10,15 @@ import './index.scss';
 @observer
 class BlockCategory extends Component {
   static propTypes = {
-    onSelected: PropTypes.func,
+    handleBlocksAdd: PropTypes.func,
   };
 
   static defaultProps = {
-    onSelected: () => {},
+    handleBlocksAdd: () => {},
   };
 
   render() {
-    let { blocksWithCategory, originKeywords, idPrefix, onSelected } = this.props;
+    let { blocksWithCategory, originKeywords, idPrefix, handleBlocksAdd } = this.props;
     if (blocksWithCategory == undefined) {
       return <div className="blocks-empty-tip">loading...</div>;
     } else if (
@@ -62,7 +62,7 @@ class BlockCategory extends Component {
                           key={`${category}-${block.name}`}
                           block={block}
                           originKeywords={originKeywords}
-                          onClick={onSelected}
+                          handleBlocksAdd={handleBlocksAdd}
                         />
                       );
                     })}

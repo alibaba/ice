@@ -14,13 +14,13 @@ class BlockPicker extends Component {
   static displayName = 'BlockPicker';
 
   static propTypes = {
-    onSelected: PropTypes.func,
+    handleBlocksAdd: PropTypes.func,
     handleOpenPreviewPage: PropTypes.func,
     generatePage: PropTypes.func,
   };
 
   static defaultProps = {
-    onSelected: () => {},
+    handleBlocksAdd: () => {},
     handleOpenPreviewPage: () => {},
     generatePage: () => {},
   };
@@ -55,23 +55,10 @@ class BlockPicker extends Component {
     this.props.blocks.setCurrentTabKey(key);
   };
 
-  formatMaterials = (materials) => {
-    const {iceMaterial, iceIndex} = this.props.blocks.getIceMaterial();
-    if (iceIndex !== -1) {
-      const formatMaterials = materials.slice();
-      formatMaterials.splice(iceIndex+1, 0 , {
-        name: '飞冰区块组合',
-        key: '-2'
-      })
-      return formatMaterials;
-    }
-    return materials;
-  }
-
   render() {
     const { materials, isLoading, type, currentTabKey } = this.props.blocks;
     const { blockGroups } = this.props.blockGroups;
-    const { style = {}, handleOpenPreviewPage, onSelected,  generatePage } = this.props;
+    const { style = {}, handleOpenPreviewPage, handleBlocksAdd,  generatePage } = this.props;
     if (!isLoading && materials.length == 0) {
       return (
         <div
@@ -98,7 +85,7 @@ class BlockPicker extends Component {
         </div>
       );
     }
-    const tabBarExtraContent = currentTabKey !== "-2" ? (
+    const tabBarExtraContent = currentTabKey !== '-2' ? (
       <div
         style={{
           height: 39,
@@ -120,9 +107,6 @@ class BlockPicker extends Component {
       </div>
     ) : null;
 
-    // materials 中有飞冰物料时，加赛飞冰组合推荐
-    const formatMaterials = this.formatMaterials(materials);
-
     return (
       <div className="block-picker-panel" style={style}>
         <div className="block-picker-panel-wrapper">
@@ -134,46 +118,41 @@ class BlockPicker extends Component {
             }}
             size="small"
             type="bar"
+            activeKey={currentTabKey}
             onChange={this.handleTabChange}
             tabBarExtraContent={tabBarExtraContent}
           >
-            {formatMaterials.map((material, index) => {
-              // 区块组合，目前只在有飞冰物料源时展示
-              if (material.key === '-2') {
-                return (
-                  <Tab.TabPane
-                    tab={material.name}
-                    key={material.key}
-                    contentStyle={{ position: 'relative' }}
-                    tabClassName="custom-material-tab"
-                  >
-                    <BlockGroupCategory 
-                      generatePage={generatePage}
-                      handleOpenPreviewPage={handleOpenPreviewPage}
-                      onSelected={onSelected}
-                    />
-                  </Tab.TabPane>
-                )
-              }
-
+            {materials.map((material, index) => {
               const blocksWithCategory = material.blocksWithCategory;
               return (
                 <Tab.TabPane
                   tab={material.name}
-                  key={index}
+                  // 常规数据没有key，加塞的飞冰区块组合才有
+                  key={material.key ? material.key : index}
                   contentStyle={{ position: 'relative' }}
                   tabClassName="custom-material-tab"
                 >
-                  <BlockSlider
-                    onClick={this.handleCategorySlideChange.bind(this, index)}
-                    blocksWithCategory={blocksWithCategory}
-                  />
-                  <BlockCategory
-                    idPrefix={this.idPrefix}
-                    onSelected={onSelected}
-                    blocksWithCategory={blocksWithCategory}
-                    originKeywords={this.props.blocks.originKeywords}
-                  />
+                  {/* 区块组合，目前只在有飞冰物料源时展示 */}
+                  {material.key === '-2' ? (
+                    <BlockGroupCategory 
+                      generatePage={generatePage}
+                      handleOpenPreviewPage={handleOpenPreviewPage}
+                      handleBlocksAdd={handleBlocksAdd}
+                    />
+                  ) : (
+                    [<BlockSlider  
+                      onClick={this.handleCategorySlideChange.bind(this, index)}
+                      key={0}
+                      blocksWithCategory={blocksWithCategory}
+                    />,
+                    <BlockCategory
+                      idPrefix={this.idPrefix}
+                      key={1}
+                      handleBlocksAdd={handleBlocksAdd}
+                      blocksWithCategory={blocksWithCategory}
+                      originKeywords={this.props.blocks.originKeywords}
+                    />]
+                  )}
                 </Tab.TabPane>
               );
             })}

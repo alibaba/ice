@@ -20,15 +20,15 @@ function withAlicdnImage(url) {
 @observer
 class Block extends Component {
   static propTypes = {
-    onClick: PropTypes.func,
+    handleBlocksAdd: PropTypes.func,
     block: PropTypes.object,
     blocks: PropTypes.object,
     originKeywords: PropTypes.string,
   };
 
   handleClick = () => {
-    if (typeof this.props.onClick === 'function') {
-      this.props.onClick(this.props.block);
+    if (typeof this.props.handleBlocksAdd === 'function') {
+      this.props.handleBlocksAdd(this.props.block);
     }
   };
 

@@ -31,17 +31,16 @@ class PageBlockPicker extends Component {
   };
 
   /**
-   * 添加区块
+   * 添加区块，支持多个
    */
-  handleSelectedBlock = (blockObj) => {
+  handleBlocksAdd = (blockObj) => {
     const { pageBlockPicker, blocks } = this.props;
-    if (Array.isArray(blockObj)) {
-      blockObj.forEach( block => 
-        blocks.addBlock(block, pageBlockPicker.existBlocks)
-      );
-    } else {
-      blocks.addBlock(blockObj, pageBlockPicker.existBlocks);
-    }
+    if (!Array.isArray(blockObj)) {
+      blockObj = [blockObj];
+    } 
+    blockObj.forEach( block => 
+      blocks.addBlock(block, pageBlockPicker.existBlocks)
+    );
   };
 
   /**
@@ -172,7 +171,7 @@ class PageBlockPicker extends Component {
           <div className="page-block-picker-body">
             <div className="page-block-picker-panel">
               <BlockPickerPanel 
-                onSelected={this.handleSelectedBlock}
+                handleBlocksAdd={this.handleBlocksAdd}
               />
             </div>
             <div className="page-block-picker-preview">

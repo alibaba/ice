@@ -37,6 +37,7 @@ function fetchMaterialsData() {
     const requestPromiss = materials.map((material) => {
       return requestJSON(material.source);
     });
+
     const materialDatas = materials.map((m) => {
       return {
         name: m.name,

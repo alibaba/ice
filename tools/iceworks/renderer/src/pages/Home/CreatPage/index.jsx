@@ -429,7 +429,7 @@ class CreatePage extends Component {
             <div className="material-wrapper">
               {showLayoutPicker && <BlockPickerLayouts />}
               <BlockPickerPanel
-                onSelected={this.handleBlocksAdd}
+                handleBlocksAdd={this.handleBlocksAdd}
                 handleOpenPreviewPage={this.handleOpenPreviewPage}
                 generatePage={this.generatePage}
                 style={{
@@ -438,7 +438,7 @@ class CreatePage extends Component {
               />
             </div>
             {/* 当前tab为区块组合时，不展示 */}
-            {currentTabKey !== "-2" && (
+            {currentTabKey !== '-2' && (
               <BlockPickerPreviewer title="已选区块" />
             )}
           </div>
@@ -447,7 +447,7 @@ class CreatePage extends Component {
               <Icon size="small" type="close" /> 取消
             </Button>
             {/* 当前tab为区块组合时，预览页面功能内置 */}
-            {showPreviewPage && currentTabKey !== "-2" && (
+            {showPreviewPage && currentTabKey !== '-2' && (
               <Button
                 disabled={!projects.currentProject.serverUrl}
                 type="secondary"
@@ -457,7 +457,7 @@ class CreatePage extends Component {
               </Button>
             )}
             {/* 当前tab为区块组合时，生成页面功能内置 */}
-            {currentTabKey !== "-2" && (
+            {currentTabKey !== '-2' && (
               <Button type="primary" onClick={this.generatePage}>
                 <Icon size="small" type="paper-plane" /> 生成页面
               </Button>

@@ -12,18 +12,18 @@ class BlockGroupCategory extends Component {
   static propTypes = {
     handleOpenPreviewPage: PropTypes.func,
     generatePage:  PropTypes.func,
-    onSelected: PropTypes.func
+    handleBlocksAdd: PropTypes.func
   };
 
   static defaultProps = {
     handleOpenPreviewPage: () => {},
     generatePage: () => {},
-    onSelected: () => {}
+    handleBlocksAdd: () => {}
   };
 
   render() {
     const { blockGroups, isLoading } = this.props.blockGroups;
-    const { generatePage, handleOpenPreviewPage, onSelected } = this.props;
+    const { generatePage, handleOpenPreviewPage, handleBlocksAdd } = this.props;
 
     if (!isLoading && blockGroups.length == 0) {
       return (
@@ -54,17 +54,17 @@ class BlockGroupCategory extends Component {
     return (
       <div className="blcoks-wrapper">
         <div className="block-groups">
-          {blockGroups.map((blockGroup, index) => {
+          {blockGroups.map( (blockGroup, index) => {
             return (
               <BlockGroup
                 key={index}
                 blockGroup={blockGroup}
                 handleOpenPreviewPage={handleOpenPreviewPage}
                 generatePage={generatePage}
-                onSelected={onSelected}
+                handleBlocksAdd={handleBlocksAdd}
               />
-            )})
-          }
+            )
+          })}
         </div>
         <BlockGroupPreviewModal />
       </div>

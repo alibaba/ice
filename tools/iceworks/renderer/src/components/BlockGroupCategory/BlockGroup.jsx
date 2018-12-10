@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Icon from '../Icon';
 import services from '../../services';
 import { Button } from '@icedesign/base';
-import CN from 'classnames';
+import classnames from 'classnames';
 
 const { log } = services;
 
@@ -18,20 +18,16 @@ class BlockGroup extends Component {
   static propTypes = {
     handleOpenPreviewPage: PropTypes.func,
     generatePage: PropTypes.func,
-    onSelected: PropTypes.func,
+    handleBlocksAdd: PropTypes.func,
     blockGroup: PropTypes.object  
   };
 
   static defaultProps = {
     handleOpenPreviewPage: () => {},
     generatePage: () => {},
-    onSelected: () => {},
+    handleBlocksAdd: () => {},
     blockGroup: {}
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   openBlockImgPreview = (event, blocks) => {
     event.stopPropagation();
@@ -54,14 +50,15 @@ class BlockGroup extends Component {
     })
   }
 
-  onBlocksClick = () => {
-    const { onSelected, newpage } = this.props;
+  onBlockGroupClick = () => {
+    const { handleBlocksAdd, newpage } = this.props;
     // 如果当前是新建页面，return;
     if (newpage.visible) {
       return;
+    } else {
+      const blocks = this.getBlocks();
+      handleBlocksAdd(blocks);
     }
-    const blocks = this.getBlocks();
-    onSelected(blocks);
   }
 
   render() {
@@ -70,13 +67,13 @@ class BlockGroup extends Component {
       newpage, pageBlockPicker
     } = this.props;
     const blocks = this.getBlocks();
-    const btnCN = CN({
-      'handle-btn': true,
-      'handle-btn-1': pageBlockPicker.visible
-    })
+    const btnCN = classnames({
+      'ibg-handle-btn': true,
+      'ibg-handle-btn-1': pageBlockPicker.visible
+    });
 
     return (
-      <div className="block block-group" onClick={this.onBlocksClick}>
+      <div className="block block-group" onClick={this.onBlockGroupClick}>
         <div className="screenshot">
           <div className="screenshot-wrapper">
             {
@@ -93,7 +90,7 @@ class BlockGroup extends Component {
           </div>
         </div>
         <p>{blockGroup.name}</p>
-        <div className="handle">
+        <div className="ibg-handle">
           <Button className={btnCN} onClick={(event) => {
               this.openBlockImgPreview(event, blocks);
             }}>

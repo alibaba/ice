@@ -43,7 +43,7 @@ $block-screenshot-img-height: $block-screenshot-height;
     background: hsla(0,0%,100%,.75);
     cursor: auto;
   }
-  .handle {
+  .ibg-handle {
     background: rgb(48, 128, 254);
     transform: translateY(100%);
     position: absolute;
@@ -55,7 +55,7 @@ $block-screenshot-img-height: $block-screenshot-height;
     font-size: 14px;
     height: 36px;
     margin: 0;
-    .handle-btn {
+    .ibg-handle-btn {
       width: 50%;
       height: 36px;
       float: left;
@@ -70,13 +70,13 @@ $block-screenshot-img-height: $block-screenshot-height;
         margin-left: 5px;
       }
     }
-    .handle-btn-1 {
+    .ibg-handle-btn-1 {
       width: 100%
     }
   }
   &:hover {
     box-shadow: none;
-    .handle {
+    .ibg-handle {
       transform: translateY(0);
     }
     p {

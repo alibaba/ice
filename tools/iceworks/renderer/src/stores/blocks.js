@@ -75,9 +75,11 @@ class Blocks {
       this.reset();
       this.materialsValue = materialsValue; // 所有 blocks 数据
       // 当有飞冰物料源时，fetch组合推荐；
-      const { iceMaterial } = this.getIceMaterial();
+      const { iceMaterial, iceIndex } = this.getIceMaterial();
       if (iceMaterial) {
         blockGroups.fetch();
+        // materials 中有飞冰物料时，加塞飞冰组合推荐
+        this.materialsValue = this.addBlockGroupsMaterial(iceMaterial, iceIndex);
       }
       this.isLoading = false;
     } else {
@@ -85,6 +87,20 @@ class Blocks {
       this.materialsValue = [];
       this.isLoading = false;
     }
+  }
+
+  // materials 中有飞冰物料时，加塞飞冰组合推荐
+  @action
+  addBlockGroupsMaterial(iceMaterial, iceIndex) {
+    if (iceIndex !== -1) {
+      const formatMaterials = this.materialsValue.slice();
+      formatMaterials.splice(iceIndex + 1, 0 , {
+        name: '飞冰区块组合',
+        key: '-2'
+      });
+      return formatMaterials;
+    }
+    return this.materialsValue;
   }
 
   @action.bound
@@ -201,18 +217,16 @@ class Blocks {
 
   @action.bound
   getIceMaterial() {
-    let iceMaterial = null;
     let iceIndex = -1;
-    let iceMaterialSouce = '';
-    RECOMMEND_MATERIALS.forEach( recommendMaterial => {
-      if (recommendMaterial.key === 'ice') {
-        iceMaterialSouce = recommendMaterial.source;
-      }
+    // 获取配置中的ice物料源source；
+    const { source } = RECOMMEND_MATERIALS.find( recommendMaterial => {
+      return recommendMaterial.key === 'ice';
     });
-    this.materialsValue.forEach( (material, index) => {
-      if (material.source === iceMaterialSouce) {
-        iceMaterial = material;
+    // 获取ice物料源及对应的index
+    const iceMaterial = this.materialsValue.find( (material, index) => {
+      if (material.source === source) {
         iceIndex = index;
+        return true
       }
     });
     return {iceMaterial, iceIndex};
