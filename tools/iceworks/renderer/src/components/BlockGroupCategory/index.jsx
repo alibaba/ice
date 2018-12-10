@@ -25,7 +25,19 @@ class BlockGroupCategory extends Component {
     const { blockGroups, isLoading } = this.props.blockGroups;
     const { generatePage, handleOpenPreviewPage, onSelected } = this.props;
 
-    if (isLoading) {
+    if (!isLoading && blockGroups.length == 0) {
+      return (
+        <div
+          style={{
+            paddingTop: '100px',
+            textAlign: 'center',
+            width: '100%',
+          }}
+        >
+          当前暂无区块组合推荐。
+        </div>
+      );
+    } else if (isLoading) {
       return (
         <div
           style={{

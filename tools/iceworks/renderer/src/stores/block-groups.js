@@ -15,10 +15,11 @@ class BlockGroups {
 
   getBlockGroups() { 
     return new Promise((resolve) => {
-      request(BLOCK_GROUPS_MATERIALS.source, (err, res, body) => {
+      const uri = BLOCK_GROUPS_MATERIALS.source;
+      request(uri, (err, res, body) => {
         if (err) {
-          console.error('区块组合请求失败', uri); // eslint-disable-line
-          resolve(null); // 总数是返回值
+          console.error('区块组合请求失败 ', uri); // eslint-disable-line
+          resolve(null);
         } else {
           resolve(body);
         }
