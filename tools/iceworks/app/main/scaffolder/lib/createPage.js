@@ -5,7 +5,7 @@ const fs = require('fs');
 const kebabCase = require('kebab-case');
 const mkdirp = require('mkdirp');
 const path = require('path');
-const uppercamelcase = require('uppercamelcase');
+const upperCamelCase = require('uppercamelcase');
 const pathExists = require('path-exists');
 
 const utils = require('./utils');
@@ -80,7 +80,7 @@ module.exports = async function createPage({
     return [];
   }
 
-  const pageFolderName = uppercamelcase(pageName || '');
+  const pageFolderName = upperCamelCase(pageName || '');
   pageName = kebabCase(pageFolderName).replace(/^-/, '');
   const pageDir = isNodeProject
     ? path.join(destDir, 'client/pages', pageFolderName)
@@ -222,13 +222,13 @@ module.exports = async function createPage({
         const tarballURL = await materialUtils.getTarballURLBySource(
           block.source
         );
-        const blockFolderName = block.alias || uppercamelcase(block.name) || block.className; // block 目录名
+        const blockFolderName = block.alias || upperCamelCase(block.name) || block.className; // block 目录名
 
         let extractPosition = isNodeProject
           ? 'client/components'
           : 'src/components';
         // 转换了 alias 的名称
-        const blockClassName = uppercamelcase(
+        const blockClassName = upperCamelCase(
           block.alias || block.className || block.name
         );
         block.className = blockClassName;
@@ -255,7 +255,7 @@ module.exports = async function createPage({
         );
         fileList = fileList.concat(blockExtractedFiles);
       } else {
-        const blockFolderName = block.alias || uppercamelcase(block.name) || block.className;
+        const blockFolderName = block.alias || upperCamelCase(block.name) || block.className;
         let extractPosition = isNodeProject
           ? `client/pages/${pageFolderName}/components`
           : `src/pages/${pageFolderName}/components`;
@@ -381,7 +381,7 @@ module.exports = async function createPage({
       pageName, // 用于生成导航栏左侧 icon
       routeFilePath,
       pageFolderName,
-      layoutClassName: uppercamelcase(layoutName),
+      layoutClassName: upperCamelCase(layoutName),
       preview,
       builtIn,
     }).catch(() => {});

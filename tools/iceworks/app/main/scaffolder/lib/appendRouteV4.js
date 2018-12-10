@@ -4,7 +4,7 @@ const generator = require('babel-generator').default;
 const prettier = require('prettier');
 const t = require('babel-types');
 const traverse = require('babel-traverse').default;
-const uppercamelcase = require('uppercamelcase');
+const upperCamelCase = require('uppercamelcase');
 
 const config = require('../../config');
 
@@ -14,7 +14,7 @@ function routeNode({ path, layout = '', component }) {
       t.objectProperty(t.stringLiteral('path'), t.stringLiteral(path)),
       t.objectProperty(
         t.stringLiteral('layout'),
-        t.identifier(uppercamelcase(layout))
+        t.identifier(upperCamelCase(layout))
       ),
       t.objectProperty(t.stringLiteral('component'), t.identifier(component)),
     ]);
@@ -136,7 +136,7 @@ module.exports = async function({
           if (t.isImportDefaultSpecifier(specifier)) {
             if (
               t.isIdentifier(specifier.local) &&
-              specifier.local.name == uppercamelcase(layoutName)
+              specifier.local.name == upperCamelCase(layoutName)
             ) {
               return true;
             }
@@ -160,7 +160,7 @@ module.exports = async function({
     appendAfterLastImport(
       routerConfigAST,
       importDefaultNode({
-        name: uppercamelcase(layoutName),
+        name: upperCamelCase(layoutName),
         source: `./layouts/${layoutName}`,
       })
     );
