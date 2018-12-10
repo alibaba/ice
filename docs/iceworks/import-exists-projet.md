@@ -4,8 +4,6 @@ category: Iceworks
 order: 3
 ---
 
-# 已有项目接入 Iceworks
-
 将已有项目接入到 Icewokrs 中，需要增加对应信息的项目描述
 
 ## 1. 描述项目可被 Iceworks 识别

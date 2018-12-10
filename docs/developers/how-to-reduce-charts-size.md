@@ -12,15 +12,18 @@ order: 10
 
 ## 步骤 1. 配置 webpack 打包排除项
 
-项目根目录下创建 `.webpackrc.js` 文件，如果已存在则跳过。
+在 `package.json` 里添加 externals 配置：
 
-```js
-module.exports = {
-  // 其他配置
-  externals: {
-    bizcharts: 'BizCharts',
-  },
-};
+```json
+// package.json
+
+{
+  "buildConfig": {
+    "externals": {
+      "bizcharts": "BizCharts"
+    }
+  }
+}
 ```
 
 说明：key 表示依赖包名，如： `bizcharts`。 value 表示引用 CDN 后的全局变量名，如: `BizCharts`.
