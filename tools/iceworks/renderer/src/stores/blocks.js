@@ -96,7 +96,7 @@ class Blocks {
       const formatMaterials = this.materialsValue.slice();
       formatMaterials.splice(iceIndex + 1, 0 , {
         name: '飞冰区块组合',
-        key: '-2'
+        key: 'iceBlockGroups'
       });
       return formatMaterials;
     }

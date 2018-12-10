@@ -85,7 +85,7 @@ class BlockPicker extends Component {
         </div>
       );
     }
-    const tabBarExtraContent = currentTabKey !== '-2' ? (
+    const tabBarExtraContent = currentTabKey !== 'iceBlockGroups' ? (
       <div
         style={{
           height: 39,
@@ -133,7 +133,7 @@ class BlockPicker extends Component {
                   tabClassName="custom-material-tab"
                 >
                   {/* 区块组合，目前只在有飞冰物料源时展示 */}
-                  {material.key === '-2' ? (
+                  {material.key === 'iceBlockGroups' ? (
                     <BlockGroupCategory 
                       generatePage={generatePage}
                       handleOpenPreviewPage={handleOpenPreviewPage}
