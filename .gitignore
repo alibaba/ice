@@ -6,6 +6,7 @@ mochawesome-report
 .happypack
 package-lock.json
 yarn.lock
+yarn-error.log
 
 */blocks/**/lib/
 */layouts/**/lib/
