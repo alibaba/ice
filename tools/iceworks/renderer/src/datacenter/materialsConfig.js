@@ -79,4 +79,11 @@ const RECOMMEND_MATERIALS = [
   },
 ];
 
-export default RECOMMEND_MATERIALS;
+const BLOCK_GROUPS_MATERIALS = {
+  source: 'https://ice.alicdn.com/assets/block-group.json'
+}
+
+export {
+  RECOMMEND_MATERIALS,
+  BLOCK_GROUPS_MATERIALS
+};

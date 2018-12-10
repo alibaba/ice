@@ -17,6 +17,7 @@ import switcher from './stores/switcher';
 import customBlocks from './stores/custom-blocks';
 import settingsMaterials from './stores/settings-materials';
 import user from './stores/user';
+import blockGroups from './stores/block-groups';
 
 // pages
 import history from './history';
@@ -85,6 +86,7 @@ class App extends Component {
         customBlocks={customBlocks}
         settingsMaterials={settingsMaterials}
         user={user}
+        blockGroups={blockGroups}
       >
         <Layout>
           <VisibleWrapper

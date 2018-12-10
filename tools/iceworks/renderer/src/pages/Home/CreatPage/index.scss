@@ -39,6 +39,9 @@
     padding: 0;
     border-radius: 6px;
   }
+  &.next-dialog .next-dialog-close {
+    z-index: 2;
+  }
 }
 
 .categories-wrapper {
