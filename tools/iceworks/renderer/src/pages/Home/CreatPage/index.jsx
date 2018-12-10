@@ -4,8 +4,6 @@ import { inject, observer } from 'mobx-react';
 import { URL } from 'url';
 import React, { Component } from 'react';
 import { remote } from 'electron';
-import uppercamelcase from 'uppercamelcase';
-import uuid from 'uuid';
 
 import { dependenciesFormat } from '../../../lib/project-utils';
 import services from '../../../services';

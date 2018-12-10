@@ -4,7 +4,7 @@ import Notification from '@icedesign/notification';
 
 import equalSource from '../lib/equal-source';
 import filterMaterial from '../lib/filter-material';
-import RECOMMEND_MATERIALS from '../datacenter/recommendMaterials';
+import { RECOMMEND_MATERIALS } from '../datacenter/materialsConfig';
 import services from '../services';
 
 const { settings, shared } = services;

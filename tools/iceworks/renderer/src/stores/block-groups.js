@@ -1,9 +1,9 @@
 import { observable, action } from 'mobx';
-import uppercamelcase from 'uppercamelcase';
 import request from 'request';
+import { BLOCK_GROUPS_MATERIALS } from '../datacenter/materialsConfig';
 
 /**
- * 用于管理 block group 的 store 管理
+ * 用于管理 block groups 的 store 管理
  */
 class BlockGroups {
   @observable visible = false;
@@ -15,7 +15,7 @@ class BlockGroups {
 
   getBlockGroups() { 
     return new Promise((resolve) => {
-      request('https://ice.alicdn.com/pre-assets/block-group.json', (err, res, body) => {
+      request(BLOCK_GROUPS_MATERIALS.source, (err, res, body) => {
         if (err) {
           console.error('区块组合请求失败', uri); // eslint-disable-line
           resolve(null); // 总数是返回值

@@ -3,7 +3,7 @@ import uppercamelcase from 'uppercamelcase';
 import uuid from 'uuid';
 
 import { getBlocks } from '../datacenter/materials';
-import RECOMMEND_MATERIALS from '../datacenter/recommendMaterials';
+import { RECOMMEND_MATERIALS } from '../datacenter/materialsConfig';
 import projects from './projects';
 import blockGroups from './block-groups';
 
