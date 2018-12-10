@@ -59,7 +59,11 @@ class BlockGroup extends Component {
   }
 
   onBlocksClick = () => {
-    const { onSelected } = this.props;
+    const { onSelected, newpage } = this.props;
+    // 如果当前是新建页面，return;
+    if (newpage.visible) {
+      return;
+    }
     const blocks = this.getBlocks();
     onSelected(blocks);
   }
