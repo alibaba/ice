@@ -20,16 +20,18 @@ function withAlicdnImage(url) {
 @observer
 class Block extends Component {
   static propTypes = {
-    onClick: PropTypes.func,
+    handleBlocksAdd: PropTypes.func,
     block: PropTypes.object,
     blocks: PropTypes.object,
     originKeywords: PropTypes.string,
   };
 
+  static defaultProps = {
+    handleBlocksAdd: () => {},
+  };
+
   handleClick = () => {
-    if (typeof this.props.onClick === 'function') {
-      this.props.onClick(this.props.block);
-    }
+    this.props.handleBlocksAdd(this.props.block);
   };
 
   createPageOpener = (url) => {

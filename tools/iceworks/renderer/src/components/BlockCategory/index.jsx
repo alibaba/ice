@@ -10,19 +10,15 @@ import './index.scss';
 @observer
 class BlockCategory extends Component {
   static propTypes = {
-    onSelected: PropTypes.func,
+    handleBlocksAdd: PropTypes.func,
   };
 
   static defaultProps = {
-    onSelected: () => {},
-  };
-
-  handleSelected = (block) => {
-    this.props.onSelected(block);
+    handleBlocksAdd: () => {},
   };
 
   render() {
-    let { blocksWithCategory, originKeywords, idPrefix } = this.props;
+    let { blocksWithCategory, originKeywords, idPrefix, handleBlocksAdd } = this.props;
     if (blocksWithCategory == undefined) {
       return <div className="blocks-empty-tip">loading...</div>;
     } else if (
@@ -46,7 +42,7 @@ class BlockCategory extends Component {
       return <div className="blocks-empty-tip">暂无可用区块...</div>;
     } else {
       return (
-        <div className="blcoks-wrapper">
+        <div className="blocks-wrapper">
           {blocksWithCategory.map(({ category, blocks }, index) => {
             if (blocks.length == 0) {
               return null;
@@ -66,7 +62,7 @@ class BlockCategory extends Component {
                           key={`${category}-${block.name}`}
                           block={block}
                           originKeywords={originKeywords}
-                          onClick={this.handleSelected}
+                          handleBlocksAdd={handleBlocksAdd}
                         />
                       );
                     })}
