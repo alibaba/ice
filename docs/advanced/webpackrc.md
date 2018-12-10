@@ -216,40 +216,6 @@ module.exports = (context) => {
 };
 ```
 
-### 字体本地化配置
-
-`@icedesign/base@0.2.4` 版本后字体文件已添加到包中。默认使用网络 cdn 字体文件，如果需要将字体本地化的，按照如下配置修改即可。
-
-修改 webpackrc.js 增加一个 alias 指定字体文件目录。
-
-```js
-const path = require('path');
-
-module.exports = (context) => {
-  return {
-    resolve: {
-      alias: {
-        '@fonts': '@icedesign/base/fonts',
-      },
-    },
-  };
-};
-```
-
-通过 themeConfig 修改 sass 中的字体默认值
-
-font-custom-path 变量名自定义字体文件路径, 修改 package.json 文件下的 themeConfig 字段内容：
-
-```json
-{
-  "themeConfig": {
-+   "font-custom-path": "~@fonts/"
-  }
-}
-```
-
-配置好后重启服务即可, 务必确认 @icedesign/base 版本大于 0.2.4
-
 ### 修改 publicPath
 
 配置 webpack 的 [output.publicPath](https://webpack.js.org/configuration/output/#output-publicpath) 属性。
@@ -267,7 +233,7 @@ module.exports = (context) => {
 
 [详细说明](https://github.com/alibaba/ice/wiki/%E8%AE%BE%E7%BD%AE%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E8%B7%AF%E5%BE%84-publicPath)
 
-### DefinePlugin
+### 使用 DefinePlugin
 
 [官方文档](https://webpack.js.org/plugins/define-plugin/)
 
@@ -277,6 +243,7 @@ module.exports = (context) => {
 
 ```js
 module.exports = (context) => {
+  const { webpack } = context;
   return {
     plugins: [
       new webpack.DefinePlugin({
@@ -301,27 +268,24 @@ console.log(ASSETS_VERSION);
 ```javascript
 const path = require('path');
 
-module.exports = {
-  //...
-  resolve: {
-    alias: {
-      Utilities: path.resolve(__dirname, 'src/utilities/'),
-      Templates: path.resolve(__dirname, 'src/templates/'),
+module.exports = () => {
+  return {
+    //...
+    resolve: {
+      alias: {
+        Utilities: path.resolve(__dirname, 'src/utilities/'),
+        Templates: path.resolve(__dirname, 'src/templates/'),
+      },
     },
-  },
-};
+  };
+}
 ```
 
 现在，替换「在导入时使用相对路径」这种方式，就像这样：
 
-```js
-import Utility from '../../utilities/utility';
-```
-
-你可以这样使用别名：
-
-```js
-import Utility from 'Utilities/utility';
+```diff
+-import Utility from '../../utilities/utility';
++import Utility from 'Utilities';
 ```
 
 ### Mock
