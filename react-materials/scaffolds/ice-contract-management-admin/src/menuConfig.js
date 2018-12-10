@@ -31,13 +31,14 @@ const asideMenuConfig = [
     icon: 'home2',
   },
   {
-    name: '合同管理',
-    path: '/contract',
-    icon: 'cascades',
-    children: [
-      { name: '我的合同', path: '/contract/my' },
-      { name: '合同查询', path: '/contract/search' },
-    ],
+    name: '合同查询',
+    path: '/contract/search',
+    icon: 'search',
+  },
+  {
+    name: '我的合同',
+    path: '/contract/my',
+    icon: 'person',
   },
 ];
 

@@ -245,9 +245,9 @@ const styles = {
   stateText: {
     display: 'inline-block',
     padding: '5px 10px',
-    color: '#52c41a',
-    background: '#f6ffed',
-    border: '1px solid #b7eb8f',
+    color: '#5e83fb',
+    background: '#fff',
+    border: '1px solid #5e83fb',
     borderRadius: '4px',
   },
   link: {
