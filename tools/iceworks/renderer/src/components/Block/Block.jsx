@@ -26,10 +26,12 @@ class Block extends Component {
     originKeywords: PropTypes.string,
   };
 
+  static defaultProps = {
+    handleBlocksAdd: () => {},
+  };
+
   handleClick = () => {
-    if (typeof this.props.handleBlocksAdd === 'function') {
-      this.props.handleBlocksAdd(this.props.block);
-    }
+    this.props.handleBlocksAdd(this.props.block);
   };
 
   createPageOpener = (url) => {
