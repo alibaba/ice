@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash.clonedeep';
-import { Table, Pagination } from '@icedesign/base';
+import PropTypes from 'prop-types';
+import { Table, Pagination, Button, Feedback } from '@icedesign/base';
 import SearchFilter from './SearchFilter';
 
 const defaultSearchQuery = {
@@ -21,9 +22,15 @@ const defaultSearchQuery = {
 export default class ContractTable extends Component {
   static displayName = 'ContractTable';
 
-  static propTypes = {};
+  static propTypes = {
+    enableFilter: PropTypes.bool,
+    searchQueryHistory: PropTypes.object,
+  };
 
-  static defaultProps = {};
+  static defaultProps = {
+    enableFilter: true,
+    searchQueryHistory: null,
+  };
 
   constructor(props) {
     super(props);
@@ -39,8 +46,16 @@ export default class ContractTable extends Component {
     this.fetchDataSource();
   }
 
-  fetchDataSource = () => {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.hasOwnProperty('searchQueryHistory')) {
+      this.setState({
+        searchQuery: Object.assign(cloneDeep(defaultSearchQuery), nextProps.searchQueryHistory),
+        pageIndex: 1,
+      }, this.fetchDataSource);
+    }
+  }
 
+  fetchDataSource = () => {
     this.setState({
       loading: true,
     });
@@ -79,11 +94,11 @@ export default class ContractTable extends Component {
   onSearchSubmit = (searchQuery) => {
     this.setState({
       searchQuery,
+      pageIndex: 1,
     }, this.fetchDataSource);
   };
 
   onSearchReset = () => {
-    debugger
     this.setState({
       searchQuery: cloneDeep(defaultSearchQuery),
     });
@@ -107,9 +122,23 @@ export default class ContractTable extends Component {
   renderOper = () => {
     return (
       <div>
-        <a style={styles.link}>修改合同</a>
+        <Button
+          shape="text"
+          onClick={() => {
+            Feedback.toast.success('修改合同');
+          }}
+        >
+          修改合同
+        </Button>
         <span style={styles.separator} />
-        <a style={styles.link}>查看详情</a>
+        <Button
+          shape="text"
+          onClick={() => {
+            Feedback.toast.success('查看详情');
+          }}
+        >
+          查看详情
+        </Button>
       </div>
     );
   };
@@ -172,17 +201,17 @@ export default class ContractTable extends Component {
   };
 
   render() {
-
+    const { enableFilter } = this.props;
     const { searchQuery, dataSource, loading, pageIndex } = this.state;
 
     return (
       <div>
-        <SearchFilter
+        {enableFilter && <SearchFilter
           value={searchQuery}
           onChange={this.onSeacrhChange}
           onSubmit={this.onSearchSubmit}
           onReset={this.onSearchReset}
-        />
+        />}
         <Table
           dataSource={dataSource}
           hasBorder={false}

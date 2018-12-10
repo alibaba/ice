@@ -23,7 +23,6 @@ export default class ContractSearch extends Component {
   }
 
   render() {
-
     const { searchQuery } = this.state;
 
     return (

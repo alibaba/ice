@@ -14,9 +14,8 @@ export default class ContractCenter extends Component {
 
   static defaultProps = {};
 
-  constructor(props) {
-    super(props);
-    this.state = {};
+  state = {
+    searchQueryHistory: null
   }
 
   render() {
@@ -26,12 +25,16 @@ export default class ContractCenter extends Component {
           <IceContainer style={{ padding: '0' }}>
             <ContainerTitle title="合同中心" />
             <div style={{ padding: '20px' }}>
-              <ContractTable />
+              <ContractTable searchQueryHistory={this.state.searchQueryHistory} />
             </div>
           </IceContainer>
         </Col>
         <Col l="6">
-          <SearchHistory />
+          <SearchHistory onSearchHistory={(searchQuery) => {
+            this.setState({
+              searchQueryHistory: searchQuery,
+            });
+          }} />
         </Col>
       </Row>
     );

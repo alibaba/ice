@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@icedesign/base';
+import { Icon, Button } from '@icedesign/base';
 import CustomForm from '../CustomForm';
 
 const formConfig = [
@@ -74,7 +74,10 @@ const formConfig = [
     componentProps: {
       placeholder: '请选择',
       size: 'large',
-      dataSource: [],
+      dataSource: [
+        {label: '淘小宝', value: '淘小宝'},
+        {label: '淘大宝', value: '淘大宝'}
+      ],
     },
     formBinderProps: {
       name: 'principal',
@@ -208,13 +211,13 @@ export default class SearchFilter extends Component {
    */
   renderExtraContent = () => {
     return (
-      <div style={styles.extraContent} onClick={this.handleAdvancedSearch}>
+      <Button shape="text" style={styles.extraContent} onClick={this.handleAdvancedSearch}>
         高级搜索{' '}
         <Icon
           size="xs"
           type={this.state.showAdvancedFields ? 'arrow-up' : 'arrow-down'}
         />
-      </div>
+      </Button>
     );
   };
 
@@ -244,7 +247,5 @@ const styles = {
     position: 'absolute',
     right: '0',
     bottom: '0',
-    color: 'rgba(49, 128, 253, 0.65)',
-    cursor: 'pointer',
   },
 };

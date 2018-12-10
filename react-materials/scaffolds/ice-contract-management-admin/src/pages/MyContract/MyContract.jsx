@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Button } from '@icedesign/base';
+import { Button, Feedback } from '@icedesign/base';
 import ContractTable from '../../components/ContractTable';
 import CustomNotice from './components/CustomNotice';
 
@@ -16,13 +16,20 @@ export default class MyContract extends Component {
     return (
       <IceContainer>
         <CustomNotice />
-        <Button type="primary" size="large" style={styles.newContractButton}>
+        <Button
+          type="primary"
+          size="large"
+          style={styles.newContractButton}
+          onClick={() => {
+            Feedback.toast.success('新建合同');
+          }}
+        >
           新建合同
         </Button>
         <div style={styles.tableHead}>
           <div style={styles.tableTitle}>我的合同</div>
         </div>
-        <ContractTable />
+        <ContractTable enableFilter={false} />
       </IceContainer>
     );
   }
