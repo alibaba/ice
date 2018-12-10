@@ -336,6 +336,7 @@ class CreatePage extends Component {
       }
     }
   };
+
   /**
    * 区块别名检测，是否重名或者为空
    */
@@ -375,7 +376,7 @@ class CreatePage extends Component {
       return false;
     }
     return true;
-  }
+  };
 
   // 生成页面，唤起 dialog 让用户输入页面名，与路由名
   generatePage = (blocks) => {
@@ -397,6 +398,7 @@ class CreatePage extends Component {
       libary: this.props.projects.currentProject.getLibraryType(),
     });
   };
+
   /**
    * 添加区块，支持多个
    */
