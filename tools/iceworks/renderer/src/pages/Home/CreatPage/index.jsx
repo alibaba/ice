@@ -336,6 +336,7 @@ class CreatePage extends Component {
       }
     }
   };
+
   /**
    * 区块别名检测，是否重名或者为空
    */
@@ -375,7 +376,7 @@ class CreatePage extends Component {
       return false;
     }
     return true;
-  }
+  };
 
   // 生成页面，唤起 dialog 让用户输入页面名，与路由名
   generatePage = (blocks) => {
@@ -398,8 +399,16 @@ class CreatePage extends Component {
     });
   };
 
-  handleBlocksAdd = (block) => {
-    this.props.blocks.addBlock(block);
+  /**
+   * 添加区块，支持多个
+   */
+  handleBlocksAdd = (blockObj) => {
+    if (!Array.isArray(blockObj)) {
+      blockObj = [blockObj];
+    } 
+    blockObj.forEach( block => 
+      this.props.blocks.addBlock(block)
+    );
   };
 
   render() {
@@ -437,17 +446,14 @@ class CreatePage extends Component {
                 }}
               />
             </div>
-            {/* 当前tab为区块组合时，不展示 */}
-            {currentTabKey !== 'iceBlockGroups' && (
-              <BlockPickerPreviewer title="已选区块" />
-            )}
+            <BlockPickerPreviewer title="已选区块" />
           </div>
           <div className="create-page-footer">
             <Button onClick={this.handleCancelCreate}>
               <Icon size="small" type="close" /> 取消
             </Button>
             {/* 当前tab为区块组合时，预览页面功能内置 */}
-            {showPreviewPage && currentTabKey !== 'iceBlockGroups' && (
+            {showPreviewPage && (
               <Button
                 disabled={!projects.currentProject.serverUrl}
                 type="secondary"
@@ -456,12 +462,10 @@ class CreatePage extends Component {
                 <Icon size="small" type="eye" /> 预览页面
               </Button>
             )}
-            {/* 当前tab为区块组合时，生成页面功能内置 */}
-            {currentTabKey !== 'iceBlockGroups' && (
-              <Button type="primary" onClick={this.generatePage}>
-                <Icon size="small" type="paper-plane" /> 生成页面
-              </Button>
-            )}
+      
+            <Button type="primary" onClick={this.generatePage}>
+              <Icon size="small" type="paper-plane" /> 生成页面
+            </Button>
           </div>
         </div>
       </Dialog>
