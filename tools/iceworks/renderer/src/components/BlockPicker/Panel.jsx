@@ -29,7 +29,6 @@ class BlockPicker extends Component {
     super(props);
 
     this.idPrefix = 'Block-' + Date.now().toString(32) + '-';
-    this.iceMaterialsSource = 'ice.alicdn.com/assets/react-materials.json';
   }
 
   UNSAFE_componentWillMount() {
@@ -57,13 +56,7 @@ class BlockPicker extends Component {
   };
 
   formatMaterials = (materials) => {
-    let iceIndex = -1;
-    materials.forEach( (material, index) => {
-      // 当有飞冰物料源时，fetch组合推荐；
-      if( material.source.includes(this.iceMaterialsSource) ) {
-        iceIndex = index;
-      }
-    });
+    const {iceMaterial, iceIndex} = this.props.blocks.getIceMaterial();
     if (iceIndex !== -1) {
       const formatMaterials = materials.slice();
       formatMaterials.splice(iceIndex+1, 0 , {

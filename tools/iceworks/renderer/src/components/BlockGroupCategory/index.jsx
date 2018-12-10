@@ -22,8 +22,23 @@ class BlockGroupCategory extends Component {
   };
 
   render() {
-    const { blockGroups } = this.props.blockGroups;
+    const { blockGroups, isLoading } = this.props.blockGroups;
     const { generatePage, handleOpenPreviewPage, onSelected } = this.props;
+
+    if (isLoading) {
+      return (
+        <div
+          style={{
+            paddingTop: '100px',
+            textAlign: 'center',
+            width: '100%',
+          }}
+        >
+          Loading....
+        </div>
+      );
+    }
+
     return (
       <div className="blcoks-wrapper">
         <div className="block-groups">

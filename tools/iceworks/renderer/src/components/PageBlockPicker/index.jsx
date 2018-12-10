@@ -70,7 +70,7 @@ class PageBlockPicker extends Component {
     // 检测 block 是否存在冲突等
     if (pageBlockPicker.blockHasConflict(blocks)) {
       Feedback.toast.error(
-        `区块名 ${pageBlockPicker.blockHasConflict()} 存在冲突，请修改后重试`
+        `区块名 ${pageBlockPicker.blockHasConflict(blocks)} 存在冲突，请修改后重试`
       );
       return false;
     }

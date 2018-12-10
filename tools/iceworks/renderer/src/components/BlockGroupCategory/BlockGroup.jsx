@@ -18,18 +18,19 @@ class BlockGroup extends Component {
   static propTypes = {
     handleOpenPreviewPage: PropTypes.func,
     generatePage: PropTypes.func,
-    onSelected: PropTypes.func
+    onSelected: PropTypes.func,
+    blockGroup: PropTypes.object  
   };
 
   static defaultProps = {
     handleOpenPreviewPage: () => {},
     generatePage: () => {},
-    onSelected: () => {}
+    onSelected: () => {},
+    blockGroup: {}
   };
 
   constructor(props) {
     super(props);
-    this.iceMaterialsSource = 'ice.alicdn.com/assets/react-materials.json';
   }
 
   openBlockImgPreview = (event, blocks) => {
@@ -43,14 +44,9 @@ class BlockGroup extends Component {
    */
   getBlocks = () => {
     const { blockGroup } = this.props;
-    const { materials } = this.props.blocks;
+    const { materials, getIceMaterial } = this.props.blocks;
     // 目前支持飞冰物料源
-    let iceMaterial = [];
-    materials.forEach( material => {
-      if(material.source.includes(this.iceMaterialsSource)) {
-        iceMaterial = material;
-      }
-    });
+    const { iceMaterial }  = getIceMaterial() || {};
     const iceBlocks = iceMaterial.originBlocks || [];
     return iceBlocks.filter( iceBlock => {
       const npm = iceBlock.source && iceBlock.source.npm;

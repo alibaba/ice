@@ -3,6 +3,7 @@ import uppercamelcase from 'uppercamelcase';
 import uuid from 'uuid';
 
 import { getBlocks } from '../datacenter/materials';
+import RECOMMEND_MATERIALS from '../datacenter/recommendMaterials';
 import projects from './projects';
 import blockGroups from './block-groups';
 
@@ -44,7 +45,6 @@ class Blocks {
         this.reset();
       }
     });
-    this.iceMaterialsSource = 'ice.alicdn.com/assets/react-materials.json';
   }
 
   @action
@@ -71,13 +71,14 @@ class Blocks {
     if (Array.isArray(materials) && materials.length > 0) {
       materials.forEach((material) => {
         materialsValue.push(new BlocksSearch(material));
-        // 当有飞冰物料源时，fetch组合推荐；
-        if( material.source.includes(this.iceMaterialsSource) ) {
-          blockGroups.fetch();
-        }
       });
       this.reset();
       this.materialsValue = materialsValue; // 所有 blocks 数据
+      // 当有飞冰物料源时，fetch组合推荐；
+      const { iceMaterial } = this.getIceMaterial();
+      if (iceMaterial) {
+        blockGroups.fetch();
+      }
       this.isLoading = false;
     } else {
       this.reset();
@@ -198,6 +199,25 @@ class Blocks {
     }
   }
 
+  @action.bound
+  getIceMaterial() {
+    let iceMaterial = null;
+    let iceIndex = -1;
+    let iceMaterialSouce = '';
+    RECOMMEND_MATERIALS.forEach( recommendMaterial => {
+      if (recommendMaterial.key === 'ice') {
+        iceMaterialSouce = recommendMaterial.source;
+      }
+    });
+    this.materialsValue.forEach( (material, index) => {
+      if (material.source === iceMaterialSouce) {
+        iceMaterial = material;
+        iceIndex = index;
+      }
+    });
+    return {iceMaterial, iceIndex};
+  }
+
   // 开始拖拽排序区块
   @action
   onSortStart = () => {
@@ -254,5 +274,6 @@ function arrayMove(arr, previousIndex, newIndex) {
   array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
   return array;
 }
+
 
 export default new Blocks();
