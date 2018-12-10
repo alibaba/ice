@@ -15,8 +15,9 @@ class SettingsMaterials {
   @observable
   customMaterialsValue = [];
 
-  // 记录编辑时的自定义物料数据，用于编辑后取消逻辑
-  beforeEditCustomMaterialsValue = [];
+  // 记录正在编辑的自定义物料源数据
+  @observable
+  edittingCustomMaterialValue = null;
 
   constructor() {
     let materials = settings.get('materials') || [];
@@ -94,6 +95,8 @@ class SettingsMaterials {
         Array.prototype.push.apply(saveMaterials, customMaterialsValue);
 
         settings.set('materials', saveMaterials);
+
+        this.edittingCustomMaterialValue = null;
         this.notification('设置变更已保存');
       })
       .catch(() => {});
@@ -101,13 +104,19 @@ class SettingsMaterials {
 
   @action
   addCustomMaterials() {
-    this.customMaterialsValue.push({
+    if (this.edittingCustomMaterialValue) {
+      return Feedback.toast.error('同时只能编辑一个自定义物料源');
+    }
+
+    const newMaterial = {
       name: '',
       source: '',
       builtIn: false,
       editing: true,
       type: 'add',
-    });
+    };
+    this.edittingCustomMaterialValue = newMaterial;
+    this.customMaterialsValue.push(newMaterial);
   }
 
   @action
@@ -118,7 +127,11 @@ class SettingsMaterials {
 
   @action
   editCustomMaterial(index) {
-    this.beforeEditCustomMaterialsValue[index] = toJS(this.customMaterialsValue[index]);
+    if (this.edittingCustomMaterialValue) {
+      return Feedback.toast.error('同时只能编辑一个自定义物料源');
+    }
+
+    this.edittingCustomMaterialValue = toJS(this.customMaterialsValue[index]);
     this.customMaterialsValue[index].update = true;
     this.customMaterialsValue[index].type = 'edit';
   }
@@ -128,10 +141,12 @@ class SettingsMaterials {
     if (this.customMaterialsValue[index].type === 'add') {
       // 新增后取消
       this.customMaterialsValue.splice(index, 1);
+      this.edittingCustomMaterialValue = null;
     } else {
       // 编辑后取消
-      this.customMaterialsValue[index] = this.beforeEditCustomMaterialsValue[index];
+      this.customMaterialsValue[index] = this.edittingCustomMaterialValue;
       this.customMaterialsValue[index].update = false;
+      this.edittingCustomMaterialValue = null;
     }
   }
 
