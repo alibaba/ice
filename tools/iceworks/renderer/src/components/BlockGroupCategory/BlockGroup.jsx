@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Icon from '../Icon';
 import services from '../../services';
 import { Button } from '@icedesign/base';
-import classnames from 'classnames';
 
 const { log } = services;
 
@@ -53,8 +52,15 @@ class BlockGroup extends Component {
   }
 
   onBlockGroupClick = () => {
-    const { handleBlocksAdd } = this.props;
+    const { handleBlocksAdd, blockGroup } = this.props;
     const blocks = this.getBlocks();
+    // 埋点
+    log.report('app', {
+      action: 'add-block-group',
+      data: {
+        name: blockGroup.name
+      }
+    })
     handleBlocksAdd(blocks);
   }
 
@@ -64,10 +70,6 @@ class BlockGroup extends Component {
       newpage, pageBlockPicker
     } = this.props;
     const blocks = this.getBlocks();
-    const btnCN = classnames({
-      'ibg-handle-btn': true,
-      'ibg-handle-btn-1': pageBlockPicker.visible
-    });
 
     return (
       <div className="block ibg-block-group" onClick={this.onBlockGroupClick}>
@@ -88,26 +90,11 @@ class BlockGroup extends Component {
         </div>
         <p>{blockGroup.name}</p>
         <div className="ibg-handle">
-          <Button className={btnCN} onClick={(event) => {
+          <Button className="ibg-handle-btn" onClick={(event) => {
               this.openBlockImgPreview(event, blocks);
             }}>
             <Icon size="small" type="02magnifyingglasspluszoom" /> 预览效果
           </Button>
-          {/* 创建页面时展示 */}
-          {newpage.visible && (
-            <Button className={btnCN} onClick={() => {
-              generatePage(blocks);
-              // 埋点
-              log.report('app', { 
-                action: 'download-block-groups',
-                data: {
-                  name: blockGroup.name,
-                },
-              });
-            }}>
-              <Icon size="small" type="paper-plane" /> 生成页面
-            </Button>
-          )}
         </div>
       </div>
     );
