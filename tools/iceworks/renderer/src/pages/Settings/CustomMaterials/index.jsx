@@ -124,15 +124,20 @@ class CustomMaterials extends Component {
               </Button>
             )
           }
-          <Switch
-            checked={item.checked !== false}
-            onChange={(checked) =>
-              this.handleCheckChange(checked, item)
-            }
-            checkedChildren="展示"
-            unCheckedChildren="隐藏"
-            size="small"
-          />
+          {
+            // 编辑状态不显示 switch
+            !this.props.settingsMaterials.edittingCustomMaterialValue && (
+              <Switch
+                checked={item.checked !== false}
+                onChange={(checked) =>
+                  this.handleCheckChange(checked, item)
+                }
+                checkedChildren="展示"
+                unCheckedChildren="隐藏"
+                size="small"
+              />
+            )
+          }
         </div>
       </div>
     );
