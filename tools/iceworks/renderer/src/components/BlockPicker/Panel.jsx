@@ -17,14 +17,12 @@ class BlockPicker extends Component {
     onSelected: PropTypes.func,
     handleOpenPreviewPage: PropTypes.func,
     generatePage: PropTypes.func,
-    handleDownBlocks: PropTypes.func,
   };
 
   static defaultProps = {
     onSelected: () => {},
     handleOpenPreviewPage: () => {},
     generatePage: () => {},
-    handleDownBlocks: () => {}
   };
 
   constructor(props) {
@@ -41,10 +39,6 @@ class BlockPicker extends Component {
   handleSearchBlock = (value) => {
     // const value = event.target.value;
     this.props.blocks.search(value);
-  };
-
-  handleBlockSelected = (block) => {
-    this.props.onSelected(block);
   };
 
   handleCategorySlideChange = (tabIndex, index) => {
@@ -84,7 +78,7 @@ class BlockPicker extends Component {
   render() {
     const { materials, isLoading, type, currentTabKey } = this.props.blocks;
     const { blockGroups } = this.props.blockGroups;
-    const { style = {}, handleOpenPreviewPage, generatePage, handleDownBlocks } = this.props;
+    const { style = {}, handleOpenPreviewPage, onSelected,  generatePage } = this.props;
     if (!isLoading && materials.length == 0) {
       return (
         <div
@@ -163,7 +157,7 @@ class BlockPicker extends Component {
                     <BlockGroupCategory 
                       generatePage={generatePage}
                       handleOpenPreviewPage={handleOpenPreviewPage}
-                      handleDownBlocks={handleDownBlocks}
+                      onSelected={onSelected}
                     />
                   </Tab.TabPane>
                 )
@@ -183,7 +177,7 @@ class BlockPicker extends Component {
                   />
                   <BlockCategory
                     idPrefix={this.idPrefix}
-                    onSelected={this.handleBlockSelected}
+                    onSelected={onSelected}
                     blocksWithCategory={blocksWithCategory}
                     originKeywords={this.props.blocks.originKeywords}
                   />

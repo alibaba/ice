@@ -41,6 +41,7 @@ $block-screenshot-img-height: $block-screenshot-height;
     font-weight: 700;
     transition: transform .3s cubic-bezier(.215,.61,.355,1);
     background: hsla(0,0%,100%,.75);
+    cursor: auto;
   }
   .handle {
     background: rgb(48, 128, 254);
@@ -68,6 +69,9 @@ $block-screenshot-img-height: $block-screenshot-height;
       span {
         margin-left: 5px;
       }
+    }
+    .handle-btn-1 {
+      width: 100%
     }
   }
   &:hover {

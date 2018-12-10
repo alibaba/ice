@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Icon from '../Icon';
 import services from '../../services';
 import { Button } from '@icedesign/base';
+import CN from 'classnames';
 
 const { log } = services;
 
@@ -17,13 +18,13 @@ class BlockGroup extends Component {
   static propTypes = {
     handleOpenPreviewPage: PropTypes.func,
     generatePage: PropTypes.func,
-    handleDownBlocks: PropTypes.func
+    onSelected: PropTypes.func
   };
 
   static defaultProps = {
     handleOpenPreviewPage: () => {},
     generatePage: () => {},
-    handleDownBlocks: () => {}
+    onSelected: () => {}
   };
 
   constructor(props) {
@@ -57,15 +58,25 @@ class BlockGroup extends Component {
     })
   }
 
+  onBlocksClick = () => {
+    const { onSelected } = this.props;
+    const blocks = this.getBlocks();
+    onSelected(blocks);
+  }
+
   render() {
     const { 
       blockGroup, handleOpenPreviewPage, generatePage, 
-      newpage, pageBlockPicker, handleDownBlocks 
+      newpage, pageBlockPicker
     } = this.props;
     const blocks = this.getBlocks();
+    const btnCN = CN({
+      'handle-btn': true,
+      'handle-btn-1': pageBlockPicker.visible
+    })
 
     return (
-      <div className="block block-group" onClick={this.handleClick}>
+      <div className="block block-group" onClick={this.onBlocksClick}>
         <div className="screenshot">
           <div className="screenshot-wrapper">
             {
@@ -83,14 +94,14 @@ class BlockGroup extends Component {
         </div>
         <p>{blockGroup.name}</p>
         <div className="handle">
-          <Button className="handle-btn" onClick={(event) => {
+          <Button className={btnCN} onClick={(event) => {
               this.openBlockImgPreview(event, blocks);
             }}>
             <Icon size="small" type="02magnifyingglasspluszoom" /> 预览效果
           </Button>
           {/* 创建页面时展示 */}
           {newpage.visible && (
-            <Button className="handle-btn" onClick={() => {
+            <Button className={btnCN} onClick={() => {
               generatePage(blocks);
               // 埋点
               log.report('app', { 
@@ -101,21 +112,6 @@ class BlockGroup extends Component {
               });
             }}>
               <Icon size="small" type="paper-plane" /> 生成页面
-            </Button>
-          )}
-          {/* 添加区块时展示 */}
-          {pageBlockPicker.visible && (
-            <Button className="handle-btn" onClick={() => {
-              handleDownBlocks(blocks);
-              // 埋点
-              log.report('app', { 
-                action: 'download-block-groups',
-                data: {
-                  name: blockGroup.name,
-                },
-              });
-            }}>
-              <Icon size="small" type="paper-plane" /> 开始下载
             </Button>
           )}
         </div>

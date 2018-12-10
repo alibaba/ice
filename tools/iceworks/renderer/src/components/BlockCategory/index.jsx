@@ -17,12 +17,8 @@ class BlockCategory extends Component {
     onSelected: () => {},
   };
 
-  handleSelected = (block) => {
-    this.props.onSelected(block);
-  };
-
   render() {
-    let { blocksWithCategory, originKeywords, idPrefix } = this.props;
+    let { blocksWithCategory, originKeywords, idPrefix, onSelected } = this.props;
     if (blocksWithCategory == undefined) {
       return <div className="blocks-empty-tip">loading...</div>;
     } else if (
@@ -66,7 +62,7 @@ class BlockCategory extends Component {
                           key={`${category}-${block.name}`}
                           block={block}
                           originKeywords={originKeywords}
-                          onClick={this.handleSelected}
+                          onClick={onSelected}
                         />
                       );
                     })}
