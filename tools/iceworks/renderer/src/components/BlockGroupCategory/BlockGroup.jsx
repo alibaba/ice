@@ -73,7 +73,7 @@ class BlockGroup extends Component {
     });
 
     return (
-      <div className="block block-group" onClick={this.onBlockGroupClick}>
+      <div className="block ibg-block-group" onClick={this.onBlockGroupClick}>
         <div className="screenshot">
           <div className="screenshot-wrapper">
             {

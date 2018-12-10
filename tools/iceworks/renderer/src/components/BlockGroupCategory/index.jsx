@@ -52,8 +52,8 @@ class BlockGroupCategory extends Component {
     }
 
     return (
-      <div className="blcoks-wrapper">
-        <div className="block-groups">
+      <div className="ibg-block-groups-wrapper">
+        <div className="ibg-block-groups">
           {blockGroups.map( (blockGroup, index) => {
             return (
               <BlockGroup

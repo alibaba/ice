@@ -7,7 +7,7 @@ $block-screenshot-height: $block-screenshot-width / 16 * 9 * 2;
 $block-screenshot-img-width: $block-screenshot-width;
 $block-screenshot-img-height: $block-screenshot-height;
 
-.block.block-group {
+.block.ibg-block-group {
   width: $block-width;
   height: $block-screenshot-height + 36;
   padding: 0;

@@ -42,7 +42,7 @@ class BlockCategory extends Component {
       return <div className="blocks-empty-tip">暂无可用区块...</div>;
     } else {
       return (
-        <div className="blcoks-wrapper">
+        <div className="blocks-wrapper">
           {blocksWithCategory.map(({ category, blocks }, index) => {
             if (blocks.length == 0) {
               return null;
