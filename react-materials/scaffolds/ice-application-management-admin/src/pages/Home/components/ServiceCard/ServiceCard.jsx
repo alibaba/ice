@@ -20,13 +20,13 @@ const getData = () => {
       qps: '5140.97/s',
       machine: 91
     },
-    {
-      name: 'seller-management',
-      desc: '商家管理后台',
-      tag: '核心应用',
-      qps: '5140.97/s',
-      machine: 91
-    }
+    // {
+    //   name: 'seller-management',
+    //   desc: '商家管理后台',
+    //   tag: '核心应用',
+    //   qps: '5140.97/s',
+    //   machine: 91
+    // }
   ]
 };
 
@@ -48,9 +48,9 @@ export default class ServiceCard extends Component {
       <Row wrap gutter="20">
         {mockData.map((item, index) => {
           return (
-            <Col l="8" key={index}>
+            <Col l="12" key={index}>
               <IceContainer style={styles.container}>
-                <a href="#/detail" >
+                <a href="#/app" >
                   <div style={styles.body}>
                     <h5 style={styles.name}>{item.name}</h5>
                     <p style={styles.desc}>{item.desc}</p>

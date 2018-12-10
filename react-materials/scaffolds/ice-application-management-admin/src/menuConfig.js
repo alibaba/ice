@@ -34,13 +34,8 @@ const asideMenuConfig = [
     icon: 'home',
   },
   {
-    name: '应用信息',
-    path: '/detail',
-    icon: 'home',
-  },
-  {
-    name: '发布大盘',
-    path: '/history',
+    name: '\u5E94\u7528\u6982\u89C8',
+    path: '/app',
     icon: 'home',
   },
 ];

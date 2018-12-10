@@ -8,6 +8,7 @@ import BasicLayout from './layouts/BasicLayout';
 import Detail from './pages/Detail';
 import History from './pages/History';
 import UserLogin from './pages/UserLogin';
+import App from './pages/App';
 import Home from './pages/Home';
 
 const routerConfig = [
@@ -25,18 +26,13 @@ const routerConfig = [
     component: Query,
   },
   {
-    path: '/detail',
-    layout: BasicLayout,
-    component: Detail,
-  },
-  {
-    path: '/history',
-    layout: BasicLayout,
-    component: History,
-  },
-  {
     path: '/user/login',
     component: UserLogin,
+  },
+  {
+    path: '/app',
+    layout: BasicLayout,
+    component: App,
   },
 ];
 
