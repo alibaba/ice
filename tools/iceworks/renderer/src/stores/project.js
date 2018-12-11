@@ -398,9 +398,9 @@ class Project {
 
   validateNodeProject() {
     if (this.pkgData) {
-      if (this.pkgData === 'Koa' || this.pkgData === 'koa') {
+      if (this.pkgData.templateType === 'Koa' || this.pkgData.templateType === 'koa') {
         return 'koa';
-      } else if (this.pkgData === 'midway') {
+      } else if (this.pkgData.templateType === 'midway') {
         return 'midway';
       } else {
         return '';
