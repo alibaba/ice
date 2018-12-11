@@ -25,6 +25,9 @@
   "scripts": {
     "start": "ice dev",
     "build": "ice build",
+    "screenshot": "ice-devtools screenshot",
+    "prepublish": "npm run build && npm run screenshot",
+    "publish": "npm publish",
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "buildConfig": {

@@ -61,5 +61,4 @@ module.exports = {
       },
     },
   },
-  completeMessage: '区块添加完成',
 };

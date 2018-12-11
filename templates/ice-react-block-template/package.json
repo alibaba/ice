@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-react-block-template",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ice react block template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

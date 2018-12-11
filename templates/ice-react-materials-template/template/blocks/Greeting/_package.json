@@ -2,6 +2,13 @@
   "name": "@icedesign/greeting-block-example",
   "version": "1.0.0",
   "description": "示例区块",
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "screenshot": "ice-devtools screenshot",
+    "prepublish": "npm run build && npm run screenshot",
+    "publish": "npm publish"
+  },
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"

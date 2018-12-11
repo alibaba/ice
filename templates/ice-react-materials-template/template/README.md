@@ -20,14 +20,6 @@ $ npm install
 $ npm run start
 ```
 
-#### 布局预览
-
-```
-$cd layouts/BasicLayout
-$ npm install
-$ npm run start
-```
-
 #### 模板预览
 
 ```
@@ -40,5 +32,6 @@ $ npm run start
 
 ```
 # 根据提示自定义添加
+# 需要到根目录下添加
 $ ice-devtools add
 ```

@@ -6,6 +6,13 @@
   "files": ["src/","build/","lib/","screenshot.png"],
   "license": "MIT",
   "keywords": ["ice","react","block"],
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "screenshot": "ice-devtools screenshot",
+    "prepublish": "npm run build && npm run screenshot",
+    "publish": "npm publish"
+  },
   "dependencies": {
     "react": "^16.2.0",
     "prop-types": "^15.5.8",

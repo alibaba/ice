@@ -3,14 +3,14 @@ module.exports = {
     version: {
       type: 'string',
       label: 'version',
-      message: '版本',
+      message: 'version',
       default: '1.0.0',
     },
     description: {
       type: 'string',
-      required: true,
-      message: '描述',
       label: 'description',
+      message: 'description',
+      default: 'This is a material project',
     },
   },
   completeMessage: '物料项目创建成功',
