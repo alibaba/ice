@@ -1,5 +1,6 @@
 import { inject, observer } from 'mobx-react';
 import { Input, Progress, Checkbox, Select } from '@icedesign/base';
+import { shell } from 'electron';
 import React, { Component } from 'react';
 import Tooltip from 'rc-tooltip';
 import services from '../../services';
@@ -43,6 +44,10 @@ export default class ScaffoldForm extends Component {
 
   handleNodeFrameSelect = (value) => {
     this.props.scaffold.toggleNodeProject(value);
+  };
+
+  handleOpenMidwayDoc = () => {
+    shell.openExternal('https://midwayjs.org/midway/guide.html');
   };
 
   render() {
@@ -128,6 +133,25 @@ export default class ScaffoldForm extends Component {
                   <Option value="midway">Midway</Option>
                   <Option value="koa">Koa</Option>
                 </Select>
+              )
+            }
+            {
+              this.props.scaffold.nodeFramework === 'midway' && (
+                <span
+                  style={{
+                    cursor: 'pointer'
+                  }}
+                  onClick={this.handleOpenMidwayDoc}
+                >
+                  <CustomIcon
+                    type="help"
+                    style={{
+                      margin: '0 4px 0 8px',
+                      color: '#5797fb'
+                    }}
+                  />
+                  <span style={{ color: '#5797fb' }} >Midway 官方文档</span>
+                </span>
               )
             }
           </div>)
