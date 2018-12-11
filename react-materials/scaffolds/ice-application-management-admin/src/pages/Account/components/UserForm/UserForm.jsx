@@ -27,7 +27,7 @@ export default class UserForm extends Component {
         permission: '1',
         term: 'week',
         content: '',
-        reason: ''
+        reason: '',
       },
     };
   }
@@ -52,13 +52,13 @@ export default class UserForm extends Component {
   submit = () => {
     Toast.success('提交成功');
     this.setState({
-      value: {}
+      value: {},
     });
   }
 
   render() {
     const {
-      value: formValue
+      value: formValue,
     } = this.state;
 
     return (
@@ -103,7 +103,7 @@ export default class UserForm extends Component {
                       size="large"
                       value={formValue.os}
                       dataSource={[
-                        { label: 'Linux', value: 'Linux' }
+                        { label: 'Linux', value: 'Linux' },
                       ]}
                     />
                   </IceFormBinder>
@@ -124,7 +124,7 @@ export default class UserForm extends Component {
                       dataSource={[
                         { label: '一般用户', value: '1' },
                         { label: '应用管理员', value: '2' },
-                        { label: '系统管理员', value: '3' }
+                        { label: '系统管理员', value: '3' },
                       ]}
                     />
                   </IceFormBinder>
@@ -145,7 +145,7 @@ export default class UserForm extends Component {
                       dataSource={[
                         { label: '一周', value: 'week' },
                         { label: '一个月', value: 'month' },
-                        { label: '一年', value: 'year' }
+                        { label: '一年', value: 'year' },
                       ]}
                     />
                   </IceFormBinder>

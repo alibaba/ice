@@ -32,24 +32,24 @@ export default class EnhanceTable extends Component {
 
   fetchData = (query = {}) => {
     this.setState({
-      __loading: true
+      __loading: true,
     });
 
     // Make a request for a user with a given ID
     axios.get('/mock/filter-table-list.json')
       .then((response) => {
-        const list  = response.data.data.list;
+        const list = response.data.data.list;
 
         // 此处是为了模拟数据变化
         if (query.app || query.status) {
           this.setState({
             list: list.slice(0, 3),
-            currentPage: 1
+            currentPage: 1,
           });
         } else {
           this.setState({
-            list: list,
-            currentPage: query.page || 1
+            list,
+            currentPage: query.page || 1,
           });
         }
       })
@@ -60,7 +60,7 @@ export default class EnhanceTable extends Component {
       .then(() => {
         // always executed
         this.setState({
-          __loading: false
+          __loading: false,
         });
       });
   };
@@ -78,13 +78,13 @@ export default class EnhanceTable extends Component {
   publish = (record, e) => {
     e.preventDefault();
     // TODO: record 为该行所对应的数据，可自定义操作行为
-    Toast.success(record.title + " 发布成功")
+    Toast.success(`${record.title} 发布成功`);
   };
 
   offline = (record, e) => {
     e.preventDefault();
     // TODO: record 为该行所对应的数据，可自定义操作行为
-    Toast.error(record.title + " 下线失败")
+    Toast.error(`${record.title} 下线失败`);
   };
 
   renderOperations = (value, index, record) => {
@@ -97,7 +97,7 @@ export default class EnhanceTable extends Component {
           <a
             href="#/account"
             style={styles.operationItem}
-            >
+          >
             申请权限
           </a>
         </div>
@@ -113,16 +113,16 @@ export default class EnhanceTable extends Component {
           href="#"
           style={styles.operationItem}
           target="_blank"
-          onClick={this.publish.bind(this, record)}
-          >
+          onClick={e => this.publish(record, e)}
+        >
             发布
         </a>
         <a
           href="#"
           style={styles.operationItem}
           target="_blank"
-          onClick={this.offline.bind(this, record)}
-          >
+          onClick={e => this.offline(record, e)}
+        >
             下线
         </a>
       </div>
@@ -139,7 +139,7 @@ export default class EnhanceTable extends Component {
 
   changePage = (currentPage) => {
     this.fetchData({
-      page: currentPage
+      page: currentPage,
     });
   };
 
@@ -166,7 +166,7 @@ export default class EnhanceTable extends Component {
       pageSize,
       total,
       filterFormValue,
-      __loading
+      __loading,
     } = this.state;
 
     return (

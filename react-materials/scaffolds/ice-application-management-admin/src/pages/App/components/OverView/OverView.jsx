@@ -14,7 +14,7 @@ export default class History extends Component {
 
   render() {
     return (
-      <IceContainer title={'资源概览'} >
+      <IceContainer title="资源概览" >
         <Row wrap gutter="20">
           <Col l="5">
             <div className="box">
@@ -36,7 +36,7 @@ export default class History extends Component {
           <Col l="8">
             <div className="box">
               <div className="box-title">
-                <span className="box-icon" style={{backgroundColor: '#ec7a0e'}}>
+                <span className="box-icon" style={{ backgroundColor: '#ec7a0e' }}>
                   <Icon className="icon" type="box" />
                 </span>
                 <span>主机预算</span>
@@ -69,7 +69,7 @@ export default class History extends Component {
           <Col l="5">
             <div className="box" >
               <div className="box-title">
-                <span className="box-icon" style={{backgroundColor: '#5485F7'}}>
+                <span className="box-icon" style={{ backgroundColor: '#5485F7' }}>
                   <Icon className="icon" type="box" />
                 </span>
                 <span>应用基线</span>

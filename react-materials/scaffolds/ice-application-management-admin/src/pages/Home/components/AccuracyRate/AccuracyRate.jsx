@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Progress, Grid } from '@icedesign/base';
+
 const { Row, Col } = Grid;
 
 export default class AccuracyRate extends Component {
@@ -18,7 +19,7 @@ export default class AccuracyRate extends Component {
   render() {
     return (
       <IceContainer title="无人值守准确率" className="circle-progress">
-        <Row wrap align="center" style={{height: '200px'}}>
+        <Row wrap align="center" style={{ height: '200px' }}>
           <Col l="12">
             <div style={styles.chart}>
               <Progress
@@ -58,28 +59,28 @@ const styles = {
     flexDirection: 'column',
   },
   progress: {
-    backgroundColor: '#ccc'
+    backgroundColor: '#ccc',
   },
   title: {
     marginTop: 20,
   },
   list: {
-    paddingLeft: '15px'
+    paddingLeft: '15px',
   },
   item: {
     lineHeight: 1.5,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   label: {
     minWidth: '80px',
     display: 'inline-block',
     marginRight: '10px',
-    color: '#666'
+    color: '#666',
   },
   number: {
     fontSize: '18px',
     color: '#333333',
     fontWeight: '500',
-  }
+  },
 };

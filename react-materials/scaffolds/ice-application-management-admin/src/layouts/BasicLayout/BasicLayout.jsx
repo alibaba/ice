@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Layout from '@icedesign/layout';
-import MainRoutes from './MainRoutes'
+import MainRoutes from './MainRoutes';
 import Header from './components/Header';
 import Asdie from './components/Aside';
 import Footer from './components/Footer';

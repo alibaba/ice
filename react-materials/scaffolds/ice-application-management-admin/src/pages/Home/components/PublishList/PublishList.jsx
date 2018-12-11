@@ -1,9 +1,8 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination, Progress } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
-import { Progress } from "@icedesign/base";
 import axios from 'axios';
 
 export default class PublishList extends Component {
@@ -29,16 +28,16 @@ export default class PublishList extends Component {
 
   fetchData = (query = {}) => {
     this.setState({
-      __loading: true
+      __loading: true,
     });
 
     // Make a request for a user with a given ID
     axios.get('/mock/history-table.json')
       .then((response) => {
-        const list  = response.data.data.list;
+        const list = response.data.data.list;
         this.setState({
-          list: list,
-          currentPage: query.page || 1
+          list,
+          currentPage: query.page || 1,
         });
       })
       .catch((error) => {
@@ -48,7 +47,7 @@ export default class PublishList extends Component {
       .then(() => {
         // always executed
         this.setState({
-          __loading: false
+          __loading: false,
         });
       });
   };
@@ -95,13 +94,13 @@ export default class PublishList extends Component {
 
   renderErrorRate = (value) => {
     return (
-      <span style={value ? {color: '#FA7070'} : {}}>{value + '%'}</span>
+      <span style={value ? { color: '#FA7070' } : {}}>{`${value}%`}</span>
     );
   }
 
   changePage = (currentPage) => {
     this.fetchData({
-      page: currentPage
+      page: currentPage,
     });
   };
 
@@ -111,7 +110,7 @@ export default class PublishList extends Component {
       currentPage,
       pageSize,
       total,
-      __loading
+      __loading,
     } = this.state;
 
     return (
@@ -122,7 +121,7 @@ export default class PublishList extends Component {
           className="basic-table"
           style={styles.basicTable}
           hasBorder={false}
-          isZebra={true}
+          isZebra
         >
           <Table.Column title="发布单ID" dataIndex="id" width={60} />
           <Table.Column
@@ -155,11 +154,11 @@ export default class PublishList extends Component {
             width={120}
           />
           <Table.Column title="发布者" dataIndex="publisher" width={80} />
-          <Table.Column 
-            title="失败机器占比" 
+          <Table.Column
+            title="失败机器占比"
             dataIndex="errorRate"
-            cell={this.renderErrorRate} 
-            width={100} 
+            cell={this.renderErrorRate}
+            width={100}
           />
           <Table.Column title="发布时间" dataIndex="publishTime" width={120} />
         </Table>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Icon } from '@icedesign/base';
+import { Grid } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;
@@ -12,13 +12,13 @@ const getData = () => {
       desc: '淘小宝管理后台',
       tag: '核心应用',
       qps: '5140.97/s',
-      machine: 91
+      machine: 91,
     },
     {
       name: 'content-management',
       desc: '内容管理后台',
       qps: '5140.97/s',
-      machine: 91
+      machine: 91,
     },
     // {
     //   name: 'seller-management',
@@ -27,7 +27,7 @@ const getData = () => {
     //   qps: '5140.97/s',
     //   machine: 91
     // }
-  ]
+  ];
 };
 
 export default class ServiceCard extends Component {
@@ -59,11 +59,11 @@ export default class ServiceCard extends Component {
                   <div style={styles.footer}>
                     <div href="#" style={{ ...styles.link, ...styles.line }}>
                       <span>QPS</span>
-                      <span style={{paddingLeft: 20}}>{item.qps}</span>
+                      <span style={{ paddingLeft: 20 }}>{item.qps}</span>
                     </div>
                     <div href="#" style={{ ...styles.link, ...styles.line }}>
                       <span>机器数</span>
-                      <span style={{paddingLeft: 20}}>{item.machine}</span>
+                      <span style={{ paddingLeft: 20 }}>{item.machine}</span>
                     </div>
                   </div>
                 </a>

@@ -47,12 +47,12 @@ export default class CPUChart extends Component {
     const cols = {
       time: {
         range: [0, 1],
-        tickCount: 7
+        tickCount: 7,
       },
       cpu: {
         min: 0,
-        max: 100
-      }
+        max: 100,
+      },
     };
 
     return (
@@ -76,13 +76,3 @@ export default class CPUChart extends Component {
     );
   }
 }
-
-const styles = {
-  title: {
-    margin: '0 0 40px',
-    fontSize: '18px',
-    paddingBottom: '15px',
-    fontWeight: 'bold',
-    borderBottom: '1px solid #eee',
-  },
-};
