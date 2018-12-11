@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@icedesign/base';
+import './Home.scss';
 
 import ServiceCard from './components/ServiceCard';
 import PublishTime from './components/PublishTime';
@@ -18,7 +19,7 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div>
+      <div className="home">
         <ServiceCard />
         <Row wrap gutter="20">
           <Col l="8">

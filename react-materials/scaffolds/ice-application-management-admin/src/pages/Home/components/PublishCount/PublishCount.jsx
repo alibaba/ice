@@ -62,7 +62,7 @@ export default class PublishCount extends Component {
               type: 'y',
             }}
           />
-          <Geom type="interval" position="name*value" />
+          <Geom type="interval" position="name*value" color="#447eff" />
         </Chart>
       </IceContainer>
     );

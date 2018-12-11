@@ -82,6 +82,32 @@ export default class History extends Component {
               </div>
             </div>
           </Col>
+          <Col l="6">
+            <div className="box" >
+              <div className="box-title">
+                <span className="box-icon" style={{ backgroundColor: '#f7da47' }}>
+                  <Icon className="icon" type="box" />
+                </span>
+                <span>负载均衡</span>
+              </div>
+              <div className="box-list">
+                <div className="box-content">
+                  <div>
+                    <span className="box-value">0</span>
+                    <span className="box-label">个</span>
+                  </div>
+                  <div className="box-key">Load Balancer 01</div>
+                </div>
+                <div className="box-content">
+                  <div>
+                    <span className="box-value">11</span>
+                    <span className="box-label">个</span>
+                  </div>
+                  <div className="box-key">Load Balancer 02</div>
+                </div>
+              </div>
+            </div>
+          </Col>
         </Row>
       </IceContainer>
     );

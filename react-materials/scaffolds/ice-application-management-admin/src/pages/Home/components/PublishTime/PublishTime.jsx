@@ -35,7 +35,7 @@ export default class PublishTime extends Component {
 const styles = {
   time: {
     textAlign: 'center',
-    color: '#2F7FFC',
+    color: '#447eff',
     fontSize: '32px',
   },
   item: {
