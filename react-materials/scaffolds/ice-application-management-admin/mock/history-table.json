@@ -11,7 +11,7 @@
         "type": "publish",
         "env": "pub",
         "statue": "success",
-        "progress": 100,
+        "progress": 90,
         "errorRate": 0,
         "publisher": "淘小宝",
         "publishTime": "17-07-03 09:17:08"
@@ -22,7 +22,7 @@
         "type": "publish",
         "env": "pre",
         "statue": "success",
-        "progress": 100,
+        "progress": 80,
         "errorRate": 0,
         "publisher": "淘小宝",
         "publishTime": "17-04-28 20:29:20"
@@ -76,7 +76,7 @@
         "type": "publish",
         "env": "pre",
         "statue": "error",
-        "progress": 100,
+        "progress": 0,
         "errorRate": 100,
         "publisher": "淘小宝",
         "publishTime": "17-05-02 12:19:20"
