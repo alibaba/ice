@@ -17,12 +17,13 @@ class ProjectInit extends Component {
   };
   handleOk = () => {
     const { project } = this.props;
+    const isMidway = project.nodeFramework === 'midway';
     project.setNeedInstallDeps(false);
     project.toggleTerminal();
 
     project.installStart();
     projectScripts.install(
-      { cwd: project.fullPath, reinstall: false },
+      { cwd: project.fullPath, reinstall: false, isMidway },
       (code, alertContent) => {
         project.installDone();
         if (code !== 0) {
