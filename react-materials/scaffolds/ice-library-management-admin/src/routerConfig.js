@@ -2,38 +2,37 @@
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
-import BasicLayout from './layouts/BasicLayout';
+import UserLogin from './pages/UserLogin';
+import UserRegister from './pages/UserRegister';
 import LibManagement from './pages/LibManagement';
 import LibBorrow from './pages/LibBorrow';
 import LibRecommend from './pages/LibRecommend';
 import LibDonation from './pages/LibDonation';
-import NotFound from './pages/NotFound';
 
 const routerConfig = [
   {
-    path: '/',
-    layout: BasicLayout,
+    path: '/user/login',
+    component: UserLogin,
+  },
+  {
+    path: '/user/register',
+    component: UserRegister,
+  },
+  {
+    path: '/dashboard',
     component: LibManagement,
   },
   {
-    path: '/library-borrow',
-    layout: BasicLayout,
+    path: '/borrow',
     component: LibBorrow,
   },
   {
-    path: '/library-recommend',
-    layout: BasicLayout,
+    path: '/recommend',
     component: LibRecommend,
   },
   {
-    path: '/library-donation',
-    layout: BasicLayout,
+    path: '/donation',
     component: LibDonation,
-  },
-  {
-    path: '*',
-    layout: BasicLayout,
-    component: NotFound,
   },
 ];
 
