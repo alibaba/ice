@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+.user-layout {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  padding-top: 100px;
+  background-image: url(https://img.alicdn.com/tfs/TB1DgSmSpXXXXaJXpXXXXXXXXXX-2760-1480.jpg);
+  background-size: cover;
+  align-items: center;
+  justify-content: center;
+  .user-content {
+    position: absolute;
+    width: 450px;
+    background: #fff;
+    border-radius: 5px;
+  }
+  .layer-mask {
+    background: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+  .formContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 368px;
+    margin: 0 auto;
+  }
+  .formItems {
+    padding-bottom: 40px;
+  }
+  .formItem {
+    position: relative;
+    margin-bottom: 25px;
+    flex-direction: column;
+  }
+  .formItemCol {
+    position: relative;
+    margin-bottom: 5px;
+  }
+  .formTitle {
+    padding: 40px 0;
+    margin: 0;
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 33px;
+    font-weight: 500;
+    text-align: center;
+  }
+  .inputIcon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+  }
+  .submitBtn {
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    background: #3080fe;
+    border-radius: 4px;
+  }
+  .checkbox {
+    margin-left: 5px;
+  }
+  .account {
+    margin: 4px 0;
+    text-align: center;
+  }
+  .tips {
+    justify-content: center;
+  }
+  .tips-text {
+    color: #999;
+    text-decoration: none;
+    font-size: 13px;
+  }
+  .line {
+    color: #dcd6d6;
+    margin: 0 8px;
+  }
+
+  .next-input.next-input-single {
+    width: 368px;
+    height: 38px;
+    line-height: 38px;
+    input {
+      padding-left: 32px;
+      font-size: 13px;
+    }
+  }
+  .next-checkbox-label {
+    color: #999;
+    font-size: 13px;
+  }
+}
