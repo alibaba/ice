@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/simple-footer-block",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "LOGO和导航组合的页脚",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

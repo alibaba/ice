@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/main-data-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "展示核心数据",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

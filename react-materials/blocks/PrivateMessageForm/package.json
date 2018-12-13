@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/private-message-form-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "私有消息表单",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

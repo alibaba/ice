@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/platform-tools-intro-block",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "平台工具介绍",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/content-editor-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "内容编辑器",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

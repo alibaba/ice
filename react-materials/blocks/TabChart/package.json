@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/tab-chart-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "标签页和图表组合使用",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
