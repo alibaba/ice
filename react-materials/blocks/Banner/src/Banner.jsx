@@ -25,7 +25,7 @@ export default class Banner extends Component {
           <div key="content" style={styles.content}>
             <div style={styles.title}>
               <img
-                src="https://img.alicdn.com/tfs/TB1V0pgaPrguuRjy0FeXXXcbFXa-1233-322.gif"
+                src={require('./images/title.gif')}
                 alt=""
                 style={styles.titlePic}
               />
@@ -33,7 +33,7 @@ export default class Banner extends Component {
 
             <div style={styles.time}>
               <img
-                src="https://img.alicdn.com/tfs/TB1eBaZGN9YBuNjy0FfXXXIsVXa-896-68.png"
+                src={require('./images/time.png')}
                 alt=""
                 style={styles.timePic}
               />
