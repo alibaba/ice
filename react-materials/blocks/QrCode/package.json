@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/qr-code-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "根据配置属性生成二维码",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

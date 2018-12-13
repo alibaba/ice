@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/notifications-block",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

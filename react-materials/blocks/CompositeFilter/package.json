@@ -1,13 +1,14 @@
 {
   "name": "@icedesign/composite-filter-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "标签、日期和搜索组合筛选",
   "main": "lib/index.js",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

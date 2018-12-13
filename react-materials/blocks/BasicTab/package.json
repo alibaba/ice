@@ -1,13 +1,14 @@
 {
   "name": "@icedesign/basic-tab-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "基础 Tab 组件",
   "main": "lib/index.js",
   "files": [
     "src/",
     "demo/",
     "mock/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

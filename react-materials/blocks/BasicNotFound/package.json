@@ -1,13 +1,14 @@
 {
   "name": "@icedesign/basic-not-found-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "404 报错提示",
   "main": "lib/index.js",
   "files": [
     "src/",
     "demo/",
     "mock/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

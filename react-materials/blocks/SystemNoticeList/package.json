@@ -1,13 +1,14 @@
 {
   "name": "@icedesign/system-notice-list-block",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "系统消息列表",
   "main": "lib/index.js",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

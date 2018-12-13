@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/text-search-list-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "文字搜索列表",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

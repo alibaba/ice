@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/chart-box-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

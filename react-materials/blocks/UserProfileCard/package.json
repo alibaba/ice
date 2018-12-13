@@ -1,11 +1,12 @@
 {
   "name": "@react-materials/user-profile-card-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "用于展示用户详细信息的卡片",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

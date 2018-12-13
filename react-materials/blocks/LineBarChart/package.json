@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/line-bar-chart-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "折线图和柱状图组合",
   "homepage": "https://alibaba.github.io/ice/block/line-bar-chart/preview",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "publishConfig": {
     "access": "public",
