@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/application-progress-block",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "申请进度信息展示",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

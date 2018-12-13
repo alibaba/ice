@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/rich-editor-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "简单的富文本编辑器",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

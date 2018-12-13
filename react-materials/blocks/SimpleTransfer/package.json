@@ -1,11 +1,12 @@
 {
   "name": "@react-materials/simple-transfer-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "简单的穿梭框面板展示",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

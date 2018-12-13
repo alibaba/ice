@@ -1,13 +1,14 @@
 {
   "name": "@icedesign/enhance-table-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "附带简单表单筛选功能的增强筛选表单",
   "main": "lib/index.js",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

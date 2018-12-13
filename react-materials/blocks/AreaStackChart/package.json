@@ -1,13 +1,14 @@
 {
   "name": "@icedesign/area-stack-chart-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "叠加面积图",
   "main": "src/index.js",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

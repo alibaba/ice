@@ -1,11 +1,12 @@
 {
   "name": "@react-materials/slide-banner-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "滑动banner 用于层叠展示",
   "author": "muchen <tao360907796@gmail.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

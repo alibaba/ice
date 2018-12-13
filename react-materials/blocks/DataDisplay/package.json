@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/data-display-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

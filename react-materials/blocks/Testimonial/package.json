@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/testimonial-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

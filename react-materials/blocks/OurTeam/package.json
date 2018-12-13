@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/our-team-block",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

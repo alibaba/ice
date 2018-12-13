@@ -1,13 +1,14 @@
 {
   "name": "@icedesign/filter-list-block",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "支持过滤的列表",
   "main": "lib/index.js",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

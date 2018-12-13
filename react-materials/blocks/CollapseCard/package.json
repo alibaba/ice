@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/collapse-card-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "折叠型卡片的信息展示",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

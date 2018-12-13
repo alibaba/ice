@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/quill-rich-text-editor-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于 react-quill 的富文本编辑器",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   "dependencies": {
     "@icedesign/base": "^0.2.3",
     "@icedesign/container": "^0.1.2",
+    "react-dom": "^16.6.3",
     "react-quill": "^1.3.1"
   },
   "peerDependencies": {

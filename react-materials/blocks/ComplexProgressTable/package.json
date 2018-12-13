@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/complex-progress-table-block",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "进度管理表格",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

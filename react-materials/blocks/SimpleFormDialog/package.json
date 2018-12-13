@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/simple-form-dialog-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "简单的表单弹窗",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
