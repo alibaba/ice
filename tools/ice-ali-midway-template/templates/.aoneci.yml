@@ -1,0 +1,51 @@
+# 不要修改该文件，会自动生成，详见 https://gitlab.alibaba-inc.com/node/ci
+
+stage:
+  node-8-单元测试:
+    env:
+      image: 'aone-base-global/alios7-nodejs-ci:1.0.0'
+    plugin:
+      -
+        param:
+          url: '${repo}'
+          branch: '${branch}'
+          path: '${source_root}'
+          isDelGit: 'false'
+        name: checkout
+        pos: front
+      -
+        param:
+          version: node-8
+          source: '${source_root}'
+        name: node_envs
+        pos: front
+    exec:
+      - 'export PATH=$PWD/node_modules/.bin:$HOME/.cli:$PATH'
+      - 'echo $PATH'
+      - 'tnpm run ci'
+      - alicov-report
+  node-10-单元测试:
+    env:
+      image: 'aone-base-global/alios7-nodejs-ci:1.0.0'
+    plugin:
+      -
+        param:
+          url: '${repo}'
+          branch: '${branch}'
+          path: '${source_root}'
+          isDelGit: 'false'
+        name: checkout
+        pos: front
+      -
+        param:
+          version: node-10
+          source: '${source_root}'
+        name: node_envs
+        pos: front
+    exec:
+      - 'export PATH=$PWD/node_modules/.bin:$HOME/.cli:$PATH'
+      - 'echo $PATH'
+      - 'tnpm run ci'
+      - alicov-report
+pipeline:
+  - 'node-8-单元测试,node-10-单元测试'
