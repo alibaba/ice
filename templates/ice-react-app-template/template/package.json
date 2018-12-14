@@ -26,9 +26,16 @@
     "start": "ice dev",
     "build": "ice build",
     "screenshot": "ice-devtools screenshot",
-    "prepublish": "npm run build && npm run screenshot",
-    "publish": "npm publish",
+    "prepublishOnly": "npm run build && npm run screenshot",
     "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "publishConfig": {
+    {{#if_eq forInnerNet true }}
+    "registry": "http://registry.npm.alibaba-inc.com"
+    {{/if_eq}}
+    {{#if_eq forInnerNet false }}
+    "registry": "http://registry.npm.com"
+    {{/if_eq}}
   },
   "buildConfig": {
     "entry": "src/index.js"

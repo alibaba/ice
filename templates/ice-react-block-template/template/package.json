@@ -10,13 +10,20 @@
     "start": "ice-devtools start",
     "build": "ice-devtools build",
     "screenshot": "ice-devtools screenshot",
-    "prepublish": "npm run build && npm run screenshot",
-    "publish": "npm publish"
+    "prepublishOnly": "npm run build && npm run screenshot"
   },
   "dependencies": {
     "react": "^16.2.0",
     "prop-types": "^15.5.8",
     "@alifd/next": "^1.11.2"
+  },
+  "publishConfig": {
+    {{#if_eq forInnerNet true }}
+    "registry": "http://registry.npm.alibaba-inc.com"
+    {{/if_eq}}
+    {{#if_eq forInnerNet false }}
+    "registry": "http://registry.npm.com"
+    {{/if_eq}}
   },
   "blockConfig": {
     "name": "{{name}}",
