@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/chart-bubble-image-block",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

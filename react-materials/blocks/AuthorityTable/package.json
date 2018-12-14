@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/authority-table-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "权限管理类的表格",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

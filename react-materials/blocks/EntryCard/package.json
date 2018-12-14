@@ -1,13 +1,10 @@
 {
   "name": "@icedesign/entry-card-block",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "入口列表卡片",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "mock/",
-    "lib/",
     "build/"
   ],
   "author": {

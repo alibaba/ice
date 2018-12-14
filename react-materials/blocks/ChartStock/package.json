@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/chart-stock-block",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "股票图",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

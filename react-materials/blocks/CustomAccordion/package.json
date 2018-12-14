@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/custom-accordion-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "适用于产品简介，可以折叠/展开的内容区域",
   "author": "",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

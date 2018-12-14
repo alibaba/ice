@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/emoji-mart-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "展示 Emoji 表情",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

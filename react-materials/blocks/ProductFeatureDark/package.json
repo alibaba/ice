@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/product-feature-dark-block",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "描述产品特点区块，深色主题，左文右图展示形式。",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

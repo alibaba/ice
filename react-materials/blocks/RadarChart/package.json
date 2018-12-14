@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/radar-chart-block",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

@@ -1,11 +1,10 @@
 {
-  "name": "@react-materials/industry-banner-block",
-  "version": "1.0.2",
+  "name": "@icedesign/industry-banner-block",
+  "version": "1.0.0",
   "description": "行业专区的图文介绍",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

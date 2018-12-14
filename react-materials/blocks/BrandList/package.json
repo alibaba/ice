@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/brand-list-block",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "展示品牌列表",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

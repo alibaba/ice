@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/overview-board-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "卡片形式的概览数据",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

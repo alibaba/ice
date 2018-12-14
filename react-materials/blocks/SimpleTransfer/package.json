@@ -1,11 +1,10 @@
 {
-  "name": "@react-materials/simple-transfer-block",
-  "version": "1.0.2",
+  "name": "@icedesign/simple-transfer-block",
+  "version": "1.0.0",
   "description": "简单的穿梭框面板展示",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

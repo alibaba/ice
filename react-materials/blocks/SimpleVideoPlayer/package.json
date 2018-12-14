@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/simple-video-player-block",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "简单的视频播放器",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

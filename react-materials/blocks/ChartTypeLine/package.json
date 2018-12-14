@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/chart-type-line-block",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

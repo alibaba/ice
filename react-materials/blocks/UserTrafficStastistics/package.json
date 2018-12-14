@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/user-traffic-stastistics",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "信息展示类，使用可视化的方式展示用户浏览以及数据分析的结果",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

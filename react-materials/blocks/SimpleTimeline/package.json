@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/simple-timeline-block",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

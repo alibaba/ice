@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/user-data-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "用户信息卡片展示",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

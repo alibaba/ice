@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/landing-intro-banner-block",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "首页介绍 Banner",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "mock/",
     "build/"
   ],
   "author": {

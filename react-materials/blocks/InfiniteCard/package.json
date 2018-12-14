@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/infinite-card-block",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "适用于横向滚动的多数据展示卡片",
   "author": "",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

@@ -1,6 +1,6 @@
 {
-  "name": "@react-materials/tree-table-block",
-  "version": "1.0.1",
+  "name": "@icedesign/tree-table-block",
+  "version": "1.0.0",
   "description": "tree和选择混合表格",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

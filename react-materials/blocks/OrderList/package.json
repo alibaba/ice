@@ -1,13 +1,10 @@
 {
   "name": "@icedesign/order-list-block",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "订单型列表",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

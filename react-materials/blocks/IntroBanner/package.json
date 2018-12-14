@@ -1,11 +1,10 @@
 {
-  "name": "@react-materials/intro-banner-block",
-  "version": "1.0.2",
+  "name": "@icedesign/intro-banner-block",
+  "version": "1.0.0",
   "description": "带图的介绍",
   "author": "muchen <tao360907796@gmail.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/sales-chart-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "销售数据图表",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

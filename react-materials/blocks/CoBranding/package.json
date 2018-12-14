@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/co-branding-block",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "展示合作的品牌",
   "author": "",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/user-stat-chart-block",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "用户统计数据或类似形式的图表",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

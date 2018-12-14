@@ -1,13 +1,10 @@
 {
   "name": "@icedesign/signup-form-block",
-  "version": "0.1.11",
+  "version": "0.1.13",
   "description": "登录表单",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

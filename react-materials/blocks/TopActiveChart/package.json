@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/top-active-chart-block",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

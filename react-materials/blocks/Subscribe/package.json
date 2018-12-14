@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/subscribe-block",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "订阅",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

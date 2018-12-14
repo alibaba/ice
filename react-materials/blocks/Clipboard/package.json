@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/clipboard-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "复制内容到剪贴板",
   "author": "",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

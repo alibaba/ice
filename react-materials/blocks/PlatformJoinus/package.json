@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/platform-joinus-block",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "加入平台区块",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

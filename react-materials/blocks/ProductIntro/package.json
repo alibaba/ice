@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/product-intro-block",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "用于左文右图产品介绍模块",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

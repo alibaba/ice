@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/message-list-block",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "消息列表",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

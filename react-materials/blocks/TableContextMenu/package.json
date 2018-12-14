@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/table-context-menu-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "表格单元格支持右键菜单配置操作，可自定义风格",
   "author": "",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

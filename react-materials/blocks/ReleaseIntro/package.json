@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/release-intro-block",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "根据平台信息，展示对应软件下载，以及软件介绍等。",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

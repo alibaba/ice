@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/double-axes-chart-block",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {

@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/multiple-pie-chart-block",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "基于 highCharts 的饼图组合",
   "author": "",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

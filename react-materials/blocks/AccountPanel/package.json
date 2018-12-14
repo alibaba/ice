@@ -1,12 +1,11 @@
 {
-  "name": "@react-materials/account-panel-block",
-  "version": "1.0.2",
+  "name": "@icedesign/account-panel-block",
+  "version": "1.0.0",
   "description": "用户中心展示账户信息内容",
   "homepage": "https://alibaba.github.io/ice/block/account-panel/preview",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

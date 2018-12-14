@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/json-view-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "支持编辑和展示JSON可视化区块",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

@@ -1,13 +1,10 @@
 {
   "name": "@icedesign/success-dialog-block",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "提示框-成功",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
