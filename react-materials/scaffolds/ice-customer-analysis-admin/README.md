@@ -1,7 +1,5 @@
 # ice-customer-analysis-admin
 
-> 使用文档
-
 ## 使用:
 
 - 启动调试服务: `npm start`
@@ -24,6 +22,6 @@
 - 功能主色：#5e83fb
 - 字体颜色：#333、#666
 
-##效果图:
+## 效果图
 
 ![screenshot](https://img.alicdn.com/tfs/TB1V.FZg3TqK1RjSZPhXXXfOFXa-2860-1520.png)
