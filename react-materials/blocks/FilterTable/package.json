@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/filter-table-block",
-  "version": "0.1.16",
+  "version": "0.1.19",
   "description": "附带筛选工具条的表格",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -50,5 +47,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/filter-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/filter-table"
 }

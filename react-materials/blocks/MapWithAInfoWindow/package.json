@@ -1,11 +1,10 @@
 {
-  "name": "@react-materials/map-with-a-info-window",
-  "version": "0.1.2",
+  "name": "@icedesign/map-with-a-info-window",
+  "version": "1.0.0",
   "description": "Map With A Info Window",
   "author": "yuanyan <yuanyan.cao@gmail.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -35,5 +34,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1eaNyCwmTBuNjy1XbXXaMrVXa-2054-794.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/map-with-a-info-window/preview"
+  "homepage": "https://alibaba.github.io/ice/block/map-with-a-info-window"
 }

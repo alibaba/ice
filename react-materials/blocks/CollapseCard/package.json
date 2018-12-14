@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/collapse-card-block",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "折叠型卡片的信息展示",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -47,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/collapse-card/preview"
+  "homepage": "https://alibaba.github.io/ice/block/collapse-card"
 }

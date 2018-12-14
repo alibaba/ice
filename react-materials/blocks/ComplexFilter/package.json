@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/complex-filter-block",
-  "version": "0.1.14",
+  "version": "0.1.16",
   "description": "标签页组合筛选",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -46,5 +43,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/complex-filter/preview"
+  "homepage": "https://alibaba.github.io/ice/block/complex-filter"
 }

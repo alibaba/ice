@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/ablity-items-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "中间展示特点 特性的区块",
   "author": "muchen <tao360907796@gmail.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -35,5 +34,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1TBcQCgmTBuNjy1XbXXaMrVXa-1683-293.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/ablity-items/preview"
+  "homepage": "https://alibaba.github.io/ice/block/ablity-items"
 }

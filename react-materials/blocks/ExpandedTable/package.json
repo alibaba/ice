@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/expanded-table-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "额外渲染和选择混合表格",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -41,5 +40,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1C8cRuAyWBuNjy0FpXXassXXa-2444-822.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/expanded-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/expanded-table"
 }

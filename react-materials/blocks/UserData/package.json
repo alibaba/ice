@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/user-data-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "用户信息卡片展示",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -42,5 +41,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1cvLWxH9YBuNjy0FgXXcxcXXa-2726-520.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/user-data/preview"
+  "homepage": "https://alibaba.github.io/ice/block/user-data"
 }

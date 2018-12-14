@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/columns-table-block",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "两栏布局的表格",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -42,5 +41,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1AIrmuwmTBuNjy1XbXXaMrVXa-2666-1002.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/columns-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/columns-table"
 }

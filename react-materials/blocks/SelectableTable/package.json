@@ -1,13 +1,10 @@
 {
   "name": "@icedesign/selectable-table-block",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "可批量操作的表格",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -47,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/selectable-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/selectable-table"
 }

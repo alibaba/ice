@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/change-password-form-block",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -48,5 +45,5 @@
     ],
     "themePackage": "@icedesign/skin"
   },
-  "homepage": "https://alibaba.github.io/ice/block/change-password-form/preview"
+  "homepage": "https://alibaba.github.io/ice/block/change-password-form"
 }

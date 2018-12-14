@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/message-list-block",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "消息列表",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -46,5 +43,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/message-list/preview"
+  "homepage": "https://alibaba.github.io/ice/block/message-list"
 }

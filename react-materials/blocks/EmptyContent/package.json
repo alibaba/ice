@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/empty-content-block",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -47,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/empty-content/preview"
+  "homepage": "https://alibaba.github.io/ice/block/empty-content"
 }

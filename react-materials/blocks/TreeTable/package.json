@@ -1,5 +1,5 @@
 {
-  "name": "@react-materials/tree-table-block",
+  "name": "@icedesign/tree-table-block",
   "version": "1.0.1",
   "description": "tree和选择混合表格",
   "author": {
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -41,5 +40,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1xDkQuuySBuNjy1zdXXXPxFXa-2872-1096.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/tree-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/tree-table"
 }

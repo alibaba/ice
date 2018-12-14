@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/markdown-docs-block",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "markdown 文档区块展示",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -38,5 +37,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1S9jMrNGYBuNjy0FnXXX5lpXa-1844-1590.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/markdown-docs/preview"
+  "homepage": "https://alibaba.github.io/ice/block/markdown-docs"
 }

@@ -1,12 +1,11 @@
 {
-  "name": "@react-materials/account-badge-block",
-  "version": "1.0.1",
+  "name": "@icedesign/account-badge-block",
+  "version": "1.0.0",
   "description": "展示账户权益勋章等权益信息",
-  "homepage": "https://alibaba.github.io/ice/block/account-badge/preview",
+  "homepage": "https://alibaba.github.io/ice/block/account-badge",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/asset-info-display-block",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "资产信息展示, 卡片类型的 UI 数据展示, 常用于额度, 余额等页面",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -46,5 +43,5 @@
     ],
     "themePackage": "@icedesign/skin"
   },
-  "homepage": "https://alibaba.github.io/ice/block/asset-info-display/preview"
+  "homepage": "https://alibaba.github.io/ice/block/asset-info-display"
 }

@@ -1,13 +1,10 @@
 {
   "name": "@icedesign/basic-tab-block",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "基础 Tab 组件",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "mock/",
-    "lib/",
     "build/"
   ],
   "author": {
@@ -47,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/basic-tab/preview"
+  "homepage": "https://alibaba.github.io/ice/block/basic-tab"
 }

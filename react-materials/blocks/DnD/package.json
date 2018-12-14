@@ -1,6 +1,6 @@
 {
-  "name": "@react-materials/dn-d-block",
-  "version": "1.0.2",
+  "name": "@icedesign/dn-d-block",
+  "version": "1.0.0",
   "description": "元素拖拽放置",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -39,5 +38,6 @@
       "拖拽"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1eOefG3mTBuNjy1XbXXaMrVXa-2410-674.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/dn-d"
 }

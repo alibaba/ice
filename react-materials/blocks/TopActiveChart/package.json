@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/top-active-chart-block",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -50,5 +47,5 @@
     ],
     "themePackage": "@icedesign/skin"
   },
-  "homepage": "https://alibaba.github.io/ice/block/top-active-chart/preview"
+  "homepage": "https://alibaba.github.io/ice/block/top-active-chart"
 }

@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/join-us-block",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -48,5 +45,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/join-us/preview"
+  "homepage": "https://alibaba.github.io/ice/block/join-us"
 }

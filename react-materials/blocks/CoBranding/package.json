@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/co-branding-block",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "展示合作的品牌",
   "author": "",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -38,5 +37,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1Qhf3J1uSBuNjy1XcXXcYjFXa-2864-380.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/co-branding/preview"
+  "homepage": "https://alibaba.github.io/ice/block/co-branding"
 }

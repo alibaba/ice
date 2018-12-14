@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/register-block",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -40,5 +39,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1XqmOqHGYBuNjy0FoXXciBFXa-2740-1556.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/register/preview"
+  "homepage": "https://alibaba.github.io/ice/block/register"
 }

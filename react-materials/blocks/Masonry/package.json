@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/masonry-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "自适应的动态瀑布流效果",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -38,5 +37,6 @@
       "瀑布流"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1rz05EFmWBuNjSspdXXbugXXa-1908-953.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/masonry"
 }
