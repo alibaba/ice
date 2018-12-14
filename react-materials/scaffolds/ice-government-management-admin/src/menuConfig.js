@@ -53,6 +53,11 @@ const asideMenuConfig = [
     path: '/batch',
     icon: 'copy',
   },
+  {
+    name: '案件录入',
+    path: '/new',
+    icon: 'copy',
+  },
 ];
 
 export { headerMenuConfig, asideMenuConfig };

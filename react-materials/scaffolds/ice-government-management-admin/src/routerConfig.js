@@ -10,6 +10,7 @@ import Allocation from './pages/Allocation';
 import Selfhelp from './pages/Selfhelp';
 import List from './pages/List';
 import Batch from './pages/Batch';
+import NewCase from './pages/NewCase';
 
 const routerConfig = [
   {
@@ -43,6 +44,10 @@ const routerConfig = [
   {
     path: '/batch',
     component: Batch,
+  },
+  {
+    path: '/new',
+    component: NewCase,
   },
 ];
 
