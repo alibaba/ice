@@ -44,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/feed-list/preview"
+  "homepage": "https://unpkg.com/@icedesign/feed-list-block@latest/build/index.html"
 }

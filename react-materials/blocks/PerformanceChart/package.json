@@ -45,5 +45,5 @@
     ],
     "themePackage": "@icedesign/skin"
   },
-  "homepage": "https://alibaba.github.io/ice/block/performance-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/performance-chart-block@latest/build/index.html"
 }

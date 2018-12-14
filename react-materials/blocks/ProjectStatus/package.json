@@ -41,5 +41,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1NuhFwDtYBeNjy1XdXXXXyVXa-1391-484.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/project-status/preview"
+  "homepage": "https://unpkg.com/@icedesign/project-status-block@latest/build/index.html"
 }

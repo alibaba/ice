@@ -47,5 +47,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/operation-table/preview"
+  "homepage": "https://unpkg.com/@icedesign/operation-table-block@latest/build/index.html"
 }

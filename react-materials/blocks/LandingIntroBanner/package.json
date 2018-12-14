@@ -44,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/landing-intro-banner/preview"
+  "homepage": "https://unpkg.com/@icedesign/landing-intro-banner-block@latest/build/index.html"
 }

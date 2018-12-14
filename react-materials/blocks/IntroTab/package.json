@@ -35,5 +35,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1lg7gux1YBuNjy1zcXXbNcXXa-2878-1604.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/intro-tab/preview"
+  "homepage": "https://unpkg.com/@icedesign/intro-tab-block@latest/build/index.html"
 }

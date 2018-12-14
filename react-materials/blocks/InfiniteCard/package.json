@@ -37,5 +37,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1YpBJc6rguuRjy0FeXXXcbFXa-2860-318.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/infinite-card/preview"
+  "homepage": "https://unpkg.com/@icedesign/infinite-card-block@latest/build/index.html"
 }

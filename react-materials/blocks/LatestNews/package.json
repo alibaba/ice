@@ -44,5 +44,5 @@
     ],
     "themePackage": "@icedesign/skin"
   },
-  "homepage": "https://alibaba.github.io/ice/block/latest-news/preview"
+  "homepage": "https://unpkg.com/@icedesign/latest-news-block@latest/build/index.html"
 }

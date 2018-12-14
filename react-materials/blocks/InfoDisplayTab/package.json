@@ -46,5 +46,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/info-display-tab/preview"
+  "homepage": "https://unpkg.com/@icedesign/info-display-tab-block@latest/build/index.html"
 }

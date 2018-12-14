@@ -34,5 +34,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1eaNyCwmTBuNjy1XbXXaMrVXa-2054-794.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/map-with-a-info-window/preview"
+  "homepage": "https://unpkg.com/@icedesign/map-with-a-info-window@latest/build/index.html"
 }

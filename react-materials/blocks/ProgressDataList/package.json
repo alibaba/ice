@@ -46,5 +46,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/progress-data-list/preview"
+  "homepage": "https://unpkg.com/@icedesign/progress-data-list-block@latest/build/index.html"
 }

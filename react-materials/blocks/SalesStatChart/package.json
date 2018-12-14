@@ -46,5 +46,5 @@
     ],
     "themePackage": "@icedesign/skin"
   },
-  "homepage": "https://alibaba.github.io/ice/block/sales-stat-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/sales-stat-chart-block@latest/build/index.html"
 }

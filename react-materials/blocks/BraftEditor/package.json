@@ -38,5 +38,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1qj.uD9tYBeNjSspkXXbU8VXa-1916-577.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/braft-editor/preview"
+  "homepage": "https://unpkg.com/@icedesign/braft-editor-block@latest/build/index.html"
 }

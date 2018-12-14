@@ -40,5 +40,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1np7YxKuSBuNjy1XcXXcYjFXa-2504-294.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/overview-card/preview"
+  "homepage": "https://unpkg.com/@icedesign/overview-card-block@latest/build/index.html"
 }

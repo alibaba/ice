@@ -39,5 +39,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1yYlvKhGYBuNjy0FnXXX5lpXa-2870-992.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/pareto-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/pareto-chart-block@latest/build/index.html"
 }

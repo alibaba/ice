@@ -46,5 +46,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/user-traffic-stastistics/preview"
+  "homepage": "https://unpkg.com/@icedesign/user-traffic-stastistics@latest/build/index.html"
 }

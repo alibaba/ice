@@ -40,5 +40,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1znQvwWmWBuNjy1XaXXXCbXXa-2686-626.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/todo-list/preview"
+  "homepage": "https://unpkg.com/@icedesign/todo-list-block@latest/build/index.html"
 }

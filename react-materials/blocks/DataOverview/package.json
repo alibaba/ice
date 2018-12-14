@@ -2,7 +2,7 @@
   "name": "@icedesign/data-overview-block",
   "version": "1.0.0",
   "description": "基础数据概览",
-  "homepage": "https://alibaba.github.io/ice/block/data-overview/preview",
+  "homepage": "https://unpkg.com/@icedesign/data-overview-block@latest/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",

@@ -44,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/article-list/preview"
+  "homepage": "https://unpkg.com/@icedesign/article-list-block@latest/build/index.html"
 }

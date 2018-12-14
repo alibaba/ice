@@ -2,7 +2,7 @@
   "name": "@icedesign/account-features-block",
   "version": "1.0.0",
   "description": "罗列账户功能列表",
-  "homepage": "https://alibaba.github.io/ice/block/account-features/preview",
+  "homepage": "https://unpkg.com/@icedesign/account-features-block@latest/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",

@@ -47,5 +47,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/filter-table/preview"
+  "homepage": "https://unpkg.com/@icedesign/filter-table-block@latest/build/index.html"
 }

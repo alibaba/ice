@@ -2,7 +2,7 @@
   "name": "@icedesign/user-landing-block",
   "version": "1.0.0",
   "description": "展示用户相关信息、等级等",
-  "homepage": "https://alibaba.github.io/ice/block/user-landing/preview",
+  "homepage": "https://unpkg.com/@icedesign/user-landing-block@latest/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",

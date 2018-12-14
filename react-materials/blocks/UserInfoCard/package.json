@@ -43,5 +43,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/user-info-card/preview"
+  "homepage": "https://unpkg.com/@icedesign/user-info-card-block@latest/build/index.html"
 }

@@ -39,5 +39,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1QH_RJ1uSBuNjy1XcXXcYjFXa-2858-706.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/real-time-data/preview"
+  "homepage": "https://unpkg.com/@icedesign/real-time-data-block@latest/build/index.html"
 }

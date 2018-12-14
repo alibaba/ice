@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "description": "适用于多数据的信息展示",
   "author": "",
-  "homepage": "https://alibaba.github.io/ice/block/info-overview/preview",
+  "homepage": "https://unpkg.com/@icedesign/info-overview-block@latest/build/index.html",
   "files": [
     "src/",
     "build/"

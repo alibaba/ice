@@ -36,5 +36,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1aoVuq_tYBeNjy1XdXXXXyVXa-2008-1228.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/platform-black-intro/preview"
+  "homepage": "https://unpkg.com/@icedesign/platform-black-intro-block@latest/build/index.html"
 }

@@ -46,5 +46,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/monaco-editor/preview"
+  "homepage": "https://unpkg.com/@icedesign/monaco-editor-block@latest/build/index.html"
 }

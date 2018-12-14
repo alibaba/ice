@@ -38,5 +38,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1mNG.qNSYBuNjSspjXXX73VXa-2072-1262.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/platform-tools-intro/preview"
+  "homepage": "https://unpkg.com/@icedesign/platform-tools-intro-block@latest/build/index.html"
 }

@@ -45,5 +45,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/brand-show-case/preview"
+  "homepage": "https://unpkg.com/@icedesign/brand-show-case-block@latest/build/index.html"
 }

@@ -2,7 +2,7 @@
   "name": "@icedesign/latest-activity-block",
   "version": "1.0.3",
   "description": "适用于图表和列表组合的活动展示场景",
-  "homepage": "https://alibaba.github.io/ice/block/latest-activity/preview",
+  "homepage": "https://unpkg.com/@icedesign/latest-activity-block@latest/build/index.html",
   "author": "",
   "files": [
     "src/",

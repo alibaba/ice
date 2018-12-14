@@ -2,7 +2,7 @@
   "name": "@icedesign/creative-login-block",
   "version": "1.0.3",
   "description": "左右布局的登录页",
-  "homepage": "https://alibaba.github.io/ice/block/creative-login/preview",
+  "homepage": "https://unpkg.com/@icedesign/creative-login-block@latest/build/index.html",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",

@@ -2,7 +2,7 @@
   "name": "@icedesign/hot-rank-block",
   "version": "1.0.0",
   "description": "展示关键词、关键点热度",
-  "homepage": "https://alibaba.github.io/ice/block/hot-rank/preview",
+  "homepage": "https://unpkg.com/@icedesign/hot-rank-block@latest/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",

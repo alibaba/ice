@@ -37,5 +37,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1RpPQCAyWBuNjy0FpXXassXXa-2422-548.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/simple-transfer/preview"
+  "homepage": "https://unpkg.com/@icedesign/simple-transfer-block@latest/build/index.html"
 }

@@ -40,5 +40,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1jWRlxntYBeNjy1XdXXXXyVXa-2864-428.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/overview-sates-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/overview-sates-chart-block@latest/build/index.html"
 }

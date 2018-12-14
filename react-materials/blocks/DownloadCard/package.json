@@ -46,5 +46,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/download-card/preview"
+  "homepage": "https://unpkg.com/@icedesign/download-card-block@latest/build/index.html"
 }

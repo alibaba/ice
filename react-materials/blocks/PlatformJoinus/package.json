@@ -38,5 +38,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1ke8jqHGYBuNjy0FoXXciBFXa-1830-1064.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/platform-joinus/preview"
+  "homepage": "https://unpkg.com/@icedesign/platform-joinus-block@latest/build/index.html"
 }
