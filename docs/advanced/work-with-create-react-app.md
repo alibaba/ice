@@ -1,6 +1,6 @@
 ---
 title: 在 create-react-app 中使用飞冰组件
-order: 3
+order: 8
 category: 进阶指南
 ---
 

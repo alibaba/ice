@@ -71,25 +71,6 @@ class Demo extends Component {
 
 更多内容请参考 [Dangerously Set innerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
 
-## 之前创建的项目，遇到如下报错怎么办
-
-![截图](https://gw.alicdn.com/tfs/TB12gIkbVGWBuNjy0FbXXb4sXXa-862-258.png)
-
-这是由于 ES6 Modules 的标准在物料中不兼容导致的。您可以把 `src/navs.js` 中最后一行修改为：
-
-```js
-export const headerNavs = transform([
-  ...autoGenHeaderNavs,
-  ...customHeaderNavs,
-]);
-
-export const asideNavs = transform([...autoGenAsideNavs, ...customAsideNavs]);
-```
-
-## 在 Iceworks 下载页面点击下载没反应怎么办？
-
-请检查是否安装 Adguard、AdBlock、xxx 安全助手等工具并被其拦截？因为 Iceworks 是二进制可安装程序，可能会被安全软件拦截，如有拦截请点击确认或者临时关闭相关拦截功能。
-
 ## 出现端口已占用启动失败应该如何处理？
 
 当你出现类似 `Something is already running on port 4444.` 或类似的报错时，可能是由于 Hosts 配置缺少 `localhost` 等相关配置。
