@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/complex-tab-table-block",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "附带复杂的 Tab 多级筛选项的表格",
   "files": [
     "src/",

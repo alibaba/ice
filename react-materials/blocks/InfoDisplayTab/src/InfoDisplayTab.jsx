@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Tab, Button, Grid } from '@icedesign/base';
 import IceEllipsis from '@icedesign/ellipsis';
-import axios from 'axios';
+import data from './data';
 
 const { Row, Col } = Grid;
 const { TabPane } = Tab;
@@ -17,32 +17,12 @@ export default class InfoDisplayTab extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabData: {},
+      tabData: data,
     };
   }
 
-  /**
-   * 异步获取数据
-   */
-  getData = () => {
-    axios
-      .get('/mock/info-display-tab.json')
-      .then((response) => {
-        this.setState({
-          tabData: response.data.data || {},
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  componentDidMount() {
-    this.getData();
-  }
-
-  renderContent = (data) => {
-    return data.map((item, index) => {
+  renderContent = (items) => {
+    return items.map((item, index) => {
       return (
         <Col xxs="24" s="12" l="8" key={index}>
           <div style={styles.columnCard}>
