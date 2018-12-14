@@ -131,7 +131,7 @@ class Columnmarked extends React.Component {
       <div>
         <ChartTitle title="年龄分布" />
         <Chart
-          height="240"
+          height={240}
           data={data}
           padding={[60, 20, 40, 60]}
           scale={scale}

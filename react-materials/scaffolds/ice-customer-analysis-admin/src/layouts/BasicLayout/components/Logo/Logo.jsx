@@ -5,13 +5,6 @@ export default class Logo extends Component {
   render() {
     return (
       <div style={styles.container}>
-        {/*
-        <img
-          src={require('./images/logo.png')}
-          style={styles.logoImg}
-          alt="logo"
-        />
-        */}
         <Link to="/" style={styles.logoText}>
           客源分析管理系统
         </Link>
@@ -26,9 +19,6 @@ const styles = {
     alignItems: 'center',
     marginRight: '20px',
   },
-  logoImg: {
-    width: '40px',
-  },
   logoText: {
     display: 'block',
     maxWidth: '180px',
@@ -37,7 +27,7 @@ const styles = {
     whiteSpace: 'nowrap',
     marginLeft: '10px',
     fontSize: '20px',
-    color: '#a3b1bf',
+    color: '#fff',
     fontWeight: 'bold',
     textDecoration: 'none',
   },

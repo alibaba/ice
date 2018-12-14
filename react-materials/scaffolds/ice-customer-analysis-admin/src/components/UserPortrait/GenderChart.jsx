@@ -68,15 +68,7 @@ class GenderChart extends React.Component {
     return (
       <div>
         <ChartTitle title="性别分布" />
-        <Chart
-          height={240}
-          data={data}
-          padding={[10]}
-          // plotBackground={{
-          //   stroke: '#eee',
-          // }}
-          forceFit
-        >
+        <Chart height={240} data={data} padding={[10]} forceFit>
           <Coord type="theta" radius={0.8} />
           <Tooltip showTitle={false} />
           <Geom
