@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/statistical-card-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "统计型卡片",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

@@ -1,10 +1,8 @@
-const { spawn } = require('child_process');
 const chalk = require('chalk');
 const fs = require('fs');
 const glob = require('glob');
 const npmRequestJson = require('npm-request-json');
 const path = require('path');
-const queue = require('queue');
 
 // 1. 创建 npmrc 文件
 
@@ -70,45 +68,8 @@ function scanMaterials() {
     .then((publishCheck) => {
       const unpublished = publishCheck.filter((n) => !!n);
       if (unpublished.length > 0) {
-        publishQueue(unpublished);
+        console.log('未发布的区块：', unpublished.length);
+        process.exit(1);
       }
     });
-}
-
-// npm publish 发布队列
-function publishQueue(unpublishedPackageJson) {
-  const q = queue({
-    concurrency: 1, // 一次执行一个
-  });
-
-  unpublishedPackageJson.forEach((packageJson) => {
-    const publishCwd = path.dirname(packageJson);
-    q.push(() => {
-      return new Promise((resolve, reject) => {
-        const ps = spawn('npm', ['publish'], {
-          cwd: publishCwd,
-          stdio: 'inherit',
-          env: Object.assign({}, process.env, {
-            NPM_CONFIG_GLOBALCONFIG: npmrc, // 定义 npm 发布权限认证 rc 文件
-          }),
-        });
-
-        ps.on('close', (code) => {
-          if (code === 0) {
-            console.log(chalk.green('发布成功：'), packageJson);
-            resolve();
-          } else {
-            reject(new Error(`发布失败：${packageJson}`));
-          }
-        });
-      });
-    });
-
-    q.start();
-
-    q.end((err) => {
-      if (err) throw err;
-      console.log(chalk.green('所有未发布的物料已发布完成'));
-    });
-  });
 }

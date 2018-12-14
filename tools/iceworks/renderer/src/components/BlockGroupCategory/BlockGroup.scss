@@ -1,0 +1,83 @@
+@import "../Block/index.scss";
+
+$block-width: 255px;
+// $block-padding: 3px;
+$block-screenshot-width: $block-width;
+$block-screenshot-height: $block-screenshot-width / 16 * 9 * 2;
+$block-screenshot-img-width: $block-screenshot-width;
+$block-screenshot-img-height: $block-screenshot-height;
+
+.block.ibg-block-group {
+  width: $block-width;
+  height: $block-screenshot-height + 36;
+  padding: 0;
+  .screenshot {
+    width: $block-screenshot-width;
+    // height: $block-screenshot-height;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+    .screenshot-wrapper {
+      width: 100%;
+      height: 100%;
+    }
+    .screenshot-img {
+      width: $block-screenshot-img-width;
+      height: auto;
+    }
+  }
+  p {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 36px;
+    font-size: 14px;
+    height: 36px;
+    margin: 0;
+    font-weight: 700;
+    transition: transform .3s cubic-bezier(.215,.61,.355,1);
+    background: hsla(0,0%,100%,.75);
+    cursor: auto;
+  }
+  .ibg-handle {
+    background: rgb(48, 128, 254);
+    transform: translateY(100%);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    transition: transform .3s cubic-bezier(.215,.61,.355,1);
+    line-height: 36px;
+    font-size: 14px;
+    height: 36px;
+    margin: 0;
+    .ibg-handle-btn {
+      width: 100%;
+      height: 36px;
+      float: left;
+      display: block;
+      box-sizing: border-box;
+      flex: 0 0 auto;
+      color: #fff;
+      border-radius: 0;
+      border: none;
+      background: inherit;
+      span {
+        margin-left: 5px;
+      }
+    }
+  }
+  &:hover {
+    box-shadow: none;
+    .ibg-handle {
+      transform: translateY(0);
+    }
+    p {
+      transform: translateY(-100%);
+    }
+  }
+}

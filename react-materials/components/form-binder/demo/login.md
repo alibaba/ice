@@ -52,34 +52,36 @@ class Login extends Component {
           onChange={this.formChange}
           ref="form"
         >
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>名称：</span>
-            <FormBinder name="username" required message="请输入正确的名称" >
-              <Input /> 
-            </FormBinder>
-            <FormError style={styles.formItemError} name="username" />
-          </div>
+          <div style={styles.content}>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>名称：</span>
+              <FormBinder name="username" required message="请输入正确的名称" >
+                <Input /> 
+              </FormBinder>
+              <FormError style={styles.formItemError} name="username" />
+            </div>
 
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>密码：</span>
-            <FormBinder name="password" required message="请输入正确的密码">
-              <Input htmlType="password" /> 
-            </FormBinder>
-            <FormError style={styles.formItemError} name="password" />
-          </div>
-      
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>记住密码：</span>
-            <FormBinder
-              name="checkbox"
-            >
-              <Checkbox />
-            </FormBinder>
-          </div>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>密码：</span>
+              <FormBinder name="password" required message="请输入正确的密码">
+                <Input htmlType="password" /> 
+              </FormBinder>
+              <FormError style={styles.formItemError} name="password" />
+            </div>
+        
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>记住密码：</span>
+              <FormBinder
+                name="checkbox"
+              >
+                <Checkbox />
+              </FormBinder>
+            </div>
 
-          <Button type="primary" style={{width: '242px'}}  onClick={this.validateFields}>
-            登 录
-          </Button>
+            <Button type="primary" style={{width: '242px'}}  onClick={this.validateFields}>
+              登 录
+            </Button>
+          </div>
         </FormBinderWrapper>
         
         <div style={styles.preview}>

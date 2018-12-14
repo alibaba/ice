@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/card-items-block",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "用卡片展示信息",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

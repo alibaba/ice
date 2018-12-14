@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/join-us-block",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

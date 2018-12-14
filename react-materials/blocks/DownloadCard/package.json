@@ -1,13 +1,14 @@
 {
   "name": "@icedesign/download-card-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "下载型信息卡片",
   "main": "lib/index.js",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

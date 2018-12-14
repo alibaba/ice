@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/notice-summary-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "用于通知摘要展示",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

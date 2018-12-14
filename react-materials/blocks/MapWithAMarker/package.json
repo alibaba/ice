@@ -1,11 +1,12 @@
 {
   "name": "@react-materials/map-with-a-marker",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Map With A Marker",
   "author": "yuanyan <yuanyan.cao@gmail.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

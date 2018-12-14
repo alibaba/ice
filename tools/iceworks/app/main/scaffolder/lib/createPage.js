@@ -227,7 +227,7 @@ module.exports = async function createPage({
         const tarballURL = await materialUtils.getTarballURLBySource(
           block.source
         );
-        const blockFolderName = block.alias || block.className || block.name; // block 目录名
+        const blockFolderName = block.alias || upperCamelCase(block.name) || block.className; // block 目录名
 
         let extractPosition = nodeFramework
           ? path.join(clientFolder, 'components')
@@ -260,9 +260,7 @@ module.exports = async function createPage({
         );
         fileList = fileList.concat(blockExtractedFiles);
       } else {
-        const blockFolderName = upperCamelCase(
-          block.alias || block.className || block.blockName
-        );
+        const blockFolderName = block.alias || upperCamelCase(block.name) || block.className;
         let extractPosition = nodeFramework
           ? path.join(clientFolder, `pages/${pageFolderName}/components`)
           : `src/pages/${pageFolderName}/components`;

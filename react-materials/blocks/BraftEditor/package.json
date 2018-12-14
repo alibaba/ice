@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/braft-editor-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于 draft-js 开发的美观易用的 React 富文本编辑器",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

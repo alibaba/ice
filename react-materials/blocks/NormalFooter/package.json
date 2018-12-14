@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/normal-footer-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

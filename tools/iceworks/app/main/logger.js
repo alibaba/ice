@@ -5,7 +5,6 @@ const macaddress = require('macaddress');
 
 const isDev = is.windows();
 
-// http://gitlab.alibaba-inc.com/ice/notes/issues/907
 let userId = 0;
 
 macaddress.one((err, macAddr) => {
