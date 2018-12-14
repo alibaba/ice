@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/complex-filter-block",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "标签页组合筛选",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

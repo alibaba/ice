@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/display-card-block",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "展示型卡片",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

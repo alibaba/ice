@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/intro-with-background-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "附带背景图片的信息介绍区块",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

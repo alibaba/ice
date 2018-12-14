@@ -1,12 +1,13 @@
 {
   "name": "ice-workspace",
-  "version": "0.0.2",
+  "version": "0.0.3-0",
   "scripts": {
     "start": "ice-devtools start",
     "publish": "lerna publish",
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
     "sync": "node scripts/sync-db.js",
+    "check": "node scripts/check-materials-publish.js",
     "generate:materials": "ice-devtools generate",
     "generate:docs": "node ./scripts/generate-docs-database",
     "generate": "npm run generate:materials && npm run generate:docs",

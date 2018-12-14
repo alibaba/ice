@@ -118,72 +118,74 @@ class Register extends Component {
           onChange={this.formChange}
           ref="form"
         >
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>邮箱：</span>
-            <FormBinder name="email" required type="email" message="请输入正确的邮箱" >
-              <Input placeholder="ice-admin@alibaba-inc.com" /> 
-            </FormBinder>
-            <FormError style={styles.formItemError} name="email" />
-          </div>
-
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>昵称：</span>
-            <FormBinder name="nickname" required message="请输入正确的昵称" >
-              <Input placeholder="淘小宝" /> 
-            </FormBinder>
-            <FormError style={styles.formItemError} name="nickname" />
-          </div>
-
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>密码：</span>
-            <FormBinder name="password" required validator={this.checkPassword}>
-              <Input htmlType="password" placeholder="输入密码" /> 
-            </FormBinder>
-            <FormError style={styles.formItemError} name="password" />
-          </div>
-
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>确认密码：</span>
-            <FormBinder name="confirmPassword" required validator={this.checkConfirmPassword}>
-              <Input htmlType="password" placeholder="输入确认密码" /> 
-            </FormBinder>
-            <FormError style={styles.formItemError} name="confirmPassword" />
-          </div>
-
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>出生日期：</span>
-              <FormBinder name="birthdate" getFieldValue={(date, formatDate) => { return formatDate }}>
-                <DatePicker formater={["YYYY-MM-DD"]} style={{ width: '200px' }} />
+          <div style={styles.content}>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>邮箱：</span>
+              <FormBinder name="email" required type="email" message="请输入正确的邮箱" >
+                <Input placeholder="ice-admin@alibaba-inc.com" /> 
               </FormBinder>
-          </div>
+              <FormError style={styles.formItemError} name="email" />
+            </div>
 
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>籍贯地址：</span>
-            <FormBinder name="city" >
-              <CascaderSelect dataSource={cityData} style={{ width: '200px' }} /> 
-            </FormBinder>
-          </div>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>昵称：</span>
+              <FormBinder name="nickname" required message="请输入正确的昵称" >
+                <Input placeholder="淘小宝" /> 
+              </FormBinder>
+              <FormError style={styles.formItemError} name="nickname" />
+            </div>
 
-           <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>开启通知：</span>
-            <FormBinder name="notification" valuePropName="checked">
-              <Switch /> 
-            </FormBinder>
-          </div>
-      
-          <div style={styles.formItem}>
-            <span style={styles.formItemLabel}>用户协议：</span>
-            <FormBinder
-              name="agreement"
-              valuePropName="checked"
-            >
-              <Checkbox />
-            </FormBinder>
-          </div>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>密码：</span>
+              <FormBinder name="password" required validator={this.checkPassword}>
+                <Input htmlType="password" placeholder="输入密码" /> 
+              </FormBinder>
+              <FormError style={styles.formItemError} name="password" />
+            </div>
 
-          <Button type="primary" style={{width: '270px'}}  onClick={this.validateFields}>
-            注 册
-          </Button>
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>确认密码：</span>
+              <FormBinder name="confirmPassword" required validator={this.checkConfirmPassword}>
+                <Input htmlType="password" placeholder="输入确认密码" /> 
+              </FormBinder>
+              <FormError style={styles.formItemError} name="confirmPassword" />
+            </div>
+
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>出生日期：</span>
+                <FormBinder name="birthdate" getFieldValue={(date, formatDate) => { return formatDate }}>
+                  <DatePicker formater={["YYYY-MM-DD"]} style={{ width: '200px' }} />
+                </FormBinder>
+            </div>
+
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>籍贯地址：</span>
+              <FormBinder name="city" >
+                <CascaderSelect dataSource={cityData} style={{ width: '200px' }} /> 
+              </FormBinder>
+            </div>
+
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>开启通知：</span>
+              <FormBinder name="notification" valuePropName="checked">
+                <Switch /> 
+              </FormBinder>
+            </div>
+        
+            <div style={styles.formItem}>
+              <span style={styles.formItemLabel}>用户协议：</span>
+              <FormBinder
+                name="agreement"
+                valuePropName="checked"
+              >
+                <Checkbox />
+              </FormBinder>
+            </div>
+
+            <Button type="primary" style={{width: '270px'}}  onClick={this.validateFields}>
+              注 册
+            </Button>
+          </div>
         </FormBinderWrapper>
         
         <div style={styles.preview}>

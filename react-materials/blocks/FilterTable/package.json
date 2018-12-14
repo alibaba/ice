@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/filter-table-block",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "附带筛选工具条的表格",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

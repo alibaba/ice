@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/masonry-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "自适应的动态瀑布流效果",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

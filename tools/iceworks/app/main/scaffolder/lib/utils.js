@@ -4,7 +4,7 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const request = require('request');
 const tar = require('tar');
-const uppercamelcase = require('uppercamelcase');
+const upperCamelCase = require('uppercamelcase');
 const zlib = require('zlib');
 
 const config = require('../../config');
@@ -88,7 +88,7 @@ function downloadBlockToPage({ destDir = process.cwd(), block, pageName, nodeFra
       block,
       path.join(
         componentsDir,
-        block.alias || uppercamelcase(block.name) || block.className
+        block.alias || upperCamelCase(block.name) || block.className
       )
     );
   }
@@ -98,7 +98,7 @@ function downloadBlockToPage({ destDir = process.cwd(), block, pageName, nodeFra
       return extractBlock(
         path.join(
           componentsDir,
-          block.alias || uppercamelcase(block.name) || block.className
+          block.alias || upperCamelCase(block.name) || block.className
         ),
         tarballURL,
         destDir

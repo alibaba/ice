@@ -17,7 +17,6 @@ module.exports = (libary, buildConfig) => {
       return {
         compile: ejs.compile(fileStr, {
           // ejs options
-          // http://web.npm.alibaba-inc.com/package/ejs
         }),
         filePath,
         fileName: file.replace(libary + '.', ''),

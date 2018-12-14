@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/picture-text-list-block",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "图文列表",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/tag-table-block",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "标签表格组合",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

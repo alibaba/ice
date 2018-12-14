@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/tree-card-list-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "树形卡片列表",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/code-syntax-highlight-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "代码语法高亮",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

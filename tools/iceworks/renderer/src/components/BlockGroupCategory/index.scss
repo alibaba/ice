@@ -1,0 +1,16 @@
+
+
+.ibg-block-groups-wrapper {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+
+.ibg-block-groups {
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 10px 0 10px 14px;
+}

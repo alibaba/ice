@@ -1,11 +1,12 @@
 {
   "name": "@react-materials/ability-introduction-block",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "产品能力介绍",
   "author": "wssgcg1213 <i@zeroling.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/editable-table-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "可编辑内容的表格",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

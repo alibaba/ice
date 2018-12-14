@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/brand-show-case-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

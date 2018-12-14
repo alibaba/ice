@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/create-activity-form-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "创建活动的表单",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

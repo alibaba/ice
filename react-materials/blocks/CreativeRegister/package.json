@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/creative-register-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "注册",
   "homepage": "https://alibaba.github.io/ice/block/creative-register/preview",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

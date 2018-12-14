@@ -1,13 +1,14 @@
 {
   "name": "@icedesign/terms-info-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "协议信息展示",
   "main": "lib/index.js",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
