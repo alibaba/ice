@@ -208,7 +208,7 @@ module.exports = async function createPage({
     }
   }
 
-  // 2. 拉取 blocks tar 包，开始现在文件
+  // 2. 拉取 blocks tar 包，开始下载文件
   if (Array.isArray(blocks)) {
     for (let i = 0; i < blocks.length; i++) {
       const block = blocks[i];
