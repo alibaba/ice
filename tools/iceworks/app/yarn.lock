@@ -270,20 +270,37 @@
     rimraf "^2.6.2"
     write "^1.0.3"
 
-"@iceland/dsl2code@^1.0.0":
-  version "1.0.1"
-  resolved "http://registry.npmjs.com/@iceland/dsl2code/download/@iceland/dsl2code-1.0.1.tgz#3f6b49fb4578cbd63873b777e895148c612dd38a"
-  integrity sha1-P2tJ+0V4y9Y4c7d36JUUjGEt04o=
+"@iceland/data-engine@^1.0.8":
+  version "1.0.8"
+  resolved "http://registry.npmjs.com/@iceland/data-engine/download/@iceland/data-engine-1.0.8.tgz#06779bb4939e670ae6560d1074d1047e6d17cac1"
+  integrity sha1-BnebtJOeZwrmVg0QdNEEfm0XysE=
   dependencies:
-    "@iceland/intelligent-code" "^1.0.0"
+    uid "^0.0.2"
+    deep-diff "^1.0.0"
+    lodash.clonedeep "^4.5.0"
+    lodash.foreach "^4.5.0"
+    lodash.groupby "^4.6.0"
+    lodash.isequal "^4.5.0"
+    lodash.merge "^4.6.1"
+    lodash.omit "^4.5.0"
+    lodash.uniqby "^4.7.0"
+    traverse "^0.6.6"
+
+"@iceland/dsl2code@^1.0.0":
+  version "1.0.24"
+  resolved "http://registry.npmjs.com/@iceland/dsl2code/download/@iceland/dsl2code-1.0.24.tgz#4efb7168b3944a407eba33081293277cd09cb7c5"
+  integrity sha1-TvtxaLOUSkB+ujMIEpMnfNCct8U=
+  dependencies:
+    "@iceland/data-engine" "^1.0.8"
+    "@iceland/intelligent-code" "^1.0.12"
     debug "^3.0.1"
     lodash "^4.17.11"
     uuid "^3.3.2"
 
-"@iceland/intelligent-code@^1.0.0":
-  version "1.0.1"
-  resolved "http://registry.npmjs.com/@iceland/intelligent-code/download/@iceland/intelligent-code-1.0.1.tgz#99f27eb65344196fac3e51b3bd8e59da5993133a"
-  integrity sha1-mfJ+tlNEGW+sPlGzvY5Z2lmTEzo=
+"@iceland/intelligent-code@^1.0.12":
+  version "1.0.12"
+  resolved "http://registry.npmjs.com/@iceland/intelligent-code/download/@iceland/intelligent-code-1.0.12.tgz#4f8e7ef39c60c0a023a76ac72516d7e92d17c70b"
+  integrity sha1-T45+85xgwKAjp2rHJRbX6S0Xxws=
   dependencies:
     babel-generator "^6.26.1"
     babylon "^6.18.0"
@@ -293,9 +310,9 @@
     prettier "^1.7.4"
 
 "@iceland/material-engine@^1.0.0":
-  version "1.0.1"
-  resolved "http://registry.npmjs.com/@iceland/material-engine/download/@iceland/material-engine-1.0.1.tgz#20f235e253998b03b09758c56a6483098570154d"
-  integrity sha1-IPI14lOZiwOwl1jFamSDCYVwFU0=
+  version "1.0.4"
+  resolved "http://registry.npmjs.com/@iceland/material-engine/download/@iceland/material-engine-1.0.4.tgz#9a560cc4ca9bd0068dadce80f601fd693a8f4109"
+  integrity sha1-mlYMxMqb0AaNrc6A9gH9aTqPQQk=
   dependencies:
     babel-core "^6.26.3"
     babel-generator "^6.26.1"
@@ -688,7 +705,7 @@ babel-generator@^6.18.0, babel-generator@^6.26.0, babel-generator@^6.26.1:
 
 babel-helper-builder-react-jsx@^6.24.1:
   version "6.26.0"
-  resolved "https://registry.yarnpkg.com/babel-helper-builder-react-jsx/-/babel-helper-builder-react-jsx-6.26.0.tgz#39ff8313b75c8b65dceff1f31d383e0ff2a408a0"
+  resolved "http://registry.npmjs.com/babel-helper-builder-react-jsx/download/babel-helper-builder-react-jsx-6.26.0.tgz#39ff8313b75c8b65dceff1f31d383e0ff2a408a0"
   integrity sha1-Of+DE7dci2Xc7/HzHTg+D/KkCKA=
   dependencies:
     babel-runtime "^6.26.0"
@@ -697,7 +714,7 @@ babel-helper-builder-react-jsx@^6.24.1:
 
 babel-helper-call-delegate@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-helper-call-delegate/-/babel-helper-call-delegate-6.24.1.tgz#ece6aacddc76e41c3461f88bfc575bd0daa2df8d"
+  resolved "http://registry.npmjs.com/babel-helper-call-delegate/download/babel-helper-call-delegate-6.24.1.tgz#ece6aacddc76e41c3461f88bfc575bd0daa2df8d"
   integrity sha1-7Oaqzdx25Bw0YfiL/Fdb0Nqi340=
   dependencies:
     babel-helper-hoist-variables "^6.24.1"
@@ -707,7 +724,7 @@ babel-helper-call-delegate@^6.24.1:
 
 babel-helper-define-map@^6.24.1:
   version "6.26.0"
-  resolved "https://registry.yarnpkg.com/babel-helper-define-map/-/babel-helper-define-map-6.26.0.tgz#a5f56dab41a25f97ecb498c7ebaca9819f95be5f"
+  resolved "http://registry.npmjs.com/babel-helper-define-map/download/babel-helper-define-map-6.26.0.tgz#a5f56dab41a25f97ecb498c7ebaca9819f95be5f"
   integrity sha1-pfVtq0GiX5fstJjH66ypgZ+Vvl8=
   dependencies:
     babel-helper-function-name "^6.24.1"
@@ -717,7 +734,7 @@ babel-helper-define-map@^6.24.1:
 
 babel-helper-function-name@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-helper-function-name/-/babel-helper-function-name-6.24.1.tgz#d3475b8c03ed98242a25b48351ab18399d3580a9"
+  resolved "http://registry.npmjs.com/babel-helper-function-name/download/babel-helper-function-name-6.24.1.tgz#d3475b8c03ed98242a25b48351ab18399d3580a9"
   integrity sha1-00dbjAPtmCQqJbSDUasYOZ01gKk=
   dependencies:
     babel-helper-get-function-arity "^6.24.1"
@@ -728,7 +745,7 @@ babel-helper-function-name@^6.24.1:
 
 babel-helper-get-function-arity@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-helper-get-function-arity/-/babel-helper-get-function-arity-6.24.1.tgz#8f7782aa93407c41d3aa50908f89b031b1b6853d"
+  resolved "http://registry.npmjs.com/babel-helper-get-function-arity/download/babel-helper-get-function-arity-6.24.1.tgz#8f7782aa93407c41d3aa50908f89b031b1b6853d"
   integrity sha1-j3eCqpNAfEHTqlCQj4mwMbG2hT0=
   dependencies:
     babel-runtime "^6.22.0"
@@ -736,7 +753,7 @@ babel-helper-get-function-arity@^6.24.1:
 
 babel-helper-hoist-variables@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-helper-hoist-variables/-/babel-helper-hoist-variables-6.24.1.tgz#1ecb27689c9d25513eadbc9914a73f5408be7a76"
+  resolved "http://registry.npmjs.com/babel-helper-hoist-variables/download/babel-helper-hoist-variables-6.24.1.tgz#1ecb27689c9d25513eadbc9914a73f5408be7a76"
   integrity sha1-HssnaJydJVE+rbyZFKc/VAi+enY=
   dependencies:
     babel-runtime "^6.22.0"
@@ -744,7 +761,7 @@ babel-helper-hoist-variables@^6.24.1:
 
 babel-helper-optimise-call-expression@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-helper-optimise-call-expression/-/babel-helper-optimise-call-expression-6.24.1.tgz#f7a13427ba9f73f8f4fa993c54a97882d1244257"
+  resolved "http://registry.npmjs.com/babel-helper-optimise-call-expression/download/babel-helper-optimise-call-expression-6.24.1.tgz#f7a13427ba9f73f8f4fa993c54a97882d1244257"
   integrity sha1-96E0J7qfc/j0+pk8VKl4gtEkQlc=
   dependencies:
     babel-runtime "^6.22.0"
@@ -752,7 +769,7 @@ babel-helper-optimise-call-expression@^6.24.1:
 
 babel-helper-regex@^6.24.1:
   version "6.26.0"
-  resolved "https://registry.yarnpkg.com/babel-helper-regex/-/babel-helper-regex-6.26.0.tgz#325c59f902f82f24b74faceed0363954f6495e72"
+  resolved "http://registry.npmjs.com/babel-helper-regex/download/babel-helper-regex-6.26.0.tgz#325c59f902f82f24b74faceed0363954f6495e72"
   integrity sha1-MlxZ+QL4LyS3T6zu0DY5VPZJXnI=
   dependencies:
     babel-runtime "^6.26.0"
@@ -761,7 +778,7 @@ babel-helper-regex@^6.24.1:
 
 babel-helper-replace-supers@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-helper-replace-supers/-/babel-helper-replace-supers-6.24.1.tgz#bf6dbfe43938d17369a213ca8a8bf74b6a90ab1a"
+  resolved "http://registry.npmjs.com/babel-helper-replace-supers/download/babel-helper-replace-supers-6.24.1.tgz#bf6dbfe43938d17369a213ca8a8bf74b6a90ab1a"
   integrity sha1-v22/5Dk40XNpohPKiov3S2qQqxo=
   dependencies:
     babel-helper-optimise-call-expression "^6.24.1"
@@ -796,7 +813,7 @@ babel-messages@^6.23.0:
 
 babel-plugin-check-es2015-constants@^6.22.0:
   version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-6.22.0.tgz#35157b101426fd2ffd3da3f75c7d1e91835bbf8a"
+  resolved "http://registry.npmjs.com/babel-plugin-check-es2015-constants/download/babel-plugin-check-es2015-constants-6.22.0.tgz#35157b101426fd2ffd3da3f75c7d1e91835bbf8a"
   integrity sha1-NRV7EBQm/S/9PaP3XH0ekYNbv4o=
   dependencies:
     babel-runtime "^6.22.0"
@@ -818,22 +835,22 @@ babel-plugin-jest-hoist@^23.2.0:
 
 babel-plugin-syntax-class-properties@^6.8.0:
   version "6.13.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-class-properties/-/babel-plugin-syntax-class-properties-6.13.0.tgz#d7eb23b79a317f8543962c505b827c7d6cac27de"
+  resolved "http://registry.npmjs.com/babel-plugin-syntax-class-properties/download/babel-plugin-syntax-class-properties-6.13.0.tgz#d7eb23b79a317f8543962c505b827c7d6cac27de"
   integrity sha1-1+sjt5oxf4VDlixQW4J8fWysJ94=
 
 babel-plugin-syntax-decorators@^6.1.18:
   version "6.13.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-decorators/-/babel-plugin-syntax-decorators-6.13.0.tgz#312563b4dbde3cc806cee3e416cceeaddd11ac0b"
+  resolved "http://registry.npmjs.com/babel-plugin-syntax-decorators/download/babel-plugin-syntax-decorators-6.13.0.tgz#312563b4dbde3cc806cee3e416cceeaddd11ac0b"
   integrity sha1-MSVjtNvePMgGzuPkFszurd0RrAs=
 
 babel-plugin-syntax-flow@^6.18.0:
   version "6.18.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-flow/-/babel-plugin-syntax-flow-6.18.0.tgz#4c3ab20a2af26aa20cd25995c398c4eb70310c8d"
+  resolved "http://registry.npmjs.com/babel-plugin-syntax-flow/download/babel-plugin-syntax-flow-6.18.0.tgz#4c3ab20a2af26aa20cd25995c398c4eb70310c8d"
   integrity sha1-TDqyCiryaqIM0lmVw5jE63AxDI0=
 
 babel-plugin-syntax-jsx@^6.3.13, babel-plugin-syntax-jsx@^6.8.0:
   version "6.18.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-jsx/-/babel-plugin-syntax-jsx-6.18.0.tgz#0af32a9a6e13ca7a3fd5069e62d7b0f58d0d8946"
+  resolved "http://registry.npmjs.com/babel-plugin-syntax-jsx/download/babel-plugin-syntax-jsx-6.18.0.tgz#0af32a9a6e13ca7a3fd5069e62d7b0f58d0d8946"
   integrity sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=
 
 babel-plugin-syntax-object-rest-spread@^6.13.0, babel-plugin-syntax-object-rest-spread@^6.8.0:
@@ -843,7 +860,7 @@ babel-plugin-syntax-object-rest-spread@^6.13.0, babel-plugin-syntax-object-rest-
 
 babel-plugin-transform-class-properties@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-class-properties/-/babel-plugin-transform-class-properties-6.24.1.tgz#6a79763ea61d33d36f37b611aa9def81a81b46ac"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-class-properties/download/babel-plugin-transform-class-properties-6.24.1.tgz#6a79763ea61d33d36f37b611aa9def81a81b46ac"
   integrity sha1-anl2PqYdM9NvN7YRqp3vgagbRqw=
   dependencies:
     babel-helper-function-name "^6.24.1"
@@ -853,8 +870,8 @@ babel-plugin-transform-class-properties@^6.24.1:
 
 babel-plugin-transform-decorators-legacy@^1.3.5:
   version "1.3.5"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-decorators-legacy/-/babel-plugin-transform-decorators-legacy-1.3.5.tgz#0e492dffa0edd70529072887f8aa86d4dd8b40a1"
-  integrity sha512-jYHwjzRXRelYQ1uGm353zNzf3QmtdCfvJbuYTZ4gKveK7M9H1fs3a5AKdY1JUDl0z97E30ukORW1dzhWvsabtA==
+  resolved "http://registry.npmjs.com/babel-plugin-transform-decorators-legacy/download/babel-plugin-transform-decorators-legacy-1.3.5.tgz#0e492dffa0edd70529072887f8aa86d4dd8b40a1"
+  integrity sha1-Dkkt/6Dt1wUpByiH+KqG1N2LQKE=
   dependencies:
     babel-plugin-syntax-decorators "^6.1.18"
     babel-runtime "^6.2.0"
@@ -862,21 +879,21 @@ babel-plugin-transform-decorators-legacy@^1.3.5:
 
 babel-plugin-transform-es2015-arrow-functions@^6.22.0:
   version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-arrow-functions/-/babel-plugin-transform-es2015-arrow-functions-6.22.0.tgz#452692cb711d5f79dc7f85e440ce41b9f244d221"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-arrow-functions/download/babel-plugin-transform-es2015-arrow-functions-6.22.0.tgz#452692cb711d5f79dc7f85e440ce41b9f244d221"
   integrity sha1-RSaSy3EdX3ncf4XkQM5BufJE0iE=
   dependencies:
     babel-runtime "^6.22.0"
 
 babel-plugin-transform-es2015-block-scoped-functions@^6.22.0:
   version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-block-scoped-functions/-/babel-plugin-transform-es2015-block-scoped-functions-6.22.0.tgz#bbc51b49f964d70cb8d8e0b94e820246ce3a6141"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-block-scoped-functions/download/babel-plugin-transform-es2015-block-scoped-functions-6.22.0.tgz#bbc51b49f964d70cb8d8e0b94e820246ce3a6141"
   integrity sha1-u8UbSflk1wy42OC5ToICRs46YUE=
   dependencies:
     babel-runtime "^6.22.0"
 
 babel-plugin-transform-es2015-block-scoping@^6.24.1:
   version "6.26.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-block-scoping/-/babel-plugin-transform-es2015-block-scoping-6.26.0.tgz#d70f5299c1308d05c12f463813b0a09e73b1895f"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-block-scoping/download/babel-plugin-transform-es2015-block-scoping-6.26.0.tgz#d70f5299c1308d05c12f463813b0a09e73b1895f"
   integrity sha1-1w9SmcEwjQXBL0Y4E7CgnnOxiV8=
   dependencies:
     babel-runtime "^6.26.0"
@@ -887,7 +904,7 @@ babel-plugin-transform-es2015-block-scoping@^6.24.1:
 
 babel-plugin-transform-es2015-classes@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-classes/-/babel-plugin-transform-es2015-classes-6.24.1.tgz#5a4c58a50c9c9461e564b4b2a3bfabc97a2584db"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-classes/download/babel-plugin-transform-es2015-classes-6.24.1.tgz#5a4c58a50c9c9461e564b4b2a3bfabc97a2584db"
   integrity sha1-WkxYpQyclGHlZLSyo7+ryXolhNs=
   dependencies:
     babel-helper-define-map "^6.24.1"
@@ -902,7 +919,7 @@ babel-plugin-transform-es2015-classes@^6.24.1:
 
 babel-plugin-transform-es2015-computed-properties@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-computed-properties/-/babel-plugin-transform-es2015-computed-properties-6.24.1.tgz#6fe2a8d16895d5634f4cd999b6d3480a308159b3"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-computed-properties/download/babel-plugin-transform-es2015-computed-properties-6.24.1.tgz#6fe2a8d16895d5634f4cd999b6d3480a308159b3"
   integrity sha1-b+Ko0WiV1WNPTNmZttNICjCBWbM=
   dependencies:
     babel-runtime "^6.22.0"
@@ -910,14 +927,14 @@ babel-plugin-transform-es2015-computed-properties@^6.24.1:
 
 babel-plugin-transform-es2015-destructuring@^6.22.0:
   version "6.23.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-destructuring/-/babel-plugin-transform-es2015-destructuring-6.23.0.tgz#997bb1f1ab967f682d2b0876fe358d60e765c56d"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-destructuring/download/babel-plugin-transform-es2015-destructuring-6.23.0.tgz#997bb1f1ab967f682d2b0876fe358d60e765c56d"
   integrity sha1-mXux8auWf2gtKwh2/jWNYOdlxW0=
   dependencies:
     babel-runtime "^6.22.0"
 
 babel-plugin-transform-es2015-duplicate-keys@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-duplicate-keys/-/babel-plugin-transform-es2015-duplicate-keys-6.24.1.tgz#73eb3d310ca969e3ef9ec91c53741a6f1576423e"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-duplicate-keys/download/babel-plugin-transform-es2015-duplicate-keys-6.24.1.tgz#73eb3d310ca969e3ef9ec91c53741a6f1576423e"
   integrity sha1-c+s9MQypaePvnskcU3QabxV2Qj4=
   dependencies:
     babel-runtime "^6.22.0"
@@ -925,14 +942,14 @@ babel-plugin-transform-es2015-duplicate-keys@^6.24.1:
 
 babel-plugin-transform-es2015-for-of@^6.22.0:
   version "6.23.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-for-of/-/babel-plugin-transform-es2015-for-of-6.23.0.tgz#f47c95b2b613df1d3ecc2fdb7573623c75248691"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-for-of/download/babel-plugin-transform-es2015-for-of-6.23.0.tgz#f47c95b2b613df1d3ecc2fdb7573623c75248691"
   integrity sha1-9HyVsrYT3x0+zC/bdXNiPHUkhpE=
   dependencies:
     babel-runtime "^6.22.0"
 
 babel-plugin-transform-es2015-function-name@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-function-name/-/babel-plugin-transform-es2015-function-name-6.24.1.tgz#834c89853bc36b1af0f3a4c5dbaa94fd8eacaa8b"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-function-name/download/babel-plugin-transform-es2015-function-name-6.24.1.tgz#834c89853bc36b1af0f3a4c5dbaa94fd8eacaa8b"
   integrity sha1-g0yJhTvDaxrw86TF26qU/Y6sqos=
   dependencies:
     babel-helper-function-name "^6.24.1"
@@ -941,14 +958,14 @@ babel-plugin-transform-es2015-function-name@^6.24.1:
 
 babel-plugin-transform-es2015-literals@^6.22.0:
   version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-literals/-/babel-plugin-transform-es2015-literals-6.22.0.tgz#4f54a02d6cd66cf915280019a31d31925377ca2e"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-literals/download/babel-plugin-transform-es2015-literals-6.22.0.tgz#4f54a02d6cd66cf915280019a31d31925377ca2e"
   integrity sha1-T1SgLWzWbPkVKAAZox0xklN3yi4=
   dependencies:
     babel-runtime "^6.22.0"
 
 babel-plugin-transform-es2015-modules-amd@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-amd/-/babel-plugin-transform-es2015-modules-amd-6.24.1.tgz#3b3e54017239842d6d19c3011c4bd2f00a00d154"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-modules-amd/download/babel-plugin-transform-es2015-modules-amd-6.24.1.tgz#3b3e54017239842d6d19c3011c4bd2f00a00d154"
   integrity sha1-Oz5UAXI5hC1tGcMBHEvS8AoA0VQ=
   dependencies:
     babel-plugin-transform-es2015-modules-commonjs "^6.24.1"
@@ -957,8 +974,8 @@ babel-plugin-transform-es2015-modules-amd@^6.24.1:
 
 babel-plugin-transform-es2015-modules-commonjs@^6.24.1:
   version "6.26.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-commonjs/-/babel-plugin-transform-es2015-modules-commonjs-6.26.2.tgz#58a793863a9e7ca870bdc5a881117ffac27db6f3"
-  integrity sha512-CV9ROOHEdrjcwhIaJNBGMBCodN+1cfkwtM1SbUHmvyy35KGT7fohbpOxkE2uLz1o6odKK2Ck/tz47z+VqQfi9Q==
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-modules-commonjs/download/babel-plugin-transform-es2015-modules-commonjs-6.26.2.tgz#58a793863a9e7ca870bdc5a881117ffac27db6f3"
+  integrity sha1-WKeThjqefKhwvcWogRF/+sJ9tvM=
   dependencies:
     babel-plugin-transform-strict-mode "^6.24.1"
     babel-runtime "^6.26.0"
@@ -967,7 +984,7 @@ babel-plugin-transform-es2015-modules-commonjs@^6.24.1:
 
 babel-plugin-transform-es2015-modules-systemjs@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-systemjs/-/babel-plugin-transform-es2015-modules-systemjs-6.24.1.tgz#ff89a142b9119a906195f5f106ecf305d9407d23"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-modules-systemjs/download/babel-plugin-transform-es2015-modules-systemjs-6.24.1.tgz#ff89a142b9119a906195f5f106ecf305d9407d23"
   integrity sha1-/4mhQrkRmpBhlfXxBuzzBdlAfSM=
   dependencies:
     babel-helper-hoist-variables "^6.24.1"
@@ -976,7 +993,7 @@ babel-plugin-transform-es2015-modules-systemjs@^6.24.1:
 
 babel-plugin-transform-es2015-modules-umd@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-umd/-/babel-plugin-transform-es2015-modules-umd-6.24.1.tgz#ac997e6285cd18ed6176adb607d602344ad38468"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-modules-umd/download/babel-plugin-transform-es2015-modules-umd-6.24.1.tgz#ac997e6285cd18ed6176adb607d602344ad38468"
   integrity sha1-rJl+YoXNGO1hdq22B9YCNErThGg=
   dependencies:
     babel-plugin-transform-es2015-modules-amd "^6.24.1"
@@ -985,7 +1002,7 @@ babel-plugin-transform-es2015-modules-umd@^6.24.1:
 
 babel-plugin-transform-es2015-object-super@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-object-super/-/babel-plugin-transform-es2015-object-super-6.24.1.tgz#24cef69ae21cb83a7f8603dad021f572eb278f8d"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-object-super/download/babel-plugin-transform-es2015-object-super-6.24.1.tgz#24cef69ae21cb83a7f8603dad021f572eb278f8d"
   integrity sha1-JM72muIcuDp/hgPa0CH1cusnj40=
   dependencies:
     babel-helper-replace-supers "^6.24.1"
@@ -993,7 +1010,7 @@ babel-plugin-transform-es2015-object-super@^6.24.1:
 
 babel-plugin-transform-es2015-parameters@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-parameters/-/babel-plugin-transform-es2015-parameters-6.24.1.tgz#57ac351ab49caf14a97cd13b09f66fdf0a625f2b"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-parameters/download/babel-plugin-transform-es2015-parameters-6.24.1.tgz#57ac351ab49caf14a97cd13b09f66fdf0a625f2b"
   integrity sha1-V6w1GrScrxSpfNE7CfZv3wpiXys=
   dependencies:
     babel-helper-call-delegate "^6.24.1"
@@ -1005,7 +1022,7 @@ babel-plugin-transform-es2015-parameters@^6.24.1:
 
 babel-plugin-transform-es2015-shorthand-properties@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-shorthand-properties/-/babel-plugin-transform-es2015-shorthand-properties-6.24.1.tgz#24f875d6721c87661bbd99a4622e51f14de38aa0"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-shorthand-properties/download/babel-plugin-transform-es2015-shorthand-properties-6.24.1.tgz#24f875d6721c87661bbd99a4622e51f14de38aa0"
   integrity sha1-JPh11nIch2YbvZmkYi5R8U3jiqA=
   dependencies:
     babel-runtime "^6.22.0"
@@ -1013,14 +1030,14 @@ babel-plugin-transform-es2015-shorthand-properties@^6.24.1:
 
 babel-plugin-transform-es2015-spread@^6.22.0:
   version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-spread/-/babel-plugin-transform-es2015-spread-6.22.0.tgz#d6d68a99f89aedc4536c81a542e8dd9f1746f8d1"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-spread/download/babel-plugin-transform-es2015-spread-6.22.0.tgz#d6d68a99f89aedc4536c81a542e8dd9f1746f8d1"
   integrity sha1-1taKmfia7cRTbIGlQujdnxdG+NE=
   dependencies:
     babel-runtime "^6.22.0"
 
 babel-plugin-transform-es2015-sticky-regex@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-sticky-regex/-/babel-plugin-transform-es2015-sticky-regex-6.24.1.tgz#00c1cdb1aca71112cdf0cf6126c2ed6b457ccdbc"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-sticky-regex/download/babel-plugin-transform-es2015-sticky-regex-6.24.1.tgz#00c1cdb1aca71112cdf0cf6126c2ed6b457ccdbc"
   integrity sha1-AMHNsaynERLN8M9hJsLta0V8zbw=
   dependencies:
     babel-helper-regex "^6.24.1"
@@ -1029,21 +1046,21 @@ babel-plugin-transform-es2015-sticky-regex@^6.24.1:
 
 babel-plugin-transform-es2015-template-literals@^6.22.0:
   version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-template-literals/-/babel-plugin-transform-es2015-template-literals-6.22.0.tgz#a84b3450f7e9f8f1f6839d6d687da84bb1236d8d"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-template-literals/download/babel-plugin-transform-es2015-template-literals-6.22.0.tgz#a84b3450f7e9f8f1f6839d6d687da84bb1236d8d"
   integrity sha1-qEs0UPfp+PH2g51taH2oS7EjbY0=
   dependencies:
     babel-runtime "^6.22.0"
 
 babel-plugin-transform-es2015-typeof-symbol@^6.22.0:
   version "6.23.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-typeof-symbol/-/babel-plugin-transform-es2015-typeof-symbol-6.23.0.tgz#dec09f1cddff94b52ac73d505c84df59dcceb372"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-typeof-symbol/download/babel-plugin-transform-es2015-typeof-symbol-6.23.0.tgz#dec09f1cddff94b52ac73d505c84df59dcceb372"
   integrity sha1-3sCfHN3/lLUqxz1QXITfWdzOs3I=
   dependencies:
     babel-runtime "^6.22.0"
 
 babel-plugin-transform-es2015-unicode-regex@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-unicode-regex/-/babel-plugin-transform-es2015-unicode-regex-6.24.1.tgz#d38b12f42ea7323f729387f18a7c5ae1faeb35e9"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-es2015-unicode-regex/download/babel-plugin-transform-es2015-unicode-regex-6.24.1.tgz#d38b12f42ea7323f729387f18a7c5ae1faeb35e9"
   integrity sha1-04sS9C6nMj9yk4fxinxa4frrNek=
   dependencies:
     babel-helper-regex "^6.24.1"
@@ -1052,7 +1069,7 @@ babel-plugin-transform-es2015-unicode-regex@^6.24.1:
 
 babel-plugin-transform-flow-strip-types@^6.22.0:
   version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-flow-strip-types/-/babel-plugin-transform-flow-strip-types-6.22.0.tgz#84cb672935d43714fdc32bce84568d87441cf7cf"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-flow-strip-types/download/babel-plugin-transform-flow-strip-types-6.22.0.tgz#84cb672935d43714fdc32bce84568d87441cf7cf"
   integrity sha1-hMtnKTXUNxT9wyvOhFaNh0Qc988=
   dependencies:
     babel-plugin-syntax-flow "^6.18.0"
@@ -1060,7 +1077,7 @@ babel-plugin-transform-flow-strip-types@^6.22.0:
 
 babel-plugin-transform-object-rest-spread@^6.26.0:
   version "6.26.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-rest-spread/-/babel-plugin-transform-object-rest-spread-6.26.0.tgz#0f36692d50fef6b7e2d4b3ac1478137a963b7b06"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-object-rest-spread/download/babel-plugin-transform-object-rest-spread-6.26.0.tgz#0f36692d50fef6b7e2d4b3ac1478137a963b7b06"
   integrity sha1-DzZpLVD+9rfi1LOsFHgTepY7ewY=
   dependencies:
     babel-plugin-syntax-object-rest-spread "^6.8.0"
@@ -1068,14 +1085,14 @@ babel-plugin-transform-object-rest-spread@^6.26.0:
 
 babel-plugin-transform-react-display-name@^6.23.0:
   version "6.25.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-display-name/-/babel-plugin-transform-react-display-name-6.25.0.tgz#67e2bf1f1e9c93ab08db96792e05392bf2cc28d1"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-react-display-name/download/babel-plugin-transform-react-display-name-6.25.0.tgz#67e2bf1f1e9c93ab08db96792e05392bf2cc28d1"
   integrity sha1-Z+K/Hx6ck6sI25Z5LgU5K/LMKNE=
   dependencies:
     babel-runtime "^6.22.0"
 
 babel-plugin-transform-react-jsx-self@^6.22.0:
   version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-jsx-self/-/babel-plugin-transform-react-jsx-self-6.22.0.tgz#df6d80a9da2612a121e6ddd7558bcbecf06e636e"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-react-jsx-self/download/babel-plugin-transform-react-jsx-self-6.22.0.tgz#df6d80a9da2612a121e6ddd7558bcbecf06e636e"
   integrity sha1-322AqdomEqEh5t3XVYvL7PBuY24=
   dependencies:
     babel-plugin-syntax-jsx "^6.8.0"
@@ -1083,7 +1100,7 @@ babel-plugin-transform-react-jsx-self@^6.22.0:
 
 babel-plugin-transform-react-jsx-source@^6.22.0:
   version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-jsx-source/-/babel-plugin-transform-react-jsx-source-6.22.0.tgz#66ac12153f5cd2d17b3c19268f4bf0197f44ecd6"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-react-jsx-source/download/babel-plugin-transform-react-jsx-source-6.22.0.tgz#66ac12153f5cd2d17b3c19268f4bf0197f44ecd6"
   integrity sha1-ZqwSFT9c0tF7PBkmj0vwGX9E7NY=
   dependencies:
     babel-plugin-syntax-jsx "^6.8.0"
@@ -1091,7 +1108,7 @@ babel-plugin-transform-react-jsx-source@^6.22.0:
 
 babel-plugin-transform-react-jsx@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-jsx/-/babel-plugin-transform-react-jsx-6.24.1.tgz#840a028e7df460dfc3a2d29f0c0d91f6376e66a3"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-react-jsx/download/babel-plugin-transform-react-jsx-6.24.1.tgz#840a028e7df460dfc3a2d29f0c0d91f6376e66a3"
   integrity sha1-hAoCjn30YN/DotKfDA2R9jduZqM=
   dependencies:
     babel-helper-builder-react-jsx "^6.24.1"
@@ -1100,14 +1117,14 @@ babel-plugin-transform-react-jsx@^6.24.1:
 
 babel-plugin-transform-regenerator@^6.24.1:
   version "6.26.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-regenerator/-/babel-plugin-transform-regenerator-6.26.0.tgz#e0703696fbde27f0a3efcacf8b4dca2f7b3a8f2f"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-regenerator/download/babel-plugin-transform-regenerator-6.26.0.tgz#e0703696fbde27f0a3efcacf8b4dca2f7b3a8f2f"
   integrity sha1-4HA2lvveJ/Cj78rPi03KL3s6jy8=
   dependencies:
     regenerator-transform "^0.10.0"
 
 babel-plugin-transform-strict-mode@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-strict-mode/-/babel-plugin-transform-strict-mode-6.24.1.tgz#d5faf7aa578a65bbe591cf5edae04a0c67020758"
+  resolved "http://registry.npmjs.com/babel-plugin-transform-strict-mode/download/babel-plugin-transform-strict-mode-6.24.1.tgz#d5faf7aa578a65bbe591cf5edae04a0c67020758"
   integrity sha1-1fr3qleKZbvlkc9e2uBKDGcCB1g=
   dependencies:
     babel-runtime "^6.22.0"
@@ -1115,7 +1132,7 @@ babel-plugin-transform-strict-mode@^6.24.1:
 
 babel-preset-es2015@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-es2015/-/babel-preset-es2015-6.24.1.tgz#d44050d6bc2c9feea702aaf38d727a0210538939"
+  resolved "http://registry.npmjs.com/babel-preset-es2015/download/babel-preset-es2015-6.24.1.tgz#d44050d6bc2c9feea702aaf38d727a0210538939"
   integrity sha1-1EBQ1rwsn+6nAqrzjXJ6AhBTiTk=
   dependencies:
     babel-plugin-check-es2015-constants "^6.22.0"
@@ -1145,7 +1162,7 @@ babel-preset-es2015@^6.24.1:
 
 babel-preset-flow@^6.23.0:
   version "6.23.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-flow/-/babel-preset-flow-6.23.0.tgz#e71218887085ae9a24b5be4169affb599816c49d"
+  resolved "http://registry.npmjs.com/babel-preset-flow/download/babel-preset-flow-6.23.0.tgz#e71218887085ae9a24b5be4169affb599816c49d"
   integrity sha1-5xIYiHCFrpoktb5Baa/7WZgWxJ0=
   dependencies:
     babel-plugin-transform-flow-strip-types "^6.22.0"
@@ -1160,7 +1177,7 @@ babel-preset-jest@^23.2.0:
 
 babel-preset-react@^6.24.1:
   version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-react/-/babel-preset-react-6.24.1.tgz#ba69dfaea45fc3ec639b6a4ecea6e17702c91380"
+  resolved "http://registry.npmjs.com/babel-preset-react/download/babel-preset-react-6.24.1.tgz#ba69dfaea45fc3ec639b6a4ecea6e17702c91380"
   integrity sha1-umnfrqRfw+xjm2pOzqbhdwLJE4A=
   dependencies:
     babel-plugin-syntax-jsx "^6.3.13"
@@ -1765,9 +1782,9 @@ core-js@^1.0.0:
   integrity sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
 
 core-js@^2.4.0, core-js@^2.5.0:
-  version "2.5.7"
-  resolved "http://registry.npmjs.com/core-js/download/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
-  integrity sha1-+XJgj/DOrWi4QaFqky0LGDeRgU4=
+  version "2.6.0"
+  resolved "http://registry.npmjs.com/core-js/download/core-js-2.6.0.tgz#1e30793e9ee5782b307e37ffa22da0eacddd84d4"
+  integrity sha1-HjB5Pp7leCswfjf/oi2g6s3dhNQ=
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -1840,8 +1857,8 @@ css-animation@^1.3.2:
 
 css@^2.2.4:
   version "2.2.4"
-  resolved "https://registry.yarnpkg.com/css/-/css-2.2.4.tgz#c646755c73971f2bba6a601e2cf2fd71b1298929"
-  integrity sha512-oUnjmWpy0niI3x/mPL8dVEI1l7MnG3+HHyRPHf+YFSbK+svOhXpmSOcDURUh2aOCgl2grzrOPt1nHLuCVFULLw==
+  resolved "http://registry.npmjs.com/css/download/css-2.2.4.tgz#c646755c73971f2bba6a601e2cf2fd71b1298929"
+  integrity sha1-xkZ1XHOXHyu6amAeLPL9cbEpiSk=
   dependencies:
     inherits "^2.0.3"
     source-map "^0.6.1"
@@ -1897,8 +1914,8 @@ debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.8, debug@^2.6
 
 debug@^3.0.1:
   version "3.2.6"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
-  integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
+  resolved "http://registry.npmjs.com/debug/download/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
+  integrity sha1-6D0X3hbYp++3cX7b5fsQE17uYps=
   dependencies:
     ms "^2.1.1"
 
@@ -1923,6 +1940,11 @@ decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "http://registry.npmjs.com/decode-uri-component/download/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+
+deep-diff@^1.0.0:
+  version "1.0.2"
+  resolved "http://registry.npmjs.com/deep-diff/download/deep-diff-1.0.2.tgz#afd3d1f749115be965e89c63edc7abb1506b9c26"
+  integrity sha1-r9PR90kRW+ll6Jxj7cersVBrnCY=
 
 deep-extend@^0.6.0:
   version "0.6.0"
@@ -3857,7 +3879,7 @@ jsesc@^2.5.1:
 
 jsesc@~0.5.0:
   version "0.5.0"
-  resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
+  resolved "http://registry.npmjs.com/jsesc/download/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
 
 json-parse-better-errors@^1.0.0, json-parse-better-errors@^1.0.1, json-parse-better-errors@^1.0.2:
@@ -4078,15 +4100,25 @@ lodash._root@~3.0.0:
   resolved "http://registry.npmjs.com/lodash._root/download/lodash._root-3.0.1.tgz#fba1c4524c19ee9a5f8136b4609f017cf4ded692"
   integrity sha1-+6HEUkwZ7ppfgTa0YJ8BfPTe1pI=
 
-lodash.clonedeep@~4.5.0:
+lodash.clonedeep@^4.5.0, lodash.clonedeep@~4.5.0:
   version "4.5.0"
   resolved "http://registry.npmjs.com/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
+lodash.foreach@^4.5.0:
+  version "4.5.0"
+  resolved "http://registry.npmjs.com/lodash.foreach/download/lodash.foreach-4.5.0.tgz#1a6a35eace401280c7f06dddec35165ab27e3e53"
+  integrity sha1-Gmo16s5AEoDH8G3d7DUWWrJ+PlM=
 
 lodash.get@^4.4.2:
   version "4.4.2"
   resolved "http://registry.npmjs.com/lodash.get/download/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
+
+lodash.groupby@^4.6.0:
+  version "4.6.0"
+  resolved "http://registry.npmjs.com/lodash.groupby/download/lodash.groupby-4.6.0.tgz#0b08a1dcf68397c397855c3239783832df7403d1"
+  integrity sha1-Cwih3PaDl8OXhVwyOXg4Mt90A9E=
 
 lodash.isarguments@^3.0.0:
   version "3.1.0"
@@ -4112,6 +4144,16 @@ lodash.keys@^3.1.2:
     lodash.isarguments "^3.0.0"
     lodash.isarray "^3.0.0"
 
+lodash.merge@^4.6.1:
+  version "4.6.1"
+  resolved "http://registry.npmjs.com/lodash.merge/download/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
+  integrity sha1-rcJdnLmbk5HFliTzefu6YNcRHVQ=
+
+lodash.omit@^4.5.0:
+  version "4.5.0"
+  resolved "http://registry.npmjs.com/lodash.omit/download/lodash.omit-4.5.0.tgz#6eb19ae5a1ee1dd9df0b969e66ce0b7fa30b5e60"
+  integrity sha1-brGa5aHuHdnfC5aeZs4Lf6MLXmA=
+
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "http://registry.npmjs.com/lodash.sortby/download/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -4126,6 +4168,11 @@ lodash.uniq@~4.5.0:
   version "4.5.0"
   resolved "http://registry.npmjs.com/lodash.uniq/download/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
+
+lodash.uniqby@^4.7.0:
+  version "4.7.0"
+  resolved "http://registry.npmjs.com/lodash.uniqby/download/lodash.uniqby-4.7.0.tgz#d99c07a669e9e6d24e1362dfe266c67616af1302"
+  integrity sha1-2ZwHpmnp5tJOE2Lf4mbGdhavEwI=
 
 lodash.without@~4.4.0:
   version "4.4.0"
@@ -4246,7 +4293,7 @@ map-visit@^1.0.0:
 
 match-require@^2.1.0:
   version "2.1.0"
-  resolved "https://registry.yarnpkg.com/match-require/-/match-require-2.1.0.tgz#f67d62c4cb1d703f408fb63b55b9ae83fb25e2cc"
+  resolved "http://registry.npmjs.com/match-require/download/match-require-2.1.0.tgz#f67d62c4cb1d703f408fb63b55b9ae83fb25e2cc"
   integrity sha1-9n1ixMsdcD9Aj7Y7Vbmug/sl4sw=
   dependencies:
     uuid "^3.0.0"
@@ -5276,9 +5323,9 @@ prettier@^1.12.1, prettier@^1.13.4, prettier@^1.13.7:
   integrity sha1-kCON1MBoS37c5fg7D7cyjki9CJU=
 
 prettier@^1.7.4:
-  version "1.15.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.2.tgz#d31abe22afa4351efa14c7f8b94b58bb7452205e"
-  integrity sha512-YgPLFFA0CdKL4Eg2IHtUSjzj/BWgszDHiNQAe0VAIBse34148whfdzLagRL+QiKS+YfK5ftB6X4v/MBw8yCoug==
+  version "1.15.3"
+  resolved "http://registry.npmjs.com/prettier/download/prettier-1.15.3.tgz#1feaac5bdd181237b54dbe65d874e02a1472786a"
+  integrity sha1-H+qsW90YEje1Tb5l2HTgKhRyeGo=
 
 pretty-format@^23.6.0:
   version "23.6.0"
@@ -5721,8 +5768,8 @@ realpath-native@^1.0.0:
 
 regenerate@^1.2.1:
   version "1.4.0"
-  resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
-  integrity sha512-1G6jJVDWrt0rK99kBjvEtziZNCICAuvIPkSiUFIQxVP06RCVpq3dmDo2oi6ABpYaDYaTRr67BEhL8r1wgEZZKg==
+  resolved "http://registry.npmjs.com/regenerate/download/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
+  integrity sha1-SoVuxLVuQHfFV1icroXnpMiGmhE=
 
 regenerator-runtime@^0.11.0:
   version "0.11.1"
@@ -5731,8 +5778,8 @@ regenerator-runtime@^0.11.0:
 
 regenerator-transform@^0.10.0:
   version "0.10.1"
-  resolved "https://registry.yarnpkg.com/regenerator-transform/-/regenerator-transform-0.10.1.tgz#1e4996837231da8b7f3cf4114d71b5691a0680dd"
-  integrity sha512-PJepbvDbuK1xgIgnau7Y90cwaAmO/LCLMI2mPvaXq2heGMR3aWW5/BQvYrhJ8jgmQjXewXvBjzfqKcVOmhjZ6Q==
+  resolved "http://registry.npmjs.com/regenerator-transform/download/regenerator-transform-0.10.1.tgz#1e4996837231da8b7f3cf4114d71b5691a0680dd"
+  integrity sha1-HkmWg3Ix2ot/PPQRTXG1aRoGgN0=
   dependencies:
     babel-runtime "^6.18.0"
     babel-types "^6.19.0"
@@ -5755,7 +5802,7 @@ regex-not@^1.0.0, regex-not@^1.0.2:
 
 regexpu-core@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/regexpu-core/-/regexpu-core-2.0.0.tgz#49d038837b8dcf8bfa5b9a42139938e6ea2ae240"
+  resolved "http://registry.npmjs.com/regexpu-core/download/regexpu-core-2.0.0.tgz#49d038837b8dcf8bfa5b9a42139938e6ea2ae240"
   integrity sha1-SdA4g3uNz4v6W5pCE5k45uoq4kA=
   dependencies:
     regenerate "^1.2.1"
@@ -5779,12 +5826,12 @@ registry-url@^3.0.3:
 
 regjsgen@^0.2.0:
   version "0.2.0"
-  resolved "https://registry.yarnpkg.com/regjsgen/-/regjsgen-0.2.0.tgz#6c016adeac554f75823fe37ac05b92d5a4edb1f7"
+  resolved "http://registry.npmjs.com/regjsgen/download/regjsgen-0.2.0.tgz#6c016adeac554f75823fe37ac05b92d5a4edb1f7"
   integrity sha1-bAFq3qxVT3WCP+N6wFuS1aTtsfc=
 
 regjsparser@^0.1.4:
   version "0.1.5"
-  resolved "https://registry.yarnpkg.com/regjsparser/-/regjsparser-0.1.5.tgz#7ee8f84dc6fa792d3fd0ae228d24bd949ead205c"
+  resolved "http://registry.npmjs.com/regjsparser/download/regjsparser-0.1.5.tgz#7ee8f84dc6fa792d3fd0ae228d24bd949ead205c"
   integrity sha1-fuj4Tcb6eS0/0K4ijSS9lJ6tIFw=
   dependencies:
     jsesc "~0.5.0"
@@ -6575,6 +6622,11 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
+traverse@^0.6.6:
+  version "0.6.6"
+  resolved "http://registry.npmjs.com/traverse/download/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
+  integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
+
 trim-right@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npmjs.com/trim-right/download/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
@@ -6621,6 +6673,11 @@ uid-number@0.0.6:
   version "0.0.6"
   resolved "http://registry.npmjs.com/uid-number/download/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
   integrity sha1-DqEOgDXo61uOREnwbaHHMGY7qoE=
+
+uid@^0.0.2:
+  version "0.0.2"
+  resolved "http://registry.npmjs.com/uid/download/uid-0.0.2.tgz#5e4a5d4b78138b4f70f89fd3c76fc59aa9d2f103"
+  integrity sha1-XkpdS3gTi09w+J/Tx2/FmqnS8QM=
 
 umask@^1.1.0, umask@~1.1.0:
   version "1.1.0"

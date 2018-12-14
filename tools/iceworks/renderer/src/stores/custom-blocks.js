@@ -11,7 +11,7 @@ import services from '../services';
 
 const defaultWorkspacePath = path.join(os.homedir(), '.iceworks');
 const devWorkbenchPath = 'http://127.0.0.1:3333/src/pages/workbench/index.html';
-const onlineWorkbenchPath = 'http://ice.alicdn.com/iceland-assets/workbench/v21300/pages/workbench/index.html';
+const onlineWorkbenchPath = 'http://ice.alicdn.com/iceland-assets/workbench/v21500/pages/workbench/index.html';
 const presentWorkbenchPath = onlineWorkbenchPath;
 
 /**
