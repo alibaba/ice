@@ -80,10 +80,7 @@ module.exports = (_options, afterCreateRequest) => {
       }
     })
     .then(() => {
-      generateAbcJsonFile(needCreateDefflow, targetPath);
-    })
-    .then(() => {
-      generateWebpackConfigFile(needCreateDefflow, targetPath, projectName);
+      generateAbcJsonFile(needCreateDefflow, targetPath, projectName);
     })
     .then(() => {
       updateScaffoldConfig(isCustomScaffold, layoutConfig);
@@ -132,12 +129,12 @@ function getOptions(_options, clientTargetPath) {
 }
 
 /**
- * 内网环境，生成 .webpackrc.js 文件，用于云构建
+ * 内网环境，生成 abc.json 文件，用于云构建
  * @param {Boolean} needCreateDefflow
  * @param {String}  destDir
  * @param {String}  projectName
  */
-function generateWebpackConfigFile(needCreateDefflow, destDir, projectName) {
+function generateAbcJsonFile(needCreateDefflow, destDir, projectName) {
   if (needCreateDefflow) {
     logger.debug('内网用户，创建 abc.json');
     const abcJson = path.join(destDir, 'abc.json');
@@ -152,50 +149,6 @@ function generateWebpackConfigFile(needCreateDefflow, destDir, projectName) {
         resolve();
       } else {
         fs.writeFile(abcJson, JSON.stringify(abcContext, null, 2), () => {
-          resolve();
-        });
-      }
-    });
-  } else {
-    return Promise.resolve();
-  }
-}
-
-/**
- * 内网环境，生成 abc.json 文件，用于云构建
- * @param {Boolean} needCreateDefflow
- * @param {String}  destDir
- */
-function generateAbcJsonFile(needCreateDefflow, destDir) {
-  if (needCreateDefflow) {
-    logger.debug('内网用户，.webpackrc.js');
-    const webpackrcPath = path.join(destDir, '.webpackrc.js');
-    return new Promise((resolve) => {
-      const webpackrcContext = `let publicPathCdn = '/'; // 静态资源存放地址
-
-if (
-  process.env.BUILD_ENV === 'cloud' &&
-  /^([^\\/]+)\\/(\\d+\\.\\d+\\.\\d+)$/.test(process.env.BUILD_GIT_BRANCH)
-) {
-  publicPathCdn =
-    [
-      '//g.alicdn.com', // alicdn 地址
-      process.env.BUILD_GIT_GROUP,
-      process.env.BUILD_GIT_PROJECT,
-      process.env.BUILD_GIT_BRANCH.replace(/([^\\/]+)\\//, ''),
-    ].join('/') + '/';
-}
-
-module.exports = {
-  output: {
-    publicPath: publicPathCdn,
-  },
-};
-      `;
-      if (pathExists.sync(webpackrcPath)) {
-        resolve();
-      } else {
-        fs.writeFile(webpackrcPath, webpackrcContext, () => {
           resolve();
         });
       }

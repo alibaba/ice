@@ -36,6 +36,7 @@ class PageConfig extends Component {
     newpage: PropTypes.object,
     blocks: PropTypes.object,
     projects: PropTypes.object,
+    selectedBlocks: PropTypes.array,
     libary: PropTypes.string,
   };
 
@@ -67,7 +68,7 @@ class PageConfig extends Component {
         const { currentProject } = this.props.projects;
 
         const layout = toJS(this.props.newpage.currentLayout);
-        const blocks = toJS(this.props.blocks.selected);
+        const blocks = toJS(this.props.selectedBlocks);
         const libraryType = currentProject.getLibraryType();
         const pageName = toJS(values.pageName);
         // 创建页面
