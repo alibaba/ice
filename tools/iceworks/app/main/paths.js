@@ -39,7 +39,7 @@ const getClientPath = (destDir, framework) => {
     if (framework === 'koa') {
       return path.join(destDir, 'client');
     } else if (framework === 'midway') {
-      return path.join(destDir, 'assert');
+      return path.join(destDir, 'assets');
     }
   } else {
     return path.join(destDir, 'src');
@@ -51,7 +51,7 @@ const getClientFolder = (framework) => {
     if (framework === 'koa') {
       return 'client';
     } else if (framework === 'midway') {
-      return 'assert';
+      return 'assets';
     }
   } else {
     return 'src';
