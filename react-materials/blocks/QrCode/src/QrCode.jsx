@@ -6,9 +6,8 @@ import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
 } from '@icedesign/form-binder';
+import QRCode from 'qrcode.react';
 import ColorPicker from './ColorPicker';
-
-const QRCode = require('qrcode.react');
 
 const { Row, Col } = Grid;
 const { Option } = Select;

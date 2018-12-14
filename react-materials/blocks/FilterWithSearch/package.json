@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/filter-with-search-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": " 含搜索筛选",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

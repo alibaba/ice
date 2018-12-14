@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/sort-card-list-block",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "拖拽排序卡片列表",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

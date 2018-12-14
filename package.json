@@ -7,6 +7,7 @@
     "bootstrap": "lerna bootstrap",
     "setup": "lerna setup",
     "sync": "node scripts/sync-db.js",
+    "check": "node scripts/check-materials-publish.js",
     "generate:materials": "ice-devtools generate",
     "generate:docs": "node ./scripts/generate-docs-database",
     "generate": "npm run generate:materials && npm run generate:docs",

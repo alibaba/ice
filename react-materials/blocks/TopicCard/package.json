@@ -1,13 +1,14 @@
 {
   "name": "@icedesign/topic-card-block",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "核心数据",
   "main": "lib/index.js",
   "files": [
     "src/",
     "demo/",
     "lib/",
-    "mock/"
+    "mock/",
+    "build/"
   ],
   "author": {
     "name": "ICE Team",

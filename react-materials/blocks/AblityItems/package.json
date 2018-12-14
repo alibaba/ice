@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/ablity-items-block",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "中间展示特点 特性的区块",
   "author": "muchen <tao360907796@gmail.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",

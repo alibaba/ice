@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/product-feature-block",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "用于描述产品的特点，左图右文形式。",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "lib/",
+    "build/"
   ],
   "repository": {
     "type": "git",
