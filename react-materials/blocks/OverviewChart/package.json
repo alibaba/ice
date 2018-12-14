@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/overview-chart-block",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "files": [
     "src/",
@@ -24,10 +24,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@antv/data-set": "^0.8.0",
+    "@antv/data-set": "^0.8.9",
     "@icedesign/base": "^0.1.5-1",
     "@icedesign/container": "^0.1.1",
-    "bizcharts": "^3.0.5",
+    "bizcharts": "3.2.2",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {

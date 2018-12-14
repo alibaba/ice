@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/review-data-chart-block",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "邀评数据图表",
   "author": {
     "name": "ICE Team",
@@ -25,10 +25,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@antv/data-set": "^0.8.9",
+    "@antv/data-set": "0.8.9",
     "@icedesign/base": "^0.2.1",
     "@icedesign/container": "^0.1.2",
-    "bizcharts": "^3.1.7",
+    "bizcharts": "3.2.2",
     "prop-types": "^15.5.8",
     "react": "^16.2.0"
   },

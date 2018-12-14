@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/order-status-chart-block",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "订单状态型的图表",
   "author": {
     "name": "ICE Team",
@@ -25,9 +25,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@antv/data-set": "^0.8.9",
+    "@antv/data-set": "^0.10.1",
     "@icedesign/container": "^0.1.2",
-    "bizcharts": "^3.1.8",
+    "bizcharts": "3.2.2",
     "prop-types": "^15.5.8"
   },
   "peerDependencies": {

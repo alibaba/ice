@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/overview-sates-chart-block",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "数据概览",
   "author": {
     "name": "ICE Team",
@@ -27,7 +27,7 @@
   "dependencies": {
     "@icedesign/base": "^0.2.2",
     "@icedesign/container": "^0.1.2",
-    "bizcharts": "^3.1.8"
+    "bizcharts": "3.2.2"
   },
   "peerDependencies": {
     "react": "^16.2.0"
