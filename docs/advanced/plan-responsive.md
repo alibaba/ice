@@ -1,10 +1,8 @@
 ---
 title: 响应式方案
-category: 项目开发手册
-order: 13
+category: 进阶指南
+order: 6
 ---
-
-# 响应式方案
 
 在飞冰物料中，响应式设计主要分为 Layout 和 Block 两部分，两者区分开来；Block 的响应式不依赖于 Layout 的相关配置和样式，这样设计的目的主要是解耦和可扩展性，保证区块不仅仅适用于飞冰提供的 Layout，也可以是自定义的 Layout；
 

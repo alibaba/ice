@@ -95,50 +95,7 @@ ICE 提供了主题功能，以满足业务和品牌多样化的视觉需求，�
 
 ## 代理配置 - proxyConfig
 
-代理功能是前后端联调时很常见的需求，为了代码维护性考虑前端请求后端接口时写的都是相对路径如 `/api/getFoo.json`，此时如果我们在本地通过访问`http://127.0.0.1:4444` 来调试页面，所有相对路径的 API 最终都会变成 `http://127.0.0.1:4444/api/getFoo.json`，因为我们调试服务并没有提供这些接口，这些请求自然都会以 404 而结束。这时候我们就需要代理功能出场了，在 package.json 中新增 proxyConfig 字段即可进行代理配置：
-
-#### 配置示例
-
-```json
-{
-  "proxyConfig": {
-    "/api/**": {
-      "enable": true,
-      "target": "http://example.com/api"
-    }
-  }
-}
-```
-
-#### 匹配规则
-
-```json
-         foo://example.com:8042/over/there?name=ferret#nose
-         \_/   \______________/\_________/ \_________/ \__/
-          |           |            |            |        |
-       scheme     authority       path        query   fragment
-```
-
-- `/` 匹配所有规则
-- `/api` 匹配 path 以 `/api` 开头的路径
-
-#### 代理示例
-
-```js
-axios({
-  url: '/api/proxy',
-  method: 'get',
-})
-  .then((response) => {})
-  .catch((err) => {});
-```
-
-请求发出后将会被代理到  `http://example.com/api/proxy`
-
-#### 注意事项
-
-- 代理之后我们可以通过相对路径的接口正常请求到后端服务，但是如果后端接口做了帐号登录鉴权之类的事情请求一样回失败，因为此时调试页面里并没有登录相关的 cookie 信息
-- 代理之后可以理解为请求是从服务端发出，因此绕过了浏览器的同源策略，一定程度可以解决跨域问题，但一样无法绕过上文提到的 cookie 鉴权等相关问题
+参考 [Iceworks 插件-代理配置](/ice/docs/iceworks/plugins-proxy)
 
 ## 构建配置 - buildConfig
 
