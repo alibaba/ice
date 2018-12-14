@@ -1,11 +1,10 @@
 {
-  "name": "@react-materials/footer-links-block",
-  "version": "1.0.2",
+  "name": "@icedesign/footer-links-block",
+  "version": "1.0.0",
   "description": "通用的底部链接区块",
   "author": "muchen <tao360907796@gmail.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -35,5 +34,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1.s1wtbSYBuNjSspfXXcZCpXa-2560-628.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/footer-links/preview"
+  "homepage": "https://alibaba.github.io/ice/block/footer-links"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/platform-intro-block",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "平台介绍",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -38,5 +37,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1JsHkqGmWBuNjy1XaXXXCbXXa-2531-1370.jpg"
   },
-  "homepage": "https://alibaba.github.io/ice/block/platform-intro/preview"
+  "homepage": "https://alibaba.github.io/ice/block/platform-intro"
 }

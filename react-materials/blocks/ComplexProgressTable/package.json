@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/complex-progress-table-block",
-  "version": "0.1.11",
+  "version": "0.1.14",
   "description": "进度管理表格",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -51,5 +48,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/complex-progress-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/complex-progress-table"
 }

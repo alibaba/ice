@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/team-display-block",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -47,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/team-display/preview"
+  "homepage": "https://alibaba.github.io/ice/block/team-display"
 }

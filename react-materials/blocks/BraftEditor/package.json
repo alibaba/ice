@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/braft-editor-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "基于 draft-js 开发的美观易用的 React 富文本编辑器",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -39,5 +38,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1qj.uD9tYBeNjSspkXXbU8VXa-1916-577.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/braft-editor/preview"
+  "homepage": "https://alibaba.github.io/ice/block/braft-editor"
 }

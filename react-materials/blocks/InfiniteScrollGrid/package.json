@@ -1,6 +1,6 @@
 {
-  "name": "@react-materials/infinite-scroll-grid-block",
-  "version": "1.0.1",
+  "name": "@icedesign/infinite-scroll-grid-block",
+  "version": "1.0.0",
   "description": "无限滚动的栅格列表",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -40,5 +39,6 @@
       "列表"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1kyB1GKOSBuNjy0FdXXbDnVXa-3418-632.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/infinite-scroll-grid"
 }

@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/tab-article-block",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "tab和文章列表组合",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -47,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/tab-article/preview"
+  "homepage": "https://alibaba.github.io/ice/block/tab-article"
 }

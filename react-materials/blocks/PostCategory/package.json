@@ -1,12 +1,11 @@
 {
-  "name": "@react-materials/post-category-block",
-  "version": "1.0.1",
+  "name": "@icedesign/post-category-block",
+  "version": "1.0.0",
   "description": "文章创作类型列表",
-  "homepage": "https://alibaba.github.io/ice/block/post-category/preview",
+  "homepage": "https://alibaba.github.io/ice/block/post-category",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

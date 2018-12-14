@@ -1,11 +1,10 @@
 {
-  "name": "@react-materials/excellent-home-page-block",
-  "version": "0.1.2",
+  "name": "@icedesign/excellent-home-page-block",
+  "version": "1.0.0",
   "description": "简洁大气首页",
   "author": "zhuoling.lcl@alibaba-inc.com",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -35,5 +34,5 @@
     ],
     "screenshot": "https://gw.alicdn.com/tfs/TB1l0KttDtYBeNjy1XdXXXXyVXa-2770-1540.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/excellent-home-page/preview"
+  "homepage": "https://alibaba.github.io/ice/block/excellent-home-page"
 }

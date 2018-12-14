@@ -1,13 +1,10 @@
 {
   "name": "@icedesign/brand-display-block",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "品牌列表展示",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -49,5 +46,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/brand-display/preview"
+  "homepage": "https://alibaba.github.io/ice/block/brand-display"
 }
