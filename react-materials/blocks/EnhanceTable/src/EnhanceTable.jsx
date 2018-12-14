@@ -2,62 +2,17 @@
 import React, { Component } from 'react';
 import { Table, Pagination, Tab, Search } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
-import { enquireScreen } from 'enquire-js';
+import data from './data';
 
-@DataBinder({
-  tableData: {
-    // 详细请求配置请参见 https://github.com/axios/axios
-    url: '/mock/enhance-table-list.json',
-    params: {
-      page: 1,
-    },
-    defaultBindingData: {
-      list: [],
-      total: 100,
-      pageSize: 10,
-      currentPage: 1,
-    },
-  },
-})
 export default class EnhanceTable extends Component {
-  static displayName = 'EnhanceTable';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
   constructor(props) {
     super(props);
 
-    this.queryCache = {};
     this.state = {
       activeKey: 'solved',
     };
   }
-
-  componentDidMount() {
-    this.queryCache.page = 1;
-    this.fetchData();
-    this.enquireScreenRegister();
-  }
-
-  enquireScreenRegister = () => {
-    const mediaCondition = 'only screen and (max-width: 720px)';
-
-    enquireScreen((mobile) => {
-      this.setState({
-        isMobile: mobile,
-      });
-    }, mediaCondition);
-  };
-
-  fetchData = () => {
-    this.props.updateBindingData('tableData', {
-      data: this.queryCache,
-    });
-  };
 
   renderTitle = (value, index, record) => {
     return (
@@ -131,8 +86,6 @@ export default class EnhanceTable extends Component {
   };
 
   render() {
-    const tableData = this.props.bindingData.tableData;
-
     return (
       <div className="enhance-table" style={styles.enhanceTable}>
         <IceContainer style={styles.card}>
@@ -183,8 +136,7 @@ export default class EnhanceTable extends Component {
         </IceContainer>
         <IceContainer>
           <Table
-            dataSource={tableData.list}
-            isLoading={tableData.__loading}
+            dataSource={data}
             className="basic-table"
             style={styles.basicTable}
             hasBorder={false}
@@ -214,13 +166,7 @@ export default class EnhanceTable extends Component {
             />
           </Table>
           <div style={styles.pagination}>
-            <Pagination
-              current={tableData.currentPage}
-              pageSize={tableData.pageSize}
-              total={tableData.total}
-              onChange={this.changePage}
-              type={this.state.isMobile ? 'simple' : 'normal'}
-            />
+            <Pagination />
           </div>
         </IceContainer>
       </div>
