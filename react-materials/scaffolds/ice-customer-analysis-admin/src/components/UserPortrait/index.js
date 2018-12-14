@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@icedesign/base';
-import ContainerTitle from '../../../../components/ContainerTitle';
+import ContainerTitle from '../ContainerTitle';
 import GenderChart from './GenderChart';
 import AgeChart from './AgeChart';
 

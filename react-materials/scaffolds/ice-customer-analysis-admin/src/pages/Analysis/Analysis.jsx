@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import UserPortrait from './components/UserPortrait';
+import UserPortrait from '../../components/UserPortrait';
 import PassengerFlow from '../../components/PassengerFlow';
 import TimeDistribution from '../../components/TimeDistribution';
+import EventsOverview from '../../components/EventsOverview';
 
 const mockData = [
   {
@@ -43,20 +44,10 @@ const mockData = [
 ];
 
 export default class Analysis extends Component {
-  static displayName = 'Analysis';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <div>
+        <EventsOverview />
         <UserPortrait />
         <PassengerFlow title="客流分析" data={mockData} />
         <TimeDistribution title="客流到访时间" />
