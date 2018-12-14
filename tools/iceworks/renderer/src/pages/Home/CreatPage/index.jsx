@@ -1,12 +1,11 @@
 import { computed, autorun, toJS } from 'mobx';
 import { Dialog, Button, Feedback } from '@icedesign/base';
 import { inject, observer } from 'mobx-react';
-import { remote } from 'electron';
 import { URL } from 'url';
 import React, { Component } from 'react';
+import { remote } from 'electron';
 
 import { dependenciesFormat } from '../../../lib/project-utils';
-import PageConfig from './PageConfig';
 import services from '../../../services';
 
 // components
@@ -18,6 +17,8 @@ import {
 import Icon from '../../../components/Icon';
 import dialog from '../../../components/dialog';
 
+import PageConfig from './PageConfig';
+
 const { log, npm, shared, interaction, scaffolder } = services;
 
 import './index.scss';
@@ -27,9 +28,10 @@ import './index.scss';
 class CreatePage extends Component {
   constructor(props) {
     super(props);
+    this.props.customBlocks.initCustomBlocks();
+
     // 监听 statusCompile 的构建状态
     // 根据编译状态判断是否将加载页面切换成预览页面
-    this.props.customBlocks.initCustomBlocks();
     const statusCompileWatcher = computed(() => {
       const { projects } = this.props;
       return projects.currentProject && projects.currentProject.statusCompile;
@@ -114,12 +116,17 @@ class CreatePage extends Component {
   };
 
   // 启动预览服务，打开新窗口，并加载对应预览地址。
-  handleOpenPreviewPage = () => {
+  handleOpenPreviewPage = (blocks) => {
+    if (Array.isArray(blocks)) {
+      blocks = toJS(blocks);
+    } else {
+      blocks = toJS(this.props.blocks.selected);
+      // 检测别名是否为空或者重名
+      if (!this.aliasNameValidated(blocks)) return;
+    }
     const layout = toJS(this.props.newpage.currentLayout);
-    const blocks = toJS(this.props.blocks.selected);
     const { projects } = this.props;
     const { currentProject } = projects;
-
     const config = {
       name: 'IceworksPreviewPage',
       layout,
@@ -330,18 +337,19 @@ class CreatePage extends Component {
     }
   };
 
-  // 生成页面，唤起 dialog 让用户输入页面名，与路由名
-  generatePage = () => {
-    const { selected: selectedBlocks } = this.props.blocks;
+  /**
+   * 区块别名检测，是否重名或者为空
+   */
+  aliasNameValidated = (blocks) => {
     let aliasNameCollector = [];
     let conflictName = '';
 
-    const hasEmptyAliasName = selectedBlocks.some((block) => {
+    const hasEmptyAliasName = blocks.some((block) => {
       return block.alias.trim() == '';
     });
 
     // 冲突检测
-    const hasConflictAliasName = selectedBlocks.some((block) => {
+    const hasConflictAliasName = blocks.some((block) => {
       if (aliasNameCollector.indexOf(block.alias.toLowerCase()) === -1) {
         aliasNameCollector.push(block.alias.toLowerCase());
         return false;
@@ -357,30 +365,56 @@ class CreatePage extends Component {
         content: '已选 Blocks 名称不能为空，请修改后重试。',
         hasMask: true,
       });
-    } else if (hasConflictAliasName) {
+      return false;
+    } 
+    if (hasConflictAliasName) {
       Feedback.toast.show({
         type: 'error',
         content: `已选 Blocks 存在多个名为: ${conflictName} 冲突，请修改后重试。`,
         hasMask: true,
       });
-    } else {
-      this.props.newpage.openSave();
-      PageConfig.show({
-        newpage: this.props.newpage,
-        blocks: this.props.blocks,
-        projects: this.props.projects,
-        libary: this.props.projects.currentProject.getLibraryType(),
-      });
+      return false;
     }
+    return true;
   };
 
-  handleBlocksAdd = (block) => {
-    this.props.blocks.addBlock(block);
+  // 生成页面，唤起 dialog 让用户输入页面名，与路由名
+  generatePage = (blocks) => {
+    let selectedBlocks;
+    if (Array.isArray(blocks)) {
+      selectedBlocks = blocks;
+    } else {
+      selectedBlocks = this.props.blocks.selected;
+      // 检测别名是否为空或者重名
+      if (!this.aliasNameValidated(selectedBlocks)) return;
+    }
+   
+    this.props.newpage.openSave();
+    PageConfig.show({
+      selectedBlocks,
+      newpage: this.props.newpage,
+      blocks: this.props.blocks,
+      projects: this.props.projects,
+      libary: this.props.projects.currentProject.getLibraryType(),
+    });
+  };
+
+  /**
+   * 添加区块，支持多个
+   */
+  handleBlocksAdd = (blockObj) => {
+    if (!Array.isArray(blockObj)) {
+      blockObj = [blockObj];
+    } 
+    blockObj.forEach( block => 
+      this.props.blocks.addBlock(block)
+    );
   };
 
   render() {
-    const { projects } = this.props;
+    const { projects, newpage, blocks } = this.props;
     const currentProject = projects.currentProject;
+    const currentTabKey = blocks.currentTabKey;
     // 当前项目为空，则不渲染新建页面的组件
     if (!currentProject) return null;
     // 脚手架类型
@@ -404,7 +438,9 @@ class CreatePage extends Component {
             <div className="material-wrapper">
               {showLayoutPicker && <BlockPickerLayouts />}
               <BlockPickerPanel
-                onSelected={this.handleBlocksAdd}
+                handleBlocksAdd={this.handleBlocksAdd}
+                handleOpenPreviewPage={this.handleOpenPreviewPage}
+                generatePage={this.generatePage}
                 style={{
                   paddingTop: showLayoutPicker ? 0 : 10,
                 }}
@@ -416,6 +452,7 @@ class CreatePage extends Component {
             <Button onClick={this.handleCancelCreate}>
               <Icon size="small" type="close" /> 取消
             </Button>
+            {/* 当前tab为区块组合时，预览页面功能内置 */}
             {showPreviewPage && (
               <Button
                 disabled={!projects.currentProject.serverUrl}
@@ -425,6 +462,7 @@ class CreatePage extends Component {
                 <Icon size="small" type="eye" /> 预览页面
               </Button>
             )}
+      
             <Button type="primary" onClick={this.generatePage}>
               <Icon size="small" type="paper-plane" /> 生成页面
             </Button>
