@@ -2,7 +2,7 @@
   "name": "@icedesign/post-category-block",
   "version": "1.0.0",
   "description": "文章创作类型列表",
-  "homepage": "https://unpkg.com/@icedesign/post-category-block@latest/build/index.html",
+  "homepage": "https://alibaba.github.io/ice/block/post-category",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",

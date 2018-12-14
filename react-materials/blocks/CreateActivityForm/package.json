@@ -44,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://unpkg.com/@icedesign/create-activity-form-block@latest/build/index.html"
+  "homepage": "https://alibaba.github.io/ice/block/create-activity-form"
 }

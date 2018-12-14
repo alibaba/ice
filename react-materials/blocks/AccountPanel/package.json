@@ -2,7 +2,7 @@
   "name": "@icedesign/account-panel-block",
   "version": "1.0.0",
   "description": "用户中心展示账户信息内容",
-  "homepage": "https://unpkg.com/@icedesign/account-panel-block@latest/build/index.html",
+  "homepage": "https://alibaba.github.io/ice/block/account-panel",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",

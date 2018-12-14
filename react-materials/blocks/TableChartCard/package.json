@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "description": "适用于图表和表格组合的展示场景",
   "author": "",
-  "homepage": "https://unpkg.com/@icedesign/table-chart-card-block@latest/build/index.html",
+  "homepage": "https://alibaba.github.io/ice/block/table-chart-card",
   "files": [
     "src/",
     "build/"

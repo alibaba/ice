@@ -2,7 +2,7 @@
   "name": "@icedesign/notice-list-block",
   "version": "1.0.0",
   "description": "展示站点公告列表",
-  "homepage": "https://unpkg.com/@icedesign/notice-list-block@latest/build/index.html",
+  "homepage": "https://alibaba.github.io/ice/block/notice-list",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",

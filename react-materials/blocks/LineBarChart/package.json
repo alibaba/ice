@@ -2,7 +2,7 @@
   "name": "@icedesign/line-bar-chart-block",
   "version": "1.0.3",
   "description": "折线图和柱状图组合",
-  "homepage": "https://unpkg.com/@icedesign/line-bar-chart-block@latest/build/index.html",
+  "homepage": "https://alibaba.github.io/ice/block/line-bar-chart",
   "author": "",
   "files": [
     "src/",

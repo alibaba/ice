@@ -2,7 +2,7 @@
   "name": "@icedesign/black-footer-block",
   "version": "1.0.3",
   "description": "页脚信息展示",
-  "homepage": "https://unpkg.com/@icedesign/black-footer-block@latest/build/index.html",
+  "homepage": "https://alibaba.github.io/ice/block/black-footer",
   "author": "",
   "files": [
     "src/",

@@ -2,7 +2,7 @@
   "name": "@icedesign/performance-indicator-block",
   "version": "1.0.3",
   "description": "适用于性能指标展示的图表",
-  "homepage": "https://unpkg.com/@icedesign/performance-indicator-block@latest/build/index.html",
+  "homepage": "https://alibaba.github.io/ice/block/performance-indicator",
   "author": "",
   "files": [
     "src/",

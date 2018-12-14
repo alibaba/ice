@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "适用于活动展示",
   "author": "",
-  "homepage": "https://unpkg.com/@icedesign/geek-events-block@latest/build/index.html",
+  "homepage": "https://alibaba.github.io/ice/block/geek-events",
   "files": [
     "src/",
     "build/"

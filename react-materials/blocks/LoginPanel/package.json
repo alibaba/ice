@@ -2,7 +2,7 @@
   "name": "@icedesign/login-panel-block",
   "version": "1.0.3",
   "description": "左右布局带背景图的登录表单页",
-  "homepage": "https://unpkg.com/@icedesign/login-panel-block@latest/build/index.html",
+  "homepage": "https://alibaba.github.io/ice/block/login-panel",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",

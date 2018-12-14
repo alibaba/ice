@@ -2,7 +2,7 @@
   "name": "@icedesign/hot-post-rank-block",
   "version": "1.0.0",
   "description": "展示文章阅读热度排行",
-  "homepage": "https://unpkg.com/@icedesign/hot-post-rank-block@latest/build/index.html",
+  "homepage": "https://alibaba.github.io/ice/block/hot-post-rank",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",

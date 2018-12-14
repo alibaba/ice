@@ -44,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://unpkg.com/@icedesign/tag-message-list-block@latest/build/index.html"
+  "homepage": "https://alibaba.github.io/ice/block/tag-message-list"
 }
