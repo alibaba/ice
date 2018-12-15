@@ -6,7 +6,7 @@ order: 6
 
 在飞冰物料中，响应式设计主要分为 Layout 和 Block 两部分，两者区分开来；Block 的响应式不依赖于 Layout 的相关配置和样式，这样设计的目的主要是解耦和可扩展性，保证区块不仅仅适用于飞冰提供的 Layout，也可以是自定义的 Layout；
 
-响应式断点阈值与 [component/grid](https://alibaba.github.io/ice//component/grid) 的栅格系统基本保持一致，但稍有删减，主要分 `xss`、`s`、`l` 三种场景做适配：
+响应式断点阈值与 [component/grid](#/component/grid) 的栅格系统基本保持一致，但稍有删减，主要分 `xss`、`s`、`l` 三种场景做适配：
 
 - xss：320px
 - s：720px
@@ -106,13 +106,13 @@ render () {
 
 ### 升级区块
 
-[Iceworks](https://alibaba.github.io/ice/iceworks) 版本已经支持添加区块到指定的页面下面，可通过该方法对区块进行升级
+[Iceworks](#/iceworks) 版本已经支持添加区块到指定的页面下面，可通过该方法对区块进行升级
 
 ![](https://img.alicdn.com/tfs/TB16S2cdxSYBuNjSspjXXX73VXa-1732-1346.png)
 
 ### 升级基础包
 
-飞冰物料依赖 `@icedesign/base` 基础包，`@icedesign/base` 由 `v1` 版本升级到了 `v2` 版本，主要改动是 [Grid](https://alibaba.github.io/ice/#/component/grid) 组件支持 `gutter` 属性，具体改动如下：
+飞冰物料依赖 `@icedesign/base` 基础包，`@icedesign/base` 由 `v1` 版本升级到了 `v2` 版本，主要改动是 [Grid](#/component/grid) 组件支持 `gutter` 属性，具体改动如下：
 
 - 删除已经废弃的 offsetFixed
 - 删除 type 属性

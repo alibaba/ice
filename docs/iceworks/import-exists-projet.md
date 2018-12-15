@@ -36,9 +36,9 @@ order: 3
 
 其中 scaffoldConfig.type 字段描述当前项目所使用的框架名 `react` `vue` `angular` 等，此字段用于与物料源相映射。
 
-## 3. `package.json` 存在可执行命令 `npm run start` `npm run build`
+## 3. 描述启动调试和构建的命令
 
-这两个命令用于 **启动调试服务** **构建项目** 功能使用，你可以使用自己定义的命令行工具。
+`package.json` 里增加 start 和 build 命令, 这两个命令用于 **启动调试服务** **构建项目** 功能使用，你可以使用自己定义的命令行工具。
 
 ```js
 {
