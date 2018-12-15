@@ -95,7 +95,7 @@ ICE 提供了主题功能，以满足业务和品牌多样化的视觉需求，�
 
 ## 代理配置 - proxyConfig
 
-参考 [Iceworks 插件-代理配置](/ice/docs/iceworks/plugins-proxy)
+参考 [Iceworks 插件-代理配置](#/docs/iceworks/plugins-proxy)
 
 ## 构建配置 - buildConfig
 
