@@ -5,7 +5,7 @@ order: 3
 
 **零环境搭建** **零配置** **简单易用**
 
-Iceworks 是 ICE 推出的辅助开发者快速开发中后台前端应用的 GUI 软件，目前支持 macOS 和 Windows 两大平台。通过 [Iceworks](https://alibaba.github.io/ice/#/iceworks) 点击下载按钮即可。
+Iceworks 是 ICE 推出的辅助开发者快速开发中后台前端应用的 GUI 软件，目前支持 macOS 和 Windows 两大平台。通过 [Iceworks](#/iceworks) 点击下载按钮即可。
 
 ## 创建项目
 
@@ -42,7 +42,7 @@ Iceworks 是 ICE 推出的辅助开发者快速开发中后台前端应用的 GU
 
 ## 新建页面
 
-启动调试服务后，可使用新建页面来搭建页面，通过 [block](https://alibaba.github.io/ice/#/template/block) 的组合完成页面的创建。
+启动调试服务后，可使用新建页面来搭建页面，通过 [block](#/block) 的组合完成页面的创建。
 
 进入 block 搭建界面
 
