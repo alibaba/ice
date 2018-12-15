@@ -32,7 +32,7 @@ npm install <packageName>@latest --save
 
 当需要更新项目内的组件的时，使用此命令 `@latest` 表示当装当前最新版本。也就达到升级组件的目的。
 
-关于组件版本说明详见 [](#/docs/others/version-rules)
+关于组件版本说明详见[组件版本号规则](#/docs/others/version-rules)。
 
 ## 使用组件
 
