@@ -97,8 +97,6 @@ class Switch extends React.Component {
 }
 ```
 
-> Demo 链接：http://ice.alibaba-inc.com/playground/142
-
 组件内用到的数据都算作一种状态，存储在 state 里面，当可以拦截某些行为来去改变 state 的值（比如 点击 按钮），需要注意的是改变当前组件的 state 不能直接用 `this.state.switchStatus = true` 来改，必须使用 `this.setState` 方法进行修改。原因是因为状态改变了之后，React 需要重新执行 render 方法进行渲染，此时 render 方法读取 `this.state.switchStatus` 的值就是最新的数据，渲染结果也是最新的。所以必须有一种机制通知 React state 已经变换了，直接改变 `this.state.switchStatus = true` 的值，React 无法检测到状态有変更，因此必须使用 `this.setState({xxx})` 来修改 state 值。
 
 React 组件在渲染的时候需要遵循一定的执行顺序，比如 state 改变之后必须重新执行 render 方法等。为了方便控制 React 的执行顺序和流程，React 创建了生命周期的概念用来处理此类功能。
@@ -181,8 +179,6 @@ class Person extends React.Component {
   }
 }
 ```
-
-> Demo 链接：http://ice.alibaba-inc.com/playground/143
 
 每一次 props 或者 state 改变，都会重新渲染组件，为了阻止渲染，React 还提供了 `shouldComponentUpdate` 方法，在 render 前判断是否有必要执行 render 提升性能。关于 React 声明周期，详情请参见官方文档：https://facebook.github.io/react/docs/react-component.html 。
 

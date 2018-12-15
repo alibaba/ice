@@ -224,4 +224,4 @@ $ git push origin branch-name
 
 ## 发布
 
-当你提交的 Pull Request 被合并到主干后，我们会进行发布并将你贡献的物料同步在[飞冰官网](https://alibaba.github.io/ice/)。
+当你提交的 Pull Request 被合并到主干后，我们会进行发布并将你贡献的物料同步在[飞冰官网](#/)。
