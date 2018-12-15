@@ -12,6 +12,11 @@
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.2.2"
   },
+  "files": [
+    "src/",
+    "build/",
+    "screenshot.png"
+  ],
   "devDependencies": {
     "babel-eslint": "^8.0.3",
     "eslint": "^4.13.1",
