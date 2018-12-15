@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/normal-footer-block",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     ],
     "themePackage": "@icedesign/skin"
   },
-  "homepage": "https://alibaba.github.io/ice/block/normal-footer/preview"
+  "homepage": "https://alibaba.github.io/ice/block/normal-footer"
 }

@@ -1,10 +1,10 @@
 import { Feedback } from '@icedesign/base';
 import { observable, action, computed, toJS } from 'mobx';
 import Notification from '@icedesign/notification';
-
+import cloneDeep from 'lodash.clonedeep';
 import equalSource from '../lib/equal-source';
 import filterMaterial from '../lib/filter-material';
-import RECOMMEND_MATERIALS from '../datacenter/recommendMaterials';
+import { RECOMMEND_MATERIALS } from '../datacenter/materialsConfig';
 import services from '../services';
 
 const { settings, shared } = services;
@@ -14,6 +14,10 @@ class SettingsMaterials {
   builtInMaterialsValue = [];
   @observable
   customMaterialsValue = [];
+
+  // 记录正在编辑的自定义物料源数据
+  @observable
+  edittingCustomMaterialValue = null;
 
   constructor() {
     let materials = settings.get('materials') || [];
@@ -72,13 +76,12 @@ class SettingsMaterials {
     });
   }
 
-  reset() {
+  resetBuiltInMaterials() {
     const { defaultMaterials } = shared;
     const saveMaterials = defaultMaterials.map((item) => ({ ...item }));
-    this.customMaterialsValue = this.filterCustomMaterials(saveMaterials);
     this.builtInMaterialsValue = this.filterBuiltInMaterials(saveMaterials);
     settings.set('materials', saveMaterials);
-    this.notification('设置变更已保存');
+    this.notification('官方物料源重置成功');
   }
 
   save() {
@@ -92,6 +95,8 @@ class SettingsMaterials {
         Array.prototype.push.apply(saveMaterials, customMaterialsValue);
 
         settings.set('materials', saveMaterials);
+
+        this.edittingCustomMaterialValue = null;
         this.notification('设置变更已保存');
       })
       .catch(() => {});
@@ -99,12 +104,19 @@ class SettingsMaterials {
 
   @action
   addCustomMaterials() {
-    this.customMaterialsValue.push({
+    if (this.edittingCustomMaterialValue) {
+      return Feedback.toast.error('同时只能编辑一个自定义物料源');
+    }
+
+    const newMaterial = {
       name: '',
       source: '',
       builtIn: false,
       editing: true,
-    });
+      type: 'add',
+    };
+    this.edittingCustomMaterialValue = newMaterial;
+    this.customMaterialsValue.push(newMaterial);
   }
 
   @action
@@ -114,8 +126,28 @@ class SettingsMaterials {
   }
 
   @action
-  updateCustomMaterial(index) {
+  editCustomMaterial(index) {
+    if (this.edittingCustomMaterialValue) {
+      return Feedback.toast.error('同时只能编辑一个自定义物料源');
+    }
+
+    this.edittingCustomMaterialValue = toJS(this.customMaterialsValue[index]);
     this.customMaterialsValue[index].update = true;
+    this.customMaterialsValue[index].type = 'edit';
+  }
+
+  @action
+  cancelEditCustomMaterial(index) {
+    if (this.customMaterialsValue[index].type === 'add') {
+      // 新增后取消
+      this.customMaterialsValue.splice(index, 1);
+      this.edittingCustomMaterialValue = null;
+    } else {
+      // 编辑后取消
+      this.customMaterialsValue[index] = this.edittingCustomMaterialValue;
+      this.customMaterialsValue[index].update = false;
+      this.edittingCustomMaterialValue = null;
+    }
   }
 
   @action
@@ -129,13 +161,9 @@ class SettingsMaterials {
   };
 
   @action
-  changeBuiltInMaterial(checked, selectedMaterial) {
-    this.builtInMaterialsValue = this.builtInMaterialsValue.map((m) => {
-      if (equalSource(m.source, selectedMaterial.source)) {
-        m.checked = checked;
-      }
-      return m;
-    });
+  switchCustomMaterial(checked, selectedMaterial) {
+    this.customMaterialsValue = this.filterMaterialsByChecked(checked, selectedMaterial, this.customMaterialsValue);
+    this.save();
   }
 
   checkSwitch(checked, selectedMaterial) {
@@ -167,7 +195,7 @@ class SettingsMaterials {
   switchBuitInMaterial(checked, selectedMaterial) {
     this.checkSwitch(checked, selectedMaterial)
       .then(() => {
-        this.changeBuiltInMaterial(checked, selectedMaterial);
+        this.builtInMaterialsValue = this.filterMaterialsByChecked(checked, selectedMaterial, this.builtInMaterials);
         this.save();
       })
       .catch(() => {});
@@ -190,7 +218,7 @@ class SettingsMaterials {
   getSaveBuiltInMaterials() {
     return this.builtInMaterials
       .filter((m) => {
-        return m.checked == true;
+        return m.checked === true;
       })
       .map((item) => {
         return {
@@ -202,9 +230,18 @@ class SettingsMaterials {
       });
   }
 
-  filterBuiltInMaterials(materials) {
+  filterMaterialsByChecked = (checked, selectedMaterial, materials) => {
+    return materials.map((m) => {
+      if (equalSource(m.source, selectedMaterial.source)) {
+        m.checked = checked;
+      }
+      return m;
+    });
+  }
+
+  filterBuiltInMaterials = (materials) => {
     // 如果用户物料源配置是否在推荐的物料源集合里，如果在则默认打开推荐列表的选项
-    let builtInMaterialsValue = RECOMMEND_MATERIALS.map((recommendMaterial) => {
+    const builtInMaterialsValue = RECOMMEND_MATERIALS.map((recommendMaterial) => {
       const hasInUserMaterials = materials.some((userMaterial) => {
         return (
           equalSource(recommendMaterial.source, userMaterial.source) &&
@@ -217,7 +254,7 @@ class SettingsMaterials {
     return filterMaterial(builtInMaterialsValue); // 过滤内网用户可见
   }
 
-  filterCustomMaterials(materials) {
+  filterCustomMaterials = (materials) => {
     return materials.filter((material) => {
       return !material.builtIn;
     });

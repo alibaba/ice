@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/progress-data-list-block",
-  "version": "0.1.6",
+  "version": "0.1.9",
   "description": "进度条数据列表展示",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -48,5 +46,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/progress-data-list/preview"
+  "homepage": "https://alibaba.github.io/ice/block/progress-data-list"
 }

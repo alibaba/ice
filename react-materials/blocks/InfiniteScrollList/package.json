@@ -1,5 +1,5 @@
 {
-  "name": "@react-materials/infinite-scroll-list-block",
+  "name": "@icedesign/infinite-scroll-list-block",
   "version": "1.0.0",
   "description": "无限滚动列表",
   "author": {
@@ -8,7 +8,7 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -36,5 +36,6 @@
       "列表"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1F8wmGGmWBuNjy1XaXXXCbXXa-3442-600.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/infinite-scroll-list"
 }

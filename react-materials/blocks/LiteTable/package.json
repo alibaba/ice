@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/lite-table-block",
-  "version": "0.1.10",
+  "version": "0.1.13",
   "description": "简单的附带状态的表格",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/lite-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/lite-table"
 }

@@ -1,13 +1,11 @@
 {
   "name": "@icedesign/article-list-block",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "文章列表",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/article-list/preview"
+  "homepage": "https://alibaba.github.io/ice/block/article-list"
 }

@@ -1,12 +1,12 @@
 {
-  "name": "geek-events-block",
+  "name": "@icedesign/geek-events-block",
   "version": "1.0.0",
   "description": "适用于活动展示",
   "author": "",
-  "homepage": "https://alibaba.github.io/ice/block/geek-events/preview",
+  "homepage": "https://alibaba.github.io/ice/block/geek-events",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "publishConfig": {
     "access": "public",

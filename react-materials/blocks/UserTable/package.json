@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/user-table-block",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "可筛选过滤的用户类表格",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,7 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -41,5 +41,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1_1HgzbSYBuNjSspiXXXNzpXa-2562-1448.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/user-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/user-table"
 }

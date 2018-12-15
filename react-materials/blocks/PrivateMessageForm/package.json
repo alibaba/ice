@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/private-message-form-block",
-  "version": "0.1.9",
+  "version": "0.1.12",
   "description": "私有消息表单",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/private-message-form/preview"
+  "homepage": "https://alibaba.github.io/ice/block/private-message-form"
 }

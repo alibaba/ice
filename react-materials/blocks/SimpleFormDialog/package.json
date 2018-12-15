@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/simple-form-dialog-block",
-  "version": "0.1.8",
+  "version": "0.1.11",
   "description": "简单的表单弹窗",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -47,5 +45,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/simple-form-dialog/preview"
+  "homepage": "https://alibaba.github.io/ice/block/simple-form-dialog"
 }

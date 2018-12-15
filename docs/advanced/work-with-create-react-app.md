@@ -1,6 +1,10 @@
 ---
 title: 在 create-react-app 中使用飞冰组件
+<<<<<<< HEAD
 order: 3
+=======
+order: 8
+>>>>>>> master
 category: 进阶指南
 ---
 

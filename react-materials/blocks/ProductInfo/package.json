@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/product-info-block",
-  "version": "0.1.9",
+  "version": "0.1.12",
   "description": "产品信息展示",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/product-info/preview"
+  "homepage": "https://alibaba.github.io/ice/block/product-info"
 }

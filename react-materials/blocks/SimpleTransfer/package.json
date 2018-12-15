@@ -1,11 +1,11 @@
 {
-  "name": "@react-materials/simple-transfer-block",
-  "version": "1.0.1",
+  "name": "@icedesign/simple-transfer-block",
+  "version": "1.0.0",
   "description": "简单的穿梭框面板展示",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -37,5 +37,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1RpPQCAyWBuNjy0FpXXassXXa-2422-548.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/simple-transfer/preview"
+  "homepage": "https://alibaba.github.io/ice/block/simple-transfer"
 }

@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/simple-table-block",
-  "version": "0.1.8",
+  "version": "0.1.16",
   "description": "基础的表格",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -49,5 +48,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/simple-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/simple-table"
 }

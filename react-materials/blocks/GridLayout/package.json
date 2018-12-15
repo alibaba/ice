@@ -1,11 +1,11 @@
 {
   "name": "@icedesign/grid-layout-block",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "可拖拽和调整大小的网格布局",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -37,5 +37,6 @@
       "瀑布流"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1tiR0E_tYBeNjy1XdXXXXyVXa-2868-1580.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/grid-layout"
 }

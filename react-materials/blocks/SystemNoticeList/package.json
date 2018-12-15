@@ -1,13 +1,11 @@
 {
   "name": "@icedesign/system-notice-list-block",
-  "version": "0.1.12",
+  "version": "0.1.15",
   "description": "系统消息列表",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/system-notice-list/preview"
+  "homepage": "https://alibaba.github.io/ice/block/system-notice-list"
 }

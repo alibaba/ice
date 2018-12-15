@@ -3,27 +3,11 @@ import React, { Component } from 'react';
 import { Table, Pagination, Tab, Search } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
-import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
-import { enquireScreen } from 'enquire-js';
 import SubCategoryItem from './SubCategoryItem';
+import data from './data';
 import './ComplexTabTable.scss';
 
-@DataBinder({
-  tableData: {
-    // 详细请求配置请参见 https://github.com/axios/axios
-    url: '/mock/complex-tab-table-list.json',
-    params: {
-      page: 1,
-    },
-    defaultBindingData: {
-      list: [],
-      total: 100,
-      pageSize: 10,
-      currentPage: 1,
-    },
-  },
-})
 export default class ComplexTabTable extends Component {
   static displayName = 'ComplexTabTable';
 
@@ -106,28 +90,6 @@ export default class ComplexTabTable extends Component {
       ],
     };
   }
-
-  componentDidMount() {
-    this.enquireScreenRegister();
-    this.queryCache.page = 1;
-    this.fetchData();
-  }
-
-  enquireScreenRegister = () => {
-    const mediaCondition = 'only screen and (max-width: 720px)';
-
-    enquireScreen((mobile) => {
-      this.setState({
-        isMobile: mobile,
-      });
-    }, mediaCondition);
-  };
-
-  fetchData = () => {
-    this.props.updateBindingData('tableData', {
-      data: this.queryCache,
-    });
-  };
 
   renderTitle = (value, index, record) => {
     return (
@@ -216,8 +178,6 @@ export default class ComplexTabTable extends Component {
   };
 
   render() {
-    const tableData = this.props.bindingData.tableData;
-
     const { tabList } = this.state;
 
     return (
@@ -268,8 +228,7 @@ export default class ComplexTabTable extends Component {
         </IceContainer>
         <IceContainer>
           <Table
-            dataSource={tableData.list}
-            isLoading={tableData.__loading}
+            dataSource={data}
             className="basic-table"
             style={styles.basicTable}
             hasBorder={false}
@@ -299,12 +258,7 @@ export default class ComplexTabTable extends Component {
             />
           </Table>
           <div style={styles.pagination}>
-            <Pagination
-              current={tableData.currentPage}
-              pageSize={tableData.pageSize}
-              total={tableData.total}
-              onChange={this.changePage}
-            />
+            <Pagination />
           </div>
         </IceContainer>
       </div>

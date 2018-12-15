@@ -1,13 +1,11 @@
 {
   "name": "@icedesign/success-dialog-block",
-  "version": "0.1.8",
+  "version": "0.1.11",
   "description": "提示框-成功",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -47,5 +45,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/success-dialog/preview"
+  "homepage": "https://alibaba.github.io/ice/block/success-dialog"
 }

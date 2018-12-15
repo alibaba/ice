@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/create-activity-form-block",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "创建活动的表单",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/create-activity-form/preview"
+  "homepage": "https://alibaba.github.io/ice/block/create-activity-form"
 }

@@ -1,13 +1,11 @@
 {
   "name": "@icedesign/order-list-block",
-  "version": "0.1.7",
+  "version": "0.1.10",
   "description": "订单型列表",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -47,5 +45,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/order-list/preview"
+  "homepage": "https://alibaba.github.io/ice/block/order-list"
 }

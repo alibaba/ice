@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/subscribe-block",
-  "version": "0.1.8",
+  "version": "0.1.11",
   "description": "订阅",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -47,5 +45,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/subscribe/preview"
+  "homepage": "https://alibaba.github.io/ice/block/subscribe"
 }
