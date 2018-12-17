@@ -27,15 +27,16 @@ function getVariableMappingString(key, value) {
 
   switch (key) {
     case 'primary-color':
+      // 根据用户配置动态计算主品牌色相关的多个变量
       return primaryColor(value);
     case 'secondary-color':
+      // 根据用户配置动态计算次品牌色相关的多个变量
       return secondaryColor(value);
-
     case 'icon-font-path':
     case 'icon-font-name':
     case 'font-custom-path':
+      // 根据用户配置覆盖变量
       return `$${key}: ${JSON.stringify(value)};`;
-
     default:
       if (/icon\-content\-/.test(key)) {
         return `$${key}: ${JSON.stringify(value)};`;

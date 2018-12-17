@@ -17,20 +17,9 @@ function deleteEmptyLine(str) {
   return filterLines.join('\n');
 }
 
-// 移除手动引入的变量文件, 防止被原始皮肤覆盖
-function deleteVariablesImport(source = '') {
-  return source
-    .split('\n')
-    .filter(function(line) {
-      return !/\/variables\.scss/.test(line);
-    })
-    .join('\n');
-}
-
-// init user defined variables
+// 根据 package.json 配置生成自定义变量
 const extraContent = createSkinExtraContent();
 
-let hasEmittedHelp = false;
 module.exports = function(source) {
   const options = loaderUtils.getOptions(this);
   const themeFile = options.themeFile;
@@ -40,25 +29,21 @@ module.exports = function(source) {
 
   // 计算 md5 值，避免中文路径的问题
   const filePathHash = md5(themeFile);
+  let themeFileContent;
 
-  source = deleteVariablesImport(source);
-
-  if (skinContentCache[filePathHash]) {
-    return skinContentCache[filePathHash] + '\n' + extraContent + '\n' + source;
-  }
-
-  // 缓存 skinLoader
-  if (pathExists.sync(themeFile)) {
-    const themeFileContent = fs.readFileSync(themeFile).toString();
+  if (skinContentCache.hasOwnProperty(filePathHash)) {
+    // 读取缓存
+    themeFileContent = skinContentCache[filePathHash];
+  } else if (pathExists.sync(themeFile)) {
+    // 读取文件
+    themeFileContent = fs.readFileSync(themeFile).toString();
     skinContentCache[filePathHash] = deleteEmptyLine(themeFileContent);
-    return skinContentCache[filePathHash] + '\n' + extraContent + '\n' + source;
-  }
-
-  // only tip once
-  if (!hasEmittedHelp) {
+  } else {
+    // 文件不存在
     console.log(chalk.red('\n[Error] 不存在皮肤文件:'), themeFile);
-    hasEmittedHelp = true;
+    themeFileContent = '';
+    skinContentCache[filePathHash] = '';
   }
 
-  return source;
+  return themeFileContent + '\n' + extraContent + '\n' + source;
 };
