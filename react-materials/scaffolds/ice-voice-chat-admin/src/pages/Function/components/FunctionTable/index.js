@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 import { Input, Table } from '@icedesign/base';
 
 export default class FunctionTable extends Component {
-  static displayName = 'FunctionTable';
-
-  onChange = (value) => {
-    console.log({ value });
-  };
-
   render() {
+    const { data } = this.props;
     return (
       <div>
         <div style={styles.head}>
@@ -24,12 +19,12 @@ export default class FunctionTable extends Component {
             placeholder="请输入函数名称或者函数描述"
           />
         </div>
-        <Table hasBorder={false}>
+        <Table hasBorder={false} dataSource={data}>
           <Table.Column title="函数名" dataIndex="name" />
+          <Table.Column title="描述" dataIndex="desc" />
           <Table.Column title="语言类型" dataIndex="language" />
           <Table.Column title="关联技能" dataIndex="skill" />
           <Table.Column title="发布状态" dataIndex="status" />
-          <Table.Column title="操作" />
         </Table>
       </div>
     );

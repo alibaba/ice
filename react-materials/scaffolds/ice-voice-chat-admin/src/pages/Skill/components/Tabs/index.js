@@ -3,18 +3,6 @@ import { Tab } from '@icedesign/base';
 import SmallCard from './../../../../components/SmallCard';
 
 const TabPane = Tab.TabPane;
-const cardsData = [
-  {
-    name: 'joke',
-    desc: '笑话',
-    tag: '预置',
-  },
-  {
-    name: 'weather',
-    desc: '天气',
-    tag: '预置',
-  },
-];
 
 export default class Tabs extends Component {
   static displayName = 'Tabs';
@@ -38,7 +26,7 @@ export default class Tabs extends Component {
       <Tab>
         {Panes.map((item, index) => (
           <TabPane key={index} tab={item.tab}>
-            <SmallCard tab={item.tab} data={cardsData} />
+            <SmallCard tab={item.tab} data={this.props.data} />
           </TabPane>
         ))}
       </Tab>

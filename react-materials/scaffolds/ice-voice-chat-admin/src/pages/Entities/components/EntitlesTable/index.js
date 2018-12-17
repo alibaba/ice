@@ -1,10 +1,36 @@
 import React, { Component } from 'react';
-import { Input, Table } from '@icedesign/base';
+import { Input, Table, Dialog } from '@icedesign/base';
 
 export default class EntitlesTable extends Component {
-  static displayName = 'EntitlesTable';
+  handleEdit = () => {
+    Dialog.confirm({
+      title: '提示',
+      content: '只有管理员权限才能编辑',
+    });
+  };
+
+  handleDelete = () => {
+    Dialog.confirm({
+      title: '提示',
+      content: '只有管理员权限才能删除',
+    });
+  };
+
+  renderOper = () => {
+    return (
+      <div style={styles.oper}>
+        <a style={styles.button} onClick={this.handleEdit}>
+          编辑
+        </a>
+        <a style={styles.button} onClick={this.handleDelete}>
+          删除
+        </a>
+      </div>
+    );
+  };
 
   render() {
+    const { data } = this.props;
     return (
       <div>
         <div style={styles.searchBar}>
@@ -15,12 +41,12 @@ export default class EntitlesTable extends Component {
             placeholder="请输入实体名称"
           />
         </div>
-        <Table hasBorder={false}>
+        <Table hasBorder={false} dataSource={data}>
           <Table.Column title="实体名称" dataIndex="name" />
           <Table.Column title="描述" dataIndex="desc" />
           <Table.Column title="预览" dataIndex="preview" />
           <Table.Column title="关联技能" dataIndex="skill" />
-          <Table.Column title="操作" />
+          <Table.Column title="操作" cell={this.renderOper} />
         </Table>
       </div>
     );
@@ -45,5 +71,10 @@ const styles = {
   info: {
     flex: '1',
     fontWeight: '400',
+  },
+  button: {
+    cursor: 'pointer',
+    color: '#1890ff',
+    marginRight: '5px',
   },
 };

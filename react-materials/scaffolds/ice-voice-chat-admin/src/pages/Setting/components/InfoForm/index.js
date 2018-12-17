@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Radio } from '@icedesign/base';
+import { Input, Button, Radio, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -38,7 +38,12 @@ export default class infoForm extends Component {
 
   validateAllFormField = () => {
     this.refs.form.validateAll((errors, values) => {
-      console.log('errors', errors, 'values', values);
+      if (errors) {
+        Feedback.toast.error('请输入完整的信息');
+        return;
+      }
+      console.log({ values });
+      Feedback.toast.success('保存成功');
     });
   };
 

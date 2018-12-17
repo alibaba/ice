@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import { Dialog } from '@icedesign/base';
 import TopBar from '../../components/TopBar';
 import PublishTable from './components/PublishTable';
 import Overview from './components/Overview';
 
 export default class Projects extends Component {
-  static displayName = 'Projects';
+  handlePublish = () => {
+    Dialog.confirm({
+      title: '提示',
+      content: '没有需要发布的项目',
+    });
+  };
 
   render() {
     return (
@@ -13,6 +19,7 @@ export default class Projects extends Component {
           style={styles.topbar}
           extraBefore={<Overview />}
           buttonText="发布项目"
+          onClick={this.handlePublish}
         />
         <div style={{ height: '40px' }} />
         <PublishTable />
