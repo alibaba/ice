@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Feedback } from '@icedesign/base';
+import { Feedback } from '@icedesign/base';
 import goalIcon from './images/goal.svg';
 import linkIcon from './images/link.svg';
 import recoveryIcon from './images/recovery.svg';

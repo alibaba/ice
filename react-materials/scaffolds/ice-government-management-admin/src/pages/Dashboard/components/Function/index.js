@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Feedback } from '@icedesign/base';
+import { Feedback } from '@icedesign/base';
 
 const mock = [
   {
