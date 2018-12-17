@@ -21,7 +21,7 @@ export default class MyContract extends Component {
           size="large"
           style={styles.newContractButton}
           onClick={() => {
-            Feedback.toast.success('新建合同');
+            Feedback.toast.success('新建合同，请结合 @icedesign/form-binder 完成');
           }}
         >
           新建合同

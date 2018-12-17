@@ -28,12 +28,12 @@ export default class Header extends PureComponent {
               {headerMenuConfig.map((nav, idx) => {
                 const linkProps = {};
                 if (nav.newWindow) {
-                  linkProps.href = nav.to;
+                  linkProps.href = nav.path;
                   linkProps.target = '_blank';
                 } else if (nav.external) {
-                  linkProps.href = nav.to;
+                  linkProps.href = nav.path;
                 } else {
-                  linkProps.to = nav.to;
+                  linkProps.to = nav.path;
                 }
                 return (
                   <Menu.Item key={idx}>
