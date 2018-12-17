@@ -18,16 +18,16 @@ const routerConfig = [
     component: UserRegister,
   },
   {
-    path: '/contract',
-    component: ContractCenter,
-  },
-  {
     path: '/contract/my',
     component: MyContract,
   },
   {
     path: '/contract/search',
     component: ContractSearch,
+  },
+  {
+    path: '/contract',
+    component: ContractCenter,
   },
 ];
 
