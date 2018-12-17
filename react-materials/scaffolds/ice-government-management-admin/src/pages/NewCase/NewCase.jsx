@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import Container from '@icedesign/container';
-import SelectBar from './components/SelectBar';
-import BatchTable from './components/BatchTable';
+import Form from './components/Form';
 
-export default class Batch extends Component {
-  static displayName = 'Batch';
-
+export default class NewCase extends Component {
   render() {
     return (
       <div>
         <div style={styles.nav}>
-          <h2 style={styles.breadcrumb}>批量操作</h2>
+          <h2 style={styles.breadcrumb}>案件录入</h2>
         </div>
         <Container style={styles.container}>
-          <SelectBar />
-        </Container>
-        <Container style={styles.container}>
-          <BatchTable />
+          <Form />
         </Container>
       </div>
     );

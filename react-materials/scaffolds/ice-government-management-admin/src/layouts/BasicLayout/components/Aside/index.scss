@@ -1,0 +1,36 @@
+.ice-layout-aside {
+  .ice-aside-custom {
+    height: 100%;
+    padding-top: 10px;
+    box-shadow: 4px 1px 12px rgba(0, 55, 107, 0.04);
+    .ice-aside-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 36px;
+      font-weight: bold;
+      color: #447eff;
+    }
+    .ice-menu-item {
+      height: auto;
+      line-height: normal;
+      .ice-menu-link {
+        display: flex;
+        padding: 15px 0;
+        color: #666;
+        font-weight: 500;
+      }
+    }
+    .ice-menu-item-selected {
+      border-left: 4px solid #447eff;
+      border-radius: 0 !important;
+      background: #f3f3f3 !important;
+      .ice-menu-link {
+        &:hover {
+          color: #666 !important;
+        }
+      }
+    }
+  }
+}
