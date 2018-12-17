@@ -1,21 +1,19 @@
 import React, { PureComponent } from 'react';
 import { Balloon, Icon } from '@icedesign/base';
 import IceImg from '@icedesign/img';
-import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
-import FoundationSymbol from 'foundation-symbol';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
-import { headerMenuConfig } from '../../menuConfig';
+import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 
 export default class Header extends PureComponent {
   render() {
-    const { width, theme, isMobile, className, style } = this.props;
+    const { width, className, style } = this.props;
 
     return (
-      <Layout.Header
-        theme={theme}
+      <div
         className={cx('ice-design-layout-header', className)}
         style={{ ...style, width }}
       >
@@ -44,14 +42,14 @@ export default class Header extends PureComponent {
                         {nav.icon ? (
                           <FoundationSymbol type={nav.icon} size="small" />
                         ) : null}
-                        {!isMobile ? nav.name : null}
+                        {nav.name}
                       </Link>
                     ) : (
                       <a {...linkProps}>
                         {nav.icon ? (
                           <FoundationSymbol type={nav.icon} size="small" />
                         ) : null}
-                        {!isMobile ? nav.name : null}
+                        {nav.name}
                       </a>
                     )}
                   </Menu.Item>
@@ -103,19 +101,7 @@ export default class Header extends PureComponent {
           >
             <ul>
               <li className="user-profile-menu-item">
-                <Link to="/">
-                  <FoundationSymbol type="person" size="small" />
-                  我的主页
-                </Link>
-              </li>
-              <li className="user-profile-menu-item">
-                <Link to="/">
-                  <FoundationSymbol type="repair" size="small" />
-                  设置
-                </Link>
-              </li>
-              <li className="user-profile-menu-item">
-                <Link to="/">
+                <Link to="/user/login">
                   <FoundationSymbol type="compass" size="small" />
                   退出
                 </Link>
@@ -123,7 +109,7 @@ export default class Header extends PureComponent {
             </ul>
           </Balloon>
         </div>
-      </Layout.Header>
+      </div>
     );
   }
 }

@@ -27,7 +27,7 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: '合同中心',
-    path: '/',
+    path: '/contract',
     icon: 'home2',
   },
   {
