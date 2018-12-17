@@ -1,19 +1,23 @@
-const path = require('path');
-const _kebab = require('kebab-case');
+const kebab = require('kebab-case');
 const primaryColor = require('./primaryColor');
 const secondaryColor = require('./secondaryColor');
 
-function kebab(str) {
-  return _kebab(str).replace(/^\-/, '');
-}
+module.exports = function generateVarsByThemeConfig(themeConfig) {
+  const themeVars = Object.assign({}, themeConfig);
 
-/**
- * Get Curren Work Directory's package.json
- */
-function getPackageContent() {
-  const cwd = process.cwd();
-  return require(path.join(cwd, 'package.json'));
-}
+  // 非 sass 变量
+  delete themeVars.nextPrefix;
+  delete themeVars.theme;
+
+  const appendVariables = Object.keys(themeVars)
+    .map((key) => {
+      const value = themeVars[key];
+      return getVariableMappingString(key, value);
+    })
+    .join('\n');
+
+  return appendVariables;
+};
 
 /**
  * 获取 sass 变量字符串映射
@@ -23,7 +27,7 @@ function getPackageContent() {
  */
 function getVariableMappingString(key, value) {
   // 输入是小驼峰, scss 变量需要的是 kebab-case
-  key = kebab(key);
+  key = kebab(key).replace(/^\-/, '');
 
   switch (key) {
     case 'primary-color':
@@ -44,29 +48,3 @@ function getVariableMappingString(key, value) {
       return `$${key}: ${value};`;
   }
 }
-
-/**
- * Get scss variables string for skin
- */
-function createSkinExtraContent() {
-  try {
-    const pkg = getPackageContent();
-    const themeConfig = Object.assign({}, pkg.themeConfig);
-    delete themeConfig.theme; // theme 由 webpack 的环境变量全局注入
-    delete themeConfig.cssPrefix; // cssPrefix 由 cssPrefixPlugin 注入
-
-    const appendVariables = Object.keys(themeConfig)
-      .map((key) => {
-        const value = themeConfig[key];
-        return getVariableMappingString(key, value);
-      })
-      .join('\n');
-
-    return appendVariables;
-  } catch (err) {
-    console.log(err);
-    return '';
-  }
-}
-
-module.exports = createSkinExtraContent;

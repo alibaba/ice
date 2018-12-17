@@ -27,6 +27,7 @@ const openBrowser = require('react-dev-utils/openBrowser');
 /* eslint no-console:off */
 
 module.exports = async function(args, subprocess) {
+
   // 与 iceworks 客户端通信
   const send = function(data) {
     iceworksClient.send(data);
