@@ -117,10 +117,9 @@ app.on('ready', async () => {
   if (settings.get('forceNotAlibaba')) {
     settings.set('isAlibaba', false);
   } else {
+    // 根据用户网络环境，设置内外网状态。
     network.isAlibaba().then((isAlibaba) => {
-      if (isAlibaba) {
-        settings.set('isAlibaba', isAlibaba);
-      }
+      settings.set('isAlibaba', isAlibaba);
     });
   }
 });
