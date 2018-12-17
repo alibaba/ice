@@ -3,10 +3,108 @@ import React, { Component } from 'react';
 import { Table, Pagination, Feedback } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
-import axios from 'axios';
 import FilterForm from './Filter';
 
 const Toast = Feedback.toast;
+
+const data = [
+  {
+    id: 1,
+    title: 'ice-contract-management-admin',
+    url: 'https://github.com/alibaba/ice',
+    type: '核心应用',
+    publishTime: '17-04-28 20:29:20',
+    publishStatus: '已上线',
+    owner: '淘小宝',
+    operation: {
+      edit: false,
+    },
+  },
+  {
+    id: 2,
+    title: 'ice-reviews-management',
+    url: 'https://github.com/alibaba/ice',
+    type: '非核心应用',
+    publishTime: '17-04-28 20:29:20',
+    publishStatus: '已上线',
+    owner: '淘小宝',
+    operation: {
+      edit: true,
+    },
+  },
+  {
+    id: 3,
+    title: 'ice-design-ecommerce',
+    url: 'https://github.com/alibaba/ice',
+    type: '非核心应用',
+    publishTime: '17-04-28 20:29:20',
+    publishStatus: '已上线',
+    owner: '淘小宝',
+    operation: {
+      edit: false,
+    },
+  },
+  {
+    id: 4,
+    title: 'ice-usertrack-admin',
+    url: 'https://github.com/alibaba/ice',
+    type: '非核心应用',
+    publishTime: '17-04-28 20:29:20',
+    publishStatus: '已发布',
+    owner: '淘小宝',
+    operation: {
+      edit: true,
+    },
+  },
+  {
+    id: 5,
+    title: 'ice-scaffold-cms',
+    url: 'https://github.com/alibaba/ice',
+    type: '非核心应用',
+    publishTime: '17-04-28 20:29:20',
+    publishStatus: '已上线',
+    owner: '淘小宝',
+    operation: {
+      edit: true,
+    },
+  },
+  {
+    id: 6,
+    title: 'ice-contract-management-admin',
+    url: 'https://github.com/alibaba/ice',
+    type: '非核心应用',
+    publishTime: '17-04-28 20:29:20',
+    publishStatus: '已上线',
+    owner: '淘小宝',
+    operation: {
+      edit: true,
+    },
+  },
+  {
+    id: 7,
+    title: 'ice-yunqi-homepage',
+    url: 'https://github.com/alibaba/ice',
+    type: '非核心应用',
+    publishTime: '17-04-28 20:29:20',
+    publishStatus: '已上线',
+    owner: '淘小宝',
+    operation: {
+      edit: true,
+    },
+  },
+  {
+    id: 8,
+    title: 'coreui-admin',
+    url: 'https://github.com/alibaba/ice',
+    type: '非核心应用',
+    publishTime: '17-04-28 20:29:20',
+    publishStatus: '已上线',
+    owner: '淘小宝',
+    operation: {
+      edit: true,
+    },
+  },
+];
 
 export default class EnhanceTable extends Component {
   static displayName = 'EnhanceTable';
@@ -35,34 +133,22 @@ export default class EnhanceTable extends Component {
       __loading: true,
     });
 
-    // Make a request for a user with a given ID
-    axios.get('/mock/filter-table-list.json')
-      .then((response) => {
-        const list = response.data.data.list;
-
-        // 此处是为了模拟数据变化
-        if (query.app || query.status) {
-          this.setState({
-            list: list.slice(0, 3),
-            currentPage: 1,
-          });
-        } else {
-          this.setState({
-            list,
-            currentPage: query.page || 1,
-          });
-        }
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      })
-      .then(() => {
-        // always executed
+    setTimeout(() => {
+      // 此处是为了模拟数据变化
+      if (query.app || query.status) {
         this.setState({
+          list: data.slice(0, 3),
+          currentPage: 1,
           __loading: false,
         });
-      });
+      } else {
+        this.setState({
+          list: data,
+          currentPage: query.page || 1,
+          __loading: false,
+        });
+      }
+    }, 300);
   };
 
   renderTitle = (value, index, record) => {

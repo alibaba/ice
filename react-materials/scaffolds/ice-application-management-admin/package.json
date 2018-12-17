@@ -15,15 +15,12 @@
     "@icedesign/layout": "^0.1.2",
     "@icedesign/menu": "^0.1.1",
     "@icedesign/skin": "^0.1.0",
-    "axios": "^0.18.0",
     "bizcharts": "^3.4.1",
     "classnames": "^2.2.5",
     "foundation-symbol": "^0.1.4",
-    "highcharts": "^6.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.4.1",
-    "react-highcharts": "^16.0.2",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {

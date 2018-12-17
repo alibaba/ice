@@ -3,8 +3,117 @@ import React, { Component } from 'react';
 import { Table, Pagination, Progress } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
-import axios from 'axios';
 
+const data = [
+  {
+    id: 2135345,
+    app: 'contract-management',
+    type: 'publish',
+    env: 'pub',
+    statue: 'success',
+    progress: 90,
+    errorRate: 0,
+    publisher: '淘小宝',
+    publishTime: '17-07-03 09:17:08',
+  },
+  {
+    id: 2135346,
+    app: 'contract-management',
+    type: 'publish',
+    env: 'pre',
+    statue: 'success',
+    progress: 80,
+    errorRate: 0,
+    publisher: '淘小宝',
+    publishTime: '17-04-28 20:29:20',
+  },
+  {
+    id: 2135344,
+    app: 'contract-management',
+    type: 'publish',
+    env: 'pre',
+    statue: 'error',
+    progress: 100,
+    errorRate: 100,
+    publisher: '淘小宝',
+    publishTime: '17-05-02 12:19:20',
+  },
+  {
+    id: 2135349,
+    app: 'contract-management',
+    type: 'publish',
+    env: 'pub',
+    statue: 'success',
+    progress: 100,
+    errorRate: 0,
+    publisher: '淘小宝',
+    publishTime: '17-04-29 23:29:20',
+  },
+  {
+    id: 2134040,
+    app: 'contract-management',
+    type: 'publish',
+    env: 'pre',
+    statue: 'success',
+    progress: 100,
+    errorRate: 0,
+    publisher: '淘小宝',
+    publishTime: '17-04-28 20:29:20',
+  }, {
+    id: 2133343,
+    app: 'contract-management',
+    type: 'publish',
+    env: 'pub',
+    statue: 'success',
+    progress: 100,
+    errorRate: 0,
+    publisher: '淘小宝',
+    publishTime: '16-04-28 20:29:20',
+  },
+  {
+    id: 2125344,
+    app: 'contract-management',
+    type: 'publish',
+    env: 'pre',
+    statue: 'error',
+    progress: 0,
+    errorRate: 100,
+    publisher: '淘小宝',
+    publishTime: '17-05-02 12:19:20',
+  },
+  {
+    id: 2138349,
+    app: 'contract-management',
+    type: 'publish',
+    env: 'pub',
+    statue: 'success',
+    progress: 100,
+    errorRate: 0,
+    publisher: '淘小宝',
+    publishTime: '17-04-29 23:29:20',
+  },
+  {
+    id: 2195340,
+    app: 'contract-management',
+    type: 'publish',
+    env: 'pre',
+    statue: 'success',
+    progress: 100,
+    errorRate: 0,
+    publisher: '淘小宝',
+    publishTime: '17-04-28 20:29:20',
+  }, {
+    id: 2145343,
+    app: 'contract-management',
+    type: 'publish',
+    env: 'pub',
+    statue: 'success',
+    progress: 100,
+    errorRate: 0,
+    publisher: '淘小宝',
+    publishTime: '16-04-28 20:29:20',
+  },
+];
 export default class PublishList extends Component {
   static displayName = 'PublishList';
 
@@ -31,25 +140,13 @@ export default class PublishList extends Component {
       __loading: true,
     });
 
-    // Make a request for a user with a given ID
-    axios.get('/mock/history-table.json')
-      .then((response) => {
-        const list = response.data.data.list;
-        this.setState({
-          list,
-          currentPage: query.page || 1,
-        });
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      })
-      .then(() => {
-        // always executed
-        this.setState({
-          __loading: false,
-        });
+    setTimeout(() => {
+      this.setState({
+        list: data,
+        currentPage: query.page || 1,
+        __loading: false,
       });
+    }, 300);
   };
 
   renderTitle = (value, index, record) => {
