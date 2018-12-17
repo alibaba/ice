@@ -14,7 +14,6 @@
     "@icedesign/menu": "^0.1.0",
     "@icedesign/skin": "^0.1.0",
     "classnames": "^2.2.5",
-    "enquire-js": "^0.1.2",
     "lodash.clonedeep": "^4.5.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",

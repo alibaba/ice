@@ -6,7 +6,6 @@ import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { headerMenuConfig } from '../../../../menuConfig';
-import Logo from '../Logo';
 
 export default class Header extends PureComponent {
   render() {
@@ -17,7 +16,7 @@ export default class Header extends PureComponent {
         className={cx('ice-design-layout-header', className)}
         style={{ ...style, width }}
       >
-        <Logo />
+        <h1 style={{ color: 'white', margin: 0 }}>合同管理系统</h1>
         <div
           className="ice-design-layout-header-menu"
           style={{ display: 'flex' }}
