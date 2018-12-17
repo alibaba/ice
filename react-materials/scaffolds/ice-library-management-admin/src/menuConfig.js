@@ -28,17 +28,17 @@ const asideMenuConfig = [
   },
   {
     name: '图书借阅',
-    path: '/library-borrow',
+    path: '/borrow',
     icon: 'cascades',
   },
   {
     name: '图书推荐',
-    path: '/library-recommend',
+    path: '/recommend',
     icon: 'person',
   },
   {
     name: '图书捐赠',
-    path: '/library-donation',
+    path: '/donation',
     icon: 'directory',
   },
 ];
