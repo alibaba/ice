@@ -117,9 +117,6 @@
       .ice-menu .ice-menu-item:hover,
       .ice-menu.ice-menu-horizontal > .ice-menu-item:hover,
       .ice-menu.ice-menu-root > .ice-menu-item:hover {
-        color: #fff;
-        border-radius: 0;
-        border-right: 3px solid $ice-aside-menu-item-selected-border-color;
         background: $ice-aside-menu-item-selected-bg;
       }
 
