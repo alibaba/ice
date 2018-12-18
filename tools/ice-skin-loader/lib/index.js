@@ -14,7 +14,7 @@ module.exports = function (source) {
 
   let prefixVars = '';
   if (themeConfig.nextPrefix && /@alifd\/next\/lib\/(.+).scss$/.test(modulePath)) {
-    // 将 next 1.x 的 prefix 改为 "nextfd-" 前缀
+    // 将 next 1.x 的 prefix 从 next- 改为自定义前缀，解决 0.x&1.x 混用的问题
     prefixVars = `$css-prefix: "${themeConfig.nextPrefix}";`;
   }
 
@@ -37,7 +37,7 @@ module.exports = function (source) {
     themeConfigVars = '  ';
   }
 
-  // 权重 themeConfigVars > themeFileVars > source
+  // 权重 prefixVars > themeConfigVars > themeFileVars > source
   return `${themeFileVars}\n${themeConfigVars}\n${prefixVars}\n${source}`;
 };
 
