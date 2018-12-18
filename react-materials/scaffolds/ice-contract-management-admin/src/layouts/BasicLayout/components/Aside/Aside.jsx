@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { Icon } from '@icedesign/base';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
 import { asideMenuConfig } from '../../../../menuConfig';
-import Logo from '../Logo';
 
 @withRouter
 export default class Aside extends PureComponent {
