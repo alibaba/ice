@@ -45,6 +45,7 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-ecommerce",
     "title": "电商管理系统",
     "categories": [

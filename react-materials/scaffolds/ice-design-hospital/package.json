@@ -24,6 +24,7 @@
     "primaryColor": "#00b7eb"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-design-hospital",
     "title": "医院管理系统",
     "categories": [

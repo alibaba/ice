@@ -49,6 +49,7 @@
     "primaryColor": "#0079f2"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-task-management-admin",
     "title": "任务管理系统",
     "categories": [

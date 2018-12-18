@@ -1,0 +1,27 @@
+.user-wrapper {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .user-avater {
+    width: 32px;
+    height: 32px;
+    border-radius: 100px;
+    background-color: #fafafa;
+    img {
+      width: 32px;
+      height: 32px;
+      display: block;
+      border-radius: 100px;
+    }
+  }
+  .user-name {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 11px;
+    line-height: 26px;
+  }
+}

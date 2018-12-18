@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Iceworks</title>
+  <script>
+    window.dom_start = Date.now();
+  </script>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #iceworks-loading {
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      background-color: #f3f3f3;
+    }
+
+    .iceworks-skeleton-aside {
+      flex: 0 0 68px;
+      width: 68px;
+      height: 100vh;
+      background-color: #3080FE;
+    }
+
+    .iceworks-skeleton-main {
+      flex: auto;
+      display: block;
+    }
+
+    .iceworks-skeleton-header {
+      height: 110px;
+      background-color: #ffffff;
+    }
+
+    .iceworks-skeleton-extensions {
+      padding: 10px 0 10px 10px;
+      display: block;
+      min-height: 100%;
+      max-height: 100%;
+      white-space: nowrap;
+      overflow-y: hidden;
+    }
+
+    .iceworks-skeleton-extensions:after {
+      visibility: hidden;
+      display: block;
+      font-size: 0;
+      content: ' ';
+      clear: both;
+      height: 0;
+    }
+
+    .iceworks-skeleton-extension {
+      float: left;
+      width: calc(50% - 10px);
+      border-radius: 5px;
+      box-sizing: border-box;
+      padding: 10px;
+      position: relative;
+    }
+
+    .iceworks-skeleton-extension-panel {
+      height: 280px;
+      border-radius: 6px;
+      background-color: #ffffff;
+    }
+  </style>
+  <script>
+    document.onreadystatechange = () => {
+      console.log(document.readyState, Date.now() - window.dom_start)
+    }
+  </script>
+  <link href="xterm/xterm.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="iceworks-loading">
+    <div class="iceworks-skeleton-aside"></div>
+    <div class="iceworks-skeleton-main"></div>
+  </div>
+  <script src="<%= htmlWebpackPlugin.options.NODE_ENV == 'production' ? 'react.production.min.js' : 'react.development.js'%>"></script>
+  <script src="<%= htmlWebpackPlugin.options.NODE_ENV == 'production' ? 'react-dom.production.min.js' : 'react-dom.development.js'%>"></script>
+  <script src="polyfill.min.js"></script>
+  <script src="mobx.umd.min.js"></script>
+  <script src="xterm/xterm.js"></script>
+</body>
+
+</html>

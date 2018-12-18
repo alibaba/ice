@@ -1,0 +1,57 @@
+body {
+  padding: 0;
+  margin: 0;
+  user-select: none;
+  -webkit-app-region: drag;
+  app-region: drag;
+  font-family: Roboto, 'Helvetica Neue', Helvetica, Tahoma, Arial,
+    FZLanTingHeiS-L-G, 'PingFang SC', 'Microsoft YaHei';
+}
+
+.updater-content {
+  padding: 10px 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+}
+
+.event-wrapper {
+  width: 100%;
+  font-size: 12px;
+  padding: 12px 0;
+}
+.btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  .next-btn + .next-btn {
+    margin-left: 10px;
+  }
+}
+
+.changelog {
+  width: 100%;
+  text-align: left;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 8px;
+  border-top: 1px solid #ddd;
+  background-color: #fafafa;
+  strong {
+    font-size: 12px;
+    padding-bottom: 4px;
+    display: block;
+  }
+  ul {
+    list-style-type: square;
+  }
+  li {
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 1px 0;
+    color: #666;
+    margin-left: 18px;
+  }
+}

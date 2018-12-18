@@ -1,0 +1,5 @@
+{
+  "log": [
+    "修复：启动时设置读取错误造成闪退的问题 <a href='https://github.com/alibaba/ice/issues/464' target='_blank'>Close 464</a>"
+  ]
+}

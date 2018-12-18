@@ -4,8 +4,6 @@ category: Iceworks
 order: 1
 ---
 
-# 插件-阿里云 OSS
-
 阿里云 OSS 插件可以一键将构建结果上传到您的 OSS bucket 中。
 
 首先看下基础界面:

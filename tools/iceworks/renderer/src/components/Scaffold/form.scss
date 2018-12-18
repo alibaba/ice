@@ -1,0 +1,18 @@
+.project-config-form {
+  .project-config-form-item {
+    margin-bottom: 10px;
+    .next-input {
+      width: 100%;
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+      cursor: pointer;
+      input {
+        cursor: pointer;
+      }
+    }
+    h3 {
+      font-size: 14px;
+      color: #333333;
+    }
+  }
+}

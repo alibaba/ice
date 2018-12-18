@@ -44,9 +44,10 @@
     "localization": false
   },
   "themeConfig": {
-    "primaryColor": "#40b370"
+    "primaryColor": "#447eff"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-library-management-admin",
     "title": "图书馆管理系统",
     "categories": [

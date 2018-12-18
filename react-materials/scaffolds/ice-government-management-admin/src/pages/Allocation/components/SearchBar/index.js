@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Input, Select, Button } from '@icedesign/base';
+import { Input, Select, Button, Feedback } from '@icedesign/base';
 
 const { Option } = Select;
 
 export default class SearchBar extends Component {
-  static displayName = 'SearchBar';
+  handleClick = () => {
+    Feedback.toast.success('未搜索到符合添加的数据');
+  };
 
   render() {
     return (
@@ -35,11 +37,13 @@ export default class SearchBar extends Component {
           号
         </span>
         <span>
-          <Button size="large" style={styles.button}>
+          <Button
+            size="large"
+            type="primary"
+            style={styles.button}
+            onClick={this.handleClick}
+          >
             查询
-          </Button>
-          <Button size="large" style={styles.button}>
-            重置
           </Button>
         </span>
       </div>
@@ -67,7 +71,6 @@ const styles = {
   },
   button: {
     margin: '0 8px',
-    padding: '0 16px',
     letterSpacing: '2px',
   },
 };

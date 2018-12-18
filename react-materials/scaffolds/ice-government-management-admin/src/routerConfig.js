@@ -2,50 +2,52 @@
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
-import BasicLayout from './layouts/BasicLayout';
-import Analysis from './pages/Analysis';
-import NotFound from './pages/NotFound';
+import UserLogin from './pages/UserLogin';
+import UserRegister from './pages/UserRegister';
+import Dashboard from './pages/Dashboard';
 import Dismantling from './pages/Dismantling';
 import Allocation from './pages/Allocation';
 import Selfhelp from './pages/Selfhelp';
 import List from './pages/List';
 import Batch from './pages/Batch';
+import NewCase from './pages/NewCase';
 
 const routerConfig = [
   {
-    path: '/',
-    layout: BasicLayout,
-    component: Analysis,
+    path: '/user/login',
+    component: UserLogin,
+  },
+  {
+    path: '/user/register',
+    component: UserRegister,
+  },
+  {
+    path: '/dashboard',
+    component: Dashboard,
   },
   {
     path: '/dismantling',
-    layout: BasicLayout,
     component: Dismantling,
   },
   {
     path: '/allocation',
-    layout: BasicLayout,
     component: Allocation,
   },
   {
     path: '/selfHelp',
-    layout: BasicLayout,
     component: Selfhelp,
   },
   {
     path: '/list',
-    layout: BasicLayout,
     component: List,
   },
   {
     path: '/batch',
-    layout: BasicLayout,
     component: Batch,
   },
   {
-    path: '*',
-    layout: BasicLayout,
-    component: NotFound,
+    path: '/new',
+    component: NewCase,
   },
 ];
 

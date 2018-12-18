@@ -47,10 +47,11 @@
     "primaryColor": "#09f"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-universal-homepage",
     "title": "ICE Universal HomePage",
     "categories": [
-      "首页展示"
+      "官网模板"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1npsvdSzqK1RjSZFpXXakSXXa-2860-1580.png"
   },

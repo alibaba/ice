@@ -4,11 +4,6 @@
 
 const headerMenuConfig = [
   {
-    name: '首页',
-    path: '/',
-    icon: 'home',
-  },
-  {
     name: '反馈',
     path: 'https://github.com/alibaba/ice',
     external: true,
@@ -26,27 +21,39 @@ const headerMenuConfig = [
 
 const asideMenuConfig = [
   {
-    name: '首页',
-    path: '/',
-    icon: 'home',
-  },
-  {
-    name: '用户管理',
-    path: '/user',
-    icon: 'yonghu',
-  },
-  {
-    name: '系统设置',
-    path: '/setting',
-    icon: 'shezhi',
+    name: 'Dashboard',
+    path: '/dashboard',
+    icon: 'home2',
     children: [
       {
-        name: '基本设置',
-        path: '/base',
+        name: '监控页',
+        path: '/dashboard/monitor',
+      },
+    ],
+  },
+  {
+    name: '图表页',
+    path: '/chart',
+    icon: 'chart1',
+    children: [
+      {
+        name: '常用图表',
+        path: '/chart/list',
+      },
+    ],
+  },
+  {
+    name: '表格页',
+    path: '/table',
+    icon: 'table',
+    children: [
+      {
+        name: '基础表格',
+        path: '/table/basic',
       },
       {
-        name: '评论设置',
-        path: '/comment',
+        name: '通用表格',
+        path: '/table/general',
       },
     ],
   },

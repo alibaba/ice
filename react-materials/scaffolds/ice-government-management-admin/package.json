@@ -46,9 +46,10 @@
     "localization": false
   },
   "themeConfig": {
-    "primaryColor": "#385af5"
+    "primaryColor": "#447eff"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-government-management-admin",
     "title": "政府管理系统",
     "categories": [

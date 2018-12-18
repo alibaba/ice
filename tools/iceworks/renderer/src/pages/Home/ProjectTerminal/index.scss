@@ -1,0 +1,48 @@
+.project-terminal-wrapper {
+  box-sizing: border-box;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.85);
+  right: 0;
+  left: 68px;
+  top: 110px;
+  bottom: 0;
+  padding: 10px;
+  .buttons {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 10;
+  }
+}
+.project-terminal {
+  box-sizing: border-box;
+  color: #e5e5c2;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  font-size: 12px;
+  line-height: 20px;
+  margin: 0;
+  max-height: 100%;
+  min-height: 100%;
+  overflow: auto;
+  user-select: text;
+  white-space: pre-wrap;
+  width: 100%;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+body.platform-win32 {
+  .project-terminal::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    &:active {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+    &:hover,
+    &:active {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+}

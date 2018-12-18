@@ -39,10 +39,11 @@
     "localization": true
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-open-platform-landingpage",
     "title": "开放平台官网",
     "categories": [
-      "首页展示"
+      "官网模板"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1F3SAuGmWBuNjy1XaXXXCbXXa-2840-1596.png"
   },

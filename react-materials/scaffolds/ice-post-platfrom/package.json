@@ -48,6 +48,7 @@
     "theme": "light"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-post-platfrom",
     "title": "创作平台",
     "categories": [

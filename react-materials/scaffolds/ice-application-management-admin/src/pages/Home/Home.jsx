@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import Overview from './components/Overview';
-import CustomTab from './components/CustomTab';
-import BaseInfo from './components/BaseInfo';
+import { Grid } from '@icedesign/base';
+import './Home.scss';
 
+import ServiceCard from './components/ServiceCard';
+import PublishTime from './components/PublishTime';
+import PublishCount from './components/PublishCount';
+import AccuracyRate from './components/AccuracyRate';
+import PublishList from './components/PublishList';
+
+const { Row, Col } = Grid;
 export default class Home extends Component {
   static displayName = 'Home';
 
@@ -13,10 +19,20 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div>
-        <Overview />
-        <CustomTab />
-        <BaseInfo />
+      <div className="home">
+        <ServiceCard />
+        <Row wrap gutter="20">
+          <Col l="8">
+            <PublishTime />
+          </Col>
+          <Col l="8">
+            <PublishCount />
+          </Col>
+          <Col l="8">
+            <AccuracyRate />
+          </Col>
+        </Row>
+        <PublishList />
       </div>
     );
   }

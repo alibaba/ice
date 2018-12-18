@@ -50,10 +50,11 @@
     "primaryColor": "#f0824c"
   },
   "scaffoldConfig": {
+    "builder": "ice-scripts",
     "name": "ice-builder-platform",
-    "title": "ICE Builder Platform",
+    "title": "云构建平台",
     "categories": [
-      "云构建平台"
+      "行业领域"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1PS.xJYSYBuNjSspfXXcZCpXa-2840-1596.png"
   }
