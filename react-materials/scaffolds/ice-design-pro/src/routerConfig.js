@@ -9,6 +9,7 @@ import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
 import Dashboard from './pages/Dashboard';
 import Charts from './pages/Charts';
+import BaiscCharts from './pages/BaiscCharts';
 import Portlets from './pages/Portlets';
 import Terms from './pages/Terms';
 import Result from './pages/Result';
@@ -26,16 +27,20 @@ import Forbidden from './pages/Forbidden';
 
 const routerConfig = [
   {
+    path: '/portlets/base',
+    component: Portlets,
+  },
+  {
     path: '/dashboard/monitor',
     component: Dashboard,
   },
   {
-    path: '/table/general',
-    component: GeneralTable,
+    path: '/chart/general',
+    component: Charts,
   },
   {
-    path: '/chart/list',
-    component: Charts,
+    path: '/chart/basic',
+    component: BaiscCharts,
   },
   {
     path: '/list/basic',
@@ -62,8 +67,8 @@ const routerConfig = [
     component: Terms,
   },
   {
-    path: '/portlets/base',
-    component: Portlets,
+    path: '/table/general',
+    component: GeneralTable,
   },
   {
     path: '/account/profile',

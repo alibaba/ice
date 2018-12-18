@@ -3,17 +3,6 @@ import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import { DataSet } from '@antv/data-set';
 
 export default class AreaChart extends Component {
-  static displayName = 'AreaChart';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     const data = [
       { year: '2012', ACME: 0, Compitor: 0 },
@@ -55,7 +44,6 @@ export default class AreaChart extends Component {
         <Tooltip crosshairs />
         <Axis />
         <Legend />
-        <Geom type="area" position="year*value" color="type" shape="smooth" />
         <Geom
           type="line"
           position="year*value"

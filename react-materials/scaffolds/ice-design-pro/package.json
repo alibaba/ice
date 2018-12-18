@@ -18,6 +18,7 @@
     "@icedesign/styled-menu": "^0.1.1",
     "axios": "^0.17.1",
     "bizcharts": "^3.2.2",
+    "bizgoblin": "0.0.1",
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
     "foundation-symbol": "^0.1.0",
@@ -26,15 +27,15 @@
     "invariant": "^2.2.4",
     "lodash": "^4.17.10",
     "path-to-regexp": "^2.2.1",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "react-document-title": "^2.0.3",
+    "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "5.0.0-alpha.6",
     "redux": "3.6.0",
-    "redux-thunk": "^2.3.0",
-    "react": "^16.2.0",
-    "react-document-title": "^2.0.3",
-    "react-dom": "^16.4.1",
-    "prop-types": "^15.5.8"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",

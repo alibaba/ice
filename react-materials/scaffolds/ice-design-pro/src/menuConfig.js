@@ -37,8 +37,12 @@ const asideMenuConfig = [
     icon: 'chart1',
     children: [
       {
-        name: '常用图表',
-        path: '/chart/list',
+        name: '基础图表',
+        path: '/chart/basic',
+      },
+      {
+        name: '通用图表',
+        path: '/chart/general',
       },
     ],
   },

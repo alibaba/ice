@@ -6,14 +6,19 @@ import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
 import FoundationSymbol from 'foundation-symbol';
 import cx from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 
 import './scss/dark.scss';
 import './scss/light.scss';
 
+@withRouter
 export default class Header extends PureComponent {
+  handleSetting = () => {
+    this.props.history.push('/account/setting');
+  };
+
   render() {
     const { theme, profile, isMobile, className, style } = this.props;
 
@@ -94,7 +99,10 @@ export default class Header extends PureComponent {
             className="user-profile-menu"
           >
             <ul>
-              <li className="user-profile-menu-item">
+              <li
+                className="user-profile-menu-item"
+                onClick={this.handleSetting}
+              >
                 <FoundationSymbol type="repair" size="small" />
                 个人设置
               </li>
