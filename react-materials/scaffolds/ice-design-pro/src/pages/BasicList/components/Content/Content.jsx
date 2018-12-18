@@ -24,7 +24,7 @@ export default class Content extends Component {
     const { data, isLoading } = this.props;
     return (
       <IceContainer style={styles.container}>
-        <h4 style={styles.cardTitle}>试卷列表</h4>
+        <h4 style={styles.cardTitle}>商品列表</h4>
         <Loading
           visible={isLoading}
           style={{ width: '100%' }}
@@ -40,7 +40,7 @@ export default class Content extends Component {
                     <Col l="16">
                       <div style={styles.metaWrap}>
                         <div style={styles.meta}>
-                          <span>阅卷方式: </span>
+                          <span>审查方式: </span>
                           <span>人工</span>
                         </div>
                         <div style={styles.meta}>
@@ -60,7 +60,7 @@ export default class Content extends Component {
                           <span>{item.subject}</span>
                         </div>
                         <div style={styles.meta}>
-                          <span>题目: </span>
+                          <span>分数: </span>
                           <span>{item.count}</span>
                         </div>
                       </div>

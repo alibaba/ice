@@ -7,11 +7,11 @@ import './BasicList.scss';
 const mockData = () => {
   return Array.from({ length: 10 }).map((item, index) => {
     return {
-      title: `${index + 1}. 这里是试卷名称这里是试卷名称这里是试卷名称`,
+      title: `${index + 1}. 这里是商品标题这里是商品标题`,
       time: `2018-06-1${index}`,
       citation: index + 1,
       score: index + 90,
-      subject: '自然语言',
+      subject: '千人千面',
       count: 20,
     };
   });

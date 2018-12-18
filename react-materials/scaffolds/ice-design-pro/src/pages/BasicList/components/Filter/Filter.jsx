@@ -3,22 +3,13 @@ import IceContainer from '@icedesign/container';
 
 const mockData = [
   {
-    label: '专业',
-    values: [
-      '全部',
-      '软件',
-      '土木',
-      '外语',
-      '机械',
-      '经济学',
-      '管理学',
-      '市场营销',
-    ],
+    label: '分类',
+    values: ['全部', '家电', '数码', '配件', '运动', '户外', '影视', '汽车'],
     selected: '全部',
   },
   {
-    label: '科目',
-    values: ['全部', '英语', '数学', '材料力学', '机械原理'],
+    label: '风格',
+    values: ['全部', '青春活力', '小清新', '美式休闲', '中国风'],
     selected: '全部',
   },
 ];

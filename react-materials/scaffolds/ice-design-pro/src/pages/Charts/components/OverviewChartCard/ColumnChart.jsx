@@ -47,7 +47,7 @@ export default class ColumnChart extends Component {
         <Geom
           type={this.props.type || 'interval'}
           position="month*visits"
-          color={color || '#3fa1ff'}
+          color={color || '#2077ff'}
           shape="smooth"
         />
         <Tooltip crosshairs={{ type: 'y' }} />

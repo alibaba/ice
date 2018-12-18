@@ -8,8 +8,8 @@ const { Row, Col } = Grid;
 const getData = () => {
   return Array.from({ length: 10 }).map(() => {
     return {
-      name: '服务名称',
-      desc: '这里是一段相关的服务简介，介绍产品的功能、特点',
+      name: '商品名称',
+      desc: '这里是一段相关商品的简介，介绍产品的功能、特点',
       tag: '精选',
     };
   });
@@ -46,18 +46,18 @@ export default class ServiceCard extends Component {
                 </div>
                 <div style={styles.footer}>
                   <a
-                    onClick={() => this.handleClick('暂无文档')}
+                    onClick={() => this.handleClick('无权限查看库存')}
                     style={{ ...styles.link, ...styles.line }}
                   >
                     <Icon type="office" size="small" style={styles.icon} />{' '}
-                    文档帮助
+                    查看库存
                   </a>
                   <a
-                    onClick={() => this.handleClick('暂无权限')}
+                    onClick={() => this.handleClick('无权限查看商品')}
                     style={styles.link}
                   >
                     <Icon type="box" size="small" style={styles.icon} />
-                    权限申请
+                    查看商品
                   </a>
                 </div>
               </IceContainer>

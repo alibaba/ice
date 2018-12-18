@@ -11,25 +11,18 @@ const mockData = [
     summary: '新零售',
   },
   {
-    chartData: [{ type: '分类一', value: 60 }, { type: '分类二', value: 48 }],
+    chartData: [{ type: '分类一', value: 50 }, { type: '分类二', value: 50 }],
     title: '销售占比',
     summary: '实体店',
   },
   {
-    chartData: [{ type: '分类一', value: 90 }, { type: '分类二', value: 10 }],
+    chartData: [{ type: '分类一', value: 80 }, { type: '分类二', value: 20 }],
     title: '销售占比',
     summary: '淘宝店',
   },
 ];
 
 export default class OverviewPieChart extends Component {
-  static displayName = 'OverviewPieChart';
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <IceContainer title="概览数据">
@@ -66,12 +59,12 @@ const styles = {
     textAlign: 'center',
   },
   summary: {
-    margin: 0,
+    margin: '0 0 5px',
     color: '#999',
   },
   title: {
     margin: 0,
     fontWeigth: 400,
-    color: '#666',
+    color: '#333',
   },
 };

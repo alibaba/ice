@@ -62,6 +62,9 @@
     "entry": "src/index.js",
     "localization": false
   },
+  "themeConfig": {
+    "primaryColor": "#2077ff"
+  },
   "scaffoldConfig": {
     "name": "ice-design-pro",
     "title": "ICE Design Pro",
