@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Tab, Button } from '@icedesign/base';
+import { withRouter } from 'react-router-dom';
 
 function random(min, max) {
   return parseInt(Math.random() * (max - min + 1) + min, 10);
@@ -27,7 +28,12 @@ function mockCentent() {
   });
 }
 
+@withRouter
 export default class PostCategory extends Component {
+  handleNewPost = () => {
+    this.props.history.push('/post/new');
+  };
+
   render() {
     const tabs = [
       {
@@ -138,7 +144,12 @@ export default class PostCategory extends Component {
                               </div>
                             );
                           })}
-                          <Button style={styles.blockBtn}>立即创作</Button>
+                          <Button
+                            style={styles.blockBtn}
+                            onClick={this.handleNewPost}
+                          >
+                            立即创作
+                          </Button>
                         </div>
                       </div>
                     );

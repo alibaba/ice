@@ -8,16 +8,21 @@ import {
   DatePicker,
   Radio,
   Feedback,
+  Upload,
+  Dialog,
 } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
+import { withRouter } from 'react-router-dom';
 
 const { Option } = Select;
 const { Group: RadioGroup } = Radio;
+const { CropUpload } = Upload;
 
+@withRouter
 export default class NewPostForm extends Component {
   static displayName = 'NewPostForm';
 
@@ -48,6 +53,7 @@ export default class NewPostForm extends Component {
       }
       console.log({ values });
       Feedback.toast.success('提交成功');
+      this.props.history.push('/post/list');
     });
   };
 
@@ -131,6 +137,27 @@ export default class NewPostForm extends Component {
               <div style={styles.formError}>
                 <IceFormError name="author" />
               </div>
+            </div>
+            <div style={styles.formItem}>
+              <div style={styles.formLabel}>封面图</div>
+              <IceFormBinder name="cover">
+                <CropUpload
+                  action="//www.easy-mock.com/mock/5b960dce7db69152d06475bc/ice/upload" // 该接口仅作测试使用，业务请勿使用
+                  preview
+                  previewList={[80, 60, 40]}
+                  minCropBoxSize={100}
+                >
+                  <div style={{ marginTop: '20px' }}>
+                    <img
+                      ref="targetViewer"
+                      alt=""
+                      src="https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg"
+                      width="120px"
+                      height="120px"
+                    />
+                  </div>
+                </CropUpload>
+              </IceFormBinder>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>发布时间</div>

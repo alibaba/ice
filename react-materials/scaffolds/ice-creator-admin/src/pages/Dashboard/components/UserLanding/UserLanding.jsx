@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import Container from '@icedesign/container';
 import { Grid, Button } from '@icedesign/base';
+import { withRouter } from 'react-router-dom';
 import Img from '@icedesign/img';
 
 const { Row, Col } = Grid;
-
+@withRouter
 class UserLanding extends Component {
   state = {
     userLevel: ['L0', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6'],
     userCurrentLevel: 'L5',
+  };
+
+  handlePost = () => {
+    this.props.history.push('/post/new');
   };
 
   render() {
@@ -93,6 +98,7 @@ class UserLanding extends Component {
             </div>
             <div style={{ paddingTop: 10, textAlign: 'center' }}>
               <Button
+                onClick={this.handlePost}
                 type="primary"
                 style={{
                   width: '100%',
