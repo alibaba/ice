@@ -6,7 +6,7 @@
 
 import { push } from 'react-router-redux';
 import { Feedback } from '@icedesign/base';
-import { postUserLogout } from '../../api';
+import { postUserLogout } from '../../api/user';
 import { setAuthority } from '../../utils/authority';
 import { reloadAuthorized } from '../../utils/Authorized';
 import {

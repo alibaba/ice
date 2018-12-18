@@ -1,5 +1,3 @@
-const tabTable = require('./tabTable');
-
 module.exports = {
   'GET /api/profile': {
     name: '淘小宝',
@@ -46,6 +44,4 @@ module.exports = {
       currentAuthority: 'guest',
     });
   },
-
-  'GET /api/tab-table': tabTable,
 };

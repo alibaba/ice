@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Tab } from '@icedesign/base';
-import axios from 'axios';
 import CustomTable from './components/CustomTable';
 import EditDialog from './components/EditDialog';
 import DeleteBalloon from './components/DeleteBalloon';
+import data from './data';
 
 const TabPane = Tab.TabPane;
 
@@ -25,7 +25,7 @@ export default class TabTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: {},
+      dataSource: data,
       tabKey: 'all',
     };
     this.columns = [
@@ -68,19 +68,6 @@ export default class TabTable extends Component {
         },
       },
     ];
-  }
-
-  componentDidMount() {
-    axios
-      .get('/api/tab-table')
-      .then((response) => {
-        this.setState({
-          dataSource: response.data.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   getFormValues = (dataIndex, values) => {

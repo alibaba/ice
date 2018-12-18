@@ -9,7 +9,7 @@
     "@icedesign/container": "^0.1.2",
     "@icedesign/data-binder": "^0.1.1",
     "@icedesign/ellipsis": "^0.1.1",
-    "@icedesign/form-binder": "^0.1.4",
+    "@icedesign/form-binder": "^1.0.3",
     "@icedesign/img": "^0.1.1",
     "@icedesign/label": "^0.1.1",
     "@icedesign/layout": "^0.1.1",

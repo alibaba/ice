@@ -17,7 +17,7 @@
 
 import { push } from 'react-router-redux';
 import { Feedback } from '@icedesign/base';
-import { login } from '../../api';
+import { login } from '../../api/user';
 import { setAuthority } from '../../utils/authority';
 import { reloadAuthorized } from '../../utils/Authorized';
 import {

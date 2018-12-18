@@ -121,6 +121,7 @@ const styles = {
   basicDetailTitle: {
     margin: '10px 0',
     fontSize: '16px',
+    color: '#333',
   },
   infoColumn: {
     marginLeft: '16px',

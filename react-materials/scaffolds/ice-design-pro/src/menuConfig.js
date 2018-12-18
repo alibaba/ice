@@ -105,6 +105,17 @@ const asideMenuConfig = [
     ],
   },
   {
+    name: '个人页',
+    path: '/account',
+    icon: 'yonghu',
+    children: [
+      {
+        name: '个人设置',
+        path: '/account/setting',
+      },
+    ],
+  },
+  {
     name: '异常页',
     path: '/exception',
     icon: 'gaojingxinxi',
