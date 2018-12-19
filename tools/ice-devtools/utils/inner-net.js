@@ -24,7 +24,23 @@ function isTnpm(npmname) {
   debug('isTnpm %j', {is, npmname});
   return is;
 }
+
+function getRegistry(npmname) {
+  if (isTnpm(npmname)) {
+    return 'http://registry.npm.alibaba-inc.com';
+  }
+  return 'http://registry.npm.com';
+}
+
+function getNpmScope(npmname) {
+  const scopeMatch = /(@ali?\w+)\/(\w+)/g.exec(npmname);
+  const scope = scopeMatch? scopeMatch[1] : null;
+  return scope;
+}
+
 module.exports = {
   isInnerNet,
   isTnpm,
+  getNpmScope,
+  getRegistry
 };

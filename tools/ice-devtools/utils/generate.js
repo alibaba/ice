@@ -14,6 +14,7 @@ const filter = require('./filter');
 const transform = require('./transform');
 const logger = require('./logger');
 const debug = require('debug')('ice:generate');
+const innerNet = require('../utils/inner-net');
 
 // register handlebars helper
 Handlebars.registerHelper('if_eq', (a, b, opts) => {
@@ -43,6 +44,7 @@ module.exports = function generate(name, src, dest, done) {
     className: uppercamelcase(name.replace(/^@\w+\//, '')),
     inPlace: dest === process.cwd(),
     noEscape: true,
+    registry: innerNet.getRegistry(name)
   });
   debug('%j', data);
   opts.helpers &&
