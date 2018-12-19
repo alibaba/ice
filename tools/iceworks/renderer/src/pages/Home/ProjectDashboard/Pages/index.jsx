@@ -14,6 +14,10 @@ import DashboardCard from '../../../../components/DashboardCard/';
 import ExtraButton from '../../../../components/ExtraButton/';
 import Icon from '../../../../components/Icon';
 import EmptyTips from '../../../../components/EmptyTips';
+import dialog from '../../../../components/dialog';
+
+import services from '../../../../services';
+const { log, interaction, scaffolder } = services;
 
 import './index.scss';
 
@@ -92,9 +96,27 @@ class PagesCard extends Component {
     this.props.newpage.toggle();
   };
 
-  handleDeletePage = (fullPath, name) => {
-    // todo 删除 page
-    console.log(fullPath, name);
+  handlePageDelete = (name) => {
+    const { projects, newpage } = this.props;
+    const { currentProject } = projects;
+
+    scaffolder.removePage({
+      destDir: currentProject.root,
+      isNodeProject: currentProject.isNodeProject,
+      pageFolderName: name
+    })
+    .then(() => {
+      log.debug('删除页面成功');
+      interaction.notify({
+        title: '删除页面完成',
+        body: `${name}`
+      });
+      this.serachPages();
+    })
+    .catch((error) => {
+      log.debug('删除页面失败', error);
+      dialog.notice({ title: '删除页面失败', error: error });
+    });
   };
 
   handlePageAddBlock(fullPath, name) {
@@ -148,6 +170,17 @@ class PagesCard extends Component {
               )}
             >
               <Icon type="block-add" />
+            </ExtraButton>
+            <ExtraButton
+              style={{ color: '#3080FE' }}
+              placement={'top'}
+              tipText="删除页面"
+              onClick={this.handlePageDelete.bind(
+                this,
+                page.name
+              )}
+            >
+              <Icon type="trash" />
             </ExtraButton>
           </div>
         </div>
