@@ -3,21 +3,27 @@ import TopBar from '../../components/TopBar';
 import GeneralDialog from '../../components/GeneralDialog';
 import EntitlesTable from './components/EntitlesTable';
 
+// MOCK 数据，实际业务按需进行替换
+const getData = () => {
+  return Array.from({ length: 10 }).map((item, index) => {
+    return {
+      id: index + 1,
+      name: 'weather',
+      desc: '一些描述',
+      preview: '--',
+      skill: '无',
+    };
+  });
+};
 export default class Entities extends Component {
   state = {
-    data: [
-      {
-        name: 'weather',
-        desc: '一些描述',
-        preview: '--',
-        skill: '无',
-      },
-    ],
+    data: getData(),
   };
 
   getFormValue = (value) => {
     const { data } = this.state;
     data.push({
+      id: data.length + 1,
       name: value.title,
       desc: value.desc,
       preview: '--',

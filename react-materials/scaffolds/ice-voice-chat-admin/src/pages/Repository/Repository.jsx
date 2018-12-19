@@ -47,7 +47,7 @@ export default class Repository extends Component {
 
   renderExtraAfter = () => {
     return (
-      <div>
+      <div style={{ display: 'flex' }}>
         <Button
           size="large"
           type="normal"

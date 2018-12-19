@@ -4,7 +4,21 @@ import TopBar from '../../components/TopBar';
 import PublishTable from './components/PublishTable';
 import Overview from './components/Overview';
 
+// MOCK 数据，实际业务按需进行替换
+const getData = () => {
+  return Array.from({ length: 10 }).map((item, index) => {
+    return {
+      time: `2018-12-1${index} 1${index}:28:38`,
+      desc: '发布备注信息',
+    };
+  });
+};
+
 export default class Projects extends Component {
+  state = {
+    data: getData(),
+  }
+
   handlePublish = () => {
     Dialog.confirm({
       title: '提示',
@@ -13,6 +27,7 @@ export default class Projects extends Component {
   };
 
   render() {
+    const { data } = this.state;
     return (
       <div>
         <TopBar
@@ -22,7 +37,7 @@ export default class Projects extends Component {
           onClick={this.handlePublish}
         />
         <div style={{ height: '40px' }} />
-        <PublishTable />
+        <PublishTable data={data} />
       </div>
     );
   }

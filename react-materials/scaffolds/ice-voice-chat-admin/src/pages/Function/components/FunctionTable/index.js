@@ -8,7 +8,7 @@ export default class FunctionTable extends Component {
       <div>
         <div style={styles.head}>
           <div style={styles.info}>
-            <h2 style={styles.title}>本项目共包含 0 个函数</h2>
+            <h2 style={styles.title}>本项目共包含 {data.length} 个函数</h2>
             <p style={styles.intro}>
               函数是定义对话回复逻辑的一种方式。成功上传的函数后，在项目发布时开始生效。
             </p>

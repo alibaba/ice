@@ -7,7 +7,7 @@ export default class GeneralizationTable extends Component {
     return (
       <div>
         <div style={styles.searchBar}>
-          <div style={styles.info}>共计 0 条泛化规则</div>
+          <div style={styles.info}>共计 {data.length} 条泛化规则</div>
           <Input
             size="large"
             style={{ width: '300px' }}

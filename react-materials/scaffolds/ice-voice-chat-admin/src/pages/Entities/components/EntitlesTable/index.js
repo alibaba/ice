@@ -34,7 +34,7 @@ export default class EntitlesTable extends Component {
     return (
       <div>
         <div style={styles.searchBar}>
-          <div style={styles.info}>本主题包含 0 个实体</div>
+          <div style={styles.info}>本主题包含 {data.length} 个实体</div>
           <Input
             size="large"
             style={{ width: '300px' }}
@@ -42,6 +42,7 @@ export default class EntitlesTable extends Component {
           />
         </div>
         <Table hasBorder={false} dataSource={data}>
+          <Table.Column title="索引" dataIndex="id" />
           <Table.Column title="实体名称" dataIndex="name" />
           <Table.Column title="描述" dataIndex="desc" />
           <Table.Column title="预览" dataIndex="preview" />

@@ -3,14 +3,28 @@ import TopBar from '../../components/TopBar';
 import GeneralDialog from '../../components/GeneralDialog';
 import GeneralizationTable from './components/GeneralizationTable';
 
+// MOCK 数据，实际业务按需进行替换
+const getData = () => {
+  return Array.from({ length: 10 }).map((item, index) => {
+    return {
+      id: index + 1,
+      name: 'USER.SYN.XYZ',
+      desc: '一些规则的描述',
+      words: '怎么样|怎样|咋样',
+      skill: '无',
+    };
+  });
+};
+
 export default class Generalization extends Component {
   state = {
-    data: [],
+    data: getData(),
   };
 
   getFormValue = (value) => {
     const { data } = this.state;
     data.push({
+      id: data.length + 1,
       name: value.title,
       desc: value.desc,
       words: '--',
