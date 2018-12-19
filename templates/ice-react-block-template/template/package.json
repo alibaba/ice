@@ -22,12 +22,7 @@
     "@alifd/next": "^1.11.2"
   },
   "publishConfig": {
-    {{#if_eq forInnerNet true }}
-    "registry": "http://registry.npm.alibaba-inc.com"
-    {{/if_eq}}
-    {{#if_eq forInnerNet false }}
-    "registry": "http://registry.npm.com"
-    {{/if_eq}}
+    "registry": "{{registry}}"
   },
   "blockConfig": {
     "name": "{{name}}",
