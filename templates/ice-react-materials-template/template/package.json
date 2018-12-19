@@ -3,6 +3,7 @@
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
+  "files": ["build"],
   "scripts": {
     "deploy": "npm run generate && npm run sync",
     "generate": "ice-devtools generate",
