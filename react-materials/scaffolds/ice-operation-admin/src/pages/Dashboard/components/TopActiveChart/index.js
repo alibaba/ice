@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Grid, Table, Progress } from '@icedesign/base';
-import LintChart from './LineChart';
 
 const { Row, Col } = Grid;
 
@@ -86,7 +85,7 @@ const ViewedProducts = [
   {
     id: 4,
     title: '设备 D',
-    cate: '智能小家电',
+    cate: '智能家电',
     amount: '8,636',
   },
 ];
@@ -153,14 +152,10 @@ export default class TopActiveChart extends Component {
                 cell={(value, index, record) =>
                   this.renderProduct(value, index, record)
                 }
-                width="40%"
+                width="20%"
               />
               <Table.Column title="分类" dataIndex="cate" width="20%" />
-              <Table.Column
-                title="销售趋势"
-                width="20%"
-                cell={() => <LintChart />}
-              />
+
               <Table.Column title="销售数量" dataIndex="amount" width="20%" />
             </Table>
           </IceContainer>
