@@ -136,7 +136,9 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder type="boolean" name="notice">
-                  <Switch />
+                  <Switch
+                    style={{ background: '#2077ff', borderColor: '#2077ff' }}
+                  />
                 </IceFormBinder>
                 <IceFormError name="notice" />
               </Col>

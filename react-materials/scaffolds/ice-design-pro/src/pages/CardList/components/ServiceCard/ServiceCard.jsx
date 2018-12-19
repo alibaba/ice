@@ -93,15 +93,15 @@ const styles = {
     margin: '12px 0',
   },
   tag: {
-    background: '#f5f5f5',
-    border: '1px solid #ffadd2',
-    color: '#eb2f96',
+    background: '#f4f4f4',
+    color: '#666',
     position: 'absolute',
     right: '20px',
     top: '20px',
     padding: '4px 12px',
     textAlign: 'center',
     borderRadius: '50px',
+    fontSize: '12px',
   },
   footer: {
     display: 'flex',

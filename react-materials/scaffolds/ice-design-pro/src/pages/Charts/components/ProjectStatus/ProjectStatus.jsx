@@ -22,13 +22,13 @@ export default class ProjectStatus extends Component {
     return (
       <Timeline>
         <TimelineItem
-          title="项目完成"
+          title="市场调研"
           content={<div>【标题】一段简单的说明当前项目的进度和状态</div>}
           time="2016-06-10 10:30:00"
           state="process"
         />
         <TimelineItem
-          title="开发测试"
+          title="产品评审"
           content="【标题】一段简单的说明当前项目的进度和状态"
           time="2016-06-10 09:30:00"
         />
@@ -38,12 +38,12 @@ export default class ProjectStatus extends Component {
           time="2016-06-10 09:03:00"
         />
         <TimelineItem
-          title="产品设计"
+          title="营销推广"
           content="【标题】一段简单的说明当前项目的进度和状态"
           time="2016-06-10 09:03:00"
         />
         <TimelineItem
-          title="分析调研"
+          title="完成目标"
           content="【标题】一段简单的说明当前项目的进度和状态"
           time="2016-06-10 09:03:00"
         />
@@ -59,7 +59,7 @@ export default class ProjectStatus extends Component {
             <IceContainer title="完成进度">
               <LineChart />
               <div style={styles.projectStatus}>
-                <p style={styles.meta}>项目状态</p>
+                <p style={styles.meta}>当前状态</p>
                 <h2 style={styles.count}>76,533</h2>
               </div>
             </IceContainer>

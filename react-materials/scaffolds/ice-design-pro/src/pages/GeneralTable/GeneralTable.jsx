@@ -9,7 +9,7 @@ import SearchHistory from './components/SearchHistory';
 const { Row, Col } = Grid;
 
 const mockData = () => {
-  return Array.from({ length: 20 }).map((item, index) => {
+  return Array.from({ length: 10 }).map((item, index) => {
     return {
       id: `00000${index}`,
       name: '聘用合同',
