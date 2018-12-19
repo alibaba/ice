@@ -7,6 +7,25 @@ const TabPane = Tab.TabPane;
 export default class Tabs extends Component {
   static displayName = 'Tabs';
 
+  state = {
+    data: this.props.data,
+  };
+
+  handleTab = (item) => {
+    let newData = [];
+    if (item.tab === '自建' || item.tab === '共享') {
+      newData.push(this.props.data[0]);
+    } else if (item.tab === '预置') {
+      newData.push(this.props.data[1]);
+    } else {
+      newData = this.props.data;
+    }
+
+    this.setState({
+      data: newData,
+    });
+  };
+
   render() {
     const Panes = [
       {
@@ -25,8 +44,14 @@ export default class Tabs extends Component {
     return (
       <Tab>
         {Panes.map((item, index) => (
-          <TabPane key={index} tab={item.tab}>
-            <SmallCard tab={item.tab} data={this.props.data} />
+          <TabPane
+            key={index}
+            tab={item.tab}
+            onClick={() => {
+              this.handleTab(item);
+            }}
+          >
+            <SmallCard tab={item.tab} data={this.state.data} />
           </TabPane>
         ))}
       </Tab>

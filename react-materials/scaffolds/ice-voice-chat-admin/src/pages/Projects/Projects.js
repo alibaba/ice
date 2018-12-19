@@ -1,8 +1,15 @@
+/* eslint no-mixed-operators:0 */
 import React, { Component } from 'react';
 import { Input } from '@icedesign/base';
 import TopBar from '../../components/TopBar';
 import GeneralDialog from '../../components/GeneralDialog';
 import Card from './components/Card';
+
+const ICONS = ['box', 'process', 'electronics', 'favorite', 'lights', 'auto'];
+
+const random = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
 
 // MOCK 数据，实际业务按需进行替换
 const getData = () => {
@@ -12,6 +19,7 @@ const getData = () => {
       title: 'NLS',
       desc: '智能语音小助手',
       time: '2018-09-30 14:30:19',
+      icon: ICONS[random(0, 5)],
     };
   });
 };
@@ -28,6 +36,7 @@ export default class Projects extends Component {
       title: value.title,
       desc: value.desc,
       time: '2018-09-30 14:30:19',
+      icon: ICONS[random(0, 5)],
     });
     this.setState({
       data,

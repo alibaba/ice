@@ -8,9 +8,9 @@ const getData = () => {
   return Array.from({ length: 10 }).map((item, index) => {
     return {
       id: index + 1,
-      name: 'USER.SYN.XYZ',
-      desc: '一些规则的描述',
-      words: '怎么样|怎样|咋样',
+      name: `USER.SYN.10${index}`,
+      desc: '规则描述',
+      words: '--',
       skill: '无',
     };
   });

@@ -20,7 +20,7 @@ export default class Card extends Component {
                   <Link to="/setting">
                     <Icon type="set" style={styles.settingIcon} />
                   </Link>
-                  <Icon type="picture" size="xl" style={styles.pictureIcon} />
+                  <Icon type={item.icon} size="xl" style={styles.pictureIcon} />
                   <p style={styles.appid}>Appid: {item.appid}</p>
                 </div>
                 <div style={styles.footer}>

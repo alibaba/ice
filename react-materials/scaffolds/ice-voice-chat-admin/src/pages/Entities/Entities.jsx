@@ -2,22 +2,11 @@ import React, { Component } from 'react';
 import TopBar from '../../components/TopBar';
 import GeneralDialog from '../../components/GeneralDialog';
 import EntitlesTable from './components/EntitlesTable';
+import mockdata from './data';
 
-// MOCK 数据，实际业务按需进行替换
-const getData = () => {
-  return Array.from({ length: 10 }).map((item, index) => {
-    return {
-      id: index + 1,
-      name: 'weather',
-      desc: '一些描述',
-      preview: '--',
-      skill: '无',
-    };
-  });
-};
 export default class Entities extends Component {
   state = {
-    data: getData(),
+    data: mockdata, // MOCK 数据，实际业务按需进行替换
   };
 
   getFormValue = (value) => {

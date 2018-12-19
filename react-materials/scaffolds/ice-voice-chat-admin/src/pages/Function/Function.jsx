@@ -2,24 +2,11 @@ import React, { Component } from 'react';
 import TopBar from '../../components/TopBar';
 import GeneralDialog from '../../components/GeneralDialog';
 import FunctionTable from './components/FunctionTable';
-
-// MOCK 数据，实际业务按需进行替换
-const getData = () => {
-  return Array.from({ length: 10 }).map((item, index) => {
-    return {
-      id: index + 1,
-      name: 'GetUser',
-      desc: '获取用户信息',
-      language: 'NodeJS 8.x',
-      skill: '无',
-      status: '已发布',
-    };
-  });
-};
+import mockdata from './data';
 
 export default class Function extends Component {
   state = {
-    data: getData(),
+    data: mockdata, // MOCK 数据，实际业务按需进行替换
   };
 
   getFormValue = (value) => {
@@ -27,7 +14,7 @@ export default class Function extends Component {
     data.push({
       name: value.title,
       desc: value.desc,
-      language: 'javascript',
+      language: 'NodeJS 8.x',
       skill: '无',
       status: '未发布',
     });
