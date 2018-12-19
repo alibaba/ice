@@ -20,8 +20,12 @@ const headerMenuConfig = [
 
 const asideMenuConfig = [
   {
-    name: '设备管理',
+    name: '监控页',
     path: '/dashboard',
+  },
+  {
+    name: '设备管理',
+    path: '/home',
   },
   {
     name: '设备编辑',

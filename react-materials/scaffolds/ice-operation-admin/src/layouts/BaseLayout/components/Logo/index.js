@@ -7,7 +7,7 @@ export default class Logo extends Component {
       <Link to="/" style={styles.logo}>
         <span style={styles.brand}>LOGO</span>
         <div style={styles.workbench}>
-          运营平台
+          设备管理
           <br />
           工作台
         </div>

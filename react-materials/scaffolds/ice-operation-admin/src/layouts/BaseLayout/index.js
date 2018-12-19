@@ -22,7 +22,7 @@ export default class CustomLayout extends Component {
 const styles = {
   container: {
     minHeight: '100vh',
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#f2f2f2',
     minWidth: '1280px',
   },
 };

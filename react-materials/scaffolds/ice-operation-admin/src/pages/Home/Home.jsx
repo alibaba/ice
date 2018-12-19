@@ -166,6 +166,7 @@ class Home extends Component {
               value={value}
               onChange={this.onInputChange}
               onSearch={this.onSearch}
+              searchText="搜索"
             />
             <Link to="/edit">
               <Button type="primary">
