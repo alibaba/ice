@@ -11,7 +11,6 @@ const logger = require('../../utils/logger');
 const localPath = require('../../utils/local-path');
 const download = require('../../utils/download');
 const generate = require('../../utils/generate');
-const InnerNet = require('../../utils/inner-net');
 const pkgJSON = require('../../utils/pkg-json');
 const validateName = require('validate-npm-package-name');
 
@@ -69,16 +68,7 @@ module.exports = async function addScaffold(type, cwd, opt, argvOpt) {
 
 function generateNpmName(npmName, pkg) {
   const kebabCaseName = kebabCase(npmName).replace(/^-/, '');
-  let name;
-  if (InnerNet.isTnpm(pkg.name)) {
-    name = `@alife/${kebabCaseName}`;
-  } else if (/^@/.test(pkg.name)) {
-    const scope = pkg.name.split('/')[0];
-    name = `${scope}/${kebabCaseName}`;
-  } else {
-    name = `${pkg.name}-${kebabCaseName}`;
-  }
-  return name;
+  return `${pkg.name}-${kebabCaseName}`;
 }
 
 /**

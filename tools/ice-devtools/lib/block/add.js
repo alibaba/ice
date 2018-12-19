@@ -12,7 +12,6 @@ const validateName = require('validate-npm-package-name');
 const logger = require('../../utils/logger');
 const download = require('../../utils/download');
 const generate = require('../../utils/generate');
-const InnerNet = require('../../utils/inner-net');
 const pkgJSON = require('../../utils/pkg-json');
 
 /**
@@ -89,16 +88,9 @@ function getBlockNpmName(blockName, pkg = {}) {
   const blockKebabCase = kebabCase(blockName).replace(/^-/, '');
 
   let npmName;
-  debugger;
+
   if (pkg.name) {
-    if (InnerNet.isTnpm(pkg.name)) {
-      npmName = `@alife/${blockKebabCase}`;
-    } else if (/^@/.test(pkg.name)) {
-      const scope = pkg.name.split('/')[0];
-      npmName = `${scope}/${blockKebabCase}`;
-    } else {
-      npmName = `${pkg.name}-${blockKebabCase}`;
-    }
+    npmName = `${pkg.name}-${blockKebabCase}`;
   } else {
     npmName = blockKebabCase;
   }
