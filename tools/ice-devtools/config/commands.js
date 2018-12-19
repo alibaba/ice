@@ -32,6 +32,9 @@ module.exports = {
   sync: {
     desc: 'Sync materials to https://fusion.design',
   },
+  'sync-npm': {
+    desc: 'Sync database json to npm'
+  },
   clear: {
     desc: 'Clear cache data',
   },
