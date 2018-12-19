@@ -1,0 +1,61 @@
+{
+  "name": "@icedesign/operation-admin-scaffold",
+  "version": "1.2.2",
+  "description": "该模板适用于设备管理类的后台系统，内置列表管理页、表单新增编辑页及表单查看页，这三个页面可形成一个闭环",
+  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-operation-platform.html",
+  "author": "ice-admin@alibaba-inc.com",
+  "dependencies": {
+    "@icedesign/base": "^0.1.5-1",
+    "@icedesign/container": "^0.1.1",
+    "@icedesign/form-binder": "^1.0.2",
+    "@icedesign/img": "^0.1.0",
+    "@icedesign/layout": "^0.1.0",
+    "@icedesign/menu": "^0.1.0",
+    "@icedesign/skin": "^0.1.0",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.8",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.2.2",
+    "bizcharts": "3.1.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.6.0-next.3"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/skin",
+    "entry": "src/index.js",
+    "localization": false
+  },
+  "themeConfig": {
+    "primaryColor": "#447eff"
+  },
+  "scaffoldConfig": {
+    "builder": "ice-scripts",
+    "name": "ice-operation-admin",
+    "title": "设备管理系统",
+    "categories": [
+      "行业领域"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1lRfswVYqK1RjSZLeXXbXppXa-2872-1580.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
