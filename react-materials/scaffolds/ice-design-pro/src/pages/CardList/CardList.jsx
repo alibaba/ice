@@ -1,9 +1,7 @@
-
-
 import React, { Component } from 'react';
 
-import InfoDisplayTab from './components/InfoDisplayTab';
-
+import ServiceCard from './components/ServiceCard';
+import ServiceHead from './components/ServiceHead';
 import './CardList.scss';
 
 export default class CardList extends Component {
@@ -17,7 +15,8 @@ export default class CardList extends Component {
   render() {
     return (
       <div className="card-list-page">
-        <InfoDisplayTab />
+        <ServiceHead />
+        <ServiceCard />
       </div>
     );
   }
