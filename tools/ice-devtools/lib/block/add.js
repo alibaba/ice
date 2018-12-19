@@ -89,6 +89,7 @@ function getBlockNpmName(blockName, pkg = {}) {
   const blockKebabCase = kebabCase(blockName).replace(/^-/, '');
 
   let npmName;
+  debugger;
   if (pkg.name) {
     if (InnerNet.isTnpm(pkg.name)) {
       npmName = `@alife/${blockKebabCase}`;
