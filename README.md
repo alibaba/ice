@@ -53,4 +53,4 @@
 
 扫码加入即刻交流与反馈：
 
-<img alt="Join the chat at dingtalk" src="https://ice.alicdn.com/assets/images/ice-group.png" width="200">
+<img alt="Join the chat at dingtalk" src="https://ice.alicdn.com/assets/images/qrcode-5.jpg" width="200">
