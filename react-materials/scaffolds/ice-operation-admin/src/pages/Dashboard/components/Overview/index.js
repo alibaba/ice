@@ -9,7 +9,7 @@ export default class Overview extends Component {
     return (
       <IceContainer>
         <Row wrap>
-          <Col xxs="12" s="12" l="8" style={styles.textCardItem}>
+          <Col xxs="12" s="12" l="6" style={styles.textCardItem}>
             <div style={styles.textCardSubtitle}>我的待办</div>
             <div style={styles.textCardTitle}>
               <span style={styles.textCardNumber}>8</span>
@@ -17,8 +17,16 @@ export default class Overview extends Component {
             </div>
           </Col>
 
-          <Col xxs="12" s="12" l="8" style={styles.textCardItem}>
-            <div style={styles.textCardSubtitle}>本周任务平均处理时间</div>
+          <Col xxs="12" s="12" l="6" style={styles.textCardItem}>
+            <div style={styles.textCardSubtitle}>对接设备时间</div>
+            <div style={styles.textCardTitle}>
+              <span style={styles.textCardNumber}>32</span>
+              分钟
+            </div>
+          </Col>
+
+          <Col xxs="12" s="12" l="6" style={styles.textCardItem}>
+            <div style={styles.textCardSubtitle}>本周销售时间</div>
             <div style={styles.textCardTitle}>
               <span style={styles.textCardNumber}>32</span>
               分钟
@@ -28,10 +36,10 @@ export default class Overview extends Component {
           <Col
             xxs="12"
             s="12"
-            l="8"
+            l="6"
             style={{ ...styles.textCardItem, borderRight: 0 }}
           >
-            <div style={styles.textCardSubtitle}>本周完成任务数</div>
+            <div style={styles.textCardSubtitle}>本周销售量</div>
             <div style={styles.textCardTitle}>
               <span style={styles.textCardNumber}>23</span>
               个任务
