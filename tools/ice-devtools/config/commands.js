@@ -31,6 +31,16 @@ module.exports = {
   },
   sync: {
     desc: 'Sync materials to https://fusion.design',
+    options: [
+      {
+        name: '-d',
+        desc: 'sync to daily site ',
+      },
+      {
+        name: '-o',
+        desc: 'sync to prod site https://fusion.design',
+      },
+    ],
   },
   clear: {
     desc: 'Clear cache data',
