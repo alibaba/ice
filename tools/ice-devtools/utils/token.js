@@ -2,11 +2,12 @@ const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
 const { promisify } = require('util');
+const getTempPath = require('./temp-path');
 
 const [readFile, writeFile] = [fs.readFile, fs.writeFile].map((fn) =>
   promisify(fn)
 );
-const TOKEN_PATH = path.join(__dirname, '../.temp/.token');
+const TOKEN_PATH = path.join(getTempPath(),'.token');
 
 async function tokenPrepare() {
   let token;
