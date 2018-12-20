@@ -60,9 +60,9 @@ module.exports = {
 };
 
 function TokenFirstLyMessage() {
-  console.log(chalk.green('-'.repeat(40)));
-  console.log(`
-如果这是你第一次使用该功能,请注意查看文档:
-  `);
-  console.log(chalk.green('-'.repeat(40)));
+  console.log(chalk.white('-'.repeat(62)));
+  console.log();
+  console.log(`如果这是你第一次使用该功能,或者不知道如何获取Token。\n请查看文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
+  console.log();
+  console.log(chalk.white('-'.repeat(62)));
 }
