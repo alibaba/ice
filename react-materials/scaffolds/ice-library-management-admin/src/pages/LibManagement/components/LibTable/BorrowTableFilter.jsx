@@ -1,13 +1,12 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Grid, Input, Select } from '@icedesign/base';
+import { Grid, Input } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
 } from '@icedesign/form-binder';
 
 const { Row, Col } = Grid;
-const { Option } = Select;
 
 export default class BorrowTableHead extends Component {
   static displayName = 'BorrowTableHead';
@@ -24,10 +23,8 @@ export default class BorrowTableHead extends Component {
   }
 
   formChange = (value) => {
-    console.log('value', value);
-    this.setState({
-      value,
-    });
+    console.log('formChange', value);
+    this.props.onChange(value);
   };
 
   render() {
@@ -58,7 +55,7 @@ export default class BorrowTableHead extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>ISBN 号：</span>
               <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="bookName" size="large" />
+                <Input placeholder="请输入" name="isbn" size="large" />
               </IceFormBinder>
             </div>
           </Col>

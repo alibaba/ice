@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
-import LibTableFilter from './LibTableFilter';
+import { Feedback } from '@icedesign/base';
+import TableFilter from './TableFilter';
+import CustomTable from './CustomTable';
 
 // MOCK 数据，实际业务按需进行替换
 const getData = () => {
@@ -29,55 +30,205 @@ export default class LibTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: 1,
+      isLoading: false,
+      dataSource: [],
     };
   }
 
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  mockApi = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData());
+      }, 600);
     });
   };
 
-  onChange = (selectedItems) => {
-    console.log('onChange callback', selectedItems);
+  fetchData = () => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi().then((dataSource) => {
+          this.setState({
+            dataSource,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.fetchData(current);
+  };
+
+  handleBorrowClick = () => {
+    Feedback.toast.success('借阅成功');
+  };
+
+  handleDetailClick = () => {
+    Feedback.toast.prompt('暂无详细信息');
+  };
+
+  handleFilter = () => {
+    this.fetchData();
   };
 
   renderOper = () => {
     return (
       <div>
-        <a style={{ ...styles.button, ...styles.detailButton }}>查看</a>
-        <a style={{ ...styles.button, ...styles.publishButton }}>借阅</a>
+        <a
+          style={{ ...styles.button, ...styles.detailButton }}
+          onClick={this.handleDetailClick}
+        >
+          查看
+        </a>
+        <a
+          style={{ ...styles.button, ...styles.borrowButton }}
+          onClick={this.handleBorrowClick}
+        >
+          借阅
+        </a>
       </div>
     );
   };
 
-  renderState = (value) => {
-    return <span style={styles.state}>{value}</span>;
-  };
-
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, dataSource } = this.state;
+    const columns = [
+      {
+        title: 'ISBN 号',
+        dataIndex: 'isbn',
+      },
+      {
+        title: '图书类型',
+        dataIndex: 'cate',
+      },
+      {
+        title: '图书名称',
+        dataIndex: 'bookName',
+        width: 150,
+      },
+      {
+        title: '作者名称',
+        dataIndex: 'authName',
+      },
+      {
+        title: '出版社',
+        dataIndex: 'publisher',
+      },
+      {
+        title: '日期',
+        dataIndex: 'date',
+      },
+      {
+        title: '总数量',
+        dataIndex: 'total',
+      },
+      {
+        title: '在馆数量',
+        dataIndex: 'instore',
+      },
+      {
+        title: '价格',
+        dataIndex: 'price',
+      },
+      {
+        title: '操作',
+        dataIndex: 'oper',
+        cell: this.renderOper,
+        width: 150,
+      },
+    ];
+    const config = [
+      {
+        label: '图书名称：',
+        component: 'Input',
+        componnetProps: {
+          placeholder: '请输入',
+        },
+        formBinderProps: {
+          name: 'bookName',
+          triggerType: 'onBlur',
+        },
+      },
+      {
+        label: '作者名称：',
+        component: 'Input',
+        componnetProps: {
+          placeholder: '请输入',
+        },
+        formBinderProps: {
+          name: 'authorName',
+          triggerType: 'onBlur',
+        },
+      },
+      {
+        label: 'ISBN 号：',
+        component: 'Input',
+        componnetProps: {
+          placeholder: '请输入',
+        },
+        formBinderProps: {
+          name: 'isbn',
+          triggerType: 'onBlur',
+        },
+      },
+      {
+        label: '图书分类：',
+        component: 'Input',
+        componnetProps: {
+          placeholder: '请选择',
+          options: [
+            {
+              lable: '技术领域',
+              value: 'technology',
+            },
+            {
+              lable: '专业领域',
+              value: 'professional',
+            },
+            {
+              lable: '管理沟通',
+              value: 'management',
+            },
+            {
+              lable: '其他',
+              value: 'other',
+            },
+          ],
+        },
+        formBinderProps: {
+          name: 'cate',
+          triggerType: 'onBlur',
+        },
+      },
+      {
+        label: '出版社：',
+        component: 'Input',
+        componnetProps: {
+          placeholder: '请输入',
+        },
+        formBinderProps: {
+          name: 'publisher',
+          triggerType: 'onBlur',
+        },
+      },
+    ];
+
     return (
       <div style={styles.container}>
-        <LibTableFilter />
-        <Table dataSource={dataSource} hasBorder={false} style={styles.table}>
-          <Table.Column title="图书 ISBN 号" width={120} dataIndex="isbn" />
-          <Table.Column title="图书类型" width={120} dataIndex="bookName" />
-          <Table.Column title="图书名称" dataIndex="cate" />
-          <Table.Column title="作者名称" dataIndex="authName" />
-          <Table.Column title="出版社" dataIndex="publisher" />
-          <Table.Column title="日期" dataIndex="date" />
-          <Table.Column title="总数量" dataIndex="total" />
-          <Table.Column title="在馆数量" dataIndex="instore" />
-          <Table.Column title="价格" dataIndex="price" />
-          <Table.Column title="操作" width={160} cell={this.renderOper} />
-        </Table>
-        <Pagination
-          style={styles.pagination}
-          current={current}
-          onChange={this.handlePaginationChange}
+        <TableFilter config={config} onChange={this.handleFilter} />
+        <CustomTable
+          isLoading={isLoading}
+          dataSource={dataSource}
+          columns={columns}
+          paginationChange={this.handlePaginationChange}
         />
       </div>
     );
@@ -85,9 +236,6 @@ export default class LibTable extends Component {
 }
 
 const styles = {
-  table: {
-    marginTop: '10px',
-  },
   button: {
     display: 'inline-block',
     padding: '6px 12px',
@@ -101,12 +249,8 @@ const styles = {
     background: '#41cac0',
     marginRight: '8px',
   },
-  publishButton: {
-    background: '#58c9f3',
+  borrowButton: {
+    background: '#517dff',
     marginRight: '8px',
-  },
-  pagination: {
-    margin: '20px 0',
-    textAlign: 'right',
   },
 };

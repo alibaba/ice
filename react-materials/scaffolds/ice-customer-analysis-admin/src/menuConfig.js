@@ -27,7 +27,7 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: '客流分析',
-    path: '/',
+    path: '/analysis',
     icon: 'home2',
   },
   {

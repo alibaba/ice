@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Icon, Pagination, Balloon, Card } from '@icedesign/base';
+import { Table, Icon, Pagination, Balloon } from '@icedesign/base';
 import Ellipsis from '@icedesign/ellipsis';
 import './Schedule.scss';
 
@@ -36,16 +36,51 @@ export default class Schedule extends Component {
     super(props);
     this.state = {
       current: 1,
+      isLoading: false,
+      dataSource: [],
     };
   }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  mockApi = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData());
+      }, 600);
+    });
+  };
+
+  fetchData = () => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi().then((data) => {
+          this.setState({
+            dataSource: data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
 
   /**
    * 页码发生改变时的回调函数
    */
   handleChange = (current) => {
-    this.setState({
-      current,
-    });
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.fetchData();
+      }
+    );
   };
 
   renderId = (value, index) => {
@@ -132,7 +167,7 @@ export default class Schedule extends Component {
   };
 
   render() {
-    const dataSource = getData();
+    const { dataSource, isLoading } = this.state;
 
     return (
       <div style={styles.container}>
@@ -141,7 +176,12 @@ export default class Schedule extends Component {
           <p style={styles.desc}>更新时间：2018年10月01日 12：00</p>
         </div>
         <div style={styles.summary}>全国单日总票房：100 亿</div>
-        <Table dataSource={dataSource} className="custom-table">
+        <Table
+          dataSource={dataSource}
+          isLoading={isLoading}
+          className="custom-table"
+          style={{ minHeight: '400px' }}
+        >
           <Table.Column
             align="center"
             title="排名"

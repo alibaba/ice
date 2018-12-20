@@ -15,7 +15,7 @@ const mockData = [
     icon: addIcon,
     title: '已收案待当事人补全信息',
     count: 3,
-    instrument: '对当事人正在登记或正在更正的执行案件进行查询',
+    instrument: '对当事人正在登记案件进行查询',
   },
   {
     icon: uploadIcon,
@@ -27,13 +27,11 @@ const mockData = [
     icon: pcIcon,
     title: '已确认代办理',
     count: 12,
-    instrument: '对已确认通过的执行案件进行立案确认',
+    instrument: '对已确认通过案件进行立案确认',
   },
 ];
 
 export default class CountBar extends Component {
-  static displayName = 'CountBar';
-
   render() {
     return (
       <div style={styles.container}>
@@ -44,9 +42,7 @@ export default class CountBar extends Component {
                 <div style={styles.cardLeft}>
                   <img src={item.icon} style={styles.icon} alt="" />
                 </div>
-                <div
-                  style={styles.cardRight}
-                >
+                <div style={styles.cardRight}>
                   <h3 style={styles.countTitle}>{item.title}</h3>
                   <span>{item.count}</span>
                 </div>
@@ -81,7 +77,7 @@ const styles = {
     display: 'flex',
     overflow: 'hidden',
     boxShadow: '0 1px 2px rgba(0,0,0,.05), 0 0 0 1px rgba(63,63,68,.1)',
-    color: '#333333',
+    color: '#333',
   },
   cardLeft: {
     lineHeight: '80px',

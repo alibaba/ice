@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table, Pagination } from '@icedesign/base';
+import { Button, Table, Pagination, Feedback } from '@icedesign/base';
 import SearchBar from './SearchBar';
 
 const mockData = [
@@ -56,10 +56,14 @@ export default class SelfhelpTable extends Component {
     });
   };
 
+  handleClick = () => {
+    Feedback.toast.success('暂不支持办理');
+  };
+
   render() {
     const actionRender = () => {
       return (
-        <Button size="large" style={styles.button}>
+        <Button size="large" style={styles.button} onClick={this.handleClick}>
           办理
         </Button>
       );
@@ -95,7 +99,6 @@ const styles = {
   },
   button: {
     margin: '0 8px',
-    padding: '0 16px',
     letterSpacing: '2px',
   },
   table: {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
-import BorrowTableFilter from './BorrowTableFilter';
+import { Feedback } from '@icedesign/base';
+import CustomTable from './CustomTable';
+import TableFilter from './TableFilter';
 
 // MOCK 数据，实际业务按需进行替换
 const getData = () => {
@@ -28,49 +29,143 @@ export default class BorrowTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: 1,
+      isLoading: false,
+      dataSource: [],
     };
   }
 
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  mockApi = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData());
+      }, 600);
     });
   };
 
-  onChange = (selectedItems) => {
-    console.log('onChange callback', selectedItems);
+  fetchData = () => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi().then((dataSource) => {
+          this.setState({
+            dataSource,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.fetchData(current);
+  };
+
+  handleBorrowClick = () => {
+    Feedback.toast.success('借阅成功');
+  };
+
+  handleDetailClick = () => {
+    Feedback.toast.prompt('暂无详细信息');
+  };
+
+  handleFilter = () => {
+    this.fetchData();
   };
 
   renderOper = () => {
     return <a style={{ ...styles.button, ...styles.detailButton }}>查看</a>;
   };
 
-  renderState = (value) => {
-    return <span style={styles.state}>{value}</span>;
-  };
-
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, dataSource } = this.state;
+    const config = [
+      {
+        label: '图书名称：',
+        component: 'Input',
+        componnetProps: {
+          placeholder: '请输入',
+        },
+        formBinderProps: {
+          name: 'bookName',
+          triggerType: 'onBlur',
+        },
+      },
+      {
+        label: 'ISBN 号：',
+        component: 'Input',
+        componnetProps: {
+          placeholder: '请输入',
+        },
+        formBinderProps: {
+          name: 'isbn',
+          triggerType: 'onBlur',
+        },
+      },
+      {
+        label: '出版社：',
+        component: 'Input',
+        componnetProps: {
+          placeholder: '请输入',
+        },
+        formBinderProps: {
+          name: 'publisher',
+          triggerType: 'onBlur',
+        },
+      },
+    ];
+    const columns = [
+      {
+        title: '借阅编号',
+        dataIndex: 'number',
+      },
+      {
+        title: '图书 ISBN 号',
+        dataIndex: 'isbn',
+      },
+      {
+        title: '图书名称',
+        dataIndex: 'bookName',
+      },
+      {
+        title: '图书类型',
+        dataIndex: 'cate',
+      },
+      {
+        title: '读者证件号',
+        dataIndex: 'idCard',
+      },
+      {
+        title: '读者名称',
+        dataIndex: 'authorName',
+      },
+      {
+        title: '借阅日期',
+        dataIndex: 'borrowDate',
+      },
+      {
+        title: '归还日期',
+        dataIndex: 'returnDate',
+      },
+      {
+        title: '操作',
+        dataIndex: 'oper',
+        cell: this.renderOper,
+      },
+    ];
     return (
       <div style={styles.container}>
-        <BorrowTableFilter />
-        <Table dataSource={dataSource} hasBorder={false} style={styles.table}>
-          <Table.Column title="借阅编号" dataIndex="number" />
-          <Table.Column title="图书 ISBN 号" dataIndex="isbn" />
-          <Table.Column title="图书名称" dataIndex="bookName" />
-          <Table.Column title="图书类型" dataIndex="cate" />
-          <Table.Column title="读者证件号" dataIndex="idCard" />
-          <Table.Column title="读者名称" dataIndex="authorName" />
-          <Table.Column title="借阅日期" dataIndex="borrowDate" />
-          <Table.Column title="归还日期" dataIndex="borrowDate" />
-          <Table.Column title="操作" cell={this.renderOper} />
-        </Table>
-        <Pagination
-          style={styles.pagination}
-          current={current}
-          onChange={this.handlePaginationChange}
+        <TableFilter config={config} onChange={this.handleFilter} />
+        <CustomTable
+          isLoading={isLoading}
+          dataSource={dataSource}
+          columns={columns}
+          paginationChange={this.handlePaginationChange}
         />
       </div>
     );
@@ -93,9 +188,5 @@ const styles = {
   detailButton: {
     background: '#41cac0',
     marginRight: '8px',
-  },
-  pagination: {
-    margin: '20px 0',
-    textAlign: 'right',
   },
 };

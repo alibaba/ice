@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Icon } from '@icedesign/base';
 
 export default class SmallCard extends Component {
@@ -16,12 +17,15 @@ export default class SmallCard extends Component {
               <h3 style={styles.name}>{item.name}</h3>
               <p style={styles.desc}>{item.desc}</p>
             </div>
-            <Icon type="set" size="small" style={styles.settingIcon} />
+            <Link to="/setting">
+              <Icon type="set" size="small" style={styles.settingIcon} />
+            </Link>
             {item.tag && <span style={styles.tag}>{item.tag}</span>}
           </div>
         </div>
       ));
     }
+    return null;
   }
 }
 

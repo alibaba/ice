@@ -1,29 +1,65 @@
 import React, { Component } from 'react';
-import { Button } from '@icedesign/base';
+import { Button, Feedback } from '@icedesign/base';
 import TopBar from '../../components/TopBar';
+import GeneralDialog from '../../components/GeneralDialog';
 import Tabs from './components/Tabs';
 
+const mockData = [
+  {
+    name: 'joke',
+    desc: '笑话',
+    tag: '预置',
+  },
+  {
+    name: 'weather',
+    desc: '天气',
+    tag: '预置',
+  },
+];
+
 export default class Skill extends Component {
-  static displayName = 'Skill';
+  state = {
+    data: mockData,
+  };
+
+  handleImport = () => {
+    Feedback.toast.prompt('暂不支持导入');
+  };
+
+  getFormValue = (value) => {
+    const { data } = this.state;
+    data.push({
+      name: value.title,
+      desc: value.desc,
+      tag: '预置',
+    });
+    this.setState({
+      data,
+    });
+  };
 
   renderExtraAfter = () => {
     return (
-      <div>
-        <Button size="large" type="normal" style={{ marginRight: '10px' }}>
+      <div style={{ display: 'flex' }}>
+        <Button
+          size="large"
+          type="normal"
+          style={{ marginRight: '10px' }}
+          onClick={this.handleImport}
+        >
           导入技能
         </Button>
-        <Button size="large" type="primary">
-          新建技能
-        </Button>
+        <GeneralDialog buttonText="新建技能" getFormValue={this.getFormValue} />
       </div>
     );
   };
 
   render() {
+    const { data } = this.state;
     return (
       <div>
         <TopBar title="全部技能" extraAfter={this.renderExtraAfter()} />
-        <Tabs />
+        <Tabs data={data} />
       </div>
     );
   }

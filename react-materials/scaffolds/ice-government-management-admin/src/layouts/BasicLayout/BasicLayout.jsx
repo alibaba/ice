@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import cx from 'classnames';
 import Layout from '@icedesign/layout';
-import Header from '../../components/Header';
-import Aside from '../../components/Aside';
-import Footer from '../../components/Footer';
-
+import Header from './components/Header';
+import Aside from './components/Aside';
+import Footer from './components/Footer';
+import MainRoutes from './MainRoutes';
 import './BasicLayout.scss';
-
-const theme = 'dark';
 
 export default class BasicLayout extends Component {
   render() {
@@ -15,7 +12,7 @@ export default class BasicLayout extends Component {
       <Layout
         fixable
         style={{ minHeight: '100vh' }}
-        className={cx(`basic-layout-${theme} ice-design-layout`)}
+        className="ice-design-layout"
       >
         <Layout.Section>
           <Layout.Aside width={240}>
@@ -24,9 +21,11 @@ export default class BasicLayout extends Component {
 
           <Layout.Main scrollable>
             <Layout.Header>
-              <Header theme={theme} />
+              <Header theme="dark" />
             </Layout.Header>
-            <div className="main-container">{this.props.children}</div>
+            <div className="main-container">
+              <MainRoutes />
+            </div>
             <Footer />
           </Layout.Main>
         </Layout.Section>
