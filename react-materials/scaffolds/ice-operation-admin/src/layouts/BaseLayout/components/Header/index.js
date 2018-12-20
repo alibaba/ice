@@ -1,3 +1,4 @@
+/* eslint arrow-parens:0 */
 import React from 'react';
 import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
@@ -10,7 +11,7 @@ import './index.scss';
 @withRouter
 class Header extends React.Component {
   getSelectKeys() {
-    const selectKeys = this.props.location.pathname.split('/').filter(i => i);
+    const selectKeys = this.props.location.pathname.split('/').filter((i) => i);
     if (selectKeys.length === 0) {
       selectKeys.push('home');
     }
