@@ -2,18 +2,13 @@ import React, { Component } from 'react';
 import { Input, Table } from '@icedesign/base';
 
 export default class FunctionTable extends Component {
-  static displayName = 'FunctionTable';
-
-  onChange = (value) => {
-    console.log({ value });
-  };
-
   render() {
+    const { data } = this.props;
     return (
       <div>
         <div style={styles.head}>
           <div style={styles.info}>
-            <h2 style={styles.title}>本项目共包含 0 个函数</h2>
+            <h2 style={styles.title}>本项目共包含 {data.length} 个函数</h2>
             <p style={styles.intro}>
               函数是定义对话回复逻辑的一种方式。成功上传的函数后，在项目发布时开始生效。
             </p>
@@ -24,12 +19,12 @@ export default class FunctionTable extends Component {
             placeholder="请输入函数名称或者函数描述"
           />
         </div>
-        <Table hasBorder={false}>
+        <Table hasBorder={false} dataSource={data}>
           <Table.Column title="函数名" dataIndex="name" />
+          <Table.Column title="描述" dataIndex="desc" />
           <Table.Column title="语言类型" dataIndex="language" />
           <Table.Column title="关联技能" dataIndex="skill" />
           <Table.Column title="发布状态" dataIndex="status" />
-          <Table.Column title="操作" />
         </Table>
       </div>
     );

@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Tab } from '@icedesign/base';
-import axios from 'axios';
 import CustomTable from './components/CustomTable';
 import EditDialog from './components/EditDialog';
 import DeleteBalloon from './components/DeleteBalloon';
+import data from './data';
 
 const TabPane = Tab.TabPane;
 
 const tabs = [
   { tab: '全部', key: 'all' },
-  { tab: '已发布', key: 'inreview' },
-  { tab: '审核中', key: 'released' },
+  { tab: '审核中', key: 'review' },
+  { tab: '已发布', key: 'released' },
   { tab: '已拒绝', key: 'rejected' },
 ];
 
@@ -25,7 +25,7 @@ export default class TabTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: {},
+      dataSource: data,
       tabKey: 'all',
     };
     this.columns = [
@@ -68,20 +68,6 @@ export default class TabTable extends Component {
         },
       },
     ];
-  }
-
-  componentDidMount() {
-    axios
-      .get('/mock/tab-table.json')
-      .then((response) => {
-        console.log(response.data.data);
-        this.setState({
-          dataSource: response.data.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   getFormValues = (dataIndex, values) => {

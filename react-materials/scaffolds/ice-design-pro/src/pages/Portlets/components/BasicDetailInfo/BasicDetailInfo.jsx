@@ -121,14 +121,17 @@ const styles = {
   basicDetailTitle: {
     margin: '10px 0',
     fontSize: '16px',
+    color: '#333',
   },
   infoColumn: {
     marginLeft: '16px',
   },
   infoColumnTitle: {
     margin: '20px 0',
+    height: '22px',
+    lineHeight: '22px',
     paddingLeft: '10px',
-    borderLeft: '3px solid #3080fe',
+    borderLeft: '4px solid #2077ff',
   },
   infoItems: {
     padding: 0,

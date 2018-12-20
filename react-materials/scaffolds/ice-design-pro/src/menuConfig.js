@@ -24,6 +24,12 @@ const asideMenuConfig = [
     name: 'Dashboard',
     path: '/dashboard',
     icon: 'home2',
+    children: [
+      {
+        name: '监控页',
+        path: '/dashboard/monitor',
+      },
+    ],
   },
   {
     name: '图表页',
@@ -31,9 +37,12 @@ const asideMenuConfig = [
     icon: 'chart1',
     children: [
       {
-        name: '常用图表',
-        path: '/chart/chart-list',
-        authority: 'admin',
+        name: '基础图表',
+        path: '/chart/basic',
+      },
+      {
+        name: '通用图表',
+        path: '/chart/general',
       },
     ],
   },
@@ -41,17 +50,16 @@ const asideMenuConfig = [
     name: '表格页',
     path: '/table',
     icon: 'table',
-    // authority: 'admin',
     children: [
       {
         name: '基础表格',
-        path: '/table/basic-table',
-        authority: 'admin',
+        path: '/table/basic',
+        // authority: 'admin',
       },
       {
-        name: '常用竖向表格',
-        path: '/table/table-display',
-        authority: 'user',
+        name: '通用表格',
+        path: '/table/general',
+        // authority: 'user',
       },
     ],
   },
@@ -61,12 +69,12 @@ const asideMenuConfig = [
     icon: 'ul-list',
     children: [
       {
-        name: '搜索列表',
-        path: '/list/article-list',
+        name: '基础列表',
+        path: '/list/basic',
       },
       {
         name: '卡片列表',
-        path: '/list/card-list',
+        path: '/list/card',
       },
     ],
   },
@@ -101,10 +109,20 @@ const asideMenuConfig = [
     ],
   },
   {
+    name: '个人页',
+    path: '/account',
+    icon: 'yonghu',
+    children: [
+      {
+        name: '个人设置',
+        path: '/account/setting',
+      },
+    ],
+  },
+  {
     name: '异常页',
     path: '/exception',
     icon: 'gaojingxinxi',
-    authority: 'admin',
     children: [
       {
         name: '204',

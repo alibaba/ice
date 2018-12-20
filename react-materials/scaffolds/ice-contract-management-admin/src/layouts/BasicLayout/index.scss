@@ -1,0 +1,123 @@
+/* GLOBAL */
+$active-color: #0079f2;
+
+.ice-design-layout {
+  min-width: 1200px;
+
+  /* LAYOUT */
+  &.ice-design-layout {
+    width: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+    .ice-layout-main {
+      padding: 20px;
+    }
+
+    /* HEADER */
+    .ice-design-layout-header {
+      width: 100%;
+      padding: 10px 20px;
+      margin: 0px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: $active-color;
+
+      .ice-design-layout-header-menu .ice-menu {
+        background: transparent;
+        color: #fff;
+        a {
+          color: #fff;
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+      .ice-design-header-userpannel {
+        color: #fff;
+        margin-left: 20px;
+        cursor: pointer;
+        .user-avatar {
+          margin-right: 12px;
+          border-radius: 4px;
+        }
+        .user-profile {
+          display: inline-block;
+          text-align: center;
+          margin-bottom: 2px;
+        }
+        .icon-down {
+          margin-left: 2px;
+        }
+      }
+    }
+
+    /* ASIDE */
+    .ice-design-layout-aside {
+      height: 100%;
+      position: relative;
+      padding-top: 20px;
+      border-right: 1px solid #eee;
+      background-color: #fff;
+
+      .collapse-btn {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 20px 0;
+        text-align: center;
+        border-top: 1px solid #f2f2f2;
+        cursor: pointer;
+      }
+
+      .ice-menu {
+        transition: width 0.3s ease;
+
+        .ice-menu-item {
+          margin-bottom: 1px;
+          font-weight: 500;
+          font-size: 14px;
+        }
+
+        .ice-menu-item-selected {
+          border-radius: 0 !important;
+        }
+      }
+    }
+
+    /* FOOTER */
+    .ice-design-layout-footer-body {
+      width: 100%;
+      margin: 20px auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .copyright {
+        line-height: 1.5;
+        font-size: 12px;
+        text-align: left;
+      }
+    }
+  }
+}
+
+.user-profile-menu {
+  width: 130px;
+  border-radius: 0;
+  padding: 0 16px;
+  .user-profile-menu-item {
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    color: #666;
+    cursor: pointer;
+    a {
+      display: block;
+    }
+    i {
+      margin-right: 5px;
+    }
+  }
+}

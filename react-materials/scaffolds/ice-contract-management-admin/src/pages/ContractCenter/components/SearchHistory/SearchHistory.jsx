@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
+import { Button, Feedback } from '@icedesign/base';
 import ContainerTitle from '../../../../components/ContainerTitle';
 
 const mockData = [
@@ -9,6 +11,7 @@ const mockData = [
       {
         label: '合同关键字',
         value: '聘用合同',
+        name: 'name',
       },
     ],
   },
@@ -18,10 +21,12 @@ const mockData = [
       {
         label: '合同编号',
         value: '000001',
+        name: 'id',
       },
       {
         label: '对方公司',
-        value: '杭州xxx科技有限公司',
+        value: 'option1',
+        name: 'otherCompany',
       },
     ],
   },
@@ -31,14 +36,17 @@ const mockData = [
       {
         label: '合同编号',
         value: '000001',
+        name: 'id',
       },
       {
         label: '申请单号',
         value: '94348394820',
+        name: 'applyCode',
       },
       {
         label: '负责人',
         value: '淘小宝',
+        name: 'principal',
       },
     ],
   },
@@ -47,14 +55,26 @@ const mockData = [
 export default class SearchHistory extends Component {
   static displayName = 'SearchHistory';
 
-  static propTypes = {};
+  static propTypes = {
+    onSearchHistory: PropTypes.func,
+  };
 
-  static defaultProps = {};
+  static defaultProps = {
+    onSearchHistory: () => {}
+  };
 
   constructor(props) {
     super(props);
     this.state = {};
   }
+
+  onSearchAgain = (data) => {
+    const query = {};
+    data.keywords.forEach((item) => {
+      query[item.name] = item.value;
+    });
+    this.props.onSearchHistory(query);
+  };
 
   render() {
     return (
@@ -66,7 +86,13 @@ export default class SearchHistory extends Component {
               <div style={styles.historyItem} key={index}>
                 <div style={styles.itemInfo}>
                   <span style={styles.time}>{item.time}</span>
-                  <span style={styles.query}>再次查询</span>
+                  <Button
+                    shape="text"
+                    style={styles.query}
+                    onClick={this.onSearchAgain.bind(this, item)}
+                  >
+                    再次查询
+                  </Button>
                 </div>
                 <div style={styles.keywords}>
                   {item.keywords.map((keyword, key) => {
@@ -104,9 +130,6 @@ const styles = {
   },
   time: {
     color: 'rgba(0,0,0,.6)',
-  },
-  query: {
-    color: 'rgba(49, 128, 253, 0.65)',
   },
   keyword: {
     display: 'inline-block',

@@ -2,20 +2,35 @@
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
+import Account from './pages/Account';
+import Query from './pages/Query';
 import BasicLayout from './layouts/BasicLayout';
+import UserLogin from './pages/UserLogin';
+import App from './pages/App';
 import Home from './pages/Home';
-import NotFound from './pages/NotFound';
 
 const routerConfig = [
   {
-    path: '/',
-    layout: BasicLayout,
+    path: '/dashboard',
     component: Home,
   },
   {
-    path: '*',
+    path: '/account',
+    component: Account,
+  },
+  {
+    path: '/query',
     layout: BasicLayout,
-    component: NotFound,
+    component: Query,
+  },
+  {
+    path: '/user/login',
+    component: UserLogin,
+  },
+  {
+    path: '/app',
+    layout: BasicLayout,
+    component: App,
   },
 ];
 
