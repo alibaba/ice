@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
+const chalk = require('chalk');
 const { promisify } = require('util');
 const getTempPath = require('./temp-path');
 
@@ -33,6 +34,7 @@ async function clearToken() {
 }
 
 async function writeToken() {
+  TokenFirstLyMessage();
   const answers = await inquirer.prompt([
     {
       name: 'token',
@@ -57,3 +59,10 @@ module.exports = {
   writeToken, clearToken, tokenPrepare,
 };
 
+function TokenFirstLyMessage() {
+  console.log(chalk.green('-'.repeat(40)));
+  console.log(`
+如果这是你第一次使用该功能,请注意查看文档:
+  `);
+  console.log(chalk.green('-'.repeat(40)));
+}
