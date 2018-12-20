@@ -10,7 +10,7 @@ import './index.scss';
 @withRouter
 class Header extends React.Component {
   getSelectKeys() {
-    const selectKeys = this.props.location.pathname.split('/').filter((i) => i);
+    const selectKeys = this.props.location.pathname.split('/').filter(i => i);
     if (selectKeys.length === 0) {
       selectKeys.push('home');
     }

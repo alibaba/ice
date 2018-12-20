@@ -25,7 +25,6 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
 } from './constants';
-import { debug } from 'util';
 
 /**
  * Changes the input field of the form
@@ -62,7 +61,6 @@ export const userLogin = (params) => {
     dispatch(userLoginRequest());
     try {
       const response = await login(params);
-      debugger;
 
       dispatch(userLoginSuccess(response.data));
 

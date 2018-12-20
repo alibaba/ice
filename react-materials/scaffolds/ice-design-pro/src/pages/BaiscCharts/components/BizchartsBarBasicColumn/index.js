@@ -1,19 +1,5 @@
 import React from 'react';
-import {
-  G2,
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Coord,
-  Label,
-  Legend,
-  View,
-  Guide,
-  Shape,
-  Facet,
-  Util,
-} from 'bizcharts';
+import { Chart, Geom, Axis, Tooltip } from 'bizcharts';
 import IceContainer from '@icedesign/container';
 
 class Basiccolumn extends React.Component {

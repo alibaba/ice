@@ -9,7 +9,6 @@ import {
   Radio,
   Feedback,
   Upload,
-  Dialog,
 } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,

@@ -1,26 +1,13 @@
+/* eslint no-underscore-dangle:0 */
 import React from 'react';
-import {
-  G2,
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Coord,
-  Label,
-  Legend,
-  View,
-  Guide,
-  Shape,
-  Facet,
-  Util,
-} from 'bizcharts';
+import { Chart, Geom, Axis, Tooltip, Label, Shape } from 'bizcharts';
 import IceContainer from '@icedesign/container';
 
 class Bubbleimage extends React.Component {
   render() {
     // 自定义 shape, 支持图片形式的气泡
     Shape.registerShape('point', 'image', {
-      drawShape: function(cfg, container) {
+      drawShape(cfg, container) {
         cfg.points = this.parsePoints(cfg.points);
         const coord = this._coord;
         container.addShape('line', {

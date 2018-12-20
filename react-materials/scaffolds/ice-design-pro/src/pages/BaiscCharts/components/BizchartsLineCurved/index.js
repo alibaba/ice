@@ -1,19 +1,5 @@
 import React from 'react';
-import {
-  G2,
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Coord,
-  Label,
-  Legend,
-  View,
-  Guide,
-  Shape,
-  Facet,
-  Util,
-} from 'bizcharts';
+import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
 import IceContainer from '@icedesign/container';
 
@@ -117,15 +103,15 @@ class Curved extends React.Component {
             type="line"
             position="month*temperature"
             size={2}
-            color={'city'}
-            shape={'smooth'}
+            color="city"
+            shape="smooth"
           />
           <Geom
             type="point"
             position="month*temperature"
             size={4}
-            shape={'circle'}
-            color={'city'}
+            shape="circle"
+            color="city"
             style={{
               stroke: '#fff',
               lineWidth: 1,
