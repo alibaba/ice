@@ -1,8 +1,18 @@
 {
   "name": "@icedesign/contract-management-scaffold",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "该模板内置了高级表单搜索和表格区块，适用于合同管理类和多表格展示的系统，使用时需要根据需求进行删除和添加",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-contract-management-admin/index.html",
+  "homepage": "https://unpkg.com/@icedesign/contract-management-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.2.5",
     "@icedesign/container": "^0.1.4",
@@ -42,7 +52,10 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": false
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "themeConfig": {
     "primaryColor": "#2077FF"
@@ -54,7 +67,7 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1..FEbxnaK1RjSZFtXXbC2VXa-2840-1582.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB16gHXw9zqK1RjSZPcXXbTepXa-2872-1580.png"
   },
   "engines": {
     "node": ">=8.0.0"

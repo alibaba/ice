@@ -25,4 +25,5 @@
 - 字体颜色：#333、#666
 
 ## 效果图
-![screenshot](https://img.alicdn.com/tfs/TB13ay8dH2pK1RjSZFsXXaNlXXa-2840-1580.png)
+
+![screenshot](https://img.alicdn.com/tfs/TB1HkrIwVzqK1RjSZFoXXbfcXXa-2872-1580.png)

@@ -2,8 +2,18 @@
   "name": "@icedesign/creator-admin-scaffold",
   "version": "1.0.0",
   "description": "该模板适用于创作者发布文章，帖子类的管理后台",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-post-platfrom/index.html",
+  "homepage": "https://unpkg.com/@icedesign/creator-admin-scaffold@latest/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
     "@antv/data-set": "^0.8.9",
     "@icedesign/base": "^0.1.5-1",
@@ -42,7 +52,10 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "src/index.js"
+    "entry": "src/index.js",
+    "output": {
+      "publicPath": "./"
+    }
   },
   "themeConfig": {
     "theme": "light"
@@ -54,6 +67,10 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1nXBnrbZnBKNjSZFGXXbt3FXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1chrGwVYqK1RjSZLeXXbXppXa-2872-1582.png"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
   }
 }

@@ -1,8 +1,18 @@
 {
   "name": "@icedesign/voice-chat-admin-scaffold",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "该模板内置了丰富的区块，适用于智能语音对话类管理系统，使用时需要根据需求进行删除和添加",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-voice-chat-admin/index.html",
+  "homepage": "https://unpkg.com/@icedesign/voice-chat-admin-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.2.5",
     "@icedesign/container": "^0.1.4",
@@ -44,7 +54,10 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": false
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "themeConfig": {
     "primaryColor": "#447eff"
@@ -56,7 +69,7 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1.csIwxjaK1RjSZKzXXXVwXXa-2864-1580.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1reHFwVzqK1RjSZFvXXcB7VXa-2872-1580.png"
   },
   "engines": {
     "node": ">=8.0.0"

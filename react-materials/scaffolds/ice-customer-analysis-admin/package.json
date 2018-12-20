@@ -1,8 +1,18 @@
 {
   "name": "@icedesign/customer-analysis-admin-scaffold",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "该模板内置了丰富的图表和表格区块，适用于客源分析管理类系统，使用时需要根据需求进行删除和添加",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-customer-analysis-admin/index.html",
+  "homepage": "https://unpkg.com/@icedesign/customer-analysis-admin-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
     "@antv/data-set": "^0.8.5",
     "@icedesign/base": "^0.1.5-1",
@@ -44,7 +54,10 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": false
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "themeConfig": {
     "primaryColor": "#5e83fb"

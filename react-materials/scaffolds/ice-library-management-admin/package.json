@@ -1,8 +1,18 @@
 {
   "name": "@icedesign/library-management-admin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "该模板内置了基础的表单和表格区块，适用于项目图书馆管理类系统，使用时需要根据需求进行删除和添加",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-library-management-admin/index.html",
+  "homepage": "https://unpkg.com/@icedesign/library-management-admin@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.2.5",
     "@icedesign/container": "^0.1.4",
@@ -41,7 +51,10 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": false
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "themeConfig": {
     "primaryColor": "#447eff"
@@ -53,7 +66,7 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1SFQ8ehnaK1RjSZFBXXcW7VXa-2860-1520.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1WN6bw9zqK1RjSZPcXXbTepXa-2872-1580.png"
   },
   "engines": {
     "node": ">=8.0.0"
