@@ -52,22 +52,33 @@ async function initAsk(options = {}) {
       ])
     : { forInnerNet: false });
 
-  const { scope } = await (forInnerNet
-    ? { scope: '@alife' }
-    : inquirer.prompt([
-        {
-          type: 'input',
-          message: 'npm scope (optional)',
-          default: '',
-          name: 'scope',
-        },
-      ]));
+  const { scope } = forInnerNet ? await inquirer.prompt([
+    {
+      type: 'list',
+      message: 'please select the npm scope',
+      name: 'scope',
+      default: '@ali',
+      choices: [
+        '@ali',
+        '@alife'
+      ],
+    },
+  ]) : await inquirer.prompt([
+    {
+      type: 'input',
+      message: 'npm scope (optional)',
+      default: '',
+      name: 'scope',
+    },
+  ]);
 
+  const basename = path.basename(options.cwd);
   const { name } = await inquirer.prompt([
     {
       type: 'input',
-      message: 'materials name(like material-app)',
+      message: 'materials name',
       name: 'name',
+      default: basename,
       require: true,
       validate: (value) => {
         if (!value) {
@@ -89,7 +100,10 @@ async function initAsk(options = {}) {
           message: 'please select the initial material template?',
           name: 'template',
           choices: [
-            '@icedesign/ice-react-materials-template',
+            {
+              name: 'React 标准模板',
+              value: '@icedesign/ice-react-materials-template'
+            },
             // TODO
             // '@icedesign/ice-vue-materials-template',
             // '@icedesign/universal-materials-template',
