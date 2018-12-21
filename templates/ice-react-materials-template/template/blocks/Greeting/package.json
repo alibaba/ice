@@ -1,13 +1,12 @@
 {
   "name": "@icedesign/greeting-block-example",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "示例区块",
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
     "screenshot": "ice-devtools screenshot",
-    "prepublish": "npm run build && npm run screenshot",
-    "publish": "npm publish"
+    "prepublish": "npm run build && npm run screenshot"
   },
   "author": {
     "name": "ICE Team",
