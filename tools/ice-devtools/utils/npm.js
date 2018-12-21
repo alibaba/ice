@@ -113,7 +113,7 @@ function getNpmTime(npm, version = 'latest') {
       return [0, data.time];
     })
     .catch((err) => {
-      if (err.response && err.response.status === 404) {
+      if ((err.response && err.response.status === 404) || err.message === 'Not found') {
         // 这种情况是该 npm 包名一次都没有发布过
         return [
           1,
@@ -121,7 +121,7 @@ function getNpmTime(npm, version = 'latest') {
             error: err,
             npm,
             version,
-            message: '[ERR checkAndQueryNpmTime] 未发布的 npm 包',
+            message: '[ERR checkAndQueryNpmTime] npm 包未发布! 禁止提交!',
           },
         ];
       }
