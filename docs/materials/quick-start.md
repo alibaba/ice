@@ -75,13 +75,13 @@ $ npm run generate
 发布到 fusion 
 
 ```bash
-$ npm run sync-fusion
+$ npm run sync
 ```
 
 发布到 unpkg
 
 ```bash
-$ npm run sync
+$ npm run sync-unpkg
 ```
 
 将对应的地址，复制粘贴到 Iceworks 设置面板的新增物料源位置，保存之后即可看到 Iceworks 的模板和区块界面出现了我们刚刚添加的自定义物料。

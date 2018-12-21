@@ -261,7 +261,7 @@ function initCompletedMessage(appPath, appName) {
   console.log('  You will see your materials in Iceworks');
   console.log();
   console.log('  We suggest that you can sync the materials json to fusion or unpkg by run: ');
-  console.log(chalk.cyan('    npm run sync-fusion') + '  or  ' + chalk.cyan('npm run sync'));
+  console.log(chalk.cyan('    npm run sync') + '  or  ' + chalk.cyan('npm run sync-unpkg'));
   console.log();
   console.log('Happy hacking!');
 }

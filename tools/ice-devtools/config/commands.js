@@ -29,11 +29,11 @@ module.exports = {
   generate: {
     desc: 'Generate materials json',
   },
-  'sync-fusion': {
+  sync: {
     desc: 'Sync materials json to https://fusion.design',
   },
-  sync: {
-    desc: 'Sync materials json to unpkg'
+  'sync-unpkg': {
+    desc: 'Sync materials json to https://unpkg.com'
   },
   clear: {
     desc: 'Clear cache data',
