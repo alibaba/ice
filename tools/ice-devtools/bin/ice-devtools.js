@@ -2,9 +2,9 @@
 const program = require('commander');
 const chalk = require('chalk');
 const semver = require('semver');
-const checkVersion = require('../utils/check-version');
 const packageJson = require('../package.json');
 const COMMANDS = require('../config/commands');
+
 const cwd = process.cwd();
 
 /**
