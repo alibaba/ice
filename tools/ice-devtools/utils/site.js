@@ -86,7 +86,7 @@ async function fetchSites(token) {
       console.log();
       console.log('获取站点失败。您可以自己创建一个站点或者请其他站点把您添加为成员');
       console.log(`创建站点文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
-      console.log(`添加成员文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
+      console.log(`添加成员文档: ${chalk.yellow('https://fusion.design/help.html#/site-user-management')}`);
       console.log();
       console.log();
     }
