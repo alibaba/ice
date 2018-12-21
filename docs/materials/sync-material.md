@@ -1,5 +1,5 @@
 ---
-title: 托管物料
+title: 物料托管
 order: 7
 category: 物料
 ---
