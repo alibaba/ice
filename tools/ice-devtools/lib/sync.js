@@ -24,8 +24,8 @@ async function requestUrl(data, token, url) {
     json: true,
     body: data,
   });
-  if (res.success === false && Array.isArray(res.data)) {
-    res.data.forEach((fail) =>
+  if (res.success === false && Array.isArray(res.data.fail)) {
+    res.data.fail.forEach((fail) =>
       console.log(
         chalk.yellow(`物料${fail.name}入库失败, 原因: ${fail.reason}`)
       )
