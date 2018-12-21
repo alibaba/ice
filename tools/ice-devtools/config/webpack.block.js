@@ -4,6 +4,7 @@ const fs = require('fs');
 const hbs = require('handlebars');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const getWebpackBaseConfig = require('./webpack.base');
+const getTempPath = require('../utils/temp-path');
 
 console.log('process.platform:', process.platform);
 
@@ -18,7 +19,9 @@ module.exports = function getWebpacksConfig(cwd) {
     __dirname,
     '../template/preview/block-react-index.js.hbs'
   );
-  const jsPath = path.join(__dirname, '../.temp/', 'block-react-index.js');
+
+  const tempPath = getTempPath();
+  const jsPath = path.join(tempPath, 'block-react-index.js');
   debug('%j', { entry, jsPath });
   const hbsTemplateContent = fs.readFileSync(hbsTemplatePath, 'utf-8');
   const compileTemplateContent = hbs.compile(hbsTemplateContent);
