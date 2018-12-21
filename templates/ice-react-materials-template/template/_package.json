@@ -3,7 +3,6 @@
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
-  "files": ["build"],
   "scripts": {
     "deploy": "npm run generate && npm run sync",
     "generate": "ice-devtools generate",
@@ -12,6 +11,7 @@
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
   },
+  "files": ["build"],
   "devDependencies": {
     "babel-eslint": "^8.1.2",
     "eslint": "^4.14.0",
