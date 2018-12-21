@@ -66,7 +66,12 @@ Greeting.defaultProps = {
 Greeting.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  links: PropTypes.array,
+  links: PropTypes.arrayOf({
+    external: PropTypes.bool,
+    path: PropTypes.string,
+    text: PropTypes.string,
+    link: PropTypes.string
+  })
 };
 
 export default Greeting;

@@ -3,10 +3,12 @@
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
+  "files": ["build"],
   "scripts": {
     "deploy": "npm run generate && npm run sync",
     "generate": "ice-devtools generate",
     "sync": "ice-devtools sync",
+    "sync-unpkg": "ice-devtools sync-unpkg",
     "lint": "npm run lint:nofix -- --fix",
     "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
   },
@@ -18,6 +20,9 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1"
+  },
+  "publishConfig": {
+    "registry": "{{registry}}"
   },
   "materialConfig": {
     "type": "react"

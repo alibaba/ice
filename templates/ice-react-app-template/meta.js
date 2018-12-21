@@ -3,6 +3,7 @@ module.exports = {
     title: {
       type: 'input',
       message: 'title',
+      default: 'demo scaffold',
       validate: (value) => {
         value = value.trim();
         if (!value) {
