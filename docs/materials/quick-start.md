@@ -140,5 +140,5 @@ $ git push
 
 这里我们只简单介绍了如何使用开发者工具快速初始化一个私有的物料项目，然后生成数据接入 Iceworks 的流程，以及对初始化目录的分析，接下来我们看看如何添加物料：
 
-- [区块开发](https://yuque.antfin-inc.com/zero/zngiwn/sgia12)
-- [模板开发](https://yuque.antfin-inc.com/zero/zngiwn/pkqklh)
+- [区块开发](https://alibaba.github.io/ice/materials/add-blocks)
+- [模板开发](https://alibaba.github.io/ice/materials/add-templates)
