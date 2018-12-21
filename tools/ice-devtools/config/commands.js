@@ -27,13 +27,13 @@ module.exports = {
     desc: 'Create screenshot.png',
   },
   generate: {
-    desc: 'Generate database json',
+    desc: 'Generate materials json',
   },
-  sync: {
-    desc: 'Sync materials to https://fusion.design',
+  'sync-fusion': {
+    desc: 'Sync materials josn to https://fusion.design',
   },
-  'sync-npm': {
-    desc: 'Sync database json to npm'
+  'sync': {
+    desc: 'Sync materials json to unpkg'
   },
   clear: {
     desc: 'Clear cache data',
