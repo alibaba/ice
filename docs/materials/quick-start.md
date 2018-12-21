@@ -34,6 +34,8 @@ $ ice-devtools -V
 
 ## 快速开始
 
+### 初始化项目
+
 开始自定义物料之前，需要先使用 ice-devtools 初始化一个约定的物料项目，可以把它理解为在日常开始做项目之前，需要先约定好项目目录结构和开发规范，这里开发物料也是同样的原则
 
 ```bash
@@ -48,8 +50,7 @@ $ ice-devtools init
 
 // 选择初始的物料模板
 ? materials template： (Use arrow keys)
-❯ @icedesign/ice-react-materials-template  :  基于 react 和 next 组件库的物料模板
-
+❯ @icedesign/ice-react-materials-template (React 标准模板)
 
 // 版本
 ? materials version：
@@ -58,23 +59,32 @@ $ ice-devtools init
 ? materials description：
 ```
 
-在初始化物料库时内置提供了三套物料模板：
+> 注释：初始化的物料库内置了一个区块和模板，默认是已经发到 npm 上的，生成项目后可直接生成数据，这样有利于快速串联工具到 Iceworks 的流程。
 
-- 如果你是 react 开发者，可以选择 react-materials-template，该模板内置基于 react 和 next 组件库相关的示例代码
-- 如果你是 vue 开发者，可以选择 vue-materials-template，该模板内置 vue 和 element-ui 组件库相关的示例代码
-- 如果以上两套模板都不适合你的场景，那么可以选择 universal-template 模板，即通用型物料库模板，可以自定义模板进行接入，如 angular + material ui 组件库的组合， vue + iview ui 组件库的组合等等，详细请查看如何[自定义物料模板](https://yuque.antfin-inc.com/zero/zngiwn/geh8ef)
+### 生成物料源
 
-这里选择 react-materials-template 为例，根据提示进行初始化，由于我们在模板内置了基础的示例代码，完成后可直接进入到项目根目录执行以下命令：
-
-> 注释：内置一个区块和模板，默认是已经发到 npm 上的，生成项目后可直接生成数据，这样有利于快速串联工具到 Iceworks 的流程。
+完成初始化后，进入到项目根目录执行以下命令，可生成物料源配置文件：
 
 ```bash
 $ cd my-materials
-$ npm run generate       // 在当前目录生成物料源配置文件
-$ npm run sync           // 将上面生成的配置文件同步到 unpkg 或 fusion，生成物料源地址
+$ npm run generate
 ```
 
-将对应的地址进行复制，粘贴到 Iceworks 设置面板的新增物料源位置，保存之后即可看到 Iceworks 的模板和区块界面出现了我们刚刚添加的自定义物料。
+对于生成好的物料源配置文件，我们可以选择将这个文件托管到 [fusion](https://fusion.design/) 或 [unpkg](https://unpkg.com/#/) 上，来生成一个可访问的 URL。分别对应如下命令：
+
+发布到 fusion 
+
+```bash
+$ npm run sync-fusion
+```
+
+发布到 unpkg
+
+```bash
+$ npm run sync
+```
+
+将对应的地址，复制粘贴到 Iceworks 设置面板的新增物料源位置，保存之后即可看到 Iceworks 的模板和区块界面出现了我们刚刚添加的自定义物料。
 
 ![Iceworks](https://cdn.nlark.com/lark/0/2018/png/71071/1543576468368-d5e730c2-af08-462e-9743-935da0f9131a.png)
 
@@ -82,9 +92,7 @@ $ npm run sync           // 将上面生成的配置文件同步到 unpkg 或 fu
 
 ## 目录结构
 
-接着上面的步骤，我们发现初始化的目录结构主要包含 components、blocks、layouts、pages、scaffolds 五个子目录， 这里针对每个目录做详细的说明：
-
-这里以选择 react-materials-template 为例，根据提示初始化后会自动生成如下目录结构，可以看到生成的目录里包含了 components、 blocks、layouts、pages、scaffolds，在目录结构部分我们会做详细的分析：
+接着上面的步骤，我们发现初始化的目录结构主要包含 blocks、scaffolds 这两个子目录， 这里针对每个目录做详细的说明：
 
 ```json
 my-materials/
