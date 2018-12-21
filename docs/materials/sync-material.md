@@ -28,6 +28,3 @@ category: 物料
 把物料源地址`https://fusion.design/api/v1/sites/xxxx/materials`, 添加到Iceworks 自定义物料源就可以使用.
 
 ![](https://img.alicdn.com/tfs/TB1o4AyxXzqK1RjSZFCXXbbxVXa-1740-1200.png)
-
-
-
