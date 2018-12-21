@@ -29,7 +29,7 @@ module.exports = async function addScaffold(type, cwd, opt, argvOpt) {
     {
       type: 'input',
       name: 'name',
-      message: 'Scaffold name',
+      message: 'scaffold name',
       validate: (value) => {
         value = value.trim();
         if (!value) {

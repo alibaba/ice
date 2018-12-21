@@ -45,7 +45,7 @@ function defaultQuestion(pkg) {
     {
       type: 'input',
       name: 'blockName',
-      message: 'block name',
+      message: 'block name (e.g. ExampleBlock)',
       validate: (value) => {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
           return 'Name must be a Upper Camel Case word, e.g. ExampleBlock.';
