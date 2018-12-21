@@ -41,8 +41,6 @@ async function getAskOptions(cwd, ...options) {
   const { templateType } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
   debug('ans: %j', templateType);
 
-  console.log(templateType);
-
   // react、vue、etc...
   const { type } = pkg.materialConfig;
   require(`./${templateType}/add`)(type, cwd, { pkg }, ...options);

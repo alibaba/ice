@@ -383,8 +383,9 @@ module.exports = function generateMaterialsDatabases(
       const file = path.join(distDir, materialName + '.json');
       fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
       console.log();
-      console.log(chalk.cyan(`Created ${materialName} db at ${file}.`));
-      console.log(chalk.cyan('The build folder is ready to be deployed.'));
+      console.log(`Created ${materialName} json at: ` + chalk.yellow(file));
+      console.log();
+      console.log('The build folder is ready to be deployed.');
       console.log();
     })
     .catch((err) => {

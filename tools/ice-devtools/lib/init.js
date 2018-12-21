@@ -52,22 +52,32 @@ async function initAsk(options = {}) {
       ])
     : { forInnerNet: false });
 
-  const { scope } = await (forInnerNet
-    ? { scope: '@alife' }
-    : inquirer.prompt([
-        {
-          type: 'input',
-          message: 'npm scope (optional)',
-          default: '',
-          name: 'scope',
-        },
-      ]));
+  const { scope } = forInnerNet ? await inquirer.prompt([
+    {
+      type: 'list',
+      message: 'please select the npm scope',
+      name: 'scope',
+      default: '@ali',
+      choices: [
+        '@ali',
+        '@alife'
+      ],
+    },
+  ]) : await inquirer.prompt([
+    {
+      type: 'input',
+      message: 'npm scope (optional)',
+      name: 'scope',
+    },
+  ]);
 
+  const projectName = path.basename(options.cwd);
   const { name } = await inquirer.prompt([
     {
       type: 'input',
-      message: 'materials name(like material-app)',
+      message: 'materials name',
       name: 'name',
+      default: projectName,
       require: true,
       validate: (value) => {
         if (!value) {
@@ -89,7 +99,10 @@ async function initAsk(options = {}) {
           message: 'please select the initial material template?',
           name: 'template',
           choices: [
-            '@icedesign/ice-react-materials-template',
+            {
+              name: '@icedesign/ice-react-materials-template (React 标准模板)',
+              value: '@icedesign/ice-react-materials-template'
+            },
             // TODO
             // '@icedesign/ice-vue-materials-template',
             // '@icedesign/universal-materials-template',
@@ -232,22 +245,23 @@ function initCompletedMessage(appPath, appName) {
   console.log();
   console.log('  Starts the block development server.');
   console.log(chalk.cyan('    cd blocks/Greeting'));
+  console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();
   console.log('  Starts the scaffold development server.');
   console.log(chalk.cyan('    cd scaffolds/lite'));
   console.log(chalk.cyan('    npm start'));
   console.log();
-  console.log('  The project is ready to be deployed.');
-  console.log(chalk.cyan('    npm run deploy'));
+  console.log('  Generate materials json.');
+  console.log(chalk.cyan('    npm run generate'));
   console.log();
-  console.log('We suggest that you begin by typing:');
   console.log(
-    'You can upload the JSON file to a static web server and put the URL at Iceworks settings panel.'
+    '  You can upload the JSON file to a static web server and put the URL at Iceworks settings panel.'
   );
-  console.log('You will see your materials in Iceworks');
+  console.log('  You will see your materials in Iceworks');
   console.log();
-  console.log(chalk.cyan('    npm run deploy'));
+  console.log('  We suggest that you can sync the materials json to fusion or unpkg by run: ');
+  console.log(chalk.cyan('    npm run sync') + '  or  ' + chalk.cyan('npm run sync-unpkg'));
   console.log();
   console.log('Happy hacking!');
 }
