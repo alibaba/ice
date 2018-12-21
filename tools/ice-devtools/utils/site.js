@@ -92,10 +92,13 @@ async function fetchSites(token) {
     }
   } catch (error) {
     const { response } = error;
-    if (response && (response.statusCode === 401 || response.statusCode === 403 || response.success === false)) {
+    if (response && (response.statusCode === 401 || response.statusCode === 403)) {
       console.log();
       console.log();
-      console.log(`鉴权失败,请前往 https://fusion.design 重新获取Token.\n请查看文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
+      console.log('鉴权失败,请前往 https://fusion.design 重新获取Token 或 请站点所有者把你添加为站点成员.');
+      console.log(`Token文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
+      console.log(`添加成员文档: ${chalk.yellow('https://fusion.design/help.html#/site-user-management')}`);
+      response.success === false && console.log(`错误信息: ${chalk.red(response.message)}`);
       console.log();
       console.log();
       tokenUtil.clearToken();
