@@ -6,12 +6,12 @@ export default class Home extends Component {
     const links = [
       {
         text: '模板开发',
-        path: 'https://yuque.antfin-inc.com/zero/zngiwn/pkqklh',
+        path: 'https://alibaba.github.io/ice/docs/materials/add-templates',
         external: true,
       },
       {
         text: '开发规范',
-        path: 'https://yuque.antfin-inc.com/zero/zngiwn/pkqklh',
+        path: 'https://alibaba.github.io/ice/docs/materials/data-specification',
         external: true,
       },
       {
