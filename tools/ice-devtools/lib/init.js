@@ -246,22 +246,23 @@ function initCompletedMessage(appPath, appName) {
   console.log();
   console.log('  Starts the block development server.');
   console.log(chalk.cyan('    cd blocks/Greeting'));
+  console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();
   console.log('  Starts the scaffold development server.');
   console.log(chalk.cyan('    cd scaffolds/lite'));
   console.log(chalk.cyan('    npm start'));
   console.log();
-  console.log('  The project is ready to be deployed.');
-  console.log(chalk.cyan('    npm run deploy'));
+  console.log('  Generate materials json.');
+  console.log(chalk.cyan('    npm run generate'));
   console.log();
-  console.log('We suggest that you begin by typing:');
   console.log(
-    'You can upload the JSON file to a static web server and put the URL at Iceworks settings panel.'
+    '  You can upload the JSON file to a static web server and put the URL at Iceworks settings panel.'
   );
-  console.log('You will see your materials in Iceworks');
+  console.log('  You will see your materials in Iceworks');
   console.log();
-  console.log(chalk.cyan('    npm run deploy'));
+  console.log('  We suggest that you can sync the materials json to unpkg or fusion by run: ');
+  console.log(chalk.cyan('    npm run sync') + '  or  ' + chalk.cyan('npm run sync-fusion'));
   console.log();
   console.log('Happy hacking!');
 }
