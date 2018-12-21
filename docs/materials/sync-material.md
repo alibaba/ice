@@ -9,11 +9,11 @@ category: 物料
 在项目根目录,运行`idev generate`之后。可以完成物料源静态数据(也就是一个json文件)的生成。
 这个静态物料源可以放在任何可以提供http服务的地方。
 
-实际中,我们发现,提供公网可访问的物料源对于许多用户都是一个难题,为此我们和(Fusion Design)[https://fusion.design]合作. 集成(Fusion Design)[https://fusion.design]的能力到官方开发工具。
+实际中,我们发现,提供公网可访问的物料源对于许多用户都是一个难题,为此我们和[Fusion Design](https://fusion.design)合作. 集成[Fusion Design](https://fusion.design)的能力到官方开发工具。
 
 
-运行`idev generate`之后,可以在根目录运行 `idev sync`, 第一次使用需要到(Fusion Design)[https://fusion.design]注册账号并建立站点。具体操作步骤见
-(Fusion Design 建站文档)[https://fusion.design/help.html#dev-create-site]
+运行`idev generate`之后,可以在根目录运行 `idev sync`, 第一次使用需要到[Fusion Design](https://fusion.design)注册账号并建立站点。具体操作步骤见
+[Fusion Design 建站文档](https://fusion.design/help.html#dev-create-site)
 
 此后这些信息会缓存下来,想要清理这些缓存数据,可以使用`idev clear`.
 
@@ -27,6 +27,7 @@ category: 物料
 
 把物料源地址`https://fusion.design/api/v1/sites/xxxx/materials`, 添加到Iceworks 自定义物料源就可以使用.
 
+![](https://img.alicdn.com/tfs/TB1o4AyxXzqK1RjSZFCXXbbxVXa-1740-1200.png)
 
 
 
