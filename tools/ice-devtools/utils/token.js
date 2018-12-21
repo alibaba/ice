@@ -1,12 +1,14 @@
 const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
+const chalk = require('chalk');
 const { promisify } = require('util');
+const getTempPath = require('./temp-path');
 
 const [readFile, writeFile] = [fs.readFile, fs.writeFile].map((fn) =>
   promisify(fn)
 );
-const TOKEN_PATH = path.join(__dirname, '../.temp/.token');
+const TOKEN_PATH = path.join(getTempPath(), '.token');
 
 async function tokenPrepare() {
   let token;
@@ -32,11 +34,12 @@ async function clearToken() {
 }
 
 async function writeToken() {
+  TokenFirstLyMessage();
   const answers = await inquirer.prompt([
     {
       name: 'token',
       message: 'Please input your https://fusion.design token: ',
-      validate: function(input) {
+      validate: function (input) {
         // Declare function as asynchronous, and save the done callback
         var done = this.async();
         if (typeof input === 'string' && input) {
@@ -56,3 +59,10 @@ module.exports = {
   writeToken, clearToken, tokenPrepare,
 };
 
+function TokenFirstLyMessage() {
+  console.log();
+  console.log();
+  console.log(`如果这是你第一次使用该功能,或者不知道如何获取Token。\n请查看文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
+  console.log();
+  console.log();
+}

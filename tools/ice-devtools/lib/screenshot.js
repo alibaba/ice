@@ -10,6 +10,7 @@ const logger = require('../utils/logger');
 const createlocalServer = require('../utils/local-server');
 const screenshotDOMElement = require('../utils/screenshot');
 const message = require('../utils/message');
+const getTempPath = require('../utils/temp-path');
 
 module.exports = function screenshot(cwd, opt) {
   const type = getType(cwd);
@@ -20,8 +21,8 @@ module.exports = function screenshot(cwd, opt) {
 
   const port = opt.port || 8990;
   const { selector, servePath, urlpath } = require(`./${type}/screenshot`)(cwd);
-
-  const screenshotTempPath = path.join(__dirname, '../.temp', 'screenshot.png'); // 临时地址
+  const tempPath = getTempPath();
+  const screenshotTempPath = path.join(tempPath, 'screenshot.png'); // 临时地址
 
   const url = `http://127.0.0.1:${port}${urlpath}`;
 

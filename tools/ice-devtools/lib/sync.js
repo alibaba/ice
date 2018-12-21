@@ -24,10 +24,10 @@ async function requestUrl(data, token, url) {
     json: true,
     body: data,
   });
-  if (res.success === false && Array.isArray(res.data)) {
-    res.data.forEach((fail) =>
+  if (res.success === false && Array.isArray(res.data.fail)) {
+    res.data.fail.forEach((fail) =>
       console.log(
-        chalk.yellow(`${fail.name} sync fail for reason: ${fail.reason}`)
+        chalk.yellow(`物料${fail.name}入库失败, 原因: ${fail.reason}`)
       )
     );
   }
@@ -56,11 +56,12 @@ async function uploadData(datas, token, site) {
       )}`;
     }
     spinner.succeed(
-      'done, if there may some failure, fix theme and sync again'
+      '已经通知 https://fusion.design 入库物料,入库速度约 5个物料每分钟'
     );
   } catch (error) {
-    spinner.fail('fail to sync, please try icedev --help');
+    spinner.fail('入库失败, please try icedev --help');
     debug('sync error: %o', error);
+    throw error;
   }
 }
 
@@ -126,7 +127,14 @@ module.exports = async function sync(cwd, opt) {
   try {
     const datas = dbReshape(db);
     await uploadData(datas, token, site);
-    console.log(chalk.green(`materials url: ${site.url}`));
+    console.log();
+    console.log();
+    console.log('物料同步完成');
+    console.log(`如果有入库失败的部分物料,请前往 https://github.com/alibaba-fusion/next 钉钉扫码入群求助`);
+    console.log(`物料源地址: ${chalk.green(site.url)}`);
+    console.log(`请添加到Iceworks中自定义物料源中使用.`);
+    console.log();
+    console.log();
   } catch (error) {
     console.log(chalk.red('sync fail'));
     console.log(error);

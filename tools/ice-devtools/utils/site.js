@@ -28,7 +28,7 @@ function getLocalSite(cwd) {
 }
 
 
-function writeLocalSite (cwd, site) {
+function writeLocalSite(cwd, site) {
   const pkgJSON = pkg.getPkgJSON(cwd);
   const siteData = {
     id: site.id,
@@ -56,7 +56,7 @@ async function fetchSites(token) {
   let sites;
   try {
     sites = await new Promise((resl, reject) => {
-      request(options, function(err, res, body) {
+      request(options, function (err, res, body) {
         if (err) {
           console.err(err);
           reject(err);
@@ -81,17 +81,41 @@ async function fetchSites(token) {
         resl(body.data);
       });
     });
+    if (!sites || !sites.length) {
+      console.log();
+      console.log();
+      console.log('获取站点失败。您可以自己创建一个站点或者请其他站点把您添加为成员');
+      console.log(`创建站点文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
+      console.log(`添加成员文档: ${chalk.yellow('https://fusion.design/help.html#/site-user-management')}`);
+      console.log();
+      console.log();
+    }
   } catch (error) {
     const { response } = error;
-    if (response && (response.statusCode === 401 || response.statusCode === 403 || response.success === false)) {
+    if (response && (response.statusCode === 401 || response.statusCode === 403)) {
       console.log();
-      console.log(chalk.red('  token authorization fail, you can find your token at https://fusion.design'));
+      console.log();
+      console.log('鉴权失败,请前往 https://fusion.design 重新获取Token 或 请站点所有者把你添加为站点成员.');
+      console.log(`Token文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
+      console.log(`添加成员文档: ${chalk.yellow('https://fusion.design/help.html#/site-user-management')}`);
+      response.success === false && console.log(`错误信息: ${chalk.red(response.message)}`);
+      console.log();
+      console.log();
       tokenUtil.clearToken();
     } else {
       logger.fatal(error);
     }
   }
+
   return sites;
+}
+
+function TokenFirstLyMessage() {
+  console.log();
+  console.log();
+  console.log(`如果这是你第一次使用该功能,或者不知道如何获取Token。\n请查看文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
+  console.log();
+  console.log();
 }
 
 async function selectSite(sites) {
@@ -117,6 +141,9 @@ async function getSite(cwd, token) {
   let site = getLocalSite(cwd);
   // 有则直接用本地的site
   if (site) {
+    console.log();
+    console.log(chalk.green('已从packge.json中,获取Fusion站点....'));
+    console.log();
     return site;
   }
 
