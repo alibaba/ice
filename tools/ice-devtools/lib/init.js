@@ -101,7 +101,7 @@ async function initAsk(options = {}) {
           name: 'template',
           choices: [
             {
-              name: 'React 标准模板',
+              name: '@icedesign/ice-react-materials-template (React 标准模板)',
               value: '@icedesign/ice-react-materials-template'
             },
             // TODO

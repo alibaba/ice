@@ -70,10 +70,11 @@ $ ice-devtools init
 
 ```bash
 $ cd my-materials
-$ npm run deploy       // 运行后会返回生成物料源地址，如 https://ice.alicdn.com/assets/react-materials.json
+$ npm run generate       // 在当前目录生成物料源配置文件
+$ npm run sync           // 将上面生成的配置文件同步到 unpkg 或 fusion，生成物料源地址
 ```
 
-生成物料源地址后，将对应的地址进行复制，粘贴到 Iceworks 设置面板的新增物料源位置，保存之后即可看到 Iceworks 的模板和区块界面出现了我们刚刚添加的自定义物料。
+将对应的地址进行复制，粘贴到 Iceworks 设置面板的新增物料源位置，保存之后即可看到 Iceworks 的模板和区块界面出现了我们刚刚添加的自定义物料。
 
 ![Iceworks](https://cdn.nlark.com/lark/0/2018/png/71071/1543576468368-d5e730c2-af08-462e-9743-935da0f9131a.png)
 
