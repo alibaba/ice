@@ -56,7 +56,7 @@ async function uploadData(datas, token, site) {
       )}`;
     }
     spinner.succeed(
-      '已经通知 https://fusion.design 入库物料,一般情况下10分钟左右能同步完成'
+      '已经通知 https://fusion.design 入库物料,入库速度约 5个物料每分钟'
     );
   } catch (error) {
     spinner.fail('入库失败, please try icedev --help');
