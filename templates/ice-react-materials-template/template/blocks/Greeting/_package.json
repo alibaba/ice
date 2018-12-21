@@ -29,6 +29,6 @@
     "name": "greeting-block",
     "title": "示例区块",
     "categories": ["其他"],
-    "screenshot": ""
+    "screenshot": "https://unpkg.com/@icedesign/greeting-block-example/screenshot.png"
   }
 }
