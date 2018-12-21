@@ -67,18 +67,17 @@ async function initAsk(options = {}) {
     {
       type: 'input',
       message: 'npm scope (optional)',
-      default: '',
       name: 'scope',
     },
   ]);
 
-  const basename = path.basename(options.cwd);
+  const projectName = path.basename(options.cwd);
   const { name } = await inquirer.prompt([
     {
       type: 'input',
       message: 'materials name',
       name: 'name',
-      default: basename,
+      default: projectName,
       require: true,
       validate: (value) => {
         if (!value) {
@@ -261,8 +260,8 @@ function initCompletedMessage(appPath, appName) {
   );
   console.log('  You will see your materials in Iceworks');
   console.log();
-  console.log('  We suggest that you can sync the materials json to unpkg or fusion by run: ');
-  console.log(chalk.cyan('    npm run sync') + '  or  ' + chalk.cyan('npm run sync-fusion'));
+  console.log('  We suggest that you can sync the materials json to fusion or unpkg by run: ');
+  console.log(chalk.cyan('    npm run sync-fusion') + '  or  ' + chalk.cyan('npm run sync'));
   console.log();
   console.log('Happy hacking!');
 }

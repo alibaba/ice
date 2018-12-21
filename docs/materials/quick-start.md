@@ -63,14 +63,14 @@ $ ice-devtools init
 
 ### 生成物料源
 
-完成初始化后，进入到项目根目录执行以下命令，可生成物料源配置文件：
+完成初始化后，进入到项目根目录执行以下命令，可生成物料源数据：
 
 ```bash
 $ cd my-materials
 $ npm run generate
 ```
 
-对于生成好的物料源配置文件，我们可以选择将这个文件托管到 [fusion](https://fusion.design/) 或 [unpkg](https://unpkg.com/#/) 上，来生成一个可访问的 URL。分别对应如下命令：
+对于生成好的物料源数据，我们可以选择将这个文件托管到 [fusion](https://fusion.design/) 或 [unpkg](https://unpkg.com/#/) 上，来生成一个可访问的 URL。分别对应如下命令：
 
 发布到 fusion 
 
