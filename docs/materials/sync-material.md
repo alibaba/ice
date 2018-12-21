@@ -6,8 +6,8 @@ category: 物料
 
 ## 物料托管
 
-在项目根目录,运行`idev generate`之后。可以完成物料源静态数据(也就是一个json文件)的生成。
-这个静态物料源可以放在任何可以提供http服务的地方。
+在项目根目录,运行`idev generate`之后。可以完成物料源静态数据的生成。
+关于物料的元数据描述，本质上是一份JSON数据, 可以放在任何可以提供http服务的地方。
 
 实际中,我们发现,提供公网可访问的物料源对于许多用户都是一个难题,为此我们和[Fusion Design](https://fusion.design)合作. 集成[Fusion Design](https://fusion.design)的能力到官方开发工具。
 
