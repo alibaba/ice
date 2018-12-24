@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tab, Button, Icon } from '@icedesign/base';
+import { Tab } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import CustomTable from './CustomTable';
 

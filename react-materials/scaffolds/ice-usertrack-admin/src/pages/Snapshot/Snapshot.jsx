@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import CustomBreadcrumb from '../../components/CustomBreadcrumb';
 import Filter from './components/Filter';
 import SnapshotTable from './components/SnapshotTable';
-import { throws } from 'assert';
 
 const getData = (length = 10) => {
   return Array.from({ length }).map((item, index) => {
