@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-react-app-template",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "ice react app template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
