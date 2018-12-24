@@ -250,6 +250,7 @@ function initCompletedMessage(appPath, appName) {
   console.log();
   console.log('  Starts the scaffold development server.');
   console.log(chalk.cyan('    cd scaffolds/lite'));
+  console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();
   console.log('  Generate materials json.');

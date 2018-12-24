@@ -29,7 +29,7 @@ function getRegistry(npmname) {
   if (isTnpm(npmname)) {
     return 'http://registry.npm.alibaba-inc.com';
   }
-  return 'http://registry.npm.com';
+  return 'http://registry.npmjs.com';
 }
 
 function getNpmScope(npmname) {

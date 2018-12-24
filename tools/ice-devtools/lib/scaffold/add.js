@@ -106,7 +106,7 @@ function completedMessage(scaffoldName, scaffoldPath) {
   );
   console.log();
   console.log('  Starts the development server.');
-  console.log(chalk.cyan(`    cd scaffold/${scaffoldName}`));
+  console.log(chalk.cyan(`    cd scaffolds/${scaffoldName}`));
   console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();

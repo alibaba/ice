@@ -113,7 +113,7 @@ function getNpmTime(npm, version = 'latest') {
       return [0, data.time];
     })
     .catch((err) => {
-      if ((err.response && err.response.status === 404) || err.message === 'Not found') {
+      if ((err.response && err.response.status === 404) || err.message === 'Not found' || err.message === 'not_found') {
         // 这种情况是该 npm 包名一次都没有发布过
         return [
           1,
