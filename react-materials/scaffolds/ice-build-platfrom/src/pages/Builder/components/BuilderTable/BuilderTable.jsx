@@ -6,12 +6,12 @@ import TableFilter from '../TableFilter';
 
 const ButtonGroup = Button.Group;
 
-const getData = () => {
-  return Array.from({ length: 20 }).map((item, index) => {
+const getData = (length) => {
+  return Array.from({ length }).map((item, index) => {
     return {
       id: index + 1,
       builder: `12022123${index}`,
-      name: '张三峰',
+      name: '淘小宝',
       description: '淘宝 Rax 项目构建器',
       createTime: `2018-06-${index + 1}`,
       executionTime: `2018-06-${index + 1}`,
@@ -24,16 +24,42 @@ const getData = () => {
 };
 
 export default class BuilderTable extends Component {
-  static displayName = 'BuilderTable';
+  state = {
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
+  componentDidMount() {
+    this.fetchData(10);
   }
+
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
+    });
+  };
+
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handleSubmit = (len) => {
+    this.fetchData(len);
+  };
 
   renderState = (value) => {
     return (
@@ -105,18 +131,30 @@ export default class BuilderTable extends Component {
   };
 
   render() {
+    const { data, isLoading } = this.state;
+
     return (
       <IceContainer>
         <div style={styles.tableHead}>
           <div style={styles.tableTitle}>构建器</div>
           <ButtonGroup size="large">
-            <Button type="primary">已发布</Button>
-            <Button type="primary">开发中</Button>
-            <Button type="primary">我的</Button>
+            <Button type="primary" onClick={() => this.handleSubmit(10)}>
+              已发布
+            </Button>
+            <Button type="primary" onClick={() => this.handleSubmit(3)}>
+              开发中
+            </Button>
+            <Button type="primary" onClick={() => this.handleSubmit(8)}>
+              我的
+            </Button>
           </ButtonGroup>
         </div>
-        <TableFilter />
-        <CustomTable columns={this.columnsConfig()} dataSource={getData()} />
+        <TableFilter handleSubmit={() => this.handleSubmit(5)} />
+        <CustomTable
+          columns={this.columnsConfig()}
+          dataSource={data}
+          isLoading={isLoading}
+        />
       </IceContainer>
     );
   }

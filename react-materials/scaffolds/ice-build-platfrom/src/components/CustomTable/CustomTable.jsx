@@ -7,11 +7,13 @@ export default class Home extends Component {
   static displayName = 'Home';
 
   static defaultProps = {
+    isLoading: false,
     columns: [],
     dataSource: [],
   };
 
   static propTypes = {
+    isLoading: PropTypes.bool,
     columns: PropTypes.array,
     dataSource: PropTypes.array,
   };
@@ -30,7 +32,7 @@ export default class Home extends Component {
   };
 
   render() {
-    const { dataSource, columns } = this.props;
+    const { isLoading, dataSource, columns } = this.props;
 
     return (
       <div>
@@ -38,6 +40,7 @@ export default class Home extends Component {
           dataSource={dataSource}
           hasBorder={false}
           className="custom-table"
+          isLoading={isLoading}
         >
           {columns.map((item) => {
             return (
