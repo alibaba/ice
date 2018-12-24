@@ -47,7 +47,7 @@
     "localization": false
   },
   "themeConfig": {
-    "primaryColor": "#1890FF"
+    "primaryColor": "#447eff"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
@@ -56,7 +56,7 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1H4NBvLImBKNjSZFlXXc43FXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1CzHYxVzqK1RjSZFvXXcB7VXa-2872-1580.png"
   },
   "engines": {
     "node": ">=8.0.0"

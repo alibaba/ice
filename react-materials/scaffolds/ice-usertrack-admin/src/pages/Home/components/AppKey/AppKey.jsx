@@ -19,32 +19,10 @@ function handleClick(key) {
 }
 
 export default class AppKey extends Component {
-  static displayName = 'AppKey';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  renderTabExtraContent = () => {
-    return (
-      <Button type="primary" size="large" onClick={handleClick}>
-        <Icon type="add" /> 新建 AppKey
-      </Button>
-    );
-  };
-
   render() {
     return (
       <IceContainer style={styles.container}>
-        <Tab
-          onChange={handleChange}
-          tabBarExtraContent={this.renderTabExtraContent()}
-        >
+        <Tab onChange={handleChange}>
           {tabs.map((item) => {
             return (
               <TabPane key={item.key} tab={item.tab} onClick={handleClick}>

@@ -3,13 +3,6 @@ import CustomBreadcrumb from '../../components/CustomBreadcrumb';
 import AppKey from './components/AppKey';
 
 export default class Home extends Component {
-  static displayName = 'Home';
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     const breadcrumb = [
       {

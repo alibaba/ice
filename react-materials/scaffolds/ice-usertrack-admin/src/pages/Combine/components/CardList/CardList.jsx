@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Grid, Balloon } from '@icedesign/base';
+import { Icon, Grid, Balloon, Feedback } from '@icedesign/base';
 import FoundationSymbol from 'foundation-symbol';
 
 const { Row, Col } = Grid;
@@ -19,23 +19,16 @@ const getData = () => {
 };
 
 export default class CardList extends Component {
-  static displayName = 'CardList';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  handleAdd = () => {
+    Feedback.toast.prompt('只有管理员才能新增测试方案');
+  };
 
   render() {
     const data = getData();
     return (
       <div style={styles.container}>
         <Row wrap gutter="20">
-          <Col l="6">
+          <Col l="6" onClick={this.handleAdd}>
             <div style={{ ...styles.card, ...styles.createScheme }}>
               <Icon type="add" size="large" style={styles.addIcon} />
               <span>新增埋点</span>

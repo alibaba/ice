@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Input, Button } from '@icedesign/base';
+import { Grid, Input, Button, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -11,29 +11,16 @@ import {
 const { Row, Col } = Grid;
 
 export default class Filter extends Component {
-  static displayName = 'Filter';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: {},
-    };
-  }
-
-  formChange = (value) => {
-    console.log('value', value);
-    this.setState({
-      value,
-    });
+  state = {
+    value: {},
   };
 
   validateAllFormField = () => {
     this.refs.form.validateAll((errors, values) => {
-      console.log('errors', errors, 'values', values);
+      if (errors) {
+        return;
+      }
+      this.props.onChange(values);
     });
   };
 
@@ -41,11 +28,7 @@ export default class Filter extends Component {
     return (
       <IceContainer style={styles.container}>
         <h4 style={styles.title}>快照过滤</h4>
-        <IceFormBinderWrapper
-          value={this.state.value}
-          onChange={this.formChange}
-          ref="form"
-        >
+        <IceFormBinderWrapper value={this.state.value} ref="form">
           <Row wrap gutter="20" style={styles.formRow}>
             <Col l="7">
               <div style={styles.formItem}>
