@@ -12,14 +12,6 @@ import services from '../services';
 
 const { settings, shared } = services;
 
-function uriWithTimestamp(uri) {
-  if (uri.indexOf('?') > -1) {
-    return uri + '&v=' + Date.now();
-  } else {
-    return uri + '?v=' + Date.now();
-  }
-}
-
 class Materials {
   @observable
   materials = [];
@@ -103,7 +95,13 @@ class Materials {
   fetchByMaterial(material) {
     return new Promise((resolve, reject) => {
       request(
-        { uri: uriWithTimestamp(material.source), json: true },
+        { 
+          uri: material.source, 
+          json: true,
+          headers: {
+            'Cache-Control': 'no-cache'
+          } 
+        },
         (err, res, body) => {
           if (err) {
             reject(err); // 总是返回值

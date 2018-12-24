@@ -8,24 +8,25 @@ import filterMaterial from '../lib/filter-material';
 
 const { settings } = services;
 
-function uriWithTimestamp(uri) {
-  if (uri.indexOf('?') > -1) {
-    return uri + '&v=' + Date.now();
-  } else {
-    return uri + '?v=' + Date.now();
-  }
-}
-
 function requestJSON(uri) {
   return new Promise((resolve) => {
-    request({ uri: uriWithTimestamp(uri), json: true }, (err, res, body) => {
-      if (err) {
-        console.error('物料请求失败', uri); // eslint-disable-line
-        resolve(null); // 总数是返回值
-      } else {
-        resolve(body);
+    request(
+      { 
+        uri, 
+        json: true,
+        headers: {
+          'Cache-Control': 'no-cache'
+        } 
+      }, 
+      (err, res, body) => {
+        if (err) {
+          console.error('物料请求失败', uri); // eslint-disable-line
+          resolve(null); // 总数是返回值
+        } else {
+          resolve(body);
+        }
       }
-    });
+    );
   });
 }
 
