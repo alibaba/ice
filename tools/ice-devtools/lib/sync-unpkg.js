@@ -15,7 +15,7 @@ module.exports = function sync(cwd, opt) {
   process.on('close', (code) => {
     if (code == 0) {
       const materialType = pkgJSON.materialConfig.type;
-      const materialUrl = (isTnpm ? 'https://unpkg.alibaba-inc.com/' : 'https://unpkg.com/') + `${pkgJSON.name}/build/${materialType}-materials.json`;
+      const materialUrl = (isTnpm ? 'http://unpkg.alibaba-inc.com/' : 'http://unpkg.com/') + `${pkgJSON.name}/build/${materialType}-materials.json`;
 
       console.log();
       // console.log(chalk.cyan('material json sync success!'));

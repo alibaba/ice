@@ -24,11 +24,12 @@ module.exports = function getBabelrc() {
       ],
       [
         'babel-plugin-import',
-        { libraryName: '@icedesign/base' },
-        '@icedesign/base',
-      ],
-      ['babel-plugin-import', { libraryName: '@alife/next' }, '@alife/next'],
-      ['babel-plugin-import', { libraryName: '@alifd/next' }, '@alifd/next'],
+        [
+          { libraryName: '@icedesign/base', style: true },
+          { libraryName: '@alife/next', style: true },
+          { libraryName: '@alifd/next', style: true },
+        ],
+      ]
     ]),
   };
 };
