@@ -21,9 +21,8 @@ category: 物料
  `idev sync` 命令运行完成以后，会返回如下内容:
  
 > 物料同步完成
-> 如果有入库失败的部分物料，请前往 https://github.com/alibaba-fusion/next 钉钉扫码入群求助
 > 物料源地址: https://fusion.design/api/v1/sites/xxxx/materials
-> 请添加到Iceworks中自定义物料源中使用。 
+> 请添加到 Iceworks 中自定义物料源中使用。 
 
 把物料源地址`https://fusion.design/api/v1/sites/xxxx/materials`， 添加到Iceworks 自定义物料源就可以使用。
 

@@ -130,9 +130,8 @@ module.exports = async function sync(cwd, opt) {
     console.log();
     console.log();
     console.log('物料同步完成');
-    console.log(`如果有入库失败的部分物料,请前往 https://github.com/alibaba-fusion/next 钉钉扫码入群求助`);
     console.log(`物料源地址: ${chalk.green(site.url)}`);
-    console.log(`请添加到Iceworks中自定义物料源中使用.`);
+    console.log(`请添加到 Iceworks 中自定义物料源中使用.`);
     console.log();
     console.log();
   } catch (error) {
