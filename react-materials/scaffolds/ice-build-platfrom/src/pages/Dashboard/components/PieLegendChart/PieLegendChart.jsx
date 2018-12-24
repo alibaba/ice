@@ -44,14 +44,17 @@ const config = {
           y: 61.41,
           sliced: true,
           selected: true,
+          color: '#5e83fb',
         },
         {
           name: 'Rollup',
           y: 11.84,
+          color: '#999',
         },
         {
           name: 'Parcel',
           y: 10.26,
+          color: '#333',
         },
       ],
     },
@@ -59,17 +62,6 @@ const config = {
 };
 
 export default class PieLengendChart extends Component {
-  static displayName = 'PieLengendChart';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <IceContainer>

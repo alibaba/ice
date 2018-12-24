@@ -49,27 +49,32 @@ const config = {
           y: 41.41,
           sliced: true,
           selected: true,
-          color: '#f29b70',
+          color: '#5e83fb',
         },
         {
           name: 'Rollup',
           y: 11.84,
+          color: '#ee6f6d',
         },
         {
           name: 'Parcel',
           y: 10.26,
+          color: '#999',
         },
         {
           name: 'Gulp',
           y: 10.85,
+          color: '#333',
         },
         {
           name: 'Browserify',
           y: 14.67,
+          color: '#f7d947',
         },
         {
           name: 'Grunt',
           y: 10.97,
+          color: '#57ca9a',
         },
       ],
     },
@@ -77,12 +82,6 @@ const config = {
 };
 
 export default class BasicPieChart extends Component {
-  static displayName = 'BasicPieChart';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
   constructor(props) {
     super(props);
     this.state = {

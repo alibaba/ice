@@ -18,6 +18,7 @@
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.4",
+    "@icedesign/form-binder": "^1.0.3",
     "@icedesign/img": "^0.1.1",
     "@icedesign/layout": "^0.1.2",
     "@icedesign/menu": "^0.1.1",
@@ -47,7 +48,7 @@
     "localization": false
   },
   "themeConfig": {
-    "primaryColor": "#f0824c"
+    "primaryColor": "#5e83fb"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
@@ -56,6 +57,6 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1PS.xJYSYBuNjSspfXXcZCpXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB16CTXx7voK1RjSZFNXXcxMVXa-2872-1580.png"
   }
 }
