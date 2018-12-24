@@ -1,22 +1,10 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
 import { Button, Progress } from '@icedesign/base';
-import request from 'request';
+import requestMaterial from '../../lib/request-material';
 import { hot } from 'react-hot-loader';
 
 const OSS_CDN_DOMAIN = __OSS_CDN_DOMAIN__;
-
-function requestJSON(uri) {
-  return new Promise((resolve, reject) => {
-    request({ uri: uri, json: true }, (err, res, body) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(body);
-      }
-    });
-  });
-}
 
 // 载入默认全局样式 normalize 、.clearfix 和一些 mixin 方法等
 import '@icedesign/base/reset.scss';
@@ -95,7 +83,7 @@ class Updater extends Component {
   fetchVersionLog = (meta) => {
     if (meta.version) {
       const updateLogUrl = `${OSS_CDN_DOMAIN}/changelog/${meta.version}.json`;
-      requestJSON(updateLogUrl)
+      requestMaterial(updateLogUrl)
         .then((res) => {
           if (typeof res === 'object') {
             if (Array.isArray(res.log)) {

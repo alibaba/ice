@@ -3,7 +3,7 @@
  */
 
 import { observable, action, computed, toJS } from 'mobx';
-import request from 'request';
+import requestMaterial from '../lib/request-material';
 
 import AdditionalBlocks from './additional-blocks';
 import AdditionalScaffolds from './additional-scaffolds';
@@ -93,24 +93,7 @@ class Materials {
   }
 
   fetchByMaterial(material) {
-    return new Promise((resolve, reject) => {
-      request(
-        { 
-          uri: material.source, 
-          json: true,
-          headers: {
-            'Cache-Control': 'no-cache'
-          } 
-        },
-        (err, res, body) => {
-          if (err) {
-            reject(err); // 总是返回值
-          } else {
-            resolve(body);
-          }
-        }
-      );
-    });
+    return requestMaterial(material.source);
   }
 
   /**
