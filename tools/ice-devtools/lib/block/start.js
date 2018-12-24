@@ -18,6 +18,7 @@ module.exports = function blockDevStart(cwd, opt) {
   config.devServer
     .compress(false)
     .host('localhost')
+    .disableHostCheck(true)
     .stats({
       colors: true,
       chunks: false,
