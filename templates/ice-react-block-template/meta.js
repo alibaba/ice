@@ -1,3 +1,4 @@
+// 默认配置
 const BLOCK_CATEGORIES = [
   '表格',
   '表单',
