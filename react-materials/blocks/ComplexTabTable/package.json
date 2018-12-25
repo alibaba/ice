@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/complex-tab-table-block",
-  "version": "0.1.10",
+  "version": "0.1.14",
   "description": "附带复杂的 Tab 多级筛选项的表格",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -50,5 +48,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/complex-tab-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/complex-tab-table"
 }

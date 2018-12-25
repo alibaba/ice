@@ -1,11 +1,11 @@
 {
   "name": "@icedesign/qr-code-block",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "根据配置属性生成二维码",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "@icedesign/base": "^0.2.3",
     "@icedesign/container": "^0.1.4",
     "@icedesign/form-binder": "^0.1.7",
-    "qrcode.react": "^0.8.0",
+    "qrcode.react": "0.7.2",
     "react-color": "^2.14.1"
   },
   "devDependencies": {
@@ -39,5 +39,6 @@
       "数据展示"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1oWRSIuOSBuNjy0FdXXbDnVXa-1960-1164.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/qr-code"
 }

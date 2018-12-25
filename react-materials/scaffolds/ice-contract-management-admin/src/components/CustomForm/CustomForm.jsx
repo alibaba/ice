@@ -22,6 +22,7 @@ class CustomForm extends Component {
   static displayName = 'CustomForm';
 
   static propTypes = {
+    value: PropTypes.object.isRequired,
     config: PropTypes.array.isRequired,
     handleSubmit: PropTypes.func,
     formChange: PropTypes.func,
@@ -36,30 +37,8 @@ class CustomForm extends Component {
     formChange: () => {},
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.initFields,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
-      this.setState({
-        value: nextProps.value,
-      });
-    }
-  }
-
   formChange = (value) => {
-    this.setState(
-      {
-        value,
-      },
-      () => {
-        this.props.formChange(value);
-      }
-    );
+    this.props.formChange(value);
   };
 
   handleSubmit = (e) => {
@@ -138,8 +117,7 @@ class CustomForm extends Component {
   };
 
   render() {
-    const { config, extraContent, handleReset } = this.props;
-    const { value } = this.state;
+    const { value, config, extraContent, handleReset } = this.props;
 
     return (
       <div style={styles.formContainer}>

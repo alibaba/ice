@@ -1,11 +1,11 @@
 {
-  "name": "@react-materials/map-with-a-marker",
-  "version": "0.1.1",
+  "name": "@icedesign/map-with-a-marker",
+  "version": "1.0.0",
   "description": "Map With A Marker",
   "author": "yuanyan <yuanyan.cao@gmail.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -34,5 +34,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1rtgvCDtYBeNjy1XdXXXXyVXa-2058-802.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/map-with-a-marker/preview"
+  "homepage": "https://alibaba.github.io/ice/block/map-with-a-marker"
 }

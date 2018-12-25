@@ -1,11 +1,11 @@
 {
   "name": "@icedesign/release-intro-block",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "根据平台信息，展示对应软件下载，以及软件介绍等。",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -34,5 +34,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB19OTopKuSBuNjy1XcXXcYjFXa-2624-1488.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/release-intro/preview"
+  "homepage": "https://alibaba.github.io/ice/block/release-intro"
 }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import { DataView } from '@antv/data-set';
 import IceContainer from '@icedesign/container';
+import mockData from './data';
 
 export default class ChartStock extends Component {
   static displayName = 'ChartStock';
@@ -14,22 +14,8 @@ export default class ChartStock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: mockData,
     };
-  }
-
-  componentDidMount() {
-    axios
-      .get('/mock/chart-stock.json')
-      .then((response) => {
-        console.log(response);
-        this.setState({
-          data: response.data && response.data.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   render() {
@@ -84,7 +70,7 @@ export default class ChartStock extends Component {
             <Axis name="stockRange" visible={false} />
             <Tooltip
               showTitle={false}
-              itemTpl="<li data-index={index} style=&quot;margin-bottom:4px;&quot;><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}<br/><span style=&quot;padding-left: 16px&quot;>开盘价：{start}</span><br/><span style=&quot;padding-left: 16px&quot;>收盘价：{end}</span><br/><span style=&quot;padding-left: 16px&quot;>最高价：{max}</span><br/><span style=&quot;padding-left: 16px&quot;>最低价：{min}</span><br/><span style=&quot;padding-left: 16px&quot;>成交量：{volumn}</span><br/></li>"
+              itemTpl='<li data-index={index} style="margin-bottom:4px;"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}<br/><span style="padding-left: 16px">开盘价：{start}</span><br/><span style="padding-left: 16px">收盘价：{end}</span><br/><span style="padding-left: 16px">最高价：{max}</span><br/><span style="padding-left: 16px">最低价：{min}</span><br/><span style="padding-left: 16px">成交量：{volumn}</span><br/></li>'
             />
             <Geom type="area" position="date*range" color="#64b5f6" />
             <Geom

@@ -95,50 +95,7 @@ ICE 提供了主题功能，以满足业务和品牌多样化的视觉需求，�
 
 ## 代理配置 - proxyConfig
 
-代理功能是前后端联调时很常见的需求，为了代码维护性考虑前端请求后端接口时写的都是相对路径如 `/api/getFoo.json`，此时如果我们在本地通过访问`http://127.0.0.1:4444` 来调试页面，所有相对路径的 API 最终都会变成 `http://127.0.0.1:4444/api/getFoo.json`，因为我们调试服务并没有提供这些接口，这些请求自然都会以 404 而结束。这时候我们就需要代理功能出场了，在 package.json 中新增 proxyConfig 字段即可进行代理配置：
-
-#### 配置示例
-
-```json
-{
-  "proxyConfig": {
-    "/api/**": {
-      "enable": true,
-      "target": "http://example.com/api"
-    }
-  }
-}
-```
-
-#### 匹配规则
-
-```json
-         foo://example.com:8042/over/there?name=ferret#nose
-         \_/   \______________/\_________/ \_________/ \__/
-          |           |            |            |        |
-       scheme     authority       path        query   fragment
-```
-
-- `/` 匹配所有规则
-- `/api` 匹配 path 以 `/api` 开头的路径
-
-#### 代理示例
-
-```js
-axios({
-  url: '/api/proxy',
-  method: 'get',
-})
-  .then((response) => {})
-  .catch((err) => {});
-```
-
-请求发出后将会被代理到  `http://example.com/api/proxy`
-
-#### 注意事项
-
-- 代理之后我们可以通过相对路径的接口正常请求到后端服务，但是如果后端接口做了帐号登录鉴权之类的事情请求一样回失败，因为此时调试页面里并没有登录相关的 cookie 信息
-- 代理之后可以理解为请求是从服务端发出，因此绕过了浏览器的同源策略，一定程度可以解决跨域问题，但一样无法绕过上文提到的 cookie 鉴权等相关问题
+参考 [Iceworks 插件-代理配置](#/docs/iceworks/plugins-proxy)
 
 ## 构建配置 - buildConfig
 
@@ -216,40 +173,6 @@ module.exports = (context) => {
 };
 ```
 
-### 字体本地化配置
-
-`@icedesign/base@0.2.4` 版本后字体文件已添加到包中。默认使用网络 cdn 字体文件，如果需要将字体本地化的，按照如下配置修改即可。
-
-修改 webpackrc.js 增加一个 alias 指定字体文件目录。
-
-```js
-const path = require('path');
-
-module.exports = (context) => {
-  return {
-    resolve: {
-      alias: {
-        '@fonts': '@icedesign/base/fonts',
-      },
-    },
-  };
-};
-```
-
-通过 themeConfig 修改 sass 中的字体默认值
-
-font-custom-path 变量名自定义字体文件路径, 修改 package.json 文件下的 themeConfig 字段内容：
-
-```json
-{
-  "themeConfig": {
-+   "font-custom-path": "~@fonts/"
-  }
-}
-```
-
-配置好后重启服务即可, 务必确认 @icedesign/base 版本大于 0.2.4
-
 ### 修改 publicPath
 
 配置 webpack 的 [output.publicPath](https://webpack.js.org/configuration/output/#output-publicpath) 属性。
@@ -267,7 +190,7 @@ module.exports = (context) => {
 
 [详细说明](https://github.com/alibaba/ice/wiki/%E8%AE%BE%E7%BD%AE%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E8%B7%AF%E5%BE%84-publicPath)
 
-### DefinePlugin
+### 使用 DefinePlugin
 
 [官方文档](https://webpack.js.org/plugins/define-plugin/)
 
@@ -277,6 +200,7 @@ module.exports = (context) => {
 
 ```js
 module.exports = (context) => {
+  const { webpack } = context;
   return {
     plugins: [
       new webpack.DefinePlugin({
@@ -301,27 +225,24 @@ console.log(ASSETS_VERSION);
 ```javascript
 const path = require('path');
 
-module.exports = {
-  //...
-  resolve: {
-    alias: {
-      Utilities: path.resolve(__dirname, 'src/utilities/'),
-      Templates: path.resolve(__dirname, 'src/templates/'),
+module.exports = () => {
+  return {
+    //...
+    resolve: {
+      alias: {
+        Utilities: path.resolve(__dirname, 'src/utilities/'),
+        Templates: path.resolve(__dirname, 'src/templates/'),
+      },
     },
-  },
-};
+  };
+}
 ```
 
 现在，替换「在导入时使用相对路径」这种方式，就像这样：
 
-```js
-import Utility from '../../utilities/utility';
-```
-
-你可以这样使用别名：
-
-```js
-import Utility from 'Utilities/utility';
+```diff
+-import Utility from '../../utilities/utility';
++import Utility from 'Utilities';
 ```
 
 ### Mock

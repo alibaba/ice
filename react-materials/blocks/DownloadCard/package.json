@@ -1,13 +1,11 @@
 {
   "name": "@icedesign/download-card-block",
-  "version": "0.1.7",
+  "version": "0.1.11",
   "description": "下载型信息卡片",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -48,5 +46,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/download-card/preview"
+  "homepage": "https://alibaba.github.io/ice/block/download-card"
 }

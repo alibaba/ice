@@ -1,12 +1,12 @@
 {
   "name": "@icedesign/creative-login-block",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "左右布局的登录页",
-  "homepage": "https://alibaba.github.io/ice/block/creative-login/preview",
+  "homepage": "https://alibaba.github.io/ice/block/creative-login",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",

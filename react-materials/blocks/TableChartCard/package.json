@@ -1,12 +1,12 @@
 {
   "name": "@icedesign/table-chart-card-block",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "适用于图表和表格组合的展示场景",
   "author": "",
-  "homepage": "https://alibaba.github.io/ice/block/table-chart-card/preview",
+  "homepage": "https://alibaba.github.io/ice/block/table-chart-card",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",

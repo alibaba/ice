@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/overview-board-block",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "卡片形式的概览数据",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,7 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -40,5 +40,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1ueUZzmtYBeNjSspkXXbU8VXa-2760-544.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/overview-board/preview"
+  "homepage": "https://alibaba.github.io/ice/block/overview-board"
 }

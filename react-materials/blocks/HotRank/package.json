@@ -1,12 +1,12 @@
 {
-  "name": "@react-materials/hot-rank-block",
-  "version": "1.0.1",
+  "name": "@icedesign/hot-rank-block",
+  "version": "1.0.0",
   "description": "展示关键词、关键点热度",
-  "homepage": "https://alibaba.github.io/ice/block/hot-rank/preview",
+  "homepage": "https://alibaba.github.io/ice/block/hot-rank",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",

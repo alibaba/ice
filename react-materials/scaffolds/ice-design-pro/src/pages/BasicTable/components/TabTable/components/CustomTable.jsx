@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Table } from '@icedesign/base';
 
 export default class CustomTable extends Component {
   static displayName = 'CustomTable';
+
+  static propTypes = {
+    dataSource: PropTypes.array,
+    columns: PropTypes.array.isRequired,
+  };
 
   static defaultProps = {
     dataSource: [],

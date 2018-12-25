@@ -1,12 +1,12 @@
 {
-  "name": "@react-materials/data-overview-block",
-  "version": "1.0.1",
+  "name": "@icedesign/data-overview-block",
+  "version": "1.0.0",
   "description": "基础数据概览",
-  "homepage": "https://alibaba.github.io/ice/block/data-overview/preview",
+  "homepage": "https://alibaba.github.io/ice/block/data-overview",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",

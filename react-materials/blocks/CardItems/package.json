@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/card-items-block",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "用卡片展示信息",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,7 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -41,5 +41,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1Qy4EtuuSBuNjy1XcXXcYjFXa-2554-1198.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/card-items/preview"
+  "homepage": "https://alibaba.github.io/ice/block/card-items"
 }

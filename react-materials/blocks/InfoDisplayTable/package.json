@@ -1,13 +1,11 @@
 {
   "name": "@icedesign/info-display-table-block",
-  "version": "0.1.7",
+  "version": "0.1.10",
   "description": "两栏信息展示型表格",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/info-display-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/info-display-table"
 }

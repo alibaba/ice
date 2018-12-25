@@ -1,0 +1,73 @@
+.header-container {
+  background: #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  .header-content {
+    height: 62px;
+    padding: 0 20px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-navbar {
+    display: flex;
+    flex: auto;
+    justify-content: flex-end;
+    flex-direction: row;
+    .ice-menu {
+      background: transparent;
+      .ice-menu-submenu-title,
+      .ice-menu-item {
+        font-size: 14px;
+        a:hover {
+          color: #2077ff;
+        }
+      }
+    }
+  }
+
+  .user-avatar {
+    margin-right: 12px;
+    border-radius: 4px;
+  }
+
+  .user-department {
+    font-size: 12px;
+    color: #333;
+  }
+
+  .ice-design-header-userpannel {
+    margin-left: 20px;
+    cursor: pointer;
+    .user-profile {
+      display: inline-block;
+      text-align: center;
+      margin-bottom: 2px;
+      color: #333;
+    }
+    .icon-down {
+      margin-left: 2px;
+      color: #333;
+    }
+  }
+}
+
+.user-profile-menu {
+  width: 130px;
+  border-radius: 6px;
+  padding: 0 16px;
+  .user-profile-menu-item {
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    color: #666;
+    cursor: pointer;
+    a:hover {
+      color: #2077ff;
+    }
+    i {
+      margin-right: 5px;
+    }
+  }
+}

@@ -1,10 +1,10 @@
 ---
 title: 在 create-react-app 中使用飞冰组件
-order: 3
+order: 8
 category: 进阶指南
 ---
 
-Iceworks 默认提供了基于 `create-react-app` 的模板，该模板可以无缝使用飞冰组件、区块、模板等能力，[参见文档](https://alibaba.github.io/ice/docs/advanced/work-with-create-react-app)。
+Iceworks 默认提供了基于 `create-react-app` 的模板，该模板可以无缝使用飞冰组件、区块、模板等能力，[参见文档](#docs/advanced/work-with-create-react-app)。
 
 如果上述模板不能满足你的需求，请参考本篇文章，本文讲述如何在使用 create-react-app 创建的项目中使用飞冰相关的物料。PS: 其他工程工具原理相同。
 

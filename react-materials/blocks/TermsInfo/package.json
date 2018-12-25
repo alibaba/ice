@@ -1,13 +1,11 @@
 {
   "name": "@icedesign/terms-info-block",
-  "version": "0.1.9",
+  "version": "0.1.12",
   "description": "协议信息展示",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/terms-info/preview"
+  "homepage": "https://alibaba.github.io/ice/block/terms-info"
 }

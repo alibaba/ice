@@ -4,4 +4,4 @@
 
 d2-crud
 
-![截图](http://fairyever.qiniudn.com/20180907163636.png)
+![截图](https://qiniucdn.fairyever.com/20180907163636.png)

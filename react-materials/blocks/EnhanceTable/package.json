@@ -1,13 +1,11 @@
 {
   "name": "@icedesign/enhance-table-block",
-  "version": "0.1.8",
+  "version": "0.1.12",
   "description": "附带简单表单筛选功能的增强筛选表单",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -50,5 +48,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/enhance-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/enhance-table"
 }

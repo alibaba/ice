@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import axios from 'axios';
 import { Tab, Button, Icon, Grid } from '@icedesign/base';
+import data from './data';
 import './DownloadCard.scss';
 
 const { Row, Col } = Grid;
@@ -17,32 +17,12 @@ export default class DownloadCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabData: {},
+      tabData: data,
     };
   }
 
-  /**
-   * 异步获取数据
-   */
-  getData = () => {
-    axios
-      .get('/mock/download-card.json')
-      .then((response) => {
-        this.setState({
-          tabData: response.data.data || {},
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  componentDidMount() {
-    this.getData();
-  }
-
-  renderContent = (data) => {
-    return data.map((item, index) => {
+  renderContent = (items) => {
+    return items.map((item, index) => {
       return (
         <Col key={index}>
           <div key={index} style={styles.columnCardItem}>

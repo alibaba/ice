@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/chart-gauge-block",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -47,5 +45,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/chart-gauge/preview"
+  "homepage": "https://alibaba.github.io/ice/block/chart-gauge"
 }

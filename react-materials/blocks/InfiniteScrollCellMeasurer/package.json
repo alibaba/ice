@@ -1,5 +1,5 @@
 {
-  "name": "@react-materials/infinite-scroll-cell-measurer-block",
+  "name": "@icedesign/infinite-scroll-cell-measurer-block",
   "version": "1.0.0",
   "description": "无限滚动的表格",
   "author": {
@@ -8,7 +8,7 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -39,5 +39,6 @@
       "列表"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1tlWrGHGYBuNjy0FoXXciBFXa-3450-860.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/infinite-scroll-cell-measurer"
 }

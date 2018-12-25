@@ -1,43 +1,33 @@
+import React, { Component, Suspense } from 'react';
+import PageLoading from '../../components/PageLoading';
 
-
-import React, { Component } from 'react';
-
-import DisplayCard from './components/DisplayCard';
-
-import TabChart from './components/TabChart';
-
-import PieDoughnutChart from './components/PieDoughnutChart';
-
-import ProgressTable from './components/ProgressTable';
-
-import EditableTable from './components/EditableTable';
-
-import ChartBar from './components/ChartBar';
-
-import './Dashboard.scss';
+const DisplayCard = React.lazy(() => import('./components/DisplayCard'));
+const TabChart = React.lazy(() => import('./components/TabChart'));
+const EditableTable = React.lazy(() => import('./components/EditableTable'));
+const LatestActivity = React.lazy(() => import('./components/LatestActivity'));
+const PieDoughnutChart = React.lazy(() =>
+  import('./components/PieDoughnutChart')
+);
 
 export default class Dashboard extends Component {
-  static displayName = 'Dashboard';
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <div className="dashboard-page">
-        <DisplayCard />
-
-        <TabChart />
-
-        <PieDoughnutChart />
-
-        <ProgressTable />
-
-        <EditableTable />
-
-        <ChartBar />
+        <Suspense fallback={<PageLoading />}>
+          <DisplayCard />
+        </Suspense>
+        <Suspense fallback={null}>
+          <TabChart />
+        </Suspense>
+        <Suspense fallback={null}>
+          <LatestActivity />
+        </Suspense>
+        <Suspense fallback={null}>
+          <EditableTable />
+        </Suspense>
+        <Suspense fallback={null}>
+          <PieDoughnutChart />
+        </Suspense>
       </div>
     );
   }

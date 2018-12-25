@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/tab-dialog-block",
-  "version": "0.1.9",
+  "version": "0.1.12",
   "description": "标签内容弹窗",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/tab-dialog/preview"
+  "homepage": "https://alibaba.github.io/ice/block/tab-dialog"
 }

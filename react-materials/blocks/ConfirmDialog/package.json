@@ -1,13 +1,11 @@
 {
   "name": "@icedesign/confirm-dialog-block",
-  "version": "0.1.7",
+  "version": "0.1.10",
   "description": "确认类型的提示框",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -47,5 +45,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/confirm-dialog/preview"
+  "homepage": "https://alibaba.github.io/ice/block/confirm-dialog"
 }
