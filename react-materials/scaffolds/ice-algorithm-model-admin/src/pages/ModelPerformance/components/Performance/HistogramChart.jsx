@@ -146,7 +146,7 @@ class Clusteredstacked extends React.Component {
             name="population"
             label={{
               formatter: (val) => {
-                return val / 1000000 + 'M';
+                return `${val / 1000000}M`;
               },
             }}
           />
