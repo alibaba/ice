@@ -4,9 +4,9 @@ const LoginIntro = () => {
   return (
     <div style={styles.container}>
       <div style={styles.content}>
-        <div style={styles.title}>设备管理系统</div>
-        <p style={styles.description}>运营与管控一体化的整合式服务平台</p>
-        <p style={styles.description}>一起解构数字世界，碰撞科技创新思想</p>
+        <div style={styles.title}>应用监控系统</div>
+        <p style={styles.description}>快速准确实施埋点，一站式采集配置</p>
+        <p style={styles.description}>全链路埋点管理分析平台</p>
       </div>
     </div>
   );
@@ -27,7 +27,7 @@ const styles = {
   title: {
     marginBottom: '20px',
     fontWeight: '700',
-    fontSize: '38px',
+    fontSize: '48px',
     lineHeight: '1.5',
   },
   description: {
