@@ -16,6 +16,7 @@ export default function requestMaterial(uri, options = {}, ignoreReject) {
   options = Object.assign({
     uri,
     json: true,
+    rejectUnauthorized: false, // 绕过 SSL 证书检测，主要是针对使用自签发证书的https资源无法访问的问题。
     headers: {
       'Cache-Control': 'no-cache'
     } 
