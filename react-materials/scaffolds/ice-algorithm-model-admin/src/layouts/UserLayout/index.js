@@ -47,7 +47,7 @@ const styles = {
     minWidth: '1200px',
     height: '100vh',
     backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1cpTewMHqK1RjSZFEXXcGMXXa-2872-1580.png)',
+      'url(https://img.alicdn.com/tfs/TB1Y6y1ymzqK1RjSZPxXXc4tVXa-1350-900.jpg)',
     backgroundSize: 'cover',
     display: 'flex',
     flexDirection: 'column',

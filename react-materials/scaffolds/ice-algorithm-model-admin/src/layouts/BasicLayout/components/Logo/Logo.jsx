@@ -6,7 +6,7 @@ export default class Logo extends Component {
     return (
       <div style={styles.container}>
         <Link to="/" style={styles.logoText}>
-          算法模型服务平台
+          算法模型管理系统
         </Link>
       </div>
     );

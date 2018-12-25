@@ -66,7 +66,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-algorithm-model-admin",
-    "title": "算法模型服务平台",
+    "title": "算法模型管理系统",
     "categories": [
       "行业领域"
     ],
