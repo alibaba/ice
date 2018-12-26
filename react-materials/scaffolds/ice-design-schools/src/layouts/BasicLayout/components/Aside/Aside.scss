@@ -1,0 +1,28 @@
+.ice-menu-custom.ice-menu-root {
+  height: 100%;
+  padding-top: 20px;
+  background: #2f323f !important;
+  box-shadow: 4px 1px 12px rgba(0, 55, 107, 0.04);
+
+  .ice-menu-item {
+    height: auto;
+    line-height: normal;
+    .ice-menu-link {
+      display: flex;
+      padding: 15px 0;
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+  .ice-menu-item-selected {
+    background: #2b2d3a !important;
+    border-radius: 0 !important;
+    border-right: 3px solid #447eff;
+    .ice-menu-link {
+      color: #fff;
+    }
+    .ice-menu-link:hover {
+      color: #fff !important;
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import UserTable from './components/UserTable';
+import BaseSetting from './components/BaseSetting';
 
-export default class UserManagement extends Component {
-  static displayName = 'UserManagement';
+export default class Setting extends Component {
+  static displayName = 'Setting';
 
   constructor(props) {
     super(props);
@@ -12,7 +12,7 @@ export default class UserManagement extends Component {
   render() {
     return (
       <div>
-        <UserTable />
+        <BaseSetting />
       </div>
     );
   }
