@@ -27,8 +27,14 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: 'Dashboard',
-    path: '/',
+    path: '/dashboard',
     icon: 'home',
+    children: [
+      {
+        name: '监控页',
+        path: '/dashboard/monitor',
+      },
+    ],
   },
   {
     name: '文章管理',

@@ -19,7 +19,7 @@ export default class RealTimeStatistics extends Component {
     return (
       <Row wrap gutter="20">
         <Col xxs="24" s="12" l="6">
-          <div style={{ ...styles.itemBody, ...styles.green }}>
+          <div style={{ ...styles.itemBody, background: '#5e83fb' }}>
             <div style={styles.itemTitle}>
               <p style={styles.titleText}>分类统计</p>
               <span style={styles.tag}>实时</span>
@@ -34,7 +34,7 @@ export default class RealTimeStatistics extends Component {
           </div>
         </Col>
         <Col xxs="24" s="12" l="6">
-          <div style={{ ...styles.itemBody, ...styles.lightBlue }}>
+          <div style={{ ...styles.itemBody, background: '#999' }}>
             <div style={styles.itemTitle}>
               <p style={styles.titleText}>附件统计</p>
               <span style={styles.tag}>实时</span>
@@ -49,7 +49,7 @@ export default class RealTimeStatistics extends Component {
           </div>
         </Col>
         <Col xxs="24" s="12" l="6">
-          <div style={{ ...styles.itemBody, ...styles.darkBlue }}>
+          <div style={{ ...styles.itemBody, background: '#58ca9a' }}>
             <div style={styles.itemTitle}>
               <p style={styles.titleText}>文章统计</p>
               <span style={styles.tag}>实时</span>
@@ -67,7 +67,7 @@ export default class RealTimeStatistics extends Component {
           </div>
         </Col>
         <Col xxs="24" s="12" l="6">
-          <div style={{ ...styles.itemBody, ...styles.navyBlue }}>
+          <div style={{ ...styles.itemBody, background: '#ee706d' }}>
             <div style={styles.itemTitle}>
               <p style={styles.titleText}>新闻统计</p>
               <span style={styles.tag}>实时</span>
@@ -133,17 +133,5 @@ const styles = {
   desc: {
     margin: 0,
     fontSize: '12px',
-  },
-  green: {
-    background: '#31B48D',
-  },
-  lightBlue: {
-    background: '#38A1F2',
-  },
-  darkBlue: {
-    background: '#7538C7',
-  },
-  navyBlue: {
-    background: '#3B67A4',
   },
 };
