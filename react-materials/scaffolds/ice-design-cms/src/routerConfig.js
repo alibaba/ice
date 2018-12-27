@@ -1,9 +1,8 @@
 // 以下文件格式为描述路由的协议格式
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
-
-import HeaderAsideFooterResponsiveLayout from './layouts/HeaderAsideFooterResponsiveLayout';
-import BlankLayout from './layouts/BlankLayout';
+import UserLogin from './pages/UserLogin';
+import UserRegister from './pages/UserRegister';
 import Dashboard from './pages/Dashboard';
 import PostList from './pages/PostList';
 import CreatePost from './pages/CreatePost';
@@ -16,114 +15,63 @@ import CreateUser from './pages/CreateUser';
 import EditPassword from './pages/EditPassword';
 import BasicSetting from './pages/BasicSetting';
 import NavigationSetting from './pages/NavigationSetting';
-import NotFound from './pages/NotFound';
-import Login from './pages/Login';
 
 const routerConfig = [
   {
-    path: '/login',
-    layout: BlankLayout,
-    component: Login,
+    path: '/user/login',
+    component: UserLogin,
   },
   {
-    path: '/',
-    layout: HeaderAsideFooterResponsiveLayout,
+    path: '/user/register',
+    component: UserRegister,
+  },
+  {
+    path: '/dashboard/monitor',
     component: Dashboard,
   },
   {
-    path: '/setting',
-    layout: HeaderAsideFooterResponsiveLayout,
+    path: '/setting/basic',
     component: BasicSetting,
-    children: [
-      {
-        path: '/basic',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: BasicSetting,
-      },
-      {
-        path: '/navigation',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: NavigationSetting,
-      },
-    ],
   },
   {
-    path: '/user',
-    layout: HeaderAsideFooterResponsiveLayout,
+    path: '/setting/navigation',
+    component: NavigationSetting,
+  },
+  {
+    path: '/users/list',
     component: UserList,
-    children: [
-      {
-        path: 'list',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: UserList,
-      },
-      {
-        path: 'create',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: CreateUser,
-      },
-      {
-        path: 'pwd',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: EditPassword,
-      },
-    ],
   },
   {
-    path: '/tag',
-    layout: HeaderAsideFooterResponsiveLayout,
+    path: '/users/create',
+    component: CreateUser,
+  },
+  {
+    path: '/users/pwd',
+    component: EditPassword,
+  },
+  {
+    path: '/tag/list',
     component: TagList,
-    children: [
-      {
-        path: 'list',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: TagList,
-      },
-      {
-        path: 'create',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: CreateTag,
-      },
-    ],
   },
   {
-    path: '/cate',
-    layout: HeaderAsideFooterResponsiveLayout,
+    path: '/tag/create',
+    component: CreateTag,
+  },
+  {
+    path: '/cate/list',
     component: CateList,
-    children: [
-      {
-        path: 'list',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: CateList,
-      },
-      {
-        path: 'create',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: CreateCate,
-      },
-    ],
   },
   {
-    path: '/post',
-    layout: HeaderAsideFooterResponsiveLayout,
+    path: '/cate/create',
+    component: CreateCate,
+  },
+  {
+    path: '/post/list',
     component: PostList,
-    children: [
-      {
-        path: 'list',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: PostList,
-      },
-      {
-        path: 'create',
-        layout: HeaderAsideFooterResponsiveLayout,
-        component: CreatePost,
-      },
-    ],
   },
   {
-    path: '*',
-    layout: HeaderAsideFooterResponsiveLayout,
-    component: NotFound,
+    path: '/post/create',
+    component: CreatePost,
   },
 ];
 
