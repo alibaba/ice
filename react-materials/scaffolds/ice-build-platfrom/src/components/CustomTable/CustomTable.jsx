@@ -26,9 +26,14 @@ export default class Home extends Component {
   }
 
   handlePagination = (current) => {
-    this.setState({
-      current,
-    });
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.props.onChange();
+      }
+    );
   };
 
   render() {
@@ -49,7 +54,7 @@ export default class Home extends Component {
                 dataIndex={item.dataIndex}
                 key={item.key}
                 sortable={item.sortable || false}
-                cell={item.cell || (value => value)}
+                cell={item.cell || ((value) => value)}
               />
             );
           })}

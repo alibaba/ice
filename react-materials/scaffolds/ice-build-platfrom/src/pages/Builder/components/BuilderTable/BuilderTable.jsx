@@ -6,7 +6,7 @@ import TableFilter from '../TableFilter';
 
 const ButtonGroup = Button.Group;
 
-const getData = (length) => {
+const getData = (length = 10) => {
   return Array.from({ length }).map((item, index) => {
     return {
       id: index + 1,
@@ -27,6 +27,7 @@ export default class BuilderTable extends Component {
   state = {
     isLoading: false,
     data: [],
+    activeIndex: null,
   };
 
   componentDidMount() {
@@ -57,7 +58,10 @@ export default class BuilderTable extends Component {
     );
   };
 
-  handleSubmit = (len) => {
+  handleSubmit = (len, idx) => {
+    this.setState({
+      activeIndex: idx,
+    });
     this.fetchData(len);
   };
 
@@ -131,22 +135,38 @@ export default class BuilderTable extends Component {
   };
 
   render() {
-    const { data, isLoading } = this.state;
+    const { isLoading, data, activeIndex } = this.state;
+    const buttonGroup = [
+      {
+        text: '已发布',
+        lenght: '10',
+      },
+      {
+        text: '开发中',
+        lenght: '3',
+      },
+      {
+        text: '我的',
+        lenght: '8',
+      },
+    ];
 
     return (
       <IceContainer>
         <div style={styles.tableHead}>
           <div style={styles.tableTitle}>构建器</div>
           <ButtonGroup size="large">
-            <Button type="primary" onClick={() => this.handleSubmit(10)}>
-              已发布
-            </Button>
-            <Button type="primary" onClick={() => this.handleSubmit(3)}>
-              开发中
-            </Button>
-            <Button type="primary" onClick={() => this.handleSubmit(8)}>
-              我的
-            </Button>
+            {buttonGroup.map((item, index) => {
+              return (
+                <Button
+                  type="primary"
+                  style={activeIndex === index ? { background: '#ee706d' } : {}}
+                  onClick={() => this.handleSubmit(item.lenght, index)}
+                >
+                  {item.text}
+                </Button>
+              );
+            })}
           </ButtonGroup>
         </div>
         <TableFilter handleSubmit={() => this.handleSubmit(5)} />
@@ -154,6 +174,7 @@ export default class BuilderTable extends Component {
           columns={this.columnsConfig()}
           dataSource={data}
           isLoading={isLoading}
+          onChange={this.fetchData}
         />
       </IceContainer>
     );

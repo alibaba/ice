@@ -3,7 +3,7 @@ import IceContainer from '@icedesign/container';
 import CustomTable from '../../../../components/CustomTable';
 import TableFilter from '../TableFilter';
 
-const getData = (length) => {
+const getData = (length = 10) => {
   return Array.from({ length }).map((item, index) => {
     return {
       id: index + 1,
@@ -132,6 +132,7 @@ export default class TaskTable extends Component {
           columns={this.columnsConfig()}
           dataSource={data}
           isLoading={isLoading}
+          onChange={this.fetchData}
         />
       </IceContainer>
     );

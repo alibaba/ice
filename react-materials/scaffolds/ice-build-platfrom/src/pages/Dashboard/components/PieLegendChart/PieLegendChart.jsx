@@ -6,8 +6,11 @@ import { Select } from '@icedesign/base';
 const ReactHighcharts = require('react-highcharts');
 
 const { Option } = Select;
+const random = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
-const config = {
+const chartConfig = {
   chart: {
     height: 300,
     plotBackgroundColor: null,
@@ -62,12 +65,32 @@ const config = {
 };
 
 export default class PieLengendChart extends Component {
+  state = {
+    selectedValue: 'day',
+    config: chartConfig,
+  };
+
+  handleChange = (value) => {
+    const { config } = this.state;
+    config.series[0].data[0].y = random(20, 60);
+    this.setState({
+      selectedValue: value,
+      config,
+    });
+  };
+
   render() {
+    const { selectedValue, config } = this.state;
     return (
       <IceContainer>
         <div style={styles.cardHead}>
           <h4 style={styles.cardTitle}>活跃构建器分布</h4>
-          <Select size="large" defaultValue="day">
+          <Select
+            size="large"
+            defaultValue="day"
+            value={selectedValue}
+            onChange={this.handleChange}
+          >
             <Option value="day">今日</Option>
             <Option value="yesterday">昨日</Option>
             <Option value="week">7 天</Option>
