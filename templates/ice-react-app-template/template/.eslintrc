@@ -17,6 +17,7 @@
   "rules": {
     "react/prefer-stateless-function": 0,
     "no-console": 0,
+    "no-use-before-define": 0,
     "jsx-a11y/label-has-for": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-a11y/anchor-has-content": 0,
@@ -25,7 +26,6 @@
     "react/no-array-index-key": 0,
     "func-names": 0,
     "arrow-body-style": 0,
-    "no-use-before-define": 0,
     "react/sort-comp": 0,
     "react/prop-types": 0,
     "react/jsx-first-prop-new-line": 0,
@@ -50,7 +50,6 @@
     "function-paren-newline": 0,
     "object-curly-newline": 0,
     "no-restricted-globals": 0,
-    "react/jsx-no-bind": 0,
-    "no-mixed-operators": 0
+    "global-require": 0
   }
 }

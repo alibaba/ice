@@ -1,6 +1,6 @@
 ---
 title: 如何贡献
-order: 5
+order: 6
 category: 物料
 ---
 
@@ -14,26 +14,17 @@ $ npm i ice-devtools -g
 
 // clone 官方仓库
 $ git clone git@github.com:alibaba/ice.git
-$ cd ice
-$ ice-devtools start
 ```
-
-通过上面的命令可以启动服务，支持预览 react-materials 和 vue-materials 目录下的所有区块和布局，启动主界面如下，可通过点击物料类型选择预览不同的物料。
-
-注：初次预览需要按需安装依赖
-
-![](https://img.alicdn.com/tfs/TB17haCnKuSBuNjy1XcXXcYjFXa-2858-1586.png)
 
 ## 开发区块
 
-以开发 Vue 物料为例添加一个区块，首先进入 ice 项目目录，通过 `ice-devtools add` 命令选择需要添加的物料类型，根据提示输入对应的信息，添加完成后会在 `ice/vue-materials` 目录下新增对应的模板文件。
+以开发 React 物料为例添加一个区块，首先进入 ice/react-materials 项目目录，通过 `ice-devtools add` 命令选择需要添加的物料类型，根据提示输入对应的信息，添加完成后会在 `ice/react-materials/blocks` 目录下新增对应的模板文件。
 
 ```
-$ cd ice
+$ cd ice/react-materials
 $ ice-devtools add
   ? 选择添加类型 (Use arrow keys)
   ❯ 区块
-    布局
     模板
 ```
 
@@ -45,111 +36,8 @@ $ ice-devtools add
     ├── README.md               // 说明文档
     ├── package.json            // pkg.json
     └── src                     // source 源码目录
-        ├── ExampleBlock.vue
         └── index.js            // 模块入口
 ```
-
-## 目录文件说明
-
-**src/ExampleBlock.vue**
-
-`ExampleBlock.vue` 文件提供了基础的区块模板代码规范，方便快速开发一个区块：
-
-```
-<template>
-  <div className="example-block">
-    <basic-container>
-      <h1>ExampleBlock</h1>
-    </basic-container>
-  </div>
-</template>
-
-<script>
-import BasicContainer from '@vue-materials/basic-container'
-
-export default {
-  components: { BasicContainer },
-
-  name: 'ExampleBlock',
-
-  data() {
-    return {}
-  },
-
-  created() {},
-
-  methods: {}
-}
-</script>
-
-<style>
-  .example-block {
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
-</style>
-```
-
-**src/index.js**
-
-区块的入口文件，导出当前区块
-
-```
-import ExampleBlock from './ExampleBlock';
-
-export default ExampleBlock;
-```
-
-**package.json**
-
-`package.json` 的 `blockConfig` 字段描述了区块的名称，截图，标题，分类等信息，主要用于 Iceworks 展示使用，在创建区块时自动生成，但截图需要在区块开发完成后补充录入。
-
-```
-{
-  "name": "example-block",  // npm 包名
-  "version": "1.0.0",
-  "description": "",        // 区块描述
-  "author": "",
-  "files": [
-    "src/",
-    "lib/"
-  ],
-  "dependencies": {
-    "vue": "^2.5.16",
-    "@vue-materials/basic-container": "^1.0.0",
-  },
-  "blockConfig": {            // 区块的相关配置，用于 Iceworks 和站点的展示
-    "name": "example-block",  // 名称
-    "screenshot": "",         // 截图（如果没有截图则不在 Iceworks 中显示图片）
-    "title": "示例区块",       // 标题
-    "categories": "[]"        // 分类
-  }
-}
-```
-
-**README.md**
-说明文档主要包含区块名，区块简介，以及区块截图三个字段信息
-
-```
-# example-block
-
-简介：示例区块
-
-![截图]()
-```
-
-## 添加布局
-
-布局与区块在开发模式上基本保持相同，不同点在于布局没有分类的概念，可以根据业务需求和设计规范自定义不同的布局。
-
-## 开发调试
-
-新增一个区块后，在主界面物料类型选择 vue-materials 进入物料列表页面如下：
-
-![](https://img.alicdn.com/tfs/TB1TP3InTtYBeNjy1XdXXXXyVXa-2864-1474.png)
-
-在列表页面，已经有了一些基础的区块和布局，可以点击预览查看效果图，支持实时编译刷新调试。
 
 ## 提交代码
 
