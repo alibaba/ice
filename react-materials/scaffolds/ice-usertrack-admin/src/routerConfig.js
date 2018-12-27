@@ -13,6 +13,7 @@ import Snapshot from './pages/Snapshot';
 import Monitor from './pages/Monitor';
 import MonitorDetail from './pages/MonitorDetail';
 import Setting from './pages/Setting';
+import EditForm from './pages/EditForm';
 
 const routerConfig = [
   {
@@ -30,6 +31,10 @@ const routerConfig = [
   {
     path: '/application/monitor',
     component: MonitorDetail,
+  },
+  {
+    path: '/application/edit',
+    component: EditForm,
   },
   {
     path: '/maintain/scheme',

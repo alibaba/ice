@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import { Icon, Grid, Loading, Feedback } from '@icedesign/base';
+import { Icon, Grid, Loading, Dialog } from '@icedesign/base';
 import FoundationSymbol from 'foundation-symbol';
+import { withRouter } from 'react-router-dom';
 
 const { Row, Col } = Grid;
 
+@withRouter
 export default class CardList extends Component {
   handleAdd = () => {
-    Feedback.toast.prompt('只有管理员才能新增测试方案');
+    Dialog.confirm({
+      content: '只有管理员才能新增测试方案',
+    });
+  };
+
+  handleEdit = () => {
+    this.props.history.push('/application/edit');
   };
 
   render() {
@@ -50,6 +58,7 @@ export default class CardList extends Component {
                           type="edit2"
                           size="xs"
                           style={styles.editIcon}
+                          onClick={this.handleEdit}
                         />
                       </p>
                     </div>
