@@ -27,20 +27,28 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: '我的工作台',
-    path: '/',
+    path: '/dashboard',
     icon: 'home',
   },
   {
-    name: '权限管理',
-    path: '/permission',
+    name: '学生管理',
+    path: '/users',
     icon: 'yonghu',
-    children: [{ name: '用户管理', path: '/permission/users' }],
   },
   {
-    name: '试题管理',
-    path: '/test',
+    name: '试卷管理',
+    path: '/paper',
+    icon: 'directory',
+  },
+  {
+    name: '添加学生',
+    path: '/add',
     icon: 'publish',
-    children: [{ name: '试卷管理', path: '/test/paper' }],
+  },
+  {
+    name: '个人设置',
+    path: '/setting',
+    icon: 'shezhi',
   },
 ];
 
