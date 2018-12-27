@@ -1,8 +1,18 @@
 {
   "name": "@icedesign/analysis-scaffold",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "该模板适用于可视化实时数据的大屏展示，默认只有一个页面，内置饼图、柱状图等图形",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-analysis.html",
+  "homepage": "https://unpkg.com/@icedesign/voice-chat-admin-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
@@ -38,7 +48,10 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": false
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
