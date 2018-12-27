@@ -3,8 +3,8 @@ import IceContainer from '@icedesign/container';
 import CustomTable from '../../../../components/CustomTable';
 import TableFilter from '../TableFilter';
 
-const getData = () => {
-  return Array.from({ length: 20 }).map((item, index) => {
+const getData = (length = 10) => {
+  return Array.from({ length }).map((item, index) => {
     return {
       id: index + 1,
       time: `${index + 1} 分钟前`,
@@ -19,16 +19,42 @@ const getData = () => {
 };
 
 export default class TaskTable extends Component {
-  static displayName = 'TaskTable';
+  state = {
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
+  componentDidMount() {
+    this.fetchData(10);
   }
+
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
+    });
+  };
+
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handleSubmit = () => {
+    this.fetchData(5);
+  };
 
   renderState = (value) => {
     return (
@@ -94,13 +120,20 @@ export default class TaskTable extends Component {
   };
 
   render() {
+    const { data, isLoading } = this.state;
+
     return (
       <IceContainer>
         <div style={styles.tableHead}>
-          <div style={styles.tableTitle}>构建器</div>
+          <div style={styles.tableTitle}>构建任务</div>
         </div>
-        <TableFilter />
-        <CustomTable columns={this.columnsConfig()} dataSource={getData()} />
+        <TableFilter handleSubmit={this.handleSubmit} />
+        <CustomTable
+          columns={this.columnsConfig()}
+          dataSource={data}
+          isLoading={isLoading}
+          onChange={this.fetchData}
+        />
       </IceContainer>
     );
   }

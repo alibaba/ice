@@ -71,7 +71,7 @@ const config = {
   series: [
     {
       name: 'Random data',
-      color: '#f0824c',
+      color: '#5e83fb',
       data: (function() {
         // generate an array of random data
         const data = [];

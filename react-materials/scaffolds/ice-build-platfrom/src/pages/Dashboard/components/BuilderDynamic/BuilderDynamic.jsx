@@ -50,19 +50,14 @@ export default class BuilderDynamic extends Component {
           {data.map((item, index) => {
             return (
               <Col l="4" key={index} style={{ background: 'red' }}>
-                <a href="#">
-                  <div style={styles.miniCard}>
-                    <div style={styles.label}>{item.name}</div>
-                    <div style={styles.value}>
-                      在<span style={styles.time}>{item.value}小时前</span>更新了版本
-                    </div>
-                    <Icon
-                      type="arrow-right"
-                      size="xs"
-                      style={styles.arrowIcon}
-                    />
+                <div style={styles.miniCard}>
+                  <div style={styles.label}>{item.name}</div>
+                  <div style={styles.value}>
+                    在<span style={styles.time}>{item.value}小时前</span>
+                    更新了版本
                   </div>
-                </a>
+                  <Icon type="arrow-right" size="xs" style={styles.arrowIcon} />
+                </div>
               </Col>
             );
           })}
@@ -99,7 +94,7 @@ const styles = {
     whiteSpace: 'nowrap',
   },
   time: {
-    color: '#0abc3c',
+    color: '#ee6f6d',
     fontWeight: '600',
     padding: '0 4px',
   },

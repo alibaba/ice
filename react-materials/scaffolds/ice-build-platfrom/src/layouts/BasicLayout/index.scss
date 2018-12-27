@@ -1,8 +1,9 @@
 // Global RESET
 .ice-layout {
-  &.header-footer-layout {
+  &.basic-layout {
     background: #f7f7f7;
     min-width: 1280px;
+    min-height: 100vh;
     .next-btn {
       border-radius: 4px;
     }
