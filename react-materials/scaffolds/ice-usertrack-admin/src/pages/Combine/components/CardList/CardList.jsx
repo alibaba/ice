@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Icon, Grid, Balloon } from '@icedesign/base';
+import { Icon, Grid, Balloon, Dialog } from '@icedesign/base';
 import FoundationSymbol from 'foundation-symbol';
+import { withRouter } from 'react-router-dom';
 
 const { Row, Col } = Grid;
 
@@ -18,24 +19,24 @@ const getData = () => {
   });
 };
 
+@withRouter
 export default class CardList extends Component {
-  static displayName = 'CardList';
+  handleAdd = () => {
+    Dialog.confirm({
+      content: '只有管理员才能新增测试方案',
+    });
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  handleEdit = () => {
+    this.props.history.push('/application/edit');
+  };
 
   render() {
     const data = getData();
     return (
       <div style={styles.container}>
         <Row wrap gutter="20">
-          <Col l="6">
+          <Col l="6" onClick={this.handleAdd}>
             <div style={{ ...styles.card, ...styles.createScheme }}>
               <Icon type="add" size="large" style={styles.addIcon} />
               <span>新增埋点</span>
@@ -68,6 +69,7 @@ export default class CardList extends Component {
                         <FoundationSymbol
                           size="small"
                           type="edit2"
+                          onClick={this.handleEdit}
                           style={{ ...styles.editIcon, ...styles.icon }}
                         />
                       }
