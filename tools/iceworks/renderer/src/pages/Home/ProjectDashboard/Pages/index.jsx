@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import React, { Component } from 'react';
 import dayjs from 'dayjs';
+import Notification from '@icedesign/notification';
 
 import { readdirSync } from '../../../../lib/file-system';
 import DashboardCard from '../../../../components/DashboardCard/';
@@ -20,6 +21,7 @@ import services from '../../../../services';
 const { log, interaction, scaffolder } = services;
 
 import './index.scss';
+import { Dialog } from '@icedesign/base';
 
 function formatDate(date) {
   return dayjs(date).format('YYYY-MM-DD hh:mm');
@@ -100,22 +102,29 @@ class PagesCard extends Component {
     const { projects, newpage } = this.props;
     const { currentProject } = projects;
 
-    scaffolder.removePage({
-      destDir: currentProject.root,
-      isNodeProject: currentProject.isNodeProject,
-      pageFolderName: name
-    })
-    .then(() => {
-      log.debug('删除页面成功');
-      interaction.notify({
-        title: '删除页面完成',
-        body: `${name}`
-      });
-      this.serachPages();
-    })
-    .catch((error) => {
-      log.debug('删除页面失败', error);
-      dialog.notice({ title: '删除页面失败', error: error });
+    Dialog.confirm({
+      title: '删除页面',
+      content: `确定删除页面 ${name} 吗？`,
+      onOk: () => {
+          scaffolder.removePage({
+          destDir: currentProject.root,
+          isNodeProject: currentProject.isNodeProject,
+          pageFolderName: name
+        })
+        .then(() => {
+          log.debug('删除页面成功');
+          Notification.success({ message: `删除页面 ${name} 成功` });
+          interaction.notify({
+            title: '删除页面完成',
+            body: `${name}`
+          });
+          this.serachPages();
+        })
+        .catch((error) => {
+          log.debug('删除页面失败', error);
+          dialog.notice({ title: '删除页面失败', error: error });
+        });
+      }
     });
   };
 
