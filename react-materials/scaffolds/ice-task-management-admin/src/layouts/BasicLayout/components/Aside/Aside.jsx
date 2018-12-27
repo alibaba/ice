@@ -3,21 +3,12 @@ import React, { Component } from 'react';
 import Menu, { Item as MenuItem } from '@icedesign/menu';
 import { withRouter, Link } from 'react-router-dom';
 import FoundationSymbol from 'foundation-symbol';
-import { asideMenuConfig } from '../../menuConfig';
+import { asideMenuConfig } from '../../../../menuConfig';
 
 import './Aside.scss';
 
 @withRouter
 export default class BasicLayout extends Component {
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     const { location } = this.props;
     const { pathname } = location;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
+import { withRouter } from 'react-router-dom';
 import ContainerTitle from '../../../../components/ContainerTitle';
 
 const mockData = [
@@ -14,24 +15,42 @@ const mockData = [
     description: '有关测试的相关文档',
     time: '12小时前',
   },
+  {
+    title: '环境搭建文档',
+    description: '有关新人入门环境搭建的相关文档',
+    time: '3小时前',
+  },
+  {
+    title: '测试文档',
+    description: '有关测试的相关文档',
+    time: '12小时前',
+  },
+  {
+    title: '环境搭建文档',
+    description: '有关新人入门环境搭建的相关文档',
+    time: '3小时前',
+  },
+  {
+    title: '测试文档',
+    description: '有关测试的相关文档',
+    time: '12小时前',
+  },
 ];
 
+@withRouter
 export default class DocsList extends Component {
-  static displayName = 'DocsList';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  handleAdd = () => {
+    this.props.history.push('/add/document');
+  };
 
   render() {
     return (
       <IceContainer style={styles.container}>
-        <ContainerTitle title="项目文档" buttonText="新建文档" />
+        <ContainerTitle
+          title="项目文档"
+          buttonText="添加文档"
+          onClick={this.handleAdd}
+        />
         <div style={styles.content}>
           {mockData.map((item, index) => {
             return (

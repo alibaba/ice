@@ -1,38 +1,51 @@
 // 以下文件格式为描述路由的协议格式
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
-
-import BasicLayout from './layouts/BasicLayout';
+import UserLogin from './pages/UserLogin';
+import UserRegister from './pages/UserRegister';
 import Dashboard from './pages/Dashboard';
 import Document from './pages/Document';
 import Services from './pages/Services';
 import Member from './pages/Member';
 import Setting from './pages/Setting';
+import AddDocument from './pages/AddDocument';
+import AddMember from './pages/AddMember';
 
 const routerConfig = [
   {
-    path: '/',
-    layout: BasicLayout,
+    path: '/user/login',
+    component: UserLogin,
+  },
+  {
+    path: '/user/register',
+    component: UserRegister,
+  },
+  {
+    path: '/dashboard',
     component: Dashboard,
   },
   {
     path: '/document',
-    layout: BasicLayout,
     component: Document,
   },
   {
     path: '/services',
-    layout: BasicLayout,
     component: Services,
   },
   {
     path: '/member',
-    layout: BasicLayout,
     component: Member,
   },
   {
+    path: '/add/document',
+    component: AddDocument,
+  },
+  {
+    path: '/add/member',
+    component: AddMember,
+  },
+  {
     path: '/setting',
-    layout: BasicLayout,
     component: Setting,
   },
 ];
