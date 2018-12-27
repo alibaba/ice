@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/algorithm-model-admin-scaffold",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "该模板适用于数据模型类的管理类后台，内置通用的介绍页和丰富的区块，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/algorithm-model-admin-scaffold@latest/build/index.html",
   "files": [
