@@ -7,11 +7,13 @@ export default class Home extends Component {
   static displayName = 'Home';
 
   static defaultProps = {
+    isLoading: false,
     columns: [],
     dataSource: [],
   };
 
   static propTypes = {
+    isLoading: PropTypes.bool,
     columns: PropTypes.array,
     dataSource: PropTypes.array,
   };
@@ -24,13 +26,18 @@ export default class Home extends Component {
   }
 
   handlePagination = (current) => {
-    this.setState({
-      current,
-    });
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.props.onChange();
+      }
+    );
   };
 
   render() {
-    const { dataSource, columns } = this.props;
+    const { isLoading, dataSource, columns } = this.props;
 
     return (
       <div>
@@ -38,6 +45,7 @@ export default class Home extends Component {
           dataSource={dataSource}
           hasBorder={false}
           className="custom-table"
+          isLoading={isLoading}
         >
           {columns.map((item) => {
             return (
@@ -46,7 +54,7 @@ export default class Home extends Component {
                 dataIndex={item.dataIndex}
                 key={item.key}
                 sortable={item.sortable || false}
-                cell={item.cell || (value => value)}
+                cell={item.cell || ((value) => value)}
               />
             );
           })}
