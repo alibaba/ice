@@ -38,15 +38,15 @@ const routerConfig = [
     component: NavigationSetting,
   },
   {
-    path: '/user/list',
+    path: '/users/list',
     component: UserList,
   },
   {
-    path: '/user/create',
+    path: '/users/create',
     component: CreateUser,
   },
   {
-    path: '/user/pwd',
+    path: '/users/pwd',
     component: EditPassword,
   },
   {
