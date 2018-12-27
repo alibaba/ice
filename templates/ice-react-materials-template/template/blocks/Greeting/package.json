@@ -1,0 +1,33 @@
+{
+  "name": "@icedesign/greeting-block-example",
+  "version": "1.0.1",
+  "description": "示例区块",
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "screenshot": "ice-devtools screenshot",
+    "prepublish": "npm run build && npm run screenshot"
+  },
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": ["src/", "build/", "screenshot.png"],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "keywords": ["ice", "block"],
+  "dependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.11.2"
+  },
+  "blockConfig": {
+    "name": "greeting-block",
+    "title": "示例区块",
+    "categories": ["其他"],
+    "screenshot": "https://unpkg.com/@icedesign/greeting-block-example/screenshot.png"
+  }
+}

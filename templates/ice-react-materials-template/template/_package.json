@@ -1,0 +1,30 @@
+{
+  "name": "{{name}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "author": "{{author}}",
+  "scripts": {
+    "deploy": "npm run generate && npm run sync",
+    "generate": "ice-devtools generate",
+    "sync": "ice-devtools sync",
+    "sync-unpkg": "ice-devtools sync-unpkg",
+    "lint": "npm run lint:nofix -- --fix",
+    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
+  },
+  "files": ["build"],
+  "devDependencies": {
+    "babel-eslint": "^8.1.2",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1"
+  },
+  "publishConfig": {
+    "registry": "{{registry}}"
+  },
+  "materialConfig": {
+    "type": "react"
+  }
+}
