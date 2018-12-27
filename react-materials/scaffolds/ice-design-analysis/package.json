@@ -38,7 +38,7 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": true
+    "localization": false
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
