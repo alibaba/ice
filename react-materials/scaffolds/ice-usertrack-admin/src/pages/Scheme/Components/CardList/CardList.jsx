@@ -1,77 +1,73 @@
 import React, { Component } from 'react';
-import { Icon, Grid } from '@icedesign/base';
+import { Icon, Grid, Loading, Dialog } from '@icedesign/base';
 import FoundationSymbol from 'foundation-symbol';
+import { withRouter } from 'react-router-dom';
 
 const { Row, Col } = Grid;
 
-const getData = () => {
-  return Array.from({ length: 11 }).map((item, index) => {
-    return {
-      title: `淘宝首页-P${index}`,
-      desc: `产品方案 - 共 ${index} 个埋点`,
-      creator: '张明',
-      leader: '淘小宝',
-      time: '2017-06-05 14:03',
-    };
-  });
-};
-
+@withRouter
 export default class CardList extends Component {
-  static displayName = 'CardList';
+  handleAdd = () => {
+    Dialog.confirm({
+      content: '只有管理员才能新增测试方案',
+    });
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  handleEdit = () => {
+    this.props.history.push('/application/edit');
+  };
 
   render() {
-    const data = getData();
+    const { data = [], isLoading = false } = this.props;
     return (
       <div style={styles.container}>
-        <Row wrap gutter="20">
-          <Col l="6">
-            <div style={{ ...styles.card, ...styles.createScheme }}>
-              <Icon type="add" size="large" style={styles.addIcon} />
-              <span>新增测试方案</span>
-            </div>
-          </Col>
-          {data.map((item, index) => {
-            return (
-              <Col l="6" key={index}>
-                <div style={styles.card}>
-                  <div style={styles.head}>
-                    <h4 style={styles.title}>{item.title}</h4>
-                    <p style={styles.desc}>{item.desc}</p>
+        <Loading
+          visible={isLoading}
+          shape="flower"
+          color="#333"
+          style={styles.loading}
+        >
+          <Row wrap gutter="20">
+            <Col l="6" onClick={this.handleAdd}>
+              <div style={{ ...styles.card, ...styles.createScheme }}>
+                <Icon type="add" size="large" style={styles.addIcon} />
+                <span>新增测试方案</span>
+              </div>
+            </Col>
+            {data.map((item, index) => {
+              return (
+                <Col l="6" key={index}>
+                  <div style={styles.card}>
+                    <div style={styles.head}>
+                      <h4 style={styles.title}>{item.title}</h4>
+                      <p style={styles.desc}>{item.desc}</p>
+                    </div>
+                    <div style={styles.body}>
+                      <p style={{ ...styles.creator, ...styles.info }}>
+                        创建人：
+                        {item.creator}
+                      </p>
+                      <p style={{ ...styles.leader, ...styles.info }}>
+                        技术负责人：
+                        {item.leader}
+                      </p>
+                      <p style={{ ...styles.time, ...styles.info }}>
+                        创建时间：
+                        {item.time}
+                        <FoundationSymbol
+                          type="edit2"
+                          size="xs"
+                          style={styles.editIcon}
+                          onClick={this.handleEdit}
+                        />
+                      </p>
+                    </div>
                   </div>
-                  <div style={styles.body}>
-                    <p style={{ ...styles.creator, ...styles.info }}>
-                      创建人：
-                      {item.creator}
-                    </p>
-                    <p style={{ ...styles.leader, ...styles.info }}>
-                      技术负责人：
-                      {item.leader}
-                    </p>
-                    <p style={{ ...styles.time, ...styles.info }}>
-                      创建时间：
-                      {item.time}
-                      <FoundationSymbol
-                        type="font-size"
-                        size="edit2"
-                        style={styles.editIcon}
-                      />
-                      ;
-                    </p>
-                  </div>
-                </div>
-              </Col>
-            );
-          })}
-        </Row>
+                </Col>
+              );
+            })}
+          </Row>
+        </Loading>
       </div>
     );
   }
@@ -80,6 +76,10 @@ export default class CardList extends Component {
 const styles = {
   container: {
     margin: '20px',
+  },
+  loading: {
+    width: '100%',
+    minHeight: '500px',
   },
   createScheme: {
     display: 'flex',

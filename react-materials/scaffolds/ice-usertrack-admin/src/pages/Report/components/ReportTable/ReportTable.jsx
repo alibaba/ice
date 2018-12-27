@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination, Feedback } from '@icedesign/base';
 
 const getData = () => {
   return Array.from({ length: 10 }).map((item, index) => {
@@ -15,42 +15,79 @@ const getData = () => {
 };
 
 export default class ReportTable extends Component {
-  static displayName = 'ReportTable';
+  state = {
+    current: 1,
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-    };
+  componentDidMount() {
+    this.fetchData();
   }
 
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
     });
+  };
+
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.fetchData();
+      }
+    );
+  };
+
+  handleApply = () => {
+    Feedback.toast.success('申请权限已发送，请十分钟之后再试');
+  };
+
+  handleDetail = () => {
+    Feedback.toast.prompt('需要管理员权限才能查看详情');
   };
 
   renderOper = () => {
     return (
       <div>
-        <a style={styles.link}>详情</a>
+        <a style={styles.link} onClick={this.handleDetail}>
+          详情
+        </a>
         <span style={styles.separator} />
-        <a style={styles.link}>申请权限</a>
+        <a style={styles.link} onClick={this.handleApply}>
+          申请权限
+        </a>
       </div>
     );
   };
 
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, data, current } = this.state;
 
     return (
       <IceContainer style={styles.container}>
-        <Table dataSource={dataSource} hasBorder={false}>
+        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="测试时间" dataIndex="testTime" />
           <Table.Column title="创建人" dataIndex="creator" />
           <Table.Column title="报告名称" dataIndex="reportName" />
