@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Icon } from '@icedesign/base';
+import { Grid, Icon, Dialog } from '@icedesign/base';
 
 const { Row, Col } = Grid;
 
@@ -43,20 +42,17 @@ const getData = () => {
 };
 
 export default class ModelCard extends Component {
-  static displayName = 'ModelCard';
-
-  static propTypes = {
-    value: PropTypes.string,
+  handleInvoke = () => {
+    Dialog.confirm({
+      content: '请先申请权限在查看调用示例',
+    });
   };
 
-  static defaultProps = {
-    value: 'string data',
+  handleOnline = () => {
+    Dialog.confirm({
+      content: '只有超级权限才能设置在线预测',
+    });
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
 
   render() {
     const mockData = getData();
@@ -80,10 +76,18 @@ export default class ModelCard extends Component {
                   })}
                 </div>
                 <div style={styles.footer}>
-                  <a style={{ ...styles.button, ...styles.lightBlue }}>
+                  <a
+                    onClick={this.handleInvoke}
+                    style={{ ...styles.button, background: '#58ca9a' }}
+                  >
                     调用示例
                   </a>
-                  <a style={{ ...styles.button, ...styles.green }}>在线预测</a>
+                  <a
+                    onClick={this.handleOnline}
+                    style={{ ...styles.button, background: '#ee706d' }}
+                  >
+                    在线预测
+                  </a>
                 </div>
               </div>
             </Col>
@@ -106,7 +110,7 @@ const styles = {
   },
   head: {
     padding: '10px 0',
-    background: '#57c8f2',
+    background: '#5e83fb',
     color: '#fff',
     textAlign: 'center',
     borderRadius: '4px 4px 0 0',
@@ -146,11 +150,5 @@ const styles = {
     color: '#fff',
     textDecoration: 'none',
     cursor: 'pointer',
-  },
-  lightBlue: {
-    background: '#58c9f3',
-  },
-  green: {
-    background: '#f77b6f',
   },
 };

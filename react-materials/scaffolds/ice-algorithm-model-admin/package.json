@@ -1,8 +1,18 @@
 {
   "name": "@icedesign/algorithm-model-admin-scaffold",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "该模板适用于数据模型类的管理类后台，内置通用的介绍页和丰富的区块，使用时需要根据需求进行删除和添加",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-algorithm-model-admin/index.html",
+  "homepage": "https://unpkg.com/@icedesign/algorithm-model-admin-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "keywords": [
     "ice-scaffold"
   ],
@@ -45,18 +55,21 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": false
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "themeConfig": {
-    "primaryColor": "#6ac8f3"
+    "primaryColor": "#447eff"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-algorithm-model-admin",
-    "title": "算法模型服务平台",
+    "title": "算法模型管理系统",
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1Pd6IbG6qK1RjSZFmXXX0PFXa-2840-1584.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1uPO2yXYqK1RjSZLeXXbXppXa-2872-1580.png"
   }
 }
