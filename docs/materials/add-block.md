@@ -206,4 +206,4 @@ $ npm run deploy
 
 ## 皮肤配置
 
-如果希望在预览区块时，也带上皮肤配置，可以参考这份[文档](../advanced/webpackrc#主题配置%20-%20themeConfig)进行配置。
+如果希望在预览区块时，也带上皮肤配置，可以参考这份[文档](#/advanced/webpackrc#主题配置%20-%20themeConfig)进行配置。
