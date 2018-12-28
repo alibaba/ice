@@ -161,8 +161,7 @@ import Container from '@icedesign/Container'
 const Login = () => {
     return (
       <Container style={styles.container}>
--        <h3 style={styles.title}>ICE Block</h3>
-+        <h3 style={styles.title}>My first block</h3>
+        <h3 style={styles.title}>My first block</h3>
         <p style={styles.description}>Edit src/index.js and save to reload.</p>
       </Container>
     )
