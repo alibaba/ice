@@ -15,25 +15,25 @@ const navigation = [
   {
     img: require('./images/TB11ED_xYGYBuNjy0FoXXciBFXa-200-200.png'),
     title: '待批改作业',
-    color: '#58ca9a',
+    color: '#f7da47',
     count: '120',
   },
   {
     img: require('./images/TB1Kvg3x4GYBuNjy0FnXXX5lpXa-200-200.png'),
     title: '待批阅试卷',
-    color: '#f7da47',
+    color: '#58ca9a',
     count: '160',
   },
   {
     img: require('./images/TB1aAH_xYGYBuNjy0FoXXciBFXa-200-200.png'),
     title: '待评分实训',
-    color: '#5e83fb',
+    color: '#447eff',
     count: '69',
   },
   {
     img: require('./images/TB1BMGtyntYBeNjy1XdXXXXyVXa-200-200.png'),
     title: '已审核课件',
-    color: '#5e83fb',
+    color: '#ee706d',
     count: '85',
   },
   {
@@ -51,7 +51,7 @@ const navigation = [
   {
     img: require('./images/TB1wQD_xYGYBuNjy0FoXXciBFXa-200-200.png'),
     title: '已评分实训',
-    color: '#ee706d',
+    color: '#447eff',
     count: '235',
   },
 ];
