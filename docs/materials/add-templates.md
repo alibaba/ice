@@ -39,7 +39,7 @@ Iceworks 会识别模板中定义的  `scripts`  字段中的 `start` 和 `bui
 },
 ```
 
-### **配置导航**
+### 配置导航
 
 脚手架模板约定必须要有 `src/menuConfig.js`  文件，用于配置应用的导航信息，在 Iceworks 创建页面时，输入的页面导航名会写入该文件：
 
@@ -59,13 +59,13 @@ export default asideMenuConfig;
 
 ![template](https://cdn.nlark.com/lark/0/2018/png/71071/1543817452170-0d63bc07-4bb8-481b-8226-3b1b6efe089d.png)
 
-### **路由配置**
+### 路由配置
 
 脚手架模板约定必须要有 `src/routerConfig.js`  文件，用于配置应用的路由信息，在 Iceworks 创建页面时，输入的路由路径会写入该文件：
 
 ![template](https://cdn.nlark.com/lark/0/2018/png/71071/1543818100357-a885fa26-4b9c-4019-b243-af522d5d8c71.png)
 
-### **页面配置**
+### 页面配置
 
 脚手架模板约定必须要有 `src/pages`  目录，用于在新建页面时添加页面到该目录下，在 Iceworks 创建页面时，输入的页面目录名会写入该目录下：
 
