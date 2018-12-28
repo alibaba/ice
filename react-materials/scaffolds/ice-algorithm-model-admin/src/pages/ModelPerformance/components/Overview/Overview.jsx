@@ -6,7 +6,7 @@ const { Row, Col } = Grid;
 
 const mockData = [
   {
-    symbolBgColor: '#5e83fb',
+    symbolBgColor: '#ee706d',
     symbol: 'shezhi',
     count: '861',
     desc: '模型总数',
@@ -24,7 +24,7 @@ const mockData = [
     desc: '近30天日均调用量',
   },
   {
-    symbolBgColor: '#ee706d',
+    symbolBgColor: '#447eff',
     symbol: 'yonghu',
     count: '334,451',
     desc: '用户总数',
