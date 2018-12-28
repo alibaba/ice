@@ -19,6 +19,8 @@ const URL_LOADER = require.resolve('url-loader');
 const URL_LOADER_LIMIT = 8192;
 
 const getBabelConfig = require('./getBabelConfig');
+const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
+const { getPkgJSON } = require('../utils/pkg-json');
 
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
@@ -49,6 +51,17 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .loader(CSS_LOADER)
     .end();
 
+  const pkgJSON = getPkgJSON(cwd);
+  const { buildConfig = {}, themeConfig = {} } = pkgJSON;
+  const theme = buildConfig.theme || buildConfig.themePackage;
+
+  if (theme) {
+    // eslint-disable-next-line no-console
+    console.log('使用主题包: ', theme);
+  }
+
+  const appNodeModules = path.resolve(cwd, 'node_modules');
+
   config.module
     .rule('scss')
     .test(/\.s[a|c]ss$/)
@@ -60,6 +73,13 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .end()
     .use('scss-loader')
     .loader(SASS_LOADER)
+    .end()
+    .use('ice-skin-loader')
+    .loader(ICE_SKIN_LOADER)
+    .options({
+      themeFile: theme && path.join(appNodeModules, `${theme}/variables.scss`),
+      themeConfig,
+    })
     .end();
 
   config.module

@@ -35,6 +35,7 @@
     "handlebars": "^4.0.12",
     "handlebars-loader": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
+    "ice-skin-loader": "^0.2.0",
     "imagemin": "^6.0.0",
     "imagemin-pngquant": "^6.0.0",
     "inquirer": "^6.2.0",
