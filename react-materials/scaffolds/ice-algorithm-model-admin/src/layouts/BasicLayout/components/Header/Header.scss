@@ -3,7 +3,7 @@
   left: 0;
   right: 0;
   z-index: 999;
-  background: #2f323f;
+  background: #447eff;
   min-width: 1200px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   .header-content {
@@ -20,10 +20,17 @@
     flex-direction: row;
     .ice-menu {
       background: transparent;
-      color: #d8d8d8;
+      color: #fff;
+      .ice-menu-item-selected {
+        background: #3560d9;
+        color: #fff;
+      }
       .ice-menu-submenu-title,
       .ice-menu-item {
+        height: 62px;
+        line-height: 62px;
         font-size: 14px;
+        &:hover,
         a:hover {
           color: #fff;
         }
@@ -38,7 +45,7 @@
 
   .user-department {
     font-size: 12px;
-    color: #d8d8d8;
+    color: #fff;
   }
 
   .ice-design-header-userpannel {
@@ -48,11 +55,11 @@
       display: inline-block;
       text-align: center;
       margin-bottom: 2px;
-      color: #d8d8d8;
+      color: #fff;
     }
     .icon-down {
       margin-left: 2px;
-      color: #d8d8d8;
+      color: #fff;
     }
   }
 }
