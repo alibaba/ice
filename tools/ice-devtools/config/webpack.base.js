@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const WebpackConfig = require('webpack-chain');
 const path = require('path');
 const debug = require('debug')('ice:webpack:base');
+const chalk = require('chalk');
 
 const BABEL_LOADER = require.resolve('babel-loader');
 const STYLE_LOADER = require.resolve('style-loader');
@@ -56,8 +57,9 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const theme = buildConfig.theme || buildConfig.themePackage;
 
   if (theme) {
-    // eslint-disable-next-line no-console
-    console.log('使用主题包: ', theme);
+    console.log('');
+    console.log(chalk.green('使用主题包: '), theme);
+    console.log('');
   }
 
   const appNodeModules = path.resolve(cwd, 'node_modules');
