@@ -99,6 +99,7 @@ class Def extends Component {
       gitIniting: false,
       remoteAddVisible: false,
       remoteUrl: '',
+      remoteUrlInput: '',
       gitRemoteAdding: false,
       branchesVisible: false,
       branches: [],
@@ -277,7 +278,7 @@ class Def extends Component {
     const { originRemote } = this.state;
     this.setState({ 
       remoteAddVisible: true,
-      remoteUrl: originRemote.refs && originRemote.refs.push || '' 
+      remoteUrlInput: originRemote.refs && originRemote.refs.push || '' 
     });
   };
 
@@ -286,14 +287,20 @@ class Def extends Component {
   };
 
   handleGitRemoteUrl = (value) => {
-    this.setState({ remoteUrl: value });
+    this.setState({ remoteUrlInput: value });
   };
 
   handleGitRemoteAddOk = async () => {
-    this.setState({ gitRemoteAdding: true });
+    this.setState({ 
+      gitRemoteAdding: true,
+      remoteUrl: this.state.remoteUrlInput
+    });
 
     try {
-      await this.gitTools.gitRemoveRemote();
+      let originRemote = await this.gitTools.gitOriginRemote();
+      if (originRemote.length > 0 ) {
+        await this.gitTools.gitRemoveRemote();
+      }
 
       this.addRemote();
     } catch (error) {
@@ -408,7 +415,6 @@ class Def extends Component {
   handleGitBranchesOk = async () => {
     const { branchOrigin, checkoutBranch, branchType } = this.state;
     if (branchOrigin === checkoutBranch && branchType === 'local') {
-
       try {
         await this.gitTools.gitCheckout(checkoutBranch);
   
@@ -425,7 +431,6 @@ class Def extends Component {
       }
 
     } else {
-
       try {
         await this.gitTools.gitCheckoutBranch(checkoutBranch, branchOrigin);
   
@@ -521,7 +526,7 @@ class Def extends Component {
       dialog.confirm(
         {
           title: '提示',
-          content: `继续发布会自动提交改动文件，并添加默认 Commit Message: update ${currentProject.projectName}，如需自定义 Commit Message，请点击 Git commit 按钮`,
+          content: `继续发布将执行 1. git add . => 2. git commit -m update ${currentProject.projectName} => 3. git push`,
         },
         (ok) => {
           resolve(ok);
@@ -862,30 +867,6 @@ class Def extends Component {
             handleGitcommitClose={this.handleGitcommitClose}
             handleGitcommitOk={this.handleGitcommitOk}
           />
-          {/* <Dialog
-            visible={this.state.commitVisible}
-            title="Commit 信息"
-            onClose={this.handleGitcommitClose}
-            footer={
-              <div>
-                <Button
-                  disabled={this.state.commitMessage.length == 0}
-                  onClick={this.handleGitcommitOk}
-                  type="primary"
-                >
-                  确定
-                </Button>
-                <Button onClick={this.handleGitcommitClose}>取消</Button>
-              </div>
-            }
-          >
-            <Input
-              onChange={this.handleGitcommitMessage}
-              placeholder="请输入 git commit 信息"
-              multiple
-              style={{ width: 400 }}
-            />
-          </Dialog> */}
           <Dialog
             visible={this.state.remoteAddVisible}
             title="Git remote add"
@@ -893,7 +874,7 @@ class Def extends Component {
             footer={
               <div>
                 <Button
-                  // disabled={this.state.remoteUrl.length == 0}
+                  disabled={this.state.remoteUrlInput.length == 0}
                   onClick={this.handleGitRemoteAddOk}
                   type="primary"
                   loading={this.state.gitRemoteAdding}
@@ -907,7 +888,7 @@ class Def extends Component {
             <Input
               onChange={this.handleGitRemoteUrl}
               placeholder="请输入 git 仓库 URL"
-              value={this.state.remoteUrl}
+              value={this.state.remoteUrlInput}
               style={{ width: 400 }}
             />
           </Dialog>

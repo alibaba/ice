@@ -1,5 +1,6 @@
 import gitPromie from 'simple-git/promise';
 import { Feedback, Dialog } from '@icedesign/base';
+import { debug } from 'util';
 
 class GitTools {
   constructor(cwd) {
@@ -17,207 +18,108 @@ class GitTools {
     });
   }
 
+  catchErrWrap = async (fnName, errMsg, ...opts) => {
+    opts = opts[0] === undefined ? null : opts;
+    try {
+      if (opts !== null) {
+        return await this.git()[fnName](...opts);
+      } else {
+        return await this.git()[fnName]();
+      }
+    } catch (error) {
+      this.showError(error, errMsg);
+      throw error;
+    }
+  }
+
   git = () => {
     return gitPromie(this.cwd);
   }
 
   // 获取远程仓库
   gitOriginRemote = async () => {
-
-    let remotes;
-    try {
-      remotes = await this.git().getRemotes(true);
-      remotes = remotes.filter(({ name }) => name == 'origin');
-    } catch (error) {
-      this.showError(error, 'git getRemotes 失败');
-      throw error;
-    }
-
+    const errMsg = 'git getRemotes 失败';
+    let remotes = await this.catchErrWrap('getRemotes', errMsg, true);
+    remotes = remotes.filter(({ name }) => name == 'origin');
     return remotes;
   }
 
   // 获取所有分支
   gitBranches = async () => {
-    let branches;
-    try {
-      branches = await this.git().branchLocal();
-    } catch (error) {
-      this.showError(error, 'git branchLocal 失败');
-      throw error;
-    }
-
-    return branches;
+    const errMsg = 'git branchLocal 失败';
+    return await this.catchErrWrap('branchLocal', errMsg);
   };
 
   // 获取当前分支文件状态
   gitStatus = async () => {
-    let status;
-    try {
-      status = await this.git().status();
-    } catch (error) {
-      this.showError(error, 'git status 失败');
-      throw error;
-    }
-
-    return status;
+    const errMsg = 'git status 失败';
+    return await this.catchErrWrap('status', errMsg);
   };
 
   // 获取最新的 Commit 信息
   gitLastCommit = async (opts) => {
-    let lastCommit;
-    try {
-      lastCommit = await this.git().log(opts);
-    } catch (error) {
-      this.showError(error, 'git lastCommit 失败');
-      throw error;
-    }
-
-    return lastCommit;
+    const errMsg = 'git lastCommit 失败';
+    return await this.catchErrWrap('log', errMsg, opts);
   };
 
   gitCheckIsRepo = async () => {
-
-    let isRepo;
-    try {
-      isRepo = await this.git().checkIsRepo();
-    } catch (error) {
-      console.error('gitCheckIsRepo', error);
-      throw error;
-    }
-
-    return isRepo;
+    const errMsg = '仓库地址错误';
+    return await this.catchErrWrap('checkIsRepo', errMsg);
   }
   
   gitAdd = async (opts) => {
-    let add;
-    try {
-      add = await this.git().add(opts);
-    } catch (error) {
-      this.showError(error, 'git add 失败请重试');
-      throw error;
-    } 
-
-    return add;
+    const errMsg = 'git add 失败请重试';
+    return await this.catchErrWrap('add', errMsg, opts);
   }
 
   gitCommit = async (commitMsg) => {
-    let commit;
-    try {
-      commit = await this.git().commit(commitMsg);
-    } catch (error) {
-      this.showError(error, 'commit 失败请重试');
-      throw error;
-    }
-
-    return commit;
+    const errMsg = 'git commit 失败请重试';
+    return await this.catchErrWrap('commit', errMsg, commitMsg);
   }
 
   gitPush = async (remote = 'origin', currentBranch) => {
-    let push;
-    try {
-      push = await this.git().push(remote, currentBranch);
-    } catch (error) {
-      this.showError(error, 'git push 失败请重试');
-      throw error;
-    }
-
-    return push;
+    const errMsg = 'git push 失败请重试';
+    return await this.catchErrWrap('push', errMsg, remote, currentBranch);
   }
 
   gitInit = async () => {
-    let init;
-    try {
-      init = await this.git().init();
-    } catch (error) {
-      this.showError(error, 'git init 失败请重试');
-      throw error;
-    }
-
-    return init;
+    const errMsg = 'git init 失败请重试';
+    return await this.catchErrWrap('init', errMsg);
   }
 
   gitRemoveRemote = async (name = 'origin') => {
-    let removeRemote;
-    try {
-      removeRemote = await this.git().removeRemote(name);
-    } catch (error) {
-      this.showError(error, 'git remote remove 失败请重试');
-      throw error;
-    }
-
-    return removeRemote;
+    const errMsg = 'git remote remove 失败请重试';
+    return await this.catchErrWrap('removeRemote', errMsg, name);
   }
 
   gitAddRemote = async (name = 'origin', url) => {
-    let addRemote;
-    try {
-      addRemote = await this.git().addRemote(name, url);
-    } catch (error) {
-      this.showError(error, 'git remote add 失败请重试');
-      throw error;
-    }
-
-    return addRemote;
+    const errMsg = 'git remote add 失败请重试';
+    return await this.catchErrWrap('addRemote', errMsg, name, url);
   }
 
   gitFetch = async () => {
-    let fetch;
-    try {
-      fetch = await this.git().fetch();
-    } catch (error) {
-      this.showError(error, 'git fetch 失败请重试');
-      throw error;
-    }
-
-    return fetch;
+    const errMsg = 'git fetch 失败请重试';
+    return await this.catchErrWrap('fetch', errMsg);
   }
 
   gitBranch = async (opts) => {
-    let branch;
-    try {
-      branch = await this.git().branch(opts);
-    } catch (error) {
-      this.showError(error, 'git branch 失败请重试');
-      throw error;
-    }
-
-    return branch;
+    const errMsg = 'git branch 失败请重试';
+    return await this.catchErrWrap('branch', errMsg, opts);
   }
   
   gitCheckout = async (checkoutBranch) => {
-    let checkout;
-    try {
-      checkout = await this.git().checkout(checkoutBranch);
-    } catch (error) {
-      this.showError(error, 'git checkout 失败请重试');
-      throw error;
-    }
-
-    return checkout;
+    const errMsg = 'git checkout 失败请重试';
+    return await this.catchErrWrap('checkout', errMsg, checkoutBranch);
   }
 
   gitCheckoutBranch = async (checkoutBranch, branchOrigin) => {
-    let checkoutB;
-    try {
-      checkoutB = await this.git().checkout(checkoutBranch, branchOrigin);
-    } catch (error) {
-      this.showError(error, 'git checkout -b 失败请重试');
-      throw error;
-    }
-
-    return checkoutB;
+    const errMsg = 'git checkout -b 失败请重试';
+    return await this.catchErrWrap('checkout', errMsg, checkoutBranch, branchOrigin);
   }
 
   gitcheckoutLocalBranch = async (newBranch) => {
-    let checkoutLocalBranch;
-    try {
-      checkoutLocalBranch = await this.git().checkoutLocalBranch(newBranch);
-    } catch (error) {
-      this.showError(error, 'git checkout -b 失败请重试');
-      throw error;
-    }
-
-    return checkoutLocalBranch;
+    const errMsg = 'git checkout -b 失败请重试';
+    return await this.catchErrWrap('checkoutLocalBranch', errMsg, newBranch);
   }
 }
 
