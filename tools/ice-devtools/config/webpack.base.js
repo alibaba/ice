@@ -167,7 +167,27 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   config.plugin('import').use(WebpackPluginImport, [
     [
       {
+        libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /@icedesign\/.*/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /@ali\/ice-.*/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /^@alife\/next\/lib\/([^/]+)/,
+        stylePath: 'style.js',
+      },
+      {
         libraryName: /^@alifd\/next\/lib\/([^/]+)/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /@alifd\/.*/,
         stylePath: 'style.js',
       },
     ],
