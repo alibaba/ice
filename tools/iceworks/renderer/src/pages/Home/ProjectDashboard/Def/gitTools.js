@@ -3,71 +3,71 @@ import { Feedback, Dialog } from '@icedesign/base';
 import { debug } from 'util';
 
 const gitToolsMap = {
-  gitOriginRemote: {  // 获取远程仓库
-    func: 'getRemotes',
+  originRemote: {  // 获取远程仓库
+    name: 'getRemotes',
     errMsg: 'git getRemotes 失败',
     handleFunc: (result) => {
       return result.filter(({ name }) => name == 'origin');
     }
   },
-  gitBranches: { // 获取所有分支
-    func: 'branchLocal',
+  branches: { // 获取所有分支
+    name: 'branchLocal',
     errMsg: 'git branchLocal 失败'
   },
-  gitStatus: { // 获取当前分支文件状态
-    func: 'status',
+  status: { // 获取当前分支文件状态
+    name: 'status',
     errMsg: 'git status 失败'
   },
-  gitLastCommit: { // 获取最新的 Commit 信息
-    func: 'log',
+  lastCommit: { // 获取最新的 Commit 信息
+    name: 'log',
     errMsg: 'git lastCommit 失败'
   },
-  gitCheckIsRepo: { // 检查当前输入的是否是一个repo地址
-    func: 'checkIsRepo',
+  checkIsRepo: { // 检查当前输入的是否是一个repo地址
+    name: 'checkIsRepo',
     errMsg: '仓库地址错误'
   },
-  gitAdd: { // git add
-    func: 'add',
+  add: { // git add
+    name: 'add',
     errMsg: 'git add 失败请重试'
   },
-  gitCommit: { // git commit
-    func: 'commit',
+  commit: { // git commit
+    name: 'commit',
     errMsg: 'git commit 失败请重试'
   },
-  gitPush: { // git push
-    func: 'push',
+  push: { // git push
+    name: 'push',
     errMsg: 'git push 失败请重试'
   },
-  gitInit: { // git init
-    func: 'init',
+  init: { // git init
+    name: 'init',
     errMsg: 'git int 失败请重试'
   },
-  gitRemoveRemote: { // 移除当前remote
-    func: 'removeRemote',
+  removeRemote: { // 移除当前remote
+    name: 'removeRemote',
     errMsg: 'git remote remove 失败请重试'
   },
-  gitAddRemote: { // 添加当前remote
-    func: 'addRemote',
+  addRemote: { // 添加当前remote
+    name: 'addRemote',
     errMsg: 'git remote add 失败请重试'
   },
-  gitFetch: { // git fetch
-    func: 'fetch',
+  fetch: { // git fetch
+    name: 'fetch',
     errMsg: 'git fetch 失败请重试'
   },
-  gitBranch: { // git branch
-    func: 'branch',
+  branch: { // git branch
+    name: 'branch',
     errMsg: 'git branch 失败请重试'
   },
-  gitCheckout: { // git checkout 参数： checkoutBranch
-    func: 'checkout',
+  checkout: { // git checkout 参数： checkoutBranch
+    name: 'checkout',
     errMsg: 'git checkout 失败请重试'
   },
-  gitCheckoutBranch: { // git checkout 参数：checkoutBranch, branchOrigin
-    func: 'checkout',
+  checkoutBranch: { // git checkout 参数：checkoutBranch, branchOrigin
+    name: 'checkout',
     errMsg: 'git checkout -b 失败请重试'
   },
-  gitcheckoutLocalBranch: { // 切新分支 参数：newBranch
-    func: 'checkoutLocalBranch',
+  checkoutLocalBranch: { // 切新分支 参数：newBranch
+    name: 'checkoutLocalBranch',
     errMsg: 'git checkoutLocalBranch 失败请重试'
   }
 }
@@ -82,13 +82,13 @@ class GitTools {
   }
 
   run = async (toolName, ...opts) => {
-    const {func, errMsg, handleFunc} = gitToolsMap[toolName];
+    const {name, errMsg, handleFunc} = gitToolsMap[toolName];
     try {
       let result;
       if (opts[0] !== undefined) {
-        result = await this.git()[func](...opts);
+        result = await this.git()[name](...opts);
       } else {
-        result = await this.git()[func]();
+        result = await this.git()[name]();
       }
       if (typeof handleFunc === 'function') {
         return handleFunc(result);
