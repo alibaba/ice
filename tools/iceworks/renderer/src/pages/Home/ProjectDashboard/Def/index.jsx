@@ -167,15 +167,15 @@ class Def extends Component {
     const cwd = currentProject.fullPath;
 
     try {
-      const isRepo = await this.gitTools.gitCheckIsRepo();
+      const isRepo = await this.gitTools.run('gitCheckIsRepo');
 
       const isGit = isRepo && pathExists.sync(path.join(cwd, '.git'));
       if (isGit) {
-        let originRemote = await this.gitTools.gitOriginRemote();
+        let originRemote = await this.gitTools.run('gitOriginRemote', true);
         originRemote = originRemote[0] || {};
         const remoteUrl = (originRemote.refs && originRemote.refs.push) || '';
-        const branches = await this.gitTools.gitBranches();
-        const status = await this.gitTools.gitStatus();
+        const branches = await this.gitTools.run('gitBranches');
+        const status = await this.gitTools.run('gitStatus');
         this.setState({
           isGit,
           isRepo,
@@ -217,8 +217,8 @@ class Def extends Component {
   handleGitcommitOk = async (commitMessage) => {
 
     try {
-      await this.gitTools.gitAdd('.');
-      await this.gitTools.gitCommit(commitMessage);
+      await this.gitTools.run('gitAdd', '.');
+      await this.gitTools.run('gitCommit', commitMessage);
 
       Feedback.toast.success('commit 成功');
       this.gitCheckIsRepo();
@@ -238,7 +238,7 @@ class Def extends Component {
     this.setState({ pushLoading: true });
     
     try {
-      await this.gitTools.gitPush('origin', currentBranch);
+      await this.gitTools.run('gitPush', 'origin', currentBranch);
 
       Feedback.toast.success('git push 成功');
       this.setState({ pushLoading: false });
@@ -253,7 +253,7 @@ class Def extends Component {
     this.setState({ gitIniting: true });
 
     try {
-      await this.gitTools.gitInit();
+      await this.gitTools.run('gitInit');
 
       this.setState({ 
         gitIniting: false 
@@ -297,11 +297,10 @@ class Def extends Component {
     });
 
     try {
-      let originRemote = await this.gitTools.gitOriginRemote();
+      let originRemote = await this.gitTools.run('gitOriginRemote');
       if (originRemote.length > 0 ) {
-        await this.gitTools.gitRemoveRemote();
+        await this.gitTools.run('gitRemoveRemote', 'origin');
       }
-
       this.addRemote();
     } catch (error) {
       this.setState(
@@ -315,8 +314,7 @@ class Def extends Component {
   addRemote = async () => {
 
     try {
-      await this.gitTools.gitAddRemote('origin', this.state.remoteUrl);
-
+      await this.gitTools.run('gitAddRemote', 'origin', this.state.remoteUrl);
       this.setState({
         gitRemoteAdding: false,
         remoteAddVisible: false,
@@ -343,9 +341,9 @@ class Def extends Component {
     });
 
     try {
-      await this.gitTools.gitFetch();
-      const originBranches = await this.gitTools.gitBranch(['--remotes', '--list', '-v']);
-      const localBranches = await this.gitTools.gitBranches();
+      await this.gitTools.run('gitFetch');
+      const originBranches = await this.gitTools.run('gitBranch', ['--remotes', '--list', '-v']);
+      const localBranches = await this.gitTools.run('gitBranches');
 
       const local = localBranches.all.map((value) => {
         return { label: value, value };
@@ -416,7 +414,7 @@ class Def extends Component {
     const { branchOrigin, checkoutBranch, branchType } = this.state;
     if (branchOrigin === checkoutBranch && branchType === 'local') {
       try {
-        await this.gitTools.gitCheckout(checkoutBranch);
+        await this.gitTools.run('gitCheckout', checkoutBranch);
   
         this.setState(
           { branchesVisible: false },
@@ -432,7 +430,7 @@ class Def extends Component {
 
     } else {
       try {
-        await this.gitTools.gitCheckoutBranch(checkoutBranch, branchOrigin);
+        await this.gitTools.run('gitCheckoutBranch', checkoutBranch, branchOrigin);
   
         this.setState(
           { branchesVisible: false },
@@ -481,7 +479,7 @@ class Def extends Component {
     validateAll( async (errors, { newBranch }) => {
       if (!errors) {
         try {
-          await this.gitTools.gitcheckoutLocalBranch(newBranch);
+          await this.gitTools.run('gitcheckoutLocalBranch', newBranch);
     
           this.setState(
             { newBranchVisible: false },
@@ -576,7 +574,7 @@ class Def extends Component {
     }
     // 5. 开始发布
     await this.setState({ defPublishing: true });
-    const lastCommit = await this.gitTools.gitLastCommit([currentBranch]);
+    const lastCommit = await this.gitTools.run('gitLastCommit', [currentBranch]);
     const { currentProject } = this.props.projects;
 
     if (target == 'daily') {
@@ -588,11 +586,11 @@ class Def extends Component {
             this.setState({ defPublishing: false });
             return;
           }
-          await this.gitTools.gitAdd('.');
-          await this.gitTools.gitCommit(`update ${currentProject.projectName}`);
+          await this.gitTools.run('gitAdd', '.');
+          await this.gitTools.run('gitCommit', `update ${currentProject.projectName}`);
         } 
         // 2. push
-        await this.gitTools.gitPush('origin', currentBranch);
+        await this.gitTools.run('gitPush', 'origin', currentBranch);
       } catch (err) {
         this.setState({ defPublishing: false });
         throw err;
