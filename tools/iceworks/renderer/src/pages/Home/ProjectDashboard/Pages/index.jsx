@@ -114,10 +114,6 @@ class PagesCard extends Component {
         .then(() => {
           log.debug('删除页面成功');
           Notification.success({ message: `删除页面 ${name} 成功` });
-          interaction.notify({
-            title: '删除页面完成',
-            body: `${name}`
-          });
           this.serachPages();
         })
         .catch((error) => {

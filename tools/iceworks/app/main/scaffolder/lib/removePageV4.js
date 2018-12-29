@@ -84,12 +84,20 @@ module.exports = async function({
       ) {
         // 过滤path
         node.init.elements = node.init.elements.filter((element) => {
-          return !element.properties.some((op) => {
-            if (op.key.name == 'path') {
-              routerPath = op.value.value;
-            }
+          // 记录匹配状态
+          const ifMatched = element.properties.some((op) => {
             return op.key.name == 'component' && op.value.name == componentName;
           });
+          // 如果匹配到过滤条件，则设置routerPath
+          if (ifMatched) {
+            element.properties.forEach( op => {
+              if (op.key.name == 'path') {
+                routerPath = op.value.value;
+              }
+            });
+          }
+          // 过滤
+          return !ifMatched;
         })
       }
     }
@@ -101,23 +109,26 @@ module.exports = async function({
   );
 
   // 3. 删除menu配置
-  const menuConfigFilePath = path.join(destDir, clientPath, 'menuConfig.js');
-  const menuConfigAST = getFileAst(menuConfigFilePath);
-
-  traverse(menuConfigAST, {
-    VariableDeclarator(path) {
-      if (
-        t.isIdentifier(path.node.id, { name: MENU_CONFIG }) &&
-        t.isArrayExpression(path.node.init)
-      ) {
-        // 移除menu配置
-        path.node.init.elements = removePageMenuConfig(path.node.init.elements, routerPath);
-      }
-    },
-  });
-
-  fs.writeFileSync(
-    menuConfigFilePath,
-    prettier.format(generator(menuConfigAST).code, config.prettier)
-  );
+  if (routerPath) {
+    const menuConfigFilePath = path.join(destDir, clientPath, 'menuConfig.js');
+    const menuConfigAST = getFileAst(menuConfigFilePath);
+  
+    traverse(menuConfigAST, {
+      VariableDeclarator(path) {
+        if (
+          t.isIdentifier(path.node.id, { name: MENU_CONFIG }) &&
+          t.isArrayExpression(path.node.init)
+        ) {
+          // 移除menu配置
+          path.node.init.elements = removePageMenuConfig(path.node.init.elements, routerPath);
+        }
+      },
+    });
+  
+    fs.writeFileSync(
+      menuConfigFilePath,
+      prettier.format(generator(menuConfigAST).code, config.prettier)
+    );
+  }
+ 
 };
