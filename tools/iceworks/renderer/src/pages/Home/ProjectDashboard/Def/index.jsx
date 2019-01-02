@@ -523,7 +523,14 @@ class Def extends Component {
       dialog.confirm(
         {
           title: '提示',
-          content: `继续发布将执行 1. git add . => 2. git commit -m update ${currentProject.projectName} => 3. git push`,
+          content: (
+            <div>
+              <p>继续发布将执行</p>
+              <p>1. git add</p>
+              <p>2. git commit -m update {currentProject.projectName}</p>
+              <p>3. git push</p>
+            </div>
+          ),
         },
         (ok) => {
           resolve(ok);
