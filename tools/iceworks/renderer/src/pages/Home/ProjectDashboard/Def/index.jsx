@@ -142,7 +142,7 @@ class Def extends Component {
   }
 
   init() {
-    const { currentProject } = this.props.projects;
+    const { currentProject = {} } = this.props.projects;
     const cwd = currentProject.fullPath;
     this.gitTools = new GitTools(cwd);
     clientEmiter.cwd = cwd;
