@@ -750,7 +750,7 @@ class Def extends Component {
               <div style={styles.statusWrapper}>{this.renderFilesStatus()}</div>
             </div>
           </div>
-          <div
+          {/* <div
             style={{
               paddingTop: 5,
               marginTop: 5,
@@ -776,7 +776,7 @@ class Def extends Component {
                 Git push
               </Button>
             </Button.Group>
-          </div>
+          </div> */}
           <div
             style={{
               paddingTop: 5,
@@ -839,14 +839,14 @@ class Def extends Component {
         <DashboardCard.Header>
           <div>DEF 前端发布</div>
           <div>
-            <ExtraButton
+            {/* <ExtraButton
               style={{ color: '#3080FE' }}
               placement={'top'}
               tipText={'DEF 文档'}
               onClick={this.handleOpenDocument}
             >
               <Icon type="help" style={{ fontSize: 18 }} />
-            </ExtraButton>
+            </ExtraButton> */}
             <ExtraButton
               style={{ color: '#3080FE' }}
               placement={'top'}
