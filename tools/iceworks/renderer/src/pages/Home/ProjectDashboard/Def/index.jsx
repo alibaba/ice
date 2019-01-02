@@ -86,8 +86,6 @@ class Def extends Component {
     super(props);
 
     this.state = {
-      commitVisible: false,
-      pushLoading: false,
       loading: true,
       isGit: false,
       isRepo: false,
@@ -202,52 +200,6 @@ class Def extends Component {
     this.gitCheckIsRepo();
   };
 
-  handleGitcommitOpen = () => {
-    if (!this.state.originRemote.refs) {
-      Feedback.toast.error('当前项目未设置 git remote 地址');
-      return;
-    }
-    this.setState({ commitVisible: true});
-  };
-
-  handleGitcommitClose = () => {
-    this.setState({ commitVisible: false });
-  };
-
-  handleGitcommitOk = async (commitMessage) => {
-
-    try {
-      await this.gitTools.run('add', '.');
-      await this.gitTools.run('commit', commitMessage);
-
-      Feedback.toast.success('commit 成功');
-      this.gitCheckIsRepo();
-      this.setState({ commitVisible: false });
-    } catch (error) {
-      console.error(error);
-    }
-
-  };
-
-  handleGitpush = async () => {
-    if (!this.state.originRemote.refs) {
-      Feedback.toast.error('当前项目未设置 git remote 地址');
-      return;
-    }
-    const { currentBranch } = this.state;
-    this.setState({ pushLoading: true });
-    
-    try {
-      await this.gitTools.run('push', 'origin', currentBranch);
-
-      Feedback.toast.success('git push 成功');
-      this.setState({ pushLoading: false });
-    } catch (error) {
-      console.error(error);
-      this.setState({ pushLoading: false });
-    }
-
-  };
 
   handleGitInit = async () => {
     this.setState({ gitIniting: true });
@@ -493,12 +445,6 @@ class Def extends Component {
         }
       }
     });
-  };
-
-  handleOpenDocument = () => {
-    shell.openExternal(
-      'http://def.alibaba-inc.com/doc/start/intro'
-    );
   };
 
   handlePublishToDaily = async () => {
@@ -757,33 +703,6 @@ class Def extends Component {
               <div style={styles.statusWrapper}>{this.renderFilesStatus()}</div>
             </div>
           </div>
-          {/* <div
-            style={{
-              paddingTop: 5,
-              marginTop: 5,
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderTop: '1px solid #f4f4f4',
-            }}
-          >
-            <Button.Group>
-              <Button
-                disabled={status && status.files && status.files.length == 0}
-                size="small"
-                onClick={this.handleGitcommitOpen}
-              >
-                Git commit
-              </Button>
-              <Button
-                loading={this.state.pushLoading}
-                size="small"
-                onClick={this.handleGitpush}
-              >
-                Git push
-              </Button>
-            </Button.Group>
-          </div> */}
           <div
             style={{
               paddingTop: 5,
@@ -846,14 +765,6 @@ class Def extends Component {
         <DashboardCard.Header>
           <div>DEF 前端发布</div>
           <div>
-            {/* <ExtraButton
-              style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'DEF 文档'}
-              onClick={this.handleOpenDocument}
-            >
-              <Icon type="help" style={{ fontSize: 18 }} />
-            </ExtraButton> */}
             <ExtraButton
               style={{ color: '#3080FE' }}
               placement={'top'}
@@ -866,11 +777,6 @@ class Def extends Component {
         </DashboardCard.Header>
         <DashboardCard.Body>
           {this.renderBody()}
-          <DialogCommitMsg 
-            commitVisible={this.state.commitVisible}
-            handleGitcommitClose={this.handleGitcommitClose}
-            handleGitcommitOk={this.handleGitcommitOk}
-          />
           <Dialog
             visible={this.state.remoteAddVisible}
             title="Git remote add"
@@ -891,7 +797,7 @@ class Def extends Component {
           >
             <Input
               onChange={this.handleGitRemoteUrl}
-              placeholder="请输入 git 仓库 URL"
+              placeholder="请输入 git 仓库 URL，如：https://github.com/alibaba/ice.git"
               value={this.state.remoteUrlInput}
               style={{ width: 400 }}
             />
