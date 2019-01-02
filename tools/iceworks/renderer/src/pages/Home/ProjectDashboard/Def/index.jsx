@@ -84,8 +84,6 @@ class Def extends Component {
 
   constructor(props) {
     super(props);
-    const { currentProject } = this.props.projects;
-    const cwd = currentProject.fullPath;
 
     this.state = {
       commitVisible: false,
@@ -110,9 +108,7 @@ class Def extends Component {
       defPublishing: false,
       originRemote: {},
     };
-
-    this.gitTools = new GitTools(cwd);
-    clientEmiter.cwd = cwd;
+    this.init()
   }
 
   componentDidMount() {
@@ -143,6 +139,17 @@ class Def extends Component {
     this.props.projects.removeListener('change', this.gitCheckIsRepo);
   }
 
+  componentWillReceiveProps() {
+    this.init();
+  }
+
+  init() {
+    const { currentProject } = this.props.projects;
+    const cwd = currentProject.fullPath;
+    this.gitTools = new GitTools(cwd);
+    clientEmiter.cwd = cwd;
+  }
+
   getUserInfo = () => {
     const userValue = localStorage.getItem('login:user');
     let user;
@@ -153,13 +160,6 @@ class Def extends Component {
       } catch (e) {}
     }
     return user;
-  };
-
-  git = () => {
-    const { projects } = this.props;
-    const { currentProject } = projects;
-    const cwd = currentProject.fullPath;
-    return gitPromie(cwd);
   };
 
   gitCheckIsRepo = async () => {
@@ -258,7 +258,6 @@ class Def extends Component {
       this.setState({ 
         gitIniting: false 
       }, this.handleReload);
-
     } catch (error) {
       this.setState({ gitIniting: false });
     }
