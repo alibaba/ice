@@ -23,9 +23,7 @@ class ScaffoldItem extends Component {
 
   createProject = () => {
     const { createProject, data } = this.props;
-    const hasIceScripts =
-      data.devDependencies &&
-      Object.prototype.hasOwnProperty.call(data.devDependencies, 'ice-scripts');
+    const hasIceScripts = data.builder === 'ice-scripts';
 
     if (createProject) {
       if (hasIceScripts) {
