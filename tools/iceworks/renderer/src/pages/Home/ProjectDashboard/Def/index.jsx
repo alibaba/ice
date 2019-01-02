@@ -797,7 +797,7 @@ class Def extends Component {
           >
             <Input
               onChange={this.handleGitRemoteUrl}
-              placeholder="请输入 git 仓库 URL，如：https://github.com/alibaba/ice.git"
+              placeholder="请输入 git 仓库 URL，如：git@github.com:alibaba/ice.git"
               value={this.state.remoteUrlInput}
               style={{ width: 400 }}
             />
