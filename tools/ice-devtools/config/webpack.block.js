@@ -11,7 +11,7 @@ console.log('process.platform:', process.platform);
 const hbsPath = path.join(__dirname, '../template/preview/block.html.hbs');
 
 module.exports = function getWebpacksConfig(cwd) {
-  const config = getWebpackBaseConfig();
+  const config = getWebpackBaseConfig(cwd);
 
   // 增加入口文件  index.js
   const entry = path.join(cwd, 'src/index.js');
