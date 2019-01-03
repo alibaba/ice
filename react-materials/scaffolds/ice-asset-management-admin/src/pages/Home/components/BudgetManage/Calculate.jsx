@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination, Dialog } from '@icedesign/base';
+import { withRouter } from 'react-router-dom';
 import TableHead from './TableHead';
 
 // MOCK 数据，实际业务按需进行替换
@@ -17,6 +18,7 @@ const getData = (length = 10) => {
   });
 };
 
+@withRouter
 export default class Calculate extends Component {
   state = {
     current: 1,
@@ -67,12 +69,27 @@ export default class Calculate extends Component {
     this.fetchData(5);
   };
 
+  handleEdit = () => {
+    Dialog.confirm({
+      title: '提示',
+      content: '只有管理员才能进行修改',
+    });
+  };
+
+  handleDetail = () => {
+    this.props.history.push('/manage/department');
+  };
+
   renderOper = () => {
     return (
       <div>
-        <a style={styles.link}>修改预算</a>
+        <a style={styles.link} onClick={this.handleEdit}>
+          修改
+        </a>
         <span style={styles.separator} />
-        <a style={styles.link}>查看详情</a>
+        <a style={styles.link} onClick={this.handleDetail}>
+          详情
+        </a>
       </div>
     );
   };

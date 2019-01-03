@@ -93,7 +93,7 @@ export default class CustomTable extends Component {
           style={{ padding: '20px' }}
         >
           <Table.Column title="应用" dataIndex="application" />
-          <Table.Column title="技术负责人" dataIndex="leader" />
+          <Table.Column title="负责人" dataIndex="leader" />
           <Table.Column title="开发人员" dataIndex="developer" />
           <Table.Column title="计算费用(万元)" dataIndex="computationalCost" />
           <Table.Column title="计算分" dataIndex="score" />
