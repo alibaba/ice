@@ -21,7 +21,8 @@
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "postinstall": "node ./postinstall.js"
   },
   "peerDependencies": {
     "react": "^16.5.0"
