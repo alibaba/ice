@@ -72,12 +72,12 @@ export default class IceQrcode extends Component {
     const { align, className = '', style = {}, trigger, triggerSize, triggerStyle, ...other } = this.props;
 
     const content = <Panel {...other} />;
-    const Clazz = classnames(className, 'ice-qrcode');
+    const clazz = classnames(className, 'ice-qrcode');
     const triggerClazz = classnames('ice-qrcode-trigger', {
       [`ice-qrcode-trigger-size-${triggerSize}`]: !!triggerSize
     });
     return (
-      <span className={Clazz} style={style}>
+      <span className={clazz} style={style}>
         <Balloon
           align={this.alignMap[align] || 'lb'}
           closable={false}
