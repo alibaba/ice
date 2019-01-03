@@ -1,19 +1,67 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table } from '@icedesign/base';
+import { Table, Dialog } from '@icedesign/base';
+import { withRouter, Link } from 'react-router-dom';
 import ContainerTitle from '../../../../components/ContainerTitle';
 
+const mockData = [
+  {
+    id: 1,
+    avatar:
+      'https://img.alicdn.com/tfs/TB18g0ydNTpK1RjSZR0XXbEwXXa-500-500.jpg',
+    name: '淘小宝',
+    email: 'ice-admin@alibaba-inc.com',
+    role: 'owner',
+  },
+  {
+    id: 2,
+    avatar:
+      'https://img.alicdn.com/tfs/TB18g0ydNTpK1RjSZR0XXbEwXXa-500-500.jpg',
+    name: '淘小宝',
+    email: 'ice-admin@alibaba-inc.com',
+    role: 'member',
+  },
+  {
+    id: 3,
+    avatar:
+      'https://img.alicdn.com/tfs/TB18g0ydNTpK1RjSZR0XXbEwXXa-500-500.jpg',
+    name: '淘小宝',
+    email: 'ice-admin@alibaba-inc.com',
+    role: 'owner',
+  },
+  {
+    id: 4,
+    avatar:
+      'https://img.alicdn.com/tfs/TB18g0ydNTpK1RjSZR0XXbEwXXa-500-500.jpg',
+    name: '淘小宝',
+    email: 'ice-admin@alibaba-inc.com',
+    role: 'member',
+  },
+];
+
+@withRouter
 export default class MemberList extends Component {
-  static displayName = 'MemberList';
+  state = {
+    data: mockData,
+  };
 
-  static propTypes = {};
+  handleAdd = () => {
+    this.props.history.push('/add/member');
+  };
 
-  static defaultProps = {};
+  handleDelete = (index) => {
+    Dialog.confirm({
+      content: '确认删除吗',
+      onOk: () => {
+        const { data } = this.state;
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+        data.splice(index, index + 1);
+        this.setState({
+          data,
+        });
+      },
+    });
+  };
 
   renderProfile = (value, index, record) => {
     return (
@@ -24,45 +72,37 @@ export default class MemberList extends Component {
     );
   };
 
-  renderOper = () => {
+  renderOper = (value) => {
     return (
       <div>
-        <a style={{ ...styles.link, ...styles.edit }}>修改</a>
-        <a style={{ ...styles.link, ...styles.delete }}>删除</a>
+        <Link to="/add/member" style={{ ...styles.link, ...styles.edit }}>
+          修改
+        </Link>
+        <a
+          onClick={() => this.handleDelete(value)}
+          style={{ ...styles.link, ...styles.delete }}
+        >
+          删除
+        </a>
       </div>
     );
   };
 
   render() {
-    const dataSource = [
-      {
-        avatar:
-          'https://img.alicdn.com/tfs/TB18g0ydNTpK1RjSZR0XXbEwXXa-500-500.jpg',
-        name: '淘小宝',
-        email: 'ice-admin@alibaba-inc.com',
-        role: 'owner',
-      },
-      {
-        avatar:
-          'https://img.alicdn.com/tfs/TB18g0ydNTpK1RjSZR0XXbEwXXa-500-500.jpg',
-        name: '宝码',
-        email: 'ice-admin@alibaba-inc.com',
-        role: 'member',
-      },
-    ];
-
+    const { data } = this.state;
     return (
       <IceContainer style={styles.container}>
         <ContainerTitle
           title="项目成员"
           buttonText="添加成员"
           style={styles.title}
+          onClick={this.handleAdd}
         />
-        <Table dataSource={dataSource} hasHeader={false} hasBorder={false}>
+        <Table dataSource={data} hasHeader={false} hasBorder={false}>
           <Table.Column dataIndex="name" cell={this.renderProfile} />
           <Table.Column dataIndex="email" />
           <Table.Column dataIndex="role" />
-          <Table.Column cell={this.renderOper} />
+          <Table.Column dataIndex="id" cell={this.renderOper} />
         </Table>
       </IceContainer>
     );
