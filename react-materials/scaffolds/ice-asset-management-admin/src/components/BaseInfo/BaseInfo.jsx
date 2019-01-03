@@ -41,25 +41,13 @@ const mockData = [
 ];
 
 export default class BaseInfo extends Component {
-  static displayName = 'BaseInfo';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <Row gutter={20}>
         {mockData.map((item, index) => {
           const scoreColor =
-            item.score.value > 90 ? styles.green : styles.yellow;
-          const consumeColor =
-            item.consume.value > 90 ? styles.green : styles.yellow;
+            item.score.value > 90 ? styles.green : styles.orange;
+
           return (
             <Col l="12" key={index}>
               <IceContainer style={styles.container}>
@@ -70,7 +58,7 @@ export default class BaseInfo extends Component {
                     <div style={{ ...styles.cellValue, ...scoreColor }}>
                       {item.score.value}
                     </div>
-                    <div style={{ ...styles.cellDesc, ...consumeColor }}>
+                    <div style={{ ...styles.cellDesc, ...styles.grey }}>
                       {item.score.desc}
                     </div>
                   </div>
@@ -144,17 +132,17 @@ const styles = {
   ratioLabel: {
     marginRight: '20px',
   },
-  yellow: {
-    color: '#ff9600',
+  orange: {
+    color: '#f7da47',
   },
   green: {
-    color: '#0da32e',
+    color: '#ee706d',
   },
   black: {
     color: '#000',
   },
   grey: {
-    color: '#808080',
+    color: '#666',
   },
   footer: {
     padding: '10px 20px',
@@ -168,9 +156,9 @@ const styles = {
     fontSize: '12px',
   },
   itemLabel: {
-    color: 'rgba(0,0,0,.4)',
+    color: 'rgba(0, 0, 0, .4)',
   },
   itemValue: {
-    color: 'rgba(0,0,0,.8)',
+    color: 'rgba(0, 0, 0, .8)',
   },
 };
