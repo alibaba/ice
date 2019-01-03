@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Table, Pagination, Search } from '@icedesign/base';
 
 // MOCK 数据，实际业务按需进行替换，
-const getData = () => {
-  return Array.from({ length: 10 }).map((item, index) => {
+const getData = (length = 10) => {
+  return Array.from({ length }).map((item, index) => {
     return {
       application: '淘宝',
       leader: '淘小宝',
@@ -22,31 +22,57 @@ const getData = () => {
 };
 
 export default class CustomTable extends Component {
-  static displayName = 'CustomTable';
+  state = {
+    current: 1,
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-    };
+  componentDidMount() {
+    this.fetchData();
   }
 
-  /**
-   * 分页器回调
-   */
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
     });
   };
 
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.fetchData();
+      }
+    );
+  };
+
+  handleFilterChange = () => {
+    this.fetchData(5);
+  };
+
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, data, current } = this.state;
 
     return (
       <div>
@@ -57,10 +83,12 @@ export default class CustomTable extends Component {
             size="large"
             inputWidth={300}
             placeholder="请输入关键词"
+            onChange={this.handleFilterChange}
           />
         </div>
         <Table
-          dataSource={dataSource}
+          isLoading={isLoading}
+          dataSource={data}
           hasBorder={false}
           style={{ padding: '20px' }}
         >

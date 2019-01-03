@@ -3,8 +3,8 @@ import { Table, Pagination } from '@icedesign/base';
 import TableHead from './TableHead';
 
 // MOCK 数据，实际业务按需进行替换
-const getData = () => {
-  return Array.from({ length: 20 }).map((item, index) => {
+const getData = (length = 10) => {
+  return Array.from({ length }).map((item, index) => {
     return {
       department: '淘宝',
       name: '淘小宝',
@@ -18,27 +18,53 @@ const getData = () => {
 };
 
 export default class Calculate extends Component {
-  static displayName = 'Calculate';
+  state = {
+    current: 1,
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-    };
+  componentDidMount() {
+    this.fetchData();
   }
 
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
     });
   };
 
-  onChange = (selectedItems) => {
-    console.log('onChange callback', selectedItems);
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.fetchData();
+      }
+    );
+  };
+
+  handleFilterChange = () => {
+    this.fetchData(5);
   };
 
   renderOper = () => {
@@ -52,13 +78,12 @@ export default class Calculate extends Component {
   };
 
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, data, current } = this.state;
 
     return (
       <div style={styles.container}>
-        <TableHead />
-        <Table dataSource={dataSource} hasBorder={false}>
+        <TableHead onChange={this.handleFilterChange} />
+        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="部门名称" dataIndex="department" />
           <Table.Column title="接口人" dataIndex="name" />
           <Table.Column title="财年预算(万元)" dataIndex="yearBudget" />
