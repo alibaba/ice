@@ -1,4 +1,4 @@
-import { Button, Feedback, Dialog, Input, CascaderSelect } from '@icedesign/base';
+import { Button, Feedback, Dialog, Input, CascaderSelect, Balloon } from '@icedesign/base';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
 import { EventEmitter } from 'events';
 import { inject, observer } from 'mobx-react';
@@ -475,23 +475,53 @@ class Def extends Component {
 
   handleDailyPublish = () => {
     const { currentProject } = this.props.projects;
+    const trigger = <Icon type="help" style={{
+      marginLeft: '3px',
+      fontSize: '14px'
+    }} />
+
     return new Promise( (resolve, reject) => {
-      dialog.confirm(
-        {
-          title: '提示',
-          content: (
-            <div>
-              <p>继续发布将执行</p>
-              <p>1. git add</p>
-              <p>2. git commit -m update {currentProject.projectName}</p>
-              <p>3. git push</p>
-            </div>
-          ),
-        },
-        (ok) => {
-          resolve(ok);
-        }
-      );
+      const dialog = Dialog.confirm({
+        needWrapper: false,
+        title: '提示',
+        content: (
+          <div style={{
+            textAlign: 'center',
+            margin: '20px 10px',
+            fontSize: '16px',
+          }}>
+            Iceworks 提醒：本地有未提交的代码，请确认操作
+          </div>
+        ),
+        footer: (
+          <div>
+            <Button
+              onClick={() => { resolve('git'); dialog.hide();}}
+              type="primary"
+            >
+              提交并发布
+              <Balloon
+                trigger={trigger}
+                align="b"
+                alignment="edge"
+                style={{ width: 600 }}
+              >
+                <div style={{
+                  margin: '0 0 10px 0',
+                  fontSize: '14px',
+                }}>git 提交将执行以下操作：</div>
+                <ul>
+                  <li><i>git add .</i></li>
+                  <li><i>git commit -m 'chore: update {currentProject.projectName}'</i></li>
+                  <li><i>git push</i></li>
+                </ul>
+              </Balloon>
+            </Button>
+            <Button onClick={() => { resolve(true); dialog.hide();}}>直接发布</Button>
+            <Button onClick={() => { resolve(false); dialog.hide();}}>取消</Button>
+          </div> 
+        )
+      });
     })
   }
 
@@ -541,20 +571,24 @@ class Def extends Component {
 
     if (target == 'daily') {
       try {
-        // 1. 如果有文件未提交，则自动commit
+        // 1. 如果有文件未提交，则供用户选择，进行git提交，或者
         if (status && status.files && status.files.length > 0) {
-          const isGoon = await this.handleDailyPublish();
-          if (!isGoon) {
+          const nextPublish = await this.handleDailyPublish();
+          if (nextPublish === 'git') {
+            await this.gitTools.run('add', '.');
+            await this.gitTools.run('commit', `chore: update ${currentProject.projectName}`);
+          } else if (!nextPublish) {
             this.setState({ defPublishing: false });
             return;
           }
-          await this.gitTools.run('add', '.');
-          await this.gitTools.run('commit', `update ${currentProject.projectName}`);
+          
         } 
         // 2. push
         await this.gitTools.run('push', 'origin', currentBranch);
       } catch (err) {
-        this.setState({ defPublishing: false });
+        this.setState({ defPublishing: false }, () => {
+          this.handleReload()
+        });
         throw err;
       }
     } 
@@ -574,7 +608,10 @@ class Def extends Component {
       commit_id: lastCommit.latest.hash, // 当前发布的 commit id 值
       env: shared.defEnv, // (可选)DEF 发布系统的环境, daily: 日常，prepub: 预发，prod: 线上；联调时可使用
     });
-    this.setState({ defPublishing: false });
+    this.setState({ defPublishing: false 
+    }, () => {
+      this.handleReload()
+    });
    
   };
 
