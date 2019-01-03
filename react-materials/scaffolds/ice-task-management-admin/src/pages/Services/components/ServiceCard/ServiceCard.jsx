@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Icon } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
+import { Link } from 'react-router-dom';
 
 const { Row, Col } = Grid;
 
@@ -41,14 +42,17 @@ export default class ServiceCard extends Component {
                   <div style={styles.tag}>{item.tag}</div>
                 </div>
                 <div style={styles.footer}>
-                  <a href="#" style={{ ...styles.link, ...styles.line }}>
+                  <Link
+                    to="/activities"
+                    style={{ ...styles.link, ...styles.line }}
+                  >
                     <Icon type="office" size="small" style={styles.icon} />{' '}
-                    文档帮助
-                  </a>
-                  <a href="#" style={styles.link}>
+                    项目状态
+                  </Link>
+                  <Link to="/dashboard" style={styles.link}>
                     <Icon type="box" size="small" style={styles.icon} />
-                    权限申请
-                  </a>
+                    项目概览
+                  </Link>
                 </div>
               </IceContainer>
             </Col>

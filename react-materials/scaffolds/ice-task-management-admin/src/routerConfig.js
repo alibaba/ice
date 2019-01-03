@@ -10,6 +10,7 @@ import Member from './pages/Member';
 import Setting from './pages/Setting';
 import AddDocument from './pages/AddDocument';
 import AddMember from './pages/AddMember';
+import Activities from './pages/Activities';
 
 const routerConfig = [
   {
@@ -31,6 +32,10 @@ const routerConfig = [
   {
     path: '/services',
     component: Services,
+  },
+  {
+    path: '/activities',
+    component: Activities,
   },
   {
     path: '/member',

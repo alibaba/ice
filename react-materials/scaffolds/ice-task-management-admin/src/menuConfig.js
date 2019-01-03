@@ -31,14 +31,19 @@ const asideMenuConfig = [
     icon: 'home2',
   },
   {
+    name: '项目',
+    path: '/services',
+    icon: 'cascades',
+  },
+  {
     name: '文档',
     path: '/document',
     icon: 'copy',
   },
   {
-    name: '服务',
-    path: '/services',
-    icon: 'cascades',
+    name: '状态',
+    path: '/activities',
+    icon: 'activity',
   },
   {
     name: '成员',

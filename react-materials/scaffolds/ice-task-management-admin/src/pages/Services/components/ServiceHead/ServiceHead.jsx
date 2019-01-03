@@ -4,7 +4,7 @@ import { Button, Dialog } from '@icedesign/base';
 export default class ServiceHead extends Component {
   handleClick = () => {
     Dialog.confirm({
-      content: '暂不支持切换管理功能',
+      content: '只有管理员才能操作',
     });
   };
 
@@ -16,7 +16,7 @@ export default class ServiceHead extends Component {
           style={{ marginRight: '10px' }}
           onClick={this.handleClick}
         >
-          服务管理
+          项目管理
         </Button>
         <Button size="large" type="primary" onClick={this.handleClick}>
           授权管理
