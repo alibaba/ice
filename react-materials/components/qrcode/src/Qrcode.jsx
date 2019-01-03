@@ -1,8 +1,7 @@
-import { Balloon } from '@icedesign/base';
-import FoundationSymbol from '@icedesign/foundation-symbol';
+import { Balloon } from '@alifd/next';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-
+import QrCodeImage from '../img/qr_code.svg';
 import Panel from './Panel';
 
 export default class IceQrcode extends Component {
@@ -80,13 +79,7 @@ export default class IceQrcode extends Component {
           closable={false}
           overlay={content}
           trigger={
-            trigger || (
-              <FoundationSymbol
-                style={this.props.triggerStyle}
-                type="qrcode"
-                size={this.props.triggerSize}
-              />
-            )
+            trigger || (<img src={QrCodeImage} />)
           }
           triggerType="hover"
         >
