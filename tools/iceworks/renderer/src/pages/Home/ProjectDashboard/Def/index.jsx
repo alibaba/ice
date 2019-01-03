@@ -490,7 +490,7 @@ class Def extends Component {
             margin: '20px 10px',
             fontSize: '16px',
           }}>
-            Iceworks 提醒：本地有未提交的代码，请确认操作
+            当前 Git 仓库本地有未提交的代码，请确认操作
           </div>
         ),
         footer: (
@@ -509,7 +509,7 @@ class Def extends Component {
                 <div style={{
                   margin: '0 0 10px 0',
                   fontSize: '14px',
-                }}>git 提交将执行以下操作：</div>
+                }}>Git 提交将执行以下操作：</div>
                 <ul>
                   <li><i>git add .</i></li>
                   <li><i>git commit -m 'chore: update {currentProject.projectName}'</i></li>
