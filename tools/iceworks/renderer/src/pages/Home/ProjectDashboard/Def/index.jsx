@@ -205,6 +205,8 @@ class Def extends Component {
 
     try {
       await this.gitTools.run('init');
+      // 执行一次init commit，否则获取不到当前分支.
+      await this.doEmptyCommit();
 
       this.setState({ 
         gitIniting: false 
@@ -400,13 +402,6 @@ class Def extends Component {
 
   handleGitNewBranchOpen = async () => {
     if (this.state.originRemote.refs) {
-      // 获取本地分支
-      const branches = await this.gitTools.run('branches');
-      // 如果没有本地分支，提示先执行一次push，否则无法正常新建分支
-      if (branches.all && branches.all.length === 0) {
-        Feedback.toast.prompt('本地仓库无分支，请先 push');
-        return;
-      }
       this.setState({ newBranchVisible: true });
     } else {
       Feedback.toast.error('当前项目未设置 git remote 地址');
@@ -429,12 +424,23 @@ class Def extends Component {
     }
   };
 
+  doEmptyCommit = async () => {
+    await this.gitTools.run('commit', 'init commit', [], {'--allow-empty':null});
+  };
+
   handleGitNewBranchOk = () => {
     const { validateAll } = this.refs.formNewBranch;
     validateAll( async (errors, { newBranch }) => {
       if (!errors) {
         try {
           await this.gitTools.run('checkoutLocalBranch', newBranch);
+
+          // 如果没有本地分支，则执行一次空提交
+          const branches = await this.gitTools.run('branches');
+          // 执行一次init commit，否则获取不到当前分支.
+          if (branches.all && branches.all.length === 0) {
+            await this.doEmptyCommit();
+          }
     
           this.setState(
             { newBranchVisible: false },
