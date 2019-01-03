@@ -15,5 +15,6 @@ export default class BlankLayout extends Component {
 const styles = {
   container: {
     minHeight: '100vh',
+    minWidth: '1200px',
   },
 };
