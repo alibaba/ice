@@ -10,7 +10,7 @@ importStyle: true
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import IceLabel from '@icedesign/label';
-import {Button} from '@icedesign/base';
+import {Button} from '@alifd/next';
 
 class App extends Component {
   render() {
