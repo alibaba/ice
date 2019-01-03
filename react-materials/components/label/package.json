@@ -29,6 +29,7 @@
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
+    "moment": "^2.23.0"
   },
   "peerDependencies": {
     "react": "^16.5.0",

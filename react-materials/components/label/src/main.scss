@@ -19,7 +19,7 @@
   font-size: 12px;
   font-weight: normal;
   line-height: 1;
-  color: $color-n1-1;
+  color: $color-fill1-1;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
@@ -35,50 +35,50 @@
   }
 
   &.#{$ice-label-prefix}-default {
-    @include bt-label-variant($color-n1-8);
+    @include bt-label-variant($color-text1-3);
     &.#{$ice-label-prefix}-no-inverse {
-      color: $color-n1-8;
-      @include bt-label-variant($color-n1-3);
+      color: $color-text1-3;
+      @include bt-label-variant($color-fill1-1);
     }
   }
 
   &.#{$ice-label-prefix}-primary {
-    @include bt-label-variant($color-b1-6);
+    @include bt-label-variant($color-brand1-6);
     &.#{$ice-label-prefix}-no-inverse {
-      color: $color-b1-6;
-      @include bt-label-variant($color-b1-1);
+      color: $color-brand1-6;
+      @include bt-label-variant($color-brand1-1);
     }
   }
 
   &.#{$ice-label-prefix}-success {
-    @include bt-label-variant($color-f3-1);
+    @include bt-label-variant($color-success-3);
     &.#{$ice-label-prefix}-no-inverse {
-      color: $color-f3-1;
-      @include bt-label-variant($color-f3-2);
+      color: $color-success-3;
+      @include bt-label-variant($color-success-1);
     }
   }
 
   &.#{$ice-label-prefix}-info {
-    @include bt-label-variant($color-f5-1);
+    @include bt-label-variant($color-notice-3);
     &.#{$ice-label-prefix}-no-inverse {
-      color: $color-f5-1;
-      @include bt-label-variant($color-f5-2);
+      color: $color-notice-3;
+      @include bt-label-variant($color-notice-1);
     }
   }
 
   &.#{$ice-label-prefix}-warning {
-    @include bt-label-variant($color-f1-1);
+    @include bt-label-variant($color-warning-3);
     &.#{$ice-label-prefix}-no-inverse {
-      color: $color-f1-1;
-      @include bt-label-variant($color-f1-2);
+      color: $color-warning-3;
+      @include bt-label-variant($color-warning-1);
     }
   }
 
   &.#{$ice-label-prefix}-danger {
-    @include bt-label-variant($color-f2-1);
+    @include bt-label-variant($color-error-3);
     &.#{$ice-label-prefix}-no-inverse {
-      color: $color-f2-1;
-      @include bt-label-variant($color-f2-2);
+      color: $color-error-3;
+      @include bt-label-variant($color-error-1);
     }
   }
 }
