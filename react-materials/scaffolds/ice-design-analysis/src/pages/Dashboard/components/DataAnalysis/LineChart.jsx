@@ -46,6 +46,7 @@ const option = {
       name: '直接访问',
       type: 'bar',
       barWidth: '60%',
+      color: ['#5e83fb'],
     },
   ],
 };
