@@ -11,7 +11,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {
   Table,
-} from '@icedesign/base';
+} from '@alifd/next';
 import Img from '@icedesign/img';
 
 
