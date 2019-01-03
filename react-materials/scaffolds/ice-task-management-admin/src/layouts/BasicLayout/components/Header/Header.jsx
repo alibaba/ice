@@ -4,21 +4,12 @@ import { Balloon, Icon } from '@icedesign/base';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import FoundationSymbol from 'foundation-symbol';
 import IceImg from '@icedesign/img';
-import { headerMenuConfig } from '../../menuConfig';
+import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 import './Header.scss';
 
 @withRouter
 export default class Header extends Component {
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     const { location = {} } = this.props;
     const { pathname } = location;
@@ -148,19 +139,13 @@ export default class Header extends Component {
             >
               <ul>
                 <li className="user-profile-menu-item">
-                  <Link to="/">
-                    <FoundationSymbol type="person" size="small" />
-                    我的主页
-                  </Link>
-                </li>
-                <li className="user-profile-menu-item">
-                  <Link to="/">
+                  <Link to="/setting">
                     <FoundationSymbol type="repair" size="small" />
                     设置
                   </Link>
                 </li>
                 <li className="user-profile-menu-item">
-                  <Link to="/">
+                  <Link to="/user/login">
                     <FoundationSymbol type="compass" size="small" />
                     退出
                   </Link>
