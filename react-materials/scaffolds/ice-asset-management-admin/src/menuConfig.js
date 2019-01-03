@@ -38,7 +38,7 @@ const asideMenuConfig = [
   {
     name: '专项管理',
     path: '/special',
-    icon: 'chart',
+    icon: 'cascades',
     children: [
       { name: '成本管理', path: '/special/cost' },
       { name: '质量管理', path: '/special/cluster' },
