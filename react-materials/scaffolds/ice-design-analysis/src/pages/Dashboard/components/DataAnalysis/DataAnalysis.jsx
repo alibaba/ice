@@ -135,10 +135,12 @@ export default class DataAnalysis extends Component {
               </p>
               <Title data="今日交易额" />
               <h2 style={styles.sum}>
-                1682<TextLoop
+                1682
+                <TextLoop
                   speed={1000}
                   children={['1242.12', '5356.32', '6518.28', '8739.69']}
-                />元
+                />
+                元
               </h2>
             </div>
           </div>
@@ -184,6 +186,8 @@ const styles = {
     flex: 1,
   },
   header: {
+    position: 'relative',
+    zIndex: 9,
     textAlign: 'center',
   },
   pageTitle: {
@@ -197,7 +201,7 @@ const styles = {
     height: '44px',
     lineHeight: '44px',
     margin: '25px 0 0',
-    color: '#fff600',
+    color: '#f7d947',
     fontSize: '62px',
     fontWeight: 400,
   },

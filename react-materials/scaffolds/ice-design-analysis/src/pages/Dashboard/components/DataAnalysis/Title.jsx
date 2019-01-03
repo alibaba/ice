@@ -25,7 +25,7 @@ const styles = {
     borderRadius: '2px',
     fontSize: '16px',
     backgroundColor: 'rgba(26, 72, 78, 0.6)',
-    color: '#F8BC38',
+    color: '#f7d947',
     textAlign: 'center',
   },
 };

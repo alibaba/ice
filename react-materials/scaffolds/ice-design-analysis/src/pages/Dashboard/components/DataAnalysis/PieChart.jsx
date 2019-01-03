@@ -35,14 +35,7 @@ export default class PicChart extends Component {
             show: true,
             formatter: '{b}\n{d}%',
           },
-          color: [
-            '#ffc72b',
-            '#49dff0',
-            '#f845f1',
-            '#9c6a79',
-            '#ff4343',
-            '#0b5263',
-          ],
+          color: ['#5e83fb', '#f7da47', '#58ca9a', '#ee706d', '#666', '#999'],
         },
       ],
     };
