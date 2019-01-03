@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/img",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "description": "ICE 图片组件。",
   "main": "lib/index.js",
   "files": [
@@ -24,7 +24,7 @@
     "ice-component"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
+    "@alifd/next": "^1.x",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.10"
   },
