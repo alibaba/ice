@@ -1,9 +1,31 @@
 // 组件如有皮肤功能，请从该文件引用 scss 变量
-// @import '~@alife/next/lib/core/index.scss';
-
 @charset "UTF-8";
-
+@import '~@alifd/next/lib/core/index.scss';
 @import 'scss/variable';
 
 #{$ice-qrcode-prefix} {
+  color: $color-text1-1;
+  &-trigger {
+    &.ice-qrcode-trigger-size-xxs {
+      width: $icon-xxs;
+    }
+    &.ice-qrcode-trigger-size-xs {
+      width: $icon-xs;
+    }
+    &.ice-qrcode-trigger-size-small {
+      width: $icon-s;
+    }
+    &.ice-qrcode-trigger-size-medium {
+      width: $icon-m;
+    }
+    &.ice-qrcode-trigger-size-large {
+      width: $icon-l;
+    }
+    &.ice-qrcode-trigger-size-xl {
+      width: $icon-xl;
+    }
+    &.ice-qrcode-trigger-size-xxl {
+      width: $icon-xxl;
+    }
+  }
 }

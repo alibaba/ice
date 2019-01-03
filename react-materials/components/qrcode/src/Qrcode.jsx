@@ -1,6 +1,7 @@
 import { Balloon } from '@alifd/next';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import QrCodeImage from '../img/qr_code.svg';
 import Panel from './Panel';
 
@@ -68,18 +69,21 @@ export default class IceQrcode extends Component {
   };
 
   render() {
-    const { align, className = '', style = {}, trigger, ...other } = this.props;
+    const { align, className = '', style = {}, trigger, triggerSize, triggerStyle, ...other } = this.props;
 
     const content = <Panel {...other} />;
-
+    const Clazz = classnames(className, 'ice-qrcode');
+    const triggerClazz = classnames('ice-qrcode-trigger', {
+      [`ice-qrcode-trigger-size-${triggerSize}`]: !!triggerSize
+    });
     return (
-      <span className={className} style={{ color: '#333', ...style }}>
+      <span className={Clazz} style={style}>
         <Balloon
           align={this.alignMap[align] || 'lb'}
           closable={false}
           overlay={content}
           trigger={
-            trigger || (<img src={QrCodeImage} />)
+            trigger || (<img className={triggerClazz} src={QrCodeImage} style={triggerStyle} />)
           }
           triggerType="hover"
         >
