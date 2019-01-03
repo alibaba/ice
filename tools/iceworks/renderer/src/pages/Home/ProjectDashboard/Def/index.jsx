@@ -10,7 +10,7 @@ import pathExists from 'path-exists';
 import path from 'path';
 
 import DashboardCard from '../../../../components/DashboardCard';
-import EmptyTips from '../../../../components/EmptyTips/';
+import EmptyTips from '../../../../components/EmptyTips';
 import ExtraButton from '../../../../components/ExtraButton';
 import Icon from '../../../../components/Icon';
 import services from '../../../../services';
@@ -163,7 +163,6 @@ class Def extends Component {
   gitCheckIsRepo = async () => {
     const { currentProject } = this.props.projects;
     const cwd = currentProject.fullPath;
-
     try {
       const isRepo = await this.gitTools.run('checkIsRepo');
 
@@ -245,25 +244,23 @@ class Def extends Component {
     this.setState({ 
       gitRemoteAdding: true,
       remoteUrl: this.state.remoteUrlInput
-    });
-
-    try {
-      let originRemote = await this.gitTools.run('originRemote');
-      if (originRemote.length > 0 ) {
-        await this.gitTools.run('removeRemote', 'origin');
+    }, async () => {
+      try {
+        let originRemote = await this.gitTools.run('originRemote');
+        if (originRemote.length > 0 ) {
+          await this.gitTools.run('removeRemote', 'origin');
+        }
+        this.addRemote();
+      } catch (error) {
+        this.setState(
+          { gitRemoteAdding: false },
+          this.gitFormReset
+        );
       }
-      this.addRemote();
-    } catch (error) {
-      this.setState(
-        { gitRemoteAdding: false },
-        this.gitFormReset
-      );
-    }
-
+    });
   };
 
   addRemote = async () => {
-
     try {
       await this.gitTools.run('addRemote', 'origin', this.state.remoteUrl);
       this.setState({
@@ -401,8 +398,15 @@ class Def extends Component {
     return label[1];
   };
 
-  handleGitNewBranchOpen = () => {
+  handleGitNewBranchOpen = async () => {
     if (this.state.originRemote.refs) {
+      // 获取本地分支
+      const branches = await this.gitTools.run('branches');
+      // 如果没有本地分支，提示先执行一次push，否则无法正常新建分支
+      if (branches.all && branches.all.length === 0) {
+        Feedback.toast.prompt('本地仓库无分支，请先 push');
+        return;
+      }
       this.setState({ newBranchVisible: true });
     } else {
       Feedback.toast.error('当前项目未设置 git remote 地址');
@@ -792,7 +796,7 @@ class Def extends Component {
                   确定
                 </Button>
                 <Button onClick={this.handleGitRemoteAddClose}>取消</Button>
-              </div>
+              </div> 
             }
           >
             <Input
