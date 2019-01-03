@@ -63,7 +63,7 @@ const gitToolsMap = {
     errMsg: 'git checkout 失败请重试'
   },
   checkoutBranch: { // git checkout 参数：checkoutBranch, branchOrigin
-    name: 'checkout',
+    name: 'checkoutBranch',
     errMsg: 'git checkout -b 失败请重试'
   },
   checkoutLocalBranch: { // 切新分支 参数：newBranch

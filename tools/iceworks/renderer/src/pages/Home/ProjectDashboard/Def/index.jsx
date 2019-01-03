@@ -1,4 +1,4 @@
-import { Button, Feedback, Dialog, Input, CascaderSelect } from '@icedesign/base';
+import { Button, Feedback, Dialog, Input, CascaderSelect, Balloon } from '@icedesign/base';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
 import { EventEmitter } from 'events';
 import { inject, observer } from 'mobx-react';
@@ -10,7 +10,7 @@ import pathExists from 'path-exists';
 import path from 'path';
 
 import DashboardCard from '../../../../components/DashboardCard';
-import EmptyTips from '../../../../components/EmptyTips/';
+import EmptyTips from '../../../../components/EmptyTips';
 import ExtraButton from '../../../../components/ExtraButton';
 import Icon from '../../../../components/Icon';
 import services from '../../../../services';
@@ -163,7 +163,6 @@ class Def extends Component {
   gitCheckIsRepo = async () => {
     const { currentProject } = this.props.projects;
     const cwd = currentProject.fullPath;
-
     try {
       const isRepo = await this.gitTools.run('checkIsRepo');
 
@@ -206,6 +205,8 @@ class Def extends Component {
 
     try {
       await this.gitTools.run('init');
+      // 执行一次init commit，否则获取不到当前分支.
+      await this.doEmptyCommit();
 
       this.setState({ 
         gitIniting: false 
@@ -245,25 +246,23 @@ class Def extends Component {
     this.setState({ 
       gitRemoteAdding: true,
       remoteUrl: this.state.remoteUrlInput
-    });
-
-    try {
-      let originRemote = await this.gitTools.run('originRemote');
-      if (originRemote.length > 0 ) {
-        await this.gitTools.run('removeRemote', 'origin');
+    }, async () => {
+      try {
+        let originRemote = await this.gitTools.run('originRemote');
+        if (originRemote.length > 0 ) {
+          await this.gitTools.run('removeRemote', 'origin');
+        }
+        this.addRemote();
+      } catch (error) {
+        this.setState(
+          { gitRemoteAdding: false },
+          this.gitFormReset
+        );
       }
-      this.addRemote();
-    } catch (error) {
-      this.setState(
-        { gitRemoteAdding: false },
-        this.gitFormReset
-      );
-    }
-
+    });
   };
 
   addRemote = async () => {
-
     try {
       await this.gitTools.run('addRemote', 'origin', this.state.remoteUrl);
       this.setState({
@@ -401,7 +400,7 @@ class Def extends Component {
     return label[1];
   };
 
-  handleGitNewBranchOpen = () => {
+  handleGitNewBranchOpen = async () => {
     if (this.state.originRemote.refs) {
       this.setState({ newBranchVisible: true });
     } else {
@@ -425,12 +424,23 @@ class Def extends Component {
     }
   };
 
+  doEmptyCommit = async () => {
+    await this.gitTools.run('commit', 'init commit', [], {'--allow-empty':null});
+  };
+
   handleGitNewBranchOk = () => {
     const { validateAll } = this.refs.formNewBranch;
     validateAll( async (errors, { newBranch }) => {
       if (!errors) {
         try {
           await this.gitTools.run('checkoutLocalBranch', newBranch);
+
+          // 如果没有本地分支，则执行一次空提交
+          const branches = await this.gitTools.run('branches');
+          // 执行一次init commit，否则获取不到当前分支.
+          if (branches.all && branches.all.length === 0) {
+            await this.doEmptyCommit();
+          }
     
           this.setState(
             { newBranchVisible: false },
@@ -465,23 +475,53 @@ class Def extends Component {
 
   handleDailyPublish = () => {
     const { currentProject } = this.props.projects;
+    const trigger = <Icon type="help" style={{
+      marginLeft: '3px',
+      fontSize: '14px'
+    }} />
+
     return new Promise( (resolve, reject) => {
-      dialog.confirm(
-        {
-          title: '提示',
-          content: (
-            <div>
-              <p>继续发布将执行</p>
-              <p>1. git add</p>
-              <p>2. git commit -m update {currentProject.projectName}</p>
-              <p>3. git push</p>
-            </div>
-          ),
-        },
-        (ok) => {
-          resolve(ok);
-        }
-      );
+      const dialog = Dialog.confirm({
+        needWrapper: false,
+        title: '提示',
+        content: (
+          <div style={{
+            textAlign: 'center',
+            margin: '20px 10px',
+            fontSize: '16px',
+          }}>
+            当前 Git 仓库本地有未提交的代码，请确认操作
+          </div>
+        ),
+        footer: (
+          <div>
+            <Button
+              onClick={() => { resolve('git'); dialog.hide();}}
+              type="primary"
+            >
+              提交并发布
+              <Balloon
+                trigger={trigger}
+                align="b"
+                alignment="edge"
+                style={{ width: 600 }}
+              >
+                <div style={{
+                  margin: '0 0 10px 0',
+                  fontSize: '14px',
+                }}>Git 提交将执行以下操作：</div>
+                <ul>
+                  <li><i>git add .</i></li>
+                  <li><i>git commit -m 'chore: update {currentProject.projectName}'</i></li>
+                  <li><i>git push</i></li>
+                </ul>
+              </Balloon>
+            </Button>
+            <Button onClick={() => { resolve(true); dialog.hide();}}>直接发布</Button>
+            <Button onClick={() => { resolve(false); dialog.hide();}}>取消</Button>
+          </div> 
+        )
+      });
     })
   }
 
@@ -531,20 +571,24 @@ class Def extends Component {
 
     if (target == 'daily') {
       try {
-        // 1. 如果有文件未提交，则自动commit
+        // 1. 如果有文件未提交，则供用户选择，进行git提交，或者
         if (status && status.files && status.files.length > 0) {
-          const isGoon = await this.handleDailyPublish();
-          if (!isGoon) {
+          const nextPublish = await this.handleDailyPublish();
+          if (nextPublish === 'git') {
+            await this.gitTools.run('add', '.');
+            await this.gitTools.run('commit', `chore: update ${currentProject.projectName}`);
+          } else if (!nextPublish) {
             this.setState({ defPublishing: false });
             return;
           }
-          await this.gitTools.run('add', '.');
-          await this.gitTools.run('commit', `update ${currentProject.projectName}`);
+          
         } 
         // 2. push
         await this.gitTools.run('push', 'origin', currentBranch);
       } catch (err) {
-        this.setState({ defPublishing: false });
+        this.setState({ defPublishing: false }, () => {
+          this.handleReload()
+        });
         throw err;
       }
     } 
@@ -564,7 +608,10 @@ class Def extends Component {
       commit_id: lastCommit.latest.hash, // 当前发布的 commit id 值
       env: shared.defEnv, // (可选)DEF 发布系统的环境, daily: 日常，prepub: 预发，prod: 线上；联调时可使用
     });
-    this.setState({ defPublishing: false });
+    this.setState({ defPublishing: false 
+    }, () => {
+      this.handleReload()
+    });
    
   };
 
@@ -792,7 +839,7 @@ class Def extends Component {
                   确定
                 </Button>
                 <Button onClick={this.handleGitRemoteAddClose}>取消</Button>
-              </div>
+              </div> 
             }
           >
             <Input
