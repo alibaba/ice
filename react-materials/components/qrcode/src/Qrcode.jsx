@@ -1,7 +1,9 @@
-import { Balloon } from '@alifd/next';
-import PropTypes from 'prop-types';
+
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { Balloon } from '@alifd/next';
+
 import QrCodeImage from '../img/qr_code.svg';
 import Panel from './Panel';
 
