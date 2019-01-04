@@ -117,9 +117,9 @@ class App extends Component {
             }}
           >
             {['topLeft', 'topRight', 'bottomLeft', 'bottomRight'].map((val) => (
-              <Option key={val} value={val}>
+              <Select.Option key={val} value={val}>
                 {val}
-              </Option>
+              </Select.Option>
             ))}
           </Select>
           <Button type="primary" onClick={this.placement}>
