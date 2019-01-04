@@ -10,7 +10,7 @@ importStyle: true
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom';
 
-import {Balloon,Icon} from '@alifd/next';
+import {Balloon, Icon} from '@alifd/next';
 import IceTitle from '@icedesign/title';
 
 class App extends Component {
