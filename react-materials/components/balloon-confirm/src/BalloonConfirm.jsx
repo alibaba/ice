@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Balloon, Button, Icon } from '@icedesign/base';
+import { Balloon, Button, Icon } from '@alifd/next';
 import PropTypes from 'prop-types';
 
 export default class BalloonConfirm extends Component {

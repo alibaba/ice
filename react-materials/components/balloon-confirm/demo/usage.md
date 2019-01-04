@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import BalloonConfirm from '@icedesign/balloon-confirm';
-import { Button, Feedback } from '@icedesign/base';
+import { Button, Message } from '@alifd/next';
 
 
 class App extends Component {
