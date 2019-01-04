@@ -87,7 +87,7 @@ export default class IceQrcode extends Component {
           trigger={
             trigger || (<QrCodeIcon className={triggerClazz} style={triggerStyle} />)
           }
-          triggerType="click"
+          triggerType="hover"
         >
           {content}
         </Balloon>
