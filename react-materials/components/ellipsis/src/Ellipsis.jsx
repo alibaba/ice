@@ -2,9 +2,9 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Balloon } from '@alifd/next';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { Balloon } from '@alifd/next';
 import { getWidthFromDOM } from './utils';
 
 const { Tooltip } = Balloon;
