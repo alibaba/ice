@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Balloon } from '@alifd/next';
 
-import QrCodeImage from '../img/qr_code.svg';
+import QrCodeIcon from './QrCodeIcon';
 import Panel from './Panel';
 
 export default class IceQrcode extends Component {
@@ -64,8 +64,8 @@ export default class IceQrcode extends Component {
   };
 
   alignMap = {
-    left: 'lb',
-    right: 'rb',
+    left: 'l',
+    right: 'r',
     top: 't',
     bottom: 'b',
   };
@@ -79,19 +79,19 @@ export default class IceQrcode extends Component {
       [`ice-qrcode-trigger-size-${triggerSize}`]: !!triggerSize
     });
     return (
-      <span className={clazz} style={style}>
+      <div className={clazz} style={style}>
         <Balloon
-          align={this.alignMap[align] || 'lb'}
+          align={this.alignMap[align] || this.alignMap.left}
           closable={false}
-          overlay={content}
+          alignEdge
           trigger={
-            trigger || (<img className={triggerClazz} src={QrCodeImage} style={triggerStyle} />)
+            trigger || (<QrCodeIcon className={triggerClazz} style={triggerStyle} />)
           }
-          triggerType="hover"
+          triggerType="click"
         >
           {content}
         </Balloon>
-      </span>
+      </div>
     );
   }
 }
