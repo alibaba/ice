@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import IceNotification from '@icedesign/notification';
-import { Button, Icon, Select } from '@icedesign/base';
+import { Button, Icon, Select } from '@alifd/next';
 
 class App extends Component {
   state = {};
