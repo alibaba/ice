@@ -116,7 +116,7 @@ class ColumnChart extends React.Component {
           <Geom
             type="interval"
             position="name*value"
-            color={['name', (value) => colorSet[value]]}
+            color={['name', value => colorSet[value]]}
             size={30}
           />
           <Geom
