@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "keywords": [
     "ice",
@@ -26,7 +27,9 @@
   },
   "scripts": {
     "start": "ice-devtools start",
-    "build": "ice-devtools build"
+    "build": "ice-devtools build",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node ./postinstall.js"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -34,7 +37,6 @@
     "@icedesign/base": "^0.2.0"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.14-beta.2"
   },
   "peerDependencies": {
     "react": "^16.5.0",

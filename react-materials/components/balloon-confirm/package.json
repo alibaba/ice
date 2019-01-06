@@ -18,7 +18,8 @@
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postinstall": "node ./postinstall.js"
   },
   "license": "MIT",
   "keywords": [
