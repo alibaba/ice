@@ -39,6 +39,6 @@
   "devDependencies": {
     "@icedesign/img": "^0.1.0",
     "@icedesign/styled-menu": "^0.1.1",
-    "@icedesign/title": "^0.1.0",
+    "@icedesign/title": "^0.1.0"
   }
 }
