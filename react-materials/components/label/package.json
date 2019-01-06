@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/label",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "创建标签组件用来突出所要显示的信息",
   "main": "lib/index.js",
   "files": [
@@ -25,11 +25,11 @@
     "ice-component"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
+    "@alifd/next": "^1.x",
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.14-beta.2"
+    "moment": "^2.23.0"
   },
   "peerDependencies": {
     "react": "^16.5.0",
