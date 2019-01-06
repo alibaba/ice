@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/panel",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "description": "面板组件",
   "main": "lib/index.js",
   "files": [
@@ -27,10 +27,9 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "prop-types": "^15.6.0",
-    "@icedesign/base": "^0.2.0"
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.14-beta.2"
   },
   "peerDependencies": {
     "react": "^16.5.0",
