@@ -5,14 +5,12 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/",
-    "postinstall.js"
+    "demo/"
   ],
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublishOnly": "npm run build",
-    "postinstall": "node ./postinstall.js"
+    "prepublishOnly": "npm run build"
   },
   "author": {
     "name": "ICE Team",
@@ -27,11 +25,11 @@
     "ice-component"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
+    "@icedesign/base": "^0.2.0"
   },
   "peerDependencies": {
     "react": "^16.5.0"

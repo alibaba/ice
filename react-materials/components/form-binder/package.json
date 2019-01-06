@@ -5,14 +5,12 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/",
-    "postinstall.js"
+    "demo/"
   ],
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublishOnly": "npm run build",
-    "postinstall": "node ./postinstall.js"
+    "prepublishOnly": "npm run build"
   },
   "author": "ice-team",
   "repository": {
@@ -36,6 +34,6 @@
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.12"
+    "@icedesign/base": "^0.2.0"
   }
 }
