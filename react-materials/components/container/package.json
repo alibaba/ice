@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/container",
-  "version": "0.1.8",
+  "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -29,11 +29,11 @@
     "react": "^16.5.0"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
+    "@alifd/next": "^1.x",
     "prop-types": "^15.5.8"
   },
   "typings": "lib/index.d.ts",
   "devDependencies": {
-    "ice-devtools": "^1.1.12"
+    "moment": "^2.23.0"
   }
 }
