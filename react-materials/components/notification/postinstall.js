@@ -4,13 +4,13 @@
  */
 const path = require('path');
 
-const appDir = process.cwd();
+// process.cwd(): ${project}/node_modules/@icedesign/notification
+const projectDir = path.resolve(process.cwd(), '../../../');
 
 try {
-  const projectPkgData = require(path.resolve(appDir, 'package.json'));
+  const projectPkgData = require(path.resolve(projectDir, 'package.json'));
   const { dependencies = {} } = projectPkgData;
 
-  const useIceDeisgn = dependencies['@icedesign/base'];
   const useFdNext = dependencies['@alifd/next'];
 
   if (useFdNext) {

@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/notification",
-  "version": "0.2.1",
+  "version": "0.2.2-5",
   "description": "全局展示通知提醒信息。",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "repository": {
     "type": "git",
@@ -21,7 +22,7 @@
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "postinstall": "node ./postinstall.js"
   },
   "peerDependencies": {
@@ -31,7 +32,5 @@
     "@icedesign/base": "^0.2.5",
     "rc-notification": "^1.4.2"
   },
-  "devDependencies": {
-    "ice-devtools": "^1.1.12"
-  }
+  "devDependencies": {}
 }
