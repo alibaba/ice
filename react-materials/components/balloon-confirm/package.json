@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/balloon-confirm",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "ICE 气泡确认框",
   "main": "lib/index.js",
   "files": [
@@ -33,10 +33,10 @@
     "react": "^16.5.0"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
+    "@alifd/next": "^1.x",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.12"
+    "moment": "^2.23.0"
   }
 }
