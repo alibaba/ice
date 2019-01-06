@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 import DataBinder from '@icedesign/data-binder';
 import {
   Button
-} from '@icedesign/base';
+} from '@alifd/next';
 
 @DataBinder({
   fooData: {
