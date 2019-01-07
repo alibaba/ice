@@ -95,7 +95,7 @@ class CreatePage extends Component {
       removePromise = currentProject.scaffold.removePreviewPage({ isNodeProject: currentProject.isNodeProject });
     } else {
       removePromise = scaffolder.removePreviewPage({
-        destDir: this.props.newpage.targetPath,
+        destDir: currentProject.root,
         isNodeProject: currentProject.isNodeProject
       });
     }
