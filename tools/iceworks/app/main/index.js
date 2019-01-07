@@ -120,5 +120,6 @@ app.on('ready', async () => {
     // 根据用户网络环境，设置内外网状态。
     const isAlibaba = await network.isAlibaba();
     settings.set('isAlibaba', isAlibaba);
+    log.info('isAlibaba: ', settings.get('isAlibaba'));
   }
 });
