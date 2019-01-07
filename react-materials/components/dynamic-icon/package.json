@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/dynamic-icon",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "动态 Icon 组件",
   "main": "lib/index.js",
   "files": [
@@ -30,8 +30,7 @@
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/skin": "^0.1.9",
+    "@alifd/next": "^1.x",
     "copy-to-clipboard": "^3.0.8",
     "react-copy-to-clipboard": "^5.0.1"
   },
