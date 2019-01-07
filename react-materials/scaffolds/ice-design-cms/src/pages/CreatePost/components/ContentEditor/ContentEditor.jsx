@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Grid, Form, Button, Select } from '@icedesign/base';
+import { Input, Grid, Form, Button, Select, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -46,7 +46,7 @@ export default class ContentEditor extends Component {
         return false;
       }
 
-      // ajax values
+      Feedback.toast.success('提交成功');
     });
   };
 

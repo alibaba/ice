@@ -25,9 +25,9 @@ module.exports = function getBabelrc() {
       [
         'babel-plugin-import',
         [
-          { libraryName: '@icedesign/base', style: true },
-          { libraryName: '@alife/next', style: true },
-          { libraryName: '@alifd/next', style: true },
+          { libraryName: '@icedesign/base' },
+          { libraryName: '@alife/next' },
+          { libraryName: '@alifd/next' },
         ],
       ]
     ]),

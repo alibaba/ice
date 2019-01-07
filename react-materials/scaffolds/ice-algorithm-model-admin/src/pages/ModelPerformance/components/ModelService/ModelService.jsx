@@ -1,25 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import ContainerTitle from '../../../../components/ContainerTitle';
 import './ModelService.scss';
 
 export default class ModelService extends Component {
-  static displayName = 'ModelService';
-
-  static propTypes = {
-    value: PropTypes.string,
-  };
-
-  static defaultProps = {
-    value: 'string data',
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <IceContainer style={{ padding: 0 }}>

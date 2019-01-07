@@ -7,7 +7,7 @@ const ContainerTitle = ({ title, style, ...props }) => {
     <div style={{ ...styles.container, ...style }}>
       <h3 style={styles.title}>{title}</h3>
       {props.buttonText ? (
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={props.onClick}>
           {props.buttonText}
         </Button>
       ) : null}

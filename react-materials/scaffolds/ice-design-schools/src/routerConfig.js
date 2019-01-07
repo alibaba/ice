@@ -1,33 +1,42 @@
 // 以下文件格式为描述路由的协议格式
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
-
-import HeaderAsideFooterResponsiveLayout from './layouts/HeaderAsideFooterResponsiveLayout';
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
+import UserLogin from './pages/UserLogin';
+import UserRegister from './pages/UserRegister';
+import Dashboard from './pages/Dashboard';
 import UserManagement from './pages/UserManagement';
 import TestManagement from './pages/TestManagement';
+import Setting from './pages/Setting';
+import AddStudent from './pages/AddStudent';
 
 const routerConfig = [
   {
-    path: '/',
-    layout: HeaderAsideFooterResponsiveLayout,
-    component: Home,
+    path: '/user/login',
+    component: UserLogin,
   },
   {
-    path: '/permission/users',
-    layout: HeaderAsideFooterResponsiveLayout,
+    path: '/user/register',
+    component: UserRegister,
+  },
+  {
+    path: '/dashboard',
+    component: Dashboard,
+  },
+  {
+    path: '/users',
     component: UserManagement,
   },
   {
-    path: '/test/paper',
-    layout: HeaderAsideFooterResponsiveLayout,
+    path: '/paper',
     component: TestManagement,
   },
   {
-    path: '*',
-    layout: HeaderAsideFooterResponsiveLayout,
-    component: NotFound,
+    path: '/add',
+    component: AddStudent,
+  },
+  {
+    path: '/setting',
+    component: Setting,
   },
 ];
 

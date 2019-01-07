@@ -1,48 +1,79 @@
+/* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Button, Select, Input } from '@icedesign/base';
+import { Button, Select, Input, Feedback } from '@icedesign/base';
+import { FormBinderWrapper, FormBinder } from '@icedesign/form-binder';
 
 export default class TableFilter extends Component {
-  static displayName = 'TableFilter';
+  state = {
+    value: {},
+  };
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  handleSubmit = () => {
+    const { validateFields } = this.refs.form;
+    validateFields((errors, values) => {
+      if (errors) {
+        Feedback.toast.error('查询参数错误');
+        return;
+      }
+      this.props.handleSubmit(values);
+    });
+  };
 
   render() {
     return (
-      <div style={styles.tableFilter}>
-        <div style={styles.filterItem}>
-          <span style={styles.filterLabel}>仓库：</span>
-          <Input placeholder="请输入仓库名" size="large" />
+      <FormBinderWrapper value={this.state.value} ref="form">
+        <div style={styles.tableFilter}>
+          <div style={styles.filterItem}>
+            <span style={styles.filterLabel}>仓库：</span>
+            <FormBinder name="repo">
+              <Input placeholder="请输入仓库名" size="large" />
+            </FormBinder>
+          </div>
+
+          <div style={styles.filterItem}>
+            <span style={styles.filterLabel}>构建器：</span>
+            <FormBinder name="builder">
+              <Input placeholder="请输入构建器名" size="large" />
+            </FormBinder>
+          </div>
+
+          <div style={styles.filterItem}>
+            <span style={styles.filterLabel}>用户：</span>
+            <FormBinder name="user">
+              <Input placeholder="请输入用户名" size="large" />
+            </FormBinder>
+          </div>
+
+          <div style={styles.filterItem}>
+            <span style={styles.filterLabel}>Client：</span>
+            <FormBinder name="client">
+              <Select size="large">
+                <Select.Option value="travis">Travis CI</Select.Option>
+                <Select.Option value="jenkins">Jenkins</Select.Option>
+              </Select>
+            </FormBinder>
+          </div>
+
+          <div style={styles.filterItem}>
+            <span style={styles.filterLabel}>状态：</span>
+            <FormBinder name="status">
+              <Select size="large">
+                <Select.Option value="all">全部</Select.Option>
+                <Select.Option value="success">成功</Select.Option>
+                <Select.Option value="failed">失败</Select.Option>
+              </Select>
+            </FormBinder>
+          </div>
+          <Button
+            type="primary"
+            size="large"
+            style={styles.submitButton}
+            onClick={this.handleSubmit}
+          >
+            查询
+          </Button>
         </div>
-        <div style={styles.filterItem}>
-          <span style={styles.filterLabel}>构建器：</span>
-          <Input placeholder="请输入构建器名" size="large" />
-        </div>
-        <div style={styles.filterItem}>
-          <span style={styles.filterLabel}>用户：</span>
-          <Input placeholder="请输入用户名" size="large" />
-        </div>
-        <div style={styles.filterItem}>
-          <span style={styles.filterLabel}>Client：</span>
-          <Select size="large">
-            <Select.Option value="travis">Travis CI</Select.Option>
-            <Select.Option value="jenkins">Jenkins</Select.Option>
-          </Select>
-        </div>
-        <div style={styles.filterItem}>
-          <span style={styles.filterLabel}>状态：</span>
-          <Select size="large">
-            <Select.Option value="all">全部</Select.Option>
-            <Select.Option value="success">成功</Select.Option>
-            <Select.Option value="failed">失败</Select.Option>
-          </Select>
-        </div>
-        <Button type="primary" size="large" style={styles.submitButton}>
-          查询
-        </Button>
-      </div>
+      </FormBinderWrapper>
     );
   }
 }

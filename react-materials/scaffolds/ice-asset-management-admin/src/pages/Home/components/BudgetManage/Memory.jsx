@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination, Dialog } from '@icedesign/base';
+import { withRouter } from 'react-router-dom';
 import TableHead from './TableHead';
 
-const getData = () => {
-  return Array.from({ length: 20 }).map((item, index) => {
+// MOCK 数据，实际业务按需进行替换
+const getData = (length = 10) => {
+  return Array.from({ length }).map((item, index) => {
     return {
       department: '阿里云',
       name: '淘小宝',
@@ -17,48 +19,89 @@ const getData = () => {
   });
 };
 
+@withRouter
 export default class Memory extends Component {
-  static displayName = 'Memory';
+  state = {
+    current: 1,
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-    };
+  componentDidMount() {
+    this.fetchData();
   }
 
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
     });
   };
 
-  onChange = (value) => {
-    console.log({ value });
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.fetchData();
+      }
+    );
+  };
+
+  handleFilterChange = () => {
+    this.fetchData(5);
+  };
+
+  handleEdit = () => {
+    Dialog.confirm({
+      title: '提示',
+      content: '只有管理员才能进行修改',
+    });
+  };
+
+  handleDetail = () => {
+    this.props.history.push('/manage/department');
   };
 
   renderOper = () => {
     return (
       <div>
-        <a style={styles.link}>修改预算</a>
+        <a style={styles.link} onClick={this.handleEdit}>
+          修改
+        </a>
         <span style={styles.separator} />
-        <a style={styles.link}>查看详情</a>
+        <a style={styles.link} onClick={this.handleDetail}>
+          详情
+        </a>
       </div>
     );
   };
 
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, data, current } = this.state;
 
     return (
       <div style={styles.container}>
-        <TableHead />
-        <Table dataSource={dataSource} hasBorder={false}>
+        <TableHead onChange={this.handleFilterChange} />
+        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="部门名称" dataIndex="department" width={100} />
           <Table.Column title="接口人" dataIndex="name" width={150} />
           <Table.Column

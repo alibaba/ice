@@ -79,11 +79,11 @@ const styles = {
     cursor: 'pointer',
   },
   name: {
-    color: 'rgba(51, 51, 51, 0.6)',
+    color: '#666',
     fonstSize: '12px',
   },
   count: {
-    background: 'rgb(169, 216, 110)',
+    background: '#58ca9a',
     width: '28px',
     height: '28px',
     display: 'flex',

@@ -72,7 +72,7 @@ $ npm start
     └── index.jsx              // 区块代码片段入口
 ```
 
-#### **目文件说明**
+#### 目文件说明
 
 - `src/index.jsx`: 提供了基础的区块模板代码规范，方便快速开发一个区块
 
@@ -136,7 +136,7 @@ export default Login;
 }
 ```
 
-- `README.md`:\_\_  \_\_说明文档
+- `README.md`: 说明文档
 
 包含区块名、区块简介等基本字段，除此之外，你也可以按需添加其他说明，仅用于开发时作为参考文档使用。
 
@@ -205,8 +205,6 @@ $ npm run deploy
 
 当物料源更新后，我们打开 Iceworks 进入到区块界面，点击刷新按钮，如果看到对应的区块截图已经更新，即可说明区块的相关信息也已经更新。此时，下载到项目的代码也即是最新的区块代码。
 
-## 其他
+## 皮肤配置
 
-- 在区块预览时能否指定 index.html ?
-
-  > 可以，在项目根目录下 .template/preview/blockPreview.hbs 进行修改，使用 [handlebars](http://handlebarsjs.com/) 语法
+如果希望在预览区块时，也带上皮肤配置，可以参考这份[文档](#/advanced/webpackrc#主题配置%20-%20themeConfig)进行配置。
