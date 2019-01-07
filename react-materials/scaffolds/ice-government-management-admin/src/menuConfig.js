@@ -9,15 +9,15 @@ const headerMenuConfig = [
   },
   {
     name: '业务办理',
-    path: '/',
+    path: '/business',
   },
   {
     name: '案件查询',
-    path: '/',
+    path: '/query',
   },
   {
     name: '统计分析',
-    path: '/',
+    path: '/analysis',
   },
 ];
 
@@ -25,7 +25,7 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: '工作台',
-    path: '/',
+    path: '/dashboard',
     icon: 'home2',
   },
   {
@@ -51,6 +51,11 @@ const asideMenuConfig = [
   {
     name: '批量处理',
     path: '/batch',
+    icon: 'copy',
+  },
+  {
+    name: '案件录入',
+    path: '/new',
     icon: 'copy',
   },
 ];

@@ -27,8 +27,13 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: '概览',
-    path: '/',
+    path: '/dashboard',
     icon: 'home2',
+  },
+  {
+    name: '项目',
+    path: '/services',
+    icon: 'cascades',
   },
   {
     name: '文档',
@@ -36,9 +41,9 @@ const asideMenuConfig = [
     icon: 'copy',
   },
   {
-    name: '服务',
-    path: '/services',
-    icon: 'cascades',
+    name: '状态',
+    path: '/activities',
+    icon: 'activity',
   },
   {
     name: '成员',

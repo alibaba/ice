@@ -179,7 +179,9 @@ class PageConfig extends Component {
               this.props.newpage.isCreating = false;
             })
             .then(() => {
-              return currentProject.scaffold.removePreviewPage({ nodeFramework: currentProject.nodeFramework });
+              return currentProject.scaffold.removePreviewPage({
+                nodeFramework: currentProject.nodeFramework
+              });
             })
             .then(() => {
               log.debug('移除临时页面成功');

@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/creative-forget-password-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "左右布局的忘记密码表单页",
-  "homepage": "https://alibaba.github.io/ice/block/creative-forget-password/preview",
+  "homepage": "https://alibaba.github.io/ice/block/creative-forget-password",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

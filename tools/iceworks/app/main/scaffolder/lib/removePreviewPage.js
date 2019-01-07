@@ -1,9 +1,9 @@
 const path = require('path');
 const pathExists = require('path-exists');
 
-const removePreviewPageV3 = require('./removePreviewPageV3');
-const removePreviewPageV4 = require('./removePreviewPageV4');
 const { getClientPath } = require('../../paths');
+const removePageV3 = require('./removePageV3');
+const removePageV4 = require('./removePageV4');
 
 module.exports = async function({ destDir, nodeFramework }) {
   const clientPath = getClientPath(destDir, nodeFramework);
@@ -11,7 +11,17 @@ module.exports = async function({ destDir, nodeFramework }) {
 
   if (pathExists.sync(routerConfigFilePath)) {
     await removePreviewPageV4({ destDir, nodeFramework });
+    await removePageV4({ 
+      destDir, 
+      isNodeProject,
+      pageFolderName: 'IceworksPreviewPage',
+      routerPath: '/IceworksPreviewPage'
+     });
   } else {
-    await removePreviewPageV3({ destDir, nodeFramework });
+    await removePageV3({ 
+      destDir, 
+      isNodeProject,
+      pageFolderName: 'IceworksPreviewPage'
+    });
   }
 };

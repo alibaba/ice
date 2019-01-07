@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/review-overview-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "评价数据概览",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -40,5 +39,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1KAOyr1SSBuNjy0FlXXbBpVXa-1828-496.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/review-overview/preview"
+  "homepage": "https://alibaba.github.io/ice/block/review-overview"
 }

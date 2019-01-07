@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/text-card-block",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "纯文字展示型卡片",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -46,5 +43,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/text-card/preview"
+  "homepage": "https://alibaba.github.io/ice/block/text-card"
 }

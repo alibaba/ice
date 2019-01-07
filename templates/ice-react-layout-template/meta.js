@@ -24,4 +24,5 @@ module.exports = {
       message: 'description (not required)',
     },
   },
+  completeMessage: '布局添加完成',
 };

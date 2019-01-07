@@ -4,6 +4,27 @@ import ContainerTitle from '../ContainerTitle';
 
 const { Row, Col } = Grid;
 
+const mockData = [
+  {
+    title: '卖品区总客流量',
+    value: '233,495',
+    ratio: '66%',
+    change: 'up',
+  },
+  {
+    title: '卖品区日均客流',
+    value: '4,592',
+    ratio: '22%',
+    change: 'down',
+  },
+  {
+    title: '平均停留时长',
+    value: '0.8h',
+    ratio: '10%',
+    change: 'up',
+  },
+];
+
 export default class PassengerFlow extends Component {
   static displayName = 'PassengerFlow';
 
@@ -17,7 +38,7 @@ export default class PassengerFlow extends Component {
   }
 
   render() {
-    const { title, data } = this.props;
+    const { title } = this.props;
     return (
       <div style={styles.container}>
         <ContainerTitle
@@ -28,7 +49,7 @@ export default class PassengerFlow extends Component {
           style={{ marginBottom: '20px' }}
         />
         <Row wrap gutter="20">
-          {data.map((item, index) => {
+          {mockData.map((item, index) => {
             return (
               <Col l="4" key={index}>
                 <div style={styles.item}>

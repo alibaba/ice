@@ -1,11 +1,10 @@
 {
-  "name": "@react-materials/intro-banner-block",
-  "version": "1.0.2",
+  "name": "@icedesign/intro-banner-block",
+  "version": "1.0.0",
   "description": "带图的介绍",
   "author": "muchen <tao360907796@gmail.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -35,5 +34,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1ACA2sWmWBuNjy1XaXXXCbXXa-2058-910.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/intro-banner/preview"
+  "homepage": "https://alibaba.github.io/ice/block/intro-banner"
 }

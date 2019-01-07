@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/our-team-block",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -47,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/our-team/preview"
+  "homepage": "https://alibaba.github.io/ice/block/our-team"
 }

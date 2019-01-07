@@ -22,7 +22,7 @@ import {
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAILURE,
 } from './constants';
-import { postUserRegister } from '../../api';
+import { postUserRegister } from '../../api/user';
 
 /**
  * Changes the input field of the form

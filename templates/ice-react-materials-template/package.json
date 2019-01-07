@@ -1,0 +1,29 @@
+{
+  "name": "@icedesign/ice-react-materials-template",
+  "version": "0.1.8",
+  "description": "自定义物料源的初始模板",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "template",
+    "meta.js"
+  ],
+  "keywords": [
+    "ice",
+    "ice-template"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  }
+}

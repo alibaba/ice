@@ -40,10 +40,9 @@ class Panel extends Component {
 
     return (
       <div className="scaffold-panel-body">
-        {scaffolds.categories &&
-          scaffolds.categories.length > 0 && (
-            <CateMenu data={scaffolds.categories} onClick={this.handleClick} />
-          )}
+        {scaffolds.categories && scaffolds.categories.length > 0 && (
+          <CateMenu data={scaffolds.categories} onClick={this.handleClick} />
+        )}
         <div className="scaffold-items-wrapper">
           {scaffolds.values.map((scaffold, index) => {
             return (
@@ -51,6 +50,7 @@ class Panel extends Component {
                 key={index}
                 mobile={material.platform === 'mobile'}
                 data={scaffold}
+                scaffolds={scaffolds}
                 createProject={this.props.onClick}
               />
             );

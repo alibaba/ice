@@ -1,13 +1,10 @@
 {
   "name": "@icedesign/register-form-block",
-  "version": "0.1.11",
+  "version": "0.1.13",
   "description": "注册表单",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -48,5 +45,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/register-form/preview"
+  "homepage": "https://alibaba.github.io/ice/block/register-form"
 }

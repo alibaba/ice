@@ -2,29 +2,23 @@ import React, { Component } from 'react';
 import { Input, Table } from '@icedesign/base';
 
 export default class GeneralizationTable extends Component {
-  static displayName = 'GeneralizationTable';
-
-  onChange = (value) => {
-    console.log({ value });
-  };
-
   render() {
+    const { data } = this.props;
     return (
       <div>
         <div style={styles.searchBar}>
-          <div style={styles.info}>共计 0 条泛化规则</div>
+          <div style={styles.info}>共计 {data.length} 条泛化规则</div>
           <Input
             size="large"
             style={{ width: '300px' }}
             placeholder="请输入泛化规则名称或者泛化词汇"
           />
         </div>
-        <Table hasBorder={false}>
+        <Table hasBorder={false} dataSource={data}>
           <Table.Column title="规则名称" dataIndex="name" />
           <Table.Column title="规则描述" dataIndex="desc" />
           <Table.Column title="泛化词汇" dataIndex="words" />
           <Table.Column title="关联技能" dataIndex="skill" />
-          <Table.Column title="操作" />
         </Table>
       </div>
     );

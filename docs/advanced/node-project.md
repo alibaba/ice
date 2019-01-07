@@ -144,7 +144,7 @@ app.use(serve(path.join(__dirname, '..', 'build')));
 之后我们只要在客户端调用这些提供好的接口就可以了，我们打开项目目录下的 `client/components/Header/index.js` 文件，在用户的下拉列表中增加一项 `用户信息`。
 
 ```jsx
-<li 
+<li
 	className="user-profile-menu-item"
 	onClick={this.getUserProfile}
 >

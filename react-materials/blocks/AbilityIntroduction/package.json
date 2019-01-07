@@ -1,11 +1,10 @@
 {
-  "name": "@react-materials/ability-introduction-block",
-  "version": "0.1.2",
+  "name": "@icedesign/ability-introduction-block",
+  "version": "1.0.0",
   "description": "产品能力介绍",
   "author": "wssgcg1213 <i@zeroling.com>",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -35,5 +34,5 @@
     ],
     "screenshot": "https://gw.alicdn.com/tfs/TB1T_OutDtYBeNjy1XdXXXXyVXa-2458-1186.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/ability-introduction/preview"
+  "homepage": "https://alibaba.github.io/ice/block/ability-introduction"
 }

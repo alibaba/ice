@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Grid, Icon } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import AreaChart from './AreaChart';

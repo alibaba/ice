@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/editable-table-block",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "可编辑内容的表格",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -46,5 +43,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/editable-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/editable-table"
 }

@@ -1,39 +1,30 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button } from '@icedesign/base';
+import { Input, Button, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
+import { withRouter } from 'react-router-dom';
 
+@withRouter
 export default class Form extends Component {
-  static displayName = 'Form';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: {
-        title: '',
-      },
-    };
-  }
-
-  formChange = (value) => {
-    console.log('value', value);
-    this.setState({
-      value,
-    });
+  state = {
+    value: {
+      title: '',
+    },
   };
 
   validateAllFormField = () => {
     this.refs.form.validateAll((errors, values) => {
-      console.log('errors', errors, 'values', values);
+      if (errors) {
+        return;
+      }
+      console.log(values);
+      Feedback.toast.success('提交成功');
+      this.props.history.push('/');
     });
   };
 
@@ -45,11 +36,7 @@ export default class Form extends Component {
           <p>您可输需要测试的URL地址，会调用自动化验证接口进行验证。</p>
           <p>验证结束后会将验证结果发至测试人，请注意查收邮箱。</p>
         </div>
-        <IceFormBinderWrapper
-          value={this.state.value}
-          onChange={this.formChange}
-          ref="form"
-        >
+        <IceFormBinderWrapper value={this.state.value} ref="form">
           <div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>验证地址：</div>

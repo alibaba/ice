@@ -78,32 +78,34 @@ export default class EditableTable extends Component {
 
   render() {
     return (
-      <div className="editable-table">
-        <IceContainer>
-          <Table dataSource={this.state.dataSource} hasBorder={false}>
-            <Table.Column width={80} title="顺序" cell={this.renderOrder} />
-            <Table.Column
-              width={280}
-              title="待办事项"
-              cell={this.renderEditor.bind(this, 'todo')}
-            />
-            <Table.Column
-              width={240}
-              title="备注"
-              cell={this.renderEditor.bind(this, 'memo')}
-            />
-            <Table.Column
-              width={180}
-              title="有效时间"
-              cell={this.renderEditor.bind(this, 'validity')}
-            />
-            <Table.Column title="操作" width={80} cell={this.renderOperation} />
-          </Table>
-          <div onClick={this.addNewItem} style={styles.addNewItem}>
-            + 新增一行
-          </div>
-        </IceContainer>
-      </div>
+      <IceContainer style={styles.container}>
+        <Table
+          dataSource={this.state.dataSource}
+          hasBorder={false}
+          className="editable-table"
+        >
+          <Table.Column width={80} title="顺序" cell={this.renderOrder} />
+          <Table.Column
+            width={280}
+            title="待办事项"
+            cell={this.renderEditor.bind(this, 'todo')}
+          />
+          <Table.Column
+            width={240}
+            title="备注"
+            cell={this.renderEditor.bind(this, 'memo')}
+          />
+          <Table.Column
+            width={180}
+            title="有效时间"
+            cell={this.renderEditor.bind(this, 'validity')}
+          />
+          <Table.Column title="操作" width={80} cell={this.renderOperation} />
+        </Table>
+        <div onClick={this.addNewItem} style={styles.addNewItem}>
+          + 新增一行
+        </div>
+      </IceContainer>
     );
   }
 }

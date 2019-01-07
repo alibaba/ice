@@ -1,11 +1,10 @@
 {
   "name": "@icedesign/qr-code-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "根据配置属性生成二维码",
   "author": "",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -40,5 +39,6 @@
       "数据展示"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1oWRSIuOSBuNjy0FdXXbDnVXa-1960-1164.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/qr-code"
 }

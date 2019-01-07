@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/real-time-overview-block",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -47,5 +44,5 @@
     ],
     "themePackage": "@icedesign/skin"
   },
-  "homepage": "https://alibaba.github.io/ice/block/real-time-overview/preview"
+  "homepage": "https://alibaba.github.io/ice/block/real-time-overview"
 }

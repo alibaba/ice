@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/complex-dialog-block",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "复杂信息和自定义底部按钮的弹窗",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -46,5 +43,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/complex-dialog/preview"
+  "homepage": "https://alibaba.github.io/ice/block/complex-dialog"
 }

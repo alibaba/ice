@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/display-card-block",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "展示型卡片",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -46,5 +43,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/display-card/preview"
+  "homepage": "https://alibaba.github.io/ice/block/display-card"
 }

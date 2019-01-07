@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Grid, Input, Button, Select, DatePicker } from '@icedesign/base';
+import { Grid, Input, Select, DatePicker } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -10,24 +10,12 @@ import {
 const { Row, Col } = Grid;
 
 export default class Filter extends Component {
-  static displayName = 'Filter';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: {},
-    };
-  }
+  state = {
+    value: {},
+  };
 
   formChange = (value) => {
-    console.log('value', value);
-    this.setState({
-      value,
-    });
+    this.props.onChange(value);
   };
 
   render() {

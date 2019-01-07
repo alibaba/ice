@@ -3,17 +3,28 @@
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
-  "files": ["src/", "lib/"],
+  "files": [
+    "src/",
+    "build/",
+    "lib/",
+    "screenshot.png"
+  ],
   "license": "MIT",
-  "keywords": ["ice", "react", "layout"],
+  "keywords": [
+    "ice",
+    "react",
+    "layout"
+  ],
   "dependencies": {
     "react": "^16.2.0",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.11.2"
   },
   "layoutConfig": {
     "name": "{{name}}",
     "title": "{{title}}",
-    "categories": ["layout"],
-    "screenshot": ""
+    "categories": [
+      "layout"
+    ]
   }
 }

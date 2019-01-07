@@ -8,7 +8,6 @@ const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
-const CssPrefixPlugin = require('css-prefix-plugin');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
@@ -68,26 +67,6 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
       },
     ]),
   ];
-
-  // 废弃 1.7.9 版本之前 themeConfig.cssPrefix 的配置
-  if (themeConfig.cssPrefix) {
-    console.log(
-      colors.red(
-        'Deprecated:',
-        'themeConfig.cssPrefix 已废弃，请使用 buildConfig.nextPrefix 代替'
-      )
-    );
-  }
-
-  // 组件升级到 next 1.x 默认使用 "nextfd-" 前缀
-  // 解决 @icedesign/base 和 @alifd/next 共存的问题
-  if (buildConfig.nextPrefix) {
-    plugins.push(
-      new CssPrefixPlugin({
-        '$css-prefix': 'nextfd-',
-      })
-    );
-  }
 
   // 增加 html 输出，支持多页面应用
   Array.prototype.push.apply(plugins, getEntryHtmlPlugins(entry));

@@ -1,5 +1,11 @@
 # ice-scripts Changelog
 
+## 1.8.0
+
+- [fix] 没有配置 theme 也需要走 ice-skin-loader 的逻辑
+- [chore] 升级 ice-skin-loader 到 0.2.x
+- [chore] 移除 css-prefix-plugin
+
 ## 1.7.9
 
 - [feat] build 支持 `customWebpackConfig` 参数

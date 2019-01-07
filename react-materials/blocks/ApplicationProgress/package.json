@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/application-progress-block",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "申请进度信息展示",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -47,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/application-progress/preview"
+  "homepage": "https://alibaba.github.io/ice/block/application-progress"
 }

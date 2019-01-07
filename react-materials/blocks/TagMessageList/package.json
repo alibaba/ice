@@ -1,12 +1,9 @@
 {
   "name": "@icedesign/tag-message-list-block",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "标签消息列表",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/",
     "build/"
   ],
   "author": {
@@ -47,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/tag-message-list/preview"
+  "homepage": "https://alibaba.github.io/ice/block/tag-message-list"
 }

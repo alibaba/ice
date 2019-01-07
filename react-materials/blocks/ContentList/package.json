@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/content-list-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "筛选和列表组合",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -42,5 +41,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1bAzvzeSSBuNjy0FlXXbBpVXa-2548-1428.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/content-list/preview"
+  "homepage": "https://alibaba.github.io/ice/block/content-list"
 }

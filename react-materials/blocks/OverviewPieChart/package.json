@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/overview-pie-chart-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "概览数据",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,6 @@
   },
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {
@@ -41,5 +40,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1yTJixntYBeNjy1XdXXXXyVXa-2820-642.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/overview-pie-chart/preview"
+  "homepage": "https://alibaba.github.io/ice/block/overview-pie-chart"
 }

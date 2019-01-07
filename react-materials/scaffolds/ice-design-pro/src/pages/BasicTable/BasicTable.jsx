@@ -1,12 +1,6 @@
-
-
 import React, { Component } from 'react';
-
-import SelectableTable from './components/SelectableTable';
-
-import EditableTable from './components/EditableTable';
-
-import SortableTable from './components/SortableTable';
+import TableChartCard from './components/TableChartCard';
+import TabTable from './components/TabTable';
 
 import './BasicTable.scss';
 
@@ -21,11 +15,8 @@ export default class BasicTable extends Component {
   render() {
     return (
       <div className="basic-table-page">
-        <SelectableTable />
-
-        <EditableTable />
-
-        <SortableTable />
+        <TabTable />
+        <TableChartCard />
       </div>
     );
   }

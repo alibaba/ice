@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/trend-chart-block",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "适合展示趋势的场景图表",
   "author": "",
-  "homepage": "https://alibaba.github.io/ice/block/trend-chart/preview",
+  "homepage": "https://alibaba.github.io/ice/block/trend-chart",
   "files": [
     "src/",
-    "lib/",
     "build/"
   ],
   "repository": {

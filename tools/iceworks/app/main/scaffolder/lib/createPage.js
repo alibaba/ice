@@ -44,8 +44,8 @@ module.exports = async function createPage({
   routePath,
   routeText,
   routeIcon, // 用于生成导航栏左侧 icon
-  destDir,
-  layout, //
+  destDir, // 当前项目的目录地址
+  layout, // 用户选择的布局
   blocks = [],
   interpreter,
   nodeFramework, //是否是koa项目
@@ -58,15 +58,16 @@ module.exports = async function createPage({
   let fileList = [];
   routePath = routePath || pageName;
 
-  const targetPackageFile = path.join(destDir, 'package.json');
-  let packageData = {};
-
-  if (pathExists.sync(targetPackageFile)) {
+  // 获取当前项目的package.json中的数据
+  const pkgPath = path.join(destDir, 'package.json');
+  let pkg = {}; 
+  if (pathExists.sync(pkgPath)) {
     try {
-      const packageText = fs.readFileSync(targetPackageFile);
-      packageData = JSON.parse(packageText.toString());
+      const packageText = fs.readFileSync(pkgPath);
+      pkg = JSON.parse(packageText.toString());
     } catch (e) {}
   }
+  pkg.dependencies = pkg.dependencies || {};
 
   if (preview) {
     pageName = 'IceworksPreviewPage';
@@ -81,6 +82,7 @@ module.exports = async function createPage({
     return [];
   }
 
+  // 项目中新建页面目录
   const pageFolderName = upperCamelCase(pageName || '');
   pageName = kebabCase(pageFolderName).replace(/^-/, '');
 
@@ -103,12 +105,8 @@ module.exports = async function createPage({
     }
   }
 
-  const pkgPath = path.join(destDir, 'package.json');
-  const pkg = JSON.parse(fs.readFileSync(pkgPath));
-  pkg.dependencies = pkg.dependencies || {};
-
   // 1. blocks 依赖获取, 过滤掉已安装的内容
-  const blockDeps = {};
+  const blockDeps = {}; // 存储未安装的依赖
   if (Array.isArray(blocks)) {
     // merge dependence
     for (let i = 0; i < blocks.length; i++) {
@@ -118,28 +116,27 @@ module.exports = async function createPage({
         const customDependencies = JSON.parse(block.dep);
         customDependencies.forEach((dep) => {
           const customDepsVersion = dep.version;
-          if (pkg.dependencies.hasOwnProperty(dep.npmName)) {
-            // do nothing
-          } else {
+          // 跳过已有依赖，未安装依赖放入blockDeps
+          if (!pkg.dependencies.hasOwnProperty(dep.npmName)) {
             blockDeps[dep.npmName] = customDepsVersion;
           }
         });
         continue;
       }
+      // 获取物料中的依赖
       const dependencies = await materialUtils.getDependenciesByMaterial(block);
       Object.keys(dependencies).forEach((dep) => {
         const version = dependencies[dep];
-        if (pkg.dependencies.hasOwnProperty(dep)) {
-          // do nothing
-        } else {
+        // 跳过已有依赖，未安装依赖放入blockDeps
+        if (!pkg.dependencies.hasOwnProperty(dep)) {
           blockDeps[dep] = version;
         }
       });
     }
   }
+
   const layoutDeps = {};
   let layoutName = '';
-
   if (layout) {
     // 兼容 layout 不存在的情况, 拉取最新的 layout
     layoutName = layout.name;
@@ -159,9 +156,7 @@ module.exports = async function createPage({
       const dependencies = materialUtils.getDependenciesByMaterial(layout);
       Object.keys(dependencies).forEach((dep) => {
         const version = dependencies[dep];
-        if (pkg.dependencies.hasOwnProperty(dep)) {
-          // do nothing
-        } else {
+        if (!pkg.dependencies.hasOwnProperty(dep)) {
           layoutDeps[dep] = version;
         }
       });
@@ -213,7 +208,7 @@ module.exports = async function createPage({
     }
   }
 
-  // 2. 拉取 blocks tar 包，开始现在文件
+  // 2. 拉取 blocks tar 包，开始下载文件
   if (Array.isArray(blocks)) {
     for (let i = 0; i < blocks.length; i++) {
       const block = blocks[i];
@@ -285,7 +280,7 @@ module.exports = async function createPage({
     }
   }
 
-  const scaffoldConfig = packageData.scaffoldConfig || {};
+  const scaffoldConfig = pkg.scaffoldConfig || {};
   const renderData = {
     // layout
     layout: (layout && layout.name) || '',
