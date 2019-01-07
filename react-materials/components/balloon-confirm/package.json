@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "author": {
     "name": "ICE Team",
@@ -18,7 +19,8 @@
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postinstall": "node ./postinstall.js"
   },
   "license": "MIT",
   "keywords": [
@@ -37,6 +39,5 @@
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "moment": "^2.23.0"
   }
 }

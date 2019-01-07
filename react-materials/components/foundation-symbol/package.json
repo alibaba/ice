@@ -1,16 +1,18 @@
 {
   "name": "@icedesign/foundation-symbol",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "基础符号表",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postinstall": "node ./postinstall.js"
   },
   "keywords": [
     "ice",
@@ -27,7 +29,6 @@
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.14-beta.2",
     "react-copy-to-clipboard": "^5.0.1"
   },
   "peerDependencies": {

@@ -10,7 +10,7 @@
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "author": "ice-team",
   "repository": {
@@ -34,6 +34,6 @@
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.12"
+    "@icedesign/base": "^0.2.0"
   }
 }

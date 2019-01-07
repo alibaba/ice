@@ -91,6 +91,70 @@ function copyMainFiles() {
     );
   });
 }
+/**
+ * 上传文件到 oss
+ * @param {*} paths oss 目标路径
+ * @param {*} file 本地文件路径
+ */
+async function getUpload2oss() {
+  gutil.log('Access Key 请在 oss 平台查询');
+  const accessKey = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: '请输入 Access KeyId',
+      default: 'LTAIpfdX8L8sa98T',
+    },
+    {
+      type: 'input',
+      name: 'secret',
+      message: '请输入 Access Key Secret (默认值读取: process.env.SECRET)',
+      default: process.env.SECRET || '',
+    },
+    {
+      name: 'bucket',
+      type: 'list',
+      choices: ['iceworks', 'iceworks-beta', 'iceworks-next'],
+      message: '请选择 bucket',
+    },
+  ]);
+
+  const iceworksStore = oss({
+    bucket: accessKey.bucket,
+    endpoint: 'oss-cn-hangzhou.aliyuncs.com',
+    accessKeyId: accessKey.id,
+    accessKeySecret: accessKey.secret,
+    time: '120s',
+  });
+
+  return async function(paths, file) {
+    if (!pathExists.sync(file)) {
+      gutil.log(colors.red('不存在文件'), file);
+      return 1;
+    }
+    gutil.log(
+      colors.yellow('开始上传'),
+      path.relative(__dirname, file),
+      '=>',
+      paths.join('/')
+    );
+  
+    return co(iceworksStore.put(paths.join('/'), file))
+      .then((object = {}) => {
+        if (object.res && object.res.status == 200) {
+          gutil.log(colors.green('上传成功'), object.url);
+          return 0;
+        } else {
+          gutil.log(colors.red('上传失败'), file);
+          return 1;
+        }
+      })
+      .catch(() => {
+        gutil.log(colors.red('上传失败'), file);
+        return 1;
+      });
+  }
+}
 
 gulp.task('compile:after:css', ['compile:prod'], () => {
   return gulp
@@ -385,63 +449,8 @@ gulp.task('dist', () => {
 });
 
 gulp.task('oss', async function() {
-  gutil.log('Access Key 请在 oss 平台查询');
-  const accessKey = await inquirer.prompt([
-    {
-      type: 'input',
-      name: 'id',
-      message: '请输入 Access KeyId',
-      default: 'LTAIpfdX8L8sa98T',
-    },
-    {
-      type: 'input',
-      name: 'secret',
-      message: '请输入 Access Key Secret (默认值读取: process.env.SECRET)',
-      default: process.env.SECRET || '',
-    },
-    {
-      name: 'bucket',
-      type: 'list',
-      choices: ['iceworks', 'iceworks-beta', 'iceworks-next'],
-      message: '请选择 bucket',
-    },
-  ]);
+  const upload2oss = await getUpload2oss();
 
-  var iceworksStore = oss({
-    bucket: accessKey.bucket,
-    endpoint: 'oss-cn-hangzhou.aliyuncs.com',
-    accessKeyId: accessKey.id,
-    accessKeySecret: accessKey.secret,
-    time: '120s',
-  });
-
-  function upload2oss(paths, file) {
-    if (!pathExists.sync(file)) {
-      gutil.log(colors.red('不存在文件'), file);
-      return 1;
-    }
-    gutil.log(
-      colors.yellow('开始上传'),
-      path.relative(__dirname, file),
-      '=>',
-      paths.join('/')
-    );
-
-    return co(iceworksStore.put(paths.join('/'), file))
-      .then((object = {}) => {
-        if (object.res && object.res.status == 200) {
-          gutil.log(colors.green('上传成功'), object.url);
-          return 0;
-        } else {
-          gutil.log(colors.red('上传失败'), file);
-          return 1;
-        }
-      })
-      .catch(() => {
-        gutil.log(colors.red('上传失败'), file);
-        return 1;
-      });
-  }
   const version = require('./out/package.json').version;
   const distDir = path.join(__dirname, 'dist');
 
@@ -495,6 +504,45 @@ gulp.task('oss', async function() {
     }
   }
 });
+
+/**
+ * 日志文件上传到 oss。
+ * dist/updates.json => oss: `${bucket}/`
+ * changelog/changelog.json => oss: `${bucket}/`
+ * changelog/${verison}.json => oss: `${bucket}/changelog/`
+ * dist/updates.json ==copy=> iceworks-updates.json => oss: `${bucket}/assets/`
+ * changelog/changelog.json ==copy=> iceworks-changelog.json => oss: `${bucket}/assets/`
+ */
+gulp.task('oss-log', async () => {
+  const upload2oss = await getUpload2oss();
+  const version = require('./out/package.json').version;
+  const productNameLowCase = productName.toLowerCase();
+  const filepaths = [{
+    from: 'dist/updates.json', // iceworks 下的相对路径
+    to: ['updates.json'] // oss 对应 bucket 下的相对路径
+  }, {
+    from: 'changelog/changelog.json',
+    to: ['changelog.json']
+  }, {
+    from: `changelog/${version}.json`,
+    to: [`changelog/${version}.json`]
+  }, {
+    from: 'dist/updates.json',
+    to: ['assets', `${productNameLowCase}-updates.json`]
+  }, {
+    from: 'changelog/changelog.json',
+    to: ['assets', `${productNameLowCase}-changelog.json`]
+  }];
+  // 上传
+  filepaths.forEach( async filepath => {
+    const fromDir = path.join(__dirname, filepath.from);
+    const code = await upload2oss(filepath.to, fromDir);
+    if (code !== 0) {
+      gutil.log( colors.red(`${fromDir} => ${filepath.to.join('/')} error`) );
+    }
+  });
+
+})
 
 gulp.task('build-dist', ['build'], () => {
   gulp.start(['dist']);

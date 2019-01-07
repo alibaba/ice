@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "start": "ice-devtools start",
-    "build": "ice-devtools build"
+    "build": "ice-devtools build",
+    "prepublishOnly": "npm run build"
   },
   "author": {
     "name": "ICE Team",
@@ -24,12 +25,11 @@
     "ice-component"
   ],
   "dependencies": {
-    "@alifd/next": "^1.x",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.14-beta.2"
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.5.0"

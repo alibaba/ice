@@ -5,11 +5,14 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "scripts": {
     "start": "ice-devtools start",
-    "build": "ice-devtools build"
+    "build": "ice-devtools build",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node ./postinstall.js"
   },
   "author": {
     "name": "ICE Team",
@@ -30,7 +33,6 @@
     "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.14-beta.2"
   },
   "peerDependencies": {
     "react": "^16.5.0",

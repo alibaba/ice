@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "keywords": [
     "ice",
@@ -21,12 +22,13 @@
     "url": "https://github.com/alibaba/ice"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
+    "access": "public"
   },
   "scripts": {
     "start": "ice-devtools start",
-    "build": "ice-devtools build"
+    "build": "ice-devtools build",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node ./postinstall.js"
   },
   "dependencies": {
     "classnames": "^2.2.5",

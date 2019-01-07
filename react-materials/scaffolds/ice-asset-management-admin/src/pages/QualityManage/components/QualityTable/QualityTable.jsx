@@ -4,8 +4,8 @@ import IceContainer from '@icedesign/container';
 import TableFilter from './TableFilter';
 
 // MOCK 数据，实际业务按需进行替换
-const getData = () => {
-  return Array.from({ length: 10 }).map((item, index) => {
+const getData = (length = 10) => {
+  return Array.from({ length }).map((item, index) => {
     return {
       grade: `A${index}`,
       average: `99.${index}`,
@@ -22,23 +22,53 @@ const getData = () => {
 };
 
 export default class QualityTable extends Component {
-  static displayName = 'QualityTable';
+  state = {
+    current: 1,
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-    };
+  componentDidMount() {
+    this.fetchData();
   }
 
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
     });
+  };
+
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.fetchData();
+      }
+    );
+  };
+
+  handleFilterChange = () => {
+    this.fetchData(5);
   };
 
   renderOper = () => {
@@ -52,15 +82,15 @@ export default class QualityTable extends Component {
   };
 
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, data, current } = this.state;
 
     return (
       <IceContainer style={styles.container}>
         <h4 style={styles.title}>等级表概览</h4>
-        <TableFilter />
+        <TableFilter onChange={this.handleFilterChange} />
         <Table
-          dataSource={dataSource}
+          isLoading={isLoading}
+          dataSource={data}
           hasBorder={false}
           style={{ padding: '0 20px 20px' }}
         >

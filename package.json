@@ -24,6 +24,7 @@
     "@vue/cli-service": "^3.0.0-beta.6",
     "@vue/eslint-config-airbnb": "^3.0.0-beta.6",
     "@vue/eslint-config-standard": "^3.0.0-rc.7",
+    "vue-template-compiler": "^2.5.17",
     "ali-oss": "^5.1.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",

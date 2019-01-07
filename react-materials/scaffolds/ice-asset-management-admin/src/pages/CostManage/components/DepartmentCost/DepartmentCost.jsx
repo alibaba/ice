@@ -7,17 +7,6 @@ import './DepartmentCost.scss';
 const TabPane = Tab.TabPane;
 
 export default class DepartmentCost extends Component {
-  static displayName = 'DepartmentCost';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <IceContainer style={styles.container} className="department-cost">

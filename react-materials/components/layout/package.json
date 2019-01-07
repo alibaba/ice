@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/layout",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "提供页面框架性的 layout 组件",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "author": {
     "name": "ICE Team",
@@ -18,25 +19,27 @@
   "license": "MIT",
   "keywords": [
     "ice",
-    "ice-components"
+    "ice-components",
+    "postinstall.js"
   ],
   "scripts": {
     "start": "ice-devtools start",
-    "build": "ice-devtools build"
+    "build": "ice-devtools build",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node ./postinstall.js"
   },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.10"
   },
-  "devDependencies": {
-    "@icedesign/img": "^0.1.0",
-    "@icedesign/styled-menu": "^0.1.1",
-    "@icedesign/title": "^0.1.0",
-    "ice-devtools": "^1.1.14-beta.2"
-  },
   "peerDependencies": {
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
+  },
+  "devDependencies": {
+    "@icedesign/img": "^0.1.0",
+    "@icedesign/styled-menu": "^0.1.1",
+    "@icedesign/title": "^0.1.0"
   }
 }

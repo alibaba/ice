@@ -10,24 +10,12 @@ import {
 const { Row, Col } = Grid;
 
 export default class TableHead extends Component {
-  static displayName = 'TableHead';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: {},
-    };
-  }
+  state = {
+    value: {},
+  };
 
   formChange = (value) => {
-    console.log('value', value);
-    this.setState({
-      value,
-    });
+    this.props.onChange(value);
   };
 
   render() {

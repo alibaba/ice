@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx';
+import requestMaterial from '../lib/request-material';
 import request from 'request';
 import { BLOCK_GROUPS_MATERIALS } from '../datacenter/materialsConfig';
 
@@ -14,40 +15,19 @@ class BlockGroups {
   @observable blockGroups = []; // 区块组合列表
 
   getBlockGroups() { 
-    return new Promise((resolve) => {
-      const uri = BLOCK_GROUPS_MATERIALS.source;
-      request(uri, (err, res, body) => {
-        if (err) {
-          console.error('区块组合请求失败 ', uri); // eslint-disable-line
-          resolve(null);
-        } else {
-          resolve(body);
-        }
-      });
-    });
+    const uri = BLOCK_GROUPS_MATERIALS.source;
+    return requestMaterial(uri, true);
   };
 
   @action
   fetch() {
     this.isLoading = true;
-    this.getBlockGroups()
-      .then(this.fetchSuccess)
-      .catch(this.fetchFailed);
+    return this.getBlockGroups().then(this.fetchSuccess);
   };
 
   @action.bound
   fetchSuccess(body) {
-    const blockGroups = JSON.parse(body);
-    if (Array.isArray(blockGroups) && blockGroups.length > 0) {
-      this.blockGroups = blockGroups;
-    } else {
-      this.blockGroups = [];
-    }
-    this.isLoading = false;
-  };
-
-  @action.bound
-  fetchFailed() {
+    this.blockGroups = body || [];
     this.isLoading = false;
   };
 
