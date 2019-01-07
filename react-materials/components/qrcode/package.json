@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/qrcode",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "飞冰 二维码组件",
   "main": "lib/index.js",
   "files": [

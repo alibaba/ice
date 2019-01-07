@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/styled-menu",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "ICE 导航组件体验版",
   "main": "lib/index.js",
   "files": [
@@ -36,7 +36,6 @@
   },
   "typings": "lib/index.d.ts",
   "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
+    "access": "public"
   }
 }

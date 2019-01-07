@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/balloon-confirm",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "ICE 气泡确认框",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "author": {
     "name": "ICE Team",

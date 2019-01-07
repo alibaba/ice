@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/layout",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "提供页面框架性的 layout 组件",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "author": {
     "name": "ICE Team",

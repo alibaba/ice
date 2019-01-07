@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/notification",
-  "version": "0.2.2-5",
+  "version": "0.2.2",
   "description": "全局展示通知提醒信息。",
   "main": "lib/index.js",
   "files": [

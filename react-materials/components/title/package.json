@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/title",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "标题组件",
   "main": "lib/index.js",
   "files": [
@@ -22,8 +22,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
+    "access": "public"
   },
   "scripts": {
     "start": "ice-devtools start",
