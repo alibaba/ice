@@ -1,4 +1,4 @@
-@import '~@icedesign/base/lib/core/index.scss';
+@import '~@alifd/next/lib/core/index.scss';
 $ice-icon-prefix: '.ice-icon';
 $ice-icon-font-family: 'iceicon2';
 
@@ -12,6 +12,70 @@ $ice-icon-font-family: 'iceicon2';
     url('//at.alicdn.com/t/font_107674_ps09fo1i2q8semi.svg#iceicon2')
       format('svg');
 }
+
+.ice-icon-stable {
+  font-family: $ice-icon-font-family !important;
+  display: inline-block;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+  &:before {
+    display: inline-block;
+    speak: none;
+    font-size: $icon-s;
+    line-height: $icon-s;
+    vertical-align: middle;
+    text-align: center;
+  }
+  &-left {
+    margin-right: $s-1;
+  }
+  &-right {
+    margin-left: $s-1;
+  }
+  &-xxs:before {
+    width: $icon-xxs;
+    font-size: $icon-xxs;
+    line-height: 1;
+  }
+  &-xs:before {
+    width: $icon-xs;
+    font-size: $icon-xs;
+    line-height: 1;
+  }
+  &-small:before {
+    width: $icon-s;
+    font-size: $icon-s;
+    line-height: 1;
+  }
+  &-medium:before {
+    width: $icon-m;
+    font-size: $icon-m;
+    line-height: 1;
+  }
+  &-large:before {
+    width: $icon-l;
+    font-size: $icon-l;
+    line-height: 1;
+  }
+  &-xl:before {
+    width: $icon-xl;
+    font-size: $icon-xl;
+    line-height: 1;
+  }
+  &-xxl:before {
+    width: $icon-xxl;
+    font-size: $icon-xxl;
+    line-height: 1;
+  }
+  &-xxxl:before {
+    width: $icon-xxxl;
+    font-size: $icon-xxxl;
+    line-height: 1;
+  }
+}
+
 .ice-icon-stable-bangzhu:before {
   content: '\e652';
 }
@@ -414,67 +478,4 @@ $ice-icon-font-family: 'iceicon2';
 
 .ice-icon-stable-requ:before {
   content: '\e699';
-}
-
-.ice-icon-stable {
-  font-family: $ice-icon-font-family !important;
-  display: inline-block;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
-  &:before {
-    display: inline-block;
-    speak: none;
-    font-size: $icon-s;
-    line-height: $icon-s;
-    vertical-align: middle;
-    text-align: center;
-  }
-  &-left {
-    margin-right: $s1;
-  }
-  &-right {
-    margin-left: $s1;
-  }
-  &-xxs:before {
-    width: $icon-xxs;
-    font-size: $icon-xxs;
-    line-height: 1;
-  }
-  &-xs:before {
-    width: $icon-xs;
-    font-size: $icon-xs;
-    line-height: 1;
-  }
-  &-small:before {
-    width: $icon-s;
-    font-size: $icon-s;
-    line-height: 1;
-  }
-  &-medium:before {
-    width: $icon-m;
-    font-size: $icon-m;
-    line-height: 1;
-  }
-  &-large:before {
-    width: $icon-l;
-    font-size: $icon-l;
-    line-height: 1;
-  }
-  &-xl:before {
-    width: $icon-xl;
-    font-size: $icon-xl;
-    line-height: 1;
-  }
-  &-xxl:before {
-    width: $icon-xxl;
-    font-size: $icon-xxl;
-    line-height: 1;
-  }
-  &-xxxl:before {
-    width: $icon-xxxl;
-    font-size: $icon-xxxl;
-    line-height: 1;
-  }
 }
