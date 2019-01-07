@@ -8,11 +8,12 @@ module.exports = function getWebpackConfigProd({ entry, buildConfig }) {
   const baseConfig = getWebpackConfigBasic({ entry, buildConfig });
 
   return webpackMerge(baseConfig, {
-    devtool: 'none',
+    devtool: process.env.SOURCEMAP || 'none',
     optimization: {
       minimize: !process.env.DEBUG,
       minimizer: [
         new UglifyJsPlugin({
+          sourceMap: true,
           cache: true,
           parallel: true,
           uglifyOptions: {
