@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import UserSearch from './components/UserSearch';
 import UserTable from './components/UserTable';
 
 export default class UserManagement extends Component {
@@ -13,7 +12,6 @@ export default class UserManagement extends Component {
   render() {
     return (
       <div>
-        <UserSearch />
         <UserTable />
       </div>
     );

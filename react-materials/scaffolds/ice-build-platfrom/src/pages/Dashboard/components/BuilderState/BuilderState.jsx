@@ -23,18 +23,22 @@ export default class BuilderState extends Component {
       {
         label: '构建量',
         value: '55464',
+        background: '#5e83fb',
       },
       {
         label: '仓库',
         value: '24717',
+        background: '#f7da47',
       },
       {
         label: '用户',
         value: '4274',
+        background: '#ee6f6d',
       },
       {
         label: '构建器',
         value: '689',
+        background: '#57ca9a',
       },
     ];
 
@@ -74,8 +78,13 @@ export default class BuilderState extends Component {
             <Row wrap gutter="10">
               {totalData.map((item, index) => {
                 return (
-                  <Col key={index} style={{ background: 'red' }}>
-                    <div style={styles.totalCard}>
+                  <Col key={index}>
+                    <div
+                      style={{
+                        ...styles.totalCard,
+                        background: item.background,
+                      }}
+                    >
                       <div style={styles.label}>{item.label}</div>
                       <div style={styles.value}>{item.value}</div>
                     </div>
@@ -89,7 +98,7 @@ export default class BuilderState extends Component {
             <Row wrap gutter="10">
               {todayData.map((item, index) => {
                 return (
-                  <Col key={index} style={{ background: 'red' }}>
+                  <Col key={index}>
                     <div style={styles.todayCard}>
                       <img src={item.img} alt="" style={styles.todayCardIcon} />
                       <div>
@@ -120,7 +129,6 @@ const styles = {
     maxWidth: '160px',
     padding: '10px',
     borderRadius: '4px',
-    background: 'rgba(240,130,76,.8)',
     color: '#fff',
   },
   todayCard: {

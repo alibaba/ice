@@ -7,8 +7,11 @@ const ReactHighcharts = require('react-highcharts');
 const Highcharts = require('highcharts');
 
 const { Option } = Select;
+const random = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
-const config = {
+const chartConfig = {
   chart: {
     height: 300,
     plotBackgroundColor: null,
@@ -49,27 +52,32 @@ const config = {
           y: 41.41,
           sliced: true,
           selected: true,
-          color: '#f29b70',
+          color: '#5e83fb',
         },
         {
           name: 'Rollup',
           y: 11.84,
+          color: '#ee6f6d',
         },
         {
           name: 'Parcel',
           y: 10.26,
+          color: '#999',
         },
         {
           name: 'Gulp',
           y: 10.85,
+          color: '#333',
         },
         {
           name: 'Browserify',
           y: 14.67,
+          color: '#f7d947',
         },
         {
           name: 'Grunt',
           y: 10.97,
+          color: '#57ca9a',
         },
       ],
     },
@@ -77,33 +85,32 @@ const config = {
 };
 
 export default class BasicPieChart extends Component {
-  static displayName = 'BasicPieChart';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedValue: 'day',
-    };
-  }
+  state = {
+    selectedValue: 'day',
+    config: chartConfig,
+  };
 
   handleChange = (value) => {
+    const { config } = this.state;
+    config.series[0].data[0].y = random(20, 40);
     this.setState({
       selectedValue: value,
+      config,
     });
   };
 
   render() {
-    const { selectedValue } = this.state;
-    console.log({ selectedValue });
+    const { selectedValue, config } = this.state;
     return (
       <IceContainer>
         <div style={styles.cardHead}>
           <h4 style={styles.cardTitle}>Client 构建分布</h4>
-          <Select size="large" defaultValue="day" onChange={this.handleChange}>
+          <Select
+            size="large"
+            defaultValue="day"
+            value={selectedValue}
+            onChange={this.handleChange}
+          >
             <Option value="day">今日</Option>
             <Option value="yesterday">昨日</Option>
             <Option value="week">7 天</Option>

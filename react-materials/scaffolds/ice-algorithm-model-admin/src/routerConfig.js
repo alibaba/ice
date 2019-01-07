@@ -2,39 +2,37 @@
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
-import BasicLayout from './layouts/BasicLayout';
-import NormalLayout from './layouts/NormalLayout';
-import Home from './pages/Home';
 import ModelManagement from './pages/ModelManagement';
 import ModelMarket from './pages/ModelMarket';
 import ModelPerformance from './pages/ModelPerformance';
-import NotFound from './pages/NotFound';
+import UserLogin from './pages/UserLogin';
+import UserRegister from './pages/UserRegister';
+import Setting from './pages/Setting';
 
 const routerConfig = [
   {
-    path: '/',
-    layout: NormalLayout,
-    component: Home,
+    path: '/user/login',
+    component: UserLogin,
   },
   {
-    path: '/model/management',
-    layout: BasicLayout,
+    path: '/user/register',
+    component: UserRegister,
+  },
+  {
+    path: '/management',
     component: ModelManagement,
   },
   {
-    path: '/model/market',
-    layout: BasicLayout,
+    path: '/market',
     component: ModelMarket,
   },
   {
-    path: '/model/performance',
-    layout: BasicLayout,
+    path: '/performance',
     component: ModelPerformance,
   },
   {
-    path: '*',
-    layout: BasicLayout,
-    component: NotFound,
+    path: '/setting',
+    component: Setting,
   },
 ];
 

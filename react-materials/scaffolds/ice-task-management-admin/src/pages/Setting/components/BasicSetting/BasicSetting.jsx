@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button } from '@icedesign/base';
+import { Input, Button, Feedback } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -32,7 +32,11 @@ export default class BasicSetting extends Component {
 
   validateAllFormField = () => {
     this.refs.form.validateAll((errors, values) => {
-      console.log('errors', errors, 'values', values);
+      if (errors) {
+        return;
+      }
+      console.log({ values });
+      Feedback.toast.success('提交成功');
     });
   };
 

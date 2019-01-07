@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class StartBanner extends Component {
   static displayName = 'StartBanner';
@@ -22,13 +23,13 @@ export default class StartBanner extends Component {
         >
           起步教程
         </a>
-        <a
-          href="#"
+        <Link
+          to="/new"
           style={{ ...styles.link, ...styles.builderLink }}
           size="large"
         >
-          开发你的第一个构建器
-        </a>
+          添加你的第一个构建器
+        </Link>
       </div>
     );
   }
@@ -46,7 +47,7 @@ const styles = {
     backgroundSize: 'cover',
     backgroundPosition: '50% 50%',
     backgroundImage:
-      'url(https://g01.alibaba-inc.com/tfscom/TB1bKOTMVXXXXbsaXXXXXXXXXXX.tfsprivate.png)',
+      'url(https://img.alicdn.com/tfs/TB1EH5cx9zqK1RjSZFjXXblCFXa-3360-520.png)',
   },
   link: {
     padding: '10px 20px',

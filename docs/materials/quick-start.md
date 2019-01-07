@@ -10,9 +10,10 @@ category: 物料
 
 在实际项目中，官方提供的物料源和设计风格可能不满足某些业务场景， 也可能你想基于已有的业务进行沉淀，形成一套自己团队风格的物料源，基于此我们提供了一套完整的开发规范和开发者工具 ice-devtools 来支持自定义物料源的能力，工具在设计层面是去中心化的方案，可以支持自定义接入 react 、vue 、angular 等不同框架物料，只需满足一定的约定和规范即可。
 
-> **名词解释**
-> 物料：指组件、区块、布局、页面、模板的统称
-> 物料源：物料接入 Iceworks 的 URL 地址 ，本质上是一份 JSON 数据，如飞冰官方物料源 [https://ice.alicdn.com/assets/react-materials.json](https://ice.alicdn.com/assets/react-materials.json)
+## 名词解释
+
+- 物料：指组件、区块、布局、页面、模板的统称
+- 物料源：物料接入 Iceworks 的 URL 地址 ，本质上是一份 JSON 数据，如飞冰官方物料源 [https://ice.alicdn.com/assets/react-materials.json](https://ice.alicdn.com/assets/react-materials.json)
 
 ## 开发者工具
 
@@ -36,7 +37,7 @@ $ ice-devtools -V
 
 ### 初始化项目
 
-开始自定义物料之前，需要先使用 ice-devtools 初始化一个约定的物料项目，可以把它理解为在日常开始做项目之前，需要先约定好项目目录结构和开发规范，这里开发物料也是同样的原则
+开始自定义物料之前，需要先使用 ice-devtools 初始化一个约定的物料项目，可以把它理解为在日常开始做项目之前，需要先约定好项目目录结构和开发规范，这里开发物料也是同样的原则。
 
 ```bash
 // 新建物料项目
@@ -59,7 +60,7 @@ $ ice-devtools init
 ? materials description：
 ```
 
-> 注释：初始化的物料库内置了一个区块和模板，默认是已经发到 npm 上的，生成项目后可直接生成数据，这样有利于快速串联工具到 Iceworks 的流程。
+> 注释：初始化的物料库内置了一个区块和模板，默认是已经发到 npm 上的，生成项目后可直接生成数据，这样有利于快速将物料添加到 Iceworks，完成一个基础的流程。
 
 ### 生成物料源
 
@@ -67,12 +68,14 @@ $ ice-devtools init
 
 ```bash
 $ cd my-materials
+
+// 生成的物料源数据在 build 目录下
 $ npm run generate
 ```
 
-对于生成好的物料源数据，我们可以选择将这个文件托管到 [fusion](https://fusion.design/) 或 [unpkg](https://unpkg.com/#/) 上，来生成一个可访问的 URL。分别对应如下命令：
+对于生成好的物料源数据，我们可以选择将这个文件  托管到 [fusion](https://fusion.design/) 或 [unpkg](https://unpkg.com/#/) 上，来生成一个可访问的 URL。分别对应如下命令：
 
-发布到 fusion 
+发布到 fusion
 
 ```bash
 $ npm run sync
@@ -140,5 +143,5 @@ $ git push
 
 这里我们只简单介绍了如何使用开发者工具快速初始化一个私有的物料项目，然后生成数据接入 Iceworks 的流程，以及对初始化目录的分析，接下来我们看看如何添加物料：
 
-- [区块开发](https://alibaba.github.io/ice/materials/add-blocks)
-- [模板开发](https://alibaba.github.io/ice/materials/add-templates)
+- [区块开发](https://alibaba.github.io/ice/docs/materials/add-block)
+- [模板开发](https://alibaba.github.io/ice/docs/materials/add-templates)

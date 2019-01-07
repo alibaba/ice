@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const WebpackConfig = require('webpack-chain');
 const path = require('path');
 const debug = require('debug')('ice:webpack:base');
+const chalk = require('chalk');
 
 const BABEL_LOADER = require.resolve('babel-loader');
 const STYLE_LOADER = require.resolve('style-loader');
@@ -19,6 +20,8 @@ const URL_LOADER = require.resolve('url-loader');
 const URL_LOADER_LIMIT = 8192;
 
 const getBabelConfig = require('./getBabelConfig');
+const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
+const { getPkgJSON } = require('../utils/pkg-json');
 
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
@@ -49,6 +52,18 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .loader(CSS_LOADER)
     .end();
 
+  const pkgJSON = getPkgJSON(cwd);
+  const { buildConfig = {}, themeConfig = {} } = pkgJSON;
+  const theme = buildConfig.theme || buildConfig.themePackage;
+
+  if (theme) {
+    console.log('');
+    console.log(chalk.green('使用主题包: '), theme);
+    console.log('');
+  }
+
+  const appNodeModules = path.resolve(cwd, 'node_modules');
+
   config.module
     .rule('scss')
     .test(/\.s[a|c]ss$/)
@@ -60,6 +75,13 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .end()
     .use('scss-loader')
     .loader(SASS_LOADER)
+    .end()
+    .use('ice-skin-loader')
+    .loader(ICE_SKIN_LOADER)
+    .options({
+      themeFile: theme && path.join(appNodeModules, `${theme}/variables.scss`),
+      themeConfig,
+    })
     .end();
 
   config.module
@@ -145,7 +167,27 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   config.plugin('import').use(WebpackPluginImport, [
     [
       {
+        libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /@icedesign\/.*/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /@ali\/ice-.*/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /^@alife\/next\/lib\/([^/]+)/,
+        stylePath: 'style.js',
+      },
+      {
         libraryName: /^@alifd\/next\/lib\/([^/]+)/,
+        stylePath: 'style.js',
+      },
+      {
+        libraryName: /@alifd\/.*/,
         stylePath: 'style.js',
       },
     ],
