@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/landing-intro-banner-block",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "description": "首页介绍 Banner",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -45,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/landing-intro-banner/preview"
+  "homepage": "https://alibaba.github.io/ice/block/landing-intro-banner"
 }

@@ -36,15 +36,13 @@ export default class MemberList extends Component {
   render() {
     const dataSource = [
       {
-        avatar:
-          'https://img.alicdn.com/tfs/TB18g0ydNTpK1RjSZR0XXbEwXXa-500-500.jpg',
+        avatar: require('./images/avatar.jpg'),
         name: '淘小宝',
         email: 'ice-admin@alibaba-inc.com',
         role: 'owner',
       },
       {
-        avatar:
-          'https://img.alicdn.com/tfs/TB18g0ydNTpK1RjSZR0XXbEwXXa-500-500.jpg',
+        avatar: require('./images/avatar.jpg'),
         name: '宝码',
         email: 'ice-admin@alibaba-inc.com',
         role: 'member',

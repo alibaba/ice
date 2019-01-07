@@ -4,9 +4,7 @@ order: 2
 category: ICE Design Pro
 ---
 
-# 布局
-
-布局是一个应用的关键骨架所在，在飞冰中，我们将布局进行了抽象化，根据不同场景提供了常见的[四种布局](https://alibaba.github.io/ice/layout)方式，在使用 Iceworks 创建项目之后，默认使用模板自带的布局，如果当前模板布局不能满足您的需求，您还是使用 Iceworks 提供的自定义布局功能，添加布局到已创建的项目进行替换。
+布局是一个应用的关键骨架所在，在使用 Iceworks 创建项目之后，默认使用模板自带的布局，如果当前模板布局不能满足需求，还可以使用 Iceworks 提供的自定义布局功能，添加布局到已创建的项目进行替换。
 
 ## 基础布局
 
@@ -22,7 +20,7 @@ category: ICE Design Pro
 
 ## 自定义布局
 
-当模板默认提供的布局不能满足您的需求时，可以使用 Iceworks 提供的自定义布局功能进行自定义；如下界面，左边是属性配置面板，右边是配置的实时效果图，目前自定义主要包含以下四部分配置:
+当模板默认提供的布局不能满足需求时，可以使用 Iceworks 提供的自定义布局功能进行自定义；如下界面，左边是属性配置面板，右边是配置的实时效果图，目前自定义主要包含以下四部分配置:
 
 - 基础配置
 - 导航配置
@@ -35,8 +33,7 @@ category: ICE Design Pro
 
 - 布局容器配置有全屏和固宽两个选项，全屏即 100% 宽度的布局，固宽默认是 1200px
 - 主题配置有深色和浅色两个选项，对应的是 Layout 部分的主题配置
-- 定制皮肤主要是指配置基础组件的样式，可以选择主色和辅色，详细可以查看[修改主题配色
-  ](https://alibaba.github.io/ice/docs/advanced/custom-theme)
+- 定制皮肤主要是指配置基础组件的样式，可以选择主色和辅色
 
 ![基础配置](https://img.alicdn.com/tfs/TB10iEqxKuSBuNjy1XcXXcYjFXa-1909-1368.png)
 
@@ -58,4 +55,4 @@ category: ICE Design Pro
 
 ![页脚配置](https://img.alicdn.com/tfs/TB1lHVnx21TBuNjy0FjXXajyXXa-1909-1368.png)
 
-在自定义布局完成后，您可以在 `routerConfig.js` 替换和更新项目的布局配置。
+在自定义布局完成后，可以在 `routerConfig.js` 替换和更新项目的布局配置。

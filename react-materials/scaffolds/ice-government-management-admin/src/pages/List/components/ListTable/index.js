@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table, Pagination } from '@icedesign/base';
+import { Button, Table, Pagination, Feedback } from '@icedesign/base';
 
 const mockData = [
   {
@@ -53,14 +53,16 @@ const mockData = [
 ];
 
 export default class ListTable extends Component {
-  static displayName = 'ListTable';
-
   constructor(props) {
     super(props);
     this.state = {
-      current: 2,
+      current: 1,
     };
   }
+
+  handleClick = () => {
+    Feedback.toast.success('暂不支持办理');
+  };
 
   onPageChange = (current) => {
     this.setState({
@@ -71,7 +73,7 @@ export default class ListTable extends Component {
   render() {
     const actionRender = () => {
       return (
-        <Button size="large" style={styles.button}>
+        <Button size="large" style={styles.button} onClick={this.handleClick}>
           办理
         </Button>
       );
@@ -113,7 +115,6 @@ const styles = {
   },
   button: {
     margin: '0 8px',
-    padding: '0 16px',
     letterSpacing: '2px',
   },
   table: {

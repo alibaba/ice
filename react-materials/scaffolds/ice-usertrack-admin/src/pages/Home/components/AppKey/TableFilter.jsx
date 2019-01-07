@@ -4,19 +4,8 @@ import { Grid, Input } from '@icedesign/base';
 const { Row, Col } = Grid;
 
 export default class TableFilter extends Component {
-  static displayName = 'TableFilter';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   onChange = (value) => {
-    console.log({ value });
+    this.props.onChange(value);
   };
 
   render() {

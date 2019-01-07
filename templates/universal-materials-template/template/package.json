@@ -1,0 +1,17 @@
+{
+  "name": "{{name}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "author": "{{author}}",
+  "scripts": {
+    "deploy": "npm run generate && npm run sync",
+    "generate": "ice-devtools generate",
+    "sync": "ice-devtools sync",
+    "lint": "npm run lint:nofix -- --fix",
+    "lint:nofix": "eslint --cache --ext .js --ext .jsx ./"
+  },
+  "devDependencies": {},
+  "materialConfig": {
+    "type": "react"
+  }
+}

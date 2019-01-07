@@ -20,17 +20,6 @@ function handleClick(key) {
 }
 
 export default class TrackTab extends Component {
-  static displayName = 'TrackTab';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   renderTabExtraContent = () => {
     return <DatePicker size="large" style={{ marginRight: '20px' }} />;
   };

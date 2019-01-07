@@ -1,9 +1,0 @@
-var DemoLayout = 'div';
-var Block = getDefaultOrSelf(window['{{ blockName }}']);
-
-// init block
-var mountNode = document.querySelector('#mountNode');
-ReactDOM.render(
-  React.createElement(DemoLayout, {}, React.createElement(Block, {})),
-  mountNode
-);

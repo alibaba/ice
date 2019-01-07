@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/success-detail-block",
-  "version": "0.1.8",
+  "version": "0.1.11",
   "description": "成功详情信息展示",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -45,5 +43,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/success-detail/preview"
+  "homepage": "https://alibaba.github.io/ice/block/success-detail"
 }

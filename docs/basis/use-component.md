@@ -8,7 +8,7 @@ ICE 的组件统一使用 NPM 进行管理，所有的组件包都可以通过 n
 
 ## 检索组件
 
-ICE 所有组件文档说明都部署在[物料 - 组件](https://alibaba.github.io/ice/#/components)上，同时你也可以在全局搜索框输入你想要的的组件名称进行查找。
+ICE 所有组件文档说明都部署在[物料 - 组件](#/component)上，同时你也可以在全局搜索框输入你想要的的组件名称进行查找。
 
 ## 安装与更新
 
@@ -32,7 +32,7 @@ npm install <packageName>@latest --save
 
 当需要更新项目内的组件的时，使用此命令 `@latest` 表示当装当前最新版本。也就达到升级组件的目的。
 
-> 关于组件版本说明详见 </docs/basis/version>
+关于组件版本说明详见[组件版本号规则](#/docs/others/version-rules)。
 
 ## 使用组件
 
@@ -49,5 +49,5 @@ import IceTitle from '@icedesign/title';
 // .... 省略其他代码
 
 // 渲染
-ReactDOM.render(<IceTitle>, mountNode)
+ReactDOM.render(<IceTitle />, mountNode)
 ```

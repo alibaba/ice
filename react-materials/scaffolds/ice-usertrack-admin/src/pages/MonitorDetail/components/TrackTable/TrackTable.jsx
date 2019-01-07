@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination, Feedback } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import TableFilter from './TableFilter';
 
-const getData = () => {
-  return Array.from({ length: 10 }).map((item, index) => {
+const getData = (length = 10) => {
+  return Array.from({ length }).map((item, index) => {
     return {
       pageName: `Page${index}`,
       eventName: '点击事件',
@@ -17,23 +17,57 @@ const getData = () => {
 };
 
 export default class TrackTable extends Component {
-  static displayName = 'TrackTable';
+  state = {
+    current: 1,
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-    };
+  componentDidMount() {
+    this.fetchData();
   }
 
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
     });
+  };
+
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.fetchData();
+      }
+    );
+  };
+
+  handleFormChange = () => {
+    this.fetchData(5);
+  };
+
+  handleApply = () => {
+    Feedback.toast.success('申请权限已发送，请十分钟之后再试');
   };
 
   renderOper = () => {
@@ -41,21 +75,23 @@ export default class TrackTable extends Component {
       <div>
         <a style={styles.link}>详情</a>
         <span style={styles.separator} />
-        <a style={styles.link}>申请权限</a>
+        <a style={styles.link} onClick={this.handleApply}>
+          申请权限
+        </a>
       </div>
     );
   };
 
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, data, current } = this.state;
 
     return (
       <IceContainer style={styles.container}>
         <h4 style={styles.title}>新增或遗漏埋点</h4>
-        <TableFilter />
+        <TableFilter onChange={this.handleFormChange} />
         <Table
-          dataSource={dataSource}
+          dataSource={data}
+          isLoading={isLoading}
           hasBorder={false}
           style={{ padding: '0 20px 20px' }}
         >

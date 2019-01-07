@@ -1,5 +1,5 @@
 {
-  "name": "@react-materials/scroll-list-block",
+  "name": "@icedesign/scroll-list-block",
   "version": "1.0.0",
   "description": "滚动分页列表",
   "author": {
@@ -8,7 +8,7 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -37,5 +37,6 @@
       "列表"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1WAQmGGmWBuNjy1XaXXXCbXXa-3442-990.png"
-  }
+  },
+  "homepage": "https://alibaba.github.io/ice/block/scroll-list"
 }

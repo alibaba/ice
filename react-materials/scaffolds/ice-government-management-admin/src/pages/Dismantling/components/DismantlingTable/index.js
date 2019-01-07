@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table, Pagination } from '@icedesign/base';
+import { Button, Table, Pagination, Feedback } from '@icedesign/base';
 
 const mockData = [
   {
@@ -80,31 +80,35 @@ export default class DismantlingTable extends Component {
     });
   };
 
+  handleClick = (text) => {
+    Feedback.toast.success(`暂不支持${text}`);
+  };
+
   render() {
+    const buttons = [
+      '编辑',
+      '补正',
+      '材料退回',
+      '申请人主动撤回',
+      '立案前化解',
+      '发送办理',
+      '删除',
+    ];
     return (
       <div style={styles.container}>
-        <div>
-          <Button size="large" style={styles.button}>
-            编辑
-          </Button>
-          <Button size="large" style={styles.button}>
-            补正
-          </Button>
-          <Button size="large" style={styles.button}>
-            材料退回
-          </Button>
-          <Button size="large" style={styles.button}>
-            申请人主动撤回
-          </Button>
-          <Button size="large" style={styles.button}>
-            立案前化解
-          </Button>
-          <Button size="large" style={styles.button}>
-            发送办理
-          </Button>
-          <Button size="large" style={styles.button}>
-            删除
-          </Button>
+        <div style={styles.buttons}>
+          {buttons.map((text, index) => {
+            return (
+              <Button
+                key={index}
+                size="large"
+                style={styles.button}
+                onClick={() => this.handleClick(text)}
+              >
+                {text}
+              </Button>
+            );
+          })}
         </div>
         <Table
           dataSource={mockData}
@@ -141,7 +145,6 @@ const styles = {
   },
   button: {
     margin: '0 8px',
-    padding: '0 16px',
     letterSpacing: '2px',
   },
   table: {

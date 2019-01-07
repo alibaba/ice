@@ -4,8 +4,6 @@ order: 10
 category: ICE Design Pro
 ---
 
-# 自定义模板
-
 在 Iceworks 2.2.0 之前的版本，可以通过 `新建页面` 时选择默认提供的 4 套布局去替换已有项目的布局，也可以通过布局列表的`自定义布局`功能进行自定义，然后添加到项目。
 
 ![iceworks](https://img.alicdn.com/tfs/TB1ecZexQyWBuNjy0FpXXassXXa-1909-1368.png)

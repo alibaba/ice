@@ -1,12 +1,12 @@
 {
   "name": "@icedesign/filter-bar-block",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "适用于页面顶部的筛选场景",
   "author": "",
-  "homepage": "https://alibaba.github.io/ice/block/filter-bar/preview",
+  "homepage": "https://alibaba.github.io/ice/block/filter-bar",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",

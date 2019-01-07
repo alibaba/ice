@@ -7,7 +7,9 @@ import React from 'react';
 import UserLayout from './layouts/UserLayout';
 import BasicLayout from './layouts/BasicLayout';
 
-// 按照 Layout 归类分组可以按照如下方式组织路由
+// 按照 Layout 分组路由
+// UserLayout 对应的路由：/user/xxx
+// BasicLayout 对应的路由：/xxx
 const router = () => {
   return (
     <Switch>

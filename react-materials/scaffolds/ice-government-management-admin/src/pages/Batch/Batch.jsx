@@ -32,7 +32,7 @@ const styles = {
     flexDirection: 'column',
   },
   breadcrumb: {
-    borderLeft: '5px solid #0056f4',
+    borderLeft: '5px solid #447eff',
     paddingLeft: '16px',
     margin: '0 0 0 20px',
   },

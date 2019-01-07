@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/intro-with-background-block",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "附带背景图片的信息介绍区块",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -46,5 +44,5 @@
     ],
     "themePackage": "@icedesign/skin"
   },
-  "homepage": "https://alibaba.github.io/ice/block/intro-with-background/preview"
+  "homepage": "https://alibaba.github.io/ice/block/intro-with-background"
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table, Pagination } from '@icedesign/base';
+import { Button, Table, Pagination, Feedback } from '@icedesign/base';
 
 const mockData = [
   {
@@ -72,10 +72,14 @@ export default class BatchTable extends Component {
     });
   };
 
+  handleClick = () => {
+    Feedback.toast.success('您暂无无权限查看');
+  };
+
   render() {
     const actionRender = () => {
       return (
-        <Button size="large" style={styles.button}>
+        <Button size="large" style={styles.button} onClick={this.handleClick}>
           查看
         </Button>
       );

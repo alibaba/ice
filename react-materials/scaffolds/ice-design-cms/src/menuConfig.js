@@ -27,8 +27,14 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: 'Dashboard',
-    path: '/',
+    path: '/dashboard',
     icon: 'home',
+    children: [
+      {
+        name: '监控页',
+        path: '/dashboard/monitor',
+      },
+    ],
   },
   {
     name: '文章管理',
@@ -59,12 +65,12 @@ const asideMenuConfig = [
   },
   {
     name: '用户管理',
-    path: '/user',
+    path: '/users',
     icon: 'yonghu',
     children: [
-      { name: '用户列表', path: '/user/list' },
-      { name: '添加用户', path: '/user/create' },
-      { name: '修改密码', path: '/user/pwd' },
+      { name: '用户列表', path: '/users/list' },
+      { name: '添加用户', path: '/users/create' },
+      { name: '修改密码', path: '/users/pwd' },
     ],
   },
   {

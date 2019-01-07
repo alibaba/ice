@@ -1,0 +1,41 @@
+{
+  "name": "@icedesign/next-lite-scaffold",
+  "version": "1.0.0",
+  "description": "用于自定义模板",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "@alifd/next": "^1.10.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.6.7"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "buildConfig": {
+    "entry": "src/index.js"
+  },
+  "scaffoldConfig": {
+    "builder": "ice-scripts",
+    "name": "next-lite",
+    "title": "基础模板",
+    "categories": [
+      "基础模板"
+    ],
+    "screenshot": "https://unpkg.com/@icedesign/next-lite-scaffold/screenshot.png"
+  }
+}

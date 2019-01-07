@@ -5,17 +5,17 @@
 const asideMenuConfig = [
   {
     name: '模型管理',
-    path: '/model/management',
+    path: '/management',
     icon: 'home2',
   },
   {
     name: '模型市场',
-    path: '/model/market',
+    path: '/market',
     icon: 'cascades',
   },
   {
     name: '性能监控',
-    path: '/model/performance',
+    path: '/performance',
     icon: 'repair',
   },
   {

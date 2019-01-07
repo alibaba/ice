@@ -2,7 +2,8 @@
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
-import BasicLayout from './layouts/BasicLayout';
+import UserLogin from './pages/UserLogin';
+import UserRegister from './pages/UserRegister';
 import Home from './pages/Home';
 import Scheme from './pages/Scheme';
 import Combine from './pages/Combine';
@@ -11,53 +12,57 @@ import Report from './pages/Report';
 import Snapshot from './pages/Snapshot';
 import Monitor from './pages/Monitor';
 import MonitorDetail from './pages/MonitorDetail';
-import NotFound from './pages/NotFound';
+import Setting from './pages/Setting';
+import EditForm from './pages/EditForm';
 
 const routerConfig = [
   {
+    path: '/user/login',
+    component: UserLogin,
+  },
+  {
+    path: '/user/register',
+    component: UserRegister,
+  },
+  {
     path: '/application/mobile',
-    layout: BasicLayout,
     component: Home,
   },
   {
     path: '/application/monitor',
-    layout: BasicLayout,
     component: MonitorDetail,
   },
   {
+    path: '/application/edit',
+    component: EditForm,
+  },
+  {
     path: '/maintain/scheme',
-    layout: BasicLayout,
     component: Scheme,
   },
   {
     path: '/maintain/combine',
-    layout: BasicLayout,
     component: Combine,
   },
   {
     path: '/validate/autotest',
-    layout: BasicLayout,
     component: AutoTest,
   },
   {
     path: '/validate/report',
-    layout: BasicLayout,
     component: Report,
   },
   {
     path: '/monitor/snapshot',
-    layout: BasicLayout,
     component: Snapshot,
   },
   {
     path: '/monitor/version',
-    layout: BasicLayout,
     component: Monitor,
   },
   {
-    path: '*',
-    layout: BasicLayout,
-    component: NotFound,
+    path: '/account/setting',
+    component: Setting,
   },
 ];
 

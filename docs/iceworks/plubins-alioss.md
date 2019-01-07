@@ -4,8 +4,6 @@ category: Iceworks
 order: 1
 ---
 
-# 插件-阿里云 OSS
-
 阿里云 OSS 插件可以一键将构建结果上传到您的 OSS bucket 中。
 
 首先看下基础界面:
@@ -14,9 +12,9 @@ order: 1
 
 主要有以下字段组成：
 
-1.  阿里云用户 AccessKey
-2.  Bucket 选择框
-3.  存储目录
+1. 阿里云用户 AccessKey
+2. Bucket 选择框
+3. 存储目录
 
 阿里云用户 AccessKey 可以在您的账户下创建 AccessKey
 

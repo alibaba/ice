@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/pie-line-chart-block",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -48,5 +46,5 @@
     ],
     "themePackage": "@icedesign/skin"
   },
-  "homepage": "https://alibaba.github.io/ice/block/pie-line-chart/preview"
+  "homepage": "https://alibaba.github.io/ice/block/pie-line-chart"
 }

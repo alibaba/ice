@@ -144,6 +144,8 @@ class NewPage {
   setCurrentLayout(layout) {
     this.currentLayout = layout;
   }
+
+
 }
 
 export default new NewPage();

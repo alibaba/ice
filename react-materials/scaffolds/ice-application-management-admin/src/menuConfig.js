@@ -4,47 +4,39 @@
 
 const headerMenuConfig = [
   {
-    name: '首页',
-    path: '/',
+    name: '反馈',
+    path: 'https://github.com/alibaba/ice',
+    external: true,
+    newWindow: true,
+    icon: 'message',
   },
   {
-    name: '应用管理',
-    path: '/',
-  },
-  {
-    name: '资源管理',
-    path: '/',
-  },
-  {
-    name: ' 业务支撑',
-    path: '/',
-  },
-  {
-    name: '社区运营',
-    path: '/',
+    name: '帮助',
+    path: 'https://alibaba.github.io/ice',
+    external: true,
+    newWindow: true,
+    icon: 'bangzhu',
   },
 ];
 
 const asideMenuConfig = [
   {
     name: '我的应用',
-    path: '/',
+    path: '/dashboard',
   },
   {
     name: '应用查询',
     path: '/query',
   },
   {
-    name: '版本对比',
-    path: '/version',
+    name: '账号申请',
+    path: '/account',
+    icon: 'home',
   },
   {
-    name: '操作指北',
-    path: '/guidelines',
-  },
-  {
-    name: '资源申请',
-    path: '/apply',
+    name: '应用详情',
+    path: '/app',
+    icon: 'home',
   },
 ];
 

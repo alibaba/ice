@@ -1,11 +1,11 @@
 {
-  "name": "@react-materials/intro-tab-block",
-  "version": "1.0.1",
+  "name": "@icedesign/intro-tab-block",
+  "version": "1.0.0",
   "description": "展示多种情况下的信息",
   "author": "muchen <tao360907796@gmail.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -35,5 +35,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1lg7gux1YBuNjy1zcXXbNcXXa-2878-1604.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/intro-tab/preview"
+  "homepage": "https://alibaba.github.io/ice/block/intro-tab"
 }

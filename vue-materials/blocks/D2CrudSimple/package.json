@@ -1,5 +1,5 @@
 {
-  "name": "d2-table-block",
+  "name": "@d2-projects/d2-crud-ice-block-simple",
   "version": "1.0.0",
   "description": "基于Element的表格封装简单示例",
   "author": "孙昊翔 <673686754@qq.com>",
@@ -17,10 +17,6 @@
     "vue",
     "block"
   ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
   "dependencies": {
     "@d2-projects/d2-crud": "^1.1.0",
     "vue": "^2.5.16"
@@ -31,6 +27,6 @@
     "categories": [
       "表格"
     ],
-    "screenshot": "http://fairyever.qiniudn.com/20180907163636.png"
+    "screenshot": "http://qiniucdn.fairyever.com/20180907163636.png"
   }
 }

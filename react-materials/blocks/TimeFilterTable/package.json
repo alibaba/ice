@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/time-filter-table-block",
-  "version": "0.1.11",
+  "version": "0.1.15",
   "description": "支持时间筛选的表格",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -48,5 +46,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/time-filter-table/preview"
+  "homepage": "https://alibaba.github.io/ice/block/time-filter-table"
 }

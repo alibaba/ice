@@ -1,42 +1,45 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table } from '@icedesign/base';
-
-const getData = () => {
-  return Array.from({ length: 10 }).map((item, index) => {
-    return {
-      name: '新版手淘',
-      appid: `2018${index}`,
-      version: `0.0.${index}`,
-      creator: '淘小宝',
-      createTime: `2018-08-28 14:29:0${index}`,
-      status: '正常',
-    };
-  });
-};
+import { Table, Pagination } from '@icedesign/base';
+import { Link } from 'react-router-dom';
 
 export default class SnapshotTable extends Component {
-  static displayName = 'SnapshotTable';
+  state = {
+    current: 1,
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  handlePaginationChange = (current) => {
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.props.fetchData(10);
+      }
+    );
+  };
 
   renderOper = () => {
-    return <a style={styles.link}>查看监控详情</a>;
+    return (
+      <Link to="/" style={styles.link}>
+        查看监控详情
+      </Link>
+    );
   };
 
   render() {
-    const dataSource = getData();
+    const { current } = this.state;
+    const { isLoading, data } = this.props;
+
     return (
       <IceContainer style={styles.container}>
         <h4 style={styles.title}>快照列表</h4>
-        <Table dataSource={dataSource} hasBorder={false} style={styles.table}>
+        <Table
+          isLoading={isLoading}
+          dataSource={data}
+          hasBorder={false}
+          style={styles.table}
+        >
           <Table.Column title="名称" dataIndex="name" />
           <Table.Column title="APPId" dataIndex="appid" />
           <Table.Column title="版本" dataIndex="version" />
@@ -45,6 +48,11 @@ export default class SnapshotTable extends Component {
           <Table.Column title="状态" dataIndex="status" />
           <Table.Column title="操作" cell={this.renderOper} />
         </Table>
+        <Pagination
+          style={styles.pagination}
+          current={current}
+          onChange={this.handlePaginationChange}
+        />
       </IceContainer>
     );
   }
@@ -82,5 +90,9 @@ const styles = {
     width: '1px',
     verticalAlign: 'middle',
     background: '#e8e8e8',
+  },
+  pagination: {
+    padding: '20px',
+    textAlign: 'right',
   },
 };

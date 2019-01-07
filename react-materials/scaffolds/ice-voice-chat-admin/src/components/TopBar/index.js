@@ -4,7 +4,14 @@ import PropTypes from 'prop-types';
 
 export default class TopBar extends PureComponent {
   render() {
-    const { title, buttonText, extraBefore, extraAfter, style } = this.props;
+    const {
+      title,
+      buttonText,
+      extraBefore,
+      extraAfter,
+      style,
+      onClick,
+    } = this.props;
 
     return (
       <div style={{ ...styles.container, ...style }}>
@@ -13,7 +20,7 @@ export default class TopBar extends PureComponent {
         {extraAfter || (
           <div style={styles.buttons}>
             {buttonText ? (
-              <Button size="large" type="primary">
+              <Button size="large" type="primary" onClick={onClick}>
                 {buttonText}
               </Button>
             ) : null}
@@ -25,12 +32,14 @@ export default class TopBar extends PureComponent {
 }
 
 TopBar.propTypes = {
+  onClick: PropTypes.func,
   extraBefore: PropTypes.element,
   extraAfter: PropTypes.element,
   style: PropTypes.object,
 };
 
 TopBar.defaultProps = {
+  onClick: () => {},
   extraAfter: null,
   extraBefore: null,
   style: {},

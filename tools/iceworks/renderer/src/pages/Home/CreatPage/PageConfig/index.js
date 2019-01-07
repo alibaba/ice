@@ -36,6 +36,7 @@ class PageConfig extends Component {
     newpage: PropTypes.object,
     blocks: PropTypes.object,
     projects: PropTypes.object,
+    selectedBlocks: PropTypes.array,
     libary: PropTypes.string,
   };
 
@@ -67,7 +68,7 @@ class PageConfig extends Component {
         const { currentProject } = this.props.projects;
 
         const layout = toJS(this.props.newpage.currentLayout);
-        const blocks = toJS(this.props.blocks.selected);
+        const blocks = toJS(this.props.selectedBlocks);
         const libraryType = currentProject.getLibraryType();
         const pageName = toJS(values.pageName);
         // 创建页面
@@ -178,7 +179,10 @@ class PageConfig extends Component {
               this.props.newpage.isCreating = false;
             })
             .then(() => {
-              return currentProject.scaffold.removePreviewPage({ isNodeProject: currentProject.isNodeProject });
+              return currentProject.scaffold.removePreviewPage({
+                destDir: currentProject.root,
+                isNodeProject: currentProject.isNodeProject 
+              });
             })
             .then(() => {
               log.debug('移除临时页面成功');
@@ -306,7 +310,7 @@ class PageConfig extends Component {
 
                 // 移除 previewPage 临时文件
                 return scaffolder.removePreviewPage({
-                  destDir: this.props.newpage.targetPath,
+                  destDir: currentProject.root,
                   isNodeProject: currentProject.isNodeProject
                 });
               }

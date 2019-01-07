@@ -1,42 +1,22 @@
 // 物料管理中心
 // 负责加载所有物料，以及区块等
 
-import request from 'request';
 import uppercamelcase from 'uppercamelcase';
 import services from '../services';
 import filterMaterial from '../lib/filter-material';
+import requestMaterial from '../lib/request-material';
 
 const { settings } = services;
-
-function uriWithTimestamp(uri) {
-  if (uri.indexOf('?') > -1) {
-    return uri + '&v=' + Date.now();
-  } else {
-    return uri + '?v=' + Date.now();
-  }
-}
-
-function requestJSON(uri) {
-  return new Promise((resolve) => {
-    request({ uri: uriWithTimestamp(uri), json: true }, (err, res, body) => {
-      if (err) {
-        console.error('物料请求失败', uri); // eslint-disable-line
-        resolve(null); // 总数是返回值
-      } else {
-        resolve(body);
-      }
-    });
-  });
-}
 
 // 请求所有物料源数据
 function fetchMaterialsData() {
   let materials = settings.get('materials'); // 获取物料接口
   materials = filterMaterial(materials);
   return new Promise((resolve) => {
-    const requestPromiss = materials.map((material) => {
-      return requestJSON(material.source);
+    const requestPromise = materials.map((material) => {
+      return requestMaterial(material.source, true);
     });
+
     const materialDatas = materials.map((m) => {
       return {
         name: m.name,
@@ -45,10 +25,10 @@ function fetchMaterialsData() {
       };
     });
 
-    Promise.all(requestPromiss).then((requestResult) => {
-      requestResult.filter((n) => !!n).forEach((res, index) => {
+    Promise.all(requestPromise).then((requestResult) => {
+      requestResult.forEach( (res, index) => {
         materialDatas[index].body = res || {};
-      });
+      })
       resolve(materialDatas);
     });
   });

@@ -1,12 +1,10 @@
 {
   "name": "@icedesign/monaco-editor-block",
-  "version": "0.1.9",
+  "version": "0.1.12",
   "description": "Monaco 代码编辑器",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/"
   ],
   "author": {
     "name": "ICE Team",
@@ -48,5 +46,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/monaco-editor/preview"
+  "homepage": "https://alibaba.github.io/ice/block/monaco-editor"
 }

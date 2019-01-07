@@ -64,10 +64,10 @@ export default class PieDoughnutChart extends Component {
               >
                 <Coord type="theta" radius={0.75} />
                 <Axis name="percent" />
-                <Legend position="bottom" offsetY={-60} />
+                <Legend position="bottom" offsetY={-20} />
                 <Tooltip
                   showTitle={false}
-                  itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"
+                  itemTpl='<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
                 />
                 <Geom type="intervalStack" position="percent" color="genre" />
               </Chart>
@@ -86,10 +86,10 @@ export default class PieDoughnutChart extends Component {
               >
                 <Coord type="theta" radius={0.75} />
                 <Axis name="percent" />
-                <Legend position="bottom" offsetY={-60} />
+                <Legend position="bottom" offsetY={-20} />
                 <Tooltip
                   showTitle={false}
-                  itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"
+                  itemTpl='<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
                 />
                 <Geom type="intervalStack" position="percent" color="genre" />
               </Chart>

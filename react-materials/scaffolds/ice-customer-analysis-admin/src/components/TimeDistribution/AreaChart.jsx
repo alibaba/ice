@@ -57,7 +57,7 @@ export default class AreaChart extends React.Component {
             name="value"
             label={{
               formatter: (val) => {
-                return (val / 10000).toFixed(1) + 'k';
+                return `${(val / 10000).toFixed(1)}k`;
               },
             }}
           />

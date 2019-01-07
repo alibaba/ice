@@ -1,11 +1,11 @@
 {
   "name": "@icedesign/wysiwyg-editor-block",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Wysiwyg 富文本编辑器，基于 ReactJS和 DraftJS 库构建的所见即所得编辑器",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -39,5 +39,5 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1RtWwD3mTBuNjy1XbXXaMrVXa-2874-766.png"
   },
-  "homepage": "https://alibaba.github.io/ice/block/wysiwyg-editor/preview"
+  "homepage": "https://alibaba.github.io/ice/block/wysiwyg-editor"
 }
