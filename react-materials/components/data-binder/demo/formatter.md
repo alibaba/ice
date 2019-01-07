@@ -14,7 +14,7 @@ importStyle: true
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import DataBinder from '@icedesign/data-binder';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 
 @DataBinder({
   fooData: {
