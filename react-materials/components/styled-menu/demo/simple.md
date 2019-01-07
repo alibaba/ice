@@ -10,7 +10,7 @@ hide: true
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 import StyledMenu, {
   SubMenu,
   Item as MenuItem,
