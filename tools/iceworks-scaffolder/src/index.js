@@ -20,6 +20,8 @@ const normalizeScaffoldrc = require('./normalizeScaffoldrc');
 
 const material = require('./material');
 
+const { getClientFolderName } = require('./utils');
+
 /**
  * 模板操作对象
  */
@@ -41,9 +43,9 @@ class Scaffolder {
     return pathExists.sync(path.join(this.cwd, '.iceworks', 'scaffoldrc.json'));
   }
 
-  async createPage({ name: pageNmae, layout, blocks, preview = false }) {
+  async createPage({ name: pageNmae, layout, blocks, preview = false, nodeFramework }) {
     const pageResult = await addPage(
-      { cwd: this.cwd, name: pageNmae, blocks, preview },
+      { cwd: this.cwd, name: pageNmae, blocks, preview, nodeFramework },
       { scaffoldRuntimeConfig: this.scaffoldRuntimeConfig },
       this.interpreter
     );
@@ -51,7 +53,7 @@ class Scaffolder {
     if (layout) {
       // 本地化 layout 不创建
       if (!layout.customLayout && !layout.localization) {
-        const createResult = await addLayout({ cwd: this.cwd, layout });
+        const createResult = await addLayout({ cwd: this.cwd, layout, nodeFramework });
         pageResult.append(createResult);
       } else {
         const layoutPaths = material.getLayoutPaths({ cwd: this.cwd, layout });
@@ -65,6 +67,7 @@ class Scaffolder {
       name: pageNmae,
       blocks,
       preview,
+      nodeFramework
     });
     pageResult.append(blocksResult);
     return pageResult;
@@ -126,6 +129,7 @@ class Scaffolder {
     pagePath,
     layoutName = '',
     layoutPath,
+    nodeFramework
   }) {
     if (this.scaffoldRuntimeConfig.routerConfigFilePath) {
       const routerContent = await appendRouter({
@@ -149,6 +153,7 @@ class Scaffolder {
         path: routerPath,
         pagePath,
         manifestFilePath: this.scaffoldRuntimeConfig.manifestFilePath,
+        nodeFramework
       });
       if (manifestContent !== false) {
         fs.writeFileSync(
@@ -178,6 +183,7 @@ class Scaffolder {
   async removePreviewPage({
     menuPath = '/IceworksPreviewPage',
     routerPath = '/IceworksPreviewPage',
+    nodeFramework = ''
   } = {}) {
     if (this.scaffoldRuntimeConfig.menuConfigFilePath) {
       const menuContent = await removeMenu({
@@ -218,9 +224,11 @@ class Scaffolder {
       }
     }
     // 先删除 menu 等配置，后删除文件夹，否则服务会找不到文件而失败
+    const clientFolder = getClientFolderName(nodeFramework);
     const previewPagePath = path.join(
       this.cwd,
-      'src/pages/IceworksPreviewPage'
+      clientFolder,
+      'pages/IceworksPreviewPage'
     );
     rimraf.sync(previewPagePath);
   }

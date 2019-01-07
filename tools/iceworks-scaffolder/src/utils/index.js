@@ -26,3 +26,17 @@ exports.unicodeUnescape = (str) => {
     return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
   });
 };
+
+exports.getClientFolderName = (nodeFramework) => {
+  if (nodeFramework) {
+    if (nodeFramework === 'koa') {
+      return 'client';
+    } else if (nodeFramework === 'midway') {
+      return 'assert';
+    } else {
+      return 'src';
+    }
+  } else {
+    return 'src';
+  }
+};
