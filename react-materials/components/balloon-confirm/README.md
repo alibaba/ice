@@ -4,7 +4,7 @@ category: Components
 chinese: 气泡确认框
 ---
 
-ICE 气泡提示框
+ICE 气泡确认框
 
 ## 安装和升级
 

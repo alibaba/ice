@@ -1,16 +1,18 @@
 {
   "name": "@icedesign/qrcode",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "飞冰 二维码组件",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postinstall": "node ./postinstall.js"
   },
   "author": {
     "name": "ICE Team",
@@ -37,7 +39,6 @@
     "qrcode.react": "^0.8.0"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.12"
   },
   "typings": "lib/index.d.ts"
 }

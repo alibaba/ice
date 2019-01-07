@@ -1,15 +1,18 @@
 {
   "name": "@icedesign/ellipsis",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "多行文字控制展示组件",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "postinstall.js"
   ],
   "scripts": {
     "start": "ice-devtools start",
-    "build": "ice-devtools build"
+    "build": "ice-devtools build",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node ./postinstall.js"
   },
   "author": {
     "name": "ICE Team",
@@ -30,7 +33,6 @@
     "@icedesign/base": "^0.2.0"
   },
   "devDependencies": {
-    "ice-devtools": "^1.1.14-beta.2"
   },
   "peerDependencies": {
     "react": "^16.5.0",
