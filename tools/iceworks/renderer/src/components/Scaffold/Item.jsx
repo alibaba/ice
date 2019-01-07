@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import { observer } from 'mobx-react';
 import handleViewport from 'react-in-viewport';
+import dialog from '../../components/dialog';
 
 const shell = electron.shell;
 
@@ -21,9 +22,35 @@ class ScaffoldItem extends Component {
   };
 
   createProject = () => {
-    if (this.props.createProject) {
-      const { data } = this.props;
-      this.props.createProject(data);
+    const { createProject, data, scaffolds = {} } = this.props;
+    const isOfficialSource = /ice\.alicdn\.com\/(pre-)?assets\/react-materials\.json/.test(
+      scaffolds.material.source
+    );
+    const hasIceScripts = data.builder === 'ice-scripts';
+
+    if (isOfficialSource) {
+      if (hasIceScripts) {
+        createProject(data);
+      } else {
+        dialog.confirm(
+          {
+            title: '提示',
+            content: (
+              <div>
+                当前模板使用的构建工具非飞冰官方提供的
+                ice-scripts，如需要自定义构建，请参考项目 README 进行使用。
+              </div>
+            ),
+          },
+          (ok) => {
+            if (ok) {
+              createProject(data);
+            }
+          }
+        );
+      }
+    } else {
+      createProject(data);
     }
   };
 

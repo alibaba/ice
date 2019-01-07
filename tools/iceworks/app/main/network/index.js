@@ -9,7 +9,7 @@ module.exports = {
       request({
         url:
           'http://img.daily.taobaocdn.net/tps/TB12WD8XEw7LKJjyzdKXXaShXXa-2-2.png',
-        timeout: 300,
+        timeout: 1000,
       })
         .on('response', function(response) {
           if (response.statusCode === 200) {

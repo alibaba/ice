@@ -74,13 +74,16 @@ class Blocks {
       });
       this.reset();
       this.materialsValue = materialsValue; // 所有 blocks 数据
-      // 当有飞冰物料源时，fetch组合推荐；
       const { iceMaterial, iceIndex } = this.getIceMaterial();
+
+      // materials 中有飞冰物料时，处理飞冰组合推荐
       if (iceMaterial) {
-        blockGroups.fetch();
-        // materials 中有飞冰物料时，加塞飞冰组合推荐
+        // tab 中加塞飞冰组合推荐。这里提前加塞，为了渲染tab不出现抖动
         this.materialsValue = this.addBlockGroupsMaterial(iceMaterial, iceIndex);
+        // fetch组合推荐
+        blockGroups.fetch();
       }
+      
       this.isLoading = false;
     } else {
       this.reset();
