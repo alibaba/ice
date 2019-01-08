@@ -8,6 +8,7 @@ const rimraf = require('rimraf');
 
 const prettier = require('prettier');
 const config = require('../../config');
+const { getClientPath } = require('../../paths');
 
 function getFileAst(file) {
   const c = fs.readFileSync(file).toString();
@@ -22,13 +23,13 @@ const MENU_CONFIG = 'asideMenuConfig'; // AST 解析 menuConfig.js 的变量名
 const PREVIEW_PATH = '/IceworksPreviewPage';
 const PREVIEW_PAGE_PATH = './pages/IceworksPreviewPage';
 
-module.exports = async function({ destDir, isNodeProject }) {
+module.exports = async function({ destDir, nodeFramework }) {
   // 删除 路由 和 blocks 文件
-  const clientPath = isNodeProject ? 'client' : 'src';
-  const previewPagePath = path.join(destDir, clientPath, 'pages/IceworksPreviewPage');
+  const clientPath = getClientPath(destDir, nodeFramework);
+  const previewPagePath = path.join(clientPath, 'pages/IceworksPreviewPage');
   rimraf.sync(previewPagePath);
 
-  const routerConfigFilePath = path.join(destDir, clientPath, 'routerConfig.js');
+  const routerConfigFilePath = path.join(clientPath, 'routerConfig.js');
   const routerConfigAST = getFileAst(routerConfigFilePath);
 
   traverse(routerConfigAST, {
@@ -63,7 +64,7 @@ module.exports = async function({ destDir, isNodeProject }) {
     prettier.format(generator(routerConfigAST).code, config.prettier)
   );
 
-  const menuConfigFilePath = path.join(destDir, clientPath, 'menuConfig.js');
+  const menuConfigFilePath = path.join(clientPath, 'menuConfig.js');
   const menuConfigAST = getFileAst(menuConfigFilePath);
 
   traverse(menuConfigAST, {

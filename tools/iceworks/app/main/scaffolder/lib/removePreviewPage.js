@@ -1,14 +1,16 @@
 const path = require('path');
 const pathExists = require('path-exists');
 
+const { getClientPath } = require('../../paths');
 const removePageV3 = require('./removePageV3');
 const removePageV4 = require('./removePageV4');
 
-module.exports = async function({ destDir, isNodeProject }) {
-  const clientPath = isNodeProject ? 'client' : 'src';
-  let routerConfigFilePath = path.join(destDir, clientPath, 'routerConfig.js');
+module.exports = async function({ destDir, nodeFramework }) {
+  const clientPath = getClientPath(destDir, nodeFramework);
+  let routerConfigFilePath = path.join(clientPath, 'routerConfig.js');
 
   if (pathExists.sync(routerConfigFilePath)) {
+    await removePreviewPageV4({ destDir, nodeFramework });
     await removePageV4({ 
       destDir, 
       isNodeProject,

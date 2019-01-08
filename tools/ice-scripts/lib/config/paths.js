@@ -48,18 +48,28 @@ function resolveApp(relativePath) {
 
 const isNode = process.env.PROJECT_TYPE == 'node';
 
+const isMidway = process.env.PROJECT_TYPE == 'midway';
+
+
+
 module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: isNode
     ? resolveApp('client/index.html')
-    : resolveApp('public/index.html'),
+    : isMidway
+      ? resolveApp('assets/index.html')
+      : resolveApp('public/index.html'),
   appFavicon: isNode
     ? resolveApp('client/favicon.png')
-    : resolveApp('public/favicon.png'),
+    : isMidway
+      ? resolveApp('assets/favicon.png')
+      : resolveApp('public/favicon.png'),
   appFaviconIco: isNode
     ? resolveApp('client/favicon.ico')
-    : resolveApp('public/favicon.ico'),
+    : isMidway
+      ? resolveApp('assets/favicon.ico')
+      : resolveApp('public/favicon.ico'),
   appPackageJson: resolveApp('package.json'),
   appAbcJson: resolveApp('abc.json'),
   appSrc: resolveApp('src'),

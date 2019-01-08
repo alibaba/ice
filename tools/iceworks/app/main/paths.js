@@ -34,6 +34,30 @@ let SASS_BINARY_PATH = isDev
       `${process.platform}-x64-57_binding.node`
     );
 
+const getClientPath = (destDir, framework) => {
+  if (framework) {
+    if (framework === 'koa') {
+      return path.join(destDir, 'client');
+    } else if (framework === 'midway') {
+      return path.join(destDir, 'assets');
+    }
+  } else {
+    return path.join(destDir, 'src');
+  }
+};
+
+const getClientFolder = (framework) => {
+  if (framework) {
+    if (framework === 'koa') {
+      return 'client';
+    } else if (framework === 'midway') {
+      return 'assets';
+    }
+  } else {
+    return 'src';
+  }
+};
+
 module.exports = {
   APP_BIN_PATH,
   APP_PATH,
@@ -41,4 +65,6 @@ module.exports = {
   SASS_BINARY_PATH,
   NODE_PATH,
   WIN_NPM_CMD,
+  getClientPath,
+  getClientFolder,
 };

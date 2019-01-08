@@ -55,13 +55,13 @@ const ScaffoldHoc = (WrappedComponent) => {
       const layoutConfig = this.props.scaffold.layoutConfig;
       const scaffold = this.props.scaffold.scaffold;
       const projectName = this.props.scaffold.projectFinalName;
-      const isNodeProject = this.props.scaffold.isNodeProject;
+      const nodeFramework = this.props.scaffold.nodeFramework;
       const options = {
         scaffold,
         projectName,
         layoutConfig,
         isCustomScaffold: !!layoutConfig, // 存在 layoutConfig 表示自定义模板
-        isNodeProject
+        nodeFramework
       };
 
       const currentPath = this.props.scaffold.getProjectPathWithWorkspace();

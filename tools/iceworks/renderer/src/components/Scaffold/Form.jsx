@@ -1,10 +1,13 @@
 import { inject, observer } from 'mobx-react';
-import { Input, Progress, Checkbox } from '@icedesign/base';
+import { Input, Progress, Checkbox, Select } from '@icedesign/base';
+import { shell } from 'electron';
 import React, { Component } from 'react';
 import Tooltip from 'rc-tooltip';
 import services from '../../services';
 
 import CustomIcon from '../Icon';
+
+const { Option } = Select;
 
 /**
  * 模板生成表单项目
@@ -32,7 +35,19 @@ export default class ScaffoldForm extends Component {
   };
 
   toggleNodeProject = (checked) => {
-    this.props.scaffold.toggleNodeProject(checked);
+    this.props.scaffold.toggleNodeSelect(checked);
+
+    if (!checked) {
+      this.props.scaffold.toggleNodeProject('');
+    }
+  };
+
+  handleNodeFrameSelect = (value) => {
+    this.props.scaffold.toggleNodeProject(value);
+  };
+
+  handleOpenMidwayDoc = () => {
+    shell.openExternal('https://midwayjs.org/midway/guide.html');
   };
 
   render() {
@@ -40,7 +55,8 @@ export default class ScaffoldForm extends Component {
     const hasIce =
       this.props.scaffold.scaffold.devDependencies
       && this.props.scaffold.scaffold.devDependencies.hasOwnProperty('ice-scripts');
-    const showNodeCheckbox = hasIce && !isAlibaba;
+
+    const showNode = !isAlibaba && hasIce;
 
     return (
       <div className="project-config-form">
@@ -94,18 +110,52 @@ export default class ScaffoldForm extends Component {
             onChange={this.changeProjectName}
           />
         </div>
-        { showNodeCheckbox
-          &&
-          (<div className="project-config-form-item">
+        { showNode && (
+          <div
+            className="project-config-form-item"
+            style={{ lineHeight: '28px' }}
+          >
             <label>
-              添加 Koa2
+              添加服务端开发框架
               <Checkbox
                 disabled={this.props.scaffold.isCreating}
                 onChange={this.toggleNodeProject}
-                style={{ margin: '0 4px', verticalAlign: 'top' }}
+                style={{ margin: '0 4px', verticalAlign: 'middle' }}
               />
             </label>
-          </div>)}
+            {
+              this.props.scaffold.isNode && (
+                <Select
+                  placeholder="选择框架"
+                  onChange={this.handleNodeFrameSelect}
+                  style={{ verticalAlign: 'middle' }}
+                >
+                  <Option value="midway">Midway</Option>
+                  <Option value="koa">Koa</Option>
+                </Select>
+              )
+            }
+            {
+              this.props.scaffold.nodeFramework === 'midway' && (
+                <span
+                  style={{
+                    cursor: 'pointer'
+                  }}
+                  onClick={this.handleOpenMidwayDoc}
+                >
+                  <CustomIcon
+                    type="help"
+                    style={{
+                      margin: '0 4px 0 8px',
+                      color: '#5797fb'
+                    }}
+                  />
+                  <span style={{ color: '#5797fb' }} >Midway 官方文档</span>
+                </span>
+              )
+            }
+          </div>)
+        }
         {this.props.scaffold.isCreating && (
           <div className="project-config-form-item">
             <span style={{ fontSize: 12, color: '#999' }}>

@@ -178,7 +178,7 @@ export default {
               cwd: project.fullPath,
               shell: 'npm',
               shellArgs: shellArgs,
-              env: project.isNodeProject
+              env: project.nodeFramework
                 ? {}
                 : { PORT: port },
             },
@@ -257,12 +257,24 @@ export default {
       return dep.startsWith('@ali/') || dep.startsWith('@alife/');
     });
 
+    let hasMidway = dependencies.some((dep) => {
+      return dep.startsWith('midway');
+    });
+
     let env = {};
 
     if (hasAli) {
       // 检测到含有 @ali 的包自动将路径设置为集团内部
       env.npm_config_registry = 'http://registry.npm.alibaba-inc.com';
       env.yarn_registry = 'http://registry.npm.alibaba-inc.com';
+
+      if (hasMidway) {
+        dependencies[dependencies.indexOf('midway')] = '@ali/midway';
+      }
+    } else if (hasMidway) {
+      // 开源 midway 不能从 tnpm 源下载
+      env.npm_config_registry = 'https://registry.npmjs.com';
+      env.yarn_registry = 'https://registry.npmjs.com';
     }
 
     if (dependencies.length > 0) {
@@ -300,7 +312,7 @@ export default {
     }
   },
 
-  install: ({ cwd, reinstall = true }, callback) => {
+  install: ({ cwd, reinstall = true, isMidway = false }, callback) => {
     log.debug('开始安装', cwd);
     const nodeModulesPath = path.join(cwd, 'node_modules');
     new Promise((resolve, reject) => {
@@ -334,9 +346,14 @@ export default {
       .then((isAli) => {
         let env = {};
 
-        if (isAli) {
+        if (isMidway) {
+          console.debug('安装依赖 - 检测为 Midway 项目');
+          // 开源 Midway 不能从 tnpm 源下载
+          env.npm_config_registry = 'https://registry.npmjs.com';
+          env.yarn_registry = 'https://registry.npmjs.com';
+        } else if (isAli) {
           console.debug('安装依赖 - 检测为内网环境');
-          // 检测到含有 @ali 的包自动将路径设置为集团内部
+          // 检测到内网环境自动将路径设置为集团内部
           env.npm_config_registry = 'http://registry.npm.alibaba-inc.com';
           env.yarn_registry = 'http://registry.npm.alibaba-inc.com';
         }
