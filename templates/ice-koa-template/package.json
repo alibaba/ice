@@ -1,13 +1,11 @@
 {
-  "name": "client",
+  "name": "ice-koa-template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "echo hi build commands",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "MIT"
 }

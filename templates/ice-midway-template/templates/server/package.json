@@ -5,7 +5,6 @@
   "main": "src/index.js",
   "scripts": {
     "start": "NODE_ENV=local midway-bin dev --ts",
-    "lint": "eslint . --ext '.js,.jsx' --fix",
     "build": "npm run server-build",
     "debug": "NODE_ENV=local midway-bin debug --ts",
     "test": "npm run lint -- --fix && midway-bin test --ts",
