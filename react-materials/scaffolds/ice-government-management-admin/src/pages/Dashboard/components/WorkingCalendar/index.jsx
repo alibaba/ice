@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Calendar } from '@icedesign/base';
+import { Calendar } from '@alifd/next';
 
 export default class WorkingCalendar extends Component {
   static displayName = 'WorkingCalendar';

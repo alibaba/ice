@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table, Pagination, Feedback } from '@icedesign/base';
+import { Button, Table, Pagination, Message } from '@alifd/next';
 
 const mockData = [
   {

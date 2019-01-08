@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Select, Button, Feedback } from '@icedesign/base';
+import { Input, Select, Button, Message } from '@alifd/next';
 
 const { Option } = Select;
 

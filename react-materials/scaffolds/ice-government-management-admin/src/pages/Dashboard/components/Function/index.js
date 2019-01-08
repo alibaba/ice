@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 
 const mock = [
   {

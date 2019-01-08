@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Select, DatePicker, Button } from '@icedesign/base';
+import { Input, Select, DatePicker, Button } from '@alifd/next';
 
 const { Option } = Select;
 

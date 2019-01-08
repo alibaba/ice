@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 
 const mockData = [
   {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import goalIcon from './images/goal.svg';
 import linkIcon from './images/link.svg';
 import recoveryIcon from './images/recovery.svg';
