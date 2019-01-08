@@ -66,7 +66,7 @@ class UserRegister extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('注册成功');
+      Message.success('注册成功');
       this.props.history.push('/user/login');
     });
   };

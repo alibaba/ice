@@ -62,7 +62,7 @@ const mockData = [
 
 export default class Transaction extends Component {
   handleClick = () => {
-    Feedback.toast.success('可以使用 Iceworks 按需添加页面');
+    Message.success('可以使用 Iceworks 按需添加页面');
   };
 
   render() {

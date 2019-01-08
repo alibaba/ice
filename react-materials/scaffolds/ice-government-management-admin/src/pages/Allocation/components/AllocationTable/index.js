@@ -54,7 +54,7 @@ const mockData = [
 
 export default class AllocationTable extends Component {
   handleClick = () => {
-    Feedback.toast.success('需要管理员账户才能分配账号');
+    Message.success('需要管理员账户才能分配账号');
   };
 
   constructor(props) {

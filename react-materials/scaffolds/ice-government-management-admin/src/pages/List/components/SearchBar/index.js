@@ -5,7 +5,7 @@ const { Option } = Select;
 
 export default class SearchBar extends Component {
   handleClick = () => {
-    Feedback.toast.success('未搜索到符合条件的数据');
+    Message.success('未搜索到符合条件的数据');
   };
 
   render() {

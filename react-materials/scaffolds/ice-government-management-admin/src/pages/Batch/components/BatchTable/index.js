@@ -73,7 +73,7 @@ export default class BatchTable extends Component {
   };
 
   handleClick = () => {
-    Feedback.toast.success('您暂无无权限查看');
+    Message.success('您暂无无权限查看');
   };
 
   render() {

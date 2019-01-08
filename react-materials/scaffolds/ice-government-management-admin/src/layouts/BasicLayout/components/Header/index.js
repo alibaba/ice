@@ -25,7 +25,7 @@ export default class Header extends Component {
   handleClick = (selectedKeys) => {
     const { history } = this.props;
     if (selectedKeys.key !== '/') {
-      Feedback.toast.success('可以使用 Iceworks 按需添加页面');
+      Message.success('可以使用 Iceworks 按需添加页面');
       history.push('/');
     }
   };

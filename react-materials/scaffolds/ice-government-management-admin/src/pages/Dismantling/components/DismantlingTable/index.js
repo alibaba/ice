@@ -81,7 +81,7 @@ export default class DismantlingTable extends Component {
   };
 
   handleClick = (text) => {
-    Feedback.toast.success(`暂不支持${text}`);
+    Message.success(`暂不支持${text}`);
   };
 
   render() {

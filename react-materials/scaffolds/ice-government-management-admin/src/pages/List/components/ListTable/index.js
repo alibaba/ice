@@ -61,7 +61,7 @@ export default class ListTable extends Component {
   }
 
   handleClick = () => {
-    Feedback.toast.success('暂不支持办理');
+    Message.success('暂不支持办理');
   };
 
   onPageChange = (current) => {

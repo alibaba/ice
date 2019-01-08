@@ -45,11 +45,11 @@ export default class DonationForm extends Component {
     this.refs.form.validateAll((errors, values) => {
       if (errors) {
         console.log({ errors });
-        Feedback.toast.error('提交失败');
+        Message.error('提交失败');
         return;
       }
       console.log({ values });
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 

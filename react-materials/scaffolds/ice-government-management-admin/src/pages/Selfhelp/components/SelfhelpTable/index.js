@@ -57,7 +57,7 @@ export default class SelfhelpTable extends Component {
   };
 
   handleClick = () => {
-    Feedback.toast.success('暂不支持办理');
+    Message.success('暂不支持办理');
   };
 
   render() {
