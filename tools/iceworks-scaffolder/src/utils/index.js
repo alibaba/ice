@@ -1,6 +1,7 @@
 const locale = require('../locale');
 const lang = 'cn';
 
+
 exports.createInterpreter = function(type, data = {}, interpreter) {
   const localeObj = locale[type] || locale.unknown;
   const message = localeObj[lang];
@@ -27,15 +28,13 @@ exports.unicodeUnescape = (str) => {
   });
 };
 
+/**
+ * node模板目录结构统一，都放在${distDir}/client/src下，相当于比普通前端模板多了一层client。具体目录参见文档。
+ */
+const nodeFrameworks = ['koa', 'midway'];
 exports.getClientFolderName = (nodeFramework) => {
-  if (nodeFramework) {
-    if (nodeFramework === 'koa') {
-      return 'client';
-    } else if (nodeFramework === 'midway') {
-      return 'assert';
-    } else {
-      return 'src';
-    }
+  if (nodeFrameworks.includes(nodeFramework)) {
+    return 'client/src';
   } else {
     return 'src';
   }
