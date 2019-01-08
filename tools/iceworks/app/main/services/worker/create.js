@@ -20,7 +20,7 @@ class CreateManager {
         isCustomScaffold: data.isCustomScaffold,
         layoutConfig: data.layoutConfig,
         progressFunc: progressFunc,
-        isNodeProject: data.isNodeProject
+        nodeFramework: data.nodeFramework,
       }
     );
     generateProject(option, (req) => {

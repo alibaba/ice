@@ -5,6 +5,10 @@ import { scanPages } from '../lib/project-utils';
 import projects from './projects';
 import projectScripts from '../lib/project-scripts';
 import scanLayout from '../datacenter/scanLayout';
+import services from '../services';
+
+const { paths } = services;
+const { getClientPath } = paths;
 
 // useStrict(true); // 严格模式，只能内部修改值
 
@@ -83,8 +87,8 @@ class NewPage {
     const destDir = this.targetPath;
     const type = projects.currentProject.getLibraryType(); // 当前项目框架库类型
     this.loading = true;
-    const scanPath = projects.currentProject.isNodeProject
-      ? path.join(destDir, 'client')
+    const scanPath = projects.currentProject.nodeFramework
+      ? getClientPath(destDir, projects.currentProject.nodeFramework)
       : path.join(destDir, 'src');
     Promise.all([
       scanLayout({ targetPath: scanPath, type }),

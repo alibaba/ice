@@ -13,6 +13,7 @@ const DependenciesError = require('./errors/DependenciesError');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
+const { getClientPath } = require('../../paths');
 
 /**
  * 批量下载 block 到页面中
@@ -21,9 +22,9 @@ const logger = require('../../logger');
  * @param {array} blocks 区块数组
  * @param {string} pageName 页面名称
  */
-function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, isNodeProject }) {
+function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, nodeFramework }) {
   return Promise.all(
-    blocks.map((block) => downloadBlockToPage({ destDir, pageName, block, isNodeProject }))
+    blocks.map((block) => downloadBlockToPage({ destDir, pageName, block, nodeFramwork }))
   )
     .then((filesList) => {
       return Promise.all(
@@ -64,16 +65,16 @@ function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, isNod
     });
 }
 
-function downloadBlockToPage({ destDir = process.cwd(), block, pageName, isNodeProject }) {
+function downloadBlockToPage({ destDir = process.cwd(), block, pageName, nodeFramework }) {
   if (!block || ( !block.source && block.type != 'custom' )) {
     throw new Error(
       'block need to have specified source at download block to page method.'
     );
   }
 
-  const componentsDir = isNodeProject
-    ? path.join(destDir, 'client/pages', pageName, 'components')
-    : path.join(destDir, 'src/pages', pageName, 'components');
+  const clientPath = getClientPath(destDir, nodeFramework);
+
+  const componentsDir = path.join(clientPath, 'pages', pageName, 'components');
   // 保证文件夹存在
   mkdirp.sync(componentsDir);
   logger.report('app', {

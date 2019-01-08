@@ -155,6 +155,7 @@ class Project extends Component {
   handleInstallProject = () => {
     const { projects } = this.props;
     const currentProject = projects.currentProject;
+    const isMidway = projects.currentProject.nodeFramework === 'midway';
     Dialog.confirm({
       needWrapper: false,
       title: '安装项目依赖',
@@ -167,7 +168,7 @@ class Project extends Component {
         // 安装项目依赖
         currentProject.installStart();
         projectScripts.install(
-          { cwd: currentProject.fullPath },
+          { cwd: currentProject.fullPath, isMidway },
           (code, result = {}) => {
             currentProject.installDone();
             if (code !== 0) {

@@ -92,10 +92,10 @@ class CreatePage extends Component {
     const { currentProject } = projects;
     let removePromise;
     if (currentProject.scaffold && currentProject.scaffold.isAvailable()) {
-      removePromise = currentProject.scaffold.removePreviewPage({ isNodeProject: currentProject.isNodeProject });
+      removePromise = currentProject.scaffold.removePreviewPage({ nodeFramework: currentProject.nodeFramework });
     } else {
       removePromise = scaffolder.removePreviewPage({
-        destDir: currentProject.root,
+        destDir: this.props.newpage.targetPath,
         isNodeProject: currentProject.isNodeProject
       });
     }
@@ -132,7 +132,7 @@ class CreatePage extends Component {
       layout,
       blocks,
       preview: true,
-      isNodeProject: currentProject.isNodeProject,
+      nodeFramework: currentProject.nodeFramework,
     };
 
     const libraryType = currentProject.getLibraryType();
@@ -250,7 +250,7 @@ class CreatePage extends Component {
           blocks,
           libary: this.props.projects.currentProject.getLibraryType(),
           commonBlock: true,
-          isNodeProject: currentProject.isNodeProject,
+          nodeFramework: currentProject.nodeFramework,
           interpreter: ({ type, message, data }, next) => {
             switch (type) {
               case 'FILE_CREATED':

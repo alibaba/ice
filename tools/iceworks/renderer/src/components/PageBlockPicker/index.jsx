@@ -63,7 +63,9 @@ class PageBlockPicker extends Component {
     
     const { pageBlockPicker } = this.props;
     const { pageName, projectPath } = pageBlockPicker;
-    const { isNodeProject } = this.props.projects.currentProject;
+
+    const { nodeFramework } = this.props.projects.currentProject;
+
     const blocks = toJS(this.props.blocks.selected);
 
     // 检测 block 是否存在冲突等
@@ -81,7 +83,7 @@ class PageBlockPicker extends Component {
         destDir: projectPath,
         blocks: blocks,
         pageName: pageName,
-        isNodeProject,
+        nodeFramework,
       })
       .catch((err) => {
         pageBlockPicker.downloadDone();
