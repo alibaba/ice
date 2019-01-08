@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Balloon, Icon, Feedback } from '@icedesign/base';
+import { Balloon, Icon } from '@icedesign/base';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import FoundationSymbol from 'foundation-symbol';
 import IceImg from '@icedesign/img';

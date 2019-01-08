@@ -1,4 +1,4 @@
-/* eslint prefer-template:0 */
+/* eslint prefer-template:0, no-prototype-builtins:0, no-restricted-syntax:0, no-shadow:0  */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, View } from 'bizcharts';

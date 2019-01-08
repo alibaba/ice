@@ -1,7 +1,7 @@
 /* eslint global-require: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Chart, Geom, Axis, Tooltip, Coord, Label, Legend } from 'bizcharts';
+import { Chart, Geom, Axis, Tooltip, Coord, Label } from 'bizcharts';
 import DataSet from '@antv/data-set';
 
 export default class PieChart extends Component {
@@ -39,7 +39,7 @@ export default class PieChart extends Component {
     const cols = {
       percent: {
         formatter: (val) => {
-          val = val * 100 + '%';
+          val = `${val * 100}%`;
           return val;
         },
       },
@@ -60,7 +60,7 @@ export default class PieChart extends Component {
             tooltip={[
               'item*percent',
               (item, percent) => {
-                percent = percent * 100 + '%';
+                percent = `${percent * 100}%`;
                 return {
                   name: item,
                   value: percent,
