@@ -4,8 +4,8 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "client": "ice dev --project-type=node",
-    "build": "ice build --project-type=node",
+    "client": "ice dev --project-type=nodejs",
+    "build": "ice build --project-type=nodejs",
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "publishConfig": {
