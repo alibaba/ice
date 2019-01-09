@@ -9,7 +9,7 @@ export default class WorkingCalendar extends Component {
       <div style={styles.container}>
         <div style={styles.card}>
           <h4 style={styles.title}>个人工作指标</h4>
-          <Calendar type="card" style={styles.calendar} />
+          <Calendar shape="card" style={styles.calendar} />
         </div>
       </div>
     );

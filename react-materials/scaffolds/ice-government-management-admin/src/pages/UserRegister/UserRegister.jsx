@@ -1,13 +1,12 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Grid, Message } from '@alifd/next';
+import { Input, Button, Grid, Message, Icon } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
 
 const { Row, Col } = Grid;
 
@@ -84,7 +83,7 @@ class UserRegister extends Component {
             <div className="formItems">
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <IceIcon type="person" size="small" className="inputIcon" />
+                  <Icon type="person" size="small" className="inputIcon" />
                   <IceFormBinder
                     name="name"
                     required
@@ -100,7 +99,7 @@ class UserRegister extends Component {
 
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <IceIcon type="mail" size="small" className="inputIcon" />
+                  <Icon type="mail" size="small" className="inputIcon" />
                   <IceFormBinder
                     type="email"
                     name="email"
@@ -117,7 +116,7 @@ class UserRegister extends Component {
 
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <IceIcon type="lock" size="small" className="inputIcon" />
+                  <Icon type="lock" size="small" className="inputIcon" />
                   <IceFormBinder
                     name="passwd"
                     required
@@ -137,7 +136,7 @@ class UserRegister extends Component {
 
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <IceIcon type="lock" size="small" className="inputIcon" />
+                  <Icon type="lock" size="small" className="inputIcon" />
                   <IceFormBinder
                     name="rePasswd"
                     required
