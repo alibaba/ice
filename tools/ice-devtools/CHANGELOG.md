@@ -1,5 +1,8 @@
 # ice-scripts Changelog
 
+## 2.0.3
+- [refactor] 升级 babel 到 7.x
+
 ## 2.0.2
 - [feat] block 预览支持皮肤配置
 
