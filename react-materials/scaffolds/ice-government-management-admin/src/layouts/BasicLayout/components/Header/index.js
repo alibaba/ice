@@ -7,7 +7,7 @@ import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 import './index.scss';
 
-const {Item, Group} = Nav;
+const {Item} = Nav;
 
 @withRouter
 export default class Header extends Component {

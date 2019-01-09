@@ -13,6 +13,7 @@ export default class BasicLayout extends Component {
         fixable
         style={{ minHeight: '100vh' }}
         className="ice-design-layout"
+        type="primary"
       >
         <Layout.Section>
           <Layout.Aside width={240}>

@@ -10,7 +10,7 @@
       margin-bottom: 20px;
       font-size: 36px;
       font-weight: bold;
-      color: #447eff;
+      color: $color-brand1-9;
     }
     .ice-menu-item {
       height: auto;
@@ -23,7 +23,7 @@
       }
     }
     .ice-menu-item-selected {
-      border-left: 4px solid #447eff;
+      border-left: 4px solid $color-brand1-9;
       border-radius: 0 !important;
       background: #f3f3f3 !important;
       .ice-menu-link {

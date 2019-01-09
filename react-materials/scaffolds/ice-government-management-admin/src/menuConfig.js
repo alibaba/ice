@@ -26,37 +26,37 @@ const asideMenuConfig = [
   {
     name: '工作台',
     path: '/dashboard',
-    icon: 'home2',
+    icon: 'edit',
   },
   {
     name: '拆预收案',
     path: '/dismantling',
-    icon: 'cascades',
+    icon: 'attachment',
   },
   {
     name: '案款账号分配',
     path: '/allocation',
-    icon: 'person',
+    icon: 'account',
   },
   {
     name: '当事人自助收案',
     path: '/selfhelp',
-    icon: 'exchange',
+    icon: 'calendar',
   },
   {
     name: '在办案件列表',
     path: '/list',
-    icon: 'ol-list',
+    icon: 'filter',
   },
   {
     name: '批量处理',
     path: '/batch',
-    icon: 'copy',
+    icon: 'picture',
   },
   {
     name: '案件录入',
     path: '/new',
-    icon: 'copy',
+    icon: 'download',
   },
 ];
 
