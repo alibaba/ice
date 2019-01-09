@@ -14,10 +14,6 @@
     "prepublishOnly": "npm run build",
     "postinstall": "node ./postinstall.js"
   },
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/ice"
@@ -32,7 +28,6 @@
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
-    "moment": "^2.23.0"
   },
   "peerDependencies": {
     "react": "^16.5.0",

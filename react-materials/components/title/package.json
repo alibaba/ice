@@ -13,10 +13,6 @@
     "ice-component"
   ],
   "license": "MIT",
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/ice"
@@ -36,7 +32,6 @@
     "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "moment": "^2.23.0"
   },
   "peerDependencies": {
     "react": "^16.5.0",
