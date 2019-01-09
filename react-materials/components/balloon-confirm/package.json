@@ -8,10 +8,6 @@
     "demo/",
     "postinstall.js"
   ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/ice/tree/master/react-materials/components/balloon-confirm"

@@ -33,6 +33,5 @@
     "rc-notification": "^1.4.2"
   },
   "devDependencies": {
-    "moment": "^2.23.0"
   }
 }

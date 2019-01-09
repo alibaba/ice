@@ -14,10 +14,6 @@
     "prepublishOnly": "npm run build",
     "postinstall": "node ./postinstall.js"
   },
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
   "publishConfig": {
     "access": "public"
   },
@@ -39,7 +35,6 @@
     "qrcode.react": "^0.8.0"
   },
   "devDependencies": {
-    "moment": "^2.23.0"
   },
   "typings": "lib/index.d.ts"
 }
