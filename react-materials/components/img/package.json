@@ -35,7 +35,6 @@
     "react": "^16.5.0"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
+    "access": "public"
   }
 }
