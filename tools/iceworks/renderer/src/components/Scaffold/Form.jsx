@@ -131,7 +131,7 @@ export default class ScaffoldForm extends Component {
                   style={{ verticalAlign: 'middle' }}
                 >
                   <Option value="midway">Midway</Option>
-                  <Option value="koa">Koa</Option>
+                  <Option value="koa2">Koa</Option>
                 </Select>
               )
             }

@@ -398,11 +398,14 @@ class Project {
 
   validateNodeProject() {
     if (this.pkgData) {
+      // 兼容老koa模板
       if (this.pkgData.templateType === 'Koa' || this.pkgData.templateType === 'koa') {
         return 'koa';
+      } else if (this.pkgData.templateType === 'koa2') { // 新koa模板
+        return 'koa2';
       } else if (this.pkgData.templateType === 'midway') {
         return 'midway';
-      } else {
+      }else {
         return '';
       }
     }

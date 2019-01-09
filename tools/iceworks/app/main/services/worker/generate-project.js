@@ -14,7 +14,7 @@ module.exports = (_options, afterCreateRequest) => {
     scaffold,
     layoutConfig,
     isCustomScaffold,
-    targetPath,
+    targetPath, // 项目路径
     projectName,
     nodeFramework
   } = _options;
@@ -33,10 +33,12 @@ module.exports = (_options, afterCreateRequest) => {
     needCreateDefflow = nodeFramework ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
     if (nodeFramework) {
       // @TODO afterCreateRequest
+      // 解压node模板的promise
       fn = template.createProject(
         getOptions(_options, nodeFramework, true),
         afterCreateRequest
       );
+      // node模板中解压前端模板的promise
       createClient = template.createProject(
         getOptions(_options, nodeFramework),
         afterCreateRequest
@@ -48,7 +50,7 @@ module.exports = (_options, afterCreateRequest) => {
 
   return fn
     .then(() => {
-      if(nodeFramework) {
+      if(nodeFramework) { // 如果是 node 模板，此处解压前端模板到已有的项目中
         return new Promise((resolve) => {
           createClient.then(() => {resolve()});
         });
@@ -77,19 +79,30 @@ module.exports = (_options, afterCreateRequest) => {
     });
 };
 
+/**
+ * 
+ * @param {*} _options 
+ * @param {*} nodeFramework // 模板类型：koa2, midway
+ * @param {*} isNode // 标识是node模板本身，还是node模板中需要解压的前端模板，true表示是node模板本身。
+ */
 function getOptions(_options, nodeFramework = '', isNode = false) {
-  const clientPath = (!isNode && nodeFramework)
+  const isNodeFramework = nodeFramework && isNode; // node模板本身
+  const isTemplateInNode = nodeFramework && !isNode; // node模板中的前端模板
+
+  const destDir = isTemplateInNode
     ? getClientPath(_options.targetPath, nodeFramework)
-    : '';
+    : _options.targetPath;
+  const scaffold = isNodeFramework
+    ? nodeScaffoldInfo[nodeFramework].tarball
+    : _options.scaffold;
+  const progressFunc = isNodeFramework
+    ? _options.progressFunc.server
+    : _options.progressFunc.client;
   return {
-    destDir: clientPath || _options.targetPath,
-    scaffold: ( nodeFramework && isNode )
-      ? nodeScaffoldInfo[nodeFramework].tarball
-      : _options.scaffold,
+    destDir,
+    scaffold,
+    progressFunc,
     projectName: _options.projectName,
-    progressFunc: ( nodeFramework && isNode )
-      ? _options.progressFunc.server
-      : _options.progressFunc.client,
     commonBlock: true,
     interpreter: ({ type, message }, next) => {
       log.info('generate project', type, message);
@@ -175,23 +188,9 @@ function updateScaffoldConfig(isCustomScaffold, layoutConfig) {
  * @param {String} targetPath
  */
 function processNodeProject(destDir, nodeFramework) {
-  const clientPath = getClientPath(destDir, nodeFramework);
-
-  const { pendingFields } = nodeScaffoldInfo[nodeFramework];
-
-  //删除client中点不需要的文件
-  pendingFields.dotFiles.forEach((currentValue) => {
-    fs.removeSync(path.join(clientPath, currentValue));
-  });
-
-  extractClientFiles(clientPath, pendingFields);
-
-  pendingFields.extractDirs.forEach((currentValue) => {
-    fs.removeSync(path.join(clientPath, currentValue));
-  });
-
-  //将koa模板中_打头的文件改为.
-  fs.readdir(destDir, 'utf8', (err, files) => {
+  //将node模板中_打头的文件改为.
+  const serverDir = path.join(destDir, 'server');
+  fs.readdir(serverDir, 'utf8', (err, files) => {
     const nameReg = /^_/;
     files.forEach((currentValue) => {
       if (nameReg.test(currentValue)) {
@@ -203,103 +202,151 @@ function processNodeProject(destDir, nodeFramework) {
       }
     });
   });
+  // 合并client下_package.json 和 模板自带package.json的scripts和依赖。
+  compoundPkg(destDir, nodeFramework);
+}
 
-  compoundDeps(destDir, nodeFramework, pendingFields);
+/**
+ * 合并_package.json的依赖和scripts到前端模板的package.json中
+ * @param {String} targetPath
+ */
+function compoundPkg(destDir, nodeFramework) {
+  const { pendingFields } = nodeScaffoldInfo[nodeFramework];
+  const clientPath = getClientPath(destDir, nodeFramework);
+  const _package = fs.readJsonSync(path.join(clientPath, '_package.json'));
+  const clientPackage = fs.readJsonSync(path.join(clientPath, 'package.json'));
+  const versionReg = /^[\^>>(?==)<<(?==)~]?([0-9]+(?=\.)[0-9]+)/;
 
-  fs.removeSync(path.join(clientPath, 'package.json'));
+  // 注入node模板类型
+  clientPackage.templateType = nodeFramework;
+
+  pendingFields.pkgAttrs.forEach((attrName) => {
+    if (attrName === 'scripts') { // 直接覆盖
+      Object
+        .keys(_package[attrName])
+        .forEach((currentValue) => {
+          clientPackage[attrName][currentValue] = _package[attrName][currentValue];
+        });
+    } else {
+      Object
+      .keys(_package[attrName])
+      .forEach((currentValue) => {
+        if(clientPackage[attrName].hasOwnProperty(currentValue)){
+          const _packageVersion = versionReg.exec(_package[attrName][currentValue]);
+          const clientVersion = versionReg.exec(clientPackage[attrName][currentValue]);
+          if (
+            _packageVersion
+            && clientVersion
+            && parseFloat(clientVersion[1]) < parseFloat(_packageVersion[1])
+          ) {
+            clientPackage[attrName][currentValue] = _package[attrName][currentValue];
+          }
+        } else {
+          clientPackage[attrName][currentValue] = _package[attrName][currentValue];
+        }
+      });
+    }
+    
+  });
+  fs.writeJsonSync(path.join(clientPath, 'package.json'), clientPackage);
+  fs.removeSync(path.join(clientPath, '_package.json'));
 }
 
 /**
  * 移动src和public内的文件到外部
  * @param {String} targetPath
  */
-function extractClientFiles(clientPath, pendingFields) {
-  pendingFields.extractDirs.forEach((currentValue) => {
-    fs
-      .readdirSync(
-        path.join(clientPath, currentValue)
-      )
-      .forEach((fileName) => {
-        const originPath = path.join(clientPath, currentValue, fileName);
-        const targetPath = path.join(clientPath, fileName);
-        if (fs.existsSync(targetPath)) {
-          recursionMerge(originPath, targetPath);
-        } else {
-          fs.renameSync(originPath, targetPath);
-        }
-      })
-  })
-}
+// function extractClientFiles(clientPath, pendingFields) {
+//   pendingFields.extractDirs.forEach((currentValue) => {
+//     fs
+//       .readdirSync(
+//         path.join(clientPath, currentValue)
+//       )
+//       .forEach((fileName) => {
+//         const originPath = path.join(clientPath, currentValue, fileName);
+//         const targetPath = path.join(clientPath, fileName);
+//         if (fs.existsSync(targetPath)) {
+//           recursionMerge(originPath, targetPath);
+//         } else {
+//           fs.renameSync(originPath, targetPath);
+//         }
+//       })
+//   })
+// }
 
 /**
  * 递归合并同名文件夹
  * @param {String} originPath
  * @param {String} targetPath
  */
-function recursionMerge(originPath, targetPath) {
-  try {
-    let targetFolder = fs.readdirSync(targetPath);
-    let originFolder = fs.readdirSync(originPath);
-    originFolder.forEach((originFile) => {
-      targetFolder.forEach((targetFile) => {
-        if (originFile === targetFile) {
-          recursionMerge(
-            path.join(originPath, originFile),
-            path.join(targetPath, targetFile)
-          );
-          originFolder.splice(
-            originFolder.indexOf(originFile),
-            1
-          );
-        }
-      });
-    });
-    originFolder.forEach((originFile) => {
-      fs.renameSync(
-        path.join(originPath, originFile),
-        path.join(targetPath, originFile)
-      );
-    });
-  } catch (e) {
-    // do nothing
-  }
-}
+// function recursionMerge(originPath, targetPath) {
+//   try {
+//     let targetFolder = fs.readdirSync(targetPath);
+//     let originFolder = fs.readdirSync(originPath);
+//     originFolder.forEach((originFile) => {
+//       targetFolder.forEach((targetFile) => {
+//         if (originFile === targetFile) {
+//           recursionMerge(
+//             path.join(originPath, originFile),
+//             path.join(targetPath, targetFile)
+//           );
+//           originFolder.splice(
+//             originFolder.indexOf(originFile),
+//             1
+//           );
+//         }
+//       });
+//     });
+//     originFolder.forEach((originFile) => {
+//       fs.renameSync(
+//         path.join(originPath, originFile),
+//         path.join(targetPath, originFile)
+//       );
+//     });
+//   } catch (e) {
+//     // do nothing
+//   }
+// }
+
+
 
 /**
  * 合并package.json的依赖
  * @param {String} targetPath
  */
-
-function compoundDeps(destDir, nodeFramework, pendingFields) {
-  const clientPath = getClientPath(destDir, nodeFramework);
-  const serverPackage = fs.readJsonSync(path.join(destDir, 'package.json'));
-  const clientPackage = fs.readJsonSync(path.join(clientPath, 'package.json'));
-  const versionReg = /^[\^>>(?==)<<(?==)~]?([0-9]+(?=\.)[0-9]+)/;
-  if (clientPackage.hasOwnProperty('themeConfig')) {
-    serverPackage.themeConfig = clientPackage.themeConfig;
-  }
-  if (clientPackage.hasOwnProperty('keywords')) {
-    serverPackage.keywords = clientPackage.keywords;
-  }
-  serverPackage.templateType = nodeFramework;
-  pendingFields.pkgAttrs.forEach((attrName) => {
-    Object
-      .keys(clientPackage[attrName])
-      .forEach((currentValue) => {
-        if(serverPackage[attrName].hasOwnProperty(currentValue)){
-          const serverVersion = versionReg.exec(serverPackage[attrName][currentValue]);
-          const clientVersion = versionReg.exec(clientPackage[attrName][currentValue]);
-          if (
-            serverVersion
-            && clientVersion
-            && parseFloat(serverVersion[1]) < parseFloat(clientVersion[1])
-          ) {
-            serverPackage[attrName][currentValue] = clientPackage[attrName][currentValue];
-          }
-        } else {
-          serverPackage[attrName][currentValue] = clientPackage[attrName][currentValue];
-        }
-      });
-  });
-  fs.writeJsonSync(path.join(destDir, 'package.json'), serverPackage);
-}
+// function compoundPkg(destDir, nodeFramework) {
+//   const { pendingFields } = nodeScaffoldInfo[nodeFramework];
+//   const clientPath = getClientPath(destDir, nodeFramework);
+//   // const serverPackage = fs.readJsonSync(path.join(destDir, 'package.json'));
+//   const _package = fs.readJsonSync(path.join(clientPath, '_package.json'));
+//   const clientPackage = fs.readJsonSync(path.join(clientPath, 'package.json'));
+//   const versionReg = /^[\^>>(?==)<<(?==)~]?([0-9]+(?=\.)[0-9]+)/;
+//   if (clientPackage.hasOwnProperty('themeConfig')) {
+//     serverPackage.themeConfig = clientPackage.themeConfig;
+//   }
+//   if (clientPackage.hasOwnProperty('keywords')) {
+//     serverPackage.keywords = clientPackage.keywords;
+//   }
+//   // 注入node模板类型
+//   serverPackage.templateType = nodeFramework;
+//   pendingFields.pkgAttrs.forEach((attrName) => {
+//     Object
+//       .keys(clientPackage[attrName])
+//       .forEach((currentValue) => {
+//         if(serverPackage[attrName].hasOwnProperty(currentValue)){
+//           const serverVersion = versionReg.exec(serverPackage[attrName][currentValue]);
+//           const clientVersion = versionReg.exec(clientPackage[attrName][currentValue]);
+//           if (
+//             serverVersion
+//             && clientVersion
+//             && parseFloat(serverVersion[1]) < parseFloat(clientVersion[1])
+//           ) {
+//             serverPackage[attrName][currentValue] = clientPackage[attrName][currentValue];
+//           }
+//         } else {
+//           serverPackage[attrName][currentValue] = clientPackage[attrName][currentValue];
+//         }
+//       });
+//   });
+//   fs.writeJsonSync(path.join(destDir, 'package.json'), serverPackage);
+// }

@@ -72,7 +72,7 @@ function downloadBlockToPage({ destDir = process.cwd(), block, pageName, nodeFra
     );
   }
 
-  const clientPath = getClientPath(destDir, nodeFramework);
+  const clientPath = getClientPath(destDir, nodeFramework, 'src');
 
   const componentsDir = path.join(clientPath, 'pages', pageName, 'components');
   // 保证文件夹存在

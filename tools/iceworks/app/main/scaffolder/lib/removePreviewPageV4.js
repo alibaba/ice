@@ -25,7 +25,7 @@ const PREVIEW_PAGE_PATH = './pages/IceworksPreviewPage';
 
 module.exports = async function({ destDir, nodeFramework }) {
   // 删除 路由 和 blocks 文件
-  const clientPath = getClientPath(destDir, nodeFramework);
+  const clientPath = getClientPath(destDir, nodeFramework, 'src');
   const previewPagePath = path.join(clientPath, 'pages/IceworksPreviewPage');
   rimraf.sync(previewPagePath);
 

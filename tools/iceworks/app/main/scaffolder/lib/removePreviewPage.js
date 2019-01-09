@@ -6,7 +6,7 @@ const removePageV3 = require('./removePageV3');
 const removePageV4 = require('./removePageV4');
 
 module.exports = async function({ destDir, nodeFramework }) {
-  const clientPath = getClientPath(destDir, nodeFramework);
+  const clientPath = getClientPath(destDir, nodeFramework, 'src');
   let routerConfigFilePath = path.join(clientPath, 'routerConfig.js');
 
   if (pathExists.sync(routerConfigFilePath)) {

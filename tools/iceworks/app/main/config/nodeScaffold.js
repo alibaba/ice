@@ -1,41 +1,11 @@
 const koa = {
   tarball: {
-    name: 'ice-koa-react-scaffold',
+    name: 'ice-koa-template',
     title: 'ICE Koa Template',
     source:
       {
         type: 'npm',
-        npm: 'ice-koa-react-scaffold',
-        registry: 'http://registry.npmjs.com'
-      }
-  },
-  PendingFields: {
-    dotFiles: [
-      '.editorconfig',
-      '.eslintignore',
-      '.eslintrc',
-      '.gitignore',
-      '.gitkeep'
-    ],
-    extractDirs: [
-      'src',
-      'public'
-    ],
-    pkgAttrs: [
-      'dependencies',
-      'devDependencies'
-    ]
-  }
-};
-
-const midway = {
-  tarball: {
-    name: 'ice-midway-react-scaffold',
-    title: 'ICE Midway Template',
-    source:
-      {
-        type: 'npm',
-        npm: 'ice-midway-react-scaffold',
+        npm: 'ice-koa-template',
         registry: 'http://registry.npmjs.com'
       }
   },
@@ -52,6 +22,38 @@ const midway = {
       'public'
     ],
     pkgAttrs: [
+      'scripts',
+      'dependencies',
+      'devDependencies'
+    ]
+  }
+};
+
+const midway = {
+  tarball: {
+    name: 'ice-midway-template',
+    title: 'ICE Midway Template',
+    source:
+      {
+        type: 'npm',
+        npm: 'ice-midway-template',
+        registry: 'http://registry.npmjs.com'
+      }
+  },
+  pendingFields: {
+    dotFiles: [
+      '.editorconfig',
+      '.eslintignore',
+      '.eslintrc',
+      '.gitignore',
+      '.gitkeep'
+    ],
+    extractDirs: [
+      'src',
+      'public'
+    ],
+    pkgAttrs: [
+      'scripts',
       'dependencies',
       'devDependencies'
     ]

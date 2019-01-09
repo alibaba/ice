@@ -14,7 +14,7 @@ class CreateManager {
     const option = Object.assign(
       {},
       {
-        targetPath: targetPath,
+        targetPath: targetPath, // 项目路径
         scaffold: data.scaffold,
         projectName: data.projectName,
         isCustomScaffold: data.isCustomScaffold,

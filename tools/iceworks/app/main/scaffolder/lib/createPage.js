@@ -86,12 +86,9 @@ module.exports = async function createPage({
   const pageFolderName = upperCamelCase(pageName || '');
   pageName = kebabCase(pageFolderName).replace(/^-/, '');
 
-  const clientPath = getClientPath(destDir, nodeFramework);
+  const clientPath = getClientPath(destDir, nodeFramework, 'src');
   const clientFolder = getClientFolder(nodeFramework);
-
-  const pageDir = nodeFramework
-    ? path.join(clientPath, 'pages', pageFolderName)
-    : path.join(destDir, 'src', 'pages', pageFolderName);
+  const pageDir = path.join(clientPath, 'pages', pageFolderName);
 
   // 0. 如果页面级目录(page)存在 不允许 override
   if (builtIn && fs.existsSync(pageDir) && fs.readdirSync(pageDir).length > 0) {
@@ -142,9 +139,7 @@ module.exports = async function createPage({
     layoutName = layout.name;
     // 判断当前文件是否存在
     // XXX 文件名被修改存在错误风险
-    const layoutOutputPath = nodeFramework
-      ? path.join(clientPath, 'layouts', layout.name)
-      : path.join(destDir, 'src', 'layouts', layout.name);
+    const layoutOutputPath = path.join(clientPath, 'layouts', layout.name);
     const layoutExists = fs.existsSync(layoutOutputPath);
     if (
       !excludeLayout &&
@@ -224,9 +219,7 @@ module.exports = async function createPage({
         );
         const blockFolderName = block.alias || upperCamelCase(block.name) || block.className; // block 目录名
 
-        let extractPosition = nodeFramework
-          ? path.join(clientFolder, 'components')
-          : 'src/components';
+        let extractPosition = path.join(clientFolder, 'components');
         // 转换了 alias 的名称
         const blockClassName = upperCamelCase(
           block.alias || block.className || block.name
@@ -237,15 +230,11 @@ module.exports = async function createPage({
 
         if (preview) {
           block.relativePath = `./blocks/${blockFolderName}`;
-          extractPosition = nodeFramework
-            ? path.join(clientFolder, 'pages/IceworksPreviewPage/blocks')
-            : 'src/pages/IceworksPreviewPage/blocks';
+          extractPosition = path.join(clientFolder, 'pages/IceworksPreviewPage/blocks');
         } else if (commonBlock || block.common) {
           // 生成到页面的 components 下面
           block.relativePath = `./components/${blockFolderName}`;
-          extractPosition = nodeFramework
-            ? path.join(clientFolder, `pages/${pageFolderName}/components`)
-            : `src/pages/${pageFolderName}/components`;
+          extractPosition = path.join(clientFolder, `pages/${pageFolderName}/components`);
         }
 
         const blockExtractedFiles = await utils.extractBlock(
@@ -256,9 +245,7 @@ module.exports = async function createPage({
         fileList = fileList.concat(blockExtractedFiles);
       } else {
         const blockFolderName = block.alias || upperCamelCase(block.name) || block.className;
-        let extractPosition = nodeFramework
-          ? path.join(clientFolder, `pages/${pageFolderName}/components`)
-          : `src/pages/${pageFolderName}/components`;
+        let extractPosition = path.join(clientFolder, `pages/${pageFolderName}/components`);
         const blockClassName = blockFolderName;
         let codeFileTree = block.code;
         block.className = blockClassName;
@@ -328,24 +315,13 @@ module.exports = async function createPage({
   }, 0x1);
 
   // 更新 routes.jsx
-  let routeFilePath = '';
-  let routerConfigFilePath = '';
-  let menuConfigFilePath = '';
-  if (nodeFramework) {
-    routeFilePath = path.join(clientPath, 'routes.jsx');
-    routerConfigFilePath = path.join(clientPath, 'routerConfig.js');
-    menuConfigFilePath = path.join(clientPath, 'menuConfig.js');
-  } else {
-    routeFilePath = path.join(destDir, 'src/routes.jsx');
-    routerConfigFilePath = path.join(destDir, 'src/routerConfig.js');
-    menuConfigFilePath = path.join(destDir, 'src/menuConfig.js');
-  }
+  let  routeFilePath = path.join(clientPath, 'routes.jsx');
+  const  routerConfigFilePath = path.join(clientPath, 'routerConfig.js');
+  const  menuConfigFilePath = path.join(clientPath, 'menuConfig.js');
 
   if (!fs.existsSync(routeFilePath)) {
     // hack 兼容 vue 物料 router
-    routeFilePath = nodeFramework
-      ? path.join(clientPath, 'router.js')
-      : path.join(destDir, 'src/router.js');
+    routeFilePath = path.join(clientPath, 'router.js');
   }
 
   // routeText 表示 menu 的导航名

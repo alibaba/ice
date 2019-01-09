@@ -12,7 +12,7 @@ const { getClientPath } = require('../../paths');
 // 需要清理干净所有新创建的内容，包括 package.json 里面、page、blocks 等，现在没清理 package.json
 module.exports = async function removePreviewPage({ destDir, nodeFramework }) {
   // 删除 page 和 blocks 文件
-  const clientPath = getClientPath(destDir, nodeFramework);
+  const clientPath = getClientPath(destDir, nodeFramework, 'src');
   const previewPagePath = path.join(clientPath, '/pages/IceworksPreviewPage');
   rimraf.sync(previewPagePath);
 

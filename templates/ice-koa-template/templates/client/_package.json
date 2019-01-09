@@ -14,7 +14,7 @@
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
-    "entry": "client/src/index.js",
+    "entry": "src/index.js",
     "localization": false
   },
   "proxyConfig": {

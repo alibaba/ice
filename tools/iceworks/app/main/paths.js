@@ -34,15 +34,15 @@ let SASS_BINARY_PATH = isDev
       `${process.platform}-x64-57_binding.node`
     );
 
-const getClientPath = (destDir, framework) => {
+const getClientPath = (destDir, framework, sourcePath = '') => {
   if (framework) {
     if (framework === 'koa') {
       return path.join(destDir, 'client');
-    } else if (framework === 'midway') {
-      return path.join(destDir, 'assets');
+    } else { // koa2, midway
+      return path.join(destDir, 'client', sourcePath);
     }
   } else {
-    return path.join(destDir, 'src');
+    return path.join(destDir, sourcePath);
   }
 };
 
@@ -50,8 +50,8 @@ const getClientFolder = (framework) => {
   if (framework) {
     if (framework === 'koa') {
       return 'client';
-    } else if (framework === 'midway') {
-      return 'assets';
+    } else if (framework === 'midway' || framework === 'koa2') {
+      return 'client/src';
     }
   } else {
     return 'src';
