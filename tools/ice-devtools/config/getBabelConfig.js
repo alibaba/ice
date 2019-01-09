@@ -1,6 +1,7 @@
-function createResolve(type) {
-  return (name) => require.resolve(`babel-${type}-${name}`);
-}
+/**
+ * 编译设置
+ * @param {Object} buildConfig 定义在 package.json 的字段
+ */
 
 function resolvePlugin(plugins) {
   return plugins.map((plugin) => {
@@ -12,24 +13,21 @@ function resolvePlugin(plugins) {
   });
 }
 
-module.exports = function getBabelrc() {
+module.exports = (buildConfig = {}) => {
   return {
-    babelrc: false,
-    presets: ['es2015', 'stage-0', 'react'].map(createResolve('preset')),
+    babelrc: buildConfig.babelrc || false,
+    presets: resolvePlugin([
+      '@babel/preset-env',
+      '@babel/preset-react',
+    ]),
     plugins: resolvePlugin([
-      'babel-plugin-transform-decorators-legacy',
-      [
-        'babel-plugin-component',
-        { libraryName: 'element-ui', styleLibraryName: 'theme-chalk' },
-      ],
       [
         'babel-plugin-import',
-        [
-          { libraryName: '@icedesign/base' },
-          { libraryName: '@alife/next' },
-          { libraryName: '@alifd/next' },
-        ],
-      ]
+        { libraryName: '@icedesign/base' },
+        '@icedesign/base',
+      ],
+      ['babel-plugin-import', { libraryName: '@alife/next' }, '@alife/next'],
+      ['babel-plugin-import', { libraryName: '@alifd/next' }, '@alifd/next'],
     ]),
   };
 };
