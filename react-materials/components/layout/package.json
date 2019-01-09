@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/layout",
-  "version": "0.1.7",
+  "version": "1.0.0",
   "description": "提供页面框架性的 layout 组件",
   "main": "lib/index.js",
   "files": [
@@ -8,10 +8,6 @@
     "demo/",
     "postinstall.js"
   ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/ice"
@@ -29,7 +25,6 @@
     "postinstall": "node ./postinstall.js"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.10"
   },
@@ -38,8 +33,6 @@
     "react-dom": "^16.5.0"
   },
   "devDependencies": {
-    "@icedesign/img": "^0.1.0",
-    "@icedesign/styled-menu": "^0.1.1",
-    "@icedesign/title": "^0.1.0"
+    "@alifd/next": "^1.11.7"
   }
 }

@@ -1,18 +1,8 @@
 @charset "UTF-8";
-@import 'scss/variable';
 
-@mixin layout-theme ($theme, $bgColor, $textColor) {
-  #{$ice-layout-prefix}-theme-#{$theme} {
-    &#{$ice-layout-prefix}-header {
-      background-color: $bgColor;
-    }
-    &#{$ice-layout-prefix}-aside {
-      background-color: $bgColor;
-    }
-  }
-}
-@include layout-theme('dark', #404040, #FFF);
-@include layout-theme('light', #FFF, #404040);
+@import '~@alifd/next/variables.scss';
+
+$ice-layout-prefix: '.ice-layout' !default;
 
 #{$ice-layout-prefix} {
   display: flex;
@@ -47,6 +37,14 @@
       }
     }
   }
+
+  .next-menu,
+  // 推荐自定义的前缀
+  .nextfd-menu {
+    box-shadow: none;
+    border: none;
+  }
+
   #{$ice-layout-prefix}-section-inner {
     display: flex;
     flex-direction: column;
@@ -55,14 +53,6 @@
   #{$ice-layout-prefix}-header {
     display: flex;
     flex: none;
-    box-shadow: 3px 0 3px rgba(0, 0, 0, 0.3);
-    z-index: 1; // shadow 盖住 main
-  }
-  #{$ice-layout-prefix}-header-right {
-    display: flex;
-    flex: auto;
-    flex-direction: row;
-    justify-content: flex-end;
     align-items: center;
   }
   #{$ice-layout-prefix}-footer {
@@ -76,32 +66,19 @@
   #{$ice-layout-prefix}-aside {
     display: block;
     transition: all 0.2s linear;
-    flex: 0 0 200px;
-    &#{$ice-layout-prefix}-aside-has-trigger {
-      position: relative;
-      #{$ice-layout-prefix}-aside-trigger {
-        height: 40px;
-        overflow: hidden;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-      }
-    }
-    #{$ice-layout-prefix}-aside-trigger {
-      background-color: rgba(0, 0, 0, 0.4);
-      cursor: pointer;
-      height: 40px;
-      line-height: 40px;
-      text-align: center;
-      .next-icon {
-        transition: all 0.2s linear;
-      }
-      &#{$ice-layout-prefix}-aside-trigger-collapsed {
-        .next-icon {
-          transform: rotate(180deg);
-        }
-      }
-    }
   }
 }
+
+
+@mixin layout-theme ($type, $bgColor, $textColor) {
+  #{$ice-layout-prefix}-header-#{$type},
+  #{$ice-layout-prefix}-aside-#{$type},
+  #{$ice-layout-prefix}-footer-#{$type} {
+    background-color: $bgColor;
+    color: $textColor;
+  }
+}
+@include layout-theme('normal', $nav-normal-bg-color, $nav-normal-text-color);
+@include layout-theme('primary', $nav-primary-bg-color, $nav-primary-text-color);
+@include layout-theme('secondary', $nav-secondary-bg-color, $nav-secondary-text-color);
+@include layout-theme('line', $nav-normal-bg-color, $nav-normal-text-color);
