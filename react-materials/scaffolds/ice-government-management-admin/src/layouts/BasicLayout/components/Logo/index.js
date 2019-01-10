@@ -20,7 +20,7 @@ const styles = {
     whiteSpace: 'nowrap',
     fontSize: '20px',
     color: '#fff',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     textDecoration: 'none',
   },
 };
