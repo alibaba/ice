@@ -1,8 +1,11 @@
 
+.iceNav {
+  box-shadow: none !important;
+}
 .iceAsideCustom {
   height: 100%;
   padding-top: 10px;
-  box-shadow: 4px 1px 12px transparentize($color-brand1-6, 0.04);
+  box-shadow: 4px 1px 12px transparentize($color-brand1-6, 0.9);
 }
 .iceAsideLogo {
   display: flex;
