@@ -33,7 +33,7 @@ export default class BasicLayout extends Component {
               return (
                 <Item key={nav.path} icon={nav.icon}>
                   <Link to={nav.path} >
-                    <span >{nav.name}</span>
+                    <span className={styleNames.iceMenuLinkText}>{nav.name}</span>
                   </Link>
                 </Item>
               );
