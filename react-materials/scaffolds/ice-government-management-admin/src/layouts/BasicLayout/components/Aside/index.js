@@ -31,9 +31,9 @@ export default class BasicLayout extends Component {
             asideMenuConfig.length > 0 &&
             asideMenuConfig.map((nav) => {
               return (
-                <Item key={nav.path} icon={nav.icon}>
-                  <Link to={nav.path}>
-                    <span>{nav.name}</span>
+                <Item key={nav.path} icon={nav.icon} className={styleNames.iceNavItem}>
+                  <Link to={nav.path} className={styleNames.iceMenuLink}>
+                    <span className={styleNames.iceMenuLinkText}>{nav.name}</span>
                   </Link>
                 </Item>
               );

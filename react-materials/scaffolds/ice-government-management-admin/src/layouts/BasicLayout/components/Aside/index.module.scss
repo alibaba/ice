@@ -6,6 +6,7 @@
   height: 100%;
   padding-top: 10px;
   box-shadow: 4px 1px 12px transparentize($color-brand1-6, 0.9);
+  width: 240px;
 }
 .iceAsideLogo {
   display: flex;
@@ -25,4 +26,7 @@
   padding: 15px 0;
   color: #666;
   font-weight: 500;
+}
+.iceMenuLinkText {
+
 }

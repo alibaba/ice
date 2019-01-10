@@ -14,7 +14,7 @@ export default class BasicLayout extends Component {
         className={style.iceLayout}
       >
         <Layout.Section>
-          <Layout.Aside width={240}>
+          <Layout.Aside>
             <Aside />
           </Layout.Aside>
           <Layout.Main scrollable>
