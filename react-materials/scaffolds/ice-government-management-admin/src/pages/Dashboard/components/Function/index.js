@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Message } from '@alifd/next';
+import styles  from './index.module.scss';
+
 
 const mock = [
   {
@@ -47,14 +49,14 @@ export default class Function extends Component {
 
   render() {
     return (
-      <div style={styles.container}>
-        <div style={styles.card}>
-          <h4 style={styles.title}>功能区</h4>
-          <div style={styles.content}>
+      <div className={styles.container}>
+        <div className={styles.card}>
+          <h4 className={styles.title}>功能区</h4>
+          <div className={styles.content}>
             {mock.map((item, index) => {
               return (
-                <div style={styles.item} key={index} onClick={this.handleClick}>
-                  <p style={styles.itemTitle}>{item.title}</p>
+                <div className={styles.item} key={index} onClick={this.handleClick}>
+                  <p className={styles.itemTitle}>{item.title}</p>
                 </div>
               );
             })}
@@ -65,55 +67,3 @@ export default class Function extends Component {
   }
 }
 
-const styles = {
-  container: {
-    width: '50%',
-    boxSizing: 'border-box',
-    padding: '10px',
-  },
-  card: {
-    width: '100%',
-    padding: '20px',
-    color: '#42436b',
-    backgroundColor: 'white',
-    borderRadius: '16px',
-    overflow: 'hidden',
-    position: 'relative',
-    height: '286px',
-  },
-  title: {
-    marginTop: '0',
-    marginBottom: '20px',
-    borderLeft: '5px solid #447eff',
-    paddingLeft: '10px',
-    lineHeight: '20px',
-  },
-  content: {
-    display: 'flex',
-    alignItems: 'space-between',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    height: '200px',
-  },
-  item: {
-    width: '25%',
-    height: '24px',
-    lineHeight: '24px',
-    padding: '0 4px',
-    boxSizing: 'border-box',
-  },
-  itemTitle: {
-    backgroundColor: '#f2f6ff',
-    border: '1px dashed #5488f0',
-    fontSize: '12px',
-    textAlign: 'center',
-    borderRadius: '12px',
-    cursor: 'pointer',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-  count: {
-    color: '#ff363b',
-  },
-};
