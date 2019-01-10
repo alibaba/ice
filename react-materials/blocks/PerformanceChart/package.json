@@ -24,17 +24,15 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
-    "@icedesign/container": "^0.1.1",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
-    "bizcharts": "3.2.2"
+    "bizcharts": "3.2.2",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^1.x",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "performance-chart",
@@ -43,7 +41,7 @@
     "categories": [
       "表格"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme"
   },
   "homepage": "https://alibaba.github.io/ice/block/performance-chart"
 }

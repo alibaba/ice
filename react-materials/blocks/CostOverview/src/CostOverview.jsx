@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Balloon, Icon } from '@icedesign/base';
+import { Grid, Balloon, Icon } from '@alifd/next';
 import DonutChart from './DonutChart';
 
 const { Row, Col } = Grid;

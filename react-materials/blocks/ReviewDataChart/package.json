@@ -26,11 +26,11 @@
   },
   "dependencies": {
     "@antv/data-set": "0.8.9",
-    "@icedesign/base": "^0.2.1",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "bizcharts": "3.2.2",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "review-data-chart",

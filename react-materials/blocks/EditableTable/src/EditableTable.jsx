@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Button } from '@icedesign/base';
+import { Table, Button } from '@alifd/next';
 import CellEditor from './CellEditor';
 import './EditableTable.scss';
 

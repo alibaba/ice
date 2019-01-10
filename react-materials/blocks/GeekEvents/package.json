@@ -23,11 +23,11 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
     "prop-types": "^15.5.8",
     "rc-queue-anim": "^1.6.5",
     "rc-scroll-anim": "^2.5.5",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "geek-events",

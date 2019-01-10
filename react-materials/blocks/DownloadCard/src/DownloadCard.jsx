@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab, Button, Icon, Grid } from '@icedesign/base';
+import { Tab, Button, Icon, Grid } from '@alifd/next';
 import data from './data';
 import './DownloadCard.scss';
 

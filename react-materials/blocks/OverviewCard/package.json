@@ -25,9 +25,8 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.2",
-    "@icedesign/container": "^0.1.2",
-    "foundation-symbol": "^0.1.3"
+    "@icedesign/container": "^1.x",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.2.0"

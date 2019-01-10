@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Pagination, Progress, Button } from '@icedesign/base';
+import { Table, Pagination, Progress, Button } from '@alifd/next';
 import EditDialog from './EditDialog';
 import data from './data';
 

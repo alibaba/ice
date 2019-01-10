@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Loading } from '@icedesign/base';
+import { Loading } from '@alifd/next';
 import dataSource from './list-data';
 import ReactList from 'react-list';
 import IceContainer from '@icedesign/container';

@@ -21,20 +21,19 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "selectable-table",
     "screenshot": "https://img.alicdn.com/tfs/TB19zkHb1uSBuNjy1XcXXcYjFXa-2322-1298.png",
-    "themePackage": "@icedesign/skin",
+    "themePackage": "@icedesign/theme",
     "title": "可批量操作的表格",
     "categories": [
       "表格"

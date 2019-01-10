@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 export default class BasicTab extends Component {

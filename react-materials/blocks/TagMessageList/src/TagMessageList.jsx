@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import './TagMessageList.scss';
 

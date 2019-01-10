@@ -25,9 +25,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.2",
-    "@icedesign/container": "^0.1.2",
-    "bizcharts": "3.2.2"
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.2.0",

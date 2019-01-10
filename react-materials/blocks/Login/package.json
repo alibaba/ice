@@ -25,11 +25,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
     "@icedesign/form-binder": "^0.1.4",
-    "@icedesign/icon": "^0.1.1",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "login",

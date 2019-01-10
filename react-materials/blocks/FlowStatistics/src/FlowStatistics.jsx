@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import LineChart from './LineChart';
 import Head from './Head';
 import './FlowStatistics.scss';

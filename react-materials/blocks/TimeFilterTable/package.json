@@ -20,23 +20,22 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "@icedesign/data-binder": "^0.1.0",
-    "@icedesign/label": "^0.1.0",
+    "@icedesign/container": "^1.x",
+    "@icedesign/data-binder": "^1.x",
+    "@icedesign/label": "^1.x",
     "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.4",
+    "@icedesign/theme": "^1.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "time-filter-table",
     "screenshot": "https://img.alicdn.com/tfs/TB153PlcxGYBuNjy0FnXXX5lpXa-2354-1000.png",
-    "themePackage": "@icedesign/skin",
+    "themePackage": "@icedesign/theme",
     "title": "时间筛选表格",
     "categories": [
       "表格"

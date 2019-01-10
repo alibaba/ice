@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Table, Progress } from '@icedesign/base';
+import { Grid, Table, Progress } from '@alifd/next';
 import LintChart from './LineChart';
 
 const { Row, Col } = Grid;

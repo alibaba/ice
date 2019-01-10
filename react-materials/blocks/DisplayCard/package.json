@@ -20,20 +20,19 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "display-card",
     "screenshot": "https://img.alicdn.com/tfs/TB1AwCEXNGYBuNjy0FnXXX5lpXa-1900-278.png",
-    "themePackage": "@icedesign/skin",
+    "themePackage": "@icedesign/theme",
     "title": "展示型卡片",
     "categories": [
       "数据展示"

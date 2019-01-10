@@ -1,6 +1,6 @@
 /* eslint no-nested-ternary:0 */
 import React, { Component } from 'react';
-import { Icon, Grid } from '@icedesign/base';
+import { Icon, Grid } from '@alifd/next';
 import Img from '@icedesign/img';
 
 const { Row, Col } = Grid;

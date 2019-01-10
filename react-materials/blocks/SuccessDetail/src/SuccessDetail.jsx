@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Button, Step } from '@icedesign/base';
+import { Button, Step } from '@alifd/next';
 
 export default class SuccessDetail extends Component {
   static displayName = 'SuccessDetail';

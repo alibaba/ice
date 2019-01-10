@@ -25,7 +25,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
     "react": "^16.2.0",
     "react-dnd": "3.0.2",

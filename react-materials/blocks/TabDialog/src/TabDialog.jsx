@@ -1,6 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 import React, { Component } from 'react';
-import { Dialog, Tab, Table, Button } from '@icedesign/base';
+import { Dialog, Tab, Table, Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const TabPane = Tab.TabPane;

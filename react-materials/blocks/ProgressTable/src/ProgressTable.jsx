@@ -1,6 +1,6 @@
 /* eslint no-mixed-operators:0 */
 import React, { Component } from 'react';
-import { Table, Progress, Pagination } from '@icedesign/base';
+import { Table, Progress, Pagination } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const getTableData = () => {

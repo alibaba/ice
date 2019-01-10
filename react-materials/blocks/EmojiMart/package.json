@@ -22,7 +22,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "emoji-mart": "^2.6.1"
   },
   "peerDependencies": {

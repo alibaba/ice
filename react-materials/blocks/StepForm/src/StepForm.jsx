@@ -4,7 +4,7 @@ import {
   Grid,
   Step,
   Icon,
-} from '@icedesign/base';
+} from '@alifd/next';
 
 import ItemForm from './ItemForm';
 import DeliveryForm from './DeliveryForm';

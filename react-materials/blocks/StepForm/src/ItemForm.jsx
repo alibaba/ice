@@ -4,7 +4,7 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import { Input, Button, Select, Grid } from '@icedesign/base';
+import { Input, Button, Select, Grid } from '@alifd/next';
 
 const { Row, Col } = Grid;
 

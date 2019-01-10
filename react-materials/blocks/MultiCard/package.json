@@ -23,10 +23,10 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "multi-card",

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Step, Grid, Icon } from '@icedesign/base';
+import { Button, Step, Grid, Icon } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import { enquireScreen } from 'enquire-js';
 

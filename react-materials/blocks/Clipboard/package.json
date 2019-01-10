@@ -22,9 +22,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.4",
-    "react-copy-to-clipboard": "^5.0.1"
+    "@icedesign/container": "^1.x",
+    "react-copy-to-clipboard": "^5.0.1",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
     "prop-types": "^15.5.8",

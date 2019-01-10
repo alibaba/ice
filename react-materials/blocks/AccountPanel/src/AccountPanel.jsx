@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Container from '@icedesign/container';
-import { Button, Dialog, Input, Upload } from '@icedesign/base';
+import { Button, Dialog, Input, Upload } from '@alifd/next';
 import {
   FormBinderWrapper,
   FormBinder,

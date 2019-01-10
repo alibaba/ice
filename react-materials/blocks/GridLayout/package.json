@@ -22,9 +22,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2",
-    "react-grid-layout": "^0.16.6"
+    "@icedesign/container": "^1.x",
+    "react-grid-layout": "^0.16.6",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",

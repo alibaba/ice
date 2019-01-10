@@ -24,16 +24,14 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
-    "@icedesign/container": "^0.1.1",
+    "@icedesign/container": "^1.x",
     "echarts": "^4.0.4",
     "echarts-for-react": "^2.0.8",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^1.x",
     "react": "*",
     "react-dom": "*"
   },
@@ -44,7 +42,7 @@
     "categories": [
       "图表"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme"
   },
   "homepage": "https://alibaba.github.io/ice/block/bar-line-chart"
 }

@@ -21,21 +21,20 @@
   ],
   "dependencies": {
     "@antv/data-set": "^0.8.0",
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
+    "@icedesign/container": "^1.x",
     "bizcharts": "^3.0.5",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "chart-box",
     "screenshot": "https://img.alicdn.com/tfs/TB1u5oLckyWBuNjy0FpXXassXXa-2340-1042.png",
-    "themePackage": "@icedesign/skin",
+    "themePackage": "@icedesign/theme",
     "title": "箱型图",
     "categories": [
       "图表"

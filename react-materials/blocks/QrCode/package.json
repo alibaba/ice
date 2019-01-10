@@ -22,11 +22,11 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^0.1.7",
     "qrcode.react": "0.7.2",
-    "react-color": "^2.14.1"
+    "react-color": "^2.14.1",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
     "react": "^16.2.0",

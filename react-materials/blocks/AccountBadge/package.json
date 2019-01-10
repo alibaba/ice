@@ -1,38 +1,38 @@
 {
-  "name": "@icedesign/account-badge-block",
-  "version": "1.0.0",
-  "description": "展示账户权益勋章等权益信息",
-  "homepage": "https://alibaba.github.io/ice/block/account-badge",
-  "author": "noyobo <nongyoubao@alibaba-inc.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/AccountBadge"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "dependencies": {
-    "@icedesign/base": "^0.2.4",
-    "@icedesign/container": "^0.1.4",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0"
-  },
-  "blockConfig": {
-    "name": "account-badge",
-    "title": "账户勋章",
-    "categories": [
-      "信息展示"
+    "name": "@icedesign/account-badge-block",
+    "version": "1.0.0",
+    "description": "展示账户权益勋章等权益信息",
+    "homepage": "https://unpkg.com/@icedesign/account-badge-block/build/index.html",
+    "author": "noyobo <nongyoubao@alibaba-inc.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB18PFFfxtnkeRjSZSgXXXAuXXa-1866-378.png"
-  }
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/AccountBadge"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "account-badge",
+        "title": "账户勋章",
+        "categories": [
+            "信息展示"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/account-badge-block/screenshot.png"
+    }
 }

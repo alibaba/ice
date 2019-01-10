@@ -22,7 +22,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "react-json-view": "^1.18.3"
   },
   "peerDependencies": {

@@ -1,38 +1,38 @@
 {
-  "name": "@icedesign/ablity-items-block",
-  "version": "1.0.3",
-  "description": "中间展示特点 特性的区块",
-  "author": "muchen <tao360907796@gmail.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/AblityItems"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "react": "^16.2.0",
-    "prop-types": "^15.5.8"
-  },
-  "blockConfig": {
-    "name": "ablity-items",
-    "title": "特性展示",
-    "categories": [
-      "信息展示",
-      "欢迎页"
+    "name": "@icedesign/ablity-items-block",
+    "version": "1.0.3",
+    "description": "中间展示特点 特性的区块",
+    "author": "muchen <tao360907796@gmail.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1TBcQCgmTBuNjy1XbXXaMrVXa-1683-293.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/ablity-items"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/AblityItems"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "react": "^16.2.0",
+        "prop-types": "^15.5.8"
+    },
+    "blockConfig": {
+        "name": "ablity-items",
+        "title": "特性展示",
+        "categories": [
+            "信息展示",
+            "欢迎页"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/ablity-items-block/screenshot.png"
+    },
+    "homepage": "https://unpkg.com/@icedesign/ablity-items-block/build/index.html"
 }

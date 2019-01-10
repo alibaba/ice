@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Step, Grid, Input, Button } from '@icedesign/base';
+import { Step, Grid, Input, Button } from '@alifd/next';
 import {
   FormBinderWrapper,
   FormBinder,

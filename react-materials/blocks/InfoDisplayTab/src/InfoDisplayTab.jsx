@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab, Button, Grid } from '@icedesign/base';
+import { Tab, Button, Grid } from '@alifd/next';
 import IceEllipsis from '@icedesign/ellipsis';
 import data from './data';
 

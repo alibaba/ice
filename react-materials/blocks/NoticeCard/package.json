@@ -22,7 +22,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3"
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",

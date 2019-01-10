@@ -22,10 +22,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "highcharts": "^6.1.1",
-    "react-highcharts": "^16.0.2"
+    "react-highcharts": "^16.0.2",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",

@@ -25,9 +25,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.2",
-    "@icedesign/container": "^0.1.2",
-    "@icedesign/form-binder": "^0.1.4"
+    "@icedesign/container": "^1.x",
+    "@icedesign/form-binder": "^0.1.4",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",

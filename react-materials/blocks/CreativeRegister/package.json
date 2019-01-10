@@ -23,10 +23,10 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
     "@icedesign/form-binder": "^0.1.7",
     "prop-types": "^15.6.2",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "creative-register",

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Accordion } from '@icedesign/base';
+import { Accordion } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const mockData = [

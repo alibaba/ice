@@ -1,4 +1,4 @@
-import { Progress } from '@icedesign/base';
+import { Progress } from '@alifd/next';
 import React, { Component } from 'react';
 
 import './HotRankItem.scss';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Progress, Grid } from '@icedesign/base';
+import { Progress, Grid } from '@alifd/next';
 import { enquireScreen } from 'enquire-js';
 
 const { Row, Col } = Grid;

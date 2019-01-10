@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Select, Grid } from '@icedesign/base';
+import { Select, Grid } from '@alifd/next';
 import './ComplexFilter.scss';
 
 const { Row, Col } = Grid;

@@ -22,9 +22,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2",
-    "braft-editor": "^1.9.8"
+    "@icedesign/container": "^1.x",
+    "braft-editor": "^1.9.8",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",

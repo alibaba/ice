@@ -20,20 +20,19 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^1.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "user-info-card",
     "screenshot": "https://img.alicdn.com/tfs/TB1NxO4l8fH8KJjy1XbXXbLdXXa-978-668.png",
-    "themePackage": "@icedesign/skin",
+    "themePackage": "@icedesign/theme",
     "title": "用户信息展示",
     "categories": [
       "信息展示"

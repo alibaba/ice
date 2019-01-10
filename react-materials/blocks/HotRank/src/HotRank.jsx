@@ -1,6 +1,6 @@
 import Container from '@icedesign/container';
 import React, { Component } from 'react';
-import { Grid, Pagination } from '@icedesign/base';
+import { Grid, Pagination } from '@alifd/next';
 
 import HotItem from './HotItem';
 

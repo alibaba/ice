@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 
 const CustomButton = (props) => {
   return <Button {...props} style={{ ...styles.button, ...props.style }} />;

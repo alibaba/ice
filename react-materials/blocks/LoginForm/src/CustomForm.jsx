@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Feedback } from '@icedesign/base';
+import { Feedback } from '@alifd/next';
 import AuthForm from './AuthForm';
 
 export default class LoginFrom extends Component {

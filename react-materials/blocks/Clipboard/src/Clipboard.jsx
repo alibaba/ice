@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import IceContainer from '@icedesign/container';
-import { Grid, Button, Input, Feedback } from '@icedesign/base';
+import { Grid, Button, Input, Feedback } from '@alifd/next';
 
 const { Row, Col } = Grid;
 const Toast = Feedback.toast;

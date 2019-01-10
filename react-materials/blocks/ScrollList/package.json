@@ -25,10 +25,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.3",
+    "@icedesign/container": "^1.x",
     "react": "^16.2.0",
-    "react-list": "^0.8.10"
+    "react-list": "^0.8.10",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "scroll-list",

@@ -24,16 +24,14 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^1.x",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "simple-footer",
@@ -42,7 +40,7 @@
     "categories": [
       "页脚"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme"
   },
   "homepage": "https://alibaba.github.io/ice/block/simple-footer"
 }

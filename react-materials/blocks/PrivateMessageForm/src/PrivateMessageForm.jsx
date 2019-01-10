@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button, Grid, Feedback } from '@icedesign/base';
+import { Input, Button, Grid, Feedback } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;

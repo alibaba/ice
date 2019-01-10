@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Tab, Button } from '@icedesign/base';
+import { Tab, Button } from '@alifd/next';
 
 function mockCentent() {
   return Array.from({ length: 2 + Math.round(Math.random() * 5) }).map(() => {

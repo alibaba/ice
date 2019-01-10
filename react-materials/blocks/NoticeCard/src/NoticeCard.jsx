@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Notice } from '@icedesign/base';
+import { Notice } from '@alifd/next';
 
 export default class NoticeCard extends Component {
   static displayName = 'NoticeCard';

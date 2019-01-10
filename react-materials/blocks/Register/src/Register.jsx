@@ -1,12 +1,11 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Input, Button, Grid, Feedback } from '@icedesign/base';
+import { Input, Button, Grid, Feedback, Icon } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
 import './Register.scss';
 
 const { Row, Col } = Grid;
@@ -94,8 +93,8 @@ export default class Register extends Component {
             <div style={styles.formItems}>
               <Row style={styles.formItem}>
                 <Col style={styles.formItemCol}>
-                  <IceIcon
-                    type="person"
+                  <Icon
+                    type="account"
                     size="small"
                     style={styles.inputIcon}
                   />
@@ -114,7 +113,7 @@ export default class Register extends Component {
 
               <Row style={styles.formItem}>
                 <Col style={styles.formItemCol}>
-                  <IceIcon type="mail" size="small" style={styles.inputIcon} />
+                  <Icon type="email" size="small" style={styles.inputIcon} />
                   <IceFormBinder
                     type="email"
                     name="email"
@@ -131,7 +130,7 @@ export default class Register extends Component {
 
               <Row style={styles.formItem}>
                 <Col style={styles.formItemCol}>
-                  <IceIcon type="lock" size="small" style={styles.inputIcon} />
+                  <Icon type="account" test="lock" size="small" style={styles.inputIcon} />
                   <IceFormBinder
                     name="passwd"
                     required
@@ -151,7 +150,7 @@ export default class Register extends Component {
 
               <Row style={styles.formItem}>
                 <Col style={styles.formItemCol}>
-                  <IceIcon type="lock" size="small" style={styles.inputIcon} />
+                  <Icon type="email" test="lock" size="small" style={styles.inputIcon} />
                   <IceFormBinder
                     name="rePasswd"
                     required

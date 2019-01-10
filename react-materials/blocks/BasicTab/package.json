@@ -21,20 +21,19 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.3",
+    "@icedesign/theme": "^1.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "basic-tab",
     "screenshot": "https://img.alicdn.com/tfs/TB1lrQXif2H8KJjy0FcXXaDlFXa-1144-112.png",
-    "themePackage": "@icedesign/skin",
+    "themePackage": "@icedesign/theme",
     "title": "基础 Tab 组件",
     "categories": [
       "信息展示"

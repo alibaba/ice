@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from '@icedesign/base';
+import { Table } from '@alifd/next';
 import PropTypes from 'prop-types';
 
 export default class RankList extends Component {

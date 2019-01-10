@@ -1,12 +1,11 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Input, Button, Checkbox, Grid, Feedback } from '@icedesign/base';
+import { Input, Button, Checkbox, Grid, Feedback, Icon } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
 import './Login.scss';
 
 const { Row, Col } = Grid;
@@ -72,8 +71,8 @@ export default class Login extends Component {
             <div style={styles.formItems}>
               <Row style={styles.formItem}>
                 <Col style={styles.formItemCol}>
-                  <IceIcon
-                    type="person"
+                  <Icon
+                    type="account"
                     size="small"
                     style={styles.inputIcon}
                   />
@@ -92,7 +91,7 @@ export default class Login extends Component {
 
               <Row style={styles.formItem}>
                 <Col style={styles.formItemCol}>
-                  <IceIcon type="lock" size="small" style={styles.inputIcon} />
+                  <Icon type="account" size="small" style={styles.inputIcon} test="lock" />
                   <IceFormBinder name="password" required message="必填">
                     <Input
                       size="large"

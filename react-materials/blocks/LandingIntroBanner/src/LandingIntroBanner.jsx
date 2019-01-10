@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 import './LandingIntroBanner.scss';
 
 // 寻找背景图片可以从 https://unsplash.com/ 寻找

@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@antv/data-set": "^0.10.1",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "bizcharts": "3.2.2",
     "prop-types": "^15.5.8"
   },

@@ -14,7 +14,7 @@ import {
   Switch,
   Radio,
   Grid,
-} from '@icedesign/base';
+} from '@alifd/next';
 
 const { Row, Col } = Grid;
 

@@ -1,4 +1,4 @@
-import { Menu, Button, Feedback } from '@icedesign/base';
+import { Menu, Button, Feedback } from '@alifd/next';
 import React, { Component } from 'react';
 
 const SplitButton = Button.Split;

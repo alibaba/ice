@@ -22,10 +22,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "codemirror": "^5.39.0",
-    "react-codemirror2": "^5.1.0"
+    "react-codemirror2": "^5.1.0",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
