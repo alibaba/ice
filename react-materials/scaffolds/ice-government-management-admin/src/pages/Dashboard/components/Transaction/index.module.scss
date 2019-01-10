@@ -1,0 +1,56 @@
+.container {
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.card {
+  width: 100%;
+  color: $color-black;
+  height: 286px;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 16px;
+  background-color: white;
+}
+.title {
+  margin-top: 0;
+  border-left: 5px solid $color-brand1-6;
+  line-height: 20px;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+.content {
+  height: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding-top: 20px;
+  justify-content: space-between;
+}
+.item {
+  width: 25%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.itemTitle {
+  font-size: 12px;
+  text-align: center;
+}
+.image {
+  width: 40px;
+  height: 40px;
+  padding: 8px 0;
+  text-align: center;
+  border-radius: 8px;
+}
+.iconImage {
+  width: 24px;
+  height: 24px;
+}
+.count {
+  color: $color-error-3;
+}
