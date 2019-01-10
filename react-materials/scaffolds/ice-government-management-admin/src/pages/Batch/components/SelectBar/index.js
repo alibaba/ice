@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Icon } from '@alifd/next';
+import cx from 'classnames';
+import styles from  './index.module.scss';
+
 
 const mockData = [
   {
@@ -38,21 +41,19 @@ export default class SelectBar extends Component {
 
   render() {
     return (
-      <div style={styles.container}>
+      <div className={styles.container}>
         {mockData.map((item, index) => {
           return (
             <div
-              style={{
-                ...styles.card,
-                ...(this.state.selectedCard === index
+
+              className={cx(styles.card, this.state.selectedCard === index
                   ? styles.selectedCard
-                  : styles.unselectedCard),
-              }}
+                  : styles.unselectedCard)}
               key={index}
               onClick={() => this.handleCardClick(index)}
             >
               <h2
-                style={
+                className={
                   this.state.selectedCard === index
                     ? styles.selectedIcon
                     : styles.icon
@@ -60,8 +61,8 @@ export default class SelectBar extends Component {
               >
                 <Icon type={item.icon} size="xl" />
               </h2>
-              <h3 style={styles.title}>{item.title}</h3>
-              <p style={styles.instrument}>说明: {item.instrument}</p>
+              <h3 className={styles.title}>{item.title}</h3>
+              <p className={styles.instrument}>说明: {item.instrument}</p>
             </div>
           );
         })}
@@ -70,44 +71,3 @@ export default class SelectBar extends Component {
   }
 }
 
-const styles = {
-  container: {
-    margin: '0 40px',
-    letterSpacing: '1px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  card: {
-    height: '120px',
-    borderRadius: '10px',
-    padding: '10px',
-    cursor: 'pointer',
-  },
-  unselectedCard: {
-    border: '1px solid #edeef0',
-    backgroundColor: 'white',
-    color: '#666',
-  },
-  selectedCard: {
-    boxShadow: '2px 2px 10px 0 hsla(0, 0%, 40%, .3)',
-    color: '#fff',
-    background: '#5e83fb',
-  },
-  icon: {
-    color: '#5e83fb',
-    margin: '8px',
-  },
-  selectedIcon: {
-    color: 'white',
-    margin: '8px',
-  },
-  title: {
-    fontSize: '14px',
-    margin: '8px',
-  },
-  instrument: {
-    fontSize: '12px',
-    margin: '8px',
-  },
-};
