@@ -1,16 +1,19 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
+import styleNames from './index.module.scss';
 
 export default class Logo extends PureComponent {
   render() {
     return (
-      <Link to="/" style={{ ...styles.logoStyle, ...this.props.style }}>
+      <Link to="/" className={styleNames.logoStyle} style={{
+        ...styles.logoStyle,
+        ...this.props.style
+      }}>
         政府管理系统
       </Link>
     );
   }
 }
-
 const styles = {
   logoStyle: {
     display: 'block',
@@ -18,9 +21,7 @@ const styles = {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    fontSize: '20px',
     color: '#fff',
-    // fontWeight: 'bold',
     textDecoration: 'none',
   },
-};
+}
