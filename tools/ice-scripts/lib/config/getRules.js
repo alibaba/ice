@@ -75,7 +75,6 @@ module.exports = (buildConfig = {}, themeConfig) => {
   if (paths.publicUrl === './') {
     miniCssExtractPluginLoader.options = { publicPath: '../' };
   }
-  console.log('local ice===================')
   return [
     {
       test: /\.scss$/,
@@ -95,7 +94,6 @@ module.exports = (buildConfig = {}, themeConfig) => {
           loader: CSS_LOADER,
           options: {
             sourceMap: true,
-            modules: false,
           },
         },
         {
