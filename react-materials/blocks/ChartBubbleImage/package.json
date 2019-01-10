@@ -1,48 +1,48 @@
 {
-  "name": "@icedesign/chart-bubble-image-block",
-  "version": "0.1.9",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ChartBubbleImage"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@antv/data-set": "^0.8.0",
-    "@icedesign/container": "^1.x",
-    "bizcharts": "^3.0.5",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^1.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "chart-bubble-image",
-    "screenshot": "https://img.alicdn.com/tfs/TB11w4FivDH8KJjy1XcXXcpdXXa-1902-1032.png",
-    "themePackage": "@icedesign/theme",
-    "title": "自定义气泡图",
-    "categories": [
-      "图表"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/chart-bubble-image"
+    "name": "@icedesign/chart-bubble-image-block",
+    "version": "0.1.9",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ChartBubbleImage"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@antv/data-set": "^0.8.0",
+        "@icedesign/container": "^1.x",
+        "bizcharts": "^3.0.5",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "chart-bubble-image",
+        "screenshot": "https://unpkg.com/@icedesign/chart-bubble-image-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "自定义气泡图",
+        "categories": [
+            "图表"
+        ]
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/chart-bubble-image-block/build/index.html"
 }

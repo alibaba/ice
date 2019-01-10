@@ -1,46 +1,46 @@
 {
-  "name": "@icedesign/brand-list-block",
-  "version": "0.1.5",
-  "description": "展示品牌列表",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BrandList"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^1.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "brand-list",
-    "screenshot": "https://img.alicdn.com/tfs/TB1_tflieGSBuNjSspbXXciipXa-1234-487.png",
-    "title": "品牌列表",
-    "categories": [
-      "信息展示"
+    "name": "@icedesign/brand-list-block",
+    "version": "0.1.5",
+    "description": "展示品牌列表",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/brand-list"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BrandList"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "brand-list",
+        "screenshot": "https://unpkg.com/@icedesign/brand-list-block/screenshot.png",
+        "title": "品牌列表",
+        "categories": [
+            "信息展示"
+        ],
+        "themePackage": "@icedesign/theme"
+    },
+    "homepage": "https://unpkg.com/@icedesign/brand-list-block/build/index.html"
 }

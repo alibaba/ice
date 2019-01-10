@@ -30,7 +30,7 @@
     "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/theme": "^1.x",
+    "@icedesign/theme": "^0.x",
     "ice-scripts": "^0.1.18",
     "react": "*",
     "react-dom": "*"

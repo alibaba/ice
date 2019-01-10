@@ -84,7 +84,7 @@ export default class ApplicationProgress extends Component {
     return (
       <div className="application-progress">
         <IceContainer>
-          <Step current={0} type={isMobile ? 'dot' : 'circle'}>
+          <Step current={0} shape={isMobile ? 'dot' : 'circle'}>
             <Step.Item title="检测账号" />
             <Step.Item title="选择入住类型" />
             <Step.Item title="填写详细资料" />

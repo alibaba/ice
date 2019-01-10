@@ -1,46 +1,46 @@
 {
-  "name": "@icedesign/basic-detail-info-block",
-  "version": "0.1.10",
-  "description": "基础详情信息展示",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BasicDetailInfo"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^1.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "basic-detail-info",
-    "screenshot": "https://gw.alicdn.com/tfs/TB1JD2VifDH8KJjy1XcXXcpdXXa-1880-1004.png",
-    "themePackage": "@icedesign/theme",
-    "title": "基础详情信息展示",
-    "categories": [
-      "信息展示"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/basic-detail-info"
+    "name": "@icedesign/basic-detail-info-block",
+    "version": "0.1.10",
+    "description": "基础详情信息展示",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BasicDetailInfo"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "basic-detail-info",
+        "screenshot": "https://unpkg.com/@icedesign/basic-detail-info-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "基础详情信息展示",
+        "categories": [
+            "信息展示"
+        ]
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/basic-detail-info-block/build/index.html"
 }

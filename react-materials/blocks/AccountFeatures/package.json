@@ -1,38 +1,38 @@
 {
-  "name": "@icedesign/account-features-block",
-  "version": "1.0.0",
-  "description": "罗列账户功能列表",
-  "homepage": "https://alibaba.github.io/ice/block/account-features",
-  "author": "noyobo <nongyoubao@alibaba-inc.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/AccountFeatures"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
-    "@alifd/next": "^1.x"
-  },
-  "blockConfig": {
-    "name": "account-features",
-    "title": "账户特性",
-    "categories": [
-      "列表"
+    "name": "@icedesign/account-features-block",
+    "version": "1.0.0",
+    "description": "罗列账户功能列表",
+    "homepage": "https://unpkg.com/@icedesign/account-features-block/build/index.html",
+    "author": "noyobo <nongyoubao@alibaba-inc.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1Z_J9pj7nBKNjSZLeXXbxCFXa-1868-1218.png"
-  }
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/AccountFeatures"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "account-features",
+        "title": "账户特性",
+        "categories": [
+            "列表"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/account-features-block/screenshot.png"
+    }
 }

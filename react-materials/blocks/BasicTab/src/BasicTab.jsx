@@ -17,7 +17,7 @@ export default class BasicTab extends Component {
       <div className="basic-tab">
         <IceContainer style={styles.tabCardStyle}>
           <Tab contentStyle={{ display: 'none' }}>
-            {tabs.map((item) => <Tab.TabPane key={item.key} tab={item.tab} />)}
+            {tabs.map((item) => <Tab.Item key={item.key} title={item.tab} />)}
           </Tab>
         </IceContainer>
       </div>

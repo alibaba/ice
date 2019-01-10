@@ -1,49 +1,49 @@
 {
-  "name": "@icedesign/brand-display-block",
-  "version": "0.1.12",
-  "description": "品牌列表展示",
-  "main": "lib/index.js",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BrandDisplay"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/img": "^0.1.0",
-    "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^1.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "brand-display",
-    "screenshot": "https://img.alicdn.com/tfs/TB1_IMuaAyWBuNjy0FpXXassXXa-2306-1244.png",
-    "themePackage": "@icedesign/theme",
-    "title": "品牌列表展示",
-    "categories": [
-      "信息展示",
-      "欢迎页"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/brand-display"
+    "name": "@icedesign/brand-display-block",
+    "version": "0.1.12",
+    "description": "品牌列表展示",
+    "main": "lib/index.js",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BrandDisplay"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/img": "^0.1.0",
+        "enquire-js": "^0.1.2",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "brand-display",
+        "screenshot": "https://unpkg.com/@icedesign/brand-display-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "品牌列表展示",
+        "categories": [
+            "信息展示",
+            "欢迎页"
+        ]
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/brand-display-block/build/index.html"
 }

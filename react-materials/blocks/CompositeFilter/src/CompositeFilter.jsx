@@ -3,7 +3,7 @@ import { Search, Tab, Tag, DatePicker } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import { enquireScreen } from 'enquire-js';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 // mock data
 const tagList = [
@@ -96,18 +96,18 @@ export default class CompositeFilter extends Component {
       <div className="composite-filter">
         <IceContainer style={styles.filterCard}>
           <Tab
-            type="text"
+            shape="text"
             onChange={this.onTabChange}
             contentStyle={{ display: 'none' }}
-            tabBarExtraContent={
+            extra={
               !this.state.isMobile ? this.renderTabBarExtraContent() : null
             }
           >
-            <TabPane tab="全部" key="all" />
-            <TabPane tab="图文" key="pic" />
-            <TabPane tab="单品" key="item" />
-            <TabPane tab="店铺上新" key="new" />
-            <TabPane tab="短视频" key="video" />
+            <TabPane title="全部" key="all" />
+            <TabPane title="图文" key="pic" />
+            <TabPane title="单品" key="item" />
+            <TabPane title="店铺上新" key="new" />
+            <TabPane title="短视频" key="video" />
           </Tab>
 
           <div style={styles.tagList}>

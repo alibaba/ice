@@ -1,48 +1,48 @@
 {
-  "name": "@icedesign/chart-type-line-block",
-  "version": "0.1.10",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ChartTypeLine"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@antv/data-set": "^0.8.0",
-    "@icedesign/container": "^1.x",
-    "bizcharts": "^3.0.5",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^1.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "chart-type-line",
-    "screenshot": "https://img.alicdn.com/tfs/TB1Of87isLJ8KJjy0FnXXcFDpXa-1906-1044.png",
-    "themePackage": "@icedesign/theme",
-    "title": "折线图",
-    "categories": [
-      "图表"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/chart-type-line"
+    "name": "@icedesign/chart-type-line-block",
+    "version": "0.1.10",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ChartTypeLine"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@antv/data-set": "^0.8.0",
+        "@icedesign/container": "^1.x",
+        "bizcharts": "^3.0.5",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "chart-type-line",
+        "screenshot": "https://unpkg.com/@icedesign/chart-type-line-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "折线图",
+        "categories": [
+            "图表"
+        ]
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/chart-type-line-block/build/index.html"
 }

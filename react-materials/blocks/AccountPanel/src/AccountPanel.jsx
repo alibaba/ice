@@ -85,8 +85,7 @@ export default class AccountPanel extends Component {
               <div style={styles.fromItem}>
                 <span>账号简介：</span>
                 <FormBinder name="desc" required max={200} message="不能为空">
-                  <Input
-                    multiple
+                  <Input.TextArea
                     hasLimitHint
                     maxLength={200}
                     style={{ width: 500 }}

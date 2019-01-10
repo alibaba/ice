@@ -1,48 +1,48 @@
 {
-  "name": "@icedesign/composite-filter-block",
-  "version": "0.1.11",
-  "description": "标签、日期和搜索组合筛选",
-  "main": "lib/index.js",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CompositeFilter"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^1.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "composite-filter",
-    "screenshot": "https://img.alicdn.com/tfs/TB1gabvbntYBeNjy1XdXXXXyVXa-1916-244.png",
-    "themePackage": "@icedesign/theme",
-    "title": "标签、日期和搜索组合筛选",
-    "categories": [
-      "筛选"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/composite-filter"
+    "name": "@icedesign/composite-filter-block",
+    "version": "0.1.11",
+    "description": "标签、日期和搜索组合筛选",
+    "main": "lib/index.js",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CompositeFilter"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "enquire-js": "^0.1.2",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "composite-filter",
+        "screenshot": "https://unpkg.com/@icedesign/composite-filter-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "标签、日期和搜索组合筛选",
+        "categories": [
+            "筛选"
+        ]
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/composite-filter-block/build/index.html"
 }
