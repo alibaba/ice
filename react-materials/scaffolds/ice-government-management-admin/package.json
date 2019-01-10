@@ -57,9 +57,6 @@
       "publicPath": "./"
     }
   },
-  "themeConfig": {
-    "primaryColor": "#447eff"
-  },
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-government-management-admin",
