@@ -1,5 +1,8 @@
 # ice-scripts Changelog
 
+## 2.0.4
+- [fix] 修复依赖缺失问题
+
 ## 2.0.3
 - [refactor] 升级 babel 到 7.x
 
