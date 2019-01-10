@@ -19,7 +19,7 @@
     "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^1.x",
     "@icedesign/img": "^1.x",
-    "@icedesign/label": "^0.1.6",
+    "@icedesign/label": "^1.x",
     "@icedesign/layout": "^1.x",
     "@icedesign/theme": "^0.1.0",
     "bizcharts": "^3.2.4",

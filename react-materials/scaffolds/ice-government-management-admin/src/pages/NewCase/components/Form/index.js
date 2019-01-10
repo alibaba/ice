@@ -68,11 +68,10 @@ export default class DonationForm extends Component {
                 required
                 triggerType="onBlur"
                 message="案件名称不能为空"
+                name="casename"
               >
                 <Input
                   placeholder="请输入案件名称"
-                  name="casename"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -86,26 +85,23 @@ export default class DonationForm extends Component {
                 required
                 triggerType="onBlur"
                 message="案件编号不能为空"
+                name="id"
               >
                 <Input
                   placeholder="图书背面右下角条纹码处"
-                  name="id"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
               <div style={styles.formError}>
-                <IceFormError name="id" />
+                <IceFormError name="id"/>
               </div>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>案件类别</div>
-              <IceFormBinder>
+              <IceFormBinder  name="cate">
                 <Select
                   placeholder="请选择"
                   mode="multiple"
-                  name="cate"
-                  size="large"
                   style={{ width: '400px' }}
                 >
                   <Option value="1">知识产权</Option>
@@ -121,11 +117,10 @@ export default class DonationForm extends Component {
                 required
                 triggerType="onBlur"
                 message="立案人不能为空"
+                name="donator"
               >
                 <Input
                   placeholder="请输入"
-                  name="donator"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -135,19 +130,16 @@ export default class DonationForm extends Component {
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>立案时间</div>
-              <IceFormBinder>
+              <IceFormBinder name="time">
                 <DatePicker
-                  name="time"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>状态</div>
-              <IceFormBinder>
+              <IceFormBinder name="status">
                 <RadioGroup
-                  name="status"
                   dataSource={[
                     {
                       value: 'on',
@@ -163,7 +155,6 @@ export default class DonationForm extends Component {
             </div>
             <Button
               type="primary"
-              size="large"
               style={styles.submitButton}
               onClick={this.validateAllFormField}
             >

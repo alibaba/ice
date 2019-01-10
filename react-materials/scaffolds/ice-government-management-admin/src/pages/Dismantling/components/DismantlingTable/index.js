@@ -101,7 +101,6 @@ export default class DismantlingTable extends Component {
             return (
               <Button
                 key={index}
-                size="large"
                 style={styles.button}
                 onClick={() => this.handleClick(text)}
               >
@@ -130,7 +129,7 @@ export default class DismantlingTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-            size="large"
+
           />
         </div>
       </div>

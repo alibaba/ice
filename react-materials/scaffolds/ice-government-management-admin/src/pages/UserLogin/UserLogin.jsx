@@ -11,6 +11,7 @@ import Label from '@icedesign/label';
 
 import style from './index.module.scss';
 
+
 const { Row, Col } = Grid;
 
 @withRouter
@@ -66,7 +67,7 @@ class UserLogin extends Component {
               <Col className="formItemCol">
                 <Icon type="account" size="small" className="inputIcon" />
                 <IceFormBinder name="username" required message="必填">
-                  <Input className={style.input} size="large" maxLength={20} placeholder="用户名" />
+                  <Input className={style.input}   maxLength={20} placeholder="用户名" />
                 </IceFormBinder>
               </Col>
               <Col>
@@ -78,7 +79,7 @@ class UserLogin extends Component {
               <Col className="formItemCol">
                 <Icon type="email" size="small" className="inputIcon" />
                 <IceFormBinder name="password" required message="必填">
-                  <Input size="large" htmlType="password" placeholder="密码" />
+                  <Input   htmlType="password" placeholder="密码" />
                 </IceFormBinder>
               </Col>
               <Col>

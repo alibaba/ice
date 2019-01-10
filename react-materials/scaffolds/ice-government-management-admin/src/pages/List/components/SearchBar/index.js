@@ -16,14 +16,14 @@ export default class SearchBar extends Component {
             案号: (
             <Input
               style={{ ...styles.input, ...styles.shortInput }}
-              size="large"
+               
             />
             )
           </label>
           <Select
             placeholder="浙执"
             style={{ ...styles.select, ...styles.input }}
-            size="large"
+             
           >
             <Option value="small">浙执1</Option>
             <Option value="medium">浙执2</Option>
@@ -32,13 +32,13 @@ export default class SearchBar extends Component {
           字第
           <Input
             style={{ ...styles.input, ...styles.shortInput }}
-            size="large"
+             
           />
           号
         </span>
         <span>
           <Button
-            size="large"
+             
             type="primary"
             style={styles.button}
             onClick={this.handleClick}

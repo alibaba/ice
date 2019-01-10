@@ -73,7 +73,7 @@ export default class ListTable extends Component {
   render() {
     const actionRender = () => {
       return (
-        <Button size="large" style={styles.button} onClick={this.handleClick}>
+        <Button   style={styles.button} onClick={this.handleClick}>
           办理
         </Button>
       );
@@ -100,7 +100,7 @@ export default class ListTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-            size="large"
+             
           />
         </div>
       </div>

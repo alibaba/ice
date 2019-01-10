@@ -89,7 +89,7 @@ class UserRegister extends Component {
                     required
                     message="请输入正确的用户名"
                   >
-                    <Input size="large" placeholder="用户名" />
+                    <Input   placeholder="用户名" />
                   </IceFormBinder>
                 </Col>
                 <Col>
@@ -106,7 +106,7 @@ class UserRegister extends Component {
                     required
                     message="请输入正确的邮箱"
                   >
-                    <Input size="large" maxLength={20} placeholder="邮箱" />
+                    <Input   maxLength={20} placeholder="邮箱" />
                   </IceFormBinder>
                 </Col>
                 <Col>
@@ -124,7 +124,7 @@ class UserRegister extends Component {
                   >
                     <Input
                       htmlType="password"
-                      size="large"
+                       
                       placeholder="至少8位密码"
                     />
                   </IceFormBinder>
@@ -151,7 +151,7 @@ class UserRegister extends Component {
                   >
                     <Input
                       htmlType="password"
-                      size="large"
+                       
                       placeholder="确认密码"
                     />
                   </IceFormBinder>
