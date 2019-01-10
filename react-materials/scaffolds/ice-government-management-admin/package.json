@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "@alifd/next": "^1.x",
+    "@alifd/theme-3": "^0.0.6",
     "@antv/data-set": "^0.9.6",
     "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^1.x",
@@ -50,7 +51,7 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@icedesign/theme",
+    "theme": "@alifd/theme-3",
     "entry": "src/index.js",
     "localization": false,
     "output": {
