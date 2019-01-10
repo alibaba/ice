@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/operation-admin-scaffold",
-  "version": "1.2.4",
+  "version": "2.0.0",
   "description": "该模板适用于设备管理类的后台系统，内置列表管理页、表单新增编辑页及表单查看页，这三个页面可形成一个闭环",
   "homepage": "https://unpkg.com/@icedesign/operation-admin-scaffold@latest/build/index.html",
   "author": "ice-admin@alibaba-inc.com",
@@ -16,8 +16,8 @@
   ],
   "dependencies": {
     "@antv/data-set": "^0.10.1",
-    "@icedesign/base": "^0.1.5-1",
-    "@icedesign/container": "^0.1.1",
+    "@alifd/next": "^1.x",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^1.0.2",
     "@icedesign/img": "^0.1.0",
     "@icedesign/layout": "^0.1.0",
