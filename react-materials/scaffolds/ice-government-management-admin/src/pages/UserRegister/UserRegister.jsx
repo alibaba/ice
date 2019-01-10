@@ -83,7 +83,7 @@ class UserRegister extends Component {
             <div className="formItems">
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <Icon type="person" size="small" className="inputIcon" />
+                  <Icon type="account" size="small" className="inputIcon" />
                   <IceFormBinder
                     name="name"
                     required

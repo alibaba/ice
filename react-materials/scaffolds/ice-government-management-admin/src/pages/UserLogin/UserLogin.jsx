@@ -7,6 +7,9 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
+import Label from '@icedesign/label';
+
+import style from './index.module.scss';
 
 const { Row, Col } = Grid;
 
@@ -51,6 +54,7 @@ class UserLogin extends Component {
   render() {
     return (
       <div className="formContainer">
+        <Label> test test test</Label>
         <h4 className="formTitle">登 录</h4>
         <IceFormBinderWrapper
           value={this.state.value}
@@ -60,9 +64,9 @@ class UserLogin extends Component {
           <div className="formItems">
             <Row className="formItem">
               <Col className="formItemCol">
-                <Icon type="person" size="small" className="inputIcon" />
+                <Icon type="account" size="small" className="inputIcon" />
                 <IceFormBinder name="username" required message="必填">
-                  <Input size="large" maxLength={20} placeholder="用户名" />
+                  <Input className={style.input} size="large" maxLength={20} placeholder="用户名" />
                 </IceFormBinder>
               </Col>
               <Col>
@@ -72,7 +76,7 @@ class UserLogin extends Component {
 
             <Row className="formItem">
               <Col className="formItemCol">
-                <Icon type="lock" size="small" className="inputIcon" />
+                <Icon type="email" size="small" className="inputIcon" />
                 <IceFormBinder name="password" required message="必填">
                   <Input size="large" htmlType="password" placeholder="密码" />
                 </IceFormBinder>
