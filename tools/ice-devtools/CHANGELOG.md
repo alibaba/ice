@@ -1,5 +1,8 @@
 # ice-scripts Changelog
 
+## 2.0.5
+- [feat] 增加常用的 babel stage plugin
+
 ## 2.0.4
 - [fix] 修复依赖缺失问题
 
