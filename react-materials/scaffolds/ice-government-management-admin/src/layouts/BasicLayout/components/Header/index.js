@@ -36,14 +36,14 @@ export default class Header extends Component {
     const { pathname } = location;
     return (
       <div className="header-container">
-        <Logo isDark />
+        <Logo />
         <div className="header-navbar">
           <Nav
             className="header-navbar-menu"
             selectedKeys={[pathname]}
             defaultSelectedKeys={[pathname]}
             direction="hoz"
-            type="primary"
+            type="secondary"
             onClick={this.handleClick}
           >
             {headerMenuConfig &&

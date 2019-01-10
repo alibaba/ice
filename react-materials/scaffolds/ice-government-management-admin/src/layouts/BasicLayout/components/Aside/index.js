@@ -4,8 +4,9 @@ import { Nav, Icon } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
 import { asideMenuConfig } from '../../../../menuConfig';
 const {Item} = Nav;
-import './index.scss';
 
+import styleNames from './index.module.scss';
+console.log(styleNames);
 @withRouter
 export default class BasicLayout extends Component {
   static propTypes = {};
@@ -22,18 +23,16 @@ export default class BasicLayout extends Component {
     const { pathname } = location;
 
     return (
-      <div className="ice-aside-custom">
-        <div className="ice-aside-logo">LOGO</div>
+      <div className={styleNames.iceAsideCustom}>
+        <div className={styleNames.iceAsideLogo}>LOGO</div>
         <Nav
-          selectedKeys={[pathname]}
-          className="ice-menu-custom"
-        >
+          selectedKeys={[pathname]}>
           {Array.isArray(asideMenuConfig) &&
             asideMenuConfig.length > 0 &&
             asideMenuConfig.map((nav) => {
               return (
                 <Item key={nav.path} icon={nav.icon}>
-                  <Link to={nav.path} className="ice-menu-link">
+                  <Link to={nav.path} className={styleNames.iceMenuLink}>
                     <span className="ice-menu-item-text">{nav.name}</span>
                   </Link>
                 </Item>

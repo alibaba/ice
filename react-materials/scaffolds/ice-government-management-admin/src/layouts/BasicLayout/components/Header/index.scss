@@ -11,15 +11,15 @@
     flex-direction: row;
     .ice-menu {
       background: transparent;
-      color: #fff;
+      color: $color-white;
       .ice-menu-item {
         font-size: 14px;
         a {
-          color: #fff;
+          color:$color-white;
         }
         &:hover,
         a:hover {
-          color: rgba(255, 255, 255, 0.8);
+          color:transparentize($color-white, 0.8);
         }
       }
     }

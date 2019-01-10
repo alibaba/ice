@@ -5,6 +5,7 @@ import Aside from './components/Aside';
 import Footer from './components/Footer';
 import MainRoutes from './MainRoutes';
 import style from './index.module.scss';
+console.log('style', style)
 
 export default class BasicLayout extends Component {
   render() {
@@ -18,7 +19,7 @@ export default class BasicLayout extends Component {
             <Aside />
           </Layout.Aside>
           <Layout.Main scrollable>
-            <Layout.Header type="primary">
+            <Layout.Header type="secondary">
               <Header />
             </Layout.Header>
             <div className="main-container">
