@@ -30,7 +30,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>页面名称：</span>
               <IceFormBinder triggerType="onBlur" name="pageName">
-                <Input placeholder="请输入"  size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="pageName" />
@@ -41,7 +41,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>事件 ID：</span>
               <IceFormBinder triggerType="onBlur" name="eventId">
-                <Input placeholder="请输入"  size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="eventId" />
@@ -52,7 +52,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>事件名称：</span>
               <IceFormBinder triggerType="onBlur" name="eventName">
-                <Input placeholder="请输入"  size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="eventName" />
@@ -63,7 +63,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>类型：</span>
               <IceFormBinder triggerType="onBlur" name="type">
-                <Select  size="large" style={{ width: '200px' }}>
+                <Select style={{ width: '200px' }}>
                   <Select.Option value="miss">遗漏埋点</Select.Option>
                   <Select.Option value="new">新增埋点</Select.Option>
                 </Select>
@@ -78,7 +78,6 @@ export default class Filter extends Component {
               <span style={styles.formLabel}>日期：</span>
               <IceFormBinder triggerType="onBlur" name="date">
                 <DatePicker
-                  size="large"
                   style={{ width: '200px' }}
                 />
               </IceFormBinder>

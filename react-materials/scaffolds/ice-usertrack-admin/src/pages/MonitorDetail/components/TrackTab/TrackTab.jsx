@@ -21,7 +21,7 @@ function handleClick(key) {
 
 export default class TrackTab extends Component {
   renderTabExtraContent = () => {
-    return <DatePicker size="large" style={{ marginRight: '20px' }} />;
+    return <DatePicker style={{ marginRight: '20px' }} />;
   };
 
   render() {

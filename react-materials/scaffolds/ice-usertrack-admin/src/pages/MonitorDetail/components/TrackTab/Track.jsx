@@ -92,7 +92,6 @@ export default class TableFilter extends Component {
             placeholder="请输入页面名称"
             hasClear
             onChange={this.onChange}
-            size="large"
             style={{ width: '220px' }}
           />
         </div>
@@ -126,7 +125,7 @@ const styles = {
     marginBottom: '20px',
   },
   label: {
-    marginRight: '10px',
+    margin: '0 10px',
   },
   link: {
     margin: '0 5px',
