@@ -58,8 +58,7 @@ export default class Aside extends Component {
         <Nav
           selectedKeys={[pathname]}
           className={styles.menu}
-          defaultOpenKeys={this.state.openKeys}
-          openMode="single">
+          defaultOpenKeys={this.state.openKeys}>
           {Array.isArray(asideMenuConfig) &&
             asideMenuConfig.length > 0 &&
             asideMenuConfig.map((nav, index) => {
@@ -67,7 +66,6 @@ export default class Aside extends Component {
                 return (
                   <SubNav
                     key={index}
-                    onClick={this.onOpenChange}
                     label={
                       <span>
                         {nav.icon ? (

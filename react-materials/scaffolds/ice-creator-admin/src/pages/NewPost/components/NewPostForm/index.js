@@ -19,7 +19,7 @@ import { withRouter } from 'react-router-dom';
 
 const { Option } = Select;
 const { Group: RadioGroup } = Radio;
-const { CropUpload } = Upload;
+
 
 @withRouter
 export default class NewPostForm extends Component {
@@ -34,6 +34,14 @@ export default class NewPostForm extends Component {
     this.state = {
       value: {
         status: 'pending',
+        cover: [{
+          uid: '0',
+          name: 'IMG.png',
+          state: 'done',
+          url: 'https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg',
+          downloadURL: 'https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg',
+          imgURL: 'https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg'
+        }],
       },
     };
   }
@@ -72,10 +80,10 @@ export default class NewPostForm extends Component {
                 required
                 triggerType="onBlur"
                 message="作品名称不能为空"
+                name="name"
               >
                 <Input
                   placeholder="请输入作品名称"
-                  name="name"
                   size="large"
                   style={{ width: '400px' }}
                 />
@@ -90,10 +98,10 @@ export default class NewPostForm extends Component {
                 required
                 triggerType="onBlur"
                 message="作品简介不能为空"
+                name="desc"
               >
                 <Input.TextArea
                   placeholder="请输入作品简介"
-                  name="desc"
                   size="large"
                   style={{ width: '400px' }}
                 />
@@ -104,11 +112,10 @@ export default class NewPostForm extends Component {
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>作品类别</div>
-              <IceFormBinder>
+              <IceFormBinder name="cate">
                 <Select
                   placeholder="请选择"
                   mode="multiple"
-                  name="cate"
                   size="large"
                   style={{ width: '400px' }}
                 >
@@ -124,10 +131,10 @@ export default class NewPostForm extends Component {
                 required
                 triggerType="onBlur"
                 message="发布作者不能为空"
+                name="author"
               >
                 <Input
                   placeholder="请输入"
-                  name="author"
                   size="large"
                   style={{ width: '400px' }}
                 />
@@ -139,29 +146,16 @@ export default class NewPostForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>封面图</div>
               <IceFormBinder name="cover">
-                <CropUpload
+                <Upload.Card
+                  listType="card"
                   action="//www.easy-mock.com/mock/5b960dce7db69152d06475bc/ice/upload" // 该接口仅作测试使用，业务请勿使用
-                  preview
-                  previewList={[80, 60, 40]}
-                  minCropBoxSize={100}
-                >
-                  <div style={{ marginTop: '20px' }}>
-                    <img
-                      ref="targetViewer"
-                      alt=""
-                      src="https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg"
-                      width="120px"
-                      height="120px"
-                    />
-                  </div>
-                </CropUpload>
+                />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>发布时间</div>
-              <IceFormBinder>
+              <IceFormBinder name="time">
                 <DatePicker
-                  name="time"
                   size="large"
                   style={{ width: '400px' }}
                 />
@@ -169,9 +163,8 @@ export default class NewPostForm extends Component {
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>状态</div>
-              <IceFormBinder>
+              <IceFormBinder name="status">
                 <RadioGroup
-                  name="status"
                   dataSource={[
                     {
                       value: 'charge',

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tab, Button } from '@alifd/next';
 import { withRouter } from 'react-router-dom';
+import styles from './index.module.scss';
 
 function random(min, max) {
   return parseInt(Math.random() * (max - min + 1) + min, 10);
@@ -76,7 +77,7 @@ export default class PostCategory extends Component {
 
     return (
       <div>
-        <div style={styles.titleWrapper}>
+        <div className={styles.titleWrapper}>
           <span
             style={{
               fontSize: 16,
@@ -105,7 +106,7 @@ export default class PostCategory extends Component {
                 tabStyle={{ height: 60, padding: '0 15px' }}
                 key={tab.key}
                 title={
-                  <div style={styles.navItemWraper}>
+                  <div className={styles.navItemWraper}>
                     <img
                       alt={tab.title}
                       src={tab.icon}
@@ -115,28 +116,28 @@ export default class PostCategory extends Component {
                   </div>
                 }
               >
-                <div style={styles.postCategoryList}>
+                <div className={styles.postCategoryList}>
                   {tab.content.map((item, index) => {
                     return (
-                      <div key={index} style={styles.postCategoryItem}>
-                        <div style={styles.coverWrapper}>
+                      <div key={index} className={styles.postCategoryItem}>
+                        <div className={styles.coverWrapper}>
                           <img
                             alt={item.title}
                             style={{ width: 140, display: 'block' }}
                             src={item.cover}
                           />
                         </div>
-                        <div style={styles.blockDetail}>
-                          <h3 style={styles.blockTitle}>{item.title}</h3>
+                        <div className={styles.blockDetail}>
+                          <h3 className={styles.blockTitle}>{item.title}</h3>
 
                           {item.detail.map((desc, detailIndex) => {
                             return (
-                              <div key={detailIndex} style={styles.blockItem}>
-                                <label style={styles.blockLable}>
+                              <div key={detailIndex} className={styles.blockItem}>
+                                <label className={styles.blockLable}>
                                   {desc.label}
                                 </label>
                                 <div
-                                  style={styles.blockDesc}
+                                  className={styles.blockDesc}
                                   dangerouslySetInnerHTML={{
                                     __html: desc.desc,
                                   }}
@@ -145,7 +146,7 @@ export default class PostCategory extends Component {
                             );
                           })}
                           <Button
-                            style={styles.blockBtn}
+                            className={styles.blockBtn}
                             onClick={this.handleNewPost}
                           >
                             立即创作
@@ -163,66 +164,3 @@ export default class PostCategory extends Component {
     );
   }
 }
-
-const styles = {
-  titleWrapper: {
-    backgroundColor: '#fff',
-    height: '60px',
-    borderRadius: '6px',
-    lineHeight: '60px',
-    padding: '0 20px',
-  },
-  navItemWraper: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '60px',
-    lineHeight: '60px',
-  },
-  postCategoryList: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  postCategoryItem: {
-    width: '49%',
-    flex: '0 0 49%',
-    boxSizing: 'border-box',
-    backgroundColor: '#f6f6f6',
-    padding: '10px',
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: '20px',
-  },
-  coverWrapper: {
-    paddingRight: '14px',
-  },
-  blockDetail: {
-    width: '100%',
-    position: 'relative',
-  },
-  blockTitle: {
-    fontSize: '16px',
-    padding: '6px 0',
-  },
-  blockItem: {
-    display: 'flex',
-  },
-  blockLable: {
-    flex: '0 0 60px',
-    fontSize: '12px',
-    lineHeight: '22px',
-  },
-  blockDesc: {
-    fontSize: '12px',
-    color: '#999',
-    lineHeight: '22px',
-  },
-  blockBtn: {
-    position: 'absolute',
-    right: '10px',
-    bottom: '10px',
-    borderRadius: '3px',
-    background: '#5e83fb',
-    color: '#fff',
-  },
-};
