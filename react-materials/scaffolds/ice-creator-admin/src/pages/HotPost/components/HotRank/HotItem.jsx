@@ -23,7 +23,7 @@ class HotItem extends Component {
           {data.index}
         </span>
         <span style={styles.keyword}>{data.keyword}</span>
-        <Progress shape="progressive" style={{ width: 60 }} percent={data.percent} />
+        <Progress progressive style={{ width: 60 }} percent={data.percent} />
         <span style={styles.total}>{data.total}</span>
         <span style={styles.link}>解读</span>
       </a>

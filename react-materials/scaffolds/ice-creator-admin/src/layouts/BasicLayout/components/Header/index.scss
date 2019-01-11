@@ -17,6 +17,12 @@
     flex-direction: row;
     .header-navbar-menu {
       box-shadow: none;
+      .next-nav-item.next-selected {
+        background-color: transparent;
+      }
+      .ice-icon-stable {
+        padding-right: 1em;
+      }
     }
   }
 

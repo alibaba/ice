@@ -8,64 +8,58 @@ import React, { Component } from 'react';
 import { asideMenuConfig } from '../../../../menuConfig';
 import styles from './index.module.scss';
 
+function getOpenKeys (pathname) {
+  let openKeys = [];
+  if (Array.isArray(asideMenuConfig)) {
+    asideMenuConfig.forEach((item, index) => {
+      if (pathname.startsWith(item.path)) {
+        openKeys = [`${index}`];
+      }
+    });
+  }
+  console.log(openKeys);
+  return openKeys;
+};
 
-const {SubNav, Item} = Nav;
+const { SubNav, Item } = Nav;
 @withRouter
 export default class Aside extends Component {
   constructor(props) {
     super(props);
-    const openKeys = this.getDefaultOpenKeys();
+    const { location = {} } = this.props;
+    const { pathname } = location;
     this.state = {
-      openKeys,
+      openKeys: getOpenKeys(pathname) ,
     };
-    this.openKeysCache = openKeys;
   }
 
   /**
-   * 当前展开的菜单项
-   */
-  onOpenChange = (openKeys) => {
-    this.setState({
-      openKeys,
-    });
-    this.openKeysCache = openKeys;
+     * 当前展开的菜单项
+     */
+  onOpenChange = (selectedKeys) => {
+    console.log('13412=======', selectedKeys);
+    // this.setState({
+    //   selectedKeys,
+    // });
   };
 
   /**
    * 获取当前展开的菜单项
    */
-  getDefaultOpenKeys = () => {
-    const { location = {} } = this.props;
-    const { pathname } = location;
 
-    let openKeys = [];
-    if (Array.isArray(asideMenuConfig)) {
-      asideMenuConfig.forEach((item, index) => {
-        if (pathname.startsWith(item.path)) {
-          openKeys = [`${index}`];
-        }
-      });
-    }
-
-    return openKeys;
-  };
 
   render() {
     const { location } = this.props;
     const { pathname } = location;
 
     console.log({ pathname });
-
     return (
       <Layout.Aside className={styles.aside}>
         <Nav
-          defaultSelectedKeys={[pathname]}
           selectedKeys={[pathname]}
-          openKeys={this.state.openKeys}
-          onSelect={this.onOpenChange}
-          onClick={this.onMenuClick}
           className={styles.menu}
-        >
+          defaultOpenKeys={this.state.openKeys}
+          openMode="single">
           {Array.isArray(asideMenuConfig) &&
             asideMenuConfig.length > 0 &&
             asideMenuConfig.map((nav, index) => {
@@ -73,7 +67,8 @@ export default class Aside extends Component {
                 return (
                   <SubNav
                     key={index}
-                    title={
+                    onClick={this.onOpenChange}
+                    label={
                       <span>
                         {nav.icon ? (
                           <FoundationSymbol size="small" type={nav.icon} />

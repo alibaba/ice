@@ -1,9 +1,10 @@
-.layout {
 
+.layout {
+  background-color: $color-fill1-1;
 }
 .layoutSecion {
-  min-height: 100vh;
-  flex-direction: row;
+  min-height: 100vh !important;
+  flex-direction: row !important;
 }
 .layoutMain {
   color: #666;
