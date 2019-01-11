@@ -38,7 +38,7 @@ export default class Header extends Component {
                             {nav.icon ? (
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            <span>{nav.name}</span>
+                            <span className="nav-name-text">{nav.name}</span>
                           </span>
                         }
                       >
@@ -83,7 +83,7 @@ export default class Header extends Component {
                             {nav.icon ? (
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            {nav.name}
+                            <span className="nav-name-text">{nav.name}</span>
                           </span>
                         </a>
                       </Item>
@@ -97,7 +97,7 @@ export default class Header extends Component {
                           {nav.icon ? (
                             <FoundationSymbol size="small" type={nav.icon} />
                           ) : null}
-                          {nav.name}
+                          <span className="nav-name-text">{nav.name}</span>
                         </span>
                       </Link>
                     </Item>

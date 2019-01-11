@@ -56,7 +56,7 @@ export default class Aside extends Component {
                 return (
                   <SubNav
                     key={index}
-                    title={
+                    label={
                       <span>
                         {nav.icon ? (
                           <FoundationSymbol size="small" type={nav.icon} />
