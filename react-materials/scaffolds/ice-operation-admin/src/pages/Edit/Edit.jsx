@@ -105,8 +105,7 @@ export default class DonationForm extends Component {
                   placeholder="请选择"
                   mode="multiple"
                   size="large"
-                  style={{ width: '400px' }}
-                >
+                  style={{ width: '400px' }}>
                   <Option value="1">传统领域</Option>
                   <Option value="2">互联网领域</Option>
                   <Option value="3">其他</Option>
