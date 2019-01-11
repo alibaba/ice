@@ -28,7 +28,7 @@ export default class CardList extends Component {
           <Row wrap gutter="20">
             <Col l="6" onClick={this.handleAdd}>
               <div style={{ ...styles.card, ...styles.createScheme }}>
-                <Icon type="add" size="large" style={styles.addIcon} />
+                <Icon type="add"  style={styles.addIcon} />
                 <span>新增测试方案</span>
               </div>
             </Col>

@@ -49,7 +49,7 @@ export default class Form extends Component {
                 <Input
                   placeholder="https://alibaba.github.io/ice/"
                   type="url"
-                  size="large"
+
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -68,7 +68,7 @@ export default class Form extends Component {
                 <Input
                   placeholder="abc@example.com"
                   type="email"
-                  size="large"
+
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -78,7 +78,7 @@ export default class Form extends Component {
             </div>
             <Button
               type="primary"
-              size="large"
+
               onClick={this.validateAllFormField}
             >
               提 交

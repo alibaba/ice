@@ -15,7 +15,7 @@ export default class Filter extends Component {
           placeholder="请输入验证方案"
           hasClear
           onChange={this.onChange}
-          size="large"
+
           style={{ width: '300px' }}
         />
       </IceContainer>

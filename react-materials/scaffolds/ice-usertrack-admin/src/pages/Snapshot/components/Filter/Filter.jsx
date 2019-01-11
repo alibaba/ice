@@ -36,7 +36,6 @@ export default class Filter extends Component {
                 <IceFormBinder name="scheme" triggerType="onBlur">
                   <Input
                     placeholder="请输入验证方案"
-                    size="large"
                   />
                 </IceFormBinder>
                 <div style={styles.formError}>
@@ -47,8 +46,8 @@ export default class Filter extends Component {
             <Col l="7">
               <div style={styles.formItem}>
                 <span style={styles.formLabel}>APP 版本：</span>
-                <IceFormBinder triggerType="onBlur">
-                  <Input placeholder="请输入版本" name="version" size="large" />
+                <IceFormBinder name="version" triggerType="onBlur">
+                  <Input placeholder="请输入版本" />
                 </IceFormBinder>
                 <div style={styles.formError}>
                   <IceFormError name="version" />
@@ -61,7 +60,6 @@ export default class Filter extends Component {
                 <IceFormBinder name="creator" triggerType="onBlur">
                   <Input
                     placeholder="请输入创建人"
-                    size="large"
                   />
                 </IceFormBinder>
                 <div style={styles.formError}>
@@ -73,7 +71,6 @@ export default class Filter extends Component {
               <div style={styles.formItem}>
                 <Button
                   type="primary"
-                  size="large"
                   onClick={this.validateAllFormField}
                 >
                   搜 索

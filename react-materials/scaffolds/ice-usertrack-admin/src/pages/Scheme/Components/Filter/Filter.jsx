@@ -24,7 +24,7 @@ export default class Filter extends Component {
               placeholder="请输入方案名称"
               hasClear
               onChange={this.onChange}
-              size="large"
+
             />
           </Col>
         </Row>
