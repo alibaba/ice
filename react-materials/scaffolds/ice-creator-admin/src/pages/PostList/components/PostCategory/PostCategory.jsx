@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tab, Button } from '@icedesign/base';
+import { Tab, Button } from '@alifd/next';
 import { withRouter } from 'react-router-dom';
 
 function random(min, max) {

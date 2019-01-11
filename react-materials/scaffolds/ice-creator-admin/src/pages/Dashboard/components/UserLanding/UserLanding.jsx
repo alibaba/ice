@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Container from '@icedesign/container';
-import { Grid, Button } from '@icedesign/base';
+import { Grid, Button } from '@alifd/next';
 import { withRouter } from 'react-router-dom';
 import Img from '@icedesign/img';
 

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Grid, Feedback } from '@icedesign/base';
+import { Grid, Feedback } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
