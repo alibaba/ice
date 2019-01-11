@@ -76,7 +76,7 @@ const styles = {
     minWidth: '80px',
     display: 'inline-block',
     marginRight: '10px',
-    color: '#666',
+    color: '$color-text1-3',
   },
   number: {
     fontSize: '18px',

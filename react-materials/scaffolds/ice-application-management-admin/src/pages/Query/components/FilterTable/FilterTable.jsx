@@ -5,7 +5,7 @@ import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
 import FilterForm from './Filter';
 
-const Toast = Feedback.toast;
+const Toast = Message;
 
 const data = [
   {

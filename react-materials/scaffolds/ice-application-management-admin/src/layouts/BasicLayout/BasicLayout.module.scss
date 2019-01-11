@@ -1,0 +1,16 @@
+.iceLayout {
+  min-width: 1200px;
+  min-height: 100vh;
+  background: $color-fill1-1;
+  :global {
+    .next-nav {
+      box-shadow: none;
+    }
+  }
+  .iceLayoutSection {
+    margin-top: 65px;
+    .iceLayoutMain {
+      padding: 20px;
+    }
+  }
+}

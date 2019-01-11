@@ -8,7 +8,7 @@ import {
   FormError as IceFormError,
 } from '@icedesign/form-binder';
 
-const Toast = Feedback.toast;
+const Toast = Message;
 
 const { Row, Col } = Grid;
 export default class UserForm extends Component {

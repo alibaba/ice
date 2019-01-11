@@ -1,9 +1,9 @@
 /* eslint no-unused-expressions:0 */
 import React, { Component } from 'react';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
+import { Nav } from '@alifd/next';
 import { Link, withRouter } from 'react-router-dom';
 import { asideMenuConfig } from '../../../../menuConfig';
-
+const {SubNav, Item} = Nav;
 @withRouter
 export default class Aside extends Component {
   static propTypes = {};
@@ -20,13 +20,13 @@ export default class Aside extends Component {
     const { pathname } = location;
 
     return (
-      <Menu selectedKeys={[pathname]} mode="inline" className="ice-menu-custom">
+      <Nav selectedKeys={[pathname]} mode="inline" className="ice-menu-custom">
         {asideMenuConfig &&
           asideMenuConfig.length > 0 &&
           asideMenuConfig.map((nav, index) => {
             if (nav.children && nav.children.length > 0) {
               return (
-                <SubMenu key={index} title={<span>{nav.name}</span>}>
+                <SubNav key={index} title={<span>{nav.name}</span>}>
                   {nav.children.map((item) => {
                     const linkProps = {};
                     if (item.newWindow) {
@@ -38,12 +38,12 @@ export default class Aside extends Component {
                       linkProps.to = item.path;
                     }
                     return (
-                      <MenuItem key={item.path}>
+                      <Item key={item.path}>
                         <Link {...linkProps}>{item.name}</Link>
-                      </MenuItem>
+                      </Item>
                     );
                   })}
-                </SubMenu>
+                </SubNav>
               );
             }
             const linkProps = {};
@@ -56,14 +56,14 @@ export default class Aside extends Component {
               linkProps.to = nav.path;
             }
             return (
-              <MenuItem key={nav.path}>
+              <Item key={nav.path}>
                 <Link {...linkProps}>
                   <span>{nav.name}</span>
                 </Link>
-              </MenuItem>
+              </Item>
             );
           })}
-      </Menu>
+      </Nav>
     );
   }
 }

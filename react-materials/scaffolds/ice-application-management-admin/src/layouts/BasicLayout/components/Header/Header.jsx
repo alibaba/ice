@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Balloon, Icon } from '@alifd/next';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
-import FoundationSymbol from 'foundation-symbol';
+import { Balloon, Icon, Nav } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import IceImg from '@icedesign/img';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 import './Header.scss';
+
+const {SubNav, Item} = Nav;
 
 @withRouter
 export default class Header extends Component {
@@ -27,19 +28,19 @@ export default class Header extends Component {
         <div className="header-content">
           <Logo isDark />
           <div className="header-navbar">
-            <Menu
+            <Nav
               className="header-navbar-menu"
               onClick={this.handleNavClick}
               selectedKeys={[pathname]}
               defaultSelectedKeys={[pathname]}
-              mode="horizontal"
+              direction="hoz"
             >
               {headerMenuConfig &&
                 headerMenuConfig.length > 0 &&
                 headerMenuConfig.map((nav, index) => {
                   if (nav.children && nav.children.length > 0) {
                     return (
-                      <SubMenu
+                      <SubNav
                         triggerType="click"
                         key={index}
                         title={
@@ -60,23 +61,23 @@ export default class Header extends Component {
 
                             linkProps.href = item.path;
                             return (
-                              <MenuItem key={idx}>
+                              <Item key={idx}>
                                 <a {...linkProps}>
                                   <span>{item.name}</span>
                                 </a>
-                              </MenuItem>
+                              </Item>
                             );
                           }
                           linkProps.to = item.path;
                           return (
-                            <MenuItem key={idx}>
+                            <Item key={idx}>
                               <Link {...linkProps}>
                                 <span>{item.name}</span>
                               </Link>
-                            </MenuItem>
+                            </Item>
                           );
                         })}
-                      </SubMenu>
+                      </SubNav>
                     );
                   }
                   const linkProps = {};
@@ -86,7 +87,7 @@ export default class Header extends Component {
                     }
                     linkProps.href = nav.path;
                     return (
-                      <MenuItem key={index}>
+                      <Item key={index}>
                         <a {...linkProps}>
                           <span>
                             {nav.icon ? (
@@ -95,12 +96,12 @@ export default class Header extends Component {
                             {nav.name}
                           </span>
                         </a>
-                      </MenuItem>
+                      </Item>
                     );
                   }
                   linkProps.to = nav.path;
                   return (
-                    <MenuItem key={index}>
+                    <Item key={index}>
                       <Link {...linkProps}>
                         <span>
                           {nav.icon ? (
@@ -109,10 +110,10 @@ export default class Header extends Component {
                           {nav.name}
                         </span>
                       </Link>
-                    </MenuItem>
+                    </Item>
                   );
                 })}
-            </Menu>
+            </Nav>
             <Balloon
               trigger={
                 <div
