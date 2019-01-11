@@ -34,6 +34,7 @@ const CSS_MODULE_CONF = {
   options: {
     sourceMap: true,
     modules: true,
+    localIdentName: '[folder]__[name]__[local]--[hash:base64:5]'
   },
 };
 module.exports = (buildConfig = {}, themeConfig) => {
@@ -90,12 +91,7 @@ module.exports = (buildConfig = {}, themeConfig) => {
       exclude: /\.module\.css$/,
       use: withCssHotLoader([
         miniCssExtractPluginLoader,
-        {
-          loader: CSS_LOADER,
-          options: {
-            sourceMap: true,
-          },
-        },
+        CSS_LOADER_CONF,
         {
           loader: POSTCSS_LOADER,
           options: Object.assign({ sourceMap: true }, postcssConfig),
@@ -106,13 +102,7 @@ module.exports = (buildConfig = {}, themeConfig) => {
       test: /\.module\.css$/,
       use: withCssHotLoader([
         miniCssExtractPluginLoader,
-        {
-          loader: CSS_LOADER,
-          options: {
-            sourceMap: true,
-            modules: true,
-          },
-        },
+        CSS_MODULE_CONF,
         {
           loader: POSTCSS_LOADER,
           options: Object.assign({ sourceMap: true }, postcssConfig),
@@ -124,12 +114,7 @@ module.exports = (buildConfig = {}, themeConfig) => {
       exclude: /\.module\.less$/,
       use: withCssHotLoader([
         miniCssExtractPluginLoader,
-        {
-          loader: CSS_LOADER,
-          options: {
-            sourceMap: true,
-          },
-        },
+        CSS_LOADER_CONF,
         {
           loader: POSTCSS_LOADER,
           options: Object.assign({ sourceMap: true }, postcssConfig),
@@ -146,13 +131,7 @@ module.exports = (buildConfig = {}, themeConfig) => {
       test: /\.module\.less$/,
       use: withCssHotLoader([
         miniCssExtractPluginLoader,
-        {
-          loader: CSS_LOADER,
-          options: {
-            sourceMap: true,
-            modules: true,
-          },
-        },
+        CSS_MODULE_CONF,
         {
           loader: POSTCSS_LOADER,
           options: Object.assign({ sourceMap: true }, postcssConfig),
