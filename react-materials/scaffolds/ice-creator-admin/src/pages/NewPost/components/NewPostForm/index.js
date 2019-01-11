@@ -7,7 +7,7 @@ import {
   Select,
   DatePicker,
   Radio,
-  Feedback,
+  Message,
   Upload,
 } from '@alifd/next';
 import {
@@ -51,7 +51,7 @@ export default class NewPostForm extends Component {
         console.log({ errors });
       }
       console.log({ values });
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
       this.props.history.push('/post/list');
     });
   };
@@ -108,7 +108,7 @@ export default class NewPostForm extends Component {
               <IceFormBinder>
                 <Select
                   placeholder="请选择"
-                  multiple
+                  mode="multiple"
                   name="cate"
                   size="large"
                   style={{ width: '400px' }}

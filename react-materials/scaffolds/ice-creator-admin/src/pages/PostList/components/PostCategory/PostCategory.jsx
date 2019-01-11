@@ -101,10 +101,10 @@ export default class PostCategory extends Component {
         >
           {tabs.map((tab) => {
             return (
-              <Tab.TabPane
+              <Tab.Item
                 tabStyle={{ height: 60, padding: '0 15px' }}
                 key={tab.key}
-                tab={
+                title={
                   <div style={styles.navItemWraper}>
                     <img
                       alt={tab.title}
@@ -155,7 +155,7 @@ export default class PostCategory extends Component {
                     );
                   })}
                 </div>
-              </Tab.TabPane>
+              </Tab.Item>
             );
           })}
         </Tab>

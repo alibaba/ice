@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Grid, Feedback } from '@alifd/next';
+import { Grid, Message } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
 class FeatureItem extends Component {
   handleClick = () => {
-    Feedback.toast.prompt('您暂无权限查看详情，请先申请权限');
+    Message.prompt('您暂无权限查看详情，请先申请权限');
   };
 
   render() {

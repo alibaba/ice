@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Grid, Feedback } from '@alifd/next';
+import { Input, Button, Checkbox, Grid, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -44,7 +44,7 @@ class UserLogin extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('登录成功');
+      Message.success('登录成功');
       this.props.history.push('/');
     });
   };

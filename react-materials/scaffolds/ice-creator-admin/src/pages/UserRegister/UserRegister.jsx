@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Grid, Feedback } from '@alifd/next';
+import { Input, Button, Grid, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -66,7 +66,7 @@ class UserRegister extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('注册成功');
+      Message.success('注册成功');
       this.props.history.push('/user/login');
     });
   };
