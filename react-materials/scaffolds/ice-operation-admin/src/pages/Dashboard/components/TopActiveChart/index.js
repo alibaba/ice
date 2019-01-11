@@ -38,7 +38,7 @@ const activePages = [
     page: '设备 E',
     amount: '1,24,693',
     percent: 60,
-    state: '',
+    state: undefined,
   },
   {
     id: 6,
@@ -59,7 +59,7 @@ const activePages = [
     page: '设备 H',
     amount: '1,688',
     percent: 50,
-    state: '',
+    state: undefined,
   },
 ];
 

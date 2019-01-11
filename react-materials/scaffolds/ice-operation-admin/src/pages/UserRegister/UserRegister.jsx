@@ -8,6 +8,7 @@ import {
   FormError as IceFormError,
 } from '@icedesign/form-binder';
 import IceIcon from '@icedesign/foundation-symbol';
+import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
@@ -73,28 +74,28 @@ class UserRegister extends Component {
 
   render() {
     return (
-      <div style={styles.container}>
-        <h4 style={styles.title}>注 册</h4>
+      <div className={styles.container}>
+        <h4 className={styles.title}>注 册</h4>
         <IceFormBinderWrapper
           value={this.state.value}
           onChange={this.formChange}
           ref="form"
         >
-          <div style={styles.formItems}>
-            <div style={styles.formItem}>
-              <IceIcon type="person" size="small" style={styles.inputIcon} />
+          <div className={styles.formItems}>
+            <div className={styles.formItem}>
+              <IceIcon type="person" size="small" className={styles.inputIcon} />
               <IceFormBinder name="name" required message="请输入正确的用户名">
                 <Input
                   size="large"
                   placeholder="用户名"
-                  style={styles.inputCol}
+                  className={styles.inputCol}
                 />
               </IceFormBinder>
               <IceFormError name="name" />
             </div>
 
-            <div style={styles.formItem}>
-              <IceIcon type="mail" size="small" style={styles.inputIcon} />
+            <div className={styles.formItem}>
+              <IceIcon type="mail" size="small" className={styles.inputIcon} />
               <IceFormBinder
                 type="email"
                 name="email"
@@ -105,14 +106,14 @@ class UserRegister extends Component {
                   size="large"
                   maxLength={20}
                   placeholder="邮箱"
-                  style={styles.inputCol}
+                  className={styles.inputCol}
                 />
               </IceFormBinder>
               <IceFormError name="email" />
             </div>
 
-            <div style={styles.formItem}>
-              <IceIcon type="lock" size="small" style={styles.inputIcon} />
+            <div className={styles.formItem}>
+              <IceIcon type="lock" size="small" className={styles.inputIcon} />
               <IceFormBinder
                 name="passwd"
                 required
@@ -122,14 +123,14 @@ class UserRegister extends Component {
                   htmlType="password"
                   size="large"
                   placeholder="至少8位密码"
-                  style={styles.inputCol}
+                  className={styles.inputCol}
                 />
               </IceFormBinder>
               <IceFormError name="passwd" />
             </div>
 
-            <div style={styles.formItem}>
-              <IceIcon type="lock" size="small" style={styles.inputIcon} />
+            <div className={styles.formItem}>
+              <IceIcon type="lock" size="small" className={styles.inputIcon} />
               <IceFormBinder
                 name="rePasswd"
                 required
@@ -141,7 +142,7 @@ class UserRegister extends Component {
                   htmlType="password"
                   size="large"
                   placeholder="确认密码"
-                  style={styles.inputCol}
+                  className={styles.inputCol}
                 />
               </IceFormBinder>
               <IceFormError name="rePasswd" />
@@ -151,12 +152,12 @@ class UserRegister extends Component {
               <Button
                 type="primary"
                 onClick={this.handleSubmit}
-                style={styles.submitBtn}
+                className={styles.submitBtn}
                 size="large"
               >
                 注 册
               </Button>
-              <Link to="/user/login" style={styles.tips}>
+              <Link to="/user/login" className={styles.tips}>
                 使用已有账户登录
               </Link>
             </div>
@@ -166,43 +167,5 @@ class UserRegister extends Component {
     );
   }
 }
-
-const styles = {
-  container: {
-    width: '400px',
-    padding: '40px',
-    background: '#fff',
-    borderRadius: '6px',
-  },
-  title: {
-    margin: '0 0 40px',
-    color: 'rgba(0, 0, 0, 0.8)',
-    fontSize: '28px',
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  formItem: {
-    position: 'relative',
-    marginBottom: '20px',
-  },
-  inputIcon: {
-    position: 'absolute',
-    left: '10px',
-    top: '8px',
-    color: '#666',
-  },
-  inputCol: {
-    width: '100%',
-    paddingLeft: '20px',
-  },
-  submitBtn: {
-    width: '100%',
-  },
-  tips: {
-    marginTop: '20px',
-    display: 'block',
-    textAlign: 'center',
-  },
-};
 
 export default UserRegister;
