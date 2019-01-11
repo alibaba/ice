@@ -1,16 +1,14 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Grid, Message, Icon } from '@alifd/next';
+import { Input, Button, Checkbox, Grid, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import Label from '@icedesign/label';
-
-import style from './index.module.scss';
-
+import cx from 'classnames';
+import Icon from '@icedesign/foundation-symbol';
 
 const { Row, Col } = Grid;
 
@@ -55,7 +53,6 @@ class UserLogin extends Component {
   render() {
     return (
       <div className="formContainer">
-        <Label> test test test</Label>
         <h4 className="formTitle">登 录</h4>
         <IceFormBinderWrapper
           value={this.state.value}
@@ -65,9 +62,9 @@ class UserLogin extends Component {
           <div className="formItems">
             <Row className="formItem">
               <Col className="formItemCol">
-                <Icon type="account" size="small" className="inputIcon" />
+                <Icon type="person" size="small" className="inputIcon" />
                 <IceFormBinder name="username" required message="必填">
-                  <Input className={style.input}   maxLength={20} placeholder="用户名" />
+                  <Input className="next-input-single" maxLength={20} placeholder="用户名" />
                 </IceFormBinder>
               </Col>
               <Col>
@@ -77,9 +74,9 @@ class UserLogin extends Component {
 
             <Row className="formItem">
               <Col className="formItemCol">
-                <Icon type="email" size="small" className="inputIcon" />
+                <Icon type="lock" size="small" className="inputIcon" />
                 <IceFormBinder name="password" required message="必填">
-                  <Input   htmlType="password" placeholder="密码" />
+                  <Input className="next-input-single" htmlType="password" placeholder="密码" />
                 </IceFormBinder>
               </Col>
               <Col>
