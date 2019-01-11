@@ -23,15 +23,14 @@ export default class Filter extends Component {
           <Row wrap>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>应用名</label>
-              <IceFormBinder>
-                <Input name="app" />
+              <IceFormBinder name="app" >
+                <Input />
               </IceFormBinder>
             </Col>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>状态</label>
-              <IceFormBinder>
+              <IceFormBinder name="status">
                 <Select
-                  name="status"
                   placeholder="请选择"
                   style={styles.filterTool}
                 >
