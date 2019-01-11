@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Grid, Button, Select, Feedback } from '@icedesign/base';
+import { Input, Grid, Button, Select, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -163,7 +163,7 @@ export default class UserForm extends Component {
                     required
                     message="请输入申请内容"
                   >
-                    <Input multiple style={{ width: '100%' }} value={formValue.content} placeholder="请输入机器ip，支持多个，逗号或换行分割" />
+                    <Input.TextArea style={{ width: '100%' }} value={formValue.content} placeholder="请输入机器ip，支持多个，逗号或换行分割" />
                   </IceFormBinder>
                   <IceFormError name="content" />
                 </Col>
@@ -179,7 +179,7 @@ export default class UserForm extends Component {
                     required
                     message="请输入申请理由"
                   >
-                    <Input multiple value={formValue.reason} style={{ width: '100%' }} />
+                    <Input.TextArea value={formValue.reason} style={{ width: '100%' }} />
                   </IceFormBinder>
                   <IceFormError name="reason" />
                 </Col>

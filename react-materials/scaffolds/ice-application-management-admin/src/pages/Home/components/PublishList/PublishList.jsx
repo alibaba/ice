@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Progress } from '@icedesign/base';
+import { Table, Pagination, Progress } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
 
@@ -214,7 +214,7 @@ export default class PublishList extends Component {
       <IceContainer title="我的发布单">
         <Table
           dataSource={list}
-          isLoading={__loading}
+          loading={__loading}
           className="basic-table"
           style={styles.basicTable}
           hasBorder={false}

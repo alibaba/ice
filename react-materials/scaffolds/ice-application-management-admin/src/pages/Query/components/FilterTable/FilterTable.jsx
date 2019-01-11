@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Feedback } from '@icedesign/base';
+import { Table, Pagination, Message } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
 import FilterForm from './Filter';
@@ -268,7 +268,7 @@ export default class EnhanceTable extends Component {
         <IceContainer>
           <Table
             dataSource={list}
-            isLoading={__loading}
+            loading={__loading}
             className="basic-table"
             style={styles.basicTable}
             hasBorder={false}
