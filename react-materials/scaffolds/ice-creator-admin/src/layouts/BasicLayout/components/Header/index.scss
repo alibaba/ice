@@ -15,15 +15,8 @@
     flex: auto;
     justify-content: flex-end;
     flex-direction: row;
-    .ice-menu {
-      background: transparent;
-      .ice-menu-submenu-title,
-      .ice-menu-item {
-        font-size: 14px;
-        a:hover {
-          color: #2077ff;
-        }
-      }
+    .header-navbar-menu {
+      box-shadow: none;
     }
   }
 
@@ -64,7 +57,7 @@
     color: #666;
     cursor: pointer;
     a:hover {
-      color: #2077ff;
+      color: $color-brand1-6;
     }
     i {
       margin-right: 5px;

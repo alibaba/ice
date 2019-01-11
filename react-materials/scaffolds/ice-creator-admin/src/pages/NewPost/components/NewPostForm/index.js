@@ -91,11 +91,10 @@ export default class NewPostForm extends Component {
                 triggerType="onBlur"
                 message="作品简介不能为空"
               >
-                <Input
+                <Input.TextArea
                   placeholder="请输入作品简介"
                   name="desc"
                   size="large"
-                  multiple
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
