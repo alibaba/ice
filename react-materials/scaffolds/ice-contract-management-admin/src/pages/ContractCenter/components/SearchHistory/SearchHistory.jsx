@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
-import { Button, Feedback } from '@icedesign/base';
+import { Button, Message } from '@alifd/next';
 import ContainerTitle from '../../../../components/ContainerTitle';
 
 const mockData = [
@@ -87,7 +87,7 @@ export default class SearchHistory extends Component {
                 <div style={styles.itemInfo}>
                   <span style={styles.time}>{item.time}</span>
                   <Button
-                    shape="text"
+                    text
                     style={styles.query}
                     onClick={this.onSearchAgain.bind(this, item)}
                   >

@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Button } from '@icedesign/base';
+import { Icon, Button } from '@alifd/next';
 import CustomForm from '../CustomForm';
 
 const formConfig = [
@@ -211,7 +211,7 @@ export default class SearchFilter extends Component {
    */
   renderExtraContent = () => {
     return (
-      <Button shape="text" style={styles.extraContent} onClick={this.handleAdvancedSearch}>
+      <Button text style={styles.extraContent} onClick={this.handleAdvancedSearch}>
         高级搜索{' '}
         <Icon
           size="xs"

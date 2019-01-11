@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
-import { Table, Pagination, Button, Feedback } from '@icedesign/base';
+import { Table, Pagination, Button, Message } from '@alifd/next';
 import SearchFilter from './SearchFilter';
 
 const defaultSearchQuery = {
@@ -123,18 +123,18 @@ export default class ContractTable extends Component {
     return (
       <div>
         <Button
-          shape="text"
+          text
           onClick={() => {
-            Feedback.toast.success('修改合同');
+            Message.success('修改合同');
           }}
         >
           修改合同
         </Button>
         <span style={styles.separator} />
         <Button
-          shape="text"
+          text
           onClick={() => {
-            Feedback.toast.success('查看详情');
+            Message.success('查看详情');
           }}
         >
           查看详情
@@ -215,7 +215,7 @@ export default class ContractTable extends Component {
         <Table
           dataSource={dataSource}
           hasBorder={false}
-          isLoading={loading}
+          loading={loading}
         >
           {this.getTableColumns().map((item) => {
             return (

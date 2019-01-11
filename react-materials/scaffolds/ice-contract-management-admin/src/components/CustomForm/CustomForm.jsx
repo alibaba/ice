@@ -8,7 +8,7 @@ import {
   Grid,
   Select,
   DatePicker,
-} from '@icedesign/base';
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,

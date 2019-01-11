@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
