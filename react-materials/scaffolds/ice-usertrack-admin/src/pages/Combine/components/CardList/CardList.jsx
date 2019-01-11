@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Grid, Balloon, Dialog } from '@icedesign/base';
+import { Icon, Grid, Balloon, Dialog } from '@alifd/next';
 import FoundationSymbol from 'foundation-symbol';
 import { withRouter } from 'react-router-dom';
 

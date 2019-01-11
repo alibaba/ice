@@ -7,8 +7,8 @@ import {
   Radio,
   DatePicker,
   Grid,
-  Feedback,
-} from '@icedesign/base';
+  Message,
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -29,7 +29,7 @@ export default class EditForm extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('编辑成功');
+      Message.success('编辑成功');
     });
   };
 
@@ -117,10 +117,9 @@ export default class EditForm extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="description">
-                  <Input
+                  <Input.TextArea
                     style={styles.inputItem}
                     size="large"
-                    multiple
                     placeholder="请输入描述..."
                   />
                 </IceFormBinder>

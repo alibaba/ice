@@ -8,8 +8,8 @@ import {
   Switch,
   Upload,
   Grid,
-  Feedback,
-} from '@icedesign/base';
+  Message,
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -74,7 +74,7 @@ export default class BaseSetting extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('更新成功');
+      Message.success('更新成功');
     });
   };
 
@@ -252,10 +252,9 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="description">
-                  <Input
+                  <Input.TextArea
                     style={styles.inputItem}
                     size="large"
-                    multiple
                     placeholder="请输入描述..."
                   />
                 </IceFormBinder>

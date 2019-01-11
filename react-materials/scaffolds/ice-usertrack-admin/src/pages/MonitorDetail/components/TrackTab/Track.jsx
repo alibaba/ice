@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Table, Pagination, Feedback } from '@icedesign/base';
+import { Input, Table, Pagination, Message } from '@alifd/next';
 
 const getData = (length = 10) => {
   return Array.from({ length }).map((item, index) => {
@@ -62,7 +62,7 @@ export default class TableFilter extends Component {
   };
 
   handleApply = () => {
-    Feedback.toast.success('申请权限已发送，请十分钟之后再试');
+    Message.success('申请权限已发送，请十分钟之后再试');
   };
 
   onChange = () => {
@@ -96,7 +96,7 @@ export default class TableFilter extends Component {
             style={{ width: '220px' }}
           />
         </div>
-        <Table dataSource={data} isLoading={isLoading} hasBorder={false}>
+        <Table dataSource={data} loading={isLoading} hasBorder={false}>
           <Table.Column title="页面名称" dataIndex="pageName" width={100} />
           <Table.Column title="事件名称" dataIndex="eventName" width={150} />
           <Table.Column title="事件ID" dataIndex="eventId" width={100} />

@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Feedback } from '@icedesign/base';
+import { Input, Button, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -23,7 +23,7 @@ export default class Form extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
       this.props.history.push('/');
     });
   };

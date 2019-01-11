@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Feedback } from '@icedesign/base';
+import { Table, Pagination, Message } from '@alifd/next';
 import { Link } from 'react-router-dom';
 import TableFilter from './TableFilter';
 
@@ -62,7 +62,7 @@ export default class CustomTable extends Component {
   };
 
   handleApply = () => {
-    Feedback.toast.success('申请权限已发送，请十分钟之后再试');
+    Message.success('申请权限已发送，请十分钟之后再试');
   };
 
   handleFilterChange = () => {
@@ -89,7 +89,7 @@ export default class CustomTable extends Component {
     return (
       <div>
         <TableFilter onChange={this.handleFilterChange} />
-        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
+        <Table loading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="APPID" dataIndex="id" />
           <Table.Column title="当前APPKey" dataIndex="key" />
           <Table.Column title="应用名称" dataIndex="name" />

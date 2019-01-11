@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Grid, Loading, Dialog } from '@icedesign/base';
+import { Icon, Grid, Loading, Dialog } from '@alifd/next';
 import FoundationSymbol from 'foundation-symbol';
 import { withRouter } from 'react-router-dom';
 
@@ -23,8 +23,6 @@ export default class CardList extends Component {
       <div style={styles.container}>
         <Loading
           visible={isLoading}
-          shape="flower"
-          color="#333"
           style={styles.loading}
         >
           <Row wrap gutter="20">
