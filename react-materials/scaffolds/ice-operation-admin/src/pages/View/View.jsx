@@ -2,7 +2,7 @@
  * 行业级设备模型查看页
  */
 import React, { Component } from 'react';
-import { Table, Dialog, Breadcrumb } from '@icedesign/base';
+import { Table, Dialog, Breadcrumb } from '@alifd/next';
 import FormView from '../../components/FormView';
 import {
   formConfig,

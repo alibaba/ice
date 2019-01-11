@@ -2,7 +2,7 @@
 import React from 'react';
 import Layout from '@icedesign/layout';
 import Menu from '@icedesign/menu';
-import { Icon, Balloon } from '@icedesign/base';
+import { Icon, Balloon } from '@alifd/next';
 import { Link, withRouter } from 'react-router-dom';
 import { asideMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';

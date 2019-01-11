@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab, Grid } from '@icedesign/base';
+import { Tab, Grid } from '@alifd/next';
 import SeriesLine from './SeriesLine';
 import BasicLine from './BasicLine';
 import Users from '../Users';

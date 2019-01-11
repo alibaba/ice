@@ -8,7 +8,7 @@ import {
   Pagination,
   Icon,
   Breadcrumb,
-} from '@icedesign/base';
+} from '@alifd/next';
 
 const { Column } = Table;
 const PAGESIZE = 10;
