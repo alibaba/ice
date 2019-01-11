@@ -1,5 +1,5 @@
 import React from 'react';
-import { Notice } from '@alifd/next';
+import { Message } from '@alifd/next';
 import './CustomNotice.scss';
 
 const CustomNotice = () => {
@@ -8,7 +8,7 @@ const CustomNotice = () => {
   };
 
   return (
-    <Notice
+    <Message
       closeable
       className="custom-notice"
       style={styles.notice}

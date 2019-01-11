@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Balloon, Icon } from '@alifd/next';
 import IceImg from '@icedesign/img';
-import Menu from '@icedesign/menu';
+import {Nav as Menu} from '@alifd/next';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
@@ -23,7 +23,7 @@ export default class Header extends PureComponent {
         >
           {/* Header 菜单项 begin */}
           {headerMenuConfig && headerMenuConfig.length > 0 ? (
-            <Menu mode="horizontal" selectedKeys={[]}>
+            <Menu direction="hoz" selectedKeys={[]}  type="secondary">
               {headerMenuConfig.map((nav, idx) => {
                 const linkProps = {};
                 if (nav.newWindow) {
