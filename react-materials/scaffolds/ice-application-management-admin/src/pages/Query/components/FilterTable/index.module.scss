@@ -12,15 +12,11 @@
 .titleWrapper {
   display: flex;
   flex-direction: row;
-  :global {
-    a:link {
-      color: $color-brand1-6;
-    }
-  }
 }
 .title {
   margin-left: 10px;
   line-height: 20px;
+  color: $color-brand1-6;
 }
 .paginationWrapper {
   text-align: right;
