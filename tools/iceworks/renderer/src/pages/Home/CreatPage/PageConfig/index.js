@@ -309,8 +309,7 @@ class PageConfig extends Component {
 
                 // 移除 previewPage 临时文件
                 return scaffolder.removePreviewPage({
-                  destDir: this.props.newpage.targetPath,
-                  nodeFramework: currentProject.nodeFramework
+                  clientSrcPath: currentProject.clientSrcPath
                 });
               }
             })

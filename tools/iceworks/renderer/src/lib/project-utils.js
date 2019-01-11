@@ -279,14 +279,14 @@ export const validateProjectName = (proejctName) => {
  * 扫描项目的 layouts  //没有被调用过的方法？
  * @param {String} projectPath  项目目录地址
  */
-export const scanLayouts = (projectPath) => {
-  const layoutsPath = path.join(projectPath, 'src', 'layouts');
-  let dir = [];
-  try {
-    dir = fs.readdirSync(layoutsPath);
-  } catch (e) {}
-  return dir;
-};
+// export const scanLayouts = (projectPath) => {
+//   const layoutsPath = path.join(projectPath, 'src', 'layouts');
+//   let dir = [];
+//   try {
+//     dir = fs.readdirSync(layoutsPath);
+//   } catch (e) {}
+//   return dir;
+// };
 
 /**
  * 获取当前项目目录下的 pages, 并且过滤掉 IceworksPreviewPage

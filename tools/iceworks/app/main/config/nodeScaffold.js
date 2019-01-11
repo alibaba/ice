@@ -1,11 +1,13 @@
-const koa = {
+const koa2 = {
   tarball: {
     name: 'ice-koa-template',
     title: 'ICE Koa Template',
     source:
       {
         type: 'npm',
-        npm: 'ice-koa-template',
+        // npm: 'ice-koa-template',
+        npm: '@icedesign/ice-koa-template',
+        version: '1.0.0-beta.2',
         registry: 'http://registry.npmjs.com'
       }
   },
@@ -61,6 +63,6 @@ const midway = {
 };
 
 module.exports = {
-  koa,
+  koa2,
   midway
 };

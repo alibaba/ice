@@ -61,10 +61,10 @@ class PageBlockPicker extends Component {
    */
   handleOk = () => {
     
-    const { pageBlockPicker } = this.props;
+    const { pageBlockPicker, projects } = this.props;
     const { pageName, projectPath } = pageBlockPicker;
-
-    const { nodeFramework } = this.props.projects.currentProject;
+    const { currentProject = {} } = projects;
+    const { clientPath, clientSrcPath } = currentProject;
 
     const blocks = toJS(this.props.blocks.selected);
 
@@ -80,10 +80,9 @@ class PageBlockPicker extends Component {
     let blocksDependencies;
     scaffolder.utils
       .downloadBlocksToPage({
-        destDir: projectPath,
+        clientSrcPath,
         blocks: blocks,
         pageName: pageName,
-        nodeFramework,
       })
       .catch((err) => {
         pageBlockPicker.downloadDone();
@@ -117,7 +116,7 @@ class PageBlockPicker extends Component {
           error: error,
         });
         // 兜底逻辑，将依赖信息写入到 package.json 里
-        const packageFile = path.join(projectPath, 'package.json');
+        const packageFile = path.join(clientPath, 'package.json');
         new Promise((resolve, reject) => {
           try {
             const pkgData = fs.readFileSync(packageFile);
@@ -147,7 +146,7 @@ class PageBlockPicker extends Component {
                 title: '写入 package.json 失败',
                 error:
                   'package.json 不存在或存在语法错误 检查 ' +
-                  path.join(projectPath, 'package.json'),
+                  path.join(clientPath, 'package.json'),
               });
             }
           } else {

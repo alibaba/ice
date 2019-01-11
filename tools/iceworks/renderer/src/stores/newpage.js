@@ -5,10 +5,6 @@ import { scanPages } from '../lib/project-utils';
 import projects from './projects';
 import projectScripts from '../lib/project-scripts';
 import scanLayout from '../datacenter/scanLayout';
-import services from '../services';
-
-const { paths } = services;
-const { getClientPath } = paths;
 
 // useStrict(true); // 严格模式，只能内部修改值
 
@@ -19,7 +15,6 @@ const { getClientPath } = paths;
 /**
  * 新建页面
  */
-
 class NewPage {
   @observable
   targetPath = ''; // 生成的目标路径
@@ -77,9 +72,8 @@ class NewPage {
     }
   }
 
-  @action
-  setTargetPath(targetPath) {
-    this.targetPath = targetPath;
+  get targetPath() {
+    return projects.currentProject.clientPath;
   }
 
   @action
@@ -87,9 +81,7 @@ class NewPage {
     const destDir = this.targetPath;
     const type = projects.currentProject.getLibraryType(); // 当前项目框架库类型
     this.loading = true;
-    const scanPath = projects.currentProject.nodeFramework
-      ? getClientPath(destDir, projects.currentProject.nodeFramework)
-      : path.join(destDir, 'src');
+    const scanPath = clientSrcPath;
     Promise.all([
       scanLayout({ targetPath: scanPath, type }),
       scanPages(scanPath),

@@ -13,7 +13,6 @@ const DependenciesError = require('./errors/DependenciesError');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
-const { getClientPath } = require('../../paths');
 
 /**
  * 批量下载 block 到页面中
@@ -22,9 +21,9 @@ const { getClientPath } = require('../../paths');
  * @param {array} blocks 区块数组
  * @param {string} pageName 页面名称
  */
-function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, nodeFramework }) {
+function downloadBlocksToPage({ clientSrcPath, blocks, pageName }) {
   return Promise.all(
-    blocks.map((block) => downloadBlockToPage({ destDir, pageName, block, nodeFramwork }))
+    blocks.map((block) => downloadBlockToPage({ clientSrcPath, pageName, block }))
   )
     .then((filesList) => {
       return Promise.all(
@@ -65,16 +64,14 @@ function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, nodeF
     });
 }
 
-function downloadBlockToPage({ destDir = process.cwd(), block, pageName, nodeFramework }) {
+function downloadBlockToPage({ clientSrcPath, block, pageName }) {
   if (!block || ( !block.source && block.type != 'custom' )) {
     throw new Error(
       'block need to have specified source at download block to page method.'
     );
   }
 
-  const clientPath = getClientPath(destDir, nodeFramework, 'src');
-
-  const componentsDir = path.join(clientPath, 'pages', pageName, 'components');
+  const componentsDir = path.join(clientSrcPath, 'pages', pageName, 'components');
   // 保证文件夹存在
   mkdirp.sync(componentsDir);
   logger.report('app', {
@@ -101,7 +98,7 @@ function downloadBlockToPage({ destDir = process.cwd(), block, pageName, nodeFra
           block.alias || upperCamelCase(block.name) || block.className
         ),
         tarballURL,
-        destDir
+        clientSrcPath
       );
     });
 }
@@ -151,13 +148,13 @@ function extractTarball(tarballURL, destDir) {
  * 把 block 下载到项目目录下，创建页面会使用到该功能
  * 添加 block 到页面中也使用该方法
  *
- * @param destDir
+ * @param destDir // block 的目标路径
  * @param tarballURL
- * @param projectDir
+ * @param clientPath // 前端项目路径
  * @param ignoreFiles
  * @returns {Promise<any>}
  */
-function extractBlock(destDir, tarballURL, projectDir, ignoreFiles) {
+function extractBlock(destDir, tarballURL, clientPath, ignoreFiles) {
   return new Promise((resolve, reject) => {
     debug('npmTarball', tarballURL);
     const allFiles = [];
@@ -184,7 +181,7 @@ function extractBlock(destDir, tarballURL, projectDir, ignoreFiles) {
         let destPath = ''; // 生成文件的路径
         if (isMockFiles) {
           destPath = path.join(
-            projectDir,
+            clientPath,
             entry.path.replace(/^package\//, '')
           );
         } else {

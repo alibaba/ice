@@ -14,7 +14,7 @@ module.exports = (_options, afterCreateRequest) => {
     scaffold,
     layoutConfig,
     isCustomScaffold,
-    targetPath, // 项目路径
+    targetPath, // 项目文件放置路径
     projectName,
     nodeFramework
   } = _options;
@@ -189,15 +189,15 @@ function updateScaffoldConfig(isCustomScaffold, layoutConfig) {
  */
 function processNodeProject(destDir, nodeFramework) {
   //将node模板中_打头的文件改为.
-  const serverDir = path.join(destDir, 'server');
+  const serverDir = getServerPath(destDir, nodeFramework);
   fs.readdir(serverDir, 'utf8', (err, files) => {
     const nameReg = /^_/;
     files.forEach((currentValue) => {
       if (nameReg.test(currentValue)) {
         const refactorName = currentValue.replace(nameReg, '.');
         fs.renameSync(
-          path.join(destDir, currentValue),
-          path.join(destDir, refactorName)
+          path.join(serverDir, currentValue),
+          path.join(serverDir, refactorName)
         );
       }
     });
@@ -213,13 +213,19 @@ function processNodeProject(destDir, nodeFramework) {
 function compoundPkg(destDir, nodeFramework) {
   const { pendingFields } = nodeScaffoldInfo[nodeFramework];
   const clientPath = getClientPath(destDir, nodeFramework);
-  const _package = fs.readJsonSync(path.join(clientPath, '_package.json'));
-  const clientPackage = fs.readJsonSync(path.join(clientPath, 'package.json'));
+  const clientPkgPath = path.join(clientPath, 'package.json');
+  const projectPkgPath = path.join(destDir, 'package.json');
+  const _pkgPath = path.join(clientPath, '_package.json');
+
+  const _package = fs.readJsonSync(_pkgPath);
+  const projectPackage = fs.readJsonSync(projectPkgPath);
+  const clientPackage = fs.readJsonSync(clientPkgPath);
   const versionReg = /^[\^>>(?==)<<(?==)~]?([0-9]+(?=\.)[0-9]+)/;
 
-  // 注入node模板类型
+  // 注入node模板类型到前端模板package和项目的package中
   clientPackage.templateType = nodeFramework;
-
+  projectPackage.templateType = nodeFramework;
+  // 合并 _package 的 scripts 和 依赖 到 clientPackage
   pendingFields.pkgAttrs.forEach((attrName) => {
     if (attrName === 'scripts') { // 直接覆盖
       Object
@@ -248,8 +254,9 @@ function compoundPkg(destDir, nodeFramework) {
     }
     
   });
-  fs.writeJsonSync(path.join(clientPath, 'package.json'), clientPackage);
-  fs.removeSync(path.join(clientPath, '_package.json'));
+  fs.writeJsonSync(clientPkgPath, clientPackage);
+  fs.writeJsonSync(projectPkgPath, projectPackage);
+  fs.removeSync(_pkgPath);
 }
 
 /**

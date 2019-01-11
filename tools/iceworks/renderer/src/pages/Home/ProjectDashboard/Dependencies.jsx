@@ -13,7 +13,6 @@ import EmptyTips from '../../../components/EmptyTips/';
 import ExtraButton from '../../../components/ExtraButton/';
 import Icon from '../../../components/Icon';
 import services from '../../../services';
-
 const { npm } = services;
 
 @inject('projects', 'installer')
@@ -62,7 +61,7 @@ class Dependencies extends Component {
     const currentProject = projects.currentProject;
     npm.exec(
       'npm outdated --json --silent',
-      { cwd: currentProject.fullPath },
+      { cwd: currentProject.clientPath },
       (error, stdout, stderr) => {
         if (stdout) {
           try {
@@ -102,7 +101,7 @@ class Dependencies extends Component {
 
     Promise.all(
       Object.keys(dependencies).map((name) => {
-        return this.readPackageVersion(name, currentProject.fullPath);
+        return this.readPackageVersion(name, currentProject.clientPath);
       })
     )
       .then((depsInstalled) => {
@@ -114,7 +113,7 @@ class Dependencies extends Component {
       .then(() => {
         return Promise.all(
           Object.keys(devDependencies).map((name) => {
-            return this.readPackageVersion(name, currentProject.fullPath);
+            return this.readPackageVersion(name, currentProject.clientPath);
           })
         );
       })
@@ -137,7 +136,7 @@ class Dependencies extends Component {
     if (!currentProject || !currentProject.exists) return null;
 
     // package.json 的路径地址
-    const packageFilePath = path.join(currentProject.fullPath, 'package.json');
+    const packageFilePath = path.join(currentProject.clientPath, 'package.json');
     if (fs.existsSync(packageFilePath)) {
       let packageData = fs.readFileSync(packageFilePath);
       try {
@@ -174,8 +173,8 @@ class Dependencies extends Component {
   };
 
   handleNpminstallOpen = () => {
-    const { type, projects } = this.props;
-    this.props.installer.open(projects.currentProject.fullPath, type);
+    const { type } = this.props;
+    this.props.installer.open(type);
   };
 
   handleReload = () => {
@@ -206,7 +205,7 @@ class Dependencies extends Component {
       this.setState({ [type]: deps });
       npm.exec(
         `npm update ${name} --silent`,
-        { cwd: currentProject.fullPath },
+        { cwd: currentProject.clientPath },
         (error) => {
           if (error) {
             deps[name].installing = false;
@@ -317,7 +316,7 @@ class Dependencies extends Component {
     return (
       <DashboardCard>
         <DashboardCard.Header>
-          <div>依赖管理</div>
+          <div>依赖管理(前端）</div>
           <div>
             <ExtraButton
               style={{ color: '#3080FE' }}

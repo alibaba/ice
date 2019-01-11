@@ -245,7 +245,7 @@ class Scaffold {
 
   /**
    * 开始创建项目
-   * @param {String} targetPath 生成项目的目标地址
+   * @param {String} targetPath 项目地址
    * @param {Object} options 脚手架配置
    */
   @action

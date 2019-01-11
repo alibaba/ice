@@ -12,13 +12,15 @@ const { interaction } = services;
 @observer
 class AddPackage extends Component {
   handleNpminstallOk = () => {
-    const { installer } = this.props;
-    console.info('添加依赖:', installer.type, installer.cwd, installer.deps);
+    const { installer, projects } = this.props;
+    const { currentProject } = projects;
+    // console.info('添加依赖:', installer.type, installer.cwd, installer.deps);
     installer.installing = true;
     projectScripts.npminstall(
-      installer.cwd,
+      currentProject,
       installer.deps,
       installer.type == 'devDependencies',
+      currentProject.nodeFramework,
       (error, dependencies) => {
         installer.installing = false;
         if (error) {

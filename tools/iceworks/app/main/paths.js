@@ -34,11 +34,13 @@ let SASS_BINARY_PATH = isDev
       `${process.platform}-x64-57_binding.node`
     );
 
+const NODE_FRAMEWORKS =['koa2', 'midway'];
+
 const getClientPath = (destDir, framework, sourcePath = '') => {
   if (framework) {
     if (framework === 'koa') {
       return path.join(destDir, 'client');
-    } else { // koa2, midway
+    } else if (NODE_FRAMEWORKS.includes(framework)) {
       return path.join(destDir, 'client', sourcePath);
     }
   } else {
@@ -46,12 +48,19 @@ const getClientPath = (destDir, framework, sourcePath = '') => {
   }
 };
 
-const getClientFolder = (framework) => {
+const getServerPath = (destDir, framework) => {
+  if (NODE_FRAMEWORKS.includes(framework) || framework === 'koa') {
+    return path.join(destDir, 'server');
+  }
+  return null;
+};
+
+const getClientSrcFolder = (framework) => {
   if (framework) {
     if (framework === 'koa') {
       return 'client';
-    } else if (framework === 'midway' || framework === 'koa2') {
-      return 'client/src';
+    } else if (NODE_FRAMEWORKS.includes(framework)) {
+      return 'src';
     }
   } else {
     return 'src';
@@ -65,6 +74,8 @@ module.exports = {
   SASS_BINARY_PATH,
   NODE_PATH,
   WIN_NPM_CMD,
+  NODE_FRAMEWORKS,
   getClientPath,
-  getClientFolder,
+  getClientSrcFolder,
+  getServerPath
 };

@@ -95,8 +95,7 @@ class CreatePage extends Component {
       removePromise = currentProject.scaffold.removePreviewPage({ nodeFramework: currentProject.nodeFramework });
     } else {
       removePromise = scaffolder.removePreviewPage({
-        destDir: this.props.newpage.targetPath,
-        isNodeProject: currentProject.isNodeProject
+        clientSrcPath: currentProject.clientSrcPath
       });
     }
     removePromise
@@ -265,7 +264,7 @@ class CreatePage extends Component {
                     ['install', '--no-package-lock'].concat(
                       dependenciesFormat(dependencies)
                     ),
-                    { cwd: projects.currentProject.fullPath }
+                    { cwd: projects.currentProject.clientPath }
                   )
                   .then(() => {
                     log.info('预览页面 依赖安装完成！');

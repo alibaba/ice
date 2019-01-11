@@ -20,7 +20,6 @@ const appendRouteV3 = require('./appendRouteV3');
 const appendRouteV4 = require('./appendRouteV4');
 const appendMenuV4 = require('./appendMenuV4');
 const logger = require('../../logger');
-const { getClientPath, getClientFolder } = require('../../paths');
 
 /**
  * 新建页面功能
@@ -44,7 +43,8 @@ module.exports = async function createPage({
   routePath,
   routeText,
   routeIcon, // 用于生成导航栏左侧 icon
-  destDir, // 当前项目的目录地址
+  clientPath, // 当前项目的前端目录地址
+  clientSrcPath, // 前端项目资源地址
   layout, // 用户选择的布局
   blocks = [],
   interpreter,
@@ -59,7 +59,7 @@ module.exports = async function createPage({
   routePath = routePath || pageName;
 
   // 获取当前项目的package.json中的数据
-  const pkgPath = path.join(destDir, 'package.json');
+  const pkgPath = path.join(clientPath, 'package.json');
   let pkg = {}; 
   if (pathExists.sync(pkgPath)) {
     try {
@@ -76,9 +76,9 @@ module.exports = async function createPage({
   }
 
   // 0. 检测目录合法
-  const projectValid = await utils.checkValidICEProject(destDir);
+  const projectValid = await utils.checkValidICEProject(clientPath);
   if (!projectValid) {
-    utils.createInterpreter('UNSUPPORTED_DESTPATH', { destDir }, interpreter);
+    utils.createInterpreter('UNSUPPORTED_DESTPATH', { clientPath }, interpreter);
     return [];
   }
 
@@ -86,15 +86,13 @@ module.exports = async function createPage({
   const pageFolderName = upperCamelCase(pageName || '');
   pageName = kebabCase(pageFolderName).replace(/^-/, '');
 
-  const clientPath = getClientPath(destDir, nodeFramework, 'src');
-  const clientFolder = getClientFolder(nodeFramework);
-  const pageDir = path.join(clientPath, 'pages', pageFolderName);
+  const pageDir = path.join(clientSrcPath, 'pages', pageFolderName);
 
   // 0. 如果页面级目录(page)存在 不允许 override
   if (builtIn && fs.existsSync(pageDir) && fs.readdirSync(pageDir).length > 0) {
     const canOverride = await utils.createInterpreter(
       'DESTDIR_EXISTS_OVERRIDE',
-      { dir: pageDir, destDir },
+      { dir: pageDir, clientPath },
       interpreter
     );
     if (!canOverride) {
@@ -139,7 +137,7 @@ module.exports = async function createPage({
     layoutName = layout.name;
     // 判断当前文件是否存在
     // XXX 文件名被修改存在错误风险
-    const layoutOutputPath = path.join(clientPath, 'layouts', layout.name);
+    const layoutOutputPath = path.join(clientSrcPath, 'layouts', layout.name);
     const layoutExists = fs.existsSync(layoutOutputPath);
     if (
       !excludeLayout &&
@@ -158,7 +156,7 @@ module.exports = async function createPage({
       const layoutFiles = await utils.extractBlock(
         layoutOutputPath,
         url,
-        destDir
+        clientPath
       );
       layoutFiles.forEach((file) => fileList.push(file));
     }
@@ -219,7 +217,7 @@ module.exports = async function createPage({
         );
         const blockFolderName = block.alias || upperCamelCase(block.name) || block.className; // block 目录名
 
-        let extractPosition = path.join(clientFolder, 'components');
+        let extractPosition = path.join(clientSrcPath, 'components');
         // 转换了 alias 的名称
         const blockClassName = upperCamelCase(
           block.alias || block.className || block.name
@@ -230,32 +228,32 @@ module.exports = async function createPage({
 
         if (preview) {
           block.relativePath = `./blocks/${blockFolderName}`;
-          extractPosition = path.join(clientFolder, 'pages/IceworksPreviewPage/blocks');
+          extractPosition = path.join(clientSrcPath, 'pages/IceworksPreviewPage/blocks');
         } else if (commonBlock || block.common) {
           // 生成到页面的 components 下面
           block.relativePath = `./components/${blockFolderName}`;
-          extractPosition = path.join(clientFolder, `pages/${pageFolderName}/components`);
+          extractPosition = path.join(clientSrcPath, `pages/${pageFolderName}/components`);
         }
 
         const blockExtractedFiles = await utils.extractBlock(
-          path.join(destDir, extractPosition, blockFolderName),
+          path.join(extractPosition, blockFolderName),
           tarballURL,
-          destDir
+          clientPath
         );
         fileList = fileList.concat(blockExtractedFiles);
       } else {
         const blockFolderName = block.alias || upperCamelCase(block.name) || block.className;
-        let extractPosition = path.join(clientFolder, `pages/${pageFolderName}/components`);
+        let extractPosition = path.join(clientSrcPath, `pages/${pageFolderName}/components`);
         const blockClassName = blockFolderName;
         let codeFileTree = block.code;
         block.className = blockClassName;
         block.relativePath = `./components/${blockFolderName}`;
-        mkdirp.sync(path.join(destDir, extractPosition, blockFolderName));
-        fs.writeFileSync(path.join(destDir, extractPosition, blockFolderName, 'index.jsx'), codeFileTree['index.jsx']);
+        mkdirp.sync(path.join(extractPosition, blockFolderName));
+        fs.writeFileSync(path.join(extractPosition, blockFolderName, 'index.jsx'), codeFileTree['index.jsx']);
         delete codeFileTree['index.jsx'];
         if(Object.keys(codeFileTree).length > 0){
           Object.keys(codeFileTree).forEach((element) => {
-            const folderPath = path.join(destDir, extractPosition, blockFolderName, element);
+            const folderPath = path.join(extractPosition, blockFolderName, element);
             const folderName = element;
             mkdirp.sync(folderPath);
             Object.keys(codeFileTree[folderName]).forEach((element) => {
@@ -315,13 +313,13 @@ module.exports = async function createPage({
   }, 0x1);
 
   // 更新 routes.jsx
-  let  routeFilePath = path.join(clientPath, 'routes.jsx');
-  const  routerConfigFilePath = path.join(clientPath, 'routerConfig.js');
-  const  menuConfigFilePath = path.join(clientPath, 'menuConfig.js');
+  let  routeFilePath = path.join(clientSrcPath, 'routes.jsx');
+  const  routerConfigFilePath = path.join(clientSrcPath, 'routerConfig.js');
+  const  menuConfigFilePath = path.join(clientSrcPath, 'menuConfig.js');
 
   if (!fs.existsSync(routeFilePath)) {
     // hack 兼容 vue 物料 router
-    routeFilePath = path.join(clientPath, 'router.js');
+    routeFilePath = path.join(clientSrcPath, 'router.js');
   }
 
   // routeText 表示 menu 的导航名
@@ -353,7 +351,7 @@ module.exports = async function createPage({
   } else {
     // 旧版添加模式
     await appendRouteV3({
-      destDir,
+      clientPath,
       routePath,
       routeText,
       routeIcon, // 用于生成导航栏左侧 icon
