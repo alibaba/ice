@@ -33,10 +33,9 @@ export default class Filter extends Component {
             <Col l="7">
               <div style={styles.formItem}>
                 <span style={styles.formLabel}>验证方案：</span>
-                <IceFormBinder triggerType="onBlur">
+                <IceFormBinder name="scheme" triggerType="onBlur">
                   <Input
                     placeholder="请输入验证方案"
-                    name="scheme"
                     size="large"
                   />
                 </IceFormBinder>
@@ -59,10 +58,9 @@ export default class Filter extends Component {
             <Col l="7">
               <div style={styles.formItem}>
                 <span style={styles.formLabel}>创建人：</span>
-                <IceFormBinder triggerType="onBlur">
+                <IceFormBinder name="creator" triggerType="onBlur">
                   <Input
                     placeholder="请输入创建人"
-                    name="creator"
                     size="large"
                   />
                 </IceFormBinder>

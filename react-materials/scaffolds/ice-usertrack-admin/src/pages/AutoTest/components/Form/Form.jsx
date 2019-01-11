@@ -44,11 +44,11 @@ export default class Form extends Component {
                 required
                 triggerType="onBlur"
                 message="验证地址必填"
+                name="url"
               >
                 <Input
                   placeholder="https://alibaba.github.io/ice/"
                   type="url"
-                  name="url"
                   size="large"
                   style={{ width: '400px' }}
                 />
@@ -61,13 +61,13 @@ export default class Form extends Component {
               <div style={styles.formLabel}>接收邮箱：</div>
               <IceFormBinder
                 required
+                name="email"
                 triggerType="onBlur"
                 message="邮箱地址必填"
               >
                 <Input
                   placeholder="abc@example.com"
                   type="email"
-                  name="email"
                   size="large"
                   style={{ width: '400px' }}
                 />

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Icon, Grid, Loading, Dialog } from '@alifd/next';
-import FoundationSymbol from 'foundation-symbol';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import { withRouter } from 'react-router-dom';
 
 const { Row, Col } = Grid;
