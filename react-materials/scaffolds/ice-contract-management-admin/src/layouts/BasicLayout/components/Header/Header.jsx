@@ -41,14 +41,14 @@ export default class Header extends PureComponent {
                         {nav.icon ? (
                           <FoundationSymbol type={nav.icon} size="small" />
                         ) : null}
-                        {nav.name}
+                        <span style={{marginLeft: '1em'}}>{nav.name}</span>
                       </Link>
                     ) : (
                       <a {...linkProps}>
                         {nav.icon ? (
                           <FoundationSymbol type={nav.icon} size="small" />
                         ) : null}
-                        {nav.name}
+                        <span style={{marginLeft: '1em'}}>{nav.name}</span>
                       </a>
                     )}
                   </Menu.Item>

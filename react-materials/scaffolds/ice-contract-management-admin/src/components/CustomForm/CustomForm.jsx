@@ -132,14 +132,13 @@ class CustomForm extends Component {
             </Row>
             <div style={styles.buttons}>
               <Button
-                size="large"
                 type="primary"
                 style={{ marginRight: '10px' }}
                 onClick={this.handleSubmit}
               >
                 搜 索
               </Button>
-              <Button size="large" type="normal" onClick={handleReset}>
+              <Button type="normal" onClick={handleReset}>
                 重 置
               </Button>
             </div>
