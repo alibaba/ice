@@ -59,11 +59,10 @@
     color: #999;
   }
   .submitBtn {
-    font-size: 16px;
+    font-size: $font-size-subhead;
     height: 40px;
     line-height: 40px;
     background: $color-brand1-6;
-    border-radius: 4px;
   }
   .checkbox {
     margin-left: 5px;
@@ -91,11 +90,11 @@
     line-height: 38px;
     input {
       padding-left: 32px;
-      font-size: 13px;
+      font-size: $font-size-body-2;
     }
   }
   .next-checkbox-label {
     color: #999;
-    font-size: 13px;
+    font-size: $font-size-body-2;
   }
 }
