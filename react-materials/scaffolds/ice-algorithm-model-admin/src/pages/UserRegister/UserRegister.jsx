@@ -64,7 +64,7 @@ class UserRegister extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('注册成功');
+      Message.success('注册成功');
       this.props.history.push('/user/login');
     });
   };
@@ -185,8 +185,8 @@ const styles = {
   },
   inputIcon: {
     position: 'absolute',
-    left: '10px',
-    top: '8px',
+    left: '12px',
+    top: '12px',
     color: '#666',
   },
   inputCol: {

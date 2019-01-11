@@ -1,0 +1,66 @@
+.row {
+  padding: 20px;
+}
+.modelCard {
+  border: 1px solid $color-line1-1;
+  background: $color-white;
+  margin-bottom: 40px;
+  border-radius: 4px;
+}
+.head {
+  color: $color-white;
+  padding: 10px 0;
+  background: $color-brand1-6;
+  text-align: center;
+  border-radius: 4px 4px 0 0;
+}
+.item {
+  padding: 10px 0;
+  display: flex;
+}
+.label {
+  width: 50%;
+  padding: 0 20px;
+  font-size: 13px;
+  text-align: right;
+  font-weight: 500;
+}
+.value {
+  width: 50%;
+  font-size: 13px;
+}
+.body {
+  padding: 20px;
+}
+.icon {
+  margin-right: 10px;
+}
+.footer {
+  padding: 10px 0;
+  display: flex;
+  border-top: 1px solid $color-fill1-2;
+  justify-content: center;
+}
+.button {
+  color: $color-white;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 12px;
+  margin-right: 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  &:link, &:hover {
+    color: $color-white;
+  }
+}
+
+.button1 {
+  composes: button;
+  background: $color-success-3;
+
+}
+
+.button2 {
+  composes: button;
+  background: $color-notice-3;
+}
