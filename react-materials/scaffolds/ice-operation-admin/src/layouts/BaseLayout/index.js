@@ -8,9 +8,8 @@ export default class CustomLayout extends Component {
     return (
       <Layout style={styles.container}>
         <Header />
-
         <Layout.Section className="ice-admin-layout-body">
-          <Layout.Main>
+          <Layout.Main >
             <MainRoutes />
           </Layout.Main>
         </Layout.Section>

@@ -20,6 +20,7 @@
     "@antv/data-set": "^0.10.1",
     "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^1.0.2",
+    "@icedesign/foundation-symbol": "^1.0.0",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
     "bizcharts": "3.1.3",

@@ -131,7 +131,6 @@ export default class TopActiveChart extends Component {
                   <Progress
                     percent={record.percent}
                     state={record.state}
-                    showInfo={false}
                   />
                 )}
               />

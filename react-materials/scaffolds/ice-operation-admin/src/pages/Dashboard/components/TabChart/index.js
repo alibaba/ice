@@ -6,7 +6,7 @@ import BasicLine from './BasicLine';
 import Users from '../Users';
 
 const { Row, Col } = Grid;
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 export default class TabChart extends Component {
   handleChange = (key) => {
