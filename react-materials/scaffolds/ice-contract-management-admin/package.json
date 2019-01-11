@@ -56,9 +56,6 @@
       "publicPath": "./"
     }
   },
-  "themeConfig": {
-    "primaryColor": "#2077FF"
-  },
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-contract-management-admin",

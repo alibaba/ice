@@ -43,7 +43,6 @@ export default class MyContract extends Component {
         <CustomNotice />
         <Button
           type="primary"
-          size="large"
           style={styles.newContractButton}
           onClick={this.showCreateForm}
         >
