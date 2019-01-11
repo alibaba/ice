@@ -5,7 +5,8 @@ import FoundationSymbol from '@icedesign/foundation-symbol';
 import IceImg from '@icedesign/img';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
-import './Header.scss';
+import styles from './Header.module.scss';
+
 
 const {SubNav, Item} = Nav;
 
@@ -24,12 +25,12 @@ export default class Header extends Component {
     const { location = {} } = this.props;
     const { pathname } = location;
     return (
-      <div className="header-container">
-        <div className="header-content">
+      <div className={styles["header-container"]}>
+        <div className={styles["header-content"]}>
           <Logo isDark />
-          <div className="header-navbar">
+          <div className={styles["header-navbar"]}>
             <Nav
-              className="header-navbar-menu"
+              className={styles["header-navbar-menu"]}
               onClick={this.handleNavClick}
               selectedKeys={[pathname]}
               defaultSelectedKeys={[pathname]}
@@ -48,7 +49,7 @@ export default class Header extends Component {
                             {nav.icon ? (
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            <span>{nav.name}</span>
+                            <span className={styles.subNavText}>{nav.name}</span>
                           </span>
                         }
                       >
@@ -93,7 +94,7 @@ export default class Header extends Component {
                             {nav.icon ? (
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            {nav.name}
+                            <span className={styles.subNavText}>{nav.name}</span>
                           </span>
                         </a>
                       </Item>
@@ -107,7 +108,7 @@ export default class Header extends Component {
                           {nav.icon ? (
                             <FoundationSymbol size="small" type={nav.icon} />
                           ) : null}
-                          {nav.name}
+                          <span className={styles.subNavText}>{nav.name}</span>
                         </span>
                       </Link>
                     </Item>
@@ -117,7 +118,7 @@ export default class Header extends Component {
             <Balloon
               trigger={
                 <div
-                  className="ice-design-header-userpannel"
+                  className={styles["ice-design-header-userpannel"]}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -128,33 +129,33 @@ export default class Header extends Component {
                     height={40}
                     width={40}
                     src={require('./images/avatar.png')}
-                    className="user-avatar"
+                    className={styles["user-avatar"]}
                   />
-                  <div className="user-profile">
-                    <span className="user-name" style={{ fontSize: '13px' }}>
+                  <div className={styles["user-profile"]}>
+                    <span className={styles["user-name"]} style={{ fontSize: '13px' }}>
                       淘小宝
                     </span>
                     <br />
-                    <span className="user-department">技术部</span>
+                    <span className={styles["user-department"]}>技术部</span>
                   </div>
                   <Icon
                     type="arrow-down-filling"
                     size="xxs"
-                    className="icon-down"
+                    className={styles["icon-down"]}
                   />
                 </div>
               }
               closable={false}
-              className="user-profile-menu"
+              className={styles["user-profile-menu"]}
             >
               <ul>
-                <li className="user-profile-menu-item">
+                <li className={styles["user-profile-menu-item"]}>
                   <Link to="/">
                     <FoundationSymbol type="person" size="small" />
                     我的主页
                   </Link>
                 </li>
-                <li className="user-profile-menu-item">
+                <li className={styles["user-profile-menu-item"]}>
                   <Link to="/user/login">
                     <FoundationSymbol type="compass" size="small" />
                     退出

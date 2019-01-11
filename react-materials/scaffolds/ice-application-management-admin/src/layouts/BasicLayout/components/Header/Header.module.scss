@@ -6,6 +6,12 @@
   background: #fff;
   min-width: 1200px;
   box-shadow: 0 1px 4px transparentize($color-brand1-6, 0.9);
+
+  :global {
+    .next-menu-item-text {
+      color: $color-text1-3;
+    }
+  }
   .header-content {
     width: 100%;
     padding: 10px 20px;
@@ -18,7 +24,9 @@
     display: flex;
     flex-direction: row;
   }
-
+  .subNavText {
+    padding-left: 1em;
+  }
   .user-avatar {
     margin-right: 12px;
     border-radius: 4px;
