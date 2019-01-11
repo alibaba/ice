@@ -154,10 +154,9 @@ class Home extends Component {
 
   render() {
     const { value, isTableLoading, total, current, dataSource } = this.state;
-
     return (
       <div className={styles.container}>
-        <Breadcrumb>
+        <Breadcrumb className={styles.Breadcrumb}>
           <Breadcrumb.Item>型号管理</Breadcrumb.Item>
         </Breadcrumb>
         <div className={styles.content}>

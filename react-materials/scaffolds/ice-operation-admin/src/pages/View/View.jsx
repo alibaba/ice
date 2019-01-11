@@ -10,6 +10,7 @@ import {
   mockTableData,
   dialogFormConfig,
 } from './data';
+import styles from './index.module.scss';
 
 const { Column } = Table;
 
@@ -55,7 +56,7 @@ class DeviceModelView extends Component {
   render() {
     const { formData, tableData, visible, dialogData } = this.state;
     return (
-      <div style={styles.container}>
+      <div className={styles.container}>
         <Dialog
           visible={visible}
           title="查看详情"
@@ -73,17 +74,17 @@ class DeviceModelView extends Component {
             config={dialogFormConfig}
           />
         </Dialog>
-        <Breadcrumb>
+        <Breadcrumb className={styles.Breadcrumb}>
           <Breadcrumb.Item link="/">型号管理</Breadcrumb.Item>
           <Breadcrumb.Item>查看详情</Breadcrumb.Item>
         </Breadcrumb>
-        <div style={styles.content}>
-          <h2 style={styles.headTitle}>基础信息</h2>
-          <div style={styles.section}>
+        <div className={styles.content}>
+          <h2 className={styles.headTitle}>基础信息</h2>
+          <div className={styles.section}>
             <FormView config={formConfig} data={formData} />
           </div>
-          <h2 style={styles.headTitle}>基础列表信息</h2>
-          <div style={styles.section}>
+          <h2 className={styles.headTitle}>基础列表信息</h2>
+          <div className={styles.section}>
             <Table hasBorder={false} dataSource={tableData}>
               <Column title="类型" dataIndex="typeName" />
               <Column title="名称" dataIndex="name" />
@@ -97,25 +98,5 @@ class DeviceModelView extends Component {
     );
   }
 }
-
-const styles = {
-  content: {
-    background: '#fff',
-    borderRadius: '6px',
-    padding: '20px',
-  },
-  headTitle: {
-    height: '16px',
-    lineHeight: '16px',
-    margin: '0 0 20px',
-    paddingLeft: '5px',
-    fontSize: '14px',
-    color: '#333',
-    borderLeft: '4px solid #3080fe',
-  },
-  section: {
-    marginBottom: '40px',
-  },
-};
 
 export default DeviceModelView;
