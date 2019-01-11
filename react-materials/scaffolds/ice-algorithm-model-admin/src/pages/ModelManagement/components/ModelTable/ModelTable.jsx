@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Dialog } from '@icedesign/base';
+import { Table, Pagination, Dialog } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import TableHead from './TableHead';
 
@@ -121,7 +121,7 @@ export default class ModelTable extends Component {
         <h3 style={styles.title}>模型列表</h3>
         <TableHead onChange={this.handleFilterChange} />
         <Table
-          isLoading={isLoading}
+          loading={isLoading}
           dataSource={data}
           hasBorder={false}
           style={styles.table}
