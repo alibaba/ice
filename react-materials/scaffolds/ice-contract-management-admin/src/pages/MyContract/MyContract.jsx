@@ -4,7 +4,7 @@ import { Button, Dialog, Message } from '@alifd/next';
 import ContractTable from '../../components/ContractTable';
 import CustomNotice from './components/CustomNotice';
 import CreateContractForm from './components/CreateContractForm';
-
+import styles from './index.module.scss';
 export default class MyContract extends Component {
   static displayName = 'MyContract';
 
@@ -43,13 +43,13 @@ export default class MyContract extends Component {
         <CustomNotice />
         <Button
           type="primary"
-          style={styles.newContractButton}
+          className={styles.newContractButton}
           onClick={this.showCreateForm}
         >
           新建合同
         </Button>
-        <div style={styles.tableHead}>
-          <div style={styles.tableTitle}>我的合同</div>
+        <div className={styles.tableHead}>
+          <div className={styles.tableTitle}>我的合同</div>
         </div>
         <ContractTable enableFilter={false} />
 
@@ -69,26 +69,3 @@ export default class MyContract extends Component {
     );
   }
 }
-
-const styles = {
-  tableHead: {
-    height: '32px',
-    lineHeight: '32px',
-    margin: '0 0 10px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  tableTitle: {
-    height: '20px',
-    lineHeight: '20px',
-    color: '#333',
-    fontSize: '18px',
-    fontWeight: 'bold',
-    paddingLeft: '12px',
-    borderLeft: '4px solid #666',
-  },
-  newContractButton: {
-    marginBottom: '20px',
-  },
-};
