@@ -103,7 +103,7 @@ export default class DonationForm extends Component {
               <IceFormBinder name="cate">
                 <Select
                   placeholder="请选择"
-                  multiple
+                  mode="multiple"
                   size="large"
                   style={{ width: '400px' }}
                 >
