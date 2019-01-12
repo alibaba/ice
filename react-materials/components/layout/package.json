@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/layout",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "提供页面框架性的 layout 组件",
   "main": "lib/index.js",
   "files": [
