@@ -9,7 +9,7 @@ import {
 import './SimpleFluencyForm.scss';
 
 const { Row, Col } = Grid;
-const Toast = Feedback.toast;
+const Toast = Message;
 
 export default class SimpleFluencyForm extends Component {
   static displayName = 'SimpleFluencyForm';

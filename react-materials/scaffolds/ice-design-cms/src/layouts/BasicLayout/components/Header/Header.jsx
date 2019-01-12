@@ -1,10 +1,9 @@
 /* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 import React, { PureComponent } from 'react';
-import { Balloon, Icon } from '@alifd/next';
+import { Balloon, Icon, Nav } from '@alifd/next';
 import IceImg from '@icedesign/img';
 import Layout from '@icedesign/layout';
-import Menu from '@icedesign/menu';
-import FoundationSymbol from 'foundation-symbol';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { headerMenuConfig } from '../../../../menuConfig';
@@ -18,7 +17,7 @@ export default class Header extends PureComponent {
 
     return (
       <Layout.Header
-        theme={theme}
+        type="secondary"
         className={cx('ice-design-layout-header', className)}
         style={{ ...style }}
       >
@@ -27,7 +26,7 @@ export default class Header extends PureComponent {
         <div className="ice-design-layout-header-menu">
           {/* Header 菜单项 begin */}
           {headerMenuConfig && headerMenuConfig.length > 0 ? (
-            <Menu mode="horizontal" selectedKeys={[]}>
+            <Nav direction="hoz" type="secondary" selectedKeys={[]}>
               {headerMenuConfig.map((nav, idx) => {
                 const linkProps = {};
                 if (nav.newWindow) {
@@ -39,7 +38,7 @@ export default class Header extends PureComponent {
                   linkProps.to = nav.path;
                 }
                 return (
-                  <Menu.Item key={idx}>
+                  <Nav.Item key={idx}>
                     {linkProps.to ? (
                       <Link {...linkProps}>
                         {nav.icon ? (
@@ -55,10 +54,10 @@ export default class Header extends PureComponent {
                         {!isMobile ? nav.name : null}
                       </a>
                     )}
-                  </Menu.Item>
+                  </Nav.Item>
                 );
               })}
-            </Menu>
+            </Nav>
           ) : null}
           {/* Header 菜单项 end */}
 

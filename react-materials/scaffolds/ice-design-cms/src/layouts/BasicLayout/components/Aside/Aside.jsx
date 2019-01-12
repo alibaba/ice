@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
+import {  } from '@alifd/next';
 import cx from 'classnames';
-import FoundationSymbol from 'foundation-symbol';
-import { Icon } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
+import { Nav } from '@alifd/next';
 import Logo from '../Logo';
 import { asideMenuConfig } from '../../../../menuConfig';
 import './scss/dark.scss';
 import './scss/light.scss';
+
+const Icon = FoundationSymbol;
 
 @withRouter
 export default class Aside extends Component {
@@ -98,7 +100,7 @@ export default class Aside extends Component {
 
       if (childrenItems && childrenItems.length > 0) {
         return (
-          <SubMenu
+          <Nav.SubNav
             key={index}
             title={
               <span>
@@ -110,15 +112,15 @@ export default class Aside extends Component {
             }
           >
             {childrenItems}
-          </SubMenu>
+          </Nav.SubNav>
         );
       }
       return null;
     }
     return (
-      <MenuItem key={item.path}>
+      <Nav.Item key={item.path}>
         <Link to={item.path}>{item.name}</Link>
-      </MenuItem>
+      </Nav.Item>
     );
   };
 
@@ -141,9 +143,8 @@ export default class Aside extends Component {
           </a>
         )}
 
-        <Menu
+        <Nav
           style={{ width: 200 }}
-          inlineCollapsed={false}
           mode="inline"
           selectedKeys={[pathname]}
           openKeys={this.state.openKeys}
@@ -152,7 +153,7 @@ export default class Aside extends Component {
           onClick={this.onMenuClick}
         >
           {this.getNavMenuItems(asideMenuConfig)}
-        </Menu>
+        </Nav>
       </div>
     );
   }

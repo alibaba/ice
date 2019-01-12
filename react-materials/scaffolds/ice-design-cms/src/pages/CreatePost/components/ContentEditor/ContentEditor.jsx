@@ -46,7 +46,7 @@ export default class ContentEditor extends Component {
         return false;
       }
 
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 

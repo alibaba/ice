@@ -7,7 +7,7 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
+import IceIcon from '@icedesign/foundation-symbol';
 
 @withRouter
 class UserRegister extends Component {
@@ -64,7 +64,7 @@ class UserRegister extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('注册成功');
+      Message.success('注册成功');
       this.props.history.push('/user/login');
     });
   };

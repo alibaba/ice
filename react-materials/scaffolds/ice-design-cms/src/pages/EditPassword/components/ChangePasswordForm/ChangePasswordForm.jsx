@@ -10,7 +10,7 @@ import {
 import './ChangePasswordForm.scss';
 
 const { Row, Col } = Grid;
-const Toast = Feedback.toast;
+const Toast = Message;
 
 export default class ChangePasswordForm extends Component {
   static displayName = 'ChangePasswordForm';

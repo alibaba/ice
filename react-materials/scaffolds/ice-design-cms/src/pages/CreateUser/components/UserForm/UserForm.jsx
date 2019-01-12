@@ -10,7 +10,7 @@ import {
 import './UserForm.scss';
 
 const { Row, Col } = Grid;
-const Toast = Feedback.toast;
+const Toast = Message;
 export default class UserForm extends Component {
   static displayName = 'UserForm';
 
