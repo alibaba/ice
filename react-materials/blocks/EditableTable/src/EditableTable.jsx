@@ -41,7 +41,7 @@ export default class EditableTable extends Component {
 
   renderOperation = (value, index) => {
     return (
-      <Button onClick={this.deleteItem.bind(this, index)} shape="text">
+      <Button onClick={this.deleteItem.bind(this, index)} text>
         删除
       </Button>
     );

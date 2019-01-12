@@ -80,11 +80,9 @@ export default class ScrollList extends Component {
   render() {
     return (
       <Loading
-        shape="fusion-reactor"
         color="#66AAFF"
         style={{ display: 'block' }}
-        visible={this.state.isLoading}
-      >
+        visible={this.state.isLoading}>
         <IceContainer
           style={{ height: this.props.height, overflow: 'auto' }}
           onScroll={this.handleScroll}

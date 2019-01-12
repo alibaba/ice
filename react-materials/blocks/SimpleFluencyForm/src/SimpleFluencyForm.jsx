@@ -136,14 +136,12 @@ export default class SimpleFluencyForm extends Component {
                 </Col>
                 <Col s="14" l="12">
                   <FormBinder>
-                    <Input
+                    <Input.TextArea
                       required
                       message="必填"
-                      multiple
                       name="address"
                       size="large"
-                      style={{ width: '100%' }}
-                    />
+                      style={{ width: '100%' }} />
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="address" />
@@ -181,7 +179,7 @@ export default class SimpleFluencyForm extends Component {
     return (
       <div className="simple-fluency-form">
         <IceContainer>
-          <Step current={this.state.step} type="dot">
+          <Step current={this.state.step} shape="dot">
             <Step.Item key={0} title="填写信息" />
             <Step.Item key={1} title="确认信息" />
             <Step.Item key={2} title="完成" />

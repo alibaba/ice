@@ -4,7 +4,6 @@ import { Table, Input, Select, Grid } from '@alifd/next';
 import { FormBinderWrapper, FormBinder } from '@icedesign/form-binder';
 import IceContainer from '@icedesign/container';
 
-const { Combobox } = Select;
 const { Row, Col } = Grid;
 
 const dataSource = [
@@ -125,14 +124,14 @@ export default class TagTable extends Component {
                 </Col>
                 <Col span="10">
                   <FormBinder>
-                    <Combobox
+                    <Select
                       name="levels"
                       filterLocal={false}
                       fillProps="label"
                       placeholder="请选择"
-                      multiple
-                      dataSource={['严重', '高危', '中危', '低危']}
-                    />
+                      mode="multiple"
+                      showSearch
+                      dataSource={['严重', '高危', '中危', '低危']} />
                   </FormBinder>
                 </Col>
               </Row>

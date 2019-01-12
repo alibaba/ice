@@ -11,7 +11,7 @@ import './SettingsForm.scss';
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
-const { ImageUpload } = Upload;
+const { Card } = Upload;
 
 function beforeUpload(info) {
   console.log('beforeUpload callback : ', info);
@@ -44,7 +44,7 @@ export default class SettingsForm extends Component {
         gender: 'male',
         notice: false,
         email: '',
-        avatar: '',
+        avatar: [],
         siteUrl: '',
         githubUrl: '',
         twitterUrl: '',
@@ -104,12 +104,11 @@ export default class SettingsForm extends Component {
                 </Col>
                 <Col s="12" l="10">
                   <IceFormBinder name="avatar" required message="必填">
-                    <ImageUpload
-                      listType="picture-card"
+                    <Upload.Card
                       action=""
                       accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
                       locale={{
-                        image: {
+                        card: {
                           cancel: '取消上传',
                           addPhoto: '上传图片',
                         },
@@ -117,8 +116,7 @@ export default class SettingsForm extends Component {
                       beforeUpload={beforeUpload}
                       onChange={onChange}
                       onSuccess={onSuccess}
-                      onError={onError}
-                    />
+                      onError={onError} />
                   </IceFormBinder>
                   <IceFormError name="avatar" />
                 </Col>
@@ -240,7 +238,7 @@ export default class SettingsForm extends Component {
                 </Col>
                 <Col s="12" l="10">
                   <IceFormBinder name="description">
-                    <Input size="large" multiple placeholder="请输入描述..." />
+                    <Input.TextArea size="large" placeholder="请输入描述..." />
                   </IceFormBinder>
                   <IceFormError name="description" />
                 </Col>

@@ -72,7 +72,7 @@ export default class TableFilter extends Component {
             value={endValue}
             placeholder="End"
             onChange={this.onEndChange}
-            open={endOpen}
+            visible={endOpen}
             onOpenChange={this.handleEndOpenChange}
           />
         </div>

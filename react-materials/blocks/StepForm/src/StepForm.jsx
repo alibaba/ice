@@ -61,7 +61,7 @@ export default class StepForm extends Component {
               <Step
                 current={this.state.step}
                 direction="vertical"
-                type="dot"
+                shape="dot"
                 animation={false}
                 style={styles.step}
               >

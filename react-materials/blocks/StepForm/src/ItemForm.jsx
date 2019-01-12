@@ -110,7 +110,7 @@ export default class ItemForm extends Component {
             </Col>
             <Col s="12" l="10">
               <IceFormBinder name="desc">
-                <Input multiple style={{ width: '100%' }} />
+                <Input.TextArea style={{ width: '100%' }} />
               </IceFormBinder>
             </Col>
           </Row>

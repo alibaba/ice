@@ -124,7 +124,7 @@ export default class SelectableTable extends Component {
         <IceContainer>
           <Table
             dataSource={this.state.dataSource}
-            isLoading={this.state.isLoading}
+            loading={this.state.isLoading}
             rowSelection={{
               ...this.rowSelection,
               selectedRowKeys: this.state.selectedRowKeys,

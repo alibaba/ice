@@ -78,6 +78,9 @@ export default class CardList extends Component {
 }
 
 const styles = {
+  container: {
+    background: 'lightgray'
+  },
   createScheme: {
     display: 'flex',
     alignItems: 'center',

@@ -309,7 +309,7 @@ export default class VideoList extends Component {
                     footer={false}
                     onClose={this.handleColse}
                     autoFocus={false}
-                    closable
+                    closeable
                     className="video-dialog"
                   >
                     <video

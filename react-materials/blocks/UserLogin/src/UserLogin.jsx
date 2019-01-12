@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Input, Button, Checkbox, Grid, Feedback, Icon } from '@alifd/next';
+import { Input, Button, Checkbox, Grid, Message, Icon } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -45,7 +45,7 @@ export default class UserLogin extends Component {
         return;
       }
       console.log('values:', values);
-      Feedback.toast.success('登录成功');
+      Message.success('登录成功');
       // 登录成功后可通过 hashHistory.push('/') 跳转首页
     });
   };

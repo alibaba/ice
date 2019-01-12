@@ -116,11 +116,7 @@ export default class QrCode extends Component {
               </Col>
               <Col l="20">
                 <IceFormBinder name="url">
-                  <Input
-                    style={{ width: '300px' }}
-                    multiple
-                    placeholder="https://alibaba.github.io/ice/"
-                  />
+                  <Input.TextArea style={{ width: '300px' }} placeholder="https://alibaba.github.io/ice/" />
                 </IceFormBinder>
               </Col>
             </Row>

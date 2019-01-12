@@ -50,7 +50,7 @@ export default class OverviewChartCard extends Component {
             <div
               style={{ height: '64px', display: 'flex', alignItems: 'center' }}
             >
-              <Progress percent={51} showInfo={false} />
+              <Progress percent={51} />
             </div>
             <Trend style={styles.footer} />
           </IceContainer>

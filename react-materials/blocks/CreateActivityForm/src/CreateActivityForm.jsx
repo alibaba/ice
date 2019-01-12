@@ -206,7 +206,7 @@ export default class CreateActivityForm extends Component {
                 </Col>
                 <Col s="12" l="10">
                   <IceFormBinder name="extra">
-                    <Input multiple style={{ width: '100%' }} />
+                    <Input.TextArea style={{ width: '100%' }} />
                   </IceFormBinder>
                 </Col>
               </Row>

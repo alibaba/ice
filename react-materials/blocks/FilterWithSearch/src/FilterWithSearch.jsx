@@ -61,6 +61,7 @@ export default class FilterWithSearch extends Component {
             <Col xxs={24} s={16} style={styles.searchWrapper}>
               <Search
                 inputWidth={250}
+                shape="simple"
                 searchText=""
                 size="large"
                 placeholder="请输入要搜索的关键词或商品链接"

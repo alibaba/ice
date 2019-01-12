@@ -152,13 +152,7 @@ export default class SimpleFormDialog extends Component {
               <Row style={styles.formRow}>
                 <Col>
                   <IceFormBinder>
-                    <Input
-                      name="content"
-                      style={styles.input}
-                      multiple
-                      placeholder="请输入详细内容"
-                      rows={4}
-                    />
+                    <Input.TextArea name="content" style={styles.input} placeholder="请输入详细内容" rows={4} />
                   </IceFormBinder>
                 </Col>
               </Row>

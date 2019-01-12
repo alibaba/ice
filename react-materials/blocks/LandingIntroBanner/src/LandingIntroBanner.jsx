@@ -44,7 +44,7 @@ export default class LandingIntroBanner extends Component {
                     }}
                     type="primary"
                     size="large"
-                    shape="ghost"
+                    ghost
                   >
                     查看帮助
                   </Button>

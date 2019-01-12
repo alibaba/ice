@@ -82,8 +82,8 @@ export default class CompositeFilter extends Component {
         />
         <Search
           placeholder="搜索"
-          searchText=""
-          inputWidth={150}
+          shape="simple"
+          style={{width:150}}
           onSearch={this.onSearch}
           style={styles.search}
         />
@@ -113,14 +113,9 @@ export default class CompositeFilter extends Component {
           <div style={styles.tagList}>
             {tagList.map((tag, index) => {
               return (
-                <Tag
-                  shape="selectable"
-                  type="normal"
-                  key={index}
-                  onChange={this.onTagChange.bind(this, tag.key)}
-                >
+                <Tag.Selectable type="normal" key={index} onChange={this.onTagChange.bind(this, tag.key)} style={styles.tag}>
                   {tag.name}
-                </Tag>
+                </Tag.Selectable>
               );
             })}
           </div>
@@ -146,4 +141,7 @@ const styles = {
   search: {
     marginLeft: '12px',
   },
+  tag: {
+    marginLeft: 10
+  }
 };

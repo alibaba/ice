@@ -91,6 +91,7 @@ const styles = {
   navItem: {
     width: '25%',
     lineHeight: '54px',
+    listStyle: 'none',
     textAlign: 'center',
   },
   navLink: {

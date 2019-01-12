@@ -93,6 +93,9 @@ const styles = {
     padding: '20px 30px',
     textAlign: 'center',
   },
+  navItem: {
+    listStyle: 'none',
+  },
   itemTitle: {
     margin: '0 0 10px',
     color: '#fff',

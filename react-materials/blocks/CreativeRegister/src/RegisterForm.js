@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Feedback } from '@alifd/next';
+import { Message } from '@alifd/next';
 import AuthForm from './AuthForm';
 
 export default class RegisterForm extends Component {
@@ -52,7 +52,7 @@ export default class RegisterForm extends Component {
       return;
     }
     console.log('values:', values);
-    Feedback.toast.success('注册成功');
+    Message.success('注册成功');
     // 注册成功后做对应的逻辑处理
   };
 

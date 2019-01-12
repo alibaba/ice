@@ -87,10 +87,10 @@ export default class PostCategory extends Component {
         >
           {tabs.map((item) => {
             return (
-              <Tab.TabPane
+              <Tab.Item
                 tabStyle={{ height: 60, padding: '0 15px' }}
                 key={item.key}
-                tab={
+                title={
                   <div style={styles.navItemWraper}>
                     <img
                       alt={item.tab}
@@ -143,7 +143,7 @@ export default class PostCategory extends Component {
                     );
                   })}
                 </div>
-              </Tab.TabPane>
+              </Tab.Item>
             );
           })}
         </Tab>

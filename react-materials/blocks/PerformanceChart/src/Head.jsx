@@ -18,7 +18,7 @@ export default class Head extends Component {
   render() {
     const { data } = this.props;
     return (
-      <Row type="wrap">
+      <Row wrap>
         <Col xxs="12" s="12" l="6">
           <div style={styles.box}>
             <p style={styles.textLabel}>昨日支付金额(元)</p>

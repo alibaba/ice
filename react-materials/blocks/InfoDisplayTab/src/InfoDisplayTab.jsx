@@ -5,7 +5,7 @@ import IceEllipsis from '@icedesign/ellipsis';
 import data from './data';
 
 const { Row, Col } = Grid;
-const { TabPane } = Tab;
+const { Item } = Tab;
 
 export default class InfoDisplayTab extends Component {
   static displayName = 'InfoDisplayTab';
@@ -54,24 +54,24 @@ export default class InfoDisplayTab extends Component {
     return (
       <div className="info-display-tab">
         <IceContainer>
-          <Tab type="bar" onChange={this.callback}>
-            <TabPane tab="全部频道" key="1">
+          <Tab onChange={this.callback}>
+            <Tab.Item title="全部频道" key="1">
               <Row wrap gutter={20}>
                 {tabData.all ? this.renderContent(tabData.all) : '暂无数据'}
               </Row>
-            </TabPane>
-            <TabPane tab="可申请频道" key="2">
+            </Tab.Item>
+            <Tab.Item title="可申请频道" key="2">
               <Row wrap gutter={20}>
                 {tabData.apply ? this.renderContent(tabData.apply) : '暂无数据'}
               </Row>
-            </TabPane>
-            <TabPane tab="已获得频道" key="3">
+            </Tab.Item>
+            <Tab.Item title="已获得频道" key="3">
               <Row wrap gutter={20}>
                 {tabData.existing
                   ? this.renderContent(tabData.existing)
                   : '暂无数据'}
               </Row>
-            </TabPane>
+            </Tab.Item>
           </Tab>
         </IceContainer>
       </div>

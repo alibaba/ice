@@ -110,6 +110,7 @@ export default class GroupedForm extends Component {
                         <Select
                           className="next-form-text-align"
                           required
+                          size="large"
                           style={{ width: '30%' }}
                           message="请选择商品类型"
                           dataSource={[
@@ -143,7 +144,7 @@ export default class GroupedForm extends Component {
                     </Col>
                     <Col s="12" l="10">
                       <IceFormBinder name="desc">
-                        <Input multiple style={{ width: '100%' }} />
+                        <Input.TextArea style={{ width: '100%' }} />
                       </IceFormBinder>
                     </Col>
                   </Row>

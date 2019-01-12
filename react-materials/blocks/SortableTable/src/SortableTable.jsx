@@ -61,7 +61,7 @@ export default class SortableTable extends Component {
         <Button
           onClick={this.moveDown.bind(this, index)}
           size="large"
-          shape="text"
+          text
           disabled={index === this.state.dataSource.length - 1}
         >
           <Icon title="下移" type="descending" />
@@ -69,7 +69,7 @@ export default class SortableTable extends Component {
         <Button
           onClick={this.moveUp.bind(this, index)}
           size="large"
-          shape="text"
+          text
           disabled={index === 0}
         >
           <Icon title="上移" type="ascending" />

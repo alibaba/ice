@@ -5,7 +5,7 @@ import data from './data';
 import './DownloadCard.scss';
 
 const { Row, Col } = Grid;
-const { TabPane } = Tab;
+const { Item } = Tab;
 
 export default class DownloadCard extends Component {
   static displayName = 'DownloadCard';
@@ -78,21 +78,21 @@ export default class DownloadCard extends Component {
     return (
       <div className="download-card" style={styles.downloadCard}>
         <IceContainer>
-          <Tab type="bar" contentStyle={{ padding: '20px 5px' }}>
-            <TabPane tab="客户端SDK" key="1">
+          <Tab contentStyle={{ padding: '20px 5px' }}>
+            <Tab.Item title="客户端SDK" key="1">
               <Row gutter="20" wrap>
                 {tabData.clientSDK
                   ? this.renderContent(tabData.clientSDK)
                   : '暂无数据'}
               </Row>
-            </TabPane>
-            <TabPane tab="服务端SDK" key="2">
+            </Tab.Item>
+            <Tab.Item title="服务端SDK" key="2">
               <Row gutter="20" wrap>
                 {tabData.serverSDK
                   ? this.renderContent(tabData.serverSDK)
                   : '暂无数据'}
               </Row>
-            </TabPane>
+            </Tab.Item>
           </Tab>
         </IceContainer>
       </div>
