@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Feedback } from '@icedesign/base';
+import { Button, Message } from '@alifd/next';
 import TopBar from '../../components/TopBar';
 import GeneralDialog from '../../components/GeneralDialog';
 import Tabs from './components/Tabs';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Table, Dialog } from '@icedesign/base';
+import { Input, Table, Dialog } from '@alifd/next';
 
 export default class EntitlesTable extends Component {
   handleEdit = () => {

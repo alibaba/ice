@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 import PropTypes from 'prop-types';
 
 export default class TopBar extends PureComponent {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Table } from '@icedesign/base';
+import { Input, Table } from '@alifd/next';
 
 export default class GeneralizationTable extends Component {
   render() {

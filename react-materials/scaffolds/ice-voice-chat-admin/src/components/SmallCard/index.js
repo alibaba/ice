@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 
 export default class SmallCard extends Component {
   render() {

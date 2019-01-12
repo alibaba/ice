@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Select } from '@icedesign/base';
+import { Select } from '@alifd/next';
 import TopBar from '../../components/TopBar';
 import Cards from './components/Cards';
 import Trend from './components/Trend';

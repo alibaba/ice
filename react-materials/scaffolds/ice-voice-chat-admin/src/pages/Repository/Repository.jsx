@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button, Icon, Dialog, Feedback } from '@icedesign/base';
+import { Input, Button, Icon, Dialog, Message } from '@alifd/next';
 import TopBar from '../../components/TopBar';
 import GeneralDialog from '../../components/GeneralDialog';
 import SmallCard from '../../components/SmallCard';
