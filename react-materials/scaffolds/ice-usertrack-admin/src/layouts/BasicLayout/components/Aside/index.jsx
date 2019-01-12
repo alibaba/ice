@@ -19,6 +19,15 @@ export default class Aside extends Component {
     this.openKeysCache = openKeys;
   }
   /**
+   * 当前展开的菜单项
+   */
+  onOpenChange = (openKeys) => {
+    this.setState({
+      openKeys,
+    });
+    this.openKeysCache = openKeys;
+  };
+  /**
    * 获取当前展开的菜单项
    */
   getDefaultOpenKeys = () => {
@@ -46,7 +55,8 @@ export default class Aside extends Component {
         <Nav
           defaultSelectedKeys={[pathname]}
           selectedKeys={[pathname]}
-          defaultOpenKeys={this.state.openKeys}
+          onOpen={this.onOpenChange}
+          openKeys={this.state.openKeys}
           className="custom-menu"
         >
           {Array.isArray(asideMenuConfig) &&
