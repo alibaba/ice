@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/product-feature-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "用于描述产品的特点，左图右文形式。",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
