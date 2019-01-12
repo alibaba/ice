@@ -1,11 +1,11 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import LibTable from './LibTable';
 import BorrowTable from './BorrowTable';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 const tabs = [
   { tab: '全部图书', key: '1', content: <LibTable /> },
@@ -31,7 +31,7 @@ export default class DonationForm extends Component {
         <Tab>
           {tabs.map((item) => {
             return (
-              <TabPane key={item.key} tab={item.tab}>
+              <TabPane key={item.key} title={item.tab}>
                 {item.content}
               </TabPane>
             );

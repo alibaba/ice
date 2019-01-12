@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import TableFilter from './TableFilter';
 import CustomTable from './CustomTable';
 
@@ -68,11 +68,11 @@ export default class LibTable extends Component {
   };
 
   handleBorrowClick = () => {
-    Feedback.toast.success('借阅成功');
+    Message.success('借阅成功');
   };
 
   handleDetailClick = () => {
-    Feedback.toast.prompt('暂无详细信息');
+    Message.prompt('暂无详细信息');
   };
 
   handleFilter = () => {

@@ -7,8 +7,8 @@ import {
   Select,
   DatePicker,
   Radio,
-  Feedback,
-} from '@icedesign/base';
+  Message,
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -47,7 +47,7 @@ export default class DonationForm extends Component {
         console.log({ errors });
       }
       console.log({ values });
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
@@ -102,7 +102,7 @@ export default class DonationForm extends Component {
               <IceFormBinder>
                 <Select
                   placeholder="请选择"
-                  multiple
+                  mode="multiple"
                   name="cate"
                   size="large"
                   style={{ width: '400px' }}
