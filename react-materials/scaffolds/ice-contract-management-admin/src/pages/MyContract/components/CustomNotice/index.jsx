@@ -1,6 +1,6 @@
 import React from 'react';
 import { Message } from '@alifd/next';
-import './CustomNotice.scss';
+import './index.scss';
 
 const CustomNotice = () => {
   const renderNum = (num, color) => {
@@ -37,6 +37,7 @@ const styles = {
   },
   title: {
     color: '#666',
+    fontSize: '14px',
   },
   num: {
     fontWeight: 'bold',
