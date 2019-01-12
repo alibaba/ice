@@ -1,5 +1,4 @@
 /* GLOBAL */
-$active-color: #0079f2;
 
 .ice-design-layout {
   min-width: 1200px;
@@ -22,7 +21,6 @@ $active-color: #0079f2;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: $active-color;
 
       .ice-design-layout-header-menu .ice-menu {
         background: transparent;

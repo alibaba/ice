@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
-import { Table, Pagination, Button, Feedback } from '@icedesign/base';
+import { Table, Pagination, Button, Message } from '@alifd/next';
 import SearchFilter from './SearchFilter';
+import styles from './index.module.scss';
 
 const defaultSearchQuery = {
   id: '',
@@ -113,8 +114,8 @@ export default class ContractTable extends Component {
 
   renderState = (value) => {
     return (
-      <div style={styles.state}>
-        <span style={styles.stateText}>{value}</span>
+      <div className={styles.state}>
+        <span className={styles.stateText}>{value}</span>
       </div>
     );
   };
@@ -123,18 +124,18 @@ export default class ContractTable extends Component {
     return (
       <div>
         <Button
-          shape="text"
+          text
           onClick={() => {
-            Feedback.toast.success('修改合同');
+            Message.success('修改合同');
           }}
         >
           修改合同
         </Button>
-        <span style={styles.separator} />
+        <span className={styles.separator} />
         <Button
-          shape="text"
+          text
           onClick={() => {
-            Feedback.toast.success('查看详情');
+            Message.success('查看详情');
           }}
         >
           查看详情
@@ -215,7 +216,7 @@ export default class ContractTable extends Component {
         <Table
           dataSource={dataSource}
           hasBorder={false}
-          isLoading={loading}
+          loading={loading}
         >
           {this.getTableColumns().map((item) => {
             return (
@@ -232,7 +233,7 @@ export default class ContractTable extends Component {
           })}
         </Table>
         <Pagination
-          style={styles.pagination}
+          className={styles.pagination}
           current={pageIndex}
           onChange={this.onPaginationChange}
         />
@@ -240,32 +241,3 @@ export default class ContractTable extends Component {
     );
   }
 }
-
-const styles = {
-  stateText: {
-    display: 'inline-block',
-    padding: '5px 10px',
-    color: '#5e83fb',
-    background: '#fff',
-    border: '1px solid #5e83fb',
-    borderRadius: '4px',
-  },
-  link: {
-    margin: '0 5px',
-    color: 'rgba(49, 128, 253, 0.65)',
-    cursor: 'pointer',
-    textDecoration: 'none',
-  },
-  separator: {
-    margin: '0 8px',
-    display: 'inline-block',
-    height: '12px',
-    width: '1px',
-    verticalAlign: 'middle',
-    background: '#e8e8e8',
-  },
-  pagination: {
-    margin: '20px 0',
-    textAlign: 'center',
-  },
-};

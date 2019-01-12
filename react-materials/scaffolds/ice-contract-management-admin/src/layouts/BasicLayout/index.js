@@ -22,7 +22,7 @@ export default class BasicLayout extends Component {
         style={{ minHeight: '100vh' }}
         className="ice-design-layout"
       >
-        <Layout.Header>
+        <Layout.Header type="secondary">
           <Header />
         </Layout.Header>
 

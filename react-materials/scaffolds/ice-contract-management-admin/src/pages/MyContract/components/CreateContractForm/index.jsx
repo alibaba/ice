@@ -3,7 +3,7 @@ import {
   Input,
   Button,
   Select,
-} from '@icedesign/base';
+} from '@alifd/next';
 import {
   FormBinderWrapper, FormBinder, FormError,
 } from '@icedesign/form-binder';

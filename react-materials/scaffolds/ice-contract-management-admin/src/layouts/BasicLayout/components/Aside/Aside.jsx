@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Icon } from '@icedesign/base';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
+import { Icon, Nav as Menu } from '@alifd/next';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
 import { asideMenuConfig } from '../../../../menuConfig';
+const { SubNav: SubMenu, Item: MenuItem } = Menu;
+import styles from './index.module.scss';
 
 @withRouter
 export default class Aside extends PureComponent {
@@ -43,11 +44,8 @@ export default class Aside extends PureComponent {
             size="small"
           />
         </a>
-
         <Menu
-          style={{ width: this.state.collapse ? 60 : 240 }}
-          inlineCollapsed={this.state.collapse}
-          mode="inline"
+          style={{ width: this.state.collapse ? 60 : 240, boxShadow: 'none' }}
           selectedKeys={[pathname]}
           defaultSelectedKeys={[pathname]}
         >
@@ -63,7 +61,10 @@ export default class Aside extends PureComponent {
                         {nav.icon ? (
                           <FoundationSymbol size="small" type={nav.icon} />
                         ) : null}
-                        <span className="ice-menu-collapse-hide">
+                        <span className={cx({
+                          [styles.iceMenuText]: true,
+                          [styles.iceMenuCollapseHide]: this.state.collapse
+                        })} >
                           {nav.name}
                         </span>
                       </span>
@@ -104,7 +105,10 @@ export default class Aside extends PureComponent {
                       {nav.icon ? (
                         <FoundationSymbol size="small" type={nav.icon} />
                       ) : null}
-                      <span className="ice-menu-collapse-hide">
+                      <span className={cx({
+                          [styles.iceMenuText]: true,
+                          [styles.iceMenuCollapseHide]: this.state.collapse
+                        })} >
                         {nav.name}
                       </span>
                     </span>

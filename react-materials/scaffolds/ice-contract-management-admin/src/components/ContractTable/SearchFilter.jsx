@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Button } from '@icedesign/base';
+import { Icon, Button } from '@alifd/next';
 import CustomForm from '../CustomForm';
 
 const formConfig = [
@@ -10,7 +10,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入合同编号',
-      size: 'large',
     },
     formBinderProps: {
       name: 'id',
@@ -23,7 +22,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入归档号',
-      size: 'large',
     },
     formBinderProps: {
       name: 'archiveId',
@@ -36,7 +34,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入申请单号',
-      size: 'large',
     },
     formBinderProps: {
       name: 'applyCode',
@@ -47,7 +44,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入合同名称',
-      size: 'large',
     },
     formBinderProps: {
       name: 'name',
@@ -58,7 +54,6 @@ const formConfig = [
     component: 'Select',
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
       dataSource: [
         { label: '杭州xxx科技有限公司', value: 'option1' },
         { label: '上海xxx科技有限公司', value: 'option2' },
@@ -73,7 +68,6 @@ const formConfig = [
     component: 'Select',
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
       dataSource: [
         {label: '淘小宝', value: '淘小宝'},
         {label: '淘大宝', value: '淘大宝'}
@@ -89,7 +83,6 @@ const formConfig = [
     advanced: true,
     componentProps: {
       placeholder: '请选择日期',
-      size: 'large',
     },
     formBinderProps: {
       name: 'createTime',
@@ -101,7 +94,6 @@ const formConfig = [
     advanced: true,
     componentProps: {
       placeholder: '请选择日期',
-      size: 'large',
     },
     formBinderProps: {
       name: 'signTime',
@@ -125,7 +117,6 @@ const formConfig = [
     advanced: true,
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
       dataSource: [
         { value: 'draft', label: '起草中' },
         { value: 'approval', label: '审批中' },
@@ -143,7 +134,6 @@ const formConfig = [
     advanced: true,
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
       dataSource: [
         { label: '主合同', value: 'primary' },
         { label: '变更合同', value: 'change' },
@@ -211,7 +201,7 @@ export default class SearchFilter extends Component {
    */
   renderExtraContent = () => {
     return (
-      <Button shape="text" style={styles.extraContent} onClick={this.handleAdvancedSearch}>
+      <Button text style={styles.extraContent} onClick={this.handleAdvancedSearch}>
         高级搜索{' '}
         <Icon
           size="xs"

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/contract-management-scaffold",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "该模板内置了高级表单搜索和表格区块，适用于合同管理类和多表格展示的系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/contract-management-scaffold@latest/build/index.html",
   "files": [
@@ -14,17 +14,16 @@
     ".eslintrc"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.4",
-    "@icedesign/form-binder": "^1.0.2",
-    "@icedesign/foundation-symbol": "^0.1.0",
-    "@icedesign/icon": "^0.1.1",
-    "@icedesign/img": "^0.1.0",
-    "@icedesign/layout": "^0.1.0",
-    "@icedesign/menu": "^0.1.0",
-    "@icedesign/skin": "^0.1.0",
+    "@alifd/next": "^1.x",
+    "@alifd/theme-1": "^0.0.6",
+    "@icedesign/container": "^1.x",
+    "@icedesign/form-binder": "^1.x",
+    "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/img": "^1.x",
+    "@icedesign/layout": "^1.x",
     "classnames": "^2.2.5",
     "lodash.clonedeep": "^4.5.0",
+    "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -50,15 +49,12 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@alifd/theme-1",
     "entry": "src/index.js",
     "localization": false,
     "output": {
       "publicPath": "./"
     }
-  },
-  "themeConfig": {
-    "primaryColor": "#2077FF"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",

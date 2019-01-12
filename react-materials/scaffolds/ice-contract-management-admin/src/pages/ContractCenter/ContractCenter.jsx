@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import ContainerTitle from '../../components/ContainerTitle';
 import ContractTable from '../../components/ContractTable';

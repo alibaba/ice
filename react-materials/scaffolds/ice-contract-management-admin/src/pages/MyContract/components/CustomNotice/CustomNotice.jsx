@@ -1,5 +1,5 @@
 import React from 'react';
-import { Notice } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import './CustomNotice.scss';
 
 const CustomNotice = () => {
@@ -8,8 +8,8 @@ const CustomNotice = () => {
   };
 
   return (
-    <Notice
-      closable
+    <Message
+      closeable
       className="custom-notice"
       style={styles.notice}
       title={
@@ -25,8 +25,7 @@ const CustomNotice = () => {
           {renderNum(0, styles.lightBlue)}
           份！
         </div>
-      }
-    />
+      } />
   );
 };
 
