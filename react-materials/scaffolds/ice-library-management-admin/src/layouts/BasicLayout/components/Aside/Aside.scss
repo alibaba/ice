@@ -1,27 +1,30 @@
-.ice-menu-custom.ice-menu-root {
+.ice-menu-custom {
   height: 100%;
   padding-top: 20px;
   box-shadow: 4px 1px 12px rgba(0, 55, 107, 0.04);
-
-  .ice-menu-item {
+  width: 240px;
+  .ice-menu-item-text {
+    padding-left: 1em;
+  }
+  .next-menu-item {
     height: auto;
     line-height: normal;
-    .ice-menu-link {
+    .next-menu-link {
       display: flex;
       padding: 15px 0;
       color: #666;
       font-weight: 500;
     }
   }
-  .ice-menu-item-selected {
+  .next-menu-item-selected {
     background: none !important;
     border-radius: 0 !important;
-    border-right: 3px solid #447eff;
-    .ice-menu-link {
-      color: #447eff;
+    border-right: 3px solid $color-brand1-6;
+    .next-menu-link {
+      color: $color-brand1-6;
     }
-    .ice-menu-link:hover {
-      color: #447eff !important;
+    .next-menu-link:hover {
+      color: $color-brand1-6 !important;
     }
   }
 }

@@ -32,7 +32,8 @@ export default class Header extends Component {
               onClick={this.handleNavClick}
               selectedKeys={[pathname]}
               defaultSelectedKeys={[pathname]}
-              mode="horizontal"
+              type="secondary"
+              direction="hoz"
             >
               {headerMenuConfig &&
                 headerMenuConfig.length > 0 &&
@@ -47,7 +48,7 @@ export default class Header extends Component {
                             {nav.icon ? (
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            <span>{nav.name}</span>
+                            <span className="custom-nav-item-text">{nav.name}</span>
                           </span>
                         }
                       >
@@ -92,7 +93,7 @@ export default class Header extends Component {
                             {nav.icon ? (
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            {nav.name}
+                            <span className="custom-nav-item-text">{nav.name}</span>
                           </span>
                         </a>
                       </Item>
@@ -106,7 +107,7 @@ export default class Header extends Component {
                           {nav.icon ? (
                             <FoundationSymbol size="small" type={nav.icon} />
                           ) : null}
-                          {nav.name}
+                          <span className="custom-nav-item-text">{nav.name}</span>
                         </span>
                       </Link>
                     </Item>
