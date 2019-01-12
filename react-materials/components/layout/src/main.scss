@@ -8,7 +8,7 @@ $ice-layout-prefix: '.ice-layout' !default;
   display: flex;
   flex-direction: column;
   flex: auto;
-  background-color: #ececec;
+
   &-has-aside {
     flex-direction: row;
   }
@@ -38,13 +38,6 @@ $ice-layout-prefix: '.ice-layout' !default;
     }
   }
 
-  .next-menu,
-  // 推荐自定义的前缀
-  .nextfd-menu {
-    box-shadow: none !important;
-    border: none !important;
-  }
-
   #{$ice-layout-prefix}-section-inner {
     display: flex;
     flex-direction: column;
@@ -67,6 +60,16 @@ $ice-layout-prefix: '.ice-layout' !default;
     display: block;
     transition: all 0.2s linear;
   }
+  #{$ice-layout-prefix}-header,
+  #{$ice-layout-prefix}-footer,
+  #{$ice-layout-prefix}-aside {
+    .next-menu,
+    .nextfd-menu {
+      box-shadow: none;
+      border: none;
+    }
+  }
+
 }
 
 
