@@ -57,11 +57,10 @@ export default class RecommendForm extends Component {
                 required
                 triggerType="onBlur"
                 message="图书名称不能为空"
+                name="bookName"
               >
                 <Input
                   placeholder="请输入图书名称"
-                  name="bookName"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -71,45 +70,37 @@ export default class RecommendForm extends Component {
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>出版社</div>
-              <IceFormBinder>
+              <IceFormBinder name="publisher">
                 <Input
                   placeholder="图书出版社"
-                  name="publisher"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>作者</div>
-              <IceFormBinder>
+              <IceFormBinder name="author">
                 <Input
-                  name="author"
                   placeholder="图书作者"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>参考价格</div>
-              <IceFormBinder>
+              <IceFormBinder name="price">
                 <Input
                   placeholder="请输入数字"
-                  name="price"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>书目类别</div>
-              <IceFormBinder>
+              <IceFormBinder name="cate">
                 <Select
                   placeholder="请选择"
                   mode="multiple"
-                  name="cate"
-                  size="large"
                   style={{ width: '400px' }}
                 >
                   <Option value="technology">技术领域</Option>
@@ -121,18 +112,15 @@ export default class RecommendForm extends Component {
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>推荐人</div>
-              <IceFormBinder>
+              <IceFormBinder name="referrer">
                 <Input
                   placeholder="请输入数字"
-                  name="referrer"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
             </div>
             <Button
               type="primary"
-              size="large"
               style={styles.submitButton}
               onClick={this.validateAllFormField}
             >
