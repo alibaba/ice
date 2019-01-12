@@ -14,7 +14,6 @@ export default class FunctionTable extends Component {
             </p>
           </div>
           <Input
-            size="large"
             style={{ width: '300px' }}
             placeholder="请输入函数名称或者函数描述"
           />

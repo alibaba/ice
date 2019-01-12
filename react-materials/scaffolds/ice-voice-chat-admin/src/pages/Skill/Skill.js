@@ -23,7 +23,7 @@ export default class Skill extends Component {
   };
 
   handleImport = () => {
-    Feedback.toast.prompt('暂不支持导入');
+   Message.error('暂不支持导入');
   };
 
   getFormValue = (value) => {
@@ -42,7 +42,6 @@ export default class Skill extends Component {
     return (
       <div style={{ display: 'flex' }}>
         <Button
-          size="large"
           type="normal"
           style={{ marginRight: '10px' }}
           onClick={this.handleImport}

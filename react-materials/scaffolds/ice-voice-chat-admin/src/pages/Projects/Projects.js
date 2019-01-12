@@ -56,7 +56,6 @@ export default class Projects extends Component {
         <TopBar
           extraBefore={
             <Input
-              size="large"
               placeholder="请输入关键字进行搜索"
               style={{ width: '240px' }}
             />

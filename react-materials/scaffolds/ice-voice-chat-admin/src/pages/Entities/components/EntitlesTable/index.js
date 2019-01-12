@@ -36,7 +36,6 @@ export default class EntitlesTable extends Component {
         <div style={styles.searchBar}>
           <div style={styles.info}>本主题包含 {data.length} 个实体</div>
           <Input
-            size="large"
             style={{ width: '300px' }}
             placeholder="请输入实体名称"
           />

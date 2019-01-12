@@ -9,7 +9,7 @@ export default class GeneralizationTable extends Component {
         <div style={styles.searchBar}>
           <div style={styles.info}>共计 {data.length} 条泛化规则</div>
           <Input
-            size="large"
+
             style={{ width: '300px' }}
             placeholder="请输入泛化规则名称或者泛化词汇"
           />

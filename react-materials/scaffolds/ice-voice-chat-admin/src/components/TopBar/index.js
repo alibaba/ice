@@ -20,7 +20,7 @@ export default class TopBar extends PureComponent {
         {extraAfter || (
           <div style={styles.buttons}>
             {buttonText ? (
-              <Button size="large" type="primary" onClick={onClick}>
+              <Button type="primary" onClick={onClick}>
                 {buttonText}
               </Button>
             ) : null}

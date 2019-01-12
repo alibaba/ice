@@ -28,7 +28,7 @@ export default class Card extends Component {
     console.log(this.props);
     this.refs.form.validateAll((error, value) => {
       if (error) {
-        Feedback.toast.error('请输入完整的信息');
+        Message.error('请输入完整的信息');
         return;
       }
 
@@ -47,7 +47,7 @@ export default class Card extends Component {
     const { buttonText, dialogTitle } = this.props;
     return (
       <div>
-        <Button type="primary" size="large" onClick={this.onOpen}>
+        <Button type="primary" onClick={this.onOpen}>
           {buttonText}
         </Button>
         <Dialog
@@ -63,7 +63,7 @@ export default class Card extends Component {
               <div style={styles.formItem}>
                 <div style={styles.formLabel}>标题</div>
                 <IceFormBinder required>
-                  <Input name="title" size="large" style={{ width: '400px' }} />
+                  <Input name="title" style={{ width: '400px' }} />
                 </IceFormBinder>
               </div>
               <div style={styles.formItem}>
@@ -72,7 +72,6 @@ export default class Card extends Component {
                   <Input.TextArea
                     placeholder="这里是一段描述"
                     name="desc"
-                    size="large"
                     style={{ width: '400px' }}
                   />
                 </IceFormBinder>

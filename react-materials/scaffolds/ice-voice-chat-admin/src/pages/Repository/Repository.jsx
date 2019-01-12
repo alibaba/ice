@@ -31,7 +31,7 @@ export default class Repository extends Component {
   };
 
   handleConfig = () => {
-    Feedback.toast.prompt('暂不支持同义词配置');
+   Message.error('暂不支持同义词配置');
   };
 
   getFormValue = (value) => {
@@ -49,7 +49,6 @@ export default class Repository extends Component {
     return (
       <div style={{ display: 'flex' }}>
         <Button
-          size="large"
           type="normal"
           style={{ marginRight: '10px' }}
           onClick={this.handlePrePublish}
@@ -58,7 +57,6 @@ export default class Repository extends Component {
           预发
         </Button>
         <Button
-          size="large"
           type="normal"
           style={{ marginRight: '10px' }}
           onClick={this.handlePublish}
@@ -67,7 +65,6 @@ export default class Repository extends Component {
           发布
         </Button>
         <Button
-          size="large"
           type="normal"
           style={{ marginRight: '10px' }}
           onClick={this.handleConfig}
@@ -89,7 +86,6 @@ export default class Repository extends Component {
         <TopBar title="知识库" extraAfter={this.renderExtraAfter()} />
         <div style={styles.searchContainer}>
           <Input
-            size="large"
             style={{ width: '300px' }}
             placeholder="请输入关键词搜索知识库"
           />
