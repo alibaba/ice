@@ -43,7 +43,6 @@ export default class BasicLayout extends Component {
                   />
                 ) : null;
               })}
-              <Redirect from="/" to="/contract" />
               <Route component={NotFound} />
             </Switch>
 
