@@ -8,57 +8,59 @@ import React, { Component } from 'react';
 import { asideMenuConfig } from '../../../../menuConfig';
 import styles from './index.module.scss';
 
-function getOpenKeys (pathname) {
-  let openKeys = [];
-  if (Array.isArray(asideMenuConfig)) {
-    asideMenuConfig.forEach((item, index) => {
-      if (pathname.startsWith(item.path)) {
-        openKeys = [`${index}`];
-      }
-    });
-  }
-  console.log(openKeys);
-  return openKeys;
-};
-
 const { SubNav, Item } = Nav;
 @withRouter
 export default class Aside extends Component {
   constructor(props) {
     super(props);
-    const { location = {} } = this.props;
-    const { pathname } = location;
+    const openKeys = this.getDefaultOpenKeys();
     this.state = {
-      openKeys: getOpenKeys(pathname) ,
+      openKeys,
     };
+    this.openKeysCache = openKeys;
   }
 
   /**
-     * 当前展开的菜单项
-     */
-  onOpenChange = (selectedKeys) => {
-    console.log('13412=======', selectedKeys);
-    // this.setState({
-    //   selectedKeys,
-    // });
+   * 当前展开的菜单项
+   */
+  onOpenChange = (openKeys) => {
+    this.setState({
+      openKeys,
+    });
+    this.openKeysCache = openKeys;
   };
 
   /**
    * 获取当前展开的菜单项
    */
+  getDefaultOpenKeys = () => {
+    const { location = {} } = this.props;
+    const { pathname } = location;
+
+    let openKeys = [];
+    if (Array.isArray(asideMenuConfig)) {
+      asideMenuConfig.forEach((item, index) => {
+        if (pathname.startsWith(item.path)) {
+          openKeys = [`${index}`];
+        }
+      });
+    }
+
+    return openKeys;
+  };
 
 
   render() {
     const { location } = this.props;
     const { pathname } = location;
 
-    console.log({ pathname });
     return (
       <Layout.Aside className={styles.aside}>
         <Nav
           selectedKeys={[pathname]}
           className={styles.menu}
-          defaultOpenKeys={this.state.openKeys}>
+          openKeys={this.state.openKeys}
+          onOpen={this.onOpenChange}>
           {Array.isArray(asideMenuConfig) &&
             asideMenuConfig.length > 0 &&
             asideMenuConfig.map((nav, index) => {
