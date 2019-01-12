@@ -41,8 +41,8 @@ $ice-layout-prefix: '.ice-layout' !default;
   .next-menu,
   // 推荐自定义的前缀
   .nextfd-menu {
-    box-shadow: none;
-    border: none;
+    box-shadow: none !important;
+    border: none !important;
   }
 
   #{$ice-layout-prefix}-section-inner {
