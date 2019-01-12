@@ -3,7 +3,7 @@ import { Search, Tab, Tag, DatePicker } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import { enquireScreen } from 'enquire-js';
 
-const TabPane = Tab.Item;
+const TabItem = Tab.Item;
 
 // mock data
 const tagList = [
@@ -82,10 +82,10 @@ export default class CompositeFilter extends Component {
         />
         <Search
           placeholder="搜索"
-          shape="simple"
-          style={{width:150}}
+          searchText=""
           onSearch={this.onSearch}
           style={styles.search}
+          shape="simple"
         />
       </div>
     );
@@ -103,17 +103,22 @@ export default class CompositeFilter extends Component {
               !this.state.isMobile ? this.renderTabBarExtraContent() : null
             }
           >
-            <TabPane title="全部" key="all" />
-            <TabPane title="图文" key="pic" />
-            <TabPane title="单品" key="item" />
-            <TabPane title="店铺上新" key="new" />
-            <TabPane title="短视频" key="video" />
+            <TabItem title="全部" key="all" />
+            <TabItem title="图文" key="pic" />
+            <TabItem title="单品" key="item" />
+            <TabItem title="店铺上新" key="new" />
+            <TabItem title="短视频" key="video" />
           </Tab>
 
           <div style={styles.tagList}>
             {tagList.map((tag, index) => {
               return (
-                <Tag.Selectable type="normal" key={index} onChange={this.onTagChange.bind(this, tag.key)} style={styles.tag}>
+                <Tag.Selectable
+                  type="normal"
+                  key={index}
+                  style={styles.tag}
+                  onChange={this.onTagChange.bind(this, tag.key)}
+                >
                   {tag.name}
                 </Tag.Selectable>
               );
@@ -133,6 +138,9 @@ const styles = {
   tagList: {
     marginTop: '10px',
   },
+  tag: {
+    margin: 8,
+  },
   extraFilter: {
     marginTop: '8px',
     display: 'flex',
@@ -140,8 +148,6 @@ const styles = {
   },
   search: {
     marginLeft: '12px',
+    width: 150,
   },
-  tag: {
-    marginLeft: 10
-  }
 };
