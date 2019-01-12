@@ -3,8 +3,9 @@
 files=`ls -d *`;
 
 # IGNORE_DIR="demo AbilityIntroduction AblityItems About AccountBadge AccountFeatures AccountPanel AccountStatus AddressInfo ApplicationProgress AreaStackChart ArticleList AssetInfoDisplay AuthorityTable Banner BarLineChart BasicDetailInfo BasicException BasicNotFound BasicTab BlackFooter BoardList BraftEditor";
-START_WITH="ComplexProgressTable";
-IS_START="FALSE";
+WHITELIST="AbilityIntroduction AblityItems About AccountBadge AccountFeatures AccountPanel AccountStatus AddressInfo ApplicationProgress AreaStackChart ArticleList AssetInfoDisplay AuthorityTable Banner BarLineChart BasicDetailInfo BasicException BasicNotFound BasicTab BlackFooter BoardList BraftEditor";
+START_WITH="PictureTextList";
+IS_START="TRUE";
 
 for x in $files
 do
@@ -31,6 +32,10 @@ case "$1" in
 
     "0.x-1.x" )
     cd $x; tnpm i; next-migrate src -m; idev build; idev screenshot; cd ..;
+    ;;
+
+    "migrate" )
+    cd $x; next-migrate src -m; cd ..;
     ;;
 
     "updatepkg" )
