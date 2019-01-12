@@ -40,8 +40,6 @@
 * scaffolder
     * `removePreviewPage(options:Object):Promise` 移除临时预览文件
         * `options.destDir` 所在的项目目录
-    * `scanLayout(options:Object):Promise` 搜索项目下的 Layout
-        * `options.destDir` 所在的项目目录
     * `createPage(options:Object):Promise` 创建页面
         * `options.pageName` 页面名称
         * `options.routePath` 路由路径
@@ -50,12 +48,10 @@
         * `options.layout` layout 名
         * `options.blocks` 区块队列
         * `options.preview` 是否是预览页面
-        * `commonBlock`: true,
         * `interpreter: ({ type, message, data }, next) => {}` 询问回调，根据执行对应的操作
     * `createProject():Promise` 生成项目
         * `destDir`,
         * `scaffolding`,
         * `version`,
         * `projectName`,
-        * `commonBlock`: true,
         * `interpreter: ({ type, message, data }, next) => {}`

@@ -7,15 +7,22 @@
  * {
     "type": "npm",
     "npm": "@icedesign/foo-block",
-    "version": "0.1.5",
+    "version": "1.0.0",
+    "version-o.x": "0.1.5"
     "sourceCodeDirectory": "src",
   },
+  * "projectVersion": "1.x" // "0.x" 
+
  */
 const npmRequest = require('../../utils/npmRequest');
 
-module.exports = function getTarballURLBySource(source = {}) {
+module.exports = function getTarballURLBySource(source = {}, projectVersion) {
   return new Promise((resolve, reject) => {
     let version = source.version;
+    
+    if (projectVersion === '0.x')  {
+      version = source['version-0.x'];
+    }
 
     npmRequest({
       name: source.npm,

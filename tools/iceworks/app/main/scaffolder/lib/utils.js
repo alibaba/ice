@@ -82,6 +82,11 @@ function downloadBlockToPage({ destDir = process.cwd(), block, pageName, isNodeP
       name: block.name,
     },
   });
+
+  // 根据项目版本下载依赖
+  const pkg = getPackageByPath(destDir);
+  const projectVersion = getProjectVersion(pkg);
+
   if(block.type == 'custom'){
     return extractCustomBlock(
       block,
@@ -92,7 +97,7 @@ function downloadBlockToPage({ destDir = process.cwd(), block, pageName, isNodeP
     );
   }
   return materialUtils
-    .getTarballURLBySource(block.source)
+    .getTarballURLBySource(block.source, projectVersion)
     .then((tarballURL) => {
       return extractBlock(
         path.join(
@@ -103,6 +108,37 @@ function downloadBlockToPage({ destDir = process.cwd(), block, pageName, isNodeP
         destDir
       );
     });
+}
+
+function getPackageByPath(path) {
+  const pkgPath = path.join(path, 'package.json');
+  if (pathExists.sync(pkgPath)) {
+    try {
+      const packageText = fs.readFileSync(pkgPath);
+      return JSON.parse(packageText.toString());
+    } catch (e) {}
+  }
+}
+
+/**
+ * 1. 有 @icedesign/base 相关依赖 则返回 0.x
+ * 2. 只有 @alifd/next 相关依赖 则返回 1.x
+ * 3. 都没有 则返回 0.x
+ * @param {*} pkg 
+ */
+function getProjectVersion(pkg) {
+  const dependencies = pkg.dependencies || {};
+  const hasBase = Object.keys(dependencies).some( depName => {
+    return depName.includes('@icedesign/base');
+  });
+  if (hasBase) {
+    return '0.x';
+  }
+  const hasNext = Object.keys(dependencies).some( depName => {
+    return depName.includes('@alifd/next');
+  });
+  return hasNext ? '1.x' : '0.x'
+
 }
 
 function extractTarball(tarballURL, destDir) {
