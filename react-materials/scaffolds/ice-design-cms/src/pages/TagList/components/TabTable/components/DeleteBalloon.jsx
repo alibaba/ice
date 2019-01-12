@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Balloon } from '@icedesign/base';
+import { Button, Balloon } from '@alifd/next';
 import PropTypes from 'prop-types';
 
 export default class DeleteBalloon extends Component {

@@ -9,7 +9,7 @@ import {
   Upload,
   Grid,
   Feedback,
-} from '@icedesign/base';
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
