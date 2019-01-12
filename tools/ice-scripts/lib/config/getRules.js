@@ -34,7 +34,7 @@ const CSS_MODULE_CONF = {
   options: {
     sourceMap: true,
     modules: true,
-    localIdentName: '[folder]__[name]__[local]--[hash:base64:5]'
+    localIdentName: '[folder]--[local]--[hash:base64:7]'
   },
 };
 module.exports = (buildConfig = {}, themeConfig) => {
