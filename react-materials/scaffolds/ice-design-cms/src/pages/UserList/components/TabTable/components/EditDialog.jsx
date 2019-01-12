@@ -71,12 +71,12 @@ export default class EditDialog extends Component {
           style={{ width: 640 }}
           visible={this.state.visible}
           onOk={this.handleSubmit}
-          closable="esc,mask,close"
+          closeable="esc,mask,close"
           onCancel={this.onClose}
           onClose={this.onClose}
           title="编辑"
         >
-          <Form direction="ver" field={this.field}>
+          <Form field={this.field}>
             <FormItem label="用户名：" {...formItemLayout}>
               <Input
                 {...init('username', {

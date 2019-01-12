@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Input, Button, Feedback } from '@alifd/next';
+import { Grid, Input, Button, Message } from '@alifd/next';
 import {
   FormBinderWrapper,
   FormBinder,
@@ -90,7 +90,6 @@ export default class SimpleFluencyForm extends Component {
                   <Button
                     onClick={this.handleSubmit}
                     type="primary"
-                    size="large"
                   >
                     确认
                   </Button>

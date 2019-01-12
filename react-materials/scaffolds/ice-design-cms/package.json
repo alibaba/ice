@@ -20,7 +20,7 @@
     "@icedesign/form-binder": "^1.x",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
-    "@alifd/theme-1": "^1.x",
+    "@alifd/theme-1": "^0.0.6",
     "axios": "^0.17.1",
     "bizcharts": "3.1.0",
     "classnames": "^2.2.5",

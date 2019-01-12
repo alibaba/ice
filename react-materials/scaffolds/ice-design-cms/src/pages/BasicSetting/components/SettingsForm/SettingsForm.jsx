@@ -8,7 +8,7 @@ import {
   Switch,
   Upload,
   Grid,
-  Feedback,
+  Message,
 } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
@@ -101,7 +101,7 @@ export default class SettingsForm extends Component {
                 </Col>
                 <Col xxs="16" s="10" l="6">
                   <IceFormBinder name="name" required max={10} message="必填">
-                    <Input size="large" placeholder="于江水" />
+                    <Input  placeholder="于江水" />
                   </IceFormBinder>
                   <IceFormError name="name" />
                 </Col>
@@ -172,7 +172,7 @@ export default class SettingsForm extends Component {
                     message="请输入正确的邮件"
                   >
                     <Input
-                      size="large"
+
                       placeholder="ice-admin@alibaba-inc.com"
                     />
                   </IceFormBinder>
@@ -192,7 +192,6 @@ export default class SettingsForm extends Component {
                     message="请输入正确的网站地址"
                   >
                     <Input
-                      size="large"
                       type="url"
                       placeholder="https://alibaba.github.io/ice"
                     />
@@ -213,7 +212,6 @@ export default class SettingsForm extends Component {
                     message="请输入正确的 Github 地址"
                   >
                     <Input
-                      size="large"
                       placeholder="https://github.com/alibaba/ice"
                     />
                   </IceFormBinder>
@@ -232,7 +230,7 @@ export default class SettingsForm extends Component {
                     required
                     message="请输入正确的 Twitter 地址"
                   >
-                    <Input size="large" placeholder="https://twitter.com" />
+                    <Input  placeholder="https://twitter.com" />
                   </IceFormBinder>
                   <IceFormError name="twitterUrl" />
                 </Col>
@@ -244,7 +242,7 @@ export default class SettingsForm extends Component {
                 </Col>
                 <Col xxs="16" s="10" l="6">
                   <IceFormBinder name="description">
-                    <Input size="large" multiple placeholder="请输入描述..." />
+                    <Input.TextArea  placeholder="请输入描述..." />
                   </IceFormBinder>
                   <IceFormError name="description" />
                 </Col>
@@ -255,7 +253,6 @@ export default class SettingsForm extends Component {
           <Row style={{ marginTop: 20 }}>
             <Col offset="3">
               <Button
-                size="large"
                 type="primary"
                 style={{ width: 100 }}
                 onClick={this.validateAllFormField}

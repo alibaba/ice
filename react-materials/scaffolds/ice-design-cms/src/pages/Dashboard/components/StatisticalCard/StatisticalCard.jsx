@@ -70,7 +70,7 @@ export default class StatisticalCard extends Component {
                 {data.text}
                 <Balloon
                   align="t"
-                  alignment="edge"
+                  alignEdge
                   trigger={
                     <span>
                       <Icon type="help" style={styles.helpIcon} size="xs" />
