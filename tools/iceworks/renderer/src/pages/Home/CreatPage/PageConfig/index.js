@@ -200,14 +200,14 @@ class PageConfig extends Component {
               pageName: toJS(values.pageName), // 页面名
               routePath: toJS(values.routePath), // 路由名
               routeText: toJS(values.routeText), // 路由导航名
-              destDir: toJS(this.props.newpage.targetPath),
+              clientPath: currentProject.clientPath,
+              clientSrcPath: currentProject.clientSrcPath,
               layout: layout,
               blocks: blocks,
               commonBlock: true,
               excludeLayout: applicationType == 'react', // hack react 的模板不生成 layout
               // hack vue
               libary: this.props.libary,
-              nodeFramework: currentProject.nodeFramework,
               interpreter: ({ type, message, data }, next) => {
                 console.log(type, message);
                 switch (type) {

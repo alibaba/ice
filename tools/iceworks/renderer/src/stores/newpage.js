@@ -17,8 +17,6 @@ import scanLayout from '../datacenter/scanLayout';
  */
 class NewPage {
   @observable
-  targetPath = ''; // 生成的目标路径
-  @observable
   layouts = []; // 所有 layouts
   @observable
   loading = true;
@@ -61,7 +59,7 @@ class NewPage {
         this.reset();
         this.fetch();
 
-        const p = projects.getProject(this.targetPath);
+        const p = projects.currentProject;
         const applicationType = p.getApplicationType();
         const libraryTYpe = p.getLibraryType();
         // react 项目不启动服务
@@ -81,7 +79,7 @@ class NewPage {
     const destDir = this.targetPath;
     const type = projects.currentProject.getLibraryType(); // 当前项目框架库类型
     this.loading = true;
-    const scanPath = clientSrcPath;
+    const scanPath = destDir;
     Promise.all([
       scanLayout({ targetPath: scanPath, type }),
       scanPages(scanPath),

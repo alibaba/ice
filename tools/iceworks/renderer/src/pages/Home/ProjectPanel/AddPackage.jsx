@@ -20,7 +20,6 @@ class AddPackage extends Component {
       currentProject,
       installer.deps,
       installer.type == 'devDependencies',
-      currentProject.nodeFramework,
       (error, dependencies) => {
         installer.installing = false;
         if (error) {

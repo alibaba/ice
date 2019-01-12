@@ -245,11 +245,12 @@ class CreatePage extends Component {
         .createPage({
           preview: true,
           destDir: toJS(this.props.newpage.targetPath),
+          clientPath: currentProject.clientPath,
+          clientSrcPath: currentProject.clientSrcPath,
           layout,
           blocks,
           libary: this.props.projects.currentProject.getLibraryType(),
           commonBlock: true,
-          nodeFramework: currentProject.nodeFramework,
           interpreter: ({ type, message, data }, next) => {
             switch (type) {
               case 'FILE_CREATED':

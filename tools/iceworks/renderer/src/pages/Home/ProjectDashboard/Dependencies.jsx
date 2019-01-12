@@ -313,10 +313,12 @@ class Dependencies extends Component {
         devDependenciesOutdatedCount += 1;
       }
     });
+    const { currentProject } = this.props.projects;
+    const title = currentProject.nodeFramework ? '依赖管理(前端)' : '依赖管理'
     return (
       <DashboardCard>
         <DashboardCard.Header>
-          <div>依赖管理(前端）</div>
+          <div>{title}</div>
           <div>
             <ExtraButton
               style={{ color: '#3080FE' }}

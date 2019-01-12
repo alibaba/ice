@@ -5,9 +5,8 @@ const koa2 = {
     source:
       {
         type: 'npm',
-        // npm: 'ice-koa-template',
         npm: '@icedesign/ice-koa-template',
-        version: '1.0.0-beta.2',
+        version: '1.0.0-beta.4',
         registry: 'http://registry.npmjs.com'
       }
   },

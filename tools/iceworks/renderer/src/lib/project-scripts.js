@@ -43,10 +43,6 @@ const configs = {
   },
 };
 
-const rmNodeMoudles = function(f, callback) {
-  rimraf
-}
-
 /**
  * session 以“项目路径”为 key 做处理
  */
@@ -331,7 +327,7 @@ export default {
       .then((isAli) => {
         let env = {};
 
-        if (nodeFramework === 'midway') {
+        if (project.nodeFramework === 'midway') {
           console.debug('安装依赖 - 检测为 Midway 项目');
           // 开源 Midway 不能从 tnpm 源下载
           env.npm_config_registry = 'https://registry.npmjs.com';

@@ -22,7 +22,7 @@ app
   .use(respond())
   .use(router.routes())
   .use(router.allowedMethods())
-  .use(serve(path.join(process.cwd(), 'client/build')))
+  .use(serve(path.join(process.cwd(), '../client/build')))
   .listen(port, () => {
     console.log('The server is running at:');
     console.log(

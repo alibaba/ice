@@ -48,7 +48,6 @@ module.exports = async function createPage({
   layout, // 用户选择的布局
   blocks = [],
   interpreter,
-  nodeFramework, //是否是koa项目
   commonBlock = false, // 是否在 page 下生成 components 目录, 默认否
   preview = false, // 用来生成 preview page 做预览使用
   builtIn = false, // 如果设置为 true, 文件冲突情况下不再询问, 直接忽略

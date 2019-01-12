@@ -7,7 +7,7 @@ const log = require('../../logger');
 const settings = require('../settings');
 const logger = require('../../logger');
 const nodeScaffoldInfo = require('../../config/nodeScaffold');
-const { getClientPath } = require('../../paths');
+const { getClientPath, getServerPath } = require('../../paths');
 
 module.exports = (_options, afterCreateRequest) => {
   const {

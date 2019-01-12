@@ -98,7 +98,7 @@ class PageBlockPicker extends Component {
         return npm.run(
           ['install', '--no-package-lock'].concat(scaffoldDependencies),
           {
-            cwd: projectPath,
+            cwd: clientPath,
           }
         );
       })

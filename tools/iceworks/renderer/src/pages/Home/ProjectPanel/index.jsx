@@ -121,7 +121,6 @@ class Project extends Component {
   // 打开新建页面流程
   handleCreatePage = () => {
     const { projects } = this.props;
-    this.props.newpage.(projects.currentProject.fullPath);
     this.props.newpage.toggle();
   };
 
@@ -167,7 +166,7 @@ class Project extends Component {
         // 安装项目依赖
         currentProject.installStart();
         projectScripts.install(
-          { project: currentProject.fullPath },
+          { project: currentProject },
           (code, result = {}) => {
             currentProject.installDone();
             if (code !== 0) {

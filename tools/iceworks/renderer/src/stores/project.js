@@ -119,6 +119,7 @@ class Project {
   /**
    * 完整路径
    */
+  @computed
   get fullPath() {
     return this.root;
   }
@@ -126,6 +127,7 @@ class Project {
   /** 
    * 前端项目路径
    */
+  @computed
   get clientPath() {
     return  getClientPath(this.root, this.nodeFramework);
   }
@@ -133,6 +135,7 @@ class Project {
   /** 
    * 前端资源路径
    */
+  @computed
   get clientSrcPath() {
     return  getClientPath(this.root, this.nodeFramework, 'src');
   }
@@ -140,6 +143,7 @@ class Project {
   /** 
    * 前端项目路径
    */
+  @computed
   get serverPath() {
     return  getServerPath(this.root, this.nodeFramework);
   }
