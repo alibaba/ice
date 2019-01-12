@@ -8,13 +8,13 @@
 
     .ice-menu.ice-menu-root.ice-menu-inline .ice-menu-submenu-title {
       margin-bottom: 1px;
-      color: $ice-aside-text-color;
+      color: #fff;
       font-weight: bold;
     }
 
     .ice-menu.ice-menu-root .ice-menu-inline > .ice-menu-item {
       margin-bottom: 1px;
-      color: $ice-aside-sub-text-color;
+      color: $color-text1-1;
       &:hover {
         color: #fff;
       }

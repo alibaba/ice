@@ -17,7 +17,6 @@ export default class Header extends PureComponent {
 
     return (
       <Layout.Header
-        type="secondary"
         className={cx('ice-design-layout-header', className)}
         style={{ ...style }}
       >
@@ -26,7 +25,7 @@ export default class Header extends PureComponent {
         <div className="ice-design-layout-header-menu">
           {/* Header 菜单项 begin */}
           {headerMenuConfig && headerMenuConfig.length > 0 ? (
-            <Nav direction="hoz" type="secondary" selectedKeys={[]}>
+            <Nav direction="hoz" selectedKeys={[]}>
               {headerMenuConfig.map((nav, idx) => {
                 const linkProps = {};
                 if (nav.newWindow) {

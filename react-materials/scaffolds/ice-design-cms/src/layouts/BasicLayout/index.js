@@ -57,28 +57,17 @@ export default class BasicLayout extends Component {
     return handler;
   };
 
-  settingTheme = () => {
-    const { theme } = this.state;
-    this.setState({
-      theme: theme === 'dark' ? 'light' : 'dark',
-    });
-  };
-
   render() {
     const { theme } = this.state;
-    const isMobile = this.state.isScreen !== 'isDesktop';
     const layoutClassName = `ice-design-layout-${theme} ice-design-layout`;
 
     return (
       <div className={layoutClassName}>
         <Layout>
-          <Header theme={theme} isMobile={isMobile} />
-          <div className="setting-theme" onClick={this.settingTheme}>
-            切换主题
-          </div>
+          <Header/>
           <Layout.Section scrollable>
-            <Layout.Aside theme={theme} width="auto">
-              <Aside isMobile={isMobile} />
+            <Layout.Aside>
+              <Aside/>
             </Layout.Aside>
             <Layout.Main>
               <MainRoutes />

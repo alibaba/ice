@@ -1,6 +1,5 @@
 /* HEADER */
-.ice-layout-theme-#{$theme} {
-  &.ice-design-layout-header {
+.ice-design-layout-header {
     width: 100%;
     padding: 10px 0px;
     margin: 0px auto;
@@ -15,12 +14,18 @@
     }
     .ice-design-layout-header-menu {
       display: flex;
-      .ice-menu {
+      .next-nav {
         background: transparent;
-        color: $ice-header-text-color;
-        .ice-menu-item:hover,
-        .ice-menu-item > a:hover {
-          color: #2077ff;
+        color: $color-twhite;
+        .next-menu-item {
+          background: transparent;
+        }
+        .next-menu-item-text {
+          color: $color-twhite;
+        }
+        .next-menu-item:hover,
+        .next-menu-item > a:hover {
+          color: $color-brand1-6;
         }
       }
     }
@@ -34,7 +39,7 @@
         display: inline-block;
         text-align: center;
         margin-bottom: 2px;
-        color: $ice-header-text-color;
+        color: $color-twhite;
         .user-name {
           font-size: 13px;
         }
@@ -45,11 +50,10 @@
       }
       .icon-down {
         margin-left: 2px;
-        color: $ice-header-icon-down-color;
+        color: $color-text1-1;
       }
     }
   }
-}
 
 .user-profile-menu {
   width: 130px;

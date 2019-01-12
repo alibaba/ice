@@ -149,7 +149,6 @@ export default class Aside extends Component {
           selectedKeys={[pathname]}
           openKeys={this.state.openKeys}
           defaultSelectedKeys={[pathname]}
-          onOpenChange={this.onOpenChange}
           onClick={this.onMenuClick}
         >
           {this.getNavMenuItems(asideMenuConfig)}
