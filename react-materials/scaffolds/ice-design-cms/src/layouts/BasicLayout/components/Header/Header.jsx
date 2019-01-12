@@ -8,12 +8,11 @@ import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
-import './scss/dark.scss';
-import './scss/light.scss';
+import './scss/base.scss';
 
 export default class Header extends PureComponent {
   render() {
-    const { theme, isMobile, className, style } = this.props;
+    const { isMobile, className, style } = this.props;
 
     return (
       <Layout.Header
@@ -43,14 +42,14 @@ export default class Header extends PureComponent {
                         {nav.icon ? (
                           <FoundationSymbol type={nav.icon} size="small" />
                         ) : null}
-                        {!isMobile ? nav.name : null}
+                        <span className="ice-head-nav-text">{!isMobile ? nav.name : null}</span>
                       </Link>
                     ) : (
                       <a {...linkProps}>
                         {nav.icon ? (
                           <FoundationSymbol type={nav.icon} size="small" />
                         ) : null}
-                        {!isMobile ? nav.name : null}
+                        <span className="ice-head-nav-text">{!isMobile ? nav.name : null}</span>
                       </a>
                     )}
                   </Nav.Item>

@@ -96,7 +96,7 @@ export default class ContentEditor extends Component {
                     >
                       <Select
                         style={styles.cats}
-                        multiple
+                        mode="multiple"
                         placeholder="请选择分类"
                         dataSource={[
                           { label: '分类1', value: 'cat1' },
@@ -127,7 +127,7 @@ export default class ContentEditor extends Component {
               </Row>
               <FormItem label="描述">
                 <IceFormBinder name="desc">
-                  <Input multiple placeholder="这里填写正文描述" />
+                  <Input.TextArea  placeholder="这里填写正文描述" />
                 </IceFormBinder>
               </FormItem>
               <FormItem label="正文" required>

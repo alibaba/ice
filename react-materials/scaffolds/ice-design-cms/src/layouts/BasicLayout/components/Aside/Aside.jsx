@@ -7,8 +7,7 @@ import FoundationSymbol from '@icedesign/foundation-symbol';
 import { Nav } from '@alifd/next';
 import Logo from '../Logo';
 import { asideMenuConfig } from '../../../../menuConfig';
-import './scss/dark.scss';
-import './scss/light.scss';
+import './scss/base.scss';
 
 const Icon = FoundationSymbol;
 
@@ -102,7 +101,7 @@ export default class Aside extends Component {
         return (
           <Nav.SubNav
             key={index}
-            title={
+            label={
               <span>
                 {item.icon ? (
                   <FoundationSymbol size="small" type={item.icon} />
@@ -150,6 +149,8 @@ export default class Aside extends Component {
           openKeys={this.state.openKeys}
           defaultSelectedKeys={[pathname]}
           onClick={this.onMenuClick}
+          onOpen={this.onOpenChange}
+          type="secondary"
         >
           {this.getNavMenuItems(asideMenuConfig)}
         </Nav>
