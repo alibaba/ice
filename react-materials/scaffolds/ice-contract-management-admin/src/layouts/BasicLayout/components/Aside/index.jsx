@@ -1,20 +1,13 @@
 import React, { PureComponent } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Icon, Nav as Menu } from '@alifd/next';
+import { Icon, Nav } from '@alifd/next';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
 import { asideMenuConfig } from '../../../../menuConfig';
-const { SubNav: SubMenu, Item: MenuItem } = Menu;
 import styles from './index.module.scss';
 
 @withRouter
 export default class Aside extends PureComponent {
-
-  static propTypes = {
-  };
-
-  static defaultProps = {
-  };
 
   state = {
     collapse: false,
@@ -30,22 +23,19 @@ export default class Aside extends PureComponent {
 
   render() {
     const { location } = this.props;
+    const { collapse } = this.state;
     const { pathname } = location;
 
     return (
-      <div
-        className={cx('ice-design-layout-aside', {
-          'open-drawer': this.state.openDrawer,
-        })}
-      >
-        <a className="collapse-btn" onClick={this.toggleCollapse}>
+      <div className={styles.asideContainer}>
+        <a className={styles.collapseBtn} onClick={this.toggleCollapse}>
           <Icon
-            type={this.state.collapse ? 'arrow-right' : 'arrow-left'}
+            type={collapse ? 'arrow-right' : 'arrow-left'}
             size="small"
           />
         </a>
-        <Menu
-          style={{ width: this.state.collapse ? 60 : 240, boxShadow: 'none' }}
+        <Nav
+          style={{ width: collapse ? 60 : 240 }}
           selectedKeys={[pathname]}
           defaultSelectedKeys={[pathname]}
         >
@@ -54,17 +44,19 @@ export default class Aside extends PureComponent {
             asideMenuConfig.map((nav, index) => {
               if (nav.children && nav.children.length > 0) {
                 return (
-                  <SubMenu
+                  <Nav.SubNav
                     key={index}
                     title={
                       <span>
                         {nav.icon ? (
                           <FoundationSymbol size="small" type={nav.icon} />
                         ) : null}
-                        <span className={cx({
-                          [styles.iceMenuText]: true,
-                          [styles.iceMenuCollapseHide]: this.state.collapse
-                        })} >
+                        <span
+                          className={cx({
+                            [styles.iceMenuText]: true,
+                            [styles.iceMenuCollapseHide]: collapse,
+                          })}
+                        >
                           {nav.name}
                         </span>
                       </span>
@@ -81,12 +73,12 @@ export default class Aside extends PureComponent {
                         linkProps.to = item.path;
                       }
                       return (
-                        <MenuItem key={item.path}>
+                        <Nav.Item key={item.path}>
                           <Link {...linkProps}>{item.name}</Link>
-                        </MenuItem>
+                        </Nav.Item>
                       );
                     })}
-                  </SubMenu>
+                  </Nav.SubNav>
                 );
               }
               const linkProps = {};
@@ -99,24 +91,26 @@ export default class Aside extends PureComponent {
                 linkProps.to = nav.path;
               }
               return (
-                <MenuItem key={nav.path}>
+                <Nav.Item key={nav.path}>
                   <Link {...linkProps}>
                     <span>
                       {nav.icon ? (
                         <FoundationSymbol size="small" type={nav.icon} />
                       ) : null}
-                      <span className={cx({
+                      <span
+                        className={cx({
                           [styles.iceMenuText]: true,
-                          [styles.iceMenuCollapseHide]: this.state.collapse
-                        })} >
+                          [styles.iceMenuCollapseHide]: collapse,
+                        })}
+                      >
                         {nav.name}
                       </span>
                     </span>
                   </Link>
-                </MenuItem>
+                </Nav.Item>
               );
             })}
-        </Menu>
+        </Nav>
       </div>
     );
   }

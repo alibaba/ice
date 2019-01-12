@@ -7,8 +7,7 @@ import routerConfig from '../../routerConfig';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Aside from './components/Aside';
-
-import './index.scss';
+import styles from './index.module.scss';
 
 export default class BasicLayout extends Component {
   static propTypes = {};
@@ -19,22 +18,20 @@ export default class BasicLayout extends Component {
     return (
       <Layout
         fixable
-        style={{ minHeight: '100vh' }}
-        className="ice-design-layout"
+        className={styles.layout}
       >
         <Layout.Header type="secondary">
           <Header />
         </Layout.Header>
 
         <Layout.Section>
-          <Layout.Aside
-            width="auto"
-          >
+          <Layout.Aside>
             <Aside />
           </Layout.Aside>
 
           {/* 主体内容 */}
-          <Layout.Main scrollable>
+          <Layout.Main scrollable className={styles.main}>
+
             <Switch>
               {routerConfig.map((item, index) => {
                 return item.component ? (
@@ -49,7 +46,11 @@ export default class BasicLayout extends Component {
               <Redirect from="/" to="/contract" />
               <Route component={NotFound} />
             </Switch>
-            <Footer />
+
+            <Layout.Footer type="none">
+              <Footer />
+            </Layout.Footer>
+
           </Layout.Main>
         </Layout.Section>
       </Layout>
