@@ -128,13 +128,14 @@ function getPackageByPath(path) {
  */
 function getProjectVersion(pkg) {
   const dependencies = pkg.dependencies || {};
-  const hasBase = Object.keys(dependencies).some( depName => {
+  const depNames = Object.keys(dependencies);
+  const hasBase = depNames.some( depName => {
     return depName.includes('@icedesign/base');
   });
   if (hasBase) {
     return '0.x';
   }
-  const hasNext = Object.keys(dependencies).some( depName => {
+  const hasNext = depNames.some( depName => {
     return depName.includes('@alifd/next');
   });
   return hasNext ? '1.x' : '0.x'
