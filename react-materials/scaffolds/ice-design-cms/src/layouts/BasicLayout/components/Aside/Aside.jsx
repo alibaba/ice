@@ -106,7 +106,7 @@ export default class Aside extends Component {
                 {item.icon ? (
                   <FoundationSymbol size="small" type={item.icon} />
                 ) : null}
-                <span className="ice-menu-collapse-hide">{item.name}</span>
+                <span className="ice-menu-collapse ice-menu-collapse-hide">{item.name}</span>
               </span>
             }
           >

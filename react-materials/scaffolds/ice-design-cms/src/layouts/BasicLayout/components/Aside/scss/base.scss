@@ -18,8 +18,12 @@
         }
       }
     }
-
-
+    i ~ .ice-menu-collapse {
+      margin-left: 1em;
+      &.ice-menu-collapse-hide {
+        visibility: hidden;
+      }
+    }
 
   }
 
