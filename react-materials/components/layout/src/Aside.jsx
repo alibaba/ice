@@ -14,7 +14,7 @@ export default class IceLayoutAside extends Component {
     /**
      * 类型，背景色
      */
-    type: PropTypes.oneOf(['normal', 'primary', 'secondary', 'line']),
+    type: PropTypes.oneOf(['none', 'normal', 'primary', 'secondary', 'line']),
   };
 
   static defaultProps = {

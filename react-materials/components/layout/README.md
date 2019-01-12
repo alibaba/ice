@@ -50,7 +50,7 @@ cols: 1
 |:-----------|:--------------|:-------|:---------|
 | type      | 配置皮肤色 | string | normal |
 
-- type: normal，primary，secondary
+- type: none(继承父元素的背景色), normal，primary，secondary
 
 ## Layout.Aside
 

@@ -81,6 +81,7 @@ class App extends Component {
               <Radio value="primary">type="primary"</Radio>
               <Radio value="secondary">type="secondary"</Radio>
               <Radio value="line">type="line"</Radio>
+              <Radio value="line">type="none"</Radio>
             </Radio.Group>
           </Layout.Main>
           <Layout.Footer
