@@ -1,42 +1,42 @@
 {
-    "name": "@icedesign/infinite-scroll-list-block",
-    "version": "1.0.0",
-    "description": "无限滚动列表",
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/infinite-scroll-list-block",
+  "version": "2.0.0",
+  "description": "无限滚动列表",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "react": "^16.2.0",
+    "react-virtualized": "^9.20.1"
+  },
+  "blockConfig": {
+    "name": "infinite-scroll-list",
+    "title": "无限滚动列表",
+    "categories": [
+      "列表"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "react": "^16.2.0",
-        "react-virtualized": "^9.20.1"
-    },
-    "blockConfig": {
-        "name": "infinite-scroll-list",
-        "title": "无限滚动列表",
-        "categories": [
-            "列表"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/infinite-scroll-list-block/screenshot.png",
-        "version-0.x": "1.0.0"
-    },
-    "homepage": "https://unpkg.com/@icedesign/infinite-scroll-list-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/infinite-scroll-list-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  },
+  "homepage": "https://unpkg.com/@icedesign/infinite-scroll-list-block/build/index.html"
 }

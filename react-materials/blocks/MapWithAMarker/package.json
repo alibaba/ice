@@ -1,39 +1,39 @@
 {
-    "name": "@icedesign/map-with-a-marker",
-    "version": "1.0.0",
-    "description": "Map With A Marker",
-    "author": "yuanyan <yuanyan.cao@gmail.com>",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/map-with-a-marker",
+  "version": "2.0.0",
+  "description": "Map With A Marker",
+  "author": "yuanyan <yuanyan.cao@gmail.com>",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/MapWithAMarker"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "react": "^16.2.0",
+    "react-amap": "^1.2.7"
+  },
+  "blockConfig": {
+    "name": "map-with-a-marker",
+    "title": "地图位置标记",
+    "categories": [
+      "信息展示"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/MapWithAMarker"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "react": "^16.2.0",
-        "react-amap": "^1.2.7"
-    },
-    "blockConfig": {
-        "name": "map-with-a-marker",
-        "title": "地图位置标记",
-        "categories": [
-            "信息展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/map-with-a-marker/screenshot.png",
-        "version-0.x": "1.0.0"
-    },
-    "homepage": "https://unpkg.com/@icedesign/map-with-a-marker/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/map-with-a-marker/screenshot.png",
+    "version-0.x": "1.0.0"
+  },
+  "homepage": "https://unpkg.com/@icedesign/map-with-a-marker/build/index.html"
 }

@@ -1,48 +1,48 @@
 {
-    "name": "@icedesign/lite-table-block",
-    "version": "0.1.13",
-    "description": "简单的附带状态的表格",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/lite-table-block",
+  "version": "2.0.0",
+  "description": "简单的附带状态的表格",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/LiteTable"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-copy-to-clipboard": "^4.2.3",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "lite-table",
+    "screenshot": "https://unpkg.com/@icedesign/lite-table-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "简单带状态表格",
+    "categories": [
+      "表格"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/LiteTable"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-copy-to-clipboard": "^4.2.3",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "lite-table",
-        "screenshot": "https://unpkg.com/@icedesign/lite-table-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "简单带状态表格",
-        "categories": [
-            "表格"
-        ],
-        "version-0.x": "0.1.13"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/lite-table-block/build/index.html"
+    "version-0.x": "0.1.13"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/lite-table-block/build/index.html"
 }

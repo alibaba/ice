@@ -1,49 +1,49 @@
 {
-    "name": "@icedesign/stacked-bar-chart-block",
-    "version": "0.1.5",
-    "description": "",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/stacked-bar-chart-block",
+  "version": "2.0.0",
+  "description": "",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/StackedBarChart"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@antv/data-set": "0.8.9",
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "stacked-bar-chart",
+    "screenshot": "https://unpkg.com/@icedesign/stacked-bar-chart-block/screenshot.png",
+    "title": "堆叠条形图",
+    "categories": [
+      "图表"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/StackedBarChart"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@antv/data-set": "0.8.9",
-        "@icedesign/container": "^1.x",
-        "bizcharts": "3.2.2",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "stacked-bar-chart",
-        "screenshot": "https://unpkg.com/@icedesign/stacked-bar-chart-block/screenshot.png",
-        "title": "堆叠条形图",
-        "categories": [
-            "图表"
-        ],
-        "themePackage": "@icedesign/theme",
-        "version-0.x": "0.1.5"
-    },
-    "homepage": "https://unpkg.com/@icedesign/stacked-bar-chart-block/build/index.html"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.5"
+  },
+  "homepage": "https://unpkg.com/@icedesign/stacked-bar-chart-block/build/index.html"
 }

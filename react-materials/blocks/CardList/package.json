@@ -1,41 +1,41 @@
 {
-    "name": "@icedesign/card-list-block",
-    "version": "1.0.3",
-    "description": "适用于多卡片信息的展示",
-    "author": "",
-    "homepage": "https://unpkg.com/@icedesign/card-list-block/build/index.html",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/card-list-block",
+  "version": "2.0.0",
+  "description": "适用于多卡片信息的展示",
+  "author": "",
+  "homepage": "https://unpkg.com/@icedesign/card-list-block/build/index.html",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CardList"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "@icedesign/form-binder": "^0.1.9",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "card-list",
+    "title": "卡片列表",
+    "categories": [
+      "数据展示"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CardList"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "@icedesign/form-binder": "^0.1.9",
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "card-list",
-        "title": "卡片列表",
-        "categories": [
-            "数据展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/card-list-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/card-list-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  }
 }

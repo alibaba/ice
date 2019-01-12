@@ -1,45 +1,45 @@
 {
-    "name": "@icedesign/tree-table-block",
-    "version": "1.0.1",
-    "description": "tree和选择混合表格",
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/tree-table-block",
+  "version": "2.0.0",
+  "description": "tree和选择混合表格",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TreeTable"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "tree-table",
+    "title": "树状表格",
+    "categories": [
+      "表格"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TreeTable"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "react": "^16.2.0"
-    },
-    "blockConfig": {
-        "name": "tree-table",
-        "title": "树状表格",
-        "categories": [
-            "表格"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/tree-table-block/screenshot.png",
-        "version-0.x": "1.0.1"
-    },
-    "homepage": "https://unpkg.com/@icedesign/tree-table-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/tree-table-block/screenshot.png",
+    "version-0.x": "1.0.1"
+  },
+  "homepage": "https://unpkg.com/@icedesign/tree-table-block/build/index.html"
 }

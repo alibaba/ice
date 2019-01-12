@@ -1,48 +1,48 @@
 {
-    "name": "@icedesign/collapse-card-block",
-    "version": "0.1.11",
-    "description": "折叠型卡片的信息展示",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/collapse-card-block",
+  "version": "2.0.0",
+  "description": "折叠型卡片的信息展示",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CollapseCard"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "collapse-card",
+    "screenshot": "https://unpkg.com/@icedesign/collapse-card-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "折叠型卡片的信息展示",
+    "categories": [
+      "信息展示"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CollapseCard"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "classnames": "^2.2.5",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "collapse-card",
-        "screenshot": "https://unpkg.com/@icedesign/collapse-card-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "折叠型卡片的信息展示",
-        "categories": [
-            "信息展示"
-        ],
-        "version-0.x": "0.1.11"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/collapse-card-block/build/index.html"
+    "version-0.x": "0.1.11"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/collapse-card-block/build/index.html"
 }

@@ -1,42 +1,42 @@
 {
-    "name": "@icedesign/performance-indicator-block",
-    "version": "1.0.3",
-    "description": "适用于性能指标展示的图表",
-    "homepage": "https://unpkg.com/@icedesign/performance-indicator-block/build/index.html",
-    "author": "",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/performance-indicator-block",
+  "version": "2.0.0",
+  "description": "适用于性能指标展示的图表",
+  "homepage": "https://unpkg.com/@icedesign/performance-indicator-block/build/index.html",
+  "author": "",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PerformanceIndicator"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "dependencies": {
+    "@antv/data-set": "^0.9.6",
+    "@icedesign/container": "^1.x",
+    "bizcharts": "^3.2.2",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "performance-indicator",
+    "title": "性能指标图",
+    "categories": [
+      "图表"
     ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PerformanceIndicator"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "dependencies": {
-        "@antv/data-set": "^0.9.6",
-        "@icedesign/container": "^1.x",
-        "bizcharts": "^3.2.2",
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "performance-indicator",
-        "title": "性能指标图",
-        "categories": [
-            "图表"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/performance-indicator-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/performance-indicator-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  }
 }

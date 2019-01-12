@@ -1,39 +1,39 @@
 {
-    "name": "@icedesign/post-category-block",
-    "version": "1.0.0",
-    "description": "文章创作类型列表",
-    "homepage": "https://unpkg.com/@icedesign/post-category-block/build/index.html",
-    "author": "noyobo <nongyoubao@alibaba-inc.com>",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/post-category-block",
+  "version": "2.0.0",
+  "description": "文章创作类型列表",
+  "homepage": "https://unpkg.com/@icedesign/post-category-block/build/index.html",
+  "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PostCategory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "post-category",
+    "title": "post-category",
+    "categories": [
+      "列表"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PostCategory"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "post-category",
-        "title": "post-category",
-        "categories": [
-            "列表"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/post-category-block/screenshot.png",
-        "version-0.x": "1.0.0"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/post-category-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  }
 }

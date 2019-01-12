@@ -1,47 +1,47 @@
 {
-    "name": "@icedesign/editable-table-block",
-    "version": "0.1.11",
-    "description": "可编辑内容的表格",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/editable-table-block",
+  "version": "2.0.0",
+  "description": "可编辑内容的表格",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/EditableTable"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "editable-table",
+    "screenshot": "https://unpkg.com/@icedesign/editable-table-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "可编辑表格",
+    "categories": [
+      "表格"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/EditableTable"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "editable-table",
-        "screenshot": "https://unpkg.com/@icedesign/editable-table-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "可编辑表格",
-        "categories": [
-            "表格"
-        ],
-        "version-0.x": "0.1.11"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/editable-table-block/build/index.html"
+    "version-0.x": "0.1.11"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/editable-table-block/build/index.html"
 }

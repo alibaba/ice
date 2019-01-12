@@ -1,47 +1,47 @@
 {
-    "name": "@icedesign/product-intro-block",
-    "version": "0.1.5",
-    "description": "用于左文右图产品介绍模块",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/product-intro-block",
+  "version": "2.0.0",
+  "description": "用于左文右图产品介绍模块",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ProductIntro"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "product-intro",
+    "screenshot": "https://unpkg.com/@icedesign/product-intro-block/screenshot.png",
+    "title": "产品介绍区块",
+    "categories": [
+      "信息展示"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ProductIntro"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "product-intro",
-        "screenshot": "https://unpkg.com/@icedesign/product-intro-block/screenshot.png",
-        "title": "产品介绍区块",
-        "categories": [
-            "信息展示"
-        ],
-        "themePackage": "@icedesign/theme",
-        "version-0.x": "0.1.5"
-    },
-    "homepage": "https://unpkg.com/@icedesign/product-intro-block/build/index.html"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.5"
+  },
+  "homepage": "https://unpkg.com/@icedesign/product-intro-block/build/index.html"
 }

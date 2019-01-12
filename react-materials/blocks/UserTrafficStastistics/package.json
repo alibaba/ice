@@ -1,50 +1,50 @@
 {
-    "name": "@icedesign/user-traffic-stastistics",
-    "version": "0.1.6",
-    "description": "信息展示类，使用可视化的方式展示用户浏览以及数据分析的结果",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/user-traffic-stastistics",
+  "version": "2.0.0",
+  "description": "信息展示类，使用可视化的方式展示用户浏览以及数据分析的结果",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/UserTrafficStastistics"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@antv/data-set": "0.8.9",
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "user-traffic-stastistics",
+    "screenshot": "https://unpkg.com/@icedesign/user-traffic-stastistics/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "用户浏览数据分析",
+    "categories": [
+      "数据展示",
+      "图表"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/UserTrafficStastistics"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@antv/data-set": "0.8.9",
-        "@icedesign/container": "^1.x",
-        "bizcharts": "3.2.2",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "user-traffic-stastistics",
-        "screenshot": "https://unpkg.com/@icedesign/user-traffic-stastistics/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "用户浏览数据分析",
-        "categories": [
-            "数据展示",
-            "图表"
-        ],
-        "version-0.x": "0.1.6"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/user-traffic-stastistics/build/index.html"
+    "version-0.x": "0.1.6"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/user-traffic-stastistics/build/index.html"
 }

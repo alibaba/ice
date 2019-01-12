@@ -1,44 +1,44 @@
 {
-    "name": "@icedesign/quill-rich-text-editor-block",
-    "version": "1.0.3",
-    "description": "基于 react-quill 的富文本编辑器",
-    "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/quill-rich-text-editor-block",
+  "version": "2.0.0",
+  "description": "基于 react-quill 的富文本编辑器",
+  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/QuillRichTextEditor"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "react-dom": "^16.6.3",
+    "react-quill": "^1.3.1",
+    "@alifd/next": "^1.x"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "quill-rich-text-editor",
+    "title": "Quill 富文本编辑器",
+    "categories": [
+      "富文本编辑器"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/QuillRichTextEditor"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "react-dom": "^16.6.3",
-        "react-quill": "^1.3.1",
-        "@alifd/next": "^1.x"
-    },
-    "peerDependencies": {
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0"
-    },
-    "blockConfig": {
-        "name": "quill-rich-text-editor",
-        "title": "Quill 富文本编辑器",
-        "categories": [
-            "富文本编辑器"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/quill-rich-text-editor-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    },
-    "homepage": "https://unpkg.com/@icedesign/quill-rich-text-editor-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/quill-rich-text-editor-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  },
+  "homepage": "https://unpkg.com/@icedesign/quill-rich-text-editor-block/build/index.html"
 }

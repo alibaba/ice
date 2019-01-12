@@ -1,39 +1,39 @@
 {
-    "name": "@icedesign/black-footer-block",
-    "version": "1.0.3",
-    "description": "页脚信息展示",
-    "homepage": "https://unpkg.com/@icedesign/black-footer-block/build/index.html",
-    "author": "",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/black-footer-block",
+  "version": "2.0.0",
+  "description": "页脚信息展示",
+  "homepage": "https://unpkg.com/@icedesign/black-footer-block/build/index.html",
+  "author": "",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BlackFooter"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "black-footer",
+    "title": "页脚",
+    "categories": [
+      "信息展示"
     ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/BlackFooter"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "dependencies": {
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "black-footer",
-        "title": "页脚",
-        "categories": [
-            "信息展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/black-footer-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/black-footer-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  }
 }

@@ -1,40 +1,40 @@
 {
-    "name": "@icedesign/intro-tab-block",
-    "version": "1.0.0",
-    "description": "展示多种情况下的信息",
-    "author": "muchen <tao360907796@gmail.com>",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/intro-tab-block",
+  "version": "2.0.0",
+  "description": "展示多种情况下的信息",
+  "author": "muchen <tao360907796@gmail.com>",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/IntroTab"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "intro-tab",
+    "title": "introduction tabs",
+    "categories": [
+      "筛选",
+      "信息展示",
+      "欢迎页"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/IntroTab"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "react": "^16.2.0",
-        "prop-types": "^15.5.8"
-    },
-    "blockConfig": {
-        "name": "intro-tab",
-        "title": "introduction tabs",
-        "categories": [
-            "筛选",
-            "信息展示",
-            "欢迎页"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/intro-tab-block/screenshot.png",
-        "version-0.x": "1.0.0"
-    },
-    "homepage": "https://unpkg.com/@icedesign/intro-tab-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/intro-tab-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  },
+  "homepage": "https://unpkg.com/@icedesign/intro-tab-block/build/index.html"
 }

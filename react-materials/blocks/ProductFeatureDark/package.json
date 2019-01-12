@@ -1,38 +1,38 @@
 {
-    "name": "@icedesign/product-feature-dark-block",
-    "version": "1.0.4",
-    "description": "描述产品特点区块，深色主题，左文右图展示形式。",
-    "author": "noyobo <nongyoubao@alibaba-inc.com>",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/product-feature-dark-block",
+  "version": "2.0.0",
+  "description": "描述产品特点区块，深色主题，左文右图展示形式。",
+  "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ProductFeatureDark"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "product-feature-dark",
+    "title": "产品特点介绍",
+    "categories": [
+      "信息展示"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ProductFeatureDark"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "react": "^16.2.0",
-        "prop-types": "^15.5.8"
-    },
-    "blockConfig": {
-        "name": "product-feature-dark",
-        "title": "产品特点介绍",
-        "categories": [
-            "信息展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/product-feature-dark-block/screenshot.png",
-        "version-0.x": "1.0.4"
-    },
-    "homepage": "https://unpkg.com/@icedesign/product-feature-dark-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/product-feature-dark-block/screenshot.png",
+    "version-0.x": "1.0.4"
+  },
+  "homepage": "https://unpkg.com/@icedesign/product-feature-dark-block/build/index.html"
 }

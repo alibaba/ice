@@ -1,48 +1,48 @@
 {
-    "name": "@icedesign/tab-table-block",
-    "version": "0.1.11",
-    "description": "",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/tab-table-block",
+  "version": "2.0.0",
+  "description": "",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TabTable"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "axios": "^0.17.1",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "tab-table",
+    "screenshot": "https://unpkg.com/@icedesign/tab-table-block/screenshot.png",
+    "title": "标签页表格组合",
+    "categories": [
+      "表格"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TabTable"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "axios": "^0.17.1",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "tab-table",
-        "screenshot": "https://unpkg.com/@icedesign/tab-table-block/screenshot.png",
-        "title": "标签页表格组合",
-        "categories": [
-            "表格"
-        ],
-        "themePackage": "@icedesign/theme",
-        "version-0.x": "0.1.11"
-    },
-    "homepage": "https://unpkg.com/@icedesign/tab-table-block/build/index.html"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.11"
+  },
+  "homepage": "https://unpkg.com/@icedesign/tab-table-block/build/index.html"
 }

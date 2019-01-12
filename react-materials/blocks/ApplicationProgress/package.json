@@ -1,48 +1,48 @@
 {
-    "name": "@icedesign/application-progress-block",
-    "version": "0.1.9",
-    "description": "申请进度信息展示",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/application-progress-block",
+  "version": "2.0.0",
+  "description": "申请进度信息展示",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ApplicationProgress"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "enquire-js": "^0.1.2",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "application-progress",
+    "screenshot": "https://unpkg.com/@icedesign/application-progress-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "申请进度信息展示",
+    "categories": [
+      "信息展示"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ApplicationProgress"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "enquire-js": "^0.1.2",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "application-progress",
-        "screenshot": "https://unpkg.com/@icedesign/application-progress-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "申请进度信息展示",
-        "categories": [
-            "信息展示"
-        ],
-        "version-0.x": "0.1.9"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/application-progress-block/build/index.html"
+    "version-0.x": "0.1.9"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/application-progress-block/build/index.html"
 }

@@ -1,39 +1,39 @@
 {
-    "name": "@icedesign/data-overview-block",
-    "version": "1.0.0",
-    "description": "基础数据概览",
-    "homepage": "https://unpkg.com/@icedesign/data-overview-block/build/index.html",
-    "author": "noyobo <nongyoubao@alibaba-inc.com>",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/data-overview-block",
+  "version": "2.0.0",
+  "description": "基础数据概览",
+  "homepage": "https://unpkg.com/@icedesign/data-overview-block/build/index.html",
+  "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/DataOverview"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "data-overview",
+    "title": "数据概览",
+    "categories": [
+      "信息展示"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/DataOverview"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0"
-    },
-    "blockConfig": {
-        "name": "data-overview",
-        "title": "数据概览",
-        "categories": [
-            "信息展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/data-overview-block/screenshot.png",
-        "version-0.x": "1.0.0"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/data-overview-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  }
 }

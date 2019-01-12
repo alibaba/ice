@@ -1,41 +1,41 @@
 {
-    "name": "@icedesign/notice-list-block",
-    "version": "1.0.0",
-    "description": "展示站点公告列表",
-    "homepage": "https://unpkg.com/@icedesign/notice-list-block/build/index.html",
-    "author": "noyobo <nongyoubao@alibaba-inc.com>",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/notice-list-block",
+  "version": "2.0.0",
+  "description": "展示站点公告列表",
+  "homepage": "https://unpkg.com/@icedesign/notice-list-block/build/index.html",
+  "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/NoticeList"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "fecha": "^2.3.3",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "notice-list",
+    "title": "公告列表",
+    "categories": [
+      "列表"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/NoticeList"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "fecha": "^2.3.3",
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "notice-list",
-        "title": "公告列表",
-        "categories": [
-            "列表"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/notice-list-block/screenshot.png",
-        "version-0.x": "1.0.0"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/notice-list-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  }
 }

@@ -1,38 +1,38 @@
 {
-    "name": "@icedesign/about-block",
-    "version": "1.0.3",
-    "description": "适用于产品的简介",
-    "homepage": "https://unpkg.com/@icedesign/about-block/build/index.html",
-    "author": "",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/about-block",
+  "version": "2.0.0",
+  "description": "适用于产品的简介",
+  "homepage": "https://unpkg.com/@icedesign/about-block/build/index.html",
+  "author": "",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/About"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "dependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "about",
+    "title": "关于",
+    "categories": [
+      "信息展示"
     ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/About"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "dependencies": {
-        "react": "^16.2.0",
-        "prop-types": "^15.5.8"
-    },
-    "blockConfig": {
-        "name": "about",
-        "title": "关于",
-        "categories": [
-            "信息展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/about-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/about-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  }
 }

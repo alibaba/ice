@@ -1,46 +1,46 @@
 {
-    "name": "@icedesign/content-list-block",
-    "version": "1.0.3",
-    "description": "筛选和列表组合",
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/content-list-block",
+  "version": "2.0.0",
+  "description": "筛选和列表组合",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ContentList"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "@alifd/next": "^1.x"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "content-list",
+    "title": "内容列表",
+    "categories": [
+      "列表",
+      "数据展示"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ContentList"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "@alifd/next": "^1.x"
-    },
-    "peerDependencies": {
-        "react": "^16.2.0",
-        "prop-types": "^15.5.8"
-    },
-    "blockConfig": {
-        "name": "content-list",
-        "title": "内容列表",
-        "categories": [
-            "列表",
-            "数据展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/content-list-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    },
-    "homepage": "https://unpkg.com/@icedesign/content-list-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/content-list-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  },
+  "homepage": "https://unpkg.com/@icedesign/content-list-block/build/index.html"
 }

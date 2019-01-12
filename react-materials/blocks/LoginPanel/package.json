@@ -1,40 +1,40 @@
 {
-    "name": "@icedesign/login-panel-block",
-    "version": "1.0.3",
-    "description": "左右布局带背景图的登录表单页",
-    "homepage": "https://unpkg.com/@icedesign/login-panel-block/build/index.html",
-    "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/login-panel-block",
+  "version": "2.0.0",
+  "description": "左右布局带背景图的登录表单页",
+  "homepage": "https://unpkg.com/@icedesign/login-panel-block/build/index.html",
+  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/LoginPanel"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "dependencies": {
+    "@icedesign/form-binder": "^0.1.7",
+    "prop-types": "^15.6.2",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "login-panel",
+    "title": "登录",
+    "categories": [
+      "登录页"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/LoginPanel"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "dependencies": {
-        "@icedesign/form-binder": "^0.1.7",
-        "prop-types": "^15.6.2",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "login-panel",
-        "title": "登录",
-        "categories": [
-            "登录页"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/login-panel-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/login-panel-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  }
 }

@@ -1,39 +1,39 @@
 {
-    "name": "@icedesign/release-intro-block",
-    "version": "1.0.5",
-    "description": "根据平台信息，展示对应软件下载，以及软件介绍等。",
-    "author": "noyobo <nongyoubao@alibaba-inc.com>",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/release-intro-block",
+  "version": "2.0.0",
+  "description": "根据平台信息，展示对应软件下载，以及软件介绍等。",
+  "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ReleaseIntro"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "release-intro",
+    "title": "软件发布介绍页",
+    "categories": [
+      "信息展示"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ReleaseIntro"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "release-intro",
-        "title": "软件发布介绍页",
-        "categories": [
-            "信息展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/release-intro-block/screenshot.png",
-        "version-0.x": "1.0.5"
-    },
-    "homepage": "https://unpkg.com/@icedesign/release-intro-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/release-intro-block/screenshot.png",
+    "version-0.x": "1.0.5"
+  },
+  "homepage": "https://unpkg.com/@icedesign/release-intro-block/build/index.html"
 }

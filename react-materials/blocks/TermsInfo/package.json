@@ -1,48 +1,48 @@
 {
-    "name": "@icedesign/terms-info-block",
-    "version": "0.1.12",
-    "description": "协议信息展示",
-    "main": "lib/index.js",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/terms-info-block",
+  "version": "2.0.0",
+  "description": "协议信息展示",
+  "main": "lib/index.js",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TermsInfo"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "terms-info",
+    "screenshot": "https://unpkg.com/@icedesign/terms-info-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "协议信息展示",
+    "categories": [
+      "信息展示"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TermsInfo"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "terms-info",
-        "screenshot": "https://unpkg.com/@icedesign/terms-info-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "协议信息展示",
-        "categories": [
-            "信息展示"
-        ],
-        "version-0.x": "0.1.12"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/terms-info-block/build/index.html"
+    "version-0.x": "0.1.12"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/terms-info-block/build/index.html"
 }

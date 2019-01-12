@@ -1,48 +1,48 @@
 {
-    "name": "@icedesign/info-display-table-block",
-    "version": "0.1.10",
-    "description": "两栏信息展示型表格",
-    "main": "lib/index.js",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/info-display-table-block",
+  "version": "2.0.0",
+  "description": "两栏信息展示型表格",
+  "main": "lib/index.js",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/InfoDisplayTable"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "info-display-table",
+    "screenshot": "https://unpkg.com/@icedesign/info-display-table-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "两栏信息展示型表格",
+    "categories": [
+      "表格"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/InfoDisplayTable"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "info-display-table",
-        "screenshot": "https://unpkg.com/@icedesign/info-display-table-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "两栏信息展示型表格",
-        "categories": [
-            "表格"
-        ],
-        "version-0.x": "0.1.10"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/info-display-table-block/build/index.html"
+    "version-0.x": "0.1.10"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/info-display-table-block/build/index.html"
 }

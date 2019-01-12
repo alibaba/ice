@@ -1,52 +1,52 @@
 {
-    "name": "@icedesign/simple-table-block",
-    "version": "0.1.16",
-    "description": "基础的表格",
-    "main": "lib/index.js",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/simple-table-block",
+  "version": "2.0.0",
+  "description": "基础的表格",
+  "main": "lib/index.js",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SimpleTable"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "@icedesign/data-binder": "^1.x",
+    "@icedesign/img": "^0.1.1",
+    "@icedesign/label": "^1.x",
+    "enquire-js": "^0.1.2",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "simple-table",
+    "screenshot": "https://unpkg.com/@icedesign/simple-table-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "基础表格",
+    "categories": [
+      "表格"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SimpleTable"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "@icedesign/data-binder": "^1.x",
-        "@icedesign/img": "^0.1.1",
-        "@icedesign/label": "^1.x",
-        "enquire-js": "^0.1.2",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "simple-table",
-        "screenshot": "https://unpkg.com/@icedesign/simple-table-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "基础表格",
-        "categories": [
-            "表格"
-        ],
-        "version-0.x": "0.1.16"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/simple-table-block/build/index.html"
+    "version-0.x": "0.1.16"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/simple-table-block/build/index.html"
 }

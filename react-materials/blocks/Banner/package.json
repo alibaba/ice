@@ -1,39 +1,39 @@
 {
-    "name": "@icedesign/banner-block",
-    "version": "1.0.3",
-    "description": "适用于 Homepage 的 Banner 简介",
-    "homepage": "https://unpkg.com/@icedesign/banner-block/build/index.html",
-    "author": "",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/banner-block",
+  "version": "2.0.0",
+  "description": "适用于 Homepage 的 Banner 简介",
+  "homepage": "https://unpkg.com/@icedesign/banner-block/build/index.html",
+  "author": "",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/Banner"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "rc-queue-anim": "^1.6.5",
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "banner",
+    "title": "Banner 简介",
+    "categories": [
+      "信息展示"
     ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/Banner"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "dependencies": {
-        "prop-types": "^15.5.8",
-        "rc-queue-anim": "^1.6.5",
-        "react": "^16.2.0"
-    },
-    "blockConfig": {
-        "name": "banner",
-        "title": "Banner 简介",
-        "categories": [
-            "信息展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/banner-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/banner-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  }
 }

@@ -1,46 +1,46 @@
 {
-    "name": "@icedesign/order-status-chart-block",
-    "version": "1.0.4",
-    "description": "订单状态型的图表",
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/order-status-chart-block",
+  "version": "2.0.0",
+  "description": "订单状态型的图表",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/OrderStatusChart"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@antv/data-set": "^0.10.1",
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "prop-types": "^15.5.8"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0"
+  },
+  "blockConfig": {
+    "name": "order-status-chart",
+    "title": "订单状态型图表",
+    "categories": [
+      "图表"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/OrderStatusChart"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@antv/data-set": "^0.10.1",
-        "@icedesign/container": "^1.x",
-        "bizcharts": "3.2.2",
-        "prop-types": "^15.5.8"
-    },
-    "peerDependencies": {
-        "react": "^16.2.0"
-    },
-    "blockConfig": {
-        "name": "order-status-chart",
-        "title": "订单状态型图表",
-        "categories": [
-            "图表"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/order-status-chart-block/screenshot.png",
-        "version-0.x": "1.0.4"
-    },
-    "homepage": "https://unpkg.com/@icedesign/order-status-chart-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/order-status-chart-block/screenshot.png",
+    "version-0.x": "1.0.4"
+  },
+  "homepage": "https://unpkg.com/@icedesign/order-status-chart-block/build/index.html"
 }

@@ -1,47 +1,47 @@
 {
-    "name": "@icedesign/simple-step-block",
-    "version": "0.1.7",
-    "description": "",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/simple-step-block",
+  "version": "2.0.0",
+  "description": "",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SimpleStep"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "simple-step",
+    "screenshot": "https://unpkg.com/@icedesign/simple-step-block/screenshot.png",
+    "title": "步骤条",
+    "categories": [
+      "信息展示"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SimpleStep"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "simple-step",
-        "screenshot": "https://unpkg.com/@icedesign/simple-step-block/screenshot.png",
-        "title": "步骤条",
-        "categories": [
-            "信息展示"
-        ],
-        "themePackage": "@icedesign/theme",
-        "version-0.x": "0.1.7"
-    },
-    "homepage": "https://unpkg.com/@icedesign/simple-step-block/build/index.html"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.7"
+  },
+  "homepage": "https://unpkg.com/@icedesign/simple-step-block/build/index.html"
 }

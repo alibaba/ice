@@ -1,44 +1,44 @@
 {
-    "name": "@icedesign/sales-chart-block",
-    "version": "1.0.3",
-    "description": "销售数据图表",
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/sales-chart-block",
+  "version": "2.0.0",
+  "description": "销售数据图表",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SalesChart"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "bizcharts": "^3.1.8"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "prop-types": "^15.5.8"
+  },
+  "blockConfig": {
+    "name": "sales-chart",
+    "title": "销售数据图表",
+    "categories": [
+      "图表"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SalesChart"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "bizcharts": "^3.1.8"
-    },
-    "peerDependencies": {
-        "react": "^16.2.0",
-        "prop-types": "^15.5.8"
-    },
-    "blockConfig": {
-        "name": "sales-chart",
-        "title": "销售数据图表",
-        "categories": [
-            "图表"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/sales-chart-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    },
-    "homepage": "https://unpkg.com/@icedesign/sales-chart-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/sales-chart-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  },
+  "homepage": "https://unpkg.com/@icedesign/sales-chart-block/build/index.html"
 }

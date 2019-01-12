@@ -1,41 +1,41 @@
 {
-    "name": "@icedesign/tickets-block",
-    "version": "1.0.3",
-    "description": "适用于票价类的信息展示",
-    "homepage": "https://unpkg.com/@icedesign/tickets-block/build/index.html",
-    "author": "",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/tickets-block",
+  "version": "2.0.0",
+  "description": "适用于票价类的信息展示",
+  "homepage": "https://unpkg.com/@icedesign/tickets-block/build/index.html",
+  "author": "",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/Tickets"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "rc-queue-anim": "^1.6.5",
+    "rc-scroll-anim": "^2.5.5",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "tickets",
+    "title": "票价列表",
+    "categories": [
+      "信息展示"
     ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/Tickets"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "dependencies": {
-        "prop-types": "^15.5.8",
-        "rc-queue-anim": "^1.6.5",
-        "rc-scroll-anim": "^2.5.5",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "tickets",
-        "title": "票价列表",
-        "categories": [
-            "信息展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/tickets-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/tickets-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  }
 }

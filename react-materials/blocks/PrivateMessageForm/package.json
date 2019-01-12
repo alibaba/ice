@@ -1,48 +1,48 @@
 {
-    "name": "@icedesign/private-message-form-block",
-    "version": "0.1.12",
-    "description": "私有消息表单",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/private-message-form-block",
+  "version": "2.0.0",
+  "description": "私有消息表单",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PrivateMessageForm"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-copy-to-clipboard": "^4.2.3",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "private-message-form",
+    "screenshot": "https://unpkg.com/@icedesign/private-message-form-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "私有消息表单",
+    "categories": [
+      "表单"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PrivateMessageForm"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-copy-to-clipboard": "^4.2.3",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "private-message-form",
-        "screenshot": "https://unpkg.com/@icedesign/private-message-form-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "私有消息表单",
-        "categories": [
-            "表单"
-        ],
-        "version-0.x": "0.1.12"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/private-message-form-block/build/index.html"
+    "version-0.x": "0.1.12"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/private-message-form-block/build/index.html"
 }

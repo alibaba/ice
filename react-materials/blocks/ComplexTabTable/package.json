@@ -1,52 +1,52 @@
 {
-    "name": "@icedesign/complex-tab-table-block",
-    "version": "0.1.14",
-    "description": "附带复杂的 Tab 多级筛选项的表格",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/complex-tab-table-block",
+  "version": "2.0.0",
+  "description": "附带复杂的 Tab 多级筛选项的表格",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ComplexTabTable"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "@icedesign/data-binder": "^1.x",
+    "@icedesign/img": "^0.1.0",
+    "@icedesign/label": "^1.x",
+    "@icedesign/theme": "^0.x",
+    "enquire-js": "^0.1.2",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "complex-tab-table",
+    "screenshot": "https://unpkg.com/@icedesign/complex-tab-table-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "复杂 Tab 筛选表格",
+    "categories": [
+      "表格"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ComplexTabTable"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "@icedesign/data-binder": "^1.x",
-        "@icedesign/img": "^0.1.0",
-        "@icedesign/label": "^1.x",
-        "@icedesign/theme": "^0.x",
-        "enquire-js": "^0.1.2",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "complex-tab-table",
-        "screenshot": "https://unpkg.com/@icedesign/complex-tab-table-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "复杂 Tab 筛选表格",
-        "categories": [
-            "表格"
-        ],
-        "version-0.x": "0.1.14"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/complex-tab-table-block/build/index.html"
+    "version-0.x": "0.1.14"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/complex-tab-table-block/build/index.html"
 }

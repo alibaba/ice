@@ -1,43 +1,43 @@
 {
-    "name": "@icedesign/platform-joinus-block",
-    "version": "1.0.5",
-    "description": "加入平台区块",
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/platform-joinus-block",
+  "version": "2.0.0",
+  "description": "加入平台区块",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PlatformJoinus"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "platform-joinus",
+    "title": "加入平台区块",
+    "categories": [
+      "信息展示",
+      "欢迎页"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PlatformJoinus"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "platform-joinus",
-        "title": "加入平台区块",
-        "categories": [
-            "信息展示",
-            "欢迎页"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/platform-joinus-block/screenshot.png",
-        "version-0.x": "1.0.5"
-    },
-    "homepage": "https://unpkg.com/@icedesign/platform-joinus-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/platform-joinus-block/screenshot.png",
+    "version-0.x": "1.0.5"
+  },
+  "homepage": "https://unpkg.com/@icedesign/platform-joinus-block/build/index.html"
 }

@@ -1,44 +1,44 @@
 {
-    "name": "@icedesign/review-detail-info-block",
-    "version": "1.0.4",
-    "description": "评论详细信息",
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/review-detail-info-block",
+  "version": "2.0.0",
+  "description": "评论详细信息",
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ReviewDetailInfo"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "review-detail-info",
+    "title": "评论详细信息",
+    "categories": [
+      "数据展示",
+      "信息展示"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ReviewDetailInfo"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "review-detail-info",
-        "title": "评论详细信息",
-        "categories": [
-            "数据展示",
-            "信息展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/review-detail-info-block/screenshot.png",
-        "version-0.x": "1.0.4"
-    },
-    "homepage": "https://unpkg.com/@icedesign/review-detail-info-block/build/index.html"
+    "screenshot": "https://unpkg.com/@icedesign/review-detail-info-block/screenshot.png",
+    "version-0.x": "1.0.4"
+  },
+  "homepage": "https://unpkg.com/@icedesign/review-detail-info-block/build/index.html"
 }

@@ -1,42 +1,42 @@
 {
-    "name": "@icedesign/cost-overview-block",
-    "version": "1.0.3",
-    "description": "适用于环形图和概要展示组合的信息展示场景",
-    "author": "",
-    "homepage": "https://unpkg.com/@icedesign/cost-overview-block/build/index.html",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/cost-overview-block",
+  "version": "2.0.0",
+  "description": "适用于环形图和概要展示组合的信息展示场景",
+  "author": "",
+  "homepage": "https://unpkg.com/@icedesign/cost-overview-block/build/index.html",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CostOverview"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "dependencies": {
+    "@antv/data-set": "^0.9.5",
+    "@icedesign/container": "^1.x",
+    "bizcharts": "^3.2.2",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "cost-overview",
+    "title": "概览展示",
+    "categories": [
+      "数据展示"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CostOverview"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "dependencies": {
-        "@antv/data-set": "^0.9.5",
-        "@icedesign/container": "^1.x",
-        "bizcharts": "^3.2.2",
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "cost-overview",
-        "title": "概览展示",
-        "categories": [
-            "数据展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/cost-overview-block/screenshot.png",
-        "version-0.x": "1.0.3"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/cost-overview-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  }
 }

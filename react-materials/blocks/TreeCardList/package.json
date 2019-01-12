@@ -1,48 +1,48 @@
 {
-    "name": "@icedesign/tree-card-list-block",
-    "version": "0.1.10",
-    "description": "树形卡片列表",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/tree-card-list-block",
+  "version": "2.0.0",
+  "description": "树形卡片列表",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TreeCardList"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-copy-to-clipboard": "^4.2.3",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "tree-card-list",
+    "screenshot": "https://unpkg.com/@icedesign/tree-card-list-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "树形卡片列表",
+    "categories": [
+      "列表"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TreeCardList"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-copy-to-clipboard": "^4.2.3",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "tree-card-list",
-        "screenshot": "https://unpkg.com/@icedesign/tree-card-list-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "树形卡片列表",
-        "categories": [
-            "列表"
-        ],
-        "version-0.x": "0.1.10"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/tree-card-list-block/build/index.html"
+    "version-0.x": "0.1.10"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/tree-card-list-block/build/index.html"
 }

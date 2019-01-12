@@ -1,40 +1,40 @@
 {
-    "name": "@icedesign/account-panel-block",
-    "version": "1.0.0",
-    "description": "用户中心展示账户信息内容",
-    "homepage": "https://unpkg.com/@icedesign/account-panel-block/build/index.html",
-    "author": "noyobo <nongyoubao@alibaba-inc.com>",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/account-panel-block",
+  "version": "2.0.0",
+  "description": "用户中心展示账户信息内容",
+  "homepage": "https://unpkg.com/@icedesign/account-panel-block/build/index.html",
+  "author": "noyobo <nongyoubao@alibaba-inc.com>",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/AccountPanel"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "@icedesign/form-binder": "^0.1.7",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
+  },
+  "blockConfig": {
+    "name": "account-panel",
+    "title": "账户信息",
+    "categories": [
+      "信息展示"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/AccountPanel"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "react",
-        "block"
-    ],
-    "publishConfig": {
-        "access": "public"
-    },
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "@icedesign/form-binder": "^0.1.7",
-        "prop-types": "^15.5.8",
-        "react": "^16.2.0",
-        "@alifd/next": "^1.x"
-    },
-    "blockConfig": {
-        "name": "account-panel",
-        "title": "账户信息",
-        "categories": [
-            "信息展示"
-        ],
-        "screenshot": "https://unpkg.com/@icedesign/account-panel-block/screenshot.png",
-        "version-0.x": "1.0.0"
-    }
+    "screenshot": "https://unpkg.com/@icedesign/account-panel-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  }
 }

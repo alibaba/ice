@@ -1,49 +1,49 @@
 {
-    "name": "@icedesign/footer-block",
-    "version": "0.1.11",
-    "description": "",
-    "files": [
-        "src/",
-        "build/"
+  "name": "@icedesign/footer-block",
+  "version": "2.0.0",
+  "description": "",
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/Footer"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ice",
+    "ice-block"
+  ],
+  "dependencies": {
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "@icedesign/theme": "^0.x",
+    "react": "*",
+    "react-copy-to-clipboard": "^4.2.3",
+    "react-dom": "*"
+  },
+  "blockConfig": {
+    "name": "footer",
+    "screenshot": "https://unpkg.com/@icedesign/footer-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "title": "页脚",
+    "categories": [
+      "信息展示",
+      "欢迎页"
     ],
-    "author": {
-        "name": "ICE Team",
-        "email": "ice-admin@alibaba-inc.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/Footer"
-    },
-    "license": "MIT",
-    "keywords": [
-        "ice",
-        "ice-block"
-    ],
-    "dependencies": {
-        "@icedesign/container": "^1.x",
-        "prop-types": "^15.5.8",
-        "@alifd/next": "^1.x"
-    },
-    "devDependencies": {
-        "@icedesign/theme": "^0.x",
-        "react": "*",
-        "react-copy-to-clipboard": "^4.2.3",
-        "react-dom": "*"
-    },
-    "blockConfig": {
-        "name": "footer",
-        "screenshot": "https://unpkg.com/@icedesign/footer-block/screenshot.png",
-        "themePackage": "@icedesign/theme",
-        "title": "页脚",
-        "categories": [
-            "信息展示",
-            "欢迎页"
-        ],
-        "version-0.x": "0.1.11"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "http://registry.npmjs.com"
-    },
-    "homepage": "https://unpkg.com/@icedesign/footer-block/build/index.html"
+    "version-0.x": "0.1.11"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.com"
+  },
+  "homepage": "https://unpkg.com/@icedesign/footer-block/build/index.html"
 }
