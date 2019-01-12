@@ -4,7 +4,8 @@
   "description": "信息展示类，使用可视化的方式展示用户浏览以及数据分析的结果",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

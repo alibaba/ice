@@ -4,7 +4,8 @@
   "description": "简单的富文本编辑器",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

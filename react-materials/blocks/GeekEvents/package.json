@@ -6,7 +6,8 @@
   "homepage": "https://unpkg.com/@icedesign/geek-events-block/build/index.html",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",

@@ -6,7 +6,8 @@
   "homepage": "https://unpkg.com/@icedesign/table-chart-card-block/build/index.html",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",

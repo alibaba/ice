@@ -4,7 +4,8 @@
   "description": "可编辑内容的表格",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

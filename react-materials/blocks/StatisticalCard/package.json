@@ -4,7 +4,8 @@
   "description": "统计型卡片",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

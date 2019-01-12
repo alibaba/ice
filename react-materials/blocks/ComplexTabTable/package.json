@@ -4,7 +4,8 @@
   "description": "附带复杂的 Tab 多级筛选项的表格",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

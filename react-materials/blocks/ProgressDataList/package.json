@@ -4,7 +4,8 @@
   "description": "进度条数据列表展示",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

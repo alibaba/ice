@@ -6,7 +6,8 @@
   "author": "",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",

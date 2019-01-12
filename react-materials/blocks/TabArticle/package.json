@@ -4,7 +4,8 @@
   "description": "tab和文章列表组合",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

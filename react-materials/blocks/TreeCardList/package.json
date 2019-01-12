@@ -4,7 +4,8 @@
   "description": "树形卡片列表",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

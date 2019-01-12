@@ -4,7 +4,8 @@
   "description": "复杂信息和自定义底部按钮的弹窗",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

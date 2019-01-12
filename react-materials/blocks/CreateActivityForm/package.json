@@ -4,7 +4,8 @@
   "description": "创建活动的表单",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

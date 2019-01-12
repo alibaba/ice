@@ -4,7 +4,8 @@
   "description": "标签页和图表组合使用",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

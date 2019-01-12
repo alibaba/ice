@@ -4,7 +4,8 @@
   "description": "用于左文右图产品介绍模块",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

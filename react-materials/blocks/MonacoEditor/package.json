@@ -4,7 +4,8 @@
   "description": "Monaco 代码编辑器",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

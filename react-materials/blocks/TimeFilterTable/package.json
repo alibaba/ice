@@ -4,7 +4,8 @@
   "description": "支持时间筛选的表格",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

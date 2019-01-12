@@ -6,7 +6,8 @@
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",

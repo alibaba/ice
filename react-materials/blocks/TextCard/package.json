@@ -4,7 +4,8 @@
   "description": "纯文字展示型卡片",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

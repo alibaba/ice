@@ -4,7 +4,8 @@
   "description": "折叠型卡片的信息展示",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

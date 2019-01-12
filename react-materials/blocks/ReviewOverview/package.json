@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",

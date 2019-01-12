@@ -4,7 +4,8 @@
   "description": "拖拽排序卡片列表",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

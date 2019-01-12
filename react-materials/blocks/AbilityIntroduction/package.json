@@ -5,7 +5,8 @@
   "author": "wssgcg1213 <i@zeroling.com>",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",

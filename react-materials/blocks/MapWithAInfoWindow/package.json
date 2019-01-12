@@ -5,7 +5,8 @@
   "author": "yuanyan <yuanyan.cao@gmail.com>",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",

@@ -4,7 +4,8 @@
   "description": "忘记密码",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

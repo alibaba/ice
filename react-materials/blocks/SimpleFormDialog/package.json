@@ -4,7 +4,8 @@
   "description": "简单的表单弹窗",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

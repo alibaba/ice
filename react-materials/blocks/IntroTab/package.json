@@ -5,7 +5,8 @@
   "author": "muchen <tao360907796@gmail.com>",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",

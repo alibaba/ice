@@ -4,7 +4,8 @@
   "description": "LOGO和导航组合的页脚",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

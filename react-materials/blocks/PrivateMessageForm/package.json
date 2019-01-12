@@ -4,7 +4,8 @@
   "description": "私有消息表单",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

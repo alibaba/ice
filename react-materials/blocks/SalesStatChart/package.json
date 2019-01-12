@@ -4,7 +4,8 @@
   "description": "显示销售数据或者类似形式数据的图表模块",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

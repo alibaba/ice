@@ -4,7 +4,8 @@
   "description": "进度管理表格",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

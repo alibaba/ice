@@ -4,7 +4,8 @@
   "description": "成功详情信息展示",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

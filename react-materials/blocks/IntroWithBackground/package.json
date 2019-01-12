@@ -4,7 +4,8 @@
   "description": "附带背景图片的信息介绍区块",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",

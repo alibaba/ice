@@ -4,7 +4,8 @@
   "description": " 含搜索筛选",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
