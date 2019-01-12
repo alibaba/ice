@@ -36,7 +36,8 @@
         "categories": [
             "列表"
         ],
-        "screenshot": "https://unpkg.com/@icedesign/board-list-block/screenshot.png"
+        "screenshot": "https://unpkg.com/@icedesign/board-list-block/screenshot.png",
+        "version-0.x": "1.0.4"
     },
     "homepage": "https://unpkg.com/@icedesign/board-list-block/build/index.html"
 }

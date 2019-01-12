@@ -1,52 +1,53 @@
 {
-  "name": "@icedesign/content-editor-block",
-  "version": "0.1.8",
-  "description": "内容编辑器",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ContentEditor"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.2",
-    "immutable": "^3.8.2",
-    "is-hotkey": "^0.1.1",
-    "prop-types": "^15.5.8",
-    "slate": "^0.32.1",
-    "slate-plain-serializer": "^0.5.1",
-    "slate-react": "^0.11.1",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "content-editor",
-    "screenshot": "https://img.alicdn.com/tfs/TB199TEXuuSBuNjy1XcXXcYjFXa-1906-1550.png",
-    "title": "内容编辑器",
-    "categories": [
-      "表单"
+    "name": "@icedesign/content-editor-block",
+    "version": "0.1.8",
+    "description": "内容编辑器",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/content-editor"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ContentEditor"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "@icedesign/form-binder": "^0.1.2",
+        "immutable": "^3.8.2",
+        "is-hotkey": "^0.1.1",
+        "prop-types": "^15.5.8",
+        "slate": "^0.32.1",
+        "slate-plain-serializer": "^0.5.1",
+        "slate-react": "^0.11.1",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "content-editor",
+        "screenshot": "https://unpkg.com/@icedesign/content-editor-block/screenshot.png",
+        "title": "内容编辑器",
+        "categories": [
+            "表单"
+        ],
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.8"
+    },
+    "homepage": "https://unpkg.com/@icedesign/content-editor-block/build/index.html"
 }

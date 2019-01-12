@@ -1,39 +1,40 @@
 {
-  "name": "@icedesign/tab-filter-table-block",
-  "version": "1.0.3",
-  "description": "适用于标签页和表格组合的展示",
-  "author": "",
-  "homepage": "https://alibaba.github.io/ice/block/tab-filter-table",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TabFilterTable"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
-    "@alifd/next": "^1.x"
-  },
-  "blockConfig": {
-    "name": "tab-filter-table",
-    "title": "标签页表格展示",
-    "categories": [
-      "表格"
+    "name": "@icedesign/tab-filter-table-block",
+    "version": "1.0.3",
+    "description": "适用于标签页和表格组合的展示",
+    "author": "",
+    "homepage": "https://unpkg.com/@icedesign/tab-filter-table-block/build/index.html",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB129dUwnqWBKNjSZFxXXcpLpXa-2794-1354.png"
-  }
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TabFilterTable"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "tab-filter-table",
+        "title": "标签页表格展示",
+        "categories": [
+            "表格"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/tab-filter-table-block/screenshot.png",
+        "version-0.x": "1.0.3"
+    }
 }

@@ -36,7 +36,8 @@
             "模态框"
         ],
         "screenshot": "https://unpkg.com/@icedesign/complex-dialog-block/screenshot.png",
-        "themePackage": "@icedesign/theme"
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.11"
     },
     "publishConfig": {
         "access": "public",

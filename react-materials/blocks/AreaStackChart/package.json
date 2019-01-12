@@ -39,7 +39,8 @@
         "title": "叠加面积图",
         "categories": [
             "图表"
-        ]
+        ],
+        "version-0.x": "0.1.7"
     },
     "publishConfig": {
         "access": "public",

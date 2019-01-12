@@ -1,41 +1,42 @@
 {
-  "name": "@icedesign/markdown-docs-block",
-  "version": "1.0.4",
-  "description": "markdown 文档区块展示",
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/MarkdownDocs"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
-    "react-markdown": "^3.3.2"
-  },
-  "blockConfig": {
-    "name": "markdown-docs",
-    "title": "markdown 文档",
-    "categories": [
-      "信息展示"
+    "name": "@icedesign/markdown-docs-block",
+    "version": "1.0.4",
+    "description": "markdown 文档区块展示",
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1S9jMrNGYBuNjy0FnXXX5lpXa-1844-1590.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/markdown-docs"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/MarkdownDocs"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "react-markdown": "^3.3.2"
+    },
+    "blockConfig": {
+        "name": "markdown-docs",
+        "title": "markdown 文档",
+        "categories": [
+            "信息展示"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/markdown-docs-block/screenshot.png",
+        "version-0.x": "1.0.4"
+    },
+    "homepage": "https://unpkg.com/@icedesign/markdown-docs-block/build/index.html"
 }

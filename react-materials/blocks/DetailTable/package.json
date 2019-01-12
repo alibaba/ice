@@ -1,47 +1,48 @@
 {
-  "name": "@icedesign/detail-table-block",
-  "version": "0.1.10",
-  "description": "展示详情信息的表格",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/DetailTable"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-copy-to-clipboard": "^4.2.3",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "detail-table",
-    "screenshot": "https://img.alicdn.com/tfs/TB1hplfjr_I8KJjy1XaXXbsxpXa-1886-700.png",
-    "themePackage": "@icedesign/theme",
-    "title": "详情信息表格",
-    "categories": [
-      "表格"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/detail-table"
+    "name": "@icedesign/detail-table-block",
+    "version": "0.1.10",
+    "description": "展示详情信息的表格",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/DetailTable"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-copy-to-clipboard": "^4.2.3",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "detail-table",
+        "screenshot": "https://unpkg.com/@icedesign/detail-table-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "详情信息表格",
+        "categories": [
+            "表格"
+        ],
+        "version-0.x": "0.1.10"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/detail-table-block/build/index.html"
 }

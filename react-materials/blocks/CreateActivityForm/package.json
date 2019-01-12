@@ -1,47 +1,48 @@
 {
-  "name": "@icedesign/create-activity-form-block",
-  "version": "0.1.8",
-  "description": "创建活动的表单",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CreateActivityForm"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.3",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "create-activity-form",
-    "screenshot": "https://img.alicdn.com/tfs/TB1o0ipnx6I8KJjy0FgXXXXzVXa-1720-1062.png",
-    "title": "创建活动表单",
-    "categories": [
-      "表单"
+    "name": "@icedesign/create-activity-form-block",
+    "version": "0.1.8",
+    "description": "创建活动的表单",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/create-activity-form"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CreateActivityForm"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "@icedesign/form-binder": "^0.1.3",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "create-activity-form",
+        "screenshot": "https://unpkg.com/@icedesign/create-activity-form-block/screenshot.png",
+        "title": "创建活动表单",
+        "categories": [
+            "表单"
+        ],
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.8"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/create-activity-form-block/build/index.html"
 }

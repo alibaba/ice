@@ -39,7 +39,8 @@
         "categories": [
             "信息展示",
             "欢迎页"
-        ]
+        ],
+        "version-0.x": "0.1.12"
     },
     "publishConfig": {
         "access": "public",

@@ -1,46 +1,47 @@
 {
-  "name": "@icedesign/display-card-block",
-  "version": "0.2.3",
-  "description": "展示型卡片",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/DisplayCard"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "display-card",
-    "screenshot": "https://img.alicdn.com/tfs/TB1AwCEXNGYBuNjy0FnXXX5lpXa-1900-278.png",
-    "themePackage": "@icedesign/theme",
-    "title": "展示型卡片",
-    "categories": [
-      "数据展示"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/display-card"
+    "name": "@icedesign/display-card-block",
+    "version": "0.2.3",
+    "description": "展示型卡片",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/DisplayCard"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "display-card",
+        "screenshot": "https://unpkg.com/@icedesign/display-card-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "展示型卡片",
+        "categories": [
+            "数据展示"
+        ],
+        "version-0.x": "0.2.3"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/display-card-block/build/index.html"
 }

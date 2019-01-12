@@ -35,6 +35,7 @@
         "categories": [
             "数据展示"
         ],
-        "screenshot": "https://unpkg.com/@icedesign/card-list-block/screenshot.png"
+        "screenshot": "https://unpkg.com/@icedesign/card-list-block/screenshot.png",
+        "version-0.x": "1.0.3"
     }
 }

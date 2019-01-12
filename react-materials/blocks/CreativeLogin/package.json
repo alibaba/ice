@@ -1,39 +1,40 @@
 {
-  "name": "@icedesign/creative-login-block",
-  "version": "1.0.3",
-  "description": "左右布局的登录页",
-  "homepage": "https://alibaba.github.io/ice/block/creative-login",
-  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CreativeLogin"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "dependencies": {
-    "@icedesign/form-binder": "^0.1.7",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
-    "@alifd/next": "^1.x"
-  },
-  "blockConfig": {
-    "name": "creative-login",
-    "title": "登录",
-    "categories": [
-      "登录页"
+    "name": "@icedesign/creative-login-block",
+    "version": "1.0.3",
+    "description": "左右布局的登录页",
+    "homepage": "https://unpkg.com/@icedesign/creative-login-block/build/index.html",
+    "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB17ah4uyMnBKNjSZFzXXc_qVXa-2640-1488.png"
-  }
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CreativeLogin"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "dependencies": {
+        "@icedesign/form-binder": "^0.1.7",
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "creative-login",
+        "title": "登录",
+        "categories": [
+            "登录页"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/creative-login-block/screenshot.png",
+        "version-0.x": "1.0.3"
+    }
 }

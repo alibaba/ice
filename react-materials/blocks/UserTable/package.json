@@ -1,45 +1,46 @@
 {
-  "name": "@icedesign/user-table-block",
-  "version": "1.0.3",
-  "description": "可筛选过滤的用户类表格",
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/UserTable"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.4",
-    "@alifd/next": "^1.x"
-  },
-  "peerDependencies": {
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0"
-  },
-  "blockConfig": {
-    "name": "user-table",
-    "title": "表格",
-    "categories": [
-      "表格"
+    "name": "@icedesign/user-table-block",
+    "version": "1.0.3",
+    "description": "可筛选过滤的用户类表格",
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1_1HgzbSYBuNjSspiXXXNzpXa-2562-1448.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/user-table"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/UserTable"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "@icedesign/form-binder": "^0.1.4",
+        "@alifd/next": "^1.x"
+    },
+    "peerDependencies": {
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0"
+    },
+    "blockConfig": {
+        "name": "user-table",
+        "title": "表格",
+        "categories": [
+            "表格"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/user-table-block/screenshot.png",
+        "version-0.x": "1.0.3"
+    },
+    "homepage": "https://unpkg.com/@icedesign/user-table-block/build/index.html"
 }

@@ -1,47 +1,48 @@
 {
-  "name": "@icedesign/tab-article-block",
-  "version": "0.1.11",
-  "description": "tab和文章列表组合",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TabArticle"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "tab-article",
-    "screenshot": "https://img.alicdn.com/tfs/TB1hNNybmCWBuNjy0FhXXb6EVXa-1916-1082.png",
-    "themePackage": "@icedesign/theme",
-    "title": "tab和文章列表组合",
-    "categories": [
-      "列表"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/tab-article"
+    "name": "@icedesign/tab-article-block",
+    "version": "0.1.11",
+    "description": "tab和文章列表组合",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TabArticle"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "enquire-js": "^0.1.2",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "tab-article",
+        "screenshot": "https://unpkg.com/@icedesign/tab-article-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "tab和文章列表组合",
+        "categories": [
+            "列表"
+        ],
+        "version-0.x": "0.1.11"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/tab-article-block/build/index.html"
 }

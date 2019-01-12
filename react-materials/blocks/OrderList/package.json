@@ -1,48 +1,49 @@
 {
-  "name": "@icedesign/order-list-block",
-  "version": "0.1.10",
-  "description": "订单型列表",
-  "main": "lib/index.js",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/OrderList"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "axios": "^0.17.1",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "order-list",
-    "screenshot": "https://img.alicdn.com/tfs/TB1QQY0fiqAXuNjy1XdXXaYcVXa-960-646.png",
-    "themePackage": "@icedesign/theme",
-    "title": "订单型列表",
-    "categories": [
-      "列表"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/order-list"
+    "name": "@icedesign/order-list-block",
+    "version": "0.1.10",
+    "description": "订单型列表",
+    "main": "lib/index.js",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/OrderList"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "axios": "^0.17.1",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "order-list",
+        "screenshot": "https://unpkg.com/@icedesign/order-list-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "订单型列表",
+        "categories": [
+            "列表"
+        ],
+        "version-0.x": "0.1.10"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/order-list-block/build/index.html"
 }

@@ -1,37 +1,38 @@
 {
-  "name": "@icedesign/product-feature-block",
-  "version": "1.0.4",
-  "description": "用于描述产品的特点，左图右文形式。",
-  "author": "noyobo <nongyoubao@alibaba-inc.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ProductFeature"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "react": "^16.2.0",
-    "prop-types": "^15.5.8"
-  },
-  "blockConfig": {
-    "name": "product-feature",
-    "title": "产品特点介绍",
-    "categories": [
-      "信息展示"
+    "name": "@icedesign/product-feature-block",
+    "version": "1.0.4",
+    "description": "用于描述产品的特点，左图右文形式。",
+    "author": "noyobo <nongyoubao@alibaba-inc.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1VljUppOWBuNjy0FiXXXFxVXa-2648-1000.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/product-feature"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ProductFeature"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "react": "^16.2.0",
+        "prop-types": "^15.5.8"
+    },
+    "blockConfig": {
+        "name": "product-feature",
+        "title": "产品特点介绍",
+        "categories": [
+            "信息展示"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/product-feature-block/screenshot.png",
+        "version-0.x": "1.0.4"
+    },
+    "homepage": "https://unpkg.com/@icedesign/product-feature-block/build/index.html"
 }

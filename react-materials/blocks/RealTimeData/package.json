@@ -1,43 +1,44 @@
 {
-  "name": "@icedesign/real-time-data-block",
-  "version": "1.0.4",
-  "description": "基于 highcharts 的动态数据展示区块",
-  "author": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/RealTimeData"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "highcharts": "^6.1.1",
-    "react-highcharts": "^16.0.2",
-    "@alifd/next": "^1.x"
-  },
-  "peerDependencies": {
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0"
-  },
-  "blockConfig": {
-    "name": "real-time-data",
-    "title": "动态数据展示",
-    "categories": [
-      "图表"
+    "name": "@icedesign/real-time-data-block",
+    "version": "1.0.4",
+    "description": "基于 highcharts 的动态数据展示区块",
+    "author": "",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1QH_RJ1uSBuNjy1XcXXcYjFXa-2858-706.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/real-time-data"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/RealTimeData"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "highcharts": "^6.1.1",
+        "react-highcharts": "^16.0.2",
+        "@alifd/next": "^1.x"
+    },
+    "peerDependencies": {
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0"
+    },
+    "blockConfig": {
+        "name": "real-time-data",
+        "title": "动态数据展示",
+        "categories": [
+            "图表"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/real-time-data-block/screenshot.png",
+        "version-0.x": "1.0.4"
+    },
+    "homepage": "https://unpkg.com/@icedesign/real-time-data-block/build/index.html"
 }

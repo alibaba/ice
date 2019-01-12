@@ -36,7 +36,8 @@
         "categories": [
             "信息展示"
         ],
-        "screenshot": "https://unpkg.com/@icedesign/clipboard-block/screenshot.png"
+        "screenshot": "https://unpkg.com/@icedesign/clipboard-block/screenshot.png",
+        "version-0.x": "1.0.3"
     },
     "homepage": "https://unpkg.com/@icedesign/clipboard-block/build/index.html"
 }

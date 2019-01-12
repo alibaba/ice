@@ -1,47 +1,48 @@
 {
-  "name": "@icedesign/simple-timeline-block",
-  "version": "0.1.7",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SimpleTimeline"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "simple-timeline",
-    "screenshot": "https://img.alicdn.com/tfs/TB1N4jvcqmWBuNjy1XaXXXCbXXa-2302-974.png",
-    "title": "时间轴",
-    "categories": [
-      "数据展示",
-      "信息展示"
+    "name": "@icedesign/simple-timeline-block",
+    "version": "0.1.7",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/simple-timeline"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SimpleTimeline"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "simple-timeline",
+        "screenshot": "https://unpkg.com/@icedesign/simple-timeline-block/screenshot.png",
+        "title": "时间轴",
+        "categories": [
+            "数据展示",
+            "信息展示"
+        ],
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.7"
+    },
+    "homepage": "https://unpkg.com/@icedesign/simple-timeline-block/build/index.html"
 }

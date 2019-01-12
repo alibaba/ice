@@ -38,7 +38,8 @@
         "title": "箱型图",
         "categories": [
             "图表"
-        ]
+        ],
+        "version-0.x": "0.1.8"
     },
     "publishConfig": {
         "access": "public",

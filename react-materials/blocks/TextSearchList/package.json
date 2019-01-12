@@ -1,46 +1,47 @@
 {
-  "name": "@icedesign/text-search-list-block",
-  "version": "0.1.10",
-  "description": "文字搜索列表",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TextSearchList"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "text-search-list",
-    "screenshot": "https://img.alicdn.com/tfs/TB1mhxFbkyWBuNjy0FpXXassXXa-1912-1376.png",
-    "themePackage": "@icedesign/theme",
-    "title": "文字搜索列表",
-    "categories": [
-      "列表"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/text-search-list"
+    "name": "@icedesign/text-search-list-block",
+    "version": "0.1.10",
+    "description": "文字搜索列表",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TextSearchList"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "text-search-list",
+        "screenshot": "https://unpkg.com/@icedesign/text-search-list-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "文字搜索列表",
+        "categories": [
+            "列表"
+        ],
+        "version-0.x": "0.1.10"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/text-search-list-block/build/index.html"
 }

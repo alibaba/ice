@@ -38,7 +38,8 @@
         "title": "标签、日期和搜索组合筛选",
         "categories": [
             "筛选"
-        ]
+        ],
+        "version-0.x": "0.1.11"
     },
     "publishConfig": {
         "access": "public",

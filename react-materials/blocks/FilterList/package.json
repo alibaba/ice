@@ -1,47 +1,48 @@
 {
-  "name": "@icedesign/filter-list-block",
-  "version": "0.1.16",
-  "description": "支持过滤的列表",
-  "main": "lib/index.js",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/FilterList"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "filter-list",
-    "screenshot": "https://img.alicdn.com/tfs/TB1iUbYilfH8KJjy1XbXXbLdXXa-2000-1154.png",
-    "themePackage": "@icedesign/theme",
-    "title": "支持过滤的列表",
-    "categories": [
-      "列表"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/filter-list"
+    "name": "@icedesign/filter-list-block",
+    "version": "0.1.16",
+    "description": "支持过滤的列表",
+    "main": "lib/index.js",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/FilterList"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "filter-list",
+        "screenshot": "https://unpkg.com/@icedesign/filter-list-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "支持过滤的列表",
+        "categories": [
+            "列表"
+        ],
+        "version-0.x": "0.1.16"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/filter-list-block/build/index.html"
 }

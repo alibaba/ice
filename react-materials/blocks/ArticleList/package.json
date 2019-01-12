@@ -37,7 +37,8 @@
         "title": "文章列表",
         "categories": [
             "信息展示"
-        ]
+        ],
+        "version-0.x": "0.1.8"
     },
     "publishConfig": {
         "access": "public",

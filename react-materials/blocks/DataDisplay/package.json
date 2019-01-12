@@ -1,47 +1,48 @@
 {
-  "name": "@icedesign/data-display-block",
-  "version": "0.1.10",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/DataDisplay"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-copy-to-clipboard": "^4.2.3",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "data-display",
-    "screenshot": "https://img.alicdn.com/tfs/TB1IKT9jfDH8KJjy1XcXXcpdXXa-1892-324.png",
-    "themePackage": "@icedesign/theme",
-    "title": "数据展示",
-    "categories": [
-      "数据展示"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/data-display"
+    "name": "@icedesign/data-display-block",
+    "version": "0.1.10",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/DataDisplay"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-copy-to-clipboard": "^4.2.3",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "data-display",
+        "screenshot": "https://unpkg.com/@icedesign/data-display-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "数据展示",
+        "categories": [
+            "数据展示"
+        ],
+        "version-0.x": "0.1.10"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/data-display-block/build/index.html"
 }

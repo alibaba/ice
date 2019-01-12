@@ -1,44 +1,45 @@
 {
-  "name": "@icedesign/overview-board-block",
-  "version": "1.0.3",
-  "description": "卡片形式的概览数据",
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/OverviewBoard"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "@alifd/next": "^1.x"
-  },
-  "peerDependencies": {
-    "react": "^16.2.0",
-    "prop-types": "^15.5.8"
-  },
-  "blockConfig": {
-    "name": "overview-board",
-    "title": "概览数据",
-    "categories": [
-      "数据展示"
+    "name": "@icedesign/overview-board-block",
+    "version": "1.0.3",
+    "description": "卡片形式的概览数据",
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1ueUZzmtYBeNjSspkXXbU8VXa-2760-544.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/overview-board"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/OverviewBoard"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "@alifd/next": "^1.x"
+    },
+    "peerDependencies": {
+        "react": "^16.2.0",
+        "prop-types": "^15.5.8"
+    },
+    "blockConfig": {
+        "name": "overview-board",
+        "title": "概览数据",
+        "categories": [
+            "数据展示"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/overview-board-block/screenshot.png",
+        "version-0.x": "1.0.3"
+    },
+    "homepage": "https://unpkg.com/@icedesign/overview-board-block/build/index.html"
 }

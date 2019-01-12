@@ -1,47 +1,48 @@
 {
-  "name": "@icedesign/topic-card-block",
-  "version": "0.1.11",
-  "description": "核心数据",
-  "main": "lib/index.js",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TopicCard"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "topic-card",
-    "screenshot": "https://img.alicdn.com/tfs/TB1fEdAcTtYBeNjy1XdXXXXyVXa-2348-332.png",
-    "themePackage": "@icedesign/theme",
-    "title": "核心数据",
-    "categories": [
-      "数据展示"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/topic-card"
+    "name": "@icedesign/topic-card-block",
+    "version": "0.1.11",
+    "description": "核心数据",
+    "main": "lib/index.js",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TopicCard"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "topic-card",
+        "screenshot": "https://unpkg.com/@icedesign/topic-card-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "核心数据",
+        "categories": [
+            "数据展示"
+        ],
+        "version-0.x": "0.1.11"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/topic-card-block/build/index.html"
 }

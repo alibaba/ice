@@ -1,47 +1,48 @@
 {
-  "name": "@icedesign/grouped-form-block",
-  "version": "0.1.4",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/GroupedForm"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.4",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "grouped-form",
-    "screenshot": "https://img.alicdn.com/tfs/TB1faTKg1OSBuNjy0FdXXbDnVXa-2306-1156.png",
-    "title": "分组显示的表单",
-    "categories": [
-      "表单"
+    "name": "@icedesign/grouped-form-block",
+    "version": "0.1.4",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/grouped-form"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/GroupedForm"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "@icedesign/form-binder": "^0.1.4",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "grouped-form",
+        "screenshot": "https://unpkg.com/@icedesign/grouped-form-block/screenshot.png",
+        "title": "分组显示的表单",
+        "categories": [
+            "表单"
+        ],
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.4"
+    },
+    "homepage": "https://unpkg.com/@icedesign/grouped-form-block/build/index.html"
 }

@@ -1,39 +1,40 @@
 {
-  "name": "@icedesign/creative-register-block",
-  "version": "1.0.4",
-  "description": "注册",
-  "homepage": "https://alibaba.github.io/ice/block/creative-register",
-  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CreativeRegister"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "dependencies": {
-    "@icedesign/form-binder": "^0.1.7",
-    "prop-types": "^15.6.2",
-    "react": "^16.2.0",
-    "@alifd/next": "^1.x"
-  },
-  "blockConfig": {
-    "name": "creative-register",
-    "title": "左右布局的注册页",
-    "categories": [
-      "注册页"
+    "name": "@icedesign/creative-register-block",
+    "version": "1.0.4",
+    "description": "注册",
+    "homepage": "https://unpkg.com/@icedesign/creative-register-block/build/index.html",
+    "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1gjN4urZnBKNjSZFrXXaRLFXa-2424-1490.png"
-  }
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CreativeRegister"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "dependencies": {
+        "@icedesign/form-binder": "^0.1.7",
+        "prop-types": "^15.6.2",
+        "react": "^16.2.0",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "creative-register",
+        "title": "左右布局的注册页",
+        "categories": [
+            "注册页"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/creative-register-block/screenshot.png",
+        "version-0.x": "1.0.4"
+    }
 }

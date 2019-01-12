@@ -1,46 +1,47 @@
 {
-  "name": "@icedesign/user-info-card-block",
-  "version": "0.1.8",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/UserInfoCard"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "user-info-card",
-    "screenshot": "https://img.alicdn.com/tfs/TB1NxO4l8fH8KJjy1XbXXbLdXXa-978-668.png",
-    "themePackage": "@icedesign/theme",
-    "title": "用户信息展示",
-    "categories": [
-      "信息展示"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/user-info-card"
+    "name": "@icedesign/user-info-card-block",
+    "version": "0.1.8",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/UserInfoCard"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "user-info-card",
+        "screenshot": "https://unpkg.com/@icedesign/user-info-card-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "用户信息展示",
+        "categories": [
+            "信息展示"
+        ],
+        "version-0.x": "0.1.8"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/user-info-card-block/build/index.html"
 }

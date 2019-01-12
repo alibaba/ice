@@ -40,7 +40,8 @@
         "categories": [
             "数据展示"
         ],
-        "themePackage": "@icedesign/theme"
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.6"
     },
     "homepage": "https://unpkg.com/@icedesign/circle-progress-block/build/index.html"
 }

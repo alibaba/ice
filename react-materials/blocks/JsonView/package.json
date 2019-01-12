@@ -1,41 +1,42 @@
 {
-  "name": "@icedesign/json-view-block",
-  "version": "1.0.3",
-  "description": "支持编辑和展示JSON可视化区块",
-  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "react-json-view": "^1.18.3"
-  },
-  "peerDependencies": {
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0"
-  },
-  "blockConfig": {
-    "name": "json-view",
-    "title": "JSON 可视化渲染",
-    "categories": [
-      "代码编辑器"
+    "name": "@icedesign/json-view-block",
+    "version": "1.0.3",
+    "description": "支持编辑和展示JSON可视化区块",
+    "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1tD2PETtYBeNjy1XdXXXXyVXa-2422-768.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/json-view"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "react-json-view": "^1.18.3"
+    },
+    "peerDependencies": {
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0"
+    },
+    "blockConfig": {
+        "name": "json-view",
+        "title": "JSON 可视化渲染",
+        "categories": [
+            "代码编辑器"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/json-view-block/screenshot.png",
+        "version-0.x": "1.0.3"
+    },
+    "homepage": "https://unpkg.com/@icedesign/json-view-block/build/index.html"
 }

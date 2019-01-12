@@ -1,46 +1,47 @@
 {
-  "name": "@icedesign/general-widget-block",
-  "version": "0.1.5",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/GeneralWidget"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "general-widget",
-    "screenshot": "https://img.alicdn.com/tfs/TB1h2JcoTtYBeNjy1XdXXXXyVXa-2390-404.png",
-    "title": "常用功能列表",
-    "categories": [
-      "信息展示"
+    "name": "@icedesign/general-widget-block",
+    "version": "0.1.5",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/general-widget"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/GeneralWidget"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "general-widget",
+        "screenshot": "https://unpkg.com/@icedesign/general-widget-block/screenshot.png",
+        "title": "常用功能列表",
+        "categories": [
+            "信息展示"
+        ],
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.5"
+    },
+    "homepage": "https://unpkg.com/@icedesign/general-widget-block/build/index.html"
 }

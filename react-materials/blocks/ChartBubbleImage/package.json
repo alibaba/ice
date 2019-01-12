@@ -38,7 +38,8 @@
         "title": "自定义气泡图",
         "categories": [
             "图表"
-        ]
+        ],
+        "version-0.x": "0.1.9"
     },
     "publishConfig": {
         "access": "public",

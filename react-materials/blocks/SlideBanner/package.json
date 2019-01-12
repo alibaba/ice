@@ -1,38 +1,39 @@
 {
-  "name": "@icedesign/slide-banner-block",
-  "version": "1.0.0",
-  "description": "滑动banner 用于层叠展示",
-  "author": "muchen <tao360907796@gmail.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SlideBanner"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "react": "^16.2.0",
-    "prop-types": "^15.5.8"
-  },
-  "blockConfig": {
-    "name": "slide-banner",
-    "title": "滑动Banner",
-    "categories": [
-      "信息展示",
-      "欢迎页"
+    "name": "@icedesign/slide-banner-block",
+    "version": "1.0.0",
+    "description": "滑动banner 用于层叠展示",
+    "author": "muchen <tao360907796@gmail.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1bNu1uDtYBeNjy1XdXXXXyVXa-2876-768.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/slide-banner"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/SlideBanner"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "react": "^16.2.0",
+        "prop-types": "^15.5.8"
+    },
+    "blockConfig": {
+        "name": "slide-banner",
+        "title": "滑动Banner",
+        "categories": [
+            "信息展示",
+            "欢迎页"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/slide-banner-block/screenshot.png",
+        "version-0.x": "1.0.0"
+    },
+    "homepage": "https://unpkg.com/@icedesign/slide-banner-block/build/index.html"
 }

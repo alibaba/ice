@@ -1,42 +1,43 @@
 {
-  "name": "@icedesign/scroll-list-block",
-  "version": "1.0.0",
-  "description": "滚动分页列表",
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "react": "^16.2.0",
-    "react-list": "^0.8.10",
-    "@alifd/next": "^1.x"
-  },
-  "blockConfig": {
-    "name": "scroll-list",
-    "title": "滚动分页列表",
-    "categories": [
-      "列表"
+    "name": "@icedesign/scroll-list-block",
+    "version": "1.0.0",
+    "description": "滚动分页列表",
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1WAQmGGmWBuNjy1XaXXXCbXXa-3442-990.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/scroll-list"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "react": "^16.2.0",
+        "react-list": "^0.8.10",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "scroll-list",
+        "title": "滚动分页列表",
+        "categories": [
+            "列表"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/scroll-list-block/screenshot.png",
+        "version-0.x": "1.0.0"
+    },
+    "homepage": "https://unpkg.com/@icedesign/scroll-list-block/build/index.html"
 }

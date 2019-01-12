@@ -1,49 +1,50 @@
 {
-  "name": "@icedesign/progress-data-list-block",
-  "version": "0.1.9",
-  "description": "进度条数据列表展示",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ProgressDataList"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "progress-data-list",
-    "screenshot": "https://img.alicdn.com/tfs/TB1OUVDnwvD8KJjy0FlXXagBFXa-1900-338.png",
-    "title": "进度条数据列表",
-    "categories": [
-      "图表",
-      "列表",
-      "数据展示"
+    "name": "@icedesign/progress-data-list-block",
+    "version": "0.1.9",
+    "description": "进度条数据列表展示",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/progress-data-list"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ProgressDataList"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "enquire-js": "^0.1.2",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "progress-data-list",
+        "screenshot": "https://unpkg.com/@icedesign/progress-data-list-block/screenshot.png",
+        "title": "进度条数据列表",
+        "categories": [
+            "图表",
+            "列表",
+            "数据展示"
+        ],
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.9"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/progress-data-list-block/build/index.html"
 }

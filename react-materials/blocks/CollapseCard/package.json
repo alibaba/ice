@@ -37,7 +37,8 @@
         "title": "折叠型卡片的信息展示",
         "categories": [
             "信息展示"
-        ]
+        ],
+        "version-0.x": "0.1.11"
     },
     "publishConfig": {
         "access": "public",

@@ -1,47 +1,48 @@
 {
-  "name": "@icedesign/our-team-block",
-  "version": "0.2.3",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/OurTeam"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "our-team",
-    "screenshot": "https://img.alicdn.com/tfs/TB1Bw3zauuSBuNjy1XcXXcYjFXa-2168-1460.png",
-    "themePackage": "@icedesign/theme",
-    "title": "我们的团队",
-    "categories": [
-      "信息展示",
-      "欢迎页"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/our-team"
+    "name": "@icedesign/our-team-block",
+    "version": "0.2.3",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/OurTeam"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "our-team",
+        "screenshot": "https://unpkg.com/@icedesign/our-team-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "我们的团队",
+        "categories": [
+            "信息展示",
+            "欢迎页"
+        ],
+        "version-0.x": "0.2.3"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/our-team-block/build/index.html"
 }

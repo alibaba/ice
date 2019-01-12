@@ -36,7 +36,8 @@
         "title": "标签页组合筛选",
         "categories": [
             "筛选"
-        ]
+        ],
+        "version-0.x": "0.1.16"
     },
     "publishConfig": {
         "access": "public",

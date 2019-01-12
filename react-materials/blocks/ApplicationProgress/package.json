@@ -37,7 +37,8 @@
         "title": "申请进度信息展示",
         "categories": [
             "信息展示"
-        ]
+        ],
+        "version-0.x": "0.1.9"
     },
     "publishConfig": {
         "access": "public",

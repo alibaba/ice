@@ -33,6 +33,7 @@
         "categories": [
             "列表"
         ],
-        "screenshot": "https://unpkg.com/@icedesign/account-features-block/screenshot.png"
+        "screenshot": "https://unpkg.com/@icedesign/account-features-block/screenshot.png",
+        "version-0.x": "1.0.0"
     }
 }

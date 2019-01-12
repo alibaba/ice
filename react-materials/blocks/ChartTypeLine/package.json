@@ -38,7 +38,8 @@
         "title": "折线图",
         "categories": [
             "图表"
-        ]
+        ],
+        "version-0.x": "0.1.10"
     },
     "publishConfig": {
         "access": "public",

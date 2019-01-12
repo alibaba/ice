@@ -1,46 +1,47 @@
 {
-  "name": "@icedesign/real-time-statistics-block",
-  "version": "0.1.7",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/RealTimeStatistics"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "real-time-statistics",
-    "screenshot": "https://img.alicdn.com/tfs/TB1TQDxchGYBuNjy0FnXXX5lpXa-2388-324.png",
-    "title": "实时数据统计展示",
-    "categories": [
-      "数据展示"
+    "name": "@icedesign/real-time-statistics-block",
+    "version": "0.1.7",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/real-time-statistics"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/RealTimeStatistics"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "real-time-statistics",
+        "screenshot": "https://unpkg.com/@icedesign/real-time-statistics-block/screenshot.png",
+        "title": "实时数据统计展示",
+        "categories": [
+            "数据展示"
+        ],
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.7"
+    },
+    "homepage": "https://unpkg.com/@icedesign/real-time-statistics-block/build/index.html"
 }

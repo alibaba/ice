@@ -37,7 +37,8 @@
         "title": "基础异常报错",
         "categories": [
             "异常"
-        ]
+        ],
+        "version-0.x": "0.1.9"
     },
     "publishConfig": {
         "access": "public",

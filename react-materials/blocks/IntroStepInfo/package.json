@@ -1,46 +1,47 @@
 {
-  "name": "@icedesign/intro-step-info-block",
-  "version": "0.1.4",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/IntroStepInfo"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "intro-step-info",
-    "screenshot": "https://img.alicdn.com/tfs/TB1dWY3m4SYBuNjSspjXXX73VXa-2352-1070.png",
-    "title": "简介和步骤条信息组合",
-    "categories": [
-      "信息展示"
+    "name": "@icedesign/intro-step-info-block",
+    "version": "0.1.4",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/intro-step-info"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/IntroStepInfo"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "intro-step-info",
+        "screenshot": "https://unpkg.com/@icedesign/intro-step-info-block/screenshot.png",
+        "title": "简介和步骤条信息组合",
+        "categories": [
+            "信息展示"
+        ],
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.4"
+    },
+    "homepage": "https://unpkg.com/@icedesign/intro-step-info-block/build/index.html"
 }

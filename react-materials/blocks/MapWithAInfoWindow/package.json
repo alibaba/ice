@@ -1,38 +1,39 @@
 {
-  "name": "@icedesign/map-with-a-info-window",
-  "version": "1.0.0",
-  "description": "Map With A Info Window",
-  "author": "yuanyan <yuanyan.cao@gmail.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/MapWithAInfoWindow"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "react": "^16.2.0",
-    "react-amap": "^1.2.7"
-  },
-  "blockConfig": {
-    "name": "map-with-a-info-window",
-    "title": "地图信息窗口",
-    "categories": [
-      "信息展示"
+    "name": "@icedesign/map-with-a-info-window",
+    "version": "1.0.0",
+    "description": "Map With A Info Window",
+    "author": "yuanyan <yuanyan.cao@gmail.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1eaNyCwmTBuNjy1XbXXaMrVXa-2054-794.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/map-with-a-info-window"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/MapWithAInfoWindow"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "react": "^16.2.0",
+        "react-amap": "^1.2.7"
+    },
+    "blockConfig": {
+        "name": "map-with-a-info-window",
+        "title": "地图信息窗口",
+        "categories": [
+            "信息展示"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/map-with-a-info-window/screenshot.png",
+        "version-0.x": "1.0.0"
+    },
+    "homepage": "https://unpkg.com/@icedesign/map-with-a-info-window/build/index.html"
 }

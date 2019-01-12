@@ -1,39 +1,40 @@
 {
-  "name": "@icedesign/creative-forget-password-block",
-  "version": "1.0.3",
-  "description": "左右布局的忘记密码表单页",
-  "homepage": "https://alibaba.github.io/ice/block/creative-forget-password",
-  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CreativeForgetPassword"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "dependencies": {
-    "@icedesign/form-binder": "^0.1.7",
-    "prop-types": "^15.6.2",
-    "react": "^16.2.0",
-    "@alifd/next": "^1.x"
-  },
-  "blockConfig": {
-    "name": "creative-forget-password",
-    "title": "找回密码",
-    "categories": [
-      "表单"
+    "name": "@icedesign/creative-forget-password-block",
+    "version": "1.0.3",
+    "description": "左右布局的忘记密码表单页",
+    "homepage": "https://unpkg.com/@icedesign/creative-forget-password-block/build/index.html",
+    "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1H8GauBjTBKNjSZFuXXb0HFXa-2602-1550.png"
-  }
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/CreativeForgetPassword"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "dependencies": {
+        "@icedesign/form-binder": "^0.1.7",
+        "prop-types": "^15.6.2",
+        "react": "^16.2.0",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "creative-forget-password",
+        "title": "找回密码",
+        "categories": [
+            "表单"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/creative-forget-password-block/screenshot.png",
+        "version-0.x": "1.0.3"
+    }
 }

@@ -35,7 +35,8 @@
         "categories": [
             "信息展示"
         ],
-        "screenshot": "https://unpkg.com/@icedesign/co-branding-block/screenshot.png"
+        "screenshot": "https://unpkg.com/@icedesign/co-branding-block/screenshot.png",
+        "version-0.x": "1.0.4"
     },
     "homepage": "https://unpkg.com/@icedesign/co-branding-block/build/index.html"
 }

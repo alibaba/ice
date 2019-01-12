@@ -1,48 +1,49 @@
 {
-  "name": "@icedesign/user-stat-chart-block",
-  "version": "0.1.7",
-  "description": "用户统计数据或类似形式的图表",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/UserStatChart"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "bizcharts": "3.2.2",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "user-stat-chart",
-    "screenshot": "https://img.alicdn.com/tfs/TB1.q8_bDtYBeNjy1XdXXXXyVXa-1832-852.png",
-    "title": "用户统计数据图表",
-    "categories": [
-      "图表",
-      "数据展示"
+    "name": "@icedesign/user-stat-chart-block",
+    "version": "0.1.7",
+    "description": "用户统计数据或类似形式的图表",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/user-stat-chart"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/UserStatChart"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "bizcharts": "3.2.2",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "user-stat-chart",
+        "screenshot": "https://unpkg.com/@icedesign/user-stat-chart-block/screenshot.png",
+        "title": "用户统计数据图表",
+        "categories": [
+            "图表",
+            "数据展示"
+        ],
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.7"
+    },
+    "homepage": "https://unpkg.com/@icedesign/user-stat-chart-block/build/index.html"
 }

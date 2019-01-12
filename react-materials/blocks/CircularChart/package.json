@@ -42,7 +42,8 @@
         "categories": [
             "图表"
         ],
-        "themePackage": "@icedesign/theme"
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.4"
     },
     "homepage": "https://unpkg.com/@icedesign/circular-chart-block/build/index.html"
 }

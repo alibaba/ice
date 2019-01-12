@@ -1,42 +1,43 @@
 {
-  "name": "@icedesign/platform-tools-intro-block",
-  "version": "1.0.6",
-  "description": "平台工具介绍",
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PlatformToolsIntro"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
-    "@alifd/next": "^1.x"
-  },
-  "blockConfig": {
-    "name": "platform-tools-intro",
-    "title": "平台工具介绍",
-    "categories": [
-      "信息展示",
-      "欢迎页"
+    "name": "@icedesign/platform-tools-intro-block",
+    "version": "1.0.6",
+    "description": "平台工具介绍",
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1mNG.qNSYBuNjSspjXXX73VXa-2072-1262.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/platform-tools-intro"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PlatformToolsIntro"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "platform-tools-intro",
+        "title": "平台工具介绍",
+        "categories": [
+            "信息展示",
+            "欢迎页"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/platform-tools-intro-block/screenshot.png",
+        "version-0.x": "1.0.6"
+    },
+    "homepage": "https://unpkg.com/@icedesign/platform-tools-intro-block/build/index.html"
 }

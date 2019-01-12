@@ -1,39 +1,40 @@
 {
-  "name": "@icedesign/service-card-block",
-  "version": "1.0.3",
-  "description": "适用于展示服务类型的卡片",
-  "homepage": "https://alibaba.github.io/ice/block/service-card",
-  "author": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ServiceCard"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
-    "@alifd/next": "^1.x"
-  },
-  "blockConfig": {
-    "name": "service-card",
-    "title": "卡片",
-    "categories": [
-      "信息展示"
+    "name": "@icedesign/service-card-block",
+    "version": "1.0.3",
+    "description": "适用于展示服务类型的卡片",
+    "homepage": "https://unpkg.com/@icedesign/service-card-block/build/index.html",
+    "author": "",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1_.erhhjaK1RjSZFAXXbdLFXa-2836-828.png"
-  }
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/ServiceCard"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "service-card",
+        "title": "卡片",
+        "categories": [
+            "信息展示"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/service-card-block/screenshot.png",
+        "version-0.x": "1.0.3"
+    }
 }

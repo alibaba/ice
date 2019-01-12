@@ -38,7 +38,8 @@
         "categories": [
             "表格"
         ],
-        "screenshot": "https://unpkg.com/@icedesign/columns-table-block/screenshot.png"
+        "screenshot": "https://unpkg.com/@icedesign/columns-table-block/screenshot.png",
+        "version-0.x": "1.0.4"
     },
     "homepage": "https://unpkg.com/@icedesign/columns-table-block/build/index.html"
 }

@@ -1,37 +1,38 @@
 {
-  "name": "@icedesign/industry-banner-block",
-  "version": "1.0.0",
-  "description": "行业专区的图文介绍",
-  "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/IndustryBanner"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "react": "^16.2.0",
-    "prop-types": "^15.5.8"
-  },
-  "blockConfig": {
-    "name": "industry-banner",
-    "title": "行业图文介绍",
-    "categories": [
-      "信息展示"
+    "name": "@icedesign/industry-banner-block",
+    "version": "1.0.0",
+    "description": "行业专区的图文介绍",
+    "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1lj3RteuSBuNjy1XcXXcYjFXa-2868-468.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/industry-banner"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/IndustryBanner"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "react": "^16.2.0",
+        "prop-types": "^15.5.8"
+    },
+    "blockConfig": {
+        "name": "industry-banner",
+        "title": "行业图文介绍",
+        "categories": [
+            "信息展示"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/industry-banner-block/screenshot.png",
+        "version-0.x": "1.0.0"
+    },
+    "homepage": "https://unpkg.com/@icedesign/industry-banner-block/build/index.html"
 }

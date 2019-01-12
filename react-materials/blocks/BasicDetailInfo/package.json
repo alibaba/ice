@@ -36,7 +36,8 @@
         "title": "基础详情信息展示",
         "categories": [
             "信息展示"
-        ]
+        ],
+        "version-0.x": "0.1.10"
     },
     "publishConfig": {
         "access": "public",

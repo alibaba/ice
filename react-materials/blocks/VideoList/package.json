@@ -1,46 +1,47 @@
 {
-  "name": "@icedesign/video-list-block",
-  "version": "0.1.4",
-  "description": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/VideoList"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "video-list",
-    "screenshot": "https://img.alicdn.com/tfs/TB1DZ4rmQyWBuNjy0FpXXassXXa-2314-1016.png",
-    "title": "视频列表",
-    "categories": [
-      "数据展示"
+    "name": "@icedesign/video-list-block",
+    "version": "0.1.4",
+    "description": "",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "themePackage": "@icedesign/theme"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/video-list"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/VideoList"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "video-list",
+        "screenshot": "https://unpkg.com/@icedesign/video-list-block/screenshot.png",
+        "title": "视频列表",
+        "categories": [
+            "数据展示"
+        ],
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.4"
+    },
+    "homepage": "https://unpkg.com/@icedesign/video-list-block/build/index.html"
 }

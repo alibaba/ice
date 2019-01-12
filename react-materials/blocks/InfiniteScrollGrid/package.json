@@ -1,44 +1,45 @@
 {
-  "name": "@icedesign/infinite-scroll-grid-block",
-  "version": "1.0.0",
-  "description": "无限滚动的栅格列表",
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "classnames": "^2.2.6",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
-    "react-virtualized": "^9.20.1"
-  },
-  "blockConfig": {
-    "name": "infinite-scroll-grid",
-    "title": "无限滚动的栅格列表",
-    "categories": [
-      "表格",
-      "列表"
+    "name": "@icedesign/infinite-scroll-grid-block",
+    "version": "1.0.0",
+    "description": "无限滚动的栅格列表",
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1kyB1GKOSBuNjy0FdXXbDnVXa-3418-632.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/infinite-scroll-grid"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "classnames": "^2.2.6",
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "react-virtualized": "^9.20.1"
+    },
+    "blockConfig": {
+        "name": "infinite-scroll-grid",
+        "title": "无限滚动的栅格列表",
+        "categories": [
+            "表格",
+            "列表"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/infinite-scroll-grid-block/screenshot.png",
+        "version-0.x": "1.0.0"
+    },
+    "homepage": "https://unpkg.com/@icedesign/infinite-scroll-grid-block/build/index.html"
 }

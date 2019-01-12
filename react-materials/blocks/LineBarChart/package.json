@@ -1,40 +1,41 @@
 {
-  "name": "@icedesign/line-bar-chart-block",
-  "version": "1.0.3",
-  "description": "折线图和柱状图组合",
-  "homepage": "https://alibaba.github.io/ice/block/line-bar-chart",
-  "author": "",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/LineBarChart"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "bizcharts": "3.2.2",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
-    "@alifd/next": "^1.x"
-  },
-  "blockConfig": {
-    "name": "line-bar-chart",
-    "title": "图表",
-    "categories": [
-      "图表"
+    "name": "@icedesign/line-bar-chart-block",
+    "version": "1.0.3",
+    "description": "折线图和柱状图组合",
+    "homepage": "https://unpkg.com/@icedesign/line-bar-chart-block/build/index.html",
+    "author": "",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1nRRJhmzqK1RjSZFpXXakSXXa-2852-960.png"
-  }
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/LineBarChart"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "bizcharts": "3.2.2",
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "line-bar-chart",
+        "title": "图表",
+        "categories": [
+            "图表"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/line-bar-chart-block/screenshot.png",
+        "version-0.x": "1.0.3"
+    }
 }

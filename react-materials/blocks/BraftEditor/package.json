@@ -36,7 +36,8 @@
         "categories": [
             "富文本编辑器"
         ],
-        "screenshot": "https://unpkg.com/@icedesign/braft-editor-block/screenshot.png"
+        "screenshot": "https://unpkg.com/@icedesign/braft-editor-block/screenshot.png",
+        "version-0.x": "1.0.3"
     },
     "homepage": "https://unpkg.com/@icedesign/braft-editor-block/build/index.html",
     "devDependencies": {

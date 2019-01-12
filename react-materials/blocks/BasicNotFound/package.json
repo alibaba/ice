@@ -37,7 +37,8 @@
         "title": "404 报错提示",
         "categories": [
             "异常"
-        ]
+        ],
+        "version-0.x": "0.1.11"
     },
     "publishConfig": {
         "access": "public",

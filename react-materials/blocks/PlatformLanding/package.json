@@ -1,42 +1,43 @@
 {
-  "name": "@icedesign/platform-landing-block",
-  "version": "1.0.5",
-  "description": "平台登陆引导页面",
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PlatformLanding"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
-    "@alifd/next": "^1.x"
-  },
-  "blockConfig": {
-    "name": "platform-landing",
-    "title": "平台登陆引导页面",
-    "categories": [
-      "信息展示",
-      "欢迎页"
+    "name": "@icedesign/platform-landing-block",
+    "version": "1.0.5",
+    "description": "平台登陆引导页面",
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1MWmjqNGYBuNjy0FnXXX5lpXa-2054-1134.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/platform-landing"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PlatformLanding"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "@alifd/next": "^1.x"
+    },
+    "blockConfig": {
+        "name": "platform-landing",
+        "title": "平台登陆引导页面",
+        "categories": [
+            "信息展示",
+            "欢迎页"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/platform-landing-block/screenshot.png",
+        "version-0.x": "1.0.5"
+    },
+    "homepage": "https://unpkg.com/@icedesign/platform-landing-block/build/index.html"
 }

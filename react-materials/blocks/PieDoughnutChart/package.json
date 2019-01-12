@@ -1,49 +1,50 @@
 {
-  "name": "@icedesign/pie-doughnut-chart-block",
-  "version": "0.1.14",
-  "description": "饼图",
-  "main": "lib/index.js",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PieDoughnutChart"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@antv/data-set": "^0.8.2",
-    "@icedesign/container": "^1.x",
-    "bizcharts": "3.2.2",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "pie-doughnut-chart",
-    "screenshot": "https://img.alicdn.com/tfs/TB1twSFcDtYBeNjy1XdXXXXyVXa-2354-758.png",
-    "themePackage": "@icedesign/theme",
-    "title": "饼图",
-    "categories": [
-      "图表"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/pie-doughnut-chart"
+    "name": "@icedesign/pie-doughnut-chart-block",
+    "version": "0.1.14",
+    "description": "饼图",
+    "main": "lib/index.js",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/PieDoughnutChart"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@antv/data-set": "^0.8.2",
+        "@icedesign/container": "^1.x",
+        "bizcharts": "3.2.2",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "pie-doughnut-chart",
+        "screenshot": "https://unpkg.com/@icedesign/pie-doughnut-chart-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "饼图",
+        "categories": [
+            "图表"
+        ],
+        "version-0.x": "0.1.14"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/pie-doughnut-chart-block/build/index.html"
 }

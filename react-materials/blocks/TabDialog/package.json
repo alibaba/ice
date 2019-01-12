@@ -1,47 +1,48 @@
 {
-  "name": "@icedesign/tab-dialog-block",
-  "version": "0.1.12",
-  "description": "标签内容弹窗",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TabDialog"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "tab-dialog",
-    "title": "标签内容弹窗",
-    "categories": [
-      "模态框"
+    "name": "@icedesign/tab-dialog-block",
+    "version": "0.1.12",
+    "description": "标签内容弹窗",
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB19AF4gOqAXuNjy1XdXXaYcVXa-1262-812.png",
-    "themePackage": "@icedesign/theme"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/tab-dialog"
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/TabDialog"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "enquire-js": "^0.1.2",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "tab-dialog",
+        "title": "标签内容弹窗",
+        "categories": [
+            "模态框"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/tab-dialog-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.12"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/tab-dialog-block/build/index.html"
 }

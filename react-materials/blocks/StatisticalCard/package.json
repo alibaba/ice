@@ -1,46 +1,47 @@
 {
-  "name": "@icedesign/statistical-card-block",
-  "version": "0.1.12",
-  "description": "统计型卡片",
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/StatisticalCard"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "ice-block"
-  ],
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "prop-types": "^15.5.8",
-    "@alifd/next": "^1.x"
-  },
-  "devDependencies": {
-    "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
-  },
-  "blockConfig": {
-    "name": "statistical-card",
-    "screenshot": "https://img.alicdn.com/tfs/TB1MLLbilfH8KJjy1XbXXbLdXXa-1910-210.png",
-    "themePackage": "@icedesign/theme",
-    "title": "统计型卡片",
-    "categories": [
-      "数据展示"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/statistical-card"
+    "name": "@icedesign/statistical-card-block",
+    "version": "0.1.12",
+    "description": "统计型卡片",
+    "files": [
+        "src/",
+        "build/"
+    ],
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice/tree/master/react-materials/blocks/StatisticalCard"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "ice-block"
+    ],
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "prop-types": "^15.5.8",
+        "@alifd/next": "^1.x"
+    },
+    "devDependencies": {
+        "@icedesign/theme": "^0.x",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "blockConfig": {
+        "name": "statistical-card",
+        "screenshot": "https://unpkg.com/@icedesign/statistical-card-block/screenshot.png",
+        "themePackage": "@icedesign/theme",
+        "title": "统计型卡片",
+        "categories": [
+            "数据展示"
+        ],
+        "version-0.x": "0.1.12"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "homepage": "https://unpkg.com/@icedesign/statistical-card-block/build/index.html"
 }

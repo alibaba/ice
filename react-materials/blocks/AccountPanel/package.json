@@ -34,6 +34,7 @@
         "categories": [
             "信息展示"
         ],
-        "screenshot": "https://unpkg.com/@icedesign/account-panel-block/screenshot.png"
+        "screenshot": "https://unpkg.com/@icedesign/account-panel-block/screenshot.png",
+        "version-0.x": "1.0.0"
     }
 }

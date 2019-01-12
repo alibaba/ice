@@ -40,7 +40,8 @@
         "categories": [
             "信息展示"
         ],
-        "themePackage": "@icedesign/theme"
+        "themePackage": "@icedesign/theme",
+        "version-0.x": "0.1.9"
     },
     "homepage": "https://unpkg.com/@icedesign/asset-info-display-block/build/index.html"
 }

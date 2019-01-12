@@ -1,44 +1,45 @@
 {
-  "name": "@icedesign/infinite-scroll-cell-measurer-block",
-  "version": "1.0.0",
-  "description": "无限滚动的表格",
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
-  "files": [
-    "src/",
-    "build/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice"
-  },
-  "license": "MIT",
-  "keywords": [
-    "ice",
-    "react",
-    "block"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
-  },
-  "dependencies": {
-    "@icedesign/container": "^1.x",
-    "classnames": "^2.2.6",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
-    "react-virtualized": "^9.20.1"
-  },
-  "blockConfig": {
-    "name": "infinite-scroll-cell-measurer",
-    "title": "无限滚动的表格",
-    "categories": [
-      "表格",
-      "列表"
+    "name": "@icedesign/infinite-scroll-cell-measurer-block",
+    "version": "1.0.0",
+    "description": "无限滚动的表格",
+    "author": {
+        "name": "ICE Team",
+        "email": "ice-admin@alibaba-inc.com"
+    },
+    "files": [
+        "src/",
+        "build/"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1tlWrGHGYBuNjy0FoXXciBFXa-3450-860.png"
-  },
-  "homepage": "https://alibaba.github.io/ice/block/infinite-scroll-cell-measurer"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alibaba/ice"
+    },
+    "license": "MIT",
+    "keywords": [
+        "ice",
+        "react",
+        "block"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "http://registry.npmjs.com"
+    },
+    "dependencies": {
+        "@icedesign/container": "^1.x",
+        "classnames": "^2.2.6",
+        "prop-types": "^15.5.8",
+        "react": "^16.2.0",
+        "react-virtualized": "^9.20.1"
+    },
+    "blockConfig": {
+        "name": "infinite-scroll-cell-measurer",
+        "title": "无限滚动的表格",
+        "categories": [
+            "表格",
+            "列表"
+        ],
+        "screenshot": "https://unpkg.com/@icedesign/infinite-scroll-cell-measurer-block/screenshot.png",
+        "version-0.x": "1.0.0"
+    },
+    "homepage": "https://unpkg.com/@icedesign/infinite-scroll-cell-measurer-block/build/index.html"
 }

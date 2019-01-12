@@ -41,7 +41,8 @@
         "title": "进度管理表格",
         "categories": [
             "表格"
-        ]
+        ],
+        "version-0.x": "0.1.14"
     },
     "publishConfig": {
         "access": "public",
