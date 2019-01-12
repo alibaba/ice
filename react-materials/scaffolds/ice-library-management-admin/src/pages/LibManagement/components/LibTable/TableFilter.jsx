@@ -59,7 +59,7 @@ export default class TableFilter extends Component {
         <div style={styles.formItem}>
           <span style={styles.formLabel}>{item.label}：</span>
           <IceFormBinder {...item.formBinderProps}>
-            <Input size="large" {...item.componnetProps} />
+            <Input {...item.componnetProps} />
           </IceFormBinder>
         </div>
       </Col>
