@@ -86,7 +86,7 @@ export default class BorrowTable extends Component {
     const { isLoading, dataSource } = this.state;
     const config = [
       {
-        label: '图书名称：',
+        label: '图书名称',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -97,7 +97,7 @@ export default class BorrowTable extends Component {
         },
       },
       {
-        label: 'ISBN 号：',
+        label: 'ISBN 号',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -108,7 +108,7 @@ export default class BorrowTable extends Component {
         },
       },
       {
-        label: '出版社：',
+        label: '出版社',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',

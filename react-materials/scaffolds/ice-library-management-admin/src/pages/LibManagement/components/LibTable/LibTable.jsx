@@ -148,7 +148,7 @@ export default class LibTable extends Component {
     ];
     const config = [
       {
-        label: '图书名称：',
+        label: '图书名称',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -159,7 +159,7 @@ export default class LibTable extends Component {
         },
       },
       {
-        label: '作者名称：',
+        label: '作者名称',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -170,7 +170,7 @@ export default class LibTable extends Component {
         },
       },
       {
-        label: 'ISBN 号：',
+        label: 'ISBN 号',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -181,7 +181,7 @@ export default class LibTable extends Component {
         },
       },
       {
-        label: '图书分类：',
+        label: '图书分类',
         component: 'Input',
         componnetProps: {
           placeholder: '请选择',
@@ -210,7 +210,7 @@ export default class LibTable extends Component {
         },
       },
       {
-        label: '出版社：',
+        label: '出版社',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
