@@ -3,8 +3,9 @@
   min-height: 100vh;
   background: $color-fill1-1;
   :global {
-    .next-nav {
-      box-shadow: none;
+    .ice-menu-custom {
+      width: 240px;
+      height: 100%;
     }
   }
   .iceLayoutSection {

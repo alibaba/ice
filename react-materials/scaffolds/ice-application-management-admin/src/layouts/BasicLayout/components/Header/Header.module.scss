@@ -8,6 +8,9 @@
   box-shadow: 0 1px 4px transparentize($color-brand1-6, 0.9);
 
   :global {
+    .next-nav {
+      box-shadow: none;
+    }
     .next-menu-item-text {
       color: $color-text1-3;
     }
