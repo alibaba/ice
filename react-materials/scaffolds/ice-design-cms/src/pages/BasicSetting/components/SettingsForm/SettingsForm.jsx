@@ -19,7 +19,7 @@ import './SettingsForm.scss';
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
-const { ImageUpload } = Upload;
+
 
 function beforeUpload(info) {
   console.log('beforeUpload callback : ', info);
@@ -52,7 +52,7 @@ export default class SettingsForm extends Component {
         gender: 'male',
         notice: false,
         email: '',
-        avatar: '',
+        avatar: [],
         siteUrl: '',
         githubUrl: '',
         twitterUrl: '',
@@ -113,16 +113,10 @@ export default class SettingsForm extends Component {
                 </Col>
                 <Col xxs="16" s="10" l="6">
                   <IceFormBinder name="avatar" required message="必填">
-                    <ImageUpload
-                      listType="picture-card"
+                    <Upload.Card
+                      listType="card"
                       action=""
                       accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
-                      locale={{
-                        image: {
-                          cancel: '取消上传',
-                          addPhoto: '上传图片',
-                        },
-                      }}
                       beforeUpload={beforeUpload}
                       onChange={onChange}
                       onSuccess={onSuccess}
@@ -172,7 +166,6 @@ export default class SettingsForm extends Component {
                     message="请输入正确的邮件"
                   >
                     <Input
-
                       placeholder="ice-admin@alibaba-inc.com"
                     />
                   </IceFormBinder>

@@ -91,7 +91,6 @@ export default class ChangePasswordForm extends Component {
                   >
                     <Input
                       htmlType="password"
-                      size="large"
                       placeholder="请重新输入新密码"
                     />
                   </IceFormBinder>
@@ -118,7 +117,6 @@ export default class ChangePasswordForm extends Component {
                   >
                     <Input
                       htmlType="password"
-                      size="large"
                       placeholder="两次输入密码保持一致"
                     />
                   </IceFormBinder>
@@ -131,7 +129,6 @@ export default class ChangePasswordForm extends Component {
           <Row style={{ marginTop: 20 }}>
             <Col offset="3">
               <Button
-                size="large"
                 type="primary"
                 onClick={this.validateAllFormField}
               >
