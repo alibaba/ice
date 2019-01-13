@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Search } from '@icedesign/base';
+import { Table, Pagination, Search } from '@alifd/next';
 
 // MOCK 数据，实际业务按需进行替换，
 const getData = (length = 10) => {
@@ -87,7 +87,7 @@ export default class CustomTable extends Component {
           />
         </div>
         <Table
-          isLoading={isLoading}
+          loading={isLoading}
           dataSource={data}
           hasBorder={false}
           style={{ padding: '20px' }}

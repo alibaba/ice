@@ -1,11 +1,9 @@
 /* eslint no-mixed-operators: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import LineChart from './LineChart';
 import './CostTrend.scss';
-
-const TabPane = Tab.TabPane;
 
 // MOCK 数据，实际业务按需进行替换
 const mockData = [
@@ -100,13 +98,13 @@ export default class CostTrend extends Component {
     return (
       <IceContainer style={styles.container} className="cost-trend">
         <h4 style={styles.title}>费用趋势</h4>
-        <Tab type="text" size="small" onChange={this.handleTabChange}>
-          <TabPane tab="总费用" key="1">
+        <Tab shape="text" size="small" onChange={this.handleTabChange}>
+          <Tab.Item title="总费用" key="1">
             <LineChart data={data} />
-          </TabPane>
-          <TabPane tab="计算费用" key="2">
+          </Tab.Item>
+          <Tab.Item title="计算费用" key="2">
             <LineChart data={data} />
-          </TabPane>
+          </Tab.Item>
         </Tab>
       </IceContainer>
     );

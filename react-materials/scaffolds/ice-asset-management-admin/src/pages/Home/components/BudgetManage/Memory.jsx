@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Dialog } from '@icedesign/base';
+import { Table, Pagination, Dialog } from '@alifd/next';
 import { withRouter } from 'react-router-dom';
 import TableHead from './TableHead';
 
@@ -101,7 +101,7 @@ export default class Memory extends Component {
     return (
       <div style={styles.container}>
         <TableHead onChange={this.handleFilterChange} />
-        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
+        <Table loading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="部门名称" dataIndex="department" width={100} />
           <Table.Column title="接口人" dataIndex="name" width={150} />
           <Table.Column

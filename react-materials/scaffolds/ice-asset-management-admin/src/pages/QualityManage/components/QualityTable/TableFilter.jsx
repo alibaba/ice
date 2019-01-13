@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Grid, Input, Select } from '@icedesign/base';
+import { Grid, Input, Select } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -29,8 +29,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>平均分：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="average" size="large" />
+              <IceFormBinder triggerType="onBlur" name="average">
+                <Input placeholder="请输入" size="large" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="average" />
@@ -40,8 +40,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>标准分：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="standard" size="large" />
+              <IceFormBinder triggerType="onBlur" name="standard">
+                <Input placeholder="请输入" size="large" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="standard" />
@@ -51,8 +51,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>所有表个数：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="alltable" size="large" />
+              <IceFormBinder triggerType="onBlur" name="alltable">
+                <Input placeholder="请输入" size="large" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="alltable" />
@@ -62,8 +62,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>等级：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Select name="type" size="large" style={{ width: '200px' }}>
+              <IceFormBinder triggerType="onBlur" name="type">
+                <Select size="large" style={{ width: '200px' }}>
                   <Select.Option value="a1">A1</Select.Option>
                   <Select.Option value="a2">A2</Select.Option>
                 </Select>
@@ -76,8 +76,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>监控率：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="rate" size="large" />
+              <IceFormBinder triggerType="onBlur" name="rate">
+                <Input placeholder="请输入" size="large" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="rate" />
