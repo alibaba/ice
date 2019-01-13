@@ -3,7 +3,7 @@ import Layout from '@icedesign/layout';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Footer from './Footer';
 import routerConfig from '../../routerConfig';
-import './UserLayout.scss';
+import './index.scss';
 
 export default class UserLayout extends Component {
   render() {
@@ -23,7 +23,7 @@ export default class UserLayout extends Component {
               ) : null;
             })}
 
-            <Redirect exact from="/user" to="/user/login" />
+            <Redirect from="/user" to="/user/login" />
           </Switch>
         </div>
         <Footer />

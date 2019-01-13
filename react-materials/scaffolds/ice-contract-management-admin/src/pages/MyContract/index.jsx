@@ -5,6 +5,7 @@ import ContractTable from '../../components/ContractTable';
 import CustomNotice from './components/CustomNotice';
 import CreateContractForm from './components/CreateContractForm';
 import styles from './index.module.scss';
+
 export default class MyContract extends Component {
   static displayName = 'MyContract';
 
