@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/analysis-scaffold",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "该模板适用于可视化实时数据的大屏展示，默认只有一个页面，内置饼图、柱状图等图形",
   "homepage": "https://unpkg.com/@icedesign/voice-chat-admin-scaffold@latest/build/index.html",
   "files": [
@@ -14,10 +14,9 @@
     ".eslintrc"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "@icedesign/layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.0",
+    "@alifd/next": "^1.11.8",
+    "@icedesign/container": "^1.0.0",
+    "@icedesign/theme": "^0.1.0",
     "echarts": "^4.0.4",
     "echarts-for-react": "^2.0.8",
     "prop-types": "^15.5.8",
@@ -46,7 +45,7 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "localization": false,
     "output": {
