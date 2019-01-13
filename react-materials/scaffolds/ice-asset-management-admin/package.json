@@ -23,6 +23,7 @@
     "@icedesign/layout": "^1.x",
     "@icedesign/theme": "^0.1.0",
     "bizcharts": "^3.2.2",
+    "classname": "^0.0.0",
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
     "moment": "^2.23.0",

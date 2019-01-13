@@ -19,7 +19,7 @@ function handleClick(key) {
 
 export default class BudgetManage extends Component {
   renderTabExtraContent = () => {
-    return <DatePicker size="large" style={{ marginRight: '20px' }} />;
+    return <div style={styles.tabExtra}><DatePicker style={{ marginRight: '20px' }} /></div>;
   };
 
   render() {
@@ -37,9 +37,7 @@ export default class BudgetManage extends Component {
                 title={item.tab}
                 onClick={handleClick}
               >
-                <div style={styles.tabItem}>
-                  {item.content}
-                </div>
+                {item.content}
               </Tab.Item>
             );
           })}
@@ -58,7 +56,8 @@ const styles = {
     fontSize: '14px',
     color: 'rgba(0, 0, 0, 0.85)',
   },
-  tabItem: {
-    padding: '0 20px 10px',
+  tabExtra: {
+    // display: 'flex',
+    // alignItems: 'center',
   },
 };

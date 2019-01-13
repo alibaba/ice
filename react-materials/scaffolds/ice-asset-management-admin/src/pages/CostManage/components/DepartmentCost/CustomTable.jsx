@@ -80,7 +80,6 @@ export default class CustomTable extends Component {
           <Search
             searchText=""
             type="secondary"
-            size="large"
             inputWidth={300}
             placeholder="请输入关键词"
             onChange={this.handleFilterChange}
@@ -90,7 +89,7 @@ export default class CustomTable extends Component {
           loading={isLoading}
           dataSource={data}
           hasBorder={false}
-          style={{ padding: '20px' }}
+          style={styles.table}
         >
           <Table.Column title="应用" dataIndex="application" />
           <Table.Column title="负责人" dataIndex="leader" />
@@ -116,6 +115,9 @@ export default class CustomTable extends Component {
 }
 
 const styles = {
+  table: {
+    margin: '20px',
+  },
   searchBox: {
     display: 'flex',
     justifyContent: 'flex-end',

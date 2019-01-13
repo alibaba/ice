@@ -84,6 +84,7 @@ export default class Overview extends Component {
     );
   }
 }
+
 const styles = {
   alignRight: {
     textAlign: 'right',

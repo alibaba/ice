@@ -30,7 +30,7 @@ export default class TableHead extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>部门：</span>
               <IceFormBinder name="type" triggerType="onBlur">
-                <Select size="large" style={{ width: '200px' }}>
+                <Select style={{ width: '200px' }}>
                   <Select.Option value="taobao">淘宝</Select.Option>
                   <Select.Option value="dingding">钉钉</Select.Option>
                   <Select.Option value="aliyun">阿里云</Select.Option>
@@ -45,7 +45,7 @@ export default class TableHead extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>负责人：</span>
               <IceFormBinder name="leader" triggerType="onBlur">
-                <Input placeholder="请输入" size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="leader" />
@@ -56,7 +56,7 @@ export default class TableHead extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>预算：</span>
               <IceFormBinder name="budget" triggerType="onBlur">
-                <Input placeholder="请输入" size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="budget" />

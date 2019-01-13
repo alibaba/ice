@@ -92,7 +92,7 @@ export default class QualityTable extends Component {
           loading={isLoading}
           dataSource={data}
           hasBorder={false}
-          style={{ padding: '0 20px 20px' }}
+          style={styles.table}
         >
           <Table.Column title="等级" dataIndex="grade" />
           <Table.Column title="平均分" dataIndex="average" />
@@ -144,7 +144,12 @@ const styles = {
     verticalAlign: 'middle',
     background: '#e8e8e8',
   },
+  table: {
+    padding: '0 20px',
+  },
   pagination: {
     textAlign: 'right',
+    marginTop: '20px',
+    padding: '0 20px',
   },
 };

@@ -1,9 +1,23 @@
 
 .aside {
-  width: 200px;
+  width: 160px;
+  height: 100%;
   padding-top: 20px;
+  position: relative;
+  transition: all ease 0.3s;
 }
 
-.menuItemText {
-  margin-left: 5px;
+.asideCollapsed {
+  width: 60px;
+}
+
+.collapseBtn {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid #aaa;
+  color: #aaa;
+  cursor: pointer;
 }

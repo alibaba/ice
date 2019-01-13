@@ -3,12 +3,25 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import FoundationSymbol from '@icedesign/foundation-symbol';
-import { Nav } from '@alifd/next';
+import { Nav, Icon } from '@alifd/next';
+import cls from 'classname';
 import { asideMenuConfig } from '../../../../menuConfig';
 import styles from './index.module.scss';
 
 @withRouter
 export default class Aside extends Component {
+
+  state = {
+    collapse: false,
+  }
+
+  toggleCollapse = () => {
+    const { collapse } = this.state;
+
+    this.setState({
+      collapse: !collapse,
+    });
+  }
 
   renderNavItem = (nav) => {
     const linkProps = {};
@@ -19,18 +32,8 @@ export default class Aside extends Component {
     }
 
     return (
-      <Nav.Item key={nav.path}>
-        <Link {...linkProps}>
-          <span>
-            {nav.icon ? (
-              <FoundationSymbol
-                size="small"
-                type={nav.icon}
-              />
-            ) : null}
-            {nav.name}
-          </span>
-        </Link>
+      <Nav.Item key={nav.path} icon={nav.icon}>
+        <Link {...linkProps}>{nav.name}</Link>
       </Nav.Item>
     );
   }
@@ -38,12 +41,25 @@ export default class Aside extends Component {
   render() {
     const { location } = this.props;
     const { pathname } = location;
+    const { collapse } = this.state;
+
+    const className = cls(styles.aside, {
+      [styles.asideCollapsed]: collapse,
+    });
 
     return (
-      <div className={styles.aside}>
+      <div className={className}>
+        <div className={styles.collapseBtn} onClick={this.toggleCollapse}>
+          <Icon
+            type={collapse ? 'arrow-right' : 'arrow-left'}
+            size="small"
+          />
+        </div>
         <Nav
           type="primary"
           direction="ver"
+          iconOnly={collapse}
+          hasTooltip
           selectedKeys={[pathname]}
         >
           {(asideMenuConfig || []).map((nav, index) => {
@@ -51,14 +67,8 @@ export default class Aside extends Component {
                 return (
                   <Nav.SubNav
                     key={index}
-                    label={
-                      <span>
-                        {nav.icon ? (
-                          <FoundationSymbol size="small" type={nav.icon} />
-                        ) : null}
-                        <span className={styles.menuItemText}>{nav.name}</span>
-                      </span>
-                    }
+                    icon={nav.icon}
+                    label={nav.name}
                   >
                     {nav.children.map(this.renderNavItem)}
                   </Nav.SubNav>

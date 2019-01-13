@@ -35,7 +35,7 @@ export default class Overview extends Component {
                     trigger={<Icon type="prompt" size="small" />}
                     align="t"
                     closable={false}
-                    alignment="edge"
+                    alignEdge={true}
                     triggerType="hover"
                     style={{ width: 300 }}
                   >
@@ -59,7 +59,7 @@ export default class Overview extends Component {
                     trigger={<Icon type="prompt" size="small" />}
                     align="t"
                     closable={false}
-                    alignment="edge"
+                    alignEdge={true}
                     triggerType="hover"
                     style={{ width: 300 }}
                   >

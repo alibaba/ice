@@ -76,7 +76,7 @@ export default class ApplicationTable extends Component {
           loading={isLoading}
           dataSource={data}
           hasBorder={false}
-          style={{ padding: '20px' }}
+          style={styles.table}
         >
           <Table.Column title="应用" dataIndex="application" />
           <Table.Column title="负责人" dataIndex="leader" />
@@ -102,6 +102,7 @@ export default class ApplicationTable extends Component {
 }
 
 const styles = {
+  table: { margin: '20px' },
   pagination: {
     margin: '20px',
     textAlign: 'right',

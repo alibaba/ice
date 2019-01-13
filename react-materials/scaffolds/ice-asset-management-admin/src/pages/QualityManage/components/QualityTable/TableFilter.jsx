@@ -30,7 +30,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>平均分：</span>
               <IceFormBinder triggerType="onBlur" name="average">
-                <Input placeholder="请输入" size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="average" />
@@ -41,7 +41,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>标准分：</span>
               <IceFormBinder triggerType="onBlur" name="standard">
-                <Input placeholder="请输入" size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="standard" />
@@ -52,7 +52,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>所有表个数：</span>
               <IceFormBinder triggerType="onBlur" name="alltable">
-                <Input placeholder="请输入" size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="alltable" />
@@ -63,7 +63,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>等级：</span>
               <IceFormBinder triggerType="onBlur" name="type">
-                <Select size="large" style={{ width: '200px' }}>
+                <Select style={{ width: '200px' }}>
                   <Select.Option value="a1">A1</Select.Option>
                   <Select.Option value="a2">A2</Select.Option>
                 </Select>
@@ -77,7 +77,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>监控率：</span>
               <IceFormBinder triggerType="onBlur" name="rate">
-                <Input placeholder="请输入" size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="rate" />

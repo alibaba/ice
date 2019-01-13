@@ -1,97 +1,126 @@
-import React from 'react';
-import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
-import DataSet from '@antv/data-set';
+/* eslint no-mixed-operators: 0 */
+import React, { Component } from 'react';
+import IceContainer from '@icedesign/container';
+import { Tab } from '@alifd/next';
+import LineChart from './LineChart';
+import './index.scss';
 
-export default class LineChart extends React.Component {
-  render() {
-    const { data } = this.props;
-    const ds = new DataSet();
-    const dv = ds.createView().source(data);
+// MOCK 数据，实际业务按需进行替换
+const mockData = [
+  {
+    year: '2018-08-01',
+    computationalCosts: 5.9,
+    storageCosts: 1.9,
+  },
+  {
+    year: '2018-08-05',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+  {
+    year: '2018-08-10',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+  {
+    year: '2018-08-15',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+  {
+    year: '2018-08-20',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+  {
+    year: '2018-08-25',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+  {
+    year: '2018-08-30',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+  {
+    year: '2018-09-01',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+  {
+    year: '2018-09-05',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+  {
+    year: '2018-09-10',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+  {
+    year: '2018-09-15',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+  {
+    year: '2018-09-20',
+    computationalCosts: 6.0,
+    storageCosts: 2.0,
+  },
+];
 
-    dv.transform({
-      type: 'fold',
-      fields: ['computationalCosts', 'storageCosts'],
-      key: 'city',
-      value: 'temperature',
+// Random Numbers
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export default class CostTrend extends Component {
+  state = {
+    data: mockData,
+  };
+
+  handleTabChange = () => {
+    const { data } = this.state;
+    const newData = data.map((item) => {
+      return {
+        year: item.year,
+        computationalCosts: item.computationalCosts + random(0.1, 0.2),
+        storageCosts: item.storageCosts + random(0.2, 0.3),
+      };
     });
+    this.setState({
+      data: newData,
+    });
+  };
 
-    const cols = {
-      year: {
-        range: [0, 1],
-      },
-    };
-
+  render() {
+    const { data } = this.state;
     return (
-      <div style={styles.container}>
-        <Chart
-          height={400}
-          padding={[60, 40, 40, 80]}
-          data={dv}
-          scale={cols}
-          forceFit
-        >
-          <Legend
-            position="left-top"
-            layout="horizontal"
-            marker="square"
-            offsetY={-30}
-            offsetX={240}
-          />
-          <Axis name="year" />
-          <Axis
-            name="temperature"
-            label={{
-              formatter: (val) => `${val}万元`,
-            }}
-          />
-          <Tooltip
-            crosshairs={{
-              type: 'y',
-            }}
-          />
-          <Geom
-            type="line"
-            position="year*temperature"
-            size={2}
-            color="city"
-            shape="smooth"
-          />
-          <Geom
-            type="point"
-            position="year*temperature"
-            size={4}
-            shape="circle"
-            color="city"
-            style={{
-              stroke: '#fff',
-              lineWidth: 1,
-            }}
-          />
-        </Chart>
-      </div>
+      <IceContainer style={styles.container} className="cost-trend">
+        <h4 style={styles.title}>费用趋势</h4>
+        <Tab shape="text" size="small" onChange={this.handleTabChange}>
+          <Tab.Item title="总费用" key="1">
+            <LineChart data={data} />
+          </Tab.Item>
+          <Tab.Item title="计算费用" key="2">
+            <LineChart data={data} />
+          </Tab.Item>
+        </Tab>
+      </IceContainer>
     );
   }
 }
 
 const styles = {
-  head: {
-    marginBottom: '20px',
+  container: {
+    padding: '0',
   },
-  button: {
-    display: 'inline-block',
-    lineHeight: '28px',
-    marginRight: '10px',
-    padding: '0 15px',
-    height: '28px',
-    minWidth: '90px',
-    borderRadius: '2px',
-    fontSize: '12px',
-    textAlign: 'center',
-    textDecoration: 'none',
-    cursor: 'pointer',
-  },
-  actived: {
-    background: '#676ca8',
-    color: '#fff',
+  title: {
+    margin: '0',
+    padding: '15px 20px',
+    fonSize: '16px',
+    color: 'rgba(0, 0, 0, 0.85)',
+    fontWeight: '500',
+    borderBottom: '1px solid #f0f0f0',
   },
 };

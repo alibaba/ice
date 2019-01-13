@@ -107,12 +107,12 @@ export default class Memory extends Component {
           <Table.Column
             title="财年预算(万元)"
             dataIndex="yearBudget"
-            width={100}
+            width={150}
           />
           <Table.Column
             title="追加预算(万元)"
             dataIndex="appendBudget"
-            width={100}
+            width={150}
           />
           <Table.Column title="已分配" dataIndex="distribution" width={100} />
           <Table.Column
@@ -136,7 +136,7 @@ export default class Memory extends Component {
 
 const styles = {
   container: {
-    margin: '10px 0',
+    padding: '0 20px 20px',
   },
   tableHead: {
     display: 'flex',
