@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import {  } from '@alifd/next';
 import cx from 'classnames';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import { Nav } from '@alifd/next';
