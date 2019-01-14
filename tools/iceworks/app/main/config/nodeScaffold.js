@@ -62,7 +62,40 @@ const midway = {
   }
 };
 
+const midwayAli = {
+  tarball: {
+    name: 'ice-ali-midway-template',
+    title: 'ICE ALI Midway Template',
+    source:
+      {
+        type: 'npm',
+        npm: '@icedesign/ice-ali-midway-template',
+        version: '1.0.0-beta.1',
+        registry: 'http://registry.npmjs.com'
+      }
+  },
+  pendingFields: {
+    dotFiles: [
+      '.editorconfig',
+      '.eslintignore',
+      '.eslintrc',
+      '.gitignore',
+      '.gitkeep'
+    ],
+    extractDirs: [
+      'src',
+      'public'
+    ],
+    pkgAttrs: [
+      'scripts',
+      'dependencies',
+      'devDependencies'
+    ]
+  }
+};
+
 module.exports = {
   koa2,
-  midway
+  midway,
+  midwayAli
 };

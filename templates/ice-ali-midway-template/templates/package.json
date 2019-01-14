@@ -1,6 +1,6 @@
 {
-  "name": "@icedesign/ice-midway-template",
-  "version": "1.0.0-beta.4",
+  "name": "@icedesign/ice-ali-midway-template",
+  "version": "1.0.0-beta.1",
   "description": "",
   "main": "server/index.js",
   "scripts": {

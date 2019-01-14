@@ -36,10 +36,6 @@ export default class ScaffoldForm extends Component {
 
   toggleNodeProject = (checked) => {
     this.props.scaffold.toggleNodeSelect(checked);
-
-    if (!checked) {
-      this.props.scaffold.toggleNodeProject('');
-    }
   };
 
   handleNodeFrameSelect = (value) => {
@@ -50,13 +46,21 @@ export default class ScaffoldForm extends Component {
     shell.openExternal('https://midwayjs.org/midway/guide.html');
   };
 
+  handleMidwaySelect = ( checked ) => {
+    if (checked) {
+      this.props.scaffold.toggleNodeProject('midwayAli');
+    } else {
+      this.props.scaffold.toggleNodeProject('');
+    }
+  }
+
   render() {
     const isAlibaba = services.settings.get('isAlibaba');
     const hasIce =
       this.props.scaffold.scaffold.devDependencies
       && this.props.scaffold.scaffold.devDependencies.hasOwnProperty('ice-scripts');
 
-    const showNode = !isAlibaba && hasIce;
+    const showNodeOutside = !isAlibaba && hasIce;
 
     return (
       <div className="project-config-form">
@@ -110,52 +114,66 @@ export default class ScaffoldForm extends Component {
             onChange={this.changeProjectName}
           />
         </div>
-        { showNode && (
-          <div
-            className="project-config-form-item"
-            style={{ lineHeight: '28px' }}
-          >
-            <label>
-              添加服务端开发框架
-              <Checkbox
-                disabled={this.props.scaffold.isCreating}
-                onChange={this.toggleNodeProject}
-                style={{ margin: '0 4px', verticalAlign: 'middle' }}
-              />
-            </label>
-            {
-              this.props.scaffold.isNode && (
-                <Select
-                  placeholder="选择框架"
-                  onChange={this.handleNodeFrameSelect}
-                  style={{ verticalAlign: 'middle' }}
-                >
-                  <Option value="midway">Midway</Option>
-                  <Option value="koa2">Koa</Option>
-                </Select>
-              )
-            }
-            {
-              this.props.scaffold.nodeFramework === 'midway' && (
-                <span
+        <div
+          className="project-config-form-item"
+          style={{ lineHeight: '28px' }}
+        >
+          {
+            isAlibaba ? (
+              <label>
+                添加 Midway 
+                <Checkbox
+                  disabled={this.props.scaffold.isCreating}
+                  onChange={this.handleMidwaySelect}
+                  style={{ margin: '0 4px', verticalAlign: 'middle' }}
+                />
+              </label>
+            ) : hasIce ? (
+              <label>
+                添加服务端开发框架
+                <Checkbox
+                  disabled={this.props.scaffold.isCreating}
+                  onChange={this.toggleNodeProject}
+                  style={{ margin: '0 4px', verticalAlign: 'middle' }}
+                />
+              </label>
+            ) : null
+          }
+          {
+            this.props.scaffold.isNode && (
+              <Select
+                placeholder="选择框架"
+                onChange={this.handleNodeFrameSelect}
+                style={{ verticalAlign: 'middle' }}
+              >
+                <Option value="midway">Midway</Option>
+                <Option value="koa2">Koa</Option>
+              </Select>
+            )
+          }
+          {
+            ( 
+              this.props.scaffold.nodeFramework === 'midway' || 
+              this.props.scaffold.nodeFramework === 'midwayAli'
+            ) && (
+              <span
+                style={{
+                  cursor: 'pointer'
+                }}
+                onClick={this.handleOpenMidwayDoc}
+              >
+                <CustomIcon
+                  type="help"
                   style={{
-                    cursor: 'pointer'
+                    margin: '0 4px 0 8px',
+                    color: '#5797fb'
                   }}
-                  onClick={this.handleOpenMidwayDoc}
-                >
-                  <CustomIcon
-                    type="help"
-                    style={{
-                      margin: '0 4px 0 8px',
-                      color: '#5797fb'
-                    }}
-                  />
-                  <span style={{ color: '#5797fb' }} >Midway 官方文档</span>
-                </span>
-              )
-            }
-          </div>)
-        }
+                />
+                <span style={{ color: '#5797fb' }} >Midway 官方文档</span>
+              </span>
+            )
+          }
+        </div>
         {this.props.scaffold.isCreating && (
           <div className="project-config-form-item">
             <span style={{ fontSize: 12, color: '#999' }}>

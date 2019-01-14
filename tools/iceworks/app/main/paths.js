@@ -34,7 +34,7 @@ let SASS_BINARY_PATH = isDev
       `${process.platform}-x64-57_binding.node`
     );
 
-const NODE_FRAMEWORKS =['koa2', 'midway'];
+const NODE_FRAMEWORKS =['koa2', 'midway', 'midwayAli'];
 
 const getClientPath = (destDir, framework, sourcePath = '') => {
   if (framework) {
