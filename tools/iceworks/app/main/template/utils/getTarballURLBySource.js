@@ -21,7 +21,8 @@ module.exports = function getTarballURLBySource(source = {}, projectVersion) {
     let version = source.version;
     
     if (projectVersion === '0.x')  {
-      version = source['version-0.x'];
+      // 兼容没有'version-0.x'字段的情况
+      version = source['version-0.x'] || source.version;
     }
 
     npmRequest({
