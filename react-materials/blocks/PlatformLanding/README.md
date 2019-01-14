@@ -4,4 +4,4 @@
 
 平台登陆引导页面
 
-![截图](https://img.alicdn.com/tfs/TB1MWmjqNGYBuNjy0FnXXX5lpXa-2054-1134.png)
+![截图](https://unpkg.com/@icedesign/platform-landing-block/screenshot.png)

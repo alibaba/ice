@@ -4,4 +4,4 @@
 
 基于 highCharts 的饼图组合
 
-![截图](https://img.alicdn.com/tfs/TB170Sdc56guuRjy1XdXXaAwpXa-2868-860.png)
+![截图](https://unpkg.com/@icedesign/multiple-pie-chart-block/screenshot.png)

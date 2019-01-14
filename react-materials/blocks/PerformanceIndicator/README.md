@@ -4,4 +4,4 @@
 
 适用于性能指标展示的图表
 
-![截图](https://img.alicdn.com/tfs/TB138oObNTpK1RjSZR0XXbEwXXa-2870-948.png)
+![截图](https://unpkg.com/@icedesign/performance-indicator-block/screenshot.png)

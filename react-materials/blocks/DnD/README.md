@@ -4,4 +4,4 @@
 
 元素拖拽放置
 
-![截图](https://img.alicdn.com/tfs/TB1eOefG3mTBuNjy1XbXXaMrVXa-2410-674.png)
+![截图](https://unpkg.com/@icedesign/dn-d-block/screenshot.png)

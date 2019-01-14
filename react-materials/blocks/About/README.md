@@ -4,4 +4,4 @@
 
 适用于产品的简介
 
-![截图](https://img.alicdn.com/tfs/TB1rINTukZmBKNjSZPiXXXFNVXa-2722-1092.png)
+![截图](https://unpkg.com/@icedesign/about-block/screenshot.png)

@@ -4,4 +4,4 @@
 
 地图信息窗口
 
-![截图](https://img.alicdn.com/tfs/TB1eaNyCwmTBuNjy1XbXXaMrVXa-2054-794.png)
+![截图](https://unpkg.com/@icedesign/map-with-a-info-window/screenshot.png)

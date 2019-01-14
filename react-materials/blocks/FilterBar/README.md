@@ -4,4 +4,4 @@
 
 适用于页面顶部的筛选场景
 
-![截图](https://img.alicdn.com/tfs/TB1N_8LXQvoK1RjSZPfXXXPKFXa-2872-134.png)
+![截图](https://unpkg.com/@icedesign/filter-bar-block/screenshot.png)
