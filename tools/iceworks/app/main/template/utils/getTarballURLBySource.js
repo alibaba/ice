@@ -8,7 +8,7 @@
     "type": "npm",
     "npm": "@icedesign/foo-block",
     "version": "1.0.0",
-    "version-o.x": "0.1.5"
+    "version-0.x": "0.1.5"
     "sourceCodeDirectory": "src",
   },
   * "projectVersion": "1.x" // "0.x" 
