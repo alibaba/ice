@@ -43,6 +43,46 @@ const configs = {
   },
 };
 
+const doProjectInstall = ({cwd, env, callback}, reInstall) => {
+  const installConfig = {
+    cwd,
+    env,
+    shell: 'npm',
+    shellArgs: ['install', '--no-package-lock'],
+  };
+
+  const npmCacheCLeanConfig = {
+    cwd,
+    env,
+    shell: 'npm',
+    shellArgs: ['cache', 'clean', '--force']
+  }
+
+  sessions.manager.new(
+    installConfig,
+    (code) => {
+      if (code !== 0) {
+        log.error('project-install-failed');
+        log.report('app', { action: 'project-install-failed'});
+        if (reInstall) {
+          log.info('执行 npm cache clean --force 重试');
+          sessions.manager.new(npmCacheCLeanConfig, (code) => {
+            doProjectInstall({cwd, env, callback});
+          });
+        } else {
+          callback(code, {
+            title: '重装依赖失败',
+            content:
+              '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
+          });
+        }
+      } else {
+        callback(0);
+      }
+    }
+  );
+}
+
 /**
  * session 以“项目路径”为 key 做处理
  */
@@ -339,26 +379,11 @@ export default {
           env.yarn_registry = 'http://registry.npm.alibaba-inc.com';
         }
 
-        sessions.manager.new(
-          {
-            cwd: project.fullPath,
-            env: env,
-            shell: 'npm',
-            shellArgs: ['install', '--no-package-lock'],
-          },
-          (code) => {
-            if (code !== 0) {
-              log.error('project-install-failed');
-              callback(code, {
-                title: '重装依赖失败',
-                content:
-                  '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
-              });
-            } else {
-              callback(0);
-            }
-          }
-        );
+        doProjectInstall({
+          cwd: project.fullPath,
+          env,
+          callback
+        }, true);
       });
   },
 

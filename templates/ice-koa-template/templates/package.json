@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-koa-template",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "",
   "main": "server/index.js",
   "scripts": {

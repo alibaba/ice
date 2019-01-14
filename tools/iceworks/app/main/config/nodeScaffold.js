@@ -6,7 +6,7 @@ const koa2 = {
       {
         type: 'npm',
         npm: '@icedesign/ice-koa-template',
-        version: '1.0.0-beta.4',
+        version: '1.0.0-beta.5',
         registry: 'http://registry.npmjs.com'
       }
   },
@@ -37,7 +37,8 @@ const midway = {
     source:
       {
         type: 'npm',
-        npm: 'ice-midway-template',
+        npm: '@icedesign/ice-midway-template',
+        version: '1.0.0-beta.3',
         registry: 'http://registry.npmjs.com'
       }
   },
