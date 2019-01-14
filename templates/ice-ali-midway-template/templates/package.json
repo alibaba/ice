@@ -1,60 +1,40 @@
 {
-  "name": "ice-midway-react-scaffold",
-  "version": "1.0.0",
+  "name": "@icedesign/ice-midway-template",
+  "version": "1.0.0-beta.4",
   "description": "",
-  "private": true,
-  "dependencies": {
-    "@ali/midway": "^6.5.7",
-    "@ali/pandora": "^3.10.2"
-  },
-  "devDependencies": {
-    "@ali/ci": "^4.7.0",
-    "@ali/midway-bin": "6",
-    "@ali/midway-mock": "6",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.5.5",
-    "ts-node": "^7.0.0",
-    "tslib": "^1.8.1",
-    "tslint": "^5.9.1",
-    "typescript": "^2.8.0",
-    "webstorm-disable-index": "^1.2.0"
-  },
-  "engines": {
-    "install-alinode": "3.11.7"
-  },
+  "main": "server/index.js",
   "scripts": {
-    "client": "ice dev --project-type=midway",
-    "server": "NODE_ENV=local midway-bin dev --ts",
-    "start": "npm run client & npm run server",
-    "lint": "eslint . --ext '.js,.jsx' --fix",
-    "build": "ice build --project-type=node && npm run server-build",
-    "start-production": "npm run client & npm run server-start",
-    "server-debug": "NODE_ENV=local midway-bin debug --ts",
-    "server-test": "npm run lint -- --fix && midway-bin test --ts",
-    "server-lint": "tslint -c tslint.json --project .",
-    "server-cov": "midway-bin cov --ts",
-    "server-ci": "midway-bin cov --ts",
-    "server-build": "midway-bin build -c",
-    "server-start": "NODE_ENV=local pandora dev"
+    "clientInstall": "cd client && npm install --no-package-lock",
+    "serverIntall": "cd server && npm install --no-package-lock",
+    "postinstall": "npm run clientInstall && npm run serverIntall",
+    "clientStart": "cd client && npm run start",
+    "serverStart": "cd server && npm run start",
+    "start": "npm run clientStart & npm run serverStart",
+    "build": "cd client && npm run build",
+    "clinetLint": "cd client && npm run lint",
+    "serverLint": "cd server && npm run lint",
+    "lint": "npm run clinetLint && npm run serverLint",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "ci": {
-    "version": "8, 10"
+  "keywords": [
+    "ice",
+    "ice-template",
+    "ice-midway-template"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
   },
-  "config": {
-    "build": {
-      "deps": "isolation"
-    }
-  },
-  "midway-bin-build": {
-    "include": [
-      "app/public",
-      "app/view"
-    ]
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/alibaba/ice"
   },
-  "author": "",
-  "license": "MIT"
+  "engines": {
+    "node": ">=8.0.0"
+  }
 }
