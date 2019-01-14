@@ -4,4 +4,4 @@
 
 适用于多卡片的信息展示
 
-![截图](https://img.alicdn.com/tfs/TB1O0BOwljTBKNjSZFNXXasFXXa-2744-1092.png)
+![截图](https://unpkg.com/@icedesign/multi-card-block/screenshot.png)

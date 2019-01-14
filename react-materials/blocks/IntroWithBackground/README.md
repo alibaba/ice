@@ -4,4 +4,4 @@
 
 附带背景图片的信息介绍区块
 
-![截图](https://img.alicdn.com/tfs/TB1yzD5iH1YBuNjSszhXXcUsFXa-2490-1240.png)
+![截图](https://unpkg.com/@icedesign/intro-with-background-block/screenshot.png)

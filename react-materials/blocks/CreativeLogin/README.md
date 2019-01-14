@@ -4,4 +4,4 @@
 
 左右布局的登录页
 
-![截图](https://img.alicdn.com/tfs/TB17ah4uyMnBKNjSZFzXXc_qVXa-2640-1488.png)
+![截图](https://unpkg.com/@icedesign/creative-login-block/screenshot.png)

@@ -4,4 +4,4 @@
 
 消息列表
 
-![截图](https://img.alicdn.com/tfs/TB1BhsgcDtYBeNjy1XdXXXXyVXa-2354-856.png)
+![截图](https://unpkg.com/@icedesign/message-list-block/screenshot.png)

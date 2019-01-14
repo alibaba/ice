@@ -4,4 +4,4 @@
 
 平台工具介绍
 
-![截图](https://img.alicdn.com/tfs/TB1mNG.qNSYBuNjSspjXXX73VXa-2072-1262.png)
+![截图](https://unpkg.com/@icedesign/platform-tools-intro-block/screenshot.png)

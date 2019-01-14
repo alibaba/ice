@@ -4,4 +4,4 @@
 
 适用于介绍页的功能简介
 
-![截图](https://img.alicdn.com/tfs/TB1RxcDbNTpK1RjSZFGXXcHqFXa-1635-493.png)
+![截图](https://unpkg.com/@icedesign/feature-intro-block/screenshot.png)

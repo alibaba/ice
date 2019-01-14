@@ -2,4 +2,4 @@
 
 简介：价格展示
 
-![截图](https://img.alicdn.com/tfs/TB1Mn6dcuuSBuNjy1XcXXcYjFXa-2836-1006.png)
+![截图](https://unpkg.com/@icedesign/price-card-block/screenshot.png)
