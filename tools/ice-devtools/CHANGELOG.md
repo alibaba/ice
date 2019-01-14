@@ -1,5 +1,8 @@
 # ice-scripts Changelog
 
+## 2.0.6
+- [bufix] 修复 generate 时报 babel-core 找不到的问题
+
 ## 2.0.5
 - [feat] 增加常用的 babel stage plugin
 
