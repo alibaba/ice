@@ -1,3 +1,4 @@
+const util = require('util');
 const marked = require('marked');
 const prismjs = require('prismjs');
 require('prismjs/components/prism-jsx');
@@ -7,8 +8,23 @@ const compileES5 = require('./compile-es5');
 
 const renderer = new marked.Renderer();
 
+var styleTemplate = `
+  <div class="markdown">
+    <div class="highlight highlight-%s">
+      <pre><code language="%s">%s</code></pre>
+    </div>
+  </div>
+  <style>%s</style>
+`;
+
 renderer.code = function (code, lang = 'jsx') {
-  return prismjs.highlight(code, prismjs.languages[lang]);
+  var html = prismjs.highlight(code, prismjs.languages[lang]);
+
+  if (lang === 'css' || lang === 'style') {
+    return util.format(styleTemplate, lang, lang, html, code);
+  }
+
+  return html;
 };
 
 renderer.heading = function (text, level) {
