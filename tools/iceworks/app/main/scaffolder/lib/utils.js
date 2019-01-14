@@ -128,10 +128,12 @@ function getPackageByPath(path) {
  */
 function getProjectVersion(pkg) {
   const dependencies = pkg.dependencies || {};
-  if (dependencies['@icedesign/base']) {
+  const hasIceDesignBase = dependencies['@icedesign/base'];
+  const hasFdNext = dependencies['@alifd/next'];
+  if (hasIceDesignBase) {
     return '0.x';
   }
-  return dependencies['@alifd/next'] ? '1.x' : '0.x'
+  return hasFdNext ? '1.x' : '0.x';
 
 }
 
