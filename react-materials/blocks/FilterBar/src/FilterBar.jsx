@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Select, DatePicker } from '@icedesign/base';
+import { Select, DatePicker } from '@alifd/next';
 
 export default class FilterBar extends Component {
   static displayName = 'FilterBar';

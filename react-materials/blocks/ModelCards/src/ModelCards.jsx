@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Icon } from '@icedesign/base';
+import { Grid, Icon } from '@alifd/next';
 
 const { Row, Col } = Grid;
 

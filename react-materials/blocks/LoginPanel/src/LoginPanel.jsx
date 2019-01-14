@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import LoginIntro from './LoginIntro';
 import LoginForm from './LoginForm';
 

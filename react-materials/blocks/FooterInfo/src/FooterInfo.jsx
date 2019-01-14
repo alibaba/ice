@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -92,6 +92,9 @@ const styles = {
   item: {
     padding: '20px 30px',
     textAlign: 'center',
+  },
+  navItem: {
+    listStyle: 'none',
   },
   itemTitle: {
     margin: '0 0 10px',

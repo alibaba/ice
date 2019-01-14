@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from '@icedesign/base';
+import { Table } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const mockData = [
@@ -11,9 +11,21 @@ const mockData = [
       {
         description: '2017秋新款女韩版宽松一字领长袖打底衫套头针织薄款上衣',
         title: '单号：234253124122414',
-        avatar: require('./images/placeholder.jpg'),
       },
     ],
+    children: [
+      {
+        price: 'US $2.5',
+        status: 1,
+        id: 2,
+        product: [
+          {
+            description: 'Free shipping women Casual dresses lady dress plus size 2014',
+            avatar: require('./images/placeholder.jpg'),
+          },
+        ],
+      }
+    ]
   },
   {
     price: 'US $2.5',
@@ -26,6 +38,19 @@ const mockData = [
         avatar: require('./images/placeholder.jpg'),
       },
     ],
+    children: [
+      {
+        price: 'US $2.5',
+        status: 1,
+        id: 2,
+        product: [
+          {
+            description: '冬季美翻天90白鹅绒保暖连帽狐狸毛羽绒服外套',
+            avatar: require('./images/placeholder.jpg'),
+          },
+        ],
+      }
+    ]
   },
   {
     price: 'US $2.5',
@@ -39,6 +64,19 @@ const mockData = [
         avatar: require('./images/placeholder.jpg'),
       },
     ],
+    children: [
+      {
+        price: 'US $2.5',
+        status: 1,
+        id: 2,
+        product: [
+          {
+            description: '冬季美翻天90白鹅绒保暖连帽狐狸毛羽绒服外套',
+            avatar: require('./images/placeholder.jpg'),
+          },
+        ],
+      }
+    ]
   },
   {
     price: 'US $2.5',
@@ -51,6 +89,19 @@ const mockData = [
         avatar: require('./images/placeholder.jpg'),
       },
     ],
+    children: [
+      {
+        price: 'US $2.5',
+        status: 1,
+        id: 2,
+        product: [
+          {
+            description: '冬季美翻天90白鹅绒保暖连帽狐狸毛羽绒服外套',
+            avatar: require('./images/placeholder.jpg'),
+          },
+        ],
+      }
+    ]
   },
 ];
 
@@ -138,8 +189,8 @@ export default class OrderList extends Component {
           <Table
             dataSource={tableData}
             getRowClassName={this.getRowClassName}
-            rowSelection={rowSelection}
             hasBorder={false}
+            rowSelection={this.handleRowSelection}
           >
             <Table.GroupHeader cell={this.renderOrderNumber} />
             <Table.Column

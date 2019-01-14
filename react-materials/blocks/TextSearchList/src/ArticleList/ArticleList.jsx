@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 
 export default class ArticleList extends Component {
   static displayName = 'ArticleList';

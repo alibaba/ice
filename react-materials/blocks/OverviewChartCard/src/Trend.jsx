@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 
 export default class Field extends Component {
   static displayName = 'Field';

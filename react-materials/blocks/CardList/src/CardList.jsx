@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Grid } from '@icedesign/base';
-import FoundationSymbol from 'foundation-symbol';
+import { Icon, Grid } from '@alifd/next';
 import Filter from './Filter';
 
 const { Row, Col } = Grid;
@@ -61,9 +60,8 @@ export default class CardList extends Component {
                     <p style={{ ...styles.time, ...styles.info }}>
                       创建时间：
                       {item.time}
-                      <FoundationSymbol
-                        type="font-size"
-                        size="edit2"
+                      <Icon
+                        type="edit"
                         style={styles.editIcon}
                       />
                       ;
@@ -80,6 +78,9 @@ export default class CardList extends Component {
 }
 
 const styles = {
+  container: {
+    background: 'lightgray'
+  },
   createScheme: {
     display: 'flex',
     alignItems: 'center',

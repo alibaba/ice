@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, Grid, Input, Radio, Button } from '@icedesign/base';
+import { Dialog, Grid, Input, Radio, Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
@@ -152,13 +152,7 @@ export default class SimpleFormDialog extends Component {
               <Row style={styles.formRow}>
                 <Col>
                   <IceFormBinder>
-                    <Input
-                      name="content"
-                      style={styles.input}
-                      multiple
-                      placeholder="请输入详细内容"
-                      rows={4}
-                    />
+                    <Input.TextArea name="content" style={styles.input} placeholder="请输入详细内容" rows={4} />
                   </IceFormBinder>
                 </Col>
               </Row>
