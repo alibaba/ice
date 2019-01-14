@@ -6,6 +6,6 @@ export class HomeController {
 
   @get('/')
 	index (ctx) {
-    ctx.body = `Welcome to midwayjs!`;
+    ctx.redirect('/index.html');
   }
 }

@@ -13,6 +13,7 @@ module.exports = (appInfo: any) => {
 	// https://www.npmjs.com/package/egg-static#configuration
   config.static = {
     // maxAge: 31536000,
+    prefix: '/',
 		dir: path.join(__dirname, '../../../client/build')
   };
 
