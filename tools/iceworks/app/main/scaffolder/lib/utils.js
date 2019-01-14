@@ -6,6 +6,7 @@ const request = require('request');
 const tar = require('tar');
 const upperCamelCase = require('uppercamelcase');
 const zlib = require('zlib');
+const pathExists = require('path-exists');
 
 const config = require('../../config');
 
@@ -29,6 +30,9 @@ function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, isNod
       return Promise.all(
         filesList.map((_, idx) => {
           const block = blocks[idx];
+          // 根据项目版本下载依赖
+          const pkg = getPackageByPath(destDir);
+          const projectVersion = getProjectVersion(pkg);
           // 兼容旧版物料源
           if (block.npm && block.version && ( block.type != 'custom' ) ) {
             return getDependenciesFromNpm({
@@ -36,9 +40,14 @@ function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, isNod
               version: block.version,
             });
           } else if (block.source && block.source.type == 'npm' && ( block.type != 'custom' ) ) {
+            let version = block.source.version;
+            if (projectVersion === '0.x')  {
+              // 兼容没有'version-0.x'字段的情况
+              version = block.source['version-0.x'] || block.source.version;
+            }
             return getDependenciesFromNpm({
+              version,
               npm: block.source.npm,
-              version: block.source.version,
               registry: block.source.registry,
             });
           } else if (block.type == 'custom') {
@@ -110,8 +119,8 @@ function downloadBlockToPage({ destDir = process.cwd(), block, pageName, isNodeP
     });
 }
 
-function getPackageByPath(path) {
-  const pkgPath = path.join(path, 'package.json');
+function getPackageByPath(destDir) {
+  const pkgPath = path.join(destDir, 'package.json');
   if (pathExists.sync(pkgPath)) {
     try {
       const packageText = fs.readFileSync(pkgPath);
