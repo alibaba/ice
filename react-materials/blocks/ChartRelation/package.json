@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/chart-relation-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "关系图",
   "files": [
     "src/",
