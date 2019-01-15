@@ -1,0 +1,11 @@
+.logo{
+  color: $color-brand1-6;
+  display: flex;
+  font-size: 36px;
+  align-items: center;
+  font-weight: bold;
+  justify-content: center;
+  &:visited, &:link {
+    color: $color-brand1-6;
+  }
+}

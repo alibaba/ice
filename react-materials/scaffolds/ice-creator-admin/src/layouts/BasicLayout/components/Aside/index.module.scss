@@ -1,0 +1,18 @@
+.aside {
+  flex: 0 0 auto;
+  margin: 20px 0 0 20px;
+  :global {
+    .next-nav {
+      box-shadow: none;
+    }
+    .ice-menu-collapse-hide {
+      padding-left: 1em;
+    }
+  }
+}
+.menu {
+  width: 240px;
+  min-height: 500px;
+  padding-top: 20px;
+  border-radius: 6px;
+}
