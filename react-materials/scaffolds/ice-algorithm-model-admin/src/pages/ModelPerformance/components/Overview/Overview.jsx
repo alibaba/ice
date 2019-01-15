@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
-import FoundationSymbol from 'foundation-symbol';
+import { Grid } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 
 const { Row, Col } = Grid;
 
