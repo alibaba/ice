@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Breadcrumb } from '@icedesign/base';
+import { Breadcrumb } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 export default class CustomBreadcrumb extends Component {

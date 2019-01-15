@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/cms-scaffold",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "该模板内置了丰富的区块，主要适用于类 CMS 管理系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/cms-scaffold@latest/build/index.html",
   "files": [
@@ -14,22 +14,21 @@
     ".eslintrc"
   ],
   "dependencies": {
+    "@alifd/next": "^1.x",
+    "@alifd/theme-1": "^0.0.6",
     "@antv/data-set": "^0.8.5",
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "@icedesign/form-binder": "^0.1.4",
-    "@icedesign/icon": "^0.1.1",
-    "@icedesign/img": "^0.1.0",
-    "@icedesign/layout": "^0.1.0",
-    "@icedesign/menu": "^0.1.0",
-    "@icedesign/skin": "^0.1.0",
+    "@icedesign/container": "^1.x",
+    "@icedesign/form-binder": "^1.x",
+    "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/img": "^1.x",
+    "@icedesign/layout": "^1.x",
     "axios": "^0.17.1",
     "bizcharts": "3.1.0",
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
-    "foundation-symbol": "^0.1.0",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.1",
+    "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-document-title": "^2.0.3",
@@ -47,7 +46,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.6.0-next.3"
+    "ice-scripts": "^1.6.0"
   },
   "scripts": {
     "start": "ice dev",
@@ -59,15 +58,12 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@alifd/theme-1",
     "entry": "src/index.js",
     "localization": false,
     "output": {
       "publicPath": "./"
     }
-  },
-  "themeConfig": {
-    "primaryColor": "#447eff"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",

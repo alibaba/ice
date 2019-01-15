@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import cx from 'classnames';
-import FoundationSymbol from 'foundation-symbol';
-import { Icon } from '@icedesign/base';
+import FoundationSymbol from '@icedesign/foundation-symbol';
+import { Nav } from '@alifd/next';
 import Logo from '../Logo';
 import { asideMenuConfig } from '../../../../menuConfig';
-import './scss/dark.scss';
-import './scss/light.scss';
+import './scss/base.scss';
+
+const Icon = FoundationSymbol;
 
 @withRouter
 export default class Aside extends Component {
@@ -98,27 +98,27 @@ export default class Aside extends Component {
 
       if (childrenItems && childrenItems.length > 0) {
         return (
-          <SubMenu
+          <Nav.SubNav
             key={index}
-            title={
+            label={
               <span>
                 {item.icon ? (
                   <FoundationSymbol size="small" type={item.icon} />
                 ) : null}
-                <span className="ice-menu-collapse-hide">{item.name}</span>
+                <span className="ice-menu-collapse ice-menu-collapse-hide">{item.name}</span>
               </span>
             }
           >
             {childrenItems}
-          </SubMenu>
+          </Nav.SubNav>
         );
       }
       return null;
     }
     return (
-      <MenuItem key={item.path}>
+      <Nav.Item key={item.path}>
         <Link to={item.path}>{item.name}</Link>
-      </MenuItem>
+      </Nav.Item>
     );
   };
 
@@ -141,18 +141,18 @@ export default class Aside extends Component {
           </a>
         )}
 
-        <Menu
+        <Nav
           style={{ width: 200 }}
-          inlineCollapsed={false}
           mode="inline"
           selectedKeys={[pathname]}
           openKeys={this.state.openKeys}
           defaultSelectedKeys={[pathname]}
-          onOpenChange={this.onOpenChange}
           onClick={this.onMenuClick}
+          onOpen={this.onOpenChange}
+          type="secondary"
         >
           {this.getNavMenuItems(asideMenuConfig)}
-        </Menu>
+        </Nav>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Grid, Button, Feedback } from '@icedesign/base';
+import { Input, Grid, Button, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -10,7 +10,7 @@ import {
 import './ChangePasswordForm.scss';
 
 const { Row, Col } = Grid;
-const Toast = Feedback.toast;
+const Toast = Message;
 
 export default class ChangePasswordForm extends Component {
   static displayName = 'ChangePasswordForm';
@@ -91,7 +91,6 @@ export default class ChangePasswordForm extends Component {
                   >
                     <Input
                       htmlType="password"
-                      size="large"
                       placeholder="请重新输入新密码"
                     />
                   </IceFormBinder>
@@ -118,7 +117,6 @@ export default class ChangePasswordForm extends Component {
                   >
                     <Input
                       htmlType="password"
-                      size="large"
                       placeholder="两次输入密码保持一致"
                     />
                   </IceFormBinder>
@@ -131,7 +129,6 @@ export default class ChangePasswordForm extends Component {
           <Row style={{ marginTop: 20 }}>
             <Col offset="3">
               <Button
-                size="large"
                 type="primary"
                 onClick={this.validateAllFormField}
               >
