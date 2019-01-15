@@ -1,5 +1,8 @@
 # ice-scripts Changelog
 
+## 2.0.8
+- [bugfix] 修复依赖缺失问题
+
 ## 2.0.6
 - [bugfix] 修复 generate 时报 babel-core 找不到的问题
 - [bugfix] 添加 file-loader, 解决大图片的加载失败问题
