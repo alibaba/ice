@@ -4,4 +4,4 @@
 
 树形卡片列表
 
-![截图](https://img.alicdn.com/tfs/TB1EQrXcAyWBuNjy0FpXXassXXa-2310-694.png)
+![截图](https://unpkg.com/@icedesign/tree-card-list-block/screenshot.png)

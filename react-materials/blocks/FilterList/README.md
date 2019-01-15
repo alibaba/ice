@@ -2,7 +2,7 @@
 
 简介：支持过滤的列表
 
-![截图](https://img.alicdn.com/tfs/TB1iUbYilfH8KJjy1XbXXbLdXXa-2000-1154.png)
+![截图](https://unpkg.com/@icedesign/filter-list-block/screenshot.png)
 
 
 

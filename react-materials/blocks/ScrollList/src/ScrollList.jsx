@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Loading } from '@icedesign/base';
+import { Loading } from '@alifd/next';
 import dataSource from './list-data';
 import ReactList from 'react-list';
 import IceContainer from '@icedesign/container';
@@ -80,11 +80,9 @@ export default class ScrollList extends Component {
   render() {
     return (
       <Loading
-        shape="fusion-reactor"
         color="#66AAFF"
         style={{ display: 'block' }}
-        visible={this.state.isLoading}
-      >
+        visible={this.state.isLoading}>
         <IceContainer
           style={{ height: this.props.height, overflow: 'auto' }}
           onScroll={this.handleScroll}

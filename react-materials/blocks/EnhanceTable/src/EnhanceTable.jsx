@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Tab, Search } from '@icedesign/base';
+import { Table, Pagination, Tab, Search } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
 import data from './data';
@@ -93,29 +93,29 @@ export default class EnhanceTable extends Component {
             <Tab
               onChange={this.onTabChange}
               size="small"
-              type="text"
+              shape="text"
               activeKey={this.state.activeKey}
               contentStyle={{ display: 'none' }}
             >
-              <Tab.TabPane
+              <Tab.Item
                 key="solved"
-                tab={
+                title={
                   <span>
                     已解决 <span style={styles.tabCount}>123</span>
                   </span>
                 }
               />
-              <Tab.TabPane
+              <Tab.Item
                 key="needFix"
-                tab={
+                title={
                   <span>
                     待解决 <span style={styles.tabCount}>10</span>
                   </span>
                 }
               />
-              <Tab.TabPane
+              <Tab.Item
                 key="needValidate"
-                tab={
+                title={
                   <span>
                     待验证 <span style={styles.tabCount}>2</span>
                   </span>
@@ -127,7 +127,7 @@ export default class EnhanceTable extends Component {
             <Search
               style={styles.search}
               type="primary"
-              inputWidth={150}
+              style={{width: 150}}
               placeholder="搜索"
               searchText=""
               onSearch={this.onSearch}

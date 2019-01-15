@@ -2,7 +2,7 @@
 
 简介：面积图
 
-![截图](https://img.alicdn.com/tfs/TB1tF0DivDH8KJjy1XcXXcpdXXa-1910-1040.png)
+![截图](https://unpkg.com/@icedesign/chart-area-block/screenshot.png)
 
 
 

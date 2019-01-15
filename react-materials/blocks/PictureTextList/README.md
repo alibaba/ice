@@ -4,7 +4,7 @@
 
 图文列表
 
-![截图](https://gw.alicdn.com/tfs/TB1ZbgJilTH8KJjy0FiXXcRsXXa-2026-1556.png)
+![截图](https://unpkg.com/@icedesign/picture-text-list-block/screenshot.png)
 
 
 

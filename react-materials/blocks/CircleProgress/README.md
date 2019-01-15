@@ -2,4 +2,4 @@
 
 简介：环形进度条
 
-![截图](https://img.alicdn.com/tfs/TB1xOKYcwmTBuNjy1XbXXaMrVXa-2352-522.png)
+![截图](https://unpkg.com/@icedesign/circle-progress-block/screenshot.png)

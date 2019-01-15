@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button, Grid, Feedback } from '@icedesign/base';
+import { Input, Button, Grid, Message } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;
@@ -64,13 +64,11 @@ export default class PrivateMessageForm extends Component {
               消息内容
             </Col>
             <Col s="14" l="7">
-              <Input
+              <Input.TextArea
                 style={{ width: '100%' }}
-                multiple
                 value={this.state.message}
                 onChange={this.messageChange}
-                placeholder="请输入内容"
-              />
+                placeholder="请输入内容" />
             </Col>
           </Row>
 

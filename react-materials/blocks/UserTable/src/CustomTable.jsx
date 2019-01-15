@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-state, no-plusplus */
 import React, { Component } from 'react';
-import { Table, Switch, Icon, Button, Grid, Pagination } from '@icedesign/base';
+import { Table, Switch, Icon, Button, Grid, Pagination } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;

@@ -4,4 +4,4 @@
 
 适用于多数据的信息展示
 
-![截图](https://img.alicdn.com/tfs/TB1NodKXIbpK1RjSZFyXXX_qFXa-2850-460.png)
+![截图](https://unpkg.com/@icedesign/info-overview-block/screenshot.png)

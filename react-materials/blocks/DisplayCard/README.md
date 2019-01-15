@@ -4,7 +4,7 @@
 
 展示型卡片
 
-![截图](https://img.alicdn.com/tfs/TB1AwCEXNGYBuNjy0FnXXX5lpXa-1900-278.png)
+![截图](https://unpkg.com/@icedesign/display-card-block/screenshot.png)
 
 
 

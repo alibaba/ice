@@ -2,7 +2,7 @@
 
 简介：数据展示
 
-![截图](https://img.alicdn.com/tfs/TB1IKT9jfDH8KJjy1XcXXcpdXXa-1892-324.png)
+![截图](https://unpkg.com/@icedesign/data-display-block/screenshot.png)
 
 
 

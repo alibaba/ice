@@ -4,4 +4,4 @@
 
 创建活动的表单
 
-![截图](https://img.alicdn.com/tfs/TB1o0ipnx6I8KJjy0FgXXXXzVXa-1720-1062.png)
+![截图](https://unpkg.com/@icedesign/create-activity-form-block/screenshot.png)
