@@ -4,4 +4,4 @@
 
 地图位置标记
 
-![截图](https://img.alicdn.com/tfs/TB1rtgvCDtYBeNjy1XdXXXXyVXa-2058-802.png)
+![截图](https://unpkg.com/@icedesign/map-with-a-marker/screenshot.png)

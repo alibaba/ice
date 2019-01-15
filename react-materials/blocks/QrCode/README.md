@@ -4,4 +4,4 @@
 
 根据配置属性生成二维码
 
-![截图](https://img.alicdn.com/tfs/TB1oWRSIuOSBuNjy0FdXXbDnVXa-1960-1164.png)
+![截图](https://unpkg.com/@icedesign/qr-code-block/screenshot.png)

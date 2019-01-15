@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Pagination, Progress, Button } from '@icedesign/base';
+import { Table, Pagination, Progress, Button } from '@alifd/next';
 import EditDialog from './EditDialog';
 import data from './data';
 
@@ -35,11 +35,11 @@ export default class ComplexProgressTable extends Component {
         <Button
           style={styles.operationButton}
           onClick={() => this.editItem(index, record)}
-          shape="text"
+          text
         >
           编辑
         </Button>
-        <Button style={styles.operationButton} shape="text">
+        <Button style={styles.operationButton} text>
           删除
         </Button>
       </div>

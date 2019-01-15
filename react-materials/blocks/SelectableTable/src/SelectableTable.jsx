@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Icon, Pagination } from '@icedesign/base';
+import { Table, Button, Icon, Pagination } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const getMockData = () => {
@@ -124,7 +124,7 @@ export default class SelectableTable extends Component {
         <IceContainer>
           <Table
             dataSource={this.state.dataSource}
-            isLoading={this.state.isLoading}
+            loading={this.state.isLoading}
             rowSelection={{
               ...this.rowSelection,
               selectedRowKeys: this.state.selectedRowKeys,

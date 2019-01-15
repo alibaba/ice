@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/simple-table-block",
-  "version": "0.1.16",
+  "version": "2.0.0",
   "description": "基础的表格",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -21,32 +22,32 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
-    "@icedesign/data-binder": "^0.1.1",
+    "@icedesign/container": "^1.x",
+    "@icedesign/data-binder": "^1.x",
     "@icedesign/img": "^0.1.1",
-    "@icedesign/label": "^0.1.0",
+    "@icedesign/label": "^1.x",
     "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "latest",
-    "@icedesign/skin": "^0.1.3",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "simple-table",
-    "screenshot": "https://img.alicdn.com/tfs/TB1dnoMib_I8KJjy1XaXXbsxpXa-1908-1496.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/simple-table-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "基础表格",
     "categories": [
       "表格"
-    ]
+    ],
+    "version-0.x": "0.1.16"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/simple-table"
+  "homepage": "https://unpkg.com/@icedesign/simple-table-block/build/index.html"
 }

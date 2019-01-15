@@ -4,4 +4,4 @@
 
 适用于顶部的消息提示
 
-![截图](https://img.alicdn.com/tfs/TB1apCOIv1TBuNjy0FjXXajyXXa-2126-198.png)
+![截图](https://unpkg.com/@icedesign/notice-card-block/screenshot.png)

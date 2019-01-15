@@ -4,4 +4,4 @@
 
 平台介绍
 
-![截图](https://img.alicdn.com/tfs/TB1JsHkqGmWBuNjy1XaXXXCbXXa-2531-1370.jpg)
+![截图](https://unpkg.com/@icedesign/platform-intro-block/screenshot.png)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import ReactEcharts from 'echarts-for-react';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 import 'echarts/lib/chart/map';
 import 'echarts/map/js/world';
 

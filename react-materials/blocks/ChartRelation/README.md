@@ -2,4 +2,4 @@
 
 简介：关系图
 
-![截图](https://img.alicdn.com/tfs/TB1urMfcDtYBeNjy1XdXXXXyVXa-2286-994.png)
+![截图](https://unpkg.com/@icedesign/chart-relation-block/screenshot.png)

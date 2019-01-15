@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Checkbox, Icon } from '@icedesign/base';
+import { Grid, Checkbox, Icon } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const avatarImg = require('./images/avatar.jpg');

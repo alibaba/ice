@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import LineChart from './LineChart';
 import Head from './Head';
 import './FlowStatistics.scss';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 const MOCK_DATA = {
   threeMonths: {
@@ -43,19 +43,19 @@ export default class FlowStatistics extends Component {
     return (
       <IceContainer className="flow-statistics">
         <h4 style={styles.title}>流量统计</h4>
-        <Tab type="text" size="small">
-          <TabPane tab="近三个月" key="1">
+        <Tab shape="text" size="small">
+          <Tab.Item title="近三个月" key="1">
             <Head data={MOCK_DATA.threeMonths} />
             <LineChart />
-          </TabPane>
-          <TabPane tab="近半年" key="2">
+          </Tab.Item>
+          <Tab.Item title="近半年" key="2">
             <Head data={MOCK_DATA.halfYear} />
             <LineChart />
-          </TabPane>
-          <TabPane tab="近一年" key="3">
+          </Tab.Item>
+          <Tab.Item title="近一年" key="3">
             <Head data={MOCK_DATA.nearlyYear} />
             <LineChart />
-          </TabPane>
+          </Tab.Item>
         </Tab>
       </IceContainer>
     );

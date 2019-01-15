@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Balloon } from '@icedesign/base';
+import { Button, Balloon } from '@alifd/next';
 import PropTypes from 'prop-types';
 
 export default class DeleteBalloon extends Component {
@@ -33,7 +33,7 @@ export default class DeleteBalloon extends Component {
 
   render() {
     const visibleTrigger = (
-      <Button size="small" type="secondary" shape="warning">
+      <Button size="small" type="secondary" warning>
         删除
       </Button>
     );
@@ -45,7 +45,7 @@ export default class DeleteBalloon extends Component {
           id="confirmBtn"
           size="small"
           type="normal"
-          shape="warning"
+          warning
           style={{ marginRight: '5px' }}
           onClick={(visible) => this.handleHide(visible, 1)}
         >

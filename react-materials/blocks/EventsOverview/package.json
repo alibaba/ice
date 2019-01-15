@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/events-overview-block",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "适用于展示活动数据概览",
-  "homepage": "https://alibaba.github.io/ice/block/events-overview",
+  "homepage": "https://unpkg.com/@icedesign/events-overview-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "build/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -23,10 +24,10 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.7",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "events-overview",
@@ -34,6 +35,7 @@
     "categories": [
       "数据展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1G1eihgHqK1RjSZJnXXbNLpXa-2704-272.png"
+    "screenshot": "https://unpkg.com/@icedesign/events-overview-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

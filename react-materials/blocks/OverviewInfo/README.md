@@ -4,4 +4,4 @@
 
 适用于概述信息和图表结合的展示
 
-![截图](https://img.alicdn.com/tfs/TB1MBhRwnqWBKNjSZFxXXcpLpXa-2752-620.png)
+![截图](https://unpkg.com/@icedesign/overview-info-block/screenshot.png)

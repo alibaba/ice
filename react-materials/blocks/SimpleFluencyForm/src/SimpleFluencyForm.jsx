@@ -1,177 +1,72 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Step, Grid, Input, Button } from '@icedesign/base';
-import {
-  FormBinderWrapper,
-  FormBinder,
-  FormError,
-} from '@icedesign/form-binder';
+import { Step, Grid, Input, Button, Form } from '@alifd/next';
 
 const { Row, Col } = Grid;
-const telPattern = /^(1[\d]{1}[\d]{9})|(((400)-(\d{3})-(\d{4}))|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$|^([ ]?)$/;
+const FormItem = Form.Item;
+
+const formItemLayout = {
+  labelCol: { xxs: 5, s: 5, l: 7 },
+  wrapperCol: { s: 14, l: 12 }
+};
+
 
 export default class SimpleFluencyForm extends Component {
   static displayName = 'SimpleFluencyForm';
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      step: 0,
-      formValue: {
-        username: '',
-        email: '',
-        phone: '',
-        address: '',
-      },
-    };
+  state = {
+    step: 0
   }
 
-  // ICE: React Component 的生命周期
+  formChange = (values, field) => {
+    console.log(values, field)
+  }
 
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillReceiveProps() {}
-
-  componentWillUnmount() {}
-
-  formChange = (newValue) => {
-    this.setState({
-      formValue: newValue,
-    });
-  };
-
-  nextStep = () => {
-    this.form.validateAll((error, value) => {
-      console.log(value);
-      if (!error || error.length === 0) {
-        this.setState({ step: this.state.step + 1 });
-      }
-    });
+  nextStep = (values, errors) => {
+    console.log('error', errors, 'value', values);
+    if (!errors) {
+      this.setState({ step: this.state.step + 1 });
+    } else {
+      // 处理表单报错
+    }
   };
 
   renderStep = (step) => {
     if (step === 0) {
-      const { username, email, phone, address } = this.state.formValue;
-      const initValue = {
-        username,
-        email,
-        phone,
-        address,
-      };
       return (
         <IceContainer style={styles.form}>
-          <FormBinderWrapper
-            ref={(form) => {
-              this.form = form;
-            }}
-            value={initValue}
-            onChange={this.formChange}
-          >
-            <div>
-              <Row style={styles.formRow}>
-                <Col xxs="5" s="5" l="7" style={styles.formLabel}>
-                  <span>姓名：</span>
-                </Col>
-                <Col s="14" l="12">
-                  <FormBinder required message="必填项">
-                    <Input
-                      name="username"
-                      size="large"
-                      style={{ width: '100%' }}
-                    />
-                  </FormBinder>
-                  <div style={styles.formErrorWrapper}>
-                    <FormError name="username" />
-                  </div>
-                </Col>
-              </Row>
-              <Row style={styles.formRow}>
-                <Col xxs="5" s="5" l="7" style={styles.formLabel}>
-                  邮箱：
-                </Col>
-                <Col s="14" l="12">
-                  <FormBinder type="email" required message="邮箱不合法">
-                    <Input
-                      name="email"
-                      size="large"
-                      style={{ width: '100%' }}
-                    />
-                  </FormBinder>
-                  <div style={styles.formErrorWrapper}>
-                    <FormError name="email" />
-                  </div>
-                </Col>
-              </Row>
-              <Row style={styles.formRow}>
-                <Col xxs="5" s="5" l="7" style={styles.formLabel}>
-                  电话：
-                </Col>
-                <Col s="14" l="12">
-                  <FormBinder
-                    required
-                    message="请输入合法的电话号码"
-                    pattern={telPattern}
-                    triggerType="onBlur"
-                  >
-                    <Input
-                      name="phone"
-                      size="large"
-                      style={{ width: '100%' }}
-                    />
-                  </FormBinder>
-                  <div style={styles.formErrorWrapper}>
-                    <FormError name="phone" />
-                  </div>
-                </Col>
-              </Row>
-              <Row style={styles.formRow}>
-                <Col xxs="5" s="5" l="7" style={styles.formLabel}>
-                  地址：
-                </Col>
-                <Col s="14" l="12">
-                  <FormBinder>
-                    <Input
-                      required
-                      message="必填"
-                      multiple
-                      name="address"
-                      size="large"
-                      style={{ width: '100%' }}
-                    />
-                  </FormBinder>
-                  <div style={styles.formErrorWrapper}>
-                    <FormError name="address" />
-                  </div>
-                </Col>
-              </Row>
-
-              <Row>
-                <Col offset={7}>
-                  <Button onClick={this.nextStep} type="primary">
-                    下一步
-                  </Button>
-                </Col>
-              </Row>
-            </div>
-          </FormBinderWrapper>
+          <Form onChange={this.formChange} >
+            <FormItem label="姓名：" {...formItemLayout} required requiredMessage="必填项" >
+              <Input name="username" autoComplete="on" />
+            </FormItem>
+            <FormItem label="邮箱：" {...formItemLayout} required formatMessage="邮箱不合法" format="email">
+              <Input name="email" htmlType="email" autoComplete="on" />
+            </FormItem>
+            <FormItem label="电话：" {...formItemLayout} required formatMessage="请输入合法的电话号码" format="tel">
+              <Input name="phone" />
+            </FormItem>
+            <FormItem label="地址：" {...formItemLayout} required requiredMessage="必填" >
+              <Input.TextArea name="address" />
+            </FormItem>
+            <FormItem {...formItemLayout} label=" ">
+              <Form.Submit onClick={this.nextStep} validate type="primary">下一步</Form.Submit>
+            </FormItem>
+          </Form>
         </IceContainer>
       );
     } else if (step === 1) {
       return (
         <IceContainer>
-          <span>步骤二</span>
+          <div>步骤二</div>
+          <Button onClick={this.nextStep} type="primary">下一步</Button>
         </IceContainer>
       );
     } else if (step === 2) {
       return (
         <IceContainer>
-          <span>步骤三</span>
+          <div>步骤三</div>
+          
+          <Button onClick={this.nextStep} type="primary">下一步</Button>
         </IceContainer>
       );
     }
@@ -181,7 +76,7 @@ export default class SimpleFluencyForm extends Component {
     return (
       <div className="simple-fluency-form">
         <IceContainer>
-          <Step current={this.state.step} type="dot">
+          <Step current={this.state.step} shape="dot">
             <Step.Item key={0} title="填写信息" />
             <Step.Item key={1} title="确认信息" />
             <Step.Item key={2} title="完成" />

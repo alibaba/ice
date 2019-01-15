@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Timeline } from '@icedesign/base';
+import { Timeline } from '@alifd/next';
 
 const { Item: TimelineItem } = Timeline;
 
