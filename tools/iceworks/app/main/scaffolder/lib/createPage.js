@@ -115,36 +115,38 @@ module.exports = async function createPage({
     })
 
     // 下载区块到页面
-    utils.downloadBlocksToPage({
-      destDir, 
-      blocks, 
-      pageName: pageFolderName, 
-      isNodeProject,
-      preview
-    })
-      .catch( err => {
-        console.log(err);
-      })
-      .then( async ({ dependencies }) => {
+    let dependencies
+    try {
+      const deps = await utils.downloadBlocksToPage({
+        destDir, 
+        blocks, 
+        pageName: pageFolderName, 
+        isNodeProject,
+        preview
+      });
+      dependencies = deps.dependencies;
+    } catch (error) {
+      console.log(err);
+    }
 
-        const waitUntilNpmInstalled = await utils.createInterpreter(
-          'ADD_DEPENDENCIES',
-          dependencies,
-          interpreter
-        );
+    const waitUntilNpmInstalled = await utils.createInterpreter(
+      'ADD_DEPENDENCIES',
+      dependencies,
+      interpreter
+    );
 
-        if (!waitUntilNpmInstalled) {
-          const blocksName = blocks
-            .map(({ source }) => `${source.npm}@${source.version}`)
-            .join(' ');
-          const depsName = Object.keys(blockDeps)
-            .map((d) => `${d}@${blockDeps[d]}`)
-            .join(' ');
-          throw new DependenciesError('blocks 安装失败', {
-            message: `无法安装以下区块： blocks: ${blocksName} dependencies: ${depsName}`,
-          });
-        }
-      })
+    if (!waitUntilNpmInstalled) {
+      const blocksName = blocks
+        .map(({ source }) => `${source.npm}@${source.version}`)
+        .join(' ');
+      const depsName = Object.keys(blockDeps)
+        .map((d) => `${d}@${blockDeps[d]}`)
+        .join(' ');
+      throw new DependenciesError('blocks 安装失败', {
+        message: `无法安装以下区块： blocks: ${blocksName} dependencies: ${depsName}`,
+      });
+    }
+
   }
 
   const scaffoldConfig = pkg.scaffoldConfig || {};
