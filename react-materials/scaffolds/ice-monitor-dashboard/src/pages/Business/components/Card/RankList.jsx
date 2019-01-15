@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Table } from '@icedesign/base';
 import PropTypes from 'prop-types';
 
@@ -30,7 +31,9 @@ export default class RankList extends Component {
           })}
         </Table>
         <div style={styles.footer}>
-          <a style={styles.link}>查看更多</a>
+          <Link to="/user/activities" style={styles.link}>
+            查看更多
+          </Link>
         </div>
       </div>
     );
@@ -58,6 +61,7 @@ const styles = {
     justifyContent: 'flex-end',
   },
   link: {
-    color: '#4990e2',
+    color: '#447eff',
+    cursor: 'pointer',
   },
 };

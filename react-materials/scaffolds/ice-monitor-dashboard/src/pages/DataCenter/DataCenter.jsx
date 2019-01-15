@@ -19,19 +19,19 @@ export default class DataCenter extends Component {
     return (
       <Row gutter="20" wrap>
         <Col l="12">
-          <BaseInfo />
-        </Col>
-        <Col l="12">
-          <PercentageComplete />
+          <LossRate />
         </Col>
         <Col l="12">
           <TimeDistribution />
         </Col>
-        <Col l="12">
-          <LossRate />
-        </Col>
         <Col l="24">
           <AverageTime />
+        </Col>
+        <Col l="12">
+          <BaseInfo />
+        </Col>
+        <Col l="12">
+          <PercentageComplete />
         </Col>
       </Row>
     );
