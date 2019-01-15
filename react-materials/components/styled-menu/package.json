@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/styled-menu",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ICE 导航组件体验版",
   "main": "lib/index.js",
   "files": [
