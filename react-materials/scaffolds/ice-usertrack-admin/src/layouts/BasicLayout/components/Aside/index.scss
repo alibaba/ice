@@ -3,10 +3,9 @@
     background: #fff;
     box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
     .custom-menu {
-      min-height: 500px;
+      min-height: 100%;
       width: 240px;
       padding-top: 20px;
-      border-radius: 6px;
       .ice-menu-item-selected {
         background: #f8f9fa !important;
         border-radius: 0 !important;
@@ -15,6 +14,9 @@
         > a {
           color: #666;
         }
+      }
+      .ice-menu-collapse-hide {
+        padding-left: 1em;
       }
     }
   }

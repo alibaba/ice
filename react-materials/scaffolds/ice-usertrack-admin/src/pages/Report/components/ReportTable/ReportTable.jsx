@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Pagination, Feedback } from '@icedesign/base';
+import { Table, Pagination, Message } from '@alifd/next';
 
 const getData = () => {
   return Array.from({ length: 10 }).map((item, index) => {
@@ -61,11 +61,11 @@ export default class ReportTable extends Component {
   };
 
   handleApply = () => {
-    Feedback.toast.success('申请权限已发送，请十分钟之后再试');
+    Message.success('申请权限已发送，请十分钟之后再试');
   };
 
   handleDetail = () => {
-    Feedback.toast.prompt('需要管理员权限才能查看详情');
+    Message.prompt('需要管理员权限才能查看详情');
   };
 
   renderOper = () => {
@@ -87,7 +87,7 @@ export default class ReportTable extends Component {
 
     return (
       <IceContainer style={styles.container}>
-        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
+        <Table loading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="测试时间" dataIndex="testTime" />
           <Table.Column title="创建人" dataIndex="creator" />
           <Table.Column title="报告名称" dataIndex="reportName" />

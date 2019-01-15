@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Icon, Grid, Loading, Dialog } from '@icedesign/base';
-import FoundationSymbol from 'foundation-symbol';
+import { Icon, Grid, Loading, Dialog } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import { withRouter } from 'react-router-dom';
 
 const { Row, Col } = Grid;
@@ -23,14 +23,12 @@ export default class CardList extends Component {
       <div style={styles.container}>
         <Loading
           visible={isLoading}
-          shape="flower"
-          color="#333"
           style={styles.loading}
         >
           <Row wrap gutter="20">
             <Col l="6" onClick={this.handleAdd}>
               <div style={{ ...styles.card, ...styles.createScheme }}>
-                <Icon type="add" size="large" style={styles.addIcon} />
+                <Icon type="add"  style={styles.addIcon} />
                 <span>新增测试方案</span>
               </div>
             </Col>

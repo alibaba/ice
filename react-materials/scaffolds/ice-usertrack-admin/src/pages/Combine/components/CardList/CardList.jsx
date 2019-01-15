@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Icon, Grid, Balloon, Dialog } from '@icedesign/base';
-import FoundationSymbol from 'foundation-symbol';
+import { Icon, Grid, Balloon, Dialog } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import { withRouter } from 'react-router-dom';
 
 const { Row, Col } = Grid;
@@ -38,7 +38,7 @@ export default class CardList extends Component {
         <Row wrap gutter="20">
           <Col l="6" onClick={this.handleAdd}>
             <div style={{ ...styles.card, ...styles.createScheme }}>
-              <Icon type="add" size="large" style={styles.addIcon} />
+              <Icon type="add"  style={styles.addIcon} />
               <span>新增埋点</span>
             </div>
           </Col>
