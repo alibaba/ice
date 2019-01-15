@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "ice 物料开发者工具",
   "main": "bin/ice-devtools.js",
   "bin": {
@@ -36,6 +36,9 @@
     "async": "^2.6.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-import": "^1.11.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-lib-import": "^0.1.0",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "consolidate": "^0.15.1",
