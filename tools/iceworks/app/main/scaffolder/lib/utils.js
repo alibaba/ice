@@ -41,7 +41,8 @@ function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, isNod
             });
           } else if (block.source && block.source.type == 'npm' && ( block.type != 'custom' ) ) {
             let version = block.source.version;
-            if (projectVersion === '0.x')  {
+            // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
+            if (projectVersion === '1.x')  {
               // 兼容没有'version-0.x'字段的情况
               version = block.source['version-0.x'] || block.source.version;
             }
@@ -132,7 +133,7 @@ function getPackageByPath(destDir) {
 /**
  * 1. 有 @icedesign/base 相关依赖 则返回 0.x
  * 2. 只有 @alifd/next 相关依赖 则返回 1.x
- * 3. 都没有 则返回 0.x
+ * 3. 都没有 则返回 1.x
  * @param {*} pkg 
  */
 function getProjectVersion(pkg) {
