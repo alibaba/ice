@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Balloon, Icon } from '@icedesign/base';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
-import FoundationSymbol from 'foundation-symbol';
+import { Balloon, Icon, Nav } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import IceImg from '@icedesign/img';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
-import './Header.scss';
+import styles from './Header.module.scss';
+
+
+const {SubNav, Item} = Nav;
 
 @withRouter
 export default class Header extends Component {
@@ -23,23 +25,23 @@ export default class Header extends Component {
     const { location = {} } = this.props;
     const { pathname } = location;
     return (
-      <div className="header-container">
-        <div className="header-content">
+      <div className={styles["header-container"]}>
+        <div className={styles["header-content"]}>
           <Logo isDark />
-          <div className="header-navbar">
-            <Menu
-              className="header-navbar-menu"
+          <div className={styles["header-navbar"]}>
+            <Nav
+              className={styles["header-navbar-menu"]}
               onClick={this.handleNavClick}
               selectedKeys={[pathname]}
               defaultSelectedKeys={[pathname]}
-              mode="horizontal"
+              direction="hoz"
             >
               {headerMenuConfig &&
                 headerMenuConfig.length > 0 &&
                 headerMenuConfig.map((nav, index) => {
                   if (nav.children && nav.children.length > 0) {
                     return (
-                      <SubMenu
+                      <SubNav
                         triggerType="click"
                         key={index}
                         title={
@@ -47,7 +49,7 @@ export default class Header extends Component {
                             {nav.icon ? (
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            <span>{nav.name}</span>
+                            <span className={styles.subNavText}>{nav.name}</span>
                           </span>
                         }
                       >
@@ -60,23 +62,23 @@ export default class Header extends Component {
 
                             linkProps.href = item.path;
                             return (
-                              <MenuItem key={idx}>
+                              <Item key={idx}>
                                 <a {...linkProps}>
                                   <span>{item.name}</span>
                                 </a>
-                              </MenuItem>
+                              </Item>
                             );
                           }
                           linkProps.to = item.path;
                           return (
-                            <MenuItem key={idx}>
+                            <Item key={idx}>
                               <Link {...linkProps}>
                                 <span>{item.name}</span>
                               </Link>
-                            </MenuItem>
+                            </Item>
                           );
                         })}
-                      </SubMenu>
+                      </SubNav>
                     );
                   }
                   const linkProps = {};
@@ -86,37 +88,37 @@ export default class Header extends Component {
                     }
                     linkProps.href = nav.path;
                     return (
-                      <MenuItem key={index}>
+                      <Item key={index}>
                         <a {...linkProps}>
                           <span>
                             {nav.icon ? (
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            {nav.name}
+                            <span className={styles.subNavText}>{nav.name}</span>
                           </span>
                         </a>
-                      </MenuItem>
+                      </Item>
                     );
                   }
                   linkProps.to = nav.path;
                   return (
-                    <MenuItem key={index}>
+                    <Item key={index}>
                       <Link {...linkProps}>
                         <span>
                           {nav.icon ? (
                             <FoundationSymbol size="small" type={nav.icon} />
                           ) : null}
-                          {nav.name}
+                          <span className={styles.subNavText}>{nav.name}</span>
                         </span>
                       </Link>
-                    </MenuItem>
+                    </Item>
                   );
                 })}
-            </Menu>
+            </Nav>
             <Balloon
               trigger={
                 <div
-                  className="ice-design-header-userpannel"
+                  className={styles["ice-design-header-userpannel"]}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -127,33 +129,33 @@ export default class Header extends Component {
                     height={40}
                     width={40}
                     src={require('./images/avatar.png')}
-                    className="user-avatar"
+                    className={styles["user-avatar"]}
                   />
-                  <div className="user-profile">
-                    <span className="user-name" style={{ fontSize: '13px' }}>
+                  <div className={styles["user-profile"]}>
+                    <span className={styles["user-name"]} style={{ fontSize: '13px' }}>
                       淘小宝
                     </span>
                     <br />
-                    <span className="user-department">技术部</span>
+                    <span className={styles["user-department"]}>技术部</span>
                   </div>
                   <Icon
                     type="arrow-down-filling"
                     size="xxs"
-                    className="icon-down"
+                    className={styles["icon-down"]}
                   />
                 </div>
               }
               closable={false}
-              className="user-profile-menu"
+              className={styles["user-profile-menu"]}
             >
               <ul>
-                <li className="user-profile-menu-item">
+                <li className={styles["user-profile-menu-item"]}>
                   <Link to="/">
                     <FoundationSymbol type="person" size="small" />
                     我的主页
                   </Link>
                 </li>
-                <li className="user-profile-menu-item">
+                <li className={styles["user-profile-menu-item"]}>
                   <Link to="/user/login">
                     <FoundationSymbol type="compass" size="small" />
                     退出

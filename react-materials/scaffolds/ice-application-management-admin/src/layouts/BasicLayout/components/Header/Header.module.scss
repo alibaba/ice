@@ -5,7 +5,16 @@
   z-index: 999;
   background: #fff;
   min-width: 1200px;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0 1px 4px transparentize($color-brand1-6, 0.9);
+
+  :global {
+    .next-nav {
+      box-shadow: none;
+    }
+    .next-menu-item-text {
+      color: $color-text1-3;
+    }
+  }
   .header-content {
     width: 100%;
     padding: 10px 20px;
@@ -17,14 +26,10 @@
   .header-navbar {
     display: flex;
     flex-direction: row;
-    .ice-menu {
-      .ice-menu-item {
-        font-size: 14px;
-        color: #666;
-      }
-    }
   }
-
+  .subNavText {
+    padding-left: 1em;
+  }
   .user-avatar {
     margin-right: 12px;
     border-radius: 4px;
@@ -32,7 +37,7 @@
 
   .user-department {
     font-size: 12px;
-    color: #666;
+    color: $color-text1-3;
   }
 
   .ice-design-header-userpannel {
@@ -42,7 +47,7 @@
       display: inline-block;
       text-align: center;
       margin-bottom: 2px;
-      color: #666;
+      color: $color-text1-3;
     }
     .icon-down {
       margin-left: 2px;
@@ -58,10 +63,10 @@
     height: 40px;
     line-height: 40px;
     font-size: 12px;
-    color: #666;
+    color: $color-text1-3;
     cursor: pointer;
     a:hover {
-      color: #2077ff;
+      color: $color-brand1-6;
     }
     i {
       margin-right: 5px;

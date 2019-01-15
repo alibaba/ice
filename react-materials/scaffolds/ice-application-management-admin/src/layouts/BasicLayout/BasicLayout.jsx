@@ -4,7 +4,7 @@ import MainRoutes from './MainRoutes';
 import Header from './components/Header';
 import Asdie from './components/Aside';
 import Footer from './components/Footer';
-import './BasicLayout.scss';
+import styles from './BasicLayout.module.scss';
 
 export default class BasicLayout extends Component {
   static propTypes = {};
@@ -13,15 +13,14 @@ export default class BasicLayout extends Component {
 
   render() {
     return (
-      <Layout style={{ minHeight: '100vh', background: '#eef5f7' }}>
+      <Layout className={styles.iceLayout}>
         <Header />
-
-        <Layout.Section>
-          <Layout.Aside width={200}>
+        <Layout.Section className={styles.iceLayoutSection}>
+          <Layout.Aside>
             <Asdie />
           </Layout.Aside>
 
-          <Layout.Main scrollable>
+          <Layout.Main  className={styles.iceLayoutMain} scrollable>
             <MainRoutes />
             <Footer />
           </Layout.Main>

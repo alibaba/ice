@@ -43,6 +43,6 @@ const styles = {
     color: '#333',
   },
   description: {
-    color: '#666',
+    color: '$color-text1-3',
   },
 };
