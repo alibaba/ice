@@ -1,6 +1,6 @@
 # ice-scripts Changelog
 
-## 2.0.7
+## 2.0.8
 - [bugfix] 修复依赖缺失问题
 
 ## 2.0.6
