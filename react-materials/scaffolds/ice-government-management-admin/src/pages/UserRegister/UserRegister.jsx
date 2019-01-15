@@ -1,13 +1,14 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Grid, Feedback } from '@icedesign/base';
+import { Input, Button, Grid, Message } from '@alifd/next';
+import Icon from '@icedesign/foundation-symbol';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
+
 
 const { Row, Col } = Grid;
 
@@ -66,7 +67,7 @@ class UserRegister extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('注册成功');
+      Message.success('注册成功');
       this.props.history.push('/user/login');
     });
   };
@@ -83,14 +84,16 @@ class UserRegister extends Component {
           >
             <div className="formItems">
               <Row className="formItem">
+
                 <Col className="formItemCol">
-                  <IceIcon type="person" size="small" className="inputIcon" />
+                  <Icon type="person" size="small" className="inputIcon" />
+
                   <IceFormBinder
                     name="name"
                     required
                     message="请输入正确的用户名"
                   >
-                    <Input size="large" placeholder="用户名" />
+                    <Input className="next-input-single"   placeholder="用户名" />
                   </IceFormBinder>
                 </Col>
                 <Col>
@@ -100,14 +103,14 @@ class UserRegister extends Component {
 
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <IceIcon type="mail" size="small" className="inputIcon" />
+                  <Icon type="mail" size="small" className="inputIcon" />
                   <IceFormBinder
                     type="email"
                     name="email"
                     required
                     message="请输入正确的邮箱"
                   >
-                    <Input size="large" maxLength={20} placeholder="邮箱" />
+                    <Input className="next-input-single" maxLength={20} placeholder="邮箱" />
                   </IceFormBinder>
                 </Col>
                 <Col>
@@ -117,15 +120,15 @@ class UserRegister extends Component {
 
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <IceIcon type="lock" size="small" className="inputIcon" />
+                  <Icon type="lock" size="small" className="inputIcon" />
                   <IceFormBinder
                     name="passwd"
                     required
                     validator={this.checkPasswd}
                   >
-                    <Input
+                    <Input className="next-input-single"
                       htmlType="password"
-                      size="large"
+
                       placeholder="至少8位密码"
                     />
                   </IceFormBinder>
@@ -137,7 +140,7 @@ class UserRegister extends Component {
 
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <IceIcon type="lock" size="small" className="inputIcon" />
+                  <Icon type="lock" size="small" className="inputIcon" />
                   <IceFormBinder
                     name="rePasswd"
                     required
@@ -150,9 +153,9 @@ class UserRegister extends Component {
                       )
                     }
                   >
-                    <Input
+                    <Input className="next-input-single"
                       htmlType="password"
-                      size="large"
+
                       placeholder="确认密码"
                     />
                   </IceFormBinder>

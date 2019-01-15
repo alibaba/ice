@@ -4,24 +4,22 @@ import Header from './components/Header';
 import Aside from './components/Aside';
 import Footer from './components/Footer';
 import MainRoutes from './MainRoutes';
-import './BasicLayout.scss';
+import style from './index.module.scss';
 
 export default class BasicLayout extends Component {
   render() {
     return (
       <Layout
         fixable
-        style={{ minHeight: '100vh' }}
-        className="ice-design-layout"
+        className={style.iceLayout}
       >
         <Layout.Section>
-          <Layout.Aside width={240}>
+          <Layout.Aside>
             <Aside />
           </Layout.Aside>
-
           <Layout.Main scrollable>
-            <Layout.Header>
-              <Header theme="dark" />
+            <Layout.Header type="secondary">
+              <Header />
             </Layout.Header>
             <div className="main-container">
               <MainRoutes />

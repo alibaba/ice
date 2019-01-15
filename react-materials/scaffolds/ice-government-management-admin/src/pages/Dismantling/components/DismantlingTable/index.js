@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table, Pagination, Feedback } from '@icedesign/base';
+import { Button, Table, Pagination, Message } from '@alifd/next';
 
 const mockData = [
   {
@@ -81,7 +81,7 @@ export default class DismantlingTable extends Component {
   };
 
   handleClick = (text) => {
-    Feedback.toast.success(`暂不支持${text}`);
+    Message.success(`暂不支持${text}`);
   };
 
   render() {
@@ -101,7 +101,6 @@ export default class DismantlingTable extends Component {
             return (
               <Button
                 key={index}
-                size="large"
                 style={styles.button}
                 onClick={() => this.handleClick(text)}
               >
@@ -130,7 +129,7 @@ export default class DismantlingTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-            size="large"
+
           />
         </div>
       </div>

@@ -26,7 +26,7 @@ const asideMenuConfig = [
   {
     name: '工作台',
     path: '/dashboard',
-    icon: 'home2',
+    icon: 'home',
   },
   {
     name: '拆预收案',

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/government-management-admin",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "该模板内置了丰富的区块，适用于政府类风格的管理类系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/government-management-admin@latest/build/index.html",
   "files": [
@@ -14,18 +14,19 @@
     ".eslintrc"
   ],
   "dependencies": {
+    "@alifd/next": "^1.x",
+    "@alifd/theme-1": "^0.0.6",
     "@antv/data-set": "^0.9.6",
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.4",
-    "@icedesign/form-binder": "^0.1.7",
-    "@icedesign/icon": "^0.1.1",
-    "@icedesign/img": "^0.1.0",
-    "@icedesign/layout": "^0.1.0",
-    "@icedesign/menu": "^0.1.0",
-    "@icedesign/skin": "^0.1.0",
+    "@icedesign/container": "^1.x",
+    "@icedesign/form-binder": "^1.x",
+    "@icedesign/foundation-symbol": "^1.0.0",
+    "@icedesign/img": "^1.x",
+    "@icedesign/label": "^1.x",
+    "@icedesign/layout": "^1.x",
+    "@icedesign/theme": "^0.1.0",
     "bizcharts": "^3.2.4",
     "classnames": "^2.2.5",
-    "foundation-symbol": "^0.1.0",
+    "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -51,15 +52,12 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@alifd/theme-1",
     "entry": "src/index.js",
     "localization": false,
     "output": {
       "publicPath": "./"
     }
-  },
-  "themeConfig": {
-    "primaryColor": "#447eff"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
