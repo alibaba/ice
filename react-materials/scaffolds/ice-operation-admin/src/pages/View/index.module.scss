@@ -1,0 +1,28 @@
+.content {
+  padding: 20px;
+  background: $color-white;
+  border-radius: 6px;
+}
+.headTitle {
+  color: $color-text1-4;
+  height: 16px;
+  margin: 0 0 20px;
+  font-size: $font-size-body-2;
+  line-height: 16px;
+  border-left: 4px solid $color-brand1-6;
+  padding-left: 5px;
+}
+.section {
+  margin-bottom: 40px;
+}
+
+.Breadcrumb {
+  margin: 0 20px 20px;
+  height: 16px;
+  line-height: 16px;
+  :global {
+    .next-breadcrumb-text {
+      font-size: $font-size-body-2;
+    }
+  }
+}

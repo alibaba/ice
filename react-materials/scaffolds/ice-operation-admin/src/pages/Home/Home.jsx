@@ -8,7 +8,9 @@ import {
   Pagination,
   Icon,
   Breadcrumb,
-} from '@icedesign/base';
+} from '@alifd/next';
+
+import styles from './index.module.scss';
 
 const { Column } = Table;
 const PAGESIZE = 10;
@@ -102,23 +104,23 @@ class Home extends Component {
   };
 
   renderStatus = () => {
-    const splitSpan = <span style={styles.split}>|</span>;
+    const splitSpan = <span className={styles.split}>|</span>;
     const view = (
-      <Link to="view" style={styles.action}>
+      <Link to="view" className={styles.action}>
         查看
       </Link>
     );
     const deleteItem = (
       <a
         href="javascrpt:void(0)"
-        style={styles.action}
+        className={styles.action}
         onClick={this.onClickDelete}
       >
         删除
       </a>
     );
     const edit = (
-      <Link to="edit" style={styles.action}>
+      <Link to="edit" className={styles.action}>
         编辑
       </Link>
     );
@@ -136,7 +138,7 @@ class Home extends Component {
   renderOnlineStatus = (value) => {
     return (
       <span style={{ color: '#ee6f6d', fontWeight: 'bold' }}>
-        <i style={styles.dot} />
+        <i className={styles.dot} />
         {value}
       </span>
     );
@@ -152,16 +154,14 @@ class Home extends Component {
 
   render() {
     const { value, isTableLoading, total, current, dataSource } = this.state;
-
     return (
-      <div style={styles.container}>
-        <Breadcrumb>
+      <div className={styles.container}>
+        <Breadcrumb className={styles.Breadcrumb}>
           <Breadcrumb.Item>型号管理</Breadcrumb.Item>
         </Breadcrumb>
-        <div style={styles.content}>
-          <div style={styles.head}>
+        <div className={styles.content}>
+          <div className={styles.head}>
             <Search
-              inputWidth={300}
               placeholder="输入型号／类型／ID"
               value={value}
               onChange={this.onInputChange}
@@ -179,7 +179,7 @@ class Home extends Component {
             hasBorder={false}
             isZebra={false}
             dataSource={dataSource}
-            isLoading={isTableLoading}
+            loading={isTableLoading}
             className="rhino-table"
           >
             <Column title="DeviceID" dataIndex="deviceId" />
@@ -204,7 +204,7 @@ class Home extends Component {
             <Column title="操作" cell={this.renderStatus} width={200} />
           </Table>
           <Pagination
-            style={styles.pagination}
+            className={styles.pagination}
             current={current}
             onChange={this.onPaginationChange}
             total={total}
@@ -215,35 +215,5 @@ class Home extends Component {
     );
   }
 }
-
-const styles = {
-  content: {
-    padding: '20px',
-    background: '#fff',
-  },
-  head: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '20px',
-  },
-  pagination: {
-    paddingTop: '20px',
-    textAlign: 'right',
-  },
-  split: {
-    color: '#999',
-  },
-  action: {
-    margin: '0 8px',
-  },
-  dot: {
-    width: '8px',
-    height: '8px',
-    background: '#ee6f6d',
-    borderRadius: '50%',
-    display: 'inline-block',
-    marginRight: '4px',
-  },
-};
 
 export default Home;

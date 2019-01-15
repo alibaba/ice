@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Progress, Grid } from '@icedesign/base';
+import { Progress, Grid } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -25,7 +25,7 @@ export default class CircleProgress extends Component {
         <Col xxs="12" s="12" l="8">
           <IceContainer>
             <div style={styles.item}>
-              <Progress percent={50} shape="circle" size="large" />
+              <Progress percent={50} shape="circle" size="large"/>
               <h6 style={styles.title}>设备 B</h6>
             </div>
           </IceContainer>
