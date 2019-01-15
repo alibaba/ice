@@ -1,0 +1,18 @@
+.button {
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-right: 8px;
+}
+.detailButton {
+  composes: button;
+  background: $color-success-3;
+}
+.borrowButton {
+  composes: button;
+  background: $color-notice-3;
+}

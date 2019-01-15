@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import TableFilter from './TableFilter';
 import CustomTable from './CustomTable';
+import styles from './LibTable.module.scss';
 
 // MOCK 数据，实际业务按需进行替换
 const getData = () => {
@@ -68,11 +69,11 @@ export default class LibTable extends Component {
   };
 
   handleBorrowClick = () => {
-    Feedback.toast.success('借阅成功');
+    Message.success('借阅成功');
   };
 
   handleDetailClick = () => {
-    Feedback.toast.prompt('暂无详细信息');
+    Message.prompt('暂无详细信息');
   };
 
   handleFilter = () => {
@@ -83,13 +84,13 @@ export default class LibTable extends Component {
     return (
       <div>
         <a
-          style={{ ...styles.button, ...styles.detailButton }}
+          className={styles.detailButton}
           onClick={this.handleDetailClick}
         >
           查看
         </a>
         <a
-          style={{ ...styles.button, ...styles.borrowButton }}
+          className={styles.borrowButton}
           onClick={this.handleBorrowClick}
         >
           借阅
@@ -147,7 +148,7 @@ export default class LibTable extends Component {
     ];
     const config = [
       {
-        label: '图书名称：',
+        label: '图书名称',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -158,7 +159,7 @@ export default class LibTable extends Component {
         },
       },
       {
-        label: '作者名称：',
+        label: '作者名称',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -169,7 +170,7 @@ export default class LibTable extends Component {
         },
       },
       {
-        label: 'ISBN 号：',
+        label: 'ISBN 号',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -180,7 +181,7 @@ export default class LibTable extends Component {
         },
       },
       {
-        label: '图书分类：',
+        label: '图书分类',
         component: 'Input',
         componnetProps: {
           placeholder: '请选择',
@@ -209,7 +210,7 @@ export default class LibTable extends Component {
         },
       },
       {
-        label: '出版社：',
+        label: '出版社',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -234,23 +235,3 @@ export default class LibTable extends Component {
     );
   }
 }
-
-const styles = {
-  button: {
-    display: 'inline-block',
-    padding: '6px 12px',
-    fontSize: '12px',
-    borderRadius: '4px',
-    color: '#fff',
-    textDecoration: 'none',
-    cursor: 'pointer',
-  },
-  detailButton: {
-    background: '#41cac0',
-    marginRight: '8px',
-  },
-  borrowButton: {
-    background: '#517dff',
-    marginRight: '8px',
-  },
-};

@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Grid, Input } from '@icedesign/base';
+import { Grid, Input } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -38,24 +38,24 @@ export default class BorrowTableHead extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>图书名称：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="bookName" size="large" />
+              <IceFormBinder name="bookName" triggerType="onBlur">
+                <Input placeholder="请输入"  />
               </IceFormBinder>
             </div>
           </Col>
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>借阅编号：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="number" size="large" />
+              <IceFormBinder name="number" triggerType="onBlur">
+                <Input placeholder="请输入"  />
               </IceFormBinder>
             </div>
           </Col>
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>ISBN 号：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="isbn" size="large" />
+              <IceFormBinder name="isbn" triggerType="onBlur">
+                <Input placeholder="请输入" />
               </IceFormBinder>
             </div>
           </Col>

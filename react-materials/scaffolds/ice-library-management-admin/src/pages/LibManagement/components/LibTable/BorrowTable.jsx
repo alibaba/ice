@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import CustomTable from './CustomTable';
 import TableFilter from './TableFilter';
 
@@ -67,11 +67,11 @@ export default class BorrowTable extends Component {
   };
 
   handleBorrowClick = () => {
-    Feedback.toast.success('借阅成功');
+    Message.success('借阅成功');
   };
 
   handleDetailClick = () => {
-    Feedback.toast.prompt('暂无详细信息');
+    Message.prompt('暂无详细信息');
   };
 
   handleFilter = () => {
@@ -86,7 +86,7 @@ export default class BorrowTable extends Component {
     const { isLoading, dataSource } = this.state;
     const config = [
       {
-        label: '图书名称：',
+        label: '图书名称',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -97,7 +97,7 @@ export default class BorrowTable extends Component {
         },
       },
       {
-        label: 'ISBN 号：',
+        label: 'ISBN 号',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
@@ -108,7 +108,7 @@ export default class BorrowTable extends Component {
         },
       },
       {
-        label: '出版社：',
+        label: '出版社',
         component: 'Input',
         componnetProps: {
           placeholder: '请输入',
