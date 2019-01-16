@@ -32,44 +32,35 @@ const asideMenuConfig = [
     icon: 'home',
     children: [
       {
-        name: '平台概况',
-        path: '/',
-      },
-      {
-        name: '数据监控',
-        path: '/monitor',
+        name: '数据概况',
+        path: '/dashboard',
       },
     ],
   },
   {
-    name: '客户信息',
-    path: '/message',
-    icon: 'yonghu',
+    name: '邀请概览',
+    path: '/invite',
+    icon: 'cascades',
     children: [
-      {
-        name: '评论信息',
-        path: '/message/comment',
-      },
-      {
-        name: '客户反馈',
-        path: '/message/feedback',
-      },
+      { name: '邀请列表', path: '/invite/list' },
+      { name: '评测团队', path: '/invite/team' },
+      { name: '新增成员', path: '/invite/add' },
     ],
   },
   {
-    name: '通用设置',
-    path: '/setting',
+    name: '邀评设置',
+    path: '/topic',
     icon: 'shezhi',
     children: [
-      {
-        name: '基础设置',
-        path: '/setting/basic',
-      },
-      {
-        name: '菜单设置',
-        path: '/setting/navigation',
-      },
+      { name: '话题列表', path: '/topic/list' },
+      { name: '新增话题', path: '/topic/add' },
     ],
+  },
+  {
+    name: '基本设置',
+    path: '/setting',
+    icon: 'yonghu',
+    children: [{ name: '个人设置', path: '/setting/my' }],
   },
 ];
 
