@@ -6,6 +6,7 @@ const request = require('request');
 const tar = require('tar');
 const upperCamelCase = require('uppercamelcase');
 const zlib = require('zlib');
+const pathExists = require('path-exists');
 
 const config = require('../../config');
 
@@ -29,6 +30,9 @@ function downloadBlocksToPage({ clientSrcPath, blocks, pageName }) {
       return Promise.all(
         filesList.map((_, idx) => {
           const block = blocks[idx];
+          // 根据项目版本下载依赖
+          const pkg = getPackageByPath(destDir);
+          const projectVersion = getProjectVersion(pkg);
           // 兼容旧版物料源
           if (block.npm && block.version && ( block.type != 'custom' ) ) {
             return getDependenciesFromNpm({
@@ -36,9 +40,15 @@ function downloadBlocksToPage({ clientSrcPath, blocks, pageName }) {
               version: block.version,
             });
           } else if (block.source && block.source.type == 'npm' && ( block.type != 'custom' ) ) {
+            let version = block.source.version;
+            // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
+            if (projectVersion === '1.x')  {
+              // 兼容没有'version-0.x'字段的情况
+              version = block.source['version-0.x'] || block.source.version;
+            }
             return getDependenciesFromNpm({
+              version,
               npm: block.source.npm,
-              version: block.source.version,
               registry: block.source.registry,
             });
           } else if (block.type == 'custom') {
@@ -80,6 +90,11 @@ function downloadBlockToPage({ clientSrcPath, block, pageName }) {
       name: block.name,
     },
   });
+
+  // 根据项目版本下载依赖
+  const pkg = getPackageByPath(destDir);
+  const projectVersion = getProjectVersion(pkg);
+
   if(block.type == 'custom'){
     return extractCustomBlock(
       block,
@@ -90,7 +105,7 @@ function downloadBlockToPage({ clientSrcPath, block, pageName }) {
     );
   }
   return materialUtils
-    .getTarballURLBySource(block.source)
+    .getTarballURLBySource(block.source, projectVersion)
     .then((tarballURL) => {
       return extractBlock(
         path.join(
@@ -101,6 +116,29 @@ function downloadBlockToPage({ clientSrcPath, block, pageName }) {
         clientSrcPath
       );
     });
+}
+
+function getPackageByPath(destDir) {
+  const pkgPath = path.join(destDir, 'package.json');
+  if (pathExists.sync(pkgPath)) {
+    try {
+      const packageText = fs.readFileSync(pkgPath);
+      return JSON.parse(packageText.toString());
+    } catch (e) {}
+  }
+}
+
+/**
+ * 1. 有 @icedesign/base 相关依赖 则返回 0.x
+ * 2. 只有 @alifd/next 相关依赖 则返回 1.x
+ * 3. 都没有 则返回 1.x
+ * @param {*} pkg 
+ */
+function getProjectVersion(pkg) {
+  const dependencies = pkg.dependencies || {};
+  const hasIceDesignBase = dependencies['@icedesign/base'];
+  return hasIceDesignBase ? '0.x' : '1.x';
+
 }
 
 function extractTarball(tarballURL, destDir) {

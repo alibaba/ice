@@ -204,7 +204,6 @@ class PageConfig extends Component {
               clientSrcPath: currentProject.clientSrcPath,
               layout: layout,
               blocks: blocks,
-              commonBlock: true,
               excludeLayout: applicationType == 'react', // hack react 的模板不生成 layout
               // hack vue
               libary: this.props.libary,

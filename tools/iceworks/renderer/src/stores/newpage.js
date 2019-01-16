@@ -81,7 +81,7 @@ class NewPage {
     this.loading = true;
     const scanPath = destDir;
     Promise.all([
-      scanLayout({ targetPath: scanPath, type }),
+      scanLayout({ targetPath: scanPath }),
       scanPages(scanPath),
     ])
       .then(this.fetchSuccess)

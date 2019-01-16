@@ -250,7 +250,6 @@ class CreatePage extends Component {
           layout,
           blocks,
           libary: this.props.projects.currentProject.getLibraryType(),
-          commonBlock: true,
           interpreter: ({ type, message, data }, next) => {
             switch (type) {
               case 'FILE_CREATED':
@@ -262,7 +261,7 @@ class CreatePage extends Component {
                 log.debug('ADD_DEPENDENCIES', dependencies);
                 npm
                   .run(
-                    ['install', '--no-package-lock'].concat(
+                    ['install', '--save', '--no-package-lock'].concat(
                       dependenciesFormat(dependencies)
                     ),
                     { cwd: projects.currentProject.clientPath }

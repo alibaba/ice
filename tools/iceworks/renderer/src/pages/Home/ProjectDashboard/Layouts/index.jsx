@@ -103,12 +103,9 @@ export default class LayoutBuilder extends Component {
     const { currentProject } = projects;
 
     if (currentProject && currentProject.fullPath) {
-      const type = currentProject.getLibraryType();
       const targetPath = currentProject.clientSrcPath;
       scanLayout({
-        targetPath,
-        type,
-        withRemote: false,
+        targetPath
       }).then((layouts) => {
         this.setState({
           localLayouts: layouts,

@@ -15,7 +15,7 @@ import { getLayouts } from './materials';
 const defaultImage =
   'https://gw.alicdn.com/tfs/TB1Qby8ex9YBuNjy0FfXXXIsVXa-976-974.png';
 
-async function scanLayout({ targetPath, type, withRemote = false }) {
+async function scanLayout({ targetPath }) {
   const layoutsPath = path.join(targetPath, 'layouts');
 
   let localCustomLayoutNames = [];
@@ -32,55 +32,7 @@ async function scanLayout({ targetPath, type, withRemote = false }) {
       });
   }
 
-  // 远端数据
-  let layoutsFormDatabase = await getLayouts(type);
-
-  const remoteLayoutsNameMap = {};
-
-  if (Array.isArray(layoutsFormDatabase)) {
-    layoutsFormDatabase.forEach((materialLayouts) => {
-      if (Array.isArray(materialLayouts.data)) {
-        materialLayouts.data.forEach((layout) => {
-          const layoutClassName = uppercamelcase(layout.name);
-          if (remoteLayoutsNameMap[layoutClassName]) {
-            // 如果原始数据丢失, 补充上
-            Object.keys(layout).forEach((key) => {
-              if (!remoteLayoutsNameMap[layoutClassName][key]) {
-                remoteLayoutsNameMap[layoutClassName][key] = layout[key];
-              }
-            });
-          } else {
-            remoteLayoutsNameMap[layoutClassName] = layout;
-          }
-        });
-      }
-    });
-  }
-
-  let outputLayoutNameList = Object.keys(remoteLayoutsNameMap);
-
-  // 仅显示本地 Layout 模式
-  if (!withRemote) {
-    outputLayoutNameList = outputLayoutNameList.filter((layoutName) => {
-      return localCustomLayoutNames.includes(layoutName);
-    });
-  }
-
-  localCustomLayoutNames.forEach((name) => {
-    if (!outputLayoutNameList.includes(name)) {
-      outputLayoutNameList.push(name);
-    }
-  });
-
-  return outputLayoutNameList.map((layoutName) => {
-    if (remoteLayoutsNameMap[layoutName]) {
-      const localLayout = remoteLayoutsNameMap[layoutName];
-      if (localCustomLayoutNames.includes(layoutName)) {
-        localLayout.localization = true;
-        localLayout.folderName = layoutName;
-      }
-      return localLayout;
-    }
+  return localCustomLayoutNames.map((layoutName) => {
 
     const layoutPath = path.join(layoutsPath, layoutName);
     const readmePath = path.join(layoutPath, 'README.md');
