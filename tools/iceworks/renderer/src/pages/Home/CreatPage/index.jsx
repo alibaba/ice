@@ -249,7 +249,6 @@ class CreatePage extends Component {
           layout,
           blocks,
           libary: this.props.projects.currentProject.getLibraryType(),
-          commonBlock: true,
           isNodeProject: currentProject.isNodeProject,
           interpreter: ({ type, message, data }, next) => {
             switch (type) {
@@ -262,7 +261,7 @@ class CreatePage extends Component {
                 log.debug('ADD_DEPENDENCIES', dependencies);
                 npm
                   .run(
-                    ['install', '--no-package-lock'].concat(
+                    ['install', '--save', '--no-package-lock'].concat(
                       dependenciesFormat(dependencies)
                     ),
                     { cwd: projects.currentProject.fullPath }
