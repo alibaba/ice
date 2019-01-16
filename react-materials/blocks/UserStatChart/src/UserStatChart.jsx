@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend, Coord, Label } from 'bizcharts';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;

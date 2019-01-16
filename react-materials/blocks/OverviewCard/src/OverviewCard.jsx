@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid, Icon } from '@alifd/next';
 import IceContainer from '@icedesign/container';
-import FoundationSymbol from 'foundation-symbol';
 
 const { Row, Col } = Grid;
 
@@ -23,9 +22,9 @@ export default class OverviewCard extends Component {
         <Col xxs="24" l="12">
           <IceContainer>
             <div style={styles.iconWrap}>
-              <FoundationSymbol
+              <Icon
                 size="large"
-                type="copy"
+                type="elipsis"
                 style={{ ...styles.icon, left: '0' }}
               />
             </div>
@@ -48,9 +47,9 @@ export default class OverviewCard extends Component {
         <Col xxs="24" l="12">
           <IceContainer>
             <div style={styles.iconWrap}>
-              <FoundationSymbol
+              <Icon
                 size="large"
-                type="fans"
+                type="account"
                 style={{ ...styles.icon, right: '0' }}
               />
             </div>

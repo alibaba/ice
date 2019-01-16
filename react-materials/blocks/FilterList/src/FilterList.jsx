@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Search, Grid } from '@icedesign/base';
+import { Button, Search, Grid } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import SingleItem from './SingleItem';
 import './FilterList.scss';

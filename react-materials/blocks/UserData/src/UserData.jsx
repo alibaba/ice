@@ -1,7 +1,7 @@
 /* eslint global-require: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Button, Icon } from '@icedesign/base';
+import { Grid, Button, Icon } from '@alifd/next';
 
 const { Row, Col } = Grid;
 

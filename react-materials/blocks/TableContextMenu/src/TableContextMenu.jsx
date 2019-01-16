@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from '@icedesign/base';
+import { Table } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import CustomContextMenu from './CustomContextMenu';

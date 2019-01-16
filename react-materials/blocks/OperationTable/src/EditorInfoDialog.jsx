@@ -1,6 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 import React, { Component } from 'react';
-import { Dialog, Input, Select, Grid } from '@icedesign/base';
+import { Dialog, Input, Select, Grid } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,

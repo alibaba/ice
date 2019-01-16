@@ -1,7 +1,7 @@
 /* eslint react/jsx-no-target-blank: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Balloon, Grid, Icon } from '@icedesign/base';
+import { Balloon, Grid, Icon } from '@alifd/next';
 
 const { Row, Col } = Grid;
 

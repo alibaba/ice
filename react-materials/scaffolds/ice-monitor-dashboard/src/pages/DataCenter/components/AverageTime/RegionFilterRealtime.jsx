@@ -1,3 +1,4 @@
+/* eslint no-plusplus: 0 */
 import React from 'react';
 import { Chart, Axis, Tooltip, Geom, Legend, Guide } from 'bizcharts';
 
@@ -49,7 +50,7 @@ class RegionFilterRealtime extends React.Component {
       const value1 = parseInt(30 + Math.random() * 50, 10);
       const direction = Math.random() > 0.5 ? 1 : -1;
       const value2 = parseInt(value1 + Math.random() * 20 * direction, 10);
-      const newData = this.state.data.map((rec) => rec);
+      const newData = this.state.data.map(rec => rec);
 
       if (newData.length >= 200) {
         newData.shift();

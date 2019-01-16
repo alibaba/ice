@@ -4,7 +4,7 @@
 
 展示详情信息的表格
 
-![截图](https://img.alicdn.com/tfs/TB1hplfjr_I8KJjy1XaXXbsxpXa-1886-700.png)
+![截图](https://unpkg.com/@icedesign/detail-table-block/screenshot.png)
 
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 
 const brandlist = [
   require('./images/TB14LkieuSBuNjy1XcXXcYjFXa-226-78.png'),

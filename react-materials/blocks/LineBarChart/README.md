@@ -4,4 +4,4 @@
 
 折线图和柱状图组合
 
-![截图](https://img.alicdn.com/tfs/TB1nRRJhmzqK1RjSZFpXXakSXXa-2852-960.png)
+![截图](https://unpkg.com/@icedesign/line-bar-chart-block/screenshot.png)

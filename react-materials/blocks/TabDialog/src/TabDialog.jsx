@@ -1,9 +1,9 @@
 /* eslint no-unused-expressions: 0 */
 import React, { Component } from 'react';
-import { Dialog, Tab, Table, Button } from '@icedesign/base';
+import { Dialog, Tab, Table, Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 const mockData = [
   {
@@ -87,7 +87,7 @@ export default class TabDialog extends Component {
               contentStyle={styles.tabContentWrapper}
               onChange={this.onTabChange}
             >
-              <TabPane tab="选择文章" key="post">
+              <TabPane title="选择文章" key="post">
                 <div style={styles.tabContent}>
                   <Table
                     dataSource={mockData}
@@ -100,7 +100,7 @@ export default class TabDialog extends Component {
                   </Table>
                 </div>
               </TabPane>
-              <TabPane tab="选择视频" key="video">
+              <TabPane title="选择视频" key="video">
                 <div style={styles.tabContent}>
                   <Table
                     dataSource={mockData}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Checkbox, Button } from '@icedesign/base';
+import { Checkbox, Button } from '@alifd/next';
 
 export default class TermsInfo extends Component {
   static displayName = 'TermsInfo';

@@ -10,7 +10,7 @@
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "author": {
     "name": "ICE Team",
@@ -26,15 +26,14 @@
     "ice-component"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
+    "@icedesign/base": "^0.2.0",
     "@icedesign/skin": "^0.1.9",
     "copy-to-clipboard": "^3.0.8",
-    "react-copy-to-clipboard": "^5.0.1",
-    "ice-devtools": "^1.1.14-beta.2"
+    "react-copy-to-clipboard": "^5.0.1"
   },
   "peerDependencies": {
     "react": "^16.5.0",

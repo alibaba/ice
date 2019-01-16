@@ -4,4 +4,4 @@
 
 适用于地址的信息展示
 
-![截图](https://img.alicdn.com/tfs/TB1eO4gupkoBKNjSZFkXXb4tFXa-2528-1448.png)
+![截图](https://unpkg.com/@icedesign/address-info-block/screenshot.png)

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Tab, DatePicker } from '@icedesign/base';
+import { Tab, DatePicker } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import Track from './Track';
 import Scheme from './Scheme';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 const tabs = [
   { tab: '埋点维度', key: 'track', content: <Track /> },
@@ -40,11 +40,11 @@ export default class TabFilterTable extends Component {
       <IceContainer style={styles.container}>
         <Tab
           onChange={handleChange}
-          tabBarExtraContent={this.renderTabExtraContent()}
+          extra={this.renderTabExtraContent()}
         >
           {tabs.map((item) => {
             return (
-              <TabPane key={item.key} tab={item.tab} onClick={handleClick}>
+              <TabPane key={item.key} title={item.tab} onClick={handleClick}>
                 {item.content}
               </TabPane>
             );

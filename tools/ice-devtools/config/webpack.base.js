@@ -136,7 +136,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .rule(/\.(png|jpg|jpeg|gif)$/i)
     .test(/\.(png|jpg|jpeg|gif)$/i)
     .use('url-loader')
-    .loader(URL_LOADER)
+    .loader(URL_LOADER) // default fallback is 'file-loader'
     .options({
       limit: URL_LOADER_LIMIT,
       name: 'images/[hash].[ext]',

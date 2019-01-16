@@ -9,7 +9,7 @@ import {
   Button,
   Checkbox,
   Grid,
-} from '@icedesign/base';
+} from '@alifd/next';
 
 const { Row, Col } = Grid;
 const CheckboxGroup = Checkbox.Group;

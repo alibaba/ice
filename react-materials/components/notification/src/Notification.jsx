@@ -4,6 +4,9 @@ import React from 'react';
 import RCNotification from 'rc-notification';
 import { Icon } from '@icedesign/base';
 
+/**
+ * List容器组件
+ */
 let defaultDuration = 4.5;
 let defaultTop = 24;
 let defaultBottom = 24;

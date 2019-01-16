@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import 'codemirror/lib/codemirror.css';
 
 require('codemirror/mode/javascript/javascript');

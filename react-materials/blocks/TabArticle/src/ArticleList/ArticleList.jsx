@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Pagination, Button } from '@icedesign/base';
+import { Pagination, Button } from '@alifd/next';
 import './ArticleList.scss';
 
 export default class ArticleList extends Component {

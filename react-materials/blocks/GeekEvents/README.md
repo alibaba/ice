@@ -4,4 +4,4 @@
 
 适用于活动展示
 
-![截图](https://img.alicdn.com/tfs/TB1jExEuBjTBKNjSZFNXXasFXXa-2828-1526.png)
+![截图](https://unpkg.com/@icedesign/geek-events-block/screenshot.png)

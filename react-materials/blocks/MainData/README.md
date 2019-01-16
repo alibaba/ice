@@ -4,4 +4,4 @@
 
 展示核心数据
 
-![截图](https://img.alicdn.com/tfs/TB1tmdQiAKWBuNjy1zjXXcOypXa-2058-426.png)
+![截图](https://unpkg.com/@icedesign/main-data-block/screenshot.png)

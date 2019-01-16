@@ -5,12 +5,27 @@
 const asideMenuConfig = [
   {
     name: '业务概览',
-    path: '/',
+    path: '/dashboard',
     icon: 'home2',
   },
   {
     name: '数据中心',
     path: '/datacenter',
+    icon: 'cascades',
+  },
+  {
+    name: '流量分析',
+    path: '/traffic/statistics',
+    icon: 'cascades',
+  },
+  {
+    name: '用户分析',
+    path: '/user/statistics',
+    icon: 'cascades',
+  },
+  {
+    name: '留存与活跃',
+    path: '/user/activities',
     icon: 'cascades',
   },
   {
@@ -22,6 +37,4 @@ const asideMenuConfig = [
   },
 ];
 
-const headerMenuConfig = asideMenuConfig;
-
-export default headerMenuConfig;
+export default asideMenuConfig;

@@ -4,4 +4,4 @@
 
 附带操作按钮的表格
 
-![截图](https://img.alicdn.com/tfs/TB1X4awcntYBeNjy1XdXXXXyVXa-2326-1476.png)
+![截图](https://unpkg.com/@icedesign/operation-table-block/screenshot.png)

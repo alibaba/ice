@@ -4,4 +4,4 @@
 
 适用于产品简介，可以折叠/展开的内容区域
 
-![截图](https://img.alicdn.com/tfs/TB1U7JgIuSSBuNjy0FlXXbBpVXa-2470-592.png)
+![截图](https://unpkg.com/@icedesign/custom-accordion-block/screenshot.png)
