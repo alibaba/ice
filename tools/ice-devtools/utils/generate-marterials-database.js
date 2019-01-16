@@ -23,6 +23,18 @@ function generatePartciple(payload, source) {
   }
 }
 
+function filterDeps(deps) {
+  return deps.filter(function(moduleName) {
+    return (
+      !/^\./.test(moduleName) &&
+      // 基础组件
+      (/(@icedesign\/base)[$\/]lib/.test(moduleName) ||
+        // 业务组件
+        /^(@icedesign\/)\w+/.test(moduleName))
+    );
+  });
+}
+
 /**
  * 生成 blocks 信息列表
  * @param {*} files
@@ -69,7 +81,7 @@ function generateBlocks(files, SPACE, type, done) {
 
     if (fs.existsSync(indexPoint)) {
       const componentDeps = depAnalyze(indexPoint);
-      const useComponents = componentDeps.map((mod) => {
+      const useComponents = filterDeps(componentDeps).map((mod) => {
         let basePackage = '';
         let className = '';
         if (mod.startsWith('@icedesign/base')) {

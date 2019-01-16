@@ -4,6 +4,18 @@ const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
 const iceDepAnalyzer = require('./dep-analyze');
+const internalLibrary = require('./internal-library');
+
+function getPkgJSON(cwd, module) {
+  const jsonPath = path.join(cwd, 'node_modules', module, './package.json');
+
+  if (!fs.existsSync(jsonPath)) {
+    return {};
+  }
+
+  const jsonString = fs.readFileSync(jsonPath, 'utf-8');
+  return JSON.parse(jsonString);
+}
 
 module.exports = class ComponentStyleGenerator {
   constructor(options) {
@@ -18,13 +30,39 @@ module.exports = class ComponentStyleGenerator {
     return mkdirp.sync(p, opts, made);
   }
 
+  filterDeps(deps) {
+    return deps.filter((dep) => {
+      // 相对路径
+      if (/^\./.test(dep)) {
+        return false;
+      }
+      
+      const isInteranlLibrary = internalLibrary.some((library) => {
+        return library.test(dep);
+      });
+
+      // 官方组件
+      if (isInteranlLibrary) {
+        return true;
+      }
+
+      // 在 package.json 中标明为组件
+      const pkgJSON = getPkgJSON(this.cwd, dep);
+      if (pkgJSON && pkgJSON.componentConfig) {
+        return true;
+      }
+    });
+  }
+
   compileDeps() {
     if (this.deps) {
       return this.deps;
     } else {
-      this.deps = iceDepAnalyzer(
+      const deps = iceDepAnalyzer(
         require.resolve(path.join(this.cwd, 'src/index'))
       );
+
+      this.deps = this.filterDeps(deps);
       return this.deps;
     }
   }
