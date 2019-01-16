@@ -23,7 +23,6 @@ createICEApp
         description: '堆叠区域图',
       },
     ],
-    commonBlock: true,
     interpreter: ({ type, message, data }, callback) => {
       console.log(message);
       switch (type) {
