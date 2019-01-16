@@ -58,19 +58,13 @@ export default class Header extends Component {
           >
             <ul>
               <li className="user-profile-menu-item">
-                <Link to="/">
-                  <FoundationSymbol type="person" size="small" />
-                  我的主页
-                </Link>
-              </li>
-              <li className="user-profile-menu-item">
-                <Link to="/">
+                <Link to="/setting">
                   <FoundationSymbol type="repair" size="small" />
                   设置
                 </Link>
               </li>
               <li className="user-profile-menu-item">
-                <Link to="/">
+                <Link to="/account/login">
                   <FoundationSymbol type="compass" size="small" />
                   退出
                 </Link>

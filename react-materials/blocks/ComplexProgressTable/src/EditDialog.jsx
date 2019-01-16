@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, Grid, Input, Radio, Range } from '@icedesign/base';
+import { Dialog, Grid, Input, Radio, Range } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,

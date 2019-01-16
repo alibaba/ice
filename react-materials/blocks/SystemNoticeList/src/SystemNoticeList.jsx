@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Pagination } from '@icedesign/base';
+import { Pagination } from '@alifd/next';
 
 const dataSource = [
   {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
 import { Grid } from '@icedesign/base';
+import { Link } from 'react-router-dom';
 import RankList from './RankList';
 
 const { Row, Col } = Grid;
@@ -34,9 +35,9 @@ export default class Card extends Component {
                   );
                 })}
               </div>
-              <a href={link.href} style={styles.link}>
+              <Link to={link.to} style={styles.link}>
                 {link.text}
-              </a>
+              </Link>
             </div>
             {this.props.content}
           </Col>
@@ -77,16 +78,16 @@ const styles = {
     marginRight: '15px',
   },
   itemLabel: {
-    color: '#9B9B9B',
+    color: '#999',
     marginRight: '6px',
   },
   itemValue: {
-    color: '#4990E2',
+    color: '#447eff',
   },
   link: {
     position: 'absolute',
     right: '20px',
-    color: '#4990E2',
+    color: '#447eff',
     fontSize: '13px',
   },
 };

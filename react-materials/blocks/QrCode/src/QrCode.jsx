@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs: 0, radix: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Select, NumberPicker, Grid, Input } from '@icedesign/base';
+import { Select, NumberPicker, Grid, Input } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -116,11 +116,7 @@ export default class QrCode extends Component {
               </Col>
               <Col l="20">
                 <IceFormBinder name="url">
-                  <Input
-                    style={{ width: '300px' }}
-                    multiple
-                    placeholder="https://alibaba.github.io/ice/"
-                  />
+                  <Input.TextArea style={{ width: '300px' }} placeholder="https://alibaba.github.io/ice/" />
                 </IceFormBinder>
               </Col>
             </Row>

@@ -4,4 +4,4 @@
 
 基于 react-quill 的富文本编辑器
 
-![截图](https://img.alicdn.com/tfs/TB1aeYJD4GYBuNjy0FnXXX5lpXa-2866-752.png)
+![截图](https://unpkg.com/@icedesign/quill-rich-text-editor-block/screenshot.png)

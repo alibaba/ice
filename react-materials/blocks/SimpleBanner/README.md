@@ -4,4 +4,4 @@
 
 适用于介绍页的简单横幅
 
-![截图](https://img.alicdn.com/tfs/TB1QbUFbQPoK1RjSZKbXXX1IXXa-1826-493.png)
+![截图](https://unpkg.com/@icedesign/simple-banner-block/screenshot.png)

@@ -4,4 +4,4 @@
 
 展示品牌列表
 
-![截图](https://img.alicdn.com/tfs/TB1_tflieGSBuNjSspbXXciipXa-1234-487.png)
+![截图](https://unpkg.com/@icedesign/brand-list-block/screenshot.png)

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Select, Grid } from '@icedesign/base';
+import { Select, Grid } from '@alifd/next';
 import './ComplexFilter.scss';
 
 const { Row, Col } = Grid;
-const { Combobox, Option } = Select;
+const {
+  Option
+} = Select;
 
 export default class ComplexFilter extends Component {
   static displayName = 'ComplexFilter';
@@ -86,14 +88,11 @@ export default class ComplexFilter extends Component {
           <Row wrap style={styles.filterForm}>
             <Col xxs={24} s={8} style={styles.col}>
               所有者：
-              <Combobox
+              <Select
                 style={styles.combobox}
-                multiple
-                value="卓凌"
-                tags
-                filterLocal={false}
-                onInputBlur={() => console.log('blur')}
-              />
+                defaultValue={["卓凌"]}
+                mode="tag"
+                onBlur={() => console.log('blur')} />
             </Col>
 
             <Col xxs={24} s={8} style={styles.col}>

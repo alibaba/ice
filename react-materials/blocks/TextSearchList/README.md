@@ -4,4 +4,4 @@
 
 文字搜索列表
 
-![截图](https://img.alicdn.com/tfs/TB1mhxFbkyWBuNjy0FpXXassXXa-1912-1376.png)
+![截图](https://unpkg.com/@icedesign/text-search-list-block/screenshot.png)

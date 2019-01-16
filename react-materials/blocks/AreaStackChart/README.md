@@ -2,7 +2,7 @@
 
 简介：叠加面积图
 
-![截图](https://img.alicdn.com/tfs/TB13crWidfJ8KJjy0FeXXXKEXXa-1754-994.png)
+![截图](https://unpkg.com/@icedesign/area-stack-chart-block/screenshot.png)
 
 
 

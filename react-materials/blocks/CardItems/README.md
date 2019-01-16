@@ -4,4 +4,4 @@
 
 用卡片展示信息
 
-![截图](https://img.alicdn.com/tfs/TB1Qy4EtuuSBuNjy1XcXXcYjFXa-2554-1198.png)
+![截图](https://unpkg.com/@icedesign/card-items-block/screenshot.png)

@@ -1,0 +1,41 @@
+{
+  "name": "@icedesign/styled-menu",
+  "version": "0.1.2",
+  "description": "ICE 导航组件体验版",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "demo/",
+    "postinstall.js"
+  ],
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node ./postinstall.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "license": "ISC",
+  "keywords": [
+    "ice-components"
+  ],
+  "dependencies": {
+    "@icedesign/base": "^0.2.0",
+    "foundation-symbol": "^0.1.0",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.10",
+    "rc-menu": "^5.0.9"
+  },
+  "devDependencies": {
+  },
+  "peerDependencies": {
+    "react": "^16.5.0"
+  },
+  "typings": "lib/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  }
+}

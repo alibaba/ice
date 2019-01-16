@@ -16,7 +16,7 @@ const mockData = [
   },
   {
     icon: 'cart',
-    title: '新增模板数',
+    title: '新增会员数',
     desc: '这里是一些说明',
     count: '882',
     total: '232,349',

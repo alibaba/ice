@@ -4,4 +4,4 @@
 
 适用于简单的验证型表单
 
-![截图](https://img.alicdn.com/tfs/TB1.6V6v7ZmBKNjSZPiXXXFNVXa-2028-908.png)
+![截图](https://unpkg.com/@icedesign/validate-form-block/screenshot.png)

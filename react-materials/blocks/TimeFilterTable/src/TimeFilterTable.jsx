@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Pagination, Radio, Search } from '@icedesign/base';
+import { Table, Pagination, Radio, Search } from '@alifd/next';
 import data from './data';
 
 const { Group: RadioGroup } = Radio;

@@ -4,4 +4,4 @@
 
 左右布局的注册页
 
-![截图](https://img.alicdn.com/tfs/TB1gjN4urZnBKNjSZFrXXaRLFXa-2424-1490.png)
+![截图](https://unpkg.com/@icedesign/creative-register-block/screenshot.png)

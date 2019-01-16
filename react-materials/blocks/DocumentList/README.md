@@ -4,4 +4,4 @@
 
 适用于文档列表类的展示
 
-![截图](https://img.alicdn.com/tfs/TB1jmpOhkvoK1RjSZFwXXciCFXa-2866-458.png)
+![截图](https://unpkg.com/@icedesign/document-list-block/screenshot.png)

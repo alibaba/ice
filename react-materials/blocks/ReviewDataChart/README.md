@@ -4,4 +4,4 @@
 
 邀评数据图表
 
-![截图](https://img.alicdn.com/tfs/TB1CqeKr1OSBuNjy0FdXXbDnVXa-1816-874.png)
+![截图](https://unpkg.com/@icedesign/review-data-chart-block/screenshot.png)

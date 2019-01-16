@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Table, Pagination } from '@icedesign/base';
+import { Input, Table, Pagination } from '@alifd/next';
 
 const getData = () => {
   return Array.from({ length: 10 }).map((item, index) => {

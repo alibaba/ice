@@ -4,4 +4,4 @@
 
 tab 和文章列表组合
 
-![截图](https://img.alicdn.com/tfs/TB1hNNybmCWBuNjy0FhXXb6EVXa-1916-1082.png)
+![截图](https://unpkg.com/@icedesign/tab-article-block/screenshot.png)

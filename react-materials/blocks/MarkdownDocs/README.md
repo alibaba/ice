@@ -4,4 +4,4 @@
 
 markdown 文档区块
 
-![截图](https://img.alicdn.com/tfs/TB1S9jMrNGYBuNjy0FnXXX5lpXa-1844-1590.png)
+![截图](https://unpkg.com/@icedesign/markdown-docs-block/screenshot.png)

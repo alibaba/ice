@@ -4,4 +4,4 @@
 
 内容编辑器
 
-![截图](https://img.alicdn.com/tfs/TB199TEXuuSBuNjy1XcXXcYjFXa-1906-1550.png)
+![截图](https://unpkg.com/@icedesign/content-editor-block/screenshot.png)

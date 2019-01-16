@@ -4,4 +4,4 @@
 
 基础数据概览
 
-![截图](https://img.alicdn.com/tfs/TB1.f71piAnBKNjSZFvXXaTKXXa-1868-454.png)
+![截图](https://unpkg.com/@icedesign/data-overview-block/screenshot.png)

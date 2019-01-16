@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
-import { Select } from '@icedesign/base';
+import { Select } from '@alifd/next';
 
 const { Option } = Select;
 
