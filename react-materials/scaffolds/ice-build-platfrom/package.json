@@ -35,6 +35,7 @@
     "@icedesign/layout": "^1.x",
     "classnames": "^2.2.5",
     "highcharts": "^6.1.1",
+    "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

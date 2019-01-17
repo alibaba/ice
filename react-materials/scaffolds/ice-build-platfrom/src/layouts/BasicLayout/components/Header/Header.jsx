@@ -47,7 +47,7 @@ export default class Header extends Component {
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
                         title={
-                          <span>
+                          <span className={'ice-nav-item-text'}>
                             {nav.name}
                           </span>
                         }
@@ -91,7 +91,7 @@ export default class Header extends Component {
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}>
                         <a {...linkProps}>
-                          <span>
+                          <span className={'ice-nav-item-text'}>
                             {nav.name}
                           </span>
                         </a>
@@ -104,7 +104,7 @@ export default class Header extends Component {
                             <FoundationSymbol size="small" type={nav.icon} />
                           ) : null}>
                       <Link {...linkProps}>
-                        <span>
+                        <span className={'ice-nav-item-text'}>
                           {nav.name}
                         </span>
                       </Link>

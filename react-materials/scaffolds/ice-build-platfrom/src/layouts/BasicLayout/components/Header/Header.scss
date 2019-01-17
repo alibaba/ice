@@ -28,9 +28,13 @@
         color: $color-text1-3;
       }
       .next-menu-item.next-selected {
+        background: transparent;
         a:link, a:visited, i {
           color: $color-brand1-6;
         }
+      }
+      .ice-nav-item-text {
+        padding-left: 1em;
       }
     }
   }
