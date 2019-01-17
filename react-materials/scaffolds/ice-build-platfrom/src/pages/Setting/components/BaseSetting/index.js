@@ -1,7 +1,7 @@
 /* eslint  react/no-string-refs: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Radio, Switch, Upload, Grid } from '@icedesign/base';
+import { Input, Button, Radio, Switch, Upload, Grid } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -240,10 +240,9 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="description">
-                  <Input
+                  <Input.TextArea
                     style={styles.inputItem}
                     size="large"
-                    multiple
                     placeholder="请输入描述..."
                   />
                 </IceFormBinder>

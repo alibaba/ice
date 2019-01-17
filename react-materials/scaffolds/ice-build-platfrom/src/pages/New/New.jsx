@@ -7,8 +7,8 @@ import {
   Select,
   DatePicker,
   Radio,
-  Feedback,
-} from '@icedesign/base';
+  Message,
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -46,10 +46,10 @@ export default class New extends Component {
   validateAllFormField = () => {
     this.refs.form.validateAll((errors, values) => {
       if (errors) {
-        Feedback.toast.error('请填写完整的信息');
+        Message.error('请填写完整的信息');
         return;
       }
-      Feedback.toast.success('添加完成');
+      Message.success('添加完成');
       this.props.history.push('/');
       console.log({ values });
     });

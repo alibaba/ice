@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 import PropTypes from 'prop-types';
 import './CustomTable.scss';
 
@@ -45,7 +45,7 @@ export default class Home extends Component {
           dataSource={dataSource}
           hasBorder={false}
           className="custom-table"
-          isLoading={isLoading}
+          loading={isLoading}
         >
           {columns.map((item) => {
             return (

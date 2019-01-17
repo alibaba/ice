@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Balloon, Icon } from '@icedesign/base';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
-import FoundationSymbol from 'foundation-symbol';
+import { Balloon, Icon, Nav } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import IceImg from '@icedesign/img';
 import headerMenuConfig from '../../../../menuConfig';
 import Logo from '../Logo';
@@ -27,27 +26,29 @@ export default class Header extends Component {
         <div className="header-content">
           <div className="header-navbar">
             <Logo isDark />
-            <Menu
+            <Nav
               className="header-navbar-menu"
               onClick={this.handleNavClick}
               selectedKeys={[pathname]}
               defaultSelectedKeys={[pathname]}
-              mode="horizontal"
+              direction="hoz"
+              mode="inline"
+              activeDirection={null}
             >
               {headerMenuConfig &&
                 headerMenuConfig.length > 0 &&
                 headerMenuConfig.map((nav, index) => {
                   if (nav.children && nav.children.length > 0) {
                     return (
-                      <SubMenu
+                      <Nav.SubNav
                         triggerType="click"
                         key={index}
-                        title={
-                          <span>
-                            {nav.icon ? (
+                        icon={nav.icon ? (
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            <span>{nav.name}</span>
+                        title={
+                          <span>
+                            {nav.name}
                           </span>
                         }
                       >
@@ -60,23 +61,23 @@ export default class Header extends Component {
 
                             linkProps.href = item.path;
                             return (
-                              <MenuItem key={item.path}>
+                              <Nav.Item key={item.path}>
                                 <a {...linkProps}>
                                   <span>{item.name}</span>
                                 </a>
-                              </MenuItem>
+                              </Nav.Item>
                             );
                           }
                           linkProps.to = item.path;
                           return (
-                            <MenuItem key={item.path}>
+                            <Nav.Item key={item.path}>
                               <Link {...linkProps}>
                                 <span>{item.name}</span>
                               </Link>
-                            </MenuItem>
+                            </Nav.Item>
                           );
                         })}
-                      </SubMenu>
+                      </Nav.SubNav>
                     );
                   }
                   const linkProps = {};
@@ -86,33 +87,31 @@ export default class Header extends Component {
                     }
                     linkProps.href = nav.path;
                     return (
-                      <MenuItem key={nav.path}>
+                      <Nav.Item key={nav.path} icon={nav.icon ? (
+                              <FoundationSymbol size="small" type={nav.icon} />
+                            ) : null}>
                         <a {...linkProps}>
                           <span>
-                            {nav.icon ? (
-                              <FoundationSymbol size="small" type={nav.icon} />
-                            ) : null}
                             {nav.name}
                           </span>
                         </a>
-                      </MenuItem>
+                      </Nav.Item>
                     );
                   }
                   linkProps.to = nav.path;
                   return (
-                    <MenuItem key={nav.path}>
+                    <Nav.Item key={nav.path} icon={nav.icon ? (
+                            <FoundationSymbol size="small" type={nav.icon} />
+                          ) : null}>
                       <Link {...linkProps}>
                         <span>
-                          {nav.icon ? (
-                            <FoundationSymbol size="small" type={nav.icon} />
-                          ) : null}
                           {nav.name}
                         </span>
                       </Link>
-                    </MenuItem>
+                    </Nav.Item>
                   );
                 })}
-            </Menu>
+            </Nav>
           </div>
 
           <Balloon

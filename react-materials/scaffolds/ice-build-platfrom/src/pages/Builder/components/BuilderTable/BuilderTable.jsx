@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 import CustomTable from '../../../../components/CustomTable';
 import TableFilter from '../TableFilter';
 

@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Button, Select, Input, Feedback } from '@icedesign/base';
+import { Button, Select, Input, Message } from '@alifd/next';
 import { FormBinderWrapper, FormBinder } from '@icedesign/form-binder';
 
 export default class TableFilter extends Component {
@@ -12,7 +12,7 @@ export default class TableFilter extends Component {
     const { validateFields } = this.refs.form;
     validateFields((errors, values) => {
       if (errors) {
-        Feedback.toast.error('查询参数错误');
+        Message.error('查询参数错误');
         return;
       }
       this.props.handleSubmit(values);

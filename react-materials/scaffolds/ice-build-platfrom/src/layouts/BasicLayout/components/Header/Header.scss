@@ -18,13 +18,18 @@
   .header-navbar {
     display: flex;
     flex-direction: row;
-    .ice-menu {
+    .next-nav {
+      box-shadow: none;
+    }
+    .next-menu {
+      border: none;
       background: transparent;
-      .ice-menu-submenu-title,
-      .ice-menu-item {
-        font-size: 14px;
-        a:hover {
-          color: #5e83fb;
+      a:link, a:visited, i {
+        color: $color-text1-3;
+      }
+      .next-menu-item.next-selected {
+        a:link, a:visited, i {
+          color: $color-brand1-6;
         }
       }
     }
