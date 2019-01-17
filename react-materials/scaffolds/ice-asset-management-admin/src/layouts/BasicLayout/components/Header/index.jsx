@@ -1,154 +1,89 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Balloon, Icon } from '@icedesign/base';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
-import FoundationSymbol from 'foundation-symbol';
+import { Balloon, Nav } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import IceImg from '@icedesign/img';
 import { headerMenuConfig } from '../../../../menuConfig';
-import Logo from '../Logo';
-import './index.scss';
+import styles from './index.module.scss';
 
 @withRouter
 export default class Header extends Component {
+
+  renderNavItem = (nav) => {
+    const linkProps = {};
+    linkProps.to = nav.path;
+
+    if (nav.newWindow) {
+      linkProps.target = '_blank';
+    }
+
+    return (
+      <Nav.Item key={nav.path}>
+        <Link {...linkProps}>
+          <span>
+            {nav.icon ? (
+              <FoundationSymbol
+                size="small"
+                type={nav.icon}
+                className={styles.navItemIcon}
+              />
+            ) : null}
+            {nav.name}
+          </span>
+        </Link>
+      </Nav.Item>
+    );
+  }
+
   render() {
     const { location = {} } = this.props;
     const { pathname } = location;
-    return (
-      <div className="header-container">
-        <div className="header-content">
-          <Logo isDark />
-          <div className="header-navbar">
-            <Menu
-              className="header-navbar-menu"
-              onClick={this.handleNavClick}
-              selectedKeys={[pathname]}
-              defaultSelectedKeys={[pathname]}
-              mode="horizontal"
-            >
-              {headerMenuConfig &&
-                headerMenuConfig.length > 0 &&
-                headerMenuConfig.map((nav, index) => {
-                  if (nav.children && nav.children.length > 0) {
-                    return (
-                      <SubMenu
-                        triggerType="click"
-                        key={index}
-                        title={
-                          <span>
-                            {nav.icon ? (
-                              <FoundationSymbol size="small" type={nav.icon} />
-                            ) : null}
-                            <span>{nav.name}</span>
-                          </span>
-                        }
-                      >
-                        {nav.children.map((item) => {
-                          const linkProps = {};
-                          if (item.external) {
-                            if (item.newWindow) {
-                              linkProps.target = '_blank';
-                            }
 
-                            linkProps.href = item.path;
-                            return (
-                              <MenuItem key={item.path}>
-                                <a {...linkProps}>
-                                  <span>{item.name}</span>
-                                </a>
-                              </MenuItem>
-                            );
-                          }
-                          linkProps.to = item.path;
-                          return (
-                            <MenuItem key={item.path}>
-                              <Link {...linkProps}>
-                                <span>{item.name}</span>
-                              </Link>
-                            </MenuItem>
-                          );
-                        })}
-                      </SubMenu>
-                    );
-                  }
-                  const linkProps = {};
-                  if (nav.external) {
-                    if (nav.newWindow) {
-                      linkProps.target = '_blank';
-                    }
-                    linkProps.href = nav.path;
-                    return (
-                      <MenuItem key={nav.path}>
-                        <a {...linkProps}>
-                          <span>
-                            {nav.icon ? (
-                              <FoundationSymbol size="small" type={nav.icon} />
-                            ) : null}
-                            {nav.name}
-                          </span>
-                        </a>
-                      </MenuItem>
-                    );
-                  }
-                  linkProps.to = nav.path;
-                  return (
-                    <MenuItem key={nav.path}>
-                      <Link {...linkProps}>
-                        <span>
-                          {nav.icon ? (
-                            <FoundationSymbol size="small" type={nav.icon} />
-                          ) : null}
-                          {nav.name}
-                        </span>
-                      </Link>
-                    </MenuItem>
-                  );
-                })}
-            </Menu>
-          </div>
+    return (
+      <div className={styles.headerContent}>
+        <Link to="/" className={styles.logo}>
+          资产管理系统
+        </Link>
+        <div className={styles.navContainer}>
+          <Nav
+            type="primary"
+            direction="hoz"
+            selectedKeys={[pathname]}
+          >
+            {
+              (headerMenuConfig || []).map(this.renderNavItem)
+            }
+          </Nav>
 
           <Balloon
+            closable={false}
             trigger={
-              <div
-                className="ice-design-header-userpannel"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  fontSize: 12,
-                }}
-              >
+              <div className={styles.userPanel}>
                 <IceImg
                   height={40}
                   width={40}
                   src={require('./images/avatar.png')}
-                  className="user-avatar"
+                  className={styles.userAvatar}
                 />
-                <div className="user-profile">
-                  <span className="user-name" style={{ fontSize: '13px' }}>
-                    淘小宝
-                  </span>
+                <div className={styles.userProfile}>
+                  <span className={styles.username}>淘小宝</span>
                   <br />
-                  <span className="user-department">技术部</span>
+                  <span>技术部</span>
                 </div>
-                <Icon
-                  type="arrow-down-filling"
-                  size="xxs"
-                  className="icon-down"
-                />
+                <FoundationSymbol type="down" size="xxs" className={styles.iconDown} />
               </div>
             }
-            closable={false}
-            className="user-profile-menu"
           >
             <ul>
-              <li className="user-profile-menu-item">
+              <li className={styles.userMenuItem}>
                 <Link to="/account/setting">
-                  <FoundationSymbol type="repair" size="small" />
+                  <FoundationSymbol type="repair" size="small" className={styles.userMenuItemIcon} />
                   设置
                 </Link>
               </li>
-              <li className="user-profile-menu-item">
+              <li className={styles.userMenuItem}>
                 <Link to="/user/login">
-                  <FoundationSymbol type="compass" size="small" />
+                  <FoundationSymbol type="compass" size="small" className={styles.userMenuItemIcon} />
                   退出
                 </Link>
               </li>
