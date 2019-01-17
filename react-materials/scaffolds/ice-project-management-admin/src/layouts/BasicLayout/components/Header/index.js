@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Balloon, Icon, Menu, Nav } from '@alifd/next';
-import FoundationSymbol from 'foundation-symbol';
 import IceImg from '@icedesign/img';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
@@ -34,15 +33,8 @@ export default class Header extends Component {
                     <SubNav
                       triggerType="click"
                       key={index}
-                      icon="email"
-                      title={
-                        <span>
-                          {nav.icon ? (
-                            <FoundationSymbol size="small" type={nav.icon} />
-                          ) : null}
-                          <span>{nav.name}</span>
-                        </span>
-                      }
+                      icon={nav.icon ? nav.icon: undefined}
+                      title={nav.name}
                     >
                       {nav.children.map((item) => {
                         const linkProps = {};
@@ -79,28 +71,18 @@ export default class Header extends Component {
                   }
                   linkProps.href = nav.path;
                   return (
-                    <NavItem key={nav.path}>
+                    <NavItem key={nav.path} icon={nav.icon? nav.icon : undefined}>
                       <a {...linkProps}>
-                        <span>
-                          {nav.icon ? (
-                            <FoundationSymbol size="small" type={nav.icon} />
-                          ) : null}
-                          {nav.name}
-                        </span>
+                      {nav.name}
                       </a>
                     </NavItem>
                   );
                 }
                 linkProps.to = nav.path;
                 return (
-                  <NavItem key={nav.path}>
+                  <NavItem key={nav.path} icon={nav.icon? nav.icon : undefined}>
                     <Link {...linkProps}>
-                      <span>
-                        {nav.icon ? (
-                          <FoundationSymbol size="small" type={nav.icon} />
-                        ) : null}
-                        {nav.name}
-                      </span>
+                      {nav.name}
                     </Link>
                   </NavItem>
                 );
@@ -131,7 +113,7 @@ export default class Header extends Component {
                   <span className="user-department">技术部</span>
                 </div>
                 <Icon
-                  type="arrow-down-filling"
+                  type="arrow-down"
                   size="xxs"
                   className="icon-down"
                 />
@@ -143,7 +125,7 @@ export default class Header extends Component {
             <ul>
               <li className="user-profile-menu-item">
                 <Link to="/user/login">
-                  <FoundationSymbol type="compass" size="small" />
+                  <Icon type="upload" size="xs" />
                   退出
                 </Link>
               </li>
