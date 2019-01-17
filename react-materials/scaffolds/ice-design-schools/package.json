@@ -24,7 +24,7 @@
     "bizcharts": "^3.1.0",
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
-    "foundation-symbol": "^0.1.0",
+    "@icedesign/foundation-symbol": "^1.x",
     "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
