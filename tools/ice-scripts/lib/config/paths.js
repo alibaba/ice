@@ -43,23 +43,24 @@ function getServedPath(appPackageJson) {
 const appDirectory = realpathSync(process.cwd());
 
 function resolveApp(relativePath) {
-  return resolve(appDirectory, relativePath);
+  // 新的node模板项目，koa、midway使用统一目录。process.env.PROJECT_TYPE == 'nodejs'
+  const clientPathMap = {
+    'nodejs': 'client',
+    'web': '',
+    'node': ''
+  };
+  const clientPath = clientPathMap[process.env.PROJECT_TYPE] || '';
+  return resolve(appDirectory, clientPath, relativePath);
 }
-
-const isNode = process.env.PROJECT_TYPE == 'node';
+// 老的koa模板项目
+const isKOA = process.env.PROJECT_TYPE == 'node';
 
 module.exports = {
-  appBuild: resolveApp('build'),
-  appPublic: resolveApp('public'),
-  appHtml: isNode
-    ? resolveApp('client/index.html')
-    : resolveApp('public/index.html'),
-  appFavicon: isNode
-    ? resolveApp('client/favicon.png')
-    : resolveApp('public/favicon.png'),
-  appFaviconIco: isNode
-    ? resolveApp('client/favicon.ico')
-    : resolveApp('public/favicon.ico'),
+  appBuild: resolveApp('build') ,
+  appPublic: resolveApp('public') ,
+  appHtml: isKOA ? resolveApp('client/index.html') : resolveApp('public/index.html'),
+  appFavicon: isKOA ? resolveApp('client/favicon.png') : resolveApp('public/favicon.png'),
+  appFaviconIco: isKOA ? resolveApp('client/favicon.ico') : resolveApp('public/favicon.ico'),
   appPackageJson: resolveApp('package.json'),
   appAbcJson: resolveApp('abc.json'),
   appSrc: resolveApp('src'),
