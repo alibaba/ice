@@ -79,7 +79,7 @@ function generateBlocks(files, SPACE, type, done) {
       // publishTime: pkg.publishTime || new Date().toISOString(),
     };
 
-    if (fs.existsSync(indexPoint)) {
+    if (type !== 'component' && fs.existsSync(indexPoint)) {
       const componentDeps = depAnalyze(indexPoint);
       const useComponents = filterDeps(componentDeps).map((mod) => {
         let basePackage = '';
@@ -296,7 +296,7 @@ function generateScaffolds(files, SPACE, done) {
  * @param {*} pattern
  * @param {*} SPACE
  */
-function gatherBlocksOrLayouts(pattern, SPACE, type) {
+function gather(pattern, SPACE, type) {
   return new Promise((resolve, reject) => {
     glob(
       pattern,
@@ -378,17 +378,19 @@ module.exports = function generateMaterialsDatabases(
   return Promise.resolve(materialPath)
     .then((space) => {
       return Promise.all([
-        gatherBlocksOrLayouts('blocks/*/package.json', space, 'block'),
-        gatherBlocksOrLayouts('layouts/*/package.json', space, 'layout'),
+        gather('blocks/*/package.json', space, 'block'),
+        gather('layouts/*/package.json', space, 'layout'),
+        gather('components/*/package.json', space, 'component'),
         gatherScaffolds('scaffolds/*/package.json', space),
       ]);
     })
-    .then(([blocks, layouts, scaffolds]) => {
+    .then(([blocks, layouts, components, scaffolds]) => {
       const data = {
         name: materialName, // 物料池名
         ...options,
         blocks,
         layouts,
+        components,
         scaffolds,
       };
 
