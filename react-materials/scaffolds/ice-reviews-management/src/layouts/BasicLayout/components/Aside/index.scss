@@ -1,22 +1,22 @@
 .ice-layout {
   .ice-layout-aside.custom-aside {
-    background: #001529;
-    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+    background: #2f323f;
     .aside-logo {
       height: 62px;
-      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #062140;
+      background: #2f323f;
     }
     .custom-menu {
       width: 240px;
       height: 100vh;
       padding-top: 20px;
       border-radius: 6px;
+      box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
       .ice-menu-sub {
-        background: #000c17;
+        background: #2c2e39;
       }
       .ice-menu-item,
       .ice-menu-submenu-title {
