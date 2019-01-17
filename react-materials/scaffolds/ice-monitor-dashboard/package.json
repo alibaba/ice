@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/monitor-dashboard",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "该模板适用于数据监控展示类的管理后台，内置通用的丰富的图表，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/monitor-dashboard@latest/build/index.html",
   "files": [
