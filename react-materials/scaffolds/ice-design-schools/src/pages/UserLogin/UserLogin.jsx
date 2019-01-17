@@ -42,7 +42,7 @@ class UserLogin extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('登录成功');
+      Message.success('登录成功');
       this.props.history.push('/');
     });
   };
@@ -129,8 +129,8 @@ const styles = {
   },
   inputIcon: {
     position: 'absolute',
-    left: '10px',
-    top: '8px',
+    left: '12px',
+    top: '12px',
     color: '#666',
   },
   inputCol: {

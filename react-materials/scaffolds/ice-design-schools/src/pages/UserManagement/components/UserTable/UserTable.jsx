@@ -18,11 +18,11 @@ const getData = (len = 10) => {
   for (let i = 0; i < len; i++) {
     result.push({
       id: i + 1,
-      name: `李晓红${i + 1}`,
+      name: `王尼玛${i + 1}`,
       university: '浙江大学',
       college: '计算机',
       class: i + 1,
-      phone: `1876666123${i}`,
+      phone: `187xxxx123${i}`,
       role: '学生',
     });
   }
