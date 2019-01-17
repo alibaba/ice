@@ -1,6 +1,6 @@
 ## 简介
 
-基于 Iceworks 能够一键生成 ice 和 Node 的前后端分离的项目；前端使用 React 技术栈，后端使用 Midway 1.x 作为服务端开发框架。
+基于 Iceworks 能够一键生成 ice 和 Node 的前后端分离的项目；前端使用 React 技术栈，后端使用 Midway 作为服务端开发框架。
 
 ## 目录结构
 
@@ -26,27 +26,52 @@ project
 │     │    ├── index.html
 │     │    ├── favicon.png
 │     │    └── index.js         // 入口文件
-|     ├── package.json          // 前端 package.json
-|     ├── .gitignore            // git 忽略目录配置
-|     ├── .editorconfig         // 代码风格配置
-|     ├── .eslintignore         // eslint 忽略目录配置
-|     ├── .eslintrc             // eslint 配置
-|     └── .webpackrc.js         // 自定义 webpack 配置
-|
+│     ├── package.json          // 前端 package.json
+│     ├── .gitignore            // git 忽略目录配置
+│     ├── .editorconfig         // 代码风格配置
+│     ├── .eslintignore         // eslint 忽略目录配置
+│     ├── .eslintrc             // eslint 配置
+│     └── .webpackrc.js         // 自定义 webpack 配置
+│
 ├── server
-|     ├── package.json          // 服务端 package.json
-|     ├── .gitignore            
-|     ├── .editorconfig         
-|     ├── .eslintignore         
-|     ├── .eslintrc             
-|     └── src
-|          ├── app           // 后端代码
-|          ├── controller       // 
-|          ├── middleware       // 用于编写中间件
-|          ├── model            // 用于放置模型
-|          ├── router           // 用于路由文件
-|          └── app.js           // 入口文件
-|
+│     ├── package.json          // 服务端 package.json
+│     ├── .gitignore
+│     ├── tsconfig.json
+│     ├── tslint.json
+│     ├── src
+│     │    ├── app                            // web 层目录
+│     │    │    ├── controller                // web 层 controller 目录
+│     │    │    │   ├── home.ts
+│     │    │    │   └── user.ts
+│     │    │    ├── middleware (可选)          // web 层中间件目录
+│     │    │    │   └── trace.ts
+│     │    │    ├── public (可选)              // web 层静态文件目录，可以配置
+│     │    │    ├── view (可选)
+│     │    │    │   └── home.tpl              // web 层模板
+│     │    ├─── config
+│     │    │    ├── config.default.ts
+│     │    │    ├── config.local.ts
+│     │    │    ├── config.prod.ts
+│     │    │    ├── config.unittest.ts
+│     │    │    └── plugin.ts
+│     │    ├─── lib                           // 业务逻辑层目录
+│     │    │    ├── interface.ts              // 接口定义文件
+│     │    │    └── service                   // 业务逻辑层，目录根据业务自己定义
+│     │    │        └── user.ts   
+│     │    ├─── app.ts                        // 应用扩展文件，可选
+│     │    └─── agent.ts                      // agent 扩展文件，可选
+│     ├─── test                               // 用户测试
+│     │    └── app
+│     │        └── controller
+│     │            └── home.test.ts
+│     └─── logs                               // 本地日志目录
+│          └── midway6-test                      // 日志应用名开头
+│              ├── common-error.log              // 错误日志
+│              ├── midway-agent.log              // agent 输出的日志
+│              ├── midway-core.log               // 框架输出的日志
+│              ├── midway-web.log                // koa 输出的日志
+│              └── midway6-test-web.log
+│
 ├── package.json           // package.json
 └── README.md              // 项目说明
 ```

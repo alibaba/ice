@@ -1,4 +1,25 @@
-const koa2 = {
+const commonConfig = {
+  pendingFields: {
+    dotFiles: [
+      '.editorconfig',
+      '.eslintignore',
+      '.eslintrc',
+      '.gitignore',
+      '.gitkeep'
+    ],
+    extractDirs: [
+      'src',
+      'public'
+    ],
+    pkgAttrs: [
+      'scripts',
+      'dependencies',
+      'devDependencies'
+    ]
+  }
+}
+
+const koa2 = Object.assign({
   tarball: {
     name: 'ice-koa-template',
     title: 'ICE Koa Template',
@@ -9,28 +30,10 @@ const koa2 = {
         version: '1.0.0-beta.6',
         registry: 'http://registry.npmjs.com'
       }
-  },
-  pendingFields: {
-    dotFiles: [
-      '.editorconfig',
-      '.eslintignore',
-      '.eslintrc',
-      '.gitignore',
-      '.gitkeep'
-    ],
-    extractDirs: [
-      'src',
-      'public'
-    ],
-    pkgAttrs: [
-      'scripts',
-      'dependencies',
-      'devDependencies'
-    ]
   }
-};
+}, commonConfig);
 
-const midway = {
+const midway = Object.assign({
   tarball: {
     name: 'ice-midway-template',
     title: 'ICE Midway Template',
@@ -41,28 +44,10 @@ const midway = {
         version: '1.0.0-beta.4',
         registry: 'http://registry.npmjs.com'
       }
-  },
-  pendingFields: {
-    dotFiles: [
-      '.editorconfig',
-      '.eslintignore',
-      '.eslintrc',
-      '.gitignore',
-      '.gitkeep'
-    ],
-    extractDirs: [
-      'src',
-      'public'
-    ],
-    pkgAttrs: [
-      'scripts',
-      'dependencies',
-      'devDependencies'
-    ]
   }
-};
+}, commonConfig);
 
-const midwayAli = {
+const midwayAli = Object.assign({
   tarball: {
     name: 'ice-ali-midway-template',
     title: 'ICE ALI Midway Template',
@@ -73,26 +58,8 @@ const midwayAli = {
         version: '1.0.0-beta.1',
         registry: 'http://registry.npmjs.com'
       }
-  },
-  pendingFields: {
-    dotFiles: [
-      '.editorconfig',
-      '.eslintignore',
-      '.eslintrc',
-      '.gitignore',
-      '.gitkeep'
-    ],
-    extractDirs: [
-      'src',
-      'public'
-    ],
-    pkgAttrs: [
-      'scripts',
-      'dependencies',
-      'devDependencies'
-    ]
   }
-};
+}, commonConfig);
 
 module.exports = {
   koa2,
