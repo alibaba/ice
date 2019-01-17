@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Icon, Pagination, Balloon } from '@icedesign/base';
+import { Table, Icon, Pagination, Balloon } from '@alifd/next';
 import Ellipsis from '@icedesign/ellipsis';
 import './Schedule.scss';
 
@@ -149,7 +149,7 @@ export default class Schedule extends Component {
       <Balloon
         trigger={Info(true)}
         align="r"
-        alignment="edge"
+        alignEdge="edge"
         triggerType="click"
         closable={false}
         style={{ width: 300 }}
@@ -178,7 +178,7 @@ export default class Schedule extends Component {
         <div style={styles.summary}>全国单日总票房：100 亿</div>
         <Table
           dataSource={dataSource}
-          isLoading={isLoading}
+          loading={isLoading}
           className="custom-table"
           style={{ minHeight: '400px' }}
         >
