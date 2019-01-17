@@ -58,9 +58,6 @@
       "publicPath": "./"
     }
   },
-  "themeConfig": {
-    "primaryColor": "#5e83fb"
-  },
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-customer-analysis-admin",
