@@ -22,6 +22,7 @@ const URL_LOADER_LIMIT = 8192;
 const getBabelConfig = require('./getBabelConfig');
 const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const { getPkgJSON } = require('../utils/pkg-json');
+const internalLibrary = require('../utils/internal-library');
 
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
@@ -165,32 +166,12 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   ]);
 
   config.plugin('import').use(WebpackPluginImport, [
-    [
-      {
-        libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
+    internalLibrary.map((libraryName) => {
+      return {
+        libraryName,
         stylePath: 'style.js',
-      },
-      {
-        libraryName: /@icedesign\/.*/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /@ali\/ice-.*/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /^@alife\/next\/lib\/([^/]+)/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /^@alifd\/next\/lib\/([^/]+)/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /@alifd\/.*/,
-        stylePath: 'style.js',
-      },
-    ],
+      }
+    })
   ]);
 
   config.plugin('hot').use(webpack.HotModuleReplacementPlugin);
