@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/price-info-block",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,29 +21,29 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "price-info",
-    "screenshot": "https://img.alicdn.com/tfs/TB12Bg8cDtYBeNjy1XdXXXXyVXa-2740-1158.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/price-info-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "价格信息展示",
     "categories": [
       "信息展示",
       "欢迎页"
-    ]
+    ],
+    "version-0.x": "0.1.6"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/price-info/preview"
+  "homepage": "https://unpkg.com/@icedesign/price-info-block/build/index.html"
 }

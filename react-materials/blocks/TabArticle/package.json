@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/tab-article-block",
-  "version": "0.1.8",
+  "version": "2.0.0",
   "description": "tab和文章列表组合",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,29 +21,29 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
+    "@icedesign/container": "^1.x",
     "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "tab-article",
-    "screenshot": "https://img.alicdn.com/tfs/TB1hNNybmCWBuNjy0FhXXb6EVXa-1916-1082.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/tab-article-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "tab和文章列表组合",
     "categories": [
       "列表"
-    ]
+    ],
+    "version-0.x": "0.1.11"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/tab-article/preview"
+  "homepage": "https://unpkg.com/@icedesign/tab-article-block/build/index.html"
 }

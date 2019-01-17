@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/tab-chart-block",
-  "version": "0.1.9",
+  "version": "2.0.0",
   "description": "标签页和图表组合使用",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,31 +21,31 @@
     "ice-block"
   ],
   "dependencies": {
-    "@antv/data-set": "^0.8.3",
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
-    "bizcharts": "^3.1.0",
-    "prop-types": "^15.5.8"
+    "@antv/data-set": "0.8.9",
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "tab-chart",
-    "screenshot": "https://img.alicdn.com/tfs/TB1OVMBmb_I8KJjy1XaXXbsxpXa-1920-764.png",
+    "screenshot": "https://unpkg.com/@icedesign/tab-chart-block/screenshot.png",
     "title": "标签页图表组合",
     "categories": [
       "图表",
       "数据展示"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.13"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/tab-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/tab-chart-block/build/index.html"
 }

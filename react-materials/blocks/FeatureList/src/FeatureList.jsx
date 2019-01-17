@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 
 export default class FeatureList extends Component {
   static displayName = 'FeatureList';

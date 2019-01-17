@@ -3,7 +3,9 @@ import uppercamelcase from 'uppercamelcase';
 import uuid from 'uuid';
 
 import { getBlocks } from '../datacenter/materials';
+import { RECOMMEND_MATERIALS } from '../datacenter/materialsConfig';
 import projects from './projects';
+import blockGroups from './block-groups';
 
 import BlocksSearch from './blocks-search';
 
@@ -33,6 +35,8 @@ class Blocks {
   showModal = false; // 图片预览弹窗
   @observable
   previewBlock = {}; // 当前预览的区块
+  @observable
+  currentTabKey = '0'; // 记录当前选中的Tab
 
   constructor() {
     autorun(() => {
@@ -48,6 +52,7 @@ class Blocks {
     this.selected = [];
     this.keywords = [];
     this.originKeywords = '';
+    this.currentTabKey = '0'; // tab重置
   }
 
   @action
@@ -67,15 +72,38 @@ class Blocks {
       materials.forEach((material) => {
         materialsValue.push(new BlocksSearch(material));
       });
-
       this.reset();
       this.materialsValue = materialsValue; // 所有 blocks 数据
+      const { iceMaterial, iceIndex } = this.getIceMaterial();
+
+      // materials 中有飞冰物料时，处理飞冰组合推荐
+      if (iceMaterial) {
+        // tab 中加塞飞冰组合推荐。这里提前加塞，为了渲染tab不出现抖动
+        this.materialsValue = this.addBlockGroupsMaterial(iceMaterial, iceIndex);
+        // fetch组合推荐
+        blockGroups.fetch();
+      }
+      
       this.isLoading = false;
     } else {
       this.reset();
       this.materialsValue = [];
       this.isLoading = false;
     }
+  }
+
+  // materials 中有飞冰物料时，加塞飞冰组合推荐
+  @action
+  addBlockGroupsMaterial(iceMaterial, iceIndex) {
+    if (iceIndex !== -1) {
+      const formatMaterials = this.materialsValue.slice();
+      formatMaterials.splice(iceIndex + 1, 0 , {
+        name: '飞冰区块组合',
+        key: 'iceBlockGroups'
+      });
+      return formatMaterials;
+    }
+    return this.materialsValue;
   }
 
   @action.bound
@@ -190,6 +218,23 @@ class Blocks {
     }
   }
 
+  @action.bound
+  getIceMaterial() {
+    let iceIndex = -1;
+    // 获取配置中的ice物料源source；
+    const { source } = RECOMMEND_MATERIALS.find( recommendMaterial => {
+      return recommendMaterial.key === 'ice';
+    });
+    // 获取ice物料源及对应的index
+    const iceMaterial = this.materialsValue.find( (material, index) => {
+      if (material.source === source) {
+        iceIndex = index;
+        return true
+      }
+    });
+    return {iceMaterial, iceIndex};
+  }
+
   // 开始拖拽排序区块
   @action
   onSortStart = () => {
@@ -228,6 +273,11 @@ class Blocks {
     }
     return confilict;
   }
+
+  @action
+  setCurrentTabKey(key) {
+    this.currentTabKey = key;
+  }
 }
 
 function arrayMove(arr, previousIndex, newIndex) {
@@ -241,5 +291,6 @@ function arrayMove(arr, previousIndex, newIndex) {
   array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
   return array;
 }
+
 
 export default new Blocks();

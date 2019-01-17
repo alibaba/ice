@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Progress, Grid } from '@icedesign/base';
+import { Progress, Grid } from '@alifd/next';
 import { enquireScreen } from 'enquire-js';
 
 const { Row, Col } = Grid;
@@ -40,7 +40,7 @@ export default class ProgressDataList extends Component {
             <div style={styles.dataIntro}>所有项目收入</div>
             <div style={styles.dataValue}>￥10M</div>
             <div style={styles.dataProgress}>
-              <Progress percent={30} showInfo={false} />
+              <Progress percent={30} />
             </div>
             <div style={styles.dataExtra}>
               <div>
@@ -57,7 +57,7 @@ export default class ProgressDataList extends Component {
             <div style={styles.dataIntro}>今年新注册用户</div>
             <div style={styles.dataValue}>2000</div>
             <div style={styles.dataProgress}>
-              <Progress percent={80} showInfo={false} />
+              <Progress percent={80} />
             </div>
             <div style={styles.dataExtra}>
               <div>
@@ -74,7 +74,7 @@ export default class ProgressDataList extends Component {
             <div style={styles.dataIntro}>本月新增订单数</div>
             <div style={styles.dataValue}>579</div>
             <div style={styles.dataProgress}>
-              <Progress percent={60} showInfo={false} />
+              <Progress percent={60} />
             </div>
             <div style={styles.dataExtra}>
               <div>
@@ -91,7 +91,7 @@ export default class ProgressDataList extends Component {
             <div style={styles.dataIntro}>用户反馈待处理的数量</div>
             <div style={styles.dataValue}>10</div>
             <div style={styles.dataProgress}>
-              <Progress percent={10} showInfo={false} />
+              <Progress percent={10} />
             </div>
             <div style={styles.dataExtra}>
               <div>

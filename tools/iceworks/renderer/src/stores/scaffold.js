@@ -54,7 +54,9 @@ class Scaffold {
   @observable
   workspacePath = localStorage.getItem(WORKSPACE_KEY) || defaultWorkspacePath;
   @observable
-  isNodeProject = false;
+  nodeFramework = '';
+  @observable
+  isNode = false;
 
   get currentScaffoldName() {
     return toJS(this.scaffoldValue).name;
@@ -74,13 +76,19 @@ class Scaffold {
     this.progressSpeedValue = 0;
     this.progressRemainingValue = 0;
     this.visible = false;
-    this.isNodeProject = false;
+    this.nodeFramework = '';
+    this.isNode = false;
   }
 
   // 更新本地缓存项目信息
   @action
   addNewProjectToProjects = (targetPath, needInstallDeps) => {
     this.projects.add(targetPath, needInstallDeps);
+  };
+
+  @action
+  toggleNodeSelect = (checked) => {
+    this.isNode = checked;
   };
 
   // 修改路由跳转到首页
@@ -237,7 +245,7 @@ class Scaffold {
 
   /**
    * 开始创建项目
-   * @param {String} targetPath 生成项目的目标地址
+   * @param {String} targetPath 项目地址
    * @param {Object} options 脚手架配置
    */
   @action
@@ -367,8 +375,8 @@ class Scaffold {
   }
 
   @action
-  toggleNodeProject(isChecked) {
-    this.isNodeProject = isChecked;
+  toggleNodeProject(value) {
+    this.nodeFramework = value;
   }
 
   getProjectPathWithWorkspace() {

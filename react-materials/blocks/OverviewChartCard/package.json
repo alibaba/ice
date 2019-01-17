@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/overview-chart-card-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "图表套件组合展示",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,9 +26,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.2",
-    "@icedesign/container": "^0.1.2",
-    "bizcharts": "^3.1.8"
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.2.0",
@@ -40,7 +41,8 @@
       "图表",
       "数据展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1yHyKxHSYBuNjSspiXXXNzpXa-2856-442.png"
+    "screenshot": "https://unpkg.com/@icedesign/overview-chart-card-block/screenshot.png",
+    "version-0.x": "1.0.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/overview-chart-card/preview"
+  "homepage": "https://unpkg.com/@icedesign/overview-chart-card-block/build/index.html"
 }

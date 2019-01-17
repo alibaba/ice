@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/address-info-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于地址的信息展示",
-  "homepage": "https://alibaba.github.io/ice/block/address-info/preview",
+  "homepage": "https://unpkg.com/@icedesign/address-info-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -32,6 +33,7 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1eO4gupkoBKNjSZFkXXb4tFXa-2528-1448.png"
+    "screenshot": "https://unpkg.com/@icedesign/address-info-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/filter-with-search-block",
-  "version": "0.1.7",
+  "version": "2.0.0",
   "description": " 含搜索筛选",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,28 +21,28 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "filter-with-search",
-    "screenshot": "https://img.alicdn.com/tfs/TB1vqnmihTI8KJjSspiXXbM4FXa-1906-136.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/filter-with-search-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": " 含搜索筛选",
     "categories": [
       "筛选"
-    ]
+    ],
+    "version-0.x": "0.1.10"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/filter-with-search/preview"
+  "homepage": "https://unpkg.com/@icedesign/filter-with-search-block/build/index.html"
 }

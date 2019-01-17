@@ -14,7 +14,7 @@
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "license": "MIT",
   "keywords": [
@@ -30,7 +30,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "ice-devtools": "latest",
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
   }

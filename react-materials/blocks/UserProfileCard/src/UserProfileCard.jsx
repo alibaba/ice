@@ -1,6 +1,6 @@
 /* eslint no-nested-ternary:0 */
 import React, { Component } from 'react';
-import { Icon, Grid } from '@icedesign/base';
+import { Icon, Grid } from '@alifd/next';
 import Img from '@icedesign/img';
 
 const { Row, Col } = Grid;
@@ -94,8 +94,8 @@ export default class UserProfileCard extends Component {
                         {item.fansCount > 10000
                           ? `${Math.ceil(item.fansCount / 100) / 100}万`
                           : item.fansCount
-                            ? item.fansCount
-                            : 0}
+                          ? item.fansCount
+                          : 0}
                       </span>
                     </div>
                   </div>
@@ -205,8 +205,7 @@ const styles = {
   },
 
   maskLayer: {
-    backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1p_fVo9_I8KJjy0FoXXaFnVXa-560-250.png)',
+    backgroundImage: `url(${require('./images/mask.png')})`,
     backgroundSize: 'cover',
     position: 'absolute',
     width: '100%',

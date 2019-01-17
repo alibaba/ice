@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/validate-form-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于简单的验证型表单",
   "author": "",
-  "homepage": "https://alibaba.github.io/ice/block/validate-form/preview",
+  "homepage": "https://unpkg.com/@icedesign/validate-form-block/build/index.html",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -23,11 +24,11 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^0.1.9",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "validate-form",
@@ -35,6 +36,7 @@
     "categories": [
       "表单"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1.6V6v7ZmBKNjSZPiXXXFNVXa-2028-908.png"
+    "screenshot": "https://unpkg.com/@icedesign/validate-form-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

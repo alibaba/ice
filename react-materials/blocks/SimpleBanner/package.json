@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/simple-banner-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于介绍页的简单横幅",
-  "homepage": "https://alibaba.github.io/ice/block/simple-banner/preview",
+  "homepage": "https://unpkg.com/@icedesign/simple-banner-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -32,6 +33,7 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1QbUFbQPoK1RjSZKbXXX1IXXa-1826-493.png"
+    "screenshot": "https://unpkg.com/@icedesign/simple-banner-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

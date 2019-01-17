@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/sales-chart-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "销售数据图表",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -37,7 +38,8 @@
     "categories": [
       "图表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1TnLLxMmTBuNjy1XbXXaMrVXa-2804-732.png"
+    "screenshot": "https://unpkg.com/@icedesign/sales-chart-block/screenshot.png",
+    "version-0.x": "1.0.3"
   },
-  "homepage": "https://alibaba.github.io/ice/block/sales-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/sales-chart-block/build/index.html"
 }

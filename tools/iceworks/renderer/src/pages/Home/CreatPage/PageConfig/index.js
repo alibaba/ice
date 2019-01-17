@@ -36,6 +36,7 @@ class PageConfig extends Component {
     newpage: PropTypes.object,
     blocks: PropTypes.object,
     projects: PropTypes.object,
+    selectedBlocks: PropTypes.array,
     libary: PropTypes.string,
   };
 
@@ -97,7 +98,7 @@ class PageConfig extends Component {
         const { currentProject } = this.props.projects;
 
         const layout = toJS(this.props.newpage.currentLayout);
-        const blocks = toJS(this.props.blocks.selected);
+        const blocks = toJS(this.props.selectedBlocks);
         const libraryType = currentProject.getLibraryType();
         const pageName = toJS(values.pageName);
         // 创建页面
@@ -105,7 +106,7 @@ class PageConfig extends Component {
           name: libraryType == 'react' ? uppercamelcase(pageName) : pageName,
           layout: layout,
           blocks: blocks,
-          isNodeProject: currentProject.isNodeProject
+          nodeFramework: currentProject.nodeFramework
         };
         console.info('createPage config:', config);
         let createResult;
@@ -208,7 +209,9 @@ class PageConfig extends Component {
               this.props.newpage.isCreating = false;
             })
             .then(() => {
-              return currentProject.scaffold.removePreviewPage({ isNodeProject: currentProject.isNodeProject });
+              return currentProject.scaffold.removePreviewPage({
+                nodeFramework: currentProject.nodeFramework
+              });
             })
             .then(() => {
               log.debug('移除临时页面成功');
@@ -227,14 +230,13 @@ class PageConfig extends Component {
               pageName: toJS(values.pageName), // 页面名
               routePath: toJS(values.routePath), // 路由名
               routeText: toJS(values.routeText), // 路由导航名
-              destDir: toJS(this.props.newpage.targetPath),
+              clientPath: currentProject.clientPath,
+              clientSrcPath: currentProject.clientSrcPath,
               layout: layout,
               blocks: blocks,
-              commonBlock: true,
               excludeLayout: applicationType == 'react', // hack react 的模板不生成 layout
               // hack vue
               libary: this.props.libary,
-              isNodeProject: currentProject.isNodeProject,
               progressFunc: this.handleProgressFunc,
               interpreter: ({ type, message, data }, next) => {
                 console.log(type, message);
@@ -337,8 +339,7 @@ class PageConfig extends Component {
 
                 // 移除 previewPage 临时文件
                 return scaffolder.removePreviewPage({
-                  destDir: this.props.newpage.targetPath,
-                  isNodeProject: currentProject.isNodeProject
+                  clientSrcPath: currentProject.clientSrcPath
                 });
               }
             })

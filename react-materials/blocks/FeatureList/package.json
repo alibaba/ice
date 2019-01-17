@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/feature-list-block",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "description": "展示一些特性列表介绍",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,25 +25,24 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
-    "@icedesign/container": "^0.1.1",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "feature-list",
-    "screenshot": "https://img.alicdn.com/tfs/TB1pjqTikyWBuNjy0FpXXassXXa-988-568.png",
+    "screenshot": "https://unpkg.com/@icedesign/feature-list-block/screenshot.png",
     "title": "特性列表",
     "categories": [
       "信息展示"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.5"
   },
-  "homepage": "https://alibaba.github.io/ice/block/feature-list/preview"
+  "homepage": "https://unpkg.com/@icedesign/feature-list-block/build/index.html"
 }

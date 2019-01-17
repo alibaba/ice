@@ -1,6 +1,6 @@
 {
-  "name": "@react-materials/infinite-scroll-cell-measurer-block",
-  "version": "1.0.0",
+  "name": "@icedesign/infinite-scroll-cell-measurer-block",
+  "version": "2.0.0",
   "description": "无限滚动的表格",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,7 +26,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "classnames": "^2.2.6",
     "prop-types": "^15.5.8",
     "react": "^16.2.0",
@@ -38,6 +39,8 @@
       "表格",
       "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1tlWrGHGYBuNjy0FoXXciBFXa-3450-860.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/infinite-scroll-cell-measurer-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  },
+  "homepage": "https://unpkg.com/@icedesign/infinite-scroll-cell-measurer-block/build/index.html"
 }

@@ -1,7 +1,7 @@
 /* eslint react/require-default-props: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Balloon } from '@icedesign/base';
+import { Icon, Balloon } from '@alifd/next';
 
 export default class Head extends Component {
   static displayName = 'Head';

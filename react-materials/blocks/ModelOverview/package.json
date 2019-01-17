@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/model-overview-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于 Dashboard 页的数据概要展示",
-  "homepage": "https://alibaba.github.io/ice/block/model-overview/preview",
+  "homepage": "https://unpkg.com/@icedesign/model-overview-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -23,10 +24,9 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
-    "foundation-symbol": "^0.1.4",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "model-overview",
@@ -34,6 +34,7 @@
     "categories": [
       "数据展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1ZUAYbNnaK1RjSZFtXXbC2VXa-1539-137.png"
+    "screenshot": "https://unpkg.com/@icedesign/model-overview-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

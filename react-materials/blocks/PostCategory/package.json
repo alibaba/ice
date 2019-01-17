@@ -1,12 +1,13 @@
 {
-  "name": "@react-materials/post-category-block",
-  "version": "1.0.0",
+  "name": "@icedesign/post-category-block",
+  "version": "2.0.0",
   "description": "文章创作类型列表",
-  "homepage": "https://alibaba.github.io/ice/block/post-category/preview",
+  "homepage": "https://unpkg.com/@icedesign/post-category-block/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -23,9 +24,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "post-category",
@@ -33,6 +34,7 @@
     "categories": [
       "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1e.V8pbwrBKNjSZPcXXXpapXa-1868-1458.png"
+    "screenshot": "https://unpkg.com/@icedesign/post-category-block/screenshot.png",
+    "version-0.x": "1.0.0"
   }
 }

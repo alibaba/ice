@@ -5,19 +5,24 @@ import React, { Component } from 'react';
 
 import BlockCategory from '../BlockCategory/';
 import CustomBlockCategory from '../BlockCategory/Custom';
+import BlockGroupCategory from '../BlockGroupCategory/';
 import BlockSlider from '../BlockSlider/';
 
-@inject('newpage', 'blocks', 'customBlocks')
+@inject('newpage', 'blocks', 'customBlocks', 'blockGroups')
 @observer
 class BlockPicker extends Component {
   static displayName = 'BlockPicker';
 
   static propTypes = {
-    onSelected: PropTypes.func,
+    handleBlocksAdd: PropTypes.func,
+    handleOpenPreviewPage: PropTypes.func,
+    generatePage: PropTypes.func,
   };
 
   static defaultProps = {
-    onSelected: () => {},
+    handleBlocksAdd: () => {},
+    handleOpenPreviewPage: () => {},
+    generatePage: () => {},
   };
 
   constructor(props) {
@@ -35,10 +40,6 @@ class BlockPicker extends Component {
     this.props.blocks.search(value);
   };
 
-  handleBlockSelected = (block) => {
-    this.props.onSelected(block);
-  };
-
   handleCategorySlideChange = (tabIndex, index) => {
     const id = `#${this.idPrefix}` + index;
     const title = document.querySelector(id);
@@ -50,9 +51,14 @@ class BlockPicker extends Component {
     });
   };
 
+  handleTabChange = (key) => {
+    this.props.blocks.setCurrentTabKey(key);
+  };
+
   render() {
-    const { materials, isLoading, type } = this.props.blocks;
-    const { style = {} } = this.props;
+    const { materials, isLoading, type, currentTabKey } = this.props.blocks;
+    const { blockGroups } = this.props.blockGroups;
+    const { style = {}, handleOpenPreviewPage, handleBlocksAdd,  generatePage } = this.props;
     if (!isLoading && materials.length == 0) {
       return (
         <div
@@ -79,6 +85,28 @@ class BlockPicker extends Component {
         </div>
       );
     }
+    const tabBarExtraContent = currentTabKey !== 'iceBlockGroups' ? (
+      <div
+        style={{
+          height: 39,
+          padding: '0 10px 0 0',
+          lineHeight: '24px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <Input
+          size="medium"
+          style={{ width: 160 }}
+          hasClear
+          placeholder="输入关键字"
+          value={this.props.blocks.originKeywords}
+          onChange={this.handleSearchBlock}
+          addonAfter="搜索"
+        />
+      </div>
+    ) : null;
+
     return (
       <div className="block-picker-panel" style={style}>
         <div className="block-picker-panel-wrapper">
@@ -90,48 +118,41 @@ class BlockPicker extends Component {
             }}
             size="small"
             type="bar"
-            tabBarExtraContent={
-              <div
-                style={{
-                  height: 39,
-                  padding: '0 10px 0 0',
-                  lineHeight: '24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <Input
-                  size="medium"
-                  style={{ width: 160 }}
-                  hasClear
-                  placeholder="输入关键字"
-                  value={this.props.blocks.originKeywords}
-                  onChange={this.handleSearchBlock}
-                  addonAfter="搜索"
-                />
-              </div>
-            }
+            activeKey={currentTabKey}
+            onChange={this.handleTabChange}
+            tabBarExtraContent={tabBarExtraContent}
           >
             {materials.map((material, index) => {
               const blocksWithCategory = material.blocksWithCategory;
-
               return (
                 <Tab.TabPane
                   tab={material.name}
-                  key={index}
+                  // 常规数据没有key，加塞的飞冰区块组合才有
+                  key={material.key ? material.key : index}
                   contentStyle={{ position: 'relative' }}
                   tabClassName="custom-material-tab"
                 >
-                  <BlockSlider
-                    onClick={this.handleCategorySlideChange.bind(this, index)}
-                    blocksWithCategory={blocksWithCategory}
-                  />
-                  <BlockCategory
-                    idPrefix={this.idPrefix}
-                    onSelected={this.handleBlockSelected}
-                    blocksWithCategory={blocksWithCategory}
-                    originKeywords={this.props.blocks.originKeywords}
-                  />
+                  {/* 区块组合，目前只在有飞冰物料源时展示 */}
+                  {material.key === 'iceBlockGroups' ? (
+                    <BlockGroupCategory 
+                      generatePage={generatePage}
+                      handleOpenPreviewPage={handleOpenPreviewPage}
+                      handleBlocksAdd={handleBlocksAdd}
+                    />
+                  ) : (
+                    [<BlockSlider  
+                      onClick={this.handleCategorySlideChange.bind(this, index)}
+                      key={0}
+                      blocksWithCategory={blocksWithCategory}
+                    />,
+                    <BlockCategory
+                      idPrefix={this.idPrefix}
+                      key={1}
+                      handleBlocksAdd={handleBlocksAdd}
+                      blocksWithCategory={blocksWithCategory}
+                      originKeywords={this.props.blocks.originKeywords}
+                    />]
+                  )}
                 </Tab.TabPane>
               );
             })}

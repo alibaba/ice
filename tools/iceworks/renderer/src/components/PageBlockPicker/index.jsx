@@ -1,5 +1,6 @@
 import { Dialog, Button, Feedback } from '@icedesign/base';
 import { inject, observer } from 'mobx-react';
+import { toJS } from 'mobx';
 import fs from 'fs';
 import Notification from '@icedesign/notification';
 import path from 'path';
@@ -30,11 +31,16 @@ class PageBlockPicker extends Component {
   };
 
   /**
-   * 添加区块
+   * 添加区块，支持多个
    */
-  handleSelectedBlock = (block) => {
+  handleBlocksAdd = (blockObj) => {
     const { pageBlockPicker, blocks } = this.props;
-    blocks.addBlock(block, pageBlockPicker.existBlocks);
+    if (!Array.isArray(blockObj)) {
+      blockObj = [blockObj];
+    } 
+    blockObj.forEach( block => 
+      blocks.addBlock(block, pageBlockPicker.existBlocks)
+    );
   };
 
   /**
@@ -54,13 +60,18 @@ class PageBlockPicker extends Component {
    * 开始下载区块
    */
   handleOk = () => {
-    const { pageBlockPicker, blocks = {} } = this.props;
+    
+    const { pageBlockPicker, projects } = this.props;
     const { pageName, projectPath } = pageBlockPicker;
-    const { isNodeProject } = this.props.projects.currentProject;
+    const { currentProject = {} } = projects;
+    const { clientPath, clientSrcPath } = currentProject;
+
+    const blocks = toJS(this.props.blocks.selected);
+
     // 检测 block 是否存在冲突等
-    if (pageBlockPicker.blockHasConflict(blocks.selected)) {
+    if (pageBlockPicker.blockHasConflict(blocks)) {
       Feedback.toast.error(
-        `区块名 ${pageBlockPicker.blockHasConflict()} 存在冲突，请修改后重试`
+        `区块名 ${pageBlockPicker.blockHasConflict(blocks)} 存在冲突，请修改后重试`
       );
       return false;
     }
@@ -69,10 +80,9 @@ class PageBlockPicker extends Component {
     let blocksDependencies;
     scaffolder.utils
       .downloadBlocksToPage({
-        destDir: projectPath,
-        blocks: blocks.selected,
+        clientSrcPath,
+        blocks: blocks,
         pageName: pageName,
-        isNodeProject,
       })
       .catch((err) => {
         pageBlockPicker.downloadDone();
@@ -88,7 +98,7 @@ class PageBlockPicker extends Component {
         return npm.run(
           ['install', '--no-package-lock'].concat(scaffoldDependencies),
           {
-            cwd: projectPath,
+            cwd: clientPath,
           }
         );
       })
@@ -106,7 +116,7 @@ class PageBlockPicker extends Component {
           error: error,
         });
         // 兜底逻辑，将依赖信息写入到 package.json 里
-        const packageFile = path.join(projectPath, 'package.json');
+        const packageFile = path.join(clientPath, 'package.json');
         new Promise((resolve, reject) => {
           try {
             const pkgData = fs.readFileSync(packageFile);
@@ -136,7 +146,7 @@ class PageBlockPicker extends Component {
                 title: '写入 package.json 失败',
                 error:
                   'package.json 不存在或存在语法错误 检查 ' +
-                  path.join(projectPath, 'package.json'),
+                  path.join(clientPath, 'package.json'),
               });
             }
           } else {
@@ -161,7 +171,9 @@ class PageBlockPicker extends Component {
           </div>
           <div className="page-block-picker-body">
             <div className="page-block-picker-panel">
-              <BlockPickerPanel onSelected={this.handleSelectedBlock} />
+              <BlockPickerPanel 
+                handleBlocksAdd={this.handleBlocksAdd}
+              />
             </div>
             <div className="page-block-picker-preview">
               {this.props.pageBlockPicker.existBlocks.length ? (
@@ -170,7 +182,6 @@ class PageBlockPicker extends Component {
                   count={this.props.pageBlockPicker.existBlocks.length}
                 />
               ) : null}
-
               {this.props.pageBlockPicker.existBlocks &&
                 this.props.pageBlockPicker.existBlocks.map((blockName) => {
                   return (
@@ -195,7 +206,6 @@ class PageBlockPicker extends Component {
                 ? '正在下载区块...'
                 : '开始下载'}
             </Button>
-
             <Button
               disabled={this.props.pageBlockPicker.isDownloading}
               onClick={this.handleClose}

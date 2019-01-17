@@ -1,13 +1,12 @@
 {
   "name": "@icedesign/area-stack-chart-block",
-  "version": "0.1.4",
+  "version": "2.0.0",
   "description": "叠加面积图",
   "main": "src/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -23,30 +22,30 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
+    "@icedesign/container": "^1.x",
     "bizcharts": "^3.0.5",
     "classnames": "^2.2.5",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.3",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "area-stack-chart",
-    "screenshot": "https://img.alicdn.com/tfs/TB13crWidfJ8KJjy0FeXXXKEXXa-1754-994.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/area-stack-chart-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "叠加面积图",
     "categories": [
       "图表"
-    ]
+    ],
+    "version-0.x": "0.1.7"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/area-stack-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/area-stack-chart-block/build/index.html"
 }

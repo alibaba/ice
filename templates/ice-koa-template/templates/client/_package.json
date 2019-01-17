@@ -1,0 +1,41 @@
+{
+  "name": "ice-koa-react-scaffold",
+  "version": "1.0.5",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "ice dev --project-type=nodejs",
+    "build": "ice build --project-type=nodejs",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/skin",
+    "entry": "src/index.js",
+    "localization": false
+  },
+  "proxyConfig": {
+    "/api": {
+      "enable": true,
+      "target": "http://127.0.0.1:3000"
+    }
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.6.7"
+  }
+}

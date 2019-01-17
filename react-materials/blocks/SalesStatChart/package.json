@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/sales-stat-chart-block",
-  "version": "0.1.4",
+  "version": "2.0.0",
   "description": "显示销售数据或者类似形式数据的图表模块",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,27 +25,26 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.5-1",
-    "@icedesign/container": "^0.1.1",
-    "bizcharts": "^3.1.3-beta.2",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "sales-stat-chart",
-    "screenshot": "https://img.alicdn.com/tfs/TB1VH7rbuuSBuNjy1XcXXcYjFXa-2812-980.png",
+    "screenshot": "https://unpkg.com/@icedesign/sales-stat-chart-block/screenshot.png",
     "title": "销售数据图表",
     "categories": [
       "图表",
       "数据展示"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.8"
   },
-  "homepage": "https://alibaba.github.io/ice/block/sales-stat-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/sales-stat-chart-block/build/index.html"
 }

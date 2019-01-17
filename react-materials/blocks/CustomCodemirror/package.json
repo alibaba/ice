@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/custom-codemirror-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "CodeMirror是一款功能强大的代码高亮插件，他不仅提供了高亮功能，其丰富的方法属性也封装了缩进、自动换行、获取编辑文本、设置编辑文本、回退功能等多种实用效果",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,10 +23,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "codemirror": "^5.39.0",
-    "react-codemirror2": "^5.1.0"
+    "react-codemirror2": "^5.1.0",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -37,7 +38,8 @@
     "categories": [
       "代码编辑器"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1i09UD7yWBuNjy0FpXXassXXa-2868-668.png"
+    "screenshot": "https://unpkg.com/@icedesign/custom-codemirror-block/screenshot.png",
+    "version-0.x": "1.0.3"
   },
-  "homepage": "https://alibaba.github.io/ice/block/custom-codemirror/preview"
+  "homepage": "https://unpkg.com/@icedesign/custom-codemirror-block/build/index.html"
 }

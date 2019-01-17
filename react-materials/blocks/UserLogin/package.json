@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/user-login-block",
-  "version": "0.1.6",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,25 +25,24 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
     "@icedesign/form-binder": "^0.1.3",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "user-login",
-    "screenshot": "https://img.alicdn.com/tfs/TB1WlGbXMmTBuNjy1XbXXaMrVXa-2868-1602.png",
+    "screenshot": "https://unpkg.com/@icedesign/user-login-block/screenshot.png",
     "title": "登录页",
     "categories": [
       "登录页"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.9"
   },
-  "homepage": "https://alibaba.github.io/ice/block/user-login/preview"
+  "homepage": "https://unpkg.com/@icedesign/user-login-block/build/index.html"
 }

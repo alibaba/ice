@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/display-card-block",
-  "version": "0.2.0",
+  "version": "2.0.0",
   "description": "展示型卡片",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,28 +21,28 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "display-card",
-    "screenshot": "https://img.alicdn.com/tfs/TB1AwCEXNGYBuNjy0FnXXX5lpXa-1900-278.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/display-card-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "展示型卡片",
     "categories": [
       "数据展示"
-    ]
+    ],
+    "version-0.x": "0.2.3"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/display-card/preview"
+  "homepage": "https://unpkg.com/@icedesign/display-card-block/build/index.html"
 }

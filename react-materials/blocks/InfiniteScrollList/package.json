@@ -1,6 +1,6 @@
 {
-  "name": "@react-materials/infinite-scroll-list-block",
-  "version": "1.0.0",
+  "name": "@icedesign/infinite-scroll-list-block",
+  "version": "2.0.0",
   "description": "无限滚动列表",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,7 +26,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "react": "^16.2.0",
     "react-virtualized": "^9.20.1"
   },
@@ -35,6 +36,8 @@
     "categories": [
       "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1F8wmGGmWBuNjy1XaXXXCbXXa-3442-600.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/infinite-scroll-list-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  },
+  "homepage": "https://unpkg.com/@icedesign/infinite-scroll-list-block/build/index.html"
 }

@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/creative-forget-password-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "左右布局的忘记密码表单页",
-  "homepage": "https://alibaba.github.io/ice/block/creative-forget-password/preview",
+  "homepage": "https://unpkg.com/@icedesign/creative-forget-password-block/build/index.html",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -23,10 +24,10 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
     "@icedesign/form-binder": "^0.1.7",
     "prop-types": "^15.6.2",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "creative-forget-password",
@@ -34,6 +35,7 @@
     "categories": [
       "表单"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1H8GauBjTBKNjSZFuXXb0HFXa-2602-1550.png"
+    "screenshot": "https://unpkg.com/@icedesign/creative-forget-password-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

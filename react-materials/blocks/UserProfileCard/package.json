@@ -1,11 +1,12 @@
 {
-  "name": "@react-materials/user-profile-card-block",
-  "version": "1.0.1",
+  "name": "@icedesign/user-profile-card-block",
+  "version": "2.0.0",
   "description": "用于展示用户详细信息的卡片",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,9 +23,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2",
-    "@icedesign/img": "^0.1.2"
+    "@icedesign/container": "^1.x",
+    "@icedesign/img": "^0.1.2",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.2.0",
@@ -36,7 +37,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1oSydCTtYBeNjy1XdXXXXyVXa-2870-428.png"
+    "screenshot": "https://unpkg.com/@icedesign/user-profile-card-block/screenshot.png",
+    "version-0.x": "1.0.0"
   },
-  "homepage": "https://alibaba.github.io/ice/block/user-profile-card/preview"
+  "homepage": "https://unpkg.com/@icedesign/user-profile-card-block/build/index.html"
 }

@@ -1,12 +1,13 @@
 {
-  "name": "@react-materials/user-landing-block",
-  "version": "1.0.1",
+  "name": "@icedesign/user-landing-block",
+  "version": "2.0.0",
   "description": "展示用户相关信息、等级等",
-  "homepage": "https://alibaba.github.io/ice/block/user-landing/preview",
+  "homepage": "https://unpkg.com/@icedesign/user-landing-block/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -23,7 +24,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "@icedesign/img": "^0.1.2",
     "prop-types": "^15.5.8",
     "react": "^16.2.0"
@@ -34,6 +35,7 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1auxWpaAoBKNjSZSyXXaHAVXa-1868-208.png"
+    "screenshot": "https://unpkg.com/@icedesign/user-landing-block/screenshot.png",
+    "version-0.x": "1.0.0"
   }
 }

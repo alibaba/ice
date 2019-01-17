@@ -2,42 +2,51 @@
  * 按照下载量和最新的规则对模板进行排序推荐
  */
 const scaffolds = [
-  'ice-customer-analysis-admin',
+  // 基础模板
+  'ice-design-pro',
+  'ice-design-lite',
+
+  // 行业模板
+  'ice-operation-admin',
+  'ice-government-management-admin',
+  'ice-creator-admin',
+  'ice-application-management-admin',
+  'ice-design-cms',
   'ice-voice-chat-admin',
   'ice-library-management-admin',
   'ice-asset-management-admin',
-  'ice-application-management-admin',
   'ice-task-management-admin',
-  'ice-government-management-admin',
   'ice-monitor-dashboard',
   'ice-algorithm-model-admin',
   'ice-contract-management-admin',
   'ice-usertrack-admin',
-  'ice-yunqi-homepage',
-  'ice-scroll-screen-homepage',
   'ice-builder-platform',
-  'ice-design-pro',
-  'ice-design-cms',
-  'ice-design-analysis',
   'ice-design-schools',
-  'ice-design-lite',
-  'ice-post-platfrom',
-  'ice-light-bootstrap-dashboard',
+  'ice-customer-analysis-admin',
   'ice-reviews-management',
-  'ice-creative-dashboard',
-  'ice-coreui-admin',
-  'ice-material-dashboard',
   'ice-design-dashboard',
   'ice-design-hospital',
   'ice-design-ecommerce',
   'ice-design-project-management',
+
+  // 数据可视化模板
+  'ice-design-analysis',
+
+  // 官网模板
+  'ice-yunqi-homepage',
+  'ice-scroll-screen-homepage',
   'ice-website-homepage',
   'iceworks-homepage',
   'ice-creator-landingpage',
   'ice-open-platform-landingpage',
-  'ice-operation-platform',
+
+  // 社区模板
   'create-react-app',
-  'ice-opensource-site',
+  'light-bootstrap-dashboard',
+  'creative-dashboard',
+  'coreui-admin',
+  'material-dashboard',
+  'opensource-site',
 ];
 
 module.exports = scaffolds;

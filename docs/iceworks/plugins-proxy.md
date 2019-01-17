@@ -4,25 +4,26 @@ category: Iceworks
 order: 2
 ---
 
-# 插件-代理配置
+代理功能是前后端联调时很常见的需求，为了代码维护性考虑前端请求后端接口时写的都是相对路径如 `/api/getFoo.json`，此时如果我们在本地通过访问`http://127.0.0.1:4444` 来调试页面，所有相对路径的 API 最终都会变成 `http://127.0.0.1:4444/api/getFoo.json`，因为我们调试服务并没有提供这些接口，这些请求自然都会以 404 而结束。本文档介绍代理功能的使用方法。
 
-Iceworks 提供代理配置功能，该功能可将匹配的路径代理到目标路径上。
+## 操作方式
 
-## 代理设置
+以下两种方式都可以使用：
 
-面板上的设置保存后以 `proxyConfig` 字段的方式保存在 package.json 文件中：
+1. 在 Iceworks 上点击代理配置的编辑按钮，进行代理配置
+2. 在 `package.json` 中配置 `proxyConfig` 字段：
 
-```js
-{
-  ...
-  "proxyConfig": {
-    "/**": {
-      "enable": true,
-      "target": "http://127.0.0.1:6001"
+  ```js
+  {
+    ...
+    "proxyConfig": {
+      "/**": {
+        "enable": true,
+        "target": "http://127.0.0.1:6001"
+      }
     }
   }
-}
-```
+  ```
 
 ### 匹配规则
 
@@ -49,14 +50,7 @@ axios({
 
 请求发出后将会被代理到 `http://127.0.0.1:6001/api/proxy`
 
-观察 network 面板可以看到如下信息：
+### 注意事项
 
-![](https://img.alicdn.com/tfs/TB1iHxTwgmTBuNjy1XbXXaMrVXa-769-407.png)
-
-## 注意事项
-
-代理并不解决跨域问题，代理目标需要开启 CORS 配置 <https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS>
-
-服务端开启后的请求如下：
-
-![](https://img.alicdn.com/tfs/TB1RmuHweSSBuNjy0FlXXbBpVXa-769-407.png)
+- 代理之后我们可以通过相对路径的接口正常请求到后端服务，但是如果后端接口做了帐号登录鉴权之类的事情请求一样回失败，因为此时调试页面里并没有登录相关的 cookie 信息
+- 代理之后可以理解为请求是从服务端发出，因此绕过了浏览器的同源策略，一定程度可以解决跨域问题，但一样无法绕过上文提到的 cookie 鉴权等相关问题

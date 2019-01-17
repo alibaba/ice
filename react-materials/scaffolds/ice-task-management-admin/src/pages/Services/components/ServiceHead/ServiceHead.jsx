@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
-import { Button } from '@icedesign/base';
+import { Button, Dialog } from '@icedesign/base';
 
 export default class ServiceHead extends Component {
-  static displayName = 'ServiceHead';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  handleClick = () => {
+    Dialog.confirm({
+      content: '只有管理员才能操作',
+    });
+  };
 
   render() {
     return (
       <div style={styles.head}>
-        <Button size="large" style={{ marginRight: '10px' }}>
-          服务管理
+        <Button
+          size="large"
+          style={{ marginRight: '10px' }}
+          onClick={this.handleClick}
+        >
+          项目管理
         </Button>
-        <Button size="large">授权管理</Button>
+        <Button size="large" type="primary" onClick={this.handleClick}>
+          授权管理
+        </Button>
       </div>
     );
   }

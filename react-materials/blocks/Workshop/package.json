@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/workshop-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于全屏的信息展示",
-  "homepage": "https://alibaba.github.io/ice/block/workshop/preview",
+  "homepage": "https://unpkg.com/@icedesign/workshop-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -34,6 +35,7 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1qnxpupkoBKNjSZFkXXb4tFXa-2850-1392.png"
+    "screenshot": "https://unpkg.com/@icedesign/workshop-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

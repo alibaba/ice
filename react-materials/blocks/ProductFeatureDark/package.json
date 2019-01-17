@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/product-feature-dark-block",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "描述产品特点区块，深色主题，左文右图展示形式。",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -31,7 +32,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1yi7OpuuSBuNjy1XcXXcYjFXa-2484-1000.png"
+    "screenshot": "https://unpkg.com/@icedesign/product-feature-dark-block/screenshot.png",
+    "version-0.x": "1.0.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/product-feature-dark/preview"
+  "homepage": "https://unpkg.com/@icedesign/product-feature-dark-block/build/index.html"
 }

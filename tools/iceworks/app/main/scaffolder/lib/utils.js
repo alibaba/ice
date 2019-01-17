@@ -4,9 +4,10 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const request = require('request');
 const tar = require('tar');
-const uppercamelcase = require('uppercamelcase');
+const upperCamelCase = require('uppercamelcase');
 const zlib = require('zlib');
 const requestProgress = require('request-progress');
+const pathExists = require('path-exists');
 
 const config = require('../../config');
 
@@ -14,6 +15,7 @@ const DependenciesError = require('./errors/DependenciesError');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
+const { emitProcess, emitError, emitProgress } = require('../../services/tracking');
 
 /**
  * 批量下载 block 到页面中
@@ -22,14 +24,17 @@ const logger = require('../../logger');
  * @param {array} blocks 区块数组
  * @param {string} pageName 页面名称
  */
-function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, isNodeProject }) {
+function downloadBlocksToPage({ clientSrcPath, blocks, pageName }) {
   return Promise.all(
-    blocks.map((block) => downloadBlockToPage({ destDir, pageName, block, isNodeProject }))
+    blocks.map((block) => downloadBlockToPage({ clientSrcPath, pageName, block }))
   )
     .then((filesList) => {
       return Promise.all(
         filesList.map((_, idx) => {
           const block = blocks[idx];
+          // 根据项目版本下载依赖
+          const pkg = getPackageByPath(destDir);
+          const projectVersion = getProjectVersion(pkg);
           // 兼容旧版物料源
           if (block.npm && block.version && ( block.type != 'custom' ) ) {
             return getDependenciesFromNpm({
@@ -37,9 +42,15 @@ function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, isNod
               version: block.version,
             });
           } else if (block.source && block.source.type == 'npm' && ( block.type != 'custom' ) ) {
+            let version = block.source.version;
+            // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
+            if (projectVersion === '1.x')  {
+              // 兼容没有'version-0.x'字段的情况
+              version = block.source['version-0.x'] || block.source.version;
+            }
             return getDependenciesFromNpm({
+              version,
               npm: block.source.npm,
-              version: block.source.version,
               registry: block.source.registry,
             });
           } else if (block.type == 'custom') {
@@ -65,16 +76,15 @@ function downloadBlocksToPage({ destDir = process.cwd(), blocks, pageName, isNod
     });
 }
 
-function downloadBlockToPage({ destDir = process.cwd(), block, pageName, isNodeProject }) {
+function downloadBlockToPage({ clientSrcPath, block, pageName }) {
   if (!block || ( !block.source && block.type != 'custom' )) {
     throw new Error(
       'block need to have specified source at download block to page method.'
     );
   }
+  emitProcess('generateBlocks', block.title || block.alias || block.blockName || block.name);
 
-  const componentsDir = isNodeProject
-    ? path.join(destDir, 'client/pages', pageName, 'components')
-    : path.join(destDir, 'src/pages', pageName, 'components');
+  const componentsDir = path.join(clientSrcPath, 'pages', pageName, 'components');
   // 保证文件夹存在
   mkdirp.sync(componentsDir);
   logger.report('app', {
@@ -83,27 +93,55 @@ function downloadBlockToPage({ destDir = process.cwd(), block, pageName, isNodeP
       name: block.name,
     },
   });
+
+  // 根据项目版本下载依赖
+  const pkg = getPackageByPath(destDir);
+  const projectVersion = getProjectVersion(pkg);
+
   if(block.type == 'custom'){
     return extractCustomBlock(
       block,
       path.join(
         componentsDir,
-        block.alias || uppercamelcase(block.name) || block.className
+        block.alias || upperCamelCase(block.name) || block.className
       )
     );
   }
   return materialUtils
-    .getTarballURLBySource(block.source)
+    .getTarballURLBySource(block.source, projectVersion)
     .then((tarballURL) => {
       return extractBlock(
         path.join(
           componentsDir,
-          block.alias || uppercamelcase(block.name) || block.className
+          block.alias || upperCamelCase(block.name) || block.className
         ),
         tarballURL,
-        destDir
+        clientSrcPath
       );
     });
+}
+
+function getPackageByPath(destDir) {
+  const pkgPath = path.join(destDir, 'package.json');
+  if (pathExists.sync(pkgPath)) {
+    try {
+      const packageText = fs.readFileSync(pkgPath);
+      return JSON.parse(packageText.toString());
+    } catch (e) {}
+  }
+}
+
+/**
+ * 1. 有 @icedesign/base 相关依赖 则返回 0.x
+ * 2. 只有 @alifd/next 相关依赖 则返回 1.x
+ * 3. 都没有 则返回 1.x
+ * @param {*} pkg 
+ */
+function getProjectVersion(pkg) {
+  const dependencies = pkg.dependencies || {};
+  const hasIceDesignBase = dependencies['@icedesign/base'];
+  return hasIceDesignBase ? '0.x' : '1.x';
+
 }
 
 function extractTarball(tarballURL, destDir) {
@@ -151,9 +189,9 @@ function extractTarball(tarballURL, destDir) {
  * 把 block 下载到项目目录下，创建页面会使用到该功能
  * 添加 block 到页面中也使用该方法
  *
- * @param destDir
+ * @param destDir // block 的目标路径
  * @param tarballURL
- * @param projectDir
+ * @param clientPath // 前端项目路径
  * @param ignoreFiles
  * @returns {Promise<any>}
  */
@@ -192,7 +230,7 @@ function extractBlock(destDir, tarballURL, projectDir, ignoreFiles, progressFunc
         let destPath = ''; // 生成文件的路径
         if (isMockFiles) {
           destPath = path.join(
-            projectDir,
+            clientPath,
             entry.path.replace(/^package\//, '')
           );
         } else {
@@ -310,13 +348,13 @@ async function getDependenciesFromMaterial(material = {}) {
 /**
  * 解压自定义区块
  */
-function extractCustomBlock (block, projectDir) {
-  return new Promise((resolve) => {
+function extractCustomBlock (block, BlockDir) {
+  return new Promise((resolve, reject) => {
     const allFiles = [];
     let codeFileTree = block.code;
-    mkdirp.sync(projectDir);
-    fs.writeFileSync(path.join(projectDir, 'index.jsx'), codeFileTree['index.jsx']);
-    allFiles.push(path.join(projectDir, 'index.jsx'));
+    mkdirp.sync(BlockDir);
+    fs.writeFileSync(path.join(BlockDir, 'index.jsx'), codeFileTree['index.jsx']);
+    allFiles.push(path.join(BlockDir, 'index.jsx'));
     resolve(allFiles);
   });
 }

@@ -1,13 +1,12 @@
 {
   "name": "@icedesign/success-dialog-block",
-  "version": "0.1.8",
+  "version": "2.0.0",
   "description": "提示框-成功",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -23,14 +22,13 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
+    "@icedesign/container": "^1.x",
     "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
@@ -40,12 +38,13 @@
     "categories": [
       "模态框"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1CMVpi5qAXuNjy1XdXXaYcVXa-1278-540.png",
-    "themePackage": "@icedesign/skin"
+    "screenshot": "https://unpkg.com/@icedesign/success-dialog-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.11"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/success-dialog/preview"
+  "homepage": "https://unpkg.com/@icedesign/success-dialog-block/build/index.html"
 }

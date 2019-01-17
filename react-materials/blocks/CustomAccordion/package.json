@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/custom-accordion-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于产品简介，可以折叠/展开的内容区域",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,8 +23,8 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.4"
+    "@icedesign/container": "^1.x",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
     "prop-types": "^15.5.8",
@@ -35,6 +36,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1U7JgIuSSBuNjy0FlXXbBpVXa-2470-592.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/custom-accordion-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  },
+  "homepage": "https://unpkg.com/@icedesign/custom-accordion-block/build/index.html"
 }

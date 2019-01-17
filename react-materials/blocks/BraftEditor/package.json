@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/braft-editor-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "基于 draft-js 开发的美观易用的 React 富文本编辑器",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,9 +23,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2",
-    "braft-editor": "^1.9.8"
+    "@icedesign/container": "^1.x",
+    "braft-editor": "^1.9.8",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -36,7 +37,11 @@
     "categories": [
       "富文本编辑器"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1qj.uD9tYBeNjSspkXXbU8VXa-1916-577.png"
+    "screenshot": "https://unpkg.com/@icedesign/braft-editor-block/screenshot.png",
+    "version-0.x": "1.0.3"
   },
-  "homepage": "https://alibaba.github.io/ice/block/braft-editor/preview"
+  "homepage": "https://unpkg.com/@icedesign/braft-editor-block/build/index.html",
+  "devDependencies": {
+    "react-dom": "^16.7.0"
+  }
 }

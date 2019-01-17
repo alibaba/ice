@@ -1,11 +1,12 @@
 {
-  "name": "@react-materials/industry-banner-block",
-  "version": "1.0.1",
+  "name": "@icedesign/industry-banner-block",
+  "version": "2.0.0",
   "description": "行业专区的图文介绍",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -31,7 +32,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1lj3RteuSBuNjy1XcXXcYjFXa-2868-468.png"
+    "screenshot": "https://unpkg.com/@icedesign/industry-banner-block/screenshot.png",
+    "version-0.x": "1.0.0"
   },
-  "homepage": "https://alibaba.github.io/ice/block/industry-banner/preview"
+  "homepage": "https://unpkg.com/@icedesign/industry-banner-block/build/index.html"
 }

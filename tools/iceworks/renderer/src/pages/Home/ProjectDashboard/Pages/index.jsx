@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import React, { Component } from 'react';
 import dayjs from 'dayjs';
+import Notification from '@icedesign/notification';
 
 import { readdirSync } from '../../../../lib/file-system';
 import DashboardCard from '../../../../components/DashboardCard/';
@@ -15,7 +16,13 @@ import ExtraButton from '../../../../components/ExtraButton/';
 import Icon from '../../../../components/Icon';
 import EmptyTips from '../../../../components/EmptyTips';
 
+import dialog from '../../../../components/dialog';
+
+import services from '../../../../services';
+const { log, interaction, scaffolder } = services;
+
 import './index.scss';
+import { Dialog } from '@icedesign/base';
 
 function formatDate(date) {
   return dayjs(date).format('YYYY-MM-DD hh:mm');
@@ -76,9 +83,7 @@ class PagesCard extends Component {
     const { currentProject } = projects;
 
     if (currentProject && currentProject.fullPath) {
-      const pagesDirectory = currentProject.isNodeProject
-        ? path.join(currentProject.fullPath, 'client/pages')
-        : path.join(currentProject.fullPath, 'src/pages');
+      const pagesDirectory = path.join( currentProject.clientSrcPath, 'pages' );
       const pages = recursivePagesSync(pagesDirectory, pagesDirectory);
       this.setState({ pages: pages });
     } else {
@@ -88,13 +93,32 @@ class PagesCard extends Component {
 
   handleCreatePage = () => {
     const { projects } = this.props;
-    this.props.newpage.setTargetPath(projects.currentProject.fullPath);
     this.props.newpage.toggle();
   };
 
-  handleDeletePage = (fullPath, name) => {
-    // todo 删除 page
-    console.log(fullPath, name);
+  handlePageDelete = (name) => {
+    const { projects, newpage } = this.props;
+    const { currentProject } = projects;
+
+    Dialog.confirm({
+      title: '删除页面',
+      content: `确定删除页面 ${name} 吗？`,
+      onOk: () => {
+          scaffolder.removePage({
+          clientSrcPath: currentProject.clientSrcPath,
+          pageFolderName: name
+        })
+        .then(() => {
+          log.debug('删除页面成功');
+          Notification.success({ message: `删除页面 ${name} 成功` });
+          this.serachPages();
+        })
+        .catch((error) => {
+          log.debug('删除页面失败', error);
+          dialog.notice({ title: '删除页面失败', error: error });
+        });
+      }
+    });
   };
 
   handlePageAddBlock(fullPath, name) {
@@ -148,6 +172,17 @@ class PagesCard extends Component {
               )}
             >
               <Icon type="block-add" />
+            </ExtraButton>
+            <ExtraButton
+              style={{ color: '#3080FE' }}
+              placement={'top'}
+              tipText="删除页面"
+              onClick={this.handlePageDelete.bind(
+                this,
+                page.name
+              )}
+            >
+              <Icon type="trash" />
             </ExtraButton>
           </div>
         </div>

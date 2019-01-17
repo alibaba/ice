@@ -1,65 +1,16 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
-import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
+import data from './data';
 
-import { enquireScreen } from 'enquire-js';
-
-@DataBinder({
-  tableData: {
-    // 详细请求配置请参见 https://github.com/axios/axios
-    url: '/mock/simple-table-list.json',
-    params: {
-      page: 1,
-    },
-    defaultBindingData: {
-      list: [],
-      total: 100,
-      pageSize: 10,
-      currentPage: 1,
-    },
-  },
-})
 export default class SimpleTable extends Component {
   static displayName = 'SimpleTable';
 
   static propTypes = {};
 
   static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      isMobile: false,
-    };
-  }
-
-  componentDidMount() {
-    this.enquireScreenRegister();
-    this.fetchData({
-      page: 1,
-    });
-  }
-
-  enquireScreenRegister = () => {
-    const mediaCondition = 'only screen and (max-width: 720px)';
-
-    enquireScreen((mobile) => {
-      this.setState({
-        isMobile: mobile,
-      });
-    }, mediaCondition);
-  };
-
-  fetchData = ({ page }) => {
-    this.props.updateBindingData('tableData', {
-      data: {
-        page,
-      },
-    });
-  };
 
   renderTitle = (value, index, record) => {
     return (
@@ -120,24 +71,11 @@ export default class SimpleTable extends Component {
     );
   };
 
-  changePage = (currentPage) => {
-    this.fetchData({
-      page: currentPage,
-    });
-  };
-
   render() {
-    const tableData = this.props.bindingData.tableData;
-
     return (
       <div className="simple-table">
         <IceContainer>
-          <Table
-            dataSource={tableData.list}
-            isLoading={tableData.__loading} // eslint-disable-line
-            className="basic-table"
-            hasBorder={false}
-          >
+          <Table dataSource={data} className="basic-table" hasBorder={false}>
             <Table.Column
               title="问题描述"
               cell={this.renderTitle}
@@ -163,13 +101,7 @@ export default class SimpleTable extends Component {
             />
           </Table>
           <div style={styles.paginationWrapper}>
-            <Pagination
-              current={tableData.currentPage}
-              pageSize={tableData.pageSize}
-              total={tableData.total}
-              onChange={this.changePage}
-              type={this.state.isMobile ? 'simple' : 'normal'}
-            />
+            <Pagination />
           </div>
         </IceContainer>
       </div>

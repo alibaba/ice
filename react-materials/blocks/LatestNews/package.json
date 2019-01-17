@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/latest-news-block",
-  "version": "0.1.4",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,25 +25,24 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.2",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.7",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "latest-news",
-    "screenshot": "https://img.alicdn.com/tfs/TB1bxhiXf1TBuNjy0FjXXajyXXa-1856-554.png",
+    "screenshot": "https://unpkg.com/@icedesign/latest-news-block/screenshot.png",
     "title": "最新消息列表",
     "categories": [
       "信息展示"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.7"
   },
-  "homepage": "https://alibaba.github.io/ice/block/latest-news/preview"
+  "homepage": "https://unpkg.com/@icedesign/latest-news-block/build/index.html"
 }

@@ -23,7 +23,7 @@ function withCssHotLoader(loaders) {
   return loaders;
 }
 
-module.exports = (buildConfig = {}) => {
+module.exports = (buildConfig = {}, themeConfig) => {
   const babelConfig = getBabelConfig(buildConfig);
   const sassLoaders = [
     {
@@ -45,16 +45,19 @@ module.exports = (buildConfig = {}) => {
   ];
 
   const theme = buildConfig.theme || buildConfig.themePackage;
+
   if (theme) {
     // eslint-disable-next-line no-console
-    console.log(colors.green('Info:'), '使用皮肤包', theme);
-    sassLoaders.push({
-      loader: require.resolve('ice-skin-loader'),
-      options: {
-        themeFile: path.join(paths.appNodeModules, `${theme}/variables.scss`),
-      },
-    });
+    console.log(colors.green('Info:'), '使用主题包', theme);
   }
+
+  sassLoaders.push({
+    loader: require.resolve('ice-skin-loader'),
+    options: {
+      themeFile: theme && path.join(paths.appNodeModules, `${theme}/variables.scss`),
+      themeConfig,
+    },
+  });
 
   // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
   const miniCssExtractPluginLoader = { loader: MiniCssExtractPlugin.loader };

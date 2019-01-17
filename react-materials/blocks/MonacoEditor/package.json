@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/monaco-editor-block",
-  "version": "0.1.9",
+  "version": "2.0.0",
   "description": "Monaco 代码编辑器",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,31 +21,31 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
     "react-monaco-editor": "^0.13.0",
-    "regenerator-runtime": "^0.11.1"
+    "regenerator-runtime": "^0.11.1",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "monaco-editor",
-    "screenshot": "https://gw.alicdn.com/tfs/TB1bOKfjvDH8KJjy1XcXXcpdXXa-1886-1236.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/monaco-editor-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "Monaco 代码编辑器",
     "categories": [
       "表单"
-    ]
+    ],
+    "version-0.x": "0.1.12"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/monaco-editor/preview"
+  "homepage": "https://unpkg.com/@icedesign/monaco-editor-block/build/index.html"
 }

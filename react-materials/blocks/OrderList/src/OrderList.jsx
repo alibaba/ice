@@ -1,7 +1,109 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Table } from '@icedesign/base';
+import { Table } from '@alifd/next';
 import IceContainer from '@icedesign/container';
+
+const mockData = [
+  {
+    price: 'US $2.45',
+    status: '0',
+    id: 1,
+    product: [
+      {
+        description: '2017秋新款女韩版宽松一字领长袖打底衫套头针织薄款上衣',
+        title: '单号：234253124122414',
+      },
+    ],
+    children: [
+      {
+        price: 'US $2.5',
+        status: 1,
+        id: 2,
+        product: [
+          {
+            description: 'Free shipping women Casual dresses lady dress plus size 2014',
+            avatar: require('./images/placeholder.jpg'),
+          },
+        ],
+      }
+    ]
+  },
+  {
+    price: 'US $2.5',
+    status: 1,
+    id: 2,
+    product: [
+      {
+        description: '冬季美翻天90白鹅绒保暖连帽狐狸毛羽绒服外套',
+        title: '单号：1567562412414',
+        avatar: require('./images/placeholder.jpg'),
+      },
+    ],
+    children: [
+      {
+        price: 'US $2.5',
+        status: 1,
+        id: 2,
+        product: [
+          {
+            description: '冬季美翻天90白鹅绒保暖连帽狐狸毛羽绒服外套',
+            avatar: require('./images/placeholder.jpg'),
+          },
+        ],
+      }
+    ]
+  },
+  {
+    price: 'US $2.5',
+    status: 1,
+    id: 3,
+    product: [
+      {
+        description:
+          '柒柒家2017冬新款韩国时尚刺绣加厚超大毛领羽绒服女中长款过膝潮',
+        title: '单号：145425342414',
+        avatar: require('./images/placeholder.jpg'),
+      },
+    ],
+    children: [
+      {
+        price: 'US $2.5',
+        status: 1,
+        id: 2,
+        product: [
+          {
+            description: '冬季美翻天90白鹅绒保暖连帽狐狸毛羽绒服外套',
+            avatar: require('./images/placeholder.jpg'),
+          },
+        ],
+      }
+    ]
+  },
+  {
+    price: 'US $2.5',
+    status: 1,
+    id: 4,
+    product: [
+      {
+        description: '宽松大码长袖镂空打底衫',
+        title: '单号：12312412412414',
+        avatar: require('./images/placeholder.jpg'),
+      },
+    ],
+    children: [
+      {
+        price: 'US $2.5',
+        status: 1,
+        id: 2,
+        product: [
+          {
+            description: '冬季美翻天90白鹅绒保暖连帽狐狸毛羽绒服外套',
+            avatar: require('./images/placeholder.jpg'),
+          },
+        ],
+      }
+    ]
+  },
+];
 
 export default class OrderList extends Component {
   static displayName = 'OrderList';
@@ -13,29 +115,9 @@ export default class OrderList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableData: [],
+      tableData: mockData,
     };
   }
-
-  componentDidMount() {
-    this.getTableData();
-  }
-
-  /**
-   * 异步获取数据
-   */
-  getTableData = () => {
-    axios
-      .get('/mock/order-list.json')
-      .then((response) => {
-        this.setState({
-          tableData: response.data.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   /**
    * 渲染订单信息
@@ -107,8 +189,8 @@ export default class OrderList extends Component {
           <Table
             dataSource={tableData}
             getRowClassName={this.getRowClassName}
-            rowSelection={rowSelection}
             hasBorder={false}
+            rowSelection={this.handleRowSelection}
           >
             <Table.GroupHeader cell={this.renderOrderNumber} />
             <Table.Column

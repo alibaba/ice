@@ -1,12 +1,12 @@
 {
   "name": "@icedesign/landing-intro-banner-block",
-  "version": "0.1.3",
+  "version": "2.0.0",
   "description": "首页介绍 Banner",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,28 +22,28 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.3",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "landing-intro-banner",
-    "screenshot": "https://img.alicdn.com/tfs/TB1zP8Flx6I8KJjy0FgXXXXzVXa-2524-1154.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/landing-intro-banner-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "首页介绍",
     "categories": [
       "信息展示",
       "欢迎页"
-    ]
+    ],
+    "version-0.x": "1.0.0"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/landing-intro-banner/preview"
+  "homepage": "https://unpkg.com/@icedesign/landing-intro-banner-block/build/index.html"
 }

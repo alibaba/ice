@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Icon } from '@icedesign/base';
+import { Grid, Icon } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import AreaChart from './AreaChart';
 
@@ -21,7 +20,7 @@ export default class OrderStatusChart extends Component {
   render() {
     return (
       <IceContainer title="订单状态">
-        <Row type="wrap">
+        <Row wrap>
           <Col xxs="12" s="12" l="6">
             <div style={styles.box}>
               <h2 style={styles.counterNum}>

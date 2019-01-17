@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/wysiwyg-editor-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Wysiwyg 富文本编辑器，基于 ReactJS和 DraftJS 库构建的所见即所得编辑器",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,10 +23,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "draft-js": "^0.10.5",
-    "react-draft-wysiwyg": "^1.12.13"
+    "react-draft-wysiwyg": "^1.12.13",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -37,7 +38,8 @@
     "categories": [
       "富文本编辑器"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1RtWwD3mTBuNjy1XbXXaMrVXa-2874-766.png"
+    "screenshot": "https://unpkg.com/@icedesign/wysiwyg-editor-block/screenshot.png",
+    "version-0.x": "1.0.3"
   },
-  "homepage": "https://alibaba.github.io/ice/block/wysiwyg-editor/preview"
+  "homepage": "https://unpkg.com/@icedesign/wysiwyg-editor-block/build/index.html"
 }

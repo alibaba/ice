@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Search, Grid } from '@icedesign/base';
+import { Search, Grid } from '@alifd/next';
 import ArticleList from './ArticleList';
 import Filter from './Filter';
 

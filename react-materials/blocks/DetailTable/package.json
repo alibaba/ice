@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/detail-table-block",
-  "version": "0.1.7",
+  "version": "2.0.0",
   "description": "展示详情信息的表格",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,29 +21,29 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "detail-table",
-    "screenshot": "https://img.alicdn.com/tfs/TB1hplfjr_I8KJjy1XaXXbsxpXa-1886-700.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/detail-table-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "详情信息表格",
     "categories": [
       "表格"
-    ]
+    ],
+    "version-0.x": "0.1.10"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/detail-table/preview"
+  "homepage": "https://unpkg.com/@icedesign/detail-table-block/build/index.html"
 }

@@ -1,12 +1,12 @@
 {
   "name": "@icedesign/progress-table-block",
-  "version": "0.1.10",
+  "version": "2.0.0",
   "description": "进度条表格",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,28 +22,28 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^0.1.0"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^0.1.0",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.3",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "progress-table",
-    "screenshot": "https://img.alicdn.com/tfs/TB1MSwOih6I8KJjy0FgXXXXzVXa-1828-1206.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/progress-table-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "进度条表格",
     "categories": [
       "表格"
-    ]
+    ],
+    "version-0.x": "0.1.13"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/progress-table/preview"
+  "homepage": "https://unpkg.com/@icedesign/progress-table-block/build/index.html"
 }

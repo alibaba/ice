@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/platform-black-intro-block",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "平台黑底介绍区块",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -34,7 +35,8 @@
       "信息展示",
       "欢迎页"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1aoVuq_tYBeNjy1XdXXXXyVXa-2008-1228.png"
+    "screenshot": "https://unpkg.com/@icedesign/platform-black-intro-block/screenshot.png",
+    "version-0.x": "1.0.5"
   },
-  "homepage": "https://alibaba.github.io/ice/block/platform-black-intro/preview"
+  "homepage": "https://unpkg.com/@icedesign/platform-black-intro-block/build/index.html"
 }

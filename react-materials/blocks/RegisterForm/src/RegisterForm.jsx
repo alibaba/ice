@@ -1,15 +1,10 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Input, Button, Checkbox, Grid } from '@icedesign/base';
-import {
-  FormBinderWrapper as IceFormBinderWrapper,
-  FormBinder as IceFormBinder,
-  FormError as IceFormError,
-} from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
+import { Input, Button, Checkbox, Grid, Icon, Form } from '@alifd/next';
 import './RegisterForm.scss';
 
 const { Row, Col } = Grid;
+const Item = Form.Item;
 
 export default class RegisterForm extends Component {
   static displayName = 'RegisterForm';
@@ -55,11 +50,8 @@ export default class RegisterForm extends Component {
     });
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.refs.form.validateAll((errors, values) => {
-      console.log('values', values);
-    });
+  handleSubmit = (values, errors) => {
+    console.log('values', values);
   };
 
   render() {
@@ -67,106 +59,82 @@ export default class RegisterForm extends Component {
       <div className="register-form">
         <div style={styles.formContainer}>
           <h4 style={styles.formTitle}>注册</h4>
-          <IceFormBinderWrapper
+          <Form
             value={this.state.value}
             onChange={this.formChange}
-            ref="form"
+            size="large"
           >
-            <div style={styles.formItems}>
-              <Row style={styles.formItem}>
-                <Col>
-                  <IceIcon
-                    type="person"
-                    size="small"
-                    style={styles.inputIcon}
-                  />
-                  <IceFormBinder name="account" required message="必填">
-                    <Input maxLength={20} placeholder="会员名/邮箱/手机号" />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="account" />
-                </Col>
-              </Row>
+            <Item required requiredMessage="必填">
+              <Input maxLength={20} placeholder="会员名/邮箱/手机号"
+                name="account"
+                innerBefore={<Icon
+                  type="account"
+                  size="small"
+                  style={styles.inputIcon}
+                />} />
+            </Item>
 
-              <Row style={styles.formItem}>
-                <Col>
-                  <IceIcon type="lock" size="small" style={styles.inputIcon} />
-                  <IceFormBinder
-                    name="passwd"
-                    required
-                    validator={this.checkPasswd}
-                  >
-                    <Input
-                      htmlType="password"
-                      size="large"
-                      placeholder="请输入密码"
-                    />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="passwd" />
-                </Col>
-              </Row>
+            <Item
 
-              <Row style={styles.formItem}>
-                <Col>
-                  <IceIcon type="lock" size="small" style={styles.inputIcon} />
-                  <IceFormBinder
-                    name="rePasswd"
-                    required
-                    validator={(rule, values, callback) =>
-                      this.checkPasswd2(
-                        rule,
-                        values,
-                        callback,
-                        this.state.value
-                      )
-                    }
-                  >
-                    <Input
-                      htmlType="password"
-                      size="large"
-                      placeholder="两次输入密码保持一致"
-                    />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="rePasswd" />
-                </Col>
-              </Row>
+              required
+              validator={this.checkPasswd}
+            >
+              <Input
+                name="passwd"
+                innerBefore={<Icon type="account" test="lock" size="small" style={styles.inputIcon} />}
+                htmlType="password"
+                size="large"
+                placeholder="请输入密码"
+              />
+            </Item>
 
-              <Row style={styles.formItem}>
-                <Col>
-                  <IceFormBinder name="checkbox">
-                    <Checkbox>记住账号</Checkbox>
-                  </IceFormBinder>
-                </Col>
-              </Row>
+            <Item
+              required
+              validator={(rule, values, callback) =>
+                this.checkPasswd2(
+                  rule,
+                  values,
+                  callback,
+                  this.state.value
+                )
+              }
+            >
+              <Input
+                name="rePasswd"
+                innerBefore={<Icon type="account" test="lock" size="small" style={styles.inputIcon} />}
+                htmlType="password"
+                size="large"
+                placeholder="两次输入密码保持一致"
+              />
+            </Item>
 
-              <Row style={styles.formItem}>
-                <Button
-                  type="primary"
-                  onClick={this.handleSubmit}
-                  style={styles.submitBtn}
-                >
-                  注 册
-                </Button>
-              </Row>
+            <Item >
+              <Checkbox name="checkbox">记住账号</Checkbox>
+            </Item>
 
-              <Row className="tips" style={styles.tips}>
-                <a href="/" style={styles.link}>
-                  立即登录
+            <Row style={styles.formItem}>
+              <Form.Submit
+                type="primary"
+                onClick={this.handleSubmit}
+                validate
+                style={styles.submitBtn}
+              >
+                注 册
+                </Form.Submit>
+            </Row>
+
+            <Row className="tips" style={styles.tips}>
+              <a href="/" style={styles.link}>
+                立即登录
                 </a>
-                <span style={styles.line}>|</span>
-                <a href="/" style={styles.link}>
-                  忘记密码
+              <span style={styles.line}>|</span>
+              <a href="/" style={styles.link}>
+                忘记密码
                 </a>
-              </Row>
-            </div>
-          </IceFormBinderWrapper>
-        </div>
+            </Row>
+          </Form>
       </div>
+      </div >
     );
   }
 }

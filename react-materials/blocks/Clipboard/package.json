@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/clipboard-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "复制内容到剪贴板",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,9 +23,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.4",
-    "react-copy-to-clipboard": "^5.0.1"
+    "@icedesign/container": "^1.x",
+    "react-copy-to-clipboard": "^5.0.1",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
     "prop-types": "^15.5.8",
@@ -36,6 +37,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1wROHIrSYBuNjSspiXXXNzpXa-2716-396.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/clipboard-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  },
+  "homepage": "https://unpkg.com/@icedesign/clipboard-block/build/index.html"
 }

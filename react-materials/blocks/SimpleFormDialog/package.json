@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/simple-form-dialog-block",
-  "version": "0.1.8",
+  "version": "2.0.0",
   "description": "简单的表单弹窗",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,15 +21,14 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^0.1.3",
     "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
@@ -40,12 +38,13 @@
     "categories": [
       "模态框"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1.65ri9_I8KJjy0FoXXaFnVXa-1270-628.png",
-    "themePackage": "@icedesign/skin"
+    "screenshot": "https://unpkg.com/@icedesign/simple-form-dialog-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.11"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/simple-form-dialog/preview"
+  "homepage": "https://unpkg.com/@icedesign/simple-form-dialog-block/build/index.html"
 }

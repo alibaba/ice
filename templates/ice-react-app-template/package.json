@@ -1,11 +1,14 @@
 {
-  "name": "ice-react-app-template",
-  "version": "1.0.2",
+  "name": "@icedesign/ice-react-app-template",
+  "version": "1.0.6",
   "description": "ice react app template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["ice", "ice-template"],
+  "keywords": [
+    "ice",
+    "ice-template"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"

@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/content-editor-block",
-  "version": "0.1.5",
+  "version": "2.0.0",
   "description": "内容编辑器",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,31 +25,30 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^0.1.2",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.1",
     "prop-types": "^15.5.8",
     "slate": "^0.32.1",
     "slate-plain-serializer": "^0.5.1",
-    "slate-react": "^0.11.1"
+    "slate-react": "^0.11.1",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "content-editor",
-    "screenshot": "https://img.alicdn.com/tfs/TB199TEXuuSBuNjy1XcXXcYjFXa-1906-1550.png",
+    "screenshot": "https://unpkg.com/@icedesign/content-editor-block/screenshot.png",
     "title": "内容编辑器",
     "categories": [
       "表单"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.8"
   },
-  "homepage": "https://alibaba.github.io/ice/block/content-editor/preview"
+  "homepage": "https://unpkg.com/@icedesign/content-editor-block/build/index.html"
 }

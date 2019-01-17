@@ -1,12 +1,13 @@
 {
-  "name": "@react-materials/hot-post-rank-block",
-  "version": "1.0.1",
+  "name": "@icedesign/hot-post-rank-block",
+  "version": "2.0.0",
   "description": "展示文章阅读热度排行",
-  "homepage": "https://alibaba.github.io/ice/block/hot-post-rank/preview",
+  "homepage": "https://unpkg.com/@icedesign/hot-post-rank-block/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -23,10 +24,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "hot-post-rank",
@@ -34,6 +35,7 @@
     "categories": [
       "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1lOrNkwZC2uNjSZFnXXaxZpXa-1866-698.png"
+    "screenshot": "https://unpkg.com/@icedesign/hot-post-rank-block/screenshot.png",
+    "version-0.x": "1.0.0"
   }
 }

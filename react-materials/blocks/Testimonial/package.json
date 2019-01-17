@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/testimonial-block",
-  "version": "0.1.8",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,29 +21,29 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "testimonial",
-    "screenshot": "https://img.alicdn.com/tfs/TB1W6KmaTtYBeNjy1XdXXXXyVXa-2402-1110.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/testimonial-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "客户评价展示",
     "categories": [
       "信息展示",
       "欢迎页"
-    ]
+    ],
+    "version-0.x": "0.1.11"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/testimonial/preview"
+  "homepage": "https://unpkg.com/@icedesign/testimonial-block/build/index.html"
 }

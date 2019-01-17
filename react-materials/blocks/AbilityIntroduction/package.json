@@ -1,11 +1,12 @@
 {
-  "name": "@react-materials/ability-introduction-block",
-  "version": "0.1.1",
+  "name": "@icedesign/ability-introduction-block",
+  "version": "2.0.0",
   "description": "产品能力介绍",
   "author": "wssgcg1213 <i@zeroling.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,9 +23,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.1",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "ability-introduction",
@@ -32,7 +33,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://gw.alicdn.com/tfs/TB1T_OutDtYBeNjy1XdXXXXyVXa-2458-1186.png"
+    "screenshot": "https://unpkg.com/@icedesign/ability-introduction-block/screenshot.png",
+    "version-0.x": "1.0.0"
   },
-  "homepage": "https://alibaba.github.io/ice/block/ability-introduction/preview"
+  "homepage": "https://unpkg.com/@icedesign/ability-introduction-block/build/index.html"
 }

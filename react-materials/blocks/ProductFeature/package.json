@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/product-feature-block",
-  "version": "1.0.1",
+  "version": "2.0.1",
   "description": "用于描述产品的特点，左图右文形式。",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -31,7 +32,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1VljUppOWBuNjy0FiXXXFxVXa-2648-1000.png"
+    "screenshot": "https://unpkg.com/@icedesign/product-feature-block/screenshot.png",
+    "version-0.x": "1.0.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/product-feature/preview"
+  "homepage": "https://unpkg.com/@icedesign/product-feature-block/build/index.html"
 }

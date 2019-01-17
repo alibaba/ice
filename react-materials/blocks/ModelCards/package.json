@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/model-cards-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于多数据卡片展示的场景",
-  "homepage": "https://alibaba.github.io/ice/block/model-cards/preview",
+  "homepage": "https://unpkg.com/@icedesign/model-cards-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -23,9 +24,9 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "model-cards",
@@ -33,6 +34,7 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1yFEHbFzqK1RjSZFCXXbbxVXa-1455-425.png"
+    "screenshot": "https://unpkg.com/@icedesign/model-cards-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

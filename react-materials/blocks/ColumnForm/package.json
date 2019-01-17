@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/column-form-block",
-  "version": "0.1.1",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,26 +25,26 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^0.1.4",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "ice-scripts": "^1.1.1",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "column-form",
-    "screenshot": "https://img.alicdn.com/tfs/TB1NvCkgY9YBuNjy0FgXXcxcXXa-2318-566.png",
+    "screenshot": "https://unpkg.com/@icedesign/column-form-block/screenshot.png",
     "title": "分栏表单",
     "categories": [
       "表单"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/column-form/preview"
+  "homepage": "https://unpkg.com/@icedesign/column-form-block/build/index.html"
 }

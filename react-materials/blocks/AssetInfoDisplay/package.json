@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/asset-info-display-block",
-  "version": "0.1.6",
+  "version": "2.0.0",
   "description": "资产信息展示, 卡片类型的 UI 数据展示, 常用于额度, 余额等页面",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,24 +25,24 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "asset-info-display",
-    "screenshot": "https://gw.alicdn.com/tfs/TB1QvhInhTI8KJjSspiXXbM4FXa-1910-570.png",
+    "screenshot": "https://unpkg.com/@icedesign/asset-info-display-block/screenshot.png",
     "title": "资产信息展示",
     "categories": [
       "信息展示"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.9"
   },
-  "homepage": "https://alibaba.github.io/ice/block/asset-info-display/preview"
+  "homepage": "https://unpkg.com/@icedesign/asset-info-display-block/build/index.html"
 }

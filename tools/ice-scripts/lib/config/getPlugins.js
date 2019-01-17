@@ -8,7 +8,6 @@ const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
-const CssPrefixPlugin = require('css-prefix-plugin');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const normalizeEntry = require('../utils/normalizeEntry');
@@ -68,14 +67,6 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
       },
     ]),
   ];
-
-  if (themeConfig.cssPrefix) {
-    plugins.push(
-      new CssPrefixPlugin({
-        '$css-prefix': `${themeConfig.cssPrefix}`,
-      })
-    );
-  }
 
   // 增加 html 输出，支持多页面应用
   Array.prototype.push.apply(plugins, getEntryHtmlPlugins(entry));

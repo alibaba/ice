@@ -1,12 +1,13 @@
 {
-  "name": "partners-block",
-  "version": "1.0.0",
+  "name": "@icedesign/partners-block",
+  "version": "2.0.0",
   "description": "适用于合作伙伴的展示",
-  "homepage": "https://alibaba.github.io/ice/block/partners/preview",
+  "homepage": "https://unpkg.com/@icedesign/partners-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -23,9 +24,9 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "partners",
@@ -33,6 +34,7 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1nPWXuyMnBKNjSZFCXXX0KFXa-2804-1516.png"
+    "screenshot": "https://unpkg.com/@icedesign/partners-block/screenshot.png",
+    "version-0.x": "1.0.0"
   }
 }

@@ -1,63 +1,10 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Pagination, Progress, Button } from '@icedesign/base';
-import DataBinder from '@icedesign/data-binder';
+import { Table, Pagination, Progress, Button } from '@alifd/next';
 import EditDialog from './EditDialog';
+import data from './data';
 
-@DataBinder({
-  tableData: {
-    // 详细请求配置请参见 https://github.com/axios/axios
-    url: '/mock/complex-progress-table.json',
-    params: {
-      page: 1,
-    },
-    defaultBindingData: {
-      list: [],
-      total: 100,
-      pageSize: 10,
-      currentPage: 1,
-    },
-  },
-  updateRow: {
-    url: '/your-update-api.json',
-  },
-})
 export default class ComplexProgressTable extends Component {
-  static displayName = 'ComplexProgressTable';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-
-    // 缓存 table 的请求参数
-    this.queryCache = {};
-    this.state = {};
-  }
-
-  // ICE: React Component 的生命周期
-
-  componentWillMount() {}
-
-  componentDidMount() {
-    this.queryCache.page = 1;
-    this.fetchData();
-  }
-
-  fetchData = () => {
-    this.props.updateBindingData('tableData', {
-      data: this.queryCache,
-    });
-  };
-
-  changePage = (currentPage) => {
-    this.queryCache.page = currentPage;
-
-    this.fetchData();
-  };
-
   renderTitle = (value, index, record) => {
     return (
       <div>
@@ -75,15 +22,7 @@ export default class ComplexProgressTable extends Component {
       onCancel: () => {
         EditDialog.hide();
       },
-      onOk: (value) => {
-        // TODO: 更新接口，并重新获取数据
-        // this.props.updateBindingData('updateRow', {
-        //   method: 'post',
-        //   data: value
-        // }, () => {
-        //   this.fetchData();
-        // });
-        console.log('value', value);
+      onOk: () => {
         EditDialog.hide();
       },
       value: record,
@@ -96,11 +35,11 @@ export default class ComplexProgressTable extends Component {
         <Button
           style={styles.operationButton}
           onClick={() => this.editItem(index, record)}
-          shape="text"
+          text
         >
           编辑
         </Button>
-        <Button style={styles.operationButton} shape="text">
+        <Button style={styles.operationButton} text>
           删除
         </Button>
       </div>
@@ -112,16 +51,11 @@ export default class ComplexProgressTable extends Component {
   };
 
   render() {
-    const tableData = this.props.bindingData.tableData;
-
     return (
       <div className="complex-progress-table">
         <IceContainer style={styles.tableCard}>
           <Table
-            dataSource={tableData.list}
-            isLoading={
-              tableData.__loading
-            } /* eslint no-underscore-dangle: "off" */
+            dataSource={data}
             className="basic-table"
             style={styles.basicTable}
             hasBorder={false}
@@ -150,12 +84,7 @@ export default class ComplexProgressTable extends Component {
             />
           </Table>
           <div style={styles.pagination}>
-            <Pagination
-              current={tableData.currentPage}
-              pageSize={tableData.pageSize}
-              total={tableData.total}
-              onChange={this.changePage}
-            />
+            <Pagination />
           </div>
         </IceContainer>
       </div>

@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/infinite-card-block",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "适用于横向滚动的多数据展示卡片",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,8 +23,8 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.4"
+    "@icedesign/container": "^1.x",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -35,7 +36,8 @@
     "categories": [
       "数据展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1YpBJc6rguuRjy0FeXXXcbFXa-2860-318.png"
+    "screenshot": "https://unpkg.com/@icedesign/infinite-card-block/screenshot.png",
+    "version-0.x": "1.0.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/infinite-card/preview"
+  "homepage": "https://unpkg.com/@icedesign/infinite-card-block/build/index.html"
 }

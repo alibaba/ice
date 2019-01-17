@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/overview-sates-chart-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "数据概览",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,9 +26,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.2",
-    "@icedesign/container": "^0.1.2",
-    "bizcharts": "^3.1.8"
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.2.0"
@@ -38,7 +39,8 @@
     "categories": [
       "图表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1jWRlxntYBeNjy1XdXXXXyVXa-2864-428.png"
+    "screenshot": "https://unpkg.com/@icedesign/overview-sates-chart-block/screenshot.png",
+    "version-0.x": "1.0.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/overview-sates-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/overview-sates-chart-block/build/index.html"
 }

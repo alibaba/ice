@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/notice-summary-block",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "用于通知摘要展示",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,7 +23,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3"
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.2.0",
@@ -34,7 +35,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1apyPCwmTBuNjy1XbXXaMrVXa-2814-274.png"
+    "screenshot": "https://unpkg.com/@icedesign/notice-summary-block/screenshot.png",
+    "version-0.x": "1.0.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/notice-summary/preview"
+  "homepage": "https://unpkg.com/@icedesign/notice-summary-block/build/index.html"
 }

@@ -1,14 +1,28 @@
 {
-  "name": "{{name}}-block",
+  "name": "{{name}}",
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
-  "files": ["src/","build/","lib/","screenshot.png"],
+  "files": [
+    "src/",
+    "build/",
+    "screenshot.png"
+  ],
   "license": "MIT",
   "keywords": ["ice","react","block"],
+  "scripts": {
+    "start": "ice-devtools start",
+    "build": "ice-devtools build",
+    "screenshot": "ice-devtools screenshot",
+    "prepublishOnly": "npm run build && npm run screenshot"
+  },
   "dependencies": {
     "react": "^16.2.0",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.11.2"
+  },
+  "publishConfig": {
+    "registry": "{{registry}}"
   },
   "blockConfig": {
     "name": "{{name}}",
@@ -17,7 +31,6 @@
       {{#each categories}}
         "{{@key}}"{{#if @last}} {{else}},{{/if}}
       {{/each}}
-    ],
-    "screenshot": ""
+    ]
   }
 }

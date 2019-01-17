@@ -6,8 +6,11 @@ import { Select } from '@icedesign/base';
 const ReactHighcharts = require('react-highcharts');
 
 const { Option } = Select;
+const random = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
-const config = {
+const chartConfig = {
   chart: {
     height: 300,
     plotBackgroundColor: null,
@@ -44,14 +47,17 @@ const config = {
           y: 61.41,
           sliced: true,
           selected: true,
+          color: '#5e83fb',
         },
         {
           name: 'Rollup',
           y: 11.84,
+          color: '#999',
         },
         {
           name: 'Parcel',
           y: 10.26,
+          color: '#333',
         },
       ],
     },
@@ -59,23 +65,32 @@ const config = {
 };
 
 export default class PieLengendChart extends Component {
-  static displayName = 'PieLengendChart';
+  state = {
+    selectedValue: 'day',
+    config: chartConfig,
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  handleChange = (value) => {
+    const { config } = this.state;
+    config.series[0].data[0].y = random(20, 60);
+    this.setState({
+      selectedValue: value,
+      config,
+    });
+  };
 
   render() {
+    const { selectedValue, config } = this.state;
     return (
       <IceContainer>
         <div style={styles.cardHead}>
           <h4 style={styles.cardTitle}>活跃构建器分布</h4>
-          <Select size="large" defaultValue="day">
+          <Select
+            size="large"
+            defaultValue="day"
+            value={selectedValue}
+            onChange={this.handleChange}
+          >
             <Option value="day">今日</Option>
             <Option value="yesterday">昨日</Option>
             <Option value="week">7 天</Option>

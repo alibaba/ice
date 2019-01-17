@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/review-detail-info-block",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "评论详细信息",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,10 +26,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.1",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "review-detail-info",
@@ -37,7 +38,8 @@
       "数据展示",
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1pc9TsmBYBeNjy0FeXXbnmFXa-2030-616.png"
+    "screenshot": "https://unpkg.com/@icedesign/review-detail-info-block/screenshot.png",
+    "version-0.x": "1.0.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/review-detail-info/preview"
+  "homepage": "https://unpkg.com/@icedesign/review-detail-info-block/build/index.html"
 }

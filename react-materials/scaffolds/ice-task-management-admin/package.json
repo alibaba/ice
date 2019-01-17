@@ -2,7 +2,17 @@
   "name": "@icedesign/task-management-admin-scaffold",
   "version": "1.0.0",
   "description": "该模板内置了丰富的图表和表格区块，适用于项目任务管理类系统，使用时需要根据需求进行删除和添加",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-task-management-admin/index.html",
+  "homepage": "https://unpkg.com/@icedesign/task-management-admin-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
     "@antv/data-set": "^0.8.9",
     "@icedesign/base": "^0.2.5",
@@ -16,10 +26,15 @@
     "bizcharts": "^3.2.2",
     "classnames": "^2.2.5",
     "foundation-symbol": "^0.1.0",
+    "immutable": "^4.0.0-rc.12",
+    "is-hotkey": "^0.1.4",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "slate": "^0.44.9",
+    "slate-plain-serializer": "^0.6.33",
+    "slate-react": "^0.21.15"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
@@ -43,10 +58,13 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": false
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "themeConfig": {
-    "primaryColor": "#0079f2"
+    "primaryColor": "#447eff"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
@@ -55,7 +73,7 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1RICXdSrqK1RjSZK9XXXyypXa-2840-1580.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1TA65yAvoK1RjSZFwXXciCFXa-2872-1580.png"
   },
   "engines": {
     "node": ">=8.0.0"

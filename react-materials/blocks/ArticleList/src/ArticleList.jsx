@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 
 const generatorData = () => {
   return Array.from({ length: 5 }).map(() => {

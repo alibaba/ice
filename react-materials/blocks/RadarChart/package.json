@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/radar-chart-block",
-  "version": "0.1.1",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -27,26 +26,25 @@
   },
   "dependencies": {
     "@antv/data-set": "^0.8.7",
-    "@icedesign/base": "^0.1.0",
-    "@icedesign/container": "^0.1.1",
-    "bizcharts": "^3.1.5",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "radar-chart",
-    "screenshot": "https://img.alicdn.com/tfs/TB1ijfcov1TBuNjy0FjXXajyXXa-2390-996.png",
+    "screenshot": "https://unpkg.com/@icedesign/radar-chart-block/screenshot.png",
     "title": "基础雷达图",
     "categories": [
       "图表"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.5"
   },
-  "homepage": "https://alibaba.github.io/ice/block/radar-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/radar-chart-block/build/index.html"
 }

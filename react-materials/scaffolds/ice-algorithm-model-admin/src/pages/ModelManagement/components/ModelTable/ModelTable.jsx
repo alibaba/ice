@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination, Dialog } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import TableHead from './TableHead';
 
 // MOCK 数据，实际业务按需进行替换
-const getData = () => {
-  return Array.from({ length: 20 }).map((item, index) => {
+const getData = (length = 10) => {
+  return Array.from({ length }).map((item, index) => {
     return {
       modelName: '强化学习',
       version: `0.0.${index + 1}`,
@@ -18,52 +18,114 @@ const getData = () => {
 };
 
 export default class ModelTable extends Component {
-  static displayName = 'ModelTable';
+  state = {
+    current: 1,
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-    };
+  componentDidMount() {
+    this.fetchData();
   }
 
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
     });
   };
 
-  onChange = (selectedItems) => {
-    console.log('onChange callback', selectedItems);
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.fetchData();
+      }
+    );
+  };
+
+  handleFilterChange = () => {
+    this.fetchData(5);
+  };
+
+  handlePublish = () => {
+    Dialog.confirm({
+      content: '确认发布线上吗',
+      onOk: () => {
+        this.fetchData();
+      },
+    });
+  };
+
+  handleDelete = () => {
+    Dialog.confirm({
+      content: '确认删除该模型吗',
+      onOk: () => {
+        this.fetchData();
+      },
+    });
   };
 
   renderOper = () => {
     return (
       <div>
-        <a style={{ ...styles.btn, ...styles.detailBtn }}>详情</a>
-        <a style={{ ...styles.btn, ...styles.publishBtn }}>发布</a>
-        <a style={{ ...styles.btn, ...styles.deleteBtn }}>删除</a>
+        <a
+          onClick={this.handlePublish}
+          style={{ ...styles.btn, ...styles.publishBtn }}
+        >
+          发布
+        </a>
+        <a
+          onClick={this.handleDelete}
+          style={{ ...styles.btn, ...styles.deleteBtn }}
+        >
+          删除
+        </a>
       </div>
     );
   };
 
   renderState = (value) => {
-    return <span style={styles.state}>{value}</span>;
+    return (
+      <span style={styles.state}>
+        <i style={styles.dot} />
+        {value}
+      </span>
+    );
   };
 
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, data, current } = this.state;
 
     return (
       <IceContainer style={styles.container}>
         <h3 style={styles.title}>模型列表</h3>
-        <TableHead />
-        <Table dataSource={dataSource} hasBorder={false} style={styles.table}>
+        <TableHead onChange={this.handleFilterChange} />
+        <Table
+          isLoading={isLoading}
+          dataSource={data}
+          hasBorder={false}
+          style={styles.table}
+        >
           <Table.Column title="模型服务" dataIndex="modelName" />
           <Table.Column title="最新版本" dataIndex="version" />
           <Table.Column title="更新时间" dataIndex="updateTime" />
@@ -110,22 +172,26 @@ const styles = {
     textDecoration: 'none',
     cursor: 'pointer',
   },
-  detailBtn: {
-    background: '#41cac0',
-    marginRight: '8px',
-  },
   publishBtn: {
-    background: '#58c9f3',
+    background: '#5e83fb',
     marginRight: '8px',
   },
   deleteBtn: {
-    background: '#bec3c7',
+    background: '#ee706d',
   },
   state: {
-    padding: '6px 12px',
-    background: '#59ace2',
-    color: '#fff',
-    borderRadius: '4px',
+    color: '#ee706d',
+    fontWeight: 'bold',
+    position: 'relative',
+  },
+  dot: {
+    width: '8px',
+    height: '8px',
+    background: '#ee706d',
+    borderRadius: '50%',
+    position: 'absolute',
+    top: '4px',
+    left: '-12px',
   },
   pagination: {
     margin: '20px 0',

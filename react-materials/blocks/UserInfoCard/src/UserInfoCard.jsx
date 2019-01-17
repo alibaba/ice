@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Balloon, Icon } from '@icedesign/base';
+import { Balloon, Icon } from '@alifd/next';
 
 export default class UserInfoCard extends Component {
   static displayName = 'UserInfoCard';

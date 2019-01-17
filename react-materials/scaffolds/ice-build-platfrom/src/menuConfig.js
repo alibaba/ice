@@ -5,7 +5,7 @@
 const asideMenuConfig = [
   {
     name: '首页',
-    path: '/',
+    path: '/dashboard',
     icon: 'home2',
   },
   {

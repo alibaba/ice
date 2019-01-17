@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination, Feedback } from '@icedesign/base';
+import { Link } from 'react-router-dom';
 import TableFilter from './TableFilter';
 
-const getData = () => {
-  return Array.from({ length: 10 }).map((item, index) => {
+const getData = (length = 10) => {
+  return Array.from({ length }).map((item, index) => {
     return {
       id: `2018090${index}`,
       key: `200920${index}`,
@@ -15,43 +16,80 @@ const getData = () => {
 };
 
 export default class CustomTable extends Component {
-  static displayName = 'CustomTable';
+  state = {
+    current: 1,
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-    };
+  componentDidMount() {
+    this.fetchData();
   }
 
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
     });
+  };
+
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.fetchData(10);
+      }
+    );
+  };
+
+  handleApply = () => {
+    Feedback.toast.success('申请权限已发送，请十分钟之后再试');
+  };
+
+  handleFilterChange = () => {
+    this.fetchData(5);
   };
 
   renderOper = () => {
     return (
       <div>
-        <a style={styles.link}>详情</a>
+        <Link to="/" style={styles.link}>
+          详情
+        </Link>
         <span style={styles.separator} />
-        <a style={styles.link}>申请权限</a>
+        <a style={styles.link} onClick={this.handleApply}>
+          申请权限
+        </a>
       </div>
     );
   };
 
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, data, current } = this.state;
 
     return (
       <div>
-        <TableFilter />
-        <Table dataSource={dataSource} hasBorder={false}>
+        <TableFilter onChange={this.handleFilterChange} />
+        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="APPID" dataIndex="id" />
           <Table.Column title="当前APPKey" dataIndex="key" />
           <Table.Column title="应用名称" dataIndex="name" />

@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/events-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于活动事件的信息展示",
-  "homepage": "https://alibaba.github.io/ice/block/events/preview",
+  "homepage": "https://unpkg.com/@icedesign/events-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -34,6 +35,7 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1fytduBsmBKNjSZFFXXcT9VXa-1440-937.png"
+    "screenshot": "https://unpkg.com/@icedesign/events-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

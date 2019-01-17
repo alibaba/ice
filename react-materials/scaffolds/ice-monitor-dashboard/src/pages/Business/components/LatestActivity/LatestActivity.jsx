@@ -6,7 +6,7 @@ const getData = () => {
   return Array.from({ length: 10 }).map((item, index) => {
     return {
       name: `${index + 1}. 造物节`,
-      num: parseInt(Math.random() * 1000),
+      num: parseInt(Math.random() * 1000, 10),
     };
   });
 };
@@ -42,7 +42,7 @@ export default class LatestActivity extends Component {
           { label: '上周发布活动数', value: '349' },
           { label: '累计发布活动数', value: '23,239' },
         ]}
-        link={{ text: '发布活动明细', href: '#' }}
+        link={{ text: '发布活动明细', to: '/traffic/statistics' }}
         dataSource={dataSource}
         columns={columns}
         content={<BarChart />}

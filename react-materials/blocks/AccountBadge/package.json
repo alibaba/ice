@@ -1,12 +1,13 @@
 {
-  "name": "@react-materials/account-badge-block",
-  "version": "1.0.0",
+  "name": "@icedesign/account-badge-block",
+  "version": "2.0.0",
   "description": "展示账户权益勋章等权益信息",
-  "homepage": "https://alibaba.github.io/ice/block/account-badge/preview",
+  "homepage": "https://unpkg.com/@icedesign/account-badge-block/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,10 +23,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.4",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "account-badge",
@@ -33,6 +34,7 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB18PFFfxtnkeRjSZSgXXXAuXXa-1866-378.png"
+    "screenshot": "https://unpkg.com/@icedesign/account-badge-block/screenshot.png",
+    "version-0.x": "1.0.0"
   }
 }

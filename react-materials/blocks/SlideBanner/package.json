@@ -1,11 +1,12 @@
 {
-  "name": "@react-materials/slide-banner-block",
-  "version": "1.0.1",
+  "name": "@icedesign/slide-banner-block",
+  "version": "2.0.0",
   "description": "滑动banner 用于层叠展示",
   "author": "muchen <tao360907796@gmail.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -32,7 +33,8 @@
       "信息展示",
       "欢迎页"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1bNu1uDtYBeNjy1XdXXXXyVXa-2876-768.png"
+    "screenshot": "https://unpkg.com/@icedesign/slide-banner-block/screenshot.png",
+    "version-0.x": "1.0.0"
   },
-  "homepage": "https://alibaba.github.io/ice/block/slide-banner/preview"
+  "homepage": "https://unpkg.com/@icedesign/slide-banner-block/build/index.html"
 }

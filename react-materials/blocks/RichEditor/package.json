@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/rich-editor-block",
-  "version": "0.1.7",
+  "version": "2.0.0",
   "description": "简单的富文本编辑器",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,29 +25,28 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
+    "@icedesign/container": "^1.x",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.1",
     "prop-types": "^15.5.8",
     "slate": "^0.32.1",
-    "slate-react": "^0.11.1"
+    "slate-react": "^0.11.1",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "rich-editor",
-    "screenshot": "https://img.alicdn.com/tfs/TB16Kedov6H8KJjy0FjXXaXepXa-1906-872.png",
+    "screenshot": "https://unpkg.com/@icedesign/rich-editor-block/screenshot.png",
     "title": "富文本编辑器",
     "categories": [
       "表单"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.10"
   },
-  "homepage": "https://alibaba.github.io/ice/block/rich-editor/preview"
+  "homepage": "https://unpkg.com/@icedesign/rich-editor-block/build/index.html"
 }

@@ -1,11 +1,14 @@
 {
-  "name": "ice-react-layout-template",
+  "name": "@icedesign/ice-react-layout-template",
   "version": "1.0.1",
   "description": "ice react layout template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["ice", "ice-template"],
+  "keywords": [
+    "ice",
+    "ice-template"
+  ],
   "author": {
     "name": "ICE Team",
     "email": "ice-admin@alibaba-inc.com"

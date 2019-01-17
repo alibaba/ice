@@ -1,13 +1,12 @@
 {
   "name": "@icedesign/info-display-table-block",
-  "version": "0.1.7",
+  "version": "2.0.0",
   "description": "两栏信息展示型表格",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -23,28 +22,28 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "info-display-table",
-    "screenshot": "https://img.alicdn.com/tfs/TB1niC_fiqAXuNjy1XdXXaYcVXa-959-294.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/info-display-table-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "两栏信息展示型表格",
     "categories": [
       "表格"
-    ]
+    ],
+    "version-0.x": "0.1.10"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/info-display-table/preview"
+  "homepage": "https://unpkg.com/@icedesign/info-display-table-block/build/index.html"
 }

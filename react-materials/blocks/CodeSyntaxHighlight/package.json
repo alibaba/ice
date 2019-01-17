@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/code-syntax-highlight-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "代码语法高亮",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,9 +23,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2",
-    "react-syntax-highlighter": "^8.0.1"
+    "@icedesign/container": "^1.x",
+    "react-syntax-highlighter": "^8.0.1",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -36,7 +37,8 @@
     "categories": [
       "代码编辑器"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1v_zvD9BYBeNjy0FeXXbnmFXa-2874-1068.png"
+    "screenshot": "https://unpkg.com/@icedesign/code-syntax-highlight-block/screenshot.png",
+    "version-0.x": "1.0.3"
   },
-  "homepage": "https://alibaba.github.io/ice/block/code-syntax-highlight/preview"
+  "homepage": "https://unpkg.com/@icedesign/code-syntax-highlight-block/build/index.html"
 }

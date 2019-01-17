@@ -1,12 +1,13 @@
 {
-  "name": "@react-materials/account-features-block",
-  "version": "1.0.1",
+  "name": "@icedesign/account-features-block",
+  "version": "2.0.0",
   "description": "罗列账户功能列表",
-  "homepage": "https://alibaba.github.io/ice/block/account-features/preview",
+  "homepage": "https://unpkg.com/@icedesign/account-features-block/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,10 +23,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.4",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "account-features",
@@ -33,6 +34,7 @@
     "categories": [
       "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1Z_J9pj7nBKNjSZLeXXbxCFXa-1868-1218.png"
+    "screenshot": "https://unpkg.com/@icedesign/account-features-block/screenshot.png",
+    "version-0.x": "1.0.0"
   }
 }

@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/user-traffic-stastistics",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "description": "信息展示类，使用可视化的方式展示用户浏览以及数据分析的结果",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,31 +21,31 @@
     "ice-block"
   ],
   "dependencies": {
-    "@antv/data-set": "^0.8.5",
-    "@icedesign/base": "^0.1.5-1",
-    "@icedesign/container": "^0.1.0",
-    "bizcharts": "^3.1.3-beta.2",
-    "prop-types": "^15.5.8"
+    "@antv/data-set": "0.8.9",
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "user-traffic-stastistics",
-    "screenshot": "https://img.alicdn.com/tfs/TB1g5ygbTtYBeNjy1XdXXXXyVXa-2820-760.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/user-traffic-stastistics/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "用户浏览数据分析",
     "categories": [
       "数据展示",
       "图表"
-    ]
+    ],
+    "version-0.x": "0.1.6"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/user-traffic-stastistics/preview"
+  "homepage": "https://unpkg.com/@icedesign/user-traffic-stastistics/build/index.html"
 }

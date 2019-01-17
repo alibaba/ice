@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/review-data-chart-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "邀评数据图表",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,12 +26,12 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@antv/data-set": "^0.8.9",
-    "@icedesign/base": "^0.2.1",
-    "@icedesign/container": "^0.1.2",
-    "bizcharts": "^3.1.7",
+    "@antv/data-set": "0.8.9",
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "review-data-chart",
@@ -39,10 +40,11 @@
       "图表",
       "数据展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1CqeKr1OSBuNjy0FdXXbDnVXa-1816-874.png"
+    "screenshot": "https://unpkg.com/@icedesign/review-data-chart-block/screenshot.png",
+    "version-0.x": "1.0.5"
   },
   "devDependencies": {
     "babel-plugin-transform-remove-strict-mode": "^0.0.2"
   },
-  "homepage": "https://alibaba.github.io/ice/block/review-data-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/review-data-chart-block/build/index.html"
 }

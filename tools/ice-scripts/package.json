@@ -1,11 +1,10 @@
 {
   "name": "ice-scripts",
-  "version": "1.7.7",
+  "version": "1.8.0",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
-    "ice": "./bin/ice.js",
-    "ice-scripts": "./bin/ice.js"
+    "ice": "./bin/ice.js"
   },
   "scripts": {
     "cover": "http-server ./ -o -c-1",
@@ -63,7 +62,6 @@
     "copy-webpack-plugin": "4.5.3",
     "css-hot-loader": "1.4.2",
     "css-loader": "1.0.1",
-    "css-prefix-plugin": "^0.0.1",
     "debug": "4.0.1",
     "decamelize": "^2.0.0",
     "deep-assign": "2.0.0",
@@ -74,7 +72,7 @@
     "gulp": "3.9.1",
     "html-webpack-plugin": "3.2.0",
     "http-proxy-middleware": "0.19.0",
-    "ice-skin-loader": "0.1.5",
+    "ice-skin-loader": "0.2.0",
     "inquirer": "5.2.0",
     "less": "3.8.1",
     "less-loader": "4.1.0",

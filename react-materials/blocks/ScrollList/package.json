@@ -1,6 +1,6 @@
 {
-  "name": "@react-materials/scroll-list-block",
-  "version": "1.0.0",
+  "name": "@icedesign/scroll-list-block",
+  "version": "2.0.0",
   "description": "滚动分页列表",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,10 +26,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.3",
+    "@icedesign/container": "^1.x",
     "react": "^16.2.0",
-    "react-list": "^0.8.10"
+    "react-list": "^0.8.10",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "scroll-list",
@@ -36,6 +37,8 @@
     "categories": [
       "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1WAQmGGmWBuNjy1XaXXXCbXXa-3442-990.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/scroll-list-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  },
+  "homepage": "https://unpkg.com/@icedesign/scroll-list-block/build/index.html"
 }

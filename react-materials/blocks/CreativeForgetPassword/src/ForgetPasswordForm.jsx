@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import AuthForm from './AuthForm';
 
 export default class ForgetPasswordForm extends Component {
@@ -20,7 +20,7 @@ export default class ForgetPasswordForm extends Component {
       return;
     }
     console.log('values:', values);
-    Feedback.toast.success('请查看邮件重设密码');
+    Message.success('请查看邮件重设密码');
     // 成功后做对应的逻辑处理
   };
 

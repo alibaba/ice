@@ -1,52 +1,12 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 import IceContainer from '@icedesign/container';
-import DataBinder from '@icedesign/data-binder';
 import IceLabel from '@icedesign/label';
 import FilterForm from './Filter';
+import data from './data';
 
-@DataBinder({
-  tableData: {
-    // 详细请求配置请参见 https://github.com/axios/axios
-    url: '/mock/filter-table-list.json',
-    params: {
-      page: 1,
-    },
-    defaultBindingData: {
-      list: [],
-      total: 100,
-      pageSize: 10,
-      currentPage: 1,
-    },
-  },
-})
 export default class EnhanceTable extends Component {
-  static displayName = 'EnhanceTable';
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-
-    // 请求参数缓存
-    this.queryCache = {};
-    this.state = {
-      filterFormValue: {},
-    };
-  }
-
-  componentDidMount() {
-    this.queryCache.page = 1;
-    this.fetchData();
-  }
-
-  fetchData = () => {
-    this.props.updateBindingData('tableData', {
-      data: this.queryCache,
-    });
-  };
-
   renderTitle = (value, index, record) => {
     return (
       <div style={styles.titleWrapper}>
@@ -92,42 +52,11 @@ export default class EnhanceTable extends Component {
     );
   };
 
-  changePage = (currentPage) => {
-    this.queryCache.page = currentPage;
-
-    this.fetchData();
-  };
-
-  filterFormChange = (value) => {
-    this.setState({
-      filterFormValue: value,
-    });
-  };
-
-  filterTable = () => {
-    // 合并参数，请求数据
-    this.queryCache = {
-      ...this.queryCache,
-      ...this.state.filterFormValue,
-    };
-    this.fetchData();
-  };
-
-  resetFilter = () => {
-    this.setState({
-      filterFormValue: {},
-    });
-  };
-
   render() {
-    const tableData = this.props.bindingData.tableData;
-    const { filterFormValue } = this.state;
-
     return (
       <div className="filter-table">
         <IceContainer title="内容筛选">
           <FilterForm
-            value={filterFormValue}
             onChange={this.filterFormChange}
             onSubmit={this.filterTable}
             onReset={this.resetFilter}
@@ -135,8 +64,7 @@ export default class EnhanceTable extends Component {
         </IceContainer>
         <IceContainer>
           <Table
-            dataSource={tableData.list}
-            isLoading={tableData.__loading}
+            dataSource={data}
             className="basic-table"
             style={styles.basicTable}
             hasBorder={false}
@@ -166,12 +94,7 @@ export default class EnhanceTable extends Component {
             />
           </Table>
           <div style={styles.paginationWrapper}>
-            <Pagination
-              current={tableData.currentPage}
-              pageSize={tableData.pageSize}
-              total={tableData.total}
-              onChange={this.changePage}
-            />
+            <Pagination />
           </div>
         </IceContainer>
       </div>

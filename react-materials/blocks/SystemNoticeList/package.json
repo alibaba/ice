@@ -1,13 +1,12 @@
 {
   "name": "@icedesign/system-notice-list-block",
-  "version": "0.1.12",
+  "version": "2.0.0",
   "description": "系统消息列表",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -23,28 +22,28 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "system-notice-list",
-    "screenshot": "https://img.alicdn.com/tfs/TB1sG8CbXGWBuNjy0FbXXb4sXXa-1914-676.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/system-notice-list-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "系统消息列表",
     "categories": [
       "列表"
-    ]
+    ],
+    "version-0.x": "0.1.15"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/system-notice-list/preview"
+  "homepage": "https://unpkg.com/@icedesign/system-notice-list-block/build/index.html"
 }

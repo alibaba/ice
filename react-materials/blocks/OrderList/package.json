@@ -1,13 +1,12 @@
 {
   "name": "@icedesign/order-list-block",
-  "version": "0.1.7",
+  "version": "2.0.0",
   "description": "订单型列表",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -23,29 +22,29 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
+    "@icedesign/container": "^1.x",
     "axios": "^0.17.1",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.7",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "order-list",
-    "screenshot": "https://img.alicdn.com/tfs/TB1QQY0fiqAXuNjy1XdXXaYcVXa-960-646.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/order-list-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "订单型列表",
     "categories": [
       "列表"
-    ]
+    ],
+    "version-0.x": "0.1.10"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/order-list/preview"
+  "homepage": "https://unpkg.com/@icedesign/order-list-block/build/index.html"
 }

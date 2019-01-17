@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/failure-detail-block",
-  "version": "0.1.8",
+  "version": "2.0.0",
   "description": "提交失败详情展示",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,20 +21,20 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
+    "version-0.x": "0.1.11",
     "name": "failure-detail",
-    "screenshot": "https://gw.alicdn.com/tfs/TB15u0eisLJ8KJjy0FnXXcFDpXa-1326-824.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/failure-detail-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "提交失败详情展示",
     "categories": [
       "信息展示"
@@ -45,5 +44,5 @@
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/failure-detail/preview"
+  "homepage": "https://unpkg.com/@icedesign/failure-detail-block/build/index.html"
 }

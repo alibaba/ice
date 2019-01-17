@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/lite-table-block",
-  "version": "0.1.10",
+  "version": "2.0.0",
   "description": "简单的附带状态的表格",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,29 +21,29 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "lite-table",
-    "screenshot": "https://img.alicdn.com/tfs/TB1apAecDtYBeNjy1XdXXXXyVXa-2290-998.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/lite-table-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "简单带状态表格",
     "categories": [
       "表格"
-    ]
+    ],
+    "version-0.x": "0.1.13"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/lite-table/preview"
+  "homepage": "https://unpkg.com/@icedesign/lite-table-block/build/index.html"
 }

@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/tickets-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于票价类的信息展示",
-  "homepage": "https://alibaba.github.io/ice/block/tickets-block/preview",
+  "homepage": "https://unpkg.com/@icedesign/tickets-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -23,11 +24,11 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
     "prop-types": "^15.5.8",
     "rc-queue-anim": "^1.6.5",
     "rc-scroll-anim": "^2.5.5",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "tickets",
@@ -35,6 +36,7 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1b.FturZnBKNjSZFrXXaRLFXa-2846-1534.png"
+    "screenshot": "https://unpkg.com/@icedesign/tickets-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

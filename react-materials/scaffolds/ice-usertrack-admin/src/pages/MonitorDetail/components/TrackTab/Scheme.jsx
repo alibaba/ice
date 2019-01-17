@@ -34,27 +34,53 @@ const checkboxOptions = [
 ];
 
 export default class TableFilter extends Component {
-  static displayName = 'TableFilter';
+  state = {
+    current: 1,
+    isLoading: false,
+    data: [],
+  };
 
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-    };
+  componentDidMount() {
+    this.fetchData();
   }
 
-  handlePaginationChange = (current) => {
-    this.setState({
-      current,
+  mockApi = (len) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getData(len));
+      }, 600);
     });
   };
 
-  onChange = (selectedItems) => {
-    console.log('onChange callback', selectedItems);
+  fetchData = (len) => {
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        this.mockApi(len).then((data) => {
+          this.setState({
+            data,
+            isLoading: false,
+          });
+        });
+      }
+    );
+  };
+
+  handlePaginationChange = (current) => {
+    this.setState(
+      {
+        current,
+      },
+      () => {
+        this.fetchData(10);
+      }
+    );
+  };
+
+  onChange = () => {
+    this.fetchData(5);
   };
 
   renderOper = () => {
@@ -62,7 +88,6 @@ export default class TableFilter extends Component {
   };
 
   renderStat = (value) => {
-    console.log(value);
     return (
       <div>
         <span style={{ ...styles.stat, ...styles.successColor }}>
@@ -79,8 +104,7 @@ export default class TableFilter extends Component {
   };
 
   render() {
-    const dataSource = getData();
-    const { current } = this.state;
+    const { isLoading, data, current } = this.state;
 
     return (
       <div style={styles.container}>
@@ -93,7 +117,7 @@ export default class TableFilter extends Component {
             onChange={this.onChange}
           />
         </div>
-        <Table dataSource={dataSource} hasBorder={false}>
+        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="方案名称" dataIndex="schemeName" />
           <Table.Column title="创建时间" dataIndex="time" />
           <Table.Column title="负责人" dataIndex="leader" />

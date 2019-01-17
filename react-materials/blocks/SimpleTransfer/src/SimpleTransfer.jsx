@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Transfer } from '@icedesign/base';
+import { Transfer } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const mockData = () => {

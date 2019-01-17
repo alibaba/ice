@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/platform-intro-block",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "平台介绍",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -35,7 +36,8 @@
       "信息展示",
       "欢迎页"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1JsHkqGmWBuNjy1XaXXXCbXXa-2531-1370.jpg"
+    "screenshot": "https://unpkg.com/@icedesign/platform-intro-block/screenshot.png",
+    "version-0.x": "1.0.5"
   },
-  "homepage": "https://alibaba.github.io/ice/block/platform-intro/preview"
+  "homepage": "https://unpkg.com/@icedesign/platform-intro-block/build/index.html"
 }

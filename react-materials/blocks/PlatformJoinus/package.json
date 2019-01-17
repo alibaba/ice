@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/platform-joinus-block",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "加入平台区块",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,9 +26,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.1",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "platform-joinus",
@@ -36,7 +37,8 @@
       "信息展示",
       "欢迎页"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1ke8jqHGYBuNjy0FoXXciBFXa-1830-1064.png"
+    "screenshot": "https://unpkg.com/@icedesign/platform-joinus-block/screenshot.png",
+    "version-0.x": "1.0.5"
   },
-  "homepage": "https://alibaba.github.io/ice/block/platform-joinus/preview"
+  "homepage": "https://unpkg.com/@icedesign/platform-joinus-block/build/index.html"
 }

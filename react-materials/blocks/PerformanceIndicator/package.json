@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/performance-indicator-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于性能指标展示的图表",
-  "homepage": "https://alibaba.github.io/ice/block/performance-indicator/preview",
+  "homepage": "https://unpkg.com/@icedesign/performance-indicator-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -24,11 +25,11 @@
   ],
   "dependencies": {
     "@antv/data-set": "^0.9.6",
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.7",
+    "@icedesign/container": "^1.x",
     "bizcharts": "^3.2.2",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "performance-indicator",
@@ -36,6 +37,7 @@
     "categories": [
       "图表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB138oObNTpK1RjSZR0XXbEwXXa-2870-948.png"
+    "screenshot": "https://unpkg.com/@icedesign/performance-indicator-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

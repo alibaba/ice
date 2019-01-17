@@ -15,7 +15,7 @@ export default class BasicException extends Component {
               className="imgException"
               alt="服务器出错"
             />
-            <div>
+            <div style={styles.content}>
               <h3 style={styles.title} className="title">
                 抱歉，服务器出错了
               </h3>
@@ -35,6 +35,9 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  content: {
+    marginLeft: 40,
   },
   title: {
     color: '#333',

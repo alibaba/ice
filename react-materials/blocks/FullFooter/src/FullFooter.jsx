@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -25,7 +25,7 @@ const FullFooter = () => {
           <Col l="8">
             <h3 style={styles.title}>使用答疑群</h3>
             <img
-              src="https://img.alicdn.com/tfs/TB1id_cbHvpK1RjSZPiXXbmwXXa-993-1280.png"
+              src={require('./images/qrcode.png')}
               alt="qr-code"
               style={styles.qrcode}
             />

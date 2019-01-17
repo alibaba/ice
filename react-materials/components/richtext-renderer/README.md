@@ -4,7 +4,7 @@ category: Components
 chinese: 富文本组件HTML渲染器
 ---
 
-富文本组件html渲染器
+富文本组件 html 渲染器
 
 ## 安装和升级
 

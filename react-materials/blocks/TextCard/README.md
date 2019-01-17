@@ -4,7 +4,7 @@
 
 纯文字展示型卡片
 
-![截图](https://img.alicdn.com/tfs/TB14dP0h8fH8KJjy1XbXXbLdXXa-1896-238.png)
+![截图](https://unpkg.com/@icedesign/text-card-block/screenshot.png)
 
 
 

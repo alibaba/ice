@@ -103,14 +103,9 @@ export default class LayoutBuilder extends Component {
     const { currentProject } = projects;
 
     if (currentProject && currentProject.fullPath) {
-      const type = projects.currentProject.getLibraryType();
-      const targetPath = currentProject.isNodeProject
-        ? path.join(currentProject.fullPath, 'client')
-        : path.join(currentProject.fullPath, 'src');
+      const targetPath = currentProject.clientSrcPath;
       scanLayout({
-        targetPath,
-        type,
-        withRemote: false,
+        targetPath
       }).then((layouts) => {
         this.setState({
           localLayouts: layouts,
@@ -175,7 +170,7 @@ export default class LayoutBuilder extends Component {
     }
 
     if (currentProject) {
-      const currentPath = currentProject.fullPath;
+      const currentPath = currentProject.clientPath;
       layoutConfig.directory = currentPath;
       templateBuilderUtils
         .generatorLayout(layoutConfig)

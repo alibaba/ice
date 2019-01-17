@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/co-branding-block",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "展示合作的品牌",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,8 +23,8 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.4"
+    "@icedesign/container": "^1.x",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -35,7 +36,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1Qhf3J1uSBuNjy1XcXXcYjFXa-2864-380.png"
+    "screenshot": "https://unpkg.com/@icedesign/co-branding-block/screenshot.png",
+    "version-0.x": "1.0.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/co-branding/preview"
+  "homepage": "https://unpkg.com/@icedesign/co-branding-block/build/index.html"
 }

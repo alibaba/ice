@@ -5,13 +5,8 @@ export default class Logo extends Component {
   render() {
     return (
       <div style={styles.container}>
-        <img
-          src={require('./images/logo.png')}
-          style={styles.logoImg}
-          alt="logo"
-        />
         <Link to="/" style={styles.logoText}>
-          算法模型服务平台
+          算法模型管理系统
         </Link>
       </div>
     );
@@ -23,9 +18,6 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     marginRight: '20px',
-  },
-  logoImg: {
-    width: '40px',
   },
   logoText: {
     display: 'block',

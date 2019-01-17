@@ -1,11 +1,12 @@
 {
-  "name": "@react-materials/account-status-block",
-  "version": "1.0.1",
+  "name": "@icedesign/account-status-block",
+  "version": "2.0.0",
   "description": "展示账户标识以及操作等",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -21,10 +22,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.4",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "account-status",
@@ -32,6 +33,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1lcWrpaQoBKNjSZJnXXaw9VXa-2020-374.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/account-status-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  },
+  "homepage": "https://unpkg.com/@icedesign/account-status-block/build/index.html"
 }

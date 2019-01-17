@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -24,7 +24,7 @@ export default class NoticeSummary extends Component {
           </div>
           <div style={styles.noticeBody}>
             <img
-              src="https://img.alicdn.com/tfs/TB1.Te1erGYBuNjy0FoXXciBFXa-560-220.png"
+              src={require('./images/banner.png')}
               alt=""
               style={styles.noticeImg}
             />
@@ -34,7 +34,7 @@ export default class NoticeSummary extends Component {
                 <a href="#" style={styles.link}>
                   查看详情{' '}
                   <img
-                    src="https://img.alicdn.com/tfs/TB1QoNkADlYBeNjSszcXXbwhFXa-42-42.png"
+                    src={require('./images/arrow.png')}
                     style={styles.arrowIcon}
                     alt=""
                   />
@@ -55,8 +55,8 @@ export default class NoticeSummary extends Component {
                 </div>
                 <div style={styles.noticeItem}>
                   <span style={styles.label}>
-                    参与创作者 <strong style={styles.count}>10</strong>个，参与商家{' '}
-                    <strong style={styles.count}>8</strong>个
+                    参与创作者 <strong style={styles.count}>10</strong>
+                    个，参与商家 <strong style={styles.count}>8</strong>个
                   </span>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Notice } from '@icedesign/base';
+import { Message } from '@alifd/next';
 
 export default class NoticeCard extends Component {
   static displayName = 'NoticeCard';
@@ -31,15 +31,14 @@ export default class NoticeCard extends Component {
   render() {
     const { title, content } = this.props;
     return (
-      <Notice
+      <Message
         title={title}
-        closable
-        type="prompt"
+        closeable
+        type="notice"
         onClose={this.onClose}
-        afterClose={this.afterClose}
-      >
+        afterClose={this.afterClose}>
         {content}
-      </Notice>
+      </Message>
     );
   }
 }

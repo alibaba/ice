@@ -4,17 +4,6 @@ import DoubleAxesChart from './DoubleAxesChart';
 import ApplicationTable from './ApplicationTable';
 
 export default class ApplicationAnalysis extends Component {
-  static displayName = 'ApplicationAnalysis';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <IceContainer style={styles.container}>

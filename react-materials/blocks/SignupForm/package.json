@@ -1,13 +1,12 @@
 {
   "name": "@icedesign/signup-form-block",
-  "version": "0.1.10",
+  "version": "2.0.0",
   "description": "登录表单",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -23,29 +22,28 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
     "@icedesign/form-binder": "^0.1.4",
-    "@icedesign/icon": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "signup-form",
-    "screenshot": "https://img.alicdn.com/tfs/TB1wHA9ib_I8KJjy1XaXXbsxpXa-616-612.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/signup-form-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "登录表单",
     "categories": [
       "表单"
-    ]
+    ],
+    "version-0.x": "0.1.13"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/signup-form/preview"
+  "homepage": "https://unpkg.com/@icedesign/signup-form-block/build/index.html"
 }

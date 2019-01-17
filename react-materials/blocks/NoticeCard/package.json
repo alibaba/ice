@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/notice-card-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于顶部的消息提示",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,7 +23,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3"
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -34,6 +35,8 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1apCOIv1TBuNjy0FjXXajyXXa-2126-198.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/notice-card-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  },
+  "homepage": "https://unpkg.com/@icedesign/notice-card-block/build/index.html"
 }

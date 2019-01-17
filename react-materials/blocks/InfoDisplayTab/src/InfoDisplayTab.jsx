@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab, Button, Grid } from '@icedesign/base';
+import { Tab, Button, Grid } from '@alifd/next';
 import IceEllipsis from '@icedesign/ellipsis';
-import axios from 'axios';
+import data from './data';
 
 const { Row, Col } = Grid;
-const { TabPane } = Tab;
+const { Item } = Tab;
 
 export default class InfoDisplayTab extends Component {
   static displayName = 'InfoDisplayTab';
@@ -17,32 +17,12 @@ export default class InfoDisplayTab extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabData: {},
+      tabData: data,
     };
   }
 
-  /**
-   * 异步获取数据
-   */
-  getData = () => {
-    axios
-      .get('/mock/info-display-tab.json')
-      .then((response) => {
-        this.setState({
-          tabData: response.data.data || {},
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  componentDidMount() {
-    this.getData();
-  }
-
-  renderContent = (data) => {
-    return data.map((item, index) => {
+  renderContent = (items) => {
+    return items.map((item, index) => {
       return (
         <Col xxs="24" s="12" l="8" key={index}>
           <div style={styles.columnCard}>
@@ -74,24 +54,24 @@ export default class InfoDisplayTab extends Component {
     return (
       <div className="info-display-tab">
         <IceContainer>
-          <Tab type="bar" onChange={this.callback}>
-            <TabPane tab="全部频道" key="1">
+          <Tab onChange={this.callback}>
+            <Tab.Item title="全部频道" key="1">
               <Row wrap gutter={20}>
                 {tabData.all ? this.renderContent(tabData.all) : '暂无数据'}
               </Row>
-            </TabPane>
-            <TabPane tab="可申请频道" key="2">
+            </Tab.Item>
+            <Tab.Item title="可申请频道" key="2">
               <Row wrap gutter={20}>
                 {tabData.apply ? this.renderContent(tabData.apply) : '暂无数据'}
               </Row>
-            </TabPane>
-            <TabPane tab="已获得频道" key="3">
+            </Tab.Item>
+            <Tab.Item title="已获得频道" key="3">
               <Row wrap gutter={20}>
                 {tabData.existing
                   ? this.renderContent(tabData.existing)
                   : '暂无数据'}
               </Row>
-            </TabPane>
+            </Tab.Item>
           </Tab>
         </IceContainer>
       </div>

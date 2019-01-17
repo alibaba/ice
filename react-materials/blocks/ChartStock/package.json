@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/chart-stock-block",
-  "version": "0.1.5",
+  "version": "2.0.0",
   "description": "股票图",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -23,30 +22,29 @@
   ],
   "dependencies": {
     "@antv/data-set": "^0.8.0",
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "axios": "^0.17.1",
+    "@icedesign/container": "^1.x",
     "bizcharts": "^3.0.5",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "chart-stock",
-    "screenshot": "https://img.alicdn.com/tfs/TB1rpkscDtYBeNjy1XdXXXXyVXa-2352-1020.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/chart-stock-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "股票图",
     "categories": [
       "图表"
-    ]
+    ],
+    "version-0.x": "0.1.9"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/chart-stock/preview"
+  "homepage": "https://unpkg.com/@icedesign/chart-stock-block/build/index.html"
 }

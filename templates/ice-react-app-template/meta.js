@@ -3,7 +3,7 @@ module.exports = {
     title: {
       type: 'input',
       message: 'title',
-      default: 'ice react admin',
+      default: 'demo scaffold',
       validate: (value) => {
         value = value.trim();
         if (!value) {
@@ -31,6 +31,4 @@ module.exports = {
       },
     },
   },
-  completeMessage:
-    'Next step: cd {your-scaffold-directory} && npm install && npm run start',
 };

@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/card-list-block",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "适用于多卡片信息的展示",
   "author": "",
-  "homepage": "https://alibaba.github.io/ice/block/card-list/preview",
+  "homepage": "https://unpkg.com/@icedesign/card-list-block/build/index.html",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -23,12 +24,11 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^0.1.9",
-    "foundation-symbol": "^0.1.3",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "card-list",
@@ -36,6 +36,7 @@
     "categories": [
       "数据展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1kha3v9YTBKNjSZKbXXXJ8pXa-2832-1396.png"
+    "screenshot": "https://unpkg.com/@icedesign/card-list-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

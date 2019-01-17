@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/project-status-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "项目状态和进度展示",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,9 +26,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.2",
-    "@icedesign/container": "^0.1.2",
-    "bizcharts": "^3.1.8"
+    "@icedesign/container": "^1.x",
+    "bizcharts": "^3.1.8",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.2.0"
@@ -39,7 +40,8 @@
       "图表",
       "数据展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1NuhFwDtYBeNjy1XdXXXXyVXa-1391-484.png"
+    "screenshot": "https://unpkg.com/@icedesign/project-status-block/screenshot.png",
+    "version-0.x": "1.0.3"
   },
-  "homepage": "https://alibaba.github.io/ice/block/project-status/preview"
+  "homepage": "https://unpkg.com/@icedesign/project-status-block/build/index.html"
 }

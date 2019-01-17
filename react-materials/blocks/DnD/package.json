@@ -1,6 +1,6 @@
 {
-  "name": "@react-materials/dn-d-block",
-  "version": "1.0.1",
+  "name": "@icedesign/dn-d-block",
+  "version": "2.0.0",
   "description": "元素拖拽放置",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,7 +26,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
     "react": "^16.2.0",
     "react-dnd": "3.0.2",
@@ -37,6 +38,8 @@
     "categories": [
       "拖拽"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1eOefG3mTBuNjy1XbXXaMrVXa-2410-674.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/dn-d-block/screenshot.png",
+    "version-0.x": "1.0.0"
+  },
+  "homepage": "https://unpkg.com/@icedesign/dn-d-block/build/index.html"
 }

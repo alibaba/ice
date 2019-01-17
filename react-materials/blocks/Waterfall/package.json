@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/waterfall-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "自适应网格布局，可实现瀑布流效果",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,9 +23,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2",
-    "autoresponsive-react": "^1.1.31"
+    "@icedesign/container": "^1.x",
+    "autoresponsive-react": "^1.1.31",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -37,6 +38,8 @@
     "categories": [
       "瀑布流"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1uLgRENGYBuNjy0FnXXX5lpXa-2862-1564.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/waterfall-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  },
+  "homepage": "https://unpkg.com/@icedesign/waterfall-block/build/index.html"
 }

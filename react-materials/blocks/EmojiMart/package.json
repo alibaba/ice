@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/emoji-mart-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "展示 Emoji 表情",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,7 +23,7 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "emoji-mart": "^2.6.1"
   },
   "peerDependencies": {
@@ -35,6 +36,8 @@
     "categories": [
       "表情"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1FEPRETtYBeNjy1XdXXXXyVXa-2864-910.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/emoji-mart-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  },
+  "homepage": "https://unpkg.com/@icedesign/emoji-mart-block/build/index.html"
 }

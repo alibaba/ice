@@ -2,4 +2,4 @@
 
 简介：注册页
 
-![截图](https://img.alicdn.com/tfs/TB1XqmOqHGYBuNjy0FoXXciBFXa-2740-1556.png)
+![截图](https://unpkg.com/@icedesign/register-block/screenshot.png)

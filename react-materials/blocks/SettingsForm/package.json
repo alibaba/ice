@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/settings-form-block",
-  "version": "0.1.5",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,26 +25,25 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^0.1.3",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "settings-form",
-    "screenshot": "https://img.alicdn.com/tfs/TB1SUbMdKuSBuNjy1XcXXcYjFXa-2340-1462.png",
+    "screenshot": "https://unpkg.com/@icedesign/settings-form-block/screenshot.png",
     "title": "通用的基本设置表单",
     "categories": [
       "表单"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.8"
   },
-  "homepage": "https://alibaba.github.io/ice/block/settings-form/preview"
+  "homepage": "https://unpkg.com/@icedesign/settings-form-block/build/index.html"
 }

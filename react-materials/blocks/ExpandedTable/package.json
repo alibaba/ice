@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/expanded-table-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "额外渲染和选择混合表格",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,9 +26,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.2",
-    "@icedesign/container": "^0.1.2",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
     "react": "^16.2.0"
@@ -38,7 +39,8 @@
     "categories": [
       "表格"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1C8cRuAyWBuNjy0FpXXassXXa-2444-822.png"
+    "screenshot": "https://unpkg.com/@icedesign/expanded-table-block/screenshot.png",
+    "version-0.x": "1.0.3"
   },
-  "homepage": "https://alibaba.github.io/ice/block/expanded-table/preview"
+  "homepage": "https://unpkg.com/@icedesign/expanded-table-block/build/index.html"
 }

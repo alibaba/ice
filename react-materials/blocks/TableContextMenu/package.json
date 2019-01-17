@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/table-context-menu-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "表格单元格支持右键菜单配置操作，可自定义风格",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,9 +23,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.4",
-    "react-contextmenu": "^2.9.3"
+    "@icedesign/container": "^1.x",
+    "react-contextmenu": "^2.9.3",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.2.0",
@@ -36,6 +37,8 @@
     "categories": [
       "表格"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1jDldIAyWBuNjy0FpXXassXXa-2866-532.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/table-context-menu-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  },
+  "homepage": "https://unpkg.com/@icedesign/table-context-menu-block/build/index.html"
 }

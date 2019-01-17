@@ -55,13 +55,13 @@ const ScaffoldHoc = (WrappedComponent) => {
       const layoutConfig = this.props.scaffold.layoutConfig;
       const scaffold = this.props.scaffold.scaffold;
       const projectName = this.props.scaffold.projectFinalName;
-      const isNodeProject = this.props.scaffold.isNodeProject;
+      const nodeFramework = this.props.scaffold.nodeFramework;
       const options = {
         scaffold,
         projectName,
         layoutConfig,
         isCustomScaffold: !!layoutConfig, // 存在 layoutConfig 表示自定义模板
-        isNodeProject
+        nodeFramework
       };
 
       const currentPath = this.props.scaffold.getProjectPathWithWorkspace();
@@ -79,7 +79,7 @@ const ScaffoldHoc = (WrappedComponent) => {
           // eslint-disable-next-line no-console
           console.log(cpmpleteConfig); //  完成后的结果展示
           this.props.scaffold.generatorStatus = 'done';
-          this.props.scaffold.addNewProjectToProjects(currentPath, true);
+          this.props.scaffold.addNewProjectToProjects(currentPath, true); // true 用来标识提示用户安装依赖
           this.props.scaffold.pushRoute('/');
         })
         .catch((error) => {

@@ -1,8 +1,18 @@
 {
   "name": "@icedesign/government-management-admin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "该模板内置了丰富的区块，适用于政府类风格的管理类系统，使用时需要根据需求进行删除和添加",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-government-management-admin/index.html",
+  "homepage": "https://unpkg.com/@icedesign/government-management-admin@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
     "@antv/data-set": "^0.9.6",
     "@icedesign/base": "^0.2.5",
@@ -43,10 +53,13 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": false
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "themeConfig": {
-    "primaryColor": "#385af5"
+    "primaryColor": "#447eff"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
@@ -55,7 +68,7 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1CXaEhkvoK1RjSZFNXXcxMVXa-2860-1520.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1w4vGw3HqK1RjSZFPXXcwapXa-2872-1580.png"
   },
   "engines": {
     "node": ">=8.0.0"

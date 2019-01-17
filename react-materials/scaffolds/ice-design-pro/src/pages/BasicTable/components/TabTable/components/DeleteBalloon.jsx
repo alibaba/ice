@@ -47,14 +47,14 @@ export default class DeleteBalloon extends Component {
           type="normal"
           shape="warning"
           style={{ marginRight: '5px' }}
-          onClick={visible => this.handleHide(visible, 1)}
+          onClick={(visible) => this.handleHide(visible, 1)}
         >
           确认
         </Button>
         <Button
           id="cancelBtn"
           size="small"
-          onClick={visible => this.handleHide(visible, 0)}
+          onClick={(visible) => this.handleHide(visible, 0)}
         >
           关闭
         </Button>

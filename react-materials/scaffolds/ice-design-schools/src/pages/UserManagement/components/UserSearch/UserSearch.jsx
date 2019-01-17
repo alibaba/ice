@@ -7,24 +7,12 @@ import IceContainer from '@icedesign/container';
 const { Row, Col } = Grid;
 
 export default class UserTable extends Component {
-  static displayName = 'UserTable';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      formValue: {},
-    };
-  }
+  state = {
+    formValue: {},
+  };
 
   formChange = (value) => {
-    console.log('changed value', value);
-    this.setState({
-      formValue: value,
-    });
+    this.props.onChange(value);
   };
 
   render() {

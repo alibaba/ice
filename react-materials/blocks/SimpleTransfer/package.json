@@ -1,11 +1,12 @@
 {
-  "name": "@react-materials/simple-transfer-block",
-  "version": "1.0.1",
+  "name": "@icedesign/simple-transfer-block",
+  "version": "2.0.0",
   "description": "简单的穿梭框面板展示",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,8 +23,8 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2"
+    "@icedesign/container": "^1.x",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.2.0",
@@ -35,7 +36,8 @@
     "categories": [
       "数据展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1RpPQCAyWBuNjy0FpXXassXXa-2422-548.png"
+    "screenshot": "https://unpkg.com/@icedesign/simple-transfer-block/screenshot.png",
+    "version-0.x": "1.0.0"
   },
-  "homepage": "https://alibaba.github.io/ice/block/simple-transfer/preview"
+  "homepage": "https://unpkg.com/@icedesign/simple-transfer-block/build/index.html"
 }

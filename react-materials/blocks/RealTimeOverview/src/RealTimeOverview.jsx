@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -23,7 +23,7 @@ export default class RealTimeOverview extends Component {
           <Col l="12" xxs="24">
             <div style={styles.dataItem}>
               <img
-                src={require('TB1iFKccamWBuNjy1XaXXXCbXXa-140-140.png')}
+                src={require('./images/TB1iFKccamWBuNjy1XaXXXCbXXa-140-140.png')}
                 alt=""
                 style={styles.dataItemImg}
               />
@@ -42,7 +42,7 @@ export default class RealTimeOverview extends Component {
           <Col l="12" xxs="24">
             <div style={styles.dataItem}>
               <img
-                src={require('TB1iFKccamWBuNjy1XaXXXCbXXa-140-140.png')}
+                src={require('./images/TB1iFKccamWBuNjy1XaXXXCbXXa-140-140.png')}
                 alt=""
                 style={styles.dataItemImg}
               />
@@ -61,7 +61,7 @@ export default class RealTimeOverview extends Component {
           <Col l="12" xxs="24">
             <div style={styles.dataItem}>
               <img
-                src={require('TB1Py4_ceuSBuNjy1XcXXcYjFXa-142-140.png')}
+                src={require('./images/TB1Py4_ceuSBuNjy1XcXXcYjFXa-142-140.png')}
                 alt=""
                 style={styles.dataItemImg}
               />
@@ -80,7 +80,7 @@ export default class RealTimeOverview extends Component {
           <Col l="12" xxs="24">
             <div style={styles.dataItem}>
               <img
-                src={require('TB1Ni4_ceuSBuNjy1XcXXcYjFXa-142-140.png')}
+                src={require('./images/TB1Ni4_ceuSBuNjy1XcXXcYjFXa-142-140.png')}
                 alt=""
                 style={styles.dataItemImg}
               />

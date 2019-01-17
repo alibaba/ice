@@ -4,4 +4,4 @@
 
 评价数据概览
 
-![截图](https://img.alicdn.com/tfs/TB1KAOyr1SSBuNjy0FlXXbBpVXa-1828-496.png)
+![截图](https://unpkg.com/@icedesign/review-overview-block/screenshot.png)

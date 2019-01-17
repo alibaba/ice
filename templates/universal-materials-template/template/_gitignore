@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+lerna-debug.log
+npm-debug.log
+package-lock.json
+blocks/**/lib/
+layouts/**/lib/
+blocks/**/build/
+.eslintcache
+databases

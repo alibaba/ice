@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/tab-table-block",
-  "version": "0.1.7",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,26 +25,25 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "axios": "^0.17.1",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "tab-table",
-    "screenshot": "https://img.alicdn.com/tfs/TB1IYWRXeuSBuNjy1XcXXcYjFXa-1902-906.png",
+    "screenshot": "https://unpkg.com/@icedesign/tab-table-block/screenshot.png",
     "title": "标签页表格组合",
     "categories": [
       "表格"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.11"
   },
-  "homepage": "https://alibaba.github.io/ice/block/tab-table/preview"
+  "homepage": "https://unpkg.com/@icedesign/tab-table-block/build/index.html"
 }

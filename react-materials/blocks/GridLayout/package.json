@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/grid-layout-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "可拖拽和调整大小的网格布局",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,9 +23,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.2",
-    "react-grid-layout": "^0.16.6"
+    "@icedesign/container": "^1.x",
+    "react-grid-layout": "^0.16.6",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -36,6 +37,8 @@
     "categories": [
       "瀑布流"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1tiR0E_tYBeNjy1XdXXXXyVXa-2868-1580.png"
-  }
+    "screenshot": "https://unpkg.com/@icedesign/grid-layout-block/screenshot.png",
+    "version-0.x": "1.0.3"
+  },
+  "homepage": "https://unpkg.com/@icedesign/grid-layout-block/build/index.html"
 }

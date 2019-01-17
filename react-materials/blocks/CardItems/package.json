@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/card-items-block",
-  "version": "1.0.3",
+  "version": "2.0.1",
   "description": "用卡片展示信息",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,9 +26,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.2",
-    "@icedesign/container": "^0.1.2",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
     "react": "^16.2.0"
@@ -39,7 +40,8 @@
       "列表",
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1Qy4EtuuSBuNjy1XcXXcYjFXa-2554-1198.png"
+    "screenshot": "https://unpkg.com/@icedesign/card-items-block/screenshot.png",
+    "version-0.x": "1.0.6"
   },
-  "homepage": "https://alibaba.github.io/ice/block/card-items/preview"
+  "homepage": "https://unpkg.com/@icedesign/card-items-block/build/index.html"
 }

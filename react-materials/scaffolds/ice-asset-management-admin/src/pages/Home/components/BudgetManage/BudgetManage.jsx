@@ -20,17 +20,6 @@ function handleClick(key) {
 }
 
 export default class BudgetManage extends Component {
-  static displayName = 'BudgetManage';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   renderTabExtraContent = () => {
     return <DatePicker size="large" style={{ marginRight: '20px' }} />;
   };

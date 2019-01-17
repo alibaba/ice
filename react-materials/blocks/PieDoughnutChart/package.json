@@ -1,13 +1,12 @@
 {
   "name": "@icedesign/pie-doughnut-chart-block",
-  "version": "0.1.10",
+  "version": "2.0.0",
   "description": "饼图",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -24,29 +23,29 @@
   ],
   "dependencies": {
     "@antv/data-set": "^0.8.2",
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "bizcharts": "^3.1.0-beta.1",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "bizcharts": "3.2.2",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "pie-doughnut-chart",
-    "screenshot": "https://img.alicdn.com/tfs/TB1twSFcDtYBeNjy1XdXXXXyVXa-2354-758.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/pie-doughnut-chart-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "饼图",
     "categories": [
       "图表"
-    ]
+    ],
+    "version-0.x": "0.1.14"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/pie-doughnut-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/pie-doughnut-chart-block/build/index.html"
 }

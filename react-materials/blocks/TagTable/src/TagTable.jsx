@@ -1,10 +1,9 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
-import { Table, Input, Select, Grid } from '@icedesign/base';
+import { Table, Input, Select, Grid } from '@alifd/next';
 import { FormBinderWrapper, FormBinder } from '@icedesign/form-binder';
-import IceCard from '@icedesign/card';
+import IceContainer from '@icedesign/container';
 
-const { Combobox } = Select;
 const { Row, Col } = Grid;
 
 const dataSource = [
@@ -92,7 +91,7 @@ export default class TagTable extends Component {
 
     return (
       <div className="tag-table">
-        <IceCard>
+        <IceContainer>
           <FormBinderWrapper value={formValue} onChange={this.formChange}>
             <div style={{ marginBottom: '25px' }}>
               <Row style={styles.formRow}>
@@ -125,14 +124,14 @@ export default class TagTable extends Component {
                 </Col>
                 <Col span="10">
                   <FormBinder>
-                    <Combobox
+                    <Select
                       name="levels"
                       filterLocal={false}
                       fillProps="label"
                       placeholder="请选择"
-                      multiple
-                      dataSource={['严重', '高危', '中危', '低危']}
-                    />
+                      mode="multiple"
+                      showSearch
+                      dataSource={['严重', '高危', '中危', '低危']} />
                   </FormBinder>
                 </Col>
               </Row>
@@ -160,7 +159,7 @@ export default class TagTable extends Component {
             />
             <Table.Column title="最后发现时间" dataIndex="time" width={200} />
           </Table>
-        </IceCard>
+        </IceContainer>
       </div>
     );
   }

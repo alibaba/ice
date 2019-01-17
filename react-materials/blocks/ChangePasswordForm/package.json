@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/change-password-form-block",
-  "version": "0.1.3",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,26 +25,25 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^0.1.3",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "change-password-form",
-    "screenshot": "https://img.alicdn.com/tfs/TB1Y.8yXHGYBuNjy0FoXXciBFXa-1212-490.png",
+    "screenshot": "https://unpkg.com/@icedesign/change-password-form-block/screenshot.png",
     "title": "修改密码表单",
     "categories": [
       "表单"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.6"
   },
-  "homepage": "https://alibaba.github.io/ice/block/change-password-form/preview"
+  "homepage": "https://unpkg.com/@icedesign/change-password-form-block/build/index.html"
 }

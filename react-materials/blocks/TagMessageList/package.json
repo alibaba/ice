@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/tag-message-list-block",
-  "version": "0.1.7",
+  "version": "2.0.0",
   "description": "标签消息列表",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,29 +21,29 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "tag-message-list",
-    "screenshot": "https://img.alicdn.com/tfs/TB1M3XQbhGYBuNjy0FnXXX5lpXa-1922-738.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/tag-message-list-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "标签消息列表",
     "categories": [
       "列表"
-    ]
+    ],
+    "version-0.x": "0.1.10"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/tag-message-list/preview"
+  "homepage": "https://unpkg.com/@icedesign/tag-message-list-block/build/index.html"
 }

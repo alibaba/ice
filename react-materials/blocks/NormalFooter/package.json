@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/normal-footer-block",
-  "version": "0.1.1",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,25 +25,24 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
-    "react-dom": "*",
-    "@icedesign/scripts": "^0.1.9"
+    "react-dom": "*"
   },
   "blockConfig": {
     "name": "normal-footer",
-    "screenshot": "https://img.alicdn.com/tfs/TB1xQ1rov5TBuNjSspcXXbnGFXa-2400-328.png",
+    "screenshot": "https://unpkg.com/@icedesign/normal-footer-block/screenshot.png",
     "title": "普通页脚",
     "categories": [
       "页脚"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/normal-footer/preview"
+  "homepage": "https://unpkg.com/@icedesign/normal-footer-block/build/index.html"
 }

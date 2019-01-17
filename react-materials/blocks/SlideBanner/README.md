@@ -4,4 +4,4 @@
 
 滑动banner 用于层叠展示
 
-![截图](https://img.alicdn.com/tfs/TB1bNu1uDtYBeNjy1XdXXXXyVXa-2876-768.png)
+![截图](https://unpkg.com/@icedesign/slide-banner-block/screenshot.png)

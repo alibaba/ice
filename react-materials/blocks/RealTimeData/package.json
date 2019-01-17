@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/real-time-data-block",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "基于 highcharts 的动态数据展示区块",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -22,10 +23,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "highcharts": "^6.1.1",
-    "react-highcharts": "^16.0.2"
+    "react-highcharts": "^16.0.2",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -37,7 +38,8 @@
     "categories": [
       "图表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1QH_RJ1uSBuNjy1XcXXcYjFXa-2858-706.png"
+    "screenshot": "https://unpkg.com/@icedesign/real-time-data-block/screenshot.png",
+    "version-0.x": "1.0.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/real-time-data/preview"
+  "homepage": "https://unpkg.com/@icedesign/real-time-data-block/build/index.html"
 }

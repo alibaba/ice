@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/tab-filter-table-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于标签页和表格组合的展示",
   "author": "",
-  "homepage": "https://alibaba.github.io/ice/block/tab-filter-table/preview",
+  "homepage": "https://unpkg.com/@icedesign/tab-filter-table-block/build/index.html",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -23,10 +24,10 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "tab-filter-table",
@@ -34,6 +35,7 @@
     "categories": [
       "表格"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB129dUwnqWBKNjSZFxXXcpLpXa-2794-1354.png"
+    "screenshot": "https://unpkg.com/@icedesign/tab-filter-table-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

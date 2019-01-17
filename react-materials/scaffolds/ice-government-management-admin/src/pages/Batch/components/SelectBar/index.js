@@ -72,14 +72,13 @@ export default class SelectBar extends Component {
 
 const styles = {
   container: {
-    margin: '0 80px',
+    margin: '0 40px',
     letterSpacing: '1px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   card: {
-    width: '240px',
     height: '120px',
     borderRadius: '10px',
     padding: '10px',
@@ -88,15 +87,15 @@ const styles = {
   unselectedCard: {
     border: '1px solid #edeef0',
     backgroundColor: 'white',
-    color: '#4c4a72',
+    color: '#666',
   },
   selectedCard: {
-    boxShadow: '2px 2px 10px 0 hsla(0,0%,40%,.3)',
-    color: 'white',
-    background: '#46b3ff',
+    boxShadow: '2px 2px 10px 0 hsla(0, 0%, 40%, .3)',
+    color: '#fff',
+    background: '#5e83fb',
   },
   icon: {
-    color: '#0054f1',
+    color: '#5e83fb',
     margin: '8px',
   },
   selectedIcon: {

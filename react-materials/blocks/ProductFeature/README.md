@@ -4,4 +4,4 @@
 
 用于描述产品的特点，左图右文形式。
 
-![截图](https://img.alicdn.com/tfs/TB1VljUppOWBuNjy0FiXXXFxVXa-2648-1000.png)
+![截图](https://unpkg.com/@icedesign/product-feature-block/screenshot.png)

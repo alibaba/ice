@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Table, Progress } from '@icedesign/base';
+import { Grid, Table, Progress } from '@alifd/next';
 import LintChart from './LineChart';
 
 const { Row, Col } = Grid;
@@ -19,28 +19,28 @@ const activePages = [
 const ViewedProducts = [
   {
     id: 1,
-    pic: require('./images/TB2_EHOgS3PL1JjSZFtXXclRVXa_!!2616970884.jpg_60x60q90.jpg'),
+    pic: require('./images/img1.jpg'),
     title: 'Apple/苹果',
     cate: '电子产品',
     amount: '38,600',
   },
   {
     id: 2,
-    pic: require('./images/TB2NVRzcbMlyKJjSZFlXXbMoFXa_!!1714128138.jpg_60x60q90.jpg'),
+    pic: require('./images/img2.jpg'),
     title: 'Xiaomi/小米5X',
     cate: '电子产品',
     amount: '33,779',
   },
   {
     id: 3,
-    pic: require('./images/TB2i7McmHsTMeJjy1zcXXXAgXXa_!!3081047815.jpg_60x60q90.jpg'),
+    pic: require('./images/img3.jpg'),
     title: '天猫精灵',
     cate: '智能家居',
     amount: '29,588',
   },
   {
     id: 4,
-    pic: require('./images/TB2ABOCcV5N.eBjSZFKXXX_QVXa_!!1714128138.jpg_60x60q90.jpg'),
+    pic: require('./images/img4.jpg'),
     title: '小米盒子3',
     cate: '智能小家电',
     amount: '8,636',
@@ -86,7 +86,7 @@ export default class TopActiveChart extends Component {
                 title="销售占比"
                 dataIndex="page"
                 cell={(value, index, record) => (
-                  <Progress percent={record.percent} showInfo={false} />
+                  <Progress percent={record.percent} />
                 )}
               />
             </Table>

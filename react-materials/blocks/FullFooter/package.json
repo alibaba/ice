@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/full-footer-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "适用于介绍页的响应式页脚",
-  "homepage": "https://alibaba.github.io/ice/block/full-footer/preview",
+  "homepage": "https://unpkg.com/@icedesign/full-footer-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -23,9 +24,9 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "full-footer",
@@ -33,6 +34,7 @@
     "categories": [
       "其他"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1uv7BbNTpK1RjSZFMXXbG_VXa-1805-406.png"
+    "screenshot": "https://unpkg.com/@icedesign/full-footer-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

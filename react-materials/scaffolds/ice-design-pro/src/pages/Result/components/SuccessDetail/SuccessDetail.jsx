@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import IceContainer from '@icedesign/container';
-import { Button, Step } from '@icedesign/base';
+import { Button, Step, Feedback } from '@icedesign/base';
+import { withRouter } from 'react-router-dom';
 
-export default class SuccessDetail extends Component {
-  static displayName = 'SuccessDetail';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
+@withRouter
+export default class SuccessDetail extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,40 +14,49 @@ export default class SuccessDetail extends Component {
     };
   }
 
+  handleBackClick = () => {
+    this.props.history.push('/');
+  };
+
+  handleLinkClick = () => {
+    Feedback.toast.success('可以根据实际需求自定义查看更多');
+  };
+
   render() {
     const { value, current, type } = this.state;
     return (
-      <div className="success-detail" style={styles.successDetail}>
-        <IceContainer style={styles.container}>
-          <div className="success-detail-head" style={styles.successDetailHead}>
-            <img
-              src={require('./images/TB1ya6gh0zJ8KJjSspkXXbF7VXa-156-156.png')}
-              style={styles.img}
-              alt=""
-            />
-            <h3 className="title" style={styles.title}>
-              提交成功
-            </h3>
-          </div>
-          <p className="summary" style={styles.summary}>
-            本文字区域可以展示简单的说明
-          </p>
-          <p className="descrpiton" style={styles.descrpiton}>
-            如果有跟多细节需要展示，可以补充在下面这里，一些相关的介绍和描述
-          </p>
-          <Step current={current} type={type} style={styles.nextStep}>
-            {value.map((item, index) => {
-              return <Step.Item key={index} title={item} />;
-            })}
-          </Step>
-          <div className="buttons" style={styles.buttons}>
-            <Button type="normal" style={styles.btn}>
-              返回首页
-            </Button>
-            <Button type="primary">查看更多</Button>
-          </div>
-        </IceContainer>
-      </div>
+      <IceContainer style={styles.container}>
+        <div style={styles.head}>
+          <img
+            src={require('./images/TB1ya6gh0zJ8KJjSspkXXbF7VXa-156-156.png')}
+            style={styles.img}
+            alt=""
+          />
+          <h3 style={styles.title}>提交成功</h3>
+        </div>
+        <p style={styles.summary}>本文字区域可以展示简单的说明</p>
+        <p style={styles.descrpiton}>
+          如果有跟多细节需要展示，可以补充在下面这里，一些相关的介绍和描述
+        </p>
+        <Step current={current} type={type} style={styles.step}>
+          {value.map((item, index) => {
+            return <Step.Item key={index} title={item} />;
+          })}
+        </Step>
+        <div style={styles.buttons}>
+          <Button
+            size="large"
+            type="normal"
+            onClick={this.handleBackClick}
+            style={{ marginRight: '6px' }}
+          >
+            返回首页
+          </Button>
+          <Button size="large" type="primary" onClick={this.handleLinkClick}>
+            查看更多
+          </Button>
+        </div>
+      </IceContainer>
     );
   }
 }
@@ -59,30 +64,28 @@ export default class SuccessDetail extends Component {
 const styles = {
   container: {
     padding: '80px 40px',
-  },
-  btn: {
-    marginRight: '6px',
-  },
-  successDetail: {
     textAlign: 'center',
   },
-  successDetailHead: {
-    position: 'relative',
-  },
   img: {
-    Width: '40px',
-    height: '40px',
+    Width: '58px',
+    height: '58px',
   },
   title: {
-    margin: 0,
-    fontWeight: 'bold',
+    margin: '20px 0',
+    fontSize: '22px',
+    fontWeight: 'normal',
   },
   summary: {
-    marginBottom: '40px',
+    margin: '0',
     fontSize: '14px',
     color: '#666',
   },
-  nextStep: {
+  descrpiton: {
+    margin: '10px 0 0',
+    fontSize: '14px',
+    color: '#666',
+  },
+  step: {
     margin: '80px 0',
   },
 };

@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/picture-text-list-block",
-  "version": "0.1.10",
+  "version": "2.0.0",
   "description": "图文列表",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,28 +21,28 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "picture-text-list",
-    "screenshot": "https://gw.alicdn.com/tfs/TB1ZbgJilTH8KJjy0FiXXcRsXXa-2026-1556.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/picture-text-list-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "图文列表",
     "categories": [
       "列表"
-    ]
+    ],
+    "version-0.x": "0.1.13"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/picture-text-list/preview"
+  "homepage": "https://unpkg.com/@icedesign/picture-text-list-block/build/index.html"
 }

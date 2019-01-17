@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/product-intro-block",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "description": "用于左文右图产品介绍模块",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,25 +25,24 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
-    "@icedesign/container": "^0.1.1",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "product-intro",
-    "screenshot": "https://img.alicdn.com/tfs/TB1FiYUgGmWBuNjy1XaXXXCbXXa-1373-665.png",
+    "screenshot": "https://unpkg.com/@icedesign/product-intro-block/screenshot.png",
     "title": "产品介绍区块",
     "categories": [
       "信息展示"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.5"
   },
-  "homepage": "https://alibaba.github.io/ice/block/product-intro/preview"
+  "homepage": "https://unpkg.com/@icedesign/product-intro-block/build/index.html"
 }

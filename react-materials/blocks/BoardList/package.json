@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/board-list-block",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "TODO 任务管理面板，可拖拽排序",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -36,7 +37,8 @@
     "categories": [
       "列表"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1XyG8qQyWBuNjy0FpXXassXXa-2288-1316.png"
+    "screenshot": "https://unpkg.com/@icedesign/board-list-block/screenshot.png",
+    "version-0.x": "1.0.4"
   },
-  "homepage": "https://alibaba.github.io/ice/block/board-list/preview"
+  "homepage": "https://unpkg.com/@icedesign/board-list-block/build/index.html"
 }

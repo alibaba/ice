@@ -3,7 +3,7 @@
  */
 
 import { observable, action, computed, toJS } from 'mobx';
-import request from 'request';
+import requestMaterial from '../lib/request-material';
 
 import AdditionalBlocks from './additional-blocks';
 import AdditionalScaffolds from './additional-scaffolds';
@@ -11,14 +11,6 @@ import filterMaterial from '../lib/filter-material';
 import services from '../services';
 
 const { settings, shared } = services;
-
-function uriWithTimestamp(uri) {
-  if (uri.indexOf('?') > -1) {
-    return uri + '&v=' + Date.now();
-  } else {
-    return uri + '?v=' + Date.now();
-  }
-}
 
 class Materials {
   @observable
@@ -88,6 +80,10 @@ class Materials {
   fetchSettingsMaterials() {
     return new Promise((resolve) => {
       let materials = settings.get('materials');
+
+      // 过滤掉隐藏的物料源
+      materials = materials.filter(item => item.checked !== false);
+
       materials = filterMaterial(materials);
       this.materials = observable.array(materials);
       setTimeout(() => {
@@ -97,18 +93,7 @@ class Materials {
   }
 
   fetchByMaterial(material) {
-    return new Promise((resolve, reject) => {
-      request(
-        { uri: uriWithTimestamp(material.source), json: true },
-        (err, res, body) => {
-          if (err) {
-            reject(err); // 总是返回值
-          } else {
-            resolve(body);
-          }
-        }
-      );
-    });
+    return requestMaterial(material.source);
   }
 
   /**

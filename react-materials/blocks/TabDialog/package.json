@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/tab-dialog-block",
-  "version": "0.1.9",
+  "version": "2.0.0",
   "description": "标签内容弹窗",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,14 +21,13 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.1",
+    "@icedesign/container": "^1.x",
     "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
@@ -39,12 +37,13 @@
     "categories": [
       "模态框"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB19AF4gOqAXuNjy1XdXXaYcVXa-1262-812.png",
-    "themePackage": "@icedesign/skin"
+    "screenshot": "https://unpkg.com/@icedesign/tab-dialog-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.12"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/tab-dialog/preview"
+  "homepage": "https://unpkg.com/@icedesign/tab-dialog-block/build/index.html"
 }

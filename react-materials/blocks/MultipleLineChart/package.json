@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/multiple-line-chart-block",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "description": "",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -26,27 +25,26 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.1.0",
-    "@icedesign/container": "^0.1.1",
+    "@icedesign/container": "^1.x",
     "echarts": "^4.0.4",
     "echarts-for-react": "^2.0.8",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/scripts": "^0.1.9",
-    "@icedesign/skin": "latest",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "multiple-line-chart",
-    "screenshot": "https://img.alicdn.com/tfs/TB1jBmrgDtYBeNjy1XdXXXXyVXa-2142-1090.png",
+    "screenshot": "https://unpkg.com/@icedesign/multiple-line-chart-block/screenshot.png",
     "title": "组合曲线图",
     "categories": [
       "图表"
     ],
-    "themePackage": "@icedesign/skin"
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.5"
   },
-  "homepage": "https://alibaba.github.io/ice/block/multiple-line-chart/preview"
+  "homepage": "https://unpkg.com/@icedesign/multiple-line-chart-block/build/index.html"
 }

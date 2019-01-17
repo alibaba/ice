@@ -1,13 +1,12 @@
 {
   "name": "@icedesign/basic-not-found-block",
-  "version": "0.1.8",
+  "version": "2.0.0",
   "description": "404 报错提示",
   "main": "lib/index.js",
   "files": [
     "src/",
-    "demo/",
-    "mock/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -23,28 +22,28 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.2",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
   "blockConfig": {
     "name": "basic-not-found",
-    "screenshot": "https://img.alicdn.com/tfs/TB1.HyVgyqAXuNjy1XdXXaYcVXa-1914-1066.png",
-    "themePackage": "@icedesign/skin",
+    "screenshot": "https://unpkg.com/@icedesign/basic-not-found-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
     "title": "404 报错提示",
     "categories": [
       "异常"
-    ]
+    ],
+    "version-0.x": "0.1.11"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/basic-not-found/preview"
+  "homepage": "https://unpkg.com/@icedesign/basic-not-found-block/build/index.html"
 }

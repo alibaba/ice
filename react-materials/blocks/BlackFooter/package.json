@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/black-footer-block",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "页脚信息展示",
-  "homepage": "https://alibaba.github.io/ice/block/black-footer/preview",
+  "homepage": "https://unpkg.com/@icedesign/black-footer-block/build/index.html",
   "author": "",
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "publishConfig": {
     "access": "public",
@@ -23,9 +24,9 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "black-footer",
@@ -33,6 +34,7 @@
     "categories": [
       "信息展示"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB13jGcuCcqBKNjSZFgXXX_kXXa-2648-502.png"
+    "screenshot": "https://unpkg.com/@icedesign/black-footer-block/screenshot.png",
+    "version-0.x": "1.0.3"
   }
 }

@@ -15,6 +15,7 @@
     "build-dist": "gulp build-dist",
     "updates": "gulp publish",
     "upload": "gulp oss",
+    "upload-log": "gulp oss-log",
     "lint": "npm run lint:render && npm run lint:main",
     "lint:render": "eslint -c ./.eslintrc.js ./renderer",
     "lint:main": "eslint -c ./.eslintrc.js ./app/main ",

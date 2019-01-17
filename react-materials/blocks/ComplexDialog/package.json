@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/complex-dialog-block",
-  "version": "0.1.8",
+  "version": "2.0.0",
   "description": "复杂信息和自定义底部按钮的弹窗",
   "files": [
     "src/",
-    "demo/",
-    "lib/",
-    "mock/"
+    "build/",
+    "screenshot.png"
   ],
   "author": {
     "name": "ICE Team",
@@ -22,13 +21,12 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "prop-types": "^15.5.8"
+    "@icedesign/container": "^1.x",
+    "prop-types": "^15.5.8",
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
-    "@icedesign/demo-layout": "^0.1.0",
-    "@icedesign/skin": "^0.1.2",
+    "@icedesign/theme": "^0.x",
     "react": "*",
     "react-dom": "*"
   },
@@ -38,12 +36,13 @@
     "categories": [
       "模态框"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1Un_filfH8KJjy1XbXXbLdXXa-1270-650.png",
-    "themePackage": "@icedesign/skin"
+    "screenshot": "https://unpkg.com/@icedesign/complex-dialog-block/screenshot.png",
+    "themePackage": "@icedesign/theme",
+    "version-0.x": "0.1.11"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
   },
-  "homepage": "https://alibaba.github.io/ice/block/complex-dialog/preview"
+  "homepage": "https://unpkg.com/@icedesign/complex-dialog-block/build/index.html"
 }

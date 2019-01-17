@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@icedesign/base';
-import axios from 'axios';
+import { Tab } from '@alifd/next';
 import CustomTable from './components/CustomTable';
 import EditDialog from './components/EditDialog';
 import DeleteBalloon from './components/DeleteBalloon';
+import data from './data';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 const tabs = [
   { tab: '全部', key: 'all' },
@@ -25,7 +25,7 @@ export default class TabTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: {},
+      dataSource: data,
       tabKey: 'all',
     };
     this.columns = [
@@ -70,20 +70,6 @@ export default class TabTable extends Component {
     ];
   }
 
-  componentDidMount() {
-    axios
-      .get('/mock/tab-table.json')
-      .then((response) => {
-        console.log(response.data.data);
-        this.setState({
-          dataSource: response.data.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   getFormValues = (dataIndex, values) => {
     const { dataSource, tabKey } = this.state;
     dataSource[tabKey][dataIndex] = values;
@@ -114,7 +100,7 @@ export default class TabTable extends Component {
           <Tab onChange={this.handleTabChange}>
             {tabs.map((item) => {
               return (
-                <TabPane tab={item.tab} key={item.key}>
+                <TabPane title={item.tab} key={item.key}>
                   <CustomTable
                     dataSource={dataSource[this.state.tabKey]}
                     columns={this.columns}

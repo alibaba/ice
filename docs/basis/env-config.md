@@ -22,7 +22,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | b
 
 #### Windows 用户
 
-访问 Node.js 的官网<https://nodejs.org/>,下载对应平台且标记为 LTS 版本的安装包，并执行安装，安装成功后在终端执行：
+访问 Node.js 的官网 <https://nodejs.org/>，下载对应平台且标记为 LTS 版本的安装包，并执行安装，安装成功后在终端执行：
 
 ### 验证安装的 Node.js 版本
 

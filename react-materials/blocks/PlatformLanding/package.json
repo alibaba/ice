@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/platform-landing-block",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "平台登陆引导页面",
   "author": {
     "name": "ICE Team",
@@ -8,7 +8,8 @@
   },
   "files": [
     "src/",
-    "lib/"
+    "build/",
+    "screenshot.png"
   ],
   "repository": {
     "type": "git",
@@ -25,9 +26,9 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.1",
     "prop-types": "^15.5.8",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "@alifd/next": "^1.x"
   },
   "blockConfig": {
     "name": "platform-landing",
@@ -36,7 +37,8 @@
       "信息展示",
       "欢迎页"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1MWmjqNGYBuNjy0FnXXX5lpXa-2054-1134.png"
+    "screenshot": "https://unpkg.com/@icedesign/platform-landing-block/screenshot.png",
+    "version-0.x": "1.0.5"
   },
-  "homepage": "https://alibaba.github.io/ice/block/platform-landing/preview"
+  "homepage": "https://unpkg.com/@icedesign/platform-landing-block/build/index.html"
 }
