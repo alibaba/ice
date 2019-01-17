@@ -22,10 +22,9 @@ class ScaffoldItem extends Component {
   };
 
   createProject = () => {
-    const { createProject, data, scaffolds = {} } = this.props;
-    const { material = {} } = scaffolds;
+    const { createProject, data = {} } = this.props;
     const isOfficialSource = /ice\.alicdn\.com\/(pre-)?assets\/react-materials\.json/.test(
-      material.source
+      data.source
     );
     const hasIceScripts = data.builder === 'ice-scripts';
 
