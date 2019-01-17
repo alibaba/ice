@@ -1,0 +1,34 @@
+.ice-layout {
+  .ice-layout-aside.custom-aside {
+    background: #001529;
+    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+    .aside-logo {
+      height: 62px;
+      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #062140;
+    }
+    .custom-menu {
+      width: 240px;
+      height: 100vh;
+      padding-top: 20px;
+      border-radius: 6px;
+      .ice-menu-sub {
+        background: #000c17;
+      }
+      .ice-menu-item,
+      .ice-menu-submenu-title {
+        color: #fff;
+      }
+      .ice-menu-item-selected {
+        border-radius: 0 !important;
+        margin-bottom: 1px;
+        > a {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
