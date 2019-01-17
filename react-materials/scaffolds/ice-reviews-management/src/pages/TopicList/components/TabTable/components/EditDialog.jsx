@@ -91,7 +91,6 @@ export default class EditDialog extends Component {
 
             <FormItem label="评测人数：" {...formItemLayout}>
               <Input
-                disabled
                 {...init('articleNum', {
                   rules: [{ required: true, message: '必填选项' }],
                 })}
