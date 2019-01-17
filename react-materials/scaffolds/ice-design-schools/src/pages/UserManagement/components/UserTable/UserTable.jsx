@@ -8,7 +8,7 @@ import {
   Grid,
   Pagination,
   Dialog,
-} from '@icedesign/base';
+} from '@alifd/next';
 import { withRouter } from 'react-router-dom';
 import IceContainer from '@icedesign/container';
 import UserSearch from '../UserSearch';
@@ -169,7 +169,7 @@ export default class UserTable extends Component {
           </Row>
           <Table
             dataSource={data}
-            isLoading={isLoading}
+            loading={isLoading}
             rowSelection={{ onChange: this.rowSelection }}
           >
             <Table.Column title="序号" dataIndex="id" width={100} />
