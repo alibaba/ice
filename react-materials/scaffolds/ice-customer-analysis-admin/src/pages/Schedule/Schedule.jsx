@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Table, Icon, Pagination, Balloon } from '@alifd/next';
 import Ellipsis from '@icedesign/ellipsis';
+import styles from './Schedule.module.scss'
 import './Schedule.scss';
+
 
 const getData = () => {
   return Array.from({ length: 10 }).map((item, index) => {
@@ -90,7 +92,7 @@ export default class Schedule extends Component {
       3: { color: 'rgba(255, 0, 0, 0.6)' },
     };
     return (
-      <div style={{ ...styles.ranking, ...ranking[index + 1] }}>
+      <div className={styles.ranking} style={ranking[index + 1]}>
         NO.
         {value}
       </div>
@@ -99,19 +101,19 @@ export default class Schedule extends Component {
 
   renderName = (value) => {
     return (
-      <div style={styles.name}>
-        <div style={styles.zh}>{value.zh}</div>
-        <div style={styles.en}>{value.en}</div>
+      <div className={styles.name}>
+        <div className={styles.zh}>{value.zh}</div>
+        <div className={styles.en}>{value.en}</div>
       </div>
     );
   };
 
   renderDayReturns = (value) => {
     return (
-      <div style={styles.dayReturns}>
-        <div style={styles.returns}>{value.returns}</div>
-        <div style={styles.ratio}>
-          <Icon type="arrow-up-filling" size="xs" style={styles.arrowUpIcon} />
+      <div className={styles.dayReturns}>
+        <div className={styles.returns}>{value.returns}</div>
+        <div className={styles.ratio}>
+          <Icon type="arrow-up-filling" size="xs" className={styles.arrowUpIcon} />
           上涨
           {value.ratio}
         </div>
@@ -122,16 +124,16 @@ export default class Schedule extends Component {
   renderOrigin = (value) => {
     const Info = (ellipsis = false) => {
       return (
-        <div style={styles.origin}>
-          <div style={styles.director}>
+        <div className={styles.origin}>
+          <div className={styles.director}>
             导演：
             {value.director}
           </div>
-          <div style={styles.actor}>
+          <div className={styles.actor}>
             主演：
             {value.actor}
           </div>
-          <div style={styles.company}>
+          <div className={styles.company}>
             {ellipsis ? (
               <Ellipsis
                 showTooltip={false}
@@ -149,13 +151,13 @@ export default class Schedule extends Component {
       <Balloon
         trigger={Info(true)}
         align="r"
-        alignEdge="edge"
+        alignEdge
         triggerType="click"
         closable={false}
         style={{ width: 300 }}
       >
-        <div style={styles.balloonContent}>
-          <h3 style={styles.balloonTitle}>详细信息</h3>
+        <div className={styles.balloonContent}>
+          <h3 className={styles.balloonTitle}>详细信息</h3>
           {Info()}
         </div>
       </Balloon>
@@ -163,19 +165,19 @@ export default class Schedule extends Component {
   };
 
   renderScore = (value) => {
-    return <div style={styles.score}>{value}</div>;
+    return <div className={styles.score}>{value}</div>;
   };
 
   render() {
     const { dataSource, isLoading } = this.state;
 
     return (
-      <div style={styles.container}>
-        <div style={styles.head}>
-          <h3 style={styles.title}>2018年10月01日票房</h3>
-          <p style={styles.desc}>更新时间：2018年10月01日 12：00</p>
+      <div className={styles.container}>
+        <div className={styles.head}>
+          <h3 className={styles.title}>2018年10月01日票房</h3>
+          <p className={styles.desc}>更新时间：2018年10月01日 12：00</p>
         </div>
-        <div style={styles.summary}>全国单日总票房：100 亿</div>
+        <div className={styles.summary}>全国单日总票房：100 亿</div>
         <Table
           dataSource={dataSource}
           loading={isLoading}
@@ -221,7 +223,7 @@ export default class Schedule extends Component {
           />
         </Table>
         <Pagination
-          style={styles.pagination}
+          className={styles.pagination}
           current={this.state.current}
           onChange={this.handleChange}
         />
@@ -230,65 +232,3 @@ export default class Schedule extends Component {
   }
 }
 
-const styles = {
-  head: {
-    marginBottom: '20px',
-    padding: '15px 0',
-    borderBottom: '1px solid #f0f0f0',
-  },
-  title: {
-    margin: '0 0 5px',
-    color: 'rgba(0, 0, 0, 0.85)',
-    fontWeight: '500',
-  },
-  desc: {
-    margin: '0',
-    color: '#999',
-    fontSize: '12px',
-  },
-  balloonTitle: {
-    margin: '0 0 15px',
-    paddingLeft: '10px',
-    borderLeft: '4px solid #2f7dfa',
-    fontWeight: '500',
-  },
-  ranking: {
-    fontSize: '15px',
-    fontWeight: '500',
-  },
-  zh: {
-    marginBottom: '10px',
-  },
-  origin: {
-    textAlign: 'left',
-  },
-  director: {
-    marginBottom: '10px',
-  },
-  actor: {
-    marginBottom: '10px',
-  },
-  summary: {
-    marginBottom: '20px',
-    textAlign: 'right',
-    color: 'rgba(0, 0, 0, 0.85)',
-    fontWeight: '500',
-  },
-  returns: {
-    marginBottom: '10px',
-  },
-  arrowUpIcon: {
-    color: 'red',
-    marginRight: '5px',
-  },
-  score: {
-    color: '#a2d1fe',
-    fontSize: '15px',
-    fontWeight: 'bold',
-    fontStyle: 'italic',
-  },
-  pagination: {
-    margin: '20px 0',
-    textAlign: 'right',
-  },
-};

@@ -63,7 +63,7 @@ class UserLogin extends Component {
               <Col className="formItemCol">
                 <IceIcon type="person" size="small" className="inputIcon" />
                 <IceFormBinder name="username" required message="必填">
-                  <Input size="large" maxLength={20} placeholder="用户名" />
+                  <Input className="next-input-single" size="large" maxLength={20} placeholder="用户名" />
                 </IceFormBinder>
               </Col>
               <Col>
@@ -75,7 +75,7 @@ class UserLogin extends Component {
               <Col className="formItemCol">
                 <IceIcon type="lock" size="small" className="inputIcon" />
                 <IceFormBinder name="password" required message="必填">
-                  <Input size="large" htmlType="password" placeholder="密码" />
+                  <Input className="next-input-single" size="large" htmlType="password" placeholder="密码" />
                 </IceFormBinder>
               </Col>
               <Col>

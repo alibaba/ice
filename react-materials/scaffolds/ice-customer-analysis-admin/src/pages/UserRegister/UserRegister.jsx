@@ -90,7 +90,7 @@ class UserRegister extends Component {
                     required
                     message="请输入正确的用户名"
                   >
-                    <Input size="large" placeholder="用户名" />
+                    <Input className="next-input-single" size="large" placeholder="用户名" />
                   </IceFormBinder>
                 </Col>
                 <Col>
@@ -107,7 +107,7 @@ class UserRegister extends Component {
                     required
                     message="请输入正确的邮箱"
                   >
-                    <Input size="large" maxLength={20} placeholder="邮箱" />
+                    <Input className="next-input-single" size="large" maxLength={20} placeholder="邮箱" />
                   </IceFormBinder>
                 </Col>
                 <Col>
@@ -123,7 +123,7 @@ class UserRegister extends Component {
                     required
                     validator={this.checkPasswd}
                   >
-                    <Input
+                    <Input className="next-input-single"
                       htmlType="password"
                       size="large"
                       placeholder="至少8位密码"
@@ -150,7 +150,7 @@ class UserRegister extends Component {
                       )
                     }
                   >
-                    <Input
+                    <Input className="next-input-single"
                       htmlType="password"
                       size="large"
                       placeholder="确认密码"

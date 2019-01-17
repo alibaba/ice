@@ -1,13 +1,15 @@
 /* eslint react/jsx-no-target-blank: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Balloon, Grid, Icon } from '@alifd/next';
+import { Balloon, Grid } from '@alifd/next';
+import Icon from '@icedesign/foundation-symbol';
+import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
 const mockData = [
   {
-    icon: 'training',
+    icon: 'shop',
     title: '到店用户数',
     desc: '这里是一些说明',
     count: '3,341',
@@ -15,7 +17,7 @@ const mockData = [
     period: '26%',
   },
   {
-    icon: 'cart',
+    icon: 'coupons',
     title: '新增会员卡用户数',
     desc: '这里是一些说明',
     count: '882',
@@ -23,7 +25,7 @@ const mockData = [
     period: '45%',
   },
   {
-    icon: 'account',
+    icon: 'person',
     title: '新增用户数',
     desc: '这里是一些说明',
     count: '2,823',
@@ -35,18 +37,18 @@ const mockData = [
 export default class EventsOverview extends Component {
   render() {
     return (
-      <IceContainer style={styles.container}>
+      <IceContainer className={styles.container}>
         <Row wrap>
           {mockData.map((item, index) => {
             return (
-              <Col key={index} l="8" style={styles.item}>
-                <div style={styles.itemIcon}>
+              <Col key={index} l="8" className={styles.item}>
+                <div className={styles.itemIcon}>
                   <Icon size="xl" type={item.icon} />
                 </div>
-                <div style={styles.body}>
-                  <div style={styles.title}>
+                <div className={styles.body}>
+                  <div className={styles.title}>
                     {item.title}
-                    <span style={styles.extraIcon}>
+                    <span className={styles.extraIcon}>
                       <Balloon
                         trigger={<Icon type="help" size="xs" />}
                         triggerType="hover"
@@ -57,10 +59,10 @@ export default class EventsOverview extends Component {
                       </Balloon>
                     </span>
                   </div>
-                  <div style={styles.count}>{item.count}</div>
-                  <div style={styles.data}>
+                  <div className={styles.count}>{item.count}</div>
+                  <div className={styles.data}>
                     <span>累计 {item.total}</span>
-                    <span style={styles.period}>周同比 {item.period}</span>
+                    <span className={styles.period}>周同比 {item.period}</span>
                   </div>
                 </div>
               </Col>
@@ -71,49 +73,3 @@ export default class EventsOverview extends Component {
     );
   }
 }
-
-const styles = {
-  item: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '10px 0',
-  },
-  itemIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: '20px',
-    color: '#4A90E2',
-  },
-  title: {
-    fontSize: '12px',
-    marginBottom: '5px',
-    color: '#9b9b9b',
-  },
-  count: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    margin: '10px 0',
-    color: '#4A90E2',
-  },
-  data: {
-    fontSize: '12px',
-    color: '#9b9b9b',
-  },
-  period: {
-    marginLeft: '10px',
-  },
-  down: {
-    width: '6px',
-    height: '9px',
-  },
-  up: {
-    width: '6px',
-    height: '9px',
-  },
-  extraIcon: {
-    marginLeft: '5px',
-    position: 'relative',
-    top: '1px',
-  },
-};
