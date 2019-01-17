@@ -75,7 +75,6 @@ export default class New extends Component {
               >
                 <Input
                   placeholder="请输入名称"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -93,7 +92,6 @@ export default class New extends Component {
               >
                 <Input
                   placeholder="1.0.0"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -106,8 +104,7 @@ export default class New extends Component {
               <IceFormBinder name="cate">
                 <Select
                   placeholder="请选择"
-                  multiple
-                  size="large"
+                  mode="multiple"
                   style={{ width: '400px' }}
                 >
                   <Option value="technology">Java</Option>
@@ -127,7 +124,6 @@ export default class New extends Component {
               >
                 <Input
                   placeholder="请输入"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -138,7 +134,7 @@ export default class New extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>时间</div>
               <IceFormBinder name="time">
-                <DatePicker size="large" style={{ width: '400px' }} />
+                <DatePicker  style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
@@ -168,7 +164,6 @@ export default class New extends Component {
             </div>
             <Button
               type="primary"
-              size="large"
               style={styles.submitButton}
               onClick={this.validateAllFormField}
             >

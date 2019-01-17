@@ -131,8 +131,8 @@ const styles = {
   },
   inputIcon: {
     position: 'absolute',
-    left: '10px',
-    top: '8px',
+    left: '12px',
+    top: '12px',
     color: '#666',
   },
   inputCol: {
