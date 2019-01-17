@@ -20,6 +20,7 @@ const appendRouteV3 = require('./appendRouteV3');
 const appendRouteV4 = require('./appendRouteV4');
 const appendMenuV4 = require('./appendMenuV4');
 const logger = require('../../logger');
+const { emitProcess, emitError, emitProgress } = require('../../services/tracking');
 
 /**
  * 新建页面功能
@@ -52,20 +53,43 @@ module.exports = async function createPage({
   builtIn = false, // 如果设置为 true, 文件冲突情况下不再询问, 直接忽略
   libary = 'react', // hack 用于识别 vue 项目做特殊处理
   excludeLayout = false,
+  progressFunc
 }) {
+
+  // 初始参数
   let fileList = [];
   const layoutName = layout.name;
   routePath = routePath || pageName;
 
-  // 获取当前项目的package.json中的数据
+  /**
+   * 1. 获取当前项目的package.json中的数据
+   */
+  let currentEvent = 'checkPathValid';
+  emitProcess(currentEvent);
+
   const pkgPath = path.join(clientPath, 'package.json');
   let pkg = {}; 
   if (pathExists.sync(pkgPath)) {
     try {
       const packageText = fs.readFileSync(pkgPath);
-      pkg = JSON.parse(packageText.toString());
-    } catch (e) {}
+      packageData = JSON.parse(packageText.toString());
+    } catch (e) {
+      emitError(currentEvent, {
+        message: 'package.json 内存在语法错误',
+        pkg: fs.readFileSync(pkgPath)
+      });
+      throw new DependenciesError('package.json 内存在语法错误', {
+        message: `请检查根目录下 package.json 的语法规范`,
+      });
+    }
+  } else {
+    emitError(currentEvent, { message: '找不到 package.json' });
+    throw new DependenciesError('找不到 package.json', {
+      message: `在项目根目录下找不到 package.json 文件`,
+    });
+
   }
+  // 兼容依赖
   pkg.dependencies = pkg.dependencies || {};
 
   if (preview) {
@@ -74,20 +98,22 @@ module.exports = async function createPage({
     routeText = 'IceworksPreviewPage';
   }
 
-  // 0. 检测目录合法
+  /**
+    * 2. 检测目录合法，生成页面的目录路径
+    */
   const projectValid = await utils.checkValidICEProject(clientPath);
   if (!projectValid) {
     utils.createInterpreter('UNSUPPORTED_DESTPATH', { clientPath }, interpreter);
     return [];
   }
 
-  // 项目中新建页面目录
+  // 生成页面的目录路径
   const pageFolderName = upperCamelCase(pageName || '');
   pageName = kebabCase(pageFolderName).replace(/^-/, '');
-
   const pageDir = path.join(clientSrcPath, 'pages', pageFolderName);
+  mkdirp.sync(pageDir);
 
-  // 0. 如果页面级目录(page)存在 不允许 override
+  // 如果页面级目录(page)存在 不允许 override
   if (builtIn && fs.existsSync(pageDir) && fs.readdirSync(pageDir).length > 0) {
     const canOverride = await utils.createInterpreter(
       'DESTDIR_EXISTS_OVERRIDE',
@@ -99,7 +125,8 @@ module.exports = async function createPage({
     }
   }
 
-  // 1. 下载区块
+  // 3. 下载区块
+  currentEvent = 'generateBlocks';
   if (Array.isArray(blocks)) {
     // className、relativePath用于ejs模板语言生成page.jsx
     blocks.forEach( block => {
@@ -114,19 +141,26 @@ module.exports = async function createPage({
     })
 
     // 下载区块到页面
-    let dependencies
+    emitProgress(true);
+    let dependencies;
     try {
       const deps = await utils.downloadBlocksToPage({
-        destDir, 
+        clientSrcPath, 
         blocks, 
         pageName: pageFolderName, 
-        isNodeProject,
-        preview
       });
       dependencies = deps.dependencies;
     } catch (error) {
-      console.log(err);
+      emitProgress(false);
     }
+
+    emitProgress(false);
+  }
+
+  // 安装 block 依赖
+  currentEvent = 'installBlockDeps';
+  if (Object.keys(dependencies).length > 0) {
+    emitProcess(currentEvent);
 
     const waitUntilNpmInstalled = await utils.createInterpreter(
       'ADD_DEPENDENCIES',
@@ -138,16 +172,18 @@ module.exports = async function createPage({
       const blocksName = blocks
         .map(({ source }) => `${source.npm}@${source.version}`)
         .join(' ');
-      const depsName = Object.keys(blockDeps)
-        .map((d) => `${d}@${blockDeps[d]}`)
+      const depsName = Object.keys(dependencies)
+        .map((d) => `${d}@${dependencies[d]}`)
         .join(' ');
       throw new DependenciesError('blocks 安装失败', {
         message: `无法安装以下区块： blocks: ${blocksName} dependencies: ${depsName}`,
       });
     }
-
   }
 
+  /**
+   * 4. 生成 ${pageName}/xxxx 文件
+   */
   const scaffoldConfig = pkg.scaffoldConfig || {};
   const renderData = {
     // layout
@@ -165,9 +201,9 @@ module.exports = async function createPage({
     scaffoldConfig,
   };
 
-  mkdirp.sync(pageDir);
+  currentEvent = 'generatePage';
+  emitProcess(currentEvent);
 
-  // 4. 生成 pages/xxxx 目录文件
   const done = pageTemplates(libary).reduce((prev, template) => {
     try {
       const fileContent = template.compile(renderData);
@@ -195,7 +231,9 @@ module.exports = async function createPage({
     }
   }, 0x1);
 
-  // 更新 routes.jsx
+  /**
+   * 5. 更新 routes.jsx
+   */
   let  routeFilePath = path.join(clientSrcPath, 'routes.jsx');
   const  routerConfigFilePath = path.join(clientSrcPath, 'routerConfig.js');
   const  menuConfigFilePath = path.join(clientSrcPath, 'menuConfig.js');
@@ -204,6 +242,12 @@ module.exports = async function createPage({
     // hack 兼容 vue 物料 router
     routeFilePath = path.join(clientSrcPath, 'router.js');
   }
+
+  /**
+   * 6. 更新配置文件 menuConfig， routerConfig
+   */
+  currentEvent = 'appendConfig';
+  emitProcess(currentEvent);
 
   // routeText 表示 menu 的导航名
   if (pathExists.sync(menuConfigFilePath) && routeText) {
