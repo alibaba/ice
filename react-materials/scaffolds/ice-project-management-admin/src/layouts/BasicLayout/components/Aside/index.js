@@ -1,11 +1,11 @@
 /* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import React, { Component } from 'react';
-import { Icon } from '@icedesign/base';
-import Menu, { Item as MenuItem } from '@icedesign/menu';
+import { Icon, Menu } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
 import { asideMenuConfig } from '../../../../menuConfig';
 
 import './index.scss';
+const MenuItem = Menu.Item;
 
 @withRouter
 export default class BasicLayout extends Component {

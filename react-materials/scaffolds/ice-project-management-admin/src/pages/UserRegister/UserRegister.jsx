@@ -1,13 +1,12 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Feedback } from '@icedesign/base';
+import { Input, Button, Message, Icon } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
 
 @withRouter
 class UserRegister extends Component {
@@ -80,7 +79,7 @@ class UserRegister extends Component {
         >
           <div style={styles.formItems}>
             <div style={styles.formItem}>
-              <IceIcon type="person" size="small" style={styles.inputIcon} />
+              <Icon type="account" size="small" style={styles.inputIcon} />
               <IceFormBinder name="name" required message="请输入正确的用户名">
                 <Input
                   size="large"
@@ -92,7 +91,7 @@ class UserRegister extends Component {
             </div>
 
             <div style={styles.formItem}>
-              <IceIcon type="mail" size="small" style={styles.inputIcon} />
+              <Icon type="email" size="small" style={styles.inputIcon} />
               <IceFormBinder
                 type="email"
                 name="email"
@@ -110,7 +109,7 @@ class UserRegister extends Component {
             </div>
 
             <div style={styles.formItem}>
-              <IceIcon type="lock" size="small" style={styles.inputIcon} />
+              <Icon type="lock" size="small" style={styles.inputIcon} />
               <IceFormBinder
                 name="passwd"
                 required
@@ -127,7 +126,7 @@ class UserRegister extends Component {
             </div>
 
             <div style={styles.formItem}>
-              <IceIcon type="lock" size="small" style={styles.inputIcon} />
+              <Icon type="lock" size="small" style={styles.inputIcon} />
               <IceFormBinder
                 name="rePasswd"
                 required

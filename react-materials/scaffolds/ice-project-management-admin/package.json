@@ -14,20 +14,19 @@
     ".eslintrc"
   ],
   "dependencies": {
+    "@alifd/next": "^1.x",
     "@antv/data-set": "^0.9.6",
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^0.1.7",
-    "@icedesign/icon": "^0.1.1",
     "@icedesign/img": "^0.1.0",
-    "@icedesign/layout": "^0.1.0",
-    "@icedesign/menu": "^0.1.0",
-    "@icedesign/skin": "^0.1.0",
+    "@icedesign/layout": "^1.x",
+    "@icedesign/theme": "^0.x",
     "bizcharts": "^3.2.4",
     "classnames": "^2.2.5",
     "foundation-symbol": "^0.1.0",
     "immutable": "^4.0.0-rc.12",
     "is-hotkey": "^0.1.4",
+    "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -57,7 +56,7 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "localization": false,
     "output": {

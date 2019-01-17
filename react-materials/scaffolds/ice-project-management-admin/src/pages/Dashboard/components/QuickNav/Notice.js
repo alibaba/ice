@@ -1,7 +1,7 @@
 /* eslint global-require: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 
 const ITEMS = [
   {
