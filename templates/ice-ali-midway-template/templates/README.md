@@ -36,19 +36,44 @@ project
 ├── server
 |     ├── package.json          // 服务端 package.json
 |     ├── .gitignore
-|     ├── .tsconfig.json
-|     ├── .tslint.json
+|     ├── tsconfig.json
+|     ├── tslint.json
 |     ├── procfile.js           // Pandora.js 启动配置 (自动生成)
-|     └── src
-|          ├── app       // 用于解析用户的输入，处理后返回相应的结果
-|          |    ├── index.html
-|          ├── config           // 配置文件
-|          ├── controller       // 用于解析用户的输入，处理后返回相应的结果
-|          ├── middleware       // 用于编写中间件
-|          ├── model            // 用于放置模型
-|          ├── router           // 用于路由文件
-|          └── app.js           // 入口文件
-|
+|     ├── build.sh              // aone 相关脚本 (自动生成)
+│     ├── src
+│     │    ├── app                            // web 层目录
+│     │    │    ├── controller                // web 层 controller 目录
+│     │    │    │   ├── home.ts
+│     │    │    │   └── user.ts
+│     │    │    ├── middleware (可选)          // web 层中间件目录
+│     │    │    │   └── trace.ts
+│     │    │    ├── public (可选)              // web 层静态文件目录，可以配置
+│     │    │    ├── view (可选)
+│     │    │    │   └── home.tpl              // web 层模板
+│     │    ├─── config
+│     │    │    ├── config.default.ts
+│     │    │    ├── config.local.ts
+│     │    │    ├── config.prod.ts
+│     │    │    ├── config.unittest.ts
+│     │    │    └── plugin.ts
+│     │    ├─── lib                           // 业务逻辑层目录
+│     │    │    ├── interface.ts              // 接口定义文件
+│     │    │    └── service                   // 业务逻辑层，目录根据业务自己定义
+│     │    │        └── user.ts
+│     │    ├─── app.ts                        // 应用扩展文件，可选
+│     │    └─── agent.ts                      // agent 扩展文件，可选
+│     ├─── test                               // 用户测试
+│     │    └── app
+│     │        └── controller
+│     │            └── home.test.ts
+│     └─── logs                               // 本地日志目录
+│          └── midway6-test                      // 日志应用名开头
+│              ├── common-error.log              // 错误日志
+│              ├── midway-agent.log              // agent 输出的日志
+│              ├── midway-core.log               // 框架输出的日志
+│              ├── midway-web.log                // koa 输出的日志
+│              └── midway6-test-web.log
+│
 ├── package.json           // package.json
 └── README.md              // 项目说明
 ```

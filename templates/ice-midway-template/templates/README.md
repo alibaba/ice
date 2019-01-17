@@ -36,8 +36,8 @@ project
 ├── server
 │     ├── package.json          // 服务端 package.json
 │     ├── .gitignore
-│     ├── .tsconfig.json
-│     ├── .tslint.json
+│     ├── tsconfig.json
+│     ├── tslint.json
 │     ├── src
 │     │    ├── app                            // web 层目录
 │     │    │    ├── controller                // web 层 controller 目录
