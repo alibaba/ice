@@ -1,17 +1,28 @@
 {
   "name": "@icedesign/reviews-management-scaffold",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "该模板适用于用户反馈和评价管理，布局方式采用左侧固定，右侧自适应方式，适合大量数据展示和界面操作",
   "author": "ice-admin@alibaba-inc.com",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-reviews-management.html",
+  "homepage": "https://unpkg.com/@icedesign/reviews-management-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
     "@antv/data-set": "^0.8.7",
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.2",
+    "@icedesign/form-binder": "^1.0.3",
     "@icedesign/img": "^0.1.1",
     "@icedesign/layout": "^0.1.2",
     "@icedesign/menu": "^0.1.1",
-    "@icedesign/skin": "^0.1.0",
+    "@icedesign/skin": "^0.1.14",
     "bizcharts": "^3.1.5",
     "enquire-js": "^0.1.2",
     "foundation-symbol": "^0.1.3",
@@ -42,16 +53,16 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": true
+    "localization": false
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-reviews-management",
-    "title": "客户反馈系统",
+    "title": "评测管理系统",
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1FrmItDtYBeNjy1XdXXXXyVXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1Bq.sCsbpK1RjSZFyXXX_qFXa-2860-1580.png"
   },
   "engines": {
     "node": ">=8.0.0"
