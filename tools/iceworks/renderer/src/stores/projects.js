@@ -148,10 +148,7 @@ class Projects extends EventEmitter {
   @action
   has(path) {
     return this.list.some((project) => {
-      if (project.fullPath === path) {
-        return true;
-      }
-      return false;
+      return project.fullPath === path;
     });
   }
 

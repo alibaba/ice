@@ -1,6 +1,13 @@
 [
   {
     "changelog": [
+      "修复：兼容没有layouts的项目"
+    ],
+    "releaseDate": "2019年01月18日",
+    "version": "2.15.4"
+  },
+  {
+    "changelog": [
       "修复：模板创建提示问题"
     ],
     "releaseDate": "2019年01月17日",
