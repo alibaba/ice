@@ -22,13 +22,13 @@ class ScaffoldItem extends Component {
   };
 
   createProject = () => {
-    const { createProject, data, scaffolds = {} } = this.props;
-    const isOfficialSource = /ice\.alicdn\.com\/(pre-)?assets\/react-materials\.json/.test(
+    const { createProject, data = {}, scaffolds= {}, isOfficialSource = false } = this.props;
+    const isOfficialSrc = isOfficialSource || /ice\.alicdn\.com\/(pre-)?assets\/react-materials\.json/.test(
       scaffolds.material.source
     );
     const hasIceScripts = data.builder === 'ice-scripts';
 
-    if (isOfficialSource) {
+    if (isOfficialSrc) {
       if (hasIceScripts) {
         createProject(data);
       } else {

@@ -9,13 +9,15 @@ const scaffolds = [
   // 行业模板
   'ice-operation-admin',
   'ice-government-management-admin',
-  'ice-creator-admin',
+  'ice-project-management-admin',
   'ice-application-management-admin',
   'ice-design-cms',
   'ice-voice-chat-admin',
+  'ice-creator-admin',
   'ice-library-management-admin',
   'ice-asset-management-admin',
   'ice-task-management-admin',
+  'ice-reviews-management',
   'ice-monitor-dashboard',
   'ice-algorithm-model-admin',
   'ice-contract-management-admin',
@@ -23,11 +25,9 @@ const scaffolds = [
   'ice-builder-platform',
   'ice-design-schools',
   'ice-customer-analysis-admin',
-  'ice-reviews-management',
   'ice-design-dashboard',
   'ice-design-hospital',
   'ice-design-ecommerce',
-  'ice-design-project-management',
 
   // 数据可视化模板
   'ice-design-analysis',

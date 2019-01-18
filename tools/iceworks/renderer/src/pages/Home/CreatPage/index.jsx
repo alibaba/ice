@@ -80,10 +80,6 @@ class CreatePage extends Component {
     this.statusCompileDisposer();
   }
 
-  fetchData = () => {
-    this.props.newpage.fetch();
-  };
-
   handleCancelCreate = () => {
     this.props.newpage.toggle();
     this.props.blocks.reset();

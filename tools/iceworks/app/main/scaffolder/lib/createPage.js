@@ -58,7 +58,11 @@ module.exports = async function createPage({
 
   // 初始参数
   let fileList = [];
-  const layoutName = layout.name;
+  let layoutName = '';
+  if (layout) { // 兼容没有layout的情况，比如通过打开项目引入的项目很可能没有。
+    layoutName = layout.name;
+  }
+
   routePath = routePath || pageName;
 
   /**
