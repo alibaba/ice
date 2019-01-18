@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Input, Button, Feedback, Select } from '@icedesign/base';
+import { Grid, Input, Button, Message, Select } from '@alifd/next';
 import {
   FormBinderWrapper,
   FormBinder,
@@ -8,7 +8,7 @@ import {
 } from '@icedesign/form-binder';
 
 const { Row, Col } = Grid;
-const Toast = Feedback.toast;
+const Toast = Message;
 
 export default class SimpleFluencyForm extends Component {
   state = {

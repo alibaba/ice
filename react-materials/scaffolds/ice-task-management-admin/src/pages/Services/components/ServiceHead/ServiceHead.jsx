@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Dialog } from '@icedesign/base';
+import { Button, Dialog } from '@alifd/next';
 
 export default class ServiceHead extends Component {
   handleClick = () => {
