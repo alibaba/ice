@@ -1,8 +1,8 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import ScrollAnim from 'rc-scroll-anim';
-import Logo from '../Logo';
-import './Header.scss';
+import Logo from '../../../../components/Logo';
+import './index.scss';
 
 const Link = ScrollAnim.Link;
 const EventListener = ScrollAnim.Event;
