@@ -3,7 +3,7 @@ import { Balloon, Icon } from '@icedesign/base';
 import Menu from '@icedesign/menu';
 import Logo from '../Logo';
 import { headerMenuConfig } from '../../menuConfig';
-import './Header.scss';
+import './index.scss';
 
 export default class Header extends Component {
   renderBalloonContent = (menu, idx) => {
