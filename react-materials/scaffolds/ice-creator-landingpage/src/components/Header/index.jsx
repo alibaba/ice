@@ -2,61 +2,35 @@ import React, { Component } from 'react';
 import { Balloon, Icon } from '@icedesign/base';
 import Menu from '@icedesign/menu';
 import Logo from '../Logo';
-import './Header.scss';
+import './index.scss';
 
 const MENUS = [
   {
     name: '设计',
-    path: '/ice/docs/ice-design',
+    path: '#',
   },
   {
     name: '文档',
-    path: '/ice/docs',
+    path: '#',
   },
   {
     name: '物料',
     children: [
       {
         name: '组件',
-        path: '/ice/component/button',
+        path: '#',
       },
       {
         name: '区块',
-        path: '/ice/block',
+        path: '#',
       },
       {
         name: '布局',
-        path: '/ice/layout',
+        path: '#',
       },
       {
         name: '模板',
-        path: '/ice/scaffold',
-      },
-    ],
-  },
-  {
-    name: '工具',
-    children: [
-      {
-        name: 'ICEWORKS',
-        path: '/ice/iceworks',
-      },
-      {
-        name: 'Playground',
-        path: '/ice/playground',
-      },
-    ],
-  },
-  {
-    name: '社区',
-    children: [
-      {
-        name: '知乎专栏',
-        path: 'https://zhuanlan.zhihu.com/ice-design',
-      },
-      {
-        name: '万能群',
-        path: require('./images/ice-group.png'),
+        path: '#',
       },
     ],
   },
