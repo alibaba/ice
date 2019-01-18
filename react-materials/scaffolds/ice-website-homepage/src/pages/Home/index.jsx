@@ -20,10 +20,18 @@ export default class Home extends Component {
       <div className="home-page" style={{ background: '#fff' }}>
         <Header />
         <LandingIntroBanner />
-        <IceworksInfo />
-        <DesignLanguage />
-        <Materials />
-        <BrandList />
+        <div id="iceworks">
+          <IceworksInfo />
+        </div>
+        <div id="design">
+          <DesignLanguage />
+        </div>
+        <div id="material">
+          <Materials />
+        </div>
+        <div id="brandlist">
+          <BrandList />
+        </div>
         <Footer />
       </div>
     );
