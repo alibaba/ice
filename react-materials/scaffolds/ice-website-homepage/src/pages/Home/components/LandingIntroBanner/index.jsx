@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from '@icedesign/base';
-import './LandingIntroBanner.scss';
+import './index.scss';
 
 export default class LandingIntroBanner extends Component {
   static displayName = 'LandingIntroBanner';
@@ -35,7 +35,7 @@ export default class LandingIntroBanner extends Component {
               className="landing-intro-banner-buttons"
               style={{ textAlign: 'center', marginTop: 70 }}
             >
-              <a href="//alibaba.github.io/ice/block" style={styles.leftButton}>
+              <a href="//alibaba.github.io/ice/block" target="_blank" rel="noopener noreferrer" style={styles.leftButton}>
                 <Button
                   style={{
                     height: 50,
@@ -50,7 +50,7 @@ export default class LandingIntroBanner extends Component {
                   查看海量物料
                 </Button>
               </a>
-              <a href="//alibaba.github.io/ice/iceworks">
+              <a href="//alibaba.github.io/ice/iceworks" target="_blank" rel="noopener noreferrer">
                 <Button
                   style={{
                     height: 50,
@@ -64,16 +64,6 @@ export default class LandingIntroBanner extends Component {
                   下载 GUI 工具
                 </Button>
               </a>
-            </div>
-
-            <div style={{ marginTop: '80px', position: 'relative' }}>
-              <div style={styles.gitContainer}>
-                <iframe
-                  style={styles.gitStar}
-                  title="alibaba/ice"
-                  src="https://ghbtns.com/github-btn.html?user=alibaba&repo=ice&type=star&count=true&size=large"
-                />
-              </div>
             </div>
           </div>
         </div>
