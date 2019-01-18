@@ -20,11 +20,18 @@ export default class Home extends Component {
       <div className="home-page" style={{ background: '#fff' }}>
         <Header />
         <PlatformLanding />
-        <PlatformToolsIntro />
-        <PlatformIntro />
-        <PlatformBlackIntro />
-        <PlatformJoinus />
-        <Footer />
+        <div id="tools">
+          <PlatformToolsIntro />
+        </div>
+        <div id="fans">
+          <PlatformIntro />
+        </div>
+        <div id="business">
+          <PlatformBlackIntro />
+        </div>
+        <div id="join">
+          <PlatformJoinus />
+        </div>
       </div>
     );
   }
