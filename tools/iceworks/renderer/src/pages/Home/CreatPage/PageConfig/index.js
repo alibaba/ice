@@ -1,4 +1,4 @@
-import { Dialog, Button, Form, Input, Field, Feedback } from '@icedesign/base';
+import { Dialog, Button, Form, Input, Field, Feedback, Progress } from '@icedesign/base';
 import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import React, { Component } from 'react';
@@ -43,11 +43,41 @@ class PageConfig extends Component {
   constructor(props) {
     super(props);
     this.field = new Field(this);
+    this.state = {
+      progress: 0,
+      progressSpeed: 0,
+      progressRemaining: 0
+    };
   }
+
+  handleProgressFunc = (state) => {
+    if (state.percent && state.percent >= 1) {
+      this.setState({
+        progress: 100,
+        progressSpeed: 0,
+        progressRemaining: 0
+      });
+    } else if (state.percent && state.percent > 0) {
+      this.setState({
+        progress: Math.ceil(Number(state.percent) * 100),
+        progressSpeed: state.speed || 0,
+        progressRemaining: (state.time && state.time.remaining) || 0
+      });
+    }
+  };
+
+  resetProgress = () => {
+    this.setState({
+      progress: 0,
+      progressSpeed: 0,
+      progressRemaining: 0
+    });
+  };
 
   handleClose = () => {
     if (!this.props.newpage.isCreating) {
       this.props.newpage.closeSave();
+      this.resetProgress();
     }
   };
 
@@ -207,6 +237,7 @@ class PageConfig extends Component {
               excludeLayout: applicationType == 'react', // hack react 的模板不生成 layout
               // hack vue
               libary: this.props.libary,
+              progressFunc: this.handleProgressFunc,
               interpreter: ({ type, message, data }, next) => {
                 console.log(type, message);
                 switch (type) {
@@ -456,6 +487,28 @@ class PageConfig extends Component {
             </FormItem>
           )}
         </Form>
+        {this.props.newpage.isCreating && (
+          <p className="create-process">{this.props.newpage.createProcess + '...'}</p>
+        )}
+        {this.props.newpage.progressVisible && (
+          <div className="create-process">
+            <Progress
+              style={{ width: '40%' }}
+              showInfo={false}
+              percent={this.state.progress}
+            />
+            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
+              {this.state.progress}%
+            </span>
+            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
+              {this.state.progressSpeed}
+              /kbs
+            </span>
+            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
+              剩余 {this.state.progressRemaining} s
+            </span>
+          </div>
+        )}
       </Dialog>
     );
   }

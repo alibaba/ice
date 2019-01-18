@@ -27,7 +27,7 @@ class AddPackage extends Component {
             title: '安装依赖失败',
             content: (
               <div>
-                请确认 ${dependencies.join(' ')} 依赖存在，或网络连接正常，
+                请确认 {dependencies.join(' ')} 依赖存在，或网络连接正常，
                 <br />
                 可展开【运行日志】查看详细反馈信息。
               </div>

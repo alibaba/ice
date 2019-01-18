@@ -6,6 +6,7 @@ const request = require('request');
 const tar = require('tar');
 const upperCamelCase = require('uppercamelcase');
 const zlib = require('zlib');
+const requestProgress = require('request-progress');
 const pathExists = require('path-exists');
 
 const config = require('../../config');
@@ -14,6 +15,7 @@ const DependenciesError = require('./errors/DependenciesError');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
+const { emitProcess, emitError, emitProgress } = require('../../services/tracking');
 
 /**
  * 批量下载 block 到页面中
@@ -80,6 +82,7 @@ function downloadBlockToPage({ clientSrcPath, block, pageName }) {
       'block need to have specified source at download block to page method.'
     );
   }
+  emitProcess('generateBlocks', block.title || block.alias || block.blockName || block.name);
 
   const componentsDir = path.join(clientSrcPath, 'pages', pageName, 'components');
   // 保证文件夹存在
@@ -192,12 +195,20 @@ function extractTarball(tarballURL, destDir) {
  * @param ignoreFiles
  * @returns {Promise<any>}
  */
-function extractBlock(destDir, tarballURL, clientPath, ignoreFiles) {
+function extractBlock(destDir, tarballURL, projectDir, ignoreFiles, progressFunc = () => {}) {
   return new Promise((resolve, reject) => {
     debug('npmTarball', tarballURL);
     const allFiles = [];
-    request
-      .get(tarballURL)
+    const req = requestProgress(
+      request({
+        url: tarballURL,
+        timeout: 5000
+      })
+    );
+    req
+      .on('progress', (state) => {
+        progressFunc(state);
+      })
       .on('error', reject)
       .pipe(zlib.Unzip()) // eslint-disable-line
       .pipe(tar.Parse()) // eslint-disable-line
@@ -239,6 +250,9 @@ function extractBlock(destDir, tarballURL, clientPath, ignoreFiles) {
         allFiles.push(destPath);
       })
       .on('end', () => {
+        progressFunc({
+          percent: 1,
+        });
         resolve(allFiles);
       });
   });
@@ -334,13 +348,13 @@ async function getDependenciesFromMaterial(material = {}) {
 /**
  * 解压自定义区块
  */
-function extractCustomBlock (block, projectDir) {
-  return new Promise((resolve) => {
+function extractCustomBlock (block, BlockDir) {
+  return new Promise((resolve, reject) => {
     const allFiles = [];
     let codeFileTree = block.code;
-    mkdirp.sync(projectDir);
-    fs.writeFileSync(path.join(projectDir, 'index.jsx'), codeFileTree['index.jsx']);
-    allFiles.push(path.join(projectDir, 'index.jsx'));
+    mkdirp.sync(BlockDir);
+    fs.writeFileSync(path.join(BlockDir, 'index.jsx'), codeFileTree['index.jsx']);
+    allFiles.push(path.join(BlockDir, 'index.jsx'));
     resolve(allFiles);
   });
 }
