@@ -114,7 +114,6 @@ function getOptions(_options, clientTargetPath) {
     progressFunc: ( _options.isNodeProject && !clientTargetPath )
       ? _options.progressFunc.server
       : _options.progressFunc.client,
-    commonBlock: true,
     interpreter: ({ type, message }, next) => {
       log.info('generate project', type, message);
       switch (type) {
