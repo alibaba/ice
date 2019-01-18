@@ -95,7 +95,7 @@ function getPrefix(cwd, opt = {}) {
     }
   } else {
     const pkg = pkgJSON.getPkgJSON(cwd);
-    prefix = `${pkg.pkgName}`;
+    prefix = `${pkg.name}-`;
   }
 
   return prefix;
