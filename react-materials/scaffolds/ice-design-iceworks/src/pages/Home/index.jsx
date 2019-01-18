@@ -20,16 +20,18 @@ export default class Home extends Component {
       <div className="home-page" style={styles.homepage}>
         <Header />
         <SoftwareDownload />
-        <ProductFeature
-          title="模板自定义创建"
-          desc="提供多种垂直领域模板，快速创建项目，支持风格切换，满足个性化需求"
-          img={{
-            url:
-              require('./images/TB1AC4BpL5TBuNjSspmXXaDRVXa-1816-878.png'),
-            width: 1816 / 2,
-            height: 878 / 2,
-          }}
-        />
+        <div id="feature">
+          <ProductFeature
+            title="模板自定义创建"
+            desc="提供多种垂直领域模板，快速创建项目，支持风格切换，满足个性化需求"
+            img={{
+              url:
+                require('./images/TB1AC4BpL5TBuNjSspmXXaDRVXa-1816-878.png'),
+              width: 1816 / 2,
+              height: 878 / 2,
+            }}
+          />
+        </div>
         <VisualAssembly />
         <ProductFeature
           title="布局自定义生成"
@@ -42,17 +44,21 @@ export default class Home extends Component {
           }}
         />
         <CustomMaterials />
-        <ProductFeature
-          title="项目仪表盘插件化"
-          desc="丰富多样的项目信息面板，页面信息，路由信息依赖管理等，配置专属的Iceworks界面"
-          img={{
-            url:
-              require('./images/TB1pPQppv1TBuNjy0FjXXajyXXa-1280-860.png'),
-            width: 1280 / 2,
-            height: 860 / 2,
-          }}
-        />
-        <ChangeLogs />
+        <div id="project">
+          <ProductFeature
+            title="项目仪表盘插件化"
+            desc="丰富多样的项目信息面板，页面信息，路由信息依赖管理等，配置专属的Iceworks界面"
+            img={{
+              url:
+                require('./images/TB1pPQppv1TBuNjy0FjXXajyXXa-1280-860.png'),
+              width: 1280 / 2,
+              height: 860 / 2,
+            }}
+          />
+        </div>
+        <div id="changelog">
+          <ChangeLogs />
+        </div>
         <Footer />
       </div>
     );

@@ -1,97 +1,36 @@
 import React, { Component } from 'react';
-import { Input, Balloon, Icon } from '@icedesign/base';
-import Menu from '@icedesign/menu';
 import Logo from '../Logo';
 import './index.scss';
 
 const MENUS = [
   {
-    name: '设计',
-    path: '#',
+    name: '特点',
+    path: '#feature',
   },
   {
-    name: '文档',
-    path: '#',
+    name: '项目',
+    path: '#project',
   },
   {
-    name: '物料',
-    children: [
-      {
-        name: '组件',
-        path: '#',
-      },
-      {
-        name: '区块',
-        path: '#',
-      },
-      {
-        name: '布局',
-        path: '#',
-      },
-      {
-        name: '模板',
-        path: '#',
-      },
-    ],
-  }
+    name: 'changelog',
+    path: '#changelog',
+  },
 ];
 
 export default class Header extends Component {
-  renderBalloonContent = (menu) => {
-    return (
-      <Menu.Item key={menu.name}>
-        <Balloon
-          className="header-balloon-content"
-          closable={false}
-          triggerType="click"
-          trigger={
-            <a>
-              {menu.name}{' '}
-              <Icon
-                size="xxs"
-                type="arrow-down-filling"
-                className="arrow-down-filling-icon"
-              />
-            </a>
-          }
-        >
-          {menu.children.map((subMenu, index) => {
-            return (
-              <a href="#" className="custom-sub-menu" key={index}>
-                {subMenu.name}
-              </a>
-            );
-          })}
-        </Balloon>
-      </Menu.Item>
-    );
-  };
-
-  renderMenuItem = () => {
-    return MENUS.map((menu, index) => {
-      if (menu.children) {
-        return this.renderBalloonContent(menu);
-      }
-      return (
-        <Menu.Item key={index}>
-          <a href={menu.path}>{menu.name}</a>
-        </Menu.Item>
-      );
-    });
-  };
-
   render() {
     return (
       <div className="header-container">
         <div className="header-content">
           <Logo />
           <div className="header-navbar">
-            <div className="header-search-input">
-              <Input placeholder="全局搜索" />
-            </div>
-            <Menu className="header-navbar-menu" mode="horizontal">
-              {this.renderMenuItem()}
-            </Menu>
+            {
+              MENUS.map((item, idx) => {
+                return (
+                  <a key={idx} className="header-menu-item" href={item.path}>{item.name}</a>
+                );
+              })
+            }
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ export default class Header extends Component {
               MENUS.map((item, idx) => {
                 return (
                   <a key={idx} className="header-menu-item" href={item.path}>{item.name}</a>
-                )
+                );
               })
             }
           </div>
