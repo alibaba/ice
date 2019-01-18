@@ -130,7 +130,7 @@ const styles = {
   inputIcon: {
     position: 'absolute',
     left: '12px',
-    top: '12x',
+    top: '12px',
     color: '#666',
   },
   inputCol: {
