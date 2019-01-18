@@ -8,7 +8,7 @@ const routerConfig = [
   {
     path: '/',
     component: HomePage,
-  }
+  },
 ];
 
 export default routerConfig;

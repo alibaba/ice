@@ -10,7 +10,7 @@ const routerConfig = [
     path: '/',
     layout: BlankLayout,
     component: Home,
-  }
+  },
 ];
 
 export default routerConfig;
