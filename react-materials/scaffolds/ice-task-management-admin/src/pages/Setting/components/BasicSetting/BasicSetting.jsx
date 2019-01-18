@@ -53,30 +53,26 @@ export default class BasicSetting extends Component {
             <div>
               <div style={styles.formItem}>
                 <div style={styles.formLabel}>英文名：</div>
-                <IceFormBinder>
+                <IceFormBinder name="cnName">
                   <Input
                     disabled
-                    name="cnName"
-                    size="large"
                     style={{ width: '400px' }}
                   />
                 </IceFormBinder>
               </div>
               <div style={styles.formItem}>
                 <div style={styles.formLabel}>中文名：</div>
-                <IceFormBinder>
+                <IceFormBinder name="zhName">
                   <Input
                     disabled
-                    name="zhName"
-                    size="large"
                     style={{ width: '400px' }}
                   />
                 </IceFormBinder>
               </div>
               <div style={styles.formItem}>
                 <div style={styles.formLabel}>项目简介：</div>
-                <IceFormBinder>
-                  <Input.TextArea multiple name="description" size="large" style={{ width: '400px' }} />
+                <IceFormBinder name="description">
+                  <Input.TextArea  style={{ width: '400px' }} />
                 </IceFormBinder>
               </div>
               <div style={styles.formItem}>
@@ -85,11 +81,10 @@ export default class BasicSetting extends Component {
                   required
                   triggerType="onBlur"
                   message="验证地址必填"
+                  name="url"
                 >
                   <Input
                     type="url"
-                    name="url"
-                    size="large"
                     style={{ width: '400px' }}
                   />
                 </IceFormBinder>
@@ -103,11 +98,10 @@ export default class BasicSetting extends Component {
                   required
                   triggerType="onBlur"
                   message="邮箱地址必填"
+                  name="email"
                 >
                   <Input
                     type="email"
-                    name="email"
-                    size="large"
                     style={{ width: '400px' }}
                   />
                 </IceFormBinder>
@@ -117,7 +111,6 @@ export default class BasicSetting extends Component {
               </div>
               <Button
                 type="primary"
-                size="large"
                 onClick={this.validateAllFormField}
               >
                 提 交
