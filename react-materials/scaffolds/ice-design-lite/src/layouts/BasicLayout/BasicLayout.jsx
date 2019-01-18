@@ -10,9 +10,6 @@ import Footer from './components/Footer';
 import MainRoutes from './MainRoutes';
 import './scss/index.scss';
 
-// 设置默认的皮肤配置，支持 dark 和 light 两套皮肤配置
-const theme = 'dark';
-
 @withRouter
 export default class BasicLayout extends Component {
   static propTypes = {};
@@ -58,15 +55,15 @@ export default class BasicLayout extends Component {
 
   render() {
     const isMobile = this.state.isScreen !== 'isDesktop';
-    const layoutClassName = `ice-design-layout-${theme} ice-design-layout`;
+    const layoutClassName = `ice-design-layout-dark ice-design-layout`;
 
     return (
       <div className={layoutClassName}>
-        <Layout>
-          <Header theme={theme} isMobile={isMobile} />
+        <Layout >
+          <Header isMobile={isMobile} />
 
           <Layout.Section scrollable>
-            <Layout.Aside theme={theme} width="auto">
+            <Layout.Aside width="auto" type={null}>
               <Aside isMobile={isMobile} />
             </Layout.Aside>
             <Layout.Main>

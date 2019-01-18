@@ -8,14 +8,14 @@ const headerMenuConfig = [
     path: 'https://github.com/alibaba/ice',
     external: true,
     newWindow: true,
-    icon: 'message',
+    icon: 'email',
   },
   {
     name: '帮助',
     path: 'https://alibaba.github.io/ice',
     external: true,
     newWindow: true,
-    icon: 'bangzhu',
+    icon: 'help',
   },
 ];
 

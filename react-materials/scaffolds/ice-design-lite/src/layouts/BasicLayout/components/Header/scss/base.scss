@@ -1,6 +1,8 @@
+$ice-header-text-color: #fff !default;
+$ice-header-icon-down-color: #fff !default;
+
 /* HEADER */
-.ice-layout-theme-#{$theme} {
-  &.ice-design-layout-header {
+  .ice-design-layout-header {
     width: 100%;
     padding: 10px 0px;
     margin: 0px auto;
@@ -48,8 +50,18 @@
         color: $ice-header-icon-down-color;
       }
     }
+
+    .next-nav {
+      background: transparent;
+      .next-nav-item.next-menu-item {
+        background: transparent;
+        &:hover {
+          background: transparent;
+          color: $color-b1-6;
+        }
+      }
+    } 
   }
-}
 
 .user-profile-menu {
   width: 130px;
@@ -67,7 +79,7 @@
 }
 
 @media screen and (max-width: 1199px) {
-  .ice-layout-theme-#{$theme} {
+  .ice-layout-theme-dark {
     &.ice-design-layout-header {
       width: 100%;
       .user-avatar {
