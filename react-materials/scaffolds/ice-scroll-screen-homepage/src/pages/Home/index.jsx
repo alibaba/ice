@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ScrollScreen from './components/ScrollScreen';
+import Header from './components/Header';
 
 export default class Home extends Component {
   static displayName = 'Home';
@@ -14,6 +15,11 @@ export default class Home extends Component {
   }
 
   render() {
-    return <ScrollScreen />;
+    return (
+      <div>
+        <Header />
+        <ScrollScreen />
+      </div>
+    );
   }
 }

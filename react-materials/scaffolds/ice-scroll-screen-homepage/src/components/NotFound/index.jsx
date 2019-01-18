@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import IceContainer from '@icedesign/container';
-import './BasicNotFound.scss';
+import './index.scss';
 
 export default class BasicNotFound extends Component {
   static displayName = 'BasicNotFound';
