@@ -24,8 +24,7 @@
   },
   "devDependencies": {
     "react": "^16.3.0",
-    "react-dom": "^16.3.0",
-    "ice-devtools": "latest"
+    "react-dom": "^16.3.0"
   },
   "componentConfig": {
     "name": "{{name}}",
