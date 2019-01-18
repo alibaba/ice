@@ -166,8 +166,9 @@ function run(opt, argsOpt) {
   // 如果是本地模板则从缓存读取，反之从 npm 源下载初始模板
   if (isLocalPath(template)) {
     const templatePath = getTemplatePath(template);
+    const npmName = name;
     if (exists(templatePath)) {
-      generate(name, templatePath, cwd, (err, cb) => {
+      generate(name, npmName, templatePath, cwd, (err, cb) => {
         if (err) logger.fatal(err);
         initCompletedMessage(cwd, name);
       });
@@ -196,7 +197,8 @@ function downloadAndGenerate({ template, tmp, to, name }) {
     .then(() => {
       spinner.stop();
 
-      generate(name, tmp, to, (err, cb) => {
+      const npmName = name;
+      generate(name, npmName, tmp, to, (err, cb) => {
         if (err) logger.fatal(err);
         initCompletedMessage(to, name);
       });
