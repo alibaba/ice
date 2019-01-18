@@ -15,6 +15,7 @@ const generate = require('../utils/generate');
 const localPath = require('../utils/local-path');
 const download = require('../utils/download');
 const innerNet = require('../utils/inner-net');
+const addComponent = require('./component/add');
 
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
@@ -28,6 +29,15 @@ module.exports = async function init(cwd, ...args) {
 
     const options = Object.assign({ cwd }, { args: [...args] });
     const answers = await initAsk(options);
+
+    if (answers.type === 'component') {
+      addComponent('react', cwd, {
+        standalone: true,
+        scope: answers.scope
+      });
+      return;
+    }
+
     run(answers, options);
   } catch (error) {
     logger.fatal(error);
@@ -38,7 +48,18 @@ module.exports = async function init(cwd, ...args) {
  * 初始询问
  */
 async function initAsk(options = {}) {
-  const templatePath = getLocalTemplatePath(options.args);
+  const { type } = await inquirer.prompt([
+    {
+      type: 'list',
+      message: 'please select the project type',
+      name: 'type',
+      default: 'material',
+      choices: [
+        'material',
+        'component'
+      ],
+    },
+  ]);
 
   const isInnerNet = await innerNet.isInnerNet();
 
@@ -71,6 +92,13 @@ async function initAsk(options = {}) {
     },
   ]);
 
+  if (type === 'component') {
+    return {
+      type: 'component',
+      scope: scope
+    };
+  }
+
   const projectName = path.basename(options.cwd);
   const { name } = await inquirer.prompt([
     {
@@ -91,6 +119,8 @@ async function initAsk(options = {}) {
       },
     },
   ]);
+
+  const templatePath = getLocalTemplatePath(options.args);
 
   const { template } = await (!templatePath
     ? inquirer.prompt([

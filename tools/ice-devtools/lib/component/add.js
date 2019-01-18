@@ -28,8 +28,9 @@ module.exports = async function addComponent(type, cwd, opt, ...argvOpts) {
 };
 
 async function execArgv(cwd, ...argvOpts) {
-  const name = await getName(cwd);
-  const npmName = await getNpmName(name);
+  const prefix = getPrefix(cwd, argvOpts);
+  const name = await getName(prefix);
+  const npmName = await getNpmName(name, prefix);
   const source = argvOpts[1];
   const dest = path.join(cwd, name);
 
@@ -40,7 +41,7 @@ async function execArgv(cwd, ...argvOpts) {
   generateTemplate({ name, npmName, source, dest });
 }
 
-function defaultQuestion(pkg) {
+function defaultQuestion(prefix) {
   return [
     {
       type: 'input',
@@ -50,7 +51,7 @@ function defaultQuestion(pkg) {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
           return 'Name must be a Upper Camel Case word, e.g. ExampleComponent.';
         }
-        const npmName = getNpmName(value, pkg);
+        const npmName = getNpmName(value, prefix);
         if (!validateName(npmName).validForNewPackages) {
           return `this block name(${npmName}) has already exist. please retry`;
         }
@@ -60,41 +61,54 @@ function defaultQuestion(pkg) {
   ];
 }
 
-async function execAsk(type, cwd, opt, argvOpts) {
+async function execAsk(type, cwd, opt = {}, argvOpts) {
   const templateName = `@icedesign/ice-${type}-component-template`;
   const source = await downloadTemplate(templateName);
-  const name = await getName(cwd);
-  const npmName = getNpmName(name, opt.pkg);
-  const dest = path.join(cwd, 'components', name);
 
-  generateTemplate({ name, npmName, source, dest });
+  const prefix = getPrefix(cwd, opt);
+  const name = await getName(prefix);
+  const npmName = getNpmName(name, prefix);
+  const dest = opt.standalone ? cwd : path.join(cwd, 'components', name);
+
+  generateTemplate({ name, npmName, source, dest, standalone : opt.standalone });
 }
 
 /**
  * 获取组件的文件名
  */
-async function getName(cwd) {
-  const pkg = pkgJSON.getPkgJSON(cwd);
-  const questions = defaultQuestion(pkg);
+async function getName(cwd, prefix) {
+  const questions = defaultQuestion(prefix);
   const { componentName } = await inquirer.prompt(questions);
   return componentName;
+}
+
+/**
+ * 获取包名前缀
+ */
+function getPrefix(cwd, opt = {}) {
+  let prefix = '';
+
+  // 独立开发组件
+  if (opt.standalone) {
+    if (opt.scope) {
+      prefix = `${opt.scope}/`;
+    }
+  } else {
+    const pkg = pkgJSON.getPkgJSON(cwd);
+    prefix = `${pkg.pkgName}`;
+  }
+
+  return prefix;
 }
 
 /**
  * 获取组件的 npm 名
  * @param {string} name
  */
-function getNpmName(name, pkg = {}) {
+function getNpmName(name, prefix) {
   const kebabCaseName = kebabCase(name).replace(/^-/, '');
 
-  let npmName;
-
-  if (pkg.name) {
-    npmName = `${pkg.name}-${kebabCaseName}`;
-  } else {
-    npmName = kebabCaseName;
-  }
-  return npmName;
+  return prefix + kebabCaseName;
 }
 
 /**
@@ -127,12 +141,12 @@ function downloadTemplate(template) {
  * @param {string} source
  * @param {string} dest
  */
-function generateTemplate({ name, npmName, source, dest }) {
+function generateTemplate({ name, npmName, source, dest, standalone }) {
   generate(name, npmName, source, dest, (err, callback) => {
     if (err) {
       logger.fatal(err);
     }
-    completedMessage(name, dest);
+    completedMessage(name, dest, standalone);
     callback();
   });
 }
@@ -142,13 +156,15 @@ function generateTemplate({ name, npmName, source, dest }) {
  * @param {string} name 组件名称
  * @param {string} path 组件路径
  */
-function completedMessage(name, path) {
+function completedMessage(name, path, standalone) {
   console.log();
   console.log(`Success! Created ${name} at ${path}`);
   console.log(`Inside ${name} directory, you can run several commands:`);
   console.log();
   console.log('  Starts the development server.');
-  console.log(chalk.cyan(`    cd components/${name}`));
+  if (!standalone) {
+    console.log(chalk.cyan(`    cd components/${name}`));
+  }
   console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();
