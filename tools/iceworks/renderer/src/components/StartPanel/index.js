@@ -49,11 +49,13 @@ class StartPanel extends Component {
         {scaffolds.length ? (
           <div className="start-recommend-scaffolds">
             {scaffolds.map((material, index) => {
+    
               return (
                 <ScaffoldItem
                   key={index}
                   createProject={this.props.handleSelectedScaffold}
                   data={material}
+                  isOfficialSource={true}
                 />
               );
             })}
