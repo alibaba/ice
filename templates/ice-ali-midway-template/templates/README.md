@@ -89,19 +89,3 @@ server 用于组织服务端的相关的代码，即常见的 MVC 的组织方�
 #### 配置
 
 公共配置包含代码风格、eslint 等基础配置，在整个应用中，前后端各自使用一套基础配置。
-
-#### 使用
-
-```bash
-# 安装 client & server 本地依赖
-$ npm run install
-# 构建本地前端资源
-$ npm run build
-# 启动服务
-$ npm run start
-# 打开浏览器查看(前端调试地址)
-$ oepn https://localhost:4444/
-# 后端服务地址（7001为默认端口，如果端口被占用自动加+1）
-$ open http://localhost:7001/
-
-```
