@@ -27,11 +27,6 @@ export default class Header extends Component {
               首页
             </Link>
           </li>
-          <li style={styles.navItem}>
-            <Link to="/one" style={styles.navItemLink}>
-              进入主页
-            </Link>
-          </li>
         </ul>
       </div>
     );
