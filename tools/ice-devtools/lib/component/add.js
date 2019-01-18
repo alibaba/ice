@@ -19,7 +19,7 @@ const pkgJSON = require('../../utils/pkg-json');
  * @param{String} cwd 当前路径
  * @param{Object} opt 参数
  */
-module.exports = async function addBlock(type, cwd, opt, ...argvOpts) {
+module.exports = async function addComponent(type, cwd, opt, ...argvOpts) {
   if (opt.hasArgvOpts) {
     await execArgv(cwd, ...argvOpts);
   } else {
@@ -28,29 +28,29 @@ module.exports = async function addBlock(type, cwd, opt, ...argvOpts) {
 };
 
 async function execArgv(cwd, ...argvOpts) {
-  const blockName = await getBlockName(cwd);
-  const blockNpmName = await getBlockNpmName(blockName);
-  const blockSource = argvOpts[1];
-  const blockDest = path.join(cwd, blockName);
+  const name = await getName(cwd);
+  const npmName = await getNpmName(name);
+  const source = argvOpts[1];
+  const dest = path.join(cwd, name);
 
-  if (exists(blockDest)) {
-    logger.fatal(`${blockName} already exists`);
+  if (exists(dest)) {
+    logger.fatal(`${name} already exists`);
   }
 
-  generateTemplate({ blockName, blockNpmName, blockSource, blockDest });
+  generateTemplate({ name, npmName, source, dest });
 }
 
 function defaultQuestion(pkg) {
   return [
     {
       type: 'input',
-      name: 'blockName',
-      message: 'block name (e.g. ExampleBlock)',
+      name: 'componentName',
+      message: 'block name (e.g. ExampleComponent)',
       validate: (value) => {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
-          return 'Name must be a Upper Camel Case word, e.g. ExampleBlock.';
+          return 'Name must be a Upper Camel Case word, e.g. ExampleComponent.';
         }
-        const npmName = getBlockNpmName(value, pkg);
+        const npmName = getNpmName(value, pkg);
         if (!validateName(npmName).validForNewPackages) {
           return `this block name(${npmName}) has already exist. please retry`;
         }
@@ -61,38 +61,38 @@ function defaultQuestion(pkg) {
 }
 
 async function execAsk(type, cwd, opt, argvOpts) {
-  const templateName = `@icedesign/ice-${type}-block-template`;
-  const blockSource = await downloadTemplate(templateName);
-  const blockName = await getBlockName(cwd);
-  const blockNpmName = getBlockNpmName(blockName, opt.pkg);
-  const blockDest = path.join(cwd, 'blocks', blockName);
+  const templateName = `@icedesign/ice-${type}-component-template`;
+  const source = await downloadTemplate(templateName);
+  const name = await getName(cwd);
+  const npmName = getNpmName(name, opt.pkg);
+  const dest = path.join(cwd, 'components', name);
 
-  generateTemplate({ blockName, blockNpmName, blockSource, blockDest });
+  generateTemplate({ name, npmName, source, dest });
 }
 
 /**
- * 获取区块的文件名
+ * 获取组件的文件名
  */
-async function getBlockName(cwd) {
+async function getName(cwd) {
   const pkg = pkgJSON.getPkgJSON(cwd);
   const questions = defaultQuestion(pkg);
-  const { blockName } = await inquirer.prompt(questions);
-  return blockName;
+  const { componentName } = await inquirer.prompt(questions);
+  return componentName;
 }
 
 /**
- * 获取区块的 npm 名
- * @param {string} blockName
+ * 获取组件的 npm 名
+ * @param {string} name
  */
-function getBlockNpmName(blockName, pkg = {}) {
-  const blockKebabCase = kebabCase(blockName).replace(/^-/, '');
+function getNpmName(name, pkg = {}) {
+  const kebabCaseName = kebabCase(name).replace(/^-/, '');
 
   let npmName;
 
   if (pkg.name) {
-    npmName = `${pkg.name}-${blockKebabCase}`;
+    npmName = `${pkg.name}-${kebabCaseName}`;
   } else {
-    npmName = blockKebabCase;
+    npmName = kebabCaseName;
   }
   return npmName;
 }
@@ -122,41 +122,38 @@ function downloadTemplate(template) {
 
 /**
  * 生成模板
- * @param {string} blockName
- * @param {string} blockNpmName
- * @param {string} blockSource
- * @param {string} blockDest
+ * @param {string} name
+ * @param {string} npmName
+ * @param {string} source
+ * @param {string} dest
  */
-function generateTemplate({ blockName, blockNpmName, blockSource, blockDest }) {
-  generate(blockName, blockNpmName, blockSource, blockDest, (err, callback) => {
+function generateTemplate({ name, npmName, source, dest }) {
+  generate(name, npmName, source, dest, (err, callback) => {
     if (err) {
       logger.fatal(err);
     }
-    completedMessage(blockName, blockDest);
+    completedMessage(name, dest);
     callback();
   });
 }
 
 /**
  * 区块下载完成后的提示信息
- * @param {string} blockName 区块名称
- * @param {string} blockPath 区块路径
+ * @param {string} name 组件名称
+ * @param {string} path 组件路径
  */
-function completedMessage(blockName, blockPath) {
+function completedMessage(name, path) {
   console.log();
-  console.log(`Success! Created ${blockName} at ${blockPath}`);
-  console.log(`Inside ${blockName} directory, you can run several commands:`);
+  console.log(`Success! Created ${name} at ${path}`);
+  console.log(`Inside ${name} directory, you can run several commands:`);
   console.log();
   console.log('  Starts the development server.');
-  console.log(chalk.cyan(`    cd blocks/${blockName}`));
+  console.log(chalk.cyan(`    cd components/${name}`));
   console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();
   console.log(
     '  When the development is complete, you need to run npm publish'
-  );
-  console.log(
-    '  Contains screenshots and build, equivalent to npm run build && npm run screenshoy'
   );
   console.log(chalk.cyan('    npm publish'));
   console.log();

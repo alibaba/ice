@@ -9,7 +9,7 @@ importStyle: true
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {{className}} from '@icedesign/{{name}}';
+import {{className}} from '{{npmName}}';
 
 
 class App extends Component {
