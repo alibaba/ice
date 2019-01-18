@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import { headerMenuConfig } from '../../menuConfig';
 import Logo from '../Logo';
-import './Header.scss';
+import './index.scss';
 
 @withRouter
 export default class Header extends Component {
