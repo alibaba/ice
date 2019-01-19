@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import styles from './index.module.scss';
 export default class Header extends Component {
   static displayName = 'Header';
 
@@ -15,16 +16,19 @@ export default class Header extends Component {
 
   render() {
     return (
-      <div style={styles.header}>
-        <div style={styles.logo}>
-          <Link to="/" style={styles.logoLink}>
+      <div className={styles.header}>
+        <div className={styles.logo}>
+          <Link to="/" className={styles.logoLink}>
             LOGO
           </Link>
         </div>
-        <ul style={styles.nav}>
-          <li style={styles.navItem}>
-            <Link to="/" style={{ ...styles.navItemLink, ...styles.active }}>
+        <ul className={styles.nav}>
+          <li className={styles.navItem}>
+            <Link to="/" className={styles.activeNavItemLink}>
               首页
+            </Link>
+            <Link to="/" className={styles.navItemLink}>
+              更多
             </Link>
           </li>
         </ul>
@@ -32,38 +36,3 @@ export default class Header extends Component {
     );
   }
 }
-
-const styles = {
-  header: {
-    width: '1200px',
-    margin: '0 auto',
-    padding: '20px 0',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  logoLink: {
-    color: '#66c7f5',
-    fontSize: '30px',
-    fontWeight: '500',
-    textDecoration: 'none',
-  },
-  nav: {
-    display: 'flex',
-  },
-  navItem: {
-    height: '40px',
-    lineHeight: '40px',
-    marginLeft: '20px',
-  },
-  navItemLink: {
-    display: 'inline-block',
-    padding: '0 20px',
-    color: '#999',
-    textDecoration: 'none',
-  },
-  active: {
-    background: '#407ee3',
-    color: '#fff',
-    borderRadius: '4px',
-  },
-};
