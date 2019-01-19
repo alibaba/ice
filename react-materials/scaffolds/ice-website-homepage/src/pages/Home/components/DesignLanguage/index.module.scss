@@ -1,0 +1,81 @@
+.wrapper {
+  height: 690px;
+  position: relative;
+  overflow: hidden;
+  margin-top: -120px;
+}
+.contentWrapper {
+  z-index: 1;
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.titleWrapper {
+  margin-top: 120px;
+}
+.titleLine {
+  width: 140px;
+  height: 2px;
+  margin-top: 17px;
+  background: #eee;
+
+}
+.titleHighlightLine {
+  width: 33px;
+  height: 2px;
+  background: $color-brand1-6;
+}
+.title {
+  color: #223C4E;
+  font-size: 36px;
+}
+.desc {
+  color: #6D7A82;
+  width: 525px;
+  font-size: 16px;
+  margin-top: 24px;
+  text-align: center;
+  line-height: 1.5;
+}
+.featureListWrapper {
+  width: 100%;
+  display: flex;
+  max-width: 960px;
+  margin-top: 60px;
+  align-items: center;
+  justify-content: space-around;
+}
+.featureItem {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.featureTitle {
+  color: #333333;
+  font-size: 24px;
+  margin-top: 35px;
+}
+.featureDesc {
+  color: #999999;
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.extraButton {
+  color: $color-brand1-6;
+  margin-top: 50px;
+  background: transparent;
+  border-color: $color-brand1-6;
+}
+.clipBackground {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  clip-path: polygon(0 15%, 100% 0, 100% 85%, 0% 100%);
+  background: #fff;
+}
