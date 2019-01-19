@@ -2,4 +2,4 @@
 
 简介：快捷导航入口
 
-![截图](https://img.alicdn.com/tfs/TB1X0sQxKuSBuNjy1XcXXcYjFXa-2866-322.png)
+![截图](https://unpkg.com/@icedesign/quick-navigation-block/screenshot.png)

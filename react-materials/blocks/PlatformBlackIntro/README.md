@@ -4,4 +4,4 @@
 
 平台黑底介绍区块
 
-![截图](https://img.alicdn.com/tfs/TB1aoVuq_tYBeNjy1XdXXXXyVXa-2008-1228.png)
+![截图](https://unpkg.com/@icedesign/platform-black-intro-block/screenshot.png)

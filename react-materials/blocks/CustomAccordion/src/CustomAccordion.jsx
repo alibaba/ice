@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Accordion } from '@icedesign/base';
+import { Collapse } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const mockData = [
@@ -48,13 +48,11 @@ export default class CustomAccordion extends Component {
     const { dataSource } = this.state;
     return (
       <IceContainer>
-        <Accordion
+        <Collapse
           style={styles.accordion}
-          single
-          singleShrink
-          onChange={this.onChange.bind(this)}
-          dataSource={dataSource}
-        />
+          accordion
+          onExpand={this.onChange.bind(this)}
+          dataSource={dataSource} />
       </IceContainer>
     );
   }

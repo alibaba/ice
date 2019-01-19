@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Input, Table } from '@icedesign/base';
-import FoundationSymbol from 'foundation-symbol';
+import { Grid, Input, Table, Icon } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -140,7 +139,7 @@ export default class ColumnsTable extends Component {
   };
 
   renderOper = () => {
-    return <FoundationSymbol type="edit" style={styles.editIcon} />;
+    return <Icon type="edit" style={styles.editIcon} />;
   };
 
   renderState = (value) => {

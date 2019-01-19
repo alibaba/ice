@@ -4,4 +4,4 @@
 
 筛选和表格组合
 
-![截图](https://img.alicdn.com/tfs/TB1ozPtzkyWBuNjy0FpXXassXXa-2566-1448.png)
+![截图](https://unpkg.com/@icedesign/table-filter-block/screenshot.png)

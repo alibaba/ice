@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import PieDonutChart from './PieDonutChart';
 import BarChart from './BarChart';
 import LineChart from './LineChart';

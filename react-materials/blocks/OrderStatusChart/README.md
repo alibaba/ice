@@ -4,4 +4,4 @@
 
 订单状态型的图表
 
-![截图](https://img.alicdn.com/tfs/TB1uwrkw49YBuNjy0FfXXXIsVXa-2868-1114.png)
+![截图](https://unpkg.com/@icedesign/order-status-chart-block/screenshot.png)

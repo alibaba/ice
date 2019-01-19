@@ -4,4 +4,4 @@
 
 筛选和列表组合
 
-![截图](https://img.alicdn.com/tfs/TB1bAzvzeSSBuNjy0FlXXbBpVXa-2548-1428.png)
+![截图](https://unpkg.com/@icedesign/content-list-block/screenshot.png)

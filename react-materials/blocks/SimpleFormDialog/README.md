@@ -4,7 +4,7 @@
 
 简单的表单弹窗
 
-![截图](https://img.alicdn.com/tfs/TB1.65ri9_I8KJjy0FoXXaFnVXa-1270-628.png)
+![截图](https://unpkg.com/@icedesign/simple-form-dialog-block/screenshot.png)
 
 
 

@@ -4,4 +4,4 @@
 
 基于 highcharts 的动态数据展示区块
 
-![截图](https://img.alicdn.com/tfs/TB1QH_RJ1uSBuNjy1XcXXcYjFXa-2858-706.png)
+![截图](https://unpkg.com/@icedesign/real-time-data-block/screenshot.png)

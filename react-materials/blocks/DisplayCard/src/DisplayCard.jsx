@@ -1,7 +1,7 @@
 /* eslint react/jsx-no-target-blank: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Balloon, Grid } from '@icedesign/base';
+import { Balloon, Grid } from '@alifd/next';
 import './DisplayCard.scss';
 
 const { Row, Col } = Grid;

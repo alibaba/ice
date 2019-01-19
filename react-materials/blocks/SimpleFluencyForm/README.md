@@ -4,4 +4,4 @@
 
 SimpleFluencyForm
 
-![截图](https://img.alicdn.com/tfs/TB1U7tFcDtYBeNjy1XdXXXXyVXa-2352-1002.png)
+![截图](https://unpkg.com/@icedesign/simple-fluency-form-block/screenshot.png)

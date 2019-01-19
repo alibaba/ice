@@ -4,4 +4,4 @@
 
 数据概览
 
-![截图](https://img.alicdn.com/tfs/TB1jWRlxntYBeNjy1XdXXXXyVXa-2864-428.png)
+![截图](https://unpkg.com/@icedesign/overview-sates-chart-block/screenshot.png)

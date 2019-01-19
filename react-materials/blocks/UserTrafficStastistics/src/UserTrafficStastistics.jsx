@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import { Chart, Geom, Axis, Tooltip, Coord, Label, Legend } from 'bizcharts';
 import { DataView } from '@antv/data-set';

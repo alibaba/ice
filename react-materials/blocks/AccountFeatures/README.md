@@ -4,4 +4,4 @@
 
 罗列账户功能列表
 
-![截图](https://img.alicdn.com/tfs/TB1Z_J9pj7nBKNjSZLeXXbxCFXa-1868-1218.png)
+![截图](https://unpkg.com/@icedesign/account-features-block/screenshot.png)

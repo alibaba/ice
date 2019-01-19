@@ -1,4 +1,4 @@
-import { Progress } from '@icedesign/base';
+import { Progress } from '@alifd/next';
 import React, { Component } from 'react';
 
 import './HotRankItem.scss';
@@ -23,12 +23,7 @@ class HotItem extends Component {
           {data.index}
         </span>
         <span style={styles.keyword}>{data.keyword}</span>
-        <Progress
-          type="progressive"
-          style={{ width: 60 }}
-          percent={data.percent}
-          showInfo={false}
-        />
+        <Progress shape="progressive" style={{ width: 60 }} percent={data.percent} />
         <span style={styles.total}>{data.total}</span>
         <span style={styles.link}>解读</span>
       </a>

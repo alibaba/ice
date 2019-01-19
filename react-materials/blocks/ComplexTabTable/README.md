@@ -4,4 +4,4 @@
 
 附带复杂的 Tab 多级筛选项的表格
 
-![截图](https://img.alicdn.com/tfs/TB1tUGncntYBeNjy1XdXXXXyVXa-2314-1466.png)
+![截图](https://unpkg.com/@icedesign/complex-tab-table-block/screenshot.png)

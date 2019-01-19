@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Timeline } from '@icedesign/base';
+import { Grid, Timeline } from '@alifd/next';
 import LineChart from './LineChart';
 
 const { Row, Col } = Grid;

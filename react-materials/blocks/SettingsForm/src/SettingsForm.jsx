@@ -1,17 +1,18 @@
 /* eslint  react/no-string-refs: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Radio, Switch, Upload, Grid } from '@icedesign/base';
-import {
-  FormBinderWrapper as IceFormBinderWrapper,
-  FormBinder as IceFormBinder,
-  FormError as IceFormError,
-} from '@icedesign/form-binder';
+import { Input, Button, Radio, Switch, Upload, Grid, Form } from '@alifd/next';
 import './SettingsForm.scss';
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
-const { ImageUpload } = Upload;
+const FormItem = Form.Item;
+
+const formItemLayout = {
+  labelCol: { xxs: 6, s: 3, l: 3 },
+  wrapperCol: { s: 12, l: 10 }
+};
+
 
 function beforeUpload(info) {
   console.log('beforeUpload callback : ', info);
@@ -44,7 +45,7 @@ export default class SettingsForm extends Component {
         gender: 'male',
         notice: false,
         email: '',
-        avatar: '',
+        avatar: [],
         siteUrl: '',
         githubUrl: '',
         twitterUrl: '',
@@ -68,17 +69,20 @@ export default class SettingsForm extends Component {
     });
   };
 
-  validateAllFormField = () => {
-    this.refs.form.validateAll((errors, values) => {
-      console.log('errors', errors, 'values', values);
-    });
+  validateAllFormField = (values, errors) => {
+    console.log('error', errors, 'value', values);
+    if (!errors) {
+      // 提交当前填写的数据
+    } else {
+      // 处理表单报错
+    }
   };
 
   render() {
     return (
       <div className="settings-form">
         <IceContainer>
-          <IceFormBinderWrapper
+          <Form
             value={this.state.value}
             onChange={this.formChange}
             ref="form"
@@ -86,180 +90,78 @@ export default class SettingsForm extends Component {
             <div style={styles.formContent}>
               <h2 style={styles.formTitle}>基本设置</h2>
 
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
-                  姓名：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder name="name" required max={10} message="必填">
-                    <Input size="large" placeholder="于江水" />
-                  </IceFormBinder>
-                  <IceFormError name="name" />
-                </Col>
-              </Row>
+              <FormItem size="large" label="姓名：" {...formItemLayout} required maxLength={10} requiredMessage="必填">
+                <Input name="name" placeholder="于江水" />
+              </FormItem>
+              <FormItem label="头像：" {...formItemLayout} required requiredMessage="必填">
+                <Upload.Card
+                  name="avatar"
+                  listType="card"
+                  action=""
+                  accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
+                  beforeUpload={beforeUpload}
+                  onChange={onChange}
+                  onSuccess={onSuccess}
+                  onError={onError}
+                />
 
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
-                  头像：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder name="avatar" required message="必填">
-                    <ImageUpload
-                      listType="picture-card"
-                      action=""
-                      accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
-                      locale={{
-                        image: {
-                          cancel: '取消上传',
-                          addPhoto: '上传图片',
-                        },
-                      }}
-                      beforeUpload={beforeUpload}
-                      onChange={onChange}
-                      onSuccess={onSuccess}
-                      onError={onError}
-                    />
-                  </IceFormBinder>
-                  <IceFormError name="avatar" />
-                </Col>
-              </Row>
+              </FormItem>
+              <FormItem label="性别：" {...formItemLayout} required requiredMessage="必填">
+                <RadioGroup name="gender" >
+                  <Radio value="male">男</Radio>
+                  <Radio value="female">女</Radio>
+                </RadioGroup>
+              </FormItem>
 
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
-                  性别：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder name="gender" required message="必填">
-                    <RadioGroup>
-                      <Radio value="male">男</Radio>
-                      <Radio value="female">女</Radio>
-                    </RadioGroup>
-                  </IceFormBinder>
-                  <IceFormError name="gender" />
-                </Col>
-              </Row>
+              <FormItem label="通知：" {...formItemLayout}  >
+                <Switch name="notice"/>
+              </FormItem>
+              <FormItem size="large" label="邮件：" {...formItemLayout} required requiredMessage="请输入正确的邮件">
+                <Input
+                  htmlType="email"
+                  name="email"
+                />
+              </FormItem>
+              <FormItem size="large" label="网站地址：" {...formItemLayout} required formatMessage="请输入正确的网站地址" format="url">
+                <Input
+                  name="siteUrl"
+                  type="url"
+                  placeholder="https://alibaba.github.io/ice"
+                />
+              </FormItem>
 
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
-                  通知：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder type="boolean" name="notice">
-                    <Switch />
-                  </IceFormBinder>
-                  <IceFormError name="notice" />
-                </Col>
-              </Row>
+              <FormItem size="large" label="Github：" {...formItemLayout} required formatMessage="请输入正确的 Github 地址" format="url">
+                <Input
+                  type="url"
+                  name="githubUrl"
+                  placeholder="https://github.com/alibaba/ice"
+                />
+              </FormItem>
 
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
-                  邮件：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder
-                    type="email"
-                    name="email"
-                    required
-                    message="请输入正确的邮件"
-                  >
-                    <Input
-                      size="large"
-                      placeholder="ice-admin@alibaba-inc.com"
-                    />
-                  </IceFormBinder>
-                  <IceFormError name="email" />
-                </Col>
-              </Row>
+              <FormItem size="large" label="Twitter：" {...formItemLayout} required formatMessage="请输入正确的 Twitter 地址" format="url">
+                <Input name="twitterUrl" placeholder="https://twitter.com" />
+              </FormItem>
 
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
-                  网站地址 ：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder
-                    type="url"
-                    name="siteUrl"
-                    required
-                    message="请输入正确的网站地址"
-                  >
-                    <Input
-                      size="large"
-                      type="url"
-                      placeholder="https://alibaba.github.io/ice"
-                    />
-                  </IceFormBinder>
-                  <IceFormError
-                    style={{ marginLeft: 10 }}
-                    name="siteUrl"
-                    required
-                    message="请输入正确的网站地址"
-                  />
-                </Col>
-              </Row>
-
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
-                  Github：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder
-                    type="url"
-                    name="githubUrl"
-                    required
-                    message="请输入正确的 Github 地址"
-                  >
-                    <Input
-                      size="large"
-                      placeholder="https://github.com/alibaba/ice"
-                    />
-                  </IceFormBinder>
-                  <IceFormError name="githubUrl" />
-                </Col>
-              </Row>
-
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
-                  Twitter：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder
-                    type="url"
-                    name="twitterUrl"
-                    required
-                    message="请输入正确的 Twitter 地址"
-                  >
-                    <Input size="large" placeholder="https://twitter.com" />
-                  </IceFormBinder>
-                  <IceFormError name="twitterUrl" />
-                </Col>
-              </Row>
-
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
-                  自我描述：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder name="description">
-                    <Input size="large" multiple placeholder="请输入描述..." />
-                  </IceFormBinder>
-                  <IceFormError name="description" />
-                </Col>
-              </Row>
-            </div>
-          </IceFormBinderWrapper>
-
-          <Row style={{ marginTop: 20 }}>
+              <FormItem size="large" label="自我描述：" {...formItemLayout} >
+                <Input.TextArea placeholder="请输入描述..." />
+              </FormItem>
+              <Row style={{ marginTop: 20 }}>
             <Col offset="3">
-              <Button
+              <Form.Submit
                 size="large"
                 type="primary"
                 style={{ width: 100 }}
+                validate
                 onClick={this.validateAllFormField}
               >
                 提 交
-              </Button>
+              </Form.Submit>
             </Col>
           </Row>
+            </div>
+          </Form>
+
+
         </IceContainer>
       </div>
     );

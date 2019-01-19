@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 
 export default class Content extends Component {
   static displayName = 'Content';

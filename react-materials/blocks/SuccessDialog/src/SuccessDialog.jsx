@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, Button } from '@icedesign/base';
+import { Dialog, Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import { enquireScreen } from 'enquire-js';
 

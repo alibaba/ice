@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Grid } from '@icedesign/base';
-import FoundationSymbol from 'foundation-symbol';
+import { Icon, Grid } from '@alifd/next';
 import Filter from './Filter';
 
 const { Row, Col } = Grid;
@@ -35,7 +34,7 @@ export default class CardList extends Component {
       <div style={styles.container}>
         <Filter />
         <Row wrap gutter="20">
-          <Col l="6">
+          <Col l="6" xs="12" xxs="24">
             <div style={{ ...styles.card, ...styles.createScheme }}>
               <Icon type="add" size="large" style={styles.addIcon} />
               <span>新增测试方案</span>
@@ -43,7 +42,7 @@ export default class CardList extends Component {
           </Col>
           {data.map((item, index) => {
             return (
-              <Col l="6" key={index}>
+              <Col l="6" xs="12" xxs="24" key={index}>
                 <div style={styles.card}>
                   <div style={styles.head}>
                     <h4 style={styles.title}>{item.title}</h4>
@@ -61,12 +60,7 @@ export default class CardList extends Component {
                     <p style={{ ...styles.time, ...styles.info }}>
                       创建时间：
                       {item.time}
-                      <FoundationSymbol
-                        type="font-size"
-                        size="edit2"
-                        style={styles.editIcon}
-                      />
-                      ;
+                      <Icon type="edit" style={styles.editIcon} />;
                     </p>
                   </div>
                 </div>
@@ -80,6 +74,9 @@ export default class CardList extends Component {
 }
 
 const styles = {
+  container: {
+    background: '#fafafa',
+  },
   createScheme: {
     display: 'flex',
     alignItems: 'center',
@@ -111,6 +108,7 @@ const styles = {
   desc: {
     margin: '0',
     fontSize: '14px',
+    color: '#666',
   },
   body: {
     position: 'relative',
@@ -119,6 +117,7 @@ const styles = {
   info: {
     margin: '0 0 8px',
     fontSize: '13px',
+    color: '#666',
   },
   time: {
     position: 'relative',

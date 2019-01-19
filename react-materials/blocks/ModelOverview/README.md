@@ -4,4 +4,4 @@
 
 适用于 Dashboard 页的数据概要展示
 
-![截图](https://img.alicdn.com/tfs/TB1ZUAYbNnaK1RjSZFtXXbC2VXa-1539-137.png)
+![截图](https://unpkg.com/@icedesign/model-overview-block/screenshot.png)

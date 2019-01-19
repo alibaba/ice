@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Search, Grid } from '@icedesign/base';
+import { Search, Grid } from '@alifd/next';
 import './FilterWithSearch.scss';
 
 const { Row, Col } = Grid;
@@ -61,6 +61,7 @@ export default class FilterWithSearch extends Component {
             <Col xxs={24} s={16} style={styles.searchWrapper}>
               <Search
                 inputWidth={250}
+                shape="simple"
                 searchText=""
                 size="large"
                 placeholder="请输入要搜索的关键词或商品链接"

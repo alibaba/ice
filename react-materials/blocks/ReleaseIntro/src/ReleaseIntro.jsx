@@ -1,7 +1,5 @@
-import { Menu, Button, Feedback } from '@icedesign/base';
+import { Menu, Button, Message, SplitButton } from '@alifd/next';
 import React, { Component } from 'react';
-
-const SplitButton = Button.Split;
 
 const descriptor = {
   'darwin-x64-prod': {
@@ -57,7 +55,7 @@ export default class ReleaseIntro extends Component {
   download = () => {
     const { data, loading, osType } = this.state;
     if (loading) {
-      Feedback.toast.success('请稍等');
+      Message.success('请稍等');
     } else {
       // 开始下载
       location.href = data[osType].install;
@@ -109,8 +107,7 @@ export default class ReleaseIntro extends Component {
                   menu={menu}
                   onClick={this.download}
                   size="large"
-                  className="iceworks-download-btn"
-                >
+                  className="iceworks-download-btn">
                   立即下载
                   <span style={{ marginLeft: '5px', fontSize: '12px' }}>
                     {descriptor[osType].download}
