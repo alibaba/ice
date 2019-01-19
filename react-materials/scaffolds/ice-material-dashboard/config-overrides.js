@@ -4,7 +4,7 @@ const rewireSass = require('./rewire-scss');
 
 module.exports = function override(config) {
   config = injectBabelPlugin(
-    ['import', { libraryName: '@icedesign/base' }],
+    ['import', { libraryName: '@alifd/next' }],
     config
   );
 
@@ -13,7 +13,7 @@ module.exports = function override(config) {
   config.plugins.push(
     new WebpackPluginImport([
       {
-        libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
+        libraryName: /^@alifd\/next\/lib\/([^/]+)/,
         stylePath: 'style.js',
       },
       {
