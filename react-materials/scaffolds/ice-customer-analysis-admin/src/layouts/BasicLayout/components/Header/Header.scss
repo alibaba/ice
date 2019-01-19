@@ -18,14 +18,24 @@
   .header-navbar {
     display: flex;
     flex-direction: row;
-    .ice-menu {
+    .next-nav {
       background: transparent;
       color: #ffffff;
+      border: none;
+      box-shadow: none;
       .ice-menu-submenu-title,
-      .ice-menu-item {
+      .next-menu-item {
         font-size: 14px;
+        background-color: transparent;
+        color: $color-white;
+        .ice-nav-item-text {
+          padding: 0 1em;
+        }
+        &:hover {
+          background-color: transparent;
+        }
         a:hover {
-          color: #2077ff;
+          color: $color-brand1-6;
         }
       }
     }

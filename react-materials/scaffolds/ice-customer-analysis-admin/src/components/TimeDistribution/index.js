@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DatePicker } from '@icedesign/base';
+import { DatePicker } from '@alifd/next';
 import ContainerTitle from '../ContainerTitle';
 import AreaChart from './AreaChart';
 
