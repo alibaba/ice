@@ -1,0 +1,27 @@
+.header-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  .header-content {
+    max-width: 1200px;
+    width: 100%;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-navbar {
+    display: flex;
+    flex-direction: row;
+
+    .header-menu-item {
+      margin-left: 60px;
+      color: #fff;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}

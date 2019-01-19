@@ -1,10 +1,20 @@
 {
   "name": "@icedesign/scroll-screen-homepage-scaffold",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "全屏展示的首页模板，支持锚点跳转定位和内置多种动画效果",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-scroll-screen-homepage/index.html",
   "keywords": [
     "ice-scaffold"
+  ],
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
   ],
   "scripts": {
     "start": "ice dev",
@@ -43,15 +53,16 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.6.0-next.3"
+    "ice-scripts": "^1.8.0"
   },
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": false
+    "output": {
+      "publicPath": "./"
+    }
   },
   "themeConfig": {
-    "primaryColor": "#236cff"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
