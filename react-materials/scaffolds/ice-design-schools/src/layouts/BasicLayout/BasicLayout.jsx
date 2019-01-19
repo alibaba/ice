@@ -8,17 +8,16 @@ import Footer from './components/Footer';
 
 import './BasicLayout.scss';
 
-const theme = 'dark';
-
 export default class BasicLayout extends Component {
   render() {
     return (
       <Layout
         fixable
         style={{ minHeight: '100vh' }}
-        className={cx(`basic-layout-${theme} ice-design-layout`)}
+        className={cx(`ice-design-layout`)}
+        type="secondary"
       >
-        <Header theme={theme} />
+        <Header/>
 
         <Layout.Section>
           <Layout.Aside width={240}>

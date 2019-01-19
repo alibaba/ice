@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Icon } from '@icedesign/base';
+import { Grid, Icon } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import CountUp from 'react-countup';
 import AreaChart from './AreaChart';
@@ -10,7 +10,7 @@ export default class OverviewChart extends Component {
   render() {
     return (
       <IceContainer title="月考报表">
-        <Row type="wrap">
+        <Row wrap>
           <Col xxs="12" s="12" l="6">
             <div style={styles.box}>
               <h2 style={styles.counterNum}>
