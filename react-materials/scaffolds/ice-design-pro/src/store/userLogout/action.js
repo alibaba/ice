@@ -47,12 +47,12 @@ export const userLogout = () => {
       dispatch(userLogoutSuccess(response.data));
 
       if (response.data.status === 200) {
-        Feedback.toast.success('已登出');
+        Message.success('已登出');
         setAuthority(response.data.currentAuthority);
         reloadAuthorized();
         dispatch(push('/user/login'));
       } else {
-        Feedback.toast.error('请稍后重试');
+        Message.error('请稍后重试');
       }
     } catch (error) {
       dispatch(userLogoutFailure(error));

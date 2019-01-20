@@ -4,13 +4,17 @@ import { Balloon, Icon, Nav } from '@alifd/next';
 import IceImg from '@icedesign/img';
 import Layout from '@icedesign/layout';
 import cx from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 
 import './scss/base.scss';
 
+@withRouter
 export default class Header extends PureComponent {
+  handleSetting = () => {
+    this.props.history.push('/account/setting');
+  };
   render() {
     const { isMobile, className, style } = this.props;
 
@@ -37,16 +41,16 @@ export default class Header extends PureComponent {
                   linkProps.to = nav.path;
                 }
                 return (
-                  <Nav.Item key={idx} icon={nav.icon ? nav.icon: null}>
+                  <Nav.Item key={idx} icon={nav.icon ? nav.icon : null}>
                     {linkProps.to ? (
                       <Link {...linkProps}>
                         {!isMobile ? nav.name : null}
                       </Link>
                     ) : (
-                      <a {...linkProps}>
-                        {!isMobile ? nav.name : null}
-                      </a>
-                    )}
+                        <a {...linkProps}>
+                          {!isMobile ? nav.name : null}
+                        </a>
+                      )}
                   </Nav.Item>
                 );
               })}
@@ -80,16 +84,16 @@ export default class Header extends PureComponent {
             className="user-profile-menu"
           >
             <ul>
-              <li className="user-profile-menu-item">
-                <Icon type="account" size="small" />
-                我的主页
-              </li>
-              <li className="user-profile-menu-item">
-                <Icon type="repair" size="small" />
+              <li className="user-profile-menu-item"
+                onClick={this.handleSetting}
+              >
+                <Icon type="set" size="small" />
                 设置
               </li>
-              <li className="user-profile-menu-item">
-                <Icon type="compass" size="small" />
+              <li className="user-profile-menu-item"
+                onClick={this.props.handleLogout}
+                >
+                <Icon type="upload" size="small" />
                 退出
               </li>
             </ul>
