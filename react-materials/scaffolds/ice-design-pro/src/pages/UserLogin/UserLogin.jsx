@@ -1,13 +1,12 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Grid } from '@icedesign/base';
+import { Input, Button, Checkbox, Grid, Icon } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -65,7 +64,7 @@ class UserLogin extends Component {
             <div className="formItems">
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <IceIcon type="person" size="small" className="inputIcon" />
+                  <Icon type="account" size="small" className="inputIcon" />
                   <IceFormBinder name="username" required message="必填">
                     <Input size="large" maxLength={20} placeholder="用户名" />
                   </IceFormBinder>
@@ -77,7 +76,7 @@ class UserLogin extends Component {
 
               <Row className="formItem">
                 <Col className="formItemCol">
-                  <IceIcon type="lock" size="small" className="inputIcon" />
+                  <Icon type="account" todo="lock" size="small" className="inputIcon" />
                   <IceFormBinder name="password" required message="必填">
                     <Input
                       size="large"

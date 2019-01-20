@@ -16,7 +16,7 @@
  */
 
 import { push } from 'react-router-redux';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,

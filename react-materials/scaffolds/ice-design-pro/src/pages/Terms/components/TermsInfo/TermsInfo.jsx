@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import IceContainer from '@icedesign/container';
-import { Checkbox, Button, Feedback } from '@icedesign/base';
+import { Checkbox, Button, Message } from '@alifd/next';
 
 export default class TermsInfo extends PureComponent {
   handleChange = () => {
