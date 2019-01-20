@@ -5,37 +5,37 @@ const asideMenuConfig = [
   {
     name: '概况',
     path: '/',
-    icon: 'home2',
+    icon: 'clock',
   },
   {
     name: '商品',
     path: '/goods',
-    icon: 'shopcar',
+    icon: 'filter',
   },
   {
     name: '订单',
     path: '/order',
-    icon: 'copy',
+    icon: 'calendar',
   },
   {
     name: '客户',
     path: '/customer',
-    icon: 'redpacket',
+    icon: 'account',
   },
   {
     name: '数据',
     path: '/statcenter',
-    icon: 'chart',
+    icon: 'ellipsis',
   },
   {
     name: '资产',
     path: '/asset',
-    icon: 'redpacket',
+    icon: 'atm',
   },
   {
     name: '设置',
     path: '/setting',
-    icon: 'shezhi',
+    icon: 'set',
   },
 ];
 

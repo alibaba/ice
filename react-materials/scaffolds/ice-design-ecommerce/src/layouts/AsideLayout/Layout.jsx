@@ -2,16 +2,17 @@
 import React, { Component } from 'react';
 import cx from 'classnames';
 import Layout from '@icedesign/layout';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
-import { Icon } from '@icedesign/base';
+import { Icon, Nav } from '@alifd/next';
 import { Link } from 'react-router-dom';
-import FoundationSymbol from 'foundation-symbol';
 import { enquire } from 'enquire-js';
 import IceImg from '@icedesign/img';
 import Logo from './components/Logo';
 import asideMenuConfig from '../../menuConfig';
 import './scss/light.scss';
 import './scss/dark.scss';
+
+const SuvNav = Nav.SubNav;
+const NavItem = Nav.Item;
 
 // 设置默认的皮肤配置，支持 dark 和 light 两套皮肤配置
 const theme = typeof THEME === 'undefined' ? 'light' : THEME;
@@ -133,29 +134,26 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
             })}
           >
             <Logo />
-            <Menu
+            <Nav
               style={{ width: 100 }}
               onClick={this.onMenuClick}
               selectedKeys={[pathname]}
               defaultSelectedKeys={[pathname]}
               defaultOpenKeys={[`${this.getOpenKeys()}`]}
-              mode="inline"
+              direction="ver"
+              activeDirection={null}
             >
               {asideMenuConfig &&
                 asideMenuConfig.length > 0 &&
                 asideMenuConfig.map((nav, index) => {
                   if (nav.children && nav.children.length > 0) {
                     return (
-                      <SubMenu
+                      <SubNav
                         key={index}
-                        title={
-                          <span>
-                            {nav.icon ? (
-                              <FoundationSymbol size="small" type={nav.icon} />
-                            ) : null}
-                            <span className="ice-menu-collapse-hide">
-                              {nav.name}
-                            </span>
+                        icon={nav.icon ? nav.icon : null}
+                        label={
+                          <span className="ice-menu-collapse-hide">
+                            {nav.name}
                           </span>
                         }
                       >
@@ -170,12 +168,12 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                             linkProps.to = item.path;
                           }
                           return (
-                            <MenuItem key={item.path}>
+                            <NavItem key={item.path}>
                               <Link {...linkProps}>{item.name}</Link>
-                            </MenuItem>
+                            </NavItem>
                           );
                         })}
-                      </SubMenu>
+                      </SubNav>
                     );
                   }
                   const linkProps = {};
@@ -188,21 +186,16 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
                     linkProps.to = nav.path;
                   }
                   return (
-                    <MenuItem key={nav.path}>
+                    <NavItem key={nav.path} icon={nav.icon ? nav.icon : null}>
                       <Link {...linkProps}>
-                        <span>
-                          {nav.icon ? (
-                            <FoundationSymbol size="small" type={nav.icon} />
-                          ) : null}
-                          <span className="ice-menu-collapse-hide">
-                            {nav.name}
-                          </span>
+                        <span className="ice-menu-collapse-hide">
+                          {nav.name}
                         </span>
                       </Link>
-                    </MenuItem>
+                    </NavItem>
                   );
                 })}
-            </Menu>
+            </Nav>
 
             {/* Header 右侧内容块 */}
 

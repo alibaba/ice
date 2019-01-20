@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import './BasicTab.scss';
 
@@ -19,7 +19,7 @@ export default class BasicTab extends Component {
         <IceContainer style={styles.tabCardStyle}>
           <Tab contentStyle={{ display: 'none' }}>
             {tabs.map((item) => {
-              return <Tab.TabPane key={item.key} tab={item.tab} />;
+              return <Tab.Item key={item.key} title={item.tab} />;
             })}
           </Tab>
         </IceContainer>
