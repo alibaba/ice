@@ -100,9 +100,7 @@ export default class Aside extends Component {
         return (
           <SubNav
             key={index}
-            icon={item.icon ? (
-              <Icon size="small" type={item.icon} />
-            ) : null}
+            icon={item.icon ? item.icon : null}
             label={<span className="ice-menu-collapse-hide">{item.name}</span>}
           >
             {childrenItems}
@@ -133,7 +131,7 @@ export default class Aside extends Component {
 
         {isMobile && !openDrawer && (
           <a className="menu-btn" onClick={this.toggleMenu}>
-            <Icon type="category" size="small" />
+            <Icon type="calendar" size="small" />
           </a>
         )}
 
