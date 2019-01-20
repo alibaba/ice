@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Balloon, Icon } from '@icedesign/base';
-import FoundationSymbol from 'foundation-symbol';
+import { Balloon, Icon } from '@alifd/next';
 import IceImg from '@icedesign/img';
 import Logo from '../Logo';
 import './Header.scss';
@@ -47,7 +46,7 @@ export default class Header extends Component {
                   <span className="user-department">技术部</span>
                 </div>
                 <Icon
-                  type="arrow-down-filling"
+                  type="arrow-down"
                   size="xxs"
                   className="icon-down"
                 />
@@ -59,19 +58,19 @@ export default class Header extends Component {
             <ul>
               <li className="user-profile-menu-item">
                 <Link to="/">
-                  <FoundationSymbol type="person" size="small" />
+                  <Icon type="account" size="small" />
                   我的主页
                 </Link>
               </li>
               <li className="user-profile-menu-item">
                 <Link to="/">
-                  <FoundationSymbol type="repair" size="small" />
+                  <Icon type="set" size="small" />
                   设置
                 </Link>
               </li>
               <li className="user-profile-menu-item">
                 <Link to="/">
-                  <FoundationSymbol type="compass" size="small" />
+                  <Icon type="upload" size="small" />
                   退出
                 </Link>
               </li>
