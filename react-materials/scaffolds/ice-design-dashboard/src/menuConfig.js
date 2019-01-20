@@ -1,39 +1,24 @@
 // 菜单配置
+// headerMenuConfig：头部导航配置
 // asideMenuConfig：侧边导航配置
 
-const asideMenuConfig = [
+const headerMenuConfig = [
   {
-    name: 'overview',
-    path: '/',
+    name: '反馈',
+    path: 'https://github.com/alibaba/ice',
+    external: true,
+    newWindow: true,
+    icon: 'message',
   },
   {
-    name: 'invoices',
-    path: '/',
-  },
-  {
-    name: 'clients',
-    path: '/',
-  },
-  {
-    name: 'payments',
-    path: '/',
-  },
-  {
-    name: 'profile',
-    path: '/',
-  },
-  {
-    name: 'notifications',
-    path: '/',
-  },
-  {
-    name: 'settings',
-    path: '/',
-  },
-  {
-    name: 'contact us',
-    path: '/',
+    name: '帮助',
+    path: 'https://alibaba.github.io/ice',
+    external: true,
+    newWindow: true,
+    icon: 'bangzhu',
   },
 ];
 
-export default asideMenuConfig;
+const asideMenuConfig = [];
+
+export { headerMenuConfig, asideMenuConfig };

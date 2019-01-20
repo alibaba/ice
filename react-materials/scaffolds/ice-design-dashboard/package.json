@@ -1,19 +1,31 @@
 {
-  "name": "@icedesign/ice-design-dashboard",
-  "version": "1.0.4",
-  "description": "该模板适用于简单的数据概览类展示，搭配简洁的暗色主题风格和图表类展示",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-design-dashboard.html",
+  "name": "@icedesign/dashboard-scaffold",
+  "version": "1.0.0",
+  "description": "该模板适用于电商类的数据展示大盘，搭配简洁的暗色主题风格和图表类展示",
+  "homepage": "https://unpkg.com/@icedesign/dashboard-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
+    "@antv/data-set": "^0.10.1",
     "@icedesign/base": "^0.2.0",
     "@icedesign/container": "^0.1.0",
     "@icedesign/layout": "^0.1.2",
     "@icedesign/menu": "^0.1.1",
     "@icedesign/skin": "^0.1.0",
-    "bizcharts": "^3.1.10",
+    "bizcharts": "^3.4.3",
     "classnames": "^2.2.5",
+    "jquery": "^3.3.1",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.7.0",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
@@ -38,16 +50,19 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": true
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-design-dashboard",
-    "title": "ICE Design Dashboard",
+    "title": "销售类数据大盘",
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1Ohh7DgmTBuNjy1XbXXaMrVXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1VjwLC9zqK1RjSZFHXXb3CpXa-2872-1580.png"
   },
   "engines": {
     "node": ">=8.0.0"
