@@ -59,14 +59,12 @@ class UserRegister extends Component {
     });
   };
 
-  handleSubmit = () => {
-    this.refs.form.validateAll((errors, values) => {
-      if (errors) {
-        console.log('errors', errors);
-        return;
-      }
-      this.props.userRegister(values);
-    });
+  handleSubmit = (values, errors) => {
+    if (errors) {
+      console.log('errors', errors);
+      return;
+    }
+    this.props.userRegister(values);
   };
 
   render() {
@@ -133,13 +131,14 @@ class UserRegister extends Component {
                 placeholder="至少8位密码" />
             </FormItem>
             <Row className="formItem">
-              <Button
+              <Form.Submit
                 type="primary"
+                validate
                 onClick={this.handleSubmit}
                 className="submitBtn"
               >
                 注 册
-                </Button>
+                </Form.Submit>
             </Row>
 
             <Row className="tips">
