@@ -1,0 +1,17 @@
+.ice-layout {
+  min-width: 1200px;
+
+  .ice-layout-main {
+    background: #f2f2f2;
+    padding: 0;
+    .main-container {
+      padding: 20px;
+    }
+  }
+
+  // reset Table style
+  .next-table td .next-table-cell-wrapper {
+    color: #666;
+    font-size: 13px;
+  }
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import Footer from './components/Footer';
 import Intro from './components/Intro';
 import routerData from '../../routerConfig';

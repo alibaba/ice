@@ -57,19 +57,13 @@ export default class Header extends Component {
           >
             <ul>
               <li className="user-profile-menu-item">
-                <Link to="/">
-                  <Icon type="account" size="small" />
-                  我的主页
-                </Link>
-              </li>
-              <li className="user-profile-menu-item">
-                <Link to="/">
+                <Link to="/setting">
                   <Icon type="set" size="small" />
                   设置
                 </Link>
               </li>
               <li className="user-profile-menu-item">
-                <Link to="/">
+                <Link to="/account/login">
                   <Icon type="upload" size="small" />
                   退出
                 </Link>

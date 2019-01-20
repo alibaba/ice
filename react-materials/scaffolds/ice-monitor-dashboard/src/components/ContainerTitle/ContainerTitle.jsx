@@ -12,11 +12,10 @@ const ContainerTitle = ({ title, style, ...props }) => {
 const styles = {
   title: {
     margin: '0',
-    padding: '15px 20px',
+    padding: '0',
     fonSize: '16px',
     color: 'rgba(0, 0, 0, 0.85)',
     fontWeight: '500',
-    borderBottom: '1px solid #f0f0f0',
   },
 };
 

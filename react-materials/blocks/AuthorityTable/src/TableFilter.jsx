@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Input, Select } from '@icedesign/base';
+import { Button, Input, Select } from '@alifd/next';
 
 export default class TableFilter extends Component {
   static displayName = 'TableFilter';

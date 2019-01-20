@@ -1,0 +1,60 @@
+.head {
+  padding: 15px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid $color-line1-1;
+}
+.title {
+  color: rgba(0, 0, 0, 0.85);
+  margin: 0 0 5px;
+  font-weight: 500;
+}
+.desc {
+  color: $color-text1-1;
+  margin: 0;
+  font-size: 12px;
+}
+.balloonTitle {
+  margin: 0 0 15px;
+  border-left: 4px solid $color-brand1-6;
+  font-weight: 500;
+  padding-left: 10px;
+}
+.ranking {
+  font-size: 15px;
+  font-weight: 500;
+}
+.zh {
+  margin-bottom: 10px;
+}
+.origin {
+  text-align: left;
+}
+.director {
+  margin-bottom: 10px;
+}
+.actor {
+  margin-bottom: 10px;
+}
+.summary {
+  color: rgba(0, 0, 0, 0.85);
+  text-align: right;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.returns {
+  margin-bottom: 10px;
+}
+.arrowUpIcon {
+  color: $color-error-3;
+  margin-right: 5px;
+}
+.score {
+  color: $color-data1-1;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: bold;
+}
+.pagination {
+  margin: 20px 0;
+  text-align: right;
+}

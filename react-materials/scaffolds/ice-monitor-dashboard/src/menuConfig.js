@@ -5,23 +5,30 @@
 const asideMenuConfig = [
   {
     name: '业务概览',
-    path: '/',
-    icon: 'clock',
+    path: '/dashboard',
   },
   {
     name: '数据中心',
     path: '/datacenter',
-    icon: 'calendar',
+  },
+  {
+    name: '流量分析',
+    path: '/traffic/statistics',
+  },
+  {
+    name: '用户分析',
+    path: '/user/statistics',
+  },
+  {
+    name: '留存与活跃',
+    path: '/user/activities',
   },
   {
     name: '反馈',
     path: 'https://github.com/alibaba/ice/issues/new',
-    icon: 'help',
     external: true,
     newWindow: true,
   },
 ];
 
-const headerMenuConfig = asideMenuConfig;
-
-export default headerMenuConfig;
+export default asideMenuConfig;

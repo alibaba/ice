@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Button } from '@icedesign/base';
+import { Button, Radio } from '@alifd/next';
 import CustomTable from '../../../../components/CustomTable';
 import TableFilter from '../TableFilter';
 
@@ -58,9 +58,9 @@ export default class BuilderTable extends Component {
     );
   };
 
-  handleSubmit = (len, idx) => {
+  handleSubmit = (len) => {
     this.setState({
-      activeIndex: idx,
+      activeIndex: len,
     });
     this.fetchData(len);
   };
@@ -155,19 +155,19 @@ export default class BuilderTable extends Component {
       <IceContainer>
         <div style={styles.tableHead}>
           <div style={styles.tableTitle}>构建器</div>
-          <ButtonGroup size="large">
+          <Radio.Group shape="button" value={activeIndex} onChange={(value) => this.handleSubmit(value)} >
             {buttonGroup.map((item, index) => {
               return (
-                <Button
-                  type="primary"
-                  style={activeIndex === index ? { background: '#ee706d' } : {}}
-                  onClick={() => this.handleSubmit(item.lenght, index)}
+                <Radio
+                  type="secondary"
+                  key={`button-${index}`}
+                  value={item.lenght}
                 >
                   {item.text}
-                </Button>
+                </Radio>
               );
             })}
-          </ButtonGroup>
+          </Radio.Group>
         </div>
         <TableFilter handleSubmit={() => this.handleSubmit(5)} />
         <CustomTable

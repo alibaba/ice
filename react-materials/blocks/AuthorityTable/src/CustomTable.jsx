@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Balloon, Icon } from '@icedesign/base';
+import { Table, Pagination, Balloon, Icon } from '@alifd/next';
 
 const getData = () => {
   return Array.from({ length: 10 }).map((item, index) => {

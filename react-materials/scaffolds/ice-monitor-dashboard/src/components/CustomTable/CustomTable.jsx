@@ -16,12 +16,9 @@ export default class Home extends Component {
     dataSource: PropTypes.array,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-    };
-  }
+  state = {
+    current: 1,
+  };
 
   handlePagination = (current) => {
     this.setState({
@@ -33,7 +30,7 @@ export default class Home extends Component {
     const { dataSource, columns } = this.props;
 
     return (
-      <div>
+      <div style={styles.container}>
         <Table
           dataSource={dataSource}
           hasBorder={false}
@@ -62,6 +59,9 @@ export default class Home extends Component {
 }
 
 const styles = {
+  container: {
+    margin: '20px 0',
+  },
   pagination: {
     margin: '20px 0',
     textAlign: 'center',

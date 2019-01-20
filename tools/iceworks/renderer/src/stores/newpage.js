@@ -87,7 +87,7 @@ class NewPage {
       ? path.join(destDir, 'client')
       : path.join(destDir, 'src');
     Promise.all([
-      scanLayout({ targetPath: scanPath, type }),
+      scanLayout({ targetPath: scanPath }),
       scanPages(scanPath),
     ])
       .then(this.fetchSuccess)

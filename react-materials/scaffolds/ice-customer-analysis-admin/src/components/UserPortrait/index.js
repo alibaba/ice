@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import ContainerTitle from '../ContainerTitle';
 import GenderChart from './GenderChart';
 import AgeChart from './AgeChart';

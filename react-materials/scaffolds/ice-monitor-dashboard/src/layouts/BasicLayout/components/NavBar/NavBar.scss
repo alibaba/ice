@@ -1,8 +1,15 @@
 .header-navbar-menu {
   background: #fff;
+  
   margin: 62px 20px 0;
   > .ice-menu-item {
     height: 58px;
     line-height: 58px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #666;
+  }
+  .ice-menu-item-selected {
+    border-bottom: 2px solid #447eff;
   }
 }

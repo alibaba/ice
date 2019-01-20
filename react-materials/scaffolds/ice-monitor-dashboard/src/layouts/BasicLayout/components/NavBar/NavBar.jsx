@@ -35,7 +35,6 @@ export default class Header extends Component {
             if (nav.children && nav.children.length > 0) {
               return (
                 <SubNav
-                  triggerType="click"
                   key={index}
                   icon={nav.icon ? nav.icon : null}
                   label={nav.name}

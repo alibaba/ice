@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Dialog, Button, Icon } from '@icedesign/base';
+import { Dialog, Button, Icon } from '@alifd/next';
 import { enquireScreen } from 'enquire-js';
 
 export default class ComplexDialog extends Component {

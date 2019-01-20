@@ -1,13 +1,42 @@
 [
   {
     "changelog": [
+      "修复：兼容没有layouts的项目"
+    ],
+    "releaseDate": "2019年01月18日",
+    "version": "2.15.4"
+  },
+  {
+    "changelog": [
+      "修复：模板创建提示问题"
+    ],
+    "releaseDate": "2019年01月17日",
+    "version": "2.15.3"
+  },
+  {
+    "changelog": [
+      "修复：初始化新建项目，推荐模板不可用"
+    ],
+    "releaseDate": "2019年01月17日",
+    "version": "2.15.2"
+  },
+  {
+    "changelog": [
+      "特性：适配飞冰物料升级到1.x版本",
+      "修复：新建页面时，module not found的临时报错"
+    ],
+    "releaseDate": "2019年01月15日",
+    "version": "2.15.1"
+  },
+  {
+    "changelog": [
       "特性：新增页面删除功能",
       "优化：DEF 插件优化",
       "优化：官方物料非 ice-scripts 的模板增加确认提示",
       "修复：自定义物料源地址不允许拼接参数的问题",
       "修复：自定义物料源地址https协议采用自签名证书导致的访问失败的问题"
     ],
-    "releaseDate": "2018年01月02日",
+    "releaseDate": "2019年01月02日",
     "version": "2.15.0"
   },
   {

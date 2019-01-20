@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Input, Button } from '@icedesign/base';
+import { Grid, Input, Button } from '@alifd/next';
 import {
   FormBinderWrapper,
   FormBinder,
@@ -124,12 +124,10 @@ export default class JoinUs extends Component {
                   style={styles.verFormItem}
                 >
                   <FormBinder>
-                    <Input
+                    <Input.TextArea
                       style={{ width: '100%', marginTop: '20px' }}
-                      multiple
                       name="content"
-                      placeholder="一些自我介绍"
-                    />
+                      placeholder="一些自我介绍" />
                   </FormBinder>
                 </Col>
               </Row>

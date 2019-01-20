@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table } from '@icedesign/base';
+import { Table } from '@alifd/next';
 
 const styles = {
   processing: {

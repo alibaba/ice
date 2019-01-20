@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle:0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Tab, Search } from '@icedesign/base';
+import { Table, Pagination, Tab, Search } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import IceLabel from '@icedesign/label';
@@ -185,21 +185,21 @@ export default class ComplexTabTable extends Component {
         <IceContainer>
           <Tab
             onChange={this.onTabChange}
-            type="bar"
+            shape="bar"
             currentTab={this.state.currentTab}
             contentStyle={{
               padding: 0,
             }}
-            tabBarExtraContent={
+            extra={
               !this.state.isMobile ? this.renderTabBarExtraContent() : null
             }
           >
             {tabList && tabList.length > 0
               ? tabList.map((tab) => {
                   return (
-                    <Tab.TabPane
+                    <Tab.Item
                       key={tab.type}
-                      tab={
+                      title={
                         <span>
                           {tab.text}
                           <span style={styles.tabCount}>{tab.count}</span>
@@ -220,7 +220,7 @@ export default class ComplexTabTable extends Component {
                             );
                           })
                         : null}
-                    </Tab.TabPane>
+                    </Tab.Item>
                   );
                 })
               : null}

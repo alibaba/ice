@@ -2,7 +2,7 @@
 
 简介：标签页表格组合
 
-![截图](https://img.alicdn.com/tfs/TB1IYWRXeuSBuNjy1XcXXcYjFXa-1902-906.png)
+![截图](https://unpkg.com/@icedesign/tab-table-block/screenshot.png)
 
 功能：
 

@@ -4,4 +4,4 @@
 
 销售数据图表
 
-![截图](https://img.alicdn.com/tfs/TB1TnLLxMmTBuNjy1XbXXaMrVXa-2804-732.png)
+![截图](https://unpkg.com/@icedesign/sales-chart-block/screenshot.png)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Checkbox, Table, Pagination } from '@icedesign/base';
+import { Checkbox, Table, Pagination } from '@alifd/next';
 
 const { Group: CheckboxGroup } = Checkbox;
 

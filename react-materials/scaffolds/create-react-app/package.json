@@ -1,10 +1,12 @@
 {
   "name": "@icedesign/scaffold-create-react-app",
-  "version": "0.1.6",
+  "version": "2.0.0",
   "description": "该模板基于 create-react-app 创建，使用 react-app-rewired 进行自定义配置，支持按需引入 ICE 基础组件，添加区块，主要适用于 0 到 1 开始搭建项目",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/create-react-app.html",
   "dependencies": {
-    "@icedesign/skin": "^0.1.13",
+    "@alifd/next": "^1.x",
+    "@icedesign/theme": "^0.1.0",
+    "moment": "^2.23.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
@@ -28,7 +30,7 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js"
   },
   "scaffoldConfig": {

@@ -6,7 +6,7 @@ const getData = () => {
   return Array.from({ length: 10 }).map((item, index) => {
     return {
       name: `${index + 1}. 云栖大会`,
-      num: parseInt(Math.random() * 10000),
+      num: parseInt(Math.random() * 10000, 10),
     };
   });
 };
@@ -42,7 +42,7 @@ export default class LatestActivity extends Component {
           { label: '上周新增用户数', value: '129,392' },
           { label: '累积用户数', value: '984,128' },
         ]}
-        link={{ text: '新增用户明细', href: '#' }}
+        link={{ text: '新增用户明细', to: '/user/statistics' }}
         dataSource={dataSource}
         columns={columns}
         content={<LineChart />}

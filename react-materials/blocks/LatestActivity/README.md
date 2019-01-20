@@ -4,4 +4,4 @@
 
 适用于图表和列表组合的活动展示场景
 
-![截图](https://img.alicdn.com/tfs/TB1rfmdhmrqK1RjSZK9XXXyypXa-2850-1104.png)
+![截图](https://unpkg.com/@icedesign/latest-activity-block/screenshot.png)
