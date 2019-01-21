@@ -10,7 +10,7 @@ const propsSchemaGenerator = require('props-schema-generator');
 const rimraf = require('rimraf');
 
 const getBabelConfig = require('../../config/getBabelConfig');
-const ComponentStyleGenerator = require('../../utils/ComponentStyleGenerator');
+const ComponentStyleGenerator = require('../../utils/component-style-generator');
 
 const GLOB_PATTERN = '**/*';
 const babelOpt = getBabelConfig();
