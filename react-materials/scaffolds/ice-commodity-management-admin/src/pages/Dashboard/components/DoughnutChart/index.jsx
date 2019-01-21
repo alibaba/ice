@@ -17,7 +17,7 @@ class Donut extends React.Component {
     const cols = {
       percent: {
         formatter: (val) => {
-          val = val * 100 + '%';
+          val = `${val * 100}%`;
           return val;
         },
       },
@@ -53,7 +53,7 @@ class Donut extends React.Component {
           tooltip={[
             'item*percent',
             (item, percent) => {
-              percent = percent * 100 + '%';
+              percent = `${percent * 100}%`;
               return {
                 name: item,
                 value: percent,
