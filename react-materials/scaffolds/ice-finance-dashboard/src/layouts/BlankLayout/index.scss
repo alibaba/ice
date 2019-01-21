@@ -1,0 +1,27 @@
+.blank-layout {
+  min-height: 100vh;
+  min-width: 1200px;
+  // background-image: url(https://img.alicdn.com/tfs/TB1T_EKC4TpK1RjSZFGXXcHqFXa-5751-3871.jpg);
+  // background-image: url(https://img.alicdn.com/tfs/TB1lEg.C4naK1RjSZFBXXcW7VXa-1920-1280.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 0;
+  padding: 0 20px 20px;
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #21293f;
+    min-height: 2000px;
+    opacity: 1;
+    z-index: 1;
+  }
+  &-content {
+    position: relative;
+    z-index: 2;
+  }
+}
