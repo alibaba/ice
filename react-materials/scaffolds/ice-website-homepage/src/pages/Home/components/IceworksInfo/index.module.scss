@@ -1,0 +1,56 @@
+.wrapper {
+  height: 690px;
+  position: relative;
+  overflow: hidden;
+  margin-top: -130px;
+  padding-top: 10px;
+}
+.productContent {
+  z-index: 1;
+  display: flex;
+  position: relative;
+  margin-top: 120px;
+  justify-content: center;
+}
+.titleLine {
+  width: 140px;
+  height: 2px;
+  margin-top: 17px;
+  background: #fff;
+
+}
+.titleHighlightLine {
+  width: 33px;
+  height: 2px;
+  background: $color-brand1-6;
+}
+.productInfo {
+  width: 400px;
+  margin-top: 40px;
+  margin-right: 90px;
+}
+.title {
+  color: #223C4E;
+  font-size: 36px;
+}
+.desc {
+  color: #6D7A82;
+  font-size: 16px;
+  margin-top: 24px;
+  line-height: 1.5;
+}
+.extraButton {
+  color: $color-brand1-6;
+  margin-top: 35px;
+  background: transparent;
+  border-color: $color-brand1-6;
+}
+.clipBackground {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  clip-path: polygon(0 15%, 100% 0, 100% 85%, 0% 100%);
+  background: #FAFAFA;
+}
