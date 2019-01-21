@@ -8,9 +8,6 @@ const CATEGORIES = [
   '筛选',
   '数据展示',
   '信息展示',
-  '异常',
-  '欢迎页',
-  '视频',
   '其他',
 ];
 
@@ -50,12 +47,6 @@ module.exports = {
       type: 'checkbox',
       message: 'categories',
       choices: CATEGORIES,
-      validate: (answer) => {
-        if (answer.length < 1) {
-          return 'It must be at least one';
-        }
-        return true;
-      },
       filter: (answer) => {
         return answer;
       },
