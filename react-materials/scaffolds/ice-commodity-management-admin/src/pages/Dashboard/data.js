@@ -2,81 +2,81 @@ const MOCK_DATA = {
   data0: [
     {
       title: '营业收入',
-      value: '0.00',
+      value: '123,459',
     },
     {
       title: '充值收入',
-      value: '0.00',
+      value: '3,954',
     },
     {
       title: '现金支付',
-      value: '0.00',
+      value: '509,432',
     },
     {
-      title: '网上支持',
-      value: '0.00',
+      title: '网上支付',
+      value: '249,234',
     },
     {
       title: '实体下单',
-      value: '0',
+      value: '12,323',
     },
     {
       title: '网上下单',
-      value: '0',
+      value: '452,234',
     },
     {
       title: '新增用户',
-      value: '0',
+      value: '2,334',
     },
     {
       title: '新增会员',
-      value: '0',
+      value: '1,234',
     },
   ],
   data1: [
     {
       title: '品项收入',
-      value: '0.00',
+      value: '594,128',
     },
     {
       title: '充值收入',
-      value: '0.00',
+      value: '35,042',
     },
     {
       title: '售卡收入',
-      value: '0.00',
+      value: '3,904',
     },
     {
       title: '耗卡金额',
-      value: '0.00',
+      value: '2,309',
     },
   ],
   data2: [
     {
       title: '新增会员数',
-      value: '0',
+      value: '2,323',
     },
     {
       title: '发卡张数',
-      value: '0',
+      value: '4,065',
     },
     {
       title: '消费客户数',
-      value: '0.00',
+      value: '3,409',
     },
     {
       title: '消费客单价',
-      value: '0.00',
+      value: '213',
     },
   ],
   data3: [
     {
       title: '积分发放',
-      value: '0',
+      value: '5,3409',
     },
     {
       title: '积分消耗',
-      value: '0',
+      value: '23,232',
     },
   ],
   data4: [
