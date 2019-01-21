@@ -16,12 +16,12 @@ export default class ChangeLogs extends Component {
             '[修复] 新建页面-布局选择器 缩略图错误问题',
           ],
           releaseDate: '2018年05月07日',
-          version: '2.0.2',
+          version: '2.0.3',
         },
         {
           changelog: ['[修复] 启动时出现错误弹窗问题'],
           releaseDate: '2018年05月05日',
-          version: '2.0.1',
+          version: '2.0.2',
         },
         {
           changelog: [
@@ -31,7 +31,7 @@ export default class ChangeLogs extends Component {
             '[新增] 自定义模板功能',
           ],
           releaseDate: '2018年05月04日',
-          version: '2.0.0',
+          version: '2.0.1',
         },
         {
           changelog: [
