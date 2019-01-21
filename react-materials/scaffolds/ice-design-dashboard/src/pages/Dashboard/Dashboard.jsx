@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import Title from './components/Title';
 import OverviewSatesChart from './components/OverviewSatesChart';
 import InternetSalesChart from './components/InternetSalesChart';
