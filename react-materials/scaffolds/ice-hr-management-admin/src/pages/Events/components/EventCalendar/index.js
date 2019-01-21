@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Calendar } from '@icedesign/base';
+import { Calendar } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 export default class EventCalendar extends Component {
@@ -14,13 +14,13 @@ export default class EventCalendar extends Component {
       left: 4,
     };
 
-    return calendarDate.week > 5 ? (
+    return calendarDate.week() > 5 ? (
       <div>
         <span style={style} />
-        {calendarDate.date}
+        {calendarDate.date()}
       </div>
     ) : (
-      <div>{calendarDate.date}</div>
+      <div>{calendarDate.date()}</div>
     );
   };
 

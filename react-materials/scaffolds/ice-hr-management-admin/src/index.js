@@ -1,6 +1,8 @@
 import ReactDOM from 'react-dom';
+import moment from 'moment';
+moment.locale('zh-cn');
 // 载入默认全局样式 normalize 、.clearfix 和一些 mixin 方法等
-import '@icedesign/base/reset.scss';
+import '@alifd/next/reset.scss';
 import router from './router';
 
 const ICE_CONTAINER = document.getElementById('ice-container');

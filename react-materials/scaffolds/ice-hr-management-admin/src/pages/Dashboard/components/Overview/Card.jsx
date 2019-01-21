@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 
 export default class Card extends Component {
   render() {
