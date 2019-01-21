@@ -10,7 +10,6 @@ import {
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
-const { Card } = Upload;
 
 function beforeUpload(info) {
   console.log('beforeUpload callback : ', info);
@@ -43,7 +42,7 @@ export default class BaseSetting extends Component {
         gender: 'male',
         notice: false,
         email: '',
-        avatar: '',
+        avatar: [],
         siteUrl: '',
         githubUrl: '',
         twitterUrl: '',
@@ -72,7 +71,6 @@ export default class BaseSetting extends Component {
         <IceFormBinderWrapper value={this.state.value} ref="form">
           <div style={styles.formContent}>
             <h2 style={styles.formTitle}>个人设置</h2>
-
             <Row style={styles.formItem}>
               <Col xxs="6" s="3" l="3" style={styles.label}>
                 姓名：
@@ -81,7 +79,6 @@ export default class BaseSetting extends Component {
                 <IceFormBinder name="name" required max={10} message="必填">
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="淘小宝"
                   />
                 </IceFormBinder>
@@ -96,15 +93,9 @@ export default class BaseSetting extends Component {
               <Col s="12" l="10">
                 <IceFormBinder name="avatar" required message="必填">
                   <Upload.Card
-                    listType="picture-card"
+                    listType="card"
                     action=""
                     accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
-                    locale={{
-                      image: {
-                        cancel: '取消上传',
-                        addPhoto: '上传图片',
-                      },
-                    }}
                     beforeUpload={beforeUpload}
                     onChange={onChange}
                     onSuccess={onSuccess}
@@ -135,9 +126,7 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder type="boolean" name="notice">
-                  <Switch
-                    style={{ background: '#2077ff', borderColor: '#2077ff' }}
-                  />
+                  <Switch />
                 </IceFormBinder>
                 <IceFormError name="notice" />
               </Col>
@@ -156,7 +145,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="ice-admin@alibaba-inc.com"
                   />
                 </IceFormBinder>
@@ -177,7 +165,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     type="url"
                     placeholder="https://alibaba.github.io/ice"
                   />
@@ -204,7 +191,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="https://github.com/alibaba/ice"
                   />
                 </IceFormBinder>
@@ -225,7 +211,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="https://twitter.com"
                   />
                 </IceFormBinder>
@@ -239,7 +224,7 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="description">
-                  <Input.TextArea style={styles.inputItem} size="large" multiple placeholder="请输入描述..." />
+                  <Input.TextArea style={styles.inputItem}  multiple placeholder="请输入描述..." />
                 </IceFormBinder>
                 <IceFormError name="description" />
               </Col>
@@ -250,7 +235,6 @@ export default class BaseSetting extends Component {
         <Row style={{ marginTop: 20 }}>
           <Col offset="3">
             <Button
-              size="large"
               type="primary"
               style={{ width: 100 }}
               onClick={this.validateAllFormField}

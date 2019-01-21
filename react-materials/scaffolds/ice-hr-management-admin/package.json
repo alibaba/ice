@@ -24,6 +24,7 @@
     "@icedesign/img": "^1.x",
     "@icedesign/label": "^1.x",
     "@icedesign/layout": "^1.x",
+    "async-validator": "^1.10.1",
     "bizcharts": "^3.4.1",
     "classnames": "^2.2.5",
     "moment": "^2.23.0",

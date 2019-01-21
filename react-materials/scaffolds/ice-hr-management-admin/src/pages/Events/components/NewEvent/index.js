@@ -52,7 +52,6 @@ export default class NewEvent extends Component {
       <IceContainer>
         <Button
           type="primary"
-          size="large"
           style={{ width: '100%' }}
           onClick={this.onOpen}
         >
@@ -75,7 +74,6 @@ export default class NewEvent extends Component {
                 <div style={styles.formLabel}>标题</div>
                 <IceFormBinder name="title" required message="必填">
                   <Input
-                    size="large"
                     maxLength={20}
                     placeholder="请输入标题"
                     style={styles.inputCol}
@@ -88,7 +86,6 @@ export default class NewEvent extends Component {
                 <div style={styles.formLabel}>描述</div>
                 <IceFormBinder name="description" required message="必填">
                   <Input
-                    size="large"
                     maxLength={20}
                     placeholder="请输入描述"
                     style={styles.inputCol}
@@ -101,7 +98,6 @@ export default class NewEvent extends Component {
                 <div style={styles.formLabel}>地址</div>
                 <IceFormBinder name="address">
                   <Input
-                    size="large"
                     maxLength={20}
                     placeholder="选题"
                     style={styles.inputCol}
