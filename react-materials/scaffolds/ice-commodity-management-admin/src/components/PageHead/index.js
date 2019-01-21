@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 
 const PageHead = ({ title, style, ...props }) => {
   return (

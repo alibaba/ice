@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Icon, Balloon } from '@icedesign/base';
+import { Grid, Icon, Balloon } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -10,7 +10,7 @@ export default class Overview extends Component {
       <Balloon
         trigger={<Icon type="help" size="xs" />}
         align="t"
-        alignment="edge"
+        alignEdge="edge"
         closable={false}
       >
         相关说明

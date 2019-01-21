@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Grid, DatePicker, Select } from '@icedesign/base';
+import { Grid, DatePicker, Select } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,

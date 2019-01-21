@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Feedback } from '@icedesign/base';
+import { Input, Button, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -68,7 +68,7 @@ export default class ReserveForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>预约备注：</div>
               <IceFormBinder name="description">
-                <Input multiple size="large" style={{ width: '400px' }} />
+                <Input.TextArea multiple size="large" style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <Button
