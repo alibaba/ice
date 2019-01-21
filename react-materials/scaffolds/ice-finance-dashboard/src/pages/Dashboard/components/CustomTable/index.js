@@ -1,3 +1,4 @@
+/* eslint no-mixed-operators:0 */
 import React, { Component } from 'react';
 import ContainerCard from '../../../../components/ContainerCard';
 import './index.scss';
