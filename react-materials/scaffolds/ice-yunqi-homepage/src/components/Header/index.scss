@@ -15,21 +15,29 @@
     justify-content: space-between;
   }
 
-  .ice-menu {
-    background: transparent;
+  .next-nav {
+    background: transparent !important;
     margin-right: 100px;
-    .ice-menu-item {
-      font-size: 14px;
+    box-shadow: none;
+    border: none;
+    .next-menu-item {
+      background-color: transparent !important;
       font-weight: 600;
-      color: #fff;
+      color: #fff !important;
+      .next-menu-item-inner {
+        font-size: 14px !important;
+      }
+      &.next-selected {
+        color:  hsla(0, 0%, 100%, 0.7) !important;
+      }
       &:hover,
       a:hover {
         color: hsla(0, 0%, 100%, 0.7);
       }
     }
-    .ice-menu-item-selected {
-      color: hsla(0, 0%, 100%, 0.7);
-    }
+    // .ice-menu-item-selected {
+    //   color: hsla(0, 0%, 100%, 0.7);
+    // }
   }
 
   .ticket-button {
