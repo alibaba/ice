@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Checkbox } from '@icedesign/base';
+import { Table, Checkbox } from '@alifd/next';
 
 const DATA = [
   {

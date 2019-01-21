@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
 import cx from 'classnames';
-import FoundationSymbol from 'foundation-symbol';
-import { Icon } from '@icedesign/base';
+import { Icon, Nav } from '@alifd/next';
 
 import Logo from '../Logo';
 import { asideMenuConfig } from '../../../../menuConfig';
 import Authorized from '../../../../utils/Authorized';
 
-import './scss/dark.scss';
-import './scss/light.scss';
+import './scss/base.scss';
+
+const SubNav = Nav.SubNav;
+const NavItem = Nav.Item;
+
 @withRouter
 export default class Aside extends Component {
   static propTypes = {};
@@ -98,32 +99,28 @@ export default class Aside extends Component {
    * 二级导航
    */
   getSubMenuOrItem = (item, index) => {
-    if (item.children && item.children.some((child) => child.name)) {
+    if (item.children && item.children.some(child => child.name)) {
       const childrenItems = this.getNavMenuItems(item.children);
 
       if (childrenItems && childrenItems.length > 0) {
         return (
-          <SubMenu
+          <SubNav
             key={index}
-            title={
-              <span>
-                {item.icon ? (
-                  <FoundationSymbol size="small" type={item.icon} />
-                ) : null}
-                <span className="ice-menu-collapse-hide">{item.name}</span>
-              </span>
-            }
+            icon={item.icon ? (
+              <Icon size="small" type={item.icon} />
+            ) : null}
+            label={<span className="ice-menu-collapse-hide">{item.name}</span>}
           >
             {childrenItems}
-          </SubMenu>
+          </SubNav>
         );
       }
       return null;
     }
     return (
-      <MenuItem key={item.path}>
+      <NavItem key={item.path}>
         <Link to={item.path}>{item.name}</Link>
-      </MenuItem>
+      </NavItem>
     );
   };
 
@@ -156,22 +153,22 @@ export default class Aside extends Component {
 
         {isMobile && !openDrawer && (
           <a className="menu-btn" onClick={this.toggleMenu}>
-            <Icon type="category" size="small" />
+            <Icon type="calendar" size="small" />
           </a>
         )}
 
-        <Menu
+        <Nav
           style={{ width: 200 }}
-          inlineCollapsed={false}
-          mode="inline"
+          direction="ver"
+          activeDirection={null}
           selectedKeys={[pathname]}
           openKeys={this.state.openKeys}
           defaultSelectedKeys={[pathname]}
-          onOpenChange={this.onOpenChange}
+          onOpen={this.onOpenChange}
           onClick={this.onMenuClick}
         >
           {this.getNavMenuItems(asideMenuConfig)}
-        </Menu>
+        </Nav>
       </div>
     );
   }

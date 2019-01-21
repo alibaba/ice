@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Feedback } from '@icedesign/base';
+import { Button, Message } from '@alifd/next';
 
 export default class ServiceHead extends Component {
   static displayName = 'ServiceHead';

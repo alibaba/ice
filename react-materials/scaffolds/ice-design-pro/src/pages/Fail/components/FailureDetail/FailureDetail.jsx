@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Feedback } from '@icedesign/base';
+import { Button, Message } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 export default class FailureDetail extends PureComponent {

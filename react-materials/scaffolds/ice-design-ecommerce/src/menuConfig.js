@@ -6,21 +6,21 @@ const headerMenuConfig = [
   {
     name: '首页',
     path: '/dashboard',
-    icon: 'home',
+    icon: 'clock',
   },
   {
     name: '反馈',
     path: 'https://github.com/alibaba/ice',
     external: true,
     newWindow: true,
-    icon: 'message',
+    icon: 'atm',
   },
   {
     name: '帮助',
     path: 'https://alibaba.github.io/ice',
     external: true,
     newWindow: true,
-    icon: 'bangzhu',
+    icon: 'help',
   },
 ];
 
@@ -28,37 +28,37 @@ const asideMenuConfig = [
   {
     name: '概况',
     path: '/dashboard',
-    icon: 'home2',
+    icon: 'clock',
   },
   {
     name: '数据',
     path: '/statcenter',
-    icon: 'chart',
+    icon: 'calendar',
   },
   {
     name: '交易',
     path: '/trade',
-    icon: 'redpacket',
+    icon: 'switch',
   },
   {
     name: '商品',
     path: '/goods',
-    icon: 'shopcar',
+    icon: 'atm',
   },
   {
     name: '订单',
     path: '/order/list',
-    icon: 'copy',
+    icon: 'filter',
   },
   {
     name: '客户',
     path: '/customer',
-    icon: 'redpacket',
+    icon: 'account',
   },
   {
     name: '设置',
     path: '/setting',
-    icon: 'shezhi',
+    icon: 'set',
   },
 ];
 

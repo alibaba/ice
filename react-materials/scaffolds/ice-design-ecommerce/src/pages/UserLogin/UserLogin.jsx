@@ -1,13 +1,12 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Feedback } from '@icedesign/base';
+import { Input, Button, Checkbox, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
 
 @withRouter
 class UserLogin extends Component {
@@ -58,7 +57,7 @@ class UserLogin extends Component {
         >
           <div style={styles.formItems}>
             <div style={styles.formItem}>
-              <IceIcon type="person" size="small" style={styles.inputIcon} />
+              <Icon type="account" size="small" style={styles.inputIcon} />
               <IceFormBinder name="username" required message="必填">
                 <Input
                   size="large"
@@ -71,7 +70,7 @@ class UserLogin extends Component {
             </div>
 
             <div style={styles.formItem}>
-              <IceIcon type="lock" size="small" style={styles.inputIcon} />
+              <Icon type="ellipsis" size="small" style={styles.inputIcon} />
               <IceFormBinder name="password" required message="必填">
                 <Input
                   size="large"

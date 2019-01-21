@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, Button } from '@icedesign/base';
+import { Dialog, Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import CustomTable from '../../components/CustomTable';
 
@@ -163,11 +163,11 @@ export default class Customer extends Component {
   renderOper = () => {
     return (
       <div>
-        <Button shape="text" onClick={this.handleDetail}>
+        <Button text onClick={this.handleDetail}>
           查看
         </Button>
         <span style={styles.separator} />
-        <Button shape="text" onClick={this.handleDelete}>
+        <Button text onClick={this.handleDelete}>
           删除
         </Button>
       </div>

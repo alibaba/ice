@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 import cloneDeep from 'lodash.clonedeep';
 import CustomForm from '../CustomForm';
 

@@ -1,11 +1,12 @@
 /* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import React, { Component } from 'react';
-import Menu, { Item as MenuItem } from '@icedesign/menu';
+import { Nav } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
-import FoundationSymbol from 'foundation-symbol';
 import { asideMenuConfig } from '../../../../menuConfig';
 
 import './Aside.scss';
+
+const NavItem = Nav.Item;
 
 @withRouter
 export default class BasicLayout extends Component {
@@ -14,22 +15,20 @@ export default class BasicLayout extends Component {
     const { pathname } = location;
 
     return (
-      <Menu mode="inline" selectedKeys={[pathname]} className="ice-menu-custom">
+      <Nav direction="ver" selectedKeys={[pathname]} className="ice-menu-custom" style={{width: 100}}
+      >
         {Array.isArray(asideMenuConfig) &&
           asideMenuConfig.length > 0 &&
           asideMenuConfig.map((nav) => {
             return (
-              <MenuItem key={nav.path}>
+              <NavItem key={nav.path} icon={nav.icon ? nav.icon : null}>
                 <Link to={nav.path} className="ice-menu-link">
-                  {nav.icon ? (
-                    <FoundationSymbol size="small" type={nav.icon} />
-                  ) : null}
                   <span className="ice-menu-item-text">{nav.name}</span>
                 </Link>
-              </MenuItem>
+              </NavItem>
             );
           })}
-      </Menu>
+      </Nav>
     );
   }
 }

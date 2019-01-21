@@ -1,13 +1,13 @@
 /* eslint no-shadow:0 */
 import React, { Component } from 'react';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import LineChart from './LineChart';
 
 import ContainerTitle from '../../../../components/ContainerTitle';
 import './index.scss';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 const data = [
   {
     year: '1991',
@@ -113,22 +113,19 @@ export default class BasicIndicator extends Component {
         <ContainerTitle title="基本活跃指标" />
         <Tab
           onChange={this.handleTabChange}
-          type="bar"
           className="basic-indicator-tab"
-          navStyle={{
+          style={{
             background: '#f7f7f7',
             marginTop: '20px',
-          }}
-        >
+          }}>
           {panes.map((pane) => {
             return (
-              <TabPane
-                tab={pane.tab}
+              <Tab.Item
+                title={pane.tab}
                 key={pane.key}
-                tabStyle={{ height: '110px', padding: '0 60px' }}
-              >
+                tabStyle={{ height: '110px', padding: '0 60px' }}>
                 <LineChart data={this.state.data} cols={this.state.cols} />
-              </TabPane>
+              </Tab.Item>
             );
           })}
         </Tab>

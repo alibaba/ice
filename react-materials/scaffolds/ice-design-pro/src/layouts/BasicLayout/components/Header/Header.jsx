@@ -1,30 +1,26 @@
 /* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 import React, { PureComponent } from 'react';
-import { Balloon, Icon } from '@icedesign/base';
+import { Balloon, Icon, Nav } from '@alifd/next';
 import IceImg from '@icedesign/img';
 import Layout from '@icedesign/layout';
-import Menu from '@icedesign/menu';
-import FoundationSymbol from 'foundation-symbol';
 import cx from 'classnames';
 import { Link, withRouter } from 'react-router-dom';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 
-import './scss/dark.scss';
-import './scss/light.scss';
+import './scss/base.scss';
 
 @withRouter
 export default class Header extends PureComponent {
   handleSetting = () => {
     this.props.history.push('/account/setting');
   };
-
   render() {
-    const { theme, profile, isMobile, className, style } = this.props;
+    const { isMobile, className, style } = this.props;
 
     return (
       <Layout.Header
-        theme={theme}
+        theme={'dark'}
         className={cx('ice-design-layout-header', className)}
         style={{ ...style }}
       >
@@ -33,7 +29,7 @@ export default class Header extends PureComponent {
         <div className="ice-design-layout-header-menu">
           {/* Header 菜单项 begin */}
           {headerMenuConfig && headerMenuConfig.length > 0 ? (
-            <Menu mode="horizontal" selectedKeys={[]}>
+            <Nav direction="hoz" type="secondary" selectedKeys={[]}>
               {headerMenuConfig.map((nav, idx) => {
                 const linkProps = {};
                 if (nav.newWindow) {
@@ -45,26 +41,20 @@ export default class Header extends PureComponent {
                   linkProps.to = nav.path;
                 }
                 return (
-                  <Menu.Item key={idx}>
+                  <Nav.Item key={idx} icon={nav.icon ? nav.icon : null}>
                     {linkProps.to ? (
                       <Link {...linkProps}>
-                        {nav.icon ? (
-                          <FoundationSymbol type={nav.icon} size="small" />
-                        ) : null}
                         {!isMobile ? nav.name : null}
                       </Link>
                     ) : (
-                      <a {...linkProps}>
-                        {nav.icon ? (
-                          <FoundationSymbol type={nav.icon} size="small" />
-                        ) : null}
-                        {!isMobile ? nav.name : null}
-                      </a>
-                    )}
-                  </Menu.Item>
+                        <a {...linkProps}>
+                          {!isMobile ? nav.name : null}
+                        </a>
+                      )}
+                  </Nav.Item>
                 );
               })}
-            </Menu>
+            </Nav>
           ) : null}
           {/* Header 菜单项 end */}
 
@@ -75,21 +65,16 @@ export default class Header extends PureComponent {
                 <IceImg
                   height={40}
                   width={40}
-                  src={
-                    profile.avatar ||
-                    'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png'
-                  }
+                  src="https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png"
                   className="user-avatar"
                 />
                 <div className="user-profile">
-                  <span className="user-name">{profile.name || '淘小宝'}</span>
+                  <span className="user-name">淘小宝</span>
                   <br />
-                  <span className="user-department">
-                    {profile.department || '技术部'}
-                  </span>
+                  <span className="user-department">技术部</span>
                 </div>
                 <Icon
-                  type="arrow-down-filling"
+                  type="arrow-down"
                   size="xxs"
                   className="icon-down"
                 />
@@ -99,18 +84,16 @@ export default class Header extends PureComponent {
             className="user-profile-menu"
           >
             <ul>
-              <li
-                className="user-profile-menu-item"
+              <li className="user-profile-menu-item"
                 onClick={this.handleSetting}
               >
-                <FoundationSymbol type="repair" size="small" />
-                个人设置
+                <Icon type="set" size="small" />
+                设置
               </li>
-              <li
-                className="user-profile-menu-item"
+              <li className="user-profile-menu-item"
                 onClick={this.props.handleLogout}
-              >
-                <FoundationSymbol type="compass" size="small" />
+                >
+                <Icon type="upload" size="small" />
                 退出
               </li>
             </ul>

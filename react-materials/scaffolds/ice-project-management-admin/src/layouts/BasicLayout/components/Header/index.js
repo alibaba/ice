@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Balloon, Icon } from '@icedesign/base';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
-import FoundationSymbol from 'foundation-symbol';
+import { Balloon, Icon, Menu, Nav } from '@alifd/next';
 import IceImg from '@icedesign/img';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 import './index.scss';
+
+const NavItem = Nav.Item;
+const SubNav = Nav.SubNav;
 
 @withRouter
 export default class Header extends Component {
@@ -17,28 +18,23 @@ export default class Header extends Component {
       <div className="header-container">
         <Logo isDark />
         <div className="header-navbar">
-          <Menu
+          <Nav
             className="header-navbar-menu"
             selectedKeys={[pathname]}
             defaultSelectedKeys={[pathname]}
-            mode="horizontal"
+            direction="hoz"
+            type="secondary"
           >
             {headerMenuConfig &&
               headerMenuConfig.length > 0 &&
               headerMenuConfig.map((nav, index) => {
                 if (nav.children && nav.children.length > 0) {
                   return (
-                    <SubMenu
+                    <SubNav
                       triggerType="click"
                       key={index}
-                      title={
-                        <span>
-                          {nav.icon ? (
-                            <FoundationSymbol size="small" type={nav.icon} />
-                          ) : null}
-                          <span>{nav.name}</span>
-                        </span>
-                      }
+                      icon={nav.icon ? nav.icon: undefined}
+                      title={nav.name}
                     >
                       {nav.children.map((item) => {
                         const linkProps = {};
@@ -49,23 +45,23 @@ export default class Header extends Component {
 
                           linkProps.href = item.path;
                           return (
-                            <MenuItem key={item.path}>
+                            <NavItem key={item.path}>
                               <a {...linkProps}>
                                 <span>{item.name}</span>
                               </a>
-                            </MenuItem>
+                            </NavItem>
                           );
                         }
                         linkProps.to = item.path;
                         return (
-                          <MenuItem key={item.path}>
+                          <NavItem key={item.path}>
                             <Link {...linkProps}>
                               <span>{item.name}</span>
                             </Link>
-                          </MenuItem>
+                          </NavItem>
                         );
                       })}
-                    </SubMenu>
+                    </SubNav>
                   );
                 }
                 const linkProps = {};
@@ -75,33 +71,23 @@ export default class Header extends Component {
                   }
                   linkProps.href = nav.path;
                   return (
-                    <MenuItem key={nav.path}>
+                    <NavItem key={nav.path} icon={nav.icon? nav.icon : undefined}>
                       <a {...linkProps}>
-                        <span>
-                          {nav.icon ? (
-                            <FoundationSymbol size="small" type={nav.icon} />
-                          ) : null}
-                          {nav.name}
-                        </span>
+                      {nav.name}
                       </a>
-                    </MenuItem>
+                    </NavItem>
                   );
                 }
                 linkProps.to = nav.path;
                 return (
-                  <MenuItem key={nav.path}>
+                  <NavItem key={nav.path} icon={nav.icon? nav.icon : undefined}>
                     <Link {...linkProps}>
-                      <span>
-                        {nav.icon ? (
-                          <FoundationSymbol size="small" type={nav.icon} />
-                        ) : null}
-                        {nav.name}
-                      </span>
+                      {nav.name}
                     </Link>
-                  </MenuItem>
+                  </NavItem>
                 );
               })}
-          </Menu>
+          </Nav>
           <Balloon
             triggerType="hover"
             trigger={
@@ -127,7 +113,7 @@ export default class Header extends Component {
                   <span className="user-department">技术部</span>
                 </div>
                 <Icon
-                  type="arrow-down-filling"
+                  type="arrow-down"
                   size="xxs"
                   className="icon-down"
                 />
@@ -139,7 +125,7 @@ export default class Header extends Component {
             <ul>
               <li className="user-profile-menu-item">
                 <Link to="/user/login">
-                  <FoundationSymbol type="compass" size="small" />
+                  <Icon type="upload" size="xs" />
                   退出
                 </Link>
               </li>

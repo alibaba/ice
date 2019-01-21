@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import CustomTable from '../CustomTable';
 
 export default class ContractTable extends Component {

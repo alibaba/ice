@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 
 // 载入默认全局样式 normalize 、.clearfix 和一些 mixin 方法等
-import '@icedesign/base/reset.scss';
+import '@alifd/next/reset.scss';
 
 import router from './router';
 

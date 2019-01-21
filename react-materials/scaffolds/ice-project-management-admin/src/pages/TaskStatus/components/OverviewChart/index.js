@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Progress } from '@icedesign/base';
+import { Grid, Progress } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;

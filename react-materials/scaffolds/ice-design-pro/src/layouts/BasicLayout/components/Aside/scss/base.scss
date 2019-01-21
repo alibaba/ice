@@ -1,55 +1,46 @@
-.ice-layout .ice-layout-theme-#{$theme} {
-  &.ice-layout-aside {
-    background: transparent;
-
-    .ice-menu {
+.ice-layout {
+  .ice-design-layout-aside {
+    .next-nav,
+    .next-nav-sub-nav-item {
       background: transparent;
     }
-
-    .ice-menu.ice-menu-root.ice-menu-inline .ice-menu-submenu-title {
-      margin-bottom: 1px;
-      color: $ice-aside-text-color;
-      font-weight: bold;
+    .next-nav .next-nav-item.next-menu-item {
+      background: transparent;
+      color: white;
     }
-
-    .ice-menu.ice-menu-root .ice-menu-inline > .ice-menu-item {
-      margin-bottom: 1px;
-      color: $ice-aside-sub-text-color;
+    .next-nav .next-menu-sub-menu .next-menu-item {
+      transition: none;
+      
+      &.next-selected,
       &:hover {
-        color: #fff;
+        background: $color-brand1-6;
+        border-radius: $corner-2;
       }
     }
 
-    .ice-menu .ice-menu-item:hover,
-    .ice-menu .ice-menu-item > a:hover {
+    .menu-btn {
+      position: fixed;
+      left: 0;
+      top: 82px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 0 6px 6px 0;
       color: #fff;
-      border-radius: 6px;
-      background-image: linear-gradient(90deg, #1861d5 0%, #2077ff 100%);
-    }
-  }
-
-  .menu-btn {
-    position: fixed;
-    left: 0;
-    top: 82px;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 0 6px 6px 0;
-    color: #fff;
-    background: #2077ff;
-    text-align: center;
-    cursor: pointer;
-    z-index: 9;
-    text-decoration: none;
-    &:hover {
-      color: #e7e7e7;
+      background: #2077ff;
+      text-align: center;
+      cursor: pointer;
+      z-index: 9;
+      text-decoration: none;
+      &:hover {
+        color: #e7e7e7;
+      }
     }
   }
 }
 
 @media screen and (max-width: 1199px) {
-  .ice-layout-theme-#{$theme} {
+  .ice-layout {
     .ice-design-layout-aside {
       position: fixed;
       left: -256px;

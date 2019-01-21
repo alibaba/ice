@@ -1,11 +1,11 @@
 /* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import React, { Component } from 'react';
-import { Icon } from '@icedesign/base';
-import Menu, { Item as MenuItem } from '@icedesign/menu';
+import { Icon, Nav } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
 import { asideMenuConfig } from '../../../../menuConfig';
 
 import './index.scss';
+const NavItem = Nav.Item;
 
 @withRouter
 export default class BasicLayout extends Component {
@@ -16,8 +16,7 @@ export default class BasicLayout extends Component {
     return (
       <div className="ice-aside-custom">
         <div className="ice-aside-logo">LOGO</div>
-        <Menu
-          mode="inline"
+        <Nav
           selectedKeys={[pathname]}
           className="ice-menu-custom"
         >
@@ -25,15 +24,14 @@ export default class BasicLayout extends Component {
             asideMenuConfig.length > 0 &&
             asideMenuConfig.map((nav) => {
               return (
-                <MenuItem key={nav.path}>
+                <NavItem key={nav.path} icon={nav.icon ? nav.icon: undefined}>
                   <Link to={nav.path} className="ice-menu-link">
-                    {nav.icon ? <Icon size="small" type={nav.icon} /> : null}
                     <span className="ice-menu-item-text">{nav.name}</span>
                   </Link>
-                </MenuItem>
+                </NavItem>
               );
             })}
-        </Menu>
+        </Nav>
       </div>
     );
   }

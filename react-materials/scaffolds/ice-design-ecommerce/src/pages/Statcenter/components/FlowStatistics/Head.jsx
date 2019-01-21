@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import ColumnChart from './ColumnChart';
 
 const { Row, Col } = Grid;
@@ -19,7 +19,7 @@ export default class Head extends Component {
   render() {
     const { data } = this.props;
     return (
-      <Row type="wrap">
+      <Row wrap>
         <Col xxs="12" s="12" l="6">
           <div style={styles.box}>
             <p style={styles.textLabel}>浏览次数</p>

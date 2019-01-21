@@ -1,13 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Grid } from '@icedesign/base';
-import {
-  FormBinderWrapper as IceFormBinderWrapper,
-  FormBinder as IceFormBinder,
-  FormError as IceFormError,
-} from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
+import { Input, Button, Checkbox, Grid, Icon, Form } from '@alifd/next';
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -16,6 +10,7 @@ import { userLogin } from './actions';
 import reducer from './reducer';
 
 const { Row, Col } = Grid;
+const FormItem = Form.Item;
 
 class UserLogin extends Component {
   static displayName = 'UserLogin';
@@ -41,15 +36,12 @@ class UserLogin extends Component {
     });
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.refs.form.validateAll((errors, values) => {
-      if (errors) {
-        console.log('errors', errors);
-        return;
-      }
-      this.props.userLogin(values);
-    });
+  handleSubmit = (values, errors) => {
+    if (errors) {
+      console.log('errors', errors);
+      return;
+    }
+    this.props.userLogin(values);
   };
 
   render() {
@@ -57,71 +49,59 @@ class UserLogin extends Component {
       <div className="user-login">
         <div className="formContainer">
           <h4 className="formTitle">登 录</h4>
-          <IceFormBinderWrapper
+          <Form
             value={this.state.value}
             onChange={this.formChange}
-            ref="form"
+            size="large"
           >
-            <div className="formItems">
-              <Row className="formItem">
-                <Col className="formItemCol">
-                  <IceIcon type="person" size="small" className="inputIcon" />
-                  <IceFormBinder name="username" required message="必填">
-                    <Input size="large" maxLength={20} placeholder="用户名" />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="username" />
-                </Col>
-              </Row>
-
-              <Row className="formItem">
-                <Col className="formItemCol">
-                  <IceIcon type="lock" size="small" className="inputIcon" />
-                  <IceFormBinder name="password" required message="必填">
-                    <Input
-                      size="large"
-                      htmlType="password"
-                      placeholder="密码"
-                    />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="password" />
-                </Col>
-              </Row>
-
-              <Row className="formItem">
-                <Col>
-                  <IceFormBinder name="checkbox">
-                    <Checkbox className="checkbox">记住账号</Checkbox>
-                  </IceFormBinder>
-                </Col>
-              </Row>
-
-              <Row className="formItem">
-                <Button
-                  type="primary"
-                  onClick={this.handleSubmit}
-                  className="submitBtn"
-                >
-                  登 录
-                </Button>
-                <p className="account">
-                  <span className="tips-text" style={{ marginRight: '20px' }}>
-                    管理员登录：admin/admin
+            <FormItem required requiredMessage="必填">
+              <Input
+                innerBefore={<Icon
+                  type="account"
+                  size="small"
+                  style={styles.inputIcon}
+                />}
+                name="username" size="large" maxLength={20} placeholder="用户名" />
+            </FormItem>
+            <FormItem required requiredMessage="必填">
+              <Input
+                innerBefore={<Icon
+                  type="account"
+                  size="small"
+                  todo="lock"
+                  style={styles.inputIcon}
+                />}
+                name="password"
+                size="large"
+                htmlType="password"
+                placeholder="密码" />
+            </FormItem>
+            <FormItem>
+              <Checkbox name="checkbox" className="checkbox">记住账号</Checkbox>
+            </FormItem>
+            <Row className="formItem">
+              <Form.Submit
+                type="primary"
+                validate
+                onClick={this.handleSubmit}
+                className="submitBtn"
+              >
+                登 录
+                </Form.Submit>
+              <p className="account">
+                <span className="tips-text" style={{ marginRight: '20px' }}>
+                  管理员登录：admin/admin
                   </span>
-                  <span className="tips-text">用户登录：user/user</span>
-                </p>
-              </Row>
+                <span className="tips-text">用户登录：user/user</span>
+              </p>
+            </Row>
 
-              <Row className="tips">
-                <Link to="/user/register" className="tips-text">
-                  立即注册
+            <Row className="tips">
+              <Link to="/user/register" className="tips-text">
+                立即注册
                 </Link>
-              </Row>
-            </div>
-          </IceFormBinderWrapper>
+            </Row>
+          </Form>
         </div>
       </div>
     );
@@ -147,3 +127,9 @@ export default compose(
   withReducer,
   withConnect
 )(UserLogin);
+
+const styles = {
+  inputIcon: {
+    marginLeft: 10
+  }
+}

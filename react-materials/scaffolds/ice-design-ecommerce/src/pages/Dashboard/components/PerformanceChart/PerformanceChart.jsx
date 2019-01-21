@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import LineChart from './LineChart';
 import Head from './Head';
 import './PerformanceChart.scss';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 const MOCK_DATA = {
   all: {
@@ -43,19 +43,19 @@ export default class PerformanceChart extends Component {
     return (
       <IceContainer className="flow-statistics">
         <h4 style={styles.title}>销售业绩</h4>
-        <Tab type="text" size="small">
-          <TabPane tab="全店" key="1">
+        <Tab shape="text" size="small">
+          <Tab.Item title="全店" key="1">
             <Head data={MOCK_DATA.all} />
             <LineChart />
-          </TabPane>
-          <TabPane tab="网店" key="2">
+          </Tab.Item>
+          <Tab.Item title="网店" key="2">
             <Head data={MOCK_DATA.online} />
             <LineChart />
-          </TabPane>
-          <TabPane tab="门店" key="3">
+          </Tab.Item>
+          <Tab.Item title="门店" key="3">
             <Head data={MOCK_DATA.offline} />
             <LineChart />
-          </TabPane>
+          </Tab.Item>
         </Tab>
       </IceContainer>
     );
