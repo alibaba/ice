@@ -19,6 +19,9 @@ import dialog from '../components/dialog';
 import history from '../history';
 import services from '../services';
 
+// store
+import progress from './progress';
+
 const defaultWorkspacePath = path.join(os.homedir(), 'iceworks-workspace');
 const WORKSPACE_KEY = 'iceworks-workspace';
 
@@ -28,17 +31,7 @@ class Scaffold {
   @observable
   layoutConfigValue = null;
   @observable
-  generatorStatus = 'normal';
-  @observable
-  generatorStatusText = 'normal';
-  @observable
   isLegalProjectName = false;  //没有被使用过的变量
-  @observable
-  progressValue = 0;
-  @observable
-  progressSpeedValue = 0; // 下载速度
-  @observable
-  progressRemainingValue = 0; // 剩余时间
   @observable
   projectName = '';
   @observable
@@ -67,14 +60,9 @@ class Scaffold {
   reset() {
     this.scaffoldValue = null; // 当前模板
     this.layoutConfigValue = null; // 当前模板
-    this.generatorStatus = 'normal'; // 生成状态
-    this.generatorStatusText = ''; // 生成状态
     this.projectFolderName = ''; // 生成状态
     this.projectFolderNameValidation = ''; // 生成状态
     this.projectName = '';
-    this.progressValue = 0;
-    this.progressSpeedValue = 0;
-    this.progressRemainingValue = 0;
     this.visible = false;
     this.nodeFramework = '';
     this.isNode = false;
@@ -193,55 +181,31 @@ class Scaffold {
     });
   }
 
+  @computed
+  get isCreating() {
+    return progress.isInProgress;
+  }
+
   /**
    * 启动模拟进度条
    */
   @action
   startProgress() {
-    this.generatorStatus = 'ing';
-    this.generatorStatusText = '模板准备中';
+    const type = this.nodeFramework ? 'nodeScaffold' : 'scaffold';
+    progress.setType(type);
+    progress.start();
   }
-  // @see https://www.npmjs.com/package/request-progress
-  /**
-    {
-      percent: 0.5, // Overall percent (between 0 to 1)
-      speed: 554732, // The download speed in bytes/sec
-      size:
-      {
-        total: 90044871, // The total payload size in bytes
-        transferred: 27610959 // The transferred payload size in bytes
-      },
-      time:
-      {
-        elapsed: 36.235, // The total elapsed seconds since the start (3 decimals)
-        remaining: 81.403 // The remaining seconds to finish (3 decimals)
-      }
-    }
-   */
-  handleProgressFunc = (state) => {
-    if (state.percent && state.percent >= 1) {
-      this.generatorStatus = 'done';
-      this.generatorStatusText = '项目创建完成';
-    } else if (state.percent && state.percent > 0) {
-      this.generatorStatus = 'ing';
-      this.generatorStatusText = '项目文件生成中';
-      this.progressValue = Number(state.percent) * 100;
-      this.progressSpeedValue = state.speed || 0;
-      this.progressRemainingValue = (state.time && state.time.remaining) || 0;
-    }
-  };
 
-  handleNodeProgressFunc = (state) => {
-    if (state.percent && state.percent >= 1) {
-      this.generatorStatusText = 'Node模板创建完成';
-    } else if (state.percent && state.percent > 0) {
-      this.generatorStatus = 'ing';
-      this.generatorStatusText = 'Node模板生成中';
-      this.progressValue = Number(state.percent) * 100;
-      this.progressSpeedValue = state.speed || 0;
-      this.progressRemainingValue = (state.time && state.time.remaining) || 0;
-    }
-  };
+  /**
+   * 结束进度条
+   */
+  endProgress() {
+    progress.end();
+  }
+
+  resetProgress() {
+    progress.reset();
+  }
 
   /**
    * 开始创建项目
@@ -250,10 +214,7 @@ class Scaffold {
    */
   @action
   create(targetPath, options) {
-    const progressFunc = {
-      client: this.handleProgressFunc,
-      server: this.handleNodeProgressFunc
-    };
+    const progressFunc = progress.handleProgressFunc;
     return new Promise((resolve, reject) => {
       services.worker.create.add(
         {
@@ -284,28 +245,8 @@ class Scaffold {
       this.projectFolderName.trim() == '' || // 项目名为空
       this.projectFolderNameValidation !== '' || // 含错误信息
       // !this.isLegalProjectName || // 合法项目名
-      this.generatorStatus !== 'normal' // 非初始状态
+      (progress &&  progress.status !== 'init' )// 非初始状态
     );
-  }
-
-  @computed
-  get isCreating() {
-    return this.generatorStatus == 'ing';
-  }
-
-  @computed
-  get progress() {
-    return Number(this.progressValue.toFixed(1));
-  }
-
-  @computed
-  get progressSpeed() {
-    return Math.floor(this.progressSpeedValue / 1024) || '-';
-  }
-
-  @computed
-  get progressRemaining() {
-    return Math.floor(this.progressRemainingValue) || '-';
   }
 
   @computed
@@ -343,9 +284,7 @@ class Scaffold {
 
   // 中断创建
   abort() {
-    this.generatorStatus = 'normal';
-    this.generatorStatusText = '已中止';
-
+    progress && progress.abort()
     services.worker.create.destroy();
   }
 

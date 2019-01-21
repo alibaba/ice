@@ -95,13 +95,10 @@ function getOptions(_options, nodeFramework = '', isNode = false) {
   const scaffold = isNodeFramework
     ? nodeScaffoldInfo[nodeFramework].tarball
     : _options.scaffold;
-  const progressFunc = isNodeFramework
-    ? _options.progressFunc.server
-    : _options.progressFunc.client;
   return {
     destDir,
     scaffold,
-    progressFunc,
+    progressFunc: _options.progressFunc,
     projectName: _options.projectName,
     interpreter: ({ type, message }, next) => {
       log.info('generate project', type, message);

@@ -1,11 +1,12 @@
 import { inject, observer } from 'mobx-react';
-import { Input, Progress, Checkbox, Select } from '@icedesign/base';
+import { Input, Checkbox, Select } from '@icedesign/base';
 import { shell } from 'electron';
 import React, { Component } from 'react';
 import Tooltip from 'rc-tooltip';
 import services from '../../services';
 
 import CustomIcon from '../Icon';
+import Progress from '../Progress';
 
 const { Option } = Select;
 
@@ -174,32 +175,7 @@ export default class ScaffoldForm extends Component {
             )
           }
         </div>
-        {this.props.scaffold.isCreating && (
-          <div className="project-config-form-item">
-            <span style={{ fontSize: 12, color: '#999' }}>
-              {this.props.scaffold.generatorStatusText}
-            </span>
-          </div>
-        )}
-        {this.props.scaffold.isCreating && (
-          <div className="project-config-form-item">
-            <Progress
-              style={{ width: '40%' }}
-              showInfo={false}
-              percent={this.props.scaffold.progress}
-            />
-            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-              {this.props.scaffold.progress}%
-            </span>
-            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-              {this.props.scaffold.progressSpeed}
-              /kbs
-            </span>
-            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-              剩余 {this.props.scaffold.progressRemaining} s
-            </span>
-          </div>
-        )}
+        <Progress />
       </div>
     );
   }

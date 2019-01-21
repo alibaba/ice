@@ -7,13 +7,14 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const upperCamelCase = require('uppercamelcase');
 const pathExists = require('path-exists');
+const to = require('await-to-js').default;
 
 const utils = require('./utils');
 const pageTemplates = require('./pageTemplates');
 
 const prettier = require('prettier');
 
-const DependenciesError = require('./errors/DependenciesError');
+const DetailError = require('../../error-handler');
 const config = require('../../config');
 const materialUtils = require('../../template/utils');
 const appendRouteV3 = require('./appendRouteV3');
@@ -72,23 +73,23 @@ module.exports = async function createPage({
   emitProcess(currentEvent);
 
   const pkgPath = path.join(clientPath, 'package.json');
-  let pkg = {}; 
+  let pkg = {};
   if (pathExists.sync(pkgPath)) {
     try {
       const packageText = fs.readFileSync(pkgPath);
-      packageData = JSON.parse(packageText.toString());
+      pkg = JSON.parse(packageText.toString());
     } catch (e) {
       emitError(currentEvent, {
         message: 'package.json 内存在语法错误',
         pkg: fs.readFileSync(pkgPath)
       });
-      throw new DependenciesError('package.json 内存在语法错误', {
+      throw new DetailError('package.json 内存在语法错误', {
         message: `请检查根目录下 package.json 的语法规范`,
       });
     }
   } else {
     emitError(currentEvent, { message: '找不到 package.json' });
-    throw new DependenciesError('找不到 package.json', {
+    throw new DetailError('找不到 package.json', {
       message: `在项目根目录下找不到 package.json 文件`,
     });
 
@@ -144,46 +145,51 @@ module.exports = async function createPage({
       block.relativePath = `./components/${blockFolderName}`;
     })
 
-    // 下载区块到页面
+    // 下载区块到页面，返回区块的依赖
+    let dependencies = {};
     emitProgress(true);
-    let dependencies;
     try {
       const deps = await utils.downloadBlocksToPage({
+        clientPath,
         clientSrcPath, 
         blocks, 
-        pageName: pageFolderName, 
+        pageName: pageFolderName,
+        progressFunc
       });
       dependencies = deps.dependencies;
     } catch (error) {
       emitProgress(false);
+      throw error;
     }
 
     emitProgress(false);
-  }
 
-  // 安装 block 依赖
-  currentEvent = 'installBlockDeps';
-  if (Object.keys(dependencies).length > 0) {
-    emitProcess(currentEvent);
+    // 安装 block 依赖
+    currentEvent = 'installBlockDeps';
+    if (Object.keys(dependencies).length > 0) {
+      emitProcess(currentEvent);
 
-    const waitUntilNpmInstalled = await utils.createInterpreter(
-      'ADD_DEPENDENCIES',
-      dependencies,
-      interpreter
-    );
+      const waitUntilNpmInstalled = await utils.createInterpreter(
+        'ADD_DEPENDENCIES',
+        dependencies,
+        interpreter
+      );
 
-    if (!waitUntilNpmInstalled) {
-      const blocksName = blocks
-        .map(({ source }) => `${source.npm}@${source.version}`)
-        .join(' ');
-      const depsName = Object.keys(dependencies)
-        .map((d) => `${d}@${dependencies[d]}`)
-        .join(' ');
-      throw new DependenciesError('blocks 安装失败', {
-        message: `无法安装以下区块： blocks: ${blocksName} dependencies: ${depsName}`,
-      });
+      if (!waitUntilNpmInstalled) {
+        const blocksName = blocks
+          .map(({ source }) => `${source.npm}@${source.version}`)
+          .join(' ');
+        const depsName = Object.keys(dependencies)
+          .map((d) => `${d}@${dependencies[d]}`)
+          .join(' ');
+        throw new DetailError('blocks 安装失败', {
+          message: `无法安装以下区块： blocks: ${blocksName} dependencies: ${depsName}`,
+        });
+      }
     }
   }
+
+  
 
   /**
    * 4. 生成 ${pageName}/xxxx 文件

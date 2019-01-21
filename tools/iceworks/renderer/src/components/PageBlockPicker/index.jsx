@@ -80,6 +80,7 @@ class PageBlockPicker extends Component {
     let blocksDependencies;
     scaffolder.utils
       .downloadBlocksToPage({
+        clientPath,
         clientSrcPath,
         blocks: blocks,
         pageName: pageName,

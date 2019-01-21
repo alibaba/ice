@@ -17,6 +17,7 @@ import switcher from './stores/switcher';
 import customBlocks from './stores/custom-blocks';
 import settingsMaterials from './stores/settings-materials';
 import user from './stores/user';
+import progress from './stores/progress';
 import blockGroups from './stores/block-groups';
 
 // pages
@@ -86,6 +87,7 @@ class App extends Component {
         customBlocks={customBlocks}
         settingsMaterials={settingsMaterials}
         user={user}
+        progress={progress}
         blockGroups={blockGroups}
       >
         <Layout>
