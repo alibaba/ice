@@ -10,7 +10,7 @@ export default class Overview extends Component {
       <Balloon
         trigger={<Icon type="help" size="xs" />}
         align="t"
-        alignEdge="edge"
+        alignEdge
         closable={false}
       >
         相关说明

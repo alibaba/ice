@@ -25,7 +25,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入订单编号',
-      size: 'large',
     },
     formBinderProps: {
       name: 'id',
@@ -38,7 +37,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入商品编号',
-      size: 'large',
     },
     formBinderProps: {
       name: 'goodId',
@@ -51,7 +49,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入申请单号',
-      size: 'large',
     },
     formBinderProps: {
       name: 'applyCode',
@@ -62,7 +59,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入订单名称',
-      size: 'large',
     },
     formBinderProps: {
       name: 'name',
@@ -73,7 +69,6 @@ const formConfig = [
     component: 'Select',
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
       dataSource: [
         { label: '已发货', value: 'option1' },
         { label: '代发货', value: 'option2' },
@@ -88,7 +83,6 @@ const formConfig = [
     component: 'Select',
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
       dataSource: [
         { label: '普通订单', value: 'option1' },
         { label: '代付订单', value: 'option2' },
@@ -104,7 +98,6 @@ const formConfig = [
     advanced: true,
     componentProps: {
       placeholder: '请选择日期',
-      size: 'large',
     },
     formBinderProps: {
       name: 'createTime',
@@ -116,7 +109,6 @@ const formConfig = [
     advanced: true,
     componentProps: {
       placeholder: '请选择日期',
-      size: 'large',
     },
     formBinderProps: {
       name: 'orderTime',
@@ -128,7 +120,6 @@ const formConfig = [
     advanced: true,
     componentProps: {
       placeholder: '请选择日期',
-      size: 'large',
     },
     formBinderProps: {
       name: 'refundTime',
@@ -140,7 +131,6 @@ const formConfig = [
     advanced: true,
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
       dataSource: [
         { value: '1', label: '支付宝付款' },
         { value: '2', label: '银行卡付款' },
@@ -158,7 +148,6 @@ const formConfig = [
     advanced: true,
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
       dataSource: [
         { label: '快递发货', value: '1' },
         { label: '上门自提', value: '2' },

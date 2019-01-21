@@ -28,10 +28,10 @@ export default class Asset extends Component {
 
     return (
       <IceContainer>
-        <Tab size="small" shape="wrapped" contentStyle={detachedContentStyle}>
+        <Tab size="small" contentStyle={detachedContentStyle}>
           {panes.map((pane) => {
             return (
-              <Tab.Item title={pane.tab} key={pane.key} style={{ padding: 0 }}>
+              <Tab.Item title={pane.tab} key={pane.key}>
                 {pane.content}
               </Tab.Item>
             );

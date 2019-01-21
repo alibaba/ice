@@ -41,7 +41,7 @@ export default class ReserveForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>客户姓名：</div>
               <IceFormBinder name="name" required message="客户姓名必填">
-                <Input size="large" style={{ width: '400px' }} />
+                <Input style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="name" />
@@ -50,7 +50,7 @@ export default class ReserveForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>预约服务：</div>
               <IceFormBinder name="service" required message="预约服务必填">
-                <Input size="large" style={{ width: '400px' }} />
+                <Input style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="service" />
@@ -59,7 +59,7 @@ export default class ReserveForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>联系方式：</div>
               <IceFormBinder name="phone" required message="联系方式必填">
-                <Input size="large" style={{ width: '400px' }} />
+                <Input style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="phone" />
@@ -68,12 +68,11 @@ export default class ReserveForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>预约备注：</div>
               <IceFormBinder name="description">
-                <Input.TextArea multiple size="large" style={{ width: '400px' }} />
+                <Input.TextArea style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <Button
               type="primary"
-              size="large"
               onClick={this.validateAllFormField}
               style={styles.button}
             >

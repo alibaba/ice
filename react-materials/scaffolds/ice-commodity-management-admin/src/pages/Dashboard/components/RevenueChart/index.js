@@ -23,7 +23,7 @@ export default class RevenueChart extends Component {
                     trigger={<Icon type="prompt" size="small" />}
                     align="t"
                     closable={false}
-                    alignEdge="edge"
+                    alignEdge
                     triggerType="hover"
                     style={{ width: 300 }}
                   >
@@ -47,7 +47,7 @@ export default class RevenueChart extends Component {
                     trigger={<Icon type="prompt" size="small" />}
                     align="t"
                     closable={false}
-                    alignEdge="edge"
+                    alignEdge
                     triggerType="hover"
                     style={{ width: 300 }}
                   >

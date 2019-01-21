@@ -51,7 +51,7 @@
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@alifd/theme-1",
     "entry": "src/index.js",
     "localization": false,
     "output": {
