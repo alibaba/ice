@@ -1,13 +1,13 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Feedback } from '@icedesign/base';
+import { Input, Button, Checkbox, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
+import IceIcon from '@icedesign/foundation-symbol';
 
 @withRouter
 class UserLogin extends Component {
@@ -129,8 +129,8 @@ const styles = {
   },
   inputIcon: {
     position: 'absolute',
-    left: '10px',
-    top: '8px',
+    left: '12px',
+    top: '12px',
     color: '#666',
   },
   inputCol: {

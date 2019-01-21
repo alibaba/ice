@@ -1,0 +1,23 @@
+.filterItem {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.filterLabel {
+  width: 80px;
+  font-size: 14px;
+}
+.filterText {
+  cursor: pointer;
+  font-size: 12px;
+  margin-right: 15px;
+}
+.activeText {
+  composes: filterText;
+  color: #fff;
+  padding: 5px 15px;
+  min-height: 60px;
+  background: $color-brand1-6;
+  border-radius: 20px;
+}

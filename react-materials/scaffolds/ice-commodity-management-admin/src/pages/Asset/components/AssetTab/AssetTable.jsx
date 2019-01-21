@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import TableFilter from './TableFilter';
 
@@ -89,7 +89,7 @@ export default class MembersshipTable extends Component {
       <div>
         <TableFilter onChange={this.handleFilterChange} />
         <IceContainer>
-          <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
+          <Table loading={isLoading} dataSource={data} hasBorder={false}>
             <Table.Column title="申请时间" dataIndex="applyTime" />
             <Table.Column title="交易号" dataIndex="transactionId" />
             <Table.Column title="金额(万元)" dataIndex="amount" />

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import AssetTable from './AssetTable';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 const detachedContentStyle = {
   borderLeft: 0,
@@ -28,12 +28,12 @@ export default class Asset extends Component {
 
     return (
       <IceContainer>
-        <Tab size="small" type="wrapped" contentStyle={detachedContentStyle}>
+        <Tab size="small" contentStyle={detachedContentStyle}>
           {panes.map((pane) => {
             return (
-              <TabPane tab={pane.tab} key={pane.key} style={{ padding: 0 }}>
+              <Tab.Item title={pane.tab} key={pane.key}>
                 {pane.content}
-              </TabPane>
+              </Tab.Item>
             );
           })}
         </Tab>
