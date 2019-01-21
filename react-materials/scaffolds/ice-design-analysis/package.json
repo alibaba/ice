@@ -2,7 +2,7 @@
   "name": "@icedesign/analysis-scaffold",
   "version": "1.2.2",
   "description": "该模板适用于可视化实时数据的大屏展示，默认只有一个页面，内置饼图、柱状图等图形",
-  "homepage": "https://unpkg.com/@icedesign/voice-chat-admin-scaffold@latest/build/index.html",
+  "homepage": "https://unpkg.com/@icedesign/analysis-scaffold@latest/build/index.html",
   "files": [
     "src/",
     "build/",

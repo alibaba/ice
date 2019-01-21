@@ -1,8 +1,18 @@
 {
   "name": "@icedesign/yunqi-homepage-scaffold",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "云栖大会官方首页模板，适用于信息展示类的场景",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-yunqi-homepage/index.html",
+  "homepage": "https://unpkg.com/@icedesign/yunqi-homepage-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "keywords": [
     "ice-scaffold"
   ],
@@ -46,7 +56,10 @@
   "buildConfig": {
     "theme": "@icedesign/skin",
     "entry": "src/index.js",
-    "localization": false
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "themeConfig": {
     "primaryColor": "#236cff"
