@@ -2,7 +2,7 @@
   "name": "@icedesign/creator-landingpage-scaffold",
   "version": "2.0.0",
   "description": "该模板适用于平台类登陆引导页，默认内置一个页面和五个不同风格的展示区块",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-creator-landingpage.html",
+  "homepage": "https://unpkg.com/@icedesign/creator-landingpage-scaffold@latest/build/index.html",
   "files": [
     "src/",
     "build/",
@@ -53,7 +53,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-creator-landingpage",
-    "title": "ICE Creator LandingPage",
+    "title": "创作者平台官网",
     "categories": [
       "官网模板"
     ],

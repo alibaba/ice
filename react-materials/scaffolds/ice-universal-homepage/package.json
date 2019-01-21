@@ -1,8 +1,8 @@
 {
   "name": "@icedesign/universal-homepage-scaffold",
   "version": "2.0.0",
-  "description": "该模板适用于产品的首页介绍，内置首页和基础布局，使用时需要根据需求进行删除和添加",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-universal-homepage/index.html",
+  "description": "该模板适用于产品的首页介绍，默认只有一个页面，使用时需要根据需求进行删除和添加",
+  "homepage": "https://unpkg.com/@icedesign/universal-homepage-scaffold@latest/build/index.html",
   "files": [
     "src/",
     "build/",
@@ -50,12 +50,15 @@
   },
   "buildConfig": {
     "theme": "@alifd/theme-1",
-    "entry": "src/index.js"
+    "entry": "src/index.js",
+    "output": {
+      "publicPath": "./"
+    }
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "ice-universal-homepage",
-    "title": "ICE Universal HomePage",
+    "title": "通用型官网",
     "categories": [
       "官网模板"
     ],

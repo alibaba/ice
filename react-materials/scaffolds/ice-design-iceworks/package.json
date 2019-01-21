@@ -2,7 +2,7 @@
   "name": "@icedesign/iceworks-homepage-scaffold",
   "version": "2.0.0",
   "description": "该模板适用于工具类产品的首页介绍，默认内置一个页面和不同风格的展示区块",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/iceworks-homepage.html",
+  "homepage": "https://unpkg.com/@icedesign/iceworks-homepage-scaffold@latest/build/index.html",
   "files": [
     "src/",
     "build/",
@@ -56,7 +56,7 @@
   "scaffoldConfig": {
     "builder": "ice-scripts",
     "name": "iceworks-homepage",
-    "title": "Iceworks HomePage",
+    "title": "Iceworks 官网",
     "categories": [
       "官网模板"
     ],
