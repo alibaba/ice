@@ -1,7 +1,7 @@
 /* eslint  react/no-string-refs: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Radio, Switch, Upload, Grid } from '@icedesign/base';
+import { Input, Button, Radio, Switch, Upload, Grid } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -10,7 +10,7 @@ import {
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
-const { ImageUpload } = Upload;
+const { Card } = Upload;
 
 function beforeUpload(info) {
   console.log('beforeUpload callback : ', info);
@@ -95,7 +95,7 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="avatar" required message="必填">
-                  <ImageUpload
+                  <Upload.Card
                     listType="picture-card"
                     action=""
                     accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
@@ -108,8 +108,7 @@ export default class BaseSetting extends Component {
                     beforeUpload={beforeUpload}
                     onChange={onChange}
                     onSuccess={onSuccess}
-                    onError={onError}
-                  />
+                    onError={onError} />
                 </IceFormBinder>
                 <IceFormError name="avatar" />
               </Col>
@@ -240,12 +239,7 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="description">
-                  <Input
-                    style={styles.inputItem}
-                    size="large"
-                    multiple
-                    placeholder="请输入描述..."
-                  />
+                  <Input.TextArea style={styles.inputItem} size="large" multiple placeholder="请输入描述..." />
                 </IceFormBinder>
                 <IceFormError name="description" />
               </Col>

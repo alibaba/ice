@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/hr-management-admin-scaffold",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "该模板适用于人力资源类的管理后台，默认内置丰富的图表和表格区块，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/hr-management-admin-scaffold/build/index.html",
   "files": [
@@ -14,20 +14,19 @@
     ".eslintrc"
   ],
   "dependencies": {
+    "@alifd/next": "^1.x",
+    "@alifd/theme-1": "^0.0.7",
     "@antv/data-set": "^0.8.9",
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.8",
-    "@icedesign/data-binder": "^0.1.0",
-    "@icedesign/form-binder": "^0.1.3",
-    "@icedesign/icon": "^0.1.1",
-    "@icedesign/img": "^0.1.0",
-    "@icedesign/label": "^0.1.0",
-    "@icedesign/layout": "^0.1.2",
-    "@icedesign/menu": "^0.1.1",
-    "@icedesign/skin": "^0.1.0",
+    "@icedesign/container": "^1.x",
+    "@icedesign/data-binder": "^1.x",
+    "@icedesign/form-binder": "^1.x",
+    "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/img": "^1.x",
+    "@icedesign/label": "^1.x",
+    "@icedesign/layout": "^1.x",
     "bizcharts": "^3.4.1",
     "classnames": "^2.2.5",
-    "foundation-symbol": "^0.1.4",
+    "moment": "^2.23.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.4.1",
@@ -53,15 +52,12 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@alifd/theme-1",
     "entry": "src/index.js",
     "localization": false,
     "output": {
       "publicPath": "./"
     }
-  },
-  "themeConfig": {
-    "primaryColor": "#447eff"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",

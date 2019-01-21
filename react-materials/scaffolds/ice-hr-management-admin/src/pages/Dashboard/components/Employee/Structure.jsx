@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Progress } from '@icedesign/base';
+import { Progress } from '@alifd/next';
 
 export default class Structure extends Component {
   render() {

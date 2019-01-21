@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs: 0 */
 import React, { Component } from 'react';
-import { Button, Dialog, Input, Feedback } from '@icedesign/base';
+import { Button, Dialog, Input, Message } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
@@ -40,7 +40,7 @@ export default class NewEvent extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('添加成功');
+      Message.success('添加成功');
       this.setState({
         visible: false,
       });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Calendar } from '@icedesign/base';
+import { Calendar } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 export default class EventCalendar extends Component {
