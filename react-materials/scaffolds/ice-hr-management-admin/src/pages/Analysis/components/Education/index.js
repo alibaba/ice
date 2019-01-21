@@ -38,7 +38,7 @@ export default class Education extends React.Component {
     const cols = {
       percent: {
         formatter: (val) => {
-          val = val * 100 + '%';
+          val = `${val * 100}%`;
           return val;
         },
       },
@@ -66,7 +66,7 @@ export default class Education extends React.Component {
             tooltip={[
               'item*percent',
               (item, percent) => {
-                percent = percent * 100 + '%';
+                percent = `${percent * 100}%`;
                 return {
                   name: item,
                   value: percent,

@@ -90,7 +90,7 @@ export default class SalaryChart extends React.Component {
           <Axis
             name="temperature"
             label={{
-              formatter: (val) => `${val}`,
+              formatter: val => `${val}`,
             }}
           />
           <Tooltip

@@ -66,7 +66,7 @@ export default class Statistics extends React.Component {
         min: 0,
 
         formatter(val) {
-          return (val * 100).toFixed(0) + 'K';
+          return `${(val * 100).toFixed(0)}K`;
         },
       },
     };
