@@ -36,7 +36,7 @@ export default class GoodsForm extends Component {
         return;
       }
       console.log({ values });
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
@@ -55,7 +55,6 @@ export default class GoodsForm extends Component {
               <IceFormBinder name="goodsName" required message="商品名称必填">
                 <Input
                   placeholder="请输入商品名称"
-
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -68,7 +67,6 @@ export default class GoodsForm extends Component {
               <IceFormBinder name="code">
                 <Input
                   placeholder="请输入数字条形码"
-
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -76,7 +74,7 @@ export default class GoodsForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>库存量：</div>
               <IceFormBinder name="stock" required message="联系方式必填">
-                <NumberPicker  />
+                <NumberPicker />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
@@ -85,7 +83,6 @@ export default class GoodsForm extends Component {
                 <Select
                   placeholder="请选择"
                   mode="multiple"
-
                   style={{ width: '400px' }}
                 >
                   <Option value="1">新品</Option>
@@ -100,7 +97,6 @@ export default class GoodsForm extends Component {
               <IceFormBinder name="price" required message="商品价格必填">
                 <Input
                   placeholder="请输入商品价格: ￥199.99"
-
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -111,7 +107,7 @@ export default class GoodsForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>预售时间：</div>
               <IceFormBinder name="reverseTime">
-                <RangePicker  style={{ width: '400px' }} />
+                <RangePicker style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
@@ -148,11 +144,7 @@ export default class GoodsForm extends Component {
                 />
               </IceFormBinder>
             </div>
-            <Button
-              type="primary"
-
-              onClick={this.validateAllFormField}
-            >
+            <Button type="primary" onClick={this.validateAllFormField}>
               提 交
             </Button>
           </IceFormBinderWrapper>

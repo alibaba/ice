@@ -24,7 +24,7 @@ export default class ReserveForm extends Component {
         return;
       }
       console.log({ values });
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
