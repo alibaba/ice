@@ -7,14 +7,15 @@ const scaffolds = [
   'ice-design-lite',
 
   // 行业模板(22)
-  'ice-operation-admin',
+  'ice-design-cms',
+  'ice-order-management-admin',
   'ice-government-management-admin',
   'ice-reviews-management',
   'ice-monitor-dashboard',
   'ice-project-management-admin',
   'ice-application-management-admin',
-  'ice-design-cms',
   'ice-commodity-management-admin',
+  'ice-operation-admin',
   'ice-design-ecommerce',
   'ice-voice-chat-admin',
   'ice-hr-management-admin',
@@ -28,7 +29,6 @@ const scaffolds = [
   'ice-builder-platform',
   'ice-design-schools',
   'ice-customer-analysis-admin',
-  'ice-design-hospital',
 
   // 数据可视化模板(3)
   'ice-design-analysis',
