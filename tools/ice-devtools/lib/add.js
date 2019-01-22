@@ -39,10 +39,14 @@ module.exports = async function add(cwd, ...options) {
 /**
  * 通过询问的形式添加物料
  * @param {string} cwd
- * @param {Array} options
+ * @param {Array} argvOpts
  */
-async function getAskOptions(cwd, ...options) {
+async function getAskOptions(cwd, ...argvOpts) {
   const pkg = pkgJSON.getPkgJSON(cwd);
+
+  const options = {
+    pkg
+  };
 
   // react、vue、etc...
   let type;
@@ -53,7 +57,8 @@ async function getAskOptions(cwd, ...options) {
     // 兼容 ice 官方仓库
     const { materialType } = await inquirer.prompt(MATERIAL_TYPE_QUESION);
     type = materialType;
-    cwd = path.join(cwd, type + '-materials');
+    cwd = path.join(cwd, `${type}-materials`);
+    options.scope = `@${type}-materials`;
   } else {
     logger.fatal(message.invalid);
   }
@@ -62,7 +67,7 @@ async function getAskOptions(cwd, ...options) {
   const { templateType } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
   debug('ans: %j', templateType);
 
-  require(`./${templateType}/add`)(type, cwd, { pkg }, ...options);
+  require(`./${templateType}/add`)(type, cwd, options, ...argvOpts);
 }
 
 /**

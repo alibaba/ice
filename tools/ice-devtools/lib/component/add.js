@@ -12,7 +12,6 @@ const validateName = require('validate-npm-package-name');
 const logger = require('../../utils/logger');
 const download = require('../../utils/download');
 const generate = require('../../utils/generate');
-const pkgJSON = require('../../utils/pkg-json');
 
 /**
  * @param{String} type 类型
@@ -65,7 +64,7 @@ async function execAsk(type, cwd, opt = {}, argvOpts) {
   const templateName = `@icedesign/ice-${type}-component-template`;
   const source = await downloadTemplate(templateName);
 
-  const prefix = getPrefix(cwd, opt);
+  const prefix = getPrefix(opt);
   const name = await getName(prefix);
   const npmName = getNpmName(name, prefix);
   const dest = opt.standalone ? cwd : path.join(cwd, 'components', name);
@@ -76,7 +75,7 @@ async function execAsk(type, cwd, opt = {}, argvOpts) {
 /**
  * 获取组件的文件名
  */
-async function getName(cwd, prefix) {
+async function getName(prefix) {
   const questions = defaultQuestion(prefix);
   const { componentName } = await inquirer.prompt(questions);
   return componentName;
@@ -85,16 +84,13 @@ async function getName(cwd, prefix) {
 /**
  * 获取包名前缀
  */
-function getPrefix(cwd, opt = {}) {
+function getPrefix(opt = {}) {
   let prefix = '';
 
   // 独立开发组件
-  if (opt.standalone) {
-    if (opt.scope) {
-      prefix = `${opt.scope}/`;
-    }
-  } else {
-    const pkg = pkgJSON.getPkgJSON(cwd);
+  if (opt.scope) {
+    prefix = `${opt.scope}/`;
+  } else if (opt.pkg) {
     prefix = `${pkg.name}-`;
   }
 

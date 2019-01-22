@@ -12,7 +12,6 @@ const validateName = require('validate-npm-package-name');
 const logger = require('../../utils/logger');
 const download = require('../../utils/download');
 const generate = require('../../utils/generate');
-const pkgJSON = require('../../utils/pkg-json');
 
 /**
  * @param{String} type 类型
@@ -40,7 +39,7 @@ async function execArgv(cwd, ...argvOpts) {
   generateTemplate({ blockName, blockNpmName, blockSource, blockDest });
 }
 
-function defaultQuestion(pkg) {
+function defaultQuestion(opt) {
   return [
     {
       type: 'input',
@@ -50,7 +49,7 @@ function defaultQuestion(pkg) {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
           return 'Name must be a Upper Camel Case word, e.g. ExampleBlock.';
         }
-        const npmName = getBlockNpmName(value, pkg);
+        const npmName = getBlockNpmName(value, opt);
         if (!validateName(npmName).validForNewPackages) {
           return `this block name(${npmName}) has already exist. please retry`;
         }
@@ -63,8 +62,8 @@ function defaultQuestion(pkg) {
 async function execAsk(type, cwd, opt, argvOpts) {
   const templateName = `@icedesign/ice-${type}-block-template`;
   const blockSource = await downloadTemplate(templateName);
-  const blockName = await getBlockName(opt.pkg);
-  const blockNpmName = getBlockNpmName(blockName, opt.pkg);
+  const blockName = await getBlockName(opt);
+  const blockNpmName = getBlockNpmName(blockName, opt);
   const blockDest = path.join(cwd, 'blocks', blockName);
 
   generateTemplate({ blockName, blockNpmName, blockSource, blockDest });
@@ -73,8 +72,8 @@ async function execAsk(type, cwd, opt, argvOpts) {
 /**
  * 获取区块的文件名
  */
-async function getBlockName(pkg = {}) {
-  const questions = defaultQuestion(pkg); 
+async function getBlockName(opt = {}) {
+  const questions = defaultQuestion(opt); 
   const { blockName } = await inquirer.prompt(questions);
   return blockName;
 }
@@ -83,13 +82,15 @@ async function getBlockName(pkg = {}) {
  * 获取区块的 npm 名
  * @param {string} blockName
  */
-function getBlockNpmName(blockName, pkg = {}) {
+function getBlockNpmName(blockName, opt) {
   const blockKebabCase = kebabCase(blockName).replace(/^-/, '');
 
   let npmName;
 
-  if (pkg.name) {
-    npmName = `${pkg.name}-${blockKebabCase}`;
+  if (opt.scope) {
+    npmName = opt.scope + '/' + blockKebabCase;
+  } else if (opt.pkg && opt.pkg.name) {
+    npmName = `${opt.pkg.name}-${blockKebabCase}`;
   } else {
     npmName = blockKebabCase;
   }
