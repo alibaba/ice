@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Container from '@icedesign/container';
 import SearchBar from './components/SearchBar';
 import ListTable from './components/ListTable';
-import styles from  './index.module.scss';
+import styles from './index.module.scss';
 
 export default class List extends Component {
   static displayName = 'List';

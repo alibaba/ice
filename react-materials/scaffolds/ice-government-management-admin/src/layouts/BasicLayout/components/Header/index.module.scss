@@ -17,11 +17,11 @@
       .ice-menu-item {
         font-size: 14px;
         a {
-          color:$color-white;
+          color: $color-white;
         }
         &:hover,
         a:hover {
-          color:transparentize($color-white, 0.8);
+          color: transparentize($color-white, 0.8);
         }
       }
     }
@@ -47,6 +47,7 @@
       color: #fff;
     }
     .icon-down {
+      font-weight: bold;
       margin-left: 2px;
       color: #fff;
     }

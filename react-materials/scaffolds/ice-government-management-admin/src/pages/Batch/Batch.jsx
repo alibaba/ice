@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Container from '@icedesign/container';
 import SelectBar from './components/SelectBar';
 import BatchTable from './components/BatchTable';
-import styles from  './index.module.scss';
+import styles from './index.module.scss';
 
 export default class Batch extends Component {
   static displayName = 'Batch';

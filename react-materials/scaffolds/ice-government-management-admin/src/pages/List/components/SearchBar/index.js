@@ -14,31 +14,21 @@ export default class SearchBar extends Component {
         <span style={styles.caseNumber}>
           <label>
             案号: (
-            <Input
-              style={{ ...styles.input, ...styles.shortInput }}
-               
-            />
-            )
+            <Input style={{ ...styles.input, ...styles.shortInput }} />)
           </label>
           <Select
             placeholder="浙执"
             style={{ ...styles.select, ...styles.input }}
-             
           >
             <Option value="small">浙执1</Option>
             <Option value="medium">浙执2</Option>
             <Option value="large">浙执3</Option>
           </Select>
           字第
-          <Input
-            style={{ ...styles.input, ...styles.shortInput }}
-             
-          />
-          号
+          <Input style={{ ...styles.input, ...styles.shortInput }} />号
         </span>
         <span>
           <Button
-             
             type="primary"
             style={styles.button}
             onClick={this.handleClick}

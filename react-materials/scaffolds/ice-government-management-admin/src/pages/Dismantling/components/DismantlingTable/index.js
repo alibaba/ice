@@ -129,7 +129,6 @@ export default class DismantlingTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-
           />
         </div>
       </div>

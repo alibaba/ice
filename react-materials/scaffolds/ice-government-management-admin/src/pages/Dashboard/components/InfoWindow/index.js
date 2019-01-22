@@ -55,4 +55,3 @@ export default class InfoWindow extends Component {
     );
   }
 }
-

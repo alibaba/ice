@@ -12,7 +12,7 @@ export default class FormPanel extends Component {
         <div style={styles.form}>
           <label style={styles.label}>
             承办组:
-            <Select style={{ ...styles.select, ...styles.input }}  >
+            <Select style={{ ...styles.select, ...styles.input }}>
               <Option value="small">淘小宝1</Option>
               <Option value="medium">淘小宝2</Option>
               <Option value="large">淘小宝3</Option>
@@ -20,11 +20,11 @@ export default class FormPanel extends Component {
           </label>
           <label style={styles.label}>
             承办组组长:
-            <Input style={styles.input}   />
+            <Input style={styles.input} />
           </label>
           <label style={styles.label}>
             承办人:
-            <Select style={{ ...styles.select, ...styles.input }}  >
+            <Select style={{ ...styles.select, ...styles.input }}>
               <Option value="small">淘小宝1</Option>
               <Option value="medium">淘小宝2</Option>
               <Option value="large">淘小宝3</Option>
@@ -32,7 +32,7 @@ export default class FormPanel extends Component {
           </label>
           <label style={styles.label}>
             书记员:
-            <Select style={{ ...styles.select, ...styles.input }}  >
+            <Select style={{ ...styles.select, ...styles.input }}>
               <Option value="small">淘小宝1</Option>
               <Option value="medium">淘小宝2</Option>
               <Option value="large">淘小宝3</Option>
@@ -40,23 +40,17 @@ export default class FormPanel extends Component {
           </label>
           <label style={styles.label}>
             发放时间:
-            <DatePicker placeholder="Start"   style={styles.input} />
+            <DatePicker placeholder="Start" style={styles.input} />
           </label>
           <label style={styles.label}>
             排期时间:
-            <DatePicker placeholder="Start"   style={styles.input} />
+            <DatePicker placeholder="Start" style={styles.input} />
           </label>
         </div>
         <div>
-          <Button   style={styles.button}>
-            保存
-          </Button>
-          <Button   style={styles.button}>
-            重置
-          </Button>
-          <Button   style={styles.button}>
-            取消
-          </Button>
+          <Button style={styles.button}>保存</Button>
+          <Button style={styles.button}>重置</Button>
+          <Button style={styles.button}>取消</Button>
         </div>
       </div>
     );

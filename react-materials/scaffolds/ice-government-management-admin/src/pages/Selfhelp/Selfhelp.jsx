@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Container from '@icedesign/container';
 import CountBar from './components/CountBar';
 import SelfhelpTable from './components/SelfhelpTable';
-import styles from  './index.module.scss';
+import styles from './index.module.scss';
 
 export default class Selfhelp extends Component {
   static displayName = 'Selfhelp';

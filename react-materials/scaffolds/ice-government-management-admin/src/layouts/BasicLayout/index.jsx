@@ -9,10 +9,7 @@ import style from './index.module.scss';
 export default class BasicLayout extends Component {
   render() {
     return (
-      <Layout
-        fixable
-        className={style.iceLayout}
-      >
+      <Layout fixable className={style.iceLayout}>
         <Layout.Section>
           <Layout.Aside>
             <Aside />

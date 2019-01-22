@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Calendar } from '@alifd/next';
-import styles from  './index.module.scss';
+import styles from './index.module.scss';
 
 export default class WorkingCalendar extends Component {
   static displayName = 'WorkingCalendar';
@@ -16,4 +16,3 @@ export default class WorkingCalendar extends Component {
     );
   }
 }
-

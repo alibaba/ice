@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Container from '@icedesign/container';
 import SearchBar from './components/SearchBar';
 import AllocationTable from './components/AllocationTable';
-import styles from  './index.module.scss';
+import styles from './index.module.scss';
+
 export default class Allocation extends Component {
   static displayName = 'Allocation';
 
@@ -20,5 +21,4 @@ export default class Allocation extends Component {
     );
   }
 }
-
 

@@ -7,7 +7,6 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import cx from 'classnames';
 import Icon from '@icedesign/foundation-symbol';
 
 const { Row, Col } = Grid;
@@ -64,7 +63,11 @@ class UserLogin extends Component {
               <Col className="formItemCol">
                 <Icon type="person" size="small" className="inputIcon" />
                 <IceFormBinder name="username" required message="必填">
-                  <Input className="next-input-single" maxLength={20} placeholder="用户名" />
+                  <Input
+                    className="next-input-single"
+                    maxLength={20}
+                    placeholder="用户名"
+                  />
                 </IceFormBinder>
               </Col>
               <Col>
@@ -76,7 +79,11 @@ class UserLogin extends Component {
               <Col className="formItemCol">
                 <Icon type="lock" size="small" className="inputIcon" />
                 <IceFormBinder name="password" required message="必填">
-                  <Input className="next-input-single" htmlType="password" placeholder="密码" />
+                  <Input
+                    className="next-input-single"
+                    htmlType="password"
+                    placeholder="密码"
+                  />
                 </IceFormBinder>
               </Col>
               <Col>

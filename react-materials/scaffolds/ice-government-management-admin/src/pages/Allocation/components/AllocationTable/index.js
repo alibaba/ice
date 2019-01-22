@@ -73,7 +73,7 @@ export default class AllocationTable extends Component {
   render() {
     const actionRender = () => {
       return (
-        <Button   style={styles.button} onClick={this.handleClick}>
+        <Button style={styles.button} onClick={this.handleClick}>
           分配账号
         </Button>
       );
@@ -98,7 +98,6 @@ export default class AllocationTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-             
           />
         </div>
       </div>
