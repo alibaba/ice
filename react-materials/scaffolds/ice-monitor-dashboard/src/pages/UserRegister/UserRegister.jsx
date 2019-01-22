@@ -1,8 +1,10 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Message, Icon, Form } from '@alifd/next';
+import { Input, Button, Message, Icon, Form, Grid } from '@alifd/next';
 const FormItem = Form.Item;
+
+const { Row, Col } = Grid;
 
 @withRouter
 class UserRegister extends Component {

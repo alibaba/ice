@@ -4,7 +4,7 @@ import IceContainer from '@icedesign/container';
 
 export default class FailureDetail extends PureComponent {
   handleChange = () => {
-    Feedback.toast.success('可以根据实际需求自定义返回修改');
+    Message.success('可以根据实际需求自定义返回修改');
   };
 
   render() {

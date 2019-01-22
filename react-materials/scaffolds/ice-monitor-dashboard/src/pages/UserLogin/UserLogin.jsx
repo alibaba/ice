@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { Input, Button, Checkbox, Message, Grid, Icon, Form } from '@alifd/next';
 
 const FormItem = Form.Item;
+const { Row, Col } = Grid;
 
 @withRouter
 class UserLogin extends Component {

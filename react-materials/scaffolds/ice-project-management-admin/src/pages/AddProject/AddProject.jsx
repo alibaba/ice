@@ -30,7 +30,7 @@ export default class AddProject extends Component {
         return false;
       }
 
-      Feedback.toast.success('创建成功');
+      Message.success('创建成功');
     });
   };
 

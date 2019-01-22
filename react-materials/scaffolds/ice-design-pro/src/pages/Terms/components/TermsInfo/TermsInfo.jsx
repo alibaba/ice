@@ -4,7 +4,7 @@ import { Checkbox, Button, Message } from '@alifd/next';
 
 export default class TermsInfo extends PureComponent {
   handleChange = () => {
-    Feedback.toast.success('已开通');
+    Message.success('已开通');
   };
 
   render() {
