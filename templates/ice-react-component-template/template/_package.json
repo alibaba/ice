@@ -4,6 +4,7 @@
   "description": "{{description}}",
   "author": "{{author}}",
   "files": ["src/", "lib/"],
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/ice"
