@@ -187,7 +187,7 @@ class Scaffold {
   }
 
   /**
-   * 启动模拟进度条
+   * 启动进度条
    */
   @action
   startProgress() {

@@ -16,7 +16,6 @@ const DetailError = require('../../error-handler');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
-const { emitProcess, emitError, emitProgress } = require('../../services/tracking');
 
 /**
  * 批量下载 block 到页面中
@@ -31,7 +30,7 @@ async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageNam
 
   [err, filesList] = await to(Promise.all(
     blocks.map( async (block) => {
-      return await downloadBlockToPage({ clientPath, clientSrcPath, pageName, block });
+      return await downloadBlockToPage({ clientPath, clientSrcPath, pageName, block }, progressFunc);
     })
   ));
   if (err) {
@@ -87,13 +86,12 @@ async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageNam
 
 }
 
-async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName, progressFunc }) {
+async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName }, progressFunc) {
   if (!block || ( !block.source && block.type != 'custom' )) {
     throw new Error(
       'block need to have specified source at download block to page method.'
     );
   }
-  emitProcess('generateBlocks', block.title || block.alias || block.blockName || block.name);
 
   const componentsDir = path.join(clientSrcPath, 'pages', pageName, 'components');
   // 保证文件夹存在
@@ -118,7 +116,8 @@ async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName,
       path.join(
         componentsDir,
         blockName
-      )
+      ),
+      progressFunc
     ));
     if (err) {
       throw new Error(`解压自定义区块${blockName}出错，请重试`);
@@ -134,7 +133,8 @@ async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName,
   [err, allFiles] = await to(extractBlock(
     path.join( componentsDir, blockName ),
     tarballURL,
-    clientSrcPath
+    clientSrcPath,
+    progressFunc
   ));
   if (err) {
     if (err.code === 'ETIMEDOUT') {
@@ -220,7 +220,7 @@ function extractTarball(tarballURL, destDir) {
  * @param ignoreFiles
  * @returns {Promise<any>}
  */
-function extractBlock(destDir, tarballURL, projectDir, ignoreFiles, progressFunc = () => {}) {
+function extractBlock(destDir, tarballURL, clientSrcPath, progressFunc = () => {}) {
   return new Promise((resolve, reject) => {
     debug('npmTarball', tarballURL);
     const allFiles = [];
@@ -239,14 +239,6 @@ function extractBlock(destDir, tarballURL, projectDir, ignoreFiles, progressFunc
       .pipe(tar.Parse()) // eslint-disable-line
       .on('entry', (entry) => {
         if (!/src|mock\//.test(entry.path)) {
-          return;
-        }
-
-        if (
-          Array.isArray(ignoreFiles) &&
-          ignoreFiles.some((file) => new RegExp(file).test(entry.path))
-        ) {
-          // 跳过忽略文件
           return;
         }
 
@@ -380,6 +372,9 @@ function extractCustomBlock (block, BlockDir) {
     mkdirp.sync(BlockDir);
     fs.writeFileSync(path.join(BlockDir, 'index.jsx'), codeFileTree['index.jsx']);
     allFiles.push(path.join(BlockDir, 'index.jsx'));
+    progressFunc({
+      percent: 1,
+    });
     resolve(allFiles);
   });
 }

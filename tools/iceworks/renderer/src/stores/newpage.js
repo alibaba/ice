@@ -3,7 +3,10 @@ import path from 'path';
 import { ipcRenderer } from 'electron';
 
 import { scanPages } from '../lib/project-utils';
+// store
+import progress from './progress';
 import projects from './projects';
+
 import projectScripts from '../lib/project-scripts';
 import scanLayout from '../datacenter/scanLayout';
 
@@ -93,13 +96,12 @@ class NewPage {
 
   @action
   fetch() {
-    const destDir = this.targetPath;
+    const destDir = projects.currentProject.clientSrcPath;
     const type = projects.currentProject.getLibraryType(); // 当前项目框架库类型
     this.loading = true;
-    const scanPath = destDir;
     Promise.all([
-      scanLayout({ targetPath: scanPath }),
-      scanPages(scanPath),
+      scanLayout({ targetPath: destDir }),
+      scanPages(destDir),
     ])
       .then(this.fetchSuccess)
       .catch(this.fetchFailed);

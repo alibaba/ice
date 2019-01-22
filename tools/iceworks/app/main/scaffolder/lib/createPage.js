@@ -131,7 +131,6 @@ module.exports = async function createPage({
   }
 
   // 3. 下载区块
-  currentEvent = 'generateBlocks';
   if (Array.isArray(blocks)) {
     // className、relativePath用于ejs模板语言生成page.jsx
     blocks.forEach( block => {
@@ -147,6 +146,8 @@ module.exports = async function createPage({
 
     // 下载区块到页面，返回区块的依赖
     let dependencies = {};
+    currentEvent = 'generateBlocks';
+    emitProcess(currentEvent);
     emitProgress(true);
     try {
       const deps = await utils.downloadBlocksToPage({
@@ -182,7 +183,7 @@ module.exports = async function createPage({
         const depsName = Object.keys(dependencies)
           .map((d) => `${d}@${dependencies[d]}`)
           .join(' ');
-        throw new DetailError('blocks 安装失败', {
+        throw new DetailError('blocks 依赖安装失败， 请重试', {
           message: `无法安装以下区块： blocks: ${blocksName} dependencies: ${depsName}`,
         });
       }

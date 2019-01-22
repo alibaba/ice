@@ -26,7 +26,7 @@ export default class ProgressWrap extends Component {
     return (
       <div>
         <div>
-          <span style={{ fontSize: 12, color: '#999' }}>
+          <span style={{ fontSize: 12, color: '#2eca9c' }}>
             {statusText}
           </span>
         </div>
