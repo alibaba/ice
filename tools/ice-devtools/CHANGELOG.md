@@ -1,5 +1,9 @@
 # ice-scripts Changelog
 
+## 2.1.0
+- [feat] 物料接入组件开发流程
+- [feat] 支持独立的组件开发流程
+
 ## 2.0.8
 - [bugfix] 修复依赖缺失问题
 

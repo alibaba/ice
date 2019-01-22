@@ -1,7 +1,8 @@
 {
-  "name": "@icedesign/{{name}}",
-  "version": "0.0.1",
+  "name": "{{npmName}}",
+  "version": "{{version}}",
   "description": "{{description}}",
+  "author": "{{author}}",
   "files": ["src/", "lib/"],
   "repository": {
     "type": "git",
@@ -16,14 +17,22 @@
   "keywords": ["ice", "react", "component"],
   "publishConfig": {
     "access": "public",
-    "registry": "http://registry.npmjs.com"
+    "registry": "{{registry}}"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0"
+    "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "react": "^16.3.0",
-    "react-dom": "^16.3.0",
-    "ice-devtools": "latest"
+    "react-dom": "^16.3.0"
+  },
+  "componentConfig": {
+    "name": "{{name}}",
+    "title": "{{title}}",
+    "categories": [
+      {{#each categories}}
+        "{{@key}}"{{#if @last}} {{else}},{{/if}}
+      {{/each}}
+    ]
   }
 }

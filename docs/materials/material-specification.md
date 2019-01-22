@@ -1,6 +1,6 @@
 ---
 title: 物料开发规范
-order: 5
+order: 6
 category: 物料
 ---
 
