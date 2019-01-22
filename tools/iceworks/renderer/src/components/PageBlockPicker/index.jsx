@@ -7,7 +7,7 @@ import path from 'path';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { dependenciesFormat } from '../../lib/project-utils';
+import { dependenciesFormat, mergeDependenciesToPkg } from '../../lib/project-utils';
 import {
   Panel as BlockPickerPanel,
   Previewer as BlockPreview,
@@ -102,6 +102,8 @@ class PageBlockPicker extends Component {
             cwd: clientPath,
           }
         );
+
+        
       })
       .then(() => {
         pageBlockPicker.close();
@@ -117,43 +119,22 @@ class PageBlockPicker extends Component {
           error: error,
         });
         // 兜底逻辑，将依赖信息写入到 package.json 里
-        const packageFile = path.join(clientPath, 'package.json');
-        new Promise((resolve, reject) => {
-          try {
-            const pkgData = fs.readFileSync(packageFile);
-            resolve(JSON.parse(pkgData.toString()));
-          } catch (e) {
-            console.log(e);
-            reject();
-          }
-        }).then((pkgData) => {
-          console.log(pkgData);
-          if (pkgData) {
-            pkgData.dependencies = Object.assign(
-              pkgData.dependencies || {},
-              blocksDependencies
-            );
-            try {
-              fs.writeFileSync(packageFile, JSON.stringify(pkgData, null, 2));
-              pageBlockPicker.close();
-              Notification.warning({
-                message:
-                  '区块依赖已兜底写入 package.json，可通过【重装依赖】修复',
-                duration: 8,
-              });
-            } catch (e) {
-              pageBlockPicker.downloadDone();
-              dialog.notice({
-                title: '写入 package.json 失败',
-                error:
-                  'package.json 不存在或存在语法错误 检查 ' +
-                  path.join(clientPath, 'package.json'),
-              });
-            }
-          } else {
-            return Promise.reject('不存在 package.json');
-          }
-        });
+        mergeDependenciesToPkg(blocksDependencies, clientPath)
+          .then(() => {
+            pageBlockPicker.close();
+            Notification.warning({
+              message:
+                '区块依赖已兜底写入 package.json，可通过【重装依赖】修复',
+              duration: 8,
+            });
+          })
+          .catch((e) => {
+            pageBlockPicker.downloadDone();
+            dialog.notice({
+              title: '依赖写入 package.json 失败',
+              error: e
+            });
+          });
       });
   };
 
