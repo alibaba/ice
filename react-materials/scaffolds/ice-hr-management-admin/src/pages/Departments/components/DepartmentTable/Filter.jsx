@@ -30,7 +30,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>部门名称：</span>
               <IceFormBinder triggerType="onBlur" name="department">
-                <Input placeholder="请输入" size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="department" />
@@ -41,7 +41,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>部门主管：</span>
               <IceFormBinder triggerType="onBlur" name="lead">
-                <Input placeholder="请输入" size="large" />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="lead" />
