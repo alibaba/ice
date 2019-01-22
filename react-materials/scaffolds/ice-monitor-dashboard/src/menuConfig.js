@@ -8,10 +8,6 @@ const asideMenuConfig = [
     path: '/dashboard',
   },
   {
-    name: '数据中心',
-    path: '/datacenter',
-  },
-  {
     name: '流量分析',
     path: '/traffic/statistics',
   },
@@ -22,6 +18,10 @@ const asideMenuConfig = [
   {
     name: '留存与活跃',
     path: '/user/activities',
+  },
+  {
+    name: '数据中心',
+    path: '/datacenter',
   },
   {
     name: '反馈',

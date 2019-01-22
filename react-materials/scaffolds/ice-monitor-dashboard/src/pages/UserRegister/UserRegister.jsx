@@ -1,8 +1,13 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Message, Icon, Form } from '@alifd/next';
-const FormItem = Form.Item;
+import { Input, Button, Message } from '@alifd/next';
+import {
+  FormBinderWrapper as IceFormBinderWrapper,
+  FormBinder as IceFormBinder,
+  FormError as IceFormError,
+} from '@icedesign/form-binder';
+import IceIcon from '@icedesign/foundation-symbol';
 
 @withRouter
 class UserRegister extends Component {
@@ -52,95 +57,101 @@ class UserRegister extends Component {
     });
   };
 
-  handleSubmit = (values, errors) => {
-    if (errors) {
-      console.log('errors', errors);
-      return;
-    }
-    console.log(values);
-    Message.success('注册成功');
-    this.props.history.push('/user/login');
+  handleSubmit = () => {
+    this.refs.form.validateAll((errors, values) => {
+      if (errors) {
+        console.log('errors', errors);
+        return;
+      }
+      console.log(values);
+      Message.success('注册成功');
+      this.props.history.push('/user/login');
+    });
   };
 
   render() {
     return (
       <div style={styles.container}>
         <h4 style={styles.title}>注 册</h4>
-        <Form
-            value={this.state.value}
-            onChange={this.formChange}
-            size="large"
-          >
-            <FormItem required requiredMessage="请输入正确的用户名">
-              <Input
-                innerBefore={<Icon
-                  type="account"
-                  size="small"
-                  style={styles.inputIcon}
-                />}
-                name="name" size="large" maxLength={20} placeholder="用户名" />
-            </FormItem>
-            <FormItem required requiredMessage="请输入正确的邮箱">
-              <Input
-                innerBefore={<Icon
-                  type="email"
-                  size="small"
-                  style={styles.inputIcon}
-                />}
-                name="email" size="large" maxLength={20} placeholder="邮箱" />
-            </FormItem>
-            <FormItem required requiredMessage="请输入正确的邮箱">
-              <Input
-                innerBefore={<Icon
-                  type="ellipsis"
-                  size="small"
-                  todo="lock"
-                  style={styles.inputIcon}
-                />}
-                name="passwd"
-                htmlType="password"
-                size="large"
-                placeholder="至少8位密码" />
-            </FormItem>
+        <IceFormBinderWrapper
+          value={this.state.value}
+          onChange={this.formChange}
+          ref="form"
+        >
+          <div style={styles.formItems}>
+            <div style={styles.formItem}>
+              <IceIcon type="person" size="small" style={styles.inputIcon} />
+              <IceFormBinder name="name" required message="请输入正确的用户名">
+                <Input placeholder="用户名" style={styles.inputCol} />
+              </IceFormBinder>
+              <IceFormError name="name" />
+            </div>
 
-            <FormItem required
-              validator={(rule, values, callback) =>
-                this.checkPasswd2(
-                  rule,
-                  values,
-                  callback,
-                  this.state.value
-                )
-              }>
-              <Input
-                innerBefore={<Icon
-                  type="ellipsis"
-                  size="small"
-                  todo="lock"
-                  style={styles.inputIcon}
-                />}
+            <div style={styles.formItem}>
+              <IceIcon type="mail" size="small" style={styles.inputIcon} />
+              <IceFormBinder
+                type="email"
+                name="email"
+                required
+                message="请输入正确的邮箱"
+              >
+                <Input
+                  maxLength={20}
+                  placeholder="邮箱"
+                  style={styles.inputCol}
+                />
+              </IceFormBinder>
+              <IceFormError name="email" />
+            </div>
+
+            <div style={styles.formItem}>
+              <IceIcon type="lock" size="small" style={styles.inputIcon} />
+              <IceFormBinder
+                name="passwd"
+                required
+                validator={this.checkPasswd}
+              >
+                <Input
+                  htmlType="password"
+                  placeholder="至少8位密码"
+                  style={styles.inputCol}
+                />
+              </IceFormBinder>
+              <IceFormError name="passwd" />
+            </div>
+
+            <div style={styles.formItem}>
+              <IceIcon type="lock" size="small" style={styles.inputIcon} />
+              <IceFormBinder
                 name="rePasswd"
-                htmlType="password"
-                size="large"
-                placeholder="至少8位密码" />
-            </FormItem>
-            <Row className="formItem">
-              <Form.Submit
+                required
+                validator={(rule, values, callback) =>
+                  this.checkPasswd2(rule, values, callback, this.state.value)
+                }
+              >
+                <Input
+                  htmlType="password"
+                  placeholder="确认密码"
+                  style={styles.inputCol}
+                />
+              </IceFormBinder>
+              <IceFormError name="rePasswd" />
+            </div>
+
+            <div className="footer">
+              <Button
                 type="primary"
-                validate
                 onClick={this.handleSubmit}
-                className="submitBtn"
+                style={styles.submitBtn}
               >
                 注 册
-                </Form.Submit>
-            </Row>
-
-            <Row className="tips">
-              <Link to="/user/login" className="tips-text">
+              </Button>
+              <Link to="/user/login" style={styles.tips}>
                 使用已有账户登录
-                </Link>
-            </Row>
-          </Form>
+              </Link>
+            </div>
+          </div>
+        </IceFormBinderWrapper>
       </div>
     );
   }
@@ -152,6 +163,7 @@ const styles = {
     padding: '40px',
     background: '#fff',
     borderRadius: '6px',
+    zIndex: 9,
   },
   title: {
     margin: '0 0 40px',
@@ -166,7 +178,7 @@ const styles = {
   },
   inputIcon: {
     position: 'absolute',
-    left: '10px',
+    left: '8px',
     top: '8px',
     color: '#666',
   },
