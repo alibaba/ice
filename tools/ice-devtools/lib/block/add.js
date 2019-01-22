@@ -63,7 +63,7 @@ function defaultQuestion(pkg) {
 async function execAsk(type, cwd, opt, argvOpts) {
   const templateName = `@icedesign/ice-${type}-block-template`;
   const blockSource = await downloadTemplate(templateName);
-  const blockName = await getBlockName(cwd);
+  const blockName = await getBlockName(opt.pkg);
   const blockNpmName = getBlockNpmName(blockName, opt.pkg);
   const blockDest = path.join(cwd, 'blocks', blockName);
 
@@ -73,9 +73,8 @@ async function execAsk(type, cwd, opt, argvOpts) {
 /**
  * 获取区块的文件名
  */
-async function getBlockName(cwd) {
-  const pkg = pkgJSON.getPkgJSON(cwd);
-  const questions = defaultQuestion(pkg);
+async function getBlockName(pkg = {}) {
+  const questions = defaultQuestion(pkg); 
   const { blockName } = await inquirer.prompt(questions);
   return blockName;
 }

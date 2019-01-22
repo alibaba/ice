@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const path = require('path');
 const debug = require('debug')('ice:add:general');
 const logger = require('../utils/logger');
 const pkgJSON = require('../utils/pkg-json');
@@ -14,6 +15,15 @@ const MATERIAL_TEMPLATE_QUESION = [
     choices: MATERIAL_TEMPLATE_TYPE,
   },
 ];
+
+const MATERIAL_TYPE_QUESION = [
+  {
+    type: 'list',
+    name: 'materialType',
+    message: 'Please select project type',
+    choices: ['react', 'vue']
+  },
+]
 
 module.exports = async function add(cwd, ...options) {
   debug('cwd: %s', cwd);
@@ -33,7 +43,18 @@ module.exports = async function add(cwd, ...options) {
  */
 async function getAskOptions(cwd, ...options) {
   const pkg = pkgJSON.getPkgJSON(cwd);
-  if (!pkg.materialConfig) {
+
+  // react、vue、etc...
+  let type;
+
+  if (pkg && pkg.materialConfig) {
+    type = pkg.materialConfig.type;
+  } else if (pkg && pkg.materials) {
+    // 兼容 ice 官方仓库
+    const { materialType } = await inquirer.prompt(MATERIAL_TYPE_QUESION);
+    type = materialType;
+    cwd = path.join(cwd, type + '-materials');
+  } else {
     logger.fatal(message.invalid);
   }
 
@@ -41,8 +62,6 @@ async function getAskOptions(cwd, ...options) {
   const { templateType } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
   debug('ans: %j', templateType);
 
-  // react、vue、etc...
-  const { type } = pkg.materialConfig;
   require(`./${templateType}/add`)(type, cwd, { pkg }, ...options);
 }
 
