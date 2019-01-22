@@ -19,10 +19,10 @@ export default class TabChart extends Component {
         <Col l="18">
           <IceContainer style={styles.card}>
             <Tab onChange={this.handleChange}>
-              <TabPane key="1" tab="销售走势">
+              <TabPane key="1" title="销售走势">
                 <SeriesLine />
               </TabPane>
-              <TabPane key="2" tab="成交趋势">
+              <TabPane key="2" title="成交趋势">
                 <BasicLine />
               </TabPane>
             </Tab>

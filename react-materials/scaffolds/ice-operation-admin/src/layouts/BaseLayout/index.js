@@ -9,13 +9,12 @@ export default class CustomLayout extends Component {
     return (
       <Layout className={styles.container}>
         <Header />
-        <Layout.Section className="ice-admin-layout-body">
-          <Layout.Main className={styles.main} >
-            <MainRoutes/>
+        <Layout.Section>
+          <Layout.Main className={styles.main}>
+            <MainRoutes />
           </Layout.Main>
         </Layout.Section>
       </Layout>
     );
   }
 }
-

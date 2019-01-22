@@ -128,10 +128,7 @@ export default class TopActiveChart extends Component {
                 title="销售占比"
                 dataIndex="page"
                 cell={(value, index, record) => (
-                  <Progress
-                    percent={record.percent}
-                    state={record.state}
-                  />
+                  <Progress percent={record.percent} state={record.state} />
                 )}
               />
             </Table>

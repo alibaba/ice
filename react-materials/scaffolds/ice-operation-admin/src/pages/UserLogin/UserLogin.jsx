@@ -61,10 +61,13 @@ class UserLogin extends Component {
         >
           <div className={styles.formItems}>
             <div className={styles.formItem}>
-              <IceIcon type="person" size="small" className={styles.inputIcon} />
+              <IceIcon
+                type="person"
+                size="small"
+                className={styles.inputIcon}
+              />
               <IceFormBinder name="username" required message="必填">
                 <Input
-                  size="large"
                   maxLength={20}
                   placeholder="用户名"
                   className={styles.inputCol}
@@ -77,7 +80,6 @@ class UserLogin extends Component {
               <IceIcon type="lock" size="small" className={styles.inputIcon} />
               <IceFormBinder name="password" required message="必填">
                 <Input
-                  size="large"
                   htmlType="password"
                   placeholder="密码"
                   className={styles.inputCol}
@@ -95,7 +97,6 @@ class UserLogin extends Component {
             <div className={styles.footer}>
               <Button
                 type="primary"
-                size="large"
                 onClick={this.handleSubmit}
                 className={styles.submitBtn}
               >
