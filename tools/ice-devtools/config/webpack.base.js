@@ -12,6 +12,7 @@ const LESS_LOADER = require.resolve('less-loader');
 const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
 
 const WEBPACK_HOT_CLIENT = require.resolve('webpack-hot-client/client');
+const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 // const VUE_STYLE_LOADER = require.resolve('vue-style-loader');
 // const VUE_LOADER = require.resolve('vue-loader');
 const WebpackPluginImport = require('webpack-plugin-import');
@@ -159,6 +160,8 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .add('.json')
     .add('.vue');
 
+  config.plugin('progress').use(SimpleProgressPlugin);
+
   config.plugin('define').use(webpack.DefinePlugin, [
     {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
@@ -184,5 +187,6 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .path(cwd)
     .filename('[name].js')
     .publicPath('./');
+
   return config;
 };
