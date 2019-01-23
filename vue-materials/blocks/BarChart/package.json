@@ -29,6 +29,7 @@
   "blockConfig": {
     "name": "bar-chart",
     "title": "条形图",
+    "type": "vue",
     "categories": [
       "图表"
     ],

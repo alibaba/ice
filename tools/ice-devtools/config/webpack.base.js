@@ -13,8 +13,6 @@ const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
 
 const WEBPACK_HOT_CLIENT = require.resolve('webpack-hot-client/client');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
-// const VUE_STYLE_LOADER = require.resolve('vue-style-loader');
-// const VUE_LOADER = require.resolve('vue-loader');
 const WebpackPluginImport = require('webpack-plugin-import');
 
 const URL_LOADER = require.resolve('url-loader');

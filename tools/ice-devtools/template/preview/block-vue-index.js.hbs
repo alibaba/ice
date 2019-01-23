@@ -1,0 +1,9 @@
+import Block from '{{ entry }}';
+
+Vue.config.productionTip = false;
+
+new Vue({
+  el: '#mountNode',
+  components: { Block: Block },
+  template: '<div class="vue-demo-layout"><Block/></div>',
+});

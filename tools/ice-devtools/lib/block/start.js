@@ -2,13 +2,21 @@ const debug = require('debug')('ice:start:block');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const chalk = require('chalk');
-
+const getMaterialType = require('../../utils/material-type');
 const getBaseConfig = require('../../config/webpack.block');
-
+const getVueConfig = require('../../config/webpack.vue.block');
 const PORT = 5000;
 
 module.exports = function blockDevStart(cwd, opt) {
-  const config = getBaseConfig(cwd);
+  const materialType = getMaterialType(cwd);
+
+  let config;
+
+  if (materialType === 'vue') {
+    config = getVueConfig(cwd, materialType);
+  } else {
+    config = getBaseConfig(cwd, materialType);
+  }
 
   // devServer
   let { port = PORT } = opt;

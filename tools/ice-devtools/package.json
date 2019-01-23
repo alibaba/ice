@@ -83,6 +83,8 @@
     "url-loader": "^1.1.2",
     "user-home": "^2.0.0",
     "validate-npm-package-name": "^3.0.0",
+    "vue-loader": "^15.5.1",
+    "vue-style-loader": "^4.1.2",
     "webpack": "^4.27.0",
     "webpack-chain": "^5.0.1",
     "webpack-dev-server": "^3.1.10",
