@@ -4,12 +4,12 @@ import IceContainer from '@icedesign/container';
 import {
   Input,
   Button,
-  Feedback,
+  Message,
   NumberPicker,
   DatePicker,
   Radio,
   Select,
-} from '@icedesign/base';
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -36,7 +36,7 @@ export default class GoodsForm extends Component {
         return;
       }
       console.log({ values });
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
@@ -84,7 +84,7 @@ export default class GoodsForm extends Component {
               <IceFormBinder name="bookName">
                 <Select
                   placeholder="请选择"
-                  multiple
+                  mode="multiple"
                   size="large"
                   style={{ width: '400px' }}
                 >

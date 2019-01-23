@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 
 // Random Numbers
 const random = (min, max) => {
@@ -78,7 +78,7 @@ export default class OrderTable extends Component {
 
     return (
       <div style={styles.container}>
-        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
+        <Table loading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="流水号" dataIndex="serialNumber" />
           <Table.Column title="订单号" dataIndex="orderNumber" />
           <Table.Column title="商品名称" dataIndex="name" />

@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Feedback } from '@icedesign/base';
+import { Input, Button, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -24,7 +24,7 @@ export default class OrderForm extends Component {
         return;
       }
       console.log({ values });
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
@@ -72,7 +72,7 @@ export default class OrderForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>订单备注：</div>
               <IceFormBinder name="description">
-                <Input multiple size="large" style={{ width: '400px' }} />
+                <Input.TextArea multiple size="large" style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <Button
