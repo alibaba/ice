@@ -14,7 +14,7 @@ export default class ServiceHead extends Component {
   }
 
   handleClick = () => {
-    Feedback.toast.success('已展示所有数据');
+    Message.success('已展示所有数据');
   };
 
   render() {

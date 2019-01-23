@@ -19,7 +19,7 @@ export default class SuccessDetail extends PureComponent {
   };
 
   handleLinkClick = () => {
-    Feedback.toast.success('可以根据实际需求自定义查看更多');
+    Message.success('可以根据实际需求自定义查看更多');
   };
 
   render() {
