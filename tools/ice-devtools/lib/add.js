@@ -30,6 +30,7 @@ module.exports = async function add(cwd, ...options) {
 
   const [templateName, templateType] = options;
   if (templateName && templateType) {
+    // eg. ice-devtools add ./templates/ice-vue-block-template block
     await getArgvOptions(cwd, ...options);
   } else {
     await getAskOptions(cwd, ...options);
@@ -88,7 +89,10 @@ async function getArgvOptions(cwd, templateName, templateType, ...options) {
     require(`./${templateType}/add`)(
       null,
       cwd,
-      { hasArgvOpts: true },
+      { 
+        hasArgvOpts: true,
+        templateSource:  templateName
+      },
       ...options
     );
   }

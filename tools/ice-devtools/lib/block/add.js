@@ -20,16 +20,16 @@ const generate = require('../../utils/generate');
  */
 module.exports = async function addBlock(type, cwd, opt, ...argvOpts) {
   if (opt.hasArgvOpts) {
-    await execArgv(cwd, ...argvOpts);
+    await execArgv(cwd, opt, ...argvOpts);
   } else {
     await execAsk(type, cwd, opt, ...argvOpts);
   }
 };
 
-async function execArgv(cwd, ...argvOpts) {
-  const blockName = await getBlockName(cwd);
+async function execArgv(cwd, opt, ...argvOpts) {
+  const blockName = await getBlockName();
   const blockNpmName = await getBlockNpmName(blockName);
-  const blockSource = argvOpts[1];
+  const blockSource = opt.templateSource;
   const blockDest = path.join(cwd, blockName);
 
   if (exists(blockDest)) {
@@ -82,7 +82,7 @@ async function getBlockName(opt = {}) {
  * 获取区块的 npm 名
  * @param {string} blockName
  */
-function getBlockNpmName(blockName, opt) {
+function getBlockNpmName(blockName, opt = {}) {
   const blockKebabCase = kebabCase(blockName).replace(/^-/, '');
 
   let npmName;
