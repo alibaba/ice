@@ -91,7 +91,7 @@ function getPrefix(opt = {}) {
   if (opt.scope) {
     prefix = `${opt.scope}/`;
   } else if (opt.pkg) {
-    prefix = `${pkg.name}-`;
+    prefix = `${opt.pkg.name}-`;
   }
 
   return prefix;
