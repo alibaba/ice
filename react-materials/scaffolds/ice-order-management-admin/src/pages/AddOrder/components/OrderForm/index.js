@@ -41,7 +41,7 @@ export default class OrderForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>客户姓名：</div>
               <IceFormBinder name="name" required message="客户姓名必填">
-                <Input size="large" style={{ width: '400px' }} />
+                <Input style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="name" />
@@ -54,7 +54,7 @@ export default class OrderForm extends Component {
                 required
                 message="商品名称必填"
               >
-                <Input size="large" style={{ width: '400px' }} />
+                <Input style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="commodityName" />
@@ -63,7 +63,7 @@ export default class OrderForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>联系方式：</div>
               <IceFormBinder name="phone" required message="联系方式必填">
-                <Input size="large" style={{ width: '400px' }} />
+                <Input style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="phone" />
@@ -72,12 +72,11 @@ export default class OrderForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>订单备注：</div>
               <IceFormBinder name="description">
-                <Input.TextArea multiple size="large" style={{ width: '400px' }} />
+                <Input.TextArea style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <Button
               type="primary"
-              size="large"
               onClick={this.validateAllFormField}
               style={styles.button}
             >

@@ -32,7 +32,7 @@ export default class Filter extends Component {
               <div style={styles.formItem}>
                 <span style={styles.formLabel}>下单时间：</span>
                 <IceFormBinder triggerType="onBlur" name="createOrderTime">
-                  <DatePicker placeholder="请输入" size="large" />
+                  <DatePicker placeholder="请输入" />
                 </IceFormBinder>
                 <div style={styles.formError}>
                   <IceFormError name="createOrderTime" />
@@ -43,7 +43,7 @@ export default class Filter extends Component {
               <div style={styles.formItem}>
                 <span style={styles.formLabel}>商品名称：</span>
                 <IceFormBinder triggerType="onBlur" name="productName">
-                  <Input placeholder="请输入" size="large" />
+                  <Input placeholder="请输入" />
                 </IceFormBinder>
                 <div style={styles.formError}>
                   <IceFormError name="productName" />
@@ -54,7 +54,7 @@ export default class Filter extends Component {
               <div style={styles.formItem}>
                 <span style={styles.formLabel}>下单方式：</span>
                 <IceFormBinder triggerType="onBlur" name="orderMethod">
-                  <Select size="large" style={{ width: '200px' }}>
+                  <Select style={{ width: '200px' }}>
                     <Select.Option value="1">代下单</Select.Option>
                     <Select.Option value="2">自主下单</Select.Option>
                   </Select>
