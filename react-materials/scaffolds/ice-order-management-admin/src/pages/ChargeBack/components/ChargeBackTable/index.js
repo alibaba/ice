@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import TableFilter from './TableFilter';
 import Overview from '../../../../components/Overview';
@@ -110,7 +110,7 @@ export default class ChargeBackTable extends Component {
         <TableFilter onChange={this.handleFilterChange} />
         <Overview data={overviewData} col="3" />
         <IceContainer>
-          <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
+          <Table loading={isLoading} dataSource={data} hasBorder={false}>
             <Table.Column title="退单号" dataIndex="backOrder" />
             <Table.Column title="客户名称" dataIndex="customerName" />
             <Table.Column title="下单时间" dataIndex="orderTime" />
