@@ -42,5 +42,9 @@
     "express": "^4.14.0",
     "ice-devtools": "^1.1.12",
     "jsonp": "^0.2.1"
+  },
+  "componentConfig": {
+    "name": "data-binder",
+    "title": "ICE 前后端数据绑定、交互方案"
   }
 }

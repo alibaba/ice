@@ -35,5 +35,9 @@
   },
   "devDependencies": {
     "@icedesign/base": "^0.2.0"
+  },
+  "componentConfig": {
+    "name": "form-binder",
+    "title": "ICE 表单数据获取方案"
   }
 }

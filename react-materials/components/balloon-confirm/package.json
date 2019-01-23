@@ -40,5 +40,9 @@
   },
   "devDependencies": {
     "ice-devtools": "^1.1.12"
+  },
+  "componentConfig": {
+    "name": "balloon-confirm",
+    "title": "ICE 气泡确认框"
   }
 }

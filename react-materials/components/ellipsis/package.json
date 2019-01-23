@@ -37,5 +37,9 @@
   "peerDependencies": {
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
+  },
+  "componentConfig": {
+    "name": "ellipsis",
+    "title": "多行文字控制展示组件"
   }
 }

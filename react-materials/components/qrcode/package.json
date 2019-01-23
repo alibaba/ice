@@ -40,5 +40,9 @@
   },
   "devDependencies": {
   },
-  "typings": "lib/index.d.ts"
+  "typings": "lib/index.d.ts",
+  "componentConfig": {
+    "name": "qrcode",
+    "title": "二维码组件"
+  }
 }

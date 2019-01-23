@@ -37,5 +37,9 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
+  },
+  "componentConfig": {
+    "name": "img",
+    "title": "ICE 图片组件"
   }
 }

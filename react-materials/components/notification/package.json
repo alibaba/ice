@@ -32,5 +32,9 @@
     "@icedesign/base": "^0.2.5",
     "rc-notification": "^1.4.2"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "componentConfig": {
+    "name": "notification",
+    "title": "全局展示通知提醒信息"
+  }
 }
