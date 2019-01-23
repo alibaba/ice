@@ -7,7 +7,7 @@ import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 import styleName from './index.module.scss';
 
-const {Item} = Nav;
+const { Item } = Nav;
 
 @withRouter
 export default class Header extends Component {
@@ -39,7 +39,7 @@ export default class Header extends Component {
         <Logo />
         <div className={styleName.headerNavbar}>
           <Nav
-            className={styleName["header-navbar-menu"]}
+            className={styleName['header-navbar-menu']}
             selectedKeys={[pathname]}
             defaultSelectedKeys={[pathname]}
             direction="hoz"
@@ -129,7 +129,7 @@ export default class Header extends Component {
             triggerType="hover"
             trigger={
               <div
-                className={styleName["ice-design-header-userpannel"]}
+                className={styleName['ice-design-header-userpannel']}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -140,27 +140,27 @@ export default class Header extends Component {
                   height={40}
                   width={40}
                   src={require('./images/avatar.png')}
-                  className={styleName["user-avatar"]}
+                  className={styleName['user-avatar']}
                 />
-                <div className={styleName["user-profile"]}>
+                <div className={styleName['user-profile']}>
                   <span className="user-name" style={{ fontSize: '13px' }}>
                     淘小宝
                   </span>
                   <br />
-                  <span className={styleName["user-department"]} >技术部</span>
+                  <span className={styleName['user-department']}>技术部</span>
                 </div>
                 <Icon
-                  type="arrow-down-filling"
+                  type="arrow-down"
                   size="xxs"
-                  className="icon-down"
+                  className={styleName['icon-down']}
                 />
               </div>
             }
             closable={false}
-            className={styleName["user-profile-menu"]}
+            className={styleName['user-profile-menu']}
           >
             <ul>
-              <li className={styleName["user-profile-menu-item"]}>
+              <li className={styleName['user-profile-menu-item']}>
                 <Link to="/user/login">
                   <Icon type="compass" size="small" />
                   退出

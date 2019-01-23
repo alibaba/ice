@@ -9,15 +9,6 @@ import './Header.scss';
 
 @withRouter
 export default class Header extends Component {
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     const { location = {} } = this.props;
     const { pathname } = location;
@@ -137,11 +128,7 @@ export default class Header extends Component {
                     <br />
                     <span className="user-department">技术部</span>
                   </div>
-                  <Icon
-                    type="arrow-down"
-                    size="xxs"
-                    className="icon-down"
-                  />
+                  <Icon type="arrow-down" size="xxs" className="icon-down" />
                 </div>
               }
               closable={false}

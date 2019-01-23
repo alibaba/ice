@@ -56,7 +56,7 @@ class Header extends React.Component {
       <div className="ice-admin-layout-header">
         <Logo />
         {asideMenuConfig && asideMenuConfig.length > 0 ? (
-          <Nav direction="hoz"  type="secondary" selectedKeys={selectedKeys}>
+          <Nav direction="hoz" type="secondary" selectedKeys={selectedKeys}>
             {asideMenuConfig.map((nav) => {
               return (
                 <Nav.Item key={nav.path.replace(/\//g, '') || 'home'}>
@@ -72,7 +72,9 @@ class Header extends React.Component {
   }
 
   render() {
-    return <Layout.Header type="secondary">{this.renderHeader()}</Layout.Header>;
+    return (
+      <Layout.Header type="secondary">{this.renderHeader()}</Layout.Header>
+    );
   }
 }
 

@@ -162,6 +162,7 @@ class Home extends Component {
         <div className={styles.content}>
           <div className={styles.head}>
             <Search
+              type="primary"
               placeholder="输入型号／类型／ID"
               value={value}
               onChange={this.onInputChange}

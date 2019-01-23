@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Message } from '@alifd/next';
 import timeIcon from './images/time.svg';
-import styles from  './index.module.scss';
+import styles from './index.module.scss';
 
 const mock = [
   {
@@ -44,16 +44,20 @@ export default class Warning extends Component {
           <div className={styles.content}>
             {mock.map((item, index) => {
               return (
-                <div className={styles.item} key={index} onClick={this.handleClick}>
+                <div
+                  className={styles.item}
+                  key={index}
+                  onClick={this.handleClick}
+                >
                   <div
                     className={styles.image}
-                    style={{background: `${item.backgroundColor}`}}
+                    style={{ background: `${item.backgroundColor}` }}
                   >
                     <img
                       alt=""
                       src={timeIcon}
                       className={styles.iconImage}
-                      style={{transform: `rotate(${index * 72}deg)`}}
+                      style={{ transform: `rotate(${index * 72}deg)` }}
                     />
                     <div className={styles.count}>{item.count}</div>
                   </div>

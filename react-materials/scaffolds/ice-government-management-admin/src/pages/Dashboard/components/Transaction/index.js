@@ -8,7 +8,7 @@ import checkIcon from './images/check.svg';
 import sendIcon from './images/send.svg';
 import checkinIcon from './images/checkin.svg';
 import sendMailIcon from './images/send-mail.svg';
-import styles  from './index.module.scss';
+import styles from './index.module.scss';
 
 const mockData = [
   {
@@ -74,7 +74,11 @@ export default class Transaction extends Component {
           <div className={styles.content}>
             {mockData.map((item, index) => {
               return (
-                <div className={styles.item} key={index} onClick={this.handleClick}>
+                <div
+                  className={styles.item}
+                  key={index}
+                  onClick={this.handleClick}
+                >
                   <div
                     className={styles.image}
                     style={{
@@ -84,7 +88,8 @@ export default class Transaction extends Component {
                     <img src={item.img} className={styles.iconImage} alt="" />
                   </div>
                   <p className={styles.itemTitle}>
-                    {item.title} <span className={styles.count}>{item.count}</span>
+                    {item.title}{' '}
+                    <span className={styles.count}>{item.count}</span>
                   </p>
                 </div>
               );

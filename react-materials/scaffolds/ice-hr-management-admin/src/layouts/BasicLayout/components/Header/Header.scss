@@ -6,6 +6,9 @@
   background: $color-brand1-6;
   min-width: 1200px;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  .header-navbar-menu {
+    box-shadow: none !important;
+  }
   .header-content {
     width: 100%;
     height: 62px;

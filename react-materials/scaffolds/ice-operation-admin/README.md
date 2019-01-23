@@ -16,6 +16,9 @@
 - 通用组件: `src/components`
 - 页面文件: `src/pages`
 
+## 主题包
+
+- @icedesign/theme
 
 ## 效果图
 

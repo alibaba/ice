@@ -7,9 +7,7 @@ const ContainerTitle = ({ title, style, ...props }) => {
     <div style={{ ...styles.container, ...style }}>
       <h3 style={styles.title}>{title}</h3>
       {props.buttonText ? (
-        <Button type="primary"  >
-          {props.buttonText}
-        </Button>
+        <Button type="primary">{props.buttonText}</Button>
       ) : null}
     </div>
   );

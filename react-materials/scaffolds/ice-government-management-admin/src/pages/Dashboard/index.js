@@ -27,6 +27,6 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     letterSpacing: '1px',
-    padding: '16px',
+    padding: '10px',
   },
 };

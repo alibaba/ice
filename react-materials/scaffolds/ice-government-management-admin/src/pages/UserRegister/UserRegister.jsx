@@ -9,7 +9,6 @@ import {
   FormError as IceFormError,
 } from '@icedesign/form-binder';
 
-
 const { Row, Col } = Grid;
 
 @withRouter
@@ -84,7 +83,6 @@ class UserRegister extends Component {
           >
             <div className="formItems">
               <Row className="formItem">
-
                 <Col className="formItemCol">
                   <Icon type="person" size="small" className="inputIcon" />
 
@@ -93,7 +91,7 @@ class UserRegister extends Component {
                     required
                     message="请输入正确的用户名"
                   >
-                    <Input className="next-input-single"   placeholder="用户名" />
+                    <Input className="next-input-single" placeholder="用户名" />
                   </IceFormBinder>
                 </Col>
                 <Col>
@@ -110,7 +108,11 @@ class UserRegister extends Component {
                     required
                     message="请输入正确的邮箱"
                   >
-                    <Input className="next-input-single" maxLength={20} placeholder="邮箱" />
+                    <Input
+                      className="next-input-single"
+                      maxLength={20}
+                      placeholder="邮箱"
+                    />
                   </IceFormBinder>
                 </Col>
                 <Col>
@@ -126,9 +128,9 @@ class UserRegister extends Component {
                     required
                     validator={this.checkPasswd}
                   >
-                    <Input className="next-input-single"
+                    <Input
+                      className="next-input-single"
                       htmlType="password"
-
                       placeholder="至少8位密码"
                     />
                   </IceFormBinder>
@@ -153,9 +155,9 @@ class UserRegister extends Component {
                       )
                     }
                   >
-                    <Input className="next-input-single"
+                    <Input
+                      className="next-input-single"
                       htmlType="password"
-
                       placeholder="确认密码"
                     />
                   </IceFormBinder>

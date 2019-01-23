@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Container from '@icedesign/container';
 import Form from './components/Form';
-import styles from  './index.module.scss';
+import styles from './index.module.scss';
 
 export default class NewCase extends Component {
   render() {

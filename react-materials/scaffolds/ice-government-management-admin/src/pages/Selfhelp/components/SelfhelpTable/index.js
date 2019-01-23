@@ -63,7 +63,7 @@ export default class SelfhelpTable extends Component {
   render() {
     const actionRender = () => {
       return (
-        <Button   style={styles.button} onClick={this.handleClick}>
+        <Button style={styles.button} onClick={this.handleClick}>
           办理
         </Button>
       );
@@ -84,7 +84,6 @@ export default class SelfhelpTable extends Component {
           <Pagination
             current={this.state.current}
             onChange={this.onPageChange}
-             
           />
         </div>
       </div>

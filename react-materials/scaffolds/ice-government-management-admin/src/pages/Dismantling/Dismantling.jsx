@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Container from '@icedesign/container';
 import SearchBar from './components/SearchBar';
 import DismantlingTable from './components/DismantlingTable';
-import styles from  './index.module.scss';
+import styles from './index.module.scss';
 
 export default class Dismantling extends Component {
   static displayName = 'Dismantling';

@@ -1,14 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import {
-  Input,
-  Button,
-  Select,
-  DatePicker,
-  Radio,
-  Message,
-} from '@alifd/next';
+import { Input, Button, Select, DatePicker, Radio, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -93,12 +86,12 @@ export default class DonationForm extends Component {
                 />
               </IceFormBinder>
               <div style={styles.formError}>
-                <IceFormError name="id"/>
+                <IceFormError name="id" />
               </div>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>案件类别</div>
-              <IceFormBinder  name="cate">
+              <IceFormBinder name="cate">
                 <Select
                   placeholder="请选择"
                   mode="multiple"
@@ -119,10 +112,7 @@ export default class DonationForm extends Component {
                 message="立案人不能为空"
                 name="donator"
               >
-                <Input
-                  placeholder="请输入"
-                  style={{ width: '400px' }}
-                />
+                <Input placeholder="请输入" style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="donator" />
@@ -131,9 +121,7 @@ export default class DonationForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>立案时间</div>
               <IceFormBinder name="time">
-                <DatePicker
-                  style={{ width: '400px' }}
-                />
+                <DatePicker style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>

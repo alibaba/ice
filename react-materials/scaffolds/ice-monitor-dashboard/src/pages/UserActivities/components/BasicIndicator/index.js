@@ -3,11 +3,9 @@ import React, { Component } from 'react';
 import { Tab } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import LineChart from './LineChart';
-
 import ContainerTitle from '../../../../components/ContainerTitle';
 import './index.scss';
 
-const TabPane = Tab.Item;
 const data = [
   {
     year: '1991',
@@ -72,9 +70,10 @@ export default class BasicIndicator extends Component {
     const newData = data.map((item) => {
       return {
         year: item.year,
-        value: item + random(1, 2),
+        value: item.value + random(1, 2),
       };
     });
+    console.log(newData);
     this.setState({
       data: newData,
     });
@@ -82,7 +81,7 @@ export default class BasicIndicator extends Component {
 
   render() {
     const complexTab1 = (
-      <div className="custom-tab-wrapper">
+      <div style={{ padding: '0 40px' }}>
         <p style={styles.tabTitle}>用户评价访问频次</p>
         <h5 style={styles.tabValue}>1.08</h5>
         <p style={styles.tabDesc}>与上一周同期比 -10%</p>
@@ -90,7 +89,7 @@ export default class BasicIndicator extends Component {
     );
 
     const complexTab2 = (
-      <div className="custom-tab-wrapper">
+      <div style={{ padding: '0 40px' }}>
         <p style={styles.tabTitle}>用户评价访问频次</p>
         <h5 style={styles.tabValue}>00:00:56</h5>
         <p style={styles.tabDesc}>与上一周同期比 20%</p>
@@ -117,13 +116,11 @@ export default class BasicIndicator extends Component {
           style={{
             background: '#f7f7f7',
             marginTop: '20px',
-          }}>
+          }}
+        >
           {panes.map((pane) => {
             return (
-              <Tab.Item
-                title={pane.tab}
-                key={pane.key}
-                tabStyle={{ height: '110px', padding: '0 60px' }}>
+              <Tab.Item title={pane.tab} key={pane.key}>
                 <LineChart data={this.state.data} cols={this.state.cols} />
               </Tab.Item>
             );

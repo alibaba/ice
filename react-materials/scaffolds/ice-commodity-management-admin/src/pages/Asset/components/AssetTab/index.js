@@ -3,8 +3,6 @@ import { Tab } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import AssetTable from './AssetTable';
 
-const TabPane = Tab.Item;
-
 const detachedContentStyle = {
   borderLeft: 0,
   borderRight: 0,

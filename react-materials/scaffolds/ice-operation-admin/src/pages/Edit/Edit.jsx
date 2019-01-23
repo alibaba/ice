@@ -1,14 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import {
-  Input,
-  Button,
-  Select,
-  DatePicker,
-  Radio,
-  Message,
-} from '@alifd/next';
+import { Input, Button, Select, DatePicker, Radio, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -72,7 +65,6 @@ export default class DonationForm extends Component {
               >
                 <Input
                   placeholder="请输入设备名称"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -90,7 +82,6 @@ export default class DonationForm extends Component {
               >
                 <Input
                   placeholder="请输入设备型号-ID"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -104,8 +95,8 @@ export default class DonationForm extends Component {
                 <Select
                   placeholder="请选择"
                   mode="multiple"
-                  size="large"
-                  style={{ width: '400px' }}>
+                  style={{ width: '400px' }}
+                >
                   <Option value="1">传统领域</Option>
                   <Option value="2">互联网领域</Option>
                   <Option value="3">其他</Option>
@@ -120,11 +111,7 @@ export default class DonationForm extends Component {
                 triggerType="onBlur"
                 message="责任人不能为空"
               >
-                <Input
-                  placeholder="请输入"
-                  size="large"
-                  style={{ width: '400px' }}
-                />
+                <Input placeholder="请输入" style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="responsible" />
@@ -133,7 +120,7 @@ export default class DonationForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>设备生产时间</div>
               <IceFormBinder name="time">
-                <DatePicker size="large" style={{ width: '400px' }} />
+                <DatePicker style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
@@ -159,7 +146,6 @@ export default class DonationForm extends Component {
             </div>
             <Button
               type="primary"
-              size="large"
               style={styles.submitButton}
               onClick={this.validateAllFormField}
             >

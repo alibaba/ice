@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Message } from '@alifd/next';
-import styles  from './index.module.scss';
-
+import styles from './index.module.scss';
 
 const mock = [
   {
@@ -55,7 +54,11 @@ export default class Function extends Component {
           <div className={styles.content}>
             {mock.map((item, index) => {
               return (
-                <div className={styles.item} key={index} onClick={this.handleClick}>
+                <div
+                  className={styles.item}
+                  key={index}
+                  onClick={this.handleClick}
+                >
                   <p className={styles.itemTitle}>{item.title}</p>
                 </div>
               );
@@ -66,4 +69,3 @@ export default class Function extends Component {
     );
   }
 }
-

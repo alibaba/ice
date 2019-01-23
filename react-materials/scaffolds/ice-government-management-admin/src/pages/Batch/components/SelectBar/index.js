@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import { Icon } from '@alifd/next';
 import cx from 'classnames';
-import styles from  './index.module.scss';
-
+import styles from './index.module.scss';
 
 const mockData = [
   {
-    icon: 'share',
+    icon: 'success',
     title: '批量操作(首次分案)',
     instrument: '对一批待分案案件进行分案',
   },
   {
-    icon: 'process',
+    icon: 'refresh',
     title: '批量操作(普通阶段分案)',
     instrument: '对一批待分案案件进行分案',
   },
   {
-    icon: 'history',
+    icon: 'upload',
     title: '批量申请延期',
     instrument: '对一批办理案件进行批量申请延期',
   },
@@ -45,10 +44,12 @@ export default class SelectBar extends Component {
         {mockData.map((item, index) => {
           return (
             <div
-
-              className={cx(styles.card, this.state.selectedCard === index
+              className={cx(
+                styles.card,
+                this.state.selectedCard === index
                   ? styles.selectedCard
-                  : styles.unselectedCard)}
+                  : styles.unselectedCard
+              )}
               key={index}
               onClick={() => this.handleCardClick(index)}
             >
@@ -59,7 +60,7 @@ export default class SelectBar extends Component {
                     : styles.icon
                 }
               >
-                <Icon type={item.icon} size="xl" />
+                <Icon type={item.icon} size="large" />
               </h2>
               <h3 className={styles.title}>{item.title}</h3>
               <p className={styles.instrument}>说明: {item.instrument}</p>
@@ -70,4 +71,3 @@ export default class SelectBar extends Component {
     );
   }
 }
-

@@ -9,15 +9,6 @@ const SubNav = Nav.SubNav;
 
 @withRouter
 export default class Header extends Component {
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     const { location = {} } = this.props;
     const { pathname } = location;
@@ -75,18 +66,14 @@ export default class Header extends Component {
               linkProps.href = nav.path;
               return (
                 <NavItem key={nav.path} icon={nav.icon ? nav.icon : null}>
-                  <a {...linkProps}>
-                    {nav.name}
-                  </a>
+                  <a {...linkProps}>{nav.name}</a>
                 </NavItem>
               );
             }
             linkProps.to = nav.path;
             return (
               <NavItem key={nav.path} icon={nav.icon ? nav.icon : null}>
-                <Link {...linkProps}>
-                  {nav.name}
-                </Link>
+                <Link {...linkProps}>{nav.name}</Link>
               </NavItem>
             );
           })}

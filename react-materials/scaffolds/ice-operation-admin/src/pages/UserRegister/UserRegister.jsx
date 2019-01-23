@@ -83,13 +83,13 @@ class UserRegister extends Component {
         >
           <div className={styles.formItems}>
             <div className={styles.formItem}>
-              <IceIcon type="person" size="small" className={styles.inputIcon} />
+              <IceIcon
+                type="person"
+                size="small"
+                className={styles.inputIcon}
+              />
               <IceFormBinder name="name" required message="请输入正确的用户名">
-                <Input
-                  size="large"
-                  placeholder="用户名"
-                  className={styles.inputCol}
-                />
+                <Input placeholder="用户名" className={styles.inputCol} />
               </IceFormBinder>
               <IceFormError name="name" />
             </div>
@@ -103,7 +103,6 @@ class UserRegister extends Component {
                 message="请输入正确的邮箱"
               >
                 <Input
-                  size="large"
                   maxLength={20}
                   placeholder="邮箱"
                   className={styles.inputCol}
@@ -121,7 +120,6 @@ class UserRegister extends Component {
               >
                 <Input
                   htmlType="password"
-                  size="large"
                   placeholder="至少8位密码"
                   className={styles.inputCol}
                 />
@@ -140,7 +138,6 @@ class UserRegister extends Component {
               >
                 <Input
                   htmlType="password"
-                  size="large"
                   placeholder="确认密码"
                   className={styles.inputCol}
                 />
@@ -153,7 +150,6 @@ class UserRegister extends Component {
                 type="primary"
                 onClick={this.handleSubmit}
                 className={styles.submitBtn}
-                size="large"
               >
                 注 册
               </Button>

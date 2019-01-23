@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "@alifd/next": "^1.x",
-    "@alifd/theme-1": "^0.0.7",
+    "@icedesign/theme": "^0.1.2",
     "@antv/data-set": "^0.10.1",
     "@icedesign/container": "^1.x",
     "@icedesign/foundation-symbol": "^1.0.1",
@@ -50,7 +50,7 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@alifd/theme-1",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "localization": false,
     "output": {
