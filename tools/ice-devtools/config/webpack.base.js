@@ -12,6 +12,7 @@ const LESS_LOADER = require.resolve('less-loader');
 const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
 
 const WEBPACK_HOT_CLIENT = require.resolve('webpack-hot-client/client');
+const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 // const VUE_STYLE_LOADER = require.resolve('vue-style-loader');
 // const VUE_LOADER = require.resolve('vue-loader');
 const WebpackPluginImport = require('webpack-plugin-import');
@@ -22,6 +23,7 @@ const URL_LOADER_LIMIT = 8192;
 const getBabelConfig = require('./getBabelConfig');
 const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const { getPkgJSON } = require('../utils/pkg-json');
+const internalLibrary = require('../utils/internal-library');
 
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
@@ -158,6 +160,8 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .add('.json')
     .add('.vue');
 
+  config.plugin('progress').use(SimpleProgressPlugin);
+
   config.plugin('define').use(webpack.DefinePlugin, [
     {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
@@ -165,32 +169,12 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   ]);
 
   config.plugin('import').use(WebpackPluginImport, [
-    [
-      {
-        libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
+    internalLibrary.map((libraryName) => {
+      return {
+        libraryName,
         stylePath: 'style.js',
-      },
-      {
-        libraryName: /@icedesign\/.*/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /@ali\/ice-.*/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /^@alife\/next\/lib\/([^/]+)/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /^@alifd\/next\/lib\/([^/]+)/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /@alifd\/.*/,
-        stylePath: 'style.js',
-      },
-    ],
+      }
+    })
   ]);
 
   config.plugin('hot').use(webpack.HotModuleReplacementPlugin);
@@ -203,5 +187,6 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .path(cwd)
     .filename('[name].js')
     .publicPath('./');
+
   return config;
 };

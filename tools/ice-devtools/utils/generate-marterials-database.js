@@ -23,6 +23,18 @@ function generatePartciple(payload, source) {
   }
 }
 
+function filterDeps(deps) {
+  return deps.filter(function(moduleName) {
+    return (
+      !/^\./.test(moduleName) &&
+      // 基础组件
+      (/(@icedesign\/base)[$\/]lib/.test(moduleName) ||
+        // 业务组件
+        /^(@icedesign\/)\w+/.test(moduleName))
+    );
+  });
+}
+
 /**
  * 生成 blocks 信息列表
  * @param {*} files
@@ -67,9 +79,9 @@ function generateBlocks(files, SPACE, type, done) {
       // publishTime: pkg.publishTime || new Date().toISOString(),
     };
 
-    if (fs.existsSync(indexPoint)) {
+    if (type !== 'component' && fs.existsSync(indexPoint)) {
       const componentDeps = depAnalyze(indexPoint);
-      const useComponents = componentDeps.map((mod) => {
+      const useComponents = filterDeps(componentDeps).map((mod) => {
         let basePackage = '';
         let className = '';
         if (mod.startsWith('@icedesign/base')) {
@@ -201,6 +213,8 @@ function generateScaffolds(files, SPACE, done) {
       devDependencies: pkg.devDependencies || {},
       // (必) 截图
       screenshot: pkg.scaffoldConfig.screenshot || pkg.scaffoldConfig.snapshot,
+      // 站点模板预览需要多张截图
+      screenshots: pkgConfig.screenshots || [],
 
       categories: pkg.scaffoldConfig.categories || [],
       // publishTime: pkg.publishTime || new Date().toISOString(),
@@ -284,7 +298,7 @@ function generateScaffolds(files, SPACE, done) {
  * @param {*} pattern
  * @param {*} SPACE
  */
-function gatherBlocksOrLayouts(pattern, SPACE, type) {
+function gather(pattern, SPACE, type) {
   return new Promise((resolve, reject) => {
     glob(
       pattern,
@@ -366,17 +380,19 @@ module.exports = function generateMaterialsDatabases(
   return Promise.resolve(materialPath)
     .then((space) => {
       return Promise.all([
-        gatherBlocksOrLayouts('blocks/*/package.json', space, 'block'),
-        gatherBlocksOrLayouts('layouts/*/package.json', space, 'layout'),
+        gather('blocks/*/package.json', space, 'block'),
+        gather('layouts/*/package.json', space, 'layout'),
+        gather('components/*/package.json', space, 'component'),
         gatherScaffolds('scaffolds/*/package.json', space),
       ]);
     })
-    .then(([blocks, layouts, scaffolds]) => {
+    .then(([blocks, layouts, components, scaffolds]) => {
       const data = {
         name: materialName, // 物料池名
         ...options,
         blocks,
         layouts,
+        components,
         scaffolds,
       };
 

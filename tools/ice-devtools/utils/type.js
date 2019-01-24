@@ -16,6 +16,10 @@ function getType(workdir) {
     return 'scaffold';
   }
 
+  if ('componentConfig' in json) {
+    return 'component';
+  }
+
   return null;
 }
 

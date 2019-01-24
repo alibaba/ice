@@ -25,8 +25,21 @@ module.exports = class WebpackPluginImport {
     }
   }
 
+  // 在 package.json 中通过 componentConfig 字段标记是否为 ICE 组件，如果是，则自动引入样式
+  componentCheck(result) {
+    if (
+      result 
+      && result.resourceResolveData
+      && result.resourceResolveData.descriptionFileData
+      && result.resourceResolveData.descriptionFileData.name === result.rawRequest
+      && result.resourceResolveData.descriptionFileData.componentConfig
+    ) {
+      return true;
+    }
+  }
+
   // eslint-disable-next-line
-  needAdditionalStyle(result, opt) {
+  libraryCheck(result, opt) {
     if (opt.libraryName instanceof RegExp) {
       return opt.libraryName.test(result.rawRequest);
     }
@@ -45,20 +58,29 @@ module.exports = class WebpackPluginImport {
           (result = {}) => {
             return new Promise((resolve) => {
               if (result.loaders && /\.jsx?$/i.test(result.resource)) {
-                this.options.forEach((opt) => {
-                  if (this.needAdditionalStyle(result, opt)) {
-                    const modPath = path.join(
-                      path.dirname(result.resource),
-                      opt.stylePath || 'style.js'
-                    );
+                let needAdditionalStyle = false;
+                let stylePath = 'style.js';
 
-                    if (fileExists(modPath)) {
-                      result.loaders.push(
-                        `${webpackLoaderRequire}?mod=${modPath}`
-                      );
-                    }
+                this.options.forEach((opt) => {
+                  needAdditionalStyle = this.libraryCheck(result, opt);
+                  if (needAdditionalStyle && opt.stylePath) {
+                    stylePath = opt.stylePath;
                   }
                 });
+
+                if (!needAdditionalStyle) {
+                  needAdditionalStyle = this.componentCheck(result);
+                }
+
+                if (needAdditionalStyle) {
+                  const modPath = path.join(path.dirname(result.resource), stylePath);
+  
+                  if (fileExists(modPath)) {
+                    result.loaders.push(
+                      `${webpackLoaderRequire}?mod=${modPath}`
+                    );
+                  }
+                }
               }
               resolve(result);
             });
