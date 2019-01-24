@@ -61,13 +61,17 @@ module.exports = class WebpackPluginImport {
                 let needAdditionalStyle = false;
                 let stylePath = 'style.js';
 
-                this.options.some((opt) => {
-                  needAdditionalStyle = this.libraryCheck(result, opt);
-                  if (needAdditionalStyle && opt.stylePath) {
-                    stylePath = opt.stylePath;
-                  }
-                  return needAdditionalStyle;
+                const matchedIndex = this.options.findIndex((opt) => {
+                  return this.libraryCheck(result, opt);
                 });
+
+                if (matchedIndex > -1) {
+                  const matchedLibrary = this.options[matchedIndex];
+                  if (matchedLibrary.stylePath) {
+                    stylePath = matchedLibrary.stylePath;
+                  }
+                  needAdditionalStyle = true;
+                }
 
                 if (!needAdditionalStyle) {
                   needAdditionalStyle = this.componentCheck(result);
