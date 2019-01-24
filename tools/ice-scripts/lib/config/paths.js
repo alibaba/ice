@@ -43,7 +43,12 @@ function getServedPath(appPackageJson) {
 const appDirectory = realpathSync(process.cwd());
 
 function resolveApp(relativePath) {
-  // 新的node模板项目，koa、midway使用统一目录。process.env.PROJECT_TYPE == 'nodejs'
+  /**
+   * 项目类型
+   *  - web: 纯前端项目
+   *  - nodejs: koa/midway 项目，前端代码放在 client 下
+   *  - node: 老的 koa 项目
+   */
   const clientPathMap = {
     'nodejs': 'client',
     'web': '',
@@ -52,15 +57,15 @@ function resolveApp(relativePath) {
   const clientPath = clientPathMap[process.env.PROJECT_TYPE] || '';
   return resolve(appDirectory, clientPath, relativePath);
 }
-// 老的koa模板项目
-const isKOA = process.env.PROJECT_TYPE == 'node';
+
+const isOldKoa = process.env.PROJECT_TYPE == 'node';
 
 module.exports = {
   appBuild: resolveApp('build') ,
   appPublic: resolveApp('public') ,
-  appHtml: isKOA ? resolveApp('client/index.html') : resolveApp('public/index.html'),
-  appFavicon: isKOA ? resolveApp('client/favicon.png') : resolveApp('public/favicon.png'),
-  appFaviconIco: isKOA ? resolveApp('client/favicon.ico') : resolveApp('public/favicon.ico'),
+  appHtml: isOldKoa ? resolveApp('client/index.html') : resolveApp('public/index.html'),
+  appFavicon: isOldKoa ? resolveApp('client/favicon.png') : resolveApp('public/favicon.png'),
+  appFaviconIco: isOldKoa ? resolveApp('client/favicon.ico') : resolveApp('public/favicon.ico'),
   appPackageJson: resolveApp('package.json'),
   appAbcJson: resolveApp('abc.json'),
   appSrc: resolveApp('src'),
