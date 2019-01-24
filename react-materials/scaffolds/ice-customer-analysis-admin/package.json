@@ -15,7 +15,6 @@
   ],
   "dependencies": {
     "@alifd/next": "^1.x",
-    "@alifd/theme-1": "^0.0.7",
     "@antv/data-set": "^0.8.5",
     "@icedesign/container": "^1.x",
     "@icedesign/ellipsis": "^1.x",

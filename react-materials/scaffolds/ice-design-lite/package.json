@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/lite-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "该模板适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示",
   "homepage": "https://unpkg.com/@icedesign/lite-scaffold@latest/build/index.html",
   "files": [
@@ -16,7 +16,7 @@
   "dependencies": {
     "@alifd/next": "^1.x",
     "@icedesign/container": "^1.x",
-    "@icedesign/img": "^0.1.1",
+    "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
     "@icedesign/theme": "^0.1.2",
     "axios": "^0.17.1",
@@ -46,7 +46,6 @@
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "publishConfig": {
-    "registry": "http://registry.npmjs.com",
     "access": "public"
   },
   "buildConfig": {

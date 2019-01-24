@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ecommerce-scaffold",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "该模板适用于电商类管理后台，布局方式采用左侧固定，右侧自适应方式，适合大量数据展示和界面操作",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://unpkg.com/@icedesign/ecommerce-scaffold@latest/build/index.html",
@@ -19,8 +19,8 @@
     "@antv/data-set": "^0.9.5",
     "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^1.0.3",
-    "@icedesign/foundation-symbol": "^0.1.1",
-    "@icedesign/img": "^0.1.1",
+    "@icedesign/foundation-symbol": "^1.0.0",
+    "@icedesign/img": "^1.0.0",
     "@icedesign/layout": "^1.x",
     "@icedesign/theme": "^0.1.2",
     "bizcharts": "^3.2.2",
@@ -32,7 +32,6 @@
     "react-router-dom": "^4.2.2"
   },
   "publishConfig": {
-    "registry": "http://registry.npmjs.com",
     "access": "public"
   },
   "devDependencies": {

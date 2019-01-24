@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/monitor-dashboard",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "该模板适用于数据监控展示类的管理后台，内置通用的丰富的图表，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/monitor-dashboard@latest/build/index.html",
   "files": [
@@ -22,7 +22,6 @@
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "publishConfig": {
-    "registry": "http://registry.npmjs.com",
     "access": "public"
   },
   "dependencies": {
@@ -30,8 +29,8 @@
     "@antv/data-set": "^0.9.6",
     "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^1.0.3",
-    "@icedesign/foundation-symbol": "^0.1.1",
-    "@icedesign/img": "^0.1.1",
+    "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
     "@icedesign/theme": "^0.1.2",
     "bizcharts": "^3.2.2",
