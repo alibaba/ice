@@ -67,7 +67,8 @@ export default class TableFilter extends Component {
           <Button
             type="primary"
             style={styles.submitButton}
-            onClick={this.handleSubmit}>
+            onClick={this.handleSubmit}
+          >
             查询
           </Button>
         </div>

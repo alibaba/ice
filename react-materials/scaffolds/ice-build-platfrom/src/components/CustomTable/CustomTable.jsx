@@ -54,7 +54,7 @@ export default class Home extends Component {
                 dataIndex={item.dataIndex}
                 key={item.key}
                 sortable={item.sortable || false}
-                cell={item.cell || ((value) => value)}
+                cell={item.cell || (value => value)}
               />
             );
           })}

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Button, Radio } from '@alifd/next';
+import { Radio } from '@alifd/next';
 import CustomTable from '../../../../components/CustomTable';
 import TableFilter from '../TableFilter';
-
-const ButtonGroup = Button.Group;
 
 const getData = (length = 10) => {
   return Array.from({ length }).map((item, index) => {
@@ -155,7 +153,11 @@ export default class BuilderTable extends Component {
       <IceContainer>
         <div style={styles.tableHead}>
           <div style={styles.tableTitle}>构建器</div>
-          <Radio.Group shape="button" value={activeIndex} onChange={(value) => this.handleSubmit(value)} >
+          <Radio.Group
+            shape="button"
+            value={activeIndex}
+            onChange={(value) => this.handleSubmit(value)}
+          >
             {buttonGroup.map((item, index) => {
               return (
                 <Radio

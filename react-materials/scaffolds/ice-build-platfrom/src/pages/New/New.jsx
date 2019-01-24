@@ -134,7 +134,7 @@ export default class New extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>时间</div>
               <IceFormBinder name="time">
-                <DatePicker  style={{ width: '400px' }} />
+                <DatePicker style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>

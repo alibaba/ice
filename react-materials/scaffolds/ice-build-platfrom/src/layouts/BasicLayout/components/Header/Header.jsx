@@ -44,10 +44,10 @@ export default class Header extends Component {
                         triggerType="click"
                         key={index}
                         icon={nav.icon ? (
-                              <FoundationSymbol size="small" type={nav.icon} />
+                          <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
                         title={
-                          <span className={'ice-nav-item-text'}>
+                          <span className="ice-nav-item-text">
                             {nav.name}
                           </span>
                         }
@@ -87,11 +87,13 @@ export default class Header extends Component {
                     }
                     linkProps.href = nav.path;
                     return (
-                      <Nav.Item key={nav.path} icon={nav.icon ? (
-                              <FoundationSymbol size="small" type={nav.icon} />
-                            ) : null}>
+                      <Nav.Item key={nav.path}
+                        icon={nav.icon ? (
+                          <FoundationSymbol size="small" type={nav.icon} />
+                            ) : null}
+                      >
                         <a {...linkProps}>
-                          <span className={'ice-nav-item-text'}>
+                          <span className="ice-nav-item-text">
                             {nav.name}
                           </span>
                         </a>
@@ -100,11 +102,13 @@ export default class Header extends Component {
                   }
                   linkProps.to = nav.path;
                   return (
-                    <Nav.Item key={nav.path} icon={nav.icon ? (
-                            <FoundationSymbol size="small" type={nav.icon} />
-                          ) : null}>
+                    <Nav.Item key={nav.path}
+                      icon={nav.icon ? (
+                        <FoundationSymbol size="small" type={nav.icon} />
+                          ) : null}
+                    >
                       <Link {...linkProps}>
-                        <span className={'ice-nav-item-text'}>
+                        <span className="ice-nav-item-text">
                           {nav.name}
                         </span>
                       </Link>
