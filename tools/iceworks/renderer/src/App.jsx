@@ -19,6 +19,9 @@ import settingsMaterials from './stores/settings-materials';
 import user from './stores/user';
 import blockGroups from './stores/block-groups';
 
+import services from './services';
+const { settings } = services;
+
 // pages
 import history from './history';
 import Layout from './Layout';
@@ -54,6 +57,13 @@ class App extends Component {
       // console.log(action, location.pathname, location.state);
       this.changeDisplay(location.pathname);
     });
+
+    // 根据url唤起是传参来定位当前path，定位后重置参数
+    const urlEvokeQuery = settings.get('urlEvokeQuery');
+    if (urlEvokeQuery && urlEvokeQuery.to) {
+      history.push(urlEvokeQuery.to);
+      settings.set('urlEvokeQuery', Object.assign(urlEvokeQuery, {to: ''}));
+    }
 
     ipcRenderer.on('router.push', (event, { url, state, title }) => {
       history.push(url);
