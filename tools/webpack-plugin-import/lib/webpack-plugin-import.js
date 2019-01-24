@@ -61,11 +61,12 @@ module.exports = class WebpackPluginImport {
                 let needAdditionalStyle = false;
                 let stylePath = 'style.js';
 
-                this.options.forEach((opt) => {
+                this.options.some((opt) => {
                   needAdditionalStyle = this.libraryCheck(result, opt);
                   if (needAdditionalStyle && opt.stylePath) {
                     stylePath = opt.stylePath;
                   }
+                  return needAdditionalStyle;
                 });
 
                 if (!needAdditionalStyle) {
@@ -74,7 +75,7 @@ module.exports = class WebpackPluginImport {
 
                 if (needAdditionalStyle) {
                   const modPath = path.join(path.dirname(result.resource), stylePath);
-  
+ 
                   if (fileExists(modPath)) {
                     result.loaders.push(
                       `${webpackLoaderRequire}?mod=${modPath}`
