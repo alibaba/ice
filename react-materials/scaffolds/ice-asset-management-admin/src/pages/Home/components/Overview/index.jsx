@@ -52,10 +52,7 @@ export default class Overview extends Component {
     return (
       <div style={styles.overview}>
         <IceContainer style={styles.alignRight}>
-          <DatePicker
-            size="large"
-            onChange={(val, str) => console.log(val, str)}
-          />
+          <DatePicker onChange={(val, str) => console.log(val, str)} />
         </IceContainer>
         <IceContainer style={styles.container}>
           <h4 style={styles.containerTitle}>概览</h4>

@@ -139,7 +139,7 @@ const styles = {
     color: '#ee706d',
   },
   black: {
-    color: '#000',
+    color: '#444',
   },
   grey: {
     color: '#666',
