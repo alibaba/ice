@@ -99,7 +99,8 @@ export default class BaseSetting extends Component {
                     beforeUpload={beforeUpload}
                     onChange={onChange}
                     onSuccess={onSuccess}
-                    onError={onError} />
+                    onError={onError}
+                  />
                 </IceFormBinder>
                 <IceFormError name="avatar" />
               </Col>
@@ -224,7 +225,7 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="description">
-                  <Input.TextArea style={styles.inputItem}  multiple placeholder="请输入描述..." />
+                  <Input.TextArea style={styles.inputItem} multiple placeholder="请输入描述..." />
                 </IceFormBinder>
                 <IceFormError name="description" />
               </Col>

@@ -10,9 +10,6 @@ import BasicLayoutHoc from './BasicLayoutHoc';
 import MainRoutes from './MainRoutes';
 import './index.scss';
 
-// 设置默认的皮肤配置，支持 dark 和 light 两套皮肤配置
-const DEFAULT_THEME = 'dark';
-
 @withRouter
 @BasicLayoutHoc
 export default class BasicLayout extends Component {

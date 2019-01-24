@@ -3,7 +3,6 @@ const WebpackPluginImport = require('webpack-plugin-import');
 const rewireSass = require('./rewire-scss');
 
 module.exports = function override(config) {
-
   config = injectBabelPlugin(
     ['import', { libraryName: '@alifd/next' }],
     config
@@ -24,6 +23,6 @@ module.exports = function override(config) {
     ])
   );
 
-    config = rewireSass(config);
+  config = rewireSass(config);
   return config;
 };

@@ -74,7 +74,7 @@ export default class GoodsForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>库存量：</div>
               <IceFormBinder name="stock" required message="联系方式必填">
-                <NumberPicker  />
+                <NumberPicker />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
@@ -107,7 +107,7 @@ export default class GoodsForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>预售时间：</div>
               <IceFormBinder name="reverseTime">
-                <RangePicker  style={{ width: '400px' }} />
+                <RangePicker style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>

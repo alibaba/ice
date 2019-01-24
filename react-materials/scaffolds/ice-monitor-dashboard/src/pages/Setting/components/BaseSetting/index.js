@@ -1,16 +1,15 @@
 /* eslint  react/no-string-refs: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Radio, Switch, Upload, Grid, Form, SplitButton } from '@alifd/next';
+import { Input, Radio, Switch, Upload, Grid, Form } from '@alifd/next';
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
-const { ImageUpload } = Upload;
 const FormItem = Form.Item;
 
 const formItemLayout = {
   labelCol: { xxs: 6, s: 3, l: 3 },
-  wrapperCol: { s: 12, l: 10 }
+  wrapperCol: { s: 12, l: 10 },
 };
 
 
@@ -114,8 +113,8 @@ export default class SettingsForm extends Component {
                 </RadioGroup>
               </FormItem>
 
-              <FormItem label="通知：" {...formItemLayout}  >
-                <Switch name="notice"/>
+              <FormItem label="通知：" {...formItemLayout} >
+                <Switch name="notice" />
               </FormItem>
               <FormItem size="large" label="邮件：" {...formItemLayout} required requiredMessage="请输入正确的邮件">
                 <Input
@@ -147,18 +146,18 @@ export default class SettingsForm extends Component {
                 <Input.TextArea placeholder="请输入描述..." />
               </FormItem>
               <Row style={{ marginTop: 20 }}>
-            <Col offset="3">
-              <Form.Submit
-                size="large"
-                type="primary"
-                style={{ width: 100 }}
-                validate
-                onClick={this.validateAllFormField}
-              >
+                <Col offset="3">
+                  <Form.Submit
+                    size="large"
+                    type="primary"
+                    style={{ width: 100 }}
+                    validate
+                    onClick={this.validateAllFormField}
+                  >
                 提 交
-              </Form.Submit>
-            </Col>
-          </Row>
+                  </Form.Submit>
+                </Col>
+              </Row>
             </div>
           </Form>
 
