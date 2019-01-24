@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/title",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "标题组件",
   "main": "lib/index.js",
   "files": [
@@ -13,10 +13,6 @@
     "ice-component"
   ],
   "license": "MIT",
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/ice"
@@ -33,7 +29,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "prop-types": "^15.5.10",
-    "@icedesign/base": "^0.2.0"
+    "@alifd/next": "^1.x"
   },
   "devDependencies": {
   },

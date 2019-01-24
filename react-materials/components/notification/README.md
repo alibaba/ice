@@ -11,7 +11,7 @@ chinese: 通知提醒框
 ## 安装和升级
 
 ```bash
-def add @icedesign/notification
+tnpm install --save @icedesign/notification
 ```
 
 ## API

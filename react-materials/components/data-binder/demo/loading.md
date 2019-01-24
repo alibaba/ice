@@ -17,7 +17,7 @@ import DataBinder from '@icedesign/data-binder';
 import {
   Button,
   Loading
-} from '@icedesign/base';
+} from '@alifd/next';
 
 @DataBinder({
   foo1Data: {
@@ -58,7 +58,7 @@ class App extends Component {
     return (
       <div>
         <div>
-          <Loading visible={foo1Data.__loading} shape="fusion-reactor">
+          <Loading visible={foo1Data.__loading}>
             <div>
               foo1 的值： {foo1Data.foo}
             </div>
@@ -68,7 +68,7 @@ class App extends Component {
           </div>
         </div>
         <div style={{marginTop: 30}}>
-          <Loading visible={foo2Data.__loading} shape="fusion-reactor">
+          <Loading visible={foo2Data.__loading}>
             <div>
               foo2 的值： {foo2Data.foo}
             </div>

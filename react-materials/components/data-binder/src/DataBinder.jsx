@@ -1,11 +1,9 @@
 /* eslint-disable no-underscore-dangle, no-nested-ternary */
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import pureRender from 'pure-render-decorator';
 import merge from 'deepmerge';
-
-const Toast = Feedback.toast;
 
 /**
  * 初始化对象的加载状态，错误状态等，并且该值不能枚举
@@ -194,7 +192,7 @@ export default function dataBinder(sourceConfig, opts = {}) {
         const customSuccess = newRequestOptions.success;
         const customError = newRequestOptions.error;
         const defaultErrorCallback = () => {
-          Toast.error('网络问题，请稍后重试！');
+          Message.error('网络问题，请稍后重试！');
         };
 
         opts.requestClient({
@@ -243,7 +241,7 @@ export default function dataBinder(sourceConfig, opts = {}) {
               if (responseData.status === 'SUCCESS' || responseData.success) {
                 const defaultCallback = () => {
                   if (responseData.message) {
-                    Toast.success(responseData.message);
+                    Message.success(responseData.message);
                   }
                 };
 
@@ -261,7 +259,7 @@ export default function dataBinder(sourceConfig, opts = {}) {
 
                 const defaultCallback = () => {
                   if (responseData.message) {
-                    Toast.error(responseData.message);
+                    Message.error(responseData.message);
                   }
                 };
 

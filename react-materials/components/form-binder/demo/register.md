@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
-import { Input, Button, Checkbox, Feedback, CascaderSelect, Switch, DatePicker } from '@icedesign/base';
+import { Input, Button, Checkbox, Feedback, CascaderSelect, Switch, DatePicker } from '@alifd/next';
 
 const cityData = [
   {
@@ -122,7 +122,7 @@ class Register extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>邮箱：</span>
               <FormBinder name="email" required type="email" message="请输入正确的邮箱" >
-                <Input placeholder="ice-admin@alibaba-inc.com" /> 
+                <Input placeholder="ice-admin@alibaba-inc.com" />
               </FormBinder>
               <FormError style={styles.formItemError} name="email" />
             </div>
@@ -130,7 +130,7 @@ class Register extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>昵称：</span>
               <FormBinder name="nickname" required message="请输入正确的昵称" >
-                <Input placeholder="淘小宝" /> 
+                <Input placeholder="淘小宝" />
               </FormBinder>
               <FormError style={styles.formItemError} name="nickname" />
             </div>
@@ -138,7 +138,7 @@ class Register extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>密码：</span>
               <FormBinder name="password" required validator={this.checkPassword}>
-                <Input htmlType="password" placeholder="输入密码" /> 
+                <Input htmlType="password" placeholder="输入密码" />
               </FormBinder>
               <FormError style={styles.formItemError} name="password" />
             </div>
@@ -146,7 +146,7 @@ class Register extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>确认密码：</span>
               <FormBinder name="confirmPassword" required validator={this.checkConfirmPassword}>
-                <Input htmlType="password" placeholder="输入确认密码" /> 
+                <Input htmlType="password" placeholder="输入确认密码" />
               </FormBinder>
               <FormError style={styles.formItemError} name="confirmPassword" />
             </div>
@@ -154,24 +154,24 @@ class Register extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>出生日期：</span>
                 <FormBinder name="birthdate" getFieldValue={(date, formatDate) => { return formatDate }}>
-                  <DatePicker formater={["YYYY-MM-DD"]} style={{ width: '200px' }} />
+                  <DatePicker format="YYYY-MM-DD" style={{ width: '200px' }} />
                 </FormBinder>
             </div>
 
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>籍贯地址：</span>
               <FormBinder name="city" >
-                <CascaderSelect dataSource={cityData} style={{ width: '200px' }} /> 
+                <CascaderSelect dataSource={cityData} style={{ width: '200px' }} />
               </FormBinder>
             </div>
 
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>开启通知：</span>
               <FormBinder name="notification" valuePropName="checked">
-                <Switch /> 
+                <Switch />
               </FormBinder>
             </div>
-        
+
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>用户协议：</span>
               <FormBinder
@@ -187,7 +187,7 @@ class Register extends Component {
             </Button>
           </div>
         </FormBinderWrapper>
-        
+
         <div style={styles.preview}>
           <strong>当前表单数据</strong>
           <pre>{JSON.stringify(this.state.value, null, 2)}</pre>
@@ -214,7 +214,7 @@ const styles = {
     marginLeft: '10px',
   },
   preview: {
-    border: '1px solid #eee', 
+    border: '1px solid #eee',
     marginTop: 20,
     padding: 10
   }

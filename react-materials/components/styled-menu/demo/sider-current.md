@@ -9,7 +9,7 @@ importStyle: true
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 import StyledMenu, { Item as MenuItem, SubMenu } from '@icedesign/styled-menu';
 
 class Sider extends React.Component {
@@ -59,7 +59,7 @@ class Sider extends React.Component {
           key="sub1"
           title={
             <span>
-              <Icon type="print" />
+              <Icon type="account" />
               <span>Navigation One</span>
             </span>
           }
@@ -73,7 +73,7 @@ class Sider extends React.Component {
           key="sub2"
           title={
             <span>
-              <Icon type="process" />
+              <Icon type="upload" />
               <span>Navigation Two</span>
             </span>
           }
@@ -89,7 +89,7 @@ class Sider extends React.Component {
           key="sub4"
           title={
             <span>
-              <Icon type="bags" />
+              <Icon type="help" />
               <span>Navigation Three</span>
             </span>
           }
