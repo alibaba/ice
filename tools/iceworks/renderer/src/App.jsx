@@ -51,6 +51,17 @@ class App extends Component {
     };
   }
 
+  componentWillMount = () => {
+    // 过滤用户设置的fusion，bizchart物料源。
+    const materials = settings.get('materials');
+    settings.set('materials', materials.filter(material => {
+      if (['Fusion 物料源', 'Bizchart 物料源'].includes(material.name)) {
+        return false;
+      } 
+      return true;
+    }));
+  }
+
   componentDidMount() {
     this.unlisten = history.listen((location, action) => {
       // location is an object like window.location
