@@ -75,7 +75,7 @@ $ npm start
 
 ## 编写组件
 
-以上面创建的 `Login` 组件为例，进入 `src/index.jsx` , 修改初始代码，就可以开始组件的开发了。
+以上面创建的 `Login` 组件为例，进入 `src/index.js` , 修改初始代码，就可以开始组件的开发了。
 
 ## 编写 DEMO
 
@@ -136,3 +136,5 @@ $ npm publish
 # 在项目根目录下
 $ npm run deploy
 ```
+
+附：独立的组件开发链路，可以查看[文档](https://github.com/alibaba/ice/wiki/%E7%8B%AC%E7%AB%8B%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B)
