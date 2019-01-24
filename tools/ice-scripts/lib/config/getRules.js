@@ -22,16 +22,24 @@ function withCssHotLoader(loaders) {
   }
   return loaders;
 }
+const CSS_LOADER_CONF = {
+  loader: CSS_LOADER,
+  options: {
+    sourceMap: true,
+  },
+};
 
+const CSS_MODULE_CONF = {
+  loader: CSS_LOADER,
+  options: {
+    sourceMap: true,
+    modules: true,
+    localIdentName: '[folder]--[local]--[hash:base64:7]'
+  },
+};
 module.exports = (buildConfig = {}, themeConfig) => {
   const babelConfig = getBabelConfig(buildConfig);
-  const sassLoaders = [
-    {
-      loader: CSS_LOADER,
-      options: {
-        sourceMap: true,
-      },
-    },
+  const sassLoadersConf = [
     {
       loader: POSTCSS_LOADER,
       options: Object.assign({ sourceMap: true }, postcssConfig),
@@ -44,6 +52,7 @@ module.exports = (buildConfig = {}, themeConfig) => {
     },
   ];
 
+
   const theme = buildConfig.theme || buildConfig.themePackage;
 
   if (theme) {
@@ -51,36 +60,49 @@ module.exports = (buildConfig = {}, themeConfig) => {
     console.log(colors.green('Info:'), '使用主题包', theme);
   }
 
-  sassLoaders.push({
+  const iceThemeLoaderConf = {
     loader: require.resolve('ice-skin-loader'),
     options: {
       themeFile: theme && path.join(paths.appNodeModules, `${theme}/variables.scss`),
       themeConfig,
     },
-  });
+  };
 
+  const sassLoaderConf = [CSS_LOADER_CONF, ...sassLoadersConf, iceThemeLoaderConf];
+  const sassModuleConf = [CSS_MODULE_CONF, ...sassLoadersConf, iceThemeLoaderConf];
   // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
   const miniCssExtractPluginLoader = { loader: MiniCssExtractPlugin.loader };
 
   if (paths.publicUrl === './') {
     miniCssExtractPluginLoader.options = { publicPath: '../' };
   }
-
   return [
     {
       test: /\.scss$/,
-      use: withCssHotLoader([miniCssExtractPluginLoader, ...sassLoaders]),
+      exclude: /\.module\.scss$/,
+      use: withCssHotLoader([miniCssExtractPluginLoader, ...sassLoaderConf]),
+    },
+    {
+      test: /\.module\.scss$/,
+      use: withCssHotLoader([miniCssExtractPluginLoader, ...sassModuleConf]),
     },
     {
       test: /\.css$/,
+      exclude: /\.module\.css$/,
       use: withCssHotLoader([
         miniCssExtractPluginLoader,
+        CSS_LOADER_CONF,
         {
-          loader: CSS_LOADER,
-          options: {
-            sourceMap: true,
-          },
+          loader: POSTCSS_LOADER,
+          options: Object.assign({ sourceMap: true }, postcssConfig),
         },
+      ]),
+    },
+    {
+      test: /\.module\.css$/,
+      use: withCssHotLoader([
+        miniCssExtractPluginLoader,
+        CSS_MODULE_CONF,
         {
           loader: POSTCSS_LOADER,
           options: Object.assign({ sourceMap: true }, postcssConfig),
@@ -89,14 +111,27 @@ module.exports = (buildConfig = {}, themeConfig) => {
     },
     {
       test: /\.less$/,
+      exclude: /\.module\.less$/,
       use: withCssHotLoader([
         miniCssExtractPluginLoader,
+        CSS_LOADER_CONF,
         {
-          loader: CSS_LOADER,
+          loader: POSTCSS_LOADER,
+          options: Object.assign({ sourceMap: true }, postcssConfig),
+        },
+        {
+          loader: LESS_LOADER,
           options: {
             sourceMap: true,
           },
         },
+      ]),
+    },
+    {
+      test: /\.module\.less$/,
+      use: withCssHotLoader([
+        miniCssExtractPluginLoader,
+        CSS_MODULE_CONF,
         {
           loader: POSTCSS_LOADER,
           options: Object.assign({ sourceMap: true }, postcssConfig),
