@@ -1,5 +1,9 @@
 # ice-scripts Changelog
 
+## 1.8.2
+
+- [chore] 降级  webpack-plugin-import 到 0.2.1 解决部分组件样式引入失败的问题
+
 ## 1.8.1
 
 - [feat] 支持 css-module，仅对 `.module.[css/less/scss]` 文件后缀生效
