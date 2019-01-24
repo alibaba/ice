@@ -55,8 +55,8 @@ module.exports = async function addScaffold(type, cwd, opt, argvOpt) {
     p = p.then(() => downloadTemplate(templateName));
     templatePath = await p;
   }
-
-  generate(name, templatePath, scaffoldPath, (err, callback) => {
+  const npmName = name;
+  generate(name, npmName, templatePath, scaffoldPath, (err, callback) => {
     if (err) {
       console.log(err);
       logger.fatal(err);

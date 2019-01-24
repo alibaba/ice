@@ -128,7 +128,7 @@ function downloadTemplate(template) {
  * @param {string} blockDest
  */
 function generateTemplate({ blockName, blockNpmName, blockSource, blockDest }) {
-  generate(blockNpmName, blockSource, blockDest, (err, callback) => {
+  generate(blockName, blockNpmName, blockSource, blockDest, (err, callback) => {
     if (err) {
       logger.fatal(err);
     }
