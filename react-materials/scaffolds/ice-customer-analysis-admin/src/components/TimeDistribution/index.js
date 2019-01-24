@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DatePicker } from '@alifd/next';
+import IceContainer from '@icedesign/container';
 import ContainerTitle from '../ContainerTitle';
 import AreaChart from './AreaChart';
 
@@ -17,7 +18,7 @@ export default class TimeDistribution extends Component {
 
   render() {
     return (
-      <div style={styles.container}>
+      <IceContainer>
         <ContainerTitle
           title={this.props.title}
           extraAfter={
@@ -25,13 +26,7 @@ export default class TimeDistribution extends Component {
           }
         />
         <AreaChart />
-      </div>
+      </IceContainer>
     );
   }
 }
-
-const styles = {
-  container: {
-    marginBottom: '20px',
-  },
-};
