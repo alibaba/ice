@@ -20,7 +20,7 @@ export default class BasicLayout extends Component {
             <Asdie />
           </Layout.Aside>
 
-          <Layout.Main  className={styles.iceLayoutMain} scrollable>
+          <Layout.Main className={styles.iceLayoutMain} scrollable>
             <MainRoutes />
             <Footer />
           </Layout.Main>

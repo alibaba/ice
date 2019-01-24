@@ -54,12 +54,10 @@ export default class UserForm extends Component {
     this.setState({
       value: {},
     });
-  }
+  };
 
   render() {
-    const {
-      value: formValue,
-    } = this.state;
+    const { value: formValue } = this.state;
 
     return (
       <div className="user-form">
@@ -80,7 +78,6 @@ export default class UserForm extends Component {
                   <IceFormBinder name="operationType">
                     <Select
                       style={{ width: '100%' }}
-                      size="large"
                       value={formValue.operationType}
                       dataSource={[
                         { label: '账号添加', value: 'add' },
@@ -100,11 +97,8 @@ export default class UserForm extends Component {
                   <IceFormBinder name="os">
                     <Select
                       style={{ width: '100%' }}
-                      size="large"
                       value={formValue.os}
-                      dataSource={[
-                        { label: 'Linux', value: 'Linux' },
-                      ]}
+                      dataSource={[{ label: 'Linux', value: 'Linux' }]}
                     />
                   </IceFormBinder>
                   <IceFormError name="os" />
@@ -119,7 +113,6 @@ export default class UserForm extends Component {
                   <IceFormBinder name="permission">
                     <Select
                       style={{ width: '100%' }}
-                      size="large"
                       value={formValue.permission}
                       dataSource={[
                         { label: '一般用户', value: '1' },
@@ -140,7 +133,6 @@ export default class UserForm extends Component {
                   <IceFormBinder name="term">
                     <Select
                       style={{ width: '100%' }}
-                      size="large"
                       value={formValue.term}
                       dataSource={[
                         { label: '一周', value: 'week' },
@@ -163,7 +155,11 @@ export default class UserForm extends Component {
                     required
                     message="请输入申请内容"
                   >
-                    <Input.TextArea style={{ width: '100%' }} value={formValue.content} placeholder="请输入机器ip，支持多个，逗号或换行分割" />
+                    <Input.TextArea
+                      style={{ width: '100%' }}
+                      value={formValue.content}
+                      placeholder="请输入机器ip，支持多个，逗号或换行分割"
+                    />
                   </IceFormBinder>
                   <IceFormError name="content" />
                 </Col>
@@ -179,7 +175,10 @@ export default class UserForm extends Component {
                     required
                     message="请输入申请理由"
                   >
-                    <Input.TextArea value={formValue.reason} style={{ width: '100%' }} />
+                    <Input.TextArea
+                      value={formValue.reason}
+                      style={{ width: '100%' }}
+                    />
                   </IceFormBinder>
                   <IceFormError name="reason" />
                 </Col>
@@ -189,11 +188,7 @@ export default class UserForm extends Component {
 
           <Row style={{ marginTop: 20 }}>
             <Col offset="3">
-              <Button
-                size="large"
-                type="primary"
-                onClick={this.validateAllFormField}
-              >
+              <Button type="primary" onClick={this.validateAllFormField}>
                 提 交
               </Button>
             </Col>

@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Input, Button, Checkbox, Grid, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
@@ -63,7 +63,12 @@ class UserLogin extends Component {
               <Col className="formItemCol">
                 <IceIcon type="person" size="small" className="inputIcon" />
                 <IceFormBinder name="username" required message="必填">
-                  <Input className="next-input-single" size="large" maxLength={20} placeholder="用户名" />
+                  <Input
+                    className="next-input-single"
+                    size="large"
+                    maxLength={20}
+                    placeholder="用户名"
+                  />
                 </IceFormBinder>
               </Col>
               <Col>
@@ -75,7 +80,12 @@ class UserLogin extends Component {
               <Col className="formItemCol">
                 <IceIcon type="lock" size="small" className="inputIcon" />
                 <IceFormBinder name="password" required message="必填">
-                  <Input className="next-input-single" size="large" htmlType="password" placeholder="密码" />
+                  <Input
+                    className="next-input-single"
+                    size="large"
+                    htmlType="password"
+                    placeholder="密码"
+                  />
                 </IceFormBinder>
               </Col>
               <Col>
@@ -99,12 +109,6 @@ class UserLogin extends Component {
               >
                 登 录
               </Button>
-            </Row>
-
-            <Row className="tips">
-              <Link to="/user/register" className="tips-text">
-                立即注册
-              </Link>
             </Row>
           </div>
         </IceFormBinderWrapper>

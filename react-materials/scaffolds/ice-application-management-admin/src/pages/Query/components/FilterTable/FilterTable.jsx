@@ -177,14 +177,8 @@ export default class EnhanceTable extends Component {
   renderOperations = (value, index, record) => {
     if (!record.operation.edit) {
       return (
-        <div
-          className="filter-table-operation"
-          className={styles.filterTableOperation}
-        >
-          <a
-            href="#/account"
-            className={styles.operationItem}
-          >
+        <div className="filter-table-operation">
+          <a href="#/account" className={styles.operationItem}>
             申请权限
           </a>
         </div>
@@ -192,25 +186,22 @@ export default class EnhanceTable extends Component {
     }
 
     return (
-      <div
-        className="filter-table-operation"
-        className={styles.filterTableOperation}
-      >
+      <div className="filter-table-operation">
         <a
           href="#"
           className={styles.operationItem}
           target="_blank"
-          onClick={e => this.publish(record, e)}
+          onClick={(e) => this.publish(record, e)}
         >
-            发布
+          发布
         </a>
         <a
           href="#"
           className={styles.operationItem}
           target="_blank"
-          onClick={e => this.offline(record, e)}
+          onClick={(e) => this.offline(record, e)}
         >
-            下线
+          下线
         </a>
       </div>
     );
@@ -271,15 +262,10 @@ export default class EnhanceTable extends Component {
             dataSource={list}
             loading={__loading}
             className="basic-table"
-            className={styles.basicTable}
             hasBorder={false}
           >
             <Table.Column title="ID" dataIndex="id" width={30} />
-            <Table.Column
-              title="应用名"
-              cell={this.renderTitle}
-              width={150}
-            />
+            <Table.Column title="应用名" cell={this.renderTitle} width={150} />
             <Table.Column title="等级" dataIndex="type" width={100} />
             <Table.Column title="Owner" dataIndex="owner" width={100} />
             <Table.Column

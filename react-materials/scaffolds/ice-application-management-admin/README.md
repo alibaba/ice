@@ -22,8 +22,8 @@
 
 - 主色：#447eff
 - 功能主色：#5e83fb、#f7da47、#58ca9a、#ee706d
-- 字体颜色：#333、$color-text1-3
+- 字体颜色：#333、\$color-text1-3
 
 ## 效果图
 
-![screenshot](https://img.alicdn.com/tfs/TB1HkrIwVzqK1RjSZFoXXbfcXXa-2872-1580.png)
+![screenshot](https://img.alicdn.com/tfs/TB1SeqCDOrpK1RjSZFhXXXSdXXa-2872-1580.png)

@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { Nav } from '@alifd/next';
 import { Link, withRouter } from 'react-router-dom';
 import { asideMenuConfig } from '../../../../menuConfig';
-const {SubNav, Item} = Nav;
+
+const { SubNav, Item } = Nav;
 @withRouter
 export default class Aside extends Component {
   static propTypes = {};
