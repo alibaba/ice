@@ -35,27 +35,50 @@ class NewPage {
   @observable
   createProcess = '';
   @observable
+  createProcessEventName = ''; // 新建页面过程中的事件名
+  @observable
   progressVisible = false;
 
   constructor() {
-    ipcRenderer.on('processTracking', (event, process) => {
-      this.createProcess = process;
+    ipcRenderer.on('processTracking', (event, process, eventName) => {
+      progress.setStatusText(process) 
+      progress.setShowTerminal(eventName === 'installBlockDeps');
     });
     ipcRenderer.on('progressVisible', (event, visible) => {
-      this.progressVisible = visible;
+        progress.setShowProgress(visible);
     });
   }
 
   @computed
   get isCreating() {
-    return this.isCreatingValue;
+    return progress.visible;
   }
 
-  set isCreating(value) {
-    this.isCreatingValue = value;
-    if (!value) {
-      this.createProcess = '';
-    }
+  /**
+   * 启动进度条
+   */
+  @action
+  startProgress(showProgress = true) {
+    progress.setStatusText('项目文件生成中');
+    progress.start(showProgress);
+  } 
+
+  /**
+   * 结束进度条
+   */
+  endProgress() {
+    progress.setStatusText('项目创建完成');
+    progress.end();
+  }
+
+  resetProgress() {
+    progress.reset();
+  }
+
+
+  @computed
+  get isInstallingBlockDeps() {
+    return this.createProcessEventName === 'installBlockDeps';
   }
 
   @action

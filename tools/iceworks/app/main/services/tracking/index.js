@@ -15,7 +15,7 @@ const events = {
 function emitProcess(eventName, blockName = '') {
   const contents = webContents.getAllWebContents();
   contents.forEach((content) => {
-    content.send('processTracking', events[eventName] + blockName);
+    content.send('processTracking', events[eventName] + blockName, eventName);
   });
   log.info(eventName);
 }

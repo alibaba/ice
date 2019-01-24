@@ -14,7 +14,7 @@ import ExtraButton from '../../../components/ExtraButton';
 import Icon from '../../../components/Icon';
 import ProjectInit from '../ProjectInit';
 import projectScripts from '../../../lib/project-scripts';
-import ProjectTerminal from '../ProjectTerminal';
+import ProjectTerminal from '../../../components/ProjectTerminal';
 import ServerUrl from './ServerUrl';
 import services from '../../../services';
 import StartPanel from '../../../components/StartPanel';
@@ -203,9 +203,13 @@ class Project extends Component {
 
   handleToggleTerminal = () => {
     const { projects } = this.props;
-    const currentProject = projects.currentProject;
+    const { currentProject } = projects;
     currentProject.toggleTerminal();
   };
+
+  closeLogs = () => {
+    this.handleToggleTerminal();
+  }
 
   render() {
     const currentProject = this.props.projects.currentProject;
@@ -354,10 +358,11 @@ class Project extends Component {
           </div>
         </div>
         <ProjectDashboard className="project-dashboard" />
-        {currentProject.exists && (
+        {currentProject.exists && currentProject.terminalVisible && (
           <ProjectTerminal
             project={currentProject}
             visible={currentProject.terminalVisible}
+            closeLogs={this.closeLogs}
           />
         )}
         <AddPackage />

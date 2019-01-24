@@ -25,6 +25,11 @@ import progress from './progress';
 const defaultWorkspacePath = path.join(os.homedir(), 'iceworks-workspace');
 const WORKSPACE_KEY = 'iceworks-workspace';
 
+const progressText = {
+  ing: '项目文件生成中',
+  done: '项目创建完成',
+};
+
 class Scaffold {
   @observable
   scaffoldValue = null;
@@ -183,23 +188,23 @@ class Scaffold {
 
   @computed
   get isCreating() {
-    return progress.isInProgress;
+    return progress.visible;
   }
 
   /**
    * 启动进度条
    */
   @action
-  startProgress() {
-    const type = this.nodeFramework ? 'nodeScaffold' : 'scaffold';
-    progress.setType(type);
-    progress.start();
-  }
+  startProgress(showProgress = true) {
+    progress.setStatusText('项目文件生成中');
+    progress.start(showProgress);
+  } 
 
   /**
    * 结束进度条
    */
   endProgress() {
+    progress.setStatusText('项目创建完成');
     progress.end();
   }
 
@@ -219,7 +224,7 @@ class Scaffold {
       services.worker.create.add(
         {
           path: targetPath,
-          data: options,
+          data: options, 
           progressFunc
         },
         (error /* 返回的 Error | CreateProjectError 实例 */) => {

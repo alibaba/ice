@@ -13,6 +13,7 @@ import {
   Previewer as BlockPreview,
   PreviewTitle,
 } from '../BlockPicker';
+import Progress from '../Progress';
 import dialog from '../dialog';
 import services from '../../services';
 import './index.scss';
@@ -22,7 +23,7 @@ const { scaffolder, npm } = services;
 // 向页面新增 block 的功能
 // 包括展示现有 page 下的 blocks 以及选择新 block 的管理
 
-@inject('pageBlockPicker', 'blocks', 'projects')
+@inject('pageBlockPicker', 'blocks', 'projects', 'progress')
 @observer
 class PageBlockPicker extends Component {
   static propTypes = {
@@ -96,14 +97,26 @@ class PageBlockPicker extends Component {
         const scaffoldDependencies = dependenciesFormat(dependencies);
         // 开始安装项目依赖
         console.log('安装依赖', scaffoldDependencies);
-        return npm.run(
-          ['install', '--no-package-lock'].concat(scaffoldDependencies),
-          {
-            cwd: clientPath,
-          }
-        );
 
-        
+        return new Promise((resolve, reject) => {
+          projectScripts.npminstall(
+            currentProject,
+            scaffoldDependencies.join(' '),
+            false,
+            (error, dependencies) => {
+              if (error) {
+                log.error('install blocks‘ dependencies  error');
+                reject();
+              } else {
+                log.info(
+                  'genereator page install dependencies success'
+                );
+                resolve();
+              }
+            }
+          )
+        })
+
       })
       .then(() => {
         pageBlockPicker.close();
@@ -139,6 +152,7 @@ class PageBlockPicker extends Component {
   };
 
   render() {
+    const { currentProject } = this.props.projects;
     return (
       <Dialog
         className="fullscreen-dialog"
@@ -195,6 +209,12 @@ class PageBlockPicker extends Component {
               取消
             </Button>
           </div>
+          {/* <div className="page-block-picker-progress">
+            <Progress
+              progress={this.props.progress}
+              currentProject={currentProject}
+            />
+          </div> */}
         </div>
       </Dialog>
     );

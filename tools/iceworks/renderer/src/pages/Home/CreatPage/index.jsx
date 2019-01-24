@@ -23,7 +23,7 @@ const { log, npm, shared, interaction, scaffolder } = services;
 
 import './index.scss';
 
-@inject('projects', 'newpage', 'blocks', 'customBlocks')
+@inject('projects', 'newpage', 'blocks', 'customBlocks', 'progress')
 @observer
 class CreatePage extends Component {
   constructor(props) {
@@ -388,6 +388,7 @@ class CreatePage extends Component {
     PageConfig.show({
       selectedBlocks,
       newpage: this.props.newpage,
+      progress: this.props.progress,
       blocks: this.props.blocks,
       projects: this.props.projects,
       libary: this.props.projects.currentProject.getLibraryType(),

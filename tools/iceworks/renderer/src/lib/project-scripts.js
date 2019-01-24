@@ -255,6 +255,7 @@ export default {
   /** 
    * 依赖单个安装，目前只支持client（前端）安装。
    * TODO: 支持前后端选择安装，需要配合UI处理
+   * deps： string      
    */
   npminstall: (project, deps, isDev = false, callback) => {
     let dependencies = deps.split(/\s+/);

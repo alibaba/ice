@@ -14,7 +14,7 @@ const { Option } = Select;
  * 模板生成表单项目
  */
 
-@inject('scaffold')
+@inject('scaffold', 'projects')
 @observer
 export default class ScaffoldForm extends Component {
 
@@ -62,6 +62,7 @@ export default class ScaffoldForm extends Component {
       && this.props.scaffold.scaffold.devDependencies.hasOwnProperty('ice-scripts');
 
     const showNodeOutside = !isAlibaba && hasIce;
+    const {currentProject} = this.props.projects;
 
     return (
       <div className="project-config-form">
@@ -175,7 +176,10 @@ export default class ScaffoldForm extends Component {
             )
           }
         </div>
-        <Progress />
+        <Progress
+          progress={this.props.progress}
+          currentProject={currentProject}
+        />
       </div>
     );
   }

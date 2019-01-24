@@ -1,23 +1,39 @@
 import { observable, action, computed } from 'mobx';
 
-const statusTextMap = {
-  scaffold: {
-    ing: '项目文件生成中',
-    done: '项目创建完成',
-  },
-  nodeScaffold: {
-    ing: 'Node 项目文件生成中',
-    done: 'Node 项目创建完成',
-  }
-};
-
 class Progress {
-  @observable statusTextConfig = {};
   @observable statusText = '';
-  @observable status = 'init';
+  @observable visible = false;
+  @observable showProgress = false;
+  @observable showTerminal = false;
   @observable progressValue = 0; // 进度
   @observable progressSpeedValue = 0; // 下载速度
   @observable progressRemainingValue = 0; // 剩余时间
+
+  @action
+  start(showProgress = false) {
+    this.visible = true;
+    this.showProgress = showProgress;
+  }
+
+  @action
+  end() {
+    this.reset();
+  }
+
+  @action
+  setStatusText(text) {
+    this.statusText = text;
+  }
+
+  @action
+  setShowTerminal(isShow) {
+    this.showTerminal = isShow;
+  }
+
+  @action
+  setShowProgress(isShow) {
+    this.showProgress = isShow;
+  }
 
   @computed
   get progress() {
@@ -34,48 +50,15 @@ class Progress {
     return Math.floor(this.progressRemainingValue) || '-';
   }
 
-  @computed
-  get isInProgress() {
-    return this.status !== 'init';
-  }
-
   @action
   reset() {
-    this.statusTextConfig = {};
     this.statusText = '';
-    this.status = 'init';
+    this.visible = false;
+    this.showProgress = false;
+    this.showTerminal = false;
     this.progressValue = 0; // 进度
     this.progressSpeedValue = 0; // 下载速度
     this.progressRemainingValue = 0; // 剩余时间
-  }
-
-  @action
-  start() {
-    this.setStatus('ing');
-  }
-
-  @action
-  end() {
-    this.setStatus('done');
-    setTimeout(() => {
-      this.reset();
-    }, 1000)
-  }
-
-  @action
-  abort() {
-    this.reset();
-  }
-
-  @action
-  setType(type) {
-    this.statusTextConfig = statusTextMap[type] || {};
-  }
-
-  @action
-  setStatus(status) {
-    this.status = status;
-    this.statusText = this.statusTextConfig[status] || '';
   }
 
   // @see https://www.npmjs.com/package/request-progress
@@ -96,12 +79,10 @@ class Progress {
     }
    */
   @action
-  handleProgressFunc = (state) => {
+  handleProgressFunc = (state = {}) => {
     if (state.percent) {
       if (state.percent >= 1) {
-        this.setStatus('done');
       } else if (state.percent > 0) {
-        this.setStatus('ing');
         this.progressValue = Number(state.percent) * 100;
         this.progressSpeedValue = state.speed || 0;
         this.progressRemainingValue = (state.time && state.time.remaining) || 0;

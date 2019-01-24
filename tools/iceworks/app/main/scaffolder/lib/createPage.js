@@ -143,7 +143,7 @@ module.exports = async function createPage({
       // block 的相对路径,生成到页面的 components 下面
       block.relativePath = `./components/${blockFolderName}`;
     })
-
+ 
     // 下载区块到页面，返回区块的依赖
     let dependencies = {};
     currentEvent = 'generateBlocks';
@@ -157,26 +157,41 @@ module.exports = async function createPage({
         pageName: pageFolderName,
         progressFunc
       });
-      dependencies = deps.dependencies;
+      const dependenciesAll = deps.dependencies;
+      // 过滤已有依赖
+      Object.keys(dependenciesAll).forEach((dep) => {
+        if (!pkg.dependencies.hasOwnProperty(dep)) {
+          dependencies[dep] = dependenciesAll[dep];
+        }
+      });
     } catch (error) {
       emitProgress(false);
       throw error;
     }
-
     emitProgress(false);
 
     // 安装 block 依赖
     currentEvent = 'installBlockDeps';
     if (Object.keys(dependencies).length > 0) {
       emitProcess(currentEvent);
-
-      const waitUntilNpmInstalled = await utils.createInterpreter(
+      let reinstallCount = 1;
+      let waitUntilNpmInstalled = await utils.createInterpreter(
         'ADD_DEPENDENCIES',
         dependencies,
         interpreter
       );
 
       if (!waitUntilNpmInstalled) {
+        // 失败尝试一次自动重装。
+        if (reinstallCount) {
+          reinstallCount -= 1;
+          waitUntilNpmInstalled = await utils.createInterpreter(
+            'ADD_DEPENDENCIES',
+            dependencies,
+            interpreter
+          );
+        }
+
         const blocksName = blocks
           .map(({ source }) => `${source.npm}@${source.version}`)
           .join(' ');
@@ -189,8 +204,6 @@ module.exports = async function createPage({
       }
     }
   }
-
-  
 
   /**
    * 4. 生成 ${pageName}/xxxx 文件

@@ -37,12 +37,12 @@ async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageNam
     throw err;
   }
 
+  const pkg = getPackageByPath(clientPath);
+  const projectVersion = getProjectVersion(pkg);
   [err, depList] = await to(Promise.all(
     filesList.map( async (_, idx) => {
       const block = blocks[idx];
       // 根据项目版本下载依赖
-      const pkg = getPackageByPath(clientPath);
-      const projectVersion = getProjectVersion(pkg);
       // 兼容旧版物料源
       if (block.npm && block.version && ( block.type != 'custom' ) ) {
         return getDependenciesFromNpm({
@@ -70,18 +70,13 @@ async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageNam
     throw err;
   }
 
+  // 合并依赖
   const dependenciesAll = {};
-  const devDependenciesAll = {};
-  const peerDependenciesAll = {};
-  depList.forEach(({ dependencies, devDependencies, peerDependencies }) => {
+  depList.forEach(({ dependencies, }) => {
     Object.assign(dependenciesAll, dependencies);
-    Object.assign(devDependenciesAll, devDependencies);
-    Object.assign(peerDependenciesAll, peerDependencies);
   });
   return {
-    dependencies: dependenciesAll,
-    devDependencies: devDependenciesAll,
-    peerDependencies: peerDependenciesAll,
+    dependencies: dependenciesAll
   };
 
 }
@@ -103,7 +98,7 @@ async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName 
     }
   });
 
-  // 根据项目版本下载依赖
+  // 根据项目版本下载
   const pkg = getPackageByPath(clientPath);
   const projectVersion = getProjectVersion(pkg);
 
@@ -133,7 +128,7 @@ async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName 
   [err, allFiles] = await to(extractBlock(
     path.join( componentsDir, blockName ),
     tarballURL,
-    clientSrcPath,
+    clientPath,
     progressFunc
   ));
   if (err) {
@@ -220,7 +215,7 @@ function extractTarball(tarballURL, destDir) {
  * @param ignoreFiles
  * @returns {Promise<any>}
  */
-function extractBlock(destDir, tarballURL, clientSrcPath, progressFunc = () => {}) {
+function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) {
   return new Promise((resolve, reject) => {
     debug('npmTarball', tarballURL);
     const allFiles = [];

@@ -1,4 +1,4 @@
-import { Dialog, Button, Form, Input, Field, Feedback, Progress } from '@icedesign/base';
+import { Dialog, Button, Form, Input, Field, Feedback } from '@icedesign/base';
 import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import React, { Component } from 'react';
@@ -8,8 +8,11 @@ import uppercamelcase from 'uppercamelcase';
 import PropTypes from 'prop-types';
 
 import { dependenciesFormat } from '../../../../lib/project-utils';
+import projectScripts from '../../../../lib/project-scripts';
 import dialog from '../../../../components/dialog';
+import Progress from '../../../../components/Progress';
 import services from '../../../../services';
+
 
 let container;
 const { log, npm, interaction, scaffolder } = services;
@@ -34,6 +37,7 @@ const pageExists = (pages, name = '') => {
 class PageConfig extends Component {
   static propTypes = {
     newpage: PropTypes.object,
+    progress: PropTypes.object,
     blocks: PropTypes.object,
     projects: PropTypes.object,
     selectedBlocks: PropTypes.array,
@@ -43,41 +47,12 @@ class PageConfig extends Component {
   constructor(props) {
     super(props);
     this.field = new Field(this);
-    this.state = {
-      progress: 0,
-      progressSpeed: 0,
-      progressRemaining: 0
-    };
   }
-
-  handleProgressFunc = (state) => {
-    if (state.percent && state.percent >= 1) {
-      this.setState({
-        progress: 100,
-        progressSpeed: 0,
-        progressRemaining: 0
-      });
-    } else if (state.percent && state.percent > 0) {
-      this.setState({
-        progress: Math.ceil(Number(state.percent) * 100),
-        progressSpeed: state.speed || 0,
-        progressRemaining: (state.time && state.time.remaining) || 0
-      });
-    }
-  };
-
-  resetProgress = () => {
-    this.setState({
-      progress: 0,
-      progressSpeed: 0,
-      progressRemaining: 0
-    });
-  };
 
   handleClose = () => {
     if (!this.props.newpage.isCreating) {
       this.props.newpage.closeSave();
-      this.resetProgress();
+      this.props.newpage.resetProgress();
     }
   };
 
@@ -94,7 +69,7 @@ class PageConfig extends Component {
           return false;
         }
 
-        this.props.newpage.isCreating = true;
+        this.props.newpage.startProgress(false);
         const { currentProject } = this.props.projects;
 
         const layout = toJS(this.props.newpage.currentLayout);
@@ -195,7 +170,7 @@ class PageConfig extends Component {
 
               log.info('generate-page-success', 'page 创建成功');
 
-              this.props.newpage.isCreating = false;
+              this.props.newpage.endProgress();
               this.props.newpage.closeSave();
               this.props.newpage.toggle();
             })
@@ -206,7 +181,7 @@ class PageConfig extends Component {
                 title: '生成页面失败',
                 error: error,
               });
-              this.props.newpage.isCreating = false;
+              this.props.newpage.resetProgress();
             })
             .then(() => {
               return currentProject.scaffold.removePreviewPage({
@@ -237,7 +212,7 @@ class PageConfig extends Component {
               excludeLayout: applicationType == 'react', // hack react 的模板不生成 layout
               // hack vue
               libary: this.props.libary,
-              progressFunc: this.handleProgressFunc,
+              progressFunc: this.props.progress.handleProgressFunc,
               interpreter: ({ type, message, data }, next) => {
                 console.log(type, message);
                 switch (type) {
@@ -275,28 +250,23 @@ class PageConfig extends Component {
                       'add dependencies',
                       this.props.newpage.targetPath
                     );
-                    npm
-                      .run(
-                        [
-                          'install',
-                          ...dependenciesFormat(dependencies),
-                          '--save',
-                          '--no-package-lock',
-                        ],
-                        {
-                          cwd: this.props.newpage.targetPath,
+                    projectScripts.npminstall(
+                      currentProject,
+                      dependenciesFormat(dependencies).join(' '),
+                      false,
+                      (error, dependencies) => {
+                        if (error) {
+                          log.error('genereator page install dependencies error');
+                          log.info('reinstall page dependencies');
+                          next(false);
+                        } else {
+                          log.info(
+                            'genereator page install dependencies success'
+                          );
+                          next(true);
                         }
-                      )
-                      .then(() => {
-                        log.info(
-                          'genereator page install dependencies success'
-                        );
-                        next(true);
-                      })
-                      .catch(() => {
-                        log.error('genereator page install dependencies error');
-                        next(false);
-                      });
+                      }
+                    )
                     break;
                   default:
                     next(true);
@@ -310,11 +280,11 @@ class PageConfig extends Component {
                 error: error,
               });
 
-              this.props.newpage.isCreating = false;
+              this.props.newpage.resetProgress();
             })
             .then((goon) => {
               if (goon == false) {
-                this.props.newpage.isCreating = false;
+              this.props.newpage.endProgress();
               } else {
                 const content = [];
                 if (values.pageName) {
@@ -333,7 +303,7 @@ class PageConfig extends Component {
 
                 log.info('generate-page-success', 'page 创建成功');
 
-                this.props.newpage.isCreating = false;
+                this.props.newpage.endProgress();
                 this.props.newpage.closeSave();
                 this.props.newpage.toggle();
 
@@ -363,7 +333,8 @@ class PageConfig extends Component {
   render() {
     const { init } = this.field;
 
-    const { currentProject } = this.props.projects;
+    const { projects, newpage } = this.props;
+    const { currentProject } = projects;
     let applicationType = '';
     if (currentProject) {
       applicationType = currentProject.getApplicationType();
@@ -438,7 +409,7 @@ class PageConfig extends Component {
                   {
                     message: '已存在同名页面，请更换',
                     validator: (rule, value, cb) => {
-                      if (pageExists(this.props.newpage.pages, value)) {
+                      if (pageExists(newpage.pages, value)) {
                         cb('error');
                       } else {
                         cb();
@@ -487,28 +458,10 @@ class PageConfig extends Component {
             </FormItem>
           )}
         </Form>
-        {this.props.newpage.isCreating && (
-          <p className="create-process">{this.props.newpage.createProcess + '...'}</p>
-        )}
-        {this.props.newpage.progressVisible && (
-          <div className="create-process">
-            <Progress
-              style={{ width: '40%' }}
-              showInfo={false}
-              percent={this.state.progress}
-            />
-            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-              {this.state.progress}%
-            </span>
-            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-              {this.state.progressSpeed}
-              /kbs
-            </span>
-            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-              剩余 {this.state.progressRemaining} s
-            </span>
-          </div>
-        )}
+        <Progress
+          progress={this.props.progress}
+          currentProject={currentProject}
+        />
       </Dialog>
     );
   }
