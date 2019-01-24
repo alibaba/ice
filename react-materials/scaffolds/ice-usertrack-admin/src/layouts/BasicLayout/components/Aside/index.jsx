@@ -7,6 +7,7 @@ import { Nav } from '@alifd/next';
 import React, { Component } from 'react';
 import { asideMenuConfig } from '../../../../menuConfig';
 import './index.scss';
+
 const { SubNav, Item } = Nav;
 @withRouter
 export default class Aside extends Component {

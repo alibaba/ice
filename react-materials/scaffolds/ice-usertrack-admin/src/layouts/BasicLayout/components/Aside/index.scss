@@ -6,17 +6,13 @@
       min-height: 100%;
       width: 240px;
       padding-top: 20px;
-      .ice-menu-item-selected {
-        background: #f8f9fa !important;
-        border-radius: 0 !important;
-        border-right: 3px solid #447eff;
-        margin-bottom: 1px;
-        > a {
-          color: #666;
-        }
+      box-shadow: 0px 0px 8px #eee;
+      .next-opened {
+        background: transparent !important;
+        color: #333 !important;
       }
-      .ice-menu-collapse-hide {
-        padding-left: 1em;
+      i {
+        margin-right: 5px !important;
       }
     }
   }
