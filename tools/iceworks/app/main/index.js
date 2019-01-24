@@ -132,7 +132,7 @@ app.on('ready', async () => {
 app.on('will-finish-launching', () => {
   // 监听，处理从url唤起iceworks的参数
   app.on('open-url', function (event, url) {
-    // url = iceworks://?to=scaffold
+    // url = iceworks://?to=scaffolds
     url = parse(url);
     const query = querystring.parse(url.query);
     if (Object.keys(query)) {
