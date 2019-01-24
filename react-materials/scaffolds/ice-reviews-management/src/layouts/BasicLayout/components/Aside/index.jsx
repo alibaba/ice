@@ -1,7 +1,7 @@
 /* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import FoundationSymbol from 'foundation-symbol';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import Layout from '@icedesign/layout';
 import { Nav } from '@alifd/next';
 import React, { Component } from 'react';

@@ -7,7 +7,7 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 
 @withRouter
 class UserRegister extends Component {
@@ -80,7 +80,7 @@ class UserRegister extends Component {
         >
           <div style={styles.formItems}>
             <div style={styles.formItem}>
-              <IceIcon type="person" size="small" style={styles.inputIcon} />
+              <FoundationSymbol type="person" size="small" style={styles.inputIcon} />
               <IceFormBinder name="name" required message="请输入正确的用户名">
                 <Input placeholder="用户名" style={styles.inputCol} />
               </IceFormBinder>
@@ -88,7 +88,7 @@ class UserRegister extends Component {
             </div>
 
             <div style={styles.formItem}>
-              <IceIcon type="mail" size="small" style={styles.inputIcon} />
+              <FoundationSymbol type="mail" size="small" style={styles.inputIcon} />
               <IceFormBinder
                 type="email"
                 name="email"
@@ -105,7 +105,7 @@ class UserRegister extends Component {
             </div>
 
             <div style={styles.formItem}>
-              <IceIcon type="lock" size="small" style={styles.inputIcon} />
+              <FoundationSymbol type="lock" size="small" style={styles.inputIcon} />
               <IceFormBinder
                 name="passwd"
                 required
@@ -121,7 +121,7 @@ class UserRegister extends Component {
             </div>
 
             <div style={styles.formItem}>
-              <IceIcon type="lock" size="small" style={styles.inputIcon} />
+              <FoundationSymbol type="lock" size="small" style={styles.inputIcon} />
               <IceFormBinder
                 name="rePasswd"
                 required
