@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "@alifd/next": "^1.x",
-    "@alifd/theme-1": "^0.0.7",
     "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^1.x",
     "@icedesign/foundation-symbol": "^1.x",

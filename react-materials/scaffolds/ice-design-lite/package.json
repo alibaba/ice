@@ -16,7 +16,7 @@
   "dependencies": {
     "@alifd/next": "^1.x",
     "@icedesign/container": "^1.x",
-    "@icedesign/img": "^0.1.1",
+    "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
     "@icedesign/theme": "^0.1.2",
     "axios": "^0.17.1",
