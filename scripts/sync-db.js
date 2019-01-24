@@ -108,7 +108,12 @@ function mergeBizchartsBlocks() {
       json: true,
     }, (error, response, body) => {
       if (body) {
-        materialsData.blocks = materialsData.blocks.concat(body.blocks);
+        console.log('获取 bizcharts 物料源成功', body.blocks);
+        const bizchartBlocks = (body.blocks || []).map((item) => {
+          item.categories = ['图表'];
+          return item;
+        });
+        materialsData.blocks = materialsData.blocks.concat(bizchartBlocks);
         return writeFile(
           materialsPath,
           JSON.stringify(materialsData, null, 2),
@@ -120,6 +125,7 @@ function mergeBizchartsBlocks() {
         );
       }
 
+      console.log('获取 bizcharts 物料源失败', error)
       return resolve();
     });
   });
