@@ -3,7 +3,7 @@
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
-  "files": ["src/", "lib/"],
+  "files": ["demo/", "lib/"],
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
   "dependencies": {
     "prop-types": "^15.5.8"
   },
-  "devDependencies": {
+  "peerDependencies": {
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
   },
