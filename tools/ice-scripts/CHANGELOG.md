@@ -1,5 +1,11 @@
 # ice-scripts Changelog
 
+## 1.8.1
+
+- [feat] 支持 css-module，仅对 `.module.[css/less/scss]` 文件后缀生效
+- [feat] 命令行参数支持 --sourcemap
+- [chore] 升级 webpack-plugin-import 到 0.2.2
+
 ## 1.8.0
 
 - [fix] 没有配置 theme 也需要走 ice-skin-loader 的逻辑
