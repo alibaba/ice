@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
-import { Button, Message } from '@alifd/next';
+import { Button } from '@alifd/next';
 import ContainerTitle from '../../../../components/ContainerTitle';
 
 const mockData = [
@@ -60,7 +60,7 @@ export default class SearchHistory extends Component {
   };
 
   static defaultProps = {
-    onSearchHistory: () => {}
+    onSearchHistory: () => {},
   };
 
   constructor(props) {

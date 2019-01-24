@@ -8,7 +8,6 @@ import styles from './index.module.scss';
 
 @withRouter
 export default class Aside extends PureComponent {
-
   state = {
     collapse: false,
   };

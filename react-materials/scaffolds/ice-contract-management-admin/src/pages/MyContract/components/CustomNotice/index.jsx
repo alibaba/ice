@@ -25,7 +25,8 @@ const CustomNotice = () => {
           {renderNum(0, styles.lightBlue)}
           份！
         </div>
-      } />
+      }
+    />
   );
 };
 

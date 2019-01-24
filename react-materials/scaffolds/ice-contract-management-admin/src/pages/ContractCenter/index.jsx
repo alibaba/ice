@@ -15,7 +15,7 @@ export default class ContractCenter extends Component {
   static defaultProps = {};
 
   state = {
-    searchQueryHistory: null
+    searchQueryHistory: null,
   }
 
   render() {
@@ -34,7 +34,8 @@ export default class ContractCenter extends Component {
             this.setState({
               searchQueryHistory: searchQuery,
             });
-          }} />
+          }}
+          />
         </Col>
       </Row>
     );

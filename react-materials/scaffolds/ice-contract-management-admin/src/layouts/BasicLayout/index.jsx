@@ -1,7 +1,7 @@
 /* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import React, { Component } from 'react';
 import Layout from '@icedesign/layout';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import NotFound from '../../components/NotFound';
 import routerConfig from '../../routerConfig';
 import Header from './components/Header';
@@ -16,10 +16,7 @@ export default class BasicLayout extends Component {
 
   render() {
     return (
-      <Layout
-        fixable
-        className={styles.layout}
-      >
+      <Layout fixable className={styles.layout}>
         <Layout.Header type="secondary">
           <Header />
         </Layout.Header>
@@ -31,7 +28,6 @@ export default class BasicLayout extends Component {
 
           {/* 主体内容 */}
           <Layout.Main scrollable className={styles.main}>
-
             <Switch>
               {routerConfig.map((item, index) => {
                 return item.component ? (
@@ -49,7 +45,6 @@ export default class BasicLayout extends Component {
             <Layout.Footer type="none">
               <Footer />
             </Layout.Footer>
-
           </Layout.Main>
         </Layout.Section>
       </Layout>

@@ -28,7 +28,7 @@ export default class MyContract extends Component {
     });
   };
 
-  onCreateSubmitSuccess = (formValue) => {
+  onCreateSubmitSuccess = () => {
     Message.success('新建成功');
     this.hideCreateForm();
     // 根据需求确定是否要重新加载 list 数据
@@ -65,7 +65,6 @@ export default class MyContract extends Component {
             onSubmitCancel={this.onCreateSubmitCancel}
           />
         </Dialog>
-
       </IceContainer>
     );
   }

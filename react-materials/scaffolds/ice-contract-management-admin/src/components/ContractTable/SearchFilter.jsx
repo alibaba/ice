@@ -69,8 +69,8 @@ const formConfig = [
     componentProps: {
       placeholder: '请选择',
       dataSource: [
-        {label: '淘小宝', value: '淘小宝'},
-        {label: '淘大宝', value: '淘大宝'}
+        { label: '淘小宝', value: '淘小宝' },
+        { label: '淘大宝', value: '淘大宝' },
       ],
     },
     formBinderProps: {
@@ -105,7 +105,7 @@ const formConfig = [
     advanced: true,
     componentProps: {
       placeholder: '请选择日期',
-      size: 'large'
+      size: 'large',
     },
     formBinderProps: {
       name: 'endTime',

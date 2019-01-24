@@ -9,7 +9,6 @@ import {
 } from '@icedesign/form-binder';
 
 export default class CreateFrom extends React.Component {
-
   static defaultProps = {
     onCreateSubmitSuccess: () => {},
     onCreateSubmitCancel: () => {},

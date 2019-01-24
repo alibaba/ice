@@ -49,10 +49,16 @@ export default class ContractTable extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.hasOwnProperty('searchQueryHistory')) {
-      this.setState({
-        searchQuery: Object.assign(cloneDeep(defaultSearchQuery), nextProps.searchQueryHistory),
-        pageIndex: 1,
-      }, this.fetchDataSource);
+      this.setState(
+        {
+          searchQuery: Object.assign(
+            cloneDeep(defaultSearchQuery),
+            nextProps.searchQueryHistory
+          ),
+          pageIndex: 1,
+        },
+        this.fetchDataSource
+      );
     }
   }
 
@@ -62,7 +68,7 @@ export default class ContractTable extends Component {
     });
 
     // 根据当前的 searchQuery/pageIndex 获取列表数据，使用 setTimeout 模拟异步请求
-    const { searchQuery, pageIndex } = this.state;
+    // const { searchQuery, pageIndex } = this.state;
 
     setTimeout(() => {
       const dataSource = Array.from({ length: 20 }).map((item, index) => {
@@ -81,9 +87,7 @@ export default class ContractTable extends Component {
         loading: false,
         dataSource,
       });
-
     }, 1 * 1000);
-
   };
 
   onSearchChange = (searchQuery) => {
@@ -93,10 +97,13 @@ export default class ContractTable extends Component {
   };
 
   onSearchSubmit = (searchQuery) => {
-    this.setState({
-      searchQuery,
-      pageIndex: 1,
-    }, this.fetchDataSource);
+    this.setState(
+      {
+        searchQuery,
+        pageIndex: 1,
+      },
+      this.fetchDataSource
+    );
   };
 
   onSearchReset = () => {
@@ -106,11 +113,13 @@ export default class ContractTable extends Component {
   };
 
   onPaginationChange = (pageIndex) => {
-    this.setState({
-      pageIndex,
-    }, this.fetchDataSource);
-  }
-
+    this.setState(
+      {
+        pageIndex,
+      },
+      this.fetchDataSource
+    );
+  };
 
   renderState = (value) => {
     return (
@@ -207,17 +216,15 @@ export default class ContractTable extends Component {
 
     return (
       <div>
-        {enableFilter && <SearchFilter
-          value={searchQuery}
-          onChange={this.onSeacrhChange}
-          onSubmit={this.onSearchSubmit}
-          onReset={this.onSearchReset}
-        />}
-        <Table
-          dataSource={dataSource}
-          hasBorder={false}
-          loading={loading}
-        >
+        {enableFilter && (
+          <SearchFilter
+            value={searchQuery}
+            onChange={this.onSeacrhChange}
+            onSubmit={this.onSearchSubmit}
+            onReset={this.onSearchReset}
+          />
+        )}
+        <Table dataSource={dataSource} hasBorder={false} loading={loading}>
           {this.getTableColumns().map((item) => {
             return (
               <Table.Column
