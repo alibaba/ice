@@ -4,11 +4,6 @@
 
 const headerMenuConfig = [
   {
-    name: '首页',
-    path: '/dashboard',
-    icon: 'clock',
-  },
-  {
     name: '反馈',
     path: 'https://github.com/alibaba/ice',
     external: true,

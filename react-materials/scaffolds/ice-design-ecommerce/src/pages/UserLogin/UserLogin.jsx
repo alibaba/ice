@@ -7,6 +7,7 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
+import Icon from '@icedesign/foundation-symbol';
 
 @withRouter
 class UserLogin extends Component {
@@ -60,7 +61,6 @@ class UserLogin extends Component {
               <Icon type="account" size="small" style={styles.inputIcon} />
               <IceFormBinder name="username" required message="必填">
                 <Input
-                  size="large"
                   maxLength={20}
                   placeholder="用户名"
                   style={styles.inputCol}
@@ -73,7 +73,6 @@ class UserLogin extends Component {
               <Icon type="ellipsis" size="small" style={styles.inputIcon} />
               <IceFormBinder name="password" required message="必填">
                 <Input
-                  size="large"
                   htmlType="password"
                   placeholder="密码"
                   style={styles.inputCol}
@@ -91,7 +90,6 @@ class UserLogin extends Component {
             <div style={styles.footer}>
               <Button
                 type="primary"
-                size="large"
                 onClick={this.handleSubmit}
                 style={styles.submitBtn}
               >

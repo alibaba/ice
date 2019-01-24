@@ -7,6 +7,7 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
+import Icon from '@icedesign/foundation-symbol';
 
 @withRouter
 class UserRegister extends Component {
@@ -81,11 +82,7 @@ class UserRegister extends Component {
             <div style={styles.formItem}>
               <Icon type="account" size="small" style={styles.inputIcon} />
               <IceFormBinder name="name" required message="请输入正确的用户名">
-                <Input
-                  size="large"
-                  placeholder="用户名"
-                  style={styles.inputCol}
-                />
+                <Input placeholder="用户名" style={styles.inputCol} />
               </IceFormBinder>
               <IceFormError name="name" />
             </div>
@@ -99,7 +96,6 @@ class UserRegister extends Component {
                 message="请输入正确的邮箱"
               >
                 <Input
-                  size="large"
                   maxLength={20}
                   placeholder="邮箱"
                   style={styles.inputCol}
@@ -117,7 +113,6 @@ class UserRegister extends Component {
               >
                 <Input
                   htmlType="password"
-                  size="large"
                   placeholder="至少8位密码"
                   style={styles.inputCol}
                 />
@@ -136,7 +131,6 @@ class UserRegister extends Component {
               >
                 <Input
                   htmlType="password"
-                  size="large"
                   placeholder="确认密码"
                   style={styles.inputCol}
                 />
@@ -149,7 +143,6 @@ class UserRegister extends Component {
                 type="primary"
                 onClick={this.handleSubmit}
                 style={styles.submitBtn}
-                size="large"
               >
                 注 册
               </Button>

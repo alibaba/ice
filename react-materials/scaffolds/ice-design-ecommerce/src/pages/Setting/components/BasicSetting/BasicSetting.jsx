@@ -48,27 +48,19 @@ export default class BasicSetting extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>英文名：</div>
               <IceFormBinder name="cnName">
-                <Input
-                  placeholder="taoxiaobao"
-                  size="large"
-                  style={{ width: '400px' }}
-                />
+                <Input placeholder="taoxiaobao" style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>中文名：</div>
               <IceFormBinder name="zhName">
-                <Input
-                  placeholder="淘小宝"
-                  size="large"
-                  style={{ width: '400px' }}
-                />
+                <Input placeholder="淘小宝" style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>个人简介：</div>
               <IceFormBinder name="description">
-                <Input.TextArea size="large" style={{ width: '400px' }} />
+                <Input.TextArea style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
@@ -79,7 +71,7 @@ export default class BasicSetting extends Component {
                 triggerType="onBlur"
                 message="验证地址必填"
               >
-                <Input type="url" size="large" style={{ width: '400px' }} />
+                <Input type="url" style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="url" />
@@ -93,17 +85,13 @@ export default class BasicSetting extends Component {
                 triggerType="onBlur"
                 message="邮箱地址必填"
               >
-                <Input type="email" size="large" style={{ width: '400px' }} />
+                <Input type="email" style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="email" />
               </div>
             </div>
-            <Button
-              type="primary"
-              size="large"
-              onClick={this.validateAllFormField}
-            >
+            <Button type="primary" onClick={this.validateAllFormField}>
               提 交
             </Button>
           </div>

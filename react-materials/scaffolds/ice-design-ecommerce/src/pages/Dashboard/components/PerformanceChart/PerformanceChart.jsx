@@ -5,8 +5,6 @@ import LineChart from './LineChart';
 import Head from './Head';
 import './PerformanceChart.scss';
 
-const TabPane = Tab.Item;
-
 const MOCK_DATA = {
   all: {
     day: '677.00',

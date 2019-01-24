@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Nav } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
 import { asideMenuConfig } from '../../../../menuConfig';
-
 import './Aside.scss';
 
 const NavItem = Nav.Item;
@@ -15,7 +14,11 @@ export default class BasicLayout extends Component {
     const { pathname } = location;
 
     return (
-      <Nav direction="ver" selectedKeys={[pathname]} className="ice-menu-custom" style={{width: 100}}
+      <Nav
+        direction="ver"
+        selectedKeys={[pathname]}
+        className="ice-menu-custom"
+        style={{ width: 100 }}
       >
         {Array.isArray(asideMenuConfig) &&
           asideMenuConfig.length > 0 &&

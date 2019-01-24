@@ -7,7 +7,6 @@ import Logo from '../Logo';
 import './Header.scss';
 
 const NavItem = Nav.Item;
-const SubNav = Nav.SubNav;
 
 @withRouter
 export default class Header extends Component {
@@ -29,47 +28,7 @@ export default class Header extends Component {
             >
               {headerMenuConfig &&
                 headerMenuConfig.length > 0 &&
-                headerMenuConfig.map((nav, index) => {
-                  if (nav.children && nav.children.length > 0) {
-                    return (
-                      <SubMenu
-                        triggerType="click"
-                        key={index}
-                        icon={nav.icon ? nav.icon : null}
-                        label={
-                          <span>
-                            <span>{nav.name}</span>
-                          </span>
-                        }
-                      >
-                        {nav.children.map((item) => {
-                          const linkProps = {};
-                          if (item.external) {
-                            if (item.newWindow) {
-                              linkProps.target = '_blank';
-                            }
-
-                            linkProps.href = item.path;
-                            return (
-                              <NavItem key={item.path}>
-                                <a {...linkProps}>
-                                  <span>{item.name}</span>
-                                </a>
-                              </NavItem>
-                            );
-                          }
-                          linkProps.to = item.path;
-                          return (
-                            <NavItem key={item.path}>
-                              <Link {...linkProps}>
-                                <span>{item.name}</span>
-                              </Link>
-                            </NavItem>
-                          );
-                        })}
-                      </SubMenu>
-                    );
-                  }
+                headerMenuConfig.map((nav) => {
                   const linkProps = {};
                   if (nav.external) {
                     if (nav.newWindow) {
@@ -79,9 +38,7 @@ export default class Header extends Component {
                     return (
                       <NavItem key={nav.path} icon={nav.icon ? nav.icon : null}>
                         <a {...linkProps}>
-                          <span>
-                            {nav.name}
-                          </span>
+                          <span>{nav.name}</span>
                         </a>
                       </NavItem>
                     );
@@ -90,10 +47,7 @@ export default class Header extends Component {
                   return (
                     <NavItem key={nav.path} nav={nav.icon ? nav.icon : null}>
                       <Link {...linkProps}>
-                        <span>
-
-                          {nav.name}
-                        </span>
+                        <span>{nav.name}</span>
                       </Link>
                     </NavItem>
                   );
