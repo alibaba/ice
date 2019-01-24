@@ -72,7 +72,7 @@ export default class BasicSetting extends Component {
               <div style={styles.formItem}>
                 <div style={styles.formLabel}>项目简介：</div>
                 <IceFormBinder name="description">
-                  <Input.TextArea  style={{ width: '400px' }} />
+                  <Input.TextArea style={{ width: '400px' }} />
                 </IceFormBinder>
               </div>
               <div style={styles.formItem}>

@@ -22,6 +22,7 @@
     "@icedesign/foundation-symbol": "^1.x",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
+    "@icedesign/theme": "^0.1.2",
     "bizcharts": "^3.2.2",
     "classnames": "^2.2.5",
     "immutable": "^4.0.0-rc.12",
@@ -55,7 +56,7 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@alifd/theme-1",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "localization": false,
     "output": {
@@ -69,7 +70,11 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1TA65yAvoK1RjSZFwXXciCFXa-2872-1580.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1TA65yAvoK1RjSZFwXXciCFXa-2872-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1E1ffDSzqK1RjSZFLXXcn2XXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1xubGDNjaK1RjSZKzXXXVwXXa-2860-1580.png"
+    ]
   },
   "engines": {
     "node": ">=8.0.0"
