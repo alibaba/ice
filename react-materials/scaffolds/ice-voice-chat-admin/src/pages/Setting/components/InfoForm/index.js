@@ -59,7 +59,7 @@ export default class infoForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>项目名称</div>
               <IceFormBinder>
-                <Input name="project"  style={{ width: '400px' }} />
+                <Input name="project" style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>

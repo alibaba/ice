@@ -5,7 +5,8 @@ import { withRouter, Link } from 'react-router-dom';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import { asideMenuConfig } from '../../../../menuConfig';
 import './index.scss';
-const {Item} = Nav;
+
+const { Item } = Nav;
 
 @withRouter
 export default class BasicLayout extends Component {

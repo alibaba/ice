@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@alifd/next';
 import styles from './index.module.scss';
+
 export default class SmallCard extends Component {
   render() {
     const { data } = this.props;

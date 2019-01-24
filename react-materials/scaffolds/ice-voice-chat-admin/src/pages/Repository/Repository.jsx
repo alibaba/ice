@@ -31,7 +31,7 @@ export default class Repository extends Component {
   };
 
   handleConfig = () => {
-   Message.error('暂不支持同义词配置');
+    Message.error('暂不支持同义词配置');
   };
 
   getFormValue = (value) => {

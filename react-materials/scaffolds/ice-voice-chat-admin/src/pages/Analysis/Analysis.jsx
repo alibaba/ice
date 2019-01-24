@@ -25,7 +25,7 @@ export default class Analysis extends Component {
           defaultValue="weather"
           style={{ width: '260px', marginRight: '10px' }}
         />
-        <Select  dataSource={dataSource2} defaultValue="today" />
+        <Select dataSource={dataSource2} defaultValue="today" />
       </div>
     );
   };

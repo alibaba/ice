@@ -23,7 +23,7 @@ export default class Skill extends Component {
   };
 
   handleImport = () => {
-   Message.error('暂不支持导入');
+    Message.error('暂不支持导入');
   };
 
   getFormValue = (value) => {
