@@ -53,7 +53,10 @@
   "buildConfig": {
     "theme": "@icedesign/theme",
     "entry": "src/index.js",
-    "localization": false
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
