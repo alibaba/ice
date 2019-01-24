@@ -1,0 +1,52 @@
+.container {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.card {
+  width: 100%;
+  padding: 24px;
+  color: $color-black;
+  font-size: 16px;
+  background-color: white;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+.title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-left: 5px solid $color-brand1-6;
+  padding-left: 10px;
+  line-height: 20px;
+}
+.list {
+  margin: 16px 0;
+  color: #454973;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.circle {
+  border: 1px solid $color-brand1-9;
+  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+  margin-right: 10px;
+  display: inline-block;
+}
+.date {
+  align-self: flex-end;
+  display: inline-block;
+  text-align: right;
+  white-space: nowrap;
+  flex: 1;
+}
+.listLeft {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
+}

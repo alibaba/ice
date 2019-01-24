@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Feedback } from '@icedesign/base';
+import { Input, Button, Checkbox, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -42,7 +42,7 @@ class UserLogin extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('登录成功');
+      Message.success('登录成功');
       this.props.history.push('/');
     });
   };
@@ -61,7 +61,6 @@ class UserLogin extends Component {
               <IceIcon type="person" size="small" style={styles.inputIcon} />
               <IceFormBinder name="username" required message="必填">
                 <Input
-                  size="large"
                   maxLength={20}
                   placeholder="用户名"
                   style={styles.inputCol}
@@ -74,7 +73,6 @@ class UserLogin extends Component {
               <IceIcon type="lock" size="small" style={styles.inputIcon} />
               <IceFormBinder name="password" required message="必填">
                 <Input
-                  size="large"
                   htmlType="password"
                   placeholder="密码"
                   style={styles.inputCol}
@@ -92,7 +90,6 @@ class UserLogin extends Component {
             <div style={styles.footer}>
               <Button
                 type="primary"
-                size="large"
                 onClick={this.handleSubmit}
                 style={styles.submitBtn}
               >
@@ -131,7 +128,7 @@ const styles = {
   inputIcon: {
     position: 'absolute',
     left: '10px',
-    top: '8px',
+    top: '6px',
     color: '#666',
   },
   inputCol: {

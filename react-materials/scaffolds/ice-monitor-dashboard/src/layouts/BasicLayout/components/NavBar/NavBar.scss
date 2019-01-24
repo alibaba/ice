@@ -1,6 +1,11 @@
-.header-navbar-menu {
+.next-nav.header-navbar-menu {
+  display: flex;
   background: #fff;
+  box-shadow: none;
   margin: 62px 20px 0;
+  height: 60px;
+  line-height: 62px;
+  border: 0;
   > .ice-menu-item {
     height: 58px;
     line-height: 58px;

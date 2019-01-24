@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Grid, DatePicker, Select } from '@icedesign/base';
+import { Grid, DatePicker, Select } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -30,7 +30,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>时间筛选：</span>
               <IceFormBinder triggerType="onBlur" name="time">
-                <DatePicker placeholder="请输入" size="large" />
+                <DatePicker placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="time" />
@@ -41,7 +41,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>时间区间：</span>
               <IceFormBinder triggerType="onBlur" name="timeInterval">
-                <Select size="large" style={{ width: '200px' }}>
+                <Select style={{ width: '200px' }}>
                   <Select.Option value="1">近3个月</Select.Option>
                   <Select.Option value="2">近半年</Select.Option>
                   <Select.Option value="3">近一年</Select.Option>
@@ -56,7 +56,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>状态：</span>
               <IceFormBinder triggerType="onBlur" name="state">
-                <Select size="large" style={{ width: '200px' }}>
+                <Select style={{ width: '200px' }}>
                   <Select.Option value="1">提现中</Select.Option>
                   <Select.Option value="2">提现完成</Select.Option>
                   <Select.Option value="3">提现失败</Select.Option>

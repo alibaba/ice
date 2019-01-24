@@ -1,38 +1,24 @@
 import React, { Component } from 'react';
-import { Balloon, Icon } from '@icedesign/base';
-import Menu from '@icedesign/menu';
+import { Nav } from '@alifd/next';
 import Logo from '../Logo';
 import { headerMenuConfig } from '../../menuConfig';
 import './index.scss';
 
+console.log(headerMenuConfig);
 export default class Header extends Component {
   renderBalloonContent = (menu, idx) => {
     return (
-      <Menu.Item key={idx}>
-        <Balloon
-          className="header-balloon-content"
-          closable={false}
-          triggerType="click"
-          trigger={
-            <a>
-              {menu.name}{' '}
-              <Icon
-                size="xxs"
-                type="arrow-down-filling"
-                className="arrow-down-filling-icon"
-              />
-            </a>
-          }
-        >
+      <Nav.SubNav key={idx} label={menu.name + ' '}>
           {menu.children.map((subMenu, index) => {
             return (
-              <a href={subMenu.path} className="custom-sub-menu" key={index}>
-                {subMenu.name}
-              </a>
+              <Nav.Item key={index}>
+                <a href={subMenu.path} className="custom-sub-menu">
+                  {subMenu.name}
+                </a>
+              </Nav.Item>
             );
           })}
-        </Balloon>
-      </Menu.Item>
+      </Nav.SubNav>
     );
   };
 
@@ -42,9 +28,9 @@ export default class Header extends Component {
         return this.renderBalloonContent(menu, idx);
       }
       return (
-        <Menu.Item key={menu.path}>
+        <Nav.Item key={menu.path}>
           <a href={menu.path}>{menu.name}</a>
-        </Menu.Item>
+        </Nav.Item>
       );
     });
   };
@@ -55,9 +41,9 @@ export default class Header extends Component {
         <div className="header-content">
           <Logo />
           <div className="header-navbar">
-            <Menu className="header-navbar-menu" mode="horizontal">
+            <Nav className="header-navbar-menu" direction="hoz">
               {this.renderMenuItem()}
-            </Menu>
+            </Nav>
           </div>
         </div>
       </div>

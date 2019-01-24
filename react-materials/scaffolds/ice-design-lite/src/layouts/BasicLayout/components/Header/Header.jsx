@@ -1,24 +1,22 @@
 /* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 import React, { PureComponent } from 'react';
-import { Balloon, Icon } from '@icedesign/base';
+import { Balloon, Icon, Nav } from '@alifd/next';
 import IceImg from '@icedesign/img';
 import Layout from '@icedesign/layout';
-import Menu from '@icedesign/menu';
-import FoundationSymbol from 'foundation-symbol';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
-import './scss/dark.scss';
-import './scss/light.scss';
+
+import './scss/base.scss';
 
 export default class Header extends PureComponent {
   render() {
-    const { theme, isMobile, className, style } = this.props;
+    const { isMobile, className, style } = this.props;
 
     return (
       <Layout.Header
-        theme={theme}
+        theme={'dark'}
         className={cx('ice-design-layout-header', className)}
         style={{ ...style }}
       >
@@ -27,7 +25,7 @@ export default class Header extends PureComponent {
         <div className="ice-design-layout-header-menu">
           {/* Header 菜单项 begin */}
           {headerMenuConfig && headerMenuConfig.length > 0 ? (
-            <Menu mode="horizontal" selectedKeys={[]}>
+            <Nav direction="hoz" type="secondary" selectedKeys={[]}>
               {headerMenuConfig.map((nav, idx) => {
                 const linkProps = {};
                 if (nav.newWindow) {
@@ -39,26 +37,20 @@ export default class Header extends PureComponent {
                   linkProps.to = nav.path;
                 }
                 return (
-                  <Menu.Item key={idx}>
+                  <Nav.Item key={idx} icon={nav.icon ? nav.icon: null}>
                     {linkProps.to ? (
                       <Link {...linkProps}>
-                        {nav.icon ? (
-                          <FoundationSymbol type={nav.icon} size="small" />
-                        ) : null}
                         {!isMobile ? nav.name : null}
                       </Link>
                     ) : (
                       <a {...linkProps}>
-                        {nav.icon ? (
-                          <FoundationSymbol type={nav.icon} size="small" />
-                        ) : null}
                         {!isMobile ? nav.name : null}
                       </a>
                     )}
-                  </Menu.Item>
+                  </Nav.Item>
                 );
               })}
-            </Menu>
+            </Nav>
           ) : null}
           {/* Header 菜单项 end */}
 
@@ -78,7 +70,7 @@ export default class Header extends PureComponent {
                   <span className="user-department">技术部</span>
                 </div>
                 <Icon
-                  type="arrow-down-filling"
+                  type="arrow-down"
                   size="xxs"
                   className="icon-down"
                 />
@@ -89,15 +81,15 @@ export default class Header extends PureComponent {
           >
             <ul>
               <li className="user-profile-menu-item">
-                <FoundationSymbol type="person" size="small" />
+                <Icon type="account" size="small" />
                 我的主页
               </li>
               <li className="user-profile-menu-item">
-                <FoundationSymbol type="repair" size="small" />
+                <Icon type="repair" size="small" />
                 设置
               </li>
               <li className="user-profile-menu-item">
-                <FoundationSymbol type="compass" size="small" />
+                <Icon type="compass" size="small" />
                 退出
               </li>
             </ul>

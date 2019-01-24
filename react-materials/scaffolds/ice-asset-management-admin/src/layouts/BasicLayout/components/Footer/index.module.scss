@@ -1,0 +1,22 @@
+.footerContainer {
+  width: 100%;
+  margin: 20px auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  filter: grayscale(100%);
+  opacity: 0.3;
+  font-size: 24px;
+}
+.copyright {
+  color: #666;
+  line-height: 1.5;
+  font-size: 12px;
+  text-align: left;
+}
+.copyrightLink {
+  color: #666;
+}

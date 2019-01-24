@@ -10,6 +10,7 @@ export default class Footer extends PureComponent {
     const { className, style } = this.props;
     return (
       <Layout.Footer
+        type={null}
         className={cx('ice-design-layout-footer', className)}
         style={{
           ...style,

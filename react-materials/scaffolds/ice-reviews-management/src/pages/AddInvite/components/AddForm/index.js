@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Input, Button, Feedback, Select } from '@icedesign/base';
+import { Grid, Input, Button, Message, Select } from '@alifd/next';
 import {
   FormBinderWrapper,
   FormBinder,
@@ -8,7 +8,6 @@ import {
 } from '@icedesign/form-binder';
 
 const { Row, Col } = Grid;
-const Toast = Feedback.toast;
 
 export default class SimpleFluencyForm extends Component {
   state = {
@@ -30,7 +29,7 @@ export default class SimpleFluencyForm extends Component {
       }
 
       console.log('values:', values);
-      Toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
@@ -51,11 +50,7 @@ export default class SimpleFluencyForm extends Component {
               </Col>
               <Col l="5">
                 <FormBinder name="name" required message="必填项">
-                  <Input
-                    size="large"
-                    placeholder="淘小宝"
-                    style={{ width: '300px' }}
-                  />
+                  <Input placeholder="淘小宝" style={{ width: '300px' }} />
                 </FormBinder>
                 <div style={styles.formErrorWrapper}>
                   <FormError name="name" />
@@ -75,7 +70,6 @@ export default class SimpleFluencyForm extends Component {
                   message="请输入正确的邮箱"
                 >
                   <Input
-                    size="large"
                     maxLength={20}
                     placeholder="邮箱"
                     style={{ width: '300px' }}
@@ -93,7 +87,7 @@ export default class SimpleFluencyForm extends Component {
               </Col>
               <Col l="5">
                 <FormBinder name="role">
-                  <Select size="large" style={{ width: '300px' }}>
+                  <Select style={{ width: '300px' }}>
                     <Select.Option value="member">评测员</Select.Option>
                     <Select.Option value="owner">主理人</Select.Option>
                   </Select>
@@ -105,7 +99,7 @@ export default class SimpleFluencyForm extends Component {
             </Row>
             <Row>
               <Col offset="2">
-                <Button onClick={this.handleSubmit} type="primary" size="large">
+                <Button onClick={this.handleSubmit} type="primary">
                   确认
                 </Button>
               </Col>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Chart, Geom, Tooltip, Coord } from 'bizcharts';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import ContainetCard from '../../../../components/ContainerCard';
 
 const { Row, Col } = Grid;

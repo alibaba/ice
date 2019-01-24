@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
+import {Nav} from '@alifd/next';
 import { headerMenuConfig } from '../../menuConfig';
 import Logo from '../Logo';
 import './index.scss';
@@ -23,20 +23,22 @@ export default class Header extends Component {
       <div className="header-container">
         <div className="header-content">
           <Logo />
-          <Menu
+          <Nav
             className="header-navbar-menu"
             onClick={this.handleNavClick}
             selectedKeys={[pathname]}
             defaultSelectedKeys={[pathname]}
-            mode="horizontal"
+            direction="hoz"
+            triggerType="click"
+            activeDirection={null}
           >
             {headerMenuConfig &&
               headerMenuConfig.length > 0 &&
               headerMenuConfig.map((nav, index) => {
                 if (nav.children && nav.children.length > 0) {
                   return (
-                    <SubMenu
-                      triggerType="click"
+                    <Nav.SubNav
+
                       key={index}
                       title={<span>{nav.name}</span>}
                     >
@@ -49,23 +51,23 @@ export default class Header extends Component {
 
                           linkProps.href = item.path;
                           return (
-                            <MenuItem key={item.path}>
+                            <Nav.Item key={item.path}>
                               <a {...linkProps}>
                                 <span>{item.name}</span>
                               </a>
-                            </MenuItem>
+                            </Nav.Item>
                           );
                         }
                         linkProps.to = item.path;
                         return (
-                          <MenuItem key={item.path}>
+                          <Nav.Item key={item.path}>
                             <Link {...linkProps}>
                               <span>{item.name}</span>
                             </Link>
-                          </MenuItem>
+                          </Nav.Item>
                         );
                       })}
-                    </SubMenu>
+                    </Nav.SubNav>
                   );
                 }
                 const linkProps = {};
@@ -75,23 +77,23 @@ export default class Header extends Component {
                   }
                   linkProps.href = nav.path;
                   return (
-                    <MenuItem key={nav.path}>
+                    <Nav.Item key={nav.path}>
                       <a {...linkProps}>
                         <span>{nav.name}</span>
                       </a>
-                    </MenuItem>
+                    </Nav.Item>
                   );
                 }
                 linkProps.to = nav.path;
                 return (
-                  <MenuItem key={nav.path}>
+                  <Nav.Item key={nav.path}>
                     <Link {...linkProps}>
                       <span>{nav.name}</span>
                     </Link>
-                  </MenuItem>
+                  </Nav.Item>
                 );
               })}
-          </Menu>
+          </Nav>
           <a href="#" className="ticket-button">
             立即购票
           </a>

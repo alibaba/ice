@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0,react/forbid-prop-types:0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Button } from '@icedesign/base';
+import { Icon, Button } from '@alifd/next';
 import CustomForm from '../CustomForm';
 
 export default class SearchFilter extends Component {
@@ -53,7 +53,7 @@ export default class SearchFilter extends Component {
   renderExtraContent = () => {
     return (
       <Button
-        shape="text"
+        text
         style={styles.extraContent}
         onClick={this.handleAdvancedSearch}
       >

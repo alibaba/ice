@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import ContainerCard from '../../../../components/ContainerCard';
 import RadarChart from './RadarChart';
 import BrushChart from './BrushChart';

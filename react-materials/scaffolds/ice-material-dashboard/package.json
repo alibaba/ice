@@ -1,11 +1,11 @@
 {
   "name": "@icedesign/ice-material-dashboard-scaffold",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "该模板基于社区的 material-dashboard-react 改造而成，默认使用 material-ui 组件和 react-scripts 构建，同时也支持飞冰基础组件和区块的使用，支持 Iceworks 一键创建项目和完整的 GUI 操作",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-material-dashboard/index.html",
   "license": "MIT",
   "dependencies": {
-    "@icedesign/base": "^0.2.3",
+    "@alifd/next": "^1.x",
     "@material-ui/core": "1.2.1",
     "@material-ui/icons": "1.1.0",
     "@types/googlemaps": "3.30.9",
@@ -13,11 +13,12 @@
     "ajv": "6.5.1",
     "chartist": "0.10.1",
     "classnames": "2.2.6",
+    "moment": "^2.23.0",
     "perfect-scrollbar": "1.4.0",
-    "react": "16.4.0",
-    "react-chartist": "0.13.1",
-    "react-dom": "16.4.0",
-    "react-router-dom": "4.3.1",
+    "react": "^16.4.0",
+    "react-chartist": "^0.13.1",
+    "react-dom": "^16.4.0",
+    "react-router-dom": "^4.3.1",
     "react-swipeable-views": "0.12.13"
   },
   "devDependencies": {

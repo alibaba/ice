@@ -3,8 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import NotFound from '../../components/NotFound';
 import routerData from '../../routerConfig';
 
-console.log(routerData);
-
 class MainRoutes extends Component {
   /**
    * 渲染路由组件

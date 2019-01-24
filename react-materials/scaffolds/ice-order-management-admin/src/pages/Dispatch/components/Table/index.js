@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Button, Dialog } from '@icedesign/base';
+import { Table, Pagination, Button, Dialog } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import Filter from '../Filter';
 import Overview from '../Overview';
@@ -126,7 +126,7 @@ export default class ReserveTable extends Component {
         >
           详情
         </Button>
-        <Button type="normal" shape="warning" onClick={this.handleDelete}>
+        <Button type="normal" warning onClick={this.handleDelete}>
           删除
         </Button>
       </div>
@@ -143,7 +143,7 @@ export default class ReserveTable extends Component {
         </IceContainer>
         <Overview data={overviewData} />
         <IceContainer>
-          <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
+          <Table loading={isLoading} dataSource={data} hasBorder={false}>
             <Table.Column title="流水号" dataIndex="serialNumber" />
             <Table.Column title="订单号" dataIndex="orderNumber" />
             <Table.Column title="商品名称" dataIndex="name" />

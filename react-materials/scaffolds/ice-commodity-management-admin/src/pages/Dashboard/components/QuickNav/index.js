@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import IceContainer from '@icedesign/container';
-import { Grid, Icon } from '@icedesign/base';
+import { Grid, Icon } from '@alifd/next';
 
 const { Row, Col } = Grid;
 

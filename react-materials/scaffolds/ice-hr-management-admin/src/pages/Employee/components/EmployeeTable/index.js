@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Dialog, Button } from '@icedesign/base';
+import { Table, Dialog, Button } from '@alifd/next';
 import { withRouter } from 'react-router-dom';
 import ContainerTitle from '../../../../components/ContainerTitle';
 
@@ -77,7 +77,7 @@ export default class Employee extends Component {
         <Button
           onClick={() => this.handleDelete(value)}
           type="normal"
-          shape="warning"
+          warning
         >
           删除
         </Button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import DoughnutChart from '../DoughnutChart';
 

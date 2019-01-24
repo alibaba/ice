@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Progress } from '@icedesign/base';
+import { Grid, Progress } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;
@@ -34,12 +34,7 @@ export default class OverviewPieChart extends Component {
           return (
             <Col xxs="24" l="6" key={index}>
               <IceContainer style={styles.container}>
-                <Progress
-                  percent={item.percent}
-                  state="error"
-                  shape="circle"
-                  size="large"
-                />
+                <Progress percent={item.percent} state="error" shape="circle" />
                 <div style={styles.content}>
                   <p style={styles.value}>{item.value}</p>
                   <h4 style={styles.title}>{item.title}</h4>

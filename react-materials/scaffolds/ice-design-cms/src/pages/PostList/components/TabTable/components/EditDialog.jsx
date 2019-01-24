@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, Button, Form, Input, Field } from '@icedesign/base';
+import { Dialog, Button, Form, Input, Field } from '@alifd/next';
 
 const FormItem = Form.Item;
 
@@ -60,23 +60,19 @@ export default class EditDialog extends Component {
 
     return (
       <div style={styles.editDialog}>
-        <Button
-          size="small"
-          type="primary"
-          onClick={() => this.onOpen(index, record)}
-        >
+        <Button type="primary" onClick={() => this.onOpen(index, record)}>
           编辑
         </Button>
         <Dialog
           style={{ width: 640 }}
           visible={this.state.visible}
           onOk={this.handleSubmit}
-          closable="esc,mask,close"
+          closeable="esc,mask,close"
           onCancel={this.onClose}
           onClose={this.onClose}
           title="编辑"
         >
-          <Form direction="ver" field={this.field}>
+          <Form field={this.field}>
             <FormItem label="标题：" {...formItemLayout}>
               <Input
                 {...init('title', {

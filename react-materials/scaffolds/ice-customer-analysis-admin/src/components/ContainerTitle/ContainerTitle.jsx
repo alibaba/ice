@@ -1,7 +1,7 @@
 /* eslint no-nested-ternary:0 */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 
 const ContainerTitle = ({ title, style, ...props }) => {
   return (

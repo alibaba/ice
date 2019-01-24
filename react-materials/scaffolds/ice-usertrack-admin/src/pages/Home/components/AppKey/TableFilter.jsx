@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Input } from '@icedesign/base';
+import { Grid, Input } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -19,7 +19,6 @@ export default class TableFilter extends Component {
             placeholder="请输入 APPID、APPKey、应用名称"
             hasClear
             onChange={this.onChange}
-            size="large"
             style={{ width: '300px' }}
           />
         </Col>

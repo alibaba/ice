@@ -7,8 +7,8 @@ import {
   Select,
   DatePicker,
   Radio,
-  Feedback,
-} from '@icedesign/base';
+  Message,
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -47,7 +47,7 @@ export default class DonationForm extends Component {
         console.log({ errors });
       }
       console.log({ values });
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
@@ -67,11 +67,10 @@ export default class DonationForm extends Component {
                 required
                 triggerType="onBlur"
                 message="图书名称不能为空"
+                name="bookName"
               >
                 <Input
                   placeholder="请输入图书名称"
-                  name="bookName"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -85,11 +84,10 @@ export default class DonationForm extends Component {
                 required
                 triggerType="onBlur"
                 message="ISBN不能为空"
+                name="isbn"
               >
                 <Input
                   placeholder="图书背面右下角条纹码处"
-                  name="isbn"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -99,12 +97,10 @@ export default class DonationForm extends Component {
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>书目类别</div>
-              <IceFormBinder>
+              <IceFormBinder name="cate">
                 <Select
                   placeholder="请选择"
-                  multiple
-                  name="cate"
-                  size="large"
+                  mode="multiple"
                   style={{ width: '400px' }}
                 >
                   <Option value="technology">技术领域</Option>
@@ -120,11 +116,10 @@ export default class DonationForm extends Component {
                 required
                 triggerType="onBlur"
                 message="捐赠人不能为空"
+                name="donator"
               >
                 <Input
                   placeholder="请输入"
-                  name="donator"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -134,19 +129,17 @@ export default class DonationForm extends Component {
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>捐赠时间</div>
-              <IceFormBinder>
+              <IceFormBinder name="time">
                 <DatePicker
-                  name="time"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>状态</div>
-              <IceFormBinder>
+              <IceFormBinder name="status">
                 <RadioGroup
-                  name="status"
+
                   dataSource={[
                     {
                       value: 'pending',
@@ -173,7 +166,6 @@ export default class DonationForm extends Component {
             </p>
             <Button
               type="primary"
-              size="large"
               style={styles.submitButton}
               onClick={this.validateAllFormField}
             >

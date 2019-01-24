@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
-import { Input, Select, Grid } from '@icedesign/base';
+import { Input, Select, Grid } from '@alifd/next';
 import { FormBinderWrapper, FormBinder } from '@icedesign/form-binder';
 import IceContainer from '@icedesign/container';
 
