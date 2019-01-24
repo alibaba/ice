@@ -120,7 +120,7 @@ export default class DataStatistics extends Component {
               <ul className={styles.items}>
                 {dataSource.statisticData.map((item, index) => {
                   return (
-                    <li key={index} className="item-box" className={styles.itemBox}>
+                    <li key={index} className="item-box">
                       <div className={styles.itemIcon}>
                         <img
                           src={item.img.url}

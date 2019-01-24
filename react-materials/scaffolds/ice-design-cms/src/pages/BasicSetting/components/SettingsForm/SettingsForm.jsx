@@ -101,7 +101,7 @@ export default class SettingsForm extends Component {
                 </Col>
                 <Col xxs="16" s="10" l="6">
                   <IceFormBinder name="name" required max={10} message="必填">
-                    <Input  placeholder="于江水" />
+                    <Input placeholder="于江水" />
                   </IceFormBinder>
                   <IceFormError name="name" />
                 </Col>
@@ -223,7 +223,7 @@ export default class SettingsForm extends Component {
                     required
                     message="请输入正确的 Twitter 地址"
                   >
-                    <Input  placeholder="https://twitter.com" />
+                    <Input placeholder="https://twitter.com" />
                   </IceFormBinder>
                   <IceFormError name="twitterUrl" />
                 </Col>
@@ -235,7 +235,7 @@ export default class SettingsForm extends Component {
                 </Col>
                 <Col xxs="16" s="10" l="6">
                   <IceFormBinder name="description">
-                    <Input.TextArea  placeholder="请输入描述..." />
+                    <Input.TextArea placeholder="请输入描述..." />
                   </IceFormBinder>
                   <IceFormError name="description" />
                 </Col>

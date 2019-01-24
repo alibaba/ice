@@ -5,17 +5,6 @@ import styles from './index.module.scss';
 const { Row, Col } = Grid;
 
 export default class RealTimeStatistics extends Component {
-  static displayName = 'RealTimeStatistics';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <Row wrap gutter="20">
@@ -89,4 +78,3 @@ export default class RealTimeStatistics extends Component {
     );
   }
 }
-

@@ -11,19 +11,19 @@
 }
 .itemBody1 {
   composes: itemBody;
-  background-color: $color-help-3;
+  background-color: #5e83fb;
 }
 .itemBody2 {
   composes: itemBody;
-  background-color: $color-notice-3;
+  background-color: #f7da47;
 }
 .itemBody3 {
   composes: itemBody;
-  background-color: $color-success-3;
+  background-color: #58ca9a;
 }
 .itemBody4 {
   composes: itemBody;
-  background-color: $color-warning-3;
+  background-color: #ee706d;
 }
 
 .itemRow {

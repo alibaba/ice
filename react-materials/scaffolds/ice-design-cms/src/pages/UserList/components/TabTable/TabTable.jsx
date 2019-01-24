@@ -11,12 +11,6 @@ const TabPane = Tab.Item;
 const tabs = [{ tab: '全部', key: 'all' }, { tab: '审核中', key: 'review' }];
 
 export default class TabTable extends Component {
-  static displayName = 'TabTable';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
   constructor(props) {
     super(props);
     this.state = {

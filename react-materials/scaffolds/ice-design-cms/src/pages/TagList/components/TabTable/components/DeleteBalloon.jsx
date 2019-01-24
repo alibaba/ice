@@ -33,7 +33,7 @@ export default class DeleteBalloon extends Component {
 
   render() {
     const visibleTrigger = (
-      <Button size="small" type="secondary" warning>
+      <Button type="secondary" warning>
         删除
       </Button>
     );
@@ -43,7 +43,6 @@ export default class DeleteBalloon extends Component {
         <div style={styles.contentText}>确认删除？</div>
         <Button
           id="confirmBtn"
-          size="small"
           type="normal"
           warning
           style={{ marginRight: '5px' }}
@@ -53,7 +52,6 @@ export default class DeleteBalloon extends Component {
         </Button>
         <Button
           id="cancelBtn"
-          size="small"
           onClick={visible => this.handleHide(visible, 0)}
         >
           关闭

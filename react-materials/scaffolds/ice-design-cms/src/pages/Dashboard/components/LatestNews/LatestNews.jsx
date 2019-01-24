@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Grid } from '@alifd/next';
-import './LatestNews.scss';
 import cx from 'classnames';
+
+import './LatestNews.scss';
 import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
@@ -72,7 +73,7 @@ export default class LatestNews extends Component {
 
   render() {
     return (
-      <div className={cx(styles.container,'latest-news')}>
+      <div className={cx(styles.container, 'latest-news')}>
         <Row wrap gutter="20">
           <Col xxs="24" s="12" l="12">
             <IceContainer className={styles.cardContainer}>
@@ -85,11 +86,7 @@ export default class LatestNews extends Component {
               <div className={styles.items}>
                 {dataSource.articles.map((item, index) => {
                   return (
-                    <a
-                      key={index}
-                      href="#"
-                      className={cx(styles.item, 'link')}
-                    >
+                    <a key={index} href="#" className={cx(styles.item, 'link')}>
                       <div className={styles.itemTitle}>{item.title}</div>
                       <div className={styles.itemTime}>{item.time}</div>
                     </a>
@@ -109,11 +106,7 @@ export default class LatestNews extends Component {
               <div className={styles.items}>
                 {dataSource.comments.map((item, index) => {
                   return (
-                    <a
-                      key={index}
-                      href="#"
-                      className={cx(styles.item, 'link')}
-                    >
+                    <a key={index} href="#" className={cx(styles.item, 'link')}>
                       <div className={styles.itemComment}>
                         <div className={styles.commentTitle}>{item.title}</div>
                         <div className={styles.commentTime}>{item.time}</div>

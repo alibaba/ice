@@ -60,11 +60,7 @@ export default class EditDialog extends Component {
 
     return (
       <div style={styles.editDialog}>
-        <Button
-          size="small"
-          type="primary"
-          onClick={() => this.onOpen(index, record)}
-        >
+        <Button type="primary" onClick={() => this.onOpen(index, record)}>
           编辑
         </Button>
         <Dialog

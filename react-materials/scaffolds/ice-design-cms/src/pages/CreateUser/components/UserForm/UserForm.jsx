@@ -90,7 +90,7 @@ export default class UserForm extends Component {
                 </Col>
                 <Col xxs="16" s="12" l="10">
                   <IceFormBinder name="username" required message="必填">
-                    <Input  placeholder="请输入用户名" />
+                    <Input placeholder="请输入用户名" />
                   </IceFormBinder>
                   <IceFormError name="username" />
                 </Col>
@@ -102,7 +102,7 @@ export default class UserForm extends Component {
                 </Col>
                 <Col xxs="16" s="12" l="10">
                   <IceFormBinder name="displayName">
-                    <Input  placeholder="请输入昵称" />
+                    <Input placeholder="请输入昵称" />
                   </IceFormBinder>
                   <IceFormError name="displayName" />
                 </Col>
