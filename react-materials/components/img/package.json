@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/img",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "description": "ICE 图片组件。",
   "main": "lib/index.js",
   "files": [
@@ -29,13 +29,12 @@
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
-    "@icedesign/base": "^0.2.0"
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^16.5.0"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
+    "access": "public"
   }
 }

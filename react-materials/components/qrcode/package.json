@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/qrcode",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "飞冰 二维码组件",
   "main": "lib/index.js",
   "files": [
@@ -13,10 +13,6 @@
     "build": "ice-devtools build",
     "prepublishOnly": "npm run build",
     "postinstall": "node ./postinstall.js"
-  },
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
   },
   "publishConfig": {
     "access": "public"
@@ -33,8 +29,8 @@
     "react": "^16.5.0"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/foundation-symbol": "^0.1.0",
+    "classnames": "^2.2.5",
+    "@alifd/next": "^1.x",
     "prop-types": "^15.6.0",
     "qrcode.react": "^0.8.0"
   },

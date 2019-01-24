@@ -42,17 +42,15 @@ cols: 1
 
 ## Layout.Header
 
-顶部布局，默认内部元素居中对其。
+顶部布局，默认 flex 布局，并且内部元素垂直居中对齐，可通过 style 属性修改。
 
 ### 参数（props）
 
 | 参数名        | 说明            | 类型     | 默认值      |
 |:-----------|:--------------|:-------|:---------|
-| alignItems | 内部元素垂直对其方式    | string | `center` |
-| theme      | 配置 Header 皮肤色 | string | -        |
+| type      | 配置皮肤色 | string | normal |
 
-- alignItems：`flex-start` `flex-end` `center` `baseline` `stretch`
-- theme：`dark, light`
+- type: none(继承父元素的背景色), normal，primary，secondary
 
 ## Layout.Aside
 
@@ -62,10 +60,7 @@ cols: 1
 
 | 参数名   | 说明            | 类型            | 默认值   |
 |:------|:--------------|:--------------|:------|
-| width | 展开状态下的宽度      | number/string | `200` |
-| theme | 配置 Aside 皮肤色 | string        | -     |
-
-- theme：`dark, light`
+| type | 配置Aside 皮肤色 | string        | -     |
 
 ## Layout.Main
 
@@ -80,3 +75,9 @@ cols: 1
 ## Layout.Footer
 
 页脚布局。
+
+### 参数（props）
+
+| 参数名   | 说明            | 类型            | 默认值   |
+|:------|:--------------|:--------------|:------|
+| type | 配置Aside 皮肤色 | string        | -     |

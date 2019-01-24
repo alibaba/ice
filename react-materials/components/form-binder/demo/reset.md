@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
-import { Select, Button, Grid } from '@icedesign/base';
+import { Select, Button, Grid } from '@alifd/next';
 const { Row, Col } = Grid;
 
 const dataSource = [];
@@ -99,7 +99,7 @@ const styles = {
     marginLeft: '56px',
   },
   preview: {
-    border: '1px solid #eee', 
+    border: '1px solid #eee',
     margin: '20px 0',
     padding: '10px'
   }

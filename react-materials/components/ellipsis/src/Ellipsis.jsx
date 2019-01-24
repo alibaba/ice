@@ -2,12 +2,12 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Balloon } from '@icedesign/base';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { Balloon } from '@alifd/next';
 import { getWidthFromDOM } from './utils';
 
-const Tooltip = Balloon.Tooltip;
+const { Tooltip } = Balloon;
 
 export default class IceEllipsis extends Component {
   static displayName = 'IceEllipsis';
@@ -164,9 +164,9 @@ export default class IceEllipsis extends Component {
         <Tooltip
           trigger={content}
           align="b"
-          text={text}
-          {...this.props.tooltipProps}
-        />
+          {...this.props.tooltipProps}>
+          {text}
+        </Tooltip>
       );
     } else {
       return <span title={text}>{content}</span>;

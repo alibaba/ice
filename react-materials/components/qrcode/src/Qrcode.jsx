@@ -1,8 +1,10 @@
-import { Balloon } from '@icedesign/base';
-import FoundationSymbol from '@icedesign/foundation-symbol';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
 
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { Balloon } from '@alifd/next';
+
+import QrCodeIcon from './QrCodeIcon';
 import Panel from './Panel';
 
 export default class IceQrcode extends Component {
@@ -62,37 +64,34 @@ export default class IceQrcode extends Component {
   };
 
   alignMap = {
-    left: 'lb',
-    right: 'rb',
+    left: 'l',
+    right: 'r',
     top: 't',
     bottom: 'b',
   };
 
   render() {
-    const { align, className = '', style = {}, trigger, ...other } = this.props;
+    const { align, className = '', style = {}, trigger, triggerSize, triggerStyle, ...other } = this.props;
 
     const content = <Panel {...other} />;
-
+    const clazz = classnames(className, 'ice-qrcode');
+    const triggerClazz = classnames('ice-qrcode-trigger', {
+      [`ice-qrcode-trigger-size-${triggerSize}`]: !!triggerSize
+    });
     return (
-      <span className={className} style={{ color: '#333', ...style }}>
+      <div className={clazz} style={style}>
         <Balloon
-          align={this.alignMap[align] || 'lb'}
+          align={this.alignMap[align] || this.alignMap.left}
           closable={false}
-          overlay={content}
+          alignEdge
           trigger={
-            trigger || (
-              <FoundationSymbol
-                style={this.props.triggerStyle}
-                type="qrcode"
-                size={this.props.triggerSize}
-              />
-            )
+            trigger || (<QrCodeIcon className={triggerClazz} style={triggerStyle} />)
           }
           triggerType="hover"
         >
           {content}
         </Balloon>
-      </span>
+      </div>
     );
   }
 }

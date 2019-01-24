@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
-import { Input, Button } from '@icedesign/base';
+import { Input, Button } from '@alifd/next';
 
 class App extends Component {
   constructor(props) {
@@ -59,7 +59,7 @@ class App extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>名称：</span>
               <FormBinder name="name" required message="请输入正确的名称" >
-                <Input placeholder="淘小宝" /> 
+                <Input placeholder="淘小宝" />
               </FormBinder>
               <FormError style={styles.formError} name="name" />
             </div>
@@ -67,7 +67,7 @@ class App extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>邮箱：</span>
               <FormBinder name="email" type="email" required message="请输入正确的邮箱">
-                <Input placeholder="ice-admin@alibaba-inc.com" /> 
+                <Input placeholder="ice-admin@alibaba-inc.com" />
               </FormBinder>
               <FormError style={styles.formError} name="email" />
             </div>
@@ -75,14 +75,14 @@ class App extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>设置密码：</span>
               <FormBinder name="password" required message="请输入新密码" >
-                <Input htmlType="password" placeholder="设置新密码"  /> 
+                <Input htmlType="password" placeholder="设置新密码"  />
               </FormBinder>
               <FormError style={styles.formError} name="password" />
             </div>
 
           </div>
         </FormBinderWrapper>
-        
+
         <div style={{marginTop: 20}}>
         <Button type="primary" style={{marginRight: 10}} onClick={() => this.validateFields(['name', 'email'])}>
             先校验名称和邮箱
@@ -116,7 +116,7 @@ const styles = {
     marginLeft: '10px',
   },
   preview: {
-    border: '1px solid #eee', 
+    border: '1px solid #eee',
     marginTop: 20,
     padding: 10
   }

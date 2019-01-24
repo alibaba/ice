@@ -1,59 +1,42 @@
 ---
-title: Aside 收起展开模式
-order: 3
+title: 通过 type 定制主题
+order: 2
 iframe: true
 width: 960
 importStyle: true
 ---
 
+通过 type 属性可以定制组件的样式，Header/Footer/Aside 支持 type 属性，并且与 Nav 组件保持一致
+
 ````jsx
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '@icedesign/layout';
-import { Icon, Nav } from '@alifd/next';
+import { Icon, Dropdown, Nav, Radio } from '@alifd/next';
 
 class App extends Component {
   state = {
-    collapse: false,
+    type: 'normal'
   };
 
   render() {
-    const { collapse } = this.state;
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Layout.Aside
-          type="primary"
-          style={{
-            width: collapse ? 60 : 200
-          }}
+          type={this.state.type}
         >
-          <Logo text={collapse ? 'go' : 'your-logo'} />
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            margin: '20px 0'
-          }}>
-            <Icon
-              type={collapse ? 'arrow-right' : 'arrow-left'}
-              onClick={() => {
-                this.setState({
-                  collapse: !this.state.collapse
-                })
-              }}
-            />
-          </div>
-          <Nav type="primary" iconOnly={this.state.collapse} hasTooltip={true}>
-
-            <Nav.SubNav icon="account" label="需求">
+          <Logo />
+          <Nav type={this.state.type}>
+            <Nav.Group label="需求">
               <Nav.Item icon="account">需求1</Nav.Item>
               <Nav.Item icon="account">需求2</Nav.Item>
               <Nav.Item icon="account">需求3</Nav.Item>
-            </Nav.SubNav>
-            <Nav.SubNav icon="account" label="我的">
+            </Nav.Group>
+            <Nav.Group label="我的">
               <Nav.Item icon="account">资料</Nav.Item>
               <Nav.Item icon="account">设置</Nav.Item>
               <Nav.Item icon="account">主题</Nav.Item>
-            </Nav.SubNav>
+            </Nav.Group>
           </Nav>
         </Layout.Aside>
         <Layout.Section>
@@ -63,10 +46,10 @@ class App extends Component {
               padding: '0 20px',
               justifyContent: 'space-between',
             }}
-            type="primary"
+            type={this.state.type}
           >
             <Nav
-              type="primary"
+              type={this.state.type}
               direction="hoz"
               triggerType="hover"
             >
@@ -77,18 +60,32 @@ class App extends Component {
               </Nav.SubNav>
               <Nav.Item key="document">Document</Nav.Item>
             </Nav>
+            <div>ICE</div>
           </Layout.Header>
           <Layout.Main
             style={{
               padding: 20,
-              height: 500,
               margin: '0 24px'
             }}
           >
-            Main
+            <Radio.Group
+              shape="button" size="medium"
+              value={this.state.type}
+              onChange={(value) => {
+                this.setState({
+                  type: value
+                })
+              }}
+            >
+              <Radio value="normal">type="normal"</Radio>
+              <Radio value="primary">type="primary"</Radio>
+              <Radio value="secondary">type="secondary"</Radio>
+              <Radio value="line">type="line"</Radio>
+              <Radio value="line">type="none"</Radio>
+            </Radio.Group>
           </Layout.Main>
           <Layout.Footer
-            type="primary"
+            type={this.state.type}
             style={{
               textAlign: 'center',
               lineHeight: '36px'
@@ -109,7 +106,6 @@ class App extends Component {
 // 项目内敛 Logo 组件
 class Logo extends Component {
   render() {
-    const { text } = this.props;
     return (
       <div
         className="logo"
@@ -129,7 +125,7 @@ class Logo extends Component {
             ...this.props.style
           }}
         >
-          {text}
+          Your Logo
         </div>
       </div>
     );

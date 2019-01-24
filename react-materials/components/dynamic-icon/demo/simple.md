@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import DynamicIcon from '@icedesign/dynamic-icon';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 
 const CustomIcon = DynamicIcon.create({
   fontFamily: 'iceicon2',

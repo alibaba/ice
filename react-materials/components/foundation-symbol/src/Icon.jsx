@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-const linkTagCache = {};
-
 export default class DynamicIcon extends Component {
   static displayName = 'DynamicIcon';
 
@@ -11,7 +9,7 @@ export default class DynamicIcon extends Component {
     /**
      * 指定显示哪种图标
      */
-    type: PropTypes.string,
+    type: PropTypes.string.isRequired,
     /**
      * 指定图标大小
      */
