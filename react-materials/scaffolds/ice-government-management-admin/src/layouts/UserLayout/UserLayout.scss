@@ -13,11 +13,11 @@
   .user-content {
     position: absolute;
     width: 450px;
-    background: #fff;
+    background: $color-white;
     border-radius: 5px;
   }
   .layer-mask {
-    background: rgba(0, 0, 0, 0.3);
+    background: transparentize($color-black, 0.7);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -46,7 +46,7 @@
   .formTitle {
     padding: 40px 0;
     margin: 0;
-    color: rgba(0, 0, 0, 0.8);
+    color: transparentize($color-black, 0.2);
     font-size: 33px;
     font-weight: 500;
     text-align: center;
@@ -56,13 +56,13 @@
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: #999;
+    color: $color-text1-2;
   }
   .submitBtn {
     font-size: 16px;
     height: 40px;
     line-height: 40px;
-    background: #3080fe;
+    background: $color-brand1-6;
     border-radius: 4px;
   }
   .checkbox {
@@ -76,12 +76,12 @@
     justify-content: center;
   }
   .tips-text {
-    color: #999;
+    color: $color-text1-2;
     text-decoration: none;
     font-size: 13px;
   }
   .line {
-    color: #dcd6d6;
+    color: $color-line1-2;
     margin: 0 8px;
   }
 
@@ -95,7 +95,7 @@
     }
   }
   .next-checkbox-label {
-    color: #999;
+    color: $color-text1-2;
     font-size: 13px;
   }
 }

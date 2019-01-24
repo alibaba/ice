@@ -1,21 +1,17 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Grid } from '@icedesign/base';
-import {
-  FormBinderWrapper as IceFormBinderWrapper,
-  FormBinder as IceFormBinder,
-  FormError as IceFormError,
-} from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
-
+import { Input, Grid, Form } from '@alifd/next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import injectReducer from '../../utils/injectReducer';
 import { userRegister } from './action';
 import reducer from './reducer';
 
-const { Row, Col } = Grid;
+const Icon = FoundationSymbol;
+const { Row } = Grid;
+const FormItem = Form.Item;
 
 @withRouter
 class UserRegister extends Component {
@@ -65,124 +61,105 @@ class UserRegister extends Component {
     });
   };
 
-  handleSubmit = () => {
-    this.refs.form.validateAll((errors, values) => {
-      if (errors) {
-        console.log('errors', errors);
-        return;
-      }
-      this.props.userRegister(values);
-    });
+  handleSubmit = (values, errors) => {
+    if (errors) {
+      console.log('errors', errors);
+      return;
+    }
+    this.props.userRegister(values);
   };
 
   render() {
     return (
       <div className="user-register">
         <div className="formContainer">
-          <h4 className="formTitle">注 册</h4>
-          <IceFormBinderWrapper
-            value={this.state.value}
-            onChange={this.formChange}
-            ref="form"
-          >
-            <div className="formItems">
-              <Row className="formItem">
-                <Col className="formItemCol">
-                  <IceIcon type="person" size="small" className="inputIcon" />
-                  <IceFormBinder
-                    name="name"
-                    required
-                    message="请输入正确的用户名"
-                  >
-                    <Input size="large" placeholder="用户名" />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="name" />
-                </Col>
-              </Row>
+          <Form value={this.state.value} onChange={this.formChange}>
+            <FormItem
+              required
+              requiredMessage="请输入正确的用户名"
+              className="formItem"
+            >
+              <Input
+                innerBefore={
+                  <Icon type="person" size="small" className="inputIcon" />
+                }
+                name="name"
+                maxLength={20}
+                placeholder="用户名"
+              />
+            </FormItem>
+            <FormItem
+              required
+              requiredMessage="请输入正确的邮箱"
+              className="formItem"
+            >
+              <Input
+                innerBefore={
+                  <Icon type="mail" size="small" className="inputIcon" />
+                }
+                name="email"
+                maxLength={20}
+                placeholder="邮箱"
+              />
+            </FormItem>
+            <FormItem
+              required
+              requiredMessage="请输入正确的密码"
+              className="formItem"
+            >
+              <Input
+                innerBefore={
+                  <Icon
+                    type="lock"
+                    size="small"
+                    todo="lock"
+                    className="inputIcon"
+                  />
+                }
+                name="passwd"
+                htmlType="password"
+                placeholder="至少8位密码"
+              />
+            </FormItem>
 
-              <Row className="formItem">
-                <Col className="formItemCol">
-                  <IceIcon type="mail" size="small" className="inputIcon" />
-                  <IceFormBinder
-                    type="email"
-                    name="email"
-                    required
-                    message="请输入正确的邮箱"
-                  >
-                    <Input size="large" maxLength={20} placeholder="邮箱" />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="email" />
-                </Col>
-              </Row>
+            <FormItem
+              required
+              validator={(rule, values, callback) =>
+                this.checkPasswd2(rule, values, callback, this.state.value)
+              }
+              className="formItem"
+            >
+              <Input
+                innerBefore={
+                  <Icon
+                    type="lock"
+                    size="small"
+                    todo="lock"
+                    className="inputIcon"
+                  />
+                }
+                name="rePasswd"
+                htmlType="password"
+                placeholder="至少8位密码"
+              />
+            </FormItem>
+            <Row className="formItem">
+              <Form.Submit
+                type="primary"
+                validate
+                onClick={this.handleSubmit}
+                className="submitBtn"
+              >
+                注 册
+              </Form.Submit>
+            </Row>
 
-              <Row className="formItem">
-                <Col className="formItemCol">
-                  <IceIcon type="lock" size="small" className="inputIcon" />
-                  <IceFormBinder
-                    name="passwd"
-                    required
-                    validator={this.checkPasswd}
-                  >
-                    <Input
-                      htmlType="password"
-                      size="large"
-                      placeholder="至少8位密码"
-                    />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="passwd" />
-                </Col>
-              </Row>
-
-              <Row className="formItem">
-                <Col className="formItemCol">
-                  <IceIcon type="lock" size="small" className="inputIcon" />
-                  <IceFormBinder
-                    name="rePasswd"
-                    required
-                    validator={(rule, values, callback) =>
-                      this.checkPasswd2(
-                        rule,
-                        values,
-                        callback,
-                        this.state.value
-                      )
-                    }
-                  >
-                    <Input
-                      htmlType="password"
-                      size="large"
-                      placeholder="确认密码"
-                    />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="rePasswd" />
-                </Col>
-              </Row>
-
-              <Row className="formItem">
-                <Button
-                  type="primary"
-                  onClick={this.handleSubmit}
-                  className="submitBtn"
-                >
-                  注 册
-                </Button>
-              </Row>
-
-              <Row className="tips">
-                <Link to="/user/login" className="tips-text">
-                  使用已有账户登录
-                </Link>
-              </Row>
-            </div>
-          </IceFormBinderWrapper>
+            <Row className="tips">
+              <Link to="/user/login" className="tips-text">
+                使用已有账户登录
+              </Link>
+            </Row>
+          </Form>
         </div>
       </div>
     );

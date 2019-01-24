@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Icon, Pagination, Loading } from '@icedesign/base';
+import { Grid, Icon, Pagination, Loading } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -28,7 +28,6 @@ export default class Content extends Component {
         <Loading
           visible={isLoading}
           style={{ width: '100%' }}
-          shape="flower"
           color="#333"
         >
           <div style={styles.contentList}>

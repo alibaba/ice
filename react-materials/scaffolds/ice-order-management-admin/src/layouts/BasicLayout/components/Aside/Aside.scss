@@ -4,38 +4,22 @@
     align-items: center;
     background: #fff;
     justify-content: center;
+    width: 240px;
     padding: 20px 0;
     position: relative;
     .user-avatar {
       margin-right: 12px;
       border-radius: 4px;
     }
-
     .user-department {
       font-size: 12px;
     }
   }
-  .ice-menu-custom.ice-menu-root {
+  .ice-menu-custom {
     background: #fff !important;
     height: 100vh;
-    .ice-menu-item {
-      height: auto;
-      line-height: normal;
-      .ice-menu-link {
-        padding: 20px 0;
-        color: #666;
-      }
-    }
-    .ice-menu-item-selected {
-      border-radius: 0 !important;
-      border-right: 3px solid #447eff;
-      background: #f5f5f5 !important;
-      .ice-menu-link {
-        color: #666;
-        &:hover {
-          color: #666 !important;
-        }
-      }
+    .ice-menu-item-text {
+      margin-left: 1em;
     }
   }
 }

@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Grid, DatePicker, Select } from '@icedesign/base';
+import { Grid, DatePicker, Select } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -30,7 +30,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>开始日期：</span>
               <IceFormBinder triggerType="onBlur" name="startTime">
-                <DatePicker placeholder="请输入" size="large" />
+                <DatePicker placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="startTime" />
@@ -41,7 +41,7 @@ export default class Filter extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>结束日期：</span>
               <IceFormBinder triggerType="onBlur" name="endTime">
-                <DatePicker placeholder="请输入" size="large" />
+                <DatePicker placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="endTime" />
@@ -51,8 +51,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>假期类型：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Select name="type" size="large" style={{ width: '200px' }}>
+              <IceFormBinder triggerType="onBlur" name="type">
+                <Select name="type" style={{ width: '200px' }}>
                   <Select.Option value="1">休年假</Select.Option>
                   <Select.Option value="2">事假</Select.Option>
                   <Select.Option value="3">调休</Select.Option>

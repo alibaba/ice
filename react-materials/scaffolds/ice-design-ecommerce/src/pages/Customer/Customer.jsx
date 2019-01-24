@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, Button } from '@icedesign/base';
+import { Dialog, Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import CustomTable from '../../components/CustomTable';
 
@@ -21,7 +21,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入关键词',
-      size: 'large',
     },
     formBinderProps: {
       name: 'keyword',
@@ -34,7 +33,6 @@ const formConfig = [
     component: 'Select',
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
       dataSource: [
         { label: '全部', value: '0' },
         { label: '会员', value: '1' },
@@ -50,7 +48,6 @@ const formConfig = [
     component: 'Select',
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
       dataSource: [
         { label: '高级客户', value: '1' },
         { label: '初级客户', value: '2' },
@@ -61,24 +58,10 @@ const formConfig = [
     },
   },
   {
-    label: '会员卡',
-    component: 'Input',
-    componentProps: {
-      placeholder: '请输入卡号',
-      size: 'large',
-    },
-    formBinderProps: {
-      name: 'card',
-      required: false,
-      message: '请输入正确的卡号',
-    },
-  },
-  {
     label: '会员积分',
     component: 'Input',
     componentProps: {
       placeholder: '请输入',
-      size: 'large',
     },
     formBinderProps: {
       name: 'integral',
@@ -89,7 +72,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入',
-      size: 'large',
     },
     formBinderProps: {
       name: 'buy',
@@ -100,7 +82,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入',
-      size: 'large',
     },
     formBinderProps: {
       name: 'price',
@@ -111,7 +92,6 @@ const formConfig = [
     component: 'RangePicker',
     componentProps: {
       placeholder: '请选择日期',
-      size: 'large',
     },
     formBinderProps: {
       name: 'time',
@@ -163,11 +143,11 @@ export default class Customer extends Component {
   renderOper = () => {
     return (
       <div>
-        <Button shape="text" onClick={this.handleDetail}>
+        <Button text onClick={this.handleDetail}>
           查看
         </Button>
         <span style={styles.separator} />
-        <Button shape="text" onClick={this.handleDelete}>
+        <Button text onClick={this.handleDelete}>
           删除
         </Button>
       </div>

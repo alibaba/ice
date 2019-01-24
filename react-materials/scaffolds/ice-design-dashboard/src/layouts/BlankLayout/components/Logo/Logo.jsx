@@ -1,26 +1,12 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-
+import styles from './index.module.scss';
 export default class Logo extends PureComponent {
   render() {
     return (
-      <Link to="/" style={{ ...styles.logoStyle, ...this.props.style }}>
+      <Link to="/" className={styles.logoStyle} style={this.props.style}>
         LOGO
       </Link>
     );
   }
 }
-
-const styles = {
-  logoStyle: {
-    display: 'block',
-    maxWidth: '180px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    fontSize: '30px',
-    color: '#447eff',
-    fontWeight: 'bold',
-    textDecoration: 'none',
-  },
-};

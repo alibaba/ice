@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import { withRouter } from 'react-router-dom';
 import ContainerTitle from '../../../../components/ContainerTitle';

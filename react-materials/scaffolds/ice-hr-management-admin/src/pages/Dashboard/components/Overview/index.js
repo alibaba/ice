@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import Card from './Card';
 import Analysis from './Analysis';
 import Statistics from './Statistics';
@@ -11,24 +11,24 @@ const cardData = {
     {
       label: '新增员工',
       value: '89',
-      icon: 'electronics',
+      icon: 'cascades',
     },
     {
       label: '总员工数',
       value: '1234',
-      icon: 'box',
+      icon: 'person',
     },
   ],
   interview: [
     {
       label: '面试人数',
       value: '18',
-      icon: 'lights',
+      icon: 'edit2',
     },
     {
       label: '待入职数',
       value: '6',
-      icon: 'office',
+      icon: 'task',
     },
   ],
 };

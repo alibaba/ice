@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Table } from '@icedesign/base';
+import { Input, Table } from '@alifd/next';
 
 export default class FunctionTable extends Component {
   render() {
@@ -14,7 +14,6 @@ export default class FunctionTable extends Component {
             </p>
           </div>
           <Input
-            size="large"
             style={{ width: '300px' }}
             placeholder="请输入函数名称或者函数描述"
           />

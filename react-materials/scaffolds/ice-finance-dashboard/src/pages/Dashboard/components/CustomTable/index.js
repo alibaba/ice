@@ -38,10 +38,10 @@ export default class CustomTable extends Component {
               return (
                 <tr key={index}>
                   <td>{item.name}</td>
-                  <td style={{ color: '#f7da47' }}>{item.amount}</td>
+                  <td className="custom-th">{item.amount}</td>
                   <td>{item.usage}</td>
                   <td>{item.duration}</td>
-                  <td style={{ color: '#f7da47' }}>{item.rate}</td>
+                  <td className="custom-th">{item.rate}</td>
                 </tr>
               );
             })}

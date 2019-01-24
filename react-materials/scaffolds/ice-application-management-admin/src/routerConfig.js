@@ -4,7 +4,6 @@
 
 import Account from './pages/Account';
 import Query from './pages/Query';
-import BasicLayout from './layouts/BasicLayout';
 import UserLogin from './pages/UserLogin';
 import App from './pages/App';
 import Home from './pages/Home';
@@ -20,7 +19,6 @@ const routerConfig = [
   },
   {
     path: '/query',
-    layout: BasicLayout,
     component: Query,
   },
   {
@@ -29,7 +27,6 @@ const routerConfig = [
   },
   {
     path: '/app',
-    layout: BasicLayout,
     component: App,
   },
 ];

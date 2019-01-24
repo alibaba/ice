@@ -1,0 +1,31 @@
+.iceNav {
+  box-shadow: none !important;
+}
+.iceAsideCustom {
+  height: 100%;
+  padding-top: 10px;
+  box-shadow: 4px 1px 12px transparentize($color-brand1-6, 0.9);
+  width: 240px;
+}
+.iceAsideLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 36px;
+  font-weight: bold;
+  color: $color-brand1-6;
+}
+.iceNavItem {
+  height: auto;
+  line-height: normal;
+}
+.iceMenuLink {
+  display: flex;
+  padding: 15px 0;
+  color: $color-text1-3;
+}
+
+.iceMenuLinkText {
+  padding-left: 1em;
+}

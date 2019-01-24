@@ -1,34 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import styles from './index.module.scss';
 
 export default class Logo extends Component {
   render() {
     return (
-      <div style={{ ...styles.container, ...this.props.style }}>
-        <Link to="/" style={styles.logoText}>
+      <div className={styles.container} style={this.props.style}>
+        <Link to="/" className={styles.logoText}>
           {this.props.text || 'LOGO'}
         </Link>
       </div>
     );
   }
 }
-
-const styles = {
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    marginRight: '20px',
-  },
-  logoText: {
-    display: 'block',
-    maxWidth: '180px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    marginLeft: '10px',
-    fontSize: '30px',
-    color: '#447eff',
-    fontWeight: 'bold',
-    textDecoration: 'none',
-  },
-};

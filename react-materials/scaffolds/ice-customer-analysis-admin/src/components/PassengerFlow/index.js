@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { DatePicker, Grid, Icon } from '@icedesign/base';
+import { DatePicker, Grid, Icon } from '@alifd/next';
+import IceContainer from '@icedesign/container';
 import ContainerTitle from '../ContainerTitle';
 
 const { Row, Col } = Grid;
@@ -26,21 +27,10 @@ const mockData = [
 ];
 
 export default class PassengerFlow extends Component {
-  static displayName = 'PassengerFlow';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     const { title } = this.props;
     return (
-      <div style={styles.container}>
+      <IceContainer>
         <ContainerTitle
           title={title}
           extraAfter={
@@ -71,15 +61,12 @@ export default class PassengerFlow extends Component {
             );
           })}
         </Row>
-      </div>
+      </IceContainer>
     );
   }
 }
 
 const styles = {
-  container: {
-    marginBottom: '20px',
-  },
   item: {
     border: '1px solid #e1e2e3',
     padding: '15px',

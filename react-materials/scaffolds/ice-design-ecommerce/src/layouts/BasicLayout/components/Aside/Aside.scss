@@ -1,22 +1,7 @@
-.ice-menu-custom.ice-menu-root {
-  background: #fff;
-  height: 100vh;
-  box-shadow: 4px 1px 12px rgba(0, 55, 107, 0.04);
-  .ice-menu-item {
-    height: auto;
-    line-height: normal;
-    .ice-menu-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px 0;
-      color: #666;
-    }
-  }
-  .ice-menu-item-selected {
-    border-radius: 0 !important;
-    .ice-menu-link {
-      color: #fff;
-    }
-  }
+.ice-menu-custom {
+  padding-top: 20px;
+  width: 100px;
+  border-top: 1px solid #eee !important;
+  box-shadow: 0 0 5px #eee;
+  height: 100%;
 }

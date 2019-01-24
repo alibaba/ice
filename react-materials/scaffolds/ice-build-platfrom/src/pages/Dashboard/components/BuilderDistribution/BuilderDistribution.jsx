@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import BasicPieChart from '../BasicPieChart';
 import PieLegendChart from '../PieLegendChart';
 

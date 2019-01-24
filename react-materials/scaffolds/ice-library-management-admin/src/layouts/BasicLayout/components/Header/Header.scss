@@ -3,9 +3,9 @@
   left: 0;
   right: 0;
   z-index: 999;
-  background: #447eff;
+  background: $color-brand1-6;
   min-width: 1200px;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0 1px 4px transparentize($color-brand1-6, 0.9);
   .header-content {
     width: 100%;
     height: 62px;
@@ -18,11 +18,15 @@
   .header-navbar {
     display: flex;
     flex-direction: row;
-    .ice-menu {
+    .custom-nav-item-text {
+      padding-left: 1em;
+    }
+    .next-menu {
       background: transparent;
       color: #fff;
-      .ice-menu-submenu-title,
-      .ice-menu-item {
+      box-shadow: none;
+      .next-menu-submenu-title,
+      .next-menu-item {
         font-size: 14px;
         &:hover,
         a:hover {
@@ -67,9 +71,9 @@
     line-height: 40px;
     font-size: 12px;
     a {
-      color: #666;
+      color: $color-text1-3;
       &:hover {
-        color: #447eff;
+        color: $color-brand1-6;
       }
     }
     i {

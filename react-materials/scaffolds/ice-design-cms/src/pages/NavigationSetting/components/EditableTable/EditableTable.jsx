@@ -1,7 +1,7 @@
 /* eslint react/jsx-no-bind: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Button } from '@icedesign/base';
+import { Table, Button } from '@alifd/next';
 import CellEditor from './CellEditor';
 import './EditableTable.scss';
 
@@ -60,7 +60,7 @@ export default class EditableTable extends Component {
 
   renderOperation = (value, index) => {
     return (
-      <Button onClick={this.deleteItem.bind(this, index)} shape="text">
+      <Button onClick={this.deleteItem.bind(this, index)} text>
         删除
       </Button>
     );

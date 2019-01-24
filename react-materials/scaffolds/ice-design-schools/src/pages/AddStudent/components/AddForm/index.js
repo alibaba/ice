@@ -1,7 +1,7 @@
 /* eslint  react/no-string-refs: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Radio, Select, Grid, Feedback } from '@icedesign/base';
+import { Input, Button, Radio, Select, Grid, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -22,7 +22,7 @@ export default class BaseSetting extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
@@ -41,7 +41,6 @@ export default class BaseSetting extends Component {
                 <IceFormBinder name="name" required max={10} message="必填">
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="淘小宝"
                   />
                 </IceFormBinder>
@@ -87,7 +86,7 @@ export default class BaseSetting extends Component {
               </Col>
               <Col l="5">
                 <IceFormBinder name="phone" required message="必填">
-                  <Input style={styles.inputItem} size="large" />
+                  <Input style={styles.inputItem} />
                 </IceFormBinder>
                 <IceFormError name="phone" />
               </Col>
@@ -101,7 +100,6 @@ export default class BaseSetting extends Component {
                 <IceFormBinder name="faculty" required max={10} message="必填">
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="计算机"
                   />
                 </IceFormBinder>
@@ -114,7 +112,6 @@ export default class BaseSetting extends Component {
         <Row style={{ marginTop: 20 }}>
           <Col offset="3">
             <Button
-              size="large"
               type="primary"
               style={{ width: 100 }}
               onClick={this.validateAllFormField}

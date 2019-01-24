@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/commodity-management-scaffold",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "该模板适用于商家类管理后台，布局方式采用左侧固定，右侧自适应方式，适合大量数据展示和界面操作",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://unpkg.com/@icedesign/commodity-management-scaffold@latest/build/index.html",
@@ -15,17 +15,18 @@
     ".eslintrc"
   ],
   "dependencies": {
+    "@alifd/next": "^1.x",
+    "@alifd/theme-1": "^0.0.6",
     "@antv/data-set": "^0.9.5",
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.6",
-    "@icedesign/form-binder": "^1.0.3",
-    "@icedesign/img": "^0.1.1",
-    "@icedesign/layout": "^0.1.2",
-    "@icedesign/menu": "^0.1.1",
-    "@icedesign/skin": "^0.1.0",
+    "@icedesign/container": "^1.x",
+    "@icedesign/form-binder": "^1.x",
+    "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/img": "^1.x",
+    "@icedesign/layout": "^1.x",
+    "@icedesign/theme": "^0.1.2",
     "bizcharts": "^3.2.2",
     "enquire-js": "^0.1.2",
-    "foundation-symbol": "^0.1.3",
+    "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.2.0",
     "react-dom": "^16.4.1",
@@ -50,11 +51,8 @@
     "build": "ice build",
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
-  "themeConfig": {
-    "primaryColor": "#447eff"
-  },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "localization": false,
     "output": {
@@ -68,7 +66,12 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1cmQaCZbpK1RjSZFyXXX_qFXa-2872-1580.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1cmQaCZbpK1RjSZFyXXX_qFXa-2872-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1NtNrDxjaK1RjSZKzXXXVwXXa-2872-1582.png",
+      "https://img.alicdn.com/tfs/TB1jt7ZDgDqK1RjSZSyXXaxEVXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1oUpsDyLaK1RjSZFxXXamPFXa-2872-1580.png"
+    ]
   },
   "engines": {
     "node": ">=8.0.0"

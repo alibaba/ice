@@ -1,6 +1,7 @@
 .ice-layout {
   .ice-layout-aside.custom-aside {
     background: #2f323f;
+    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
     .aside-logo {
       height: 62px;
       box-shadow: 0 1px 4px rgba(0, 21, 41, 0.5);
@@ -15,19 +16,17 @@
       padding-top: 20px;
       border-radius: 6px;
       box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-      .ice-menu-sub {
+      .next-menu-sub-menu {
         background: #2c2e39;
+        .next-menu-item {
+          -webkit-font-smoothing: antialiased;
+        }
       }
-      .ice-menu-item,
-      .ice-menu-submenu-title {
+      .next-menu-item {
         color: #fff;
       }
-      .ice-menu-item-selected {
-        border-radius: 0 !important;
-        margin-bottom: 1px;
-        > a {
-          color: #fff;
-        }
+      .next-selected {
+        background: #447eff;
       }
     }
   }

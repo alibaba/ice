@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import IceContainer from '@icedesign/container';
-import { Button, Step, Feedback } from '@icedesign/base';
+import { Button, Step, Message } from '@alifd/next';
 import { withRouter } from 'react-router-dom';
 
 @withRouter
@@ -19,7 +19,7 @@ export default class SuccessDetail extends PureComponent {
   };
 
   handleLinkClick = () => {
-    Feedback.toast.success('可以根据实际需求自定义查看更多');
+    Message.success('可以根据实际需求自定义查看更多');
   };
 
   render() {
@@ -38,21 +38,20 @@ export default class SuccessDetail extends PureComponent {
         <p style={styles.descrpiton}>
           如果有跟多细节需要展示，可以补充在下面这里，一些相关的介绍和描述
         </p>
-        <Step current={current} type={type} style={styles.step}>
+        <Step current={current} shape={type} style={styles.step}>
           {value.map((item, index) => {
             return <Step.Item key={index} title={item} />;
           })}
         </Step>
         <div style={styles.buttons}>
           <Button
-            size="large"
             type="normal"
             onClick={this.handleBackClick}
             style={{ marginRight: '6px' }}
           >
             返回首页
           </Button>
-          <Button size="large" type="primary" onClick={this.handleLinkClick}>
+          <Button type="primary" onClick={this.handleLinkClick}>
             查看更多
           </Button>
         </div>

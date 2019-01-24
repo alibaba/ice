@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Icon } from '@icedesign/base';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 
 export default class Card extends Component {
   render() {
@@ -11,7 +11,7 @@ export default class Card extends Component {
           const hasBorder = index !== data.length - 1 ? styles.border : {};
           return (
             <div style={{ ...styles.body, ...hasBorder }} key={index}>
-              <Icon type={item.icon} style={styles.icon} />
+              <FoundationSymbol type={item.icon} style={styles.icon} />
               <div style={styles.info}>
                 <p style={styles.label}>{item.label}</p>
                 <h4 style={styles.value}>{item.value}</h4>

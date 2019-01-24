@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Button, Dialog } from '@icedesign/base';
+import { Table, Pagination, Button, Dialog } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import FilterTag from '../FilterTag';
 import FilterForm from '../FilterForm';
@@ -101,7 +101,7 @@ export default class GoodsTable extends Component {
         >
           详情
         </Button>
-        <Button type="normal" shape="warning" onClick={this.handleDelete}>
+        <Button type="normal" warning onClick={this.handleDelete}>
           删除
         </Button>
       </div>
@@ -118,7 +118,7 @@ export default class GoodsTable extends Component {
           <FilterForm onChange={this.handleFilterChange} />
         </IceContainer>
         <IceContainer>
-          <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
+          <Table loading={isLoading} dataSource={data} hasBorder={false}>
             <Table.Column title="会员名称" dataIndex="name" />
             <Table.Column title="会员等级" dataIndex="level" />
             <Table.Column title="会员余额(元)" dataIndex="balance" />

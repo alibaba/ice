@@ -1,130 +1,84 @@
 /* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import FoundationSymbol from 'foundation-symbol';
-import Layout from '@icedesign/layout';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
-import React, { Component } from 'react';
+import FoundationSymbol from '@icedesign/foundation-symbol';
+import { Nav, Icon } from '@alifd/next';
+import cls from 'classname';
 import { asideMenuConfig } from '../../../../menuConfig';
-import './index.scss';
+import styles from './index.module.scss';
 
 @withRouter
 export default class Aside extends Component {
-  constructor(props) {
-    super(props);
-    const openKeys = this.getDefaultOpenKeys();
-    this.state = {
-      openKeys,
-    };
-    this.openKeysCache = openKeys;
+
+  state = {
+    collapse: false,
   }
 
-  /**
-   * 当前展开的菜单项
-   */
-  onOpenChange = (openKeys) => {
+  toggleCollapse = () => {
+    const { collapse } = this.state;
+
     this.setState({
-      openKeys,
+      collapse: !collapse,
     });
-    this.openKeysCache = openKeys;
-  };
+  }
 
-  /**
-   * 获取当前展开的菜单项
-   */
-  getDefaultOpenKeys = () => {
-    const { location = {} } = this.props;
-    const { pathname } = location;
+  renderNavItem = (nav) => {
+    const linkProps = {};
+    linkProps.to = nav.path;
 
-    let openKeys = [];
-    if (Array.isArray(asideMenuConfig)) {
-      asideMenuConfig.forEach((item, index) => {
-        if (pathname.startsWith(item.path)) {
-          openKeys = [`${index}`];
-        }
-      });
+    if (nav.newWindow) {
+      linkProps.target = '_blank';
     }
 
-    return openKeys;
-  };
+    return (
+      <Nav.Item key={nav.path} icon={nav.icon}>
+        <Link {...linkProps}>{nav.name}</Link>
+      </Nav.Item>
+    );
+  }
 
   render() {
     const { location } = this.props;
     const { pathname } = location;
+    const { collapse } = this.state;
+
+    const className = cls(styles.aside, {
+      [styles.asideCollapsed]: collapse,
+    });
 
     return (
-      <Layout.Aside width="240" theme="light" className="custom-aside">
-        <Menu
-          defaultSelectedKeys={[pathname]}
-          mode="inline"
+      <div className={className}>
+        <div className={styles.collapseBtn} onClick={this.toggleCollapse}>
+          <Icon
+            type={collapse ? 'arrow-right' : 'arrow-left'}
+            size="small"
+          />
+        </div>
+        <Nav
+          type="primary"
+          direction="ver"
+          iconOnly={collapse}
+          hasTooltip
           selectedKeys={[pathname]}
-          openKeys={this.state.openKeys}
-          onOpenChange={this.onOpenChange}
-          onClick={this.onMenuClick}
-          className="custom-menu"
         >
-          {Array.isArray(asideMenuConfig) &&
-            asideMenuConfig.length > 0 &&
-            asideMenuConfig.map((nav, index) => {
+          {(asideMenuConfig || []).map((nav, index) => {
               if (nav.children && nav.children.length > 0) {
                 return (
-                  <SubMenu
+                  <Nav.SubNav
                     key={index}
-                    title={
-                      <span>
-                        {nav.icon ? (
-                          <FoundationSymbol size="small" type={nav.icon} />
-                        ) : null}
-                        <span className="ice-menu-collapse-hide">
-                          {nav.name}
-                        </span>
-                      </span>
-                    }
+                    icon={nav.icon}
+                    label={nav.name}
                   >
-                    {nav.children.map((item) => {
-                      const linkProps = {};
-                      if (item.newWindow) {
-                        linkProps.href = item.path;
-                        linkProps.target = '_blank';
-                      } else if (item.external) {
-                        linkProps.href = item.path;
-                      } else {
-                        linkProps.to = item.path;
-                      }
-                      return (
-                        <MenuItem key={item.path}>
-                          <Link {...linkProps}>{item.name}</Link>
-                        </MenuItem>
-                      );
-                    })}
-                  </SubMenu>
+                    {nav.children.map(this.renderNavItem)}
+                  </Nav.SubNav>
                 );
               }
-              const linkProps = {};
-              if (nav.newWindow) {
-                linkProps.href = nav.path;
-                linkProps.target = '_blank';
-              } else if (nav.external) {
-                linkProps.href = nav.path;
-              } else {
-                linkProps.to = nav.path;
-              }
-              return (
-                <MenuItem key={nav.path}>
-                  <Link {...linkProps}>
-                    <span>
-                      {nav.icon ? (
-                        <FoundationSymbol size="small" type={nav.icon} />
-                      ) : null}
-                      <span className="ice-menu-collapse-hide">{nav.name}</span>
-                    </span>
-                  </Link>
-                </MenuItem>
-              );
+              return this.renderNavItem(nav);
             })}
-        </Menu>
+        </Nav>
         {/* 侧边菜单项 end */}
-      </Layout.Aside>
+      </div>
     );
   }
 }

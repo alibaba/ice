@@ -1,0 +1,43 @@
+.title {
+  color: #fff;
+  font-size: 46px;
+  text-align: center;
+  line-height: 60px;
+  margin-bottom: 30px;
+  letter-spacing: 4px;
+}
+.subTitle {
+  color: #fff;
+  margin: 0px;
+  font-size: 20px;
+  text-align: center;
+  text-shadow: #C8C8C8 1px 1px 2px;
+  line-height: 1.7em;
+}
+.leftButton {
+  margin-right: 20px;
+  :global {
+    button:first-child {
+      color: $color-brand1-6;
+      &:hover {
+        color: $color-brand1-6;
+      }
+    }
+  }
+}
+.gitStar {
+  width: 145px;
+  border: 0px;
+  height: 32px;
+  margin: 0 auto;
+}
+.gitContainer {
+  margin-top: 30px;
+  text-align: center;
+}
+.updateLogLinkWrap {
+  text-align: center;
+}
+.updateLogLink {
+  color: #fff;
+}

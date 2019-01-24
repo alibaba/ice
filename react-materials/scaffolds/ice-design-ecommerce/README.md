@@ -24,4 +24,4 @@
 
 ## 效果图
 
-![screenshot](https://img.alicdn.com/tfs/TB1hSOGCbvpK1RjSZFqXXcXUVXa-2872-1580.png)
+![screenshot](https://img.alicdn.com/tfs/TB1O_6jDOrpK1RjSZFhXXXSdXXa-2860-1580.png)

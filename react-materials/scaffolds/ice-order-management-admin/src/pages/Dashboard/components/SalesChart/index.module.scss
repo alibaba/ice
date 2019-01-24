@@ -1,0 +1,31 @@
+.container {
+  border-top: 3px solid $color-brand1-6;
+}
+.content {
+  color: #333;
+  border-radius: 3px;
+}
+.title {
+  color: #666;
+  margin: 0 0 30px 0;
+  font-weight: 450;
+}
+.data {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+.amount {
+  margin: 0 15px 0 0;
+  font-size: 28px;
+}
+.percent {
+  display: flex;
+  font-size: 14px;
+  align-items: flex-end;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.arrowIcon {
+  margin-left: 8px;
+}

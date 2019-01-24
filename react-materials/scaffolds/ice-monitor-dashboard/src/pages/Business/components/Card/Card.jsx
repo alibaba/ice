@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import { Link } from 'react-router-dom';
 import RankList from './RankList';
 

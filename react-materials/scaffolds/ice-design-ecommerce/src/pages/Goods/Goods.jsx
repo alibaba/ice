@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, Button } from '@icedesign/base';
+import { Dialog, Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import CustomTable from '../../components/CustomTable';
 
@@ -17,7 +17,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入商品编号',
-      size: 'large',
     },
     formBinderProps: {
       name: 'id',
@@ -30,7 +29,7 @@ const formConfig = [
     component: 'Select',
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
+
       dataSource: [
         { label: '全部', value: '0' },
         { label: '电器', value: '1' },
@@ -47,7 +46,7 @@ const formConfig = [
     component: 'Select',
     componentProps: {
       placeholder: '请选择',
-      size: 'large',
+
       dataSource: [
         { label: '实物商品', value: '1' },
         { label: '虚拟商品', value: '2' },
@@ -62,7 +61,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入卡号',
-      size: 'large',
     },
     formBinderProps: {
       name: 'sales',
@@ -75,7 +73,6 @@ const formConfig = [
     component: 'Input',
     componentProps: {
       placeholder: '请输入',
-      size: 'large',
     },
     formBinderProps: {
       name: 'price',
@@ -117,11 +114,11 @@ export default class Goods extends Component {
   renderOper = () => {
     return (
       <div>
-        <Button shape="text" onClick={this.handleDetail}>
+        <Button text onClick={this.handleDetail}>
           查看
         </Button>
         <span style={styles.separator} />
-        <Button shape="text" onClick={this.handleDelete}>
+        <Button text onClick={this.handleDelete}>
           删除
         </Button>
       </div>

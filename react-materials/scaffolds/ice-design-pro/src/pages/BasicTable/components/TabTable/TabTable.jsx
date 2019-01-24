@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import CustomTable from './components/CustomTable';
 import EditDialog from './components/EditDialog';
 import DeleteBalloon from './components/DeleteBalloon';
 import data from './data';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 const tabs = [
   { tab: '全部', key: 'all' },
@@ -100,13 +100,13 @@ export default class TabTable extends Component {
           <Tab onChange={this.handleTabChange}>
             {tabs.map((item) => {
               return (
-                <TabPane tab={item.tab} key={item.key}>
+                <Tab.Item title={item.tab} key={item.key}>
                   <CustomTable
                     dataSource={dataSource[this.state.tabKey]}
                     columns={this.columns}
                     hasBorder={false}
                   />
-                </TabPane>
+                </Tab.Item>
               );
             })}
           </Tab>

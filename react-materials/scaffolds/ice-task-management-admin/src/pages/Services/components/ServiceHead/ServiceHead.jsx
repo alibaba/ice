@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Dialog } from '@icedesign/base';
+import { Button, Dialog } from '@alifd/next';
 
 export default class ServiceHead extends Component {
   handleClick = () => {
@@ -12,13 +12,12 @@ export default class ServiceHead extends Component {
     return (
       <div style={styles.head}>
         <Button
-          size="large"
           style={{ marginRight: '10px' }}
           onClick={this.handleClick}
         >
           项目管理
         </Button>
-        <Button size="large" type="primary" onClick={this.handleClick}>
+        <Button type="primary" onClick={this.handleClick}>
           授权管理
         </Button>
       </div>
