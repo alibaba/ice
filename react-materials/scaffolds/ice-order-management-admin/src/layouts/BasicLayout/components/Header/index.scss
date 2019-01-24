@@ -12,5 +12,8 @@
   .header-navbar {
     display: flex;
     flex-direction: row;
+    i {
+      margin-right: 5px;
+    }
   }
 }

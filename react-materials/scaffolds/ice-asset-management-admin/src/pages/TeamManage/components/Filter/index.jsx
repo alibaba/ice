@@ -21,7 +21,6 @@ export default class Filter extends Component {
     return (
       <IceContainer style={styles.container}>
         <Select
-          size="large"
           style={{ width: '200px' }}
           onChange={this.handleSelectChange}
           defaultValue="frontend"
@@ -31,7 +30,7 @@ export default class Filter extends Component {
           <Select.Option value="business">业务团队</Select.Option>
           <Select.Option value="operation">运营团队</Select.Option>
         </Select>
-        <DatePicker size="large" onChange={this.handleDatePickerChange} />
+        <DatePicker onChange={this.handleDatePickerChange} />
       </IceContainer>
     );
   }
