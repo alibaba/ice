@@ -30,9 +30,9 @@ const asideMenuConfig = [
     path: '/manage',
     icon: 'account',
     children: [
-      { name: '公司管理', path: '/manage/company', icon: 'filter' },
-      { name: '部门管理', path: '/manage/department', icon: 'filter' },
-      { name: '团队管理', path: '/manage/team', icon: 'filter' },
+      { name: '公司管理', path: '/manage/company', icon: 'set' },
+      { name: '部门管理', path: '/manage/department', icon: 'lights' },
+      { name: '团队管理', path: '/manage/team', icon: 'atm' },
     ],
   },
   {
@@ -40,8 +40,8 @@ const asideMenuConfig = [
     path: '/special',
     icon: 'set',
     children: [
-      { name: '成本管理', path: '/special/cost', icon: 'filter' },
-      { name: '质量管理', path: '/special/cluster', icon: 'filter' },
+      { name: '成本管理', path: '/special/cost', icon: 'refresh' },
+      { name: '质量管理', path: '/special/cluster', icon: 'account' },
     ],
   },
 ];

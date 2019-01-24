@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@alifd/next';
+import { Select } from '@alifd/next';
 import LineChart from './LineChart';
 import Head from './Head';
 import './index.scss';
@@ -35,27 +35,36 @@ export default class YearsAnalysis extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      type: 'memory',
+    };
+  }
+
+  changeType = (type) => {
+    this.setState({
+      type,
+    });
   }
 
   render() {
+    const { type } = this.state;
+
     return (
       <IceContainer style={styles.container} className="years-analysis">
-        <h4 style={styles.title}>财年分析</h4>
-        <Tab shape="text" size="small">
-          <Tab.Item title="存储" key="1">
-            <Head data={MOCK_DATA.memory} />
-            <LineChart />
-          </Tab.Item>
-          <Tab.Item title="计算" key="2">
-            <Head data={MOCK_DATA.calculate} />
-            <LineChart />
-          </Tab.Item>
-          <Tab.Item title="成本" key="3">
-            <Head data={MOCK_DATA.cost} />
-            <LineChart />
-          </Tab.Item>
-        </Tab>
+        <div style={styles.titleContainer}>
+          <div style={styles.title}>财年分析</div>
+          <Select onChange={this.changeType} value={type} size="small">
+            {
+              ['memory', 'calculate', 'cost'].map((item) => {
+                return <Select.Option value={item} key={item}>{item}</Select.Option>;
+              })
+            }
+          </Select>
+        </div>
+        <div style={styles.chartContent}>
+          <Head data={MOCK_DATA[type]} />
+          <LineChart />
+        </div>
       </IceContainer>
     );
   }
@@ -65,12 +74,20 @@ const styles = {
   container: {
     padding: '0',
   },
+  titleContainer: {
+    padding: '0 20px',
+    height: '40px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottom: '1px solid rgb(240, 240, 240)',
+  },
   title: {
-    margin: '0',
-    padding: '15px 20px',
     fonSize: '16px',
     color: 'rgba(0, 0, 0, 0.85)',
     fontWeight: '500',
-    borderBottom: '1px solid #f0f0f0',
+  },
+  chartContent: {
+    padding: '15px',
   },
 };

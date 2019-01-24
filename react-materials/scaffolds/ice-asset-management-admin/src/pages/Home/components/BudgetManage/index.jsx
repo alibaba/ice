@@ -18,17 +18,12 @@ function handleClick(key) {
 }
 
 export default class BudgetManage extends Component {
-  renderTabExtraContent = () => {
-    return <div style={styles.tabExtra}><DatePicker style={{ marginRight: '20px' }} /></div>;
-  };
-
   render() {
     return (
       <IceContainer style={styles.container}>
         <Tab
           onChange={handleChange}
           navStyle={styles.tabHead}
-          extra={this.renderTabExtraContent()}
         >
           {tabs.map((item) => {
             return (

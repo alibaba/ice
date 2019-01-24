@@ -1,7 +1,7 @@
 /* eslint no-mixed-operators: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@alifd/next';
+import { Select } from '@alifd/next';
 import LineChart from './LineChart';
 import './index.scss';
 
@@ -77,7 +77,15 @@ function random(min, max) {
 export default class CostTrend extends Component {
   state = {
     data: mockData,
+    type: 'allCost',
   };
+
+  changeType = (type) => {
+    this.setState({
+      type,
+    });
+  }
+
 
   handleTabChange = () => {
     const { data } = this.state;
@@ -94,18 +102,23 @@ export default class CostTrend extends Component {
   };
 
   render() {
-    const { data } = this.state;
+    const { data, type } = this.state;
     return (
       <IceContainer style={styles.container} className="cost-trend">
-        <h4 style={styles.title}>费用趋势</h4>
-        <Tab shape="text" size="small" onChange={this.handleTabChange}>
-          <Tab.Item title="总费用" key="1">
-            <LineChart data={data} />
-          </Tab.Item>
-          <Tab.Item title="计算费用" key="2">
-            <LineChart data={data} />
-          </Tab.Item>
-        </Tab>
+        <div style={styles.titleContainer}>
+          <div style={styles.title}>费用趋势</div>
+          <Select onChange={this.changeType} value={type} size="small">
+            {
+              ['allCost', 'cost'].map((item) => {
+                return <Select.Option value={item} key={item}>{item}</Select.Option>;
+              })
+            }
+          </Select>
+        </div>
+
+        <div style={styles.chartContent}>
+          <LineChart data={data} />
+        </div>
       </IceContainer>
     );
   }
@@ -115,12 +128,20 @@ const styles = {
   container: {
     padding: '0',
   },
+  titleContainer: {
+    padding: '0 20px',
+    height: '40px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottom: '1px solid rgb(240, 240, 240)',
+  },
   title: {
-    margin: '0',
-    padding: '15px 20px',
     fonSize: '16px',
     color: 'rgba(0, 0, 0, 0.85)',
     fontWeight: '500',
-    borderBottom: '1px solid #f0f0f0',
+  },
+  chartContent: {
+    padding: '15px',
   },
 };
