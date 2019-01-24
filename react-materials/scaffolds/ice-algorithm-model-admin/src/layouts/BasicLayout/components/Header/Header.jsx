@@ -6,7 +6,8 @@ import IceImg from '@icedesign/img';
 import headerMenuConfig from '../../../../menuConfig';
 import Logo from '../Logo';
 import './Header.scss';
-const {SubNav: SubMenu, Item: MenuItem} = Nav;
+
+const { SubNav: SubMenu, Item: MenuItem } = Nav;
 
 @withRouter
 export default class Header extends Component {

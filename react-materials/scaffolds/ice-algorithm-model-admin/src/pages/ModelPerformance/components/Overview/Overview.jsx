@@ -14,19 +14,19 @@ const mockData = [
   {
     symbolBgColor: '#f7da47',
     symbol: 'chart',
-    count: '83,495,050',
+    count: '8495',
     desc: '近30天总调用量',
   },
   {
     symbolBgColor: '#58ca9a',
     symbol: 'cascades',
-    count: '348,065',
+    count: '3065',
     desc: '近30天日均调用量',
   },
   {
     symbolBgColor: '#447eff',
     symbol: 'yonghu',
-    count: '334,451',
+    count: '4451',
     desc: '用户总数',
   },
 ];

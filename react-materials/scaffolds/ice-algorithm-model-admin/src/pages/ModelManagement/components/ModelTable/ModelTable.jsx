@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Dialog } from '@alifd/next';
+import { Table, Pagination, Dialog, Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import TableHead from './TableHead';
 import styles from './table.module.scss';
@@ -89,18 +89,16 @@ export default class ModelTable extends Component {
   renderOper = () => {
     return (
       <div>
-        <a
+        <Button
+          type="primary"
+          style={{ marginRight: '5px' }}
           onClick={this.handlePublish}
-          className={styles.publishBtn}
         >
           发布
-        </a>
-        <a
-          onClick={this.handleDelete}
-          className={styles.deleteBtn}
-        >
+        </Button>
+        <Button type="primary" warning onClick={this.handleDelete}>
           删除
-        </a>
+        </Button>
       </div>
     );
   };
@@ -148,4 +146,3 @@ export default class ModelTable extends Component {
     );
   }
 }
-

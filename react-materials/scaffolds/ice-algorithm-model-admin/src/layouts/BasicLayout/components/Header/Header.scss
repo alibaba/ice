@@ -18,23 +18,9 @@
   .header-navbar {
     display: flex;
     flex-direction: row;
-    .ice-menu {
-      background: transparent;
-      color: #fff;
-      .ice-menu-item-selected {
-        background: #3560d9;
-        color: #fff;
-      }
-      .ice-menu-submenu-title,
-      .ice-menu-item {
-        height: 62px;
-        line-height: 62px;
-        font-size: 14px;
-        &:hover,
-        a:hover {
-          color: #fff;
-        }
-      }
+
+    .header-navbar-menu {
+      box-shadow: none;
     }
   }
 
@@ -45,7 +31,6 @@
 
   .user-department {
     font-size: 12px;
-    color: #fff;
   }
 
   .ice-design-header-userpannel {

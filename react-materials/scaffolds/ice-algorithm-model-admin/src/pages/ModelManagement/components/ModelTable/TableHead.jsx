@@ -59,7 +59,7 @@ export default class TableHead extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>状态：</span>
               <IceFormBinder name="state" triggerType="onBlur">
-                <Input placeholder="请输入"  />
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="state" />

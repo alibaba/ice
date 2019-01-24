@@ -21,15 +21,6 @@
   border-radius: 4px;
   text-decoration: none;
 }
-.publishBtn {
-  composes: btn;
-  background: $color-notice-3;
-  margin-right: 8px;
-}
-.deleteBtn {
-  composes: btn;
-  background: $color-warning-3;
-}
 .state {
   color: $color-warning-3;
   position: relative;
