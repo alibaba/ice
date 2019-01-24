@@ -22,7 +22,7 @@ export default class FailureDetail extends PureComponent {
         <p style={styles.descrpiton}>
           如果有更多细节需要展示，可以补充在这里，一些相关的介绍和描述
         </p>
-        <Button size="large" type="primary" onClick={this.handleChange}>
+        <Button type="primary" onClick={this.handleChange}>
           返回修改
         </Button>
       </IceContainer>

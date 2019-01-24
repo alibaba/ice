@@ -15,18 +15,19 @@
     ".eslintrc"
   ],
   "dependencies": {
-    "@antv/data-set": "^0.8.9",
     "@alifd/next": "^1.x",
+    "@alifd/theme-1": "^0.0.6",
+    "@antv/data-set": "^0.8.9",
     "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^0.1.7",
+    "@icedesign/foundation-symbol": "^1.x",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
-    "@alifd/theme-1": "^0.0.6",
+    "@icedesign/theme": "^0.1.2",
     "bizcharts": "^3.2.0",
     "classnames": "^2.2.6",
     "enquire-js": "0.1.x",
     "moment": "^2.23.0",
-    "@icedesign/foundation-symbol": "^1.x",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-document-title": "^2.0.3",
@@ -50,7 +51,7 @@
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "buildConfig": {
-    "theme": "@alifd/theme-1",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "output": {
       "publicPath": "./"
@@ -63,7 +64,11 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1chrGwVYqK1RjSZLeXXbXppXa-2872-1582.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1zynrDHvpK1RjSZFqXXcXUVXa-2860-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1zynrDHvpK1RjSZFqXXcXUVXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1O1jlDMDqK1RjSZSyXXaxEVXa-2860-1580.png"
+    ]
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.com",

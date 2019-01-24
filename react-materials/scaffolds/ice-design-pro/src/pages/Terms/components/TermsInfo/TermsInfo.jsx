@@ -44,7 +44,7 @@ export default class TermsInfo extends PureComponent {
         </p>
 
         <div style={styles.button}>
-          <Button type="primary" size="large" onClick={this.handleChange}>
+          <Button type="primary" onClick={this.handleChange}>
             确认开通
           </Button>
         </div>

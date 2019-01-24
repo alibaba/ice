@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Balloon, Icon, Menu, Nav } from '@alifd/next';
+import { Balloon, Icon, Nav } from '@alifd/next';
 import IceImg from '@icedesign/img';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
@@ -33,7 +33,7 @@ export default class Header extends Component {
                     <SubNav
                       triggerType="click"
                       key={index}
-                      icon={nav.icon ? nav.icon: undefined}
+                      icon={nav.icon ? nav.icon : undefined}
                       title={nav.name}
                     >
                       {nav.children.map((item) => {
@@ -71,19 +71,21 @@ export default class Header extends Component {
                   }
                   linkProps.href = nav.path;
                   return (
-                    <NavItem key={nav.path} icon={nav.icon? nav.icon : undefined}>
-                      <a {...linkProps}>
-                      {nav.name}
-                      </a>
+                    <NavItem
+                      key={nav.path}
+                      icon={nav.icon ? nav.icon : undefined}
+                    >
+                      <a {...linkProps}>{nav.name}</a>
                     </NavItem>
                   );
                 }
                 linkProps.to = nav.path;
                 return (
-                  <NavItem key={nav.path} icon={nav.icon? nav.icon : undefined}>
-                    <Link {...linkProps}>
-                      {nav.name}
-                    </Link>
+                  <NavItem
+                    key={nav.path}
+                    icon={nav.icon ? nav.icon : undefined}
+                  >
+                    <Link {...linkProps}>{nav.name}</Link>
                   </NavItem>
                 );
               })}
@@ -112,11 +114,7 @@ export default class Header extends Component {
                   <br />
                   <span className="user-department">技术部</span>
                 </div>
-                <Icon
-                  type="arrow-down"
-                  size="xxs"
-                  className="icon-down"
-                />
+                <Icon type="arrow-down" size="xxs" className="icon-down" />
               </div>
             }
             closable={false}

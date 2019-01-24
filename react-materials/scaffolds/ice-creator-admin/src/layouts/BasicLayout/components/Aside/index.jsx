@@ -49,7 +49,6 @@ export default class Aside extends Component {
     return openKeys;
   };
 
-
   render() {
     const { location } = this.props;
     const { pathname } = location;
@@ -60,7 +59,8 @@ export default class Aside extends Component {
           selectedKeys={[pathname]}
           className={styles.menu}
           openKeys={this.state.openKeys}
-          onOpen={this.onOpenChange}>
+          onOpen={this.onOpenChange}
+        >
           {Array.isArray(asideMenuConfig) &&
             asideMenuConfig.length > 0 &&
             asideMenuConfig.map((nav, index) => {

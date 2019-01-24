@@ -121,7 +121,6 @@ export default class SearchFilter extends Component {
         component: 'Input',
         componentProps: {
           placeholder: '请输入合同编号',
-          size: 'large',
         },
         formBinderProps: {
           name: 'id',
@@ -134,7 +133,6 @@ export default class SearchFilter extends Component {
         component: 'Input',
         componentProps: {
           placeholder: '请输入归档号',
-          size: 'large',
         },
         formBinderProps: {
           name: 'archiveId',
@@ -147,7 +145,6 @@ export default class SearchFilter extends Component {
         component: 'Input',
         componentProps: {
           placeholder: '请输入申请单号',
-          size: 'large',
         },
         formBinderProps: {
           name: 'applyCode',
@@ -158,7 +155,6 @@ export default class SearchFilter extends Component {
         component: 'Input',
         componentProps: {
           placeholder: '请输入合同名称',
-          size: 'large',
         },
         formBinderProps: {
           name: 'name',
@@ -169,7 +165,7 @@ export default class SearchFilter extends Component {
         component: 'Select',
         componentProps: {
           placeholder: '请选择',
-          size: 'large',
+
           dataSource: [
             { label: '杭州xxx科技有限公司', value: 'option1' },
             { label: '上海xxx科技有限公司', value: 'option2' },
@@ -184,7 +180,7 @@ export default class SearchFilter extends Component {
         component: 'Select',
         componentProps: {
           placeholder: '请选择',
-          size: 'large',
+
           dataSource: [
             { label: '淘小宝', value: 'taoxiaobao' },
             { label: '淘二宝', value: 'taoerbao' },
@@ -199,7 +195,7 @@ export default class SearchFilter extends Component {
         component: 'RangePicker',
         componentProps: {
           placeholder: '请选择日期',
-          size: 'large',
+
           defaultValue: [],
         },
         formBinderProps: {
@@ -211,7 +207,7 @@ export default class SearchFilter extends Component {
         component: 'RangePicker',
         componentProps: {
           placeholder: '请选择日期',
-          size: 'large',
+
           defaultValue: [],
         },
         formBinderProps: {
@@ -223,7 +219,7 @@ export default class SearchFilter extends Component {
         component: 'RangePicker',
         componentProps: {
           placeholder: '请选择日期',
-          size: 'large',
+
           defaultValue: [],
         },
         formBinderProps: {
@@ -235,7 +231,7 @@ export default class SearchFilter extends Component {
         component: 'Select',
         componentProps: {
           placeholder: '请选择',
-          size: 'large',
+
           dataSource: [
             { value: 'draft', label: '起草中' },
             { value: 'approval', label: '审批中' },
@@ -252,7 +248,7 @@ export default class SearchFilter extends Component {
         component: 'Select',
         componentProps: {
           placeholder: '请选择',
-          size: 'large',
+
           dataSource: [
             { label: '主合同', value: 'primary' },
             { label: '变更合同', value: 'change' },

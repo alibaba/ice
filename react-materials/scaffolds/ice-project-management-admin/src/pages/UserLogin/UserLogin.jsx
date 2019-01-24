@@ -1,12 +1,13 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Message, Icon } from '@alifd/next';
+import { Input, Button, Checkbox, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
+import IceIcon from '@icedesign/icon';
 
 @withRouter
 class UserLogin extends Component {
@@ -57,10 +58,9 @@ class UserLogin extends Component {
         >
           <div style={styles.formItems}>
             <div style={styles.formItem}>
-              <Icon type="account" size="small" style={styles.inputIcon} />
+              <IceIcon type="person" size="small" style={styles.inputIcon} />
               <IceFormBinder name="username" required message="必填">
                 <Input
-                  size="large"
                   maxLength={20}
                   placeholder="用户名"
                   style={styles.inputCol}
@@ -70,10 +70,9 @@ class UserLogin extends Component {
             </div>
 
             <div style={styles.formItem}>
-              <Icon type="ellipsis" test="xxx" size="small" style={styles.inputIcon} />
+              <IceIcon type="lock" size="small" style={styles.inputIcon} />
               <IceFormBinder name="password" required message="必填">
                 <Input
-                  size="large"
                   htmlType="password"
                   placeholder="密码"
                   style={styles.inputCol}
@@ -91,7 +90,6 @@ class UserLogin extends Component {
             <div style={styles.footer}>
               <Button
                 type="primary"
-                size="large"
                 onClick={this.handleSubmit}
                 style={styles.submitBtn}
               >
@@ -130,7 +128,7 @@ const styles = {
   inputIcon: {
     position: 'absolute',
     left: '10px',
-    top: '8px',
+    top: '6px',
     color: '#666',
   },
   inputCol: {

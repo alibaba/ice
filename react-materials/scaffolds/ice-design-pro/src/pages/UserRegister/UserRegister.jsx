@@ -1,14 +1,16 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Grid, Icon, Form } from '@alifd/next';
+import { Input, Grid, Form } from '@alifd/next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import injectReducer from '../../utils/injectReducer';
 import { userRegister } from './action';
 import reducer from './reducer';
 
-const { Row, Col } = Grid;
+const Icon = FoundationSymbol;
+const { Row } = Grid;
 const FormItem = Form.Item;
 
 @withRouter
@@ -71,64 +73,75 @@ class UserRegister extends Component {
     return (
       <div className="user-register">
         <div className="formContainer">
-          <h4 className="formTitle">注 册</h4>
-          <Form
-            value={this.state.value}
-            onChange={this.formChange}
-            size="large"
-          >
-            <FormItem required requiredMessage="请输入正确的用户名">
+          <Form value={this.state.value} onChange={this.formChange}>
+            <FormItem
+              required
+              requiredMessage="请输入正确的用户名"
+              className="formItem"
+            >
               <Input
-                innerBefore={<Icon
-                  type="account"
-                  size="small"
-                  style={styles.inputIcon}
-                />}
-                name="name" size="large" maxLength={20} placeholder="用户名" />
+                innerBefore={
+                  <Icon type="person" size="small" className="inputIcon" />
+                }
+                name="name"
+                maxLength={20}
+                placeholder="用户名"
+              />
             </FormItem>
-            <FormItem required requiredMessage="请输入正确的邮箱">
+            <FormItem
+              required
+              requiredMessage="请输入正确的邮箱"
+              className="formItem"
+            >
               <Input
-                innerBefore={<Icon
-                  type="email"
-                  size="small"
-                  style={styles.inputIcon}
-                />}
-                name="email" size="large" maxLength={20} placeholder="邮箱" />
+                innerBefore={
+                  <Icon type="mail" size="small" className="inputIcon" />
+                }
+                name="email"
+                maxLength={20}
+                placeholder="邮箱"
+              />
             </FormItem>
-            <FormItem required requiredMessage="请输入正确的邮箱">
+            <FormItem
+              required
+              requiredMessage="请输入正确的密码"
+              className="formItem"
+            >
               <Input
-                innerBefore={<Icon
-                  type="ellipsis"
-                  size="small"
-                  todo="lock"
-                  style={styles.inputIcon}
-                />}
+                innerBefore={
+                  <Icon
+                    type="lock"
+                    size="small"
+                    todo="lock"
+                    className="inputIcon"
+                  />
+                }
                 name="passwd"
                 htmlType="password"
-                size="large"
-                placeholder="至少8位密码" />
+                placeholder="至少8位密码"
+              />
             </FormItem>
 
-            <FormItem required
+            <FormItem
+              required
               validator={(rule, values, callback) =>
-                this.checkPasswd2(
-                  rule,
-                  values,
-                  callback,
-                  this.state.value
-                )
-              }>
+                this.checkPasswd2(rule, values, callback, this.state.value)
+              }
+              className="formItem"
+            >
               <Input
-                innerBefore={<Icon
-                  type="ellipsis"
-                  size="small"
-                  todo="lock"
-                  style={styles.inputIcon}
-                />}
+                innerBefore={
+                  <Icon
+                    type="lock"
+                    size="small"
+                    todo="lock"
+                    className="inputIcon"
+                  />
+                }
                 name="rePasswd"
                 htmlType="password"
-                size="large"
-                placeholder="至少8位密码" />
+                placeholder="至少8位密码"
+              />
             </FormItem>
             <Row className="formItem">
               <Form.Submit
@@ -138,13 +151,13 @@ class UserRegister extends Component {
                 className="submitBtn"
               >
                 注 册
-                </Form.Submit>
+              </Form.Submit>
             </Row>
 
             <Row className="tips">
               <Link to="/user/login" className="tips-text">
                 使用已有账户登录
-                </Link>
+              </Link>
             </Row>
           </Form>
         </div>
@@ -170,9 +183,3 @@ export default compose(
   withReducer,
   withConnect
 )(UserRegister);
-
-const styles = {
-  inputIcon: {
-    marginLeft: 10
-  }
-}

@@ -6,7 +6,7 @@ import IceImg from '@icedesign/img';
 import { headerMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
 import './index.scss';
-const {SubNav, Item} = Nav;
+const { SubNav, Item } = Nav;
 @withRouter
 export default class Header extends Component {
   render() {
@@ -15,7 +15,7 @@ export default class Header extends Component {
     return (
       <div className="header-container">
         <div className="header-content">
-          <Logo/>
+          <Logo />
           <div className="header-navbar">
             <Nav
               className="header-navbar-menu"
@@ -122,7 +122,10 @@ export default class Header extends Component {
                   className="user-avatar"
                 />
                 <div className="user-profile">
-                  <span className="user-name" style={{ fontSize: '13px' }}>
+                  <span
+                    className="user-name"
+                    style={{ fontSize: '13px', color: '#666' }}
+                  >
                     淘小宝
                   </span>
                   <br />

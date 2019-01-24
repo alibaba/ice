@@ -45,14 +45,13 @@ export default class SuccessDetail extends PureComponent {
         </Step>
         <div style={styles.buttons}>
           <Button
-            size="large"
             type="normal"
             onClick={this.handleBackClick}
             style={{ marginRight: '6px' }}
           >
             返回首页
           </Button>
-          <Button size="large" type="primary" onClick={this.handleLinkClick}>
+          <Button type="primary" onClick={this.handleLinkClick}>
             查看更多
           </Button>
         </div>

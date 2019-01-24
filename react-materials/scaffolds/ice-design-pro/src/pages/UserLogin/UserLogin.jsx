@@ -1,7 +1,8 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Grid, Icon, Form } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
+import { Input, Checkbox, Grid, Form } from '@alifd/next';
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -9,7 +10,8 @@ import injectReducer from '../../utils/injectReducer';
 import { userLogin } from './actions';
 import reducer from './reducer';
 
-const { Row, Col } = Grid;
+const Icon = FoundationSymbol;
+const { Row } = Grid;
 const FormItem = Form.Item;
 
 class UserLogin extends Component {
@@ -48,36 +50,31 @@ class UserLogin extends Component {
     return (
       <div className="user-login">
         <div className="formContainer">
-          <h4 className="formTitle">登 录</h4>
-          <Form
-            value={this.state.value}
-            onChange={this.formChange}
-            size="large"
-          >
-            <FormItem required requiredMessage="必填">
+          <Form value={this.state.value} onChange={this.formChange}>
+            <FormItem required requiredMessage="必填" className="formItem">
               <Input
-                innerBefore={<Icon
-                  type="account"
-                  size="small"
-                  style={styles.inputIcon}
-                />}
-                name="username" size="large" maxLength={20} placeholder="用户名" />
+                innerBefore={
+                  <Icon type="person" size="small" className="inputIcon" />
+                }
+                name="username"
+                maxLength={20}
+                placeholder="用户名"
+              />
             </FormItem>
-            <FormItem required requiredMessage="必填">
+            <FormItem required requiredMessage="必填" className="formItem">
               <Input
-                innerBefore={<Icon
-                  type="account"
-                  size="small"
-                  todo="lock"
-                  style={styles.inputIcon}
-                />}
+                innerBefore={
+                  <Icon type="lock" size="small" className="inputIcon" />
+                }
                 name="password"
-                size="large"
                 htmlType="password"
-                placeholder="密码" />
+                placeholder="密码"
+              />
             </FormItem>
             <FormItem>
-              <Checkbox name="checkbox" className="checkbox">记住账号</Checkbox>
+              <Checkbox name="checkbox" className="checkbox">
+                记住账号
+              </Checkbox>
             </FormItem>
             <Row className="formItem">
               <Form.Submit
@@ -87,11 +84,11 @@ class UserLogin extends Component {
                 className="submitBtn"
               >
                 登 录
-                </Form.Submit>
+              </Form.Submit>
               <p className="account">
                 <span className="tips-text" style={{ marginRight: '20px' }}>
                   管理员登录：admin/admin
-                  </span>
+                </span>
                 <span className="tips-text">用户登录：user/user</span>
               </p>
             </Row>
@@ -99,7 +96,7 @@ class UserLogin extends Component {
             <Row className="tips">
               <Link to="/user/register" className="tips-text">
                 立即注册
-                </Link>
+              </Link>
             </Row>
           </Form>
         </div>
@@ -130,6 +127,6 @@ export default compose(
 
 const styles = {
   inputIcon: {
-    marginLeft: 10
-  }
-}
+    marginLeft: 10,
+  },
+};

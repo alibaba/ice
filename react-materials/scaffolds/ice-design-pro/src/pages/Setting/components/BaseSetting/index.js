@@ -1,18 +1,16 @@
 /* eslint  react/no-string-refs: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Radio, Switch, Upload, Grid, Form, SplitButton } from '@alifd/next';
+import { Input, Radio, Switch, Upload, Grid, Form } from '@alifd/next';
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
-const { ImageUpload } = Upload;
 const FormItem = Form.Item;
 
 const formItemLayout = {
   labelCol: { xxs: 6, s: 3, l: 3 },
-  wrapperCol: { s: 12, l: 10 }
+  wrapperCol: { s: 12, l: 10 },
 };
-
 
 function beforeUpload(info) {
   console.log('beforeUpload callback : ', info);
@@ -81,20 +79,26 @@ export default class SettingsForm extends Component {
   render() {
     return (
       <div className="settings-form">
-
         <IceContainer>
-          <Form
-            value={this.state.value}
-            onChange={this.formChange}
-            ref="form"
-          >
+          <Form value={this.state.value} onChange={this.formChange} ref="form">
             <div style={styles.formContent}>
               <h2 style={styles.formTitle}>基本设置</h2>
 
-              <FormItem size="large" label="姓名：" {...formItemLayout} required maxLength={10} requiredMessage="必填">
+              <FormItem
+                label="姓名："
+                {...formItemLayout}
+                required
+                maxLength={10}
+                requiredMessage="必填"
+              >
                 <Input name="name" placeholder="淘小宝" />
               </FormItem>
-              <FormItem label="头像：" {...formItemLayout} required requiredMessage="必填">
+              <FormItem
+                label="头像："
+                {...formItemLayout}
+                required
+                requiredMessage="必填"
+              >
                 <Upload.Card
                   name="avatar"
                   listType="card"
@@ -105,25 +109,37 @@ export default class SettingsForm extends Component {
                   onSuccess={onSuccess}
                   onError={onError}
                 />
-
               </FormItem>
-              <FormItem label="性别：" {...formItemLayout} required requiredMessage="必填">
-                <RadioGroup name="gender" >
+              <FormItem
+                label="性别："
+                {...formItemLayout}
+                required
+                requiredMessage="必填"
+              >
+                <RadioGroup name="gender">
                   <Radio value="male">男</Radio>
                   <Radio value="female">女</Radio>
                 </RadioGroup>
               </FormItem>
 
-              <FormItem label="通知：" {...formItemLayout}  >
-                <Switch name="notice"/>
+              <FormItem label="通知：" {...formItemLayout}>
+                <Switch name="notice" />
               </FormItem>
-              <FormItem size="large" label="邮件：" {...formItemLayout} required requiredMessage="请输入正确的邮件">
-                <Input
-                  htmlType="email"
-                  name="email"
-                />
+              <FormItem
+                label="邮件："
+                {...formItemLayout}
+                required
+                requiredMessage="请输入正确的邮件"
+              >
+                <Input htmlType="email" name="email" />
               </FormItem>
-              <FormItem size="large" label="网站地址：" {...formItemLayout} required formatMessage="请输入正确的网站地址" format="url">
+              <FormItem
+                label="网站地址："
+                {...formItemLayout}
+                required
+                formatMessage="请输入正确的网站地址"
+                format="url"
+              >
                 <Input
                   name="siteUrl"
                   type="url"
@@ -131,7 +147,13 @@ export default class SettingsForm extends Component {
                 />
               </FormItem>
 
-              <FormItem size="large" label="Github：" {...formItemLayout} required formatMessage="请输入正确的 Github 地址" format="url">
+              <FormItem
+                label="Github："
+                {...formItemLayout}
+                required
+                formatMessage="请输入正确的 Github 地址"
+                format="url"
+              >
                 <Input
                   type="url"
                   name="githubUrl"
@@ -139,30 +161,33 @@ export default class SettingsForm extends Component {
                 />
               </FormItem>
 
-              <FormItem size="large" label="Twitter：" {...formItemLayout} required formatMessage="请输入正确的 Twitter 地址" format="url">
+              <FormItem
+                label="Twitter："
+                {...formItemLayout}
+                required
+                formatMessage="请输入正确的 Twitter 地址"
+                format="url"
+              >
                 <Input name="twitterUrl" placeholder="https://twitter.com" />
               </FormItem>
 
-              <FormItem size="large" label="自我描述：" {...formItemLayout} >
+              <FormItem label="自我描述：" {...formItemLayout}>
                 <Input.TextArea placeholder="请输入描述..." />
               </FormItem>
               <Row style={{ marginTop: 20 }}>
-            <Col offset="3">
-              <Form.Submit
-                size="large"
-                type="primary"
-                style={{ width: 100 }}
-                validate
-                onClick={this.validateAllFormField}
-              >
-                提 交
-              </Form.Submit>
-            </Col>
-          </Row>
+                <Col offset="3">
+                  <Form.Submit
+                    type="primary"
+                    style={{ width: 100 }}
+                    validate
+                    onClick={this.validateAllFormField}
+                  >
+                    提 交
+                  </Form.Submit>
+                </Col>
+              </Row>
             </div>
           </Form>
-
-
         </IceContainer>
       </div>
     );

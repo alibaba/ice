@@ -20,7 +20,7 @@
     "@icedesign/form-binder": "^0.1.7",
     "@icedesign/img": "^0.1.0",
     "@icedesign/layout": "^1.x",
-    "@icedesign/theme": "^0.x",
+    "@icedesign/theme": "^0.1.2",
     "bizcharts": "^3.2.4",
     "classnames": "^2.2.5",
     "foundation-symbol": "^0.1.0",
@@ -73,7 +73,11 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1OrPDAMHqK1RjSZFgXXa7JXXa-2872-1580.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1OrPDAMHqK1RjSZFgXXa7JXXa-2872-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1UDbpDHrpK1RjSZTEXXcWAVXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1OrPDAMHqK1RjSZFgXXa7JXXa-2872-1580.png"
+    ]
   },
   "engines": {
     "node": ">=8.0.0"

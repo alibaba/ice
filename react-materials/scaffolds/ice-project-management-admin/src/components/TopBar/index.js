@@ -12,7 +12,7 @@ export default class TopBar extends PureComponent {
 
         {extraAfter || (
           <div style={styles.buttons}>
-            <Button size="large" iconSize="xs" type="primary">
+            <Button iconSize="xs" type="primary">
               <Icon type="add" style={styles.addIcon} />
               {buttonText}
             </Button>

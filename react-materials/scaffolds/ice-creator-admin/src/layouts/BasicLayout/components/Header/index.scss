@@ -17,6 +17,10 @@
     flex-direction: row;
     .header-navbar-menu {
       box-shadow: none;
+      border: 0;
+      .next-menu-item-text {
+        color: #666;
+      }
       .next-nav-item.next-selected {
         background-color: transparent;
       }
@@ -33,7 +37,7 @@
 
   .user-department {
     font-size: 12px;
-    color: #333;
+    color: #666;
   }
 
   .ice-design-header-userpannel {
