@@ -51,7 +51,7 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@alifd/theme-1",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "localization": false,
     "output": {
@@ -65,7 +65,11 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1aCNzDbPpK1RjSZFFXXa5PpXa-2872-1580.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1aCNzDbPpK1RjSZFFXXa5PpXa-2872-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1t4iBDHrpK1RjSZTEXXcWAVXa-2872-1580.png",
+      "https://img.alicdn.com/tfs/TB1zAOEDQvoK1RjSZFDXXXY3pXa-2872-1580.png"
+    ]
   },
   "engines": {
     "node": ">=8.0.0"
