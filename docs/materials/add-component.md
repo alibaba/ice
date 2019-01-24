@@ -1,12 +1,12 @@
 ---
-title: 添加组件
+title: 开发业务组件
 order: 4
 category: 物料
 ---
 
 ## 基础规范
 
-- 区块名称: 大驼峰写法, 如 `ExampleComponent`, 遵循简练能表达组件含义的原则
+- 组件名称: 大驼峰写法, 如 `ExampleComponent`, 遵循简练能表达组件含义的原则
 - 基础编码码规范: [JavaScript Style Guide](https://github.com/airbnb/javascript)
 - CSS 规范: [CSS-in-JS](https://github.com/MicheleBertoli/css-in-js)
 
@@ -23,7 +23,7 @@ category: 物料
   模板
 
 // 必须输入
-? 名称(name)：
+? 组件名(name)：
 
 // 必须输入
 ? 中文名(title)：
@@ -67,7 +67,6 @@ $ npm start
 └── lib                        // 组件构建后的结果    
 │   └── index.js         
 └── src
-│   ├── Login.jsx              // 组件定义文件
 │   ├── index.js               // 组件入口
 │   ├── main.scss              // 组件自身的样式代码
 └── demo                        
@@ -76,7 +75,7 @@ $ npm start
 
 ## 编写组件
 
-以上面创建的 `Login` 组件为例，进入 `src/Login.jsx` , 修改初始代码，就可以开始组件的开发了。
+以上面创建的 `Login` 组件为例，进入 `src/index.jsx` , 修改初始代码，就可以开始组件的开发了。
 
 ## 编写 DEMO
 
