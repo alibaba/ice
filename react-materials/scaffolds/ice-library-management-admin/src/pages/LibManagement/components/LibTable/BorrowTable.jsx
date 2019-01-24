@@ -71,7 +71,7 @@ export default class BorrowTable extends Component {
   };
 
   handleDetailClick = () => {
-    Message.prompt('暂无详细信息');
+    Message.success('暂无详细信息');
   };
 
   handleFilter = () => {

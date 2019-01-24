@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Message } from '@alifd/next';
+import { Message, Button } from '@alifd/next';
 import TableFilter from './TableFilter';
 import CustomTable from './CustomTable';
 import styles from './LibTable.module.scss';
@@ -73,7 +73,7 @@ export default class LibTable extends Component {
   };
 
   handleDetailClick = () => {
-    Message.prompt('暂无详细信息');
+    Message.success('暂无详细信息');
   };
 
   handleFilter = () => {
@@ -83,18 +83,16 @@ export default class LibTable extends Component {
   renderOper = () => {
     return (
       <div>
-        <a
-          className={styles.detailButton}
-          onClick={this.handleDetailClick}
-        >
+        <Button style={{ marginRight: '5px' }} onClick={this.handleDetailClick}>
           查看
-        </a>
-        <a
+        </Button>
+        <Button
+          type="primary"
           className={styles.borrowButton}
           onClick={this.handleBorrowClick}
         >
           借阅
-        </a>
+        </Button>
       </div>
     );
   };

@@ -39,7 +39,7 @@ export default class BorrowTableHead extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>图书名称：</span>
               <IceFormBinder name="bookName" triggerType="onBlur">
-                <Input placeholder="请输入"  />
+                <Input placeholder="请输入" />
               </IceFormBinder>
             </div>
           </Col>
@@ -47,7 +47,7 @@ export default class BorrowTableHead extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>借阅编号：</span>
               <IceFormBinder name="number" triggerType="onBlur">
-                <Input placeholder="请输入"  />
+                <Input placeholder="请输入" />
               </IceFormBinder>
             </div>
           </Col>

@@ -44,7 +44,7 @@ export default class CustomTable extends Component {
                 title={item.title}
                 width={item.width || 'auto'}
                 dataIndex={item.dataIndex}
-                cell={item.cell || ((value) => value)}
+                cell={item.cell || (value => value)}
               />
             );
           })}
