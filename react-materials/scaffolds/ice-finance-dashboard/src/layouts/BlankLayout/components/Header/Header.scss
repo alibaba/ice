@@ -14,15 +14,19 @@
   .header-navbar {
     display: flex;
     flex-direction: row;
-    .ice-menu {
-      background: transparent;
-      color: #fff;
-      .ice-menu-submenu-title,
-      .ice-menu-item {
-        font-size: 14px;
-        &:hover,
-        a:hover {
-          color: rgba(255, 255, 255, 0.8);
+    .next-menu {
+      background: transparent !important;
+      border: none;
+      box-shadow: none;
+      color: #fff !important;
+      .next-menu-item {
+        background: transparent !important;
+        color: #fff !important;
+        i {
+          margin-right: 1em;
+        }
+        &:hover {
+          color: $color-data1-1 !important;
         }
       }
     }

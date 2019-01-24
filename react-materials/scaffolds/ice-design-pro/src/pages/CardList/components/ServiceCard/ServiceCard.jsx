@@ -28,7 +28,7 @@ export default class ServiceCard extends Component {
   }
 
   handleClick = (message) => {
-    Feedback.toast.success(message);
+    Message.success(message);
   };
 
   render() {

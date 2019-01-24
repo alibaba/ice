@@ -16,11 +16,11 @@ export default class ContractTable extends Component {
     this.state = {};
   }
   handleUpdate = () => {
-    Feedback.toast.success('暂不支持修改合同');
+    Message.success('暂不支持修改合同');
   };
 
   handleMore = () => {
-    Feedback.toast.success('暂不支持查看详情');
+    Message.success('暂不支持查看详情');
   };
 
   renderState = (value) => {

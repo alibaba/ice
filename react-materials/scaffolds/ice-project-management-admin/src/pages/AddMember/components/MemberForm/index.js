@@ -23,7 +23,7 @@ export default class AddProject extends Component {
         return false;
       }
 
-      Feedback.toast.success('添加成功');
+      Message.success('添加成功');
     });
   };
 
