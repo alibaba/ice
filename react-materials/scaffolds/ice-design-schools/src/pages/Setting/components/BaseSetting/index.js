@@ -128,7 +128,7 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder type="boolean" name="notice">
-                  <Switch/>
+                  <Switch />
                 </IceFormBinder>
                 <IceFormError name="notice" />
               </Col>

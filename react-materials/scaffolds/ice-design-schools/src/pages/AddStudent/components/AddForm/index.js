@@ -86,7 +86,7 @@ export default class BaseSetting extends Component {
               </Col>
               <Col l="5">
                 <IceFormBinder name="phone" required message="必填">
-                  <Input style={styles.inputItem}  />
+                  <Input style={styles.inputItem} />
                 </IceFormBinder>
                 <IceFormError name="phone" />
               </Col>
