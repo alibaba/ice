@@ -7,7 +7,7 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 
 @withRouter
 class UserLogin extends Component {
@@ -58,7 +58,7 @@ class UserLogin extends Component {
         >
           <div style={styles.formItems}>
             <div style={styles.formItem}>
-              <IceIcon type="person" size="small" style={styles.inputIcon} />
+              <FoundationSymbol type="person" size="small" style={styles.inputIcon} />
               <IceFormBinder name="username" required message="必填">
                 <Input
                   maxLength={20}
@@ -70,7 +70,7 @@ class UserLogin extends Component {
             </div>
 
             <div style={styles.formItem}>
-              <IceIcon type="lock" size="small" style={styles.inputIcon} />
+              <FoundationSymbol type="lock" size="small" style={styles.inputIcon} />
               <IceFormBinder name="password" required message="必填">
                 <Input
                   htmlType="password"
