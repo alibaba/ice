@@ -5,7 +5,6 @@ const checkEnv = require('./helper/checkEnv');
 const network = require('./network');
 const spc = require('./spc');
 const parse = require('url-parse');
-const querystring = require('query-string');
 
 const { app, dialog } = require('electron');
 
@@ -133,9 +132,8 @@ app.on('will-finish-launching', () => {
   // 监听，处理从url唤起iceworks的参数
   app.on('open-url', function (event, url) {
     // url = iceworks://?to=scaffolds
-    url = parse(url);
-    const query = querystring.parse(url.query);
-    if (Object.keys(query)) {
+    const query = parse(url, true).query;
+    if (Object.keys(query).length > 0) {
       settings.set('urlEvokeQuery', query);
     }
   })

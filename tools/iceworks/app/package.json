@@ -52,7 +52,6 @@
     "npm-run-path": "^2.0.2",
     "path-exists": "^3.0.0",
     "prettier": "^1.12.1",
-    "query-string": "^6.2.0",
     "ramda": "^0.25.0",
     "request": "^2.87.0",
     "request-progress": "^3.0.0",
