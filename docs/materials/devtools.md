@@ -1,5 +1,5 @@
 ---
-title: 快速开始
+title: 使用 ice-devtools
 order: 2
 category: 物料
 ---
