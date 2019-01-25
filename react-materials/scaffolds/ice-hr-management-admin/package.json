@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/hr-management-admin-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "该模板适用于人力资源类的管理后台，默认内置丰富的图表和表格区块，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/hr-management-admin-scaffold/build/index.html",
   "files": [
