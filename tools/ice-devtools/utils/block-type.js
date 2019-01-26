@@ -2,11 +2,11 @@ const path = require('path');
 const pkgJSON = require('./pkg-json');
 
 /**
- * 获取物料仓库的类型(react、vue、angular、etc...)
+ * 获取区块的类型(react、vue、angular、etc...)
  * @param   {String} workdir
  * @returns {String} type
  */
-function getMaterialType(workdir) {
+function getBlockType(workdir) {
   const json = pkgJSON.getPkgJSON(workdir) || {};
 
   const blockConfig = json.blockConfig || {};
@@ -14,4 +14,4 @@ function getMaterialType(workdir) {
   return blockConfig.type || 'react';
 }
 
-module.exports = getMaterialType;
+module.exports = getBlockType;
