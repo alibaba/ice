@@ -16,11 +16,11 @@ const MATERIAL_TEMPLATE_QUESION = [
   },
 ];
 
-const MATERIAL_TYPE_QUESION = [
+const FRAMEWORK_TYPE_QUESION = [
   {
     type: 'list',
-    name: 'materialType',
-    message: 'Please select project type',
+    name: 'frameworkType',
+    message: 'Please select framework type',
     choices: ['react', 'vue']
   },
 ]
@@ -56,8 +56,8 @@ async function getAskOptions(cwd, ...argvOpts) {
     type = pkg.materialConfig.type;
   } else if (pkg && pkg.materials) {
     // 兼容 ice 官方仓库
-    const { materialType } = await inquirer.prompt(MATERIAL_TYPE_QUESION);
-    type = materialType;
+    const { frameworkType } = await inquirer.prompt(FRAMEWORK_TYPE_QUESION);
+    type = frameworkType;
     cwd = path.join(cwd, `${type}-materials`);
     options.scope = `@${type}-materials`;
   } else {
