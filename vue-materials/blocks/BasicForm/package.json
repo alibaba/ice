@@ -27,6 +27,7 @@
   "blockConfig": {
     "name": "basic-form",
     "title": "基础表单",
+    "type": "vue",
     "categories": ["表单"],
     "screenshot": "https://img.alicdn.com/tfs/TB13E09pMmTBuNjy1XbXXaMrVXa-2014-1148.png"
   }

@@ -28,6 +28,7 @@
   "blockConfig": {
     "name": "select-table",
     "title": "多选表格",
+    "type": "vue",
     "categories": [
       "表格"
     ],

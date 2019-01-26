@@ -30,6 +30,7 @@
   "blockConfig": {
     "name": "pie-chart",
     "title": "pie-chart",
+    "type": "vue",
     "categories": [
       "图表"
     ],

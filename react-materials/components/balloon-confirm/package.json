@@ -34,9 +34,6 @@
     "@alifd/next": "^1.x",
     "prop-types": "^15.5.8"
   },
-  "devDependencies": {
-    "ice-devtools": "^1.1.12"
-  },
   "componentConfig": {
     "name": "balloon-confirm",
     "title": "ICE 气泡确认框"

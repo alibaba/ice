@@ -21,6 +21,7 @@
   "blockConfig": {
     "name": "not-permission",
     "title": "无权限提示",
+    "type": "vue",
     "categories": ["异常"],
     "screenshot":
       "https://user-images.githubusercontent.com/18508817/40156536-aa55aa7c-59cc-11e8-971a-ecc339655041.png"

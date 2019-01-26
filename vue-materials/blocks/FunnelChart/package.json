@@ -30,6 +30,7 @@
   "blockConfig": {
     "name": "funnel-chart",
     "title": "funnel-chart",
+    "type": "vue",
     "categories": [
       "图表"
     ],

@@ -29,6 +29,7 @@
   "blockConfig": {
     "name": "simple-footer",
     "title": "简单页脚",
+    "type": "vue",
     "categories": [
       "其他"
     ],

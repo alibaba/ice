@@ -30,6 +30,7 @@
   "blockConfig": {
     "name": "waterfall-chart",
     "title": "waterfall-chart",
+    "type": "vue",
     "categories": [
       "图表"
     ],
