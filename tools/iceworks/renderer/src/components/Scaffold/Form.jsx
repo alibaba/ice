@@ -177,8 +177,6 @@ export default class ScaffoldForm extends Component {
           }
         </div>
         <Progress
-          progress={this.props.progress}
-          currentProject={currentProject}
         />
       </div>
     );

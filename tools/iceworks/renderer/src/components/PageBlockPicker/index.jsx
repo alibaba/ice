@@ -1,4 +1,4 @@
-import { Dialog, Button, Feedback } from '@icedesign/base';
+import { Dialog, Button, Feedback, Balloon } from '@icedesign/base';
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import fs from 'fs';
@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { dependenciesFormat, mergeDependenciesToPkg } from '../../lib/project-utils';
+import projectScripts from '../../lib/project-scripts';
 import {
   Panel as BlockPickerPanel,
   Previewer as BlockPreview,
@@ -18,7 +19,7 @@ import dialog from '../dialog';
 import services from '../../services';
 import './index.scss';
 
-const { scaffolder, npm } = services;
+const { scaffolder, npm, log } = services;
 
 // 向页面新增 block 的功能
 // 包括展示现有 page 下的 blocks 以及选择新 block 的管理
@@ -30,7 +31,7 @@ class PageBlockPicker extends Component {
     blocks: PropTypes.object.isRequired,
     pageBlockPicker: PropTypes.object.isRequired,
   };
-
+  
   /**
    * 添加区块，支持多个
    */
@@ -62,7 +63,7 @@ class PageBlockPicker extends Component {
    */
   handleOk = () => {
     
-    const { pageBlockPicker, projects } = this.props;
+    const { pageBlockPicker, projects, progress } = this.props;
     const { pageName, projectPath } = pageBlockPicker;
     const { currentProject = {} } = projects;
     const { clientPath, clientSrcPath } = currentProject;
@@ -78,6 +79,11 @@ class PageBlockPicker extends Component {
     }
 
     pageBlockPicker.downloadStart();
+
+    progress.start(true);
+    progress.setStatusText('正在生成区块');
+    progress.setSectionCount(blocks.length);
+    
     let blocksDependencies;
     scaffolder.utils
       .downloadBlocksToPage({
@@ -85,12 +91,15 @@ class PageBlockPicker extends Component {
         clientSrcPath,
         blocks: blocks,
         pageName: pageName,
+        progressFunc: progress.handleProgressAllInOneFunc
       })
       .catch((err) => {
         pageBlockPicker.downloadDone();
+        progress.reset()
         console.log(err);
       })
       .then(({ dependencies }) => {
+       
         blocksDependencies = dependencies;
         // 下载包依赖完成后对 dependencies 进行安装操作
         // 如果安装失败，自动将 dependencies 与 package.json 进行合并
@@ -98,27 +107,34 @@ class PageBlockPicker extends Component {
         // 开始安装项目依赖
         console.log('安装依赖', scaffoldDependencies);
 
-        return new Promise((resolve, reject) => {
-          projectScripts.npminstall(
-            currentProject,
-            scaffoldDependencies.join(' '),
-            false,
-            (error, dependencies) => {
-              if (error) {
-                log.error('install blocks‘ dependencies  error');
-                reject();
-              } else {
-                log.info(
-                  'genereator page install dependencies success'
-                );
-                resolve();
+        if (scaffoldDependencies.length > 0) {
+          progress.setStatusText('正在下载区块依赖');
+          progress.setShowTerminal(true);
+          progress.setShowProgress(false);
+
+          return new Promise((resolve, reject) => {
+            projectScripts.npminstall(
+              currentProject,
+              scaffoldDependencies.join(' '),
+              false,
+              (error, dependencies) => {
+                if (error) {
+                  log.error('install blocks‘ dependencies  error');
+                  reject();
+                } else {
+                  log.info(
+                    'genereator page install dependencies success'
+                  );
+                  resolve();
+                }
               }
-            }
-          )
-        })
+            )
+          })
+        }
 
       })
       .then(() => {
+        progress.end();
         pageBlockPicker.close();
         console.log('区块依赖安装完成');
         Notification.success({
@@ -134,6 +150,7 @@ class PageBlockPicker extends Component {
         // 兜底逻辑，将依赖信息写入到 package.json 里
         mergeDependenciesToPkg(blocksDependencies, clientPath)
           .then(() => {
+            progress.end();
             pageBlockPicker.close();
             Notification.warning({
               message:
@@ -143,6 +160,7 @@ class PageBlockPicker extends Component {
           })
           .catch((e) => {
             pageBlockPicker.downloadDone();
+            progress.reset();
             dialog.notice({
               title: '依赖写入 package.json 失败',
               error: e
@@ -153,6 +171,7 @@ class PageBlockPicker extends Component {
 
   render() {
     const { currentProject } = this.props.projects;
+
     return (
       <Dialog
         className="fullscreen-dialog"
@@ -192,16 +211,31 @@ class PageBlockPicker extends Component {
             </div>
           </div>
           <div className="page-block-picker-footer">
-            <Button
-              disabled={this.props.blocks.selected.length == 0}
-              loading={this.props.pageBlockPicker.isDownloading}
-              type="primary"
-              onClick={this.handleOk}
+            <Balloon
+              trigger={
+                <Button
+                  disabled={this.props.blocks.selected.length == 0}
+                  loading={this.props.pageBlockPicker.isDownloading}
+                  type="primary"
+                  onClick={this.handleOk}
+                >
+                  {this.props.pageBlockPicker.isDownloading
+                    ? '正在下载区块...'
+                    : '开始下载'}
+                </Button>
+              }
+              align="t"
+              alignment="normal"
+              triggerType="hover"
+              style={{ width: 350, height: 85 }}
+              visible={this.props.pageBlockPicker.isDownloading}
             >
-              {this.props.pageBlockPicker.isDownloading
-                ? '正在下载区块...'
-                : '开始下载'}
-            </Button>
+              <div>
+                <Progress
+                  styleOffset={[-350, 0]}
+                />
+              </div>
+            </Balloon>
             <Button
               disabled={this.props.pageBlockPicker.isDownloading}
               onClick={this.handleClose}
@@ -209,12 +243,6 @@ class PageBlockPicker extends Component {
               取消
             </Button>
           </div>
-          {/* <div className="page-block-picker-progress">
-            <Progress
-              progress={this.props.progress}
-              currentProject={currentProject}
-            />
-          </div> */}
         </div>
       </Dialog>
     );

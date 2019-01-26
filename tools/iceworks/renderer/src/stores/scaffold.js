@@ -212,7 +212,7 @@ class Scaffold {
     progress.reset();
   }
 
-  /**
+  /** 
    * 开始创建项目
    * @param {String} targetPath 项目地址
    * @param {Object} options 脚手架配置
@@ -250,7 +250,7 @@ class Scaffold {
       this.projectFolderName.trim() == '' || // 项目名为空
       this.projectFolderNameValidation !== '' || // 含错误信息
       // !this.isLegalProjectName || // 合法项目名
-      (progress &&  progress.status !== 'init' )// 非初始状态
+      (progress && progress.visible )// 非初始状态
     );
   }
 

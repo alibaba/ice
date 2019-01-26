@@ -11,10 +11,13 @@ const Popup = Overlay.Popup;
 /**
  * 进度条
  */
+@inject('progress', 'projects')
+@observer
 export default class ProgressWrap extends Component {
 
   render() {
-    const { currentProject } = this.props;
+    const { projects, styleOffset } = this.props;
+    const { currentProject } = projects;
     const {
       visible,
       showProgress,
@@ -25,9 +28,9 @@ export default class ProgressWrap extends Component {
       progressRemaining
     } = this.props.progress;
 
-    // if (!visible) {
-    //   return null;
-    // }
+    if (!visible) {
+      return null;
+    }
 
     return (
       <div style={{
@@ -40,10 +43,10 @@ export default class ProgressWrap extends Component {
             color: '#2eca9c',
             lineHeight: '24px'
           }}>
-            {statusText} 开始下载区块...
+            {statusText}...
           </span>
           {
-            // showTerminal && (
+            showTerminal && (
               <Popup
                 trigger={
                   <ExtraButton
@@ -60,7 +63,7 @@ export default class ProgressWrap extends Component {
                 triggerType="click"
                 animation={false}
                 align="bl tl"
-                offset={[-370,0]}
+                offset={styleOffset || [-370,0]}
               >
                 <div style={{
                   border: '1px solid #999',
@@ -84,11 +87,11 @@ export default class ProgressWrap extends Component {
                   />
                 </div>
               </Popup>
-            // )
+            )
           }
         </div>
         {
-          // showProgress && (
+          showProgress && (
             <div>
               <Progress
                 style={{ width: '40%' }}
@@ -107,7 +110,7 @@ export default class ProgressWrap extends Component {
                 剩余 {progressRemaining} s
               </span>
             </div>
-          // )
+          )
         }
       </div>
     );

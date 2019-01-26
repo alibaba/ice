@@ -1,9 +1,9 @@
 import { Dialog, Button, Form, Input, Field, Feedback } from '@icedesign/base';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { toJS } from 'mobx';
 import React, { Component } from 'react';
 
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import uppercamelcase from 'uppercamelcase';
 import PropTypes from 'prop-types';
 
@@ -12,7 +12,6 @@ import projectScripts from '../../../../lib/project-scripts';
 import dialog from '../../../../components/dialog';
 import Progress from '../../../../components/Progress';
 import services from '../../../../services';
-
 
 let container;
 const { log, npm, interaction, scaffolder } = services;
@@ -33,6 +32,7 @@ const pageExists = (pages, name = '') => {
   });
 };
 
+@inject('projects', 'newpage', 'blocks', 'customBlocks', 'progress')
 @observer
 class PageConfig extends Component {
   static propTypes = {
@@ -52,11 +52,12 @@ class PageConfig extends Component {
   handleClose = () => {
     if (!this.props.newpage.isCreating) {
       this.props.newpage.closeSave();
-      this.props.newpage.resetProgress();
+      this.props.progress.reset();
     }
   };
 
   handleOk = () => {
+    const { progress } = this.props;
     this.field.validate((errors, values) => {
       if (errors) {
         // 表单验证失败
@@ -68,14 +69,14 @@ class PageConfig extends Component {
           );
           return false;
         }
+        this.props.newpage.isCreating = true;
 
-        this.props.newpage.startProgress(false);
         const { currentProject } = this.props.projects;
-
         const layout = toJS(this.props.newpage.currentLayout);
         const blocks = toJS(this.props.selectedBlocks);
         const libraryType = currentProject.getLibraryType();
         const pageName = toJS(values.pageName);
+
         // 创建页面
         const config = {
           name: libraryType == 'react' ? uppercamelcase(pageName) : pageName,
@@ -170,7 +171,8 @@ class PageConfig extends Component {
 
               log.info('generate-page-success', 'page 创建成功');
 
-              this.props.newpage.endProgress();
+              progress.end();
+              this.props.newpage.isCreating = false;
               this.props.newpage.closeSave();
               this.props.newpage.toggle();
             })
@@ -181,7 +183,8 @@ class PageConfig extends Component {
                 title: '生成页面失败',
                 error: error,
               });
-              this.props.newpage.resetProgress();
+              progress.reset();
+              this.props.newpage.isCreating = false;
             })
             .then(() => {
               return currentProject.scaffold.removePreviewPage({
@@ -196,10 +199,15 @@ class PageConfig extends Component {
             });
         } else {
           let applicationType = '';
-
           if (currentProject) {
             applicationType = currentProject.getApplicationType();
           }
+
+           // 进度条
+          progress.start(true);
+          progress.setStatusText('正在生成页面');
+          progress.setSectionCount(blocks.length);
+          
           scaffolder
             .createPage({
               pageName: toJS(values.pageName), // 页面名
@@ -212,7 +220,7 @@ class PageConfig extends Component {
               excludeLayout: applicationType == 'react', // hack react 的模板不生成 layout
               // hack vue
               libary: this.props.libary,
-              progressFunc: this.props.progress.handleProgressFunc,
+              progressFunc: progress.handleProgressAllInOneFunc,
               interpreter: ({ type, message, data }, next) => {
                 console.log(type, message);
                 switch (type) {
@@ -279,12 +287,13 @@ class PageConfig extends Component {
                 title: '生成页面失败',
                 error: error,
               });
-
-              this.props.newpage.resetProgress();
+              progress.reset();
+              this.props.newpage.isCreating = false;
             })
             .then((goon) => {
               if (goon == false) {
-              this.props.newpage.endProgress();
+                progress.end();
+                this.props.newpage.isCreating = false;
               } else {
                 const content = [];
                 if (values.pageName) {
@@ -303,7 +312,8 @@ class PageConfig extends Component {
 
                 log.info('generate-page-success', 'page 创建成功');
 
-                this.props.newpage.endProgress();
+                progress.end();
+                this.props.newpage.isCreating = false;
                 this.props.newpage.closeSave();
                 this.props.newpage.toggle();
 
@@ -325,14 +335,14 @@ class PageConfig extends Component {
   };
 
   // 卸载组件
-  handleAfterClose = () => {
-    ReactDOM.unmountComponentAtNode(container);
-    container.parentNode.removeChild(container);
-  };
+  // handleAfterClose = () => {
+  //   ReactDOM.unmountComponentAtNode(container);
+  //   container.parentNode.removeChild(container);
+  // };
 
   render() {
     const { init } = this.field;
-
+console.log('progress:', this.props.progress);
     const { projects, newpage } = this.props;
     const { currentProject } = projects;
     let applicationType = '';
@@ -358,7 +368,7 @@ class PageConfig extends Component {
         visible={this.props.newpage.savePageVisible}
         onClose={this.handleClose}
         onCancel={this.handleClose}
-        afterClose={this.handleAfterClose}
+        // afterClose={this.handleAfterClose}
         footer={
           <div>
             <Button
@@ -459,7 +469,6 @@ class PageConfig extends Component {
           )}
         </Form>
         <Progress
-          progress={this.props.progress}
           currentProject={currentProject}
         />
       </Dialog>
@@ -467,17 +476,5 @@ class PageConfig extends Component {
   }
 }
 
-export default {
-  /**
-   * 显示
-   *
-   * @param {Object} newpage 操作对象
-   */
-  show(props) {
-    container = document.createElement('div');
-    container.id = 'page-config';
-    document.body.appendChild(container);
+export default PageConfig;
 
-    ReactDOM.render(<PageConfig {...props} />, container);
-  },
-};

@@ -157,13 +157,8 @@ module.exports = async function createPage({
         pageName: pageFolderName,
         progressFunc
       });
-      const dependenciesAll = deps.dependencies;
-      // 过滤已有依赖
-      Object.keys(dependenciesAll).forEach((dep) => {
-        if (!pkg.dependencies.hasOwnProperty(dep)) {
-          dependencies[dep] = dependenciesAll[dep];
-        }
-      });
+      dependencies = deps.dependencies;
+ 
     } catch (error) {
       emitProgress(false);
       throw error;

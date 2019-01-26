@@ -28,6 +28,9 @@ import './index.scss';
 class CreatePage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectedBlocks: []
+    };
     this.props.customBlocks.initCustomBlocks();
 
     // 监听 statusCompile 的构建状态
@@ -385,13 +388,8 @@ class CreatePage extends Component {
     }
    
     this.props.newpage.openSave();
-    PageConfig.show({
-      selectedBlocks,
-      newpage: this.props.newpage,
-      progress: this.props.progress,
-      blocks: this.props.blocks,
-      projects: this.props.projects,
-      libary: this.props.projects.currentProject.getLibraryType(),
+    this.setState({
+      selectedBlocks
     });
   };
 
@@ -464,6 +462,14 @@ class CreatePage extends Component {
             </Button>
           </div>
         </div>
+        {
+          this.props.newpage.savePageVisible && (
+            <PageConfig
+              selectedBlocks={this.state.selectedBlocks}
+              libary={this.props.projects.currentProject.getLibraryType()}
+            />
+          )
+        }
       </Dialog>
     );
   }

@@ -75,8 +75,15 @@ async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageNam
   depList.forEach(({ dependencies, }) => {
     Object.assign(dependenciesAll, dependencies);
   });
+  // 过滤已有依赖
+  const filterDependencies = {};
+  Object.keys(dependenciesAll).forEach((dep) => {
+    if (!pkg.dependencies.hasOwnProperty(dep)) {
+      filterDependencies[dep] = dependenciesAll[dep];
+    }
+  });
   return {
-    dependencies: dependenciesAll
+    dependencies: filterDependencies
   };
 
 }

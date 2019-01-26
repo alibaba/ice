@@ -49,36 +49,14 @@ class NewPage {
     });
   }
 
+
   @computed
   get isCreating() {
-    return progress.visible;
+    return this.isCreatingValue;
   }
 
-  /**
-   * 启动进度条
-   */
-  @action
-  startProgress(showProgress = true) {
-    progress.setStatusText('项目文件生成中');
-    progress.start(showProgress);
-  } 
-
-  /**
-   * 结束进度条
-   */
-  endProgress() {
-    progress.setStatusText('项目创建完成');
-    progress.end();
-  }
-
-  resetProgress() {
-    progress.reset();
-  }
-
-
-  @computed
-  get isInstallingBlockDeps() {
-    return this.createProcessEventName === 'installBlockDeps';
+  set isCreating(value) {
+    this.isCreatingValue = value;
   }
 
   @action
