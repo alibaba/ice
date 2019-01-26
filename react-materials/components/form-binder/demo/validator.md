@@ -11,7 +11,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
-import { Select, Button, Grid, Input } from '@icedesign/base';
+import { Select, Button, Grid, Input } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -91,7 +91,7 @@ const styles = {
     fontSize: '12px'
   },
   preview: {
-    border: '1px solid #eee', 
+    border: '1px solid #eee',
     margin: '20px 0',
     padding: '10px'
   }

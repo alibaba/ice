@@ -1,0 +1,19 @@
+.footerContainer {
+  width: 100%;
+  margin: 20px auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #666;
+}
+.title {
+  filter: grayscale(100%);
+  opacity: 0.3;
+  margin: 0;
+}
+.copyright {
+  line-height: 1.5;
+  font-size: 12px;
+  text-align: left;
+}

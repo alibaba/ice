@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/styled-menu",
-  "version": "0.1.2",
+  "version": "1.0.2",
   "description": "ICE 导航组件体验版",
   "main": "lib/index.js",
   "files": [
@@ -23,14 +23,13 @@
     "ice-components"
   ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "foundation-symbol": "^0.1.0",
+    "@alifd/next": "^1.11.7",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.10",
-    "rc-menu": "^5.0.9"
+    "rc-menu": "^5.0.9",
+    "@icedesign/foundation-symbol": "^1.0.0"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "peerDependencies": {
     "react": "^16.5.0"
   },

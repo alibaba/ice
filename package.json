@@ -87,5 +87,8 @@
       "platform": "mobile",
       "type": "rax"
     }
-  ]
+  ],
+  "dependencies": {
+    "@alifd/next": "^1.11.7"
+  }
 }

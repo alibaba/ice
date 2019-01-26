@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Grid, Icon } from '@icedesign/base';
+import { Grid, Icon } from '@alifd/next';
 import IceContainer from '@icedesign/container';
+import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 const mockData = [
@@ -37,14 +38,14 @@ export default class SalesChart extends Component {
         {mockData.map((item, index) => {
           return (
             <Col xxs="24" l="6" key={index}>
-              <IceContainer style={styles.container}>
-                <div style={styles.content}>
-                  <p style={styles.title}>{item.title}</p>
-                  <div style={styles.data}>
-                    <h2 style={styles.amount}>{item.amount}</h2>
+              <IceContainer className={styles.container}>
+                <div className={styles.content}>
+                  <p className={styles.title}>{item.title}</p>
+                  <div className={styles.data}>
+                    <h2 className={styles.amount}>{item.amount}</h2>
                     <div
+                      className={styles.percent}
                       style={{
-                        ...styles.percent,
                         color: item.increase ? 'red' : 'green',
                       }}
                     >
@@ -52,7 +53,7 @@ export default class SalesChart extends Component {
                       <Icon
                         type={`arrow-${item.increase ? 'up' : 'down'}-filling`}
                         size="xs"
-                        style={styles.arrowIcon}
+                        className={styles.arrowIcon}
                       />
                     </div>
                   </div>
@@ -65,37 +66,3 @@ export default class SalesChart extends Component {
     );
   }
 }
-
-const styles = {
-  container: {
-    borderTop: '3px solid #447eff',
-  },
-  content: {
-    color: '#333',
-    borderRadius: '3px',
-  },
-  title: {
-    margin: '0 0 30px 0',
-    color: '#666',
-    fontWeight: '450',
-  },
-  data: {
-    display: 'flex',
-    margin: '10px 0',
-    justifyContent: 'space-between',
-  },
-  amount: {
-    margin: '0 15px 0 0',
-    fontSize: '28px',
-  },
-  percent: {
-    display: 'flex',
-    alignItems: 'flex-end',
-    marginBottom: '4px',
-    fontSize: '14px',
-    fontWeight: 'bold',
-  },
-  arrowIcon: {
-    marginLeft: '8px',
-  },
-};

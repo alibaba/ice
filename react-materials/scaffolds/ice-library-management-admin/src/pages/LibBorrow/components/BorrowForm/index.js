@@ -7,8 +7,8 @@ import {
   Select,
   DatePicker,
   Radio,
-  Feedback,
-} from '@icedesign/base';
+  Message,
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -46,7 +46,7 @@ export default class RecommendForm extends Component {
         console.log({ errors });
       }
       console.log({ values });
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
@@ -62,12 +62,10 @@ export default class RecommendForm extends Component {
           <div style={styles.formContent}>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>图书名称</div>
-              <IceFormBinder>
+              <IceFormBinder name="bookName">
                 <Select
                   placeholder="请选择"
-                  multiple
-                  name="bookName"
-                  size="large"
+                  mode="multiple"
                   style={{ width: '400px' }}
                 >
                   <Option value="book1">史蒂夫·乔布斯传</Option>
@@ -81,9 +79,8 @@ export default class RecommendForm extends Component {
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>借阅/归还</div>
-              <IceFormBinder>
+              <IceFormBinder name="status">
                 <RadioGroup
-                  name="status"
                   dataSource={[
                     {
                       value: 'borrow',
@@ -99,28 +96,23 @@ export default class RecommendForm extends Component {
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>借阅证</div>
-              <IceFormBinder>
+              <IceFormBinder name="idNumber">
                 <Input
                   placeholder="请输入借阅证号码"
-                  name="idNumber"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
               <div style={styles.formLabel}>借阅时间</div>
-              <IceFormBinder>
+              <IceFormBinder name="time">
                 <DatePicker
-                  name="time"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
             </div>
             <Button
               type="primary"
-              size="large"
               style={styles.submitButton}
               onClick={this.validateAllFormField}
             >

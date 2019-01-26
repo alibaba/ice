@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 
 // MOCK 数据，实际业务按需进行替换
 const getData = (length = 10) => {
@@ -73,10 +73,10 @@ export default class ApplicationTable extends Component {
     return (
       <div>
         <Table
-          isLoading={isLoading}
+          loading={isLoading}
           dataSource={data}
           hasBorder={false}
-          style={{ padding: '20px' }}
+          style={styles.table}
         >
           <Table.Column title="应用" dataIndex="application" />
           <Table.Column title="负责人" dataIndex="leader" />
@@ -102,6 +102,7 @@ export default class ApplicationTable extends Component {
 }
 
 const styles = {
+  table: { margin: '20px' },
   pagination: {
     margin: '20px',
     textAlign: 'right',

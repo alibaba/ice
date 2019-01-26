@@ -92,9 +92,10 @@ const styles = {
     fontWeight: '450',
   },
   filterText: {
-    fontSize: '15px',
+    fontSize: '13px',
     marginRight: '15px',
     cursor: 'pointer',
+    color: '#666',
   },
   active: {
     minWeight: '60px',

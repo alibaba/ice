@@ -23,7 +23,7 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: '图书管理',
-    path: '/',
+    path: '/dashboard',
     icon: 'home2',
   },
   {

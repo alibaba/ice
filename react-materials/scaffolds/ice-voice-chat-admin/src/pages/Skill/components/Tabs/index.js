@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import SmallCard from './../../../../components/SmallCard';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 export default class Tabs extends Component {
   static displayName = 'Tabs';
@@ -46,7 +46,7 @@ export default class Tabs extends Component {
         {Panes.map((item, index) => (
           <TabPane
             key={index}
-            tab={item.tab}
+            title={item.tab}
             onClick={() => {
               this.handleTab(item);
             }}

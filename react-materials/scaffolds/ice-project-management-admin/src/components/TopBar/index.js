@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Icon } from '@icedesign/base';
+import { Button, Icon } from '@alifd/next';
 import PropTypes from 'prop-types';
 
 export default class TopBar extends PureComponent {
@@ -12,8 +12,8 @@ export default class TopBar extends PureComponent {
 
         {extraAfter || (
           <div style={styles.buttons}>
-            <Button size="large" type="primary">
-              <Icon type="add" size="xs" style={styles.addIcon} />
+            <Button iconSize="xs" type="primary">
+              <Icon type="add" style={styles.addIcon} />
               {buttonText}
             </Button>
           </div>

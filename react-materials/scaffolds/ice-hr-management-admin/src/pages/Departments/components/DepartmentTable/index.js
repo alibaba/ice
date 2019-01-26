@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import TableFilter from './Filter';
 
@@ -90,7 +90,7 @@ export default class DepartmentTable extends Component {
         <h4 style={styles.title}>部门列表</h4>
         <TableFilter onChange={this.handleFilterChange} />
         <Table
-          isLoading={isLoading}
+          loading={isLoading}
           dataSource={data}
           hasBorder={false}
           style={{ padding: '0 20px 20px' }}

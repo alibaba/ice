@@ -218,7 +218,7 @@ function generateScaffolds(files, SPACE, done) {
       // (必) 截图
       screenshot: pkg.scaffoldConfig.screenshot || pkg.scaffoldConfig.snapshot,
       // 站点模板预览需要多张截图
-      screenshots: pkgConfig.screenshots || [],
+      screenshots: pkg.scaffoldConfig.screenshots || [],
 
       categories: pkg.scaffoldConfig.categories || [],
       // publishTime: pkg.publishTime || new Date().toISOString(),

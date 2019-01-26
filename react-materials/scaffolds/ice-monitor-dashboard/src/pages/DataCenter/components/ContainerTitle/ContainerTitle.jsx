@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Balloon } from '@icedesign/base';
+import { Icon, Balloon } from '@alifd/next';
 
 export default class ContainerTitle extends Component {
   static displayName = 'ContainerTitle';

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 import SearchFilter from './SearchFilter';
 
 export default class CustomTable extends Component {
@@ -111,7 +111,7 @@ export default class CustomTable extends Component {
             hasAdvance={hasAdvance}
           />
         )}
-        <Table dataSource={dataSource} hasBorder={false} isLoading={loading}>
+        <Table dataSource={dataSource} hasBorder={false} loading={loading}>
           {columns.map((item) => {
             return (
               <Table.Column

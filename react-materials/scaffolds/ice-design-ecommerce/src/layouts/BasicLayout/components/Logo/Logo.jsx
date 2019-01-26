@@ -6,7 +6,7 @@ export default class Logo extends Component {
     return (
       <div style={{ ...styles.container, ...this.props.style }}>
         <Link to="/" style={styles.logoText}>
-          {this.props.text || '电商管理系统'}
+          {this.props.text || 'LOGO'}
         </Link>
       </div>
     );
@@ -26,8 +26,8 @@ const styles = {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     marginLeft: '10px',
-    fontSize: '20px',
-    color: '#333',
+    fontSize: '30px',
+    color: '#3080FE',
     fontWeight: 'bold',
     textDecoration: 'none',
   },

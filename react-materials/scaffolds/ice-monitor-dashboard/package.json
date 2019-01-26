@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/monitor-dashboard",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "该模板适用于数据监控展示类的管理后台，内置通用的丰富的图表，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/monitor-dashboard@latest/build/index.html",
   "files": [
@@ -22,21 +22,20 @@
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "publishConfig": {
-    "registry": "http://registry.npmjs.com",
     "access": "public"
   },
   "dependencies": {
+    "@alifd/next": "^1.x",
     "@antv/data-set": "^0.9.6",
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.4",
+    "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^1.0.3",
-    "@icedesign/img": "^0.1.1",
-    "@icedesign/layout": "^0.1.2",
-    "@icedesign/menu": "^0.1.1",
-    "@icedesign/skin": "^0.1.0",
+    "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/img": "^1.x",
+    "@icedesign/layout": "^1.x",
+    "@icedesign/theme": "^0.1.2",
     "bizcharts": "^3.2.2",
     "classnames": "^2.2.5",
-    "foundation-symbol": "^0.1.3",
+    "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -53,7 +52,7 @@
     "ice-scripts": "^1.6.0-next.3"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "localization": false,
     "output": {
@@ -70,6 +69,11 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1tUgmCAvoK1RjSZFNXXcxMVXa-2872-1580.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1tUgmCAvoK1RjSZFNXXcxMVXa-2872-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB14J3BDmzqK1RjSZPcXXbTepXa-2872-1580.png",
+      "https://img.alicdn.com/tfs/TB1O6pxDxnaK1RjSZFtXXbC2VXa-2872-1580.png",
+      "https://img.alicdn.com/tfs/TB1GOs8DXYqK1RjSZLeXXbXppXa-2872-1580.png"
+    ]
   }
 }

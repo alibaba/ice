@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 
 export default class CustomTable extends Component {
   static displayName = 'CustomTable';
@@ -32,7 +32,7 @@ export default class CustomTable extends Component {
     return (
       <div style={styles.container}>
         <Table
-          isLoading={isLoading}
+          loading={isLoading}
           dataSource={dataSource}
           hasBorder={false}
           style={styles.table}
@@ -44,7 +44,7 @@ export default class CustomTable extends Component {
                 title={item.title}
                 width={item.width || 'auto'}
                 dataIndex={item.dataIndex}
-                cell={item.cell || ((value) => value)}
+                cell={item.cell || (value => value)}
               />
             );
           })}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import BarChart from './BarChart';
 import PieChart from './PieChart';
 import LineChart from './LineChart';

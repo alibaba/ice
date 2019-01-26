@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import Overview from './components/Overview';
 import BarChart from './components/BarChart';
 import Commits from './components/Commits';

@@ -1,13 +1,13 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Button, Checkbox, Grid, Feedback } from '@icedesign/base';
+import { Input, Button, Checkbox, Grid, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
+import Icon from '@icedesign/foundation-symbol';
 
 const { Row, Col } = Grid;
 
@@ -44,7 +44,7 @@ class UserLogin extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('登录成功');
+      Message.success('登录成功');
       this.props.history.push('/');
     });
   };
@@ -61,9 +61,13 @@ class UserLogin extends Component {
           <div className="formItems">
             <Row className="formItem">
               <Col className="formItemCol">
-                <IceIcon type="person" size="small" className="inputIcon" />
+                <Icon type="person" size="small" className="inputIcon" />
                 <IceFormBinder name="username" required message="必填">
-                  <Input size="large" maxLength={20} placeholder="用户名" />
+                  <Input
+                    className="next-input-single"
+                    maxLength={20}
+                    placeholder="用户名"
+                  />
                 </IceFormBinder>
               </Col>
               <Col>
@@ -73,9 +77,13 @@ class UserLogin extends Component {
 
             <Row className="formItem">
               <Col className="formItemCol">
-                <IceIcon type="lock" size="small" className="inputIcon" />
+                <Icon type="lock" size="small" className="inputIcon" />
                 <IceFormBinder name="password" required message="必填">
-                  <Input size="large" htmlType="password" placeholder="密码" />
+                  <Input
+                    className="next-input-single"
+                    htmlType="password"
+                    placeholder="密码"
+                  />
                 </IceFormBinder>
               </Col>
               <Col>

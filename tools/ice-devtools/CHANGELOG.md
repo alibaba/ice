@@ -1,5 +1,8 @@
 # ice-scripts Changelog
 
+## 2.1.2
+- [bugfix] 修复物料生成错误
+
 ## 2.1.1
 - [feat] 物料接入组件开发流程
 - [feat] 支持独立的组件开发流程

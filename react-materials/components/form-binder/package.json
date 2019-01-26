@@ -34,7 +34,9 @@
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "@icedesign/base": "^0.2.0"
+    "@icedesign/base": "^0.2.0",
+    "@alifd/next": "^1.11.8",
+    "moment": "^2.23.0"
   },
   "componentConfig": {
     "name": "form-binder",

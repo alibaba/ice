@@ -5,6 +5,9 @@ const findFileLoaderRuleFn = rule =>
 const findStyleLoaderRuleFn = rule =>
   rule.test.toString() === /\.css$/.toString();
 
+const pkgJSON = require('package.json');
+
+const theme = pkgJSON.buildConfig && pkgJSON.buildConfig.theme;
 function rewireSass(config, env, sassOptions = {}) {
   // find the non-javascript ruleset in the webpack config
   const rules = getRules(config);
@@ -30,12 +33,14 @@ function rewireSass(config, env, sassOptions = {}) {
       loader: require.resolve('sass-loader'),
       options: sassOptions,
     });
-    styleLoaderRule.loader.push({
-      loader: require.resolve('ice-skin-loader'),
-      options: {
-        themeFile: require.resolve('@icedesign/skin'),
-      },
-    });
+    if (theme) {
+      styleLoaderRule.loader.push({
+        loader: require.resolve('ice-skin-loader'),
+        options: {
+          themeFile: require.resolve(`${theme}/variables.scss`),
+        },
+      });
+    }
   }
 
   if (styleLoaderRule.use) {
@@ -43,12 +48,14 @@ function rewireSass(config, env, sassOptions = {}) {
       loader: require.resolve('sass-loader'),
       options: sassOptions,
     });
-    styleLoaderRule.use.push({
-      loader: require.resolve('ice-skin-loader'),
-      options: {
-        themeFile: require.resolve('@icedesign/skin'),
-      },
-    });
+    if (theme) {
+      styleLoaderRule.use.push({
+        loader: require.resolve('ice-skin-loader'),
+        options: {
+          themeFile: require.resolve(`${theme}/variables.scss`),
+        },
+      });
+    }
   }
 
   return config;

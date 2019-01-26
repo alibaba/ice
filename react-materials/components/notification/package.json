@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/notification",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "description": "全局展示通知提醒信息。",
   "main": "lib/index.js",
   "files": [
@@ -29,7 +29,7 @@
     "react": "^16.5.0"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.5",
+    "@alifd/next": "^1.x",
     "rc-notification": "^1.4.2"
   },
   "devDependencies": {},

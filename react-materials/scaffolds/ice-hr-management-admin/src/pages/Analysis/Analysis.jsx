@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import Age from './components/Age';
 import Education from './components/Education';
 import Performance from './components/Performance';

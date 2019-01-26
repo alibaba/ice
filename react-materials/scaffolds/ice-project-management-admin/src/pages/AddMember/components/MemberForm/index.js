@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Grid, Form, Button, Feedback } from '@icedesign/base';
+import { Input, Grid, Form, Button, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -23,7 +23,7 @@ export default class AddProject extends Component {
         return false;
       }
 
-      Feedback.toast.success('添加成功');
+      Message.success('添加成功');
     });
   };
 

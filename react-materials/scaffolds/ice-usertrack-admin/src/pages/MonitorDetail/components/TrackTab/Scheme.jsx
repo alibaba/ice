@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Checkbox, Table, Pagination } from '@icedesign/base';
+import { Checkbox, Table, Pagination } from '@alifd/next';
 
 const { Group: CheckboxGroup } = Checkbox;
 
@@ -117,7 +117,7 @@ export default class TableFilter extends Component {
             onChange={this.onChange}
           />
         </div>
-        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
+        <Table loading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="方案名称" dataIndex="schemeName" />
           <Table.Column title="创建时间" dataIndex="time" />
           <Table.Column title="负责人" dataIndex="leader" />

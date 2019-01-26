@@ -1,23 +1,13 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
+import styles from './index.module.scss';
 
 export default class Logo extends PureComponent {
   render() {
     return (
-      <Link to="/" style={{ ...styles.logo, ...this.props.style }}>
+      <Link to="/" className={styles.logo} style={this.props.style}>
         LOGO
       </Link>
     );
   }
 }
-
-const styles = {
-  logo: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '36px',
-    fontWeight: 'bold',
-    color: '#447eff',
-  },
-};

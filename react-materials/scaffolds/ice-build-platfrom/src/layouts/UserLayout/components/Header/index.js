@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 import { Link } from 'react-router-dom';
 import './index.scss';
 

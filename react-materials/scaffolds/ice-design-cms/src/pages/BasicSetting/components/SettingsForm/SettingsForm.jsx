@@ -8,8 +8,8 @@ import {
   Switch,
   Upload,
   Grid,
-  Feedback,
-} from '@icedesign/base';
+  Message,
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -19,7 +19,7 @@ import './SettingsForm.scss';
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
-const { ImageUpload } = Upload;
+
 
 function beforeUpload(info) {
   console.log('beforeUpload callback : ', info);
@@ -52,7 +52,7 @@ export default class SettingsForm extends Component {
         gender: 'male',
         notice: false,
         email: '',
-        avatar: '',
+        avatar: [],
         siteUrl: '',
         githubUrl: '',
         twitterUrl: '',
@@ -79,7 +79,7 @@ export default class SettingsForm extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
@@ -101,7 +101,7 @@ export default class SettingsForm extends Component {
                 </Col>
                 <Col xxs="16" s="10" l="6">
                   <IceFormBinder name="name" required max={10} message="必填">
-                    <Input size="large" placeholder="于江水" />
+                    <Input placeholder="于江水" />
                   </IceFormBinder>
                   <IceFormError name="name" />
                 </Col>
@@ -113,16 +113,10 @@ export default class SettingsForm extends Component {
                 </Col>
                 <Col xxs="16" s="10" l="6">
                   <IceFormBinder name="avatar" required message="必填">
-                    <ImageUpload
-                      listType="picture-card"
+                    <Upload.Card
+                      listType="card"
                       action=""
                       accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
-                      locale={{
-                        image: {
-                          cancel: '取消上传',
-                          addPhoto: '上传图片',
-                        },
-                      }}
                       beforeUpload={beforeUpload}
                       onChange={onChange}
                       onSuccess={onSuccess}
@@ -172,7 +166,6 @@ export default class SettingsForm extends Component {
                     message="请输入正确的邮件"
                   >
                     <Input
-                      size="large"
                       placeholder="ice-admin@alibaba-inc.com"
                     />
                   </IceFormBinder>
@@ -192,7 +185,6 @@ export default class SettingsForm extends Component {
                     message="请输入正确的网站地址"
                   >
                     <Input
-                      size="large"
                       type="url"
                       placeholder="https://alibaba.github.io/ice"
                     />
@@ -213,7 +205,6 @@ export default class SettingsForm extends Component {
                     message="请输入正确的 Github 地址"
                   >
                     <Input
-                      size="large"
                       placeholder="https://github.com/alibaba/ice"
                     />
                   </IceFormBinder>
@@ -232,7 +223,7 @@ export default class SettingsForm extends Component {
                     required
                     message="请输入正确的 Twitter 地址"
                   >
-                    <Input size="large" placeholder="https://twitter.com" />
+                    <Input placeholder="https://twitter.com" />
                   </IceFormBinder>
                   <IceFormError name="twitterUrl" />
                 </Col>
@@ -244,7 +235,7 @@ export default class SettingsForm extends Component {
                 </Col>
                 <Col xxs="16" s="10" l="6">
                   <IceFormBinder name="description">
-                    <Input size="large" multiple placeholder="请输入描述..." />
+                    <Input.TextArea placeholder="请输入描述..." />
                   </IceFormBinder>
                   <IceFormError name="description" />
                 </Col>
@@ -255,7 +246,6 @@ export default class SettingsForm extends Component {
           <Row style={{ marginTop: 20 }}>
             <Col offset="3">
               <Button
-                size="large"
                 type="primary"
                 style={{ width: 100 }}
                 onClick={this.validateAllFormField}

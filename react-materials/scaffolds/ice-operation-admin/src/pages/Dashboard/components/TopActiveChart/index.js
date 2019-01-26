@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Table, Progress } from '@icedesign/base';
+import { Grid, Table, Progress } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -38,7 +38,7 @@ const activePages = [
     page: '设备 E',
     amount: '1,24,693',
     percent: 60,
-    state: '',
+    state: undefined,
   },
   {
     id: 6,
@@ -59,7 +59,7 @@ const activePages = [
     page: '设备 H',
     amount: '1,688',
     percent: 50,
-    state: '',
+    state: undefined,
   },
 ];
 
@@ -128,11 +128,7 @@ export default class TopActiveChart extends Component {
                 title="销售占比"
                 dataIndex="page"
                 cell={(value, index, record) => (
-                  <Progress
-                    percent={record.percent}
-                    state={record.state}
-                    showInfo={false}
-                  />
+                  <Progress percent={record.percent} state={record.state} />
                 )}
               />
             </Table>

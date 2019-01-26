@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Icon, Feedback } from '@icedesign/base';
+import { Grid, Icon, Message } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;
@@ -28,7 +28,7 @@ export default class ServiceCard extends Component {
   }
 
   handleClick = (message) => {
-    Feedback.toast.success(message);
+    Message.success(message);
   };
 
   render() {

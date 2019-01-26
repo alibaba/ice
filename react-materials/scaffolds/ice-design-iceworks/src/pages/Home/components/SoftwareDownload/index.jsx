@@ -1,5 +1,5 @@
 /* eslint react/jsx-no-bind:0 */
-import { Button, Feedback } from '@icedesign/base';
+import { Button, Message } from '@alifd/next';
 import React, { Component } from 'react';
 import './index.scss';
 
@@ -7,7 +7,7 @@ export default class ReleaseIntro extends Component {
   static displayName = 'ReleaseIntro';
 
   download = () => {
-    Feedback.toast.success('开始下载');
+    Message.success('开始下载');
   };
 
   render() {

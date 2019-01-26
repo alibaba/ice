@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './index.module.scss';
 
 const MOCK_DATA = [
   {
@@ -44,21 +45,21 @@ export default class FilterTag extends Component {
   render() {
     const { data } = this.state;
     return (
-      <div style={styles.filterContent}>
+      <div className={styles.filterContent}>
         {data.map((item, index) => {
           const lastItem = index === data.length - 1;
           const lastItemStyle = lastItem ? { marginBottom: 10 } : null;
           return (
-            <div style={{ ...styles.filterItem, ...lastItemStyle }} key={index}>
-              <div style={styles.filterLabel}>{item.label}:</div>
-              <div style={styles.filterList}>
+            <div className={styles.filterItem} style={lastItemStyle} key={index}>
+              <div className={styles.filterLabel}>{item.label}:</div>
+              <div className={styles.filterList}>
                 {item.value.map((text, idx) => {
                   const activeStyle =
-                    item.selected === text ? styles.active : null;
+                    item.selected === text ? styles.activeText : styles.filterText;
                   return (
                     <span
                       onClick={() => this.handleClick(text, index)}
-                      style={{ ...styles.filterText, ...activeStyle }}
+                      className={activeStyle}
                       key={idx}
                     >
                       {text}
@@ -73,28 +74,3 @@ export default class FilterTag extends Component {
     );
   }
 }
-
-const styles = {
-  filterItem: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '28px',
-    marginBottom: '20px',
-  },
-  filterLabel: {
-    width: '80px',
-    fontSize: '14px',
-  },
-  filterText: {
-    fontSize: '12px',
-    marginRight: '15px',
-    cursor: 'pointer',
-  },
-  active: {
-    minWeight: '60px',
-    borderRadius: '20px',
-    padding: '5px 15px',
-    background: '#2784fc',
-    color: '#fff',
-  },
-};

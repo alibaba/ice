@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 
 const ContainerTitle = ({ title, style, ...props }) => {
   return (
     <div style={{ ...styles.container, ...style }}>
       <h3 style={styles.title}>{title}</h3>
       {props.buttonText ? (
-        <Button type="primary" size="large" onClick={props.onClick}>
+        <Button type="primary" onClick={props.onClick}>
           {props.buttonText}
         </Button>
       ) : null}
