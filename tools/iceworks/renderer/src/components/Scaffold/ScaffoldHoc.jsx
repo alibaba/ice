@@ -69,7 +69,8 @@ const ScaffoldHoc = (WrappedComponent) => {
         .createProjectFolder()
         .then((gotoCreate) => {
           if (gotoCreate) {
-            this.props.scaffold.startProgress();
+            const SectionCount = nodeFramework ? 2 : 1;
+            this.props.scaffold.startProgress(SectionCount);
             return this.props.scaffold.create(currentPath, options);
           } else {
             return Promise.resolve(gotoCreate);

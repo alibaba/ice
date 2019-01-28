@@ -90,25 +90,9 @@ class Progress {
       }
     }
    */
+  // 多区块下载合并成一个进度的逻辑。
   @action
   handleProgressFunc = (state = {}) => {
-    if (state.percent) {
-      if (state.percent >= 1) {
-        this.progressValue = 100;
-        this.progressSpeedValue = 0;
-        this.progressRemainingValue = 0;
-      } else if (state.percent > 0) {
-        this.progressValue = Number(state.percent) * 100;
-        this.progressSpeedValue = state.speed || 0;
-        this.progressRemainingValue = (state.time && state.time.remaining) || 0;
-      }
-      
-    }
-  };
-
-  // 多区块下载合并成一个进度的逻辑。
-  handleProgressAllInOneFunc = (state = {}) => {
-    console.log('percent:', state.percent)
     if (state.percent) {
       if (state.percent >= 1) {
         if(this.SectionCount === this.currentCount) {
