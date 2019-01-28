@@ -48,35 +48,7 @@ const RECOMMEND_MATERIALS = [
     source: 'https://ice.alicdn.com/assets/angular-materials.json',
     tags: ['推荐', 'Angular', 'Material UI'],
     type: 'angular',
-  },
-  {
-    key: 'fusion',
-    name: 'Fusion 物料源',
-    homepage: 'http://fusion.design/',
-    checked: false,
-    builtIn: true,
-    logo: 'https://img.alicdn.com/tfs/TB1V78io_mWBKNjSZFBXXXxUFXa-400-400.png',
-    description:
-      'Fusion官方物料源。聚合，极致，效率尽在 https://fusion.design',
-    source:
-      'https://fusion.design/api/v1/sites/1/materials',
-    tags: ['推荐', 'React', 'Fusion'],
-    type: 'react',
-  },
-  {
-    key: 'bizchart',
-    name: 'Bizchart 物料源',
-    homepage: 'http://bizcharts.net/',
-    checked: false,
-    builtIn: true,
-    logo: 'http://img.alicdn.com/tfs/TB1Y9Zav4WYBuNjy1zkXXXGGpXa-274-216.png',
-    description:
-      'BizCharts 官方推出的基于 Iceworks 的模板和区块物料源，适用于图表可视化展示类的应用场景',
-    source:
-      'http://g.alicdn.com/bizcharts-material/scripts/material-assets.json',
-    tags: ['推荐', 'React', 'BizChart'],
-    type: 'react',
-  },
+  }
 ];
 
 const BLOCK_GROUPS_MATERIALS = {
