@@ -91,7 +91,7 @@ class PageBlockPicker extends Component {
         clientSrcPath,
         blocks: blocks,
         pageName: pageName,
-        progressFunc: progress.handleProgressAllInOneFunc
+        progressFunc: progress.handleProgressFunc
       })
       .catch((err) => {
         pageBlockPicker.downloadDone();

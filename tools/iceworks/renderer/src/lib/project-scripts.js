@@ -289,15 +289,18 @@ export default {
         installPrefix = '--save-dev';
       }
 
-      const cwd = project.clientPath;
+      const cwd = project.fullPath;
+      const cwdClient = project.clientPath;
+      terms.writeln(cwd, '开始安装依赖');
 
       sessions.manager.new(
         {
-          cwd: cwd,
+          cwd: cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
+          cwdClient: cwdClient,// 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
           env: env,
           shell: 'npm',
           shellArgs: ['install', '--no-package-lock', installPrefix].concat(
-            dependenciesFormat(dependencies)
+            dependencies
           ),
         },
         (code) => {
@@ -319,6 +322,7 @@ export default {
    */
   install: ({ project, reinstall = true }, callback) => {
     log.debug('开始安装', project.fullPath);
+    const cwd = project.fullPath;
     let nodeModulesPaths = [];
     nodeModulesPaths.push(path.join(project.clientPath, 'node_modules'));
     if (project.serverPath) {
@@ -327,9 +331,8 @@ export default {
     // const nodeModulesPath = path.join(cwd, 'node_modules');
     new Promise(async (resolve, reject) => {
       if (reinstall) {
-        const cwd = nodeModulesPaths[0];
         terms.writeln(cwd, '正在清理 node_modules 目录请稍等...');
-        rimraf(cwd, (error) => {
+        rimraf(nodeModulesPaths[0], (error) => {
           log.debug('node_modules 删除成功');
           if (error) {
             terms.writeln(cwd, '清理 node_modules 失败');
@@ -346,13 +349,12 @@ export default {
       .then(() => {
         if (nodeModulesPaths.length === 2) {
           return new Promise(async (resolve, reject) => {
-            const cwd = nodeModulesPaths[1];
-            rimraf(cwd, (error) => {
+            rimraf(nodeModulesPaths[1], (error) => {
               if (error) {
                 terms.writeln(cwd, '清理 node_modules 失败');
                 reject(error);
               } else {
-                terms.writeln(cwd, '清理 node_modules 目录完成');
+                terms.writeln(cwd, '清理 server/node_modules 目录完成');
                 resolve();
               }
             })

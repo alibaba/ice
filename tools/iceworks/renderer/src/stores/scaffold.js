@@ -195,9 +195,10 @@ class Scaffold {
    * 启动进度条
    */
   @action
-  startProgress(showProgress = true) {
+  startProgress(SectionCount) {
     progress.setStatusText('项目文件生成中');
-    progress.start(showProgress);
+    progress.start(true);
+    progress.setSectionCount(SectionCount);
   } 
 
   /**

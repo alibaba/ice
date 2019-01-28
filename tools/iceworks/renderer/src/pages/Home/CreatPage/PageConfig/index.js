@@ -220,7 +220,7 @@ class PageConfig extends Component {
               excludeLayout: applicationType == 'react', // hack react 的模板不生成 layout
               // hack vue
               libary: this.props.libary,
-              progressFunc: progress.handleProgressAllInOneFunc,
+              progressFunc: progress.handleProgressFunc,
               interpreter: ({ type, message, data }, next) => {
                 console.log(type, message);
                 switch (type) {
