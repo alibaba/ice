@@ -31,5 +31,9 @@
   },
   "dmg": {
     "iconSize": 160
+  },
+  "protocols": {
+    "name": "iceworks",
+    "schemes": ["iceworks"]
   }
 }
