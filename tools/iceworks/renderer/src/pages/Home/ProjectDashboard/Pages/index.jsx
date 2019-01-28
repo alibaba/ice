@@ -9,6 +9,7 @@ import path from 'path';
 import React, { Component } from 'react';
 import dayjs from 'dayjs';
 import Notification from '@icedesign/notification';
+import orderBy from 'lodash.orderby';
 
 import { readdirSync } from '../../../../lib/file-system';
 import DashboardCard from '../../../../components/DashboardCard/';
@@ -130,37 +131,20 @@ class PagesCard extends Component {
     });
   }
 
-  renderTipContent = (page) => {
-    return (
-      <div className="page-tip-content">
-        <div className="page-info-item">
-          <span>创建时间：</span>
-          <span>{page.birthtime}</span>
-        </div>
-      </div>
-    );
-  };
-
   renderPageList = () => {
     const { pages } = this.state;
     if (pages && pages.length == 0) {
       return <EmptyTips>暂无页面</EmptyTips>;
     }
-    return pages.map((page) => {
+    // 按时间倒叙
+    const pagesOrderByTime = orderBy(pages, ['birthtime'], ['desc']);
+
+    return pagesOrderByTime.map((page) => {
       return (
         <div className="page-item" key={page.name} data-path={page.fullPath}>
           <div className="name">{page.name}</div>
           <div className="operational">
-            <ExtraButton
-              style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipContent={() => this.renderTipContent(page)}
-            >
-              <Icon
-                type="time"
-                style={{ fontWeight: 'bold', fontSize: '14px' }}
-              />
-            </ExtraButton>
+            <span className="page-creat-time">{page.birthtime}</span>
             <ExtraButton
               style={{ color: '#3080FE' }}
               placement={'top'}
