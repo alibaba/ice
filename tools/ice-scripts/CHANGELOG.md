@@ -1,8 +1,12 @@
 # ice-scripts Changelog
 
+## 1.8.3
+
+- [fix] 修复默认开启 UglifyJsPlugin sourceMap 引起的内存溢出问题，更新为默认关闭 sourceMap
+
 ## 1.8.2
 
-- [chore] 降级  webpack-plugin-import 到 0.2.1 解决部分组件样式引入失败的问题
+- [chore] 降级 webpack-plugin-import 到 0.2.1 解决部分组件样式引入失败的问题
 
 ## 1.8.1
 
@@ -23,7 +27,7 @@
 
 ## 1.7.8
 
-- [chore] dev模式下第一次编译成功后自动用本地浏览器打开对应地址
+- [chore] dev 模式下第一次编译成功后自动用本地浏览器打开对应地址
 
 ## 1.7.7
 
