@@ -92,7 +92,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .options({
       sourceMap: true,
       modules: true,
-      localIdentName: '[name]_[local]_[hash:base64:5]',
+      localIdentName: '[folder]--[local]--[hash:base64:7]',
     })
     .end()
     .use('scss-loader')
