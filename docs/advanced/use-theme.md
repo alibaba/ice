@@ -4,6 +4,8 @@ order: 9
 category: 进阶指南
 ---
 
+> 该能力需要满足项目依赖的基础组件为 `@alifd/next`，如果依赖的是 `@icedesign/base` 请参考之前的文档
+
 飞冰（ICE）默认的主题是蓝色系，无法满足所有项目的需求，因此我们通过工程方式支持一键换肤的能力。
 
 ## 选择主题包
@@ -15,7 +17,7 @@ category: 进阶指南
 - 绿色主题：`@alifd/theme-ice-green`
 - 紫色主题：`@alifd/theme-ice-purple`
 
-如果这几个不能满足需求，可以在 ICE 群里反馈由官方来支持，也可以通过更自由的方式自行配置：@TODO
+如果这几个不能满足需求，可以在 ICE 群里反馈由官方来支持，也可以通过更自由的方式自行配置：[配置组件主题样式](https://fusion.design/help.html#/design-config-component)。注意：如果需要自行配置主题，推荐让专业的设计师同学来做。
 
 ![](https://img.alicdn.com/tfs/TB1y78lECzqK1RjSZPxXXc4tVXa-1768-702.png)
 

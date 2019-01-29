@@ -101,7 +101,7 @@ category: 物料
 
   // (必) 用于说明组件依赖关系
   "components": {
-    "@icedesign/base": "^x.x.x",
+    "@alifd/next": "^x.x.x",
   },
 
   // (必) features
@@ -111,7 +111,7 @@ category: 物料
 
     // 区块使用的组件
     "useComponents": [{
-        "basePackage": "@icedesign/base",
+        "basePackage": "@alifd/next",
         "className": "Grid"
     },{
         "basePackage": "@icedesign/container",
