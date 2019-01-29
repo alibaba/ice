@@ -61,7 +61,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
 
   config.module
     .rule('scss')
-    .test(/\.scss$/)
+    .test(/\.s[a|c]ss$/)
     .exclude.add(/\.module\.scss$/)
     .end()
     .use('style-loader')
