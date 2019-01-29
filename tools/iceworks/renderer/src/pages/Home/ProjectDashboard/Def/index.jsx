@@ -19,7 +19,7 @@ import dialog from '../../../../components/dialog';
 import projects from '../../../../stores/projects';
 
 import DialogCommitMsg from './components/DialogCommitMsg';
-import GitTools from './gitTools';
+import GitTools from '../../../../lib/git-tools';
 
 import Client from './Client';
 
@@ -106,7 +106,7 @@ class Def extends Component {
       defPublishing: false,
       originRemote: {},
     };
-    this.init()
+    this.init();
   }
 
   componentDidMount() {
@@ -812,7 +812,7 @@ class Def extends Component {
     return (
       <DashboardCard>
         <DashboardCard.Header>
-          <div>DEF 前端发布</div>
+          <div>DEF 发布</div>
           <div>
             <ExtraButton
               style={{ color: '#3080FE' }}

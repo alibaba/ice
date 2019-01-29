@@ -81,6 +81,15 @@ class Extensions {
       },
     ];
 
+    const gitConfig = {
+      name: 'git',
+      cover: require('../static/def@3x.png'), // 1x1 的封面图
+      title: 'Git 面板',
+      description: '关联项目的 git 仓库',
+      author: 'ICE TEAM',
+      version: '1.0.0',
+    }
+
     const isAlibaba = settings.get('isAlibaba');
 
     if (isAlibaba) {
@@ -91,7 +100,7 @@ class Extensions {
         description: '支持阿里内网 DEF 发布构建流程，发布到日常以及线上。',
         author: 'ICE TEAM',
         version: '1.0.0',
-      });
+      }, gitConfig);
     } else {
       this.list.push({
         name: 'aliyun',
@@ -100,7 +109,7 @@ class Extensions {
         description: '将项目构建结果上传到阿里云 OSS。',
         author: 'ICE TEAM',
         version: '1.0.0',
-      });
+      }, gitConfig);
     }
 
     const checked = {};

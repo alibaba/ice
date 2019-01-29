@@ -19,6 +19,7 @@ import settingsMaterials from './stores/settings-materials';
 import user from './stores/user';
 import progress from './stores/progress';
 import blockGroups from './stores/block-groups';
+import git from './stores/git';
 
 // pages
 import history from './history';
@@ -89,6 +90,7 @@ class App extends Component {
         user={user}
         progress={progress}
         blockGroups={blockGroups}
+        git={git}
       >
         <Layout>
           <VisibleWrapper
