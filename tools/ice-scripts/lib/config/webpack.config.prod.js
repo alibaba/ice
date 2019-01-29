@@ -20,7 +20,7 @@ module.exports = function getWebpackConfigProd({ entry, buildConfig }) {
       minimize: !process.env.DEBUG,
       minimizer: [
         new UglifyJsPlugin({
-          sourceMap: process.env.SOURCEMAP !== 'none' || false,
+          sourceMap: process.env.SOURCEMAP && process.env.SOURCEMAP !== 'none',
           cache: true,
           parallel: true,
           uglifyOptions: {
