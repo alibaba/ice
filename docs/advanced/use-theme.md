@@ -1,5 +1,5 @@
 ---
-title: 切换项目主题
+title: 配置项目主题
 order: 9
 category: 进阶指南
 ---
@@ -21,14 +21,13 @@ category: 进阶指南
 
 ![](https://img.alicdn.com/tfs/TB1y78lECzqK1RjSZPxXXc4tVXa-1768-702.png)
 
-
 ## 安装主题包
 
 ```bash
 # 项目/模板安装在 dependencies 里
 npm install @icedesign/theme --save
 # 区块/组件安装在 devDependencies 里
-npm install @icedesign/theme --save
+npm install @icedesign/theme --save-dev
 ```
 
 注意区块/组件的主题包仅在开发区块/组件时有效，将区块引入到项目之后，最终以项目配置的主题包为准。

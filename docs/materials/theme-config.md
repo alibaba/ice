@@ -19,7 +19,7 @@ category: 物料
 
 // 使用主题变量
 .title {
-  color: $color-brand1-1;
+  color: $color-brand1-6;
 }
 ```
 
