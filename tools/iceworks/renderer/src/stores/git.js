@@ -1,6 +1,7 @@
 import { observable, action, computed } from 'mobx';
 import pathExists from 'path-exists';
 import path from 'path';
+import { Feedback } from '@icedesign/base';
 
 import GitTools from '../lib/git-tools';
 
@@ -25,11 +26,21 @@ class Git {
   @observable checkoutBranch = '';
   @observable branchOrigin = '';
   @observable branchType = '';
+  @observable branchesCheckout = [];
+  
 
   @observable selectedFiles = []; // 选中的变更文件
   @observable unstagedFiles = []; // 变更的文件
   @observable commitMsg = ''; // 提交信息
 
+  @observable gitCommitting = false;
+  @observable gitNewBranching = false;
+  @observable reloading = false;
+
+  // @observable visibleDialogGitConfig = false;
+  @observable visibleDialogChangeRemote = false;
+  @observable visibleDialogNewBranch = false;
+  @observable visibleDialogBranches = false;
 
   @action
   initTools() {
@@ -64,7 +75,7 @@ class Git {
   @action
   async checkIsRepo() {
     const { currentProject = {} } = Projects;
-    const cwd = currentProject.clientPath;
+    const cwd = currentProject.fullPath;
     try {
       const isRepo = await this.gitTools.run('checkIsRepo');
 
@@ -86,6 +97,10 @@ class Git {
         } else {
           this.currentStep = 1;
         }
+console.log('remoteUrl: ', remoteUrl);
+console.log('originRemote: ', originRemote);
+console.log('currentBranch: ', currentBranch);
+
       }
       this.isGit = isGit;
       this.isRepo = isRepo;
@@ -151,6 +166,124 @@ class Git {
     } catch (error) {
       this.gitCommitting = false;
       this.resetCommit();
+      return false;
+    }
+  }
+
+  @action
+  async newBranch(value) {
+    try {
+      this.gitNewBranching = true;
+      await this.gitTools.run('checkoutLocalBranch', value);
+      this.gitNewBranching = false;
+      return true;
+    } catch (error) {
+      this.gitNewBranching = false;
+      return false;
+    }
+  }
+
+  @action
+  async getBranches() {
+
+    Feedback.toast.show({
+      type: "loading",
+      content: "Git fetching",
+    });
+
+    try {
+      await this.gitTools.run('fetch');
+      const originBranches = await this.gitTools.run('branch', ['--remotes', '--list', '-v']);
+      const localBranches = await this.gitTools.run('branches');
+
+      const local = localBranches.all.map((value) => {
+        return { label: value, value };
+      });
+      const origin = originBranches.all.map((value) => {
+        return { label: value, value };
+      });
+      const branchesCheckout = [];
+      if (local.length > 0) {
+        branchesCheckout.push({
+          label: 'local',
+          value: 'local',
+          children: local,
+        });
+      }
+      if (origin.length > 0) {
+        branchesCheckout.push({
+          label: 'origin',
+          value: 'origin',
+          children: origin,
+        });
+      }
+      Feedback.toast.hide();
+      if (branchesCheckout.length === 0) {
+        Feedback.toast.prompt('本地和远程仓库均无分支，请先 push');
+        return;
+      }
+
+      this.branchesCheckout = branchesCheckout;
+      this.visibleDialogBranches = true;
+
+    } catch (error) {
+      Feedback.toast.hide();
+      this.visibleDialogBranches = false;
+    }
+  }
+
+  @action
+  async checkout() {
+    try {
+      await this.gitTools.run('checkout', this.checkoutBranch);
+      this.visibleDialogBranches = false;
+      return true;
+    } catch (error) {
+      this.visibleDialogBranches = false;
+      return false;
+    }
+  }
+
+  @action
+  async checkoutLocalBranch() {
+    try {
+      await this.gitTools.run('checkoutBranch', this.checkoutBranch, this.branchOrigin);
+      this.visibleDialogBranches = false;
+      return true;
+    } catch (error) {
+      this.visibleDialogBranches = false;
+      return false;
+    }
+  }
+
+  @action
+  async push() {
+    Feedback.toast.show({
+      type: "loading",
+      content: "Git push",
+    });
+    try {
+      await this.gitTools.run('push', 'origin', this.currentBranch);
+      Feedback.toast.hide();
+      return true;
+    } catch (error) {
+      Feedback.toast.hide();
+      return false;
+    }
+  }
+
+  @action
+  async pull() {
+    Feedback.toast.show({
+      type: "loading",
+      content: "Git pull",
+    });
+    try {
+      await this.gitTools.run('pull', 'origin', this.currentBranch);
+      Feedback.toast.hide();
+      return true;
+    } catch (error) {
+      Feedback.toast.hide();
       return false;
     }
   }

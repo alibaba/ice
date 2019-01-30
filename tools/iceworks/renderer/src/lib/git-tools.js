@@ -38,6 +38,10 @@ const gitToolsMap = {
     name: 'push',
     errMsg: 'git push 失败请重试'
   },
+  pull: { // git pull
+    name: 'pull',
+    errMsg: 'git pull 失败请重试',
+  },
   init: { // git init
     name: 'init',
     errMsg: 'git int 失败请重试'
@@ -87,6 +91,7 @@ class GitTools {
       let result;
       if (opts[0] !== undefined) {
         result = await this.git()[name](...opts);
+        console.log('result', result)
       } else {
         result = await this.git()[name]();
       }

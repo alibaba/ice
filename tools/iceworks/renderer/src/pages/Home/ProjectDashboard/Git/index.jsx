@@ -1,6 +1,10 @@
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { Step, Button, Input, Field, Checkbox } from '@icedesign/base';
+import { 
+  Step, Button, Input, Field, 
+  Checkbox, Dialog, CascaderSelect, Dropdown,
+  Menu, Loading
+} from '@icedesign/base';
 import { ipcRenderer } from 'electron';
 import Notification from '@icedesign/notification';
 
@@ -9,7 +13,9 @@ import EmptyTips from '../../../../components/EmptyTips';
 import ExtraButton from '../../../../components/ExtraButton';
 import Icon from '../../../../components/Icon';
 
-import DialogAddRepo from './components/DialogAddRepo';
+import DialogBranches from './components/DialogBranches';
+import DialogNewBranch from './components/DialogNewBranch';
+import DialogChangeRemote from './components/DialogChangeRemote';
 
 const { Group: ButtonGroup } = Button;
 const { Group: CheckboxGroup } = Checkbox;
@@ -24,12 +30,6 @@ export default class GitPanel extends Component {
   constructor(props) {
     super(props);
     this.field = new Field(this);
-    this.state = {
-      // remoteAddVisible: false, // 控制添加 Repo 弹窗显示
-      // remoteUrlInput: '',
-      // gitRemoteAdding: false // 关联仓库
-    };
-
     // 初始化gitTools
     this.init();
   }
@@ -37,12 +37,17 @@ export default class GitPanel extends Component {
     const { git, projects } = this.props;
 
     await git.checkIsRepo();
+    if (git.remoteUrl) {
+      this.field.setValue('remoteUrlInput', git.remoteUrl);
+    } else {
+      this.field.setValue('remoteUrlInput', '');
+    }
   }
 
   componentDidMount() {
     const { git, projects } = this.props;
 
-    ipcRenderer.on('focus', this.handleReload);
+    ipcRenderer.on('focus', this.handleReload.bind(this, false));
     projects.on('change', this.handleReload);
   }
 
@@ -51,6 +56,10 @@ export default class GitPanel extends Component {
 
     ipcRenderer.removeListener('focus', this.handleReload);
     projects.removeListener('change', this.handleReload);
+  }
+
+  componentWillReceiveProps() {
+    this.init();
   }
 
   init() {
@@ -66,14 +75,22 @@ export default class GitPanel extends Component {
     }
   };
 
-  handleReload = async () => {
+  handleReload = async (showLoading = true) => {
     const { git } = this.props;
+    if (showLoading) {
+      git.reloading = true;
+    }
     await git.checkIsRepo();
+    git.reloading = false;
+    if (git.remoteUrl) {
+      this.field.setValue('remoteUrlInput', git.remoteUrl);
+    } else {
+      this.field.setValue('remoteUrlInput', '');
+    }
   };
 
   renderStep0 = () => {
     const { git } = this.props;
-
     return (
       <div
         style={{
@@ -94,44 +111,6 @@ export default class GitPanel extends Component {
     )
   }
 
-  // handleGitRemoteAddOpen = () => {
-  //   this.setState({ 
-  //     remoteAddVisible: true,
-  //   });
-  // };
-
-  // handleGitRemoteAddClose = () => {
-  //   this.setState({ remoteAddVisible: false });
-  // }
-
-  // handleGitRemoteAddOk = async (value) => {
-  //   const { git } = this.props;
-
-  //   this.setState({ 
-  //     gitRemoteAdding: true,
-  //   }, async () => {
-  //     try {
-  //       let originRemote = await git.getOriginRemote();
-  //       if (originRemote.length > 0 ) {
-  //         await git.removeRemote();
-  //       }
-  //       await git.addRemote(value);
-  //       this.setState({
-  //         gitRemoteAdding: false,
-  //         remoteAddVisible: false,
-  //       }, () => {
-  //         this.handleReload();
-  //         git.gitFormReset();
-  //       });
-
-  //     } catch (error) {
-  //       this.setState({ 
-  //         gitRemoteAdding: false 
-  //       }, git.gitFormReset );
-  //     }
-  //   });
-  // }
-
   checkGitRepo(rule, value, callback) {
     if (/^git@.+.git$/.test(value)) {
       callback();
@@ -144,7 +123,6 @@ export default class GitPanel extends Component {
 
   renderStep1 = () => {
     const { git } = this.props;
-    const { remoteAddVisible } = this.state;
     const { init } = this.field;
     return (
       <div
@@ -163,22 +141,22 @@ export default class GitPanel extends Component {
           }}>
             <Input
               placeholder="如：git@github.com:alibaba/ice.git"
-              style={{ width: 350, marginLeft: 10 }}
-              {...init("remoteUrlInput", {
+              style={{ marginLeft: 10 }}
+              {...init('remoteUrlInput', {
                 rules: {
                   validator: this.checkGitRepo,
                 }
               })}
             />
             <br />
-            {this.field.getError("remoteUrlInput") ? (
+            {this.field.getError('remoteUrlInput') ? (
               <span style={{ 
                 color: '#fa7070',
                 fontSize: 12,
                 display: 'inline-block',
                 margin: '5px 0 0 10px'
               }}>
-                {this.field.getError("remoteUrlInput").join(",")}
+                {this.field.getError('remoteUrlInput').join(",")}
               </span>
             ) : (
               ""
@@ -201,9 +179,12 @@ export default class GitPanel extends Component {
     this.field.validate(async (errors, values) => {
       if (errors) return;
       const { remoteUrlInput } = values;
+      if (remoteUrlInput === git.remoteUrl) {
+        return;
+      }
       const addDone = await git.addRemote(remoteUrlInput);
       if (addDone) {
-        git.checkIsRepo();
+        this.handleReload();
       }
     });
   }
@@ -223,17 +204,28 @@ export default class GitPanel extends Component {
     }
   }
 
+  getUserInfo = () => {
+    const userValue = localStorage.getItem('login:user');
+    let user;
+
+    if (userValue) {
+      try {
+        user = JSON.parse(userValue);
+      } catch (e) {}
+    }
+    return user;
+  };
+
   handleGitCommit = async () => {
     const { git = {} } = this.props;
-    console.log('selectedFiles: ', git.selectedFiles);
-    console.log('commitMsg: ', git.commitMsg);
+    const user = this.getUserInfo();
     const commitDone = await git.addAndCommit();
     if (commitDone) {
       Notification.success({
         message: 'Git 提交成功',
         duration: 8,
       });
-      await git.checkIsRepo();
+      this.handleReload();
     }
   }
 
@@ -337,77 +329,153 @@ export default class GitPanel extends Component {
     );
   }
 
+  handleChangeRemote = () => {
+    const { git } = this.props;
+    git.visibleDialogChangeRemote = true;
+  }
+
+  handleGitNewBranchOpen = async () => {
+    const { git } = this.props;
+    if (git.remoteUrl) {
+      git.visibleDialogNewBranch = true;
+    } else {
+      Feedback.toast.error('当前项目未设置仓库地址');
+    }
+  };
+
+  handleGitBranchesOpen = async () => {
+    const { git } = this.props;
+    if (!git.remoteUrl) {
+      Feedback.toast.error('当前项目未设置 git remote 地址');
+      return;
+    }
+    await git.getBranches();
+  };
+
+  handlePull = async () => {
+    const { git } = this.props;
+    const pullDone = await git.pull();
+    if (pullDone) {
+      Notification.success({
+        message: 'Git 拉取当前分支最新代码成功',
+        duration: 8,
+      });
+    }
+  }
+
+  handlePush = async () => {
+    const { git } = this.props;
+    const pushDone = await git.push();
+    if (pushDone) {
+      Notification.success({
+        message: 'Git 推送当前分支本地代码成功',
+        duration: 8,
+      });
+    }
+  }
+
   render() {
     const { git } = this.props;
     const { currentStep } = git;
 
+    const menu = (
+      <Menu>
+        <Menu.Item
+          onClick={this.handleGitNewBranchOpen}
+        >新建分支</Menu.Item>
+        <Menu.Item
+          onClick={this.handleGitBranchesOpen}
+        >切换分支</Menu.Item>
+      </Menu>
+    );
+
     return (
+      
       <DashboardCard>
-        <DashboardCard.Header>
-          <div>
-            Git
-            <span style={{ paddingLeft: 10, fontSize: 12, color: '#666' }}>
-              （{git.currentBranch}）
-            </span>
-          </div>
-          <div>
-            <ExtraButton
-              style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'修改仓库地址/分支'}
-              onClick={this.serachPages}
-            >
-              <Icon type="edit" style={{ fontSize: 18 }} />
-            </ExtraButton>
-            <ExtraButton
-              style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'Pull'}
-              onClick={this.serachPages}
-            >
-              <Icon type="down-arrow" style={{ fontSize: 18 }} />
-            </ExtraButton>
-            <ExtraButton
-              style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'Push'}
-              onClick={this.handleCreatePage}
-            >
-              <Icon type="up-arrow" style={{ fontSize: 18 }} />
-            </ExtraButton>
-            <ExtraButton
-              style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'刷新'}
-              onClick={this.handleCreatePage}
-            >
-              <Icon type="reload" style={{ fontSize: 18 }} />
-            </ExtraButton>
-          </div>
-        </DashboardCard.Header>
-        <DashboardCard.Body>
-          {
-            git.loading ? (
-              <div>Loading</div>
-            ) : git.showMainPanel ? (
-              // 主面板
-              this.renderMainPanel()
-            ) : (
-              // 初始化引导
-              <div>
-                <Step current={currentStep} shape="circle">
-                  {
-                    steps.map( (item, index) => {
-                      return <Step.Item key={index} title={item} />
-                    })
-                  }
-                </Step>
-                { currentStep === 0 && this.renderStep0() }
-                { currentStep === 1 && this.renderStep1() }
-              </div>
-            )
-          }
-        </DashboardCard.Body>
+        <Loading visible={git.reloading} style={{width: '100%', height: '100%'}} shape="fusion-reactor">
+          <DashboardCard.Header>
+            <div>
+              Git
+              <span style={{ paddingLeft: 10, fontSize: 12, color: '#666' }}>
+                （{git.currentBranch}）
+              </span>
+              <Dropdown
+                trigger={
+                  <a style={{zIndex: 2}}>
+                    <Icon type="down-triangle" style={{fontSize: 12, color: '#666'}} />
+                  </a>
+                }
+                align="tr br"
+              >
+                {menu}
+              </Dropdown>
+            </div>
+            <div>
+              <ExtraButton
+                style={{ color: '#3080FE' }}
+                placement={'top'}
+                tipText={'修改仓库地址'}
+                onClick={this.handleChangeRemote}
+              >
+                <Icon type="edit" style={{ fontSize: 18 }} />
+              </ExtraButton>
+              <ExtraButton
+                style={{ color: '#3080FE' }}
+                placement={'top'}
+                tipText={'Pull'}
+                onClick={this.handlePull}
+              >
+                <Icon type="down-arrow" style={{ fontSize: 18 }} />
+              </ExtraButton>
+              <ExtraButton
+                style={{ color: '#3080FE' }}
+                placement={'top'}
+                tipText={'Push'}
+                onClick={this.handlePush}
+              >
+                <Icon type="up-arrow" style={{ fontSize: 18 }} />
+              </ExtraButton>
+              <ExtraButton
+                style={{ color: '#3080FE' }}
+                placement={'top'}
+                tipText={'刷新'}
+                onClick={this.handleReload}
+              >
+                <Icon type="reload" style={{ fontSize: 18 }} />
+              </ExtraButton>
+            </div>
+          </DashboardCard.Header>
+          <DashboardCard.Body>
+            {
+              git.loading ? (
+                <div>Loading</div>
+              ) : git.showMainPanel ? (
+                // 主面板
+                this.renderMainPanel()
+              ) : (
+                // 初始化引导
+                <div>
+                  <Step current={currentStep} shape="circle">
+                    {
+                      steps.map( (item, index) => {
+                        return <Step.Item key={index} title={item} />
+                      })
+                    }
+                  </Step>
+                  { currentStep === 0 && this.renderStep0() }
+                  { currentStep === 1 && this.renderStep1() }
+                </div>
+              )
+            }
+            {
+              git.visibleDialogChangeRemote && (
+                <DialogChangeRemote />
+              )
+            }
+            <DialogNewBranch />
+            <DialogBranches />
+          </DashboardCard.Body>
+        </Loading>
       </DashboardCard>
     );
   }
