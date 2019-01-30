@@ -133,7 +133,7 @@ module.exports = function override(config, env) {
     new WebpackPluginImport([
       {
         // 基础组件 0.x
-        libraryName: /^@@icedesign\/base\/lib\/([^/]+)/
+        libraryName: /^@icedesign\/base\/lib\/([^/]+)/
       },
       {
         // 基础组件 1.x

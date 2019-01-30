@@ -32,4 +32,6 @@ category: 物料
 虽然 Design Tokens 提供了大量变量，但实际场景里用到的非常有限，这里介绍几个重点的变量：
 
 - `$color-brand1-6`: 品牌主色
+- `$color-brand1-9`: 深一点的品牌主色，常用来 hover 效果
+- `$color-brand1-1`: 非常浅的品牌主色，常用来支持背景颜色
 - 持续完善……
