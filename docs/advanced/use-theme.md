@@ -4,7 +4,7 @@ order: 9
 category: 进阶指南
 ---
 
-> 该能力需要满足项目依赖的基础组件为 `@alifd/next`，如果依赖的是 `@icedesign/base` 请参考之前的文档
+> 该能力需要满足项目依赖的基础组件为 `@alifd/next`，如果依赖的是 `@icedesign/base` 请参考 [这篇文档](https://github.com/alibaba/ice/wiki/0.x-theme)
 
 飞冰（ICE）默认的主题是蓝色系，无法满足所有项目的需求，因此我们通过工程方式支持一键换肤的能力。
 
