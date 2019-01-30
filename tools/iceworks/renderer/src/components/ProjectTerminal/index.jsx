@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@icedesign/base';
 
 import ExtraButton from '../ExtraButton/';
 import Icon from '../Icon';
@@ -92,19 +93,25 @@ class ProjectTerminal extends Component {
           <ExtraButton
             onClick={this.clearLogs}
             tipText={'清空当前日志'}
-            style={{ color: '#eee' }}
+            style={{ color: '#eee', marginRight: 10 }}
           >
             <Icon type="clear" size="small" />
           </ExtraButton>
           {
             shwoClose && (
-              <ExtraButton
+              <Button
+                type="dark" shape="ghost"
                 onClick={closeLogs}
-                tipText={'关闭日志面板'}
-                style={{ color: '#eee' }}
               >
-                <Icon type="close" />
-              </ExtraButton>
+                返回操作台
+              </Button>
+              // <ExtraButton
+              //   onClick={closeLogs}
+              //   tipText={'关闭日志面板'}
+              //   style={{ color: '#eee' }}
+              // >
+              //   <Icon type="close" />
+              // </ExtraButton>
             )
           }
         </div>
