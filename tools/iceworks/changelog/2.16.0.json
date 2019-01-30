@@ -1,0 +1,6 @@
+{
+  "log": [
+    "特性：新增 Git 插件，提供能力：变更文件浏览；变更文件可选择提交；git add; git commit; git pull; git push；切换分支；修改仓库地址；刷新",
+    "优化：Def 面板重构：移除 git 操作相关内容，放入 Git 插件"
+  ]
+}
