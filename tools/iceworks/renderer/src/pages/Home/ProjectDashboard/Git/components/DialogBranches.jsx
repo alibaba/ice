@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Feedback, Dialog, Input, CascaderSelect } from '@icedesign/base';
+import { Button, Dialog, Input, CascaderSelect } from '@icedesign/base';
 import { inject, observer } from 'mobx-react';
 
 @inject('git')

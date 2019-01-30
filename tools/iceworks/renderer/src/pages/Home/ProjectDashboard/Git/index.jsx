@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { 
   Step, Button, Input, Field, 
   Checkbox, Dialog, CascaderSelect, Dropdown,
-  Menu, Loading
+  Menu, Loading, Feedback
 } from '@icedesign/base';
 import { ipcRenderer } from 'electron';
 import Notification from '@icedesign/notification';
@@ -48,18 +48,24 @@ export default class GitPanel extends Component {
     const { git, projects } = this.props;
 
     ipcRenderer.on('focus', this.handleReload.bind(this, false));
-    projects.on('change', this.handleReload);
+    projects.on('change', this.onProjectChange);
   }
 
   componentWillUnmount() {
     const { git, projects } = this.props;
 
     ipcRenderer.removeListener('focus', this.handleReload);
-    projects.removeListener('change', this.handleReload);
+    projects.removeListener('change', this.onProjectChange);
   }
 
   componentWillReceiveProps() {
     this.init();
+  }
+
+  onProjectChange = async () => {
+    const { git } = this.props;
+    await git.reset();
+    await this.handleReload();
   }
 
   init() {
@@ -232,17 +238,17 @@ export default class GitPanel extends Component {
   getFiles = () => {
     const { git = {} } = this.props;
     const statusMap = [
-      ['conflicted', '#FA7070'],
-      ['not_added', '#2ECA9C'],
-      ['modified', '#FCDA52'],
-      ['created', '#5485F7'],
-      ['deleted', '#999999'],
-      ['renamed', '#FA7070'],
+      ['conflicted', '#FA7070', '冲突'],
+      ['not_added', '#2ECA9C', '未添加'],
+      ['modified', '#FCDA52', '已变更'],
+      ['created', '#5485F7', '新创建'],
+      ['deleted', '#999999', '已删除'],
+      ['renamed', '#FA7070', '重命名'],
     ];
     let dataSource = [];
 
     if (git.status && git.status.files && git.status.files.length > 0) {
-      statusMap.forEach(([key, color]) => {
+      statusMap.forEach(([key, color, cn]) => {
         const files = git.status[key];
         if (Array.isArray(files) && files.length > 0) {
           const statusLabel = (
@@ -250,7 +256,7 @@ export default class GitPanel extends Component {
               key={key}
               style={{ ...styles.statusTag, backgroundColor: color }}
             >
-              {key}
+              {cn}
             </span>
           )
           dataSource = dataSource.concat(files.map( (file, index) => {
@@ -391,67 +397,91 @@ export default class GitPanel extends Component {
 
     return (
       
-      <DashboardCard>
+      <DashboardCard >
         <Loading visible={git.reloading} style={{width: '100%', height: '100%'}} shape="fusion-reactor">
           <DashboardCard.Header>
             <div>
               Git
-              <span style={{ paddingLeft: 10, fontSize: 12, color: '#666' }}>
-                （{git.currentBranch}）
-              </span>
-              <Dropdown
-                trigger={
-                  <a style={{zIndex: 2}}>
-                    <Icon type="down-triangle" style={{fontSize: 12, color: '#666'}} />
-                  </a>
-                }
-                align="tr br"
-              >
-                {menu}
-              </Dropdown>
+              {
+                git.showMainPanel && (
+                  <span style={{ paddingLeft: 10, fontSize: 12, color: '#666' }}>
+                    （{git.currentBranch}）
+                  </span>
+                )
+              }
+              {
+                git.showMainPanel && (
+                  <Dropdown
+                    trigger={
+                      <a style={{zIndex: 2}}>
+                        <Icon type="down-triangle" style={{fontSize: 12, color: '#666'}} />
+                      </a>
+                    }
+                    align="tr br"
+                  >
+                    {menu}
+                  </Dropdown>
+                )
+              }
             </div>
-            <div>
-              <ExtraButton
-                style={{ color: '#3080FE' }}
-                placement={'top'}
-                tipText={'修改仓库地址'}
-                onClick={this.handleChangeRemote}
-              >
-                <Icon type="edit" style={{ fontSize: 18 }} />
-              </ExtraButton>
-              <ExtraButton
-                style={{ color: '#3080FE' }}
-                placement={'top'}
-                tipText={'Pull'}
-                onClick={this.handlePull}
-              >
-                <Icon type="down-arrow" style={{ fontSize: 18 }} />
-              </ExtraButton>
-              <ExtraButton
-                style={{ color: '#3080FE' }}
-                placement={'top'}
-                tipText={'Push'}
-                onClick={this.handlePush}
-              >
-                <Icon type="up-arrow" style={{ fontSize: 18 }} />
-              </ExtraButton>
-              <ExtraButton
-                style={{ color: '#3080FE' }}
-                placement={'top'}
-                tipText={'刷新'}
-                onClick={this.handleReload}
-              >
-                <Icon type="reload" style={{ fontSize: 18 }} />
-              </ExtraButton>
-            </div>
+            {
+              git.showMainPanel && (
+                <div>
+                  <ExtraButton
+                    style={{ color: '#3080FE' }}
+                    placement={'top'}
+                    tipText={'修改仓库地址'}
+                    onClick={this.handleChangeRemote}
+                  >
+                    <Icon type="edit" style={{ fontSize: 18 }} />
+                  </ExtraButton>
+                  <ExtraButton
+                    style={{ color: '#3080FE' }}
+                    placement={'top'}
+                    tipText={'Pull'}
+                    onClick={this.handlePull}
+                  >
+                    <Icon type="down-arrow" style={{ fontSize: 18 }} />
+                  </ExtraButton>
+                  <ExtraButton
+                    style={{ color: '#3080FE' }}
+                    placement={'top'}
+                    tipText={'Push'}
+                    onClick={this.handlePush}
+                  >
+                    <Icon type="up-arrow" style={{ fontSize: 18 }} />
+                  </ExtraButton>
+                  <ExtraButton
+                    style={{ color: '#3080FE' }}
+                    placement={'top'}
+                    tipText={'刷新'}
+                    onClick={this.handleReload}
+                  >
+                    <Icon type="reload" style={{ fontSize: 18 }} />
+                  </ExtraButton>
+                </div>
+              )
+            }
           </DashboardCard.Header>
           <DashboardCard.Body>
             {
               git.loading ? (
                 <div>Loading</div>
               ) : git.showMainPanel ? (
-                // 主面板
-                this.renderMainPanel()
+                // git.unstagedFiles.length === 0 ? (
+                //   <div
+                //     style={{
+                //       display: 'flex',
+                //       flexDirection: 'column',
+                //       alignItems: 'center'
+                //     }}
+                //   >
+                //     <EmptyTips>暂无变更文件</EmptyTips>
+                //   </div>
+                // ) : (
+                  // 主面板
+                  this.renderMainPanel()
+                // )
               ) : (
                 // 初始化引导
                 <div>

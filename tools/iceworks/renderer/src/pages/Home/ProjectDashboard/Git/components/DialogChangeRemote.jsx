@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Feedback, Dialog, Input, Field } from '@icedesign/base';
+import { Button, Dialog, Input, Field } from '@icedesign/base';
 import { inject, observer } from 'mobx-react';
+import Notification from '@icedesign/notification';
 
 @inject('git')
 @observer
@@ -30,10 +31,21 @@ export default class DialogChangeRemote extends Component {
         git.visibleDialogChangeRemote = false;
         return;
       }
+      git.removeAndAddRemoting = true;
+      const originRemote = await git.getOriginRemote();
+      if (originRemote.length > 0 ) {
+        await git.removeRemote();
+      }
       const addDone = await git.addRemote(remoteUrlInput);
       if (addDone) {
         await git.checkIsRepo();
       }
+      Notification.success({
+        message: '仓库地址修改成功',
+        duration: 8,
+      });
+      git.removeAndAddRemoting = false;
+      git.visibleDialogChangeRemote = false;
     });
   }
   
@@ -67,7 +79,7 @@ export default class DialogChangeRemote extends Component {
             <Button
               type="primary"
               onClick={this.handleAddRemote}
-              loading={git.gitRemoteAdding}
+              loading={git.removeAndAddRemoting}
             >
               确定
             </Button>

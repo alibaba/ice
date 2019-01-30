@@ -36,6 +36,8 @@ class Git {
   @observable gitCommitting = false;
   @observable gitNewBranching = false;
   @observable reloading = false;
+  @observable removeAndAddRemoting = false;
+  @observable gitRemoteAdding = false;
 
   // @observable visibleDialogGitConfig = false;
   @observable visibleDialogChangeRemote = false;
@@ -70,6 +72,12 @@ class Git {
   @action
   async doEmptyCommit() {
     await this.gitTools.run('commit', 'init commit', [], {'--allow-empty':null});
+  }
+
+  @action
+  async reset() {
+    this.showMainPanel = false;
+    this.currentStep = 0;
   }
 
   @action
@@ -124,12 +132,20 @@ console.log('currentBranch: ', currentBranch);
 
   @action
   async getOriginRemote() {
-    return await this.gitTools.run('originRemote');
+    try {
+      return await this.gitTools.run('originRemote');
+    } catch (error) {
+      return false;
+    }
   }
 
   @action
   async removeRemote() {
-    return await this.gitTools.run('removeRemote', 'origin');
+    try {
+      return await this.gitTools.run('removeRemote', 'origin');
+    } catch (error) {
+      return false;
+    }
   }
 
   @action
@@ -145,21 +161,21 @@ console.log('currentBranch: ', currentBranch);
     }
   }
   @action
-  async add() {
-    await this.gitTools.run('add', this.selectedFiles);
+  async add(files) {
+    await this.gitTools.run('add', files || this.selectedFiles);
   }
 
   @action
-  async commit() {
-    await this.gitTools.run('commit', this.commitMsg);
+  async commit(msg) {
+    await this.gitTools.run('commit', msg || this.commitMsg);
   }
 
   @action
-  async addAndCommit() {
+  async addAndCommit(files, msg) {
     try {
       this.gitCommitting = true;
-      await this.add();
-      await this.commit();
+      await this.add(files);
+      await this.commit(msg);
       this.gitCommitting = false;
       this.resetCommit();
       return true;
@@ -284,6 +300,16 @@ console.log('currentBranch: ', currentBranch);
       return true;
     } catch (error) {
       Feedback.toast.hide();
+      return false;
+    }
+  }
+
+  @action
+  async lastCommit() {
+    try {
+      const lastCommit = this.gitTools.run('lastCommit', [this.currentBranch]);
+      return lastCommit;
+    } catch (error) {
       return false;
     }
   }

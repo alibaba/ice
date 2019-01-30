@@ -8,6 +8,7 @@ import gitPromie from 'simple-git/promise';
 import React, { Component } from 'react';
 import pathExists from 'path-exists';
 import path from 'path';
+import Notification from '@icedesign/notification';
 
 import DashboardCard from '../../../../components/DashboardCard';
 import EmptyTips from '../../../../components/EmptyTips';
@@ -18,7 +19,6 @@ import spc from '../../../../spc';
 import dialog from '../../../../components/dialog';
 import projects from '../../../../stores/projects';
 
-import DialogCommitMsg from './components/DialogCommitMsg';
 import GitTools from '../../../../lib/git-tools';
 
 import Client from './Client';
@@ -77,7 +77,7 @@ client.on('success', () => {
   clientEmiter.emit('success');
 });
 
-@inject('projects', 'user')
+@inject('projects', 'user', 'git')
 @observer
 class Def extends Component {
   static extensionName = 'def';
@@ -86,36 +86,14 @@ class Def extends Component {
     super(props);
 
     this.state = {
-      loading: true,
-      isGit: false,
-      isRepo: false,
-      remote: {},
-      currentBranch: '',
-      status: {},
-      gitIniting: false,
-      remoteAddVisible: false,
-      remoteUrl: '',
-      remoteUrlInput: '',
-      gitRemoteAdding: false,
-      branchesVisible: false,
-      branches: [],
-      checkoutBranch: '',
-      branchOrigin: '',
-      branchType: '',
-      newBranchVisible: false,
       defPublishing: false,
-      originRemote: {},
     };
     this.init();
   }
 
   componentDidMount() {
-    this.gitCheckIsRepo();
 
-    ipcRenderer.on('focus', this.gitCheckIsRepo);
     const { projects } = this.props;
-    projects.on('change', this.gitCheckIsRepo);
-
     clientEmiter.on('start', () => {
       const { currentProject } = projects;
       currentProject.setCloudBuild('start');
@@ -132,11 +110,6 @@ class Def extends Component {
     });
   }
 
-  componentWillUnmount() {
-    ipcRenderer.removeListener('focus', this.gitCheckIsRepo);
-    this.props.projects.removeListener('change', this.gitCheckIsRepo);
-  }
-
   componentWillReceiveProps() {
     this.init();
   }
@@ -144,9 +117,6 @@ class Def extends Component {
   init() {
     const { currentProject = {} } = this.props.projects;
     const cwd = currentProject.fullPath;
-    if (cwd) {
-      this.gitTools = new GitTools(cwd);
-    }
     clientEmiter.cwd = cwd;
   }
 
@@ -162,302 +132,6 @@ class Def extends Component {
     return user;
   };
 
-  gitCheckIsRepo = async () => {
-    const { currentProject } = this.props.projects;
-    const cwd = currentProject.fullPath;
-    try {
-      const isRepo = await this.gitTools.run('checkIsRepo');
-
-      const isGit = isRepo && pathExists.sync(path.join(cwd, '.git'));
-      if (isGit) {
-        let originRemote = await this.gitTools.run('originRemote', true);
-        originRemote = originRemote[0] || {};
-        const remoteUrl = (originRemote.refs && originRemote.refs.push) || '';
-        const branches = await this.gitTools.run('branches');
-        const status = await this.gitTools.run('status');
-        this.setState({
-          isGit,
-          isRepo,
-          originRemote,
-          remoteUrl,
-          loading: false,
-          currentBranch: branches.current,
-          status,
-        });
-      } else {
-        this.setState({
-          isGit,
-          isRepo,
-          loading: false,
-        });
-      }
-    } catch (error) {
-      this.setState({ isGit: false, loading: false });
-    }
-
-  };
-
-  handleReload = () => {
-    this.gitCheckIsRepo();
-  };
-
-
-  handleGitInit = async () => {
-    this.setState({ gitIniting: true });
-
-    try {
-      await this.gitTools.run('init');
-      // 执行一次init commit，否则获取不到当前分支.
-      await this.doEmptyCommit();
-
-      this.setState({ 
-        gitIniting: false 
-      }, this.handleReload);
-    } catch (error) {
-      this.setState({ gitIniting: false });
-    }
-
-  };
-
-  gitFormReset = () => {
-    this.setState({
-      branches: [],
-      checkoutBranch: '',
-      branchOrigin: '',
-      branchType: '',
-    })
-  };
-
-  handleGitRemoteAddOpen = () => {
-    const { originRemote } = this.state;
-    this.setState({ 
-      remoteAddVisible: true,
-      remoteUrlInput: originRemote.refs && originRemote.refs.push || '' 
-    });
-  };
-
-  handleGitRemoteAddClose = () => {
-    this.setState({ remoteAddVisible: false });
-  };
-
-  handleGitRemoteUrl = (value) => {
-    this.setState({ remoteUrlInput: value });
-  };
-
-  handleGitRemoteAddOk = async () => {
-    this.setState({ 
-      gitRemoteAdding: true,
-      remoteUrl: this.state.remoteUrlInput
-    }, async () => {
-      try {
-        let originRemote = await this.gitTools.run('originRemote');
-        if (originRemote.length > 0 ) {
-          await this.gitTools.run('removeRemote', 'origin');
-        }
-        this.addRemote();
-      } catch (error) {
-        this.setState(
-          { gitRemoteAdding: false },
-          this.gitFormReset
-        );
-      }
-    });
-  };
-
-  addRemote = async () => {
-    try {
-      await this.gitTools.run('addRemote', 'origin', this.state.remoteUrl);
-      this.setState({
-        gitRemoteAdding: false,
-        remoteAddVisible: false,
-      }, this.handleReload);
-      this.gitFormReset();
-    } catch (error) {
-      this.setState(
-        { gitRemoteAdding: false },
-        this.gitFormReset
-      );
-    }
-
-  };
-
-  handleGitBranchesOpen = async () => {
-    if (!this.state.originRemote.refs) {
-      Feedback.toast.error('当前项目未设置 git remote 地址');
-      return;
-    }
-
-    Feedback.toast.show({
-      type: "loading",
-      content: "Git fetching",
-    });
-
-    try {
-      await this.gitTools.run('fetch');
-      const originBranches = await this.gitTools.run('branch', ['--remotes', '--list', '-v']);
-      const localBranches = await this.gitTools.run('branches');
-
-      const local = localBranches.all.map((value) => {
-        return { label: value, value };
-      });
-      const origin = originBranches.all.map((value) => {
-        return { label: value, value };
-      });
-      const branches = [];
-      if (local.length > 0) {
-        branches.push({
-          label: 'local',
-          value: 'local',
-          children: local,
-        });
-      }
-      if (origin.length > 0) {
-        branches.push({
-          label: 'origin',
-          value: 'origin',
-          children: origin,
-        });
-      }
-      Feedback.toast.hide();
-      if (branches.length === 0) {
-        Feedback.toast.prompt('本地和远程仓库均无分支，请先 push');
-        return;
-      }
-      this.setState({
-        branches,
-        branchesVisible: true
-      });
-
-    } catch (error) {
-      Feedback.toast.hide();
-      this.setState({ branchesVisible: false });
-    }
-
-  };
-
-  handleGitBranchesClose = () => {
-    this.setState(
-      { branchesVisible: false },
-      this.gitFormReset
-    );
-  };
-
-  handleSelectBranch = (value, data, extra) => {
-    if (extra.selectedPath[0].label === 'local') {
-      this.setState({
-        branchOrigin: value,
-        checkoutBranch: value,
-        branchType: 'local'
-      })
-    } else {
-      this.setState({
-        branchOrigin: value,
-        checkoutBranch: '',
-        branchType: 'origin'
-      })
-    }
-  };
-
-  handleGitLocalBranch = (value) => {
-    this.setState({ checkoutBranch: value });
-  };
-
-  handleGitBranchesOk = async () => {
-    const { branchOrigin, checkoutBranch, branchType } = this.state;
-    if (branchOrigin === checkoutBranch && branchType === 'local') {
-      try {
-        await this.gitTools.run('checkout', checkoutBranch);
-  
-        this.setState(
-          { branchesVisible: false },
-          this.handleReload
-        );
-        this.gitFormReset();
-      } catch (error) {
-        this.setState(
-          { branchesVisible: false },
-          this.gitFormReset()
-        );
-      }
-
-    } else {
-      try {
-        await this.gitTools.run('checkoutBranch', checkoutBranch, branchOrigin);
-  
-        this.setState(
-          { branchesVisible: false },
-          this.handleReload
-        );
-        this.gitFormReset();
-      } catch (error) {
-        this.setState(
-          { branchesVisible: false },
-          this.gitFormReset
-        );
-      }
-    }
-  };
-
-  displayBranch = (label) => {
-    return label[1];
-  };
-
-  handleGitNewBranchOpen = async () => {
-    if (this.state.originRemote.refs) {
-      this.setState({ newBranchVisible: true });
-    } else {
-      Feedback.toast.error('当前项目未设置 git remote 地址');
-    }
-  };
-
-  handleGitNewBranchClose = () => {
-    this.setState(
-      { newBranchVisible: false },
-      this.gitFormReset
-    );
-  };
-
-  // 检测分支是否合法
-  checkNewBranch = (rule, values, callback) => {
-    if (!/[^\/]+\/\d+\.\d+\.\d+/i.test(values)) {
-      callback('云构建要求分支名为：prefix/x.y.z 格式，例如：daily/1.0.0');
-    } else {
-      callback();
-    }
-  };
-
-  doEmptyCommit = async () => {
-    await this.gitTools.run('commit', 'init commit', [], {'--allow-empty':null});
-  };
-
-  handleGitNewBranchOk = () => {
-    const { validateAll } = this.refs.formNewBranch;
-    validateAll( async (errors, { newBranch }) => {
-      if (!errors) {
-        try {
-          await this.gitTools.run('checkoutLocalBranch', newBranch);
-
-          // 如果没有本地分支，则执行一次空提交
-          const branches = await this.gitTools.run('branches');
-          // 执行一次init commit，否则获取不到当前分支.
-          if (branches.all && branches.all.length === 0) {
-            await this.doEmptyCommit();
-          }
-    
-          this.setState(
-            { newBranchVisible: false },
-            this.handleReload
-          );
-          this.gitFormReset();
-        } catch (error) {
-          this.setState(
-            { newBranchVisible: false },
-            this.gitFormReset()
-          );
-        }
-      }
-    });
-  };
 
   handlePublishToDaily = async () => {
     try {
@@ -475,7 +149,7 @@ class Def extends Component {
     }
   };
 
-  handleDailyPublish = () => {
+  confirmFilesIsCommit = () => {
     const { currentProject } = this.props.projects;
     const trigger = <Icon type="help" style={{
       marginLeft: '3px',
@@ -528,7 +202,8 @@ class Def extends Component {
   }
 
   cloudPublish = async (target) => {
-    const { originRemote, currentBranch, status } = this.state;
+    const { projects, git } = this.props;
+    const { originRemote, currentBranch, status } = git;
     const user = this.getUserInfo();
     // 1. 检测是否登录
     if (!user || !user.workid) {
@@ -545,53 +220,48 @@ class Def extends Component {
       );
       return;
     }
-    // 2. 是否设置了remote地址
-    if (!(originRemote.refs && originRemote.refs.push)) {
-      Feedback.toast.error('当前项目未设置 git remote 地址');
-      return;
-    }
-    // 3. 是否已有远程分支
-    if (!currentBranch) {
-      Feedback.toast.show({
-        type: 'error',
-        content: '请先建立 Git 远程分支再进行 DEF 发布',
-        duration: 3000
-      });
-      return;
-    }
-    // 4. 分支是否合法
+    // 2. 分支是否合法
     if (!/[^\/]+\/\d+\.\d+\.\d+/i.test(currentBranch)) {
       Feedback.toast.error(
-        '云构建要求分支名为： prefix/x.y.z 格式，例如：daily/1.0.0'
+        '云构建要求分支名为： prefix/x.y.z 格式，例如：daily/1.0.0，请到 Git 插件切换分支'
       );
       return;
     }
-    // 5. 开始发布
+    // 3. 开始发布
     await this.setState({ defPublishing: true });
-    const lastCommit = await this.gitTools.run('lastCommit', [currentBranch]);
-    const { currentProject } = this.props.projects;
+    const lastCommit = await git.lastCommit();
+    if (!lastCommit) {
+      return;
+    }
+    const { currentProject } = projects;
 
     if (target == 'daily') {
-      try {
-        // 1. 如果有文件未提交，则供用户选择，进行git提交，或者
-        if (status && status.files && status.files.length > 0) {
-          const nextPublish = await this.handleDailyPublish();
-          if (nextPublish === 'git') {
-            await this.gitTools.run('add', '.');
-            await this.gitTools.run('commit', `chore: update ${currentProject.projectName}`);
-          } else if (!nextPublish) {
+      // 1. 如果有文件未提交，则供用户选择，进行git提交，或者
+      if (status && status.files && status.files.length > 0) {
+        const nextPublish = await this.confirmFilesIsCommit();
+        if (nextPublish === 'git') {
+          const commitDone = await git.addAndCommit('.', `chore: update ${currentProject.projectName}`);
+          if (commitDone) {
+            git.checkIsRepo();
+          } else {
             this.setState({ defPublishing: false });
             return;
           }
-          
-        } 
-        // 2. push
-        await this.gitTools.run('push', 'origin', currentBranch);
-      } catch (err) {
-        this.setState({ defPublishing: false }, () => {
-          this.handleReload()
+        } else if (!nextPublish) {
+          this.setState({ defPublishing: false });
+          return;
+        }
+      } 
+      // 2. push
+      const pushDone = await git.push();
+      if (pushDone) {
+        Notification.success({
+          message: 'Git 推送代码成功',
+          duration: 8,
         });
-        throw err;
+      } else {
+        this.setState({ defPublishing: false });
+        return;
       }
     } 
 
@@ -612,156 +282,57 @@ class Def extends Component {
     });
     this.setState({ defPublishing: false 
     }, () => {
-      this.handleReload()
+      git.checkIsRepo();
     });
    
   };
 
-  renderFilesStatus = () => {
-    const { status } = this.state;
-    if (status && status.files && status.files.length > 0) {
-      return [
-        ['created', '#5485F7'],
-        ['deleted', '#999999'],
-        ['modified', '#FCDA52'],
-        ['not_added', '#2ECA9C'],
-        ['conflicted', '#FA7070'],
-        ['renamed', '#FA7070'],
-      ].map(([key, color]) => {
-        if (Array.isArray(status[key]) && status[key].length > 0) {
-          return (
-            <div
-              key={key}
-              style={{ ...styles.statusTag, backgroundColor: color }}
-            >
-              {key} ({status[key].length})
-            </div>
-          );
-        }
-        return null;
-      });
-    }
-    return (
-      <div style={{ ...styles.statusTag, backgroundColor: '#2ECA9C' }}>
-        nothing to commit
-      </div>
-    );
-  };
-
   renderBody = () => {
-    if (this.state.loading) {
-      return <div>Loading</div>;
-    }
-    const { status } = this.state;
-    const { projects } = this.props;
+    const { projects, git } = this.props;
     const { currentProject } = projects;
 
-    if (this.state.isGit) {
+    if (git.loading) {
+      return <div>Loading</div>;
+    }
+
+    if (git.showMainPanel) {
       return (
         <div>
-          <div style={styles.item}>
-            <div style={styles.itemTitle}>Repo 地址:</div>
-            {(this.state.originRemote.refs &&
-              (
-                <div style={{
-                  ...styles.itemContent,
-                  justifyContent: 'space-between'
-                }}>
-                  <p style={{
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                    margin: 0,
-                  }}>
-                    {this.state.originRemote.refs.push}
-                  </p>
-                  <div style={{ width: 24 }}>
-                    <ExtraButton
-                      style={{ color: '#3080FE' }}
-                      placement={'top'}
-                      tipText="修改仓库地址"
-                      onClick={this.handleGitRemoteAddOpen}
-                    >
-                      <Icon type="edit" />
-                    </ExtraButton>
-                  </div>
-                </div>
-              )
-            ) || (
-              <div style={{
-                ...styles.itemContent,
-                justifyContent: 'space-between'
-              }}>
-                <div>未设置</div>
-                <div style={{ width: 24 }}>
-                  <ExtraButton
-                    style={{ color: '#3080FE' }}
-                    placement={'top'}
-                    tipText="关联仓库"
-                    onClick={this.handleGitRemoteAddOpen}
-                  >
-                    <Icon type="edit" />
-                  </ExtraButton>
-                </div>
-              </div>
-            )}
-          </div>
-          <div style={styles.item}>
-            <div style={styles.itemTitle}>当前分支:</div>
-            <div style={{
-              ...styles.itemContent,
-              justifyContent: 'space-between'
-            }}>
-              <p style={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                margin: 0,
-              }}>
-                {this.state.currentBranch}
-              </p>
-              <div
-                style={{
-                  width: 48,
-                  display: 'flex',
-                  justifyContent: 'space-around'
-                }}
-              >
-                <ExtraButton
-                  style={{ color: '#3080FE' }}
-                  placement={'top'}
-                  tipText={'新建分支'}
-                  onClick={this.handleGitNewBranchOpen}
-                >
-                  <Icon type="plus-o" />
-                </ExtraButton>
-                <ExtraButton
-                  style={{ color: '#3080FE' }}
-                  placement={'top'}
-                  tipText="切换分支"
-                  onClick={this.handleGitBranchesOpen}
-                >
-                  <Icon type="edit" />
-                </ExtraButton>
-              </div>
-            </div>
-          </div>
-          <div style={styles.item}>
-            <div style={styles.itemTitle}>文件状态:</div>
-            <div style={styles.itemContent}>
-              <div style={styles.statusWrapper}>{this.renderFilesStatus()}</div>
-            </div>
-          </div>
           <div
             style={{
               paddingTop: 5,
               marginTop: 5,
               display: 'flex',
-              flexDirection: 'row',
+              flexDirection: 'column',
               alignItems: 'center',
-              borderTop: '1px solid #f4f4f4',
+              justifyContent: 'center'
             }}
           >
+            <div
+              style={{
+                flex: 'auto',
+                display: 'flex',
+                flexDirection: 'flow',
+                minHeight: 140,
+              }}
+            >
+              <Icon type="tip" style={{ 
+                color: 'rgb(48, 128, 254)', 
+                paddingRight: 10,
+                position: 'relative',
+                top: '14px'
+              }} />
+              <div style={{ 
+                color: '#aaa', 
+                fontSize: 14 , 
+                display: 'flex', 
+                flexDirection: 'column', 
+                maxWidth: '400px',
+              }}>
+                <p>1. git 操作请在 Git 插件中处理</p>
+                <p style={{whiteSpace: 'initial'}}>2. def 发布要求分支名为： prefix/x.y.z，例如：daily/1.0.0</p>
+              </div>
+            </div>
             <Button.Group>
               <Button
                 size="small"
@@ -796,14 +367,8 @@ class Def extends Component {
           alignItems: 'center'
         }}
       >
-        <EmptyTips>当前项目不是一个 Git 仓库</EmptyTips>
-        <Button
-          type="secondary"
-          onClick={this.handleGitInit}
-          loading={this.state.gitIniting}
-        >
-          Git init
-        </Button>
+        <EmptyTips>当前项目不是一个 Git 仓库，请在 Git 插件中完成配置后使用</EmptyTips>
+        {/* 唤起 Git 插件 */}
       </div>
     );
   };
@@ -813,107 +378,9 @@ class Def extends Component {
       <DashboardCard>
         <DashboardCard.Header>
           <div>DEF 发布</div>
-          <div>
-            <ExtraButton
-              style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'刷新'}
-              onClick={this.handleReload}
-            >
-              <Icon type="reload" style={{ fontSize: 18 }} />
-            </ExtraButton>
-          </div>
         </DashboardCard.Header>
         <DashboardCard.Body>
           {this.renderBody()}
-          <Dialog
-            visible={this.state.remoteAddVisible}
-            title="Git remote add"
-            onClose={this.handleGitRemoteAddClose}
-            footer={
-              <div>
-                <Button
-                  disabled={this.state.remoteUrlInput.length == 0}
-                  onClick={this.handleGitRemoteAddOk}
-                  type="primary"
-                  loading={this.state.gitRemoteAdding}
-                >
-                  确定
-                </Button>
-                <Button onClick={this.handleGitRemoteAddClose}>取消</Button>
-              </div> 
-            }
-          >
-            <Input
-              onChange={this.handleGitRemoteUrl}
-              placeholder="请输入 git 仓库 URL，如：git@github.com:alibaba/ice.git"
-              value={this.state.remoteUrlInput}
-              style={{ width: 400 }}
-            />
-          </Dialog>
-          <Dialog
-            visible={this.state.branchesVisible}
-            title="Git Branches"
-            onClose={this.handleGitBranchesClose}
-            footer={
-              <div>
-                <Button
-                  disabled={this.state.checkoutBranch.length == 0}
-                  onClick={this.handleGitBranchesOk}
-                  type="primary"
-                >
-                  确定
-                </Button>
-                <Button onClick={this.handleGitBranchesClose}>取消</Button>
-              </div>
-            }
-          >
-            <div style={{ lineHeight: '28px', height: 20 }}>
-              <span style={{ margin: '0 8px'}}>Checkout</span>
-              <CascaderSelect
-                placeholder="选择分支"
-                onChange={this.handleSelectBranch}
-                dataSource={this.state.branches}
-                style={{ verticalAlign: 'middle' }}
-                displayRender={this.displayBranch}
-              />
-              <span style={{ margin: '0 8px'}}>as</span>
-              <Input
-                onChange={this.handleGitLocalBranch}
-                placeholder="请输入本地分支名称"
-                value={this.state.checkoutBranch}
-                disabled={this.state.branchOrigin === ''}
-              />
-            </div>
-          </Dialog>
-          <Dialog
-            visible={this.state.newBranchVisible}
-            title="New Branch"
-            onClose={this.handleGitNewBranchClose}
-            footer={
-              <div>
-                <Button
-                  onClick={this.handleGitNewBranchOk}
-                  type="primary"
-                >
-                  确定
-                </Button>
-                <Button onClick={this.handleGitNewBranchClose}>取消</Button>
-              </div>
-            }
-          >
-            <FormBinderWrapper ref="formNewBranch" >
-              <div>
-                <FormBinder validator={this.checkNewBranch} name='newBranch' >
-                  <Input
-                    placeholder="请输入分支名称"
-                    style={{ width: 400 }}
-                  />
-                </FormBinder>
-                <FormError style={styles.formError} name="newBranch" />
-              </div>
-            </FormBinderWrapper>
-          </Dialog>
         </DashboardCard.Body>
       </DashboardCard>
     );

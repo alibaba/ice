@@ -230,6 +230,16 @@ class Extensions {
     const excludeOrder = names.filter((n) => {
       return !keepOrder.includes(n);
     });
+    // 调整 Git 插件顺序，开启 Git 插件之后保证其在 Def 面板之后，不存在则跳过。
+    if (excludeOrder.includes('git')) {
+      if (keepOrder.includes('def')) {
+        keepOrder.splice(keepOrder.indexOf('def')+1, 0, 'git');
+        excludeOrder.splice(excludeOrder.indexOf('git'), 1);
+      } else if (excludeOrder.includes('def')) {
+        excludeOrder.splice(excludeOrder.indexOf('git'), 1);
+        excludeOrder.splice(keepOrder.indexOf('def')+1, 0, 'git');
+      }
+    }
 
     return keepOrder.concat(excludeOrder);
   }
