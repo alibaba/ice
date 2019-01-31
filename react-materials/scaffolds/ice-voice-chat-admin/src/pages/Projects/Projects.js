@@ -1,6 +1,6 @@
 /* eslint no-mixed-operators:0 */
 import React, { Component } from 'react';
-import { Input } from '@icedesign/base';
+import { Input } from '@alifd/next';
 import TopBar from '../../components/TopBar';
 import GeneralDialog from '../../components/GeneralDialog';
 import Card from './components/Card';
@@ -56,7 +56,6 @@ export default class Projects extends Component {
         <TopBar
           extraBefore={
             <Input
-              size="large"
               placeholder="请输入关键字进行搜索"
               style={{ width: '240px' }}
             />

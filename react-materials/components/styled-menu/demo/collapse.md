@@ -11,7 +11,7 @@ importStyle: true
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Icon, Button } from '@icedesign/base';
+import { Icon, Button } from '@alifd/next';
 import StyledMenu, {
   Item as MenuItem,
   SubMenu,
@@ -60,22 +60,22 @@ class Sider extends Component {
           selectedKeys={[this.state.currentSelectedKey]}
         >
           <StyledMenu.Item key="1">
-            <Icon type="cart" />
+            <Icon type="account" />
             <span className="ice-menu-collapse-hide">Option 1</span>
           </StyledMenu.Item>
           <StyledMenu.Item key="2">
-            <Icon type="help" />
+            <Icon type="email" />
             <span className="ice-menu-collapse-hide">Option 2</span>
           </StyledMenu.Item>
           <StyledMenu.Item key="3">
-            <Icon type="box" />
+            <Icon type="set" />
             <span className="ice-menu-collapse-hide">Option 3</span>
           </StyledMenu.Item>
           <SubMenu
             key="sub1"
             title={
               <span>
-                <Icon type="table" />
+                <Icon type="upload" />
                 <span className="ice-menu-collapse-hide">Navigation One</span>
               </span>
             }
@@ -89,7 +89,7 @@ class Sider extends Component {
             key="sub2"
             title={
               <span>
-                <Icon type="compass" />
+                <Icon type="refresh" />
                 <span className="ice-menu-collapse-hide">Navigation Two</span>
               </span>
             }

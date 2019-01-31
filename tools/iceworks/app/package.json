@@ -63,6 +63,7 @@
     "tar": "^2.0.0",
     "update-notifier": "^2.5.0",
     "uppercamelcase": "^3.0.0",
+    "url-parse": "^1.4.4",
     "uuid": "^3.1.0"
   }
 }

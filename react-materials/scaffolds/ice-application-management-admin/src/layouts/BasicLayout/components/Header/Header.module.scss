@@ -1,0 +1,76 @@
+.header-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: #fff;
+  min-width: 1200px;
+  box-shadow: 0 1px 4px transparentize($color-brand1-6, 0.9);
+
+  :global {
+    .next-nav {
+      box-shadow: none;
+      border: 0;
+    }
+    .next-menu-item-text {
+      color: $color-text1-3;
+    }
+  }
+  .header-content {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-navbar {
+    display: flex;
+    flex-direction: row;
+  }
+  .subNavText {
+    padding-left: 1em;
+  }
+  .user-avatar {
+    margin-right: 12px;
+    border-radius: 4px;
+  }
+
+  .user-department {
+    font-size: 12px;
+    color: $color-text1-3;
+  }
+
+  .ice-design-header-userpannel {
+    margin-left: 20px;
+    cursor: pointer;
+    .user-profile {
+      display: inline-block;
+      text-align: center;
+      margin-bottom: 2px;
+      color: $color-text1-3;
+    }
+    .icon-down {
+      margin-left: 2px;
+    }
+  }
+}
+
+.user-profile-menu {
+  width: 130px;
+  border-radius: 6px;
+  padding: 0 16px;
+  .user-profile-menu-item {
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    color: $color-text1-3;
+    cursor: pointer;
+    a:hover {
+      color: $color-brand1-6;
+    }
+    i {
+      margin-right: 5px;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Balloon, Icon } from '@icedesign/base';
+import { Grid, Balloon, Icon } from '@alifd/next';
 import DonutChart from './DonutChart';
 
 const { Row, Col } = Grid;
@@ -35,7 +35,7 @@ export default class CostOverview extends Component {
                     trigger={<Icon type="prompt" size="small" />}
                     align="t"
                     closable={false}
-                    alignment="edge"
+                    alignEdge="edge"
                     triggerType="hover"
                     style={{ width: 300 }}
                   >
@@ -59,7 +59,7 @@ export default class CostOverview extends Component {
                     trigger={<Icon type="prompt" size="small" />}
                     align="t"
                     closable={false}
-                    alignment="edge"
+                    alignEdge="edge"
                     triggerType="hover"
                     style={{ width: 300 }}
                   >

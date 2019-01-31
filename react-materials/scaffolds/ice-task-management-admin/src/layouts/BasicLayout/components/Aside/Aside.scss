@@ -1,8 +1,11 @@
-.ice-menu-custom.ice-menu-root {
-  box-shadow: 4px 1px 12px rgba(0, 55, 107, 0.04);
-  .ice-menu-item {
+.ice-menu-custom {
+  .next-nav-item {
     height: auto;
     line-height: normal;
+    width: 80px;
+    .next-menu-item-inner {
+      height: 80px !important;
+    }
     .ice-menu-link {
       display: flex;
       flex-direction: column;
@@ -15,6 +18,12 @@
       }
       .ice-menu-item-text {
         margin-top: 5px;
+      }
+    }
+    &.next-selected {
+      background-color: $color-brand1-6 !important;
+      .ice-menu-link {
+        color: #fff;
       }
     }
   }

@@ -1,23 +1,26 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
-const Logo = ({ style }) => {
-  return (
-    <Link to="/" style={{ ...styles.logo, ...style }}>
-      资产管理系统
-    </Link>
-  );
-};
+export default class Logo extends PureComponent {
+  render() {
+    return (
+      <Link to="/" style={{ ...styles.logoStyle, ...this.props.style }}>
+        LOGO
+      </Link>
+    );
+  }
+}
 
 const styles = {
-  logo: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '22px',
-    fontWeight: 'bold',
+  logoStyle: {
+    display: 'block',
+    maxWidth: '180px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    fontSize: '28px',
     color: '#fff',
+    fontWeight: 'bold',
+    textDecoration: 'none',
   },
 };
-
-export default Logo;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Grid, Form, Button, Select, Feedback } from '@icedesign/base';
+import { Input, Grid, Form, Button, Select, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -46,7 +46,7 @@ export default class ContentEditor extends Component {
         return false;
       }
 
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
     });
   };
 
@@ -96,7 +96,7 @@ export default class ContentEditor extends Component {
                     >
                       <Select
                         style={styles.cats}
-                        multiple
+                        mode="multiple"
                         placeholder="请选择分类"
                         dataSource={[
                           { label: '分类1', value: 'cat1' },
@@ -127,7 +127,7 @@ export default class ContentEditor extends Component {
               </Row>
               <FormItem label="描述">
                 <IceFormBinder name="desc">
-                  <Input multiple placeholder="这里填写正文描述" />
+                  <Input.TextArea placeholder="这里填写正文描述" />
                 </IceFormBinder>
               </FormItem>
               <FormItem label="正文" required>

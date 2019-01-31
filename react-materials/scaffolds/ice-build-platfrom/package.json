@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/builder-platfrom-scaffold",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "该模板适用于云构建类的数据展示和管理后台",
   "homepage": "https://unpkg.com/@icedesign/builder-platfrom-scaffold@latest/build/index.html",
   "files": [
@@ -26,16 +26,16 @@
     "access": "public"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.4",
-    "@icedesign/form-binder": "^1.0.3",
-    "@icedesign/img": "^0.1.1",
-    "@icedesign/layout": "^0.1.2",
-    "@icedesign/menu": "^0.1.1",
-    "@icedesign/skin": "^0.1.0",
+    "@alifd/next": "^1.x",
+    "@icedesign/container": "^1.x",
+    "@icedesign/form-binder": "^1.x",
+    "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/img": "^1.x",
+    "@icedesign/layout": "^1.x",
+    "@icedesign/theme": "^0.1.2",
     "classnames": "^2.2.5",
-    "foundation-symbol": "^0.1.3",
     "highcharts": "^6.1.1",
+    "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -53,15 +53,12 @@
     "ice-scripts": "^1.6.0-next.3"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "localization": false,
     "output": {
       "publicPath": "./"
     }
-  },
-  "themeConfig": {
-    "primaryColor": "#5e83fb"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
@@ -70,6 +67,10 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB16CTXx7voK1RjSZFNXXcxMVXa-2872-1580.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB16CTXx7voK1RjSZFNXXcxMVXa-2872-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1dbmZDNTpK1RjSZFMXXbG_VXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1dbmZDNTpK1RjSZFMXXbG_VXa-2860-1580.png"
+    ]
   }
 }

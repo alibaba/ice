@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog } from '@icedesign/base';
+import { Dialog } from '@alifd/next';
 import TopBar from '../../components/TopBar';
 import PublishTable from './components/PublishTable';
 import Overview from './components/Overview';

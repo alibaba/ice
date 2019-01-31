@@ -7,7 +7,7 @@ import './Footer.scss';
 export default class Footer extends PureComponent {
   render() {
     return (
-      <Layout.Footer className="ice-design-layout-footer">
+      <Layout.Footer className="ice-design-layout-footer" type={null}>
         <div className="ice-design-layout-footer-body">
           <div style={{ filter: 'grayscale(100%)', opacity: 0.3 }}>
             <Logo />

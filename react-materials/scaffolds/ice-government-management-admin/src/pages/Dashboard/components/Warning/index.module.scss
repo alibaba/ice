@@ -1,0 +1,68 @@
+.container {
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.card {
+  width: 100%;
+  color: $color-black;
+  height: 286px;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 16px;
+  background-color: $color-white;
+}
+.title {
+  margin-top: 0;
+  border-left: 5px solid $color-brand1-6;
+  line-height: 20px;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+.content {
+  height: 200px;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding-top: 56px;
+  justify-content: space-between;
+}
+.item {
+  width: 20%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.image {
+  width: 50px;
+  height: 50px;
+  padding: 10px 0;
+  position: relative;
+  text-align: center;
+  border-radius: 8px;
+}
+.itemTitle {
+  font-size: 12px;
+  text-align: center;
+}
+.iconImage {
+  width: 30px;
+  height: 30px;
+}
+.count {
+  top: -6px;
+  color: $color-white;
+  width: 18px;
+  right: -6px;
+  height: 18px;
+  position: absolute;
+  font-size: 12px;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 50%;
+  background-color: $color-error-3;
+}

@@ -25,7 +25,7 @@ class PageBlocks extends Component {
   static displayName = 'PageBlocks';
 
   componentDidMount() {
-    this.props.materials.initMaterials();
+    this.props.materials.refresh();
   }
 
   handleRefresh = () => {

@@ -1,13 +1,13 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Input, Button, Checkbox, Grid } from '@icedesign/base';
+import { Input, Button, Checkbox, Grid } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
+import IceIcon from '@icedesign/foundation-symbol';
 import './UserLogin.scss';
 
 const { Row, Col } = Grid;

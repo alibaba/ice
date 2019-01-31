@@ -1,0 +1,41 @@
+.container {
+  padding: 0;
+}
+.table {
+  padding: 20px;
+}
+.title {
+  color: transparentize($color-black, 0.05);
+  margin: 0;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 1px solid $color-warning-1;
+}
+.btn {
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.state {
+  color: $color-warning-3;
+  position: relative;
+  font-weight: bold;
+}
+.dot {
+  top: 4px;
+  left: -12px;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  background: $color-warning-3;
+  border-radius: 50%;
+}
+.pagination {
+  margin: 20px 0;
+  text-align: right;
+}

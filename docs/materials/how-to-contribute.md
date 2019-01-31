@@ -1,6 +1,6 @@
 ---
 title: 如何贡献
-order: 6
+order: 7
 category: 物料
 ---
 

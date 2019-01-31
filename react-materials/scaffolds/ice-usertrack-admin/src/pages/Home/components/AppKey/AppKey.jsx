@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Tab } from '@icedesign/base';
+import { Tab } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import CustomTable from './CustomTable';
 
-const TabPane = Tab.TabPane;
+const TabPane = Tab.Item;
 
 const tabs = [
   { tab: '全部 AppKey', key: 'all', content: <CustomTable /> },
@@ -25,7 +25,7 @@ export default class AppKey extends Component {
         <Tab onChange={handleChange}>
           {tabs.map((item) => {
             return (
-              <TabPane key={item.key} tab={item.tab} onClick={handleClick}>
+              <TabPane key={item.key} title={item.tab} onClick={handleClick}>
                 {item.content}
               </TabPane>
             );

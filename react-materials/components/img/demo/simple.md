@@ -9,7 +9,7 @@ importStyle: true
 ````jsx
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {Button} from '@icedesign/base';
+import {Button} from '@alifd/next';
 import Img from '@icedesign/img';
 
 class App extends Component {
@@ -64,7 +64,7 @@ class App extends Component {
           style={{border: '1px solid #ccc', margin: '10px'}}
         />
         <div>
-          <Button style={{marginTop: 20}} onClick={this.changeImgs}>切换新图片会重新计算尺寸</Button>
+          <Button type="primary" style={{marginTop: 20}} onClick={this.changeImgs}>切换新图片会重新计算尺寸</Button>
         </div>
       </div>
     );

@@ -8,14 +8,14 @@ const headerMenuConfig = [
     path: 'https://github.com/alibaba/ice',
     external: true,
     newWindow: true,
-    icon: 'message',
+    icon: 'email',
   },
   {
     name: '帮助',
     path: 'https://alibaba.github.io/ice',
     external: true,
     newWindow: true,
-    icon: 'bangzhu',
+    icon: 'help',
   },
 ];
 
@@ -23,7 +23,7 @@ const asideMenuConfig = [
   {
     name: 'Dashboard',
     path: '/dashboard',
-    icon: 'home2',
+    icon: 'atm',
     children: [
       {
         name: '监控页',
@@ -34,7 +34,7 @@ const asideMenuConfig = [
   {
     name: '图表页',
     path: '/chart',
-    icon: 'chart1',
+    icon: 'picture',
     children: [
       {
         name: '常用图表',
@@ -45,7 +45,7 @@ const asideMenuConfig = [
   {
     name: '表格页',
     path: '/table',
-    icon: 'table',
+    icon: 'calendar',
     children: [
       {
         name: '基础表格',

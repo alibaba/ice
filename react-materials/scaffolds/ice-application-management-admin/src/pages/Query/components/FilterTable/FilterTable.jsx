@@ -1,11 +1,12 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Feedback } from '@icedesign/base';
+import { Table, Pagination, Message } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
 import FilterForm from './Filter';
+import styles from './index.module.scss';
 
-const Toast = Feedback.toast;
+const Toast = Message;
 
 const data = [
   {
@@ -153,9 +154,9 @@ export default class EnhanceTable extends Component {
 
   renderTitle = (value, index, record) => {
     return (
-      <div style={styles.titleWrapper}>
+      <div className={styles.titleWrapper}>
         <a href="#/detail">
-          <span style={styles.title}>{record.title}</span>
+          <span className={styles.title}>{record.title}</span>
         </a>
       </div>
     );
@@ -176,14 +177,8 @@ export default class EnhanceTable extends Component {
   renderOperations = (value, index, record) => {
     if (!record.operation.edit) {
       return (
-        <div
-          className="filter-table-operation"
-          style={styles.filterTableOperation}
-        >
-          <a
-            href="#/account"
-            style={styles.operationItem}
-          >
+        <div className="filter-table-operation">
+          <a href="#/account" className={styles.operationItem}>
             申请权限
           </a>
         </div>
@@ -191,25 +186,22 @@ export default class EnhanceTable extends Component {
     }
 
     return (
-      <div
-        className="filter-table-operation"
-        style={styles.filterTableOperation}
-      >
+      <div className="filter-table-operation">
         <a
           href="#"
-          style={styles.operationItem}
+          className={styles.operationItem}
           target="_blank"
-          onClick={e => this.publish(record, e)}
+          onClick={(e) => this.publish(record, e)}
         >
-            发布
+          发布
         </a>
         <a
           href="#"
-          style={styles.operationItem}
+          className={styles.operationItem}
           target="_blank"
-          onClick={e => this.offline(record, e)}
+          onClick={(e) => this.offline(record, e)}
         >
-            下线
+          下线
         </a>
       </div>
     );
@@ -268,17 +260,12 @@ export default class EnhanceTable extends Component {
         <IceContainer>
           <Table
             dataSource={list}
-            isLoading={__loading}
+            loading={__loading}
             className="basic-table"
-            style={styles.basicTable}
             hasBorder={false}
           >
             <Table.Column title="ID" dataIndex="id" width={30} />
-            <Table.Column
-              title="应用名"
-              cell={this.renderTitle}
-              width={150}
-            />
+            <Table.Column title="应用名" cell={this.renderTitle} width={150} />
             <Table.Column title="等级" dataIndex="type" width={100} />
             <Table.Column title="Owner" dataIndex="owner" width={100} />
             <Table.Column
@@ -294,7 +281,7 @@ export default class EnhanceTable extends Component {
               cell={this.renderOperations}
             />
           </Table>
-          <div style={styles.paginationWrapper}>
+          <div className={styles.paginationWrapper}>
             <Pagination
               current={currentPage}
               pageSize={pageSize}
@@ -307,26 +294,3 @@ export default class EnhanceTable extends Component {
     );
   }
 }
-
-const styles = {
-  filterTableOperation: {
-    lineHeight: '28px',
-  },
-  operationItem: {
-    marginRight: '12px',
-    textDecoration: 'none',
-    color: '#5485F7',
-  },
-  titleWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  title: {
-    marginLeft: '10px',
-    lineHeight: '20px',
-  },
-  paginationWrapper: {
-    textAlign: 'right',
-    paddingTop: '26px',
-  },
-};

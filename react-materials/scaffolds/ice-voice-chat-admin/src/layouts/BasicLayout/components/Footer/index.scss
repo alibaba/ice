@@ -1,3 +1,6 @@
+.ice-layout-footer {
+  background-color: transparent;
+}
 .ice-design-layout-footer-body {
   width: 100%;
   margin: 20px auto;
@@ -6,12 +9,12 @@
   justify-content: space-between;
   align-items: center;
   .copyright {
-    color: #666;
+    color: $color-text1-3;
     line-height: 1.5;
     font-size: 12px;
     text-align: left;
   }
   .copyright-link {
-    color: #666;
+    color: $color-text1-3;
   }
 }

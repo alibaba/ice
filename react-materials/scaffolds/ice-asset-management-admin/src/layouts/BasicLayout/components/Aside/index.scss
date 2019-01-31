@@ -1,20 +1,32 @@
 .ice-layout {
   .ice-layout-aside.custom-aside {
-    background: #fff;
+    background: #2f323f;
     box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+    .aside-logo {
+      height: 62px;
+      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #2f323f;
+    }
     .custom-menu {
-      min-height: 500px;
       width: 240px;
+      height: 100vh;
       padding-top: 20px;
       border-radius: 6px;
-      .ice-menu-item-selected {
-        background: #f8f9fa !important;
-        border-radius: 0 !important;
-        border-right: 3px solid #447eff;
-        margin-bottom: 1px;
-        > a {
-          color: #666;
+      box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+      .next-menu-sub-menu {
+        background: #2c2e39;
+        .next-menu-item {
+          -webkit-font-smoothing: antialiased;
         }
+      }
+      .next-menu-item {
+        color: #fff;
+      }
+      .next-selected {
+        background: #447eff;
       }
     }
   }

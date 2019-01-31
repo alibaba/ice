@@ -21,6 +21,9 @@ import progress from './stores/progress';
 import blockGroups from './stores/block-groups';
 import git from './stores/git';
 
+import services from './services';
+const { settings } = services;
+
 // pages
 import history from './history';
 import Layout from './Layout';
@@ -50,12 +53,30 @@ class App extends Component {
     };
   }
 
+  componentWillMount = () => {
+    // 过滤用户设置的fusion，bizchart物料源。
+    const materials = settings.get('materials');
+    settings.set('materials', materials.filter(material => {
+      if (['Fusion 物料源', 'Bizchart 物料源'].includes(material.name)) {
+        return false;
+      } 
+      return true;
+    }));
+  }
+
   componentDidMount() {
     this.unlisten = history.listen((location, action) => {
       // location is an object like window.location
       // console.log(action, location.pathname, location.state);
       this.changeDisplay(location.pathname);
     });
+
+    // 根据url唤起是传参来定位当前path，定位后重置参数
+    const urlEvokeQuery = settings.get('urlEvokeQuery');
+    if (urlEvokeQuery && urlEvokeQuery.to) {
+      history.push(urlEvokeQuery.to);
+      settings.set('urlEvokeQuery', Object.assign(urlEvokeQuery, {to: ''}));
+    }
 
     ipcRenderer.on('router.push', (event, { url, state, title }) => {
       history.push(url);

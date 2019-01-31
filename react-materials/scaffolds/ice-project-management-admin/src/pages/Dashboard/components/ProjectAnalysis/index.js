@@ -1,6 +1,6 @@
 /* eslint global-require: 0 */
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import LineChart from './LineChart';
 import PieChart from './PieChart';
 import ProjectList from './ProjectList';

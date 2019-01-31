@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Balloon, Icon } from '@icedesign/base';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
-import FoundationSymbol from 'foundation-symbol';
+import { Balloon, Icon, Nav } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import IceImg from '@icedesign/img';
 import headerMenuConfig from '../../../../menuConfig';
 import Logo from '../Logo';
 import './Header.scss';
+
+const { SubNav: SubMenu, Item: MenuItem } = Nav;
 
 @withRouter
 export default class Header extends Component {
@@ -27,12 +28,13 @@ export default class Header extends Component {
         <div className="header-content">
           <div className="header-navbar">
             <Logo isDark />
-            <Menu
+            <Nav
               className="header-navbar-menu"
               onClick={this.handleNavClick}
               selectedKeys={[pathname]}
               defaultSelectedKeys={[pathname]}
-              mode="horizontal"
+              type="secondary"
+              direction="hoz"
             >
               {headerMenuConfig &&
                 headerMenuConfig.length > 0 &&
@@ -92,7 +94,7 @@ export default class Header extends Component {
                             {nav.icon ? (
                               <FoundationSymbol size="small" type={nav.icon} />
                             ) : null}
-                            {nav.name}
+                            <span>{nav.name}</span>
                           </span>
                         </a>
                       </MenuItem>
@@ -106,13 +108,13 @@ export default class Header extends Component {
                           {nav.icon ? (
                             <FoundationSymbol size="small" type={nav.icon} />
                           ) : null}
-                          {nav.name}
+                          <span>{nav.name}</span>
                         </span>
                       </Link>
                     </MenuItem>
                   );
                 })}
-            </Menu>
+            </Nav>
           </div>
 
           <Balloon

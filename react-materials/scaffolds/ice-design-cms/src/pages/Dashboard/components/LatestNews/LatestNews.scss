@@ -3,9 +3,9 @@
 .latest-news {
   .link {
     text-decoration: none;
-    color: #999;
+    color: $color-text1-2;
     &:hover {
-      color: #38a1f2;
+      color: $color-brand1-6;
     }
   }
 }

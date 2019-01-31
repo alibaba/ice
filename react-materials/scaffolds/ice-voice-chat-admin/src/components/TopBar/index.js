@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 import PropTypes from 'prop-types';
 
 export default class TopBar extends PureComponent {
@@ -20,7 +20,7 @@ export default class TopBar extends PureComponent {
         {extraAfter || (
           <div style={styles.buttons}>
             {buttonText ? (
-              <Button size="large" type="primary" onClick={onClick}>
+              <Button type="primary" onClick={onClick}>
                 {buttonText}
               </Button>
             ) : null}

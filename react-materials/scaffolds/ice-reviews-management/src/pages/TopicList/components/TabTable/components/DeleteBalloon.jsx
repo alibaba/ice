@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Balloon } from '@icedesign/base';
+import { Button, Balloon } from '@alifd/next';
 import PropTypes from 'prop-types';
 
 export default class DeleteBalloon extends Component {
@@ -52,7 +52,6 @@ export default class DeleteBalloon extends Component {
         </Button>
         <Button
           id="cancelBtn"
-          size="small"
           onClick={visible => this.handleHide(visible, 0)}
         >
           关闭

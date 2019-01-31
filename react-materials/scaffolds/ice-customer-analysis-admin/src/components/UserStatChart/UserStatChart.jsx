@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend, Coord, Label } from 'bizcharts';
-import { Grid, DatePicker } from '@icedesign/base';
+import { Grid, DatePicker } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import ContainerTitle from '../ContainerTitle';
 

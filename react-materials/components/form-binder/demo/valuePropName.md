@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
-import { Checkbox, Switch } from '@icedesign/base';
+import { Checkbox, Switch } from '@alifd/next';
 
 class App extends Component {
 
@@ -45,7 +45,7 @@ class App extends Component {
 
             <div style={styles.formItem}>
               <span>开关：</span>
-              <FormBinder 
+              <FormBinder
                 name="switch"
                 valuePropName="checked"  // Switch 接收的属性是 `checked`
                 setFieldValue={(selected) => { return selected === 1 }}  // 转换为 boolean 传给 switch
@@ -71,7 +71,7 @@ const styles = {
     marginBottom: '20px'
   },
   preview: {
-    border: '1px solid #eee', 
+    border: '1px solid #eee',
     marginTop: 20,
     padding: 10
   }

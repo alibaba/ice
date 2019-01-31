@@ -1,0 +1,26 @@
+.stateText {
+  color: $color-brand1-6;
+  border: 1px solid $color-brand1-6;
+  display: inline-block;
+  padding: 5px 10px;
+  background: #fff;
+  border-radius: 4px;
+}
+.link {
+  color: transparentize($color-brand1-6, 0.9);
+  margin: 0 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.separator {
+  width: 1px;
+  margin: 0 8px;
+  height: 12px;
+  display: inline-block;
+  background: $color-fill1-1;
+  vertical-align: middle;
+}
+.pagination {
+  margin: 20px 0;
+  text-align: center;
+}

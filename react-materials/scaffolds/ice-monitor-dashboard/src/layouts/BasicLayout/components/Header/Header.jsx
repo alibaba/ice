@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Balloon, Icon } from '@icedesign/base';
-import FoundationSymbol from 'foundation-symbol';
+import { Balloon, Icon } from '@alifd/next';
 import IceImg from '@icedesign/img';
 import Logo from '../Logo';
 import './Header.scss';
 
 @withRouter
 export default class Header extends Component {
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <div className="header-container">
@@ -46,11 +36,7 @@ export default class Header extends Component {
                   <br />
                   <span className="user-department">技术部</span>
                 </div>
-                <Icon
-                  type="arrow-down-filling"
-                  size="xxs"
-                  className="icon-down"
-                />
+                <Icon type="arrow-down" size="xxs" className="icon-down" />
               </div>
             }
             closable={false}
@@ -59,13 +45,13 @@ export default class Header extends Component {
             <ul>
               <li className="user-profile-menu-item">
                 <Link to="/setting">
-                  <FoundationSymbol type="repair" size="small" />
+                  <Icon type="set" size="small" />
                   设置
                 </Link>
               </li>
               <li className="user-profile-menu-item">
                 <Link to="/account/login">
-                  <FoundationSymbol type="compass" size="small" />
+                  <Icon type="upload" size="small" />
                   退出
                 </Link>
               </li>

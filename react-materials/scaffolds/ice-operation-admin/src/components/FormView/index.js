@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 
 const { Col, Row } = Grid;
 

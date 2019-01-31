@@ -1,0 +1,23 @@
+
+.iceMenuText {
+  padding-left: 1em;
+}
+.iceMenuCollapseHide {
+  display: none;
+}
+.asideContainer {
+  height: 100%;
+  position: relative;
+  padding-top: 20px;
+  border-right: 1px solid #eee;
+  background-color: #fff;
+}
+.collapseBtn {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid #f2f2f2;
+  cursor: pointer;
+}

@@ -16,12 +16,6 @@
 - 通用组件: `src/components`
 - 页面文件: `src/pages`
 
-## 配色
-
-- 头部背景主色：#2f323f
-- 功能主色：#5e83fb
-- 字体颜色：#333、#666
-
 ## 效果图
 
-![screenshot](https://img.alicdn.com/tfs/TB1V.FZg3TqK1RjSZPhXXXfOFXa-2860-1520.png)
+![screenshot](https://img.alicdn.com/tfs/TB17_m3DOrpK1RjSZFhXXXSdXXa-2860-1580.png)
