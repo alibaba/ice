@@ -11,7 +11,7 @@ theme 为主题配置，有浅色系（默认）和深色系两个配置 `light|
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Icon, Switch, Select } from '@icedesign/base';
+import { Icon, Switch, Select } from '@alifd/next';
 import StyledMenu, {
   Item as MenuItem,
   SubMenu,

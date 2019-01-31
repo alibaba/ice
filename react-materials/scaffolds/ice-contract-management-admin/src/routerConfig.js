@@ -26,7 +26,7 @@ const routerConfig = [
     component: ContractSearch,
   },
   {
-    path: '/contract',
+    path: '/contract/index',
     component: ContractCenter,
   },
 ];

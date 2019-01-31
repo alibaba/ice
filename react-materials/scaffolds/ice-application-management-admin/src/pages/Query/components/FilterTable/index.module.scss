@@ -1,0 +1,24 @@
+.filterTableOperation {
+  line-height: 28px;
+}
+.operationItem {
+  color: $color-brand1-6;
+  margin-right: 12px;
+  text-decoration: none;
+  &:link, &:visited {
+    color: $color-brand1-6;
+  }
+}
+.titleWrapper {
+  display: flex;
+  flex-direction: row;
+}
+.title {
+  margin-left: 10px;
+  line-height: 20px;
+  color: $color-brand1-6;
+}
+.paginationWrapper {
+  text-align: right;
+  padding-top: 26px;
+}

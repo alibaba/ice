@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table } from '@icedesign/base';
+import { Table } from '@alifd/next';
 import PropTypes from 'prop-types';
 
 export default class RankList extends Component {

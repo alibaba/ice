@@ -115,4 +115,4 @@ FormBinder 支持的属性包含以下两部分：
 
 ## 双向绑定协议
 
-双向绑定协议指的是组件接收 `value` 和 `onChange` 两个参数，其用户输入值由 value 提供，当用户操作组件导致数据变更，组件会调用 `onChange` 并把新的 `value` 作为第一个参数传出。React 社区的大多数组件都遵守这个设计，如 `@icedesign/base` 的 `Input`, `Select`, `Checkbox` 等，如果你希望你的表单类组件能够接入 FormBinder ，请务必遵守这个协议。
+双向绑定协议指的是组件接收 `value` 和 `onChange` 两个参数，其用户输入值由 value 提供，当用户操作组件导致数据变更，组件会调用 `onChange` 并把新的 `value` 作为第一个参数传出。React 社区的大多数组件都遵守这个设计，如 `@alifd/next` 的 `Input`, `Select`, `Checkbox` 等，如果你希望你的表单类组件能够接入 FormBinder ，请务必遵守这个协议。

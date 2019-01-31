@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Progress, Grid } from '@icedesign/base';
+import { Progress, Grid } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -76,7 +76,7 @@ const styles = {
     minWidth: '80px',
     display: 'inline-block',
     marginRight: '10px',
-    color: '#666',
+    color: '$color-text1-3',
   },
   number: {
     fontSize: '18px',

@@ -1,0 +1,81 @@
+{
+  "name": "@icedesign/hr-management-admin-scaffold",
+  "version": "2.0.1",
+  "description": "该模板适用于人力资源类的管理后台，默认内置丰富的图表和表格区块，使用时需要根据需求进行删除和添加",
+  "homepage": "https://unpkg.com/@icedesign/hr-management-admin-scaffold/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
+  "dependencies": {
+    "@alifd/next": "^1.x",
+    "@alifd/theme-1": "^0.0.7",
+    "@antv/data-set": "^0.8.9",
+    "@icedesign/container": "^1.x",
+    "@icedesign/data-binder": "^1.x",
+    "@icedesign/form-binder": "^1.x",
+    "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/img": "^1.x",
+    "@icedesign/label": "^1.x",
+    "@icedesign/layout": "^1.x",
+    "@icedesign/theme": "^0.1.2",
+    "async-validator": "^1.10.1",
+    "bizcharts": "^3.4.1",
+    "classnames": "^2.2.5",
+    "moment": "^2.23.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.6.0"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/theme",
+    "entry": "src/index.js",
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
+  },
+  "scaffoldConfig": {
+    "builder": "ice-scripts",
+    "name": "ice-hr-management-admin",
+    "title": "人力资源系统",
+    "categories": [
+      "行业领域"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1i960CMHqK1RjSZFEXXcGMXXa-2872-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1KGA3DgHqK1RjSZFgXXa7JXXa-2872-1580.png",
+      "https://img.alicdn.com/tfs/TB1QxQ3Da6qK1RjSZFmXXX0PFXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1Hws2DjTpK1RjSZKPXXa3UpXa-2872-1580.png"
+    ]
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Dialog, Input, Feedback, Button } from '@icedesign/base';
+import { Dialog, Input, Message, Button } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -28,7 +28,7 @@ export default class Card extends Component {
     console.log(this.props);
     this.refs.form.validateAll((error, value) => {
       if (error) {
-        Feedback.toast.error('请输入完整的信息');
+        Message.error('请输入完整的信息');
         return;
       }
 
@@ -47,13 +47,13 @@ export default class Card extends Component {
     const { buttonText, dialogTitle } = this.props;
     return (
       <div>
-        <Button type="primary" size="large" onClick={this.onOpen}>
+        <Button type="primary" onClick={this.onOpen}>
           {buttonText}
         </Button>
         <Dialog
           visible={this.state.visible}
           onOk={this.handleConfirm}
-          closable="esc,mask,close"
+          closeable="esc,mask,close"
           onCancel={this.onClose}
           onClose={this.onClose}
           title={dialogTitle || buttonText}
@@ -63,17 +63,15 @@ export default class Card extends Component {
               <div style={styles.formItem}>
                 <div style={styles.formLabel}>标题</div>
                 <IceFormBinder required>
-                  <Input name="title" size="large" style={{ width: '400px' }} />
+                  <Input name="title" style={{ width: '400px' }} />
                 </IceFormBinder>
               </div>
               <div style={styles.formItem}>
                 <div style={styles.formLabel}>描述</div>
                 <IceFormBinder required>
-                  <Input
-                    multiple
+                  <Input.TextArea
                     placeholder="这里是一段描述"
                     name="desc"
-                    size="large"
                     style={{ width: '400px' }}
                   />
                 </IceFormBinder>

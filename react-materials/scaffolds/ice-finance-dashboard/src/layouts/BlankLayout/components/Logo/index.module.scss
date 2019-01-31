@@ -1,0 +1,16 @@
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  text-decoration: none;
+}
+.brand {
+  color: $color-brand1-6;
+  padding: 0 15px;
+  display: inline-block;
+  font-size: 34px;
+}
+.text {
+  color: #fff;
+  font-size: 30px;
+}

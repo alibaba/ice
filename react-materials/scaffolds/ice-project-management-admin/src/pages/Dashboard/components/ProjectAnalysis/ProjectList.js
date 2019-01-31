@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Progress } from '@icedesign/base';
+import { Table, Progress } from '@alifd/next';
 
 const DATA = [
   {
@@ -80,11 +80,7 @@ export default class TopActiveChart extends Component {
             title="项目进度"
             dataIndex="percent"
             cell={(value, index, record) => (
-              <Progress
-                percent={record.percent}
-                state={record.state}
-                showInfo={false}
-              />
+              <Progress percent={record.percent} state={record.state} />
             )}
           />
         </Table>

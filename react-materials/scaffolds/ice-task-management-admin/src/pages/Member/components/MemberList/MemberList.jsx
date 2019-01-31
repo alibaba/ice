@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Dialog } from '@icedesign/base';
+import { Table, Dialog } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
 import ContainerTitle from '../../../../components/ContainerTitle';
 

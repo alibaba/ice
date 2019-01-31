@@ -1,0 +1,50 @@
+.wrapperContainer {
+  background-color: #f6f6f6;
+}
+.wrapper {
+  height: 500px;
+  margin: 0 auto;
+  position: relative;
+  max-width: 1190px;
+  background-color: #f6f6f6;
+}
+.feature {
+  margin-left: 50%;
+  padding-top: 160px;
+  margin-right: 10%;
+  padding-left: 30px;
+  padding-bottom: 160px;
+  background-image: url('./images/TB1fFH5pAyWBuNjy0FpXXassXXa-66-66.png');
+  background-repeat: no-repeat;
+  background-position: 10px 120px;
+}
+.line {
+  width: 140px;
+  height: 2px;
+  margin: 20px 0;
+  background-color: #fff;
+}
+.lineHeader {
+  width: 33px;
+  height: 2px;
+  background-color: $color-brand1-6;
+}
+.title {
+  color: $color-brand1-6;
+  font-size: 36px;
+}
+.desc {
+  color: #6D7A82;
+  font-size: 16px;
+  max-width: 400px;
+  line-height: 26px;
+}
+.cover {
+  right: 55%;
+  bottom: 0;
+  position: absolute;
+}
+.coverImage {
+  display: block;
+  max-height: 430px;
+}

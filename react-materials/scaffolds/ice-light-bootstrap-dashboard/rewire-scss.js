@@ -34,7 +34,7 @@ function rewireSass(config, env, sassOptions = {}) {
     styleLoaderRule.loader.push({
       loader: require.resolve('ice-skin-loader'),
       options: {
-        themeFile: require.resolve('@icedesign/skin'),
+        themeFile: require.resolve('@icedesign/theme/variables.scss'),
       },
     });
   }
@@ -47,7 +47,7 @@ function rewireSass(config, env, sassOptions = {}) {
     styleLoaderRule.use.push({
       loader: require.resolve('ice-skin-loader'),
       options: {
-        themeFile: require.resolve('@icedesign/skin'),
+        themeFile: require.resolve('@icedesign/theme/variables.scss'),
       },
     });
   }

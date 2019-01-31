@@ -3,7 +3,7 @@
   left: 0;
   right: 0;
   z-index: 999;
-  background: #447eff;
+  background: $color-brand1-6;
   min-width: 1200px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   .header-content {
@@ -18,23 +18,9 @@
   .header-navbar {
     display: flex;
     flex-direction: row;
-    .ice-menu {
-      background: transparent;
-      color: #fff;
-      .ice-menu-item-selected {
-        background: #3560d9;
-        color: #fff;
-      }
-      .ice-menu-submenu-title,
-      .ice-menu-item {
-        height: 62px;
-        line-height: 62px;
-        font-size: 14px;
-        &:hover,
-        a:hover {
-          color: #fff;
-        }
-      }
+
+    .header-navbar-menu {
+      box-shadow: none;
     }
   }
 
@@ -45,7 +31,6 @@
 
   .user-department {
     font-size: 12px;
-    color: #fff;
   }
 
   .ice-design-header-userpannel {

@@ -1,14 +1,24 @@
 {
   "name": "@icedesign/open-platform-scaffold",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "该模板适用于开放平台的引导页，默认内置一个页面和六个不同风格的展示区块",
-  "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-open-platform-landingpage.html",
+  "homepage": "https://unpkg.com/@icedesign/open-platform-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.0",
-    "@icedesign/layout": "^0.1.2",
-    "@icedesign/menu": "^0.1.0",
-    "@icedesign/skin": "^0.1.0",
+    "@alifd/next": "^1.x",
+    "@icedesign/theme": "^0.1.0",
+    "@icedesign/container": "^1.x",
+    "@icedesign/layout": "^1.x",
+    "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -34,9 +44,11 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
-    "localization": true
+    "output": {
+      "publicPath": "./"
+    }
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
@@ -46,8 +58,5 @@
       "官网模板"
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1F3SAuGmWBuNjy1XaXXXCbXXa-2840-1596.png"
-  },
-  "engines": {
-    "node": ">=8.0.0"
   }
 }

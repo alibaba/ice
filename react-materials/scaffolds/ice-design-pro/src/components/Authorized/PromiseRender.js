@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loading } from '@icedesign/base';
+import { Loading } from '@alifd/next';
 
 export default class PromiseRender extends React.PureComponent {
   state = {
@@ -43,7 +43,7 @@ export default class PromiseRender extends React.PureComponent {
     return Component ? (
       <Component {...this.props} />
     ) : (
-      <Loading shape="flower" tip="loading..." color="#333">
+      <Loading tip="loading..." color="#333">
         <div
           style={{
             width: '100%',

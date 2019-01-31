@@ -1,13 +1,13 @@
 /* eslint react/jsx-no-target-blank: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Balloon, Grid, Icon } from '@icedesign/base';
+import { Balloon, Grid, Icon } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
 const mockData = [
   {
-    icon: 'training',
+    icon: 'atm',
     title: '最新发布活动数',
     desc: '这里是一些说明',
     count: '3,341',
@@ -15,7 +15,7 @@ const mockData = [
     period: '26%',
   },
   {
-    icon: 'cart',
+    icon: 'upload',
     title: '新增会员数',
     desc: '这里是一些说明',
     count: '882',

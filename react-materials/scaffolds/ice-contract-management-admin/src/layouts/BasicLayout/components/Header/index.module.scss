@@ -1,0 +1,64 @@
+.headerContainer {
+  width: 100%;
+  padding: 10px 20px;
+  margin: 0px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: white;
+  margin: 0;
+}
+
+.rightContainer {
+  display: flex;
+}
+
+.navItemText {
+  margin-left: 10px;
+}
+
+.userPanel {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.userAvatar {
+  margin-right: 12px;
+  border-radius: 4px;
+}
+.userProfile {
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 2px;
+}
+.userName {
+  font-size: 13px;
+}
+.iconDown {
+  margin-left: 2px;
+}
+
+.userProfileMenu {
+  width: 130px;
+  border-radius: 0;
+  padding: 0 16px;
+}
+.userProfileMenuItem {
+  height: 40px;
+  line-height: 40px;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+}
+.menuItemLink {
+  display: block;
+}
+.menuItemIcon {
+  margin-right: 5px;
+}

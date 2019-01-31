@@ -11,7 +11,7 @@ importStyle: true
 ````jsx
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 

@@ -1,0 +1,33 @@
+.header {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+}
+.logoLink {
+  color: $color-brand1-6 !important;
+  font-size: 30px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.nav {
+  display: flex;
+}
+.navItem {
+  height: 40px;
+  line-height: 40px;
+  margin-left: 20px;
+}
+.navItemLink {
+  display: inline-block;
+  padding: 0 20px;
+  text-decoration: none;
+  color: $color-brand1-6 !important;
+}
+.activeNavItemLink {
+  composes: navItemLink;
+  color: #fff  !important;
+  background: $color-brand1-6;
+  border-radius: 4px;
+}

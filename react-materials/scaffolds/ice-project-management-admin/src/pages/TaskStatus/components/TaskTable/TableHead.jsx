@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Grid, Input, Select } from '@icedesign/base';
+import { Grid, Input, Select } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -30,7 +30,7 @@ export default class TableHead extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>任务状态：</span>
               <IceFormBinder triggerType="onBlur">
-                <Select name="status" size="large" style={{ width: '200px' }}>
+                <Select name="status" style={{ width: '200px' }}>
                   <Select.Option value="option1">未解决</Select.Option>
                   <Select.Option value="option2">已解决</Select.Option>
                   <Select.Option value="option3">已解决</Select.Option>
@@ -45,7 +45,7 @@ export default class TableHead extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>Assign By：</span>
               <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="by" size="large" />
+                <Input placeholder="请输入" name="by" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="by" />
@@ -56,7 +56,7 @@ export default class TableHead extends Component {
             <div style={styles.formItem}>
               <span style={styles.formLabel}>Assign To：</span>
               <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="to" size="large" />
+                <Input placeholder="请输入" name="to" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="to" />

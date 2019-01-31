@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Input } from '@icedesign/base';
+import { Grid, Input } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;
@@ -24,7 +24,7 @@ export default class Filter extends Component {
               placeholder="请输入方案名称"
               hasClear
               onChange={this.onChange}
-              size="large"
+
             />
           </Col>
         </Row>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Progress, Icon } from '@icedesign/base';
+import { Grid, Progress, Icon } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;
@@ -49,7 +49,6 @@ export default class ReviewDetailInfo extends Component {
               <Progress
                 style={styles.reviewTargetProgress}
                 percent={50}
-                size="large"
                 shape="circle"
                 suffix={<span>392 份</span>}
               />

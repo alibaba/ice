@@ -16,7 +16,7 @@ error 有两类错位，一类是网络中断，请求都没有到后端服务�
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import DataBinder from '@icedesign/data-binder';
-import { Button, Loading, Feedback } from '@icedesign/base';
+import { Button, Loading, Message } from '@alifd/next';
 
 @DataBinder({
   foo1Data: {
@@ -79,13 +79,13 @@ class App extends Component {
           </Loading>
           {foo1Data.__error
             ?
-            <Feedback type="error">
+            <Message type="error">
               foo1 数据获取失败，失败 message： {foo1Data.__error.message}
-            </Feedback>
+            </Message>
             :
-            <Feedback>
+            <Message>
               foo1 数据获取成功
-            </Feedback>
+            </Message>
           }
           <div style={{marginTop: 10}}>
             <Button onClick={this.refreshFoo1}>请求获取 foo1 新数据</Button>
@@ -99,9 +99,9 @@ class App extends Component {
             </div>
           </Loading>
           {foo2Data.__error &&
-            <Feedback type="error">
+            <Message type="error">
               foo1 数据获取失败，失败 message： {foo2Data.__error.message}
-            </Feedback>
+            </Message>
           }
           <div style={{marginTop: 10}}>
             <Button onClick={this.refreshFoo2}>请求获取 foo2 新数据</Button>

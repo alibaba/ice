@@ -1,6 +1,6 @@
 /* eslint no-mixed-operators:0 */
 import React, { Component } from 'react';
-import { Table, Progress, Pagination } from '@icedesign/base';
+import { Table, Progress, Pagination } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const getTableData = () => {
@@ -27,7 +27,7 @@ export default class ProgressTable extends Component {
   }
 
   renderCellProgress = value => (
-    <Progress showInfo={false} percent={parseInt(value, 10)} />
+    <Progress percent={parseInt(value, 10)} />
   );
 
   onPageChange = (pageNo) => {
@@ -41,8 +41,8 @@ export default class ProgressTable extends Component {
       <div className="progress-table">
         <IceContainer className="tab-card" title="本月最活跃金主">
           <Table
-            getRowClassName={(record, index) => {
-              return `progress-table-tr progress-table-tr${index}`;
+            getRowProps={(record, index) => {
+              return { className: `progress-table-tr progress-table-tr${index}` };
             }}
             dataSource={this.state.dataSource}
           >

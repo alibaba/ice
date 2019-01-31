@@ -11,7 +11,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import DataBinder from '@icedesign/data-binder';
 import jsonp from 'jsonp';
-import { Pagination, Table } from '@icedesign/base';
+import { Pagination, Table } from '@alifd/next';
 
 /**
  * 自定义的 json request client
@@ -80,7 +80,7 @@ class App extends Component {
 
     return (
       <div>
-        <Table dataSource={account.table} isLoading={account.__loading}>
+        <Table dataSource={account.table} loading={account.__loading}>
           <Table.Column dataIndex="name" title="name" />
           <Table.Column dataIndex="age" title="age" />
         </Table>

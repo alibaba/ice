@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Button, Icon, Dialog } from '@icedesign/base';
+import { Grid, Button, Icon } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 const { Row, Col } = Grid;
@@ -48,20 +48,6 @@ const DATA = [
 ];
 
 export default class Member extends Component {
-  handleDetail = () => {
-    Dialog.confirm({
-      title: '提示',
-      content: '暂不支持查看个人主页',
-    });
-  };
-
-  handleMessage = () => {
-    Dialog.confirm({
-      title: '提示',
-      content: '暂不支持发送消息',
-    });
-  };
-
   render() {
     return (
       <Row wrap gutter="20">
@@ -73,14 +59,8 @@ export default class Member extends Component {
                 <h4 style={styles.name}>{item.name}</h4>
                 <p style={styles.jobTitle}>{item.jobTitle}</p>
                 <div style={styles.action}>
-                  <Button type="primary" onClick={this.handleDetail}>
-                    个人主页
-                  </Button>
-                  <Button
-                    type="secondary"
-                    onClick={this.handleMessage}
-                    style={{ marginLeft: '10px' }}
-                  >
+                  <Button type="primary">个人主页</Button>
+                  <Button type="secondary" style={{ marginLeft: '10px' }}>
                     发送消息
                   </Button>
                 </div>

@@ -1,0 +1,20 @@
+.custom-table {
+  width: 100%;
+  color: #999;
+  font-size: 13px;
+  tr {
+    &.thead {
+      color: #fff;
+      font-weight: bold;
+    }
+    &:nth-child(2n) {
+      background: #253042;
+    }
+    td {
+      padding: 10px 20px;
+    }
+  }
+  .custom-th {
+    color: $color-data1-1;
+  }
+}

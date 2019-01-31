@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Grid, Input, Select, DatePicker } from '@icedesign/base';
+import { Grid, Input, Select, DatePicker } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -29,8 +29,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>页面名称：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="pageName" size="large" />
+              <IceFormBinder triggerType="onBlur" name="pageName">
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="pageName" />
@@ -40,8 +40,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>事件 ID：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="eventId" size="large" />
+              <IceFormBinder triggerType="onBlur" name="eventId">
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="eventId" />
@@ -51,8 +51,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>事件名称：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Input placeholder="请输入" name="eventName" size="large" />
+              <IceFormBinder triggerType="onBlur" name="eventName">
+                <Input placeholder="请输入" />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="eventName" />
@@ -62,8 +62,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>类型：</span>
-              <IceFormBinder triggerType="onBlur">
-                <Select name="type" size="large" style={{ width: '200px' }}>
+              <IceFormBinder triggerType="onBlur" name="type">
+                <Select style={{ width: '200px' }}>
                   <Select.Option value="miss">遗漏埋点</Select.Option>
                   <Select.Option value="new">新增埋点</Select.Option>
                 </Select>
@@ -76,10 +76,8 @@ export default class Filter extends Component {
           <Col l="8">
             <div style={styles.formItem}>
               <span style={styles.formLabel}>日期：</span>
-              <IceFormBinder triggerType="onBlur">
+              <IceFormBinder triggerType="onBlur" name="date">
                 <DatePicker
-                  name="date"
-                  size="large"
                   style={{ width: '200px' }}
                 />
               </IceFormBinder>

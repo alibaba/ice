@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Radio, Feedback } from '@icedesign/base';
+import { Input, Button, Radio, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -39,11 +39,11 @@ export default class infoForm extends Component {
   validateAllFormField = () => {
     this.refs.form.validateAll((errors, values) => {
       if (errors) {
-        Feedback.toast.error('请输入完整的信息');
+        Message.error('请输入完整的信息');
         return;
       }
       console.log({ values });
-      Feedback.toast.success('保存成功');
+      Message.success('保存成功');
     });
   };
 
@@ -59,7 +59,7 @@ export default class infoForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>项目名称</div>
               <IceFormBinder>
-                <Input name="project" size="large" style={{ width: '400px' }} />
+                <Input name="project" style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
@@ -67,7 +67,6 @@ export default class infoForm extends Component {
               <IceFormBinder>
                 <Input
                   name="appid"
-                  size="large"
                   style={{ width: '400px' }}
                   disabled
                 />
@@ -78,7 +77,6 @@ export default class infoForm extends Component {
               <IceFormBinder>
                 <Input
                   name="token"
-                  size="large"
                   style={{ width: '400px' }}
                   disabled
                 />
@@ -105,18 +103,15 @@ export default class infoForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>项目描述</div>
               <IceFormBinder>
-                <Input
-                  multiple
+                <Input.TextArea
                   placeholder="这里是一段描述"
                   name="desc"
-                  size="large"
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
             </div>
             <Button
               type="primary"
-              size="large"
               style={styles.submitButton}
               onClick={this.validateAllFormField}
             >

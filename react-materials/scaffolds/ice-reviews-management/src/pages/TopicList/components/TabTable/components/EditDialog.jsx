@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, Button, Form, Input, Field } from '@icedesign/base';
+import { Dialog, Button, Form, Input, Field } from '@alifd/next';
 
 const FormItem = Form.Item;
 
@@ -91,6 +91,7 @@ export default class EditDialog extends Component {
 
             <FormItem label="评测人数：" {...formItemLayout}>
               <Input
+                disabled
                 {...init('articleNum', {
                   rules: [{ required: true, message: '必填选项' }],
                 })}

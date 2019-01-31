@@ -9,7 +9,7 @@ importStyle: true
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Icon, Switch } from '@icedesign/base';
+import { Icon, Switch } from '@alifd/next';
 import StyledMenu, {
   Item as MenuItem,
   SubMenu,

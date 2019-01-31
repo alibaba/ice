@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Progress } from '@icedesign/base';
+import { Grid, Progress } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import Head from './Head';
 import Field from './Field';
@@ -50,7 +50,7 @@ export default class OverviewChartCard extends Component {
             <div
               style={{ height: '64px', display: 'flex', alignItems: 'center' }}
             >
-              <Progress percent={51} showInfo={false} />
+              <Progress percent={51} />
             </div>
             <Trend style={styles.footer} />
           </IceContainer>

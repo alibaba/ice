@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
+import cx from 'classnames';
+
 import './LatestNews.scss';
+import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
@@ -70,27 +73,22 @@ export default class LatestNews extends Component {
 
   render() {
     return (
-      <div className="latest-news" style={styles.container}>
+      <div className={cx(styles.container, 'latest-news')}>
         <Row wrap gutter="20">
           <Col xxs="24" s="12" l="12">
-            <IceContainer style={styles.cardContainer}>
-              <h3 style={styles.cardTitle}>
+            <IceContainer className={styles.cardContainer}>
+              <h3 className={styles.cardTitle}>
                 最新文章
-                <a className="link" href="#" style={styles.more}>
+                <a href="#" className={cx(styles.more, 'link')}>
                   更多
                 </a>
               </h3>
-              <div style={styles.items}>
+              <div className={styles.items}>
                 {dataSource.articles.map((item, index) => {
                   return (
-                    <a
-                      className="link"
-                      key={index}
-                      href="#"
-                      style={styles.item}
-                    >
-                      <div style={styles.itemTitle}>{item.title}</div>
-                      <div style={styles.itemTime}>{item.time}</div>
+                    <a key={index} href="#" className={cx(styles.item, 'link')}>
+                      <div className={styles.itemTitle}>{item.title}</div>
+                      <div className={styles.itemTime}>{item.time}</div>
                     </a>
                   );
                 })}
@@ -98,27 +96,22 @@ export default class LatestNews extends Component {
             </IceContainer>
           </Col>
           <Col xxs="24" s="12" l="12">
-            <IceContainer style={styles.cardContainer}>
-              <h3 style={styles.cardTitle}>
+            <IceContainer className={styles.cardContainer}>
+              <h3 className={styles.cardTitle}>
                 最新评论
-                <a className="link" href="#" style={styles.more}>
+                <a href="#" className={cx(styles.more, 'link')}>
                   更多
                 </a>
               </h3>
-              <div style={styles.items}>
+              <div className={styles.items}>
                 {dataSource.comments.map((item, index) => {
                   return (
-                    <a
-                      className="link"
-                      key={index}
-                      href="#"
-                      style={styles.item}
-                    >
-                      <div style={styles.itemComment}>
-                        <div style={styles.commentTitle}>{item.title}</div>
-                        <div style={styles.commentTime}>{item.time}</div>
+                    <a key={index} href="#" className={cx(styles.item, 'link')}>
+                      <div className={styles.itemComment}>
+                        <div className={styles.commentTitle}>{item.title}</div>
+                        <div className={styles.commentTime}>{item.time}</div>
                       </div>
-                      <div style={styles.commentNum}>{item.num}</div>
+                      <div className={styles.commentNum}>{item.num}</div>
                     </a>
                   );
                 })}
@@ -130,65 +123,3 @@ export default class LatestNews extends Component {
     );
   }
 }
-
-const styles = {
-  cardContainer: {
-    height: '286px',
-    overflowY: 'auto',
-  },
-  cardTitle: {
-    position: 'relative',
-    margin: '0 0 10px',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  more: {
-    position: 'absolute',
-    right: 0,
-    fontSize: '12px',
-    color: '#666',
-  },
-  item: {
-    position: 'relative',
-    display: 'block',
-  },
-  itemTime: {
-    position: 'absolute',
-    right: 0,
-    top: 6,
-    fontSize: '12px',
-  },
-  itemTitle: {
-    height: '34px',
-    lineHeight: '34px',
-    fontSize: '13px',
-  },
-  itemComment: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: '10px',
-  },
-  commentTitle: {
-    height: '28px',
-    lineHeight: '28px',
-    fontSize: '13px',
-  },
-  commentTime: {
-    fontSize: '12px',
-  },
-  commentNum: {
-    position: 'absolute',
-    right: 0,
-    top: 6,
-    width: '24px',
-    height: '24px',
-    lineHeight: '24px',
-    fontSize: '12px',
-    textAlign: 'center',
-    borderRadius: '50px',
-    background: '#FF2851',
-    color: '#fff',
-  },
-};
