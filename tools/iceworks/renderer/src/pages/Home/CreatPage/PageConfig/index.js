@@ -342,7 +342,6 @@ class PageConfig extends Component {
 
   render() {
     const { init } = this.field;
-console.log('progress:', this.props.progress);
     const { projects, newpage } = this.props;
     const { currentProject } = projects;
     let applicationType = '';
