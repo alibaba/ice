@@ -147,7 +147,7 @@ export default class GitPanel extends Component {
           }}>
             <Input
               placeholder="如：git@github.com:alibaba/ice.git"
-              style={{ marginLeft: 10 }}
+              style={{ marginLeft: 10, width: 240 }}
               {...init('remoteUrlInput', {
                 rules: {
                   validator: this.checkGitRepo,

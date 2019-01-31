@@ -105,10 +105,6 @@ class Git {
         } else {
           this.currentStep = 1;
         }
-console.log('remoteUrl: ', remoteUrl);
-console.log('originRemote: ', originRemote);
-console.log('currentBranch: ', currentBranch);
-
       }
       this.isGit = isGit;
       this.isRepo = isRepo;
