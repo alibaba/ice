@@ -59,6 +59,7 @@ export default class GitPanel extends Component {
 
   onProjectChange = async () => {
     const { git } = this.props;
+    this.field.reset();
     await git.reset();
     await this.handleReload();
   }
@@ -138,21 +139,21 @@ export default class GitPanel extends Component {
             <Input
               placeholder="如：git@github.com:alibaba/ice.git"
               style={{ marginLeft: 10, width: 240 }}
-              {...init('remoteUrlInput', {
+              {...init('remoteUrl', {
                 rules: {
                   validator: this.checkGitRepo,
                 }
               })}
             />
             <br />
-            {this.field.getError('remoteUrlInput') ? (
+            {this.field.getError('remoteUrl') ? (
               <span style={{ 
                 color: '#fa7070',
                 fontSize: 12,
                 display: 'inline-block',
                 margin: '5px 0 0 10px'
               }}>
-                {this.field.getError('remoteUrlInput').join(",")}
+                {this.field.getError('remoteUrl').join(",")}
               </span>
             ) : (
               ""
@@ -174,11 +175,11 @@ export default class GitPanel extends Component {
     const { git = {} } = this.props;
     this.field.validate(async (errors, values) => {
       if (errors) return;
-      const { remoteUrlInput } = values;
-      if (remoteUrlInput === git.remoteUrl) {
+      const { remoteUrl } = values;
+      if (remoteUrl === git.remoteUrl) {
         return;
       }
-      const addDone = await git.addRemote(remoteUrlInput);
+      const addDone = await git.addRemote(remoteUrl);
       if (addDone) {
         this.handleReload();
       }
