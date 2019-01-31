@@ -15,6 +15,7 @@ import DashboardCard from '../../../../components/DashboardCard/';
 import ExtraButton from '../../../../components/ExtraButton/';
 import Icon from '../../../../components/Icon';
 import EmptyTips from '../../../../components/EmptyTips';
+
 import dialog from '../../../../components/dialog';
 
 import services from '../../../../services';
@@ -82,9 +83,7 @@ class PagesCard extends Component {
     const { currentProject } = projects;
 
     if (currentProject && currentProject.fullPath) {
-      const pagesDirectory = currentProject.isNodeProject
-        ? path.join(currentProject.fullPath, 'client/pages')
-        : path.join(currentProject.fullPath, 'src/pages');
+      const pagesDirectory = path.join( currentProject.clientSrcPath, 'pages' );
       const pages = recursivePagesSync(pagesDirectory, pagesDirectory);
       this.setState({ pages: pages });
     } else {
@@ -94,7 +93,6 @@ class PagesCard extends Component {
 
   handleCreatePage = () => {
     const { projects } = this.props;
-    this.props.newpage.setTargetPath(projects.currentProject.fullPath);
     this.props.newpage.toggle();
   };
 
@@ -107,8 +105,7 @@ class PagesCard extends Component {
       content: `确定删除页面 ${name} 吗？`,
       onOk: () => {
           scaffolder.removePage({
-          destDir: currentProject.root,
-          isNodeProject: currentProject.isNodeProject,
+          clientSrcPath: currentProject.clientSrcPath,
           pageFolderName: name
         })
         .then(() => {

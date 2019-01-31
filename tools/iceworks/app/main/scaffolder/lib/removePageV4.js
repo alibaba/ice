@@ -36,15 +36,13 @@ function removePageMenuConfig(elements, routerPath) {
 }
 
 module.exports = async function({ 
-  destDir, // 项目路径
-  isNodeProject, // 是否是node项目
+  clientSrcPath, // 项目路径
   pageFolderName,  // 页面文件夹名
   routerPath = '', // 路由路径
 }) {
   const pageImportPath = `./pages/${pageFolderName}`; // 文件导入路径
-  const clientPath = isNodeProject ? 'client' : 'src'; 
-  const routerConfigFilePath = path.join(destDir, clientPath, 'routerConfig.js'); // 路由配置文件全路径
-  const pageFullPath = path.join(destDir, clientPath, `/pages/${pageFolderName}`); // 文件全路径
+  const routerConfigFilePath = path.join(clientSrcPath, 'routerConfig.js'); // 路由配置文件全路径
+  const pageFullPath = path.join(clientSrcPath, `/pages/${pageFolderName}`); // 文件全路径
 
   let componentName = ''; // 组件名
 
@@ -110,7 +108,7 @@ module.exports = async function({
 
   // 3. 删除menu配置
   if (routerPath) {
-    const menuConfigFilePath = path.join(destDir, clientPath, 'menuConfig.js');
+    const menuConfigFilePath = path.join(clientSrcPath, 'menuConfig.js');
     const menuConfigAST = getFileAst(menuConfigFilePath);
   
     traverse(menuConfigAST, {

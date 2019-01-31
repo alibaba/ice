@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import ExtraButton from '../../../components/ExtraButton/';
-import Icon from '../../../components/Icon';
-import terms from '../../../terms';
+import ExtraButton from '../ExtraButton/';
+import Icon from '../Icon';
+import terms from '../../terms';
 
 import './index.scss';
 
 class ProjectTerminal extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    style: PropTypes.object,
+    closeLogs: PropTypes.func,
+    shwoClose: PropTypes.bool
+  };
+
+  static defaultProps = {
+    id: 'terminal',
+    style: {},
+    closeLogs: () => {},
+    shwoClose: true
+  };
+
   constructor(props) {
     super(props);
 
@@ -17,10 +32,6 @@ class ProjectTerminal extends Component {
 
   clearLogs = () => {
     terms.getTerm(this.state.path).clear();
-  };
-
-  closeLogs = () => {
-    this.props.project.toggleTerminal();
   };
 
   componentWillReceiveProps(nextProps) {
@@ -41,7 +52,8 @@ class ProjectTerminal extends Component {
   }
 
   createTerm() {
-    const terminalContainer = document.getElementById('terminal');
+    const { id } = this.props;
+    const terminalContainer = document.getElementById(id);
     terminalContainer.innerHTML = '';
     terms.new(this.state.path, terminalContainer);
   }
@@ -54,7 +66,8 @@ class ProjectTerminal extends Component {
   };
 
   setTerminalSize() {
-    const container = document.getElementById('terminal');
+    const { id } = this.props;
+    const container = document.getElementById(id);
     if(!container){
       return null;
     }
@@ -66,10 +79,14 @@ class ProjectTerminal extends Component {
   }
 
   render() {
+    const { style, id, closeLogs, shwoClose } = this.props;
     return (
       <div
         className="project-terminal-wrapper"
-        style={{ zIndex: this.props.visible ? '0' : '-1' }}
+        style={{ 
+          zIndex: this.props.visible ? '0' : '-1',
+          ...style
+        }}
       >
         <div className="buttons">
           <ExtraButton
@@ -79,15 +96,19 @@ class ProjectTerminal extends Component {
           >
             <Icon type="clear" size="small" />
           </ExtraButton>
-          <ExtraButton
-            onClick={this.closeLogs}
-            tipText={'关闭日志面板'}
-            style={{ color: '#eee' }}
-          >
-            <Icon type="close" />
-          </ExtraButton>
+          {
+            shwoClose && (
+              <ExtraButton
+                onClick={closeLogs}
+                tipText={'关闭日志面板'}
+                style={{ color: '#eee' }}
+              >
+                <Icon type="close" />
+              </ExtraButton>
+            )
+          }
         </div>
-        <div id="terminal" className="project-terminal" />
+        <div id={id} className="project-terminal" />
       </div>
     );
   }

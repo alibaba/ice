@@ -1,4 +1,4 @@
-import { Dialog, Button, Feedback } from '@icedesign/base';
+import { Dialog, Button, Feedback, Balloon } from '@icedesign/base';
 import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import fs from 'fs';
@@ -7,29 +7,31 @@ import path from 'path';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { dependenciesFormat } from '../../lib/project-utils';
+import { dependenciesFormat, mergeDependenciesToPkg } from '../../lib/project-utils';
+import projectScripts from '../../lib/project-scripts';
 import {
   Panel as BlockPickerPanel,
   Previewer as BlockPreview,
   PreviewTitle,
 } from '../BlockPicker';
+import Progress from '../Progress';
 import dialog from '../dialog';
 import services from '../../services';
 import './index.scss';
 
-const { scaffolder, npm } = services;
+const { scaffolder, npm, log } = services;
 
 // 向页面新增 block 的功能
 // 包括展示现有 page 下的 blocks 以及选择新 block 的管理
 
-@inject('pageBlockPicker', 'blocks', 'projects')
+@inject('pageBlockPicker', 'blocks', 'projects', 'progress')
 @observer
 class PageBlockPicker extends Component {
   static propTypes = {
     blocks: PropTypes.object.isRequired,
     pageBlockPicker: PropTypes.object.isRequired,
   };
-
+  
   /**
    * 添加区块，支持多个
    */
@@ -61,9 +63,11 @@ class PageBlockPicker extends Component {
    */
   handleOk = () => {
     
-    const { pageBlockPicker } = this.props;
+    const { pageBlockPicker, projects, progress } = this.props;
     const { pageName, projectPath } = pageBlockPicker;
-    const { isNodeProject } = this.props.projects.currentProject;
+    const { currentProject = {} } = projects;
+    const { clientPath, clientSrcPath } = currentProject;
+
     const blocks = toJS(this.props.blocks.selected);
 
     // 检测 block 是否存在冲突等
@@ -75,33 +79,62 @@ class PageBlockPicker extends Component {
     }
 
     pageBlockPicker.downloadStart();
+
+    progress.start(true);
+    progress.setStatusText('正在生成区块');
+    progress.setSectionCount(blocks.length);
+    
     let blocksDependencies;
     scaffolder.utils
       .downloadBlocksToPage({
-        destDir: projectPath,
+        clientPath,
+        clientSrcPath,
         blocks: blocks,
         pageName: pageName,
-        isNodeProject,
+        progressFunc: progress.handleProgressFunc
       })
       .catch((err) => {
         pageBlockPicker.downloadDone();
+        progress.reset()
         console.log(err);
       })
       .then(({ dependencies }) => {
+       
         blocksDependencies = dependencies;
         // 下载包依赖完成后对 dependencies 进行安装操作
         // 如果安装失败，自动将 dependencies 与 package.json 进行合并
         const scaffoldDependencies = dependenciesFormat(dependencies);
         // 开始安装项目依赖
         console.log('安装依赖', scaffoldDependencies);
-        return npm.run(
-          ['install', '--no-package-lock'].concat(scaffoldDependencies),
-          {
-            cwd: projectPath,
-          }
-        );
+
+        if (scaffoldDependencies.length > 0) {
+          progress.setStatusText('正在下载区块依赖');
+          progress.setShowTerminal(true);
+          progress.setShowProgress(false);
+
+          return new Promise((resolve, reject) => {
+            projectScripts.npminstall(
+              currentProject,
+              scaffoldDependencies.join(' '),
+              false,
+              (error, dependencies) => {
+                if (error) {
+                  log.error('install blocks‘ dependencies  error');
+                  reject();
+                } else {
+                  log.info(
+                    'genereator page install dependencies success'
+                  );
+                  resolve();
+                }
+              }
+            )
+          })
+        }
+
       })
       .then(() => {
+        progress.end();
         pageBlockPicker.close();
         console.log('区块依赖安装完成');
         Notification.success({
@@ -115,47 +148,30 @@ class PageBlockPicker extends Component {
           error: error,
         });
         // 兜底逻辑，将依赖信息写入到 package.json 里
-        const packageFile = path.join(projectPath, 'package.json');
-        new Promise((resolve, reject) => {
-          try {
-            const pkgData = fs.readFileSync(packageFile);
-            resolve(JSON.parse(pkgData.toString()));
-          } catch (e) {
-            console.log(e);
-            reject();
-          }
-        }).then((pkgData) => {
-          console.log(pkgData);
-          if (pkgData) {
-            pkgData.dependencies = Object.assign(
-              pkgData.dependencies || {},
-              blocksDependencies
-            );
-            try {
-              fs.writeFileSync(packageFile, JSON.stringify(pkgData, null, 2));
-              pageBlockPicker.close();
-              Notification.warning({
-                message:
-                  '区块依赖已兜底写入 package.json，可通过【重装依赖】修复',
-                duration: 8,
-              });
-            } catch (e) {
-              pageBlockPicker.downloadDone();
-              dialog.notice({
-                title: '写入 package.json 失败',
-                error:
-                  'package.json 不存在或存在语法错误 检查 ' +
-                  path.join(projectPath, 'package.json'),
-              });
-            }
-          } else {
-            return Promise.reject('不存在 package.json');
-          }
-        });
+        mergeDependenciesToPkg(blocksDependencies, clientPath)
+          .then(() => {
+            progress.end();
+            pageBlockPicker.close();
+            Notification.warning({
+              message:
+                '区块依赖已兜底写入 package.json，可通过【重装依赖】修复',
+              duration: 8,
+            });
+          })
+          .catch((e) => {
+            pageBlockPicker.downloadDone();
+            progress.reset();
+            dialog.notice({
+              title: '依赖写入 package.json 失败',
+              error: e
+            });
+          });
       });
   };
 
   render() {
+    const { currentProject } = this.props.projects;
+
     return (
       <Dialog
         className="fullscreen-dialog"
@@ -195,16 +211,31 @@ class PageBlockPicker extends Component {
             </div>
           </div>
           <div className="page-block-picker-footer">
-            <Button
-              disabled={this.props.blocks.selected.length == 0}
-              loading={this.props.pageBlockPicker.isDownloading}
-              type="primary"
-              onClick={this.handleOk}
+            <Balloon
+              trigger={
+                <Button
+                  disabled={this.props.blocks.selected.length == 0}
+                  loading={this.props.pageBlockPicker.isDownloading}
+                  type="primary"
+                  onClick={this.handleOk}
+                >
+                  {this.props.pageBlockPicker.isDownloading
+                    ? '正在下载区块...'
+                    : '开始下载'}
+                </Button>
+              }
+              align="t"
+              alignment="normal"
+              triggerType="hover"
+              style={{ width: 350, height: 85 }}
+              visible={this.props.pageBlockPicker.isDownloading}
             >
-              {this.props.pageBlockPicker.isDownloading
-                ? '正在下载区块...'
-                : '开始下载'}
-            </Button>
+              <div>
+                <Progress
+                  styleOffset={[-350, 0]}
+                />
+              </div>
+            </Balloon>
             <Button
               disabled={this.props.pageBlockPicker.isDownloading}
               onClick={this.handleClose}

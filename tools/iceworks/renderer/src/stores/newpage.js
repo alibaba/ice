@@ -1,8 +1,12 @@
 import { observable, action, computed } from 'mobx';
 import path from 'path';
+import { ipcRenderer } from 'electron';
 
 import { scanPages } from '../lib/project-utils';
+// store
+import progress from './progress';
 import projects from './projects';
+
 import projectScripts from '../lib/project-scripts';
 import scanLayout from '../datacenter/scanLayout';
 
@@ -15,10 +19,7 @@ import scanLayout from '../datacenter/scanLayout';
 /**
  * 新建页面
  */
-
 class NewPage {
-  @observable
-  targetPath = ''; // 生成的目标路径
   @observable
   layouts = []; // 所有 layouts
   @observable
@@ -31,6 +32,23 @@ class NewPage {
   savePageVisible = false; // 控制 page 保存 dialog 的显示
   @observable
   isCreatingValue = false; // 用于控制 pageConfig 确定按钮 loading 状态
+  @observable
+  createProcess = '';
+  @observable
+  createProcessEventName = ''; // 新建页面过程中的事件名
+  @observable
+  progressVisible = false;
+
+  constructor() {
+    ipcRenderer.on('processTracking', (event, process, eventName) => {
+      progress.setStatusText(process) 
+      progress.setShowTerminal(eventName === 'installBlockDeps');
+    });
+    ipcRenderer.on('progressVisible', (event, visible) => {
+        progress.setShowProgress(visible);
+    });
+  }
+
 
   @computed
   get isCreating() {
@@ -62,7 +80,7 @@ class NewPage {
         this.reset();
         this.fetch();
 
-        const p = projects.getProject(this.targetPath);
+        const p = projects.currentProject;
         const applicationType = p.getApplicationType();
         const libraryTYpe = p.getLibraryType();
         // react 项目不启动服务
@@ -73,22 +91,18 @@ class NewPage {
     }
   }
 
-  @action
-  setTargetPath(targetPath) {
-    this.targetPath = targetPath;
+  get targetPath() {
+    return projects.currentProject.clientPath;
   }
 
   @action
   fetch() {
-    const destDir = this.targetPath;
+    const destDir = projects.currentProject.clientSrcPath;
     const type = projects.currentProject.getLibraryType(); // 当前项目框架库类型
     this.loading = true;
-    const scanPath = projects.currentProject.isNodeProject
-      ? path.join(destDir, 'client')
-      : path.join(destDir, 'src');
     Promise.all([
-      scanLayout({ targetPath: scanPath }),
-      scanPages(scanPath),
+      scanLayout({ targetPath: destDir }),
+      scanPages(destDir),
     ])
       .then(this.fetchSuccess)
       .catch(this.fetchFailed);

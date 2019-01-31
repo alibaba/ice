@@ -14,7 +14,7 @@ import ExtraButton from '../../../components/ExtraButton';
 import Icon from '../../../components/Icon';
 import ProjectInit from '../ProjectInit';
 import projectScripts from '../../../lib/project-scripts';
-import ProjectTerminal from '../ProjectTerminal';
+import ProjectTerminal from '../../../components/ProjectTerminal';
 import ServerUrl from './ServerUrl';
 import services from '../../../services';
 import StartPanel from '../../../components/StartPanel';
@@ -121,7 +121,6 @@ class Project extends Component {
   // 打开新建页面流程
   handleCreatePage = () => {
     const { projects } = this.props;
-    this.props.newpage.setTargetPath(projects.currentProject.fullPath);
     this.props.newpage.toggle();
   };
 
@@ -148,13 +147,13 @@ class Project extends Component {
   };
 
   handleNpminstallOpen = () => {
-    const { projects } = this.props;
-    this.props.installer.open(projects.currentProject.fullPath);
+    this.props.installer.open();
   };
 
   handleInstallProject = () => {
     const { projects } = this.props;
     const currentProject = projects.currentProject;
+    const nodeFramework = projects.currentProject.nodeFramework;
     Dialog.confirm({
       needWrapper: false,
       title: '安装项目依赖',
@@ -167,7 +166,7 @@ class Project extends Component {
         // 安装项目依赖
         currentProject.installStart();
         projectScripts.install(
-          { cwd: currentProject.fullPath },
+          { project: currentProject },
           (code, result = {}) => {
             currentProject.installDone();
             if (code !== 0) {
@@ -204,9 +203,13 @@ class Project extends Component {
 
   handleToggleTerminal = () => {
     const { projects } = this.props;
-    const currentProject = projects.currentProject;
+    const { currentProject } = projects;
     currentProject.toggleTerminal();
   };
+
+  closeLogs = () => {
+    this.handleToggleTerminal();
+  }
 
   render() {
     const currentProject = this.props.projects.currentProject;
@@ -301,11 +304,6 @@ class Project extends Component {
               progress={currentProject.statusCompileProgress}
             />
             <BuildStatus status={currentProject.statusBuild} />
-            {currentProject.isRepairing && (
-              <span className={'project-status project-status-working'}>
-                正在修复中
-              </span>
-            )}
             {currentProject.isDependenciesInstalling && (
               <span className={'project-status project-status-working'}>
                 依赖安装中
@@ -316,7 +314,6 @@ class Project extends Component {
             {currentProject.isUnavailable && (
               <ExtraButton
                 placement={'bottom'}
-                disabled={currentProject.isRepairing}
                 tipText={
                   '适配 Iceworks 需要遵循一定的目录规范，以及信息描述，点击查看详细适配说明，适配完成后可刷新项目'
                 }
@@ -361,10 +358,11 @@ class Project extends Component {
           </div>
         </div>
         <ProjectDashboard className="project-dashboard" />
-        {currentProject.exists && (
+        {currentProject.exists && currentProject.terminalVisible && (
           <ProjectTerminal
             project={currentProject}
             visible={currentProject.terminalVisible}
+            closeLogs={this.closeLogs}
           />
         )}
         <AddPackage />
