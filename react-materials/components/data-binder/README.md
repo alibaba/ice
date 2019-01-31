@@ -188,7 +188,7 @@ const { accountTable } = this.props.bindingData;
 
 ```jsx
 import DataBinder from '@icedesign/data-binder';
-import { Loading } from '@icedesign/base';
+import { Loading } from '@alifd/next';
 
 @DataBinder({
   account: {

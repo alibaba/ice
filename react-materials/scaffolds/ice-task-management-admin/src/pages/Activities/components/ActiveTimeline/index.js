@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Timeline } from '@icedesign/base';
+import { Timeline } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import ContainerTitle from '../../../../components/ContainerTitle';
 import './index.scss';

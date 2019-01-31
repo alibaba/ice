@@ -1,0 +1,59 @@
+.cardContainer {
+  height: 286px;
+  overflow-y: auto;
+}
+.cardTitle {
+  color: #333;
+  margin: 0 0 10px;
+  position: relative;
+  font-size: 16px;
+  font-weight: bold;
+}
+.more {
+  right: 0;
+  color: $color-text1-3;
+  position: absolute;
+  font-size: 12px;
+}
+.item {
+  display: block;
+  position: relative;
+}
+.itemTime {
+  top: 6px;
+  right: 0;
+  position: absolute;
+  font-size: 12px;
+}
+.itemTitle {
+  height: 34px;
+  font-size: 13px;
+  line-height: 34px;
+}
+.itemComment {
+  display: flex;
+  position: relative;
+  margin-bottom: 10px;
+  flex-direction: column;
+}
+.commentTitle {
+  height: 28px;
+  font-size: 13px;
+  line-height: 28px;
+}
+.commentTime {
+  font-size: 12px;
+}
+.commentNum {
+  top: 6px;
+  right: 0;
+  width: 24px;
+  color: #fff;
+  height: 24px;
+  position: absolute;
+  font-size: 12px;
+  text-align: center;
+  background: $color-error-3;
+  line-height: 24px;
+  border-radius: 50px;
+}

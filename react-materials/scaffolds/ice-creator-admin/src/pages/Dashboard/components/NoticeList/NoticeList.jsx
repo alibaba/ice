@@ -2,7 +2,7 @@ import Container from '@icedesign/container';
 import React, { Component } from 'react';
 import fecha from 'fecha';
 
-import { Pagination } from '@icedesign/base';
+import { Pagination } from '@alifd/next';
 
 const mokeDataTitle = [
   '【内容分类】获得更多曝光量！',

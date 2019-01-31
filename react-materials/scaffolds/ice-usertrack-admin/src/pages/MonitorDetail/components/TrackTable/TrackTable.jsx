@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Feedback } from '@icedesign/base';
+import { Table, Pagination, Message } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import TableFilter from './TableFilter';
 
@@ -67,7 +67,7 @@ export default class TrackTable extends Component {
   };
 
   handleApply = () => {
-    Feedback.toast.success('申请权限已发送，请十分钟之后再试');
+    Message.success('申请权限已发送，请十分钟之后再试');
   };
 
   renderOper = () => {
@@ -91,7 +91,7 @@ export default class TrackTable extends Component {
         <TableFilter onChange={this.handleFormChange} />
         <Table
           dataSource={data}
-          isLoading={isLoading}
+          loading={isLoading}
           hasBorder={false}
           style={{ padding: '0 20px 20px' }}
         >

@@ -7,9 +7,9 @@ import {
   Select,
   DatePicker,
   Radio,
-  Feedback,
+  Message,
   Upload,
-} from '@icedesign/base';
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -52,7 +52,7 @@ export default class AddForm extends Component {
         return;
       }
       console.log({ values });
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
       this.props.history.push('/post/list');
     });
   };
@@ -74,11 +74,7 @@ export default class AddForm extends Component {
                 triggerType="onBlur"
                 message="名称不能为空"
               >
-                <Input
-                  placeholder="请输入名称"
-                  size="large"
-                  style={{ width: '400px' }}
-                />
+                <Input placeholder="请输入名称" style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="title" />
@@ -94,7 +90,6 @@ export default class AddForm extends Component {
               >
                 <Input
                   placeholder="请输入作品简介"
-                  size="large"
                   multiple
                   style={{ width: '400px' }}
                 />
@@ -109,7 +104,6 @@ export default class AddForm extends Component {
                 <Select
                   placeholder="请选择"
                   multiple
-                  size="large"
                   style={{ width: '400px' }}
                 >
                   <Option value="car">汽车</Option>
@@ -126,11 +120,7 @@ export default class AddForm extends Component {
                 triggerType="onBlur"
                 message="发布作者不能为空"
               >
-                <Input
-                  placeholder="请输入"
-                  size="large"
-                  style={{ width: '400px' }}
-                />
+                <Input placeholder="请输入" style={{ width: '400px' }} />
               </IceFormBinder>
               <div style={styles.formError}>
                 <IceFormError name="author" />
@@ -160,7 +150,7 @@ export default class AddForm extends Component {
             <div style={styles.formItem}>
               <div style={styles.formLabel}>发布时间</div>
               <IceFormBinder name="time">
-                <DatePicker size="large" style={{ width: '400px' }} />
+                <DatePicker style={{ width: '400px' }} />
               </IceFormBinder>
             </div>
             <div style={styles.formItem}>
@@ -185,7 +175,6 @@ export default class AddForm extends Component {
             </p>
             <Button
               type="primary"
-              size="large"
               style={styles.submitButton}
               onClick={this.validateAllFormField}
             >

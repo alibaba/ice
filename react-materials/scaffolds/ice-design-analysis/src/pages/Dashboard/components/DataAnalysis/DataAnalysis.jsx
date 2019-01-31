@@ -1,6 +1,6 @@
 /* eslint react/no-children-prop:0 */
 import React, { Component } from 'react';
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 import TextLoop from 'react-text-loop';
 import PieChart from './PieChart';
 import TopList from './TopList';

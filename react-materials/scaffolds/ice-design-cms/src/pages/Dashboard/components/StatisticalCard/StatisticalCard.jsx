@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { enquireScreen } from 'enquire-js';
-import { Balloon, Icon, Grid } from '@icedesign/base';
+import { Balloon, Icon, Grid } from '@alifd/next';
+import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
@@ -61,19 +62,19 @@ export default class StatisticalCard extends Component {
     return dataSource.map((data, idx) => {
       return (
         <Col xxs="24" s="12" l="6" key={idx}>
-          <div style={{ ...styles.statisticalCardItem, ...itemStyle }}>
-            <div style={styles.circleWrap}>
-              <img src={data.imgUrl} style={styles.imgStyle} alt="图片" />
+          <div className={styles.statisticalCardItem} style={itemStyle}>
+            <div className={styles.circleWrap}>
+              <img src={data.imgUrl} className={styles.imgStyle} alt="图片" />
             </div>
-            <div style={styles.statisticalCardDesc}>
-              <div style={styles.statisticalCardText}>
+            <div className={styles.statisticalCardDesc}>
+              <div className={styles.statisticalCardText}>
                 {data.text}
                 <Balloon
                   align="t"
-                  alignment="edge"
+                  alignEdge
                   trigger={
                     <span>
-                      <Icon type="help" style={styles.helpIcon} size="xs" />
+                      <Icon type="help" className={styles.helpIcon} size="xs" />
                     </span>
                   }
                   closable={false}
@@ -81,7 +82,7 @@ export default class StatisticalCard extends Component {
                   {data.desc}
                 </Balloon>
               </div>
-              <div style={styles.statisticalCardNumber}>{data.number}</div>
+              <div className={styles.statisticalCardNumber}>{data.number}</div>
             </div>
           </div>
         </Col>
@@ -91,60 +92,9 @@ export default class StatisticalCard extends Component {
 
   render() {
     return (
-      <IceContainer style={styles.container}>
+      <IceContainer className={styles.container}>
         <Row wrap>{this.renderItem()}</Row>
       </IceContainer>
     );
   }
 }
-
-const styles = {
-  container: {
-    padding: '10px 20px',
-  },
-  statisticalCardItem: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '10px 0',
-  },
-  circleWrap: {
-    width: '70px',
-    height: '70px',
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '50%',
-    marginRight: '10px',
-  },
-  imgStyle: {
-    maxWidth: '100%',
-  },
-  helpIcon: {
-    marginLeft: '5px',
-    color: '#b8b8b8',
-  },
-  statisticalCardDesc: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  statisticalCardText: {
-    position: 'relative',
-    color: '#333333',
-    fontSize: '12px',
-    fontWeight: 'bold',
-    marginBottom: '4px',
-  },
-  statisticalCardNumber: {
-    color: '#333333',
-    fontSize: '24px',
-  },
-  itemHelp: {
-    width: '12px',
-    height: '12px',
-    position: 'absolute',
-    top: '1px',
-    right: '-15px',
-  },
-};

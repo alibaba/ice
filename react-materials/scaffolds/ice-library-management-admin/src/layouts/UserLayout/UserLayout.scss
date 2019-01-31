@@ -56,13 +56,13 @@
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: #999;
+    color: $color-text1-2;
   }
   .submitBtn {
     font-size: 16px;
     height: 40px;
     line-height: 40px;
-    background: #3080fe;
+    background: $color-brand1-6;
     border-radius: 4px;
   }
   .checkbox {
@@ -76,12 +76,12 @@
     justify-content: center;
   }
   .tips-text {
-    color: #999;
+    color: $color-text1-2;
     text-decoration: none;
     font-size: 13px;
   }
   .line {
-    color: #dcd6d6;
+    color: $color-line1-1;
     margin: 0 8px;
   }
 
@@ -95,7 +95,7 @@
     }
   }
   .next-checkbox-label {
-    color: #999;
+    color: $color-text1-2;
     font-size: 13px;
   }
 }

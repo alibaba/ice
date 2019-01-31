@@ -1,8 +1,8 @@
 import React from 'react';
-import { Loading } from '@icedesign/base';
+import { Loading } from '@alifd/next';
 
 export default () => (
   <div style={{ paddingTop: 200, textAlign: 'center' }}>
-    <Loading shape="fusion-reactor" color="#fff" />
+    <Loading color="#fff" />
   </div>
 );

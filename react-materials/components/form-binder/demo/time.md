@@ -11,7 +11,10 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
-import { DatePicker, TimePicker, Button } from '@icedesign/base';
+import { DatePicker, TimePicker, Button } from '@alifd/next';
+import moment from 'moment';
+
+moment.locale('zh-cn');
 
 const { MonthPicker, RangePicker } = DatePicker;
 
@@ -50,7 +53,6 @@ class Time extends Component {
     const config = {
       required: true,
       message: "请选择",
-      getFieldValue: (date, formatDate) => { return formatDate }
     }
 
     const style = {
@@ -68,7 +70,7 @@ class Time extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>日期选择：</span>
               <FormBinder name="datePicker" {...config}>
-                <DatePicker formater={["YYYY-MM-DD"]} style={{...style}} />
+                <DatePicker format="YYYY-MM-DD" style={{...style}} />
               </FormBinder>
               <FormError style={styles.formItemError} name="datePicker" />
             </div>
@@ -76,7 +78,7 @@ class Time extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>日期时间：</span>
               <FormBinder name="dateTimePicker" {...config}>
-                <DatePicker showTime formater={["YYYY-MM-DD"]} style={{...style}} />
+                <DatePicker showTime format="YYYY-MM-DD" style={{...style}} />
               </FormBinder>
               <FormError style={styles.formItemError} name="dateTimePicker" />
             </div>
@@ -84,7 +86,7 @@ class Time extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>月份选择：</span>
               <FormBinder name="monthPicker" {...config}>
-                <MonthPicker formater={["YYYY-MM"]} style={{...style}} />
+                <MonthPicker format="YYYY-MM" style={{...style}} />
               </FormBinder>
               <FormError style={styles.formItemError} name="monthPicker" />
             </div>
@@ -92,7 +94,7 @@ class Time extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>区间选择：</span>
               <FormBinder name="rangePicker" {...config}>
-                <RangePicker formater={["YYYY-MM-DD"]} style={{...style}} />
+                <RangePicker format="YYYY-MM-DD" style={{...style}} />
               </FormBinder>
               <FormError style={styles.formItemError} name="rangePicker" />
             </div>
@@ -100,7 +102,7 @@ class Time extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>区间时间：</span>
               <FormBinder name="rangeRimePicker" {...config}>
-                <RangePicker showTime formater={["YYYY-MM-DD"]} />
+                <RangePicker showTime format="YYYY-MM-DD" />
               </FormBinder>
               <FormError style={styles.formItemError} name="rangeRimePicker" />
             </div>
@@ -118,7 +120,7 @@ class Time extends Component {
             </Button>
           </div>
         </FormBinderWrapper>
-        
+
         <div style={styles.preview}>
           <strong>当前表单数据</strong>
           <pre>{JSON.stringify(this.state.value, null, 2)}</pre>
@@ -140,7 +142,7 @@ const styles = {
     marginLeft: '10px',
   },
   preview: {
-    border: '1px solid #eee', 
+    border: '1px solid #eee',
     marginTop: 20,
     padding: 10
   }

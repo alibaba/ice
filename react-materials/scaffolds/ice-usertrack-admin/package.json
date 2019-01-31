@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/usertrack-admin-scaffold",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "该模板内置了丰富的区块，适用于埋点治理的管理系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/usertrack-admin-scaffold@latest/build/index.html",
   "files": [
@@ -14,19 +14,18 @@
     ".eslintrc"
   ],
   "dependencies": {
+    "@alifd/next": "^1.x",
     "@antv/data-set": "^0.8.9",
-    "@icedesign/base": "^0.2.5",
-    "@icedesign/container": "^0.1.4",
-    "@icedesign/form-binder": "^0.1.7",
-    "@icedesign/icon": "^0.1.1",
-    "@icedesign/img": "^0.1.0",
-    "@icedesign/layout": "^0.1.0",
-    "@icedesign/menu": "^0.1.0",
-    "@icedesign/skin": "^0.1.0",
+    "@icedesign/container": "^1.x",
+    "@icedesign/form-binder": "^1.x",
+    "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/img": "^1.x",
+    "@icedesign/layout": "^1.x",
+    "@icedesign/theme": "^0.1.2",
     "bizcharts": "^3.2.2",
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
-    "foundation-symbol": "^0.1.0",
+    "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -52,15 +51,12 @@
     "access": "public"
   },
   "buildConfig": {
-    "theme": "@icedesign/skin",
+    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "localization": false,
     "output": {
       "publicPath": "./"
     }
-  },
-  "themeConfig": {
-    "primaryColor": "#447eff"
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
@@ -69,7 +65,10 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1CzHYxVzqK1RjSZFvXXcB7VXa-2872-1580.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1LkGRDH2pK1RjSZFsXXaNlXXa-2860-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1LkGRDH2pK1RjSZFsXXaNlXXa-2860-1580.png"
+    ]
   },
   "engines": {
     "node": ">=8.0.0"

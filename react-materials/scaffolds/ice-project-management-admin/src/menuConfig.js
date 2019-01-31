@@ -8,14 +8,14 @@ const headerMenuConfig = [
     path: 'https://github.com/alibaba/ice',
     external: true,
     newWindow: true,
-    icon: 'message',
+    icon: 'email',
   },
   {
     name: '帮助',
     path: 'https://alibaba.github.io/ice',
     external: true,
     newWindow: true,
-    icon: 'bangzhu',
+    icon: 'help',
   },
 ];
 
@@ -24,37 +24,37 @@ const asideMenuConfig = [
   {
     name: '工作台',
     path: '/dashboard',
-    icon: 'electronics',
+    icon: 'account',
   },
   {
     name: '任务表盘',
     path: '/taskboard',
-    icon: 'box',
+    icon: 'clock',
   },
   {
     name: '任务状态',
     path: '/task/status',
-    icon: 'lights',
+    icon: 'calendar',
   },
   {
     name: '项目列表',
     path: '/project/list',
-    icon: 'folder',
+    icon: 'filter',
   },
   {
     name: '添加项目',
     path: '/add/project',
-    icon: 'survey',
+    icon: 'refresh',
   },
   {
     name: '成员列表',
     path: '/member/list',
-    icon: 'service',
+    icon: 'account',
   },
   {
     name: '添加成员',
     path: '/add/member',
-    icon: 'survey',
+    icon: 'add',
   },
 ];
 

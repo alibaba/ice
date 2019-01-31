@@ -5,7 +5,7 @@ const pkgJSON = require('../utils/pkg-json');
 const message = require('../utils/message');
 const { getLocalTemplate } = require('../utils/local-path');
 
-const MATERIAL_TEMPLATE_TYPE = ['block', 'scaffold'];
+const MATERIAL_TEMPLATE_TYPE = ['block', 'component', 'scaffold'];
 const MATERIAL_TEMPLATE_QUESION = [
   {
     type: 'list',

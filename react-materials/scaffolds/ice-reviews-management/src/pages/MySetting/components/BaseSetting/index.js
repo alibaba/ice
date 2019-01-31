@@ -1,7 +1,7 @@
 /* eslint  react/no-string-refs: 0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Radio, Switch, Upload, Grid } from '@icedesign/base';
+import { Input, Button, Radio, Switch, Grid } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -10,23 +10,6 @@ import {
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
-const { ImageUpload } = Upload;
-
-function beforeUpload(info) {
-  console.log('beforeUpload callback : ', info);
-}
-
-function onChange(info) {
-  console.log('onChane callback : ', info);
-}
-
-function onSuccess(res, file) {
-  console.log('onSuccess callback : ', res, file);
-}
-
-function onError(file) {
-  console.log('onError callback : ', file);
-}
 
 export default class BaseSetting extends Component {
   static displayName = 'BaseSetting';
@@ -52,14 +35,6 @@ export default class BaseSetting extends Component {
     };
   }
 
-  onDragOver = () => {
-    console.log('dragover callback');
-  };
-
-  onDrop = (fileList) => {
-    console.log('drop callback : ', fileList);
-  };
-
   validateAllFormField = () => {
     this.refs.form.validateAll((errors, values) => {
       console.log('errors', errors, 'values', values);
@@ -79,39 +54,9 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="name" required max={10} message="必填">
-                  <Input
-                    style={styles.inputItem}
-                    size="large"
-                    placeholder="淘小宝"
-                  />
+                  <Input style={styles.inputItem} placeholder="淘小宝" />
                 </IceFormBinder>
                 <IceFormError name="name" />
-              </Col>
-            </Row>
-
-            <Row style={styles.formItem}>
-              <Col xxs="6" s="3" l="3" style={styles.label}>
-                头像：
-              </Col>
-              <Col s="12" l="10">
-                <IceFormBinder name="avatar" required message="必填">
-                  <ImageUpload
-                    listType="picture-card"
-                    action=""
-                    accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
-                    locale={{
-                      image: {
-                        cancel: '取消上传',
-                        addPhoto: '上传图片',
-                      },
-                    }}
-                    beforeUpload={beforeUpload}
-                    onChange={onChange}
-                    onSuccess={onSuccess}
-                    onError={onError}
-                  />
-                </IceFormBinder>
-                <IceFormError name="avatar" />
               </Col>
             </Row>
 
@@ -157,7 +102,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="ice-admin@alibaba-inc.com"
                   />
                 </IceFormBinder>
@@ -178,7 +122,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     type="url"
                     placeholder="https://alibaba.github.io/ice"
                   />
@@ -205,7 +148,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="https://github.com/alibaba/ice"
                   />
                 </IceFormBinder>
@@ -226,7 +168,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="https://twitter.com"
                   />
                 </IceFormBinder>
@@ -242,7 +183,6 @@ export default class BaseSetting extends Component {
                 <IceFormBinder name="description">
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     multiple
                     placeholder="请输入描述..."
                   />
@@ -256,7 +196,6 @@ export default class BaseSetting extends Component {
         <Row style={{ marginTop: 20 }}>
           <Col offset="3">
             <Button
-              size="large"
               type="primary"
               style={{ width: 100 }}
               onClick={this.validateAllFormField}

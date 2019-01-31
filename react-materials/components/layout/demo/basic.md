@@ -19,45 +19,85 @@ class App extends Component {
     return (
       <div>
         <Layout>
-          <Layout.Header>&nbsp;&nbsp;&nbsp;&nbsp;header</Layout.Header>
-          <Layout.Main>Main</Layout.Main>
-          <Layout.Footer>Footer</Layout.Footer>
+          <Layout.Header style={{
+            height: 80,
+          }} type="secondary">header</Layout.Header>
+          <Layout.Main style={{height: 200, background: '#fff'}}>Main</Layout.Main>
+          <Layout.Footer style={{
+            height: 80,
+          }} type="secondary">Footer</Layout.Footer>
         </Layout>
 
+        <div style={{height: 20}}></div>
+
         <Layout>
-          <Layout.Header>&nbsp;&nbsp;&nbsp;&nbsp;header</Layout.Header>
+          <Layout.Header style={{
+            height: 80,
+          }} type="secondary">header</Layout.Header>
           <Layout.Section>
-            <Layout.Aside>Aside</Layout.Aside>
-            <Layout.Main>Main</Layout.Main>
+            <Layout.Aside style={{
+              width: 80,
+            }} type="secondary">Aside</Layout.Aside>
+            <Layout.Main style={{height: 200, background: '#fff'}}>Main</Layout.Main>
           </Layout.Section>
-          <Layout.Footer>Footer</Layout.Footer>
+          <Layout.Footer style={{
+            height: 80,
+          }} type="secondary">Footer</Layout.Footer>
         </Layout>
 
+        <div style={{height: 20}}></div>
+
         <Layout>
-          <Layout.Header>&nbsp;&nbsp;&nbsp;&nbsp;header</Layout.Header>
+          <Layout.Header style={{
+            height: 80,
+          }} type="secondary">header</Layout.Header>
           <Layout.Section style={{ padding: '20px 40px' }}>
-            <Layout.Aside>Aside</Layout.Aside>
-            <Layout.Main>Main</Layout.Main>
+            <Layout.Aside style={{
+              width: 80,
+            }} type="secondary" >Aside</Layout.Aside>
+            <Layout.Main style={{height: 200, background: '#fff'}}>Main</Layout.Main>
           </Layout.Section>
-          <Layout.Footer>Footer</Layout.Footer>
+          <Layout.Footer style={{
+            height: 80,
+          }} type="secondary">Footer</Layout.Footer>
         </Layout>
 
-        <Layout>
-          <Layout.Header>&nbsp;&nbsp;&nbsp;&nbsp;header</Layout.Header>
-          <Layout.Section>
-            <Layout.Aside>Aside</Layout.Aside>
-            <Layout.Main>Main</Layout.Main>
-            <Layout.Aside>Aside</Layout.Aside>
-          </Layout.Section>
-          <Layout.Footer>Footer</Layout.Footer>
-        </Layout>
+        <div style={{height: 20}}></div>
 
         <Layout>
-          <Layout.Aside>Aside</Layout.Aside>
+          <Layout.Header style={{
+            height: 80,
+          }} type="secondary">header</Layout.Header>
           <Layout.Section>
-            <Layout.Header>&nbsp;&nbsp;&nbsp;&nbsp;header</Layout.Header>
-            <Layout.Main>Main</Layout.Main>
-            <Layout.Footer>Footer</Layout.Footer>
+            <Layout.Aside style={{
+              width: 80,
+            }} type="secondary">Aside</Layout.Aside>
+            <Layout.Main style={{height: 500, background: '#fff'}}>Main</Layout.Main>
+            <Layout.Aside style={{
+              width: 80,
+            }} type="secondary">Aside</Layout.Aside>
+          </Layout.Section>
+          <Layout.Footer style={{
+            height: 80,
+          }} type="secondary">Footer</Layout.Footer>
+        </Layout>
+
+        <div style={{height: 20}}></div>
+
+        <Layout>
+          <Layout.Aside style={{
+            width: 80,
+          }} type="secondary">Aside</Layout.Aside>
+          <Layout.Section>
+            <Layout.Header style={{
+              height: 80,
+            }} type="secondary">header</Layout.Header>
+            <Layout.Main style={{
+              height: 200, background: '#fff'
+            }}>Main</Layout.Main>
+            <Layout.Footer style={{
+              height: 80,
+            }} type="secondary">Footer</Layout.Footer>
           </Layout.Section>
         </Layout>
       </div>

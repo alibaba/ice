@@ -29,22 +29,24 @@ Handlebars.registerHelper('unless_eq', (a, b, opts) => {
  * Generate a template given a `src` and `dest`.
  *
  * @param {String} name
+ * @param {String} npmName
  * @param {String} src
  * @param {String} dest
  * @param {Function} done
  */
-module.exports = function generate(name, src, dest, done) {
+module.exports = function generate(name, npmName, src, dest, done) {
   const opts = getOptions(name, src);
   debug('%j', { name, src, dest });
   const metalsmith = Metalsmith(path.join(src, 'template'));
   metalsmith.frontmatter(false);
   const data = Object.assign(metalsmith.metadata(), {
-    name: kebabCase(name).replace(/^-/, ''),
-    npmName: kebabCase(name).replace(/^-/, ''),
-    className: uppercamelcase(name.replace(/^@\w+\//, '')),
+    name: kebabCase(npmName).replace(/^-/, ''),
+    npmName: kebabCase(npmName).replace(/^-/, ''),
+    className: uppercamelcase(name),
+    kebabClassName: kebabCase(name).replace(/^-/, ''),
     inPlace: dest === process.cwd(),
     noEscape: true,
-    registry: innerNet.getRegistry(name)
+    registry: innerNet.getRegistry(npmName)
   });
   debug('%j', data);
   opts.helpers &&

@@ -1,0 +1,38 @@
+.wrapper {
+  height: 740px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.titleWrapper {
+  text-align: center;
+  padding-top: 200px;
+}
+.title {
+  color: #333;
+  font-size: 32px;
+  text-align: center;
+  line-height: 48px;
+  letter-spacing: 2px;
+}
+.buttons {
+  text-align: center;
+  margin-top: 60px;
+}
+.primaryButton {
+  color: #fff !important;
+  height: 50px !important;
+  padding: 0 58px !important;
+  font-size: 16px !important;
+  line-height: 50px !important;
+}
+.secondaryButton {
+  color: $color-brand1-6 !important;
+  height: 50px !important;
+  padding: 0 58px !important;
+  font-size: 16px !important;
+  line-height: 50px !important;
+  margin-right: 20px !important;
+  border-color: $color-brand1-6 !important;
+  background-color: transparent !important;
+}

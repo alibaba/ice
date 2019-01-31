@@ -11,7 +11,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
-import { Input, Button, Grid, DatePicker } from '@icedesign/base';
+import { Input, Button, Grid, DatePicker } from '@alifd/next';
 const { Row, Col } = Grid;
 
 class App extends Component {
@@ -138,7 +138,7 @@ const styles = {
     margin: '20px 0 0 86px',
   },
   preview: {
-    border: '1px solid #eee', 
+    border: '1px solid #eee',
     marginTop: 20,
     padding: 10
   }

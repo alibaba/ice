@@ -28,20 +28,20 @@ const asideMenuConfig = [
   {
     name: '管理概况',
     path: '/manage',
-    icon: 'home2',
+    icon: 'account',
     children: [
-      { name: '公司管理', path: '/manage/company' },
-      { name: '部门管理', path: '/manage/department' },
-      { name: '团队管理', path: '/manage/team' },
+      { name: '公司管理', path: '/manage/company', icon: 'set' },
+      { name: '部门管理', path: '/manage/department', icon: 'lights' },
+      { name: '团队管理', path: '/manage/team', icon: 'atm' },
     ],
   },
   {
     name: '专项管理',
     path: '/special',
-    icon: 'cascades',
+    icon: 'set',
     children: [
-      { name: '成本管理', path: '/special/cost' },
-      { name: '质量管理', path: '/special/cluster' },
+      { name: '成本管理', path: '/special/cost', icon: 'refresh' },
+      { name: '质量管理', path: '/special/cluster', icon: 'account' },
     ],
   },
 ];

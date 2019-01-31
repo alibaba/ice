@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import IceContainer from '@icedesign/container';
-import { Checkbox, Button, Feedback } from '@icedesign/base';
+import { Checkbox, Button, Message } from '@alifd/next';
 
 export default class TermsInfo extends PureComponent {
   handleChange = () => {
-    Feedback.toast.success('已开通');
+    Message.success('已开通');
   };
 
   render() {
@@ -44,7 +44,7 @@ export default class TermsInfo extends PureComponent {
         </p>
 
         <div style={styles.button}>
-          <Button type="primary" size="large" onClick={this.handleChange}>
+          <Button type="primary" onClick={this.handleChange}>
             确认开通
           </Button>
         </div>

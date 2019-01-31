@@ -1,8 +1,7 @@
 /* eslint arrow-parens:0 */
 import React from 'react';
 import Layout from '@icedesign/layout';
-import Menu from '@icedesign/menu';
-import { Icon, Balloon } from '@icedesign/base';
+import { Icon, Balloon, Nav } from '@alifd/next';
 import { Link, withRouter } from 'react-router-dom';
 import { asideMenuConfig } from '../../../../menuConfig';
 import Logo from '../Logo';
@@ -38,7 +37,7 @@ class Header extends React.Component {
         triggerType="click"
         trigger={trigger}
         align="br"
-        alignment="edge"
+        alignEdge
         closable={false}
         className="ice-header-balloon"
         style={{ width: '80px' }}
@@ -57,15 +56,15 @@ class Header extends React.Component {
       <div className="ice-admin-layout-header">
         <Logo />
         {asideMenuConfig && asideMenuConfig.length > 0 ? (
-          <Menu mode="horizontal" selectedKeys={selectedKeys}>
+          <Nav direction="hoz" type="secondary" selectedKeys={selectedKeys}>
             {asideMenuConfig.map((nav) => {
               return (
-                <Menu.Item key={nav.path.replace(/\//g, '') || 'home'}>
+                <Nav.Item key={nav.path.replace(/\//g, '') || 'home'}>
                   <Link to={nav.path}>{nav.name}</Link>
-                </Menu.Item>
+                </Nav.Item>
               );
             })}
-          </Menu>
+          </Nav>
         ) : null}
         {this.renderUser()}
       </div>
@@ -73,7 +72,9 @@ class Header extends React.Component {
   }
 
   render() {
-    return <Layout.Header>{this.renderHeader()}</Layout.Header>;
+    return (
+      <Layout.Header type="secondary">{this.renderHeader()}</Layout.Header>
+    );
   }
 }
 

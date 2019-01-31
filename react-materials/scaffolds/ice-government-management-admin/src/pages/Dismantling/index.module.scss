@@ -1,0 +1,15 @@
+.nav {
+  height: 72px;
+  display: flex;
+  background: $color-white;
+  flex-direction: column;
+  justify-content: center;
+}
+.breadcrumb {
+  margin: 0 0 0 20px;
+  border-left: 5px solid $color-brand1-6;
+  padding-left: 16px;
+}
+.container {
+  margin: 20px;
+}

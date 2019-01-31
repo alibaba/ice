@@ -1,0 +1,32 @@
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.ice-design-layout-dark.ice-design-layout {
+  background-image: url(https://img.alicdn.com/tfs/TB1_YvwXTtYBeNjy1XdXXXXyVXa-1680-370.png);
+  background-color: #2e323f;
+}
+
+.ice-design-layout-dark {
+  &.ice-design-layout {
+    min-height: 100vh;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  .ice-layout {
+    width: 100%;
+    min-height: 100vh;
+    padding: 0 20px;
+    background: transparent;
+  }
+
+  .ice-layout-main {
+    padding: 0 0 0 20px;
+  }
+
+  .ice-layout-section {
+    margin: 20px 0 0;
+  }
+}

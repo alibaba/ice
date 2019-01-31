@@ -79,11 +79,7 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="name" required max={10} message="必填">
-                  <Input
-                    style={styles.inputItem}
-                    size="large"
-                    placeholder="淘小宝"
-                  />
+                  <Input style={styles.inputItem} placeholder="淘小宝" />
                 </IceFormBinder>
                 <IceFormError name="name" />
               </Col>
@@ -157,7 +153,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="ice-admin@alibaba-inc.com"
                   />
                 </IceFormBinder>
@@ -178,7 +173,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     type="url"
                     placeholder="https://alibaba.github.io/ice"
                   />
@@ -205,7 +199,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="https://github.com/alibaba/ice"
                   />
                 </IceFormBinder>
@@ -226,7 +219,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="https://twitter.com"
                   />
                 </IceFormBinder>
@@ -242,7 +234,6 @@ export default class BaseSetting extends Component {
                 <IceFormBinder name="description">
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     multiple
                     placeholder="请输入描述..."
                   />
@@ -256,7 +247,6 @@ export default class BaseSetting extends Component {
         <Row style={{ marginTop: 20 }}>
           <Col offset="3">
             <Button
-              size="large"
               type="primary"
               style={{ width: 100 }}
               onClick={this.validateAllFormField}

@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
-import { Grid, Feedback } from '@icedesign/base';
+import { Grid, Message } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
 class BadgeItem extends PureComponent {
   handleClick = (info) => {
-    Feedback.toast.prompt(`您暂无权限${info}，请先申请权限`);
+    Message.prompt(`您暂无权限${info}，请先申请权限`);
   };
 
   render() {

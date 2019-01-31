@@ -16,11 +16,9 @@
 - 通用组件: `src/components`
 - 页面文件: `src/pages`
 
-## 配色
+## 主题包
 
-- 主色：#447eff
-- 功能主色：#58ca9a
-- 字体颜色：#333、#666
+- @icedesign/theme
 
 ## 效果图
 

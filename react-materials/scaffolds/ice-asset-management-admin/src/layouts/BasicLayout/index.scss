@@ -1,0 +1,15 @@
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.ice-layout {
+  min-width: 1200px;
+
+  .ice-layout-main {
+    background: #f2f2f2;
+    padding: 0;
+    .main-container {
+      padding: 20px;
+    }
+  }
+}
