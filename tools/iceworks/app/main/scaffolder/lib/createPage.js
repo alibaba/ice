@@ -193,7 +193,7 @@ module.exports = async function createPage({
         const depsName = Object.keys(dependencies)
           .map((d) => `${d}@${dependencies[d]}`)
           .join(' ');
-        throw new DetailError('blocks 依赖安装失败， 请重试', {
+        throw new DetailError('blocks 依赖安装失败， 请在设置中切换npm源并重试', {
           message: `无法安装以下区块： blocks: ${blocksName} dependencies: ${depsName}`,
         });
       }

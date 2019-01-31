@@ -62,7 +62,7 @@ class PageBlockPicker extends Component {
    * 开始下载区块
    */
   handleOk = () => {
-    
+
     const { pageBlockPicker, projects, progress } = this.props;
     const { pageName, projectPath } = pageBlockPicker;
     const { currentProject = {} } = projects;
@@ -145,6 +145,7 @@ class PageBlockPicker extends Component {
       .catch((error) => {
         dialog.notice({
           title: '区块依赖安装失败',
+          message: '提示：请重试，如再次失败，可在设置中切换 npm 源再重试。',
           error: error,
         });
         // 兜底逻辑，将依赖信息写入到 package.json 里
@@ -154,7 +155,7 @@ class PageBlockPicker extends Component {
             pageBlockPicker.close();
             Notification.warning({
               message:
-                '区块依赖已兜底写入 package.json，可通过【重装依赖】修复',
+                '区块依赖已兜底写入 package.json，可通过【重装依赖】修复，如多次失败可在设置中切换npm源再重试',
               duration: 8,
             });
           })
