@@ -2,6 +2,9 @@ import gitPromie from 'simple-git/promise';
 import { Feedback, Dialog } from '@icedesign/base';
 import { debug } from 'util';
 
+/**
+ * 命令文档：https://web.npm.alibaba-inc.com/package/simple-git
+ */
 const gitToolsMap = {
   originRemote: {  // 获取远程仓库
     name: 'getRemotes',

@@ -11,35 +11,35 @@ import { access } from 'fs';
 
 class Git {
   @observable gitTools = null;
-  @observable gitIniting = false; // git init 状态
+  // 初始化状态
+  @observable loading = true; // 插件初始化时loading状态
+  @observable showMainPanel = false; // 判断是否已经绑定仓库地址，已经绑定则展示主面板，否则展示引导步骤
+  // 主要的变更状态
   @observable isGit = false; // 是否是一个 git 仓库
   @observable isRepo = false; // repo 地址是否错误
-  @observable loading = true; // 
-  @observable originRemote = {};
-  @observable remoteUrl = '';
-  @observable currentBranch = '';
-  @observable status = '';
-  @observable currentStep = 0;
-  @observable showMainPanel = false;
-
+  @observable originRemote = {}; // gets a list of the named remotes, includes the URLs and purpose of each ref
+  @observable remoteUrl = ''; // 当前仓库地址
+  @observable currentBranch = ''; // 当前分支
+  @observable status = ''; // 当前项目文件状态
+  @observable currentStep = 0; // 当前引导步骤
+  // 切换分支状态
   @observable branches = [];
   @observable checkoutBranch = '';
   @observable branchOrigin = '';
   @observable branchType = '';
   @observable branchesCheckout = [];
-  
-
+  // 文件选择状态
   @observable selectedFiles = []; // 选中的变更文件
   @observable unstagedFiles = []; // 变更的文件
   @observable commitMsg = ''; // 提交信息
-
+  // loading状态
+  @observable gitIniting = false; // git init 状态
   @observable gitCommitting = false;
   @observable gitNewBranching = false;
   @observable reloading = false;
   @observable removeAndAddRemoting = false;
   @observable gitRemoteAdding = false;
-
-  // @observable visibleDialogGitConfig = false;
+  // dialog显示状态
   @observable visibleDialogChangeRemote = false;
   @observable visibleDialogNewBranch = false;
   @observable visibleDialogBranches = false;
@@ -47,7 +47,7 @@ class Git {
   @action
   initTools() {
     const { currentProject = {} } = Projects;
-    const cwd = currentProject.clientPath;
+    const cwd = currentProject.fullPath;
     if (cwd) {
       this.gitTools = new GitTools(cwd);
     }
@@ -86,7 +86,6 @@ class Git {
     const cwd = currentProject.fullPath;
     try {
       const isRepo = await this.gitTools.run('checkIsRepo');
-
       const isGit = isRepo && pathExists.sync(path.join(cwd, '.git'));
       if (isGit) {
         let originRemote = await this.gitTools.run('originRemote', true);

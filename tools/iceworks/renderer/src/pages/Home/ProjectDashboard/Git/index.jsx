@@ -37,11 +37,6 @@ export default class GitPanel extends Component {
     const { git, projects } = this.props;
 
     await git.checkIsRepo();
-    if (git.remoteUrl) {
-      this.field.setValue('remoteUrlInput', git.remoteUrl);
-    } else {
-      this.field.setValue('remoteUrlInput', '');
-    }
   }
 
   componentDidMount() {
@@ -88,11 +83,6 @@ export default class GitPanel extends Component {
     }
     await git.checkIsRepo();
     git.reloading = false;
-    if (git.remoteUrl) {
-      this.field.setValue('remoteUrlInput', git.remoteUrl);
-    } else {
-      this.field.setValue('remoteUrlInput', '');
-    }
   };
 
   renderStep0 = () => {

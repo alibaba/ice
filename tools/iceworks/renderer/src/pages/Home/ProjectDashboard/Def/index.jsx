@@ -223,7 +223,7 @@ class Def extends Component {
     // 2. 分支是否合法
     if (!/[^\/]+\/\d+\.\d+\.\d+/i.test(currentBranch)) {
       Feedback.toast.error(
-        '云构建要求分支名为： prefix/x.y.z 格式，例如：daily/1.0.0，请到 Git 插件切换分支'
+        '云构建要求分支名为： prefix/x.y.z 格式，例如：daily/1.0.0，请到 Git 插件变更分支'
       );
       return;
     }
