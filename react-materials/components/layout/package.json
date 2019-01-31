@@ -30,9 +30,9 @@
   },
   "peerDependencies": {
     "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "react-dom": "^16.5.0",
+    "@alifd/next": "^1.11.7"
   },
   "devDependencies": {
-    "@alifd/next": "^1.11.7"
   }
 }
