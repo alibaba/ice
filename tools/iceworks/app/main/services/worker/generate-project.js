@@ -30,7 +30,8 @@ module.exports = (_options, afterCreateRequest) => {
     fn = templateBuilderUtils.generateTemplate(layoutConfig);
   } else {
     const scaffoldDevDeps = (scaffold && scaffold.devDependencies) || {};
-    needCreateDefflow = nodeFramework ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
+    // needCreateDefflow = nodeFramework ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
+    needCreateDefflow = isAlibaba && scaffoldDevDeps['ice-scripts'];
     if (nodeFramework) {
       // @TODO afterCreateRequest
       // 解压node模板的promise

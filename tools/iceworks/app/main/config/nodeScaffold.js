@@ -27,7 +27,7 @@ const koa2 = Object.assign({
       {
         type: 'npm',
         npm: '@icedesign/ice-koa-template',
-        version: '1.0.0-beta.6',
+        version: 'latest',
         registry: 'http://registry.npmjs.com'
       }
   }
@@ -41,7 +41,7 @@ const midway = Object.assign({
       {
         type: 'npm',
         npm: '@icedesign/ice-midway-template',
-        version: '1.0.0-beta.4',
+        version: 'latest',
         registry: 'http://registry.npmjs.com'
       }
   }
@@ -54,9 +54,9 @@ const midwayAli = Object.assign({
     source:
       {
         type: 'npm',
-        npm: '@icedesign/ice-ali-midway-template',
-        version: '1.0.0-beta.1',
-        registry: 'http://registry.npmjs.com'
+        npm: '@ali/ice-midway-template',
+        version: 'latest',
+        registry: 'http://registry.npm.alibaba-inc.com/'
       }
   }
 }, commonConfig);
