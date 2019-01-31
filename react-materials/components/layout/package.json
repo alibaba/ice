@@ -26,12 +26,12 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "prop-types": "^15.5.10"
+    "prop-types": "^15.5.10",
+    "@alifd/next": "^1.11.7"
   },
   "peerDependencies": {
     "react": "^16.5.0",
-    "react-dom": "^16.5.0",
-    "@alifd/next": "^1.11.7"
+    "react-dom": "^16.5.0"
   },
   "devDependencies": {
   }
