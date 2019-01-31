@@ -400,20 +400,6 @@ export default class GitPanel extends Component {
                   </span>
                 )
               }
-              {
-                git.showMainPanel && (
-                  <Dropdown
-                    trigger={
-                      <a style={{zIndex: 2}}>
-                        <Icon type="down-triangle" style={{fontSize: 12, color: '#666'}} />
-                      </a>
-                    }
-                    align="tr br"
-                  >
-                    {menu}
-                  </Dropdown>
-                )
-              }
             </div>
             {
               git.showMainPanel && (
@@ -421,10 +407,20 @@ export default class GitPanel extends Component {
                   <ExtraButton
                     style={{ color: '#3080FE' }}
                     placement={'top'}
-                    tipText={'修改仓库地址'}
-                    onClick={this.handleChangeRemote}
+                    tipText={'变更分支'}
+                    onClick={this.handlePull}
                   >
-                    <Icon type="edit" style={{ fontSize: 18 }} />
+                    <Dropdown
+                      trigger={
+                        <a style={{zIndex: 2}}>
+                          <Icon type="git" style={{fontSize: 16}} />
+                        </a>
+                      }
+                      align="tr br"
+                      triggerType="click"
+                    >
+                      {menu}
+                    </Dropdown>
                   </ExtraButton>
                   <ExtraButton
                     style={{ color: '#3080FE' }}
@@ -441,6 +437,14 @@ export default class GitPanel extends Component {
                     onClick={this.handlePush}
                   >
                     <Icon type="up-arrow" style={{ fontSize: 18 }} />
+                  </ExtraButton>
+                  <ExtraButton
+                    style={{ color: '#3080FE' }}
+                    placement={'top'}
+                    tipText={'修改仓库地址'}
+                    onClick={this.handleChangeRemote}
+                  >
+                    <Icon type="edit" style={{ fontSize: 18 }} />
                   </ExtraButton>
                   <ExtraButton
                     style={{ color: '#3080FE' }}
