@@ -12,3 +12,4 @@ Layout.Aside = Aside;
 Layout.Main = Main;
 
 export default Layout;
+export { Section, Header, Footer, Aside, Main };
