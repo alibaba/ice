@@ -32,7 +32,6 @@
   "blockConfig": {
     "name": "tag-message-list",
     "title": "标签消息列表",
-    "type": "vue",
     "categories": [
       "列表"
     ],

@@ -29,7 +29,6 @@
   "blockConfig": {
     "name": "data-display",
     "title": "数据展示",
-    "type": "vue",
     "categories": [
       "数据展示"
     ],

@@ -24,7 +24,6 @@
   "blockConfig": {
     "name": "d2-crud",
     "title": "D2Crud简单示例",
-    "type": "vue",
     "categories": [
       "表格"
     ],

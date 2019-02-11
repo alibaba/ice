@@ -21,7 +21,6 @@
   "blockConfig": {
     "name": "basic-exception",
     "title": "基础异常报错",
-    "type": "vue",
     "categories": ["异常"],
     "screenshot":
       "https://user-images.githubusercontent.com/18508817/40156388-bf1a1b92-59cb-11e8-913c-b31886149263.png"

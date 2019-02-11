@@ -30,7 +30,6 @@
   "blockConfig": {
     "name": "gauge-chart",
     "title": "gauge-chart",
-    "type": "vue",
     "categories": [
       "图表"
     ],

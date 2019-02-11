@@ -27,7 +27,6 @@
   "blockConfig": {
     "name": "fixed-table",
     "title": "固定表格",
-    "type": "vue",
     "categories": [
       "表格"
     ],

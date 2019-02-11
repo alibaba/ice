@@ -30,7 +30,6 @@
   "blockConfig": {
     "name": "diy-toggle-chart",
     "title": "diy-toggle-chart",
-    "type": "vue",
     "categories": [
       "图表"
     ],

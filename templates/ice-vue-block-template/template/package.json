@@ -13,7 +13,6 @@
   "blockConfig": {
     "name": "{{name}}",
     "title": "{{title}}",
-    "type": "vue",
     "categories": [
       {{#each categories}}
         "{{@key}}"{{#if @last}} {{else}},{{/if}}

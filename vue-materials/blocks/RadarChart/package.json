@@ -30,7 +30,6 @@
   "blockConfig": {
     "name": "radar-chart",
     "title": "radar-chart",
-    "type": "vue",
     "categories": [
       "图表"
     ],

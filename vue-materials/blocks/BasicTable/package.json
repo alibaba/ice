@@ -27,7 +27,6 @@
   "blockConfig": {
     "name": "basic-table",
     "title": "基础表格",
-    "type": "vue",
     "categories": [
       "表格"
     ],

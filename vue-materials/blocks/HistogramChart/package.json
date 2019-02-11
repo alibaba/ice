@@ -29,7 +29,6 @@
   "blockConfig": {
     "name": "histogram-chart",
     "title": "柱状图",
-    "type": "vue",
     "categories": [
       "图表"
     ],

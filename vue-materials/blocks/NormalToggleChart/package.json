@@ -30,7 +30,6 @@
   "blockConfig": {
     "name": "normal-toggle-chart",
     "title": "normal-toggle-chart",
-    "type": "vue",
     "categories": [
       "图表"
     ],

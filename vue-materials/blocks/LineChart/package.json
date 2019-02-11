@@ -29,7 +29,6 @@
   "blockConfig": {
     "name": "line-chart",
     "title": "折线图",
-    "type": "vue",
     "categories": [
       "图表"
     ],

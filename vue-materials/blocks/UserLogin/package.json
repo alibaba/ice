@@ -28,7 +28,6 @@
   "blockConfig": {
     "name": "user-login",
     "title": "登录页",
-    "type": "vue",
     "categories": [
       "登录页"
     ],

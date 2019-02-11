@@ -30,7 +30,6 @@
   "blockConfig": {
     "name": "map-toggle-chart",
     "title": "map-toggle-chart",
-    "type": "vue",
     "categories": [
       "图表"
     ],

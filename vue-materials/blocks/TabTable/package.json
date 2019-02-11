@@ -28,7 +28,6 @@
   "blockConfig": {
     "name": "tab-table",
     "title": "基于element的标签页表格组合",
-    "type": "vue",
     "categories": [
       "表格"
     ],

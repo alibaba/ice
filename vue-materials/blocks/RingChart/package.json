@@ -30,7 +30,6 @@
   "blockConfig": {
     "name": "ring-chart",
     "title": "ring-chart",
-    "type": "vue",
     "categories": [
       "图表"
     ],

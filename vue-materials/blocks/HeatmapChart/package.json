@@ -30,7 +30,6 @@
   "blockConfig": {
     "name": "heatmap-chart",
     "title": "heatmap-chart",
-    "type": "vue",
     "categories": [
       "图表"
     ],

@@ -30,7 +30,6 @@
   "blockConfig": {
     "name": "scatter-chart",
     "title": "scatter-chart",
-    "type": "vue",
     "categories": [
       "图表"
     ],
