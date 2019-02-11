@@ -64,11 +64,7 @@ function generateBlocks(files, SPACE, type, done) {
         type: 'npm',
         npm: pkg.name,
         version: pkgConfig['version-0.x'] || pkg.version,
-        'version-0.x': pkg.version,
         registry,
-
-        // layout or block need src/
-        sourceCodeDirectory: 'src/',
       },
       // (必) 用于说明组件依赖关系
       dependencies: pkg.dependencies || {},
@@ -79,6 +75,15 @@ function generateBlocks(files, SPACE, type, done) {
       categories: pkgConfig.categories || [],
       // publishTime: pkg.publishTime || new Date().toISOString(),
     };
+
+    if (type === 'block') {
+      payload.source['version-0.x'] = pkg.version;
+    }
+
+    // layout or block need src/
+    if (type === 'block' || type === 'layout') {
+      payload.source.sourceCodeDirectory = 'src/';
+    }
 
     if (type !== 'component' && fs.existsSync(indexPoint)) {
       const componentDeps = depAnalyze(indexPoint);

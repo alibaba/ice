@@ -18,7 +18,7 @@ function generateMultiDatabase(materials, cwd) {
       return generateMaterialsDatabases(
         material.type ? `${material.type}-materials` : 'db',
         material.type,
-        path.join(cwd + '/' + material.directory),
+        path.join(cwd, material.directory),
       );
     };
   });
