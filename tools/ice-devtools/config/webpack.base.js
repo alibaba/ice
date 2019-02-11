@@ -1,37 +1,32 @@
 const webpack = require('webpack');
 const WebpackConfig = require('webpack-chain');
 const path = require('path');
-const debug = require('debug')('ice:webpack:base');
 const chalk = require('chalk');
 
 const BABEL_LOADER = require.resolve('babel-loader');
 const STYLE_LOADER = require.resolve('style-loader');
 const CSS_LOADER = require.resolve('css-loader');
 const SASS_LOADER = require.resolve('sass-loader');
-const LESS_LOADER = require.resolve('less-loader');
 const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
-
+const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const WEBPACK_HOT_CLIENT = require.resolve('webpack-hot-client/client');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
 
-const URL_LOADER = require.resolve('url-loader');
-const URL_LOADER_LIMIT = 8192;
-
 const getBabelConfig = require('./getBabelConfig');
-const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const { getPkgJSON } = require('../utils/pkg-json');
 const internalLibrary = require('../utils/internal-library');
 
+const URL_LOADER = require.resolve('url-loader');
+const URL_LOADER_LIMIT = 8192;
+
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
-  // debug('loaders: &')
   config
     .mode(process.env.NODE_ENV === 'production' ? 'production' : 'development')
     .externals({
       react: 'React',
       'react-dom': 'ReactDOM',
-      vue: 'Vue',
     });
 
   config.module
@@ -67,11 +62,38 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   config.module
     .rule('scss')
     .test(/\.s[a|c]ss$/)
+    .exclude.add(/\.module\.scss$/)
+    .end()
     .use('style-loader')
     .loader(STYLE_LOADER)
     .end()
     .use('css-loader')
     .loader(CSS_LOADER)
+    .end()
+    .use('scss-loader')
+    .loader(SASS_LOADER)
+    .end()
+    .use('ice-skin-loader')
+    .loader(ICE_SKIN_LOADER)
+    .options({
+      themeFile: theme && path.join(appNodeModules, `${theme}/variables.scss`),
+      themeConfig,
+    })
+    .end();
+
+  config.module
+    .rule('cssmodule')
+    .use('style-loader')
+    .loader(STYLE_LOADER)
+    .end()
+    .test(/\.module\.scss$/)
+    .use('css-loader')
+    .loader(CSS_LOADER)
+    .options({
+      sourceMap: true,
+      modules: true,
+      localIdentName: '[folder]--[local]--[hash:base64:7]',
+    })
     .end()
     .use('scss-loader')
     .loader(SASS_LOADER)
@@ -155,8 +177,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   config.resolve.extensions
     .add('.js')
     .add('.jsx')
-    .add('.json')
-    .add('.vue');
+    .add('.json');
 
   config.plugin('progress').use(SimpleProgressPlugin);
 
@@ -171,8 +192,8 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
       return {
         libraryName,
         stylePath: 'style.js',
-      }
-    })
+      };
+    }),
   ]);
 
   config.plugin('hot').use(webpack.HotModuleReplacementPlugin);

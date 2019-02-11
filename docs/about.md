@@ -37,4 +37,4 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 * 邮件：<mailto:ice-admin@alibaba-inc.com>
 * 反馈/建议：<https://github.com/alibaba/ice/issues/new>
-* 答疑钉钉群：<img src="https://ice.alicdn.com/assets/images/ice-group.png" width="300" />
+* 答疑钉钉群：<img src="https://img.alicdn.com/tfs/TB1UKaqEsbpK1RjSZFyXXX_qFXa-970-1280.jpg" width="300" />

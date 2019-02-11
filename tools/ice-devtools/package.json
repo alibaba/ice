@@ -86,7 +86,7 @@
     "vue-loader": "^15.5.1",
     "vue-style-loader": "^4.1.2",
     "webpack": "^4.27.0",
-    "webpack-chain": "^5.0.1",
+    "webpack-chain": "^5.2.0",
     "webpack-dev-server": "^3.1.10",
     "webpack-hot-client": "^4.1.1",
     "webpack-plugin-import": "^0.2.1",

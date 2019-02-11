@@ -1,6 +1,14 @@
 [
   {
     "changelog": [
+      "特性: 应用协议iceworks://，可通过浏览器唤起iceworks",
+      "特性: fusion物料源、bizchat物料源合并到飞冰物料源，并删除对应配置项"
+    ],
+    "releaseDate": "2019年01月24日",
+    "version": "2.15.5"
+  },
+  {
+    "changelog": [
       "修复：兼容没有layouts的项目"
     ],
     "releaseDate": "2019年01月18日",
