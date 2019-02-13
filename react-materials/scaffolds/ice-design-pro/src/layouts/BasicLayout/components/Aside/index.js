@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import cx from 'classnames';
-import { Icon, Nav } from '@alifd/next';
+import { Nav } from '@alifd/next';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 
 import Logo from '../Logo';
 import { asideMenuConfig } from '../../../../menuConfig';
@@ -106,7 +107,7 @@ export default class Aside extends Component {
         return (
           <SubNav
             key={index}
-            icon={item.icon ? <Icon size="small" type={item.icon} /> : null}
+            icon={item.icon ? <FoundationSymbol size="small" type={item.icon} /> : null}
             label={<span className="ice-menu-collapse-hide">{item.name}</span>}
           >
             {childrenItems}
@@ -149,7 +150,7 @@ export default class Aside extends Component {
 
         {isMobile && !openDrawer && (
           <a className="menu-btn" onClick={this.toggleMenu}>
-            <Icon type="calendar" size="small" />
+            <FoundationSymbol type="menu" size="small" />
           </a>
         )}
 

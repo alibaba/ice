@@ -1,8 +1,9 @@
 /* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
 import React, { PureComponent } from 'react';
-import { Balloon, Icon, Nav } from '@alifd/next';
+import { Balloon, Nav } from '@alifd/next';
 import IceImg from '@icedesign/img';
 import Layout from '@icedesign/layout';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
 import { Link, withRouter } from 'react-router-dom';
 import { headerMenuConfig } from '../../../../menuConfig';
@@ -69,7 +70,7 @@ export default class Header extends PureComponent {
                   <br />
                   <span className="user-department">技术部</span>
                 </div>
-                <Icon type="arrow-down" size="xxs" className="icon-down" />
+                <FoundationSymbol type="angle-down" size="small" className="icon-down" />
               </div>
             }
             closable={false}
@@ -80,14 +81,14 @@ export default class Header extends PureComponent {
                 className="user-profile-menu-item"
                 onClick={this.handleSetting}
               >
-                <Icon type="set" size="small" />
+                <FoundationSymbol type="repair" size="small" />
                 设置
               </li>
               <li
                 className="user-profile-menu-item"
                 onClick={this.props.handleLogout}
               >
-                <Icon type="upload" size="small" />
+                <FoundationSymbol type="person" size="small" />
                 退出
               </li>
             </ul>

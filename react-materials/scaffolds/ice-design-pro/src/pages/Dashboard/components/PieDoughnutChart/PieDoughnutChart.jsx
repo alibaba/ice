@@ -51,7 +51,7 @@ export default class PieDoughnutChart extends Component {
 
     return (
       <div className="pie-doughnut-chart">
-        <Row wrap gutter="20" style={{margin: 0}}>
+        <Row wrap gutter="20">
           <Col xxs="24" s="24" l="12">
             <IceContainer title="性别占比" style={styles.leftContainer}>
               <Chart

@@ -66,7 +66,7 @@ const asideMenuConfig = [
   {
     name: '列表页',
     path: '/list',
-    icon: 'ul-list',
+    icon: 'copy',
     children: [
       {
         name: '基础列表',
@@ -81,7 +81,7 @@ const asideMenuConfig = [
   {
     name: '内容页',
     path: '/portlets',
-    icon: 'publish',
+    icon: 'cascades',
     children: [
       {
         name: '基础详情页',
@@ -96,7 +96,7 @@ const asideMenuConfig = [
   {
     name: '结果页',
     path: '/result',
-    icon: 'result',
+    icon: 'edit2',
     children: [
       {
         name: '成功',
@@ -111,7 +111,7 @@ const asideMenuConfig = [
   {
     name: '个人页',
     path: '/account',
-    icon: 'yonghu',
+    icon: 'person',
     children: [
       {
         name: '个人设置',
