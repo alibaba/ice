@@ -205,6 +205,7 @@ function generateScaffolds(files, SPACE, done) {
       (pkg.publishConfig && pkg.publishConfig.registry) ||
       'http://registry.npmjs.com';
 
+    const screenshot = pkg.scaffoldConfig.screenshot || pkg.scaffoldConfig.snapshot;
     const payload = {
       // (必)英文名
       name: pkg.scaffoldConfig.name,
@@ -221,9 +222,9 @@ function generateScaffolds(files, SPACE, done) {
       dependencies: pkg.dependencies || {},
       devDependencies: pkg.devDependencies || {},
       // (必) 截图
-      screenshot: pkg.scaffoldConfig.screenshot || pkg.scaffoldConfig.snapshot,
+      screenshot: screenshot,
       // 站点模板预览需要多张截图
-      screenshots: pkg.scaffoldConfig.screenshots || [],
+      screenshots: pkg.scaffoldConfig.screenshots || [screenshot],
 
       categories: pkg.scaffoldConfig.categories || [],
       // publishTime: pkg.publishTime || new Date().toISOString(),
