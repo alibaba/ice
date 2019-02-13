@@ -1,5 +1,8 @@
 # ice-scripts Changelog
 
+## 2.1.5
+- [fix] 增加默认 screenshot
+
 ## 2.1.4
 - [feat] 兼容 ice 仓库的目录结构
 
