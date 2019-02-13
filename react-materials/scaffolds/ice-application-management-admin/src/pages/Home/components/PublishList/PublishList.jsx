@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Progress } from '@icedesign/base';
+import { Table, Pagination, Progress } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
 
@@ -11,7 +11,7 @@ const data = [
     type: 'publish',
     env: 'pub',
     statue: 'success',
-    progress: 90,
+    progress: 29,
     errorRate: 0,
     publisher: '淘小宝',
     publishTime: '17-07-03 09:17:08',
@@ -33,7 +33,7 @@ const data = [
     type: 'publish',
     env: 'pre',
     statue: 'error',
-    progress: 100,
+    progress: 53,
     errorRate: 100,
     publisher: '淘小宝',
     publishTime: '17-05-02 12:19:20',
@@ -44,7 +44,7 @@ const data = [
     type: 'publish',
     env: 'pub',
     statue: 'success',
-    progress: 100,
+    progress: 88,
     errorRate: 0,
     publisher: '淘小宝',
     publishTime: '17-04-29 23:29:20',
@@ -77,7 +77,7 @@ const data = [
     env: 'pre',
     statue: 'error',
     progress: 0,
-    errorRate: 100,
+    errorRate: 55,
     publisher: '淘小宝',
     publishTime: '17-05-02 12:19:20',
   },
@@ -87,7 +87,7 @@ const data = [
     type: 'publish',
     env: 'pub',
     statue: 'success',
-    progress: 100,
+    progress: 55,
     errorRate: 0,
     publisher: '淘小宝',
     publishTime: '17-04-29 23:29:20',
@@ -185,7 +185,7 @@ export default class PublishList extends Component {
 
   renderProgress = (value) => {
     return (
-      <Progress percent={value} size="large" />
+      <Progress progressive percent={value} size="large" />
     );
   }
 
@@ -214,7 +214,7 @@ export default class PublishList extends Component {
       <IceContainer title="我的发布单">
         <Table
           dataSource={list}
-          isLoading={__loading}
+          loading={__loading}
           className="basic-table"
           style={styles.basicTable}
           hasBorder={false}

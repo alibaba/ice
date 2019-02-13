@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Table, Pagination } from '@icedesign/base';
+import { Table, Pagination } from '@alifd/next';
 import { Link } from 'react-router-dom';
 
 export default class SnapshotTable extends Component {
@@ -35,7 +35,7 @@ export default class SnapshotTable extends Component {
       <IceContainer style={styles.container}>
         <h4 style={styles.title}>快照列表</h4>
         <Table
-          isLoading={isLoading}
+          loading={isLoading}
           dataSource={data}
           hasBorder={false}
           style={styles.table}

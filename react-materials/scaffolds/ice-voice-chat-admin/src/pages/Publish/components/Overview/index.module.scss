@@ -1,0 +1,47 @@
+.container {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+.item {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.IconBox {
+  width: 56px;
+  color: #fff;
+  height: 56px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  border-radius: 100%;
+}
+.itemBox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.itemLabel {
+  color: rgba(0, 0, 0, 0.5);
+  margin: 3px 0px 10px;
+  font-size: 14px;
+}
+.itemValue {
+  color: rgba(0, 0, 0, 0.8);
+  margin: 0;
+  font-size: 24px;
+}
+.symbol1 {
+  composes: itemBox IconBox;
+  // composes: IconBox;
+  background: $color-notice-3;
+}
+
+.symbol2 {
+  composes: itemBox IconBox;
+  // composes: IconBox;
+  background: $color-success-3;
+}

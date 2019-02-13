@@ -2,6 +2,7 @@ const oss = require('ali-oss');
 const co = require('co');
 const { readdirSync, readFileSync, writeFile } = require('fs');
 const path = require('path');
+const request = require('request');
 const scaffolds = require('./scaffolds');
 
 if (
@@ -9,7 +10,7 @@ if (
   process.env.TRAVIS_BRANCH !== 'production'
 ) {
   console.log('当前分支非 master / production, 不执行物料源同步脚本');
-  console.log('TRAVIS_BRANCH=' + process.env.TRAVIS_BRANCH);
+  console.log(`TRAVIS_BRANCH=${process.env.TRAVIS_BRANCH}`);
   process.exit(0);
 }
 
@@ -32,6 +33,7 @@ const assetsMap = {
 
 console.log('start uploading');
 sortScaffoldMaterials()
+  .then(mergeBizchartsBlocks)
   .then(() => {
     const files = readdirSync(path.resolve(__dirname, '../build')).map(
       (filename) => ({
@@ -86,6 +88,46 @@ function sortScaffoldMaterials() {
         resolve();
       }
     );
+  });
+}
+
+/**
+ * 合并 bizchart 的区块物料
+ */
+function mergeBizchartsBlocks() {
+  return new Promise((resolve, reject) => {
+    const materialsPath = path.join(
+      __dirname,
+      '../build',
+      'react-materials.json'
+    );
+    const materialsData = JSON.parse(readFileSync(materialsPath, 'utf-8'));
+
+    request({
+      url: 'http://g.alicdn.com/bizcharts-material/scripts/material-assets.json',
+      json: true,
+    }, (error, response, body) => {
+      if (body) {
+        console.log('获取 bizcharts 物料源成功', body.blocks);
+        const bizchartBlocks = (body.blocks || []).map((item) => {
+          item.categories = ['图表'];
+          return item;
+        });
+        materialsData.blocks = materialsData.blocks.concat(bizchartBlocks);
+        return writeFile(
+          materialsPath,
+          JSON.stringify(materialsData, null, 2),
+          'utf-8',
+          (err) => {
+            if (err) reject(err);
+            resolve();
+          }
+        );
+      }
+
+      console.log('获取 bizcharts 物料源失败', error)
+      return resolve();
+    });
   });
 }
 

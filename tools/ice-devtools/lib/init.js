@@ -15,6 +15,7 @@ const generate = require('../utils/generate');
 const localPath = require('../utils/local-path');
 const download = require('../utils/download');
 const innerNet = require('../utils/inner-net');
+const addComponent = require('./component/add');
 
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
@@ -28,6 +29,15 @@ module.exports = async function init(cwd, ...args) {
 
     const options = Object.assign({ cwd }, { args: [...args] });
     const answers = await initAsk(options);
+
+    if (answers.type === 'component') {
+      addComponent('react', cwd, {
+        standalone: true,
+        scope: answers.scope
+      });
+      return;
+    }
+
     run(answers, options);
   } catch (error) {
     logger.fatal(error);
@@ -38,7 +48,18 @@ module.exports = async function init(cwd, ...args) {
  * 初始询问
  */
 async function initAsk(options = {}) {
-  const templatePath = getLocalTemplatePath(options.args);
+  const { type } = await inquirer.prompt([
+    {
+      type: 'list',
+      message: 'please select the project type',
+      name: 'type',
+      default: 'material',
+      choices: [
+        'material',
+        'component'
+      ],
+    },
+  ]);
 
   const isInnerNet = await innerNet.isInnerNet();
 
@@ -71,6 +92,13 @@ async function initAsk(options = {}) {
     },
   ]);
 
+  if (type === 'component') {
+    return {
+      type: 'component',
+      scope: scope
+    };
+  }
+
   const projectName = path.basename(options.cwd);
   const { name } = await inquirer.prompt([
     {
@@ -91,6 +119,8 @@ async function initAsk(options = {}) {
       },
     },
   ]);
+
+  const templatePath = getLocalTemplatePath(options.args);
 
   const { template } = await (!templatePath
     ? inquirer.prompt([
@@ -136,8 +166,9 @@ function run(opt, argsOpt) {
   // 如果是本地模板则从缓存读取，反之从 npm 源下载初始模板
   if (isLocalPath(template)) {
     const templatePath = getTemplatePath(template);
+    const npmName = name;
     if (exists(templatePath)) {
-      generate(name, templatePath, cwd, (err, cb) => {
+      generate(name, npmName, templatePath, cwd, (err, cb) => {
         if (err) logger.fatal(err);
         initCompletedMessage(cwd, name);
       });
@@ -166,7 +197,8 @@ function downloadAndGenerate({ template, tmp, to, name }) {
     .then(() => {
       spinner.stop();
 
-      generate(name, tmp, to, (err, cb) => {
+      const npmName = name;
+      generate(name, npmName, tmp, to, (err, cb) => {
         if (err) logger.fatal(err);
         initCompletedMessage(to, name);
       });

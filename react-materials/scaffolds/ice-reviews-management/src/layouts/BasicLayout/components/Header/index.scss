@@ -1,0 +1,75 @@
+.header-container {
+  width: 100%;
+  height: 62px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  min-width: 1200px;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+
+  .header-navbar {
+    display: flex;
+    flex-direction: row;
+    .ice-menu {
+      background: transparent;
+      color: #666;
+      .ice-menu-item {
+        font-size: 14px;
+        a {
+          color: #666;
+        }
+        &:hover,
+        a:hover {
+          color: rgba(102, 102, 102, 0.8);
+        }
+      }
+    }
+  }
+
+  .user-avatar {
+    margin-right: 12px;
+    border-radius: 4px;
+  }
+
+  .user-department {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .ice-design-header-userpannel {
+    margin-left: 20px;
+    cursor: pointer;
+    .user-profile {
+      display: inline-block;
+      text-align: center;
+      margin-bottom: 2px;
+      color: #666;
+    }
+    .icon-down {
+      margin-left: 2px;
+      color: #666;
+    }
+  }
+}
+
+.user-profile-menu {
+  width: 130px;
+  border-radius: 6px;
+  padding: 0 16px;
+  .user-profile-menu-item {
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    a {
+      color: #666;
+      &:hover {
+        color: #447eff;
+      }
+    }
+    i {
+      margin-right: 5px;
+    }
+  }
+}

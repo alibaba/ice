@@ -4,4 +4,4 @@
 
 忘记密码
 
-![截图](https://img.alicdn.com/tfs/TB11ywwc_tYBeNjy1XdXXXXyVXa-2322-398.png)
+![截图](https://unpkg.com/@icedesign/forget-password-form-block/screenshot.png)

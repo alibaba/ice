@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -91,6 +91,7 @@ const styles = {
   navItem: {
     width: '25%',
     lineHeight: '54px',
+    listStyle: 'none',
     textAlign: 'center',
   },
   navLink: {

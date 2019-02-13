@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/container",
-  "version": "0.1.9",
+  "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -13,10 +13,6 @@
     "build": "ice-devtools build",
     "prepublishOnly": "npm run build",
     "postinstall": "node ./postinstall.js"
-  },
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
   },
   "repository": {
     "type": "git",
@@ -31,10 +27,14 @@
     "react": "^16.5.0"
   },
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
+    "@alifd/next": "^1.x",
     "prop-types": "^15.5.8"
   },
   "typings": "lib/index.d.ts",
   "devDependencies": {
+  },
+  "componentConfig": {
+    "name": "container",
+    "title": "基础容器"
   }
 }

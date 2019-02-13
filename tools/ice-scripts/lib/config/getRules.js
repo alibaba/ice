@@ -34,7 +34,7 @@ const CSS_MODULE_CONF = {
   options: {
     sourceMap: true,
     modules: true,
-    localIdentName: '[folder]--[local]--[hash:base64:7]'
+    localIdentName: '[folder]--[local]--[hash:base64:7]',
   },
 };
 module.exports = (buildConfig = {}, themeConfig) => {
@@ -63,13 +63,22 @@ module.exports = (buildConfig = {}, themeConfig) => {
   const iceThemeLoaderConf = {
     loader: require.resolve('ice-skin-loader'),
     options: {
-      themeFile: theme && path.join(paths.appNodeModules, `${theme}/variables.scss`),
+      themeFile:
+        theme && path.join(paths.appNodeModules, `${theme}/variables.scss`),
       themeConfig,
     },
   };
 
-  const sassLoaderConf = [CSS_LOADER_CONF, ...sassLoadersConf, iceThemeLoaderConf];
-  const sassModuleConf = [CSS_MODULE_CONF, ...sassLoadersConf, iceThemeLoaderConf];
+  const sassLoaderConf = [
+    CSS_LOADER_CONF,
+    ...sassLoadersConf,
+    iceThemeLoaderConf,
+  ];
+  const sassModuleConf = [
+    CSS_MODULE_CONF,
+    ...sassLoadersConf,
+    iceThemeLoaderConf,
+  ];
   // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
   const miniCssExtractPluginLoader = { loader: MiniCssExtractPlugin.loader };
 

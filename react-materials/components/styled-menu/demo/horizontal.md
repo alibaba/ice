@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Icon } from '@icedesign/base';
+import { Icon } from '@alifd/next';
 import StyledMenu, {
   Item as MenuItem,
   SubMenu,
@@ -41,7 +41,7 @@ class App extends Component {
         mode="horizontal"
       >
         <MenuItem key="mail">
-          <Icon type="pin" />导航一（默认选中状态）
+          <Icon type="upload" />导航一（默认选中状态）
         </MenuItem>
         <MenuItem key="linkicon">
           <a target="_blank" href="https://www.taobao.com/">
@@ -49,13 +49,13 @@ class App extends Component {
           </a>
         </MenuItem>
         <MenuItem key="app" disabled>
-          <Icon type="form" />导航三（禁用当前选项）
+          <Icon type="help" />导航三（禁用当前选项）
         </MenuItem>
         <SubMenu
           key="SubMenu"
           title={
             <span>
-              <Icon type="discount" />导航四（附带下拉菜单）
+              <Icon type="account" />导航四（附带下拉菜单）
             </span>
           }
         >

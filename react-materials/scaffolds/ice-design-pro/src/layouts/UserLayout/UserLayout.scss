@@ -23,8 +23,7 @@
   .title {
     text-align: center;
     font-size: 33px;
-    color: rgba(0, 0, 0, 0.85);
-    font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    color: #3080fe;
     font-weight: 600;
   }
   .desc {
@@ -52,11 +51,10 @@
     position: relative;
     margin-bottom: 5px;
   }
-  .formTitle {
-    text-align: center;
-    margin: 0 0 20px;
-    color: rgba(0, 0, 0, 0.85);
-    font-weight: bold;
+  input {
+    padding: 0 30px !important;
+    height: 40px !important;
+    line-height: 40px !important;
   }
   .inputIcon {
     position: absolute;

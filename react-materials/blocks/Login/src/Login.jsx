@@ -1,15 +1,10 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Input, Button, Checkbox, Grid, Feedback } from '@icedesign/base';
-import {
-  FormBinderWrapper as IceFormBinderWrapper,
-  FormBinder as IceFormBinder,
-  FormError as IceFormError,
-} from '@icedesign/form-binder';
-import IceIcon from '@icedesign/icon';
+import { Input, Button, Checkbox, Grid, Message, Icon, Form } from '@alifd/next';
 import './Login.scss';
 
 const { Row, Col } = Grid;
+const Item = Form.Item;
 
 export default class Login extends Component {
   static displayName = 'Login';
@@ -35,17 +30,14 @@ export default class Login extends Component {
     });
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.refs.form.validateAll((errors, values) => {
-      if (errors) {
-        console.log('errors', errors);
-        return;
-      }
-      console.log('values:', values);
-      Feedback.toast.success('登录成功');
-      // 登录成功后做对应的逻辑处理
-    });
+  handleSubmit = (values, errors) => {
+    if (errors) {
+      console.log('errors', errors);
+      return;
+    }
+    console.log('values:', values);
+    Message.success('登录成功');
+    // 登录成功后做对应的逻辑处理
   };
 
   render() {
@@ -64,77 +56,60 @@ export default class Login extends Component {
         </div>
         <div style={styles.formContainer}>
           <h4 style={styles.formTitle}>登 录</h4>
-          <IceFormBinderWrapper
+          <Form
             value={this.state.value}
             onChange={this.formChange}
+            size="large"
             ref="form"
           >
-            <div style={styles.formItems}>
-              <Row style={styles.formItem}>
-                <Col style={styles.formItemCol}>
-                  <IceIcon
-                    type="person"
-                    size="small"
-                    style={styles.inputIcon}
-                  />
-                  <IceFormBinder name="account" required message="必填">
-                    <Input
-                      size="large"
-                      maxLength={20}
-                      placeholder="管理员账号"
-                    />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="account" />
-                </Col>
-              </Row>
+            <Item required requiredMessage="必填">
+              <Input
+                name="account"
+                innerBefore={<Icon
+                  type="account"
+                  size="small"
+                  style={styles.inputIcon}
+                />}
+                size="large"
+                maxLength={20}
+                placeholder="管理员账号"
+              />
+            </Item>
+            <Item required requiredMessage="必填">
+              <Input
+                name="password"
+                innerBefore={<Icon type="account" size="small" style={styles.inputIcon} test="lock" />}
+                size="large"
+                htmlType="password"
+                placeholder="密码"
+              />
+            </Item>
+            <Item >
+              <Checkbox name="checkbox" style={styles.checkbox}>记住账号</Checkbox>
+            </Item>
 
-              <Row style={styles.formItem}>
-                <Col style={styles.formItemCol}>
-                  <IceIcon type="lock" size="small" style={styles.inputIcon} />
-                  <IceFormBinder name="password" required message="必填">
-                    <Input
-                      size="large"
-                      htmlType="password"
-                      placeholder="密码"
-                    />
-                  </IceFormBinder>
-                </Col>
-                <Col>
-                  <IceFormError name="password" />
-                </Col>
-              </Row>
 
-              <Row style={styles.formItem}>
-                <Col>
-                  <IceFormBinder name="checkbox">
-                    <Checkbox style={styles.checkbox}>记住账号</Checkbox>
-                  </IceFormBinder>
-                </Col>
-              </Row>
+            <Row style={styles.formItem}>
+              <Form.Submit
+                type="primary"
+                onClick={this.handleSubmit}
+                style={styles.submitBtn}
+                validate
+              >
+                登 录
+                </Form.Submit>
+            </Row>
 
-              <Row style={styles.formItem}>
-                <Button
-                  type="primary"
-                  onClick={this.handleSubmit}
-                  style={styles.submitBtn}
-                >
-                  登 录
-                </Button>
-              </Row>
-
-              <Row className="tips" style={styles.tips}>
-                <a href="/" style={styles.link}>
-                  立即注册
+            <Row className="tips" style={styles.tips}>
+              <a href="/" style={styles.link}>
+                立即注册
                 </a>
-                <span style={styles.line}>|</span>
-                <a href="/" style={styles.link}>
-                  忘记密码
+              <span style={styles.line}>|</span>
+              <a href="/" style={styles.link}>
+                忘记密码
                 </a>
-              </Row>
-            </div>
-          </IceFormBinderWrapper>
+            </Row>
+          </Form>
         </div>
       </div>
     );

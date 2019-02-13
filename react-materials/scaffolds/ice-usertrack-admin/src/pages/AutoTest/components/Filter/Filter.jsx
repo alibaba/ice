@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input } from '@icedesign/base';
+import { Input } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 
 export default class Filter extends Component {
@@ -15,7 +15,7 @@ export default class Filter extends Component {
           placeholder="请输入验证方案"
           hasClear
           onChange={this.onChange}
-          size="large"
+
           style={{ width: '300px' }}
         />
       </IceContainer>

@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import ChartistGraph from 'react-chartist';
 import { Grid, Row, Col } from 'react-bootstrap';
-
 import Card from 'components/Card';
 import StatsCard from 'components/StatsCard';
 import Tasks from 'components/Tasks';

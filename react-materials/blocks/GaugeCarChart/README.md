@@ -2,4 +2,4 @@
 
 简介：仪表盘
 
-![截图](https://img.alicdn.com/tfs/TB1WHrZfDtYBeNjy1XdXXXXyVXa-2258-1066.png)
+![截图](https://unpkg.com/@icedesign/gauge-car-chart-block/screenshot.png)

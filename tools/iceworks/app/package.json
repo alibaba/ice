@@ -3,7 +3,7 @@
   "productName": "Iceworks",
   "private": true,
   "description": "ICE Desktop Application.",
-  "version": "2.15.0",
+  "version": "2.15.5",
   "author": {
     "name": "Alibaba Group Holding Limited",
     "url": "http://alibaba.github.io/ice"
@@ -62,6 +62,7 @@
     "tar": "^2.0.0",
     "update-notifier": "^2.5.0",
     "uppercamelcase": "^3.0.0",
+    "url-parse": "^1.4.4",
     "uuid": "^3.1.0"
   }
 }

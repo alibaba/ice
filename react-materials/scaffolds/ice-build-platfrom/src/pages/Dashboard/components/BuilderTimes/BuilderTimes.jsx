@@ -1,7 +1,7 @@
 /* eslint object-shorthand: 0,space-before-function-paren:0, prefer-template:0, wrap-iife:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Select } from '@icedesign/base';
+import { Select } from '@alifd/next';
 
 const ReactHighcharts = require('react-highcharts');
 

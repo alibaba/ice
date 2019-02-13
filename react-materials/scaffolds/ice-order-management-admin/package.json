@@ -1,0 +1,73 @@
+{
+  "name": "@icedesign/order-management-scaffold",
+  "version": "2.0.3",
+  "description": "该模板适用于订单类管理后台，布局方式采用左侧固定，右侧自适应方式，适合大量数据展示和界面操作",
+  "author": "ice-admin@alibaba-inc.com",
+  "homepage": "https://unpkg.com/@icedesign/order-management-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
+  "dependencies": {
+    "@alifd/next": "^1.x",
+    "@antv/data-set": "^0.9.5",
+    "@icedesign/container": "^1.x",
+    "@icedesign/form-binder": "^1.x",
+    "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/img": "^1.x",
+    "@icedesign/layout": "^1.x",
+    "@icedesign/theme": "^0.1.2",
+    "bizcharts": "^3.2.2",
+    "enquire-js": "^0.1.2",
+    "moment": "^2.24.0",
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.2.2"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.6.0-next.3"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/theme",
+    "entry": "src/index.js",
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
+  },
+  "scaffoldConfig": {
+    "builder": "ice-scripts",
+    "name": "ice-order-management-admin",
+    "title": "订单管理系统",
+    "categories": [
+      "行业领域"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB19NPDDcbpK1RjSZFyXXX_qFXa-2872-1580.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

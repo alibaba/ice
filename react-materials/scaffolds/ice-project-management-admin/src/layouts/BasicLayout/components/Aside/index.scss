@@ -1,0 +1,23 @@
+.ice-layout-aside {
+  .ice-aside-custom {
+    height: 100%;
+    width: 240px;
+    padding-top: 10px;
+    box-shadow: 4px 1px 12px rgba(0, 55, 107, 0.04);
+    .ice-aside-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 36px;
+      font-weight: bold;
+      color: #447eff;
+    }
+    .next-menu-item-text {
+      color: #666;
+      .next-nav-icon.next-icon {
+        margin-right: 10px;
+      }
+    }
+  }
+}

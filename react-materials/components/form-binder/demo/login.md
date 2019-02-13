@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
-import { Input, Button, Checkbox, Feedback } from '@icedesign/base';
+import { Input, Button, Checkbox, Feedback } from '@alifd/next';
 
 class Login extends Component {
   constructor(props) {
@@ -56,7 +56,7 @@ class Login extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>名称：</span>
               <FormBinder name="username" required message="请输入正确的名称" >
-                <Input /> 
+                <Input />
               </FormBinder>
               <FormError style={styles.formItemError} name="username" />
             </div>
@@ -64,11 +64,11 @@ class Login extends Component {
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>密码：</span>
               <FormBinder name="password" required message="请输入正确的密码">
-                <Input htmlType="password" /> 
+                <Input htmlType="password" />
               </FormBinder>
               <FormError style={styles.formItemError} name="password" />
             </div>
-        
+
             <div style={styles.formItem}>
               <span style={styles.formItemLabel}>记住密码：</span>
               <FormBinder
@@ -83,7 +83,7 @@ class Login extends Component {
             </Button>
           </div>
         </FormBinderWrapper>
-        
+
         <div style={styles.preview}>
           <strong>当前表单数据</strong>
           <pre>{JSON.stringify(this.state.value, null, 2)}</pre>
@@ -99,13 +99,13 @@ const styles = {
     marginBottom: '20px'
   },
   formItemLabel: {
-    
+
   },
   formItemError: {
     marginLeft: '10px',
   },
   preview: {
-    border: '1px solid #eee', 
+    border: '1px solid #eee',
     marginTop: 20,
     padding: 10
   }

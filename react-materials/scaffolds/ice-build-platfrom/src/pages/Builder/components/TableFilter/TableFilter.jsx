@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Button, DatePicker, Select, Input, Feedback } from '@icedesign/base';
+import { Button, DatePicker, Select, Input, Message } from '@alifd/next';
 import { FormBinderWrapper, FormBinder } from '@icedesign/form-binder';
 
 export default class TableFilter extends Component {
@@ -60,7 +60,7 @@ export default class TableFilter extends Component {
     const { validateFields } = this.refs.form;
     validateFields((errors, values) => {
       if (errors) {
-        Feedback.toast.error('查询参数错误');
+        Message.error('查询参数错误');
         return;
       }
       console.log(values);
@@ -76,7 +76,7 @@ export default class TableFilter extends Component {
           <div style={styles.filterItem}>
             <span style={styles.filterLabel}>责任人：</span>
             <FormBinder name="person">
-              <Input placeholder="请输入责任人" size="large" />
+              <Input placeholder="请输入责任人" />
             </FormBinder>
           </div>
           <div style={styles.filterItem}>
@@ -88,17 +88,16 @@ export default class TableFilter extends Component {
                   value={startValue}
                   placeholder="Start"
                   onChange={this.onStartChange}
-                  onOpenChange={this.handleStartOpenChange}
+                  onVisibleChange={this.handleStartOpenChange}
                 />
                 &nbsp;&nbsp;
                 <DatePicker
-                  size="large"
                   disabledDate={this.disabledEndDate}
                   value={endValue}
                   placeholder="End"
                   onChange={this.onEndChange}
-                  open={endOpen}
-                  onOpenChange={this.handleEndOpenChange}
+                  visible={endOpen}
+                  onVisibleChange={this.handleEndOpenChange}
                 />
               </div>
             </FormBinder>
@@ -106,7 +105,7 @@ export default class TableFilter extends Component {
           <div style={styles.filterItem}>
             <span style={styles.filterLabel}>状态：</span>
             <FormBinder name="status">
-              <Select size="large">
+              <Select>
                 <Select.Option value="all">全部</Select.Option>
                 <Select.Option value="success">成功</Select.Option>
                 <Select.Option value="failed">失败</Select.Option>
@@ -115,7 +114,6 @@ export default class TableFilter extends Component {
           </div>
           <Button
             type="primary"
-            size="large"
             style={styles.submitButton}
             onClick={this.handleSubmit}
           >

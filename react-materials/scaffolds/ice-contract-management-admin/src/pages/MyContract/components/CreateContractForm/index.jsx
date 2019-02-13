@@ -3,13 +3,12 @@ import {
   Input,
   Button,
   Select,
-} from '@icedesign/base';
+} from '@alifd/next';
 import {
   FormBinderWrapper, FormBinder, FormError,
 } from '@icedesign/form-binder';
 
 export default class CreateFrom extends React.Component {
-
   static defaultProps = {
     onCreateSubmitSuccess: () => {},
     onCreateSubmitCancel: () => {},

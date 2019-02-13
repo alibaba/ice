@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/dynamic-icon",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "动态 Icon 组件",
   "main": "lib/index.js",
   "files": [
@@ -11,10 +11,6 @@
     "start": "ice-devtools start",
     "build": "ice-devtools build",
     "prepublishOnly": "npm run build"
-  },
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
   },
   "repository": {
     "type": "git",
@@ -30,13 +26,16 @@
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "@icedesign/base": "^0.2.0",
-    "@icedesign/skin": "^0.1.9",
+    "@alifd/next": "^1.x",
     "copy-to-clipboard": "^3.0.8",
     "react-copy-to-clipboard": "^5.0.1"
   },
   "peerDependencies": {
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
+  },
+  "componentConfig": {
+    "name": "dynamic-icon",
+    "title": "动态 Icon 组件"
   }
 }

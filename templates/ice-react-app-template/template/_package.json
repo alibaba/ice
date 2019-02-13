@@ -15,6 +15,7 @@
   "files": [
     "src/",
     "build/",
+    "public/",
     "screenshot.png"
   ],
   "devDependencies": {

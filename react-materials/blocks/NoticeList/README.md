@@ -4,4 +4,4 @@
 
 展示站点公告列表
 
-![截图](https://img.alicdn.com/tfs/TB1PzsRpbZnBKNjSZFGXXbt3FXa-1868-1374.png)
+![截图](https://unpkg.com/@icedesign/notice-list-block/screenshot.png)

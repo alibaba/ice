@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Step, Button } from '@icedesign/base';
+import { Step, Button } from '@alifd/next';
 
 const { Item: StepItem } = Step;
 const { Group: ButtonGroup } = Button;

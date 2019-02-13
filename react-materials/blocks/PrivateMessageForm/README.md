@@ -4,4 +4,4 @@
 
 私有消息表单
 
-![截图](https://img.alicdn.com/tfs/TB1KNsWcuOSBuNjy0FdXXbDnVXa-880-512.png)
+![截图](https://unpkg.com/@icedesign/private-message-form-block/screenshot.png)

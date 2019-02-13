@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Icon } from '@icedesign/base';
+import { Grid, Icon } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import './OverView.scss';
 
@@ -14,13 +14,13 @@ export default class History extends Component {
 
   render() {
     return (
-      <IceContainer title="资源概览" >
+      <IceContainer title="资源概览">
         <Row wrap gutter="20">
           <Col l="5">
             <div className="box">
               <div className="box-title">
                 <span className="box-icon">
-                  <Icon className="icon" type="box" />
+                  <Icon className="icon" type="upload" size="xs" />
                 </span>
                 <span>线上主机</span>
               </div>
@@ -36,8 +36,11 @@ export default class History extends Component {
           <Col l="8">
             <div className="box">
               <div className="box-title">
-                <span className="box-icon" style={{ backgroundColor: '#ec7a0e' }}>
-                  <Icon className="icon" type="box" />
+                <span
+                  className="box-icon"
+                  style={{ backgroundColor: '#ec7a0e' }}
+                >
+                  <Icon className="icon" type="download" size="xs" />
                 </span>
                 <span>主机预算</span>
               </div>
@@ -67,10 +70,13 @@ export default class History extends Component {
             </div>
           </Col>
           <Col l="5">
-            <div className="box" >
+            <div className="box">
               <div className="box-title">
-                <span className="box-icon" style={{ backgroundColor: '#5485F7' }}>
-                  <Icon className="icon" type="box" />
+                <span
+                  className="box-icon"
+                  style={{ backgroundColor: '#5485F7' }}
+                >
+                  <Icon className="icon" type="refresh" size="xs" />
                 </span>
                 <span>应用基线</span>
               </div>
@@ -83,10 +89,13 @@ export default class History extends Component {
             </div>
           </Col>
           <Col l="6">
-            <div className="box" >
+            <div className="box">
               <div className="box-title">
-                <span className="box-icon" style={{ backgroundColor: '#f7da47' }}>
-                  <Icon className="icon" type="box" />
+                <span
+                  className="box-icon"
+                  style={{ backgroundColor: '#f7da47' }}
+                >
+                  <Icon className="icon" type="attachment" size="xs" />
                 </span>
                 <span>负载均衡</span>
               </div>

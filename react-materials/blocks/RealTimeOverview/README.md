@@ -2,4 +2,4 @@
 
 简介：实时概况
 
-![截图](https://img.alicdn.com/tfs/TB1GgjAmVOWBuNjy0FiXXXFxVXa-2348-596.png)
+![截图](https://unpkg.com/@icedesign/real-time-overview-block/screenshot.png)

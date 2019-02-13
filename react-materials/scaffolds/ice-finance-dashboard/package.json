@@ -1,0 +1,77 @@
+{
+  "name": "@icedesign/finance-dashboard",
+  "version": "2.0.0",
+  "description": "该模板适用于金融销售类的数据展示大盘，搭配简洁的暗色主题风格和图表类展示",
+  "homepage": "https://unpkg.com/@icedesign/finance-dashboard@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
+  ],
+  "dependencies": {
+    "@alifd/next": "^1.x",
+    "@alifd/theme-1": "^0.0.6",
+    "@antv/data-set": "^0.10.1",
+    "@antv/g2-brush": "^0.0.2",
+    "@icedesign/container": "^1.x",
+    "@icedesign/foundation-symbol": "^1.0.1",
+    "@icedesign/layout": "^1.x",
+    "bizcharts": "^3.4.3",
+    "classnames": "^2.2.5",
+    "jquery": "^3.3.1",
+    "moment": "^2.24.0",
+    "prop-types": "^15.5.8",
+    "react": "^16.4.1",
+    "react-countup": "^4.0.0",
+    "react-dom": "^16.7.0",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.1.1"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/theme",
+    "entry": "src/index.js",
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
+  },
+  "scaffoldConfig": {
+    "builder": "ice-scripts",
+    "name": "ice-finance-dashboard",
+    "title": "金融销售类数据大盘",
+    "categories": [
+      "数据可视化"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1aCNzDbPpK1RjSZFFXXa5PpXa-2872-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1t4iBDHrpK1RjSZTEXXcWAVXa-2872-1580.png",
+      "https://img.alicdn.com/tfs/TB1zAOEDQvoK1RjSZFDXXXY3pXa-2872-1580.png"
+    ]
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

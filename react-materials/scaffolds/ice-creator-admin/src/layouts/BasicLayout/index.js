@@ -5,19 +5,19 @@ import MainRoutes from './MainRoutes';
 import Header from './components/Header';
 import Aside from './components/Aside';
 import Footer from './components/Footer';
-import './index.scss';
+import styles from './index.module.scss';
 
 export default class BasicLayout extends Component {
   render() {
     return (
-      <Layout style={styles.layout}>
+      <Layout className={styles.layout}>
         {/* 顶部导航  */}
         <Header />
-        <Layout.Section style={styles.layoutSecion}>
+        <Layout.Section className={styles.layoutSecion}>
           {/* 侧边导航  */}
           <Aside />
           {/* 主体内容 */}
-          <Layout.Main>
+          <Layout.Main className={styles.layoutMain}>
             <MainRoutes />
           </Layout.Main>
         </Layout.Section>
@@ -27,9 +27,3 @@ export default class BasicLayout extends Component {
   }
 }
 
-const styles = {
-  layoutSecion: {
-    flexDirection: 'row',
-    minHeight: '100vh',
-  },
-};

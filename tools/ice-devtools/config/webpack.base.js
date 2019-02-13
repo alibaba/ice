@@ -1,37 +1,32 @@
 const webpack = require('webpack');
 const WebpackConfig = require('webpack-chain');
 const path = require('path');
-const debug = require('debug')('ice:webpack:base');
 const chalk = require('chalk');
 
 const BABEL_LOADER = require.resolve('babel-loader');
 const STYLE_LOADER = require.resolve('style-loader');
 const CSS_LOADER = require.resolve('css-loader');
 const SASS_LOADER = require.resolve('sass-loader');
-const LESS_LOADER = require.resolve('less-loader');
 const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
-
+const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const WEBPACK_HOT_CLIENT = require.resolve('webpack-hot-client/client');
-// const VUE_STYLE_LOADER = require.resolve('vue-style-loader');
-// const VUE_LOADER = require.resolve('vue-loader');
+const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
+
+const getBabelConfig = require('./getBabelConfig');
+const { getPkgJSON } = require('../utils/pkg-json');
+const internalLibrary = require('../utils/internal-library');
 
 const URL_LOADER = require.resolve('url-loader');
 const URL_LOADER_LIMIT = 8192;
 
-const getBabelConfig = require('./getBabelConfig');
-const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
-const { getPkgJSON } = require('../utils/pkg-json');
-
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
-  // debug('loaders: &')
   config
     .mode(process.env.NODE_ENV === 'production' ? 'production' : 'development')
     .externals({
       react: 'React',
       'react-dom': 'ReactDOM',
-      vue: 'Vue',
     });
 
   config.module
@@ -67,11 +62,38 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   config.module
     .rule('scss')
     .test(/\.s[a|c]ss$/)
+    .exclude.add(/\.module\.scss$/)
+    .end()
     .use('style-loader')
     .loader(STYLE_LOADER)
     .end()
     .use('css-loader')
     .loader(CSS_LOADER)
+    .end()
+    .use('scss-loader')
+    .loader(SASS_LOADER)
+    .end()
+    .use('ice-skin-loader')
+    .loader(ICE_SKIN_LOADER)
+    .options({
+      themeFile: theme && path.join(appNodeModules, `${theme}/variables.scss`),
+      themeConfig,
+    })
+    .end();
+
+  config.module
+    .rule('cssmodule')
+    .use('style-loader')
+    .loader(STYLE_LOADER)
+    .end()
+    .test(/\.module\.scss$/)
+    .use('css-loader')
+    .loader(CSS_LOADER)
+    .options({
+      sourceMap: true,
+      modules: true,
+      localIdentName: '[folder]--[local]--[hash:base64:7]',
+    })
     .end()
     .use('scss-loader')
     .loader(SASS_LOADER)
@@ -136,7 +158,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .rule(/\.(png|jpg|jpeg|gif)$/i)
     .test(/\.(png|jpg|jpeg|gif)$/i)
     .use('url-loader')
-    .loader(URL_LOADER)
+    .loader(URL_LOADER) // default fallback is 'file-loader'
     .options({
       limit: URL_LOADER_LIMIT,
       name: 'images/[hash].[ext]',
@@ -155,8 +177,9 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   config.resolve.extensions
     .add('.js')
     .add('.jsx')
-    .add('.json')
-    .add('.vue');
+    .add('.json');
+
+  config.plugin('progress').use(SimpleProgressPlugin);
 
   config.plugin('define').use(webpack.DefinePlugin, [
     {
@@ -165,32 +188,12 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   ]);
 
   config.plugin('import').use(WebpackPluginImport, [
-    [
-      {
-        libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
+    internalLibrary.map((libraryName) => {
+      return {
+        libraryName,
         stylePath: 'style.js',
-      },
-      {
-        libraryName: /@icedesign\/.*/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /@ali\/ice-.*/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /^@alife\/next\/lib\/([^/]+)/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /^@alifd\/next\/lib\/([^/]+)/,
-        stylePath: 'style.js',
-      },
-      {
-        libraryName: /@alifd\/.*/,
-        stylePath: 'style.js',
-      },
-    ],
+      };
+    }),
   ]);
 
   config.plugin('hot').use(webpack.HotModuleReplacementPlugin);
@@ -203,5 +206,6 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .path(cwd)
     .filename('[name].js')
     .publicPath('./');
+
   return config;
 };

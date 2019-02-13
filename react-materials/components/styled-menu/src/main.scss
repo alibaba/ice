@@ -1,4 +1,4 @@
-@import '~@icedesign/base/lib/core/index.scss';
+@import '~@alifd/next/lib/core/index.scss';
 @import './scss/variable';
 
 #{$ice-menu-prefix} {
@@ -44,7 +44,7 @@
           left: 0;
           bottom: 0;
           width: 4px;
-          background: $color-b1-6;
+          background: $color-brand1-6;
           position: absolute;
         }
       }
@@ -66,7 +66,7 @@
         left: 0;
         bottom: 0;
         width: 4px;
-        background: $color-b1-6;
+        background: $color-brand1-6;
         position: absolute;
       }
     }
@@ -82,7 +82,7 @@
         left: 0;
         bottom: 0;
         width: 4px;
-        background: $color-b1-6;
+        background: $color-brand1-6;
         position: absolute;
       }
     }
@@ -142,7 +142,7 @@
     //   left: 0;
     //   bottom: 0;
     //   width: 4px;
-    //   background: $color-b1-6;
+    //   background: $color-brand1-6;
     //   position: absolute;
     // }
     // > a,
@@ -155,7 +155,7 @@
     //     left: 0;
     //     bottom: 0;
     //     width: 4px;
-    //     background: $color-b1-6;
+    //     background: $color-brand1-6;
     //     position: absolute;
     //   }
     // }
@@ -179,7 +179,7 @@
   //     left: 0;
   //     bottom: 0;
   //     width: 4px;
-  //     background: $color-b1-6;
+  //     background: $color-brand1-6;
   //     position: absolute;
   //   }
   // }
@@ -203,7 +203,7 @@
   //     left: 0;
   //     bottom: 0;
   //     width: 4px;
-  //     background: $color-b1-6;
+  //     background: $color-brand1-6;
   //     position: absolute;
   //   }
   // }
@@ -302,7 +302,7 @@
       //     left: 0;
       //     bottom: 0;
       //     width: 4px;
-      //     background: $color-b1-6;
+      //     background: $color-brand1-6;
       //     position: absolute;
       //   }
       // }
@@ -326,20 +326,20 @@
             left: 0;
             bottom: 0;
             width: 4px;
-            background: $color-b1-6;
+            background: $color-brand1-6;
             position: absolute;
           }
         }
       }
       #{$ice-menu-prefix}-item-selected {
-        background: $color-b1-1;
+        background: $color-brand1-1;
         &:before {
           content: ' ';
           top: 0;
           left: 0;
           bottom: 0;
           width: 4px;
-          background: $color-b1-6;
+          background: $color-brand1-6;
           position: absolute;
         }
       }
@@ -347,7 +347,7 @@
     // #{$ice-menu-prefix}-selected,
     // #{$ice-menu-prefix}-item-selected {
     //   transform: translateZ(0);
-    //   background-color: $color-b1-1;
+    //   background-color: $color-brand1-1;
     //   position: relative;
     //   &:after {
     //     content: ' ';
@@ -355,7 +355,7 @@
     //     left: 0;
     //     bottom: 0;
     //     width: 4px;
-    //     background: $color-b1-6;
+    //     background: $color-brand1-6;
     //     position: absolute;
     //   }
     // }
@@ -379,7 +379,7 @@
     }
 
     // &#{$ice-menu-prefix}-vertical > #{$ice-menu-prefix}-submenu-selected {
-    // background-color: $color-b1-1;
+    // background-color: $color-brand1-1;
     // position: relative;
 
     // &:after {
@@ -388,7 +388,7 @@
     //   left: 0;
     //   bottom: 0;
     //   width: 4px;
-    //   background: $color-b1-6;
+    //   background: $color-brand1-6;
     //   position: absolute;
     // }
     // }
@@ -715,7 +715,7 @@
   //       left: 0;
   //       bottom: 0;
   //       width: 4px;
-  //       background: $color-b1-6;
+  //       background: $color-brand1-6;
   //       position: absolute;
   //     }
   //   }

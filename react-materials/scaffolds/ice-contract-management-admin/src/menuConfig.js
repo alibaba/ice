@@ -5,7 +5,7 @@
 const headerMenuConfig = [
   {
     name: '首页',
-    path: '/contract',
+    path: '/contract/index',
     icon: 'home',
   },
   {
@@ -27,7 +27,7 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: '合同中心',
-    path: '/contract',
+    path: '/contract/index',
     icon: 'home2',
   },
   {

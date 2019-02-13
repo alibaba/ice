@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Dialog } from '@icedesign/base';
+import { Table, Pagination, Dialog, Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import TableHead from './TableHead';
+import styles from './table.module.scss';
 
 // MOCK 数据，实际业务按需进行替换
 const getData = (length = 10) => {
@@ -88,26 +89,24 @@ export default class ModelTable extends Component {
   renderOper = () => {
     return (
       <div>
-        <a
+        <Button
+          type="primary"
+          style={{ marginRight: '5px' }}
           onClick={this.handlePublish}
-          style={{ ...styles.btn, ...styles.publishBtn }}
         >
           发布
-        </a>
-        <a
-          onClick={this.handleDelete}
-          style={{ ...styles.btn, ...styles.deleteBtn }}
-        >
+        </Button>
+        <Button type="primary" warning onClick={this.handleDelete}>
           删除
-        </a>
+        </Button>
       </div>
     );
   };
 
   renderState = (value) => {
     return (
-      <span style={styles.state}>
-        <i style={styles.dot} />
+      <span className={styles.state}>
+        <i className={styles.dot} />
         {value}
       </span>
     );
@@ -117,14 +116,14 @@ export default class ModelTable extends Component {
     const { isLoading, data, current } = this.state;
 
     return (
-      <IceContainer style={styles.container}>
-        <h3 style={styles.title}>模型列表</h3>
+      <IceContainer className={styles.container}>
+        <h3 className={styles.title}>模型列表</h3>
         <TableHead onChange={this.handleFilterChange} />
         <Table
-          isLoading={isLoading}
+          loading={isLoading}
           dataSource={data}
           hasBorder={false}
-          style={styles.table}
+          className={styles.table}
         >
           <Table.Column title="模型服务" dataIndex="modelName" />
           <Table.Column title="最新版本" dataIndex="version" />
@@ -139,7 +138,7 @@ export default class ModelTable extends Component {
           <Table.Column title="操作" cell={this.renderOper} />
         </Table>
         <Pagination
-          style={styles.pagination}
+          className={styles.pagination}
           current={current}
           onChange={this.handlePaginationChange}
         />
@@ -147,54 +146,3 @@ export default class ModelTable extends Component {
     );
   }
 }
-
-const styles = {
-  container: {
-    padding: '0',
-  },
-  table: {
-    padding: '20px',
-  },
-  title: {
-    margin: '0',
-    padding: '15px 20px',
-    fonSize: '16px',
-    color: 'rgba(0, 0, 0, 0.85)',
-    fontWeight: '500',
-    borderBottom: '1px solid #f0f0f0',
-  },
-  btn: {
-    display: 'inline-block',
-    padding: '6px 12px',
-    fontSize: '12px',
-    borderRadius: '4px',
-    color: '#fff',
-    textDecoration: 'none',
-    cursor: 'pointer',
-  },
-  publishBtn: {
-    background: '#5e83fb',
-    marginRight: '8px',
-  },
-  deleteBtn: {
-    background: '#ee706d',
-  },
-  state: {
-    color: '#ee706d',
-    fontWeight: 'bold',
-    position: 'relative',
-  },
-  dot: {
-    width: '8px',
-    height: '8px',
-    background: '#ee706d',
-    borderRadius: '50%',
-    position: 'absolute',
-    top: '4px',
-    left: '-12px',
-  },
-  pagination: {
-    margin: '20px 0',
-    textAlign: 'right',
-  },
-};

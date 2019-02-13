@@ -2,7 +2,7 @@
 
 简介：404 报错提示
 
-![截图](https://img.alicdn.com/tfs/TB1.HyVgyqAXuNjy1XdXXaYcVXa-1914-1066.png)
+![截图](https://unpkg.com/@icedesign/basic-not-found-block/screenshot.png)
 
 
 

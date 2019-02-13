@@ -1,0 +1,27 @@
+.container-card {
+  margin: 30px 0;
+  color: #fff;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+  &-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+  }
+  &-title {
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+  }
+  &-content {
+    padding: 20px;
+  }
+}

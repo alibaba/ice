@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Grid, Button, Select, Feedback } from '@icedesign/base';
+import { Input, Grid, Button, Select, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -10,7 +10,7 @@ import {
 import './UserForm.scss';
 
 const { Row, Col } = Grid;
-const Toast = Feedback.toast;
+const Toast = Message;
 export default class UserForm extends Component {
   static displayName = 'UserForm';
 
@@ -90,7 +90,7 @@ export default class UserForm extends Component {
                 </Col>
                 <Col xxs="16" s="12" l="10">
                   <IceFormBinder name="username" required message="必填">
-                    <Input size="large" placeholder="请输入用户名" />
+                    <Input placeholder="请输入用户名" />
                   </IceFormBinder>
                   <IceFormError name="username" />
                 </Col>
@@ -102,7 +102,7 @@ export default class UserForm extends Component {
                 </Col>
                 <Col xxs="16" s="12" l="10">
                   <IceFormBinder name="displayName">
-                    <Input size="large" placeholder="请输入昵称" />
+                    <Input placeholder="请输入昵称" />
                   </IceFormBinder>
                   <IceFormError name="displayName" />
                 </Col>
@@ -120,7 +120,6 @@ export default class UserForm extends Component {
                     message="请输入正确的邮箱"
                   >
                     <Input
-                      size="large"
                       placeholder="ice-admin@alibaba-inc.com"
                     />
                   </IceFormBinder>
@@ -135,7 +134,6 @@ export default class UserForm extends Component {
                 <Col xxs="16" s="12" l="10">
                   <IceFormBinder name="userGroup">
                     <Select
-                      size="large"
                       placeholder="请选择..."
                       dataSource={[
                         { label: '管理员', value: 'administrator' },
@@ -153,7 +151,6 @@ export default class UserForm extends Component {
                 <Col xxs="16" s="12" l="10">
                   <IceFormBinder name="userState">
                     <Select
-                      size="large"
                       placeholder="请选择..."
                       dataSource={[
                         { label: '有效', value: 'valid' },
@@ -177,7 +174,6 @@ export default class UserForm extends Component {
                   >
                     <Input
                       htmlType="password"
-                      size="large"
                       placeholder="请重新输入新密码"
                     />
                   </IceFormBinder>
@@ -204,7 +200,6 @@ export default class UserForm extends Component {
                   >
                     <Input
                       htmlType="password"
-                      size="large"
                       placeholder="两次输入密码保持一致"
                     />
                   </IceFormBinder>
@@ -217,7 +212,6 @@ export default class UserForm extends Component {
           <Row style={{ marginTop: 20 }}>
             <Col offset="3">
               <Button
-                size="large"
                 type="primary"
                 onClick={this.validateAllFormField}
               >

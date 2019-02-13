@@ -1,14 +1,7 @@
 /* eslint react/no-string-refs:0, array-callback-return:0, react/forbid-prop-types:0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Checkbox,
-  Input,
-  Button,
-  Grid,
-  Select,
-  DatePicker,
-} from '@icedesign/base';
+import { Checkbox, Input, Button, Grid, Select, DatePicker } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -122,14 +115,13 @@ class CustomForm extends Component {
             </Row>
             <div style={styles.buttons}>
               <Button
-                size="large"
                 type="primary"
                 style={{ marginRight: '10px' }}
                 onClick={this.handleSubmit}
               >
                 搜 索
               </Button>
-              <Button size="large" type="normal" onClick={handleReset}>
+              <Button type="normal" onClick={handleReset}>
                 重 置
               </Button>
             </div>

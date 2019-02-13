@@ -12,8 +12,9 @@ export default class Footer extends PureComponent {
       <Layout.Footer
         className={cx('ice-design-layout-footer', className)}
         style={{
-          ...style,
+          backgroundColor: 'transparent',
           lineHeight: '36px',
+          ...style,
         }}
       >
         <div className="ice-design-layout-footer-body">

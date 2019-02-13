@@ -1,6 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 import React, { Component } from 'react';
-import { Icon, Input } from '@icedesign/base';
+import { Icon, Input } from '@alifd/next';
 
 export default class CellEditor extends Component {
   static displayName = 'CellEditor';

@@ -1,0 +1,18 @@
+.iceLayout {
+  min-width: 1200px;
+  min-height: 100vh;
+  background: $color-fill1-1;
+  :global {
+    .ice-menu-custom {
+      width: 240px;
+      height: 100%;
+      padding-top: 20px;
+    }
+  }
+  .iceLayoutSection {
+    margin-top: 65px;
+    .iceLayoutMain {
+      padding: 20px;
+    }
+  }
+}

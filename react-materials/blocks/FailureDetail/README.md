@@ -4,7 +4,7 @@
 
 
 
-![截图](https://gw.alicdn.com/tfs/TB15u0eisLJ8KJjy0FnXXcFDpXa-1326-824.png)
+![截图](https://unpkg.com/@icedesign/failure-detail-block/screenshot.png)
 
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import Overview from './components/Overview';
 import ModelList from './components/ModelList';
 import ModelService from './components/ModelService';

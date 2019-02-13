@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Button, Feedback } from '@icedesign/base';
+import { Input, Button, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -23,7 +23,7 @@ export default class Form extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('提交成功');
+      Message.success('提交成功');
       this.props.history.push('/');
     });
   };
@@ -44,12 +44,12 @@ export default class Form extends Component {
                 required
                 triggerType="onBlur"
                 message="验证地址必填"
+                name="url"
               >
                 <Input
                   placeholder="https://alibaba.github.io/ice/"
                   type="url"
-                  name="url"
-                  size="large"
+
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -61,14 +61,14 @@ export default class Form extends Component {
               <div style={styles.formLabel}>接收邮箱：</div>
               <IceFormBinder
                 required
+                name="email"
                 triggerType="onBlur"
                 message="邮箱地址必填"
               >
                 <Input
                   placeholder="abc@example.com"
                   type="email"
-                  name="email"
-                  size="large"
+
                   style={{ width: '400px' }}
                 />
               </IceFormBinder>
@@ -78,7 +78,7 @@ export default class Form extends Component {
             </div>
             <Button
               type="primary"
-              size="large"
+
               onClick={this.validateAllFormField}
             >
               提 交

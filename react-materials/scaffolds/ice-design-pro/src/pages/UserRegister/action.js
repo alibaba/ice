@@ -16,7 +16,7 @@
  */
 
 import { push } from 'react-router-redux';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -61,13 +61,13 @@ export const userRegister = (params) => {
       const response = await postUserRegister(params);
 
       if (response.data.status === 200) {
-        Feedback.toast.success('注册成功');
+        Message.success('注册成功');
 
         dispatch(userRegisterSuccess(response.data));
 
         dispatch(push('/user/login'));
       } else {
-        Feedback.toast.error('注册失败');
+        Message.error('注册失败');
       }
 
       return response.data;

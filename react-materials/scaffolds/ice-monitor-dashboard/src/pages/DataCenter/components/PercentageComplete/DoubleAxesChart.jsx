@@ -1,3 +1,4 @@
+/* eslint no-plusplus: 0 */
 import React from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 
@@ -117,24 +118,24 @@ class DoubleAxesChart extends React.Component {
             grid={null}
             label={{
               textStyle: {
-                fill: '#fdae6b',
+                fill: '#ee706d',
               },
             }}
           />
           <Tooltip />
-          <Geom type="interval" position="time*waiting" color="#65b6f0" />
+          <Geom type="interval" position="time*waiting" color="#447eff" />
           <Geom
             type="line"
             position="time*people"
-            color="#fdae6b"
-            size={3}
+            color="#ee706d"
+            size={2}
             shape="smooth"
           />
           <Geom
             type="point"
             position="time*people"
-            color="#fdae6b"
-            size={3}
+            color="#ee706d"
+            size={2}
             shape="circle"
           />
         </Chart>

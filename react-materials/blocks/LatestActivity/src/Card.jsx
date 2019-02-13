@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import RankList from './RankList';
 
 const { Row, Col } = Grid;

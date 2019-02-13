@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from '@icedesign/base';
+import { Table } from '@alifd/next';
 
 // MOCK 数据，实际业务按需进行替换
 const getData = () => {

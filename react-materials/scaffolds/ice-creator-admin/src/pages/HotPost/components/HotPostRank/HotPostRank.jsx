@@ -1,6 +1,6 @@
 import Container from '@icedesign/container';
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 
 import HotPostRankItem from './HotPostRankItem';
 
