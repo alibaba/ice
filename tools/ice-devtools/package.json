@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "ice 物料开发者工具",
   "main": "bin/ice-devtools.js",
   "bin": {
@@ -83,6 +83,8 @@
     "url-loader": "^1.1.2",
     "user-home": "^2.0.0",
     "validate-npm-package-name": "^3.0.0",
+    "vue-loader": "^15.5.1",
+    "vue-style-loader": "^4.1.2",
     "webpack": "^4.27.0",
     "webpack-chain": "^5.2.0",
     "webpack-dev-server": "^3.1.10",

@@ -12,7 +12,6 @@ const validateName = require('validate-npm-package-name');
 const logger = require('../../utils/logger');
 const download = require('../../utils/download');
 const generate = require('../../utils/generate');
-const pkgJSON = require('../../utils/pkg-json');
 
 /**
  * @param{String} type 类型
@@ -21,16 +20,16 @@ const pkgJSON = require('../../utils/pkg-json');
  */
 module.exports = async function addBlock(type, cwd, opt, ...argvOpts) {
   if (opt.hasArgvOpts) {
-    await execArgv(cwd, ...argvOpts);
+    await execArgv(cwd, opt, ...argvOpts);
   } else {
     await execAsk(type, cwd, opt, ...argvOpts);
   }
 };
 
-async function execArgv(cwd, ...argvOpts) {
-  const blockName = await getBlockName(cwd);
+async function execArgv(cwd, opt, ...argvOpts) {
+  const blockName = await getBlockName();
   const blockNpmName = await getBlockNpmName(blockName);
-  const blockSource = argvOpts[1];
+  const blockSource = opt.templateSource;
   const blockDest = path.join(cwd, blockName);
 
   if (exists(blockDest)) {
@@ -40,7 +39,7 @@ async function execArgv(cwd, ...argvOpts) {
   generateTemplate({ blockName, blockNpmName, blockSource, blockDest });
 }
 
-function defaultQuestion(pkg) {
+function defaultQuestion(opt) {
   return [
     {
       type: 'input',
@@ -50,7 +49,7 @@ function defaultQuestion(pkg) {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
           return 'Name must be a Upper Camel Case word, e.g. ExampleBlock.';
         }
-        const npmName = getBlockNpmName(value, pkg);
+        const npmName = getBlockNpmName(value, opt);
         if (!validateName(npmName).validForNewPackages) {
           return `this block name(${npmName}) has already exist. please retry`;
         }
@@ -63,8 +62,8 @@ function defaultQuestion(pkg) {
 async function execAsk(type, cwd, opt, argvOpts) {
   const templateName = `@icedesign/ice-${type}-block-template`;
   const blockSource = await downloadTemplate(templateName);
-  const blockName = await getBlockName(cwd);
-  const blockNpmName = getBlockNpmName(blockName, opt.pkg);
+  const blockName = await getBlockName(opt);
+  const blockNpmName = getBlockNpmName(blockName, opt);
   const blockDest = path.join(cwd, 'blocks', blockName);
 
   generateTemplate({ blockName, blockNpmName, blockSource, blockDest });
@@ -73,9 +72,8 @@ async function execAsk(type, cwd, opt, argvOpts) {
 /**
  * 获取区块的文件名
  */
-async function getBlockName(cwd) {
-  const pkg = pkgJSON.getPkgJSON(cwd);
-  const questions = defaultQuestion(pkg);
+async function getBlockName(opt = {}) {
+  const questions = defaultQuestion(opt); 
   const { blockName } = await inquirer.prompt(questions);
   return blockName;
 }
@@ -84,13 +82,15 @@ async function getBlockName(cwd) {
  * 获取区块的 npm 名
  * @param {string} blockName
  */
-function getBlockNpmName(blockName, pkg = {}) {
+function getBlockNpmName(blockName, opt = {}) {
   const blockKebabCase = kebabCase(blockName).replace(/^-/, '');
 
   let npmName;
 
-  if (pkg.name) {
-    npmName = `${pkg.name}-${blockKebabCase}`;
+  if (opt.scope) {
+    npmName = opt.scope + '/' + blockKebabCase;
+  } else if (opt.pkg && opt.pkg.name) {
+    npmName = `${opt.pkg.name}-${blockKebabCase}`;
   } else {
     npmName = blockKebabCase;
   }

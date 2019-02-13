@@ -1,7 +1,9 @@
 # ice-scripts Changelog
 
-## 2.1.3
+## 2.1.4
+- [feat] 兼容 ice 仓库的目录结构
 
+## 2.1.3
 - [feat] 支持 CSS Modules
 
 ## 2.1.2

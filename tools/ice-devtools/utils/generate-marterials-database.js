@@ -63,11 +63,8 @@ function generateBlocks(files, SPACE, type, done) {
       source: {
         type: 'npm',
         npm: pkg.name,
-        version: pkg.version,
+        version: pkgConfig['version-0.x'] || pkg.version,
         registry,
-
-        // layout or block need src/
-        sourceCodeDirectory: 'src/',
       },
       // (必) 用于说明组件依赖关系
       dependencies: pkg.dependencies || {},
@@ -78,6 +75,15 @@ function generateBlocks(files, SPACE, type, done) {
       categories: pkgConfig.categories || [],
       // publishTime: pkg.publishTime || new Date().toISOString(),
     };
+
+    if (type === 'block') {
+      payload.source['version-0.x'] = pkg.version;
+    }
+
+    // layout or block need src/
+    if (type === 'block' || type === 'layout') {
+      payload.source.sourceCodeDirectory = 'src/';
+    }
 
     if (type !== 'component' && fs.existsSync(indexPoint)) {
       const componentDeps = depAnalyze(indexPoint);
@@ -175,6 +181,9 @@ function generateBlocks(files, SPACE, type, done) {
         console.error(status.npm, status.version);
         console.error(status.message);
       });
+      console.log();
+      console.error(chalk.red('material db generate error'));
+      console.log();
       process.exit(1);
     }
     done(result);
@@ -287,6 +296,9 @@ function generateScaffolds(files, SPACE, done) {
         console.error(status.npm, status.version);
         console.error(status.message);
       });
+      console.log();
+      console.error(chalk.red('material db generate error'));
+      console.log();
       process.exit(1);
     }
     done(result);
@@ -371,6 +383,7 @@ function appendFieldFromNpm(item) {
 // entry and run
 module.exports = function generateMaterialsDatabases(
   materialName,
+  materialType,
   materialPath,
   options
 ) {
@@ -389,6 +402,7 @@ module.exports = function generateMaterialsDatabases(
     .then(([blocks, layouts, components, scaffolds]) => {
       const data = {
         name: materialName, // 物料池名
+        type: materialType,
         ...options,
         blocks,
         layouts,
@@ -400,8 +414,6 @@ module.exports = function generateMaterialsDatabases(
       fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
       console.log();
       console.log(`Created ${materialName} json at: ` + chalk.yellow(file));
-      console.log();
-      console.log('The build folder is ready to be deployed.');
       console.log();
     })
     .catch((err) => {

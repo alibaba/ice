@@ -36,5 +36,9 @@
   "typings": "lib/index.d.ts",
   "publishConfig": {
     "access": "public"
+  },
+  "componentConfig": {
+    "name": "styled-menu",
+    "title": "导航组件体验版"
   }
 }
