@@ -8,7 +8,7 @@ const getTempPath = require('../utils/temp-path');
 
 console.log('process.platform:', process.platform);
 
-module.exports = function getWebpacksConfig(cwd, type) {
+module.exports = function getWebpacksConfig(cwd, type = 'react') {
   const config = getWebpackBaseConfig(cwd);
 
   // 增加入口文件  index.js
