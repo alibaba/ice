@@ -222,7 +222,7 @@ function generateScaffolds(files, SPACE, done) {
       dependencies: pkg.dependencies || {},
       devDependencies: pkg.devDependencies || {},
       // (必) 截图
-      screenshot: screenshot,
+      screenshot,
       // 站点模板预览需要多张截图
       screenshots: pkg.scaffoldConfig.screenshots || [screenshot],
 
