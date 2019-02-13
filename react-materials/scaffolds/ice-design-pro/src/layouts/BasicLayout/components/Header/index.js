@@ -7,6 +7,7 @@ import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
 import { Link, withRouter } from 'react-router-dom';
 import { headerMenuConfig } from '../../../../menuConfig';
+import SelectLang from '../../../../components/SelectLang';
 import Logo from '../Logo';
 
 import './index.scss';
@@ -55,6 +56,9 @@ export default class Header extends PureComponent {
           ) : null}
           {/* Header 菜单项 end */}
 
+          {/* 多语言选择 */}
+          <SelectLang />
+
           {/* Header 右侧内容块 */}
           <Balloon
             trigger={
@@ -70,7 +74,11 @@ export default class Header extends PureComponent {
                   <br />
                   <span className="user-department">技术部</span>
                 </div>
-                <FoundationSymbol type="angle-down" size="small" className="icon-down" />
+                <FoundationSymbol
+                  type="angle-down"
+                  size="small"
+                  className="icon-down"
+                />
               </div>
             }
             closable={false}

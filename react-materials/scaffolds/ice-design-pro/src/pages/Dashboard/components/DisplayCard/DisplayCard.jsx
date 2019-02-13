@@ -1,5 +1,6 @@
 /* eslint react/jsx-no-target-blank: 0 */
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 import IceContainer from '@icedesign/container';
 import { Balloon, Grid } from '@alifd/next';
 
@@ -38,7 +39,7 @@ export default class extends Component {
         <Row wrap>
           <Col xxs="24" s="12" l="6" style={styles.item}>
             <div style={styles.title}>
-              昨日内容浏览次数
+              <FormattedMessage id="app.dashboard.view" />
               <span style={styles.extraIcon}>
                 <Balloon
                   trigger={
