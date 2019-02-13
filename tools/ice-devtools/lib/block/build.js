@@ -2,9 +2,11 @@ const webpack = require('webpack');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const logger = require('../../utils/logger');
 const getBaseConfig = require('../../config/webpack.block');
+const getBlockType = require('../../utils/block-type');
 
 module.exports = function buildBlock(cwd, opt) {
-  const config = getBaseConfig(cwd);
+  const blockType = getBlockType(cwd);
+  const config = getBaseConfig(cwd, blockType);
   config.mode('production');
   config.plugin('progress').use(ProgressBarPlugin);
 
