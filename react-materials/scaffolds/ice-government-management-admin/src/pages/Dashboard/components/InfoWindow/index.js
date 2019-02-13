@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './index.module.scss';
 
 const mock = [
   {
@@ -33,18 +34,18 @@ export default class InfoWindow extends Component {
 
   render() {
     return (
-      <div style={styles.container}>
-        <div style={styles.card}>
-          <h4 style={styles.title}>信息窗</h4>
+      <div className={styles.container}>
+        <div className={styles.card}>
+          <h4 className={styles.title}>信息窗</h4>
           <ul>
             {mock.map((item, index) => {
               return (
-                <li style={styles.list} key={index}>
-                  <span style={styles.listLeft}>
-                    <span style={styles.circle} />
+                <li className={styles.list} key={index}>
+                  <span className={styles.listLeft}>
+                    <span className={styles.circle} />
                     {item.title}
                   </span>
-                  <span style={styles.date}>[{item.date}]</span>
+                  <span className={styles.date}>[{item.date}]</span>
                 </li>
               );
             })}
@@ -54,58 +55,3 @@ export default class InfoWindow extends Component {
     );
   }
 }
-
-const styles = {
-  container: {
-    width: '50%',
-    boxSizing: 'border-box',
-    padding: '10px',
-  },
-  card: {
-    width: '100%',
-    padding: '24px',
-    color: '#44426e',
-    fontSize: '16px',
-    backgroundColor: 'white',
-    borderRadius: '16px',
-    overflow: 'hidden',
-    position: 'relative',
-  },
-  title: {
-    marginTop: '0',
-    marginBottom: '20px',
-    borderLeft: '5px solid #447eff',
-    paddingLeft: '10px',
-    lineHeight: '20px',
-  },
-  list: {
-    margin: '16px 0',
-    color: '#454973',
-    fontSize: '14px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    cursor: 'pointer',
-  },
-  circle: {
-    border: '1px solid #0059da',
-    borderRadius: '50%',
-    width: '7px',
-    height: '7px',
-    marginRight: '10px',
-    display: 'inline-block',
-  },
-  date: {
-    alignSelf: 'flex-end',
-    display: 'inline-block',
-    textAlign: 'right',
-    whiteSpace: 'nowrap',
-    flex: '1',
-  },
-  listLeft: {
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    cursor: 'pointer',
-  },
-};

@@ -1,0 +1,21 @@
+.aside-custom-menu {
+  width: 240px;
+  .user-info {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    justify-content: center;
+    padding: 20px 0;
+    .user-avatar {
+      margin-right: 12px;
+      border-radius: 4px;
+    }
+
+    .user-department {
+      font-size: 12px;
+    }
+  }
+  .ice-menu-item-text {
+    padding-left: 1em;
+  }
+}

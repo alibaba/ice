@@ -1,0 +1,60 @@
+.titleWrapper {
+  height: 60px;
+  padding: 0 20px;
+  line-height: 60px;
+  border-radius: 6px;
+  background-color: #fff;
+}
+.navItemWraper {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  line-height: 60px;
+}
+.postCategoryList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.postCategoryItem {
+  flex: 0 0 49%;
+  width: 49%;
+  padding: 10px;
+  display: flex;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  flex-direction: row;
+  background-color: #f6f6f6;
+}
+.coverWrapper {
+  padding-right: 14px;
+}
+.blockDetail {
+  width: 100%;
+  position: relative;
+}
+.blockTitle {
+  padding: 6px 0;
+  font-size: $font-size-subhead;
+}
+.blockItem {
+  display: flex;
+}
+.blockLable {
+  flex: 0 0 60px;
+  font-size: 12px;
+  line-height: 22px;
+}
+.blockDesc {
+  color: #999;
+  font-size: 12px;
+  line-height: 22px;
+}
+.blockBtn {
+  right: 10px;
+  color: #fff;
+  bottom: 10px;
+  position: absolute;
+  background: #5e83fb;
+  border-radius: 3px;
+}

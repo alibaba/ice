@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 
 const all = [
@@ -111,7 +111,7 @@ const all = [
 
 class App extends Component {
   copied = () => {
-    Feedback.toast.success('复制成功！');
+    Message.success('复制成功！');
   };
 
   renderIcon = (type, idx) => {

@@ -1,0 +1,17 @@
+.ice-design-layout-footer-body {
+  width: 100%;
+  margin: 20px auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .copyright {
+    color: #666;
+    line-height: 1.5;
+    font-size: 12px;
+    text-align: left;
+  }
+  .copyright-link {
+    color: #666;
+  }
+}

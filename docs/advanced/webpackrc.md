@@ -43,6 +43,8 @@ Options:
 
 ```bash
 $ ice dev -p=3000
+# 或者
+$ npm run start -- -p=3000
 ```
 
 比如开启 https
@@ -66,36 +68,6 @@ Options:
   --project-type <type>  项目类型, node|web (default: "web")
   --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime (default: "polyfill")
 ```
-
-## 主题配置 - themeConfig
-
-ICE 提供了主题功能，以满足业务和品牌多样化的视觉需求，包括但不限于主色、圆角、边框等的视觉自定义配置。
-
-- Layout 主题配置：由 Layout 提供能力支持，比如可传入 dark 、Light 或者其他自定义的主题（注：需要看模板是否支持 Layout 主题配置）
-- 组件主题配置：由基础组件提供能力支持，通过主题功能可以实现对组件基础样式的个性化配置
-
-需要在 package.json 中新增 themeConfig 字段进行配置，默认的 icedesign 风格由皮肤包 @icedesign/skin 提供，你也可以基于该皮肤包进一步定制:
-
-```json
-// in package.json
-
-...
-
-"buildConfig": {
-  "theme": "@icedesign/skin", // 主题包
-},
-"themeConfig": {
-  "theme": "dark",            // layout 主题配置
-  "primaryColor": "red",      // 主品牌色
-  "secondaryColor": "grey",   // 副品牌色
-},
-
-...
-```
-
-## 代理配置 - proxyConfig
-
-参考 [Iceworks 插件-代理配置](#/docs/iceworks/plugins-proxy)
 
 ## 构建配置 - buildConfig
 
@@ -230,8 +202,7 @@ module.exports = () => {
     //...
     resolve: {
       alias: {
-        Utilities: path.resolve(__dirname, 'src/utilities/'),
-        Templates: path.resolve(__dirname, 'src/templates/'),
+        '@components': path.resolve(__dirname, 'src/components/'),
       },
     },
   };
@@ -241,8 +212,8 @@ module.exports = () => {
 现在，替换「在导入时使用相对路径」这种方式，就像这样：
 
 ```diff
--import Utility from '../../utilities/utility';
-+import Utility from 'Utilities';
+-import CustomTips from '../../../components/CustomTips';
++import CustomTips from '@components/CustomTips';
 ```
 
 ### Mock
@@ -264,7 +235,38 @@ export default {
 };
 ```
 
-### 使用 public 目录
+## 使用 public 目录
 
 我们约定 public 目录下的文件会在 dev 和 build 时被自动 copy 到输出目录（默认是 ./build）下。所以可以在这里存放
 favicon, index.html 等。
+
+## CSS Modules
+
+[CSS Modules](https://github.com/css-modules/css-modules) 可以有效解决样式的冲突等问题，ice-scripts 支持 CSS Modules 能力。只需要将样式文件的后缀名改为 `.module.[css/scss/less]`，即可使用 CSS Modules 的能力：
+
+```css
+/* index.module.scss */
+.btn {
+  color: green;
+}
+
+.tips {
+  font-size: 12px;
+}
+```
+
+```js
+// index.js
+import styles from './index.module.scss';
+
+<Button className={styles.btn}>OK</Button>
+```
+
+## 主题配置 - themeConfig
+
+参考 [切换项目主题](#/docs/advanced/use-theme)
+
+## 代理配置 - proxyConfig
+
+参考 [Iceworks 插件-代理配置](#/docs/iceworks/plugins-proxy)
+

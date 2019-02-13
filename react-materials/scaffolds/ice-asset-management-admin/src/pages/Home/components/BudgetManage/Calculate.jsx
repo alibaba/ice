@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Dialog } from '@icedesign/base';
+import { Table, Pagination, Dialog } from '@alifd/next';
 import { withRouter } from 'react-router-dom';
 import TableHead from './TableHead';
 
@@ -100,11 +100,11 @@ export default class Calculate extends Component {
     return (
       <div style={styles.container}>
         <TableHead onChange={this.handleFilterChange} />
-        <Table isLoading={isLoading} dataSource={data} hasBorder={false}>
+        <Table loading={isLoading} dataSource={data} hasBorder={false}>
           <Table.Column title="部门名称" dataIndex="department" />
           <Table.Column title="接口人" dataIndex="name" />
-          <Table.Column title="财年预算(万元)" dataIndex="yearBudget" />
-          <Table.Column title="追加预算(万元)" dataIndex="appendBudget" />
+          <Table.Column width={150} title="财年预算(万元)" dataIndex="yearBudget" />
+          <Table.Column width={150} title="追加预算(万元)" dataIndex="appendBudget" />
           <Table.Column title="分配率(%)" dataIndex="distributionRate" />
           <Table.Column title="已使用(KCU)" dataIndex="uesed" />
           <Table.Column title="使用率(%)" dataIndex="usagRate" />
@@ -122,7 +122,7 @@ export default class Calculate extends Component {
 
 const styles = {
   container: {
-    margin: '10px 0',
+    padding: '0 20px 20px',
   },
   link: {
     margin: '0 5px',

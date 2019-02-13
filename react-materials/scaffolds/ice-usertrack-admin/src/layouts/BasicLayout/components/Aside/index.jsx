@@ -1,13 +1,14 @@
 /* eslint no-undef:0, no-unused-expressions:0, array-callback-return:0 */
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import FoundationSymbol from 'foundation-symbol';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import Layout from '@icedesign/layout';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
+import { Nav } from '@alifd/next';
 import React, { Component } from 'react';
 import { asideMenuConfig } from '../../../../menuConfig';
 import './index.scss';
 
+const { SubNav, Item } = Nav;
 @withRouter
 export default class Aside extends Component {
   constructor(props) {
@@ -18,7 +19,6 @@ export default class Aside extends Component {
     };
     this.openKeysCache = openKeys;
   }
-
   /**
    * 当前展开的菜单项
    */
@@ -28,7 +28,6 @@ export default class Aside extends Component {
     });
     this.openKeysCache = openKeys;
   };
-
   /**
    * 获取当前展开的菜单项
    */
@@ -54,13 +53,11 @@ export default class Aside extends Component {
 
     return (
       <Layout.Aside width="240" theme="light" className="custom-aside">
-        <Menu
+        <Nav
           defaultSelectedKeys={[pathname]}
-          mode="inline"
           selectedKeys={[pathname]}
+          onOpen={this.onOpenChange}
           openKeys={this.state.openKeys}
-          onOpenChange={this.onOpenChange}
-          onClick={this.onMenuClick}
           className="custom-menu"
         >
           {Array.isArray(asideMenuConfig) &&
@@ -68,9 +65,9 @@ export default class Aside extends Component {
             asideMenuConfig.map((nav, index) => {
               if (nav.children && nav.children.length > 0) {
                 return (
-                  <SubMenu
+                  <SubNav
                     key={index}
-                    title={
+                    label={
                       <span>
                         {nav.icon ? (
                           <FoundationSymbol size="small" type={nav.icon} />
@@ -92,12 +89,12 @@ export default class Aside extends Component {
                         linkProps.to = item.path;
                       }
                       return (
-                        <MenuItem key={item.path}>
+                        <Item key={item.path}>
                           <Link {...linkProps}>{item.name}</Link>
-                        </MenuItem>
+                        </Item>
                       );
                     })}
-                  </SubMenu>
+                  </SubNav>
                 );
               }
               const linkProps = {};
@@ -110,7 +107,7 @@ export default class Aside extends Component {
                 linkProps.to = nav.path;
               }
               return (
-                <MenuItem key={nav.path}>
+                <Item key={nav.path}>
                   <Link {...linkProps}>
                     <span>
                       {nav.icon ? (
@@ -119,10 +116,10 @@ export default class Aside extends Component {
                       <span className="ice-menu-collapse-hide">{nav.name}</span>
                     </span>
                   </Link>
-                </MenuItem>
+                </Item>
               );
             })}
-        </Menu>
+        </Nav>
         {/* 侧边菜单项 end */}
       </Layout.Aside>
     );

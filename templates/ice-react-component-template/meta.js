@@ -1,54 +1,55 @@
-function camelize(str) {
-  return str
-    .trim()
-    .replace(/^[_.\- ]+/, '')
-    .toLowerCase()
-    .replace(/[_.\- ]+(\w|$)/g, function (m, p1) {
-      return p1.toUpperCase();
-    });
-}
-
-function uppercamelcase(str) {
-  const cased = camelize(str);
-  return cased.charAt(0).toUpperCase() + cased.slice(1);
-}
+// 默认配置
+const CATEGORIES = [
+  '表格',
+  '表单',
+  '图表',
+  '列表',
+  '模态框',
+  '筛选',
+  '数据展示',
+  '信息展示',
+  '其他',
+];
 
 module.exports = {
   prompts: {
-    name: {
+    title: {
       type: 'input',
-      message: 'Input Component Name',
-      default: 'react-component',
+      message: 'title',
+      default: 'demo component',
       validate: (value) => {
         value = value.trim();
-        if (/[A-Z_]/.test(value)) {
-          return 'Component name cannot be uppercase or underscore.'
-        }
         if (!value) {
-          return 'Component name cannot be empty!';
+          return 'title cannot be empty';
         }
         return true;
       },
     },
-    className: {
-      type: 'input',
-      message: 'Input Component className',
-      default: (ans) => {
-        return uppercamelcase(ans.name);
-      },
-      validate: (value) => {
-        value = value.trim();
-        if (!value) {
-          return 'Component className cannot be empty!';
-        }
-        return true;
-      },
+    version: {
+      type: 'string',
+      required: true,
+      message: 'version',
+      default: '1.0.0',
     },
     description: {
       type: 'string',
-      required: false,
-      default: '',
-      message: 'description (not required)',
+      required: true,
+      message: 'description',
+      validate: (value) => {
+        value = value.trim();
+        if (!value) {
+          return 'description cannot be empty';
+        }
+        return true;
+      },
+    },
+    categories: {
+      type: 'checkbox',
+      message: 'categories',
+      choices: CATEGORIES,
+      filter: (answer) => {
+        return answer;
+      },
     },
   },
 };

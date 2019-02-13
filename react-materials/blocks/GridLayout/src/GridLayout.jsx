@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IceContainer from '@icedesign/container';
-import { Button } from '@icedesign/base';
+import { Button } from '@alifd/next';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import './GridLayout.scss';
 

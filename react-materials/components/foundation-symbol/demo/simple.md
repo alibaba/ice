@@ -19,7 +19,14 @@ class App extends Component {
       <div>
         自定义图标集图标：
         <div>
-          <FoundationSymbol type="bangzhu" />
+          <FoundationSymbol type="bangzhu" size="xxs" />
+          <FoundationSymbol type="bangzhu" size="xs" />
+          <FoundationSymbol type="bangzhu" size="small" />
+          <FoundationSymbol type="bangzhu" size="medium" />
+          <FoundationSymbol type="bangzhu" size="large" />
+          <FoundationSymbol type="bangzhu" size="xl" />
+          <FoundationSymbol type="bangzhu" size="xxl" />
+          <FoundationSymbol type="bangzhu" size="xxxl" />
         </div>
         <div>
           <FoundationSymbol type="font-size" />

@@ -1,15 +1,17 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Grid, Button } from '@icedesign/base';
-import {
-  FormBinderWrapper as IceFormBinderWrapper,
-  FormBinder as IceFormBinder,
-  FormError as IceFormError,
-} from '@icedesign/form-binder';
+import { Input, Grid, Button, Form, SplitButton } from '@alifd/next';
+
 import './ChangePasswordForm.scss';
 
 const { Row, Col } = Grid;
+const FormItem = Form.Item;
+
+const formItemLayout = {
+  labelCol: { xxs: 7, s: 4, l: 3 },
+  wrapperCol: { xxs: 16, s: 10, l: 7 }
+};
 
 export default class ChangePasswordForm extends Component {
   static displayName = 'ChangePasswordForm';
@@ -55,84 +57,65 @@ export default class ChangePasswordForm extends Component {
     });
   };
 
-  validateAllFormField = () => {
-    this.refs.form.validateAll((errors, values) => {
-      console.log('values', values);
-    });
+  validateAllFormField = (values, errors) => {
+    console.log('error', errors, 'value', values);
+    if (!errors) {
+      // 提交当前填写的数据
+    } else {
+      // 处理表单报错
+    }
   };
 
   render() {
     return (
       <div className="change-password-form">
         <IceContainer>
-          <IceFormBinderWrapper
+          <Form
             value={this.state.value}
             onChange={this.formChange}
             ref="form"
+            size="large"
           >
             <div style={styles.formContent}>
               <h2 style={styles.formTitle}>修改密码</h2>
-
-              <Row wrap style={styles.formItem}>
-                <Col xxs="7" s="4" l="3" style={styles.formLabel}>
-                  新密码：
-                </Col>
-                <Col xxs="16" s="10" l="7">
-                  <IceFormBinder
-                    name="passwd"
-                    required
-                    validator={this.checkPasswd}
-                  >
-                    <Input
-                      htmlType="password"
-                      size="large"
-                      placeholder="请重新输入新密码"
-                    />
-                  </IceFormBinder>
-                  <IceFormError name="passwd" />
-                </Col>
-              </Row>
-
-              <Row wrap style={styles.formItem}>
-                <Col xxs="7" s="4" l="3" style={styles.formLabel}>
-                  确认密码：
-                </Col>
-                <Col xxs="16" s="10" l="7">
-                  <IceFormBinder
-                    name="rePasswd"
-                    required
-                    validator={(rule, values, callback) =>
-                      this.checkPasswd2(
-                        rule,
-                        values,
-                        callback,
-                        this.state.value
-                      )
-                    }
-                  >
-                    <Input
-                      htmlType="password"
-                      size="large"
-                      placeholder="两次输入密码保持一致"
-                    />
-                  </IceFormBinder>
-                  <IceFormError name="rePasswd" />
-                </Col>
-              </Row>
+              <FormItem label="新密码：" {...formItemLayout} validator={this.checkPasswd}>
+                <Input
+                  name="passwd"
+                  htmlType="password"
+                  size="large"
+                  placeholder="请重新输入新密码"
+                />
+              </FormItem>
+              <FormItem label="确认密码：" {...formItemLayout} validator={(rule, values, callback) =>
+                this.checkPasswd2(
+                  rule,
+                  values,
+                  callback,
+                  this.state.value
+                )
+              }>
+                <Input
+                  name="rePasswd"
+                  htmlType="password"
+                  size="large"
+                  placeholder="两次输入密码保持一致"
+                />
+              </FormItem>
             </div>
-          </IceFormBinderWrapper>
 
-          <Row wrap style={{ marginTop: 20 }}>
-            <Col xxs={{ offset: 6 }} s={{ offset: 3 }}>
-              <Button
-                size="large"
-                type="primary"
-                onClick={this.validateAllFormField}
-              >
-                提 交
-              </Button>
-            </Col>
-          </Row>
+            <Row wrap style={{ marginTop: 20 }}>
+              <Col xxs={{ offset: 6 }} s={{ offset: 3 }}>
+                <Form.Submit
+                  size="large"
+                  validate
+                  type="primary"
+                  onClick={this.validateAllFormField}
+                >
+                  提 交
+              </Form.Submit>
+              </Col>
+            </Row>
+          </Form>
         </IceContainer>
       </div>
     );

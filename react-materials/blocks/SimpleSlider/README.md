@@ -2,4 +2,4 @@
 
 简介：图片轮播
 
-![截图](https://img.alicdn.com/tfs/TB19Gn3dNGYBuNjy0FnXXX5lpXa-2348-750.png)
+![截图](https://unpkg.com/@icedesign/simple-slider-block/screenshot.png)

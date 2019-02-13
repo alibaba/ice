@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Button, Step } from '@icedesign/base';
+import { Button, Step } from '@alifd/next';
 
 export default class SuccessDetail extends Component {
   static displayName = 'SuccessDetail';
@@ -39,7 +39,7 @@ export default class SuccessDetail extends Component {
           <p className="descrpiton" style={styles.descrpiton}>
             如果有跟多细节需要展示，可以补充在下面这里，一些相关的介绍和描述
           </p>
-          <Step current={current} type={type} style={styles.nextStep}>
+          <Step current={current} shape={type} style={styles.nextStep}>
             {value.map((item, index) => {
               return <Step.Item key={index} title={item} />;
             })}

@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table } from '@icedesign/base';
+import { Table } from '@alifd/next';
 
 export default class CustomTable extends Component {
   static displayName = 'CustomTable';

@@ -4,4 +4,4 @@
 
 支持时间筛选的表格
 
-![截图](https://img.alicdn.com/tfs/TB153PlcxGYBuNjy0FnXXX5lpXa-2354-1000.png)
+![截图](https://unpkg.com/@icedesign/time-filter-table-block/screenshot.png)

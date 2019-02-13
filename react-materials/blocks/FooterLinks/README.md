@@ -4,4 +4,4 @@
 
 通用的底部链接区块
 
-![截图]()
+![截图](https://unpkg.com/@icedesign/footer-links-block/screenshot.png)

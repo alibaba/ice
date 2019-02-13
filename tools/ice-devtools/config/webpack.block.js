@@ -8,20 +8,18 @@ const getTempPath = require('../utils/temp-path');
 
 console.log('process.platform:', process.platform);
 
-const hbsPath = path.join(__dirname, '../template/preview/block.html.hbs');
-
-module.exports = function getWebpacksConfig(cwd) {
+module.exports = function getWebpacksConfig(cwd, type = 'react') {
   const config = getWebpackBaseConfig(cwd);
 
   // 增加入口文件  index.js
   const entry = path.join(cwd, 'src/index.js');
   const hbsTemplatePath = path.join(
     __dirname,
-    '../template/preview/block-react-index.js.hbs'
+    `../template/preview/block-${type}-index.js.hbs`
   );
 
   const tempPath = getTempPath();
-  const jsPath = path.join(tempPath, 'block-react-index.js');
+  const jsPath = path.join(tempPath, `block-${type}-index.js`);
   debug('%j', { entry, jsPath });
   const hbsTemplateContent = fs.readFileSync(hbsTemplatePath, 'utf-8');
   const compileTemplateContent = hbs.compile(hbsTemplateContent);
@@ -40,7 +38,7 @@ module.exports = function getWebpacksConfig(cwd) {
 
   config.plugin('html').use(HtmlWebpackPlugin, [
     {
-      template: hbsPath,
+      template: path.join(__dirname, `../template/preview/block.${type}.html.hbs`),
     },
   ]);
   return config;

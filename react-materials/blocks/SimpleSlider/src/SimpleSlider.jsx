@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Slider } from '@icedesign/base';
+import { Slider } from '@alifd/next';
 
 const slides = [
   {

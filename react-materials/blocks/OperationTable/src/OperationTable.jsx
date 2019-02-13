@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
-import { Table, Pagination, Icon, Feedback } from '@icedesign/base';
+import { Table, Pagination, Icon, Message } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import IceImg from '@icedesign/img';
 import IceLabel from '@icedesign/label';
@@ -95,7 +95,7 @@ export default class OperationTable extends Component {
       onOk: (value) => {
         // 更新数据
         console.log(value);
-        Feedback.toast.success('更新成功');
+        Message.success('更新成功');
         EditorInfoDialog.hide();
       },
       onClose: () => {
@@ -147,7 +147,7 @@ export default class OperationTable extends Component {
         <IceContainer style={styles.cardContainer}>
           <Table
             dataSource={tableData.list}
-            isLoading={tableData.__loading}
+            loading={tableData.__loading}
             className="basic-table"
             style={styles.basicTable}
             hasBorder={false}

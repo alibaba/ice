@@ -10,18 +10,18 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import BalloonConfirm from '@icedesign/balloon-confirm';
-import { Button, Feedback } from '@icedesign/base';
+import { Button, Message } from '@alifd/next';
 
 
 class App extends Component {
   onConfirm = (e) => {
     console.log('ok');
-    Feedback.toast.success('click on ok')
+    Message.success('click on ok')
   }
 
   onCancel = (e) => {
     console.log('cancel');
-    Feedback.toast.error('click on cancel')
+    Message.error('click on cancel')
   }
 
   render() {

@@ -1,8 +1,19 @@
-.header-navbar-menu {
+.next-nav.header-navbar-menu {
+  display: flex;
   background: #fff;
+  box-shadow: none;
   margin: 62px 20px 0;
+  height: 60px;
+  line-height: 62px;
+  border: 0;
   > .ice-menu-item {
     height: 58px;
     line-height: 58px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #666;
+  }
+  .ice-menu-item-selected {
+    border-bottom: 2px solid #447eff;
   }
 }

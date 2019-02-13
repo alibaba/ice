@@ -1,0 +1,34 @@
+.header-container {
+  z-index: 999;
+  width: 100%;
+  min-width: 1200px;
+  .header-content {
+    width: 100%;
+    height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid #283448;
+  }
+
+  .header-navbar {
+    display: flex;
+    flex-direction: row;
+    .next-menu {
+      background: transparent !important;
+      border: none;
+      box-shadow: none;
+      color: #fff !important;
+      .next-menu-item {
+        background: transparent !important;
+        color: #fff !important;
+        i {
+          margin-right: 1em;
+        }
+        &:hover {
+          color: $color-data1-1 !important;
+        }
+      }
+    }
+  }
+}

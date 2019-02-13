@@ -4,4 +4,4 @@
 
 权限管理类的表格
 
-![截图](https://img.alicdn.com/tfs/TB1Og2vzbGYBuNjy0FoXXciBFXa-2870-1444.png)
+![截图](https://unpkg.com/@icedesign/authority-table-block/screenshot.png)

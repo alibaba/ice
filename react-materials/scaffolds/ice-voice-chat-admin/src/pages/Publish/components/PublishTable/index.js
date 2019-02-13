@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from '@icedesign/base';
+import { Table } from '@alifd/next';
 
 export default class PublishTable extends Component {
   renderTime = (value) => {

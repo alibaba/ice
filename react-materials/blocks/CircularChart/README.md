@@ -2,4 +2,4 @@
 
 简介：环形图
 
-![截图](https://img.alicdn.com/tfs/TB137Fme_tYBeNjy1XdXXXXyVXa-2218-884.png)
+![截图](https://unpkg.com/@icedesign/circular-chart-block/screenshot.png)

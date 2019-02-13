@@ -1,0 +1,26 @@
+.blank-layout {
+  min-height: 100vh;
+  min-width: 1200px;
+  background-image: url(https://img.alicdn.com/tfs/TB1xmUiCZbpK1RjSZFyXXX_qFXa-1920-1372.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 0;
+  padding: 0 20px 20px;
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    min-height: 1998px;
+    opacity: 0.92;
+    z-index: 1;
+  }
+  &-content {
+    position: relative;
+    z-index: 2;
+  }
+}

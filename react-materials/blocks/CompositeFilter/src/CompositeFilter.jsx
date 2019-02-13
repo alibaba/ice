@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Search, Tab, Tag, DatePicker } from '@icedesign/base';
+import { Search, Tab, Tag, DatePicker } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import { enquireScreen } from 'enquire-js';
 
-const TabPane = Tab.TabPane;
+const TabItem = Tab.Item;
 
 // mock data
 const tagList = [
@@ -83,9 +83,9 @@ export default class CompositeFilter extends Component {
         <Search
           placeholder="搜索"
           searchText=""
-          inputWidth={150}
           onSearch={this.onSearch}
           style={styles.search}
+          shape="simple"
         />
       </div>
     );
@@ -96,31 +96,31 @@ export default class CompositeFilter extends Component {
       <div className="composite-filter">
         <IceContainer style={styles.filterCard}>
           <Tab
-            type="text"
+            shape="text"
             onChange={this.onTabChange}
             contentStyle={{ display: 'none' }}
-            tabBarExtraContent={
+            extra={
               !this.state.isMobile ? this.renderTabBarExtraContent() : null
             }
           >
-            <TabPane tab="全部" key="all" />
-            <TabPane tab="图文" key="pic" />
-            <TabPane tab="单品" key="item" />
-            <TabPane tab="店铺上新" key="new" />
-            <TabPane tab="短视频" key="video" />
+            <TabItem title="全部" key="all" />
+            <TabItem title="图文" key="pic" />
+            <TabItem title="单品" key="item" />
+            <TabItem title="店铺上新" key="new" />
+            <TabItem title="短视频" key="video" />
           </Tab>
 
           <div style={styles.tagList}>
             {tagList.map((tag, index) => {
               return (
-                <Tag
-                  shape="selectable"
+                <Tag.Selectable
                   type="normal"
                   key={index}
+                  style={styles.tag}
                   onChange={this.onTagChange.bind(this, tag.key)}
                 >
                   {tag.name}
-                </Tag>
+                </Tag.Selectable>
               );
             })}
           </div>
@@ -138,6 +138,9 @@ const styles = {
   tagList: {
     marginTop: '10px',
   },
+  tag: {
+    margin: 8,
+  },
   extraFilter: {
     marginTop: '8px',
     display: 'flex',
@@ -145,5 +148,6 @@ const styles = {
   },
   search: {
     marginLeft: '12px',
+    width: 150,
   },
 };

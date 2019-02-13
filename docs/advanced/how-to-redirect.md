@@ -40,7 +40,7 @@ class Demo extends React.Component {
 
 一般在某些操作后跳转路由使用，例如权限验证，表单提交后等。
 
-#### 1. `withRouter`
+#### 1. withRouter
 
 如果调用方法的地方在 React 组件内部，可以直接在组件上添加 `withRouter` 的装饰器，然后组件内可以通过 `props` 获取到相关 API：
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import { Chart, Coord, Geom, Tooltip, Axis, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
@@ -51,7 +51,7 @@ export default class PieDoughnutChart extends Component {
 
     return (
       <div className="pie-doughnut-chart">
-        <Row wrap gutter="20">
+        <Row wrap gutter="20" style={{margin: 0}}>
           <Col xxs="24" s="24" l="12">
             <IceContainer title="性别占比" style={styles.leftContainer}>
               <Chart

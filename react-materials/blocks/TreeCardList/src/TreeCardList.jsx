@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Select } from '@icedesign/base';
+import { Select } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import './TreeCardList.scss';
 

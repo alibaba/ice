@@ -5,7 +5,7 @@
 
 
 ## 效果图
-![效果图](https://img.alicdn.com/tfs/TB1niC_fiqAXuNjy1XdXXaYcVXa-959-294.png)
+![效果图](https://unpkg.com/@icedesign/info-display-table-block/screenshot.png)
 
 
 

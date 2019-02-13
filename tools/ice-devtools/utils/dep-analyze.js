@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const babel = require('babel-core');
+const babel = require('@babel/core');
 const babelPluginTransformLibImport = interopRequire(
   'babel-plugin-transform-lib-import'
 );
@@ -63,7 +63,9 @@ function analyzeDependenciesImport(str) {
     plugins: [
       babelPluginTransformExport,
       [babelPluginTransformModulesCommonjs, { noInterop: true }],
-      [babelPluginTransformLibImport, { libraryName: '@icedesign/base' }],
+      [babelPluginTransformLibImport, { libraryName: '@icedesign/base' }, '@icedesign/base'],
+      [babelPluginTransformLibImport, { libraryName: '@alife/next' }, '@alife/next'],
+      [babelPluginTransformLibImport, { libraryName: '@alifd/next' }, '@alifd/next'],
     ],
   });
 
@@ -94,15 +96,8 @@ const tracedFiles = {};
 module.exports = function(entryFilename) {
   let result = [];
   trace(require.resolve(entryFilename));
-  return dedupe(result).filter(function(moduleName) {
-    return (
-      !/^\./.test(moduleName) &&
-      // 基础组件
-      (/(@icedesign\/base)[$\/]lib/.test(moduleName) ||
-        // 业务组件
-        /^(@icedesign\/)\w+/.test(moduleName))
-    );
-  });
+
+  return dedupe(result);
 
   // effect 有副作用的递归
   function trace(filename) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from '@icedesign/base';
+import { Grid } from '@alifd/next';
 import ForgetPasswordIntro from './ForgetPasswordIntro';
 import ForgetPasswordForm from './ForgetPasswordForm';
 

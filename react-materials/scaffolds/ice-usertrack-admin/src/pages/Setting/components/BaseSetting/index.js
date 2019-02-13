@@ -8,8 +8,8 @@ import {
   Switch,
   Upload,
   Grid,
-  Feedback,
-} from '@icedesign/base';
+  Message,
+} from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -18,7 +18,6 @@ import {
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
-const { ImageUpload } = Upload;
 
 function beforeUpload(info) {
   console.log('beforeUpload callback : ', info);
@@ -51,7 +50,14 @@ export default class BaseSetting extends Component {
         gender: 'male',
         notice: false,
         email: '',
-        avatar: '',
+        avatar: [{
+          uid: '0',
+          name: 'IMG.png',
+          state: 'done',
+          url: 'https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg',
+          downloadURL: 'https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg',
+          imgURL: 'https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg',
+        }],
         siteUrl: '',
         githubUrl: '',
         twitterUrl: '',
@@ -74,7 +80,7 @@ export default class BaseSetting extends Component {
         return;
       }
       console.log(values);
-      Feedback.toast.success('更新成功');
+      Message.success('更新成功');
     });
   };
 
@@ -93,7 +99,7 @@ export default class BaseSetting extends Component {
                 <IceFormBinder name="name" required max={10} message="必填">
                   <Input
                     style={styles.inputItem}
-                    size="large"
+
                     placeholder="淘小宝"
                   />
                 </IceFormBinder>
@@ -107,8 +113,8 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="avatar" required message="必填">
-                  <ImageUpload
-                    listType="picture-card"
+                  <Upload
+                    listType="card"
                     action=""
                     accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
                     locale={{
@@ -169,7 +175,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="ice-admin@alibaba-inc.com"
                   />
                 </IceFormBinder>
@@ -190,7 +195,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     type="url"
                     placeholder="https://alibaba.github.io/ice"
                   />
@@ -217,7 +221,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="https://github.com/alibaba/ice"
                   />
                 </IceFormBinder>
@@ -238,7 +241,6 @@ export default class BaseSetting extends Component {
                 >
                   <Input
                     style={styles.inputItem}
-                    size="large"
                     placeholder="https://twitter.com"
                   />
                 </IceFormBinder>
@@ -252,10 +254,8 @@ export default class BaseSetting extends Component {
               </Col>
               <Col s="12" l="10">
                 <IceFormBinder name="description">
-                  <Input
+                  <Input.TextArea
                     style={styles.inputItem}
-                    size="large"
-                    multiple
                     placeholder="请输入描述..."
                   />
                 </IceFormBinder>
@@ -268,7 +268,6 @@ export default class BaseSetting extends Component {
         <Row style={{ marginTop: 20 }}>
           <Col offset="3">
             <Button
-              size="large"
               type="primary"
               style={{ width: 100 }}
               onClick={this.validateAllFormField}

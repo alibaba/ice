@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input } from '@icedesign/base';
+import { Input } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import ContainerTitle from '../../../../components/ContainerTitle';
 

@@ -3,7 +3,7 @@
   left: 0;
   right: 0;
   z-index: 999;
-  background: #2f323f;
+  background-color: $nav-primary-bg-color;
   min-width: 1200px;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   .header-content {
@@ -18,14 +18,18 @@
   .header-navbar {
     display: flex;
     flex-direction: row;
-    .ice-menu {
+    .next-menu {
       background: transparent;
       color: #fff;
-      .ice-menu-item {
+      box-shadow: none;
+      .next-menu-item {
         font-size: 14px;
         &:hover,
         a:hover {
           color: rgba(255, 255, 255, 0.8);
+        }
+        .ice-menu-item-text {
+          padding-left: 1em;
         }
       }
     }

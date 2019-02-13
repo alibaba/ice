@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Icon, Pagination } from '@icedesign/base';
+import { Grid, Icon, Pagination } from '@alifd/next';
 
 const { Row, Col } = Grid;
 

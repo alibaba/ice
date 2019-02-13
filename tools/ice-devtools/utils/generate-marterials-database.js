@@ -23,6 +23,18 @@ function generatePartciple(payload, source) {
   }
 }
 
+function filterDeps(deps) {
+  return deps.filter(function(moduleName) {
+    return (
+      !/^\./.test(moduleName) &&
+      // 基础组件
+      (/(@icedesign\/base)[$\/]lib/.test(moduleName) ||
+        // 业务组件
+        /^(@icedesign\/)\w+/.test(moduleName))
+    );
+  });
+}
+
 /**
  * 生成 blocks 信息列表
  * @param {*} files
@@ -51,11 +63,8 @@ function generateBlocks(files, SPACE, type, done) {
       source: {
         type: 'npm',
         npm: pkg.name,
-        version: pkg.version,
+        version: pkgConfig['version-0.x'] || pkg.version,
         registry,
-
-        // layout or block need src/
-        sourceCodeDirectory: 'src/',
       },
       // (必) 用于说明组件依赖关系
       dependencies: pkg.dependencies || {},
@@ -67,9 +76,18 @@ function generateBlocks(files, SPACE, type, done) {
       // publishTime: pkg.publishTime || new Date().toISOString(),
     };
 
-    if (fs.existsSync(indexPoint)) {
+    if (type === 'block') {
+      payload.source['version-0.x'] = pkg.version;
+    }
+
+    // layout or block need src/
+    if (type === 'block' || type === 'layout') {
+      payload.source.sourceCodeDirectory = 'src/';
+    }
+
+    if (type !== 'component' && fs.existsSync(indexPoint)) {
       const componentDeps = depAnalyze(indexPoint);
-      const useComponents = componentDeps.map((mod) => {
+      const useComponents = filterDeps(componentDeps).map((mod) => {
         let basePackage = '';
         let className = '';
         if (mod.startsWith('@icedesign/base')) {
@@ -163,6 +181,9 @@ function generateBlocks(files, SPACE, type, done) {
         console.error(status.npm, status.version);
         console.error(status.message);
       });
+      console.log();
+      console.error(chalk.red('material db generate error'));
+      console.log();
       process.exit(1);
     }
     done(result);
@@ -184,6 +205,7 @@ function generateScaffolds(files, SPACE, done) {
       (pkg.publishConfig && pkg.publishConfig.registry) ||
       'http://registry.npmjs.com';
 
+    const screenshot = pkg.scaffoldConfig.screenshot || pkg.scaffoldConfig.snapshot;
     const payload = {
       // (必)英文名
       name: pkg.scaffoldConfig.name,
@@ -200,7 +222,9 @@ function generateScaffolds(files, SPACE, done) {
       dependencies: pkg.dependencies || {},
       devDependencies: pkg.devDependencies || {},
       // (必) 截图
-      screenshot: pkg.scaffoldConfig.screenshot || pkg.scaffoldConfig.snapshot,
+      screenshot,
+      // 站点模板预览需要多张截图
+      screenshots: pkg.scaffoldConfig.screenshots || [screenshot],
 
       categories: pkg.scaffoldConfig.categories || [],
       // publishTime: pkg.publishTime || new Date().toISOString(),
@@ -273,6 +297,9 @@ function generateScaffolds(files, SPACE, done) {
         console.error(status.npm, status.version);
         console.error(status.message);
       });
+      console.log();
+      console.error(chalk.red('material db generate error'));
+      console.log();
       process.exit(1);
     }
     done(result);
@@ -284,7 +311,7 @@ function generateScaffolds(files, SPACE, done) {
  * @param {*} pattern
  * @param {*} SPACE
  */
-function gatherBlocksOrLayouts(pattern, SPACE, type) {
+function gather(pattern, SPACE, type) {
   return new Promise((resolve, reject) => {
     glob(
       pattern,
@@ -357,6 +384,7 @@ function appendFieldFromNpm(item) {
 // entry and run
 module.exports = function generateMaterialsDatabases(
   materialName,
+  materialType,
   materialPath,
   options
 ) {
@@ -366,17 +394,20 @@ module.exports = function generateMaterialsDatabases(
   return Promise.resolve(materialPath)
     .then((space) => {
       return Promise.all([
-        gatherBlocksOrLayouts('blocks/*/package.json', space, 'block'),
-        gatherBlocksOrLayouts('layouts/*/package.json', space, 'layout'),
+        gather('blocks/*/package.json', space, 'block'),
+        gather('layouts/*/package.json', space, 'layout'),
+        gather('components/*/package.json', space, 'component'),
         gatherScaffolds('scaffolds/*/package.json', space),
       ]);
     })
-    .then(([blocks, layouts, scaffolds]) => {
+    .then(([blocks, layouts, components, scaffolds]) => {
       const data = {
         name: materialName, // 物料池名
+        type: materialType,
         ...options,
         blocks,
         layouts,
+        components,
         scaffolds,
       };
 
@@ -384,8 +415,6 @@ module.exports = function generateMaterialsDatabases(
       fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
       console.log();
       console.log(`Created ${materialName} json at: ` + chalk.yellow(file));
-      console.log();
-      console.log('The build folder is ready to be deployed.');
       console.log();
     })
     .catch((err) => {

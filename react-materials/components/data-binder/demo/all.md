@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import DataBinder from '@icedesign/data-binder';
-import { Pagination, Table } from '@icedesign/base';
+import { Pagination, Table } from '@alifd/next';
 
 @DataBinder({
   account: {
@@ -65,7 +65,7 @@ class App extends Component {
 
     return (
       <div>
-        <Table dataSource={account.table} isLoading={account.__loading}>
+        <Table dataSource={account.table} loading={account.__loading}>
           <Table.Column dataIndex="name" title="name" />
           <Table.Column dataIndex="age" title="age" />
         </Table>

@@ -1,6 +1,6 @@
 /* eslint jsx-a11y/media-has-caption: 0, jsx-a11y/no-noninteractive-element-interactions: 0 */
 import React, { Component } from 'react';
-import { Dialog, Grid } from '@icedesign/base';
+import { Dialog, Grid } from '@alifd/next';
 
 const { Row, Col } = Grid;
 
@@ -309,7 +309,7 @@ export default class VideoList extends Component {
                     footer={false}
                     onClose={this.handleColse}
                     autoFocus={false}
-                    closable
+                    closeable
                     className="video-dialog"
                   >
                     <video

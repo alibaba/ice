@@ -11,7 +11,7 @@ importStyle: true
 ````jsx
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
-import { Table } from '@icedesign/base';
+import { Table } from '@alifd/next';
 import IceEllipsis from '@icedesign/ellipsis';
 
 const getData = () =>{

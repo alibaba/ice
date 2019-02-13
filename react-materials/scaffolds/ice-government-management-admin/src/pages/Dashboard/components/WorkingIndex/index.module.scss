@@ -1,0 +1,27 @@
+.container {
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.card {
+  width: 100%;
+  color: $color-black;
+  height: 286px;
+  padding: 20px;
+  overflow: scroll;
+  position: relative;
+  font-size: 16px;
+  border-radius: 16px;
+  background-color: $color-white;
+}
+.title {
+  margin: 0;
+  border-left: 5px solid $color-brand1-6;
+  line-height: 20px;
+  padding-left: 10px;
+}
+.charts {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

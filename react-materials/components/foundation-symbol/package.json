@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/foundation-symbol",
-  "version": "0.1.1",
+  "version": "1.0.1",
   "description": "基础符号表",
   "main": "lib/index.js",
   "files": [
@@ -18,13 +18,9 @@
     "ice",
     "ice-component"
   ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
   "license": "MIT",
   "dependencies": {
-    "@icedesign/base": "^0.2.0",
+    "@alifd/next": "^1.11.7",
     "classnames": "^2.2.5",
     "prop-types": "^15.6.0"
   },
@@ -34,5 +30,9 @@
   "peerDependencies": {
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
+  },
+  "componentConfig": {
+    "name": "foundation-symbol",
+    "title": "基础符号表"
   }
 }

@@ -2,17 +2,6 @@ import React, { Component } from 'react';
 import { Chart, Geom } from 'bizcharts';
 
 export default class ColumnChart extends Component {
-  static displayName = 'ColumnChart';
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     const { color } = this.props;
     const data = [
@@ -33,15 +22,9 @@ export default class ColumnChart extends Component {
       sales: { tickInterval: 20 },
     };
     return (
-      <Chart
-        height={60}
-        forceFit
-        padding={[10, 2, 10, 2]}
-        data={data}
-        scale={cols}
-      >
+      <Chart height={60} forceFit padding={[2]} data={data} scale={cols}>
         <Geom
-          type="area"
+          type="line"
           position="month*sales"
           color={color || '#3fa1ff'}
           shape="smooth"
