@@ -32,5 +32,9 @@
   "devDependencies": {
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
+  },
+  "componentConfig": {
+    "name": "list",
+    "title": "列表组件"
   }
 }

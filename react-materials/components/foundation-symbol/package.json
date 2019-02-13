@@ -30,5 +30,9 @@
   "peerDependencies": {
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
+  },
+  "componentConfig": {
+    "name": "foundation-symbol",
+    "title": "基础符号表"
   }
 }

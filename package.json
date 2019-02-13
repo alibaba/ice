@@ -45,7 +45,7 @@
     "eslint-plugin-vue": "^4.5.0",
     "findup": "^0.1.5",
     "ghooks": "^2.0.2",
-    "ice-devtools": "^1.1.14",
+    "ice-devtools": "^2.1.1",
     "lerna": "^2.5.1",
     "mark-twain": "^2.0.2",
     "mkdirp": "^0.5.1",

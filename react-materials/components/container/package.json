@@ -32,5 +32,9 @@
   },
   "typings": "lib/index.d.ts",
   "devDependencies": {
+  },
+  "componentConfig": {
+    "name": "container",
+    "title": "基础容器"
   }
 }

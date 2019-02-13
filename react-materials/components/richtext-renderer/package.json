@@ -31,5 +31,9 @@
   },
   "dependencies": {},
   "devDependencies": {
+  },
+  "componentConfig": {
+    "name": "richtext-renderer",
+    "title": "富文本组件 HTML 渲染器"
   }
 }
