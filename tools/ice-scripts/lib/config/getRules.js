@@ -52,7 +52,6 @@ module.exports = (buildConfig = {}, themeConfig) => {
     },
   ];
 
-
   const theme = buildConfig.theme || buildConfig.themePackage;
 
   if (theme) {
