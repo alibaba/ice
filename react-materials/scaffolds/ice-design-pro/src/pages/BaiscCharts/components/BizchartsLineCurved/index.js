@@ -1,8 +1,10 @@
 import React from 'react';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
+import { injectIntl } from 'react-intl';
 import DataSet from '@antv/data-set';
 import IceContainer from '@icedesign/container';
 
+@injectIntl
 class Curved extends React.Component {
   render() {
     const data = [
@@ -83,8 +85,11 @@ class Curved extends React.Component {
         range: [0, 1],
       },
     };
+    const {
+      intl: { formatMessage },
+    } = this.props;
     return (
-      <IceContainer title="曲线图">
+      <IceContainer title={formatMessage({ id: 'app.chart.basic.line.title' })}>
         <Chart height={300} data={dv} scale={cols} forceFit>
           <Legend />
           <Axis name="month" />

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Grid, Icon } from '@alifd/next';
+import { injectIntl } from 'react-intl';
 import IceContainer from '@icedesign/container';
 import AreaChart from './AreaChart';
 
 const { Row, Col } = Grid;
 
+@injectIntl
 export default class OrderStatusChart extends Component {
   static displayName = 'OrderStatusChart';
 
@@ -18,8 +20,16 @@ export default class OrderStatusChart extends Component {
   }
 
   render() {
+    const {
+      intl: { formatMessage },
+    } = this.props;
+
     return (
-      <IceContainer title="订单状态">
+      <IceContainer
+        title={formatMessage({
+          id: 'app.chart.general.order.status',
+        })}
+      >
         <Row wrap>
           <Col xxs="12" s="12" l="6">
             <div style={styles.box}>
