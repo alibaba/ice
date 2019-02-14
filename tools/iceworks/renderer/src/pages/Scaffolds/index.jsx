@@ -30,7 +30,8 @@ class Scaffolds extends Component {
   };
 
   componentDidMount() {
-    this.props.materials.initMaterials();
+    this.props.materials.refresh();
+
   }
 
   renderScaffoldsTabPanel = () => {
