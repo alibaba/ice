@@ -72,11 +72,13 @@ class PagesCard extends Component {
   componentDidMount() {
     ipcRenderer.on('focus', this.serachPages);
     this.props.projects.on('change', this.serachPages);
+    this.props.newpage.on('generate-page-success', this.serachPages);
   }
 
   componentWillUnmount() {
     ipcRenderer.removeListener('focus', this.serachPages);
     this.props.projects.removeListener('change', this.serachPages);
+    this.props.newpage.removeListener('generate-page-success', this.serachPages);
   }
 
   serachPages = () => {
@@ -140,6 +142,9 @@ class PagesCard extends Component {
     const pagesOrderByTime = orderBy(pages, ['birthtime'], ['desc']);
 
     return pagesOrderByTime.map((page) => {
+      if (page.name === 'IceworksPreviewPage') {
+        return null;
+      }
       return (
         <div className="page-item" key={page.name} data-path={page.fullPath}>
           <div className="name">{page.name}</div>

@@ -165,6 +165,9 @@ class Project extends Component {
       onOk: () => {
         // 安装项目依赖
         currentProject.installStart();
+        if (!currentProject.terminalVisible) {
+          currentProject.toggleTerminal();
+        }
         projectScripts.install(
           { project: currentProject },
           (code, result = {}) => {
