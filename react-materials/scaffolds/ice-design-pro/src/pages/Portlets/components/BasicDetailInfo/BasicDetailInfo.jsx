@@ -1,31 +1,11 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Grid } from '@alifd/next';
+import { injectIntl, FormattedMessage } from 'react-intl';
 
 const { Row, Col } = Grid;
 
-/**
- * 渲染详情信息的数据
- */
-const dataSource = {
-  title: '集盒家居旗舰店双十一活动',
-  shopName: '集盒家居旗舰店',
-  amount: '1000.00',
-  bounty: '200.00',
-  orderTime: '2017-10-18 12:20:07',
-  deliveryTime: '2017-10-18 12:20:07',
-  phone: '15612111213',
-  address: '杭州市文一西路',
-  status: '进行中',
-  remark: '暂无',
-  pics: [
-    require('./images/img4.jpg'),
-    require('./images/img3.jpg'),
-    require('./images/img2.jpg'),
-    require('./images/img1.jpg'),
-  ],
-};
-
+@injectIntl
 export default class BasicDetailInfo extends Component {
   static displayName = 'BasicDetailInfo';
 
@@ -39,35 +19,77 @@ export default class BasicDetailInfo extends Component {
   }
 
   render() {
+    const {
+      intl: { formatMessage },
+    } = this.props;
+    // 渲染详情信息的数据
+    const dataSource = {
+      title: formatMessage({ id: 'app.portlets.basic.task.value' }),
+      shopName: formatMessage({ id: 'app.portlets.basic.shop.value' }),
+      amount: formatMessage({ id: 'app.portlets.basic.amount.value' }),
+      bounty: formatMessage({ id: 'app.portlets.basic.reward.value' }),
+      orderTime: formatMessage({ id: 'app.portlets.basic.ordertime.value' }),
+      deliveryTime: formatMessage({
+        id: 'app.portlets.basic.deliverytime.value',
+      }),
+      phone: formatMessage({ id: 'app.portlets.basic.contact.value' }),
+      address: formatMessage({ id: 'app.portlets.basic.address.value' }),
+      status: formatMessage({ id: 'app.portlets.basic.status.value' }),
+      remark: formatMessage({ id: 'app.portlets.basic.note.value' }),
+      pics: [
+        require('./images/img4.jpg'),
+        require('./images/img3.jpg'),
+        require('./images/img2.jpg'),
+        require('./images/img1.jpg'),
+      ],
+    };
+
     return (
       <IceContainer>
-        <h2 style={styles.basicDetailTitle}>基础详情页</h2>
+        <h2 style={styles.basicDetailTitle}>
+          <FormattedMessage id="app.portlets.basic.title" />
+        </h2>
 
         <div style={styles.infoColumn}>
-          <h5 style={styles.infoColumnTitle}>基本信息</h5>
+          <h5 style={styles.infoColumnTitle}>
+            <FormattedMessage id="app.portlets.basic.sub.title1" />
+          </h5>
           <Row wrap style={styles.infoItems}>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.infoItemLabel}>任务标题：</span>
+              <span style={styles.infoItemLabel}>
+                <FormattedMessage id="app.portlets.basic.task.label" />：
+              </span>
               <span style={styles.infoItemValue}>{dataSource.title}</span>
             </Col>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.infoItemLabel}>店铺名称：</span>
+              <span style={styles.infoItemLabel}>
+                <FormattedMessage id="app.portlets.basic.shop.label" />：
+              </span>
               <span style={styles.infoItemValue}>{dataSource.shopName}</span>
             </Col>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.infoItemLabel}>任务金额：</span>
+              <span style={styles.infoItemLabel}>
+                <FormattedMessage id="app.portlets.basic.amount.label" />：
+              </span>
               <span style={styles.infoItemValue}>¥ {dataSource.amount}</span>
             </Col>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.infoItemLabel}>任务赏金：</span>
+              <span style={styles.infoItemLabel}>
+                <FormattedMessage id="app.portlets.basic.reward.label" />：
+              </span>
               <span style={styles.infoItemValue}>¥ {dataSource.bounty}</span>
             </Col>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.infoItemLabel}>接单时间：</span>
+              <span style={styles.infoItemLabel}>
+                <FormattedMessage id="app.portlets.basic.ordertime.label" />：
+              </span>
               <span style={styles.infoItemValue}>{dataSource.orderTime}</span>
             </Col>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.infoItemLabel}>交付时间：</span>
+              <span style={styles.infoItemLabel}>
+                <FormattedMessage id="app.portlets.basic.deliverytime.label" />
+                ：
+              </span>
               <span style={styles.infoItemValue}>
                 {dataSource.deliveryTime}
               </span>
@@ -75,26 +97,38 @@ export default class BasicDetailInfo extends Component {
           </Row>
         </div>
         <div style={styles.infoColumn}>
-          <h5 style={styles.infoColumnTitle}>更多信息</h5>
+          <h5 style={styles.infoColumnTitle}>
+            <FormattedMessage id="app.portlets.basic.sub.title2" />
+          </h5>
           <Row wrap style={styles.infoItems}>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.infoItemLabel}>联系方式：</span>
+              <span style={styles.infoItemLabel}>
+                <FormattedMessage id="app.portlets.basic.contact.label" />：
+              </span>
               <span style={styles.infoItemValue}>{dataSource.phone}</span>
             </Col>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.infoItemLabel}>收货地址：</span>
+              <span style={styles.infoItemLabel}>
+                <FormattedMessage id="app.portlets.basic.address.label" />：
+              </span>
               <span style={styles.infoItemValue}>{dataSource.address}</span>
             </Col>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.infoItemLabel}>任务状态：</span>
+              <span style={styles.infoItemLabel}>
+                <FormattedMessage id="app.portlets.basic.status.label" />：
+              </span>
               <span style={styles.infoItemValue}>{dataSource.status}</span>
             </Col>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.infoItemLabel}>备注：</span>
+              <span style={styles.infoItemLabel}>
+                <FormattedMessage id="app.portlets.basic.note.label" />：
+              </span>
               <span style={styles.infoItemValue}>{dataSource.remark}</span>
             </Col>
             <Col xxs="24" l="12" style={styles.infoItem}>
-              <span style={styles.attachLabel}>附件：</span>
+              <span style={styles.attachLabel}>
+                <FormattedMessage id="app.portlets.basic.attachment.label" />：
+              </span>
               <span>
                 {dataSource.pics &&
                   dataSource.pics.length &&

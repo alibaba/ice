@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
+import { FormattedMessage } from 'react-intl';
 
 export default class DetailTable extends Component {
   static displayName = 'DetailTable';
@@ -19,31 +20,52 @@ export default class DetailTable extends Component {
         <IceContainer title="任务详情">
           <ul style={styles.detailTable}>
             <li style={styles.detailItem}>
-              <div style={styles.detailTitle}>任务标题：</div>
-              <div style={styles.detailBody}>集盒家居旗舰店双十一活动</div>
-            </li>
-            <li style={styles.detailItem}>
-              <div style={styles.detailTitle}>单个任务金额：</div>
-              <div style={styles.detailBody}>¥ 1000.00</div>
-            </li>
-            <li style={styles.detailItem}>
-              <div style={styles.detailTitle}>接单时间：</div>
-              <div style={styles.detailBody}>2017-10-18 12:20:07</div>
-            </li>
-            <li style={styles.detailItem}>
-              <div style={styles.detailTitle}>商家联系方式：</div>
-              <div style={styles.detailBody}>15112111213</div>
-            </li>
-            <li style={styles.detailItem}>
-              <div style={styles.detailTitle}>任务状态：</div>
+              <div style={styles.detailTitle}>
+                <FormattedMessage id="app.portlets.table.task.label" />：
+              </div>
               <div style={styles.detailBody}>
-                <span style={styles.statusProcessing}>进行中</span>
+                <FormattedMessage id="app.portlets.table.task.value" />
               </div>
             </li>
             <li style={styles.detailItem}>
-              <div style={styles.detailTitle}>收货地址：</div>
+              <div style={styles.detailTitle}>
+                <FormattedMessage id="app.portlets.table.amount.label" />：
+              </div>
               <div style={styles.detailBody}>
-                浙江省杭州市余杭区文一西路969号淘宝城
+                ¥ <FormattedMessage id="app.portlets.table.amount.value" />
+              </div>
+            </li>
+            <li style={styles.detailItem}>
+              <div style={styles.detailTitle}>
+                <FormattedMessage id="app.portlets.table.deliverytime.label" />
+                ：
+              </div>
+              <div style={styles.detailBody}>
+                <FormattedMessage id="app.portlets.table.deliverytime.value" />
+              </div>
+            </li>
+            <li style={styles.detailItem}>
+              <div style={styles.detailTitle}>
+                <FormattedMessage id="app.portlets.table.contact.label" />：
+              </div>
+              <div style={styles.detailBody}>
+                <FormattedMessage id="app.portlets.table.contact.value" />
+              </div>
+            </li>
+            <li style={styles.detailItem}>
+              <div style={styles.detailTitle}>
+                <FormattedMessage id="app.portlets.table.status.label" />：
+              </div>
+              <div style={styles.detailBody}>
+                <FormattedMessage id="app.portlets.table.status.value" />
+              </div>
+            </li>
+            <li style={styles.detailItem}>
+              <div style={styles.detailTitle}>
+                <FormattedMessage id="app.portlets.table.address.label" />：
+              </div>
+              <div style={styles.detailBody}>
+                <FormattedMessage id="app.portlets.table.address.value" />
               </div>
             </li>
           </ul>
