@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
+import { injectIntl } from 'react-intl';
 import ContainerTitle from '../ContainerTitle';
 
 const mockData = [
@@ -44,6 +45,7 @@ const mockData = [
   },
 ];
 
+@injectIntl
 export default class SearchHistory extends Component {
   static displayName = 'SearchHistory';
 
@@ -61,9 +63,14 @@ export default class SearchHistory extends Component {
   };
 
   render() {
+    const {
+      intl: { formatMessage },
+    } = this.props;
     return (
       <IceContainer style={styles.container}>
-        <ContainerTitle title="搜索历史" />
+        <ContainerTitle
+          title={formatMessage({ id: 'app.general.history.title' })}
+        />
         <div style={styles.historyList}>
           {mockData.map((item, index) => {
             return (

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@alifd/next';
+import { injectIntl } from 'react-intl';
 import IceContainer from '@icedesign/container';
 import ContainerTitle from './components/ContainerTitle';
 import ContractTable from './components/ContractTable';
@@ -22,6 +23,7 @@ const mockData = () => {
   });
 };
 
+@injectIntl
 export default class GeneralTable extends Component {
   static displayName = 'GeneralTable';
 
@@ -67,11 +69,16 @@ export default class GeneralTable extends Component {
 
   render() {
     const { isLoading, dataSource } = this.state;
+    const {
+      intl: { formatMessage },
+    } = this.props;
     return (
       <Row gutter={20} wrap>
         <Col l="18">
           <IceContainer style={{ padding: '0' }}>
-            <ContainerTitle title="合同中心" />
+            <ContainerTitle
+              title={formatMessage({ id: 'app.general.table.title' })}
+            />
             <div style={{ padding: '20px' }}>
               <SearchFilter fetchData={this.fetchData} />
               <ContractTable

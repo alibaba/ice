@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Tab } from '@alifd/next';
+import { injectIntl } from 'react-intl';
 import CustomTable from './components/CustomTable';
 import EditDialog from './components/EditDialog';
 import DeleteBalloon from './components/DeleteBalloon';
 import data from './data';
 
-const TabPane = Tab.Item;
-
-const tabs = [
-  { tab: '全部', key: 'all' },
-  { tab: '审核中', key: 'review' },
-  { tab: '已发布', key: 'released' },
-  { tab: '已拒绝', key: 'rejected' },
-];
-
+@injectIntl
 export default class TabTable extends Component {
   static displayName = 'TabTable';
 
@@ -94,6 +87,16 @@ export default class TabTable extends Component {
 
   render() {
     const { dataSource } = this.state;
+    const {
+      intl: { formatMessage },
+    } = this.props;
+    const tabs = [
+      { tab: formatMessage({ id: 'app.base.table.tab1' }), key: 'all' },
+      { tab: formatMessage({ id: 'app.base.table.tab2' }), key: 'review' },
+      { tab: formatMessage({ id: 'app.base.table.tab3' }), key: 'released' },
+      { tab: formatMessage({ id: 'app.base.table.tab4' }), key: 'rejected' },
+    ];
+
     return (
       <div className="tab-table">
         <IceContainer>
