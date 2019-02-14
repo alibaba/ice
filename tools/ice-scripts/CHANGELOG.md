@@ -1,5 +1,9 @@
 # ice-scripts Changelog
 
+## 1.8.4
+
+- [feat] 通过对命令行参数 --project-type 添加参数，增加对 iceworks 中生成的 node 项目的支持。
+
 ## 1.8.3
 
 - [fix] 修复默认开启 UglifyJsPlugin sourceMap 引起的内存溢出问题，更新为默认关闭 sourceMap
