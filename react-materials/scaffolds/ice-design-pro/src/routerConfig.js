@@ -13,17 +13,14 @@ import BaiscCharts from './pages/BaiscCharts';
 import Portlets from './pages/Portlets';
 import Terms from './pages/Terms';
 import Result from './pages/Result';
-import Empty from './pages/Empty';
 import BasicList from './pages/BasicList';
 import CardList from './pages/CardList';
 import BasicTable from './pages/BasicTable';
 import GeneralTable from './pages/GeneralTable';
 import Profile from './pages/Profile';
 import Setting from './pages/Setting';
-import NotFound from './pages/NotFound';
 import Fail from './pages/Fail';
-import ServerError from './pages/ServerError';
-import Forbidden from './pages/Forbidden';
+import { Empty, Forbidden, NotFound, ServerError } from './pages/Exception';
 
 const routerConfig = [
   {
