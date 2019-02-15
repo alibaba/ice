@@ -4,7 +4,7 @@ const rp = require('request-promise-native');
 const ora = require('ora');
 const getDB = require('../utils/db');
 const tokenUtil = require('../utils/token');
-const siteUtil = require('../utils/site');
+const siteUtil = require('../utils/inner-site');
 const getUrl = require('../utils/inner-url');
 const innerNet = require('../utils/inner-net');
 
@@ -44,7 +44,7 @@ async function uploadData(datas, token, site) {
   const baseUrl = getUrl().fusionDesignUrl;
   const url = `${baseUrl}/api/v1/sites/${site.id}/materials`;
 
-  const spinner = ora('Sync to https://fusion.design, Now: 0%').start();
+  const spinner = ora('Sync to https://fusion.alibaba-inc.com, Now: 0%').start();
 
   try {
     for (let index = 0; index < datas.length; index++) {
@@ -52,12 +52,12 @@ async function uploadData(datas, token, site) {
       await requestUrl(data, token, url);
       const percent = Math.ceil(((index + 1) / datas.length) * 100);
       debug('index: %s, length: %s, percent: %s', index, datas.length, percent);
-      spinner.text = `Sync to https://fusion.design, Now: ${chalk.green(
+      spinner.text = `Sync to https://fusion.alibaba-inc.com, Now: ${chalk.green(
         percent + '%'
       )}`;
     }
     spinner.succeed(
-      '已经通知 https://fusion.design 入库物料, 入库为耗时操作, 请耐心等待'
+      '已经通知 https://fusion.alibaba-inc.com 入库物料, 入库为耗时操作, 请耐心等待'
     );
   } catch (error) {
     spinner.fail('入库失败, please try icedev --help');
