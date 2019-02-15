@@ -5,7 +5,8 @@ const ora = require('ora');
 const getDB = require('../utils/db');
 const tokenUtil = require('../utils/token');
 const siteUtil = require('../utils/site');
-const getUrl = require('../utils/url');
+const getUrl = require('../utils/inner-url');
+const innerNet = require('../utils/inner-net');
 
 /**
  * 上传数据
@@ -84,7 +85,7 @@ function dbReshape(db) {
   const all = blocks.concat(scaffolds);
   debug('all : %j', all);
   const datas = [];
-  const ONCE_LIMIT = 4; // 20个一批 太多了服务器受不了
+  const ONCE_LIMIT = 4; // 4个一批 太多了服务器受不了
   for (let i = 0; i < all.length; i += ONCE_LIMIT) {
     const data = {
       blocks: [],
@@ -109,6 +110,12 @@ function dbReshape(db) {
   return datas;
 }
 module.exports = async function sync(cwd, opt) {
+  const isInnerNet = await innerNet.isInnerNet();
+
+  if (!isInnerNet) {
+    console.log(chalk.red('非内网环境, 无法运行此命令'));
+    return;
+  }
   const db = await getDB(cwd);
   if (!db) {
     return;
