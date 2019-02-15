@@ -1,7 +1,7 @@
 const debug = require('debug')('ice:util:inner-url');
-const FUSION_DESIGN_DAILY_URL = 'https://mc.fusion.alibaba.net';
-const FUSION_DESIGN_PRE_URL = 'https://pre-mc-fusion.alibaba-inc.com';
-const FUSION_DESIGN_URL = 'https://mc-fusion.alibaba-inc.com';
+const FUSION_DESIGN_DAILY_URL = 'https://fusion.alibaba.net';
+const FUSION_DESIGN_PRE_URL = 'https://pre-fusion.alibaba-inc.com';
+const FUSION_DESIGN_URL = 'https://fusion.alibaba-inc.com';
 
 const URLS = {
   daily: {
