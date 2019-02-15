@@ -4,7 +4,6 @@ import { Icon } from '@alifd/next';
 import cloneDeep from 'lodash.clonedeep';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import CustomForm from '../CustomForm';
-import { format } from 'fecha';
 
 @injectIntl
 export default class SearchFilter extends Component {
