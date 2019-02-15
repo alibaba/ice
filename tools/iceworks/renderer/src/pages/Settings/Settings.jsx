@@ -243,7 +243,7 @@ class Setting extends Component {
             <FormItem label="消息提示音" {...formItemLayout}>
               <Switch
                 {...init('tone', {
-                  initValue: this.state.userconfig.tone || true,
+                  initValue: this.state.userconfig.tone,
                   valueName: 'checked',
                 })}
               />
