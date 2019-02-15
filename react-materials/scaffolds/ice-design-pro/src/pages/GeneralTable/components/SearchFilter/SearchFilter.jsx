@@ -2,8 +2,11 @@
 import React, { Component } from 'react';
 import { Icon } from '@alifd/next';
 import cloneDeep from 'lodash.clonedeep';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import CustomForm from '../CustomForm';
+import { format } from 'fecha';
 
+@injectIntl
 export default class SearchFilter extends Component {
   static displayName = 'SearchFilter';
 
@@ -81,7 +84,7 @@ export default class SearchFilter extends Component {
   renderExtraContent = () => {
     return (
       <div style={styles.extraContent} onClick={this.handleAdvancedSearch}>
-        高级搜索{' '}
+        <FormattedMessage id="app.general.form.advanced.search" />{' '}
         <Icon
           size="xs"
           type={this.state.showAdvancedFields ? 'arrow-up' : 'arrow-down'}
@@ -115,9 +118,13 @@ export default class SearchFilter extends Component {
   };
 
   render() {
+    const {
+      intl: { formatMessage },
+    } = this.props;
+    const i18n = (value) => formatMessage({ id: value });
     const config = [
       {
-        label: '合同编号',
+        label: i18n('app.general.form.number'),
         component: 'Input',
         componentProps: {
           placeholder: '请输入合同编号',
@@ -129,7 +136,7 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '归档号',
+        label: i18n('app.general.form.archive'),
         component: 'Input',
         componentProps: {
           placeholder: '请输入归档号',
@@ -141,7 +148,7 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '申请单号',
+        label: i18n('app.general.form.apply'),
         component: 'Input',
         componentProps: {
           placeholder: '请输入申请单号',
@@ -151,7 +158,7 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '合同名称',
+        label: i18n('app.general.form.name'),
         component: 'Input',
         componentProps: {
           placeholder: '请输入合同名称',
@@ -161,14 +168,14 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '对方公司',
+        label: i18n('app.general.form.company'),
         component: 'Select',
         componentProps: {
           placeholder: '请选择',
 
           dataSource: [
-            { label: '杭州xxx科技有限公司', value: 'option1' },
-            { label: '上海xxx科技有限公司', value: 'option2' },
+            { label: '杭州xxx科技公司', value: 'option1' },
+            { label: '上海xxx科技公司', value: 'option2' },
           ],
         },
         formBinderProps: {
@@ -176,7 +183,7 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '负责人',
+        label: i18n('app.general.form.principal'),
         component: 'Select',
         componentProps: {
           placeholder: '请选择',
@@ -191,7 +198,7 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '创建时间',
+        label: i18n('app.general.form.createtime'),
         component: 'RangePicker',
         componentProps: {
           placeholder: '请选择日期',
@@ -203,7 +210,7 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '签订时间',
+        label: i18n('app.general.form.signingtime'),
         component: 'RangePicker',
         componentProps: {
           placeholder: '请选择日期',
@@ -215,7 +222,7 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '终止时间',
+        label: i18n('app.general.form.endtime'),
         component: 'RangePicker',
         componentProps: {
           placeholder: '请选择日期',
@@ -227,7 +234,7 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '合同状态',
+        label: i18n('app.general.form.state'),
         component: 'Select',
         componentProps: {
           placeholder: '请选择',
@@ -244,7 +251,7 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '合同类型',
+        label: i18n('app.general.form.type'),
         component: 'Select',
         componentProps: {
           placeholder: '请选择',
@@ -259,7 +266,7 @@ export default class SearchFilter extends Component {
         },
       },
       {
-        label: '查询我批准的合同',
+        label: i18n('app.general.form.hint'),
         component: 'Checkbox',
         componentProps: {},
         formBinderProps: {

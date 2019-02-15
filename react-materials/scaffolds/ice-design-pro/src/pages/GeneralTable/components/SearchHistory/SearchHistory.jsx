@@ -22,7 +22,7 @@ const mockData = [
       },
       {
         label: '对方公司',
-        value: '杭州xxx科技有限公司',
+        value: '杭州xxx科技公司',
       },
     ],
   },

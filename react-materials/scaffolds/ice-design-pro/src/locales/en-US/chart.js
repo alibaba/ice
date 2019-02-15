@@ -22,6 +22,11 @@ export default {
   'app.chart.general.trend.income': 'Income trend',
   'app.chart.general.trend.trans': 'Transaction Trend',
   'app.chart.general.complete.schedule': 'Complete Schedule',
+  'app.chart.general.complete.state': 'Current State',
   'app.chart.general.complete.condition': 'Finished Condition',
   'app.chart.general.order.status': 'Order Status',
+  'app.chart.general.order.day': 'Day',
+  'app.chart.general.order.week': 'Week',
+  'app.chart.general.order.month': 'Month',
+  'app.chart.general.order.total': 'Total',
 };

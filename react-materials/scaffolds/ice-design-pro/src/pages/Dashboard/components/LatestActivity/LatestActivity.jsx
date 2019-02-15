@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import Card from '../Card';
 import BarChart from './BarChart';
 
-const getData = () => {
-  return Array.from({ length: 10 }).map((item, index) => {
-    return {
-      name: `${index + 1}. 造物节`,
-      num: parseInt(Math.random() * 1000, 10),
-    };
-  });
-};
-
+@injectIntl
 export default class LatestActivity extends Component {
   static displayName = 'LatestActivity';
 
@@ -19,15 +12,27 @@ export default class LatestActivity extends Component {
   static defaultProps = {};
 
   render() {
-    const dataSource = getData();
+    const {
+      intl: { formatMessage },
+    } = this.props;
+
+    const dataSource = Array.from({ length: 10 }).map((item, index) => {
+      return {
+        name: `${index + 1}. ${formatMessage({
+          id: 'app.dashboard.activity.festival',
+        })}`,
+        num: parseInt(Math.random() * 1000, 10),
+      };
+    });
+
     const columns = [
       {
-        title: '空间名称',
+        title: formatMessage({ id: 'app.dashboard.activity.spacename' }),
         dataIndex: 'name',
         key: 'name',
       },
       {
-        title: '发布活动数',
+        title: formatMessage({ id: 'app.dashboard.activity.number' }),
         dataIndex: 'num',
         key: 'num',
       },
@@ -35,14 +40,24 @@ export default class LatestActivity extends Component {
 
     return (
       <Card
-        title="最新发布活动"
-        subTitle="最近7日TOP 10"
+        title={formatMessage({ id: 'app.dashboard.activity.latest' })}
+        subTitle={`${formatMessage({
+          id: 'app.dashboard.activity.latestweek',
+        })} TOP 10`}
         summary={[
-          { label: '本周发布活动数', value: '123' },
-          { label: '上周发布活动数', value: '349' },
-          { label: '累计发布活动数', value: '23,239' },
+          {
+            label: formatMessage({ id: 'app.dashboard.activity.week' }),
+            value: '123',
+          },
+          {
+            label: formatMessage({ id: 'app.dashboard.activity.accumulative' }),
+            value: '23,239',
+          },
         ]}
-        link={{ text: '发布活动明细', href: '#' }}
+        link={{
+          text: formatMessage({ id: 'app.dashboard.activity.list' }),
+          href: '#',
+        }}
         dataSource={dataSource}
         columns={columns}
         content={<BarChart />}

@@ -14,8 +14,8 @@ const mockData = () => {
     return {
       id: `00000${index}`,
       name: '聘用合同',
-      ourCompany: '杭州xxx科技有限公司',
-      otherCompany: '上海xxx科技有限公司',
+      ourCompany: '杭州xxx科技公司',
+      otherCompany: '上海xxx科技公司',
       amount: '999,999',
       currency: 'CNY',
       state: '签约中',

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Icon } from '@alifd/next';
-import { injectIntl } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import IceContainer from '@icedesign/container';
 import AreaChart from './AreaChart';
 
@@ -41,7 +41,9 @@ export default class OrderStatusChart extends Component {
                   style={{ ...styles.arrowIcon, ...styles.arrowDown }}
                 />
               </h2>
-              <p style={styles.textLabel}>日订单量</p>
+              <p style={styles.textLabel}>
+                <FormattedMessage id="app.chart.general.order.day" />
+              </p>
             </div>
           </Col>
           <Col xxs="12" s="12" l="6">
@@ -54,7 +56,9 @@ export default class OrderStatusChart extends Component {
                   style={{ ...styles.arrowIcon, ...styles.arrowUp }}
                 />
               </h2>
-              <p style={styles.textLabel}>订单完成</p>
+              <p style={styles.textLabel}>
+                <FormattedMessage id="app.chart.general.order.week" />
+              </p>
             </div>
           </Col>
           <Col xxs="12" s="12" l="6">
@@ -67,7 +71,9 @@ export default class OrderStatusChart extends Component {
                   style={{ ...styles.arrowIcon, ...styles.arrowDown }}
                 />
               </h2>
-              <p style={styles.textLabel}>月销售量</p>
+              <p style={styles.textLabel}>
+                <FormattedMessage id="app.chart.general.order.month" />
+              </p>
             </div>
           </Col>
           <Col xxs="12" s="12" l="6">
@@ -80,7 +86,9 @@ export default class OrderStatusChart extends Component {
                   style={{ ...styles.arrowIcon, ...styles.arrowUp }}
                 />
               </h2>
-              <p style={styles.textLabel}>累计收入</p>
+              <p style={styles.textLabel}>
+                <FormattedMessage id="app.chart.general.order.total" />
+              </p>
             </div>
           </Col>
         </Row>

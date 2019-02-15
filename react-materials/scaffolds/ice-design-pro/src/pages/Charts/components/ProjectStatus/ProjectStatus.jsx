@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Grid, Timeline } from '@alifd/next';
-import { injectIntl } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import LineChart from './LineChart';
 
 const { Row, Col } = Grid;
@@ -68,7 +68,9 @@ export default class ProjectStatus extends Component {
           >
             <LineChart />
             <div style={styles.projectStatus}>
-              <p style={styles.meta}>当前状态</p>
+              <p style={styles.meta}>
+                <FormattedMessage id="app.chart.general.complete.state" />
+              </p>
               <h2 style={styles.count}>76,533</h2>
             </div>
           </IceContainer>

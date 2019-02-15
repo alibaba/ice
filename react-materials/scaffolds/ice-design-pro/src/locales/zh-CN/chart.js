@@ -22,6 +22,11 @@ export default {
   'app.chart.general.trend.income': '收益走势',
   'app.chart.general.trend.trans': '成交走势',
   'app.chart.general.complete.schedule': '完成进度',
+  'app.chart.general.complete.state': '当前状态',
   'app.chart.general.complete.condition': '完成状态',
   'app.chart.general.order.status': '订单状态',
+  'app.chart.general.order.day': '日订单量',
+  'app.chart.general.order.week': '周订单量',
+  'app.chart.general.order.month': '月订单量',
+  'app.chart.general.order.total': '总订单量',
 };

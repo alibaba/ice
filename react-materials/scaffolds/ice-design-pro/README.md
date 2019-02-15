@@ -47,8 +47,7 @@
   - 表格列表
 - 列表页
   - 文章列表
-  - 卡片列表
-  - 图文列表
+  - 项目列表
 - 内容页
   - 基础详情页
   - 条款协议页
@@ -101,3 +100,17 @@ $ npm run build  // 构建 dist
 ## 相关文档
 
 - [ICE Design Pro 使用文档](https://github.com/alibaba/ice/wiki#ice-design-pro-%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3)
+
+## TODO
+
+- [DONE]多语言默认值设置
+- [DONE]通过 redux 进行多语言切换
+- [DONE]代码重构
+- 接入美杜莎进行文案翻译
+- 中英文代码替换
+- 组件中英文替换
+- Menu 中英文
+- Header 中英文
+- Login 中英文
+- 代码重构，整体对比 Antd Pro
+- 输出国际化文档

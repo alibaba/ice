@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import cx from 'classnames';
 import { Nav } from '@alifd/next';
-import FoundationSymbol from '@icedesign/foundation-symbol';
+import { FormattedMessage } from 'react-intl';
 
 import Logo from '../Logo';
 import { asideMenuConfig } from '../../../../menuConfig';
 import Authorized from '../../../../utils/Authorized';
-
 import './index.scss';
 
 const SubNav = Nav.SubNav;
@@ -97,6 +97,14 @@ export default class Aside extends Component {
   };
 
   /**
+   * menuConfig.js 的 name 属性和 locals/menu.js 的 key 进行对应
+   * 在这里进行转换 path: '/chart/basic' => 'app.menu.chart.basic'
+   */
+  getLocaleKey = (item) => {
+    return `app.menu${item.path.replace(/\//g, '.')}`;
+  };
+
+  /**
    * 二级导航
    */
   getSubMenuOrItem = (item, index) => {
@@ -107,8 +115,16 @@ export default class Aside extends Component {
         return (
           <SubNav
             key={index}
-            icon={item.icon ? <FoundationSymbol size="small" type={item.icon} /> : null}
-            label={<span className="ice-menu-collapse-hide">{item.name}</span>}
+            icon={
+              item.icon ? (
+                <FoundationSymbol size="small" type={item.icon} />
+              ) : null
+            }
+            label={
+              <span className="ice-menu-collapse-hide">
+                <FormattedMessage id={this.getLocaleKey(item)} />
+              </span>
+            }
           >
             {childrenItems}
           </SubNav>
@@ -118,7 +134,9 @@ export default class Aside extends Component {
     }
     return (
       <NavItem key={item.path}>
-        <Link to={item.path}>{item.name}</Link>
+        <Link to={item.path}>
+          <FormattedMessage id={this.getLocaleKey(item)} />
+        </Link>
       </NavItem>
     );
   };
