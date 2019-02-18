@@ -103,7 +103,7 @@ class ProjectTerminal extends Component {
                 type="dark" shape="ghost"
                 onClick={closeLogs}
               >
-                返回操作台
+                返回工作台
               </Button>
               // <ExtraButton
               //   onClick={closeLogs}
