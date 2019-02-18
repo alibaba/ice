@@ -2,11 +2,13 @@ const debug = require('debug')('ice:sync');
 const chalk = require('chalk');
 const rp = require('request-promise-native');
 const ora = require('ora');
+const inquirer = require('inquirer');
 const getDB = require('../utils/db');
 const tokenUtil = require('../utils/token');
 const siteUtil = require('../utils/site');
 const getUrl = require('../utils/url');
-
+const innerNet = require('../utils/inner-net');
+const syncAli = require('./sync-ali');
 /**
  * 上传数据
  * @param {Object} datas
@@ -109,6 +111,22 @@ function dbReshape(db) {
   return datas;
 }
 module.exports = async function sync(cwd, opt) {
+  const isInnerNet = await innerNet.isInnerNet();
+
+  if (isInnerNet) {
+    const {inner} = await inquirer.prompt([
+      {
+        type: 'confirm',
+        message: '您正处于内网环境,请问是否需要同步到内部站点',
+        name: 'inner',
+      },
+    ]);
+    debug('sync-ali: %s', inner);
+    if (inner) {
+      return syncAli(cwd, opt);
+    }
+  }
+
   const db = await getDB(cwd);
   if (!db) {
     return;
