@@ -35,9 +35,6 @@ module.exports = {
   'sync-unpkg': {
     desc: 'Sync materials json to https://unpkg.com'
   },
-  'sync-ali': {
-    desc: 'Sync materials json to https://fusion.alibaba-inc.com'
-  },
   clear: {
     desc: 'Clear cache data',
   },
