@@ -122,11 +122,11 @@ module.exports = async function sync(cwd, opt) {
     innerSync = inner;
   }
 
-  // const { name: pkgname} = pkgJSON.getPkgJSON(cwd);
-  // if (innerNet.isTnpm(pkgname) && !innerSync) {
-  //   console.log(chalk.red(`${pkgname} 为内网项目, 禁止同步到外网`));
-  //   return;
-  // }
+  const { name: pkgname} = pkgJSON.getPkgJSON(cwd);
+  if (innerNet.isTnpm(pkgname) && !innerSync) {
+    console.log(chalk.red(`${pkgname} 为内网项目, 禁止同步到外网`));
+    return;
+  }
 
   let siteUtil;
   if (innerSync) {
