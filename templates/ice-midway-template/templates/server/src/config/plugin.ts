@@ -1,8 +1,7 @@
 // had enabled by midway
- exports.static = true;
+exports.static = true;
 
-// exports.ejs = {
-//   enable: true,
-//   package: 'egg-view-ejs',
-// };
-
+exports.ejs = {
+  enable: true,
+  package: 'egg-view-ejs',
+};

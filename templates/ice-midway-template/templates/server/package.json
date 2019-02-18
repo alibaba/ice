@@ -30,6 +30,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "egg-view-ejs": "^2.0.0",
     "midway": "*"
   },
   "devDependencies": {
