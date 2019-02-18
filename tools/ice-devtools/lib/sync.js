@@ -5,10 +5,8 @@ const ora = require('ora');
 const inquirer = require('inquirer');
 const getDB = require('../utils/db');
 const tokenUtil = require('../utils/token');
-const siteUtil = require('../utils/site');
-const getUrl = require('../utils/url');
 const innerNet = require('../utils/inner-net');
-const syncAli = require('./sync-ali');
+let fusionDesignUrl;
 /**
  * 上传数据
  * @param {Object} datas
@@ -42,7 +40,7 @@ async function requestUrl(data, token, url) {
  * @param {Object} site
  */
 async function uploadData(datas, token, site) {
-  const baseUrl = getUrl().fusionDesignUrl;
+  const baseUrl = fusionDesignUrl;
   const url = `${baseUrl}/api/v1/sites/${site.id}/materials`;
 
   const spinner = ora('Sync to https://fusion.design, Now: 0%').start();
@@ -112,7 +110,7 @@ function dbReshape(db) {
 }
 module.exports = async function sync(cwd, opt) {
   const isInnerNet = await innerNet.isInnerNet();
-
+  let innerSync = false;
   if (isInnerNet) {
     const {inner} = await inquirer.prompt([
       {
@@ -122,9 +120,16 @@ module.exports = async function sync(cwd, opt) {
       },
     ]);
     debug('sync-ali: %s', inner);
-    if (inner) {
-      return syncAli(cwd, opt);
-    }
+    innerSync = inner;
+  }
+
+  let siteUtil;
+  if (innerSync) {
+    siteUtil = require('../utils/inner-site');
+    fusionDesignUrl = require('../utils/inner-url').fusionDesignUrl;
+  } else {
+    siteUtil = require('../utils/site');
+    fusionDesignUrl = require('../utils/url').fusionDesignUrl;
   }
 
   const db = await getDB(cwd);
