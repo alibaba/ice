@@ -1,5 +1,8 @@
 # ice-scripts Changelog
 
+## 2.1.7
+- [feat] 添加内部站点物料同步
+
 ## 2.1.6
 - [fix] 修复 block build 报错 [#1444](https://github.com/alibaba/ice/issues/1444)
 
