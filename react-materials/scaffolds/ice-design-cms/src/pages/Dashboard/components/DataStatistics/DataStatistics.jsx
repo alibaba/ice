@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Grid } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import { Chart, Axis, Geom, Tooltip } from 'bizcharts';
-import './DataStatistics.scss';
 import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
@@ -98,51 +97,49 @@ export default class DataStatistics extends Component {
     };
 
     return (
-      <div className="data-statistics">
-        <IceContainer>
-          <h4 className={styles.title}>用户活跃趋势</h4>
-          <Row wrap>
-            <Col xxs="24" l="16">
-              <Chart
-                height={300}
-                padding={[40, 10, 40, 35]}
-                data={dataSource.chartData}
-                scale={cols}
-                forceFit
-              >
-                <Axis name="month" />
-                <Axis name="value" />
-                <Tooltip crosshairs={{ type: 'y' }} />
-                <Geom type="interval" position="month*users" />
-              </Chart>
-            </Col>
-            <Col xxs="24" l="8">
-              <ul className={styles.items}>
-                {dataSource.statisticData.map((item, index) => {
-                  return (
-                    <li key={index} className="item-box">
-                      <div className={styles.itemIcon}>
-                        <img
-                          src={item.img.url}
-                          style={{
-                            width: item.img.width,
-                            height: item.img.height,
-                          }}
-                          alt=""
-                        />
-                      </div>
-                      <div className={styles.itemText}>
-                        <div className={styles.name}>{item.name}</div>
-                        <div className={styles.value}>{item.value}</div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </Col>
-          </Row>
-        </IceContainer>
-      </div>
+      <IceContainer>
+        <h4 className={styles.title}>用户活跃趋势</h4>
+        <Row wrap>
+          <Col xxs="24" l="16">
+            <Chart
+              height={300}
+              padding={[40, 10, 40, 35]}
+              data={dataSource.chartData}
+              scale={cols}
+              forceFit
+            >
+              <Axis name="month" />
+              <Axis name="value" />
+              <Tooltip crosshairs={{ type: 'y' }} />
+              <Geom type="interval" position="month*users" />
+            </Chart>
+          </Col>
+          <Col xxs="24" l="8">
+            <ul className={styles.items}>
+              {dataSource.statisticData.map((item, index) => {
+                return (
+                  <li key={index} className={styles.itemBox}>
+                    <div className={styles.itemIcon}>
+                      <img
+                        src={item.img.url}
+                        style={{
+                          width: item.img.width,
+                          height: item.img.height,
+                        }}
+                        alt=""
+                      />
+                    </div>
+                    <div className={styles.itemText}>
+                      <div className={styles.name}>{item.name}</div>
+                      <div className={styles.value}>{item.value}</div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </Col>
+        </Row>
+      </IceContainer>
     );
   }
 }
