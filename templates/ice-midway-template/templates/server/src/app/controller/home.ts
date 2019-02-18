@@ -5,7 +5,7 @@ import { controller, get, provide } from 'midway';
 export class HomeController {
 
   @get('/')
-	index (ctx) {
+  index (ctx) {
     ctx.redirect('/index.html');
   }
 }
