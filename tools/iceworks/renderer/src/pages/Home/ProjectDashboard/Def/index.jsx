@@ -367,7 +367,7 @@ class Def extends Component {
           alignItems: 'center'
         }}
       >
-        <EmptyTips>当前项目不是一个 Git 仓库，请在 Git 插件中配置后使用</EmptyTips>
+        <EmptyTips>该项目不是一个 Git 仓库，请在 Git 插件配置后使用</EmptyTips>
         {/* 唤起 Git 插件 */}
       </div>
     );

@@ -43,18 +43,18 @@ const configs = {
   },
 };
 
-const doProjectInstall = ({cwd, env, callback}, reInstall) => {
+const doProjectInstall = ({cwd, env, shell, callback}, reInstall) => {
   const installConfig = {
     cwd,
     env,
-    shell: 'npm',
+    shell,
     shellArgs: ['install', '--no-package-lock'],
   };
 
   const npmCacheCLeanConfig = {
     cwd,
     env,
-    shell: 'npm',
+    shell,
     shellArgs: ['cache', 'clean', '--force']
   }
 
@@ -67,14 +67,25 @@ const doProjectInstall = ({cwd, env, callback}, reInstall) => {
         if (reInstall) {
           log.info('执行 npm cache clean --force 重试');
           sessions.manager.new(npmCacheCLeanConfig, (code) => {
-            doProjectInstall({cwd, env, callback});
+            doProjectInstall({cwd, env, shell, callback});
           });
         } else {
-          callback(code, {
-            title: '重装依赖失败',
-            content:
-              '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
-          });
+          if (shell === 'tnpm') {
+            callback(code, {
+              title: '重装依赖失败',
+              content:
+                <div>
+                  <p>1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装</p>
+                  <p>2. 已安装 tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息</p>
+                </div>
+            });
+          } else {
+            callback(code, {
+              title: '重装依赖失败',
+              content:
+                '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
+            });
+          }
         }
       } else {
         callback(0);
@@ -98,6 +109,16 @@ const getEnvByNodeFramework = (nodeFramework, isAli) => {
   }
   return env;
 }
+
+const getShellByNodeFramework = (nodeFramework, isAli) => {
+  let shell = 'npm';
+  if (isAli && nodeFramework === 'midwayAli') {
+    console.debug('内部 midway 项目使用 tnpm 安装');
+    shell = 'tnpm'
+  }
+  return shell;
+}
+
 
 /**
  * session 以“项目路径”为 key 做处理
@@ -270,6 +291,7 @@ export default {
     });
 
     const env = getEnvByNodeFramework(project.nodeFramework, hasAli);
+    const shell = getShellByNodeFramework(project.nodeFramework, hasAli);
 
     // TODO： 老代码遗留逻辑，兼容？
     if (hasAli && hasMidway) {
@@ -298,7 +320,7 @@ export default {
           cwd: cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
           cwdClient: cwdClient,// 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
           env: env,
-          shell: 'npm',
+          shell: shell,
           shellArgs: ['install', '--no-package-lock', installPrefix].concat(
             dependencies
           ),
@@ -313,6 +335,7 @@ export default {
           }
         }
       );
+      
     }
   },
 
@@ -376,9 +399,11 @@ export default {
       })
       .then((isAli) => {
         const env = getEnvByNodeFramework(project.nodeFramework, isAli);
+        const shell = getShellByNodeFramework(project.nodeFramework, isAli);
         doProjectInstall({
           cwd: project.fullPath,
           env,
+          shell,
           callback
         }, true);
       });

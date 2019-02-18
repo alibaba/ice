@@ -96,7 +96,7 @@ export default class GitPanel extends Component {
           alignItems: 'center'
         }}
       >
-        <EmptyTips style={{minHeight: 90}}>当前项目不是一个 Git 仓库，请点击 Git init 开始初始化</EmptyTips>
+        <EmptyTips style={{minHeight: 90}}>该项目不是一个 Git 仓库，请点击 Git init 开始配置</EmptyTips>
         <Button
           type="secondary"
           onClick={this.handleGitInit}

@@ -16,10 +16,9 @@ module.exports = ({ title, body, type = 'success', url, onClick }) => {
   const specs = {
     title,
     body,
-    silent: !(settings.get('tone') || true),
+    silent: !settings.get('tone'),
     icon: iconMap[type] || '',
   };
-
   const notification = new Notification(specs);
 
   if (url || onClick) {

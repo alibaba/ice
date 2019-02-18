@@ -168,6 +168,7 @@ class PageConfig extends Component {
                 title: '生成页面成功',
                 body: content.join(' '),
               });
+              this.props.newpage.emit('generate-page-success');
 
               log.info('generate-page-success', 'page 创建成功');
 
@@ -309,6 +310,7 @@ class PageConfig extends Component {
                   title: '生成页面成功',
                   body: content.join(' '),
                 });
+                this.props.newpage.emit('generate-page-success');
 
                 log.info('generate-page-success', 'page 创建成功');
 

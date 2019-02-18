@@ -6,6 +6,7 @@ import { scanPages } from '../lib/project-utils';
 // store
 import progress from './progress';
 import projects from './projects';
+import EventEmitter from 'events';
 
 import projectScripts from '../lib/project-scripts';
 import scanLayout from '../datacenter/scanLayout';
@@ -19,7 +20,7 @@ import scanLayout from '../datacenter/scanLayout';
 /**
  * 新建页面
  */
-class NewPage {
+class NewPage extends EventEmitter{
   @observable
   layouts = []; // 所有 layouts
   @observable
@@ -40,6 +41,7 @@ class NewPage {
   progressVisible = false;
 
   constructor() {
+    super();
     ipcRenderer.on('processTracking', (event, process, eventName) => {
       progress.setStatusText(process) 
       progress.setShowTerminal(eventName === 'installBlockDeps');
