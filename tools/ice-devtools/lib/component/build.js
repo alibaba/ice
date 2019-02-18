@@ -15,10 +15,20 @@ const ComponentStyleGenerator = require('../../utils/component-style-generator')
 const GLOB_PATTERN = '**/*';
 const babelOpt = getBabelConfig();
 
+const webpack = require('webpack');
+const getBaseConfig = require('../../config/webpack.component');
+const logger = require('../../utils/logger');
+
 /**
  * 构建项目
  */
 module.exports = function componentBuild(workDir, opts) {
+  demoBuild(workDir, () => {
+    compile(workDir, opts);
+  });
+}
+
+function compile(workDir, opts) {
   opts = opts || {};
 
   const srcDir = path.join(workDir, 'src');
@@ -119,3 +129,37 @@ module.exports = function componentBuild(workDir, opts) {
       });
   }
 };
+
+function  demoBuild(workDir, callback) {
+  const config = getBaseConfig(workDir);
+
+  config.output
+    .path(path.join(workDir, 'build'))
+    .filename('[name].js')
+    .publicPath('./');
+
+  const compiler = webpack(config.toConfig());
+  const cb = callback || (() => {});
+  compiler.run((err, stats) => {
+    if (err) {
+      console.error(err.stack || err);
+      if (err.details) {
+        logger.fatal(err.details);
+      }
+      cb(err);
+      return;
+    }
+
+    const info = stats.toJson();
+
+    if (stats.hasErrors()) {
+      cb(info.errors);
+      logger.fatal(info.errors);
+    }
+
+    if (stats.hasWarnings()) {
+      console.warn(info.warnings);
+    }
+    cb(null, info);
+  });
+}

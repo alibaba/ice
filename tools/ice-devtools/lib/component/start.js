@@ -5,7 +5,6 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 
 const getBaseConfig = require('../../config/webpack.component');
-const router = require('../../utils/demo-router');
 
 const PORT = 5000;
 
@@ -38,13 +37,6 @@ module.exports = function blockDevStart(cwd, opt) {
     .hot(true);
 
   const options = config.toConfig();
-
-  // webpack-chain 中没有 after 这个方法，只能这样赋值
-  Object.assign(options.devServer, {
-    after: (app, server) => {
-      router(app, cwd);
-    }
-  });
 
   WebpackDevServer.addDevServerEntrypoints(options, options.devServer);
   const compiler = webpack(options);

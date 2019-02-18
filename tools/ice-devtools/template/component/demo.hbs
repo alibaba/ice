@@ -459,10 +459,10 @@
 
 <body>
   <div class="container">
-    {{#if meta}}
+    {{#if htmlWebpackPlugin.options.meta}}
       <div class="meta">
         <ul>
-        {{#each meta}}
+        {{#each htmlWebpackPlugin.options.meta}}
           <li>{{this.key}}: {{this.value}}</li>
         {{/each}}
         </ul>
@@ -471,7 +471,7 @@
 
     <div class="preview">
       <div class="markdown">
-        {{{ markdownContent }}}
+        {{{ htmlWebpackPlugin.options.markdownContent }}}
       </div>
 
       <div class="code-box">
@@ -480,15 +480,15 @@
         </div>
         <div class="markdown">
           <div class="highlight">
-            <pre><code lang="jsx">{{{ highlightedCode }}}</code></pre>
+            <pre><code lang="jsx">{{{ htmlWebpackPlugin.options.highlightedCode }}}</code></pre>
           </div>
         </div>
       </div>
     </div>
 
-    {{#if demos}}
-      <ul class="demo-list" data-current="{{currentPath}}">
-      {{#each demos}}
+    {{#if htmlWebpackPlugin.options.demos}}
+      <ul class="demo-list" data-current="{{htmlWebpackPlugin.options.currentPath}}">
+      {{#each htmlWebpackPlugin.options.demos}}
         <li><a href="{{href}}">{{title}}</a></li>
       {{/each}}
       </ul>
@@ -512,7 +512,8 @@
       }
     }
   </script>
-  <script src="/__Component_Dev__.{{demoName}}.js"></script>
+
+  <script src="./{{htmlWebpackPlugin.options.demoName}}.js"></script>
 </body>
 
 </html>
