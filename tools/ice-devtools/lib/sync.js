@@ -6,6 +6,7 @@ const inquirer = require('inquirer');
 const getDB = require('../utils/db');
 const tokenUtil = require('../utils/token');
 const innerNet = require('../utils/inner-net');
+const pkgJSON = require('../utils/pkg-json');
 let fusionDesignUrl;
 /**
  * 上传数据
@@ -120,6 +121,12 @@ module.exports = async function sync(cwd, opt) {
     debug('sync-ali: %s', inner);
     innerSync = inner;
   }
+
+  // const { name: pkgname} = pkgJSON.getPkgJSON(cwd);
+  // if (innerNet.isTnpm(pkgname) && !innerSync) {
+  //   console.log(chalk.red(`${pkgname} 为内网项目, 禁止同步到外网`));
+  //   return;
+  // }
 
   let siteUtil;
   if (innerSync) {
