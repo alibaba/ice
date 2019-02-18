@@ -34,5 +34,9 @@
     "react-dom": "^16.5.0"
   },
   "devDependencies": {
+  },
+  "componentConfig": {
+    "name": "layout",
+    "title": "提供页面框架性的 layout 组件"
   }
 }

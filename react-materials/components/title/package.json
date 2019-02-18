@@ -36,5 +36,9 @@
   "peerDependencies": {
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
+  },
+  "componentConfig": {
+    "name": "title",
+    "title": "标题组件"
   }
 }

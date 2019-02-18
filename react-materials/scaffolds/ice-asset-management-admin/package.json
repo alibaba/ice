@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/asset-management-scaffold",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "该模板内置了丰富的区块，适用于资产管理类的系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/asset-management-scaffold@latest/build/index.html",
   "files": [
@@ -19,6 +19,7 @@
     "@icedesign/container": "^1.x",
     "@icedesign/form-binder": "^1.x",
     "@icedesign/foundation-symbol": "^1.x",
+    "@icedesign/icon": "^0.1.1",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
     "@icedesign/theme": "^0.1.0",

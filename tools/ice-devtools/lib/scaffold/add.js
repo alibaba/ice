@@ -23,7 +23,6 @@ const getTemplatePath = localPath.getTemplatePath;
  * @param{Object} opt 参数
  */
 module.exports = async function addScaffold(type, cwd, opt, argvOpt) {
-  const pkg = pkgJSON.getPkgJSON(cwd);
   const templateName = `@icedesign/ice-${type}-app-template`;
   const answer = await inquirer.prompt([
     {
@@ -35,7 +34,7 @@ module.exports = async function addScaffold(type, cwd, opt, argvOpt) {
         if (!value) {
           return 'scaffold name cannot be empty';
         }
-        const name = generateNpmName(value, pkg);
+        const name = generateNpmName(value, opt);
         if (!validateName(name).validForNewPackages) {
           return `this scaffold name(${name}) has already exist. please retry`;
         }
@@ -44,7 +43,7 @@ module.exports = async function addScaffold(type, cwd, opt, argvOpt) {
     },
   ]);
   const scaffoldName = answer.name;
-  const name = generateNpmName(scaffoldName, pkg);
+  const name = generateNpmName(scaffoldName, opt);
 
   const scaffoldPath = path.join(cwd, 'scaffolds', scaffoldName);
   let templatePath = getTemplatePath(templateName);
@@ -66,9 +65,20 @@ module.exports = async function addScaffold(type, cwd, opt, argvOpt) {
   });
 };
 
-function generateNpmName(npmName, pkg) {
-  const kebabCaseName = kebabCase(npmName).replace(/^-/, '');
-  return `${pkg.name}-${kebabCaseName}`;
+function generateNpmName(name, opt) {
+  const kebabCaseName = kebabCase(name).replace(/^-/, '');
+
+  let npmName;
+
+  if (opt.scope) {
+    npmName = opt.scope + '/' + kebabCaseName;
+  } else if (opt.pkg && opt.pkg.name) {
+    npmName = `${opt.pkg.name}-${kebabCaseName}`;
+  } else {
+    npmName = kebabCaseName;
+  }
+
+  return npmName;
 }
 
 /**
