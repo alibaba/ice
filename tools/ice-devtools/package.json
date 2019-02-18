@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "ice 物料开发者工具",
   "main": "bin/ice-devtools.js",
   "bin": {
