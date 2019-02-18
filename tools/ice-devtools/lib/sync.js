@@ -43,7 +43,7 @@ async function uploadData(datas, token, site) {
   const baseUrl = fusionDesignUrl;
   const url = `${baseUrl}/api/v1/sites/${site.id}/materials`;
 
-  const spinner = ora('Sync to https://fusion.design, Now: 0%').start();
+  const spinner = ora(`Sync to ${baseUrl}, Now: 0%`).start();
 
   try {
     for (let index = 0; index < datas.length; index++) {
@@ -51,13 +51,11 @@ async function uploadData(datas, token, site) {
       await requestUrl(data, token, url);
       const percent = Math.ceil(((index + 1) / datas.length) * 100);
       debug('index: %s, length: %s, percent: %s', index, datas.length, percent);
-      spinner.text = `Sync to https://fusion.design, Now: ${chalk.green(
+      spinner.text = `Sync to ${baseUrl}, Now: ${chalk.green(
         percent + '%'
       )}`;
     }
-    spinner.succeed(
-      '已经通知 https://fusion.design 入库物料, 入库为耗时操作, 请耐心等待'
-    );
+    spinner.succeed(`已经通知 ${baseUrl} 入库物料, 入库为耗时操作, 请耐心等待`);
   } catch (error) {
     spinner.fail('入库失败, please try icedev --help');
     debug('sync error: %o', error);
@@ -126,10 +124,10 @@ module.exports = async function sync(cwd, opt) {
   let siteUtil;
   if (innerSync) {
     siteUtil = require('../utils/inner-site');
-    fusionDesignUrl = require('../utils/inner-url').fusionDesignUrl;
+    fusionDesignUrl = require('../utils/inner-url')().fusionDesignUrl;
   } else {
     siteUtil = require('../utils/site');
-    fusionDesignUrl = require('../utils/url').fusionDesignUrl;
+    fusionDesignUrl = require('../utils/url')().fusionDesignUrl;
   }
 
   const db = await getDB(cwd);
