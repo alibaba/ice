@@ -12,7 +12,7 @@
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build && npm run screenshot"
   },
   "license": "MIT",
   "keywords": ["ice", "react", "component"],
