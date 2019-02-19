@@ -122,14 +122,16 @@ export default class ScaffoldForm extends Component {
         >
           {
             isAlibaba ? (
-              <label>
-                添加 Midway 
-                <Checkbox
-                  disabled={this.props.scaffold.isCreating}
-                  onChange={this.handleMidwaySelect}
-                  style={{ margin: '0 4px', verticalAlign: 'middle' }}
-                />
-              </label>
+              // TODO 解决tnpm的问题
+              // <label>
+              //   添加 Midway 
+              //   <Checkbox
+              //     disabled={this.props.scaffold.isCreating}
+              //     onChange={this.handleMidwaySelect}
+              //     style={{ margin: '0 4px', verticalAlign: 'middle' }}
+              //   />
+              // </label>
+              null
             ) : hasIce ? (
               <label>
                 添加服务端开发框架
@@ -155,8 +157,9 @@ export default class ScaffoldForm extends Component {
           }
           {
             ( 
-              this.props.scaffold.nodeFramework === 'midway' || 
-              this.props.scaffold.nodeFramework === 'midwayAli'
+              this.props.scaffold.nodeFramework === 'midway'
+              // TODO 解决tnpm的问题
+              // || this.props.scaffold.nodeFramework === 'midwayAli'
             ) && (
               <span
                 style={{
