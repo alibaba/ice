@@ -78,9 +78,9 @@ const primaryColorMap = {
   '$upload-select-card-border-color-hover': '$color-brand1-6',
 
   // 1.x
-  '$color-link-1: $color-brand1-6',
-  '$color-link-2: $color-brand1-6',
-  '$color-link-3: $color-brand1-9',
+  '$color-link-1': '$color-brand1-6',
+  '$color-link-2': '$color-brand1-6',
+  '$color-link-3': '$color-brand1-9',
 
   // 兼容
   '$color-b1-1': '$color-brand1-1 !default',
