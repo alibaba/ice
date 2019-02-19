@@ -85,12 +85,7 @@ const doProjectInstall = ({cwd, env, shell, callback}, reInstall) => {
 
 const getEnvByNodeFramework = (nodeFramework, isAli) => {
   let env = {};
-  if (nodeFramework === 'midway') {
-    console.debug('安装依赖 - 检测为外部 Midway 项目');
-    // 开源 Midway 不能从 tnpm 源下载
-    env.npm_config_registry = 'https://registry.npmjs.com';
-    env.yarn_registry = 'https://registry.npmjs.com';
-  } else if (isAli || nodeFramework === 'midwayAli') {
+  if (isAli || nodeFramework === 'midwayAli') {
     console.debug('安装依赖 - 检测为内网环境 / 内部 midway 项目');
     // 检测到内网环境自动将路径设置为集团内部
     env.npm_config_registry = 'http://registry.npm.alibaba-inc.com';
