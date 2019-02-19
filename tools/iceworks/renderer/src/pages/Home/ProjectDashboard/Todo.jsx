@@ -236,7 +236,7 @@ class Todo extends Component {
    * @property  {String}  messagesInfo.totalLines Total number of lines in the file.
    */
   renderMessages(messagesInfo) {
-    const { currentProject } = this.props.projects.currentProject;
+    const { currentProject } = this.props.projects;
     const clientSrcPath = currentProject.clientSrcPath;
     return (
       <td style={{ lineHeight: '20px' }}>
