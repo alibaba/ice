@@ -6,7 +6,7 @@ const requestProgress = require('request-progress');
 const zlib = require('zlib');
 const tar = require('tar');
 const logger = require('../../logger');
-const { CreateProjectError } = require('../../error-handler');
+const { DetailError } = require('../../error-handler');
 
 /**
  * 将 tarbar 下的内容下载到指定目录，同时做路径转换
@@ -42,17 +42,17 @@ module.exports = function extractTarball(
         progressFunc(state);
       })
       .on('error', (error = {}) => {
-        reject(new CreateProjectError(`链接 ${tarballURL} 请求失败`), {
+        reject(new DetailError(`链接 ${tarballURL} 请求失败`, {
           message: error.message,
           stack: error.stack,
-        });
+        }));
       })
       .pipe(zlib.Unzip()) // eslint-disable-line babel/new-cap
       .on('error', (error) => {
-        reject(new CreateProjectError('已中止创建'), {
-          message: error.message,
-          stack: error.stack,
-        });
+        reject(new DetailError('已中止创建', {
+          message: '',
+          stack: '',
+        }));
       })
       .pipe(tar.Parse()) // eslint-disable-line babel/new-cap
       .on('entry', (entry) => {
@@ -107,7 +107,7 @@ module.exports = function extractTarball(
           .all(allWriteStream)
           .then(() => resolve(allFiles))
           .catch(() => {
-            reject(new CreateProjectError('写入文件失败'));
+            reject(new DetailError('写入文件失败'));
           });
       });
   });
