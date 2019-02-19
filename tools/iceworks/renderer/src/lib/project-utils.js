@@ -311,3 +311,22 @@ export const dependenciesFormat = function(dependencies) {
     });
   }
 };
+
+export const mergeDependenciesToPkg = function(dependencies, clientPath) {
+  const packageFile = path.join(clientPath, 'package.json');
+  return new Promise((resolve, reject) => {
+    let pkgData;
+    try {
+      pkgData = fs.readFileSync(packageFile);
+      pkgData = JSON.parse(pkgData.toString());
+      pkgData.dependencies = Object.assign(
+        pkgData.dependencies || {},
+        dependencies
+      );
+      fs.writeFileSync(packageFile, JSON.stringify(pkgData, null, 2));
+      resolve();
+    } catch (e) {
+      reject(`package.json 不存在或存在语法错误 检查${packageFile}`);
+    }
+  });
+}

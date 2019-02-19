@@ -1,0 +1,32 @@
+{
+  "name": "@icedesign/ice-midway-template",
+  "version": "1.0.1",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "clientInstall": "cd client && npm install --no-package-lock",
+    "serverIntall": "cd server && npm install --no-package-lock",
+    "postinstall": "npm run clientInstall && npm run serverIntall",
+    "clientStart": "cd client && npm run start",
+    "serverStart": "cd server && npm run start",
+    "start": "npm run clientStart & npm run serverStart",
+    "build": "cd client && npm run build",
+    "clinetLint": "cd client && npm run lint",
+    "serverLint": "cd server && npm run lint",
+    "lint": "npm run clinetLint && npm run serverLint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ice",
+    "ice-template",
+    "ice-midway-template"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

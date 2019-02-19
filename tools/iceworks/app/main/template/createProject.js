@@ -6,6 +6,7 @@ const path = require('path');
 const utils = require('./utils');
 
 /**
+ * destDir 项目解压路径: 项目文件夹下/client文件夹下
  * 根据 NPM 包创建项目，下载 tarball 后解压
  * @param {Object} 项目参数
  */

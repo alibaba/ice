@@ -1,14 +1,16 @@
 import { Dialog, Button, Form, Input, Field, Feedback } from '@icedesign/base';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { toJS } from 'mobx';
 import React, { Component } from 'react';
 
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import uppercamelcase from 'uppercamelcase';
 import PropTypes from 'prop-types';
 
 import { dependenciesFormat } from '../../../../lib/project-utils';
+import projectScripts from '../../../../lib/project-scripts';
 import dialog from '../../../../components/dialog';
+import Progress from '../../../../components/Progress';
 import services from '../../../../services';
 
 let container;
@@ -30,10 +32,12 @@ const pageExists = (pages, name = '') => {
   });
 };
 
+@inject('projects', 'newpage', 'blocks', 'customBlocks', 'progress')
 @observer
 class PageConfig extends Component {
   static propTypes = {
     newpage: PropTypes.object,
+    progress: PropTypes.object,
     blocks: PropTypes.object,
     projects: PropTypes.object,
     selectedBlocks: PropTypes.array,
@@ -48,10 +52,12 @@ class PageConfig extends Component {
   handleClose = () => {
     if (!this.props.newpage.isCreating) {
       this.props.newpage.closeSave();
+      this.props.progress.reset();
     }
   };
 
   handleOk = () => {
+    const { progress } = this.props;
     this.field.validate((errors, values) => {
       if (errors) {
         // 表单验证失败
@@ -63,20 +69,20 @@ class PageConfig extends Component {
           );
           return false;
         }
-
         this.props.newpage.isCreating = true;
-        const { currentProject } = this.props.projects;
 
+        const { currentProject } = this.props.projects;
         const layout = toJS(this.props.newpage.currentLayout);
         const blocks = toJS(this.props.selectedBlocks);
         const libraryType = currentProject.getLibraryType();
         const pageName = toJS(values.pageName);
+
         // 创建页面
         const config = {
           name: libraryType == 'react' ? uppercamelcase(pageName) : pageName,
           layout: layout,
           blocks: blocks,
-          isNodeProject: currentProject.isNodeProject
+          nodeFramework: currentProject.nodeFramework
         };
         console.info('createPage config:', config);
         let createResult;
@@ -162,9 +168,11 @@ class PageConfig extends Component {
                 title: '生成页面成功',
                 body: content.join(' '),
               });
+              this.props.newpage.emit('generate-page-success');
 
               log.info('generate-page-success', 'page 创建成功');
 
+              progress.end();
               this.props.newpage.isCreating = false;
               this.props.newpage.closeSave();
               this.props.newpage.toggle();
@@ -176,12 +184,12 @@ class PageConfig extends Component {
                 title: '生成页面失败',
                 error: error,
               });
+              progress.reset();
               this.props.newpage.isCreating = false;
             })
             .then(() => {
               return currentProject.scaffold.removePreviewPage({
-                destDir: currentProject.root,
-                isNodeProject: currentProject.isNodeProject 
+                nodeFramework: currentProject.nodeFramework
               });
             })
             .then(() => {
@@ -192,22 +200,28 @@ class PageConfig extends Component {
             });
         } else {
           let applicationType = '';
-
           if (currentProject) {
             applicationType = currentProject.getApplicationType();
           }
+
+           // 进度条
+          progress.start(true);
+          progress.setStatusText('正在生成页面');
+          progress.setSectionCount(blocks.length);
+          
           scaffolder
             .createPage({
               pageName: toJS(values.pageName), // 页面名
               routePath: toJS(values.routePath), // 路由名
               routeText: toJS(values.routeText), // 路由导航名
-              destDir: toJS(this.props.newpage.targetPath),
+              clientPath: currentProject.clientPath,
+              clientSrcPath: currentProject.clientSrcPath,
               layout: layout,
               blocks: blocks,
               excludeLayout: applicationType == 'react', // hack react 的模板不生成 layout
               // hack vue
               libary: this.props.libary,
-              isNodeProject: currentProject.isNodeProject,
+              progressFunc: progress.handleProgressFunc,
               interpreter: ({ type, message, data }, next) => {
                 console.log(type, message);
                 switch (type) {
@@ -245,28 +259,23 @@ class PageConfig extends Component {
                       'add dependencies',
                       this.props.newpage.targetPath
                     );
-                    npm
-                      .run(
-                        [
-                          'install',
-                          ...dependenciesFormat(dependencies),
-                          '--save',
-                          '--no-package-lock',
-                        ],
-                        {
-                          cwd: this.props.newpage.targetPath,
+                    projectScripts.npminstall(
+                      currentProject,
+                      dependenciesFormat(dependencies).join(' '),
+                      false,
+                      (error, dependencies) => {
+                        if (error) {
+                          log.error('genereator page install dependencies error');
+                          log.info('reinstall page dependencies');
+                          next(false);
+                        } else {
+                          log.info(
+                            'genereator page install dependencies success'
+                          );
+                          next(true);
                         }
-                      )
-                      .then(() => {
-                        log.info(
-                          'genereator page install dependencies success'
-                        );
-                        next(true);
-                      })
-                      .catch(() => {
-                        log.error('genereator page install dependencies error');
-                        next(false);
-                      });
+                      }
+                    )
                     break;
                   default:
                     next(true);
@@ -279,11 +288,12 @@ class PageConfig extends Component {
                 title: '生成页面失败',
                 error: error,
               });
-
+              progress.reset();
               this.props.newpage.isCreating = false;
             })
             .then((goon) => {
               if (goon == false) {
+                progress.end();
                 this.props.newpage.isCreating = false;
               } else {
                 const content = [];
@@ -300,17 +310,18 @@ class PageConfig extends Component {
                   title: '生成页面成功',
                   body: content.join(' '),
                 });
+                this.props.newpage.emit('generate-page-success');
 
                 log.info('generate-page-success', 'page 创建成功');
 
+                progress.end();
                 this.props.newpage.isCreating = false;
                 this.props.newpage.closeSave();
                 this.props.newpage.toggle();
 
                 // 移除 previewPage 临时文件
                 return scaffolder.removePreviewPage({
-                  destDir: currentProject.root,
-                  isNodeProject: currentProject.isNodeProject
+                  clientSrcPath: currentProject.clientSrcPath
                 });
               }
             })
@@ -326,15 +337,15 @@ class PageConfig extends Component {
   };
 
   // 卸载组件
-  handleAfterClose = () => {
-    ReactDOM.unmountComponentAtNode(container);
-    container.parentNode.removeChild(container);
-  };
+  // handleAfterClose = () => {
+  //   ReactDOM.unmountComponentAtNode(container);
+  //   container.parentNode.removeChild(container);
+  // };
 
   render() {
     const { init } = this.field;
-
-    const { currentProject } = this.props.projects;
+    const { projects, newpage } = this.props;
+    const { currentProject } = projects;
     let applicationType = '';
     if (currentProject) {
       applicationType = currentProject.getApplicationType();
@@ -358,7 +369,7 @@ class PageConfig extends Component {
         visible={this.props.newpage.savePageVisible}
         onClose={this.handleClose}
         onCancel={this.handleClose}
-        afterClose={this.handleAfterClose}
+        // afterClose={this.handleAfterClose}
         footer={
           <div>
             <Button
@@ -409,7 +420,7 @@ class PageConfig extends Component {
                   {
                     message: '已存在同名页面，请更换',
                     validator: (rule, value, cb) => {
-                      if (pageExists(this.props.newpage.pages, value)) {
+                      if (pageExists(newpage.pages, value)) {
                         cb('error');
                       } else {
                         cb();
@@ -458,22 +469,13 @@ class PageConfig extends Component {
             </FormItem>
           )}
         </Form>
+        <Progress
+          currentProject={currentProject}
+        />
       </Dialog>
     );
   }
 }
 
-export default {
-  /**
-   * 显示
-   *
-   * @param {Object} newpage 操作对象
-   */
-  show(props) {
-    container = document.createElement('div');
-    container.id = 'page-config';
-    document.body.appendChild(container);
+export default PageConfig;
 
-    ReactDOM.render(<PageConfig {...props} />, container);
-  },
-};

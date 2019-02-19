@@ -45,7 +45,7 @@ class Option extends Component {
               id="check_remove_project_dist"
               type="checkbox"
             >
-              同时删除项目文件（可还原）
+              同时删除项目文件（可从系统垃圾箱找回）
             </Checkbox>
           </div>
         </div>

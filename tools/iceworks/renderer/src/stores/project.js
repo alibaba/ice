@@ -9,6 +9,10 @@ import semver from 'semver';
 import { getDefaultProjectName } from '../lib/project-utils';
 const IceworksScaffolder = remote.require('@icedesign/iceworks-scaffolder');
 
+import services from '../services';
+const { paths } = services;
+const { getClientPath, NODE_FRAMEWORKS, getServerPath } = paths;
+
 const homeDir = os.homedir();
 
 /**
@@ -26,8 +30,6 @@ class Project {
   isPageCreating = false;
   @observable
   isProjectExist = true;
-  @observable
-  isRepairing = false;
   @observable
   projectName = '';
   @observable
@@ -58,7 +60,7 @@ class Project {
   @observable
   needInstallDeps = false; // 是否为新项目? 新项目首次打开提示安装依赖
   @observable
-  isNodeProject = false; //是否为 koa 项目
+  nodeFramework = ''; //服务端模板类型
 
   // data
   @observable
@@ -68,6 +70,8 @@ class Project {
     this.root = path;
     this.needInstallDeps = needInstallDeps;
     this.pkgData = this.getPkgData();
+
+    this.nodeFramework = this.validateNodeProject(this.pkgData);
 
     this.isProjectExist = !!this.pkgData;
     // 初始化判断项目状态
@@ -89,8 +93,6 @@ class Project {
       this.pkgData.scripts &&
       this.pkgData.scripts.build
     );
-
-    this.isNodeProject = this.validateNodeProject();
 
     this.scaffold = new IceworksScaffolder({
       cwd: this.root,
@@ -117,19 +119,54 @@ class Project {
   /**
    * 完整路径
    */
+  @computed
   get fullPath() {
     return this.root;
   }
 
+  /** 
+   * 前端项目路径
+   */
+  @computed
+  get clientPath() {
+    return  getClientPath(this.root, this.nodeFramework);
+  }
+
+  /** 
+   * 前端资源路径
+   */
+  @computed
+  get clientSrcPath() {
+    return  getClientPath(this.root, this.nodeFramework, 'src');
+  }
+
+  /** 
+   * 前端项目路径
+   */
+  @computed
+  get serverPath() {
+    return  getServerPath(this.root, this.nodeFramework);
+  }
+
   /**
-   * 获取 package.json 文件内容
+   * 获取 package.json 文件内容：
+   *    这里其实是指前端模板的package.json，引入服务端模板后，
+   *    前端模板package.json路径变更。
    * @return Object package.json content
    */
   getPkgData() {
-    const pkgPath = Path.join(this.root, 'package.json');
+    let pkgPath = Path.join(this.root, 'package.json');
     try {
       let pkgData = fs.readFileSync(pkgPath);
       pkgData = JSON.parse(String(pkgData));
+      // 获取项目模板类型，如果为node模板，则重新获取package.json
+      const nodeFramework = this.validateNodeProject(pkgData);
+      if (NODE_FRAMEWORKS.includes(nodeFramework)) {
+        const clientPath = getClientPath(this.root, nodeFramework);
+        pkgPath = Path.join(clientPath, 'package.json');
+        pkgData = fs.readFileSync(pkgPath);
+        pkgData = JSON.parse(String(pkgData));
+      } 
       return pkgData;
     } catch (e) {
       console.error(pkgPath + ' 不存在');
@@ -306,15 +343,6 @@ class Project {
   }
 
   @action
-  repairStart() {
-    this.isRepairing = true;
-  }
-  @action
-  repairDone() {
-    this.isRepairing = false;
-  }
-
-  @action
   installStart() {
     this.isDependenciesInstalling = true;
   }
@@ -347,7 +375,7 @@ class Project {
   @computed
   get actionDisabled() {
     return (
-      !this.isProjectExist || this.isRepairing || this.isDependenciesInstalling
+      !this.isProjectExist || this.isDependenciesInstalling
     );
   }
 
@@ -385,7 +413,6 @@ class Project {
       this.isProjectExist &&
       this.hasScriptsBuild &&
       this.hasScriptsStart &&
-      !this.isRepairing &&
       (icescriptsAvailable || reactWithoutIceValidate || keywordsHasIce)
     );
 
@@ -396,8 +423,18 @@ class Project {
     return pathExists.sync(this.fullPath);
   }
 
-  validateNodeProject() {
-    return this.pkgData && this.pkgData.templateType === 'Koa';
+  validateNodeProject(pkgData) {
+    if (pkgData) {
+      // 兼容老koa模板
+      if (pkgData.templateType === 'Koa' || pkgData.templateType === 'koa') {
+        return 'koa';
+      } else if (NODE_FRAMEWORKS.includes(pkgData.templateType)) { 
+        return pkgData.templateType;
+      }else {
+        return '';
+      }
+    }
+    return '';
   }
 }
 

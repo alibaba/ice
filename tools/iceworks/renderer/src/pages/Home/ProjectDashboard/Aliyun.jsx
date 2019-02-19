@@ -240,7 +240,7 @@ class Aliyun extends Component {
 
   handleUploadOss = () => {
     const { currentProject } = this.props.projects;
-    const buildDir = path.join(currentProject.fullPath, 'build');
+    const buildDir = path.join(currentProject.clientPath, 'build');
     if (pathExists.sync(buildDir)) {
       const assets = this.recursiveAssets();
       if (assets.length == 0) {
@@ -339,7 +339,7 @@ class Aliyun extends Component {
   recursiveAssets = () => {
     const { projects } = this.props;
     const { currentProject } = projects;
-    const cwd = currentProject.fullPath;
+    const cwd = currentProject.client;
     const distPath = path.join(cwd, 'build');
     const assets = this.recursiveReaddirSync(distPath, distPath);
     return assets;
