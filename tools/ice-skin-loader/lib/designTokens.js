@@ -1,5 +1,6 @@
 // ice-design 主品牌色组件功能色关系映射
 const primaryColorMap = {
+  // 0.x
   '$balloon-primary-color-bg': '$color-brand1-1',
   '$balloon-primary-color-close': '$color-brand1-5',
   '$balloon-primary-color-close-hover': '$color-brand1-7',
@@ -75,6 +76,13 @@ const primaryColorMap = {
   '$tree-switch-hover-border-color': '$color-brand1-6',
   '$tree-switch-hover-icon-color': '$color-brand1-6',
   '$upload-select-card-border-color-hover': '$color-brand1-6',
+
+  // 1.x
+  '$color-link-1': '$color-brand1-6',
+  '$color-link-2': '$color-brand1-6',
+  '$color-link-3': '$color-brand1-9',
+
+  // 兼容
   '$color-b1-1': '$color-brand1-1 !default',
   '$color-b1-2': '$color-brand1-2 !default',
   '$color-b1-3': '$color-brand1-3 !default',
