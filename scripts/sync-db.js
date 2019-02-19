@@ -103,31 +103,34 @@ function mergeBizchartsBlocks() {
     );
     const materialsData = JSON.parse(readFileSync(materialsPath, 'utf-8'));
 
-    request({
-      url: 'http://g.alicdn.com/bizcharts-material/scripts/material-assets.json',
-      json: true,
-    }, (error, response, body) => {
-      if (body) {
-        console.log('获取 bizcharts 物料源成功', body.blocks);
-        const bizchartBlocks = (body.blocks || []).map((item) => {
-          item.categories = ['图表'];
-          return item;
-        });
-        materialsData.blocks = materialsData.blocks.concat(bizchartBlocks);
-        return writeFile(
-          materialsPath,
-          JSON.stringify(materialsData, null, 2),
-          'utf-8',
-          (err) => {
-            if (err) reject(err);
-            resolve();
-          }
-        );
-      }
+    request(
+      {
+        url:
+          'http://g.alicdn.com/bizcharts-material/scripts/material-assets.json',
+        json: true,
+      },
+      (error, response, body) => {
+        if (body) {
+          const bizchartBlocks = (body.blocks || []).map((item) => {
+            item.categories = ['图表'];
+            return item;
+          });
+          materialsData.blocks = materialsData.blocks.concat(bizchartBlocks);
+          return writeFile(
+            materialsPath,
+            JSON.stringify(materialsData, null, 2),
+            'utf-8',
+            (err) => {
+              if (err) reject(err);
+              resolve();
+            }
+          );
+        }
 
-      console.log('获取 bizcharts 物料源失败', error)
-      return resolve();
-    });
+        console.log('获取 bizcharts 物料源失败', error);
+        return resolve();
+      }
+    );
   });
 }
 
