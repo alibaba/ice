@@ -21,7 +21,7 @@
  */
 
 module.exports = function getDependenciesByMaterial(material = {}) {
-  if(material.type == 'custom'){
+  if (material.type == 'custom') {
     const customDependencies = JSON.parse(material.dep);
     const dependencies = {};
     customDependencies.forEach((dep) => {

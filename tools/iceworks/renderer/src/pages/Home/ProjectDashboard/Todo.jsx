@@ -14,8 +14,12 @@ function recursiveReaddirSync(dirPath, rootDir) {
   let list = [];
   let stats;
   const files = readdirSync(dirPath);
+  const ignoreFiles = ['node_modules']
 
   files.forEach(function(file) {
+    if (ignoreFiles.includes(file)) {
+      return
+    }
     let fullPath = path.join(dirPath, file);
     stats = fs.lstatSync(fullPath);
     if (stats.isDirectory()) {
@@ -141,11 +145,11 @@ class Todo extends Component {
     // TODO 监听目录文件变更
     const { currentProject } = this.props.projects;
     if (currentProject && currentProject.fullPath) {
-      const srcDir = currentProject.isNodeProject
-        ? path.join(currentProject.fullPath, 'client')
-        : path.join(currentProject.fullPath, 'src');
+      const srcDir = currentProject.clientSrcPath;
       const files = recursiveReaddirSync(srcDir, srcDir);
-      this.state.files = []; // fixme: 不能通过赋值方式修改 state
+      this.setState({
+        files: []
+      });
 
       if (files.length > 0) {
         files.forEach(([filePath, fullPath]) => {
@@ -232,10 +236,11 @@ class Todo extends Component {
    * @property  {String}  messagesInfo.totalLines Total number of lines in the file.
    */
   renderMessages(messagesInfo) {
-    const { isNodeProject } = this.props.projects.currentProject;
+    const { currentProject } = this.props.projects;
+    const clientSrcPath = currentProject.clientSrcPath;
     return (
       <td style={{ lineHeight: '20px' }}>
-        <div>{isNodeProject ? 'client/' + messagesInfo.path : 'src/' + messagesInfo.path}</div>
+        <div>{ clientSrcPath + '/' + messagesInfo.path }</div>
         <ul style={{ paddingLeft: '2em', fontSize: '0.8em', color: '#666' }}>
           {messagesInfo.messages.map((message, index) => {
             return (

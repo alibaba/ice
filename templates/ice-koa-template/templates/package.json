@@ -1,0 +1,42 @@
+{
+  "name": "@icedesign/ice-koa-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "clientInstall": "cd client && npm install --no-package-lock",
+    "serverIntall": "cd server && npm install --no-package-lock",
+    "postinstall": "npm run clientInstall && npm run serverIntall",
+    "clientStart": "cd client && npm run start",
+    "serverStart": "cd server && npm run server",
+    "start": "npm run clientStart & npm run serverStart",
+    "build": "cd client && npm run build",
+    "clinetLint": "cd client && npm run lint",
+    "serverLint": "cd server && npm run lint",
+    "lint": "npm run clinetLint && npm run serverLint"
+  },
+  "keywords": [
+    "ice",
+    "ice-template"
+  ],
+  "author": {
+    "name": "ICE Team",
+    "email": "ice-admin@alibaba-inc.com"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.com",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/ice"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

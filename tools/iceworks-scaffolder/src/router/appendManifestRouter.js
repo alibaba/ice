@@ -10,7 +10,9 @@ const fs = require('fs');
 const path = require('path');
 const pathExists = require('path-exists');
 
-module.exports = async function addManifestRouter({ path: routePath, manifestFilePath, pagePath }) {
+const { getClientFolderName } = require('../utils');
+
+module.exports = async function addManifestRouter({ path: routePath, manifestFilePath, pagePath, nodeFramework = '' }) {
   if (!pathExists.sync(manifestFilePath)) {
     return false;
   }
@@ -24,7 +26,8 @@ module.exports = async function addManifestRouter({ path: routePath, manifestFil
   const manifestData = JSON.parse(manifestContent);
 
   const pages = manifestData.pages || {};
-  let pagePathWithRoot = path.join('src', pagePath, 'index');
+  const clientFolder = getClientFolderName(nodeFramework);
+  let pagePathWithRoot = path.join(clientFolder, pagePath, 'index');
 
   pagePathWithRoot = pagePathWithRoot.replace(/\\/g, '/');
 

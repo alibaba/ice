@@ -33,5 +33,9 @@
   "peerDependencies": {
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
+  },
+  "componentConfig": {
+    "name": "panel",
+    "title": "面板组件"
   }
 }

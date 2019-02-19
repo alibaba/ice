@@ -52,7 +52,7 @@ class Proxies extends Component {
     const { currentProject } = this.props.projects;
 
     if (currentProject) {
-      const pkgFilePath = path.join(currentProject.fullPath, 'package.json');
+      const pkgFilePath = path.join(currentProject.clientPath, 'package.json');
       try {
         let pkgData = fs.readFileSync(pkgFilePath);
         pkgData = JSON.parse(pkgData.toString());
@@ -76,7 +76,7 @@ class Proxies extends Component {
   writeProxyConfig = (proxyConfig, cb) => {
     const { currentProject } = this.props.projects;
     if (currentProject) {
-      const pkgFilePath = path.join(currentProject.fullPath, 'package.json');
+      const pkgFilePath = path.join(currentProject.clientPath, 'package.json');
       try {
         let pkgData = fs.readFileSync(pkgFilePath);
         pkgData = JSON.parse(pkgData.toString());

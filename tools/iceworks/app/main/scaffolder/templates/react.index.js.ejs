@@ -1,14 +1,21 @@
-<% if (scaffoldConfig.enableCodeSplitting) { -%>
-import Loadable from 'react-loadable';
-import LoadingIndicator from '@/components/LoadingIndicator';
-
-export default Loadable({
-  loader: () => import('./<%= className %>'),
-  loading: LoadingIndicator,
-});
-<% } else { -%>
-import <%= className %> from './<%= className %>';
-export default <%= className %>;
+import React, { Component } from 'react';
+<% for(var i = 0; i < blocks.length; i++) { -%>
+import <%= blocks[i].className %> from '<%= blocks[i].relativePath -%>';
 <% } -%>
 
+export default class <%= className %> extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
+  render() {
+    return (
+      <div className="<%= pageName %>-page">
+        <% for(var i = 0; i < blocks.length; i++){ -%>
+        <<%= blocks[i].className -%> />
+        <% } -%>
+      </div>
+    );
+  }
+}

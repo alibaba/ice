@@ -1,7 +1,15 @@
 # ice-scripts Changelog
 
-## 2.1.3
+## 2.1.6
+- [fix] 修复 block build 报错 [#1444](https://github.com/alibaba/ice/issues/1444)
 
+## 2.1.5
+- [fix] 增加默认 screenshot
+
+## 2.1.4
+- [feat] 兼容 ice 仓库的目录结构
+
+## 2.1.3
 - [feat] 支持 CSS Modules
 
 ## 2.1.2

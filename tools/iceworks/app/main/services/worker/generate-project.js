@@ -6,42 +6,17 @@ const template = require('../../template');
 const log = require('../../logger');
 const settings = require('../settings');
 const logger = require('../../logger');
-const tempTarballScaffold = {
-  name: 'ice-koa-react-scaffold',
-  title: 'ICE Koa Template',
-  source:
-  {
-    type: 'npm',
-    npm: 'ice-koa-react-scaffold',
-    registry: 'http://registry.npmjs.com'
-  }
-};
-const pendingFields = {
-  dotFiles: [
-    '.editorconfig',
-    '.eslintignore',
-    '.eslintrc',
-    '.gitignore',
-    '.gitkeep'
-  ],
-  extractDirs: [
-    'src',
-    'public'
-  ],
-  pkgAttrs: [
-    'dependencies',
-    'devDependencies'
-  ]
-};
+const nodeScaffoldInfo = require('../../config/nodeScaffold');
+const { getClientPath, getServerPath } = require('../../paths');
 
 module.exports = (_options, afterCreateRequest) => {
   const {
     scaffold,
     layoutConfig,
     isCustomScaffold,
-    targetPath,
+    targetPath, // 项目文件放置路径
     projectName,
-    isNodeProject
+    nodeFramework
   } = _options;
   const isAlibaba = settings.get('isAlibaba');
 
@@ -55,15 +30,18 @@ module.exports = (_options, afterCreateRequest) => {
     fn = templateBuilderUtils.generateTemplate(layoutConfig);
   } else {
     const scaffoldDevDeps = (scaffold && scaffold.devDependencies) || {};
-    needCreateDefflow = isNodeProject ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
-    if (isNodeProject) {
+    // needCreateDefflow = nodeFramework ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
+    needCreateDefflow = isAlibaba && scaffoldDevDeps['ice-scripts'];
+    if (nodeFramework) {
       // @TODO afterCreateRequest
-      fn = template.createProject(getOptions(_options), afterCreateRequest);
+      // 解压node模板的promise
+      fn = template.createProject(
+        getOptions(_options, nodeFramework, true),
+        afterCreateRequest
+      );
+      // node模板中解压前端模板的promise
       createClient = template.createProject(
-        getOptions(
-          _options,
-          path.join(targetPath, 'client')
-        ),
+        getOptions(_options, nodeFramework),
         afterCreateRequest
       );
     } else {
@@ -73,7 +51,7 @@ module.exports = (_options, afterCreateRequest) => {
 
   return fn
     .then(() => {
-      if(isNodeProject) {
+      if(nodeFramework) { // 如果是 node 模板，此处解压前端模板到已有的项目中
         return new Promise((resolve) => {
           createClient.then(() => {resolve()});
         });
@@ -86,15 +64,15 @@ module.exports = (_options, afterCreateRequest) => {
       updateScaffoldConfig(isCustomScaffold, layoutConfig);
     })
     .then(() => {
-      if (isNodeProject) {
-        processNodeProject(targetPath);
+      if (nodeFramework) {
+        processNodeProject(targetPath, nodeFramework);
       }
     })
     .then(() => {
       log.report('app', {
         action: isCustomScaffold
           ? 'custom-generator-project'
-          : ( isNodeProject ? 'node-project' : 'generator-project' ),
+          : ( nodeFramework ? nodeFramework : 'generator-project' ),
         scaffold: scaffold.name || 'custom-react-template',
         group: isAlibaba ? 'alibaba' : 'outer',
       });
@@ -102,18 +80,27 @@ module.exports = (_options, afterCreateRequest) => {
     });
 };
 
-function getOptions(_options, clientTargetPath) {
+/**
+ * 
+ * @param {*} _options 
+ * @param {*} nodeFramework // 模板类型：koa2, midway
+ * @param {*} isNode // 标识是node模板本身，还是node模板中需要解压的前端模板，true表示是node模板本身。
+ */
+function getOptions(_options, nodeFramework = '', isNode = false) {
+  const isNodeFramework = nodeFramework && isNode; // node模板本身
+  const isTemplateInNode = nodeFramework && !isNode; // node模板中的前端模板
+
+  const destDir = isTemplateInNode
+    ? getClientPath(_options.targetPath, nodeFramework)
+    : _options.targetPath;
+  const scaffold = isNodeFramework
+    ? nodeScaffoldInfo[nodeFramework].tarball
+    : _options.scaffold;
   return {
-    destDir: clientTargetPath
-      ? clientTargetPath
-      : _options.targetPath,
-    scaffold: ( _options.isNodeProject && !clientTargetPath )
-      ? tempTarballScaffold
-      : _options.scaffold,
+    destDir,
+    scaffold,
+    progressFunc: _options.progressFunc,
     projectName: _options.projectName,
-    progressFunc: ( _options.isNodeProject && !clientTargetPath )
-      ? _options.progressFunc.server
-      : _options.progressFunc.client,
     interpreter: ({ type, message }, next) => {
       log.info('generate project', type, message);
       switch (type) {
@@ -197,128 +184,74 @@ function updateScaffoldConfig(isCustomScaffold, layoutConfig) {
  * 处理Node模板和前端模板的文件
  * @param {String} targetPath
  */
-function processNodeProject(destDir) {
-
-  //删除client中点不需要的文件
-  pendingFields.dotFiles.forEach((currentValue) => {
-    fs.removeSync(path.join(destDir, 'client', currentValue));
-  });
-
-  extractClientFiles(destDir);
-
-  pendingFields.extractDirs.forEach((currentValue) => {
-    fs.removeSync(path.join(destDir, 'client', currentValue));
-  });
-
-  //将koa模板中_打头的文件改为.
-  fs.readdir(destDir, 'utf8', (err, files) => {
+function processNodeProject(destDir, nodeFramework) {
+  //将node模板中_打头的文件改为.
+  const serverDir = getServerPath(destDir, nodeFramework);
+  fs.readdir(serverDir, 'utf8', (err, files) => {
     const nameReg = /^_/;
     files.forEach((currentValue) => {
       if (nameReg.test(currentValue)) {
         const refactorName = currentValue.replace(nameReg, '.');
         fs.renameSync(
-          path.join(destDir, currentValue),
-          path.join(destDir, refactorName)
+          path.join(serverDir, currentValue),
+          path.join(serverDir, refactorName)
         );
       }
-    })
+    });
   });
-
-  compoundDeps(destDir);
-
-  fs.removeSync(path.join(destDir, 'client', 'package.json'));
+  // 合并client下_package.json 和 模板自带package.json的scripts和依赖。
+  compoundPkg(destDir, nodeFramework);
 }
 
 /**
- * 移动src和public内的文件到外部
+ * 合并_package.json的依赖和scripts到前端模板的package.json中
  * @param {String} targetPath
  */
-function extractClientFiles(destDir) {
-  pendingFields.extractDirs.forEach((currentValue) => {
-    fs
-      .readdirSync(
-        path.join(destDir, 'client', currentValue)
-      )
-      .forEach((fileName) => {
-        const originPath = path.join(destDir, 'client', currentValue, fileName);
-        const targetPath = path.join(destDir, 'client', fileName);
-        if (fs.existsSync(targetPath)) {
-          recursionMerge(originPath, targetPath);
-        } else {
-          fs.renameSync(originPath, targetPath);
-        }
-      })
-  })
-}
+function compoundPkg(destDir, nodeFramework) {
+  const { pendingFields } = nodeScaffoldInfo[nodeFramework];
+  const clientPath = getClientPath(destDir, nodeFramework);
+  const clientPkgPath = path.join(clientPath, 'package.json');
+  const projectPkgPath = path.join(destDir, 'package.json');
+  const _pkgPath = path.join(clientPath, '_package.json');
 
-/**
- * 递归合并同名文件夹
- * @param {String} originPath
- * @param {String} targetPath
- */
-function recursionMerge(originPath, targetPath) {
-  try {
-    let targetFolder = fs.readdirSync(targetPath);
-    let originFolder = fs.readdirSync(originPath);
-    originFolder.forEach((originFile) => {
-      targetFolder.forEach((targetFile) => {
-        if (originFile == targetFile) {
-          recursionMerge(
-            path.join(originPath, originFile),
-            path.join(targetPath, targetFile)
-          );
-          originFolder.splice(
-            originFolder.indexOf(originFile),
-            1
-          );
-        }
-      });
-    });
-    originFolder.forEach((originFile) => {
-      fs.renameSync(
-        path.join(originPath, originFile),
-        path.join(targetPath, originFile)
-      );
-    });
-  } catch (e) {
-    // do nothing
-  }
-}
-
-/**
- * 合并package.json的依赖
- * @param {String} targetPath
- */
-
-function compoundDeps(destDir) {
-  const serverPackage = fs.readJsonSync(path.join(destDir, 'package.json'));
-  const clientPackage = fs.readJsonSync(path.join(destDir, 'client', 'package.json'));
+  const _package = fs.readJsonSync(_pkgPath);
+  const projectPackage = fs.readJsonSync(projectPkgPath);
+  const clientPackage = fs.readJsonSync(clientPkgPath);
   const versionReg = /^[\^>>(?==)<<(?==)~]?([0-9]+(?=\.)[0-9]+)/;
-  if (clientPackage.hasOwnProperty('themeConfig')) {
-    serverPackage.themeConfig = clientPackage.themeConfig;
-  }
-  if (clientPackage.hasOwnProperty('keywords')) {
-    serverPackage.keywords = clientPackage.keywords;
-  }
-  serverPackage.templateType = 'Koa';
+
+  // 注入node模板类型到前端模板package和项目的package中
+  clientPackage.templateType = nodeFramework;
+  projectPackage.templateType = nodeFramework;
+  // 合并 _package 的 scripts 和 依赖 到 clientPackage
   pendingFields.pkgAttrs.forEach((attrName) => {
-    Object
-      .keys(clientPackage[attrName])
+    if (attrName === 'scripts') { // 直接覆盖
+      Object
+        .keys(_package[attrName])
+        .forEach((currentValue) => {
+          clientPackage[attrName][currentValue] = _package[attrName][currentValue];
+        });
+    } else {
+      Object
+      .keys(_package[attrName])
       .forEach((currentValue) => {
-        if(serverPackage[attrName].hasOwnProperty(currentValue)){
-          const serverVersion = versionReg.exec(serverPackage[attrName][currentValue]);
+        if(clientPackage[attrName].hasOwnProperty(currentValue)){
+          const _packageVersion = versionReg.exec(_package[attrName][currentValue]);
           const clientVersion = versionReg.exec(clientPackage[attrName][currentValue]);
           if (
-            serverVersion
+            _packageVersion
             && clientVersion
-            && parseFloat(serverVersion[1]) < parseFloat(clientVersion[1])
+            && parseFloat(clientVersion[1]) < parseFloat(_packageVersion[1])
           ) {
-            serverPackage[attrName][currentValue] = clientPackage[attrName][currentValue];
+            clientPackage[attrName][currentValue] = _package[attrName][currentValue];
           }
         } else {
-          serverPackage[attrName][currentValue] = clientPackage[attrName][currentValue];
+          clientPackage[attrName][currentValue] = _package[attrName][currentValue];
         }
       });
+    }
+    
   });
-  fs.writeJsonSync(path.join(destDir, 'package.json'), serverPackage);
+  fs.writeJsonSync(clientPkgPath, clientPackage);
+  fs.writeJsonSync(projectPkgPath, projectPackage);
+  fs.removeSync(_pkgPath);
 }

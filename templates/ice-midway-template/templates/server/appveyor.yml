@@ -1,0 +1,14 @@
+environment:
+  matrix:
+    - nodejs_version: '6, 8, 10'
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm i npminstall && node_modules\.bin\npminstall
+
+test_script:
+  - node --version
+  - npm --version
+  - npm run test
+
+build: off
