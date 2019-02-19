@@ -21,18 +21,10 @@
     "ice-template",
     "ice-midway-template"
   ],
-  "author": {
-    "name": "ICE Team",
-    "email": "ice-admin@alibaba-inc.com"
-  },
   "license": "MIT",
   "publishConfig": {
     "registry": "http://registry.npmjs.com",
     "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice"
   },
   "engines": {
     "node": ">=8.0.0"
