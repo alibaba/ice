@@ -1,5 +1,9 @@
 # ice-scripts Changelog
 
+## 1.8.6
+
+- [fix] 修复 iceworks node 项目路径获取错误的问题
+
 ## 1.8.5
 
 - [chore] 升级 ice-skin-loader 到 0.2.1
