@@ -1,0 +1,22 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+logs/
+npm-debug.log
+yarn-error.log
+node_modules/
+coverage/
+.idea/
+.DS_Store
+*.sw*
+*.un~
+.nodejs-cache
+.happypack
+.tmp/
+
+# client
+/client/build/
+/client/dist/
+
+# server
+/server/logs/
+/server/run/

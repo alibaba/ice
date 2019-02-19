@@ -58,6 +58,12 @@ exports.appMenu = (app, windows) => {
       },
     },
     {
+      label: 'Midway 文档',
+      click() {
+        shell.openExternal('https://midwayjs.org/midway/guide.html');
+      },
+    },
+    {
       label: 'Github',
       click() {
         shell.openExternal('https://github.com/alibaba/ice');

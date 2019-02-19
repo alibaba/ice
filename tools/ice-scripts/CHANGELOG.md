@@ -1,5 +1,9 @@
 # ice-scripts Changelog
 
+## 1.8.5
+
+- [chore] 升级 ice-skin-loader 到 0.2.1
+
 ## 1.8.4
 
 - [feat] 通过对命令行参数 --project-type 添加参数，增加对 iceworks 中生成的 node 项目的支持。

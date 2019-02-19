@@ -1,16 +1,20 @@
 import { inject, observer } from 'mobx-react';
-import { Input, Progress, Checkbox } from '@icedesign/base';
+import { Input, Checkbox, Select } from '@icedesign/base';
+import { shell } from 'electron';
 import React, { Component } from 'react';
 import Tooltip from 'rc-tooltip';
 import services from '../../services';
 
 import CustomIcon from '../Icon';
+import Progress from '../Progress';
+
+const { Option } = Select;
 
 /**
  * 模板生成表单项目
  */
 
-@inject('scaffold')
+@inject('scaffold', 'projects')
 @observer
 export default class ScaffoldForm extends Component {
 
@@ -32,15 +36,33 @@ export default class ScaffoldForm extends Component {
   };
 
   toggleNodeProject = (checked) => {
-    this.props.scaffold.toggleNodeProject(checked);
+    this.props.scaffold.toggleNodeSelect(checked);
   };
+
+  handleNodeFrameSelect = (value) => {
+    this.props.scaffold.toggleNodeProject(value);
+  };
+
+  handleOpenMidwayDoc = () => {
+    shell.openExternal('https://midwayjs.org/midway/guide.html');
+  };
+
+  handleMidwaySelect = ( checked ) => {
+    if (checked) {
+      this.props.scaffold.toggleNodeProject('midwayAli');
+    } else {
+      this.props.scaffold.toggleNodeProject('');
+    }
+  }
 
   render() {
     const isAlibaba = services.settings.get('isAlibaba');
     const hasIce =
       this.props.scaffold.scaffold.devDependencies
       && this.props.scaffold.scaffold.devDependencies.hasOwnProperty('ice-scripts');
-    const showNodeCheckbox = hasIce && !isAlibaba;
+
+    const showNodeOutside = !isAlibaba && hasIce;
+    const {currentProject} = this.props.projects;
 
     return (
       <div className="project-config-form">
@@ -94,44 +116,71 @@ export default class ScaffoldForm extends Component {
             onChange={this.changeProjectName}
           />
         </div>
-        { showNodeCheckbox
-          &&
-          (<div className="project-config-form-item">
-            <label>
-              添加 Koa2
-              <Checkbox
-                disabled={this.props.scaffold.isCreating}
-                onChange={this.toggleNodeProject}
-                style={{ margin: '0 4px', verticalAlign: 'top' }}
-              />
-            </label>
-          </div>)}
-        {this.props.scaffold.isCreating && (
-          <div className="project-config-form-item">
-            <span style={{ fontSize: 12, color: '#999' }}>
-              {this.props.scaffold.generatorStatusText}
-            </span>
-          </div>
-        )}
-        {this.props.scaffold.isCreating && (
-          <div className="project-config-form-item">
-            <Progress
-              style={{ width: '40%' }}
-              showInfo={false}
-              percent={this.props.scaffold.progress}
-            />
-            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-              {this.props.scaffold.progress}%
-            </span>
-            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-              {this.props.scaffold.progressSpeed}
-              /kbs
-            </span>
-            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-              剩余 {this.props.scaffold.progressRemaining} s
-            </span>
-          </div>
-        )}
+        <div
+          className="project-config-form-item"
+          style={{ lineHeight: '28px' }}
+        >
+          {
+            isAlibaba ? (
+              // TODO 解决tnpm的问题
+              // <label>
+              //   添加 Midway 
+              //   <Checkbox
+              //     disabled={this.props.scaffold.isCreating}
+              //     onChange={this.handleMidwaySelect}
+              //     style={{ margin: '0 4px', verticalAlign: 'middle' }}
+              //   />
+              // </label>
+              null
+            ) : hasIce ? (
+              <label>
+                添加服务端开发框架
+                <Checkbox
+                  disabled={this.props.scaffold.isCreating}
+                  onChange={this.toggleNodeProject}
+                  style={{ margin: '0 4px', verticalAlign: 'middle' }}
+                />
+              </label>
+            ) : null
+          }
+          {
+            this.props.scaffold.isNode && (
+              <Select
+                placeholder="选择框架"
+                onChange={this.handleNodeFrameSelect}
+                style={{ verticalAlign: 'middle' }}
+              >
+                <Option value="midway">Midway</Option>
+                <Option value="koa2">Koa</Option>
+              </Select>
+            )
+          }
+          {
+            ( 
+              this.props.scaffold.nodeFramework === 'midway'
+              // TODO 解决tnpm的问题
+              // || this.props.scaffold.nodeFramework === 'midwayAli'
+            ) && (
+              <span
+                style={{
+                  cursor: 'pointer'
+                }}
+                onClick={this.handleOpenMidwayDoc}
+              >
+                <CustomIcon
+                  type="help"
+                  style={{
+                    margin: '0 4px 0 8px',
+                    color: '#5797fb'
+                  }}
+                />
+                <span style={{ color: '#5797fb' }} >Midway 官方文档</span>
+              </span>
+            )
+          }
+        </div>
+        <Progress
+        />
       </div>
     );
   }

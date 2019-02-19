@@ -1,4 +1,5 @@
 const tinycolor = require('tinycolor2');
+
 /**
  * 根据差值计算颜色
  * @param {Color} color

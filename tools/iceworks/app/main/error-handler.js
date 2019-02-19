@@ -1,5 +1,5 @@
 // 创建项目类型错误
-exports.CreateProjectError = class CreateProjectError extends Error {
+exports.DetailError = class DetailError extends Error {
   constructor(message, metadata) {
     super(message);
 

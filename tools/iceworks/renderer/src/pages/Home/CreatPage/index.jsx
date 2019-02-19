@@ -23,11 +23,14 @@ const { log, npm, shared, interaction, scaffolder } = services;
 
 import './index.scss';
 
-@inject('projects', 'newpage', 'blocks', 'customBlocks')
+@inject('projects', 'newpage', 'blocks', 'customBlocks', 'progress')
 @observer
 class CreatePage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectedBlocks: []
+    };
     this.props.customBlocks.initCustomBlocks();
 
     // 监听 statusCompile 的构建状态
@@ -88,11 +91,10 @@ class CreatePage extends Component {
     const { currentProject } = projects;
     let removePromise;
     if (currentProject.scaffold && currentProject.scaffold.isAvailable()) {
-      removePromise = currentProject.scaffold.removePreviewPage({ isNodeProject: currentProject.isNodeProject });
+      removePromise = currentProject.scaffold.removePreviewPage({ nodeFramework: currentProject.nodeFramework });
     } else {
       removePromise = scaffolder.removePreviewPage({
-        destDir: currentProject.root,
-        isNodeProject: currentProject.isNodeProject
+        clientSrcPath: currentProject.clientSrcPath
       });
     }
     removePromise
@@ -128,7 +130,7 @@ class CreatePage extends Component {
       layout,
       blocks,
       preview: true,
-      isNodeProject: currentProject.isNodeProject,
+      nodeFramework: currentProject.nodeFramework,
     };
 
     const libraryType = currentProject.getLibraryType();
@@ -242,10 +244,11 @@ class CreatePage extends Component {
         .createPage({
           preview: true,
           destDir: toJS(this.props.newpage.targetPath),
+          clientPath: currentProject.clientPath,
+          clientSrcPath: currentProject.clientSrcPath,
           layout,
           blocks,
           libary: this.props.projects.currentProject.getLibraryType(),
-          isNodeProject: currentProject.isNodeProject,
           interpreter: ({ type, message, data }, next) => {
             switch (type) {
               case 'FILE_CREATED':
@@ -260,7 +263,7 @@ class CreatePage extends Component {
                     ['install', '--save', '--no-package-lock'].concat(
                       dependenciesFormat(dependencies)
                     ),
-                    { cwd: projects.currentProject.fullPath }
+                    { cwd: projects.currentProject.clientPath }
                   )
                   .then(() => {
                     log.info('预览页面 依赖安装完成！');
@@ -385,12 +388,8 @@ class CreatePage extends Component {
     }
    
     this.props.newpage.openSave();
-    PageConfig.show({
-      selectedBlocks,
-      newpage: this.props.newpage,
-      blocks: this.props.blocks,
-      projects: this.props.projects,
-      libary: this.props.projects.currentProject.getLibraryType(),
+    this.setState({
+      selectedBlocks
     });
   };
 
@@ -463,6 +462,14 @@ class CreatePage extends Component {
             </Button>
           </div>
         </div>
+        {
+          this.props.newpage.savePageVisible && (
+            <PageConfig
+              selectedBlocks={this.state.selectedBlocks}
+              libary={this.props.projects.currentProject.getLibraryType()}
+            />
+          )
+        }
       </Dialog>
     );
   }

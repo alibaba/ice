@@ -13,10 +13,9 @@ module.exports = function generateVarsByThemeConfig(themeConfig) {
     .map((key) => {
       const value = themeVars[key];
       return getVariableMappingString(key, value);
-    })
-    .join('\n');
+    });
 
-  return appendVariables;
+  return appendVariables.join('\n');
 };
 
 /**

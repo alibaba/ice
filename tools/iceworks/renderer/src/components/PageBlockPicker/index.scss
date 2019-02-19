@@ -27,6 +27,14 @@
       margin-right: 10px;
     }
   }
+  &-progress {
+    height: 60px;
+    width: 300px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #f3f3f3;
+  }
   &-target {
     font-size: 12px;
     border-bottom: 1px solid #eee;
