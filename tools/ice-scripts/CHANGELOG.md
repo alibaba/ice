@@ -1,5 +1,9 @@
 # ice-scripts Changelog
 
+## 1.8.7
+
+- [feat] 支持 TypeScript 构建
+
 ## 1.8.6
 
 - [fix] 修复 iceworks node 项目路径获取错误的问题
