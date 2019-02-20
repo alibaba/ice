@@ -1,5 +1,9 @@
 # ice-scripts Changelog
 
+## 2.1.8
+
+- [fix] 修复 imagemin-pngquant 安装报错 [#46](https://github.com/imagemin/imagemin-pngquant/issues/46)
+
 ## 2.1.7
 
 - [chore] typescript-definition-generator 迁移为 @alifd/dts-generator [#1475](https://github.com/alibaba/ice/pull/1475)
