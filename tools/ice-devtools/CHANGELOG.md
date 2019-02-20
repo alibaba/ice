@@ -1,5 +1,8 @@
 # ice-scripts Changelog
 
+## 2.2.0
+- [feat] 添加组件入库托管
+
 ## 2.1.9
 - [feat] 添加内部站点物料同步
 
