@@ -222,7 +222,7 @@ class Dependencies extends Component {
 
   renderDependencies = (deps, type = 'dependencies') => {
     const depsArr = Object.keys(deps);
-    if (depsArr.length == 0) {
+    if (depsArr.length === 0) {
       return <EmptyTips style={{ minHeight: 40 }}>暂无依赖项</EmptyTips>;
     }
     return (

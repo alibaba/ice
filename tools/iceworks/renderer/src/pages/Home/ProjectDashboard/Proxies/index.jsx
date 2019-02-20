@@ -59,7 +59,7 @@ class Proxies extends Component {
         const proxyConfig = pkgData.proxyConfig || {};
         let proxyConfigRules = Object.entries(proxyConfig).map(
           ([rule, options]) => {
-            if (typeof options == 'string') {
+            if (typeof options === 'string') {
               return [rule, { target: options, enable: true }];
             }
             return [rule, { ...options }];
@@ -205,7 +205,7 @@ class Proxies extends Component {
   renderProxyForm = () => {
     let { proxyConfigRules } = this.state;
 
-    if (Array.isArray(proxyConfigRules) && proxyConfigRules.length == 0) {
+    if (Array.isArray(proxyConfigRules) && proxyConfigRules.length === 0) {
       proxyConfigRules.push(deepcopy(newRuleItem));
     }
 

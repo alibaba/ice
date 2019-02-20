@@ -5,19 +5,19 @@ const commonConfig = {
       '.eslintignore',
       '.eslintrc',
       '.gitignore',
-      '.gitkeep'
+      '.gitkeep',
     ],
     extractDirs: [
       'src',
-      'public'
+      'public',
     ],
     pkgAttrs: [
       'scripts',
       'dependencies',
-      'devDependencies'
-    ]
-  }
-}
+      'devDependencies',
+    ],
+  },
+};
 
 const koa2 = Object.assign({
   tarball: {
@@ -28,9 +28,9 @@ const koa2 = Object.assign({
         type: 'npm',
         npm: '@icedesign/ice-koa-template',
         version: 'latest',
-        registry: 'http://registry.npmjs.com'
-      }
-  }
+        registry: 'http://registry.npmjs.com',
+      },
+  },
 }, commonConfig);
 
 const midway = Object.assign({
@@ -42,9 +42,9 @@ const midway = Object.assign({
         type: 'npm',
         npm: '@icedesign/ice-midway-template',
         version: 'latest',
-        registry: 'http://registry.npmjs.com'
-      }
-  }
+        registry: 'http://registry.npmjs.com',
+      },
+  },
 }, commonConfig);
 
 const midwayAli = Object.assign({
@@ -56,13 +56,13 @@ const midwayAli = Object.assign({
         type: 'npm',
         npm: '@ali/ice-midway-template',
         version: 'latest',
-        registry: 'http://registry.npm.alibaba-inc.com/'
-      }
-  }
+        registry: 'http://registry.npm.alibaba-inc.com/',
+      },
+  },
 }, commonConfig);
 
 module.exports = {
   koa2,
   midway,
-  midwayAli
+  midwayAli,
 };

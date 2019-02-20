@@ -48,7 +48,7 @@ module.exports = function extractTarball(
         }));
       })
       .pipe(zlib.Unzip()) // eslint-disable-line babel/new-cap
-      .on('error', (error) => {
+      .on('error', () => {
         reject(new DetailError('已中止创建', {
           message: '',
           stack: '',
@@ -78,7 +78,7 @@ module.exports = function extractTarball(
         // deal with _ started file
         // https://github.com/alibaba/ice/issues/226
         const parsedDestPath = path.parse(destPath);
-        if (parsedDestPath.base == '_gitignore') {
+        if (parsedDestPath.base === '_gitignore') {
           parsedDestPath.base = parsedDestPath.base.replace(/^_/, '.');
         }
         destPath = path.format(parsedDestPath);
@@ -91,7 +91,7 @@ module.exports = function extractTarball(
         }
         logger.info('extractTarball', destPath);
         allFiles.push(destPath);
-        const writeStream = new Promise(streamResolve => {
+        const writeStream = new Promise((streamResolve) => {
           entry
             .pipe(fs.createWriteStream(destPath))
             .on('finish', () => streamResolve());

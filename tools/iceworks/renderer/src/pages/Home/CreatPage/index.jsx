@@ -62,7 +62,7 @@ class CreatePage extends Component {
           if (serverUrl) {
             let previewUrl = new URL(serverUrl);
             let mobile = false;
-            if (applicationType == 'rax') {
+            if (applicationType === 'rax') {
               previewUrl.hash = '!/IceworksPreviewPage';
               mobile = true;
             } else {
@@ -152,7 +152,7 @@ class CreatePage extends Component {
           log.debug('add dependencies', this.props.newpage.targetPath);
           createResult = result;
           return new Promise((resolve) => {
-            if (Object.keys(dependencies).length == 0) {
+            if (Object.keys(dependencies).length === 0) {
               resolve(true);
             } else {
               const npmArgs = [
@@ -188,14 +188,14 @@ class CreatePage extends Component {
           let routerConfig;
 
           // angular 的模板生成的路由
-          if (libraryType == 'angular') {
+          if (libraryType === 'angular') {
             routerConfig = {
               path: '/IceworksPreviewPage',
               pagePath: createResult.output.page,
               component: `${pageClassName}Component`,
               module: `${pageClassName}Module`,
             };
-          } else if (libraryType == 'rax') {
+          } else if (libraryType === 'rax') {
             routerConfig = {
               path: 'IceworksPreviewPage',
               pagePath: createResult.output.page,
@@ -214,7 +214,7 @@ class CreatePage extends Component {
         .then(() => {
           log.info('预览页面生成成功');
           // @hack rax 生成成功后 1 秒打开预览页面
-          if (libraryType == 'rax') {
+          if (libraryType === 'rax') {
             setTimeout(() => {
               const serverUrl = currentProject.serverUrl;
               if (serverUrl) {
@@ -343,7 +343,7 @@ class CreatePage extends Component {
     let conflictName = '';
 
     const hasEmptyAliasName = blocks.some((block) => {
-      return block.alias.trim() == '';
+      return block.alias.trim() === '';
     });
 
     // 冲突检测
@@ -413,7 +413,7 @@ class CreatePage extends Component {
     if (!currentProject) return null;
     // 脚手架类型
     const applicationType = currentProject.getApplicationType();
-    const showLayoutPicker = applicationType == 'ice';
+    const showLayoutPicker = applicationType === 'ice';
     const showPreviewPage = ['ice', 'angular', 'rax'].includes(applicationType);
     return (
       <Dialog

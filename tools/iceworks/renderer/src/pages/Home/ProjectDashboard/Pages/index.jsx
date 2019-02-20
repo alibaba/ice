@@ -135,7 +135,7 @@ class PagesCard extends Component {
 
   renderPageList = () => {
     const { pages } = this.state;
-    if (pages && pages.length == 0) {
+    if (pages && pages.length === 0) {
       return <EmptyTips>暂无页面</EmptyTips>;
     }
     // 按时间倒叙

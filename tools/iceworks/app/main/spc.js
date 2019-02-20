@@ -1,6 +1,6 @@
 const { EventEmitter } = require('events');
 
-let instance = null;
+const instance = null;
 
 const CHANNEL_DATA = 'session:data';
 const CHANNEL_EXIT = 'session:exit';

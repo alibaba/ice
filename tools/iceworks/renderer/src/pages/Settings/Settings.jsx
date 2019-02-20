@@ -58,7 +58,7 @@ class Setting extends Component {
 
   checkRegistryIsCustom = (registryUrl) => {
     const inRegistryes = originRegistries.some((reg) => {
-      if (reg.value == registryUrl) {
+      if (reg.value === registryUrl) {
         return true;
       }
       return false;
@@ -82,7 +82,7 @@ class Setting extends Component {
 
   throttleTimer = null;
   handleFormChange = (key, value) => {
-    if (key == 'registryCustom') {
+    if (key === 'registryCustom') {
       // 输入自定义 NPM 源地址
       if (!this.field.getError('registryCustom')) {
         clearTimeout(this.throttleTimer);
@@ -90,7 +90,7 @@ class Setting extends Component {
           this.udpateSettings('registry', value);
         }, 300);
       }
-    } else if (key == 'editorShell') {
+    } else if (key === 'editorShell') {
       // 输入自定义编辑器启动脚本
       if (!this.field.getError(key)) {
         clearTimeout(this.throttleTimer);
@@ -98,10 +98,10 @@ class Setting extends Component {
           this.udpateSettings(key, value);
         }, 300);
       }
-    } else if (key == 'editor') {
+    } else if (key === 'editor') {
       this.setState({ currentEditor: value });
       this.udpateSettings(key, value);
-    } else if (key == 'registry') {
+    } else if (key === 'registry') {
       const isRegistryCustom = this.checkRegistryIsCustom(value);
       this.setState({ registryCustomVisible: isRegistryCustom });
       if (!isRegistryCustom) {
@@ -173,7 +173,7 @@ class Setting extends Component {
             <FormItem
               style={{
                 display:
-                  this.state.currentEditor == CUSTOM_EDITOR ? 'flex' : 'none',
+                  this.state.currentEditor === CUSTOM_EDITOR ? 'flex' : 'none',
               }}
               label=" "
               {...formItemLayout}

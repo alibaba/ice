@@ -116,26 +116,26 @@ class App extends Component {
         <Layout>
           <VisibleWrapper
             visible={
-              this.state.activePathname == '/' ||
-              this.state.activePathname == '/index.html'
+              this.state.activePathname === '/' ||
+              this.state.activePathname === '/index.html'
             }
           >
             <PageHome />
           </VisibleWrapper>
-          <VisibleWrapper visible={this.state.activePathname == '/scaffolds'}>
+          <VisibleWrapper visible={this.state.activePathname === '/scaffolds'}>
             <PageScaffolds />
           </VisibleWrapper>
-          <VisibleWrapper visible={this.state.activePathname == '/blocks'}>
+          <VisibleWrapper visible={this.state.activePathname === '/blocks'}>
             <PageBlocks />
           </VisibleWrapper>
           <VisibleWrapper
             rerender={true}
-            visible={this.state.activePathname == '/settings'}
+            visible={this.state.activePathname === '/settings'}
           >
             <PageSettings />
           </VisibleWrapper>
 
-          <VisibleWrapper visible={this.state.activePathname == '/extensions'}>
+          <VisibleWrapper visible={this.state.activePathname === '/extensions'}>
             <PageExtensions />
           </VisibleWrapper>
         </Layout>
@@ -154,7 +154,7 @@ class VisibleWrapper extends Component {
       return null;
     }
 
-    if (!visible && this.rendered == false) {
+    if (!visible && this.rendered === false) {
       return null;
     }
 

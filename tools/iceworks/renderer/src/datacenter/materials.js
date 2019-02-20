@@ -26,9 +26,9 @@ function fetchMaterialsData() {
     });
 
     Promise.all(requestPromise).then((requestResult) => {
-      requestResult.forEach( (res, index) => {
+      requestResult.forEach((res, index) => {
         materialDatas[index].body = res || {};
-      })
+      });
       resolve(materialDatas);
     });
   });
@@ -56,7 +56,7 @@ const getBlocks = (type = '') => {
   return fetchMaterialsData().then((materialDatas) => {
     if (type) {
       materialDatas = materialDatas.filter((materials) => {
-        return materials.body.type == type;
+        return materials.body.type === type;
       });
     }
     return materialDatas.map((materials) => {
@@ -77,7 +77,7 @@ const getLayouts = (type = '') => {
   return fetchMaterialsData().then((materialDatas) => {
     if (type) {
       materialDatas = materialDatas.filter((materials) => {
-        return materials.body.type == type;
+        return materials.body.type === type;
       });
     }
     return materialDatas.map((materials) => {

@@ -18,12 +18,12 @@ export default function requestMaterial(uri, options = {}, ignoreReject) {
     json: true,
     rejectUnauthorized: false, // 绕过 SSL 证书检测，主要是针对使用自签发证书的https资源无法访问的问题。
     headers: {
-      'Cache-Control': 'no-cache'
-    } 
+      'Cache-Control': 'no-cache',
+    },
   }, options);
 
   return new Promise((resolve, reject) => {
-    request( options, 
+    request(options,
       (err, res, body) => {
         const error = err || body.error;
         if (error) {

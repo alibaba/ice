@@ -63,10 +63,13 @@ function getBundleIdentifiers(editor) {
 
 const findApplication = async function findApplication(editor) {
   const identifiers = getBundleIdentifiers(editor);
+  // eslint-disable-next-line no-restricted-syntax
   for (const identifier of identifiers) {
     try {
+      // eslint-disable-next-line no-await-in-loop
       const installPath = await appPath(identifier);
       const path = getExecutableShim(editor, installPath);
+      // eslint-disable-next-line no-await-in-loop
       const exists = await pathExists(path);
       if (exists) {
         return path;

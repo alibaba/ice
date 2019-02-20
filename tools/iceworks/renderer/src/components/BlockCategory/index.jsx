@@ -19,11 +19,11 @@ class BlockCategory extends Component {
 
   render() {
     let { blocksWithCategory, originKeywords, idPrefix, handleBlocksAdd } = this.props;
-    if (blocksWithCategory == undefined) {
+    if (blocksWithCategory === undefined) {
       return <div className="blocks-empty-tip">loading...</div>;
     } else if (
       Array.isArray(blocksWithCategory) &&
-      blocksWithCategory.length == 0 &&
+      blocksWithCategory.length ===  0 &&
       originKeywords
     ) {
       return (
@@ -37,14 +37,14 @@ class BlockCategory extends Component {
       );
     } else if (
       Array.isArray(blocksWithCategory) &&
-      blocksWithCategory.length == 0
+      blocksWithCategory.length ===  0
     ) {
       return <div className="blocks-empty-tip">暂无可用区块...</div>;
     } else {
       return (
         <div className="blocks-wrapper">
           {blocksWithCategory.map(({ category, blocks }, index) => {
-            if (blocks.length == 0) {
+            if (blocks.length ===  0) {
               return null;
             }
             const blockPanelId = `${idPrefix}${index}`;

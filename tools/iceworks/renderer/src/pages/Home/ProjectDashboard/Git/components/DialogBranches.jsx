@@ -64,7 +64,7 @@ export default class DialogBranches extends Component {
         footer={
           <div>
             <Button
-              disabled={git.checkoutBranch.length == 0}
+              disabled={git.checkoutBranch.length === 0}
               onClick={this.handleGitBranchesOk}
               type="primary"
             >
