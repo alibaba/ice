@@ -3,6 +3,9 @@ import path from 'path';
 
 import { readdirSync } from '../lib/file-system';
 
+// store
+import progress from './progress';
+
 class PageBlockPicker {
   @observable
   visible = false;
@@ -39,6 +42,27 @@ class PageBlockPicker {
   @action
   downloadDone() {
     this.downloading = false;
+  }
+
+  /**
+   * 启动进度条
+   */
+  @action
+  startProgress(showProgress = true) {
+    progress.setStatusText('正在生成区块');
+    progress.start(showProgress);
+  } 
+
+  /**
+   * 结束进度条
+   */
+  endProgress() {
+    progress.setStatusText('区块创建完成');
+    progress.end();
+  }
+
+  resetProgress() {
+    progress.reset();
   }
 
   @action

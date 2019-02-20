@@ -6,11 +6,24 @@ const generateVarsByThemeConfig = require('./generateVarsByThemeConfig');
 
 let themeFileVars = '';
 let themeConfigVars = '';
+let importVarsCode = '';
 
 module.exports = function (source) {
   const options = loaderUtils.getOptions(this);
+
   const { themeFile, themeConfig } = options;
   const modulePath = path.relative(this.rootContext, this.resourcePath);
+
+  // 使用 `@alifd/next` 的项目自动引入 next 变量，业务代码里无需手动 @import
+  if (!importVarsCode) {
+    try {
+      const projectPkgData = require(path.resolve(this.rootContext, 'package.json'));
+      importVarsCode = projectPkgData.dependencies['@alifd/next'] ? `@import '~@alifd/next/lib/core/index.scss';` : ' ';
+    } catch (err) {
+      console.error(chalk.red('\n[Error] 读取 package.json 出错'), err);
+      importVarsCode = ' ';
+    }
+  }
 
   let prefixVars = '';
   if (themeConfig.nextPrefix && /@alifd\/next\/lib\/(.+).scss$/.test(modulePath)) {
@@ -38,7 +51,7 @@ module.exports = function (source) {
   }
 
   // 权重 prefixVars > themeConfigVars > themeFileVars > source
-  return `${themeFileVars}\n${themeConfigVars}\n${prefixVars}\n${source}`;
+  return `${themeFileVars}\n${themeConfigVars}\n${prefixVars}\n${importVarsCode}\n${source}`;
 };
 
 

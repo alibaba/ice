@@ -43,19 +43,7 @@ function getServedPath(appPackageJson) {
 const appDirectory = realpathSync(process.cwd());
 
 function resolveApp(relativePath) {
-  /**
-   * 项目类型
-   *  - web: 纯前端项目
-   *  - nodejs: koa/midway 项目，前端代码放在 client 下
-   *  - node: 老的 koa 项目
-   */
-  const clientPathMap = {
-    'nodejs': 'client',
-    'web': '',
-    'node': ''
-  };
-  const clientPath = clientPathMap[process.env.PROJECT_TYPE] || '';
-  return resolve(appDirectory, clientPath, relativePath);
+  return resolve(appDirectory, relativePath);
 }
 
 const isOldKoa = process.env.PROJECT_TYPE == 'node';

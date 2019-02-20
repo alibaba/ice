@@ -17,11 +17,13 @@ import Pages from './Pages';
 import Layouts from './Layouts';
 import Proxies from './Proxies';
 import Def from './Def';
+import Git from './Git';
 
 const ExtensionMap = {
   [Assets.extensionName]: Assets,
   [Aliyun.extensionName]: Aliyun,
   [Def.extensionName]: Def,
+  [Git.extensionName]: Git,
   [Dependencies.extensionName]: Dependencies,
   [Layouts.extensionName]: Layouts,
   [Pages.extensionName]: Pages,

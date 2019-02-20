@@ -19,8 +19,13 @@ class Sessions extends EventEmitter {
    * 新建一个 session
    * @param {object} options Session 对象参数
    */
-  new({ uid = uuid.v4(), cwd, shell, shellArgs, env = {} }, done = () => {}) {
-    const session = new Session({ cwd, shell, shellArgs, env });
+  new({ uid = uuid.v4(), cwd, cwdClient, shell, shellArgs, env = {} }, done = () => {}) {
+    const session = new Session({ 
+      cwd: cwdClient || cwd, // 如果存在cwdClient，则说明是node模板，使用传入的前端目录，其他则用cwd
+      shell, 
+      shellArgs, 
+      env 
+    });
     sessions[uid] = session;
     spc.emit(CHANNEL_DATA, {
       uid: uid,
