@@ -80,7 +80,12 @@ function dbReshape(db) {
     version: source.version,
     type: 'scaffold',
   }));
-  const all = blocks.concat(scaffolds);
+  const components = Array.isArray(db.components) ? db.components.map(({ source }) => ({
+    name: source.npm,
+    version: source.version,
+    type: 'comp',
+  })) : [];
+  const all = blocks.concat(scaffolds, components);
   debug('all : %j', all);
   const datas = [];
   const ONCE_LIMIT = 4; // 20个一批 太多了服务器受不了
@@ -88,6 +93,7 @@ function dbReshape(db) {
     const data = {
       blocks: [],
       scaffolds: [],
+      components: [],
     };
     for (let j = 0; j < ONCE_LIMIT && i + j < all.length; j++) {
       const element = all[i + j];
@@ -98,9 +104,11 @@ function dbReshape(db) {
         data.blocks.push(fullName);
       } else if (type === 'scaffold') {
         data.scaffolds.push(fullName);
+      } else if (type === 'comp') {
+        data.components.push(fullName)
       }
     }
-    if (data.blocks.length || data.scaffolds.length) {
+    if (data.blocks.length || data.scaffolds.length || data.components.length) {
       datas.push(data);
     }
   }
