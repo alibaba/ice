@@ -1,12 +1,11 @@
 # ice-scripts Changelog
 
 
-## 2.1.9
-- [feat] 添加内部站点物料同步
 
 ## 2.1.8
 
 - [fix] 修复 imagemin-pngquant 安装报错 [#46](https://github.com/imagemin/imagemin-pngquant/issues/46)
+- [feat] 添加内部站点物料同步
 
 ## 2.1.7
 
