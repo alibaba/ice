@@ -7,6 +7,7 @@ const path = require('path');
 const postcssConfig = require('./postcssConfig');
 const paths = require('./paths');
 
+const AWESOME_TYPESCRIPT_LOADER = require.resolve('awesome-typescript-loader');
 const BABEL_LOADER = require.resolve('babel-loader');
 const CSS_LOADER = require.resolve('css-loader');
 const LESS_LOADER = require.resolve('less-loader');
@@ -157,6 +158,20 @@ module.exports = (buildConfig = {}, themeConfig) => {
       exclude: /node_modules/,
       loader: BABEL_LOADER,
       options: deepAssign({}, babelConfig, { cacheDirectory: true }),
+    },
+    // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'
+    {
+      test: /\.tsx?$/,
+      loader: AWESOME_TYPESCRIPT_LOADER,
+      exclude: /node_modules/,
+      options: {
+        babelOptions: {
+          presets: ['react'],
+          plugins: [['import', { libraryName: '@alifd/next', style: true }]],
+        },
+        useBabel: true,
+        useCache: false,
+      },
     },
 
     // extra url loader usage
