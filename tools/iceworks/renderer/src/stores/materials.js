@@ -43,14 +43,18 @@ class Materials {
   setBlockTabActiveKey(key, load = true) {
     this.tabBlockActiveKey = key;
     const index = key.split('_')[1];
-    load && this.loaderMaterial(index);
+    if (load) {
+      this.loaderMaterial(index);
+    }
   }
 
   @action
   setScaffoldTabActiveKey(key, load = true) {
     this.tabScaffoldActiveKeyValue = key;
     const index = key.split('_')[1];
-    load && this.loaderMaterial(index);
+    if (load) {
+      this.loaderMaterial(index);
+    }
   }
 
   initMaterials() {
@@ -62,16 +66,16 @@ class Materials {
   }
 
   getBlockTabActiveKey(index) {
-    return 'block_' + index;
+    return `block_${index}`;
   }
 
   getScaffoldTabActiveKey(index) {
-    return 'scaffold_' + index;
+    return `scaffold_${index}`;
   }
 
   @computed
   get tabScaffoldActiveKey() {
-    if (this.materials.length == 0) {
+    if (this.materials.length === 0) {
       return 'custom-scaffold';
     }
     return this.tabScaffoldActiveKeyValue;
@@ -82,7 +86,7 @@ class Materials {
       let materials = settings.get('materials');
 
       // 过滤掉隐藏的物料源
-      materials = materials.filter(item => item.checked !== false);
+      materials = materials.filter((item) => item.checked !== false);
 
       materials = filterMaterial(materials);
       this.materials = observable.array(materials);
@@ -127,7 +131,6 @@ class Materials {
           const {
             blocks = [],
             scaffolds = [],
-            layouts = [],
             name,
             ...attrs
           } = body;

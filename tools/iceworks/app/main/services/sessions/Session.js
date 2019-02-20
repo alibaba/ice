@@ -35,7 +35,7 @@ module.exports = class Manager extends EventEmitter {
     const defaultShellArgs = ['--login'];
     const spawnEnv = Object.assign({}, getEnv(), env);
 
-    if (isWin && shell == 'npm') {
+    if (isWin && shell === 'npm') {
       shell = WIN_NPM_CMD;
     }
 

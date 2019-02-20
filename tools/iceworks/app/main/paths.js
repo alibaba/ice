@@ -19,22 +19,22 @@ const NODE_PATH = isDev
 
 const NPM_CLI = path.join(APP_PATH, 'node_modules', 'npm', 'bin', 'npm-cli.js');
 
-let SASS_BINARY_PATH = isDev
+const SASS_BINARY_PATH = isDev
   ? path.join(
-      process.cwd(),
-      'binary',
-      process.platform,
-      'sass',
-      `${process.platform}-x64-57_binding.node`
-    )
+    process.cwd(),
+    'binary',
+    process.platform,
+    'sass',
+    `${process.platform}-x64-57_binding.node`
+  )
   : path.join(
-      process.resourcesPath,
-      'binary',
-      'sass',
-      `${process.platform}-x64-57_binding.node`
-    );
+    process.resourcesPath,
+    'binary',
+    'sass',
+    `${process.platform}-x64-57_binding.node`
+  );
 
-const NODE_FRAMEWORKS =['koa2', 'midway', 'midwayAli'];
+const NODE_FRAMEWORKS = ['koa2', 'midway', 'midwayAli'];
 
 const getClientPath = (destDir, framework, sourcePath = '') => {
   if (framework) {
@@ -77,5 +77,5 @@ module.exports = {
   NODE_FRAMEWORKS,
   getClientPath,
   getClientSrcFolder,
-  getServerPath
+  getServerPath,
 };

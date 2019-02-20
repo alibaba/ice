@@ -9,7 +9,7 @@ const events = {
   installLayoutDeps: '正在下载 Layout 依赖',
   generateBlocks: '正在生成区块',
   generatePage: '正在生成页面文件',
-  appendConfig: '正在添加路由配置'
+  appendConfig: '正在添加路由配置',
 };
 
 function emitProcess(eventName, blockName = '') {

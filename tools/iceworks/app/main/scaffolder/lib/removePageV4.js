@@ -25,19 +25,18 @@ function removePageMenuConfig(elements, routerPath) {
   return elements.filter((element) => {
     return !element.properties.some((op) => {
       // 如果存在次级路由
-      if (op.key.name == 'children' && t.isArrayExpression(op.value)) {
+      if (op.key.name === 'children' && t.isArrayExpression(op.value)) {
         op.value.elements = removePageMenuConfig(op.value.elements, routerPath);
         return false;
-      } else {
-        return op.key.name == 'path' && op.value.value == routerPath;
       }
+      return op.key.name === 'path' && op.value.value === routerPath;
     });
   });
 }
 
-module.exports = async function({ 
+module.exports = async function ({
   clientSrcPath, // 项目路径
-  pageFolderName,  // 页面文件夹名
+  pageFolderName, // 页面文件夹名
   routerPath = '', // 路由路径
 }) {
   const pageImportPath = `./pages/${pageFolderName}`; // 文件导入路径
@@ -53,14 +52,14 @@ module.exports = async function({
   // 移除 import 节点，并记录 componentName、 routerPath 用于后续处理。
   const routerConfigAST = getFileAst(routerConfigFilePath);
   traverse(routerConfigAST, {
-    ImportDeclaration(path) {
-      const { node } = path;
+    ImportDeclaration(pathNode) {
+      const { node } = pathNode;
       if (
-        t.isStringLiteral(node.source) &&  
+        t.isStringLiteral(node.source) &&
         node.source.value === pageImportPath
       ) {
         // 获取页面对应的组件名。
-        node.specifiers.forEach( specifier => {
+        node.specifiers.forEach((specifier) => {
           if (
             t.isImportDefaultSpecifier(specifier) &&
             t.isIdentifier(specifier.local)
@@ -69,9 +68,9 @@ module.exports = async function({
           }
         });
         // 移除对应import节点
-        path.remove();
+        pathNode.remove();
       }
-    }
+    },
   });
   // 移除 routerConfig 中配置
   traverse(routerConfigAST, {
@@ -84,21 +83,21 @@ module.exports = async function({
         node.init.elements = node.init.elements.filter((element) => {
           // 记录匹配状态
           const ifMatched = element.properties.some((op) => {
-            return op.key.name == 'component' && op.value.name == componentName;
+            return op.key.name === 'component' && op.value.name === componentName;
           });
           // 如果匹配到过滤条件，则设置routerPath
           if (ifMatched) {
-            element.properties.forEach( op => {
-              if (op.key.name == 'path') {
+            element.properties.forEach((op) => {
+              if (op.key.name === 'path') {
                 routerPath = op.value.value;
               }
             });
           }
           // 过滤
           return !ifMatched;
-        })
+        });
       }
-    }
+    },
   });
   // 重写 routerConfig.js
   fs.writeFileSync(
@@ -110,23 +109,22 @@ module.exports = async function({
   if (routerPath) {
     const menuConfigFilePath = path.join(clientSrcPath, 'menuConfig.js');
     const menuConfigAST = getFileAst(menuConfigFilePath);
-  
+
     traverse(menuConfigAST, {
-      VariableDeclarator(path) {
+      VariableDeclarator(pathNode) {
         if (
-          t.isIdentifier(path.node.id, { name: MENU_CONFIG }) &&
-          t.isArrayExpression(path.node.init)
+          t.isIdentifier(pathNode.node.id, { name: MENU_CONFIG }) &&
+          t.isArrayExpression(pathNode.node.init)
         ) {
           // 移除menu配置
-          path.node.init.elements = removePageMenuConfig(path.node.init.elements, routerPath);
+          pathNode.node.init.elements = removePageMenuConfig(pathNode.node.init.elements, routerPath);
         }
       },
     });
-  
+
     fs.writeFileSync(
       menuConfigFilePath,
       prettier.format(generator(menuConfigAST).code, config.prettier)
     );
   }
- 
 };

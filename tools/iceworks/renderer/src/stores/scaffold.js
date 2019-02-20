@@ -25,10 +25,10 @@ import progress from './progress';
 const defaultWorkspacePath = path.join(os.homedir(), 'iceworks-workspace');
 const WORKSPACE_KEY = 'iceworks-workspace';
 
-const progressText = {
-  ing: '项目文件生成中',
-  done: '项目创建完成',
-};
+// const progressText = {
+//   ing: '项目文件生成中',
+//   done: '项目创建完成',
+// };
 
 class Scaffold {
   @observable
@@ -36,7 +36,7 @@ class Scaffold {
   @observable
   layoutConfigValue = null;
   @observable
-  isLegalProjectName = false;  //没有被使用过的变量
+  isLegalProjectName = false; // 没有被使用过的变量
   @observable
   projectName = '';
   @observable
@@ -109,7 +109,7 @@ class Scaffold {
     }
 
     return new Promise((resolve, reject) => {
-      mkdirp(targetPath, function(err) {
+      mkdirp(targetPath, (err) => {
         if (err) {
           reject(err);
         } else {
@@ -168,6 +168,9 @@ class Scaffold {
             case 'unknown':
               resolve(true);
               break;
+            default:
+              resolve(true);
+              break;
           }
         }
       });
@@ -199,7 +202,7 @@ class Scaffold {
     progress.setStatusText('项目文件生成中');
     progress.start(true);
     progress.setSectionCount(SectionCount);
-  } 
+  }
 
   /**
    * 结束进度条
@@ -213,7 +216,7 @@ class Scaffold {
     progress.reset();
   }
 
-  /** 
+  /**
    * 开始创建项目
    * @param {String} targetPath 项目地址
    * @param {Object} options 脚手架配置
@@ -225,8 +228,8 @@ class Scaffold {
       services.worker.create.add(
         {
           path: targetPath,
-          data: options, 
-          progressFunc
+          data: options,
+          progressFunc,
         },
         (error /* 返回的 Error | CreateProjectError 实例 */) => {
           // 创建项目弹窗提示
@@ -248,10 +251,10 @@ class Scaffold {
     // 以下情况禁用创建按钮
     return (
       !this.scaffoldValue ||
-      this.projectFolderName.trim() == '' || // 项目名为空
+      this.projectFolderName.trim() === '' || // 项目名为空
       this.projectFolderNameValidation !== '' || // 含错误信息
       // !this.isLegalProjectName || // 合法项目名
-      (progress && progress.visible )// 非初始状态
+      (progress && progress.visible)// 非初始状态
     );
   }
 
@@ -290,7 +293,9 @@ class Scaffold {
 
   // 中断创建
   abort() {
-    progress && progress.abort()
+    if (progress) {
+      progress.abort();
+    }
     services.worker.create.destroy();
   }
 
@@ -306,7 +311,7 @@ class Scaffold {
 
   @action
   setProjectFolderName(value = '') {
-    if (value.trim() == '' || !/^[a-z][-_0-9a-z]*$/i.test(value.trim())) {
+    if (value.trim() === '' || !/^[a-z][-_0-9a-z]*$/i.test(value.trim())) {
       this.projectFolderNameValidation = '首字母开头、字母、数字、中下划线组成';
     } else {
       this.projectFolderNameValidation = '';

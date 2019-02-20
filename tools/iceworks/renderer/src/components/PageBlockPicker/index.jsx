@@ -215,7 +215,7 @@ class PageBlockPicker extends Component {
             <Balloon
               trigger={
                 <Button
-                  disabled={this.props.blocks.selected.length == 0}
+                  disabled={this.props.blocks.selected.length === 0}
                   loading={this.props.pageBlockPicker.isDownloading}
                   type="primary"
                   onClick={this.handleOk}

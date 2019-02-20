@@ -243,7 +243,7 @@ class Aliyun extends Component {
     const buildDir = path.join(currentProject.clientPath, 'build');
     if (pathExists.sync(buildDir)) {
       const assets = this.recursiveAssets();
-      if (assets.length == 0) {
+      if (assets.length === 0) {
         Feedback.toast.error('当前构建结果为空');
       } else {
         if (!this.state.selectedBucket) {
@@ -312,7 +312,7 @@ class Aliyun extends Component {
     storeFilepath = storeFilepath.replace(/^\//, '');
     return co(ossStore.put(storeFilepath, file.fullPath))
       .then((object = {}) => {
-        if (object.res && object.res.status == 200) {
+        if (object.res && object.res.status === 200) {
           return Promise.resolve({
             code: 0,
             url: object.url,
@@ -372,7 +372,7 @@ class Aliyun extends Component {
     let successCount = 0;
     let faildCount = 0;
     const content = result.map((item) => {
-      const success = item.code == 0;
+      const success = item.code === 0;
       if (success) {
         successCount += 1;
       } else {

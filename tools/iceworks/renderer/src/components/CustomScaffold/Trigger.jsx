@@ -5,7 +5,7 @@ import Icon from '../Icon';
 
 @inject('customScaffold', 'scaffold')
 @observer
-export default class ScaffoldTrigger extends Component {
+class ScaffoldTrigger extends Component {
   static displayName = 'ScaffoldTrigger';
 
   render() {
@@ -33,3 +33,5 @@ export default class ScaffoldTrigger extends Component {
     );
   }
 }
+
+export default ScaffoldTrigger;

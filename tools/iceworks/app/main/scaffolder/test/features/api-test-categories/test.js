@@ -1,8 +1,6 @@
 const rimraf = require('rimraf');
-const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
-const request = require('request');
 const createIceApp = require('../../..');
 
 const tmpDirectory = path.join(__dirname, 'tmp');

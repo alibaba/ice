@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import pathExists from 'path-exists';
 import path from 'path';
 import { Feedback } from '@icedesign/base';
@@ -7,7 +7,6 @@ import GitTools from '../lib/git-tools';
 
 // store
 import Projects from './projects';
-import { access } from 'fs';
 
 class Git {
   @observable gitTools = null;
@@ -68,10 +67,10 @@ class Git {
       return false;
     }
   }
-  
+
   @action
   async doEmptyCommit() {
-    await this.gitTools.run('commit', 'init commit', [], {'--allow-empty':null});
+    await this.gitTools.run('commit', 'init commit', [], { '--allow-empty': null });
   }
 
   @action
@@ -118,7 +117,7 @@ class Git {
     const statusMap = ['conflicted', 'not_added', 'modified', 'created', 'deleted', 'renamed'];
     let unstagedFiles = [];
     if (status && status.files && status.files.length > 0) {
-      statusMap.forEach( item => {
+      statusMap.forEach((item) => {
         unstagedFiles = unstagedFiles.concat(status[item]);
       });
     }
@@ -196,10 +195,9 @@ class Git {
 
   @action
   async getBranches() {
-
     Feedback.toast.show({
-      type: "loading",
-      content: "Git fetching",
+      type: 'loading',
+      content: 'Git fetching',
     });
 
     try {
@@ -236,7 +234,6 @@ class Git {
 
       this.branchesCheckout = branchesCheckout;
       this.visibleDialogBranches = true;
-
     } catch (error) {
       Feedback.toast.hide();
       this.visibleDialogBranches = false;
@@ -270,8 +267,8 @@ class Git {
   @action
   async push() {
     Feedback.toast.show({
-      type: "loading",
-      content: "Git push",
+      type: 'loading',
+      content: 'Git push',
     });
     try {
       await this.gitTools.run('push', 'origin', this.currentBranch);
@@ -286,8 +283,8 @@ class Git {
   @action
   async pull() {
     Feedback.toast.show({
-      type: "loading",
-      content: "Git pull",
+      type: 'loading',
+      content: 'Git pull',
     });
     try {
       await this.gitTools.run('pull', 'origin', this.currentBranch);
@@ -328,9 +325,8 @@ class Git {
   @action
   nextStep() {
     const s = this.currentStep + 1;
-    this.currentStep = s > 2 ? 2 : s
+    this.currentStep = s > 2 ? 2 : s;
   }
-
 }
 
 export default new Git();

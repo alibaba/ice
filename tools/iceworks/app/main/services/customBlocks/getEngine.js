@@ -5,8 +5,8 @@ const settings = require('../settings');
 
 module.exports = (materialData) => {
   const sourceType = 'react';
-  const classes = (materialData.classes || []).filter(item => item.sourceType === sourceType);
-  const categories = (materialData.categories || []).filter(item => item.sourceType === sourceType);
+  const classes = (materialData.classes || []).filter((item) => item.sourceType === sourceType);
+  const categories = (materialData.categories || []).filter((item) => item.sourceType === sourceType);
   const instances = (materialData.instances || []).filter((item) => {
     return classes.find((oneClass) => {
       return oneClass.name === item.materialName;

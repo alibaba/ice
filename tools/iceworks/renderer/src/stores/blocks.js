@@ -83,7 +83,7 @@ class Blocks {
         // fetch组合推荐
         blockGroups.fetch();
       }
-      
+
       this.isLoading = false;
     } else {
       this.reset();
@@ -97,9 +97,9 @@ class Blocks {
   addBlockGroupsMaterial(iceMaterial, iceIndex) {
     if (iceIndex !== -1) {
       const formatMaterials = this.materialsValue.slice();
-      formatMaterials.splice(iceIndex + 1, 0 , {
+      formatMaterials.splice(iceIndex + 1, 0, {
         name: '飞冰区块组合',
-        key: 'iceBlockGroups'
+        key: 'iceBlockGroups',
       });
       return formatMaterials;
     }
@@ -190,18 +190,17 @@ class Blocks {
 
   @action
   addCustomBlock(block, blockName, existBlocks = []) {
-    const blockClassName = uppercamelcase(this.formatBlockName(blockName));
     const aliasName = this.generateBlockAliasName(blockName, 0, existBlocks);
     this.selected.push({
       ...block,
-      blockName: blockName,
+      blockName,
       uid: uuid.v1(), // 模块渲染唯一值
       alias: aliasName,
     });
   }
 
   generateBlockAliasName(blockAlias, count, existBlocks) {
-    const name = count == 0 ? blockAlias : blockAlias + count;
+    const name = count === 0 ? blockAlias : blockAlias + count;
     const isConflict =
       this.selected.some((block) => {
         return block.alias === name;
@@ -213,26 +212,26 @@ class Blocks {
     // TODO 验证名称冲突
     if (isConflict) {
       return this.generateBlockAliasName(blockAlias, count + 1, existBlocks);
-    } else {
-      return name;
     }
+    return name;
   }
 
   @action.bound
   getIceMaterial() {
     let iceIndex = -1;
     // 获取配置中的ice物料源source；
-    const { source } = RECOMMEND_MATERIALS.find( recommendMaterial => {
+    const { source } = RECOMMEND_MATERIALS.find((recommendMaterial) => {
       return recommendMaterial.key === 'ice';
     });
     // 获取ice物料源及对应的index
-    const iceMaterial = this.materialsValue.find( (material, index) => {
+    const iceMaterial = this.materialsValue.find((material, index) => {
       if (material.source === source) {
         iceIndex = index;
-        return true
+        return true;
       }
+      return false;
     });
-    return {iceMaterial, iceIndex};
+    return { iceMaterial, iceIndex };
   }
 
   // 开始拖拽排序区块
@@ -243,7 +242,7 @@ class Blocks {
 
   // 结束拖拽排序区块
   @action
-  onSortEnd = ({ oldIndex, newIndex }, event) => {
+  onSortEnd = ({ oldIndex, newIndex }) => {
     this.isSorting = false;
     this.selected = arrayMove(this.selected, oldIndex, newIndex);
   };
@@ -258,7 +257,7 @@ class Blocks {
   @action
   blockModifyAlias(orderIndex, newAlias) {
     this.selected = this.selected.map((block, index) => {
-      if (index == orderIndex) {
+      if (index === orderIndex) {
         block.alias = this.formatBlockName(newAlias);
       }
       return block;

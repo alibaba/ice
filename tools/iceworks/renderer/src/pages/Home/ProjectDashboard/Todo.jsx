@@ -302,7 +302,7 @@ class Todo extends Component {
           </div>
         </DashboardCard.Header>
         <DashboardCard.Body>
-          {this.state.files.length == 0 ? (
+          {this.state.files.length === 0 ? (
             <EmptyTips>暂无 TODO 项</EmptyTips>
           ) : (
             <table>

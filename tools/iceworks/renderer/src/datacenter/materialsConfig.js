@@ -48,14 +48,14 @@ const RECOMMEND_MATERIALS = [
     source: 'https://ice.alicdn.com/assets/angular-materials.json',
     tags: ['推荐', 'Angular', 'Material UI'],
     type: 'angular',
-  }
+  },
 ];
 
 const BLOCK_GROUPS_MATERIALS = {
-  source: 'https://ice.alicdn.com/assets/block-group.json'
-}
+  source: 'https://ice.alicdn.com/assets/block-group.json',
+};
 
 export {
   RECOMMEND_MATERIALS,
-  BLOCK_GROUPS_MATERIALS
+  BLOCK_GROUPS_MATERIALS,
 };

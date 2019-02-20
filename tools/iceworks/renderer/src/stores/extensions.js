@@ -88,7 +88,7 @@ class Extensions {
       description: '关联项目的 git 仓库',
       author: 'ICE TEAM',
       version: '1.0.0',
-    }
+    };
 
     const isAlibaba = settings.get('isAlibaba');
 
@@ -119,7 +119,7 @@ class Extensions {
       );
 
       if (extensionStorageValue && typeof extensionStorageValue === 'string') {
-        checked[extension.name] = extensionStorageValue == 'true';
+        checked[extension.name] = extensionStorageValue === 'true';
       } else {
         // 默认开启
         checked[extension.name] = true;
@@ -185,11 +185,11 @@ class Extensions {
 
   checkAvailable({ name, ...other }) {
     const extension = this.list.find((item) => {
-      return item.name == name;
+      return item.name === name;
     });
     if ('conditions' in extension) {
       return Object.keys(extension.conditions).every((key) => {
-        return extension.conditions[key] == other[key];
+        return extension.conditions[key] === other[key];
       });
     }
     return true;
@@ -233,11 +233,11 @@ class Extensions {
     // 调整 Git 插件顺序，开启 Git 插件之后保证其在 Def 面板之后，不存在则跳过。
     if (excludeOrder.includes('git')) {
       if (keepOrder.includes('def')) {
-        keepOrder.splice(keepOrder.indexOf('def')+1, 0, 'git');
+        keepOrder.splice(keepOrder.indexOf('def') + 1, 0, 'git');
         excludeOrder.splice(excludeOrder.indexOf('git'), 1);
       } else if (excludeOrder.includes('def')) {
         excludeOrder.splice(excludeOrder.indexOf('git'), 1);
-        excludeOrder.splice(keepOrder.indexOf('def')+1, 0, 'git');
+        excludeOrder.splice(keepOrder.indexOf('def') + 1, 0, 'git');
       }
     }
 

@@ -30,7 +30,7 @@ class Panel extends Component {
       return <EmptyTips size={120}>加载中...</EmptyTips>;
     }
 
-    if (Array.isArray(scaffolds.values) && scaffolds.values.length == 0) {
+    if (Array.isArray(scaffolds.values) && scaffolds.values.length === 0) {
       return (
         <div style={{ padding: 10 }}>
           <EmptyTips size={120}>当前物料源暂无模板</EmptyTips>

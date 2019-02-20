@@ -7,7 +7,7 @@ export default function isAlibaba() {
         'http://img.daily.taobaocdn.net/tps/TB12WD8XEw7LKJjyzdKXXaShXXa-2-2.png',
       timeout: 300,
     })
-      .on('response', function(response) {
+      .on('response', (response) => {
         if (response.statusCode === 200) {
           resolve(true);
         } else {

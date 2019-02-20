@@ -25,7 +25,7 @@ class BlockGroupCategory extends Component {
     const { blockGroups, isLoading } = this.props.blockGroups;
     const { generatePage, handleOpenPreviewPage, handleBlocksAdd } = this.props;
 
-    if (!isLoading && blockGroups.length == 0) {
+    if (!isLoading && blockGroups.length === 0) {
       return (
         <div
           style={{

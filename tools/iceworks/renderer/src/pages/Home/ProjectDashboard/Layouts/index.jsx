@@ -157,7 +157,7 @@ export default class LayoutBuilder extends Component {
     const { layoutConfig } = this.state;
     const { currentProject } = this.props.projects;
 
-    if (!layoutConfig.name || layoutConfig.name.trim() == '') {
+    if (!layoutConfig.name || layoutConfig.name.trim() === '') {
       Feedback.toast.error('请输入布局名称');
       return false;
     }

@@ -1,4 +1,5 @@
 const log = require('./logger');
+
 global.log = log;
 
 const checkEnv = require('./helper/checkEnv');
@@ -129,11 +130,11 @@ app.on('ready', async () => {
 
 app.on('will-finish-launching', () => {
   // 监听，处理从url唤起iceworks的参数
-  app.on('open-url', function (event, url) {
+  app.on('open-url', (event, url) => {
     // url = iceworks://?to=scaffolds
     const query = parse(url, true).query;
     if (Object.keys(query).length > 0) {
       settings.set('urlEvokeQuery', query);
     }
-  })
+  });
 });

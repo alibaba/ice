@@ -235,7 +235,7 @@ class Def extends Component {
     }
     const { currentProject } = projects;
 
-    if (target == 'daily') {
+    if (target === 'daily') {
       // 1. 如果有文件未提交，则供用户选择，进行git提交，或者
       if (status && status.files && status.files.length > 0) {
         const nextPublish = await this.confirmFilesIsCommit();
@@ -339,7 +339,7 @@ class Def extends Component {
                 type="secondary"
                 onClick={this.handlePublishToDaily}
                 loading={this.state.defPublishing}
-                disabled={currentProject.statusCloudBuild == 'start'}
+                disabled={currentProject.statusCloudBuild === 'start'}
               >
                 日常发布
               </Button>
@@ -347,12 +347,12 @@ class Def extends Component {
                 size="small"
                 type="primary"
                 onClick={this.handlePublishToProd}
-                disabled={currentProject.statusCloudBuild == 'start'}
+                disabled={currentProject.statusCloudBuild === 'start'}
               >
                 正式发布
               </Button>
             </Button.Group>
-            {currentProject.statusCloudBuild == 'start' && (
+            {currentProject.statusCloudBuild === 'start' && (
               <div style={{ fontSize: 12, marginLeft: 10 }}>正在发布中...</div>
             )}
           </div>
