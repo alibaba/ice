@@ -3,7 +3,7 @@ const rp = require('request-promise-native');
 const debug = require('debug')('ice:util:innernet');
 
 const INNER_NET_IMG_URL =
-  'http://img.daily.taobaocdn.net/tps/TB11DHfX.w7LKJjyzdKXXaShXXa-460-460.png';
+  'http://img.daily.taobaocdn.net/tps/TB1T7AtX.w7LKJjyzdKXXaShXXa-2-4.jpg';
 
 async function isInnerNet() {
   try {
