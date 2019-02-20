@@ -1,2 +1,3 @@
 # typescript-definition-generator
-> .d.ts 文件生成器
+
+迁移至：https://github.com/alibaba-fusion/dts-generator
