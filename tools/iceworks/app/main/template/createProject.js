@@ -38,7 +38,7 @@ module.exports = async function createProject(
 
     fs.writeFileSync(
       pkgJSONPath,
-      JSON.stringify(pkgJSON, null, 2) + '\n',
+      `${JSON.stringify(pkgJSON, null, 2)}\n`,
       'utf-8'
     );
   } catch (error) {

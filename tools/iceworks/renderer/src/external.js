@@ -1,4 +1,5 @@
 import { shell, remote } from 'electron';
+
 const services = remote.getGlobal('services');
 const log = services.log;
 
@@ -30,6 +31,6 @@ export const openInBrowser = (url) => {
   shell.openExternal(url);
   log.report('external', {
     action: 'open-in-browser',
-    url: url,
+    url,
   });
 };

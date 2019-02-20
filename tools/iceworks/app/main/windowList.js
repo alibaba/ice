@@ -28,6 +28,7 @@ function appStateKeeper(app, win) {
       }
     } else {
       // windows 平台，给与提示
+      // eslint-disable-next-line no-lonely-if
       if (
         (sessions.buildProxy.checkRuning() ||
           sessions.startProxy.checkRuning()) &&
@@ -43,7 +44,7 @@ function appStateKeeper(app, win) {
             buttons: ['取消', '确定'],
           },
           (choose) => {
-            if (choose == 1) {
+            if (choose === 1) {
               forceClose = true;
               BrowserWindow.getAllWindows().forEach((currentWindow) => {
                 currentWindow.destroy();
@@ -71,15 +72,15 @@ exports.createHomeWindow = function createHomeWindow(app) {
     resizable: true,
     center: true,
     show: true,
-    title: '',
+    // title: '',
     fullscreenable: false,
     transparent: false,
     webPreferences: {
       preload: 'on',
     },
   });
-  var handleRedirect = (e, url) => {
-    if (url != homeWindow.webContents.getURL()) {
+  const handleRedirect = (e, url) => {
+    if (url !== homeWindow.webContents.getURL()) {
       e.preventDefault();
       shell.openExternal(url);
     }
@@ -111,8 +112,8 @@ exports.createUpdaterWindow = () => {
     },
   });
 
-  var handleRedirect = (e, url) => {
-    if (url != updaterWindow.webContents.getURL()) {
+  const handleRedirect = (e, url) => {
+    if (url !== updaterWindow.webContents.getURL()) {
       e.preventDefault();
       shell.openExternal(url);
     }

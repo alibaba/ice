@@ -1,49 +1,44 @@
 import { Dialog } from '@icedesign/base';
 import { remote } from 'electron';
-import fs from 'fs';
 import path from 'path';
-import pathExists from 'path-exists';
 import React from 'react';
 import rimraf from 'rimraf';
-import { dependenciesFormat } from './project-utils';
 import dialog from '../components/dialog';
 import services from '../services';
 import terms from '../terms';
+import isAlibaba from './is-alibaba';
 
 const detectPort = remote.require('detect-port');
-import isAlibaba from './is-alibaba';
-import { re } from 'junk';
 
-const { log, folder, interaction, npm, sessions, paths } = services;
-const { getClientPath, NODE_FRAMEWORKS } = paths;
+const { log, folder, interaction, sessions } = services;
 
 // todo 后续抽出到独立套件保持独立更新
 // todo vue cli 后续需要升级
-const configs = {
-  vue: {
-    devDependencies: {
-      '@vue/cli-plugin-babel': '^3.0.0-beta.6',
-      '@vue/cli-plugin-eslint': '^3.0.0-beta.6',
-      '@vue/cli-service': '^3.0.0-beta.6',
-      '@vue/eslint-config-airbnb': '^3.0.0-beta.6',
-    },
-    scripts: {
-      start: 'vue-cli-service serve',
-      build: 'vue-cli-service build',
-    },
-  },
-  react: {
-    devDependencies: {
-      'ice-scripts': '^1.0.0',
-    },
-    scripts: {
-      start: 'ice dev',
-      build: 'ice build',
-    },
-  },
-};
+// const configs = {
+//   vue: {
+//     devDependencies: {
+//       '@vue/cli-plugin-babel': '^3.0.0-beta.6',
+//       '@vue/cli-plugin-eslint': '^3.0.0-beta.6',
+//       '@vue/cli-service': '^3.0.0-beta.6',
+//       '@vue/eslint-config-airbnb': '^3.0.0-beta.6',
+//     },
+//     scripts: {
+//       start: 'vue-cli-service serve',
+//       build: 'vue-cli-service build',
+//     },
+//   },
+//   react: {
+//     devDependencies: {
+//       'ice-scripts': '^1.0.0',
+//     },
+//     scripts: {
+//       start: 'ice dev',
+//       build: 'ice build',
+//     },
+//   },
+// };
 
-const doProjectInstall = ({cwd, env, shell, callback}, reInstall) => {
+const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
   const installConfig = {
     cwd,
     env,
@@ -55,19 +50,28 @@ const doProjectInstall = ({cwd, env, shell, callback}, reInstall) => {
     cwd,
     env,
     shell,
-    shellArgs: ['cache', 'clean', '--force']
-  }
+    shellArgs: ['cache', 'clean', '--force'],
+  };
 
   sessions.manager.new(
     installConfig,
     (code) => {
       if (code !== 0) {
         log.error('project-install-failed');
-        log.report('app', { action: 'project-install-failed'});
+        log.report('app', { action: 'project-install-failed' });
         if (reInstall) {
           log.info('执行 npm cache clean --force 重试');
-          sessions.manager.new(npmCacheCLeanConfig, (code) => {
-            doProjectInstall({cwd, env, shell, callback});
+          sessions.manager.new(npmCacheCLeanConfig, () => {
+            doProjectInstall({ cwd, env, shell, callback });
+          });
+        } else if (shell === 'tnpm') {
+          callback(code, {
+            title: '重装依赖失败',
+            content:
+  <div>
+    <p>1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装</p>
+    <p>2. 已安装 tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息</p>
+  </div>,
           });
         } else {
           callback(code, {
@@ -81,10 +85,10 @@ const doProjectInstall = ({cwd, env, shell, callback}, reInstall) => {
       }
     }
   );
-}
+};
 
 const getEnvByNodeFramework = (nodeFramework, isAli) => {
-  let env = {};
+  const env = {};
   if (isAli || nodeFramework === 'midwayAli') {
     console.debug('安装依赖 - 检测为内网环境 / 内部 midway 项目');
     // 检测到内网环境自动将路径设置为集团内部
@@ -92,7 +96,7 @@ const getEnvByNodeFramework = (nodeFramework, isAli) => {
     env.yarn_registry = 'http://registry.npm.alibaba-inc.com';
   }
   return env;
-}
+};
 
 /**
  * session 以“项目路径”为 key 做处理
@@ -111,9 +115,9 @@ export default {
     } else {
       // @HACK angular 默认端口为 4200
       let DEFAULT_PORT = 4444;
-      if (libraryType == 'angular') {
+      if (libraryType === 'angular') {
         DEFAULT_PORT = 4200;
-      } else if (libraryType == 'rax') {
+      } else if (libraryType === 'rax') {
         DEFAULT_PORT = 4200;
       }
 
@@ -168,14 +172,14 @@ export default {
         .then((port) => {
           project.devStart();
           let shellArgs = ['start'];
-          if (libraryType == 'angular') {
+          if (libraryType === 'angular') {
             shellArgs = ['run', 'start', '--', `--port=${port}`];
           }
           sessions.startProxy.start(
             {
               cwd: project.fullPath,
               shell: 'npm',
-              shellArgs: shellArgs,
+              shellArgs,
               env: project.nodeFramework
                 ? {}
                 : { PORT: port },
@@ -247,20 +251,20 @@ export default {
     }
   },
 
-  /** 
+  /**
    * 依赖单个安装，目前只支持client（前端）安装。
    * TODO: 支持前后端选择安装，需要配合UI处理
-   * deps： string      
+   * deps： string
    */
   npminstall: (project, deps, isDev = false, callback) => {
     let dependencies = deps.split(/\s+/);
     dependencies = dependencies.filter((d) => !!d.trim());
 
     // 检测到含有 @ali 的包自动将路径设置为集团内部
-    let hasAli = dependencies.some((dep) => {
+    const hasAli = dependencies.some((dep) => {
       return dep.startsWith('@ali/') || dep.startsWith('@alife/');
     });
-    let hasMidway = dependencies.some((dep) => {
+    const hasMidway = dependencies.some((dep) => {
       return dep.startsWith('midway');
     });
 
@@ -269,15 +273,14 @@ export default {
     // TODO： 老代码遗留逻辑，兼容？
     if (hasAli && hasMidway) {
       dependencies[dependencies.indexOf('midway')] = '@ali/midway';
-    } 
+    }
 
     if (dependencies.length > 0) {
       dependencies = dependencies.map((dep) => {
         if (dep.lastIndexOf('@') > 0) {
           return dep;
-        } else {
-          return `${dep}@latest`;
         }
+        return `${dep}@latest`;
       });
       let installPrefix = '--save';
       if (isDev) {
@@ -290,10 +293,10 @@ export default {
 
       sessions.manager.new(
         {
-          cwd: cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
-          cwdClient: cwdClient,// 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
-          env: env,
-          shell: "npm",
+          cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
+          cwdClient, // 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
+          env,
+          shell: 'npm',
           shellArgs: ['install', '--no-package-lock', installPrefix].concat(
             dependencies
           ),
@@ -308,22 +311,21 @@ export default {
           }
         }
       );
-      
     }
   },
 
-  /** 
+  /**
    * project: 当前项目
    * 依赖全量安装/重装，都是client和server共同执行。
    */
   install: ({ project, reinstall = true }, callback) => {
     log.debug('开始安装', project.fullPath);
     const cwd = project.fullPath;
-    let nodeModulesPaths = [];
+    const nodeModulesPaths = [];
     nodeModulesPaths.push(path.join(project.clientPath, 'node_modules'));
     if (project.serverPath) {
       nodeModulesPaths.push(path.join(project.serverPath, 'node_modules'));
-    }  
+    }
     // const nodeModulesPath = path.join(cwd, 'node_modules');
     new Promise(async (resolve, reject) => {
       if (reinstall) {
@@ -333,7 +335,7 @@ export default {
           if (error) {
             terms.writeln(cwd, '清理 node_modules 失败');
             reject(error);
-          } else {   
+          } else {
             terms.writeln(cwd, '清理 node_modules 目录完成');
             resolve();
           }
@@ -353,13 +355,13 @@ export default {
                 terms.writeln(cwd, '清理 server/node_modules 目录完成');
                 resolve();
               }
-            })
-         })
-        } else {
-          return Promise.resolve();
+            });
+          });
         }
+        return Promise.resolve();
       })
       .catch((error) => {
+        const nodeModulesPath = nodeModulesPaths.join(';');
         callback(1, {
           title: '依赖清空失败',
           content: `清理 node_modules 目录失败，请尝试手动删除 ${nodeModulesPath} ${
@@ -376,7 +378,7 @@ export default {
           cwd: project.fullPath,
           env,
           shell: 'npm',
-          callback
+          callback,
         }, true);
       });
   },

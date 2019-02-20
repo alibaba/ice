@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx';
 import requestMaterial from '../lib/request-material';
-import request from 'request';
 import { BLOCK_GROUPS_MATERIALS } from '../datacenter/materialsConfig';
 
 /**
@@ -14,22 +13,22 @@ class BlockGroups {
   @observable previewBlocks = []; // 当前预览的区块组合
   @observable blockGroups = []; // 区块组合列表
 
-  getBlockGroups() { 
+  getBlockGroups() {
     const uri = BLOCK_GROUPS_MATERIALS.source;
     return requestMaterial(uri, true);
-  };
+  }
 
   @action
   fetch() {
     this.isLoading = true;
     return this.getBlockGroups().then(this.fetchSuccess);
-  };
+  }
 
   @action.bound
   fetchSuccess(body) {
     this.blockGroups = body || [];
     this.isLoading = false;
-  };
+  }
 
   @action
   openModal = (blocks) => {
@@ -41,7 +40,6 @@ class BlockGroups {
   closeModal = () => {
     this.showModal = false;
   };
-
 }
 
 export default new BlockGroups();

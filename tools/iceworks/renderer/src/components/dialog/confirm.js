@@ -38,7 +38,7 @@ const confirm = ({ title, content, fullWidth = false }, done) => {
         {content}
       </div>
     ),
-    title: title,
+    title,
   });
 };
 

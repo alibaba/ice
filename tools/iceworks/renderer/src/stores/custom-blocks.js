@@ -10,7 +10,7 @@ import requestProgress from 'request-progress';
 import services from '../services';
 
 const defaultWorkspacePath = path.join(os.homedir(), '.iceworks');
-const devWorkbenchPath = 'http://127.0.0.1:3333/src/pages/workbench/index.html';
+// const devWorkbenchPath = 'http://127.0.0.1:3333/src/pages/workbench/index.html';
 const onlineWorkbenchPath = 'http://ice.alicdn.com/iceland-assets/workbench/v21300/pages/workbench/index.html';
 const presentWorkbenchPath = onlineWorkbenchPath;
 
@@ -61,10 +61,10 @@ class CustomBlocks {
   }
 
   initCustomBlocks() {
-    //确保目录存在
+    // 确保目录存在
     mkdirp.sync(path.join(defaultWorkspacePath, 'blocks'));
     mkdirp.sync(path.join(defaultWorkspacePath, 'images'));
-    //读取区块文件数据到状态池
+    // 读取区块文件数据到状态池
     this.initBlocksData();
   }
 
@@ -80,10 +80,10 @@ class CustomBlocks {
   }
 
   loadMaterialData() {
-    if(this.dataLoading){
+    if (this.dataLoading) {
       this.progressVisible = true;
     }
-    if(!this.materialData) {
+    if (!this.materialData) {
       this.dataLoading = true;
       this.progressTitle = '下载物料数据';
       requestProgress(
@@ -94,28 +94,26 @@ class CustomBlocks {
               this.materialData = body;
               this.getEngine('react');
               this.loadIconData();
+            } else if (this.requestCount < 3) {
+              this.requestCount++;
+              this.loadMaterialData();
             } else {
-              if (this.requestCount < 3) {
-                this.requestCount++;
-                this.loadMaterialData();
-              } else {
-                this.requestCount = 0;
-                this.errorVisible = true;
-                this.dataLoading = false;
-                this.progressVisible = false;
-              }
+              this.requestCount = 0;
+              this.errorVisible = true;
+              this.dataLoading = false;
+              this.progressVisible = false;
             }
           }),
         {})
-      .on('progress', (state) => {
-        this.materialProgress = Math.ceil(state.percentage * 50);
-        this.progressSpeed = Math.floor(state.speed / 1024);
-      });
+        .on('progress', (state) => {
+          this.materialProgress = Math.ceil(state.percentage * 50);
+          this.progressSpeed = Math.floor(state.speed / 1024);
+        });
     }
   }
 
   loadIconData() {
-    if(!this.iconData){
+    if (!this.iconData) {
       this.progressTitle = '下载 Iconfont 数据';
       requestProgress(
         request('http://ice.alicdn.com/iceland-assets/iconData.json',
@@ -126,16 +124,14 @@ class CustomBlocks {
               this.dataLoading = false;
               this.progressVisible = false;
               this.dataTest();
+            } else if (this.requestCount < 3) {
+              this.requestCount++;
+              this.loadIconData();
             } else {
-              if (this.requestCount < 3) {
-                this.requestCount++;
-                this.loadIconData();
-              } else {
-                this.requestCount = 0;
-                this.errorVisible = true;
-                this.dataLoading = false;
-                this.progressVisible = false;
-              }
+              this.requestCount = 0;
+              this.errorVisible = true;
+              this.dataLoading = false;
+              this.progressVisible = false;
             }
           }),
         {})
@@ -171,7 +167,7 @@ class CustomBlocks {
   openModal = (blockName) => {
     this.showModal = true;
     this.previewBlock.name = blockName;
-    this.previewBlock.screenshot = 'data:image/png;base64,' + this.getBlockImg(blockName);
+    this.previewBlock.screenshot = `data:image/png;base64,${this.getBlockImg(blockName)}`;
   };
 
   @action
@@ -179,7 +175,7 @@ class CustomBlocks {
     this.showModal = false;
   };
 
-  //重置新建区块和重命名表单
+  // 重置新建区块和重命名表单
   formReset() {
     this.blockName = '';
     this.blockAlias = '';
@@ -207,7 +203,7 @@ class CustomBlocks {
   @action
   open() {
     this.visible = true;
-    //获取区块名默认值
+    // 获取区块名默认值
     this.blockCounter = Object.keys(this.blocksStorage).length;
     this.getDefaultBlockName(this.blockCounter);
   }
@@ -227,21 +223,21 @@ class CustomBlocks {
 
   getDefaultBlockName(blockCounter) {
     blockCounter++;
-    let blockName = 'block' + blockCounter;
-    if(this.blocksStorage.hasOwnProperty(blockName)){
+    const blockName = `block${blockCounter}`;
+    if (Object.prototype.hasOwnProperty.call(this.blocksStorage, blockName)) {
       this.getDefaultBlockName(blockCounter);
     } else {
       this.setBlockName(blockName);
     }
   }
 
-  //表单onChange + 验证
+  // 表单onChange + 验证
   @action
   setBlockName(value = '') {
-    if (value.trim() == '' || !/^[a-z][0-9a-z]*$/i.test(value.trim())) {
+    if (value.trim() === '' || !/^[a-z][0-9a-z]*$/i.test(value.trim())) {
       this.blockNameValidation = '区块名须由字母、数字组成, 字母开头';
       this.isDisabled = true;
-    } else if(this.blocksStorage.hasOwnProperty(value)) {
+    } else if (Object.prototype.hasOwnProperty.call(this.blocksStorage, value)) {
       this.isDisabled = true;
       this.blockNameValidation = '区块名重复';
     } else {
@@ -256,13 +252,13 @@ class CustomBlocks {
     this.blockAlias = value;
   }
 
-  //表单onChange时表单验证
+  // 表单onChange时表单验证
   @action
   resetBlockName(value = '') {
-    if (value.trim() == '' || !/^[a-z][0-9a-z]*$/i.test(value.trim())) {
+    if (value.trim() === '' || !/^[a-z][0-9a-z]*$/i.test(value.trim())) {
       this.blockNameValidation = '区块名须由字母、数字组成,字母开头';
       this.isDisabled = true;
-    } else if(this.blocksStorage.hasOwnProperty(value) && this.renameBlock != value) {
+    } else if (Object.prototype.hasOwnProperty.call(this.blocksStorage, value) && this.renameBlock !== value) {
       this.isDisabled = true;
       this.blockNameValidation = '区块名重复';
     } else {
@@ -279,12 +275,12 @@ class CustomBlocks {
 
   @action
   refactorBlock() {
-    if(this.renameBlock !== this.renameBlockName || this.renameBlockAlias !== this.blocksStorage[this.renameBlockName].alias) {
+    if (this.renameBlock !== this.renameBlockName || this.renameBlockAlias !== this.blocksStorage[this.renameBlockName].alias) {
       this.blockEditing = true;
       this.refactorBlockFiles(this.renameBlock);
       this.blocksStorage[this.renameBlockName] = this.deepClone(this.blocksStorage[this.renameBlock]);
       this.blocksStorage[this.renameBlockName].alias = this.renameBlockAlias;
-      if(this.renameBlock !== this.renameBlockName) {
+      if (this.renameBlock !== this.renameBlockName) {
         this.deleteBlock(this.renameBlock);
       }
       this.blockEditing = false;
@@ -303,7 +299,7 @@ class CustomBlocks {
 
   @action
   dataTest() {
-    if(!this.materialData || !this.iconData){
+    if (!this.materialData || !this.iconData) {
       this.progressVisible = true;
       this.loadMaterialData();
     } else {
@@ -313,19 +309,19 @@ class CustomBlocks {
 
   @action
   openWorkBench() {
-    if(!this.materialData || !this.iconData){
+    if (!this.materialData || !this.iconData) {
       return this.dataTest();
     }
-    if(!this.workBenchWindow) {
+    if (!this.workBenchWindow) {
       this.workBenchEventsBinding();
-      if(this.blockJSON){
+      if (this.blockJSON) {
         this.workBenchWindow.webContents.setUserAgent(JSON.stringify({
           name: this.blockName,
           json: this.blockJSON,
         }));
       } else {
         this.workBenchWindow.webContents.setUserAgent(JSON.stringify({
-          name: this.blockName
+          name: this.blockName,
         }));
       }
     }
@@ -334,35 +330,35 @@ class CustomBlocks {
   @action
   editBlock(name) {
     this.blockName = name;
-    this.blockCode = this.blocksStorage[name]['code'];
-    this.blockAlias = this.blocksStorage[name]['alias'];
-    this.blockJSON = this.blocksStorage[name]['json'];
+    this.blockCode = this.blocksStorage[name].code;
+    this.blockAlias = this.blocksStorage[name].alias;
+    this.blockJSON = this.blocksStorage[name].json;
     this.dataTest();
   }
 
   workBenchEventsBinding() {
     this.blockEditing = true;
     this.workBenchWindow = new remote.BrowserWindow({
-      title: "ICELAND - 区块搭建",
+      title: 'ICELAND - 区块搭建',
       width: 1280,
       minWidth: 1186,
       height: 720,
       minHeight: 720,
-      show: false
+      show: false,
     });
     this.workBenchWindow.once('ready-to-show', () => {
       this.workBenchWindow.show();
     });
     this.workBenchWindow.loadURL(presentWorkbenchPath);
-    this.workBenchWindow.webContents.executeJavaScript("window.IceLand.materialData = " + this.materialData, true);
-    //回调参数和官方文档描述不符
+    this.workBenchWindow.webContents.executeJavaScript(`window.IceLand.materialData = ${this.materialData}`, true);
+    // 回调参数和官方文档描述不符
     this.workBenchWindow.webContents.on('console-message', (level, sourceId, message, line) => {
       console.log(message, line);
-      if(line == 133 || line == 125){
+      if (line === 133 || line === 125) {
         const passBackData = JSON.parse(message);
-        if(passBackData){
+        if (passBackData) {
           if (passBackData.type === 'icon') {
-            this.workBenchWindow.webContents.executeJavaScript("window.IceLand.iconData = " + this.iconData, true);
+            this.workBenchWindow.webContents.executeJavaScript(`window.IceLand.iconData = ${this.iconData}`, true);
           } else if (passBackData.type === 'offset') {
             this.paintOffset = passBackData.value;
           } else if (passBackData.type === 'height') {
@@ -372,7 +368,7 @@ class CustomBlocks {
             this.capture = true;
           } else if (passBackData.type === 'Group') {
             this.blockSaving = true;
-            let JSONObj = passBackData;
+            const JSONObj = passBackData;
             JSONObj.props.style.position = 'relative';
             this.blockJSON = JSON.stringify(JSONObj);
             this.jsonTransfer();
@@ -385,7 +381,7 @@ class CustomBlocks {
       this.formReset();
     });
     this.workBenchWindow.on('close', (event) => {
-      if(!this.blockSaving){
+      if (!this.blockSaving) {
         this.workBenchWindow.destroy();
         this.blockJSON = '';
         this.blockEditing = false;
@@ -395,9 +391,9 @@ class CustomBlocks {
     });
   }
 
-  //json转代码 + 抽取依赖 + 代码美化
+  // json转代码 + 抽取依赖 + 代码美化
   jsonTransfer() {
-    let json = JSON.parse(this.blockJSON);
+    const json = JSON.parse(this.blockJSON);
     services.customBlocks.dsl2code(json, this.materialEngine, this.saveCustomBlock);
   }
 
@@ -409,16 +405,16 @@ class CustomBlocks {
       alias: this.blockAlias,
       code: this.blockCode,
       type: 'custom',
-      time: fecha.format(new Date(),'YYYY-MM-DD HH:mm:ss'),
-      dep: this.blockDeps
+      time: fecha.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+      dep: this.blockDeps,
     };
     fs.writeFileSync(path.join(defaultWorkspacePath, 'blocks', this.blockName), JSON.stringify(this.currentBlock));
-    if(this.capture){
+    if (this.capture) {
       this.workBenchWindow.capturePage({
         x: Math.floor(this.paintOffset.left),
         y: Math.floor(this.paintOffset.top),
         width: Math.floor(this.paintWidth),
-        height: Math.floor(this.paintHeight)
+        height: Math.floor(this.paintHeight),
       }, (img) => {
         fs.writeFile(path.join(defaultWorkspacePath, 'images', this.blockName), img.toPNG(), () => {
           this.refreshBlocks();

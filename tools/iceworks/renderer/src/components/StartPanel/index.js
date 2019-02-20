@@ -49,19 +49,19 @@ class StartPanel extends Component {
         {scaffolds.length ? (
           <div className="start-recommend-scaffolds">
             {scaffolds.map((material, index) => {
-    
               return (
                 <ScaffoldItem
                   key={index}
                   createProject={this.props.handleSelectedScaffold}
                   data={material}
-                  isOfficialSource={true}
+                  isOfficialSource
                 />
               );
             })}
           </div>
         ) : (
           <img
+            alt="项目为空"
             src="https://img.alicdn.com/tfs/TB1WNNxjBHH8KJjy0FbXXcqlpXa-780-780.png"
             style={{
               width: 200,

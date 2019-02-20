@@ -3,9 +3,6 @@
  */
 import fs from 'fs';
 import path from 'path';
-import uppercamelcase from 'uppercamelcase';
-
-import { getLayouts } from './materials';
 
 /**
  * 返回 layout[] 数据
@@ -33,7 +30,6 @@ async function scanLayout({ targetPath }) {
   }
 
   return localCustomLayoutNames.map((layoutName) => {
-
     const layoutPath = path.join(layoutsPath, layoutName);
     const readmePath = path.join(layoutPath, 'README.md');
 
@@ -43,7 +39,7 @@ async function scanLayout({ targetPath }) {
       title: layoutName,
       description: fs.existsSync(readmePath)
         ? fs.readFileSync(readmePath, 'utf-8')
-        : '用户自定义布局 - ' + layoutName,
+        : `用户自定义布局 - ${layoutName}`,
       customLayout: true,
       localization: true,
       folderName: layoutName,

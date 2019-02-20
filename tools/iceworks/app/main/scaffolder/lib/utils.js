@@ -28,8 +28,9 @@ const logger = require('../../logger');
 async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageName, progressFunc }) {
   let err, filesList, depList;
 
+  // eslint-disable-next-line prefer-const
   [err, filesList] = await to(Promise.all(
-    blocks.map( async (block) => {
+    blocks.map(async (block) => {
       return await downloadBlockToPage({ clientPath, clientSrcPath, pageName, block }, progressFunc);
     })
   ));
@@ -39,20 +40,21 @@ async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageNam
 
   const pkg = getPackageByPath(clientPath);
   const projectVersion = getProjectVersion(pkg);
+  // eslint-disable-next-line prefer-const
   [err, depList] = await to(Promise.all(
-    filesList.map( async (_, idx) => {
+    filesList.map(async (_, idx) => {
       const block = blocks[idx];
       // 根据项目版本下载依赖
       // 兼容旧版物料源
-      if (block.npm && block.version && ( block.type != 'custom' ) ) {
+      if (block.npm && block.version && (block.type !== 'custom')) {
         return getDependenciesFromNpm({
           npm: block.npm,
           version: block.version,
         });
-      } else if (block.source && block.source.type == 'npm' && ( block.type != 'custom' ) ) {
+      } else if (block.source && block.source.type === 'npm' && (block.type !== 'custom')) {
         let version = block.source.version;
         // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
-        if (projectVersion === '1.x')  {
+        if (projectVersion === '1.x') {
           // 兼容没有'version-0.x'字段的情况
           version = block.source['version-0.x'] || block.source.version;
         }
@@ -61,7 +63,7 @@ async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageNam
           npm: block.source.npm,
           registry: block.source.registry,
         });
-      } else if (block.type == 'custom') {
+      } else if (block.type === 'custom') {
         return getDependenciesFromCustom(block);
       }
     })
@@ -72,24 +74,24 @@ async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageNam
 
   // 合并依赖
   const dependenciesAll = {};
-  depList.forEach(({ dependencies, }) => {
+  depList.forEach(({ dependencies }) => {
     Object.assign(dependenciesAll, dependencies);
   });
   // 过滤已有依赖
   const filterDependencies = {};
   Object.keys(dependenciesAll).forEach((dep) => {
+    // eslint-disable-next-line no-prototype-builtins
     if (!pkg.dependencies.hasOwnProperty(dep)) {
       filterDependencies[dep] = dependenciesAll[dep];
     }
   });
   return {
-    dependencies: filterDependencies
+    dependencies: filterDependencies,
   };
-
 }
 
 async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName }, progressFunc) {
-  if (!block || ( !block.source && block.type != 'custom' )) {
+  if (!block || (!block.source && block.type !== 'custom')) {
     throw new Error(
       'block need to have specified source at download block to page method.'
     );
@@ -102,17 +104,19 @@ async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName 
     action: 'download-block',
     data: {
       name: block.name,
-    }
+    },
   });
 
   // 根据项目版本下载
   const pkg = getPackageByPath(clientPath);
   const projectVersion = getProjectVersion(pkg);
 
-  let err, tarballURL, allFiles;
+  let err,
+    tarballURL,
+    allFiles;
   const blockName = block.alias || upperCamelCase(block.name) || block.className;
 
-  if(block.type == 'custom'){
+  if (block.type === 'custom') {
     [err, allFiles] = await to(extractCustomBlock(
       block,
       path.join(
@@ -123,17 +127,18 @@ async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName 
     ));
     if (err) {
       throw new Error(`解压自定义区块${blockName}出错，请重试`);
-    } 
+    }
     return allFiles;
   }
 
+  // eslint-disable-next-line prefer-const
   [err, tarballURL] = await to(materialUtils.getTarballURLBySource(block.source, projectVersion));
   if (err) {
     throw err;
-  } 
+  }
 
   [err, allFiles] = await to(extractBlock(
-    path.join( componentsDir, blockName ),
+    path.join(componentsDir, blockName),
     tarballURL,
     clientPath,
     progressFunc
@@ -154,7 +159,9 @@ function getPackageByPath(clientPath) {
     try {
       const packageText = fs.readFileSync(pkgPath);
       return JSON.parse(packageText.toString());
-    } catch (e) {}
+    } catch (e) {
+      logger.error(e);
+    }
   }
 }
 
@@ -162,13 +169,12 @@ function getPackageByPath(clientPath) {
  * 1. 有 @icedesign/base 相关依赖 则返回 0.x
  * 2. 只有 @alifd/next 相关依赖 则返回 1.x
  * 3. 都没有 则返回 1.x
- * @param {*} pkg 
+ * @param {*} pkg
  */
 function getProjectVersion(pkg) {
   const dependencies = pkg.dependencies || {};
   const hasIceDesignBase = dependencies['@icedesign/base'];
   return hasIceDesignBase ? '0.x' : '1.x';
-
 }
 
 function extractTarball(tarballURL, destDir) {
@@ -196,7 +202,7 @@ function extractTarball(tarballURL, destDir) {
         // deal with _ started file
         // https://github.com/alibaba/ice/issues/226
         const parsedDestPath = path.parse(destPath);
-        if (parsedDestPath.base == '_gitignore') {
+        if (parsedDestPath.base === '_gitignore') {
           parsedDestPath.base = parsedDestPath.base.replace(/^_/, '.');
         }
         destPath = path.format(parsedDestPath);
@@ -229,7 +235,7 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
     const req = requestProgress(
       request({
         url: tarballURL,
-        timeout: 20000
+        timeout: 20000,
       })
     );
     req
@@ -284,7 +290,7 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
  */
 function getTarballURL(npm, version = 'latest') {
   return new Promise((resolve, reject) => {
-    npmRequest({ name: npm, version: version })
+    npmRequest({ name: npm, version })
       .then((pkgData) => {
         resolve(pkgData.dist.tarball);
       })
@@ -300,7 +306,7 @@ function getTarballURL(npm, version = 'latest') {
  */
 function getDependenciesFromNpm({ npm, version = 'latest', registry }) {
   return new Promise((resolve, reject) => {
-    npmRequest({ name: npm, version: version, registry })
+    npmRequest({ name: npm, version, registry })
       .then((pkgData) => {
         resolve({
           dependencies: pkgData.dependencies || {},
@@ -320,7 +326,7 @@ function getDependenciesFromNpm({ npm, version = 'latest', registry }) {
 }
 
 const lang = 'cn';
-exports.createInterpreter = function(type, data = {}, interpreter) {
+exports.createInterpreter = function (type, data = {}, interpreter) {
   const localeObj = config.locale[type] || config.locale.unknown;
   const message = localeObj[lang];
   return new Promise((resolve) => {
@@ -333,7 +339,7 @@ exports.createInterpreter = function(type, data = {}, interpreter) {
 /**
  * 检测是否是合法的 ICE 项目
  */
-exports.checkValidICEProject = function(dir) {
+exports.checkValidICEProject = function (dir) {
   if (!fs.existsSync(dir)) {
     return false;
   }
@@ -342,7 +348,9 @@ exports.checkValidICEProject = function(dir) {
   try {
     const pkg = require(pkgPath);
     return 'scaffoldConfig' in pkg || 'buildConfig' in pkg;
-  } catch (err) {}
+  } catch (err) {
+    logger.error(err);
+  }
 
   try {
     const abcPath = path.join(dir, 'abc.json');
@@ -367,10 +375,10 @@ async function getDependenciesFromMaterial(material = {}) {
 /**
  * 解压自定义区块
  */
-function extractCustomBlock (block, BlockDir) {
-  return new Promise((resolve, reject) => {
+function extractCustomBlock(block, BlockDir, progressFunc) {
+  return new Promise((resolve) => {
     const allFiles = [];
-    let codeFileTree = block.code;
+    const codeFileTree = block.code;
     mkdirp.sync(BlockDir);
     fs.writeFileSync(path.join(BlockDir, 'index.jsx'), codeFileTree['index.jsx']);
     allFiles.push(path.join(BlockDir, 'index.jsx'));
@@ -381,7 +389,7 @@ function extractCustomBlock (block, BlockDir) {
   });
 }
 
-function getDependenciesFromCustom (block) {
+function getDependenciesFromCustom(block) {
   return new Promise((resolve) => {
     const customDependencies = JSON.parse(block.dep);
     const dependencies = {};
@@ -389,7 +397,7 @@ function getDependenciesFromCustom (block) {
       dependencies[dep.npmName] = dep.version;
     });
     resolve({
-      dependencies: dependencies
+      dependencies,
     });
   });
 }

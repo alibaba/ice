@@ -1,7 +1,6 @@
 import { Feedback } from '@icedesign/base';
 import { observable, action, computed, toJS } from 'mobx';
 import Notification from '@icedesign/notification';
-import cloneDeep from 'lodash.clonedeep';
 import equalSource from '../lib/equal-source';
 import filterMaterial from '../lib/filter-material';
 import { RECOMMEND_MATERIALS } from '../datacenter/materialsConfig';
@@ -53,7 +52,7 @@ class SettingsMaterials {
     return new Promise((resolve, reject) => {
       // 检测物料名以及 source
       const hasEmpty = this.customMaterialsValue.some((material) => {
-        return material.name.trim() == '' || material.source.trim() == '';
+        return material.name.trim() === '' || material.source.trim() === '';
       });
 
       if (hasEmpty) {

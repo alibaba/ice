@@ -8,7 +8,7 @@ class Progress {
   @observable progressValue = 0; // 进度
   @observable progressSpeedValue = 0; // 下载速度
   @observable progressRemainingValue = 0; // 剩余时间
-  @observable progressSection = 100; // 
+  @observable progressSection = 100; //
   @observable SectionCount = 1; // 多文件下载合并进度, 几段
   @observable currentCount = 1; // 每段长度
 
@@ -68,7 +68,7 @@ class Progress {
     this.progressValue = 0; // 进度
     this.progressSpeedValue = 0; // 下载速度
     this.progressRemainingValue = 0; // 剩余时间
-    this.progressSection = 100; 
+    this.progressSection = 100;
     this.sectionCount = 1;
     this.currentCount = 1;
   }
@@ -95,7 +95,7 @@ class Progress {
   handleProgressFunc = (state = {}) => {
     if (state.percent) {
       if (state.percent >= 1) {
-        if(this.SectionCount === this.currentCount) {
+        if (this.SectionCount === this.currentCount) {
           this.progressValue = 100;
           this.progressSpeedValue = 0;
           this.progressRemainingValue = 0;
@@ -103,15 +103,13 @@ class Progress {
           this.currentCount++;
         }
       } else if (state.percent > 0) {
-        this.progressValue = Number(state.percent) * this.progressSection 
-                              + (this.currentCount - 1) * this.progressSection;
+        this.progressValue = (Number(state.percent) * this.progressSection)
+                              + ((this.currentCount - 1) * this.progressSection);
         this.progressSpeedValue = state.speed || 0;
         this.progressRemainingValue = (state.time && state.time.remaining) || 0;
       }
     }
   };
-
-
 }
 
 export default new Progress();

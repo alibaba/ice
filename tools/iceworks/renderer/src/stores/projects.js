@@ -161,7 +161,6 @@ class Projects extends EventEmitter {
     );
 
     if (currentProject && currentProject.length) {
-
       return currentProject[0];
     }
 

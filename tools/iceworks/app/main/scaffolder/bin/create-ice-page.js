@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 const createICEApp = require('../lib');
 const path = require('path');
+
 const cwd = process.cwd();
 const destDir = path.join(cwd);
 const spawnSync = require('child_process').spawnSync;
+
 console.log('CREATE ICE APP');
 
 // console.log('Cli tool not implamented yet. cc @zhuoling.lcl');

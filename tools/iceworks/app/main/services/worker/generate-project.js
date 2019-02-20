@@ -16,7 +16,7 @@ module.exports = (_options, afterCreateRequest) => {
     isCustomScaffold,
     targetPath, // 项目文件放置路径
     projectName,
-    nodeFramework
+    nodeFramework,
   } = _options;
   const isAlibaba = settings.get('isAlibaba');
 
@@ -51,9 +51,9 @@ module.exports = (_options, afterCreateRequest) => {
 
   return fn
     .then(() => {
-      if(nodeFramework) { // 如果是 node 模板，此处解压前端模板到已有的项目中
+      if (nodeFramework) { // 如果是 node 模板，此处解压前端模板到已有的项目中
         return new Promise((resolve) => {
-          createClient.then(() => {resolve()});
+          createClient.then(() => { resolve(); });
         });
       }
     })
@@ -72,7 +72,7 @@ module.exports = (_options, afterCreateRequest) => {
       log.report('app', {
         action: isCustomScaffold
           ? 'custom-generator-project'
-          : ( nodeFramework ? nodeFramework : 'generator-project' ),
+          : (nodeFramework || 'generator-project'),
         scaffold: scaffold.name || 'custom-react-template',
         group: isAlibaba ? 'alibaba' : 'outer',
       });
@@ -81,8 +81,8 @@ module.exports = (_options, afterCreateRequest) => {
 };
 
 /**
- * 
- * @param {*} _options 
+ *
+ * @param {*} _options
  * @param {*} nodeFramework // 模板类型：koa2, midway
  * @param {*} isNode // 标识是node模板本身，还是node模板中需要解压的前端模板，true表示是node模板本身。
  */
@@ -139,9 +139,8 @@ function generateAbcJsonFile(needCreateDefflow, destDir, projectName) {
         });
       }
     });
-  } else {
-    return Promise.resolve();
   }
+  return Promise.resolve();
 }
 
 /**
@@ -160,7 +159,7 @@ function updateScaffoldConfig(isCustomScaffold, layoutConfig) {
           pkgJSON = fs.readFileSync(pkgJSONPath);
           pkgJSON = JSON.parse(pkgJSON.toString());
           pkgJSON.themeConfig = layoutConfig.themeConfig;
-          const data = JSON.stringify(pkgJSON, null, 2) + '\n';
+          const data = `${JSON.stringify(pkgJSON, null, 2)}\n`;
           fs.writeFile(pkgJSONPath, data, 'utf-8', (err) => {
             if (err) {
               reject(err);
@@ -175,9 +174,8 @@ function updateScaffoldConfig(isCustomScaffold, layoutConfig) {
         resolve(currentPath);
       }
     });
-  } else {
-    return Promise.resolve();
   }
+  return Promise.resolve();
 }
 
 /**
@@ -185,7 +183,7 @@ function updateScaffoldConfig(isCustomScaffold, layoutConfig) {
  * @param {String} targetPath
  */
 function processNodeProject(destDir, nodeFramework) {
-  //将node模板中_打头的文件改为.
+  // 将node模板中_打头的文件改为.
   const serverDir = getServerPath(destDir, nodeFramework);
   fs.readdir(serverDir, 'utf8', (err, files) => {
     const nameReg = /^_/;
@@ -232,24 +230,24 @@ function compoundPkg(destDir, nodeFramework) {
         });
     } else {
       Object
-      .keys(_package[attrName])
-      .forEach((currentValue) => {
-        if(clientPackage[attrName].hasOwnProperty(currentValue)){
-          const _packageVersion = versionReg.exec(_package[attrName][currentValue]);
-          const clientVersion = versionReg.exec(clientPackage[attrName][currentValue]);
-          if (
-            _packageVersion
+        .keys(_package[attrName])
+        .forEach((currentValue) => {
+          // eslint-disable-next-line no-prototype-builtins
+          if (clientPackage[attrName].hasOwnProperty(currentValue)) {
+            const _packageVersion = versionReg.exec(_package[attrName][currentValue]);
+            const clientVersion = versionReg.exec(clientPackage[attrName][currentValue]);
+            if (
+              _packageVersion
             && clientVersion
             && parseFloat(clientVersion[1]) < parseFloat(_packageVersion[1])
-          ) {
+            ) {
+              clientPackage[attrName][currentValue] = _package[attrName][currentValue];
+            }
+          } else {
             clientPackage[attrName][currentValue] = _package[attrName][currentValue];
           }
-        } else {
-          clientPackage[attrName][currentValue] = _package[attrName][currentValue];
-        }
-      });
+        });
     }
-    
   });
   fs.writeJsonSync(clientPkgPath, clientPackage);
   fs.writeJsonSync(projectPkgPath, projectPackage);

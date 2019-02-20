@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 const createICEApp = require('../lib');
 const path = require('path');
+
 const cwd = process.cwd();
 const destDir = path.join(cwd, process.argv[3] || '');
 const inquirer = require('inquirer');
 const spawnSync = require('child_process').spawnSync;
+
 console.log('CREATE ICE APP');
 
 const scaffordName = process.argv[2] || '@icedesign/scaffold-lite@latest';
@@ -12,7 +14,7 @@ const scaffordNameSplited = scaffordName.split('@');
 let pkgName = '';
 let pkgVersion = 'latest';
 if (scaffordName[0] === '@') {
-  pkgName = '@' + scaffordNameSplited[1];
+  pkgName = `@${scaffordNameSplited[1]}`;
   if (scaffordNameSplited[2]) {
     pkgVersion = scaffordNameSplited[2];
   }

@@ -1,19 +1,22 @@
 const { dialog } = require('electron');
 
 module.exports = ({ title, message, buttons, type }, ok, cancel) => {
-  let win = windows && windows.home;
+  // eslint-disable-next-line
+  const win = windows && windows.home;
   dialog.showMessageBox(
-    win ? win : undefined,
+    win || undefined,
     {
       type: type || 'info',
       buttons: buttons || ['确定', '取消'],
-      title: title,
-      message: message,
+      title,
+      message,
     },
     (result) => {
-      if (result == 0) {
+      if (result === 0) {
+        // eslint-disable-next-line no-unused-expressions
         typeof ok === 'function' && ok();
       } else {
+        // eslint-disable-next-line no-unused-expressions
         typeof cancel === 'function' && cancel();
       }
     }

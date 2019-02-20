@@ -3,12 +3,11 @@
  *
  * @param {Array|Object} dependencies  依赖包名
  */
-module.exports = function(dependencies) {
+module.exports = function (dependencies) {
   if (Array.isArray(dependencies)) {
     return dependencies;
-  } else {
-    return Object.entries(dependencies).map((depGroup) => {
-      return depGroup.join('@');
-    });
   }
+  return Object.entries(dependencies).map((depGroup) => {
+    return depGroup.join('@');
+  });
 };

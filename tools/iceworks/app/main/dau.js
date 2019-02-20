@@ -3,7 +3,7 @@ const logger = require('./logger');
 const settings = require('./services/settings');
 
 module.exports = {
-  record: function() {
+  record() {
     const isAlibaba = settings.get('isAlibaba');
     const currentDate = new Date().toDateString();
     const prevDate = statStorage.get();
