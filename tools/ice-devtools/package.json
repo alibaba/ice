@@ -13,6 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@alifd/dts-generator": "^1.0.3",
     "@babel/core": "7.1.2",
     "@babel/plugin-proposal-class-properties": "7.1.0",
     "@babel/plugin-proposal-decorators": "7.1.2",
@@ -78,7 +79,6 @@
     "style-loader": "^0.23.1",
     "tar": "^2.2.1",
     "tildify": "^1.2.0",
-    "typescript-definition-generator": "^0.1.1",
     "uppercamelcase": "^3.0.0",
     "url-loader": "^1.1.2",
     "user-home": "^2.0.0",
