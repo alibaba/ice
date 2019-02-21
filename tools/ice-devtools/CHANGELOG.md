@@ -1,6 +1,11 @@
 # ice-scripts Changelog
 
+## 2.1.10
+
+- [chore] 组件和区块开发不 external React
+
 ## 2.1.9
+
 - [feat] 添加内部站点物料同步
 
 ## 2.1.8
