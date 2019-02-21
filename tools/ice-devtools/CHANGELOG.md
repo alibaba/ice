@@ -1,4 +1,4 @@
-# ice-scripts Changelog
+# Changelog
 
 ## 2.2.0
  - [feat] 添加组件入库托管
