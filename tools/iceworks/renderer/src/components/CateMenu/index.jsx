@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 
-import './CateMenu.scss';
+import './index.scss';
 
 export default class CateMenu extends Component {
   static displayName = 'CateMenu';

@@ -22,6 +22,8 @@ class Materials {
   @observable
   tabScaffoldActiveKeyValue = '';
   @observable
+  tabComponentActiveKey = '';
+  @observable
   startRecommendMaterials = {};
 
   constructor() {
@@ -57,6 +59,15 @@ class Materials {
     }
   }
 
+  @action
+  setComponentTabActiveKey(key, load = true) {
+    this.tabComponentActiveKey = key;
+    const index = key.split('_')[1];
+    if (load) {
+      this.loaderMaterial(index);
+    }
+  }
+
   initMaterials() {
     this.setBlockTabActiveKey(this.getBlockTabActiveKey(0), false);
     this.setScaffoldTabActiveKey(this.getScaffoldTabActiveKey(0), false);
@@ -71,6 +82,10 @@ class Materials {
 
   getScaffoldTabActiveKey(index) {
     return `scaffold_${index}`;
+  }
+
+  getComponentTabActiveKey(index) {
+    return `component_${index}`;
   }
 
   @computed

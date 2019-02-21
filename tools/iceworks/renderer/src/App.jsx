@@ -31,6 +31,7 @@ const {
   PageHome,
   PageScaffolds,
   PageBlocks,
+  PageComponents,
   PageExtensions,
   PageSettings,
 } = require('./router');
@@ -127,6 +128,9 @@ class App extends Component {
           </VisibleWrapper>
           <VisibleWrapper visible={this.state.activePathname === '/blocks'}>
             <PageBlocks />
+          </VisibleWrapper>
+          <VisibleWrapper visible={this.state.activePathname === '/components'}>
+            <PageComponents />
           </VisibleWrapper>
           <VisibleWrapper
             rerender={true}
