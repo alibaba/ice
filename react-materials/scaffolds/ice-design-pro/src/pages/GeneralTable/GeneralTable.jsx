@@ -79,7 +79,7 @@ export default class GeneralTable extends Component {
             <ContainerTitle
               title={formatMessage({ id: 'app.general.table.title' })}
             />
-            <div style={{ padding: '20px' }}>
+            <div style={{ minWidth: '960px', padding: '20px' }}>
               <SearchFilter fetchData={this.fetchData} />
               <ContractTable
                 isLoading={isLoading}
