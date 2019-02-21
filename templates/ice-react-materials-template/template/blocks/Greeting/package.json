@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/greeting-block-example",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "示例区块",
   "scripts": {
     "start": "ice-devtools start",
@@ -21,6 +21,7 @@
   "keywords": ["ice", "block"],
   "dependencies": {
     "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "prop-types": "^15.5.8",
     "@alifd/next": "^1.11.2"
   },
