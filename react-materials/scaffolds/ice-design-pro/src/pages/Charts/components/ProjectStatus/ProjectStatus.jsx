@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Grid, Timeline } from '@alifd/next';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import LineChart from './LineChart';
 
 const { Row, Col } = Grid;
 const { Item: TimelineItem } = Timeline;
 
+@injectIntl
 export default class ProjectStatus extends Component {
   static displayName = 'ProjectStatus';
 
@@ -52,25 +54,38 @@ export default class ProjectStatus extends Component {
   };
 
   render() {
+    const {
+      intl: { formatMessage },
+    } = this.props;
+
     return (
-      <div>
-        <Row wrap gutter={20}>
-          <Col xxs="24" l="12" style={styles.item}>
-            <IceContainer title="完成进度">
-              <LineChart />
-              <div style={styles.projectStatus}>
-                <p style={styles.meta}>当前状态</p>
-                <h2 style={styles.count}>76,533</h2>
-              </div>
-            </IceContainer>
-          </Col>
-          <Col xxs="24" l="12" style={styles.item}>
-            <IceContainer title="完成状态" style={styles.container}>
-              {this.renderTimeline()}
-            </IceContainer>
-          </Col>
-        </Row>
-      </div>
+      <Row wrap gutter={20}>
+        <Col xxs="24" l="12" style={styles.item}>
+          <IceContainer
+            title={formatMessage({
+              id: 'app.chart.general.complete.schedule',
+            })}
+          >
+            <LineChart />
+            <div style={styles.projectStatus}>
+              <p style={styles.meta}>
+                <FormattedMessage id="app.chart.general.complete.state" />
+              </p>
+              <h2 style={styles.count}>76,533</h2>
+            </div>
+          </IceContainer>
+        </Col>
+        <Col xxs="24" l="12" style={styles.item}>
+          <IceContainer
+            title={formatMessage({
+              id: 'app.chart.general.complete.condition',
+            })}
+            style={styles.container}
+          >
+            {this.renderTimeline()}
+          </IceContainer>
+        </Col>
+      </Row>
     );
   }
 }

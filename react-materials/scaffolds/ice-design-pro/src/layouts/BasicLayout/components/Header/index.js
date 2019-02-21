@@ -1,22 +1,37 @@
 /* eslint jsx-a11y/no-noninteractive-element-interactions:0 */
-import React, { PureComponent } from 'react';
-import { Balloon, Icon, Nav } from '@alifd/next';
+import React, { Component } from 'react';
+import { Balloon, Nav } from '@alifd/next';
 import IceImg from '@icedesign/img';
 import Layout from '@icedesign/layout';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import cx from 'classnames';
 import { Link, withRouter } from 'react-router-dom';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { headerMenuConfig } from '../../../../menuConfig';
+import SelectLang from '../../../../components/SelectLang';
 import Logo from '../Logo';
 
 import './index.scss';
 
+@injectIntl
 @withRouter
-export default class Header extends PureComponent {
+export default class Header extends Component {
   handleSetting = () => {
     this.props.history.push('/account/setting');
   };
+
+  getLocaleKey = (item) => {
+    return `app.header.${item.name}`;
+  };
+
   render() {
-    const { isMobile, className, style } = this.props;
+    const {
+      isMobile,
+      className,
+      style,
+      intl: { formatMessage },
+    } = this.props;
+    console.log(this.props);
 
     return (
       <Layout.Header
@@ -40,12 +55,23 @@ export default class Header extends PureComponent {
                 } else {
                   linkProps.to = nav.path;
                 }
+                const name = formatMessage({ id: this.getLocaleKey(nav) });
                 return (
-                  <Nav.Item key={idx} icon={nav.icon ? nav.icon : null}>
+                  <Nav.Item key={idx}>
                     {linkProps.to ? (
-                      <Link {...linkProps}>{!isMobile ? nav.name : null}</Link>
+                      <Link {...linkProps}>
+                        {nav.icon ? (
+                          <FoundationSymbol type={nav.icon} size="small" />
+                        ) : null}{' '}
+                        {!isMobile ? name : null}
+                      </Link>
                     ) : (
-                      <a {...linkProps}>{!isMobile ? nav.name : null}</a>
+                      <a {...linkProps}>
+                        {nav.icon ? (
+                          <FoundationSymbol type={nav.icon} size="small" />
+                        ) : null}{' '}
+                        {!isMobile ? name : null}
+                      </a>
                     )}
                   </Nav.Item>
                 );
@@ -53,6 +79,9 @@ export default class Header extends PureComponent {
             </Nav>
           ) : null}
           {/* Header 菜单项 end */}
+
+          {/* 多语言选择 */}
+          <SelectLang />
 
           {/* Header 右侧内容块 */}
           <Balloon
@@ -65,11 +94,19 @@ export default class Header extends PureComponent {
                   className="user-avatar"
                 />
                 <div className="user-profile">
-                  <span className="user-name">淘小宝</span>
+                  <span className="user-name">
+                    <FormattedMessage id="app.header.user.name" />
+                  </span>
                   <br />
-                  <span className="user-department">技术部</span>
+                  <span className="user-department">
+                    <FormattedMessage id="app.header.user.department" />
+                  </span>
                 </div>
-                <Icon type="arrow-down" size="xxs" className="icon-down" />
+                <FoundationSymbol
+                  type="angle-down"
+                  size="small"
+                  className="icon-down"
+                />
               </div>
             }
             closable={false}
@@ -80,15 +117,15 @@ export default class Header extends PureComponent {
                 className="user-profile-menu-item"
                 onClick={this.handleSetting}
               >
-                <Icon type="set" size="small" />
-                设置
+                <FoundationSymbol type="repair" size="small" />
+                <FormattedMessage id="app.header.user.setting" />
               </li>
               <li
                 className="user-profile-menu-item"
                 onClick={this.props.handleLogout}
               >
-                <Icon type="upload" size="small" />
-                退出
+                <FoundationSymbol type="person" size="small" />
+                <FormattedMessage id="app.header.user.logout" />
               </li>
             </ul>
           </Balloon>
