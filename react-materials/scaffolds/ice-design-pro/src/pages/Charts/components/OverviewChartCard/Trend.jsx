@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Icon } from '@alifd/next';
 
 export default class Field extends Component {
@@ -20,7 +21,8 @@ export default class Field extends Component {
         <div style={styles.trendItems}>
           <div style={styles.trendItem}>
             <span>
-              周同比<span style={styles.trendRate}>12%</span>
+              <FormattedMessage id="app.chart.general.overview.week" />
+              <span style={styles.trendRate}>12%</span>
             </span>
             <span style={styles.arrowIcon}>
               <Icon type="arrow-down-filling" size="xxs" />
@@ -28,7 +30,8 @@ export default class Field extends Component {
           </div>
           <div style={styles.trendItem}>
             <span>
-              日同比<span style={styles.trendRate}>10%</span>
+              <FormattedMessage id="app.chart.general.overview.day" />
+              <span style={styles.trendRate}>10%</span>
             </span>
             <span style={styles.arrowIcon}>
               <Icon type="arrow-up-filling" size="xxs" />

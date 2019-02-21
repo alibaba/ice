@@ -2,7 +2,9 @@
 import React from 'react';
 import { Chart, Geom, Axis, Tooltip, Label, Shape } from 'bizcharts';
 import IceContainer from '@icedesign/container';
+import { injectIntl } from 'react-intl';
 
+@injectIntl
 class Bubbleimage extends React.Component {
   render() {
     // 自定义 shape, 支持图片形式的气泡
@@ -79,8 +81,13 @@ class Bubbleimage extends React.Component {
         min: 0,
       },
     };
+    const {
+      intl: { formatMessage },
+    } = this.props;
     return (
-      <IceContainer title="气泡图">
+      <IceContainer
+        title={formatMessage({ id: 'app.chart.basic.column.title' })}
+      >
         <Chart
           height={300}
           data={data}

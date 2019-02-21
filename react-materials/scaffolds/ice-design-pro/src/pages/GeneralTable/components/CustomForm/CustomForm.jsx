@@ -7,6 +7,7 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
+import { FormattedMessage } from 'react-intl';
 
 const { Row, Col } = Grid;
 const { RangePicker } = DatePicker;
@@ -119,10 +120,10 @@ class CustomForm extends Component {
                 style={{ marginRight: '10px' }}
                 onClick={this.handleSubmit}
               >
-                搜 索
+                <FormattedMessage id="app.general.table.btn.search" />
               </Button>
               <Button type="normal" onClick={handleReset}>
-                重 置
+                <FormattedMessage id="app.general.table.btn.reset" />
               </Button>
             </div>
             {extraContent}
