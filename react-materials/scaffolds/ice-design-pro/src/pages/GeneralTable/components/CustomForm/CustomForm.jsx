@@ -38,11 +38,13 @@ class CustomForm extends Component {
 
   renderInput = (item) => {
     return (
-      <Col l="8" key={item.label}>
+      <Col xs="12" l="8" key={item.label}>
         <div style={styles.formItem}>
           <span style={styles.formLabel}>{item.label}：</span>
           <IceFormBinder {...item.formBinderProps}>
-            <span style={{ width: '100%' }}><Input {...item.componentProps} style={{ width: '100%' }} /></span>
+            <span style={{ width: '100%' }}>
+              <Input {...item.componentProps} style={{ width: '100%' }} />
+            </span>
           </IceFormBinder>
           <div style={styles.formError}>
             <IceFormError name={item.formBinderProps.name} />
@@ -54,7 +56,7 @@ class CustomForm extends Component {
 
   renderCheckbox = (item) => {
     return (
-      <Col l="8" key={item.label}>
+      <Col xs="12" l="8" key={item.label}>
         <div style={styles.formItem}>
           <IceFormBinder {...item.formBinderProps}>
             <Checkbox {...item.componentProps}>{item.label}</Checkbox>
@@ -66,7 +68,7 @@ class CustomForm extends Component {
 
   renderDatePicker = (item) => {
     return (
-      <Col l="8" key={item.label}>
+      <Col xs="12" l="8" key={item.label}>
         <div style={styles.formItem}>
           <span style={styles.formLabel}>{item.label}：</span>
           <IceFormBinder {...item.formBinderProps}>
@@ -79,7 +81,7 @@ class CustomForm extends Component {
 
   renderSelect = (item) => {
     return (
-      <Col l="8" key={item.label}>
+      <Col xs="12" l="8" key={item.label}>
         <div style={styles.formItem}>
           <span style={styles.formLabel}>{item.label}：</span>
           <IceFormBinder {...item.formBinderProps}>

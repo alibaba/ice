@@ -45,7 +45,7 @@ export default class Aside extends Component {
   /**
    * 左侧菜单收缩切换
    */
-  onMenuClick = () => {
+  onSelect = () => {
     this.toggleMenu();
   };
 
@@ -180,7 +180,7 @@ export default class Aside extends Component {
           openKeys={this.state.openKeys}
           defaultSelectedKeys={[pathname]}
           onOpen={this.onOpenChange}
-          onClick={this.onMenuClick}
+          onSelect={this.onSelect}
         >
           {this.getNavMenuItems(asideMenuConfig)}
         </Nav>

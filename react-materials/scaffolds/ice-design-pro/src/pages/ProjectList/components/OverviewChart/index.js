@@ -36,7 +36,7 @@ export default class OverviewPieChart extends Component {
     ];
 
     return (
-      <Row gutter={20}>
+      <Row gutter={20} wrap>
         {mockData.map((item, index) => {
           return (
             <Col xxs="24" l="6" key={index}>
