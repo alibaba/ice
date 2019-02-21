@@ -42,7 +42,7 @@ class CustomForm extends Component {
         <div style={styles.formItem}>
           <span style={styles.formLabel}>{item.label}：</span>
           <IceFormBinder {...item.formBinderProps}>
-            <Input {...item.componentProps} style={{ width: '100%' }} />
+            <span style={{ width: '100%' }}><Input {...item.componentProps} style={{ width: '100%' }} /></span>
           </IceFormBinder>
           <div style={styles.formError}>
             <IceFormError name={item.formBinderProps.name} />
