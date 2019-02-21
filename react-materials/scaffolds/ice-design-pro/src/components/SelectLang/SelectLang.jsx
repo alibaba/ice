@@ -25,6 +25,7 @@ export default class SelectLang extends Component {
       <Select
         onChange={this.changeLang}
         value={selectedLang}
+        size="small"
         style={{ display: 'flex', alignItems: 'center' }}
       >
         {Object.keys(LANG_CONFIG).map((lang) => {
