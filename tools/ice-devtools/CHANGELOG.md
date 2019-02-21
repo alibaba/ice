@@ -1,5 +1,8 @@
 # ice-scripts Changelog
 
+## 2.2.0
+ - [feat] 添加组件入库托管
+
 ## 2.1.10
 
 - [chore] 组件和区块开发不 external React
