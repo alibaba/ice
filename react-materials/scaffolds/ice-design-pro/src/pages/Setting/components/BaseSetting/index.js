@@ -1,5 +1,6 @@
 /* eslint  react/no-string-refs: 0 */
 import React, { Component } from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import IceContainer from '@icedesign/container';
 import { Input, Radio, Switch, Upload, Grid, Form } from '@alifd/next';
 
@@ -28,7 +29,7 @@ function onError(file) {
   console.log('onError callback : ', file);
 }
 
-export default class SettingsForm extends Component {
+class SettingsForm extends Component {
   static displayName = 'SettingsForm';
 
   static propTypes = {};
@@ -77,27 +78,36 @@ export default class SettingsForm extends Component {
   };
 
   render() {
+    const {
+      intl: { formatMessage },
+    } = this.props;
     return (
       <div className="settings-form">
         <IceContainer>
           <Form value={this.state.value} onChange={this.formChange} ref="form">
             <div style={styles.formContent}>
-              <h2 style={styles.formTitle}>基本设置</h2>
+              <h2 style={styles.formTitle}>
+                <FormattedMessage id="app.setting.pagetitle" />
+              </h2>
 
               <FormItem
-                label="姓名："
+                label={formatMessage({ id: 'app.setting.name' })}
                 {...formItemLayout}
                 required
                 maxLength={10}
-                requiredMessage="必填"
+                requiredMessage={formatMessage({
+                  id: 'app.setting.name.message',
+                })}
               >
-                <Input name="name" placeholder="淘小宝" />
+                <Input name="name" placeholder="taoxiaobao" />
               </FormItem>
               <FormItem
-                label="头像："
+                label={formatMessage({ id: 'app.setting.avatar' })}
                 {...formItemLayout}
                 required
-                requiredMessage="必填"
+                requiredMessage={formatMessage({
+                  id: 'app.setting.avatar.message',
+                })}
               >
                 <Upload.Card
                   name="avatar"
@@ -111,33 +121,46 @@ export default class SettingsForm extends Component {
                 />
               </FormItem>
               <FormItem
-                label="性别："
+                label={formatMessage({ id: 'app.setting.gender' })}
                 {...formItemLayout}
                 required
-                requiredMessage="必填"
+                requiredMessage={formatMessage({
+                  id: 'app.setting.gender.message',
+                })}
               >
                 <RadioGroup name="gender">
-                  <Radio value="male">男</Radio>
-                  <Radio value="female">女</Radio>
+                  <Radio value="male">
+                    <FormattedMessage id="app.setting.male" />
+                  </Radio>
+                  <Radio value="female">
+                    <FormattedMessage id="app.setting.female" />
+                  </Radio>
                 </RadioGroup>
               </FormItem>
 
-              <FormItem label="通知：" {...formItemLayout}>
+              <FormItem
+                label={formatMessage({ id: 'app.setting.notification' })}
+                {...formItemLayout}
+              >
                 <Switch name="notice" />
               </FormItem>
               <FormItem
-                label="邮件："
+                label={formatMessage({ id: 'app.setting.email' })}
                 {...formItemLayout}
                 required
-                requiredMessage="请输入正确的邮件"
+                requiredMessage={formatMessage({
+                  id: 'app.setting.email.message',
+                })}
               >
                 <Input htmlType="email" name="email" />
               </FormItem>
               <FormItem
-                label="网站地址："
+                label={formatMessage({ id: 'app.setting.website' })}
                 {...formItemLayout}
                 required
-                formatMessage="请输入正确的网站地址"
+                requiredMessage={formatMessage({
+                  id: 'app.setting.website.message',
+                })}
                 format="url"
               >
                 <Input
@@ -148,10 +171,12 @@ export default class SettingsForm extends Component {
               </FormItem>
 
               <FormItem
-                label="Github："
+                label={formatMessage({ id: 'app.setting.github' })}
                 {...formItemLayout}
                 required
-                formatMessage="请输入正确的 Github 地址"
+                requiredMessage={formatMessage({
+                  id: 'app.setting.github.message',
+                })}
                 format="url"
               >
                 <Input
@@ -162,16 +187,21 @@ export default class SettingsForm extends Component {
               </FormItem>
 
               <FormItem
-                label="Twitter："
+                label={formatMessage({ id: 'app.setting.twitter' })}
                 {...formItemLayout}
                 required
-                formatMessage="请输入正确的 Twitter 地址"
+                requiredMessage={formatMessage({
+                  id: 'app.setting.twitter.message',
+                })}
                 format="url"
               >
                 <Input name="twitterUrl" placeholder="https://twitter.com" />
               </FormItem>
 
-              <FormItem label="自我描述：" {...formItemLayout}>
+              <FormItem
+                label={formatMessage({ id: 'app.setting.description' })}
+                {...formItemLayout}
+              >
                 <Input.TextArea placeholder="请输入描述..." />
               </FormItem>
               <Row style={{ marginTop: 20 }}>
@@ -182,7 +212,7 @@ export default class SettingsForm extends Component {
                     validate
                     onClick={this.validateAllFormField}
                   >
-                    提 交
+                    <FormattedMessage id="app.setting.submit" />
                   </Form.Submit>
                 </Col>
               </Row>
@@ -212,3 +242,5 @@ const styles = {
     borderBottom: '1px solid #eee',
   },
 };
+
+export default injectIntl(SettingsForm);

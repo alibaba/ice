@@ -35,11 +35,11 @@ export default class ContractTable extends Component {
     return (
       <div>
         <a style={styles.link} onClick={this.handleUpdate}>
-          修改合同
+          修改
         </a>
         <span style={styles.separator} />
         <a style={styles.link} onClick={this.handleMore}>
-          查看详情
+          查看
         </a>
       </div>
     );

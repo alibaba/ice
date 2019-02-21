@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Grid } from '@alifd/next';
 import IceContainer from '@icedesign/container';
+import { injectIntl } from 'react-intl';
 import { Chart, Coord, Geom, Tooltip, Axis, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
 
 const { Row, Col } = Grid;
 const { DataView } = DataSet;
 
+@injectIntl
 export default class PieDoughnutChart extends Component {
   static displayName = 'PieDoughnutChart';
 
@@ -49,11 +51,18 @@ export default class PieDoughnutChart extends Component {
       },
     };
 
+    const {
+      intl: { formatMessage },
+    } = this.props;
+
     return (
       <div className="pie-doughnut-chart">
-        <Row wrap gutter="20" style={{margin: 0}}>
+        <Row wrap gutter="20">
           <Col xxs="24" s="24" l="12">
-            <IceContainer title="性别占比" style={styles.leftContainer}>
+            <IceContainer
+              title={formatMessage({ id: 'app.dashboard.gender.share' })}
+              style={styles.leftContainer}
+            >
               <Chart
                 width={450}
                 height={300}
@@ -74,7 +83,10 @@ export default class PieDoughnutChart extends Component {
             </IceContainer>
           </Col>
           <Col xxs="24" s="24" l="12">
-            <IceContainer title="年龄分布" style={styles.rightContainer}>
+            <IceContainer
+              title={formatMessage({ id: 'app.dashboard.age.distribution' })}
+              style={styles.rightContainer}
+            >
               <Chart
                 style={styles.chart}
                 width={450}

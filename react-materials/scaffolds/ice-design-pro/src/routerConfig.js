@@ -2,34 +2,25 @@
 // 你可以调整 routerConfig 里的内容
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
-import { getRouterData } from './utils/utils';
-import { asideMenuConfig } from './menuConfig';
-
 import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
 import Dashboard from './pages/Dashboard';
 import Charts from './pages/Charts';
 import BaiscCharts from './pages/BaiscCharts';
-import Portlets from './pages/Portlets';
 import Terms from './pages/Terms';
 import Result from './pages/Result';
-import Empty from './pages/Empty';
 import BasicList from './pages/BasicList';
-import CardList from './pages/CardList';
+import ProjectList from './pages/ProjectList';
 import BasicTable from './pages/BasicTable';
 import GeneralTable from './pages/GeneralTable';
 import Profile from './pages/Profile';
 import Setting from './pages/Setting';
-import NotFound from './pages/NotFound';
 import Fail from './pages/Fail';
-import ServerError from './pages/ServerError';
-import Forbidden from './pages/Forbidden';
+import { Empty, Forbidden, NotFound, ServerError } from './pages/Exception';
+import { getRouterData } from './utils/utils';
+import { asideMenuConfig } from './menuConfig';
 
 const routerConfig = [
-  {
-    path: '/portlets/base',
-    component: Portlets,
-  },
   {
     path: '/dashboard/monitor',
     component: Dashboard,
@@ -47,8 +38,8 @@ const routerConfig = [
     component: BasicList,
   },
   {
-    path: '/list/card',
-    component: CardList,
+    path: '/list/general',
+    component: ProjectList,
   },
   {
     path: '/result/success',
@@ -63,16 +54,16 @@ const routerConfig = [
     component: BasicTable,
   },
   {
-    path: '/portlets/terms',
+    path: '/profile/basic',
+    component: Profile,
+  },
+  {
+    path: '/profile/general',
     component: Terms,
   },
   {
     path: '/table/general',
     component: GeneralTable,
-  },
-  {
-    path: '/account/profile',
-    component: Profile,
   },
   {
     path: '/account/setting',

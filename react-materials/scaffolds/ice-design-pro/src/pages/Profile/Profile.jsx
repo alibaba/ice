@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
 
+import BasicDetailInfo from './components/BasicDetailInfo';
+
+import CollapseCard from './components/CollapseCard';
+
+import DetailTable from './components/DetailTable';
+
+import './Profile.scss';
+
 export default class Profile extends Component {
   static displayName = 'Profile';
 
@@ -9,6 +17,14 @@ export default class Profile extends Component {
   }
 
   render() {
-    return <div className="profile-page">Profile</div>;
+    return (
+      <div className="profile-page">
+        <BasicDetailInfo />
+
+        <CollapseCard />
+
+        <DetailTable />
+      </div>
+    );
   }
 }

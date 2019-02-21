@@ -2,30 +2,46 @@ import React, { Component } from 'react';
 import { Chart, Geom, Tooltip, Coord } from 'bizcharts';
 import { Grid } from '@alifd/next';
 import IceContainer from '@icedesign/container';
+import { injectIntl } from 'react-intl';
 
 const { Row, Col } = Grid;
-const mockData = [
-  {
-    chartData: [{ type: '分类一', value: 20 }, { type: '分类二', value: 80 }],
-    title: '销售占比',
-    summary: '新零售',
-  },
-  {
-    chartData: [{ type: '分类一', value: 50 }, { type: '分类二', value: 50 }],
-    title: '销售占比',
-    summary: '实体店',
-  },
-  {
-    chartData: [{ type: '分类一', value: 80 }, { type: '分类二', value: 20 }],
-    title: '销售占比',
-    summary: '淘宝店',
-  },
-];
 
+@injectIntl
 export default class OverviewPieChart extends Component {
   render() {
+    const {
+      intl: { formatMessage },
+    } = this.props;
+    const mockData = [
+      {
+        chartData: [
+          { type: '分类一', value: 20 },
+          { type: '分类二', value: 80 },
+        ],
+        title: formatMessage({ id: 'app.chart.basic.overview.share' }),
+        summary: formatMessage({ id: 'app.chart.basic.overview.retai' }),
+      },
+      {
+        chartData: [
+          { type: '分类一', value: 50 },
+          { type: '分类二', value: 50 },
+        ],
+        title: formatMessage({ id: 'app.chart.basic.overview.share' }),
+        summary: formatMessage({ id: 'app.chart.basic.overview.physical' }),
+      },
+      {
+        chartData: [
+          { type: '分类一', value: 80 },
+          { type: '分类二', value: 20 },
+        ],
+        title: formatMessage({ id: 'app.chart.basic.overview.share' }),
+        summary: formatMessage({ id: 'app.chart.basic.overview.taobao' }),
+      },
+    ];
     return (
-      <IceContainer title="概览数据">
+      <IceContainer
+        title={formatMessage({ id: 'app.chart.basic.overview.title' })}
+      >
         <Row wrap>
           {mockData.map((item, index) => {
             return (

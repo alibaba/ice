@@ -1,7 +1,9 @@
 import React from 'react';
 import { Chart, Geom, Axis, Tooltip } from 'bizcharts';
+import { injectIntl } from 'react-intl';
 import IceContainer from '@icedesign/container';
 
+@injectIntl
 class Basiccolumn extends React.Component {
   render() {
     const data = [
@@ -43,8 +45,13 @@ class Basiccolumn extends React.Component {
         tickInterval: 20,
       },
     };
+    const {
+      intl: { formatMessage },
+    } = this.props;
     return (
-      <IceContainer title="柱状图">
+      <IceContainer
+        title={formatMessage({ id: 'app.chart.basic.bubble.title' })}
+      >
         <Chart height={400} data={data} scale={cols} forceFit>
           <Axis name="year" />
           <Axis name="sales" />

@@ -8,9 +8,13 @@
       background: transparent;
       color: white;
     }
+    .next-nav .next-menu-item-text i {
+      margin-right: 8px;
+      font-weight: 500;
+    }
     .next-nav .next-menu-sub-menu .next-menu-item {
       transition: none;
-      
+
       &.next-selected,
       &:hover {
         background: $color-brand1-6;
