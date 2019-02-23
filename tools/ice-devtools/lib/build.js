@@ -10,5 +10,7 @@ module.exports = function build(cwd, opt) {
     logger.fatal(message.invalid);
   }
 
+  process.env.NODE_ENV = 'production';
+  
   require(`./${type}/build`)(cwd, opt);
 };
