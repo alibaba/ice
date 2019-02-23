@@ -1,5 +1,9 @@
 # ice-scripts Changelog
 
+## 2.1.12
+
+- [fix] 修改 npm registry 为官方默认值
+
 ## 2.1.10
 
 - [chore] 组件和区块开发不 external React
