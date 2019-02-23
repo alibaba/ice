@@ -1,5 +1,9 @@
 # ice-scripts Changelog
 
+## 2.1.11
+
+- [fix] 区块 external React 后预览错误
+
 ## 2.1.10
 
 - [chore] 组件和区块开发不 external React
