@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/qrcode",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "飞冰 二维码组件",
   "main": "lib/index.js",
   "files": [
@@ -35,8 +35,9 @@
     "qrcode.react": "^0.8.0"
   },
   "devDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
   },
-  "typings": "lib/index.d.ts",
   "componentConfig": {
     "name": "qrcode",
     "title": "二维码组件"

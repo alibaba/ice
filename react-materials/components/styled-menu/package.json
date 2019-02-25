@@ -29,11 +29,13 @@
     "rc-menu": "^5.0.9",
     "@icedesign/foundation-symbol": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
+  },
   "peerDependencies": {
     "react": "^16.5.0"
   },
-  "typings": "lib/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
