@@ -9,6 +9,8 @@ const uppercamelcase = require('uppercamelcase');
 const depAnalyze = require('./dep-analyze');
 const npm = require('./npm');
 
+const DEFAULT_REGISTRY = 'http://registry.npmjs.org';
+
 function generatePartciple(payload, source) {
   if (process.env.PARTICIPLE) {
     const { cut } = require('../shared/participle');
@@ -53,7 +55,7 @@ function generateBlocks(files, SPACE, type, done) {
 
     const registry =
       (pkg.publishConfig && pkg.publishConfig.registry) ||
-      'http://registry.npmjs.com';
+      DEFAULT_REGISTRY;
 
     const payload = {
       // (必)英文名
@@ -203,7 +205,7 @@ function generateScaffolds(files, SPACE, done) {
 
     const registry =
       (pkg.publishConfig && pkg.publishConfig.registry) ||
-      'http://registry.npmjs.com';
+      DEFAULT_REGISTRY;
 
     const screenshot = pkg.scaffoldConfig.screenshot || pkg.scaffoldConfig.snapshot;
     const payload = {
@@ -364,7 +366,7 @@ function gatherScaffolds(pattern, SPACE) {
  * @param {Object} appender 需要补充的字段, key 是返回的字段, 对应的 value 是 registry 返回的字段
  */
 function appendFieldFromNpm(item) {
-  const registry = 'http://registry.npmjs.com/';
+  const registry = DEFAULT_REGISTRY;
   const { npm, version } = item;
   return npm.getNpmInfo(npm).then((body) => {
     const latestVersionBody = body.versions[version];
