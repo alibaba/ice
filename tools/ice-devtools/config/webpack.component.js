@@ -9,6 +9,7 @@ const getDemos = require('../utils/get-demos');
 const { getPkgJSON } = require('../utils/pkg-json');
 const getTempPath = require('../utils/temp-path');
 const formatPathForWin = require('../utils/format-path-for-win');
+const { parseMarkdownParts } = require('../utils/markdown-helper');
 
 console.log('process.platform:', process.platform);
 
@@ -27,10 +28,15 @@ module.exports = function getWebpacksConfig(cwd) {
 
   const entry = generateEntryTemplate(demos);
   config.entry('index').add(entry);
+
+  const filePath = join(cwd, 'README.md');
+  const markdown = fs.readFileSync(filePath, 'utf-8');
+  const { content: readme } = parseMarkdownParts(markdown);
   config.plugin('html').use(HtmlWebpackPlugin, [
     {
       template: join(__dirname, `../template/component/index.html.hbs`),
       filename: 'index.html',
+      readme,
       demos
     }
   ]);

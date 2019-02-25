@@ -72,7 +72,7 @@ exports.parseMarkdownParts = function parseMarkdownParts(md) {
   const splited = split(md);
   const result = {
     meta: {},
-    content: '',
+    content: md,
     code: ''
   };
 
