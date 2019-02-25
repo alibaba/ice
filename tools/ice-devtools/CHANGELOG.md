@@ -1,8 +1,12 @@
 # ice-scripts Changelog
 
-## 2.1.11
+## 2.1.13
 
 - [fix] 区块 external React 后预览错误
+
+## 2.1.12
+
+- [fix] 修改 npm registry 为官方默认值
 
 ## 2.1.10
 
