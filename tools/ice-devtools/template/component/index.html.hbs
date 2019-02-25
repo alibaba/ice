@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>飞冰组件开发 Server</title>
+</head>
+
+<body>
+  <h1>飞冰组件开发服务 {{htmlWebpackPlugin.options.pkg.name}}</h1>
+  {{#if htmlWebpackPlugin.options.demos.length}}
+  <h3>DEMO 列表</h3>
+  <div>
+    {{#each htmlWebpackPlugin.options.demos}}
+    <div id="{{filename}}"></div>
+    {{/each}}
+  </div>
+  {{/if}}
+  
+  <script src="./index.js"></script>
+</body>
+
+</html>

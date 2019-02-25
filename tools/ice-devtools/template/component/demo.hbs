@@ -475,7 +475,7 @@
 
       <div class="code-box">
         <div class="code-box-demo">
-          <div id="mountNode"></div>
+          <div id="{{demoName}}"></div>
         </div>
         <div class="markdown">
           <div class="highlight">
@@ -497,7 +497,6 @@
 
 
   <script>
-    var mountNode = document.querySelector('#mountNode');
     function require(mod) {
       switch(mod) {
         case '{{ name }}':
