@@ -20,14 +20,19 @@ const addComponent = require('./component/add');
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
 
-module.exports = async function init(cwd, ...args) {
+module.exports = async function init(cwd) {
   try {
     // 检查当前目录是否为空
     if (fs.readdirSync(cwd).length) {
       logger.fatal('Workdir %s is not empty.', cwd);
     }
 
-    const options = Object.assign({ cwd }, { args: [...args] });
+    const options = Object.assign({ 
+      cwd, 
+      template: process.env.TEMPLATE,
+      localTemplate: process.env.LOCAL_TEMPLATE
+    });
+
     const answers = await initAsk(options);
 
     if (answers.type === 'component') {
@@ -120,9 +125,9 @@ async function initAsk(options = {}) {
     },
   ]);
 
-  const templatePath = getLocalTemplatePath(options.args);
+  const customTemplatePath = options.template || options.localTemplate;
 
-  const { template } = await (!templatePath
+  const { template } = await (!customTemplatePath
     ? inquirer.prompt([
         {
           type: 'list',
@@ -139,7 +144,7 @@ async function initAsk(options = {}) {
           ],
         },
       ])
-    : { template: templatePath });
+    : { template: customTemplatePath });
 
   return {
     name: scope ? `${scope}/${name}` : name,
@@ -207,64 +212,6 @@ function downloadAndGenerate({ template, tmp, to, name }) {
       spinner.stop();
       logger.fatal(`Failed to download repo ${template} : ${err.stack}`);
     });
-}
-
-/**
- * TODO: 不够优雅，需要重构
- * 依赖安装
- * @param {string} to     项目名称
- * @param {string} cb     用来显性控制从 meta.js 里面读取的 message 展现时机
- */
-function tryNPMInstall({ to, cb }) {
-  inquirer
-    .prompt([
-      {
-        type: 'confirm',
-        name: 'needNPMInstall',
-        message: 'Do you need run `npm install` right now?',
-      },
-    ])
-    .then((answers) => {
-      if (answers.needNPMInstall) {
-        // todo 日志没有高亮
-        const npm = spawn('npm', ['install'], { cwd: to });
-
-        npm.stdout.on('data', (data) => {
-          console.log(`${data}`);
-        });
-
-        npm.stderr.on('data', (data) => {
-          console.log(`${data}`);
-        });
-
-        npm.on('close', (code) => {
-          console.log('npm install finished.');
-          cb();
-        });
-      }
-    });
-}
-
-/**
- * 获取本地模板路径
- * @param {array} options
- */
-function getLocalTemplatePath(options = []) {
-  const [, template] = options;
-  if (!template) {
-    return null;
-  }
-
-  if (!isLocalPath(template)) {
-    logger.fatal('Local path "%s" is invalid.', template);
-  }
-
-  const templatePath = getTemplatePath(template);
-  if (!exists(templatePath)) {
-    logger.fatal('Local template "%s" not found.', template);
-  }
-
-  return template;
 }
 
 function initCompletedMessage(appPath, appName) {
