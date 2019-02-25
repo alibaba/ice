@@ -1,12 +1,22 @@
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import React, { Component } from 'react';
 
+import projectScripts from '../../lib/project-scripts';
 import CateMenu from '../../components/CateMenu';
 import EmptyTips from '../../components/EmptyTips';
+import dialog from '../../components/dialog';
+
+import DownloadDialog from './components/DownloadDialog';
+
 import Item from './Item';
 
+import services from '../../services';
+
+const { interaction } = services;
+
+@inject('projects', 'component')
 @observer
-class Panel extends Component {
+class ComponentPanel extends Component {
   constructor(props) {
     super(props);
   }
@@ -15,12 +25,53 @@ class Panel extends Component {
    * 点击模板分类菜单的回调
    */
   handleClick = (value) => {
-    // const { material } = this.props;
-    // const scaffolds = material.scaffolds;
-    // if (scaffolds) {
-    //   scaffolds.activeCategory = value;
-    // }
+    console.log(value)
+    const { material } = this.props;
+    const components = material.components;
+    if (components) {
+      components.activeCategory = value;
+    }
   };
+
+  download = (data) => {
+    const { component, material } = this.props;
+    component.open();
+  }
+
+  handleDownloadComponent = () => {
+    const { component, projects } = this.props;
+    const { npm, version, importStatement } = component.source;
+    const { currentProject } = projects;
+
+    component.downloading = true;
+
+    projectScripts.npminstall(
+      currentProject,
+      `${npm}@${version}`,
+      false,
+      (error, dependencies) => {
+        component.downloading = false;
+        if (error) {
+          dialog.alert({
+            title: '组件下载失败',
+            content: (
+              <div>
+                请确认网络连接正常，或在设置中切换 npm 源重试
+                <br />
+                可展开【运行日志】查看详细反馈信息。
+              </div>
+            ),
+          });
+        } else {
+          interaction.notify({
+            title: '组件下载成功，组件需要自行引入到页面中',
+            body: importStatement ? `引用方法：${importStatement}` : `${npm}`,
+            type: 'success',
+          });
+        }
+      }
+    );
+  }
 
   render() {
     const { material } = this.props;
@@ -33,7 +84,7 @@ class Panel extends Component {
     if (Array.isArray(components.values) && components.values.length === 0) {
       return (
         <div style={{ padding: 10 }}>
-          <EmptyTips size={120}>当前物料源暂无模板</EmptyTips>
+          <EmptyTips size={120}>当前物料源暂无组件</EmptyTips>
         </div>
       );
     }
@@ -44,17 +95,23 @@ class Panel extends Component {
           <CateMenu data={components.categories} onClick={this.handleClick} />
         )}
         <div className="component-items-wrapper">
-          {components.values.map((scaffold, index) => {
+          {components.values.map((component, index) => {
             return (
               <Item
                 key={index}
+                data={component}
+                material={material}
+                download={this.download}
               />
             );
           })}
         </div>
+        <DownloadDialog
+          handleDownloadComponent={this.handleDownloadComponent}
+        />
       </div>
     );
   }
 }
 
-export default Panel;
+export default ComponentPanel;

@@ -7,10 +7,14 @@ import requestMaterial from '../lib/request-material';
 
 import AdditionalBlocks from './additional-blocks';
 import AdditionalScaffolds from './additional-scaffolds';
+import AdditionalComponents from './additional-components';
 import filterMaterial from '../lib/filter-material';
+import { isIceMaterial } from '../lib/utils';
 import services from '../services';
+import history from '../history';
+import projects from './projects';
 
-const { settings, shared } = services;
+const { settings, shared, scaffolder } = services;
 
 class Materials {
   @observable
@@ -71,6 +75,7 @@ class Materials {
   initMaterials() {
     this.setBlockTabActiveKey(this.getBlockTabActiveKey(0), false);
     this.setScaffoldTabActiveKey(this.getScaffoldTabActiveKey(0), false);
+    this.setComponentTabActiveKey(this.getComponentTabActiveKey(0), false);
 
     // 加载第一个物料
     this.loaderMaterial(0);
@@ -139,33 +144,54 @@ class Materials {
 
   loaderMaterial(index) {
     const material = this.materials[index];
+    const location = history.location;
+    console.log('location ', location)
     // 当前物料是否已加载过
     if (material && !material.loaded) {
-      this.fetchByMaterial(material)
-        .then((body = {}) => {
-          const {
-            blocks = [],
-            scaffolds = [],
-            name,
-            ...attrs
-          } = body;
+      let promiseAll;
+      if (isIceMaterial(material.source)) {
+        // 根据组件版本获取对应的基础组件物料源
+        const { iceVersion } = projects.currentProject;
+        const { iceBaseMaterials } = shared;
+        const iceBaseMaterial = iceVersion === '0.x' ? iceBaseMaterials[0] : iceBaseMaterials[1];
+        promiseAll = Promise.all([
+          this.fetchByMaterial(material),
+          this.fetchByMaterial(iceBaseMaterial)
+        ]);
+      } else {
+        promiseAll = Promise.all([
+          this.fetchByMaterial(material)
+        ]);
+      }
 
-          Object.keys(attrs).forEach((key) => {
-            material[key] = attrs[key];
-          });
+      promiseAll.then(([
+        body = {},
+        iceBaseComponents
+      ]) => {
+        const {
+          blocks = [],
+          scaffolds = [],
+          components = [],
+          name,
+          ...attrs
+        } = body;
 
-          // 双向绑定数据
-          material.blocks = new AdditionalBlocks(blocks);
-          material.scaffolds = new AdditionalScaffolds(scaffolds, material);
-
-          material.loaded = true;
-          material.data = body;
-          material.error = null;
-        })
-        .catch((error) => {
-          material.loaded = false;
-          material.error = error;
+        Object.keys(attrs).forEach((key) => {
+          material[key] = attrs[key];
         });
+        // 双向绑定数据
+        material.blocks = new AdditionalBlocks(blocks);
+        material.scaffolds = new AdditionalScaffolds(scaffolds, material);
+        material.components = new AdditionalComponents(components, material, iceBaseComponents);
+
+        material.loaded = true;
+        material.data = body;
+        material.error = null;
+
+      }).catch((error) => {
+        material.loaded = false;
+        material.error = error;
+      });
     }
   }
 
@@ -185,6 +211,16 @@ class Materials {
     if (index) {
       const material = this.materials[index];
       return toJS(material.data && material.data.scaffolds) || null;
+    }
+    return null;
+  }
+
+  @computed
+  get currentComponents() {
+    const index = this.tabComponentActiveKey.split('_')[1];
+    if (index) {
+      const material = this.materials[index];
+      return toJS(material.data && material.data.components) || null;
     }
     return null;
   }

@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.iceworks-yixiazai:before {
+  content: "\e68a";
+}
+
 .iceworks-plus:before {
   content: "\ea35";
 }

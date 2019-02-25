@@ -14,11 +14,10 @@ class IceComponent extends Component {
 
   static propTypes = {
     materials: PropTypes.object.isRequired,
-    handleTabChange: PropTypes.func.isRequired,
-    handleSelectedComponent: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
+    this.props.materials.refresh();
   }
 
   handleRefresh = () => {
@@ -47,10 +46,10 @@ class IceComponent extends Component {
     return materials.map((material, index) => {
       return (
         <TabPane tab={material.name} key={getComponentTabActiveKey(index)}>
-          {/* <ComponentPanel
+          <ComponentPanel
             onClick={this.props.handleSelectedComponent}
             material={material}
-          /> */}
+          />
         </TabPane>
       );
     });
@@ -86,7 +85,7 @@ class IceComponent extends Component {
               </div>
             }
           >
-            {/* {this.renderComponentsTabPanel()} */}
+            {this.renderComponentsTabPanel()}
           </Tab>
         </div>
       </div>

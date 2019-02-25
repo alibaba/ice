@@ -12,6 +12,7 @@ import newpage from './stores/newpage';
 import pageBlockPicker from './stores/page-block-picker';
 import projects from './stores/projects';
 import scaffold from './stores/scaffold';
+import component from './stores/component';
 import materials from './stores/materials';
 import switcher from './stores/switcher';
 import customBlocks from './stores/custom-blocks';
@@ -105,6 +106,7 @@ class App extends Component {
         pageBlockPicker={pageBlockPicker}
         projects={projects}
         scaffold={scaffold}
+        component={component}
         materials={materials}
         switcher={switcher}
         customBlocks={customBlocks}

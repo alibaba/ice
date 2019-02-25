@@ -72,3 +72,15 @@ const defaultMaterials = [
   },
 ];
 exports.defaultMaterials = defaultMaterials;
+
+const iceBaseMaterials = [
+  {
+    name: '飞冰基础组件物料源 base',
+    source: 'https://ice.alicdn.com/assets/base-components.json',
+  },
+  {
+    name: '飞冰基础组件物料源 next',
+    source: 'https://ice.alicdn.com/assets/base-components-1.x.json',
+  }
+];
+exports.iceBaseMaterials = iceBaseMaterials;
