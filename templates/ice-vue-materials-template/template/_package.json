@@ -25,6 +25,6 @@
     "registry": "{{registry}}"
   },
   "materialConfig": {
-    "type": "react"
+    "type": "vue"
   }
 }
