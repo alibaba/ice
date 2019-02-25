@@ -14,10 +14,20 @@ module.exports = function getDemos(projectDir) {
     .map((filename) => {
       const filePath = join(demoPath, filename);
       const content = readFileSync(filePath, 'utf-8');
-      const { meta } = parseMarkdownParts(content);
+
+      const { meta, highlightedCode, content: markdownContent } = parseMarkdownParts(content);
+
       filename = filename.replace(/\.md$/, '');
       const href = `/preview/?demo=${filename}`;
-      return { href, filename, filePath, ...meta };
+
+      return { 
+        href, 
+        filename, 
+        filePath, 
+        ...meta, 
+        highlightedCode, 
+        markdownContent, 
+      };
     }).sort(function (a, b) {
       return a.order - b.order;
     });
