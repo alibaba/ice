@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const semver = require('semver');
 const packageJson = require('../package.json');
 const COMMANDS = require('../config/commands');
+const optionsAttachToEnv = require('../utils/options-attach-to-env');
 
 const cwd = process.cwd();
 
@@ -48,6 +49,8 @@ Object.entries(COMMANDS).forEach((entry) => {
     });
 
   command.action(function() {
+    optionsAttachToEnv(command);
+
     const fn = require(`../lib/${entry[0]}`);
     const args = [cwd].concat(Array.prototype.slice.call(arguments));
     fn.apply(global, args);
