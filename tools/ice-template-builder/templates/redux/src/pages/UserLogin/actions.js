@@ -16,14 +16,10 @@
  */
 
 import { push } from 'react-router-redux';
-import { Feedback } from '@icedesign/base';
-import { login } from '../../api';
-
-<% if (redux.enabled && redux.authorityModule) { %>
+import { Message } from '@alifd/next';
+import { login } from '../../api/user';
 import { setAuthority } from '../../utils/authority';
 import { reloadAuthorized } from '../../utils/Authorized';
-<% } %>
-
 import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -69,15 +65,12 @@ export const userLogin = (params) => {
       dispatch(userLoginSuccess(response.data));
 
       if (response.data.status === 200) {
-        <% if (redux.enabled && redux.authorityModule) { %>
+        Message.success('登录成功');
         setAuthority(response.data.currentAuthority);
-
         reloadAuthorized();
-        <% } %>
-
         dispatch(push('/'));
       } else {
-        Feedback.toast.error('账号或者密码错误');
+        Message.error('账号或者密码错误');
       }
 
       return response.data;

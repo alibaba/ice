@@ -1,6 +1,13 @@
 @charset "UTF-8";
 
 .user-layout {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding-top: 100px;
+  background: #f0f2f5;
+  background-image: 'url(https://img.alicdn.com/tfs/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png)';
+  background-size: contain;
   .header {
     display: flex;
     flex-direction: column;
@@ -16,8 +23,7 @@
   .title {
     text-align: center;
     font-size: 33px;
-    color: rgba(0, 0, 0, 0.85);
-    font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    color: #3080fe;
     font-weight: 600;
   }
   .desc {
@@ -26,8 +32,8 @@
     color: rgba(0, 0, 0, 0.45);
   }
   .logo {
+    height: 32px;
     margin-right: 10px;
-    width: 48px;
   }
   .formContainer {
     display: flex;
@@ -45,16 +51,15 @@
     position: relative;
     margin-bottom: 5px;
   }
-  .formTitle {
-    text-align: center;
-    margin: 0 0 20px;
-    color: rgba(0, 0, 0, 0.85);
-    font-weight: bold;
+  input {
+    padding: 0 30px !important;
+    height: 40px !important;
+    line-height: 40px !important;
   }
   .inputIcon {
     position: absolute;
     left: 12px;
-    top: 50%;
+    top: 20px;
     transform: translateY(-50%);
     color: #999;
   }

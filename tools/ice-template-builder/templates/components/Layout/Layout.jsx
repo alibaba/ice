@@ -15,19 +15,21 @@ import Aside from './components/Aside';
 import Footer from './components/Footer';
 <% } %>
 
-<% if(redux.enabled && redux.registerLoginModule) { %>
-import BasicLayoutHoc from './BasicLayoutHoc';
-<% } %>
-
 <% if(aside) { %>
 import MainRoutes from './MainRoutes';
 <% } %>
 
-import './scss/index.scss';
+<% if(redux.enabled && redux.registerLoginModule) { %>
+  import BasicLayoutHoc from './BasicLayoutHoc';
+<% } %>
 
-// 设置默认的皮肤配置，支持 dark 和 light 两套皮肤配置
-const theme = '<%= themeConfig.theme %>';
 
+import './Layout.scss';
+
+
+<% if(redux.enabled && redux.registerLoginModule) { %>
+@BasicLayoutHoc
+<% } %>
 @withRouter
 export default class BasicLayout extends Component {
   static propTypes = {};
@@ -73,15 +75,15 @@ export default class BasicLayout extends Component {
 
   render() {
     const isMobile = this.state.isScreen !== 'isDesktop';
-    const layoutClassName = `ice-design-layout-${theme} ice-design-layout ice-design-<%= layout %>`;
+    const layoutClassName = `ice-design-layout-dark ice-design-layout ice-design-<%= layout %>`;
 
     <% if(header) { %>
-      const header = <Header theme={theme} isMobile={isMobile} />;
+      const header = <Header isMobile={isMobile} />;
     <% } %>
 
     <% if(aside) { %>
     const aside = (
-      <Layout.Aside theme={theme} width="auto">
+      <Layout.Aside width="auto" type={null}>
         <Aside isMobile={isMobile} />
       </Layout.Aside>
     );
