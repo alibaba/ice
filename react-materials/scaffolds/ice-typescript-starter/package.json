@@ -46,7 +46,6 @@
   "buildConfig": {
     "theme": "@icedesign/theme",
     "entry": "src/index.tsx",
-    "localization": false,
     "output": {
       "publicPath": "./"
     }
