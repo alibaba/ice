@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/container",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -30,8 +30,9 @@
     "@alifd/next": "^1.x",
     "prop-types": "^15.5.8"
   },
-  "typings": "lib/index.d.ts",
   "devDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
   },
   "componentConfig": {
     "name": "container",

@@ -28,9 +28,7 @@
   "devDependencies": {
     "@alifd/next": "^1.x",
     "copy-to-clipboard": "^3.0.8",
-    "react-copy-to-clipboard": "^5.0.1"
-  },
-  "peerDependencies": {
+    "react-copy-to-clipboard": "^5.0.1",
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
   },
