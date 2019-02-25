@@ -6,7 +6,7 @@ import ansiHTML from 'ansi-html';
  * 全局提示模块
  */
 
-const notify = ({ title = '错误信息', error = {} }) => {
+const notify = ({ title = '错误信息', error = {}, message ='' }) => {
   let msg = '';
   let stackMessage = '';
   if (typeof error === 'string') {
@@ -20,6 +20,9 @@ const notify = ({ title = '错误信息', error = {} }) => {
   const str = ansiHTML(msg.replace(/\n/g, '<br>'));
   if (stackMessage) {
     stackHtml = ansiHTML(stackMessage.replace(/\n/g, '<br>'));
+  }
+  if (message) {
+    message = message + '<br/>';
   }
 
   Dialog.alert({
@@ -42,7 +45,7 @@ const notify = ({ title = '错误信息', error = {} }) => {
           width: '500px',
           overflow: 'auto',
         }}
-        dangerouslySetInnerHTML={{ __html: str + '<br/>' + stackHtml }}
+        dangerouslySetInnerHTML={{ __html: message + str + '<br/>' + stackHtml }}
       />
     ),
     title: title,

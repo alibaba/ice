@@ -12,8 +12,10 @@ import terms from '../terms';
 
 const detectPort = remote.require('detect-port');
 import isAlibaba from './is-alibaba';
+import { re } from 'junk';
 
-const { log, folder, interaction, npm, sessions } = services;
+const { log, folder, interaction, npm, sessions, paths } = services;
+const { getClientPath, NODE_FRAMEWORKS } = paths;
 
 // todo 后续抽出到独立套件保持独立更新
 // todo vue cli 后续需要升级
@@ -41,64 +43,60 @@ const configs = {
   },
 };
 
-const repairPackage = ({ projectPath, libary }) => {
-  const packageFilePath = path.join(projectPath, 'package.json');
+const doProjectInstall = ({cwd, env, shell, callback}, reInstall) => {
+  const installConfig = {
+    cwd,
+    env,
+    shell,
+    shellArgs: ['install', '--no-package-lock'],
+  };
 
-  return new Promise((resolve, reject) => {
-    pathExists(packageFilePath).then((exists) => {
-      if (!exists) {
-        reject();
-      } else {
-        try {
-          const pakcageContents = fs.readFileSync(packageFilePath);
-          const packageData = JSON.parse(pakcageContents.toString());
+  const npmCacheCLeanConfig = {
+    cwd,
+    env,
+    shell,
+    shellArgs: ['cache', 'clean', '--force']
+  }
 
-          // hack 通过 libary 简单判断 vue 的处理逻辑，先耦合进来
-          const projectType = libary;
-
-          packageData.scripts = packageData.scripts || {};
-          packageData.devDependencies = packageData.devDependencies || {};
-
-          packageData.scripts = Object.assign({}, packageData.scripts, {
-            ...configs[projectType].scripts,
+  sessions.manager.new(
+    installConfig,
+    (code) => {
+      if (code !== 0) {
+        log.error('project-install-failed');
+        log.report('app', { action: 'project-install-failed'});
+        if (reInstall) {
+          log.info('执行 npm cache clean --force 重试');
+          sessions.manager.new(npmCacheCLeanConfig, (code) => {
+            doProjectInstall({cwd, env, shell, callback});
           });
-
-          const originBuildConfig = packageData.ice;
-
-          // Copy to buildConfig
-          if (originBuildConfig) {
-            if (originBuildConfig.projectName) {
-              packageData.title = originBuildConfig.projectName;
-            }
-
-            packageData.buildConfig = {
-              theme: originBuildConfig.themePackage,
-              entry: originBuildConfig.entry,
-            };
-
-            delete packageData.ice;
-          }
-
-          packageData.devDependencies = Object.assign(
-            {},
-            packageData.devDependencies,
-            {
-              ...configs[projectType].devDependencies,
-            }
-          );
-
-          fs.writeFileSync(
-            packageFilePath,
-            JSON.stringify(packageData, null, 2)
-          );
-          resolve();
-        } catch (error) {
-          reject(error);
+        } else {
+          callback(code, {
+            title: '重装依赖失败',
+            content:
+              '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
+          });
         }
+      } else {
+        callback(0);
       }
-    });
-  });
-};
+    }
+  );
+}
+
+const getEnvByNodeFramework = (nodeFramework, isAli) => {
+  let env = {};
+  if (isAli || nodeFramework === 'midwayAli') {
+    console.debug('安装依赖 - 检测为内网环境 / 内部 midway 项目');
+    // 检测到内网环境自动将路径设置为集团内部
+    env.npm_config_registry = 'http://registry.npm.alibaba-inc.com';
+    env.yarn_registry = 'http://registry.npm.alibaba-inc.com';
+  }
+  return env;
+}
+
+/**
+ * session 以“项目路径”为 key 做处理
+ */
 
 export default {
   /**
@@ -178,7 +176,7 @@ export default {
               cwd: project.fullPath,
               shell: 'npm',
               shellArgs: shellArgs,
-              env: project.isNodeProject
+              env: project.nodeFramework
                 ? {}
                 : { PORT: port },
             },
@@ -228,7 +226,7 @@ export default {
         (code) => {
           if (code === 0) {
             project.buildDone();
-            const dist = path.join(project.fullPath, 'build');
+            const dist = path.join(project.clientPath, 'build');
 
             interaction.notify({
               title: '构建完成，点击查看构建结果',
@@ -249,21 +247,29 @@ export default {
     }
   },
 
-  npminstall: (cwd, deps, isDev = false, callback) => {
+  /** 
+   * 依赖单个安装，目前只支持client（前端）安装。
+   * TODO: 支持前后端选择安装，需要配合UI处理
+   * deps： string      
+   */
+  npminstall: (project, deps, isDev = false, callback) => {
     let dependencies = deps.split(/\s+/);
     dependencies = dependencies.filter((d) => !!d.trim());
 
+    // 检测到含有 @ali 的包自动将路径设置为集团内部
     let hasAli = dependencies.some((dep) => {
       return dep.startsWith('@ali/') || dep.startsWith('@alife/');
     });
+    let hasMidway = dependencies.some((dep) => {
+      return dep.startsWith('midway');
+    });
 
-    let env = {};
+    const env = getEnvByNodeFramework(project.nodeFramework, hasAli);
 
-    if (hasAli) {
-      // 检测到含有 @ali 的包自动将路径设置为集团内部
-      env.npm_config_registry = 'http://registry.npm.alibaba-inc.com';
-      env.yarn_registry = 'http://registry.npm.alibaba-inc.com';
-    }
+    // TODO： 老代码遗留逻辑，兼容？
+    if (hasAli && hasMidway) {
+      dependencies[dependencies.indexOf('midway')] = '@ali/midway';
+    } 
 
     if (dependencies.length > 0) {
       dependencies = dependencies.map((dep) => {
@@ -278,13 +284,18 @@ export default {
         installPrefix = '--save-dev';
       }
 
+      const cwd = project.fullPath;
+      const cwdClient = project.clientPath;
+      terms.writeln(cwd, '开始安装依赖');
+
       sessions.manager.new(
         {
-          cwd: cwd,
+          cwd: cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
+          cwdClient: cwdClient,// 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
           env: env,
-          shell: 'npm',
+          shell: "npm",
           shellArgs: ['install', '--no-package-lock', installPrefix].concat(
-            dependenciesFormat(dependencies)
+            dependencies
           ),
         },
         (code) => {
@@ -297,21 +308,32 @@ export default {
           }
         }
       );
+      
     }
   },
 
-  install: ({ cwd, reinstall = true }, callback) => {
-    log.debug('开始安装', cwd);
-    const nodeModulesPath = path.join(cwd, 'node_modules');
-    new Promise((resolve, reject) => {
+  /** 
+   * project: 当前项目
+   * 依赖全量安装/重装，都是client和server共同执行。
+   */
+  install: ({ project, reinstall = true }, callback) => {
+    log.debug('开始安装', project.fullPath);
+    const cwd = project.fullPath;
+    let nodeModulesPaths = [];
+    nodeModulesPaths.push(path.join(project.clientPath, 'node_modules'));
+    if (project.serverPath) {
+      nodeModulesPaths.push(path.join(project.serverPath, 'node_modules'));
+    }  
+    // const nodeModulesPath = path.join(cwd, 'node_modules');
+    new Promise(async (resolve, reject) => {
       if (reinstall) {
         terms.writeln(cwd, '正在清理 node_modules 目录请稍等...');
-        rimraf(nodeModulesPath, (error) => {
+        rimraf(nodeModulesPaths[0], (error) => {
           log.debug('node_modules 删除成功');
           if (error) {
             terms.writeln(cwd, '清理 node_modules 失败');
             reject(error);
-          } else {
+          } else {   
             terms.writeln(cwd, '清理 node_modules 目录完成');
             resolve();
           }
@@ -320,6 +342,23 @@ export default {
         resolve();
       }
     })
+      .then(() => {
+        if (reinstall && nodeModulesPaths.length === 2) {
+          return new Promise(async (resolve, reject) => {
+            rimraf(nodeModulesPaths[1], (error) => {
+              if (error) {
+                terms.writeln(cwd, '清理 node_modules 失败');
+                reject(error);
+              } else {
+                terms.writeln(cwd, '清理 server/node_modules 目录完成');
+                resolve();
+              }
+            })
+         })
+        } else {
+          return Promise.resolve();
+        }
+      })
       .catch((error) => {
         callback(1, {
           title: '依赖清空失败',
@@ -332,81 +371,14 @@ export default {
         return isAlibaba();
       })
       .then((isAli) => {
-        let env = {};
-
-        if (isAli) {
-          console.debug('安装依赖 - 检测为内网环境');
-          // 检测到含有 @ali 的包自动将路径设置为集团内部
-          env.npm_config_registry = 'http://registry.npm.alibaba-inc.com';
-          env.yarn_registry = 'http://registry.npm.alibaba-inc.com';
-        }
-
-        sessions.manager.new(
-          {
-            cwd: cwd,
-            env: env,
-            shell: 'npm',
-            shellArgs: ['install', '--no-package-lock'],
-          },
-          (code) => {
-            if (code !== 0) {
-              log.error('project-install-failed');
-              callback(code, {
-                title: '重装依赖失败',
-                content:
-                  '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
-              });
-            } else {
-              callback(0);
-            }
-          }
-        );
+        const env = getEnvByNodeFramework(project.nodeFramework, isAli);
+        doProjectInstall({
+          cwd: project.fullPath,
+          env,
+          shell: 'npm',
+          callback
+        }, true);
       });
   },
 
-  // FIXME 这里与 ice 项目强耦合，其他类型的项目无法修复
-  repair: ({ path: projectPath, libary }, callback) => {
-    log.debug('开始修复项目', projectPath);
-    // 添加 start build
-    const nodeMoudlesPath = path.join(projectPath, 'node_modules');
-    repairPackage({ projectPath, libary })
-      .then(() => {
-        log.debug('删除 node_modules', nodeMoudlesPath);
-        return new Promise((resolve, reject) => {
-          rimraf(nodeMoudlesPath, (error) => {
-            if (error) {
-              reject(error);
-            } else {
-              log.debug('删除 node_modules 完成', nodeMoudlesPath);
-              resolve();
-            }
-          });
-        });
-      })
-      .catch((error) => {
-        log.debug('删除 node_modules 失败', nodeMoudlesPath);
-        callback({
-          title: '依赖清空失败',
-          error: `清理 node_modules 目录失败，请尝试手动删除 ${nodeMoudlesPath}
- ${error.message}`,
-        });
-      })
-      .then(() => {
-        return npm.run(['install', '--no-package-lock'], {
-          cwd: projectPath,
-        });
-      })
-      .then(() => {
-        log.debug('安装 node_modules 成功', projectPath);
-        callback(null);
-      })
-      .catch((error) => {
-        log.debug('安装 node_modules 失败', projectPath);
-        log.error(error);
-        callback({
-          title: '项目修复失败',
-          error: error,
-        });
-      });
-  },
 };

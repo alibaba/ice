@@ -51,7 +51,7 @@ class Assets extends Component {
   recursiveAssets = () => {
     const { projects } = this.props;
     const { currentProject } = projects;
-    const cwd = currentProject.fullPath;
+    const cwd = currentProject.clientPath;
     let distPath = '';
     if (fs.existsSync(path.join(cwd, 'dist'))) {
       distPath = path.join(cwd, 'dist');
@@ -89,7 +89,7 @@ class Assets extends Component {
     const { projects } = this.props;
     const { currentProject } = projects;
     if (currentProject) {
-      const cwd = currentProject.fullPath;
+      const cwd = currentProject.clientPath;
       const distPath = path.join(cwd, 'build');
       folder.open(distPath);
     } else {

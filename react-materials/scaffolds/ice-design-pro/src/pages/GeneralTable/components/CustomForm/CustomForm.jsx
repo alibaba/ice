@@ -7,6 +7,7 @@ import {
   FormBinder as IceFormBinder,
   FormError as IceFormError,
 } from '@icedesign/form-binder';
+import { FormattedMessage } from 'react-intl';
 
 const { Row, Col } = Grid;
 const { RangePicker } = DatePicker;
@@ -37,11 +38,13 @@ class CustomForm extends Component {
 
   renderInput = (item) => {
     return (
-      <Col l="8" key={item.label}>
+      <Col xs="12" l="8" key={item.label}>
         <div style={styles.formItem}>
           <span style={styles.formLabel}>{item.label}：</span>
           <IceFormBinder {...item.formBinderProps}>
-            <Input {...item.componentProps} style={{ width: '100%' }} />
+            <span style={{ width: '100%' }}>
+              <Input {...item.componentProps} style={{ width: '100%' }} />
+            </span>
           </IceFormBinder>
           <div style={styles.formError}>
             <IceFormError name={item.formBinderProps.name} />
@@ -53,7 +56,7 @@ class CustomForm extends Component {
 
   renderCheckbox = (item) => {
     return (
-      <Col l="8" key={item.label}>
+      <Col xs="12" l="8" key={item.label}>
         <div style={styles.formItem}>
           <IceFormBinder {...item.formBinderProps}>
             <Checkbox {...item.componentProps}>{item.label}</Checkbox>
@@ -65,7 +68,7 @@ class CustomForm extends Component {
 
   renderDatePicker = (item) => {
     return (
-      <Col l="8" key={item.label}>
+      <Col xs="12" l="8" key={item.label}>
         <div style={styles.formItem}>
           <span style={styles.formLabel}>{item.label}：</span>
           <IceFormBinder {...item.formBinderProps}>
@@ -78,7 +81,7 @@ class CustomForm extends Component {
 
   renderSelect = (item) => {
     return (
-      <Col l="8" key={item.label}>
+      <Col xs="12" l="8" key={item.label}>
         <div style={styles.formItem}>
           <span style={styles.formLabel}>{item.label}：</span>
           <IceFormBinder {...item.formBinderProps}>
@@ -119,10 +122,10 @@ class CustomForm extends Component {
                 style={{ marginRight: '10px' }}
                 onClick={this.handleSubmit}
               >
-                搜 索
+                <FormattedMessage id="app.general.table.btn.search" />
               </Button>
               <Button type="normal" onClick={handleReset}>
-                重 置
+                <FormattedMessage id="app.general.table.btn.reset" />
               </Button>
             </div>
             {extraContent}

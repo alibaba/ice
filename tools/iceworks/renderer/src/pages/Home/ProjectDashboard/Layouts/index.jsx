@@ -103,9 +103,7 @@ export default class LayoutBuilder extends Component {
     const { currentProject } = projects;
 
     if (currentProject && currentProject.fullPath) {
-      const targetPath = currentProject.isNodeProject
-        ? path.join(currentProject.fullPath, 'client')
-        : path.join(currentProject.fullPath, 'src');
+      const targetPath = currentProject.clientSrcPath;
       scanLayout({
         targetPath
       }).then((layouts) => {
@@ -172,7 +170,7 @@ export default class LayoutBuilder extends Component {
     }
 
     if (currentProject) {
-      const currentPath = currentProject.fullPath;
+      const currentPath = currentProject.clientPath;
       layoutConfig.directory = currentPath;
       templateBuilderUtils
         .generatorLayout(layoutConfig)

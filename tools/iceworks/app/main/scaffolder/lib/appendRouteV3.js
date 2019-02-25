@@ -12,7 +12,7 @@ const config = require('../../config');
 const ROUTE_BLACK_LIST = ['*', '404', '502'];
 
 module.exports = async function({
-  destDir,
+  clientPath,
   routePath,
   routeText,
   routeIcon, // 用于生成导航栏左侧 icon
@@ -63,8 +63,8 @@ module.exports = async function({
   let navsRealFilePath = '';
   let isNavsFileLegacy = false;
   let navsFileReplacement;
-  const navsFileLegacyPath = path.join(destDir, 'src/config/navs.json');
-  const navsFilePath = path.join(destDir, 'src/navs.js');
+  const navsFileLegacyPath = path.join(clientPath, 'src/config/navs.json');
+  const navsFilePath = path.join(clientPath, 'src/navs.js');
   // 由于 vue 等私有化物料可能没有 navs.js 这个文件，所以判断绕过
   let enableNavsGenerate = false;
 

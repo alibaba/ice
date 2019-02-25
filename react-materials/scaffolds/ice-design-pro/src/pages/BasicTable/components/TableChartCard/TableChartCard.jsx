@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Grid } from '@alifd/next';
+import { FormattedMessage } from 'react-intl';
 import CustomTable from './CustomTable';
 import PirChart from './PieChart';
 
@@ -21,7 +22,9 @@ export default class TableChartCard extends Component {
   render() {
     return (
       <IceContainer style={styles.container}>
-        <h4 style={styles.title}>计算健康分析</h4>
+        <h4 style={styles.title}>
+          <FormattedMessage id="app.base.table.title" />
+        </h4>
         <Row wrap>
           <Col l="8">
             <PirChart />

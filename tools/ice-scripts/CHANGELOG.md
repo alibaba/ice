@@ -1,5 +1,17 @@
 # ice-scripts Changelog
 
+## 1.8.7
+
+- [fix] ice-scripts 不固定ICE官方维护的包版本（ice-skin-loader&webpack-plugin-import）
+
+## 1.8.6
+
+- [fix] 修复 iceworks node 项目路径获取错误的问题
+
+## 1.8.5
+
+- [chore] 升级 ice-skin-loader 到 0.2.1
+
 ## 1.8.4
 
 - [feat] 通过对命令行参数 --project-type 添加参数，增加对 iceworks 中生成的 node 项目的支持。

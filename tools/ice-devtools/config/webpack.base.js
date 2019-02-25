@@ -23,11 +23,7 @@ const URL_LOADER_LIMIT = 8192;
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
   config
-    .mode(process.env.NODE_ENV === 'production' ? 'production' : 'development')
-    .externals({
-      react: 'React',
-      'react-dom': 'ReactDOM',
-    });
+    .mode(process.env.NODE_ENV === 'production' ? 'production' : 'development');
 
   config.module
     .rule('babel')

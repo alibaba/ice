@@ -2,7 +2,7 @@ const { createReadStream, createWriteStream, writeFileSync } = require('fs');
 const babel = require('@babel/core');
 const chokidar = require('chokidar');
 const colors = require('colors');
-const dtsGenerator = require('typescript-definition-generator');
+const dtsGenerator = require('@alifd/dts-generator');
 const glob = require('glob');
 const mkdirp = require('mkdirp');
 const path = require('path');
@@ -98,6 +98,8 @@ function compile(workDir, opts) {
         writeFileSync(dtsDist, dts.message);
         console.log(colors.green('Write index.d.ts'));
       }
+    }).catch((err) => {
+      console.log(colors.yellow('生成 d.ts 失败'), err);
     });
   }
 

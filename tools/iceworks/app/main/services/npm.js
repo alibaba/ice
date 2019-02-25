@@ -61,67 +61,7 @@ const NPM = {
     });
   },
 
-  /**
-   * 修复项目 重复逻辑，参见 project-scripts.js 文件
-   *
-   * @param {String} projectPath 项目路径
-   */
-  repair(projectPath) {
-    const packageFilePath = path.join(projectPath, 'package.json');
-
-    return new Promise((resolve, reject) => {
-      pathExists(packageFilePath).then((exists) => {
-        if (!exists) {
-          reject();
-        } else {
-          try {
-            const pakcageContents = fs.readFileSync(packageFilePath);
-            const packageData = JSON.parse(pakcageContents.toString());
-
-            packageData.scripts = packageData.scripts || {};
-            packageData.devDependencies = packageData.devDependencies || {};
-
-            packageData.scripts = Object.assign({}, packageData.scripts, {
-              start: 'ice dev',
-              build: 'ice build',
-            });
-
-            const originBuildConfig = packageData.ice;
-
-            // Copy to buildConfig
-            if (originBuildConfig) {
-              if (originBuildConfig.projectName) {
-                packageData.title = originBuildConfig.projectName;
-              }
-
-              packageData.buildConfig = {
-                theme: originBuildConfig.themePackage,
-                entry: originBuildConfig.entry,
-              };
-
-              delete packageData.ice;
-            }
-
-            packageData.devDependencies = Object.assign(
-              {},
-              packageData.devDependencies,
-              {
-                'ice-scripts': 'latest',
-              }
-            );
-
-            fs.writeFileSync(
-              packageFilePath,
-              JSON.stringify(packageData, null, 2)
-            );
-            resolve();
-          } catch (error) {
-            reject(error);
-          }
-        }
-      });
-    });
-  },
+  
 };
 
 module.exports = NPM;

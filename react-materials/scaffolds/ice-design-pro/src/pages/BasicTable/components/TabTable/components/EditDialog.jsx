@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Dialog, Button, Form, Input, Field } from '@alifd/next';
+import { FormattedMessage } from 'react-intl';
 
 const FormItem = Form.Item;
 
@@ -61,7 +62,7 @@ export default class EditDialog extends Component {
     return (
       <div style={styles.editDialog}>
         <Button type="primary" onClick={() => this.onOpen(index, record)}>
-          编辑
+          <FormattedMessage id="app.base.table.btn.edit" />
         </Button>
         <Dialog
           style={{ width: 640 }}
