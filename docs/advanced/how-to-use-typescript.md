@@ -6,19 +6,18 @@ category: 进阶指南
 
 ## 为什么使用 TypeScript
 
-TypeScript 拥有媲美 C# 的强大语法特性，比如类、函数重载、多态、抽象方法、接口、继承、泛型、属性、类似 Lambda 表达式的函数定义写法等等。
+TypeScript 拥有媲美 C# 的强大语法特性，比如类、函数重载、多态、抽象方法、接口、继承、泛型、属性、类似 Lambda 表达式的函数定义写法等等，社区基于 TypeScript 的应用也越来越多。
 
 相对于 JavaScript，TypeScript 拥有以下这些独有的特性：
 
 - 更完善的类型定义，支持静态类型检查
 - 更完善的面向对象编程
 - 更完善的模块系统
-- 支持编译 ES2015+
 - 其他...
 
 ## 安装和初始化
 
-ICE 提供了基于 TypeScript 的基础模板，可以从 iceworks 模板界面进行下载使用。
+ICE 提供了基于 TypeScript 的基础模板，可以从 Iceworks 模板界面进行下载使用。
 
 ![](https://img.alicdn.com/tfs/TB1.YxLHY2pK1RjSZFsXXaNlXXa-954-684.png)
 
@@ -94,7 +93,7 @@ class App extends React.PureComponent<IProps, IState> {
 - 升级构建工具 ice-scripts
 
 ```bash
-# 1.8.7 开始支持 TypeScript 构建
+#  最新版支持 TypeScript 构建
 $ npm update ice-script
 ```
 
@@ -139,13 +138,13 @@ $ npm i -g renamex-cli
 $ renamex start -p "src/**/*.js" -r "[name].ts" -t no
 ```
 
-- 指定 Entry 入口
+- 修改 Entry 入口
 
 ```js
 // packgae.json
 // 将 src/index.js 改为 src/index.tsx
 buildConfig: {
-  entry: './src/index.tsx';
+  entry: './src/index.tsx'
 }
 ```
 
