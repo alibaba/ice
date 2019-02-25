@@ -91,7 +91,7 @@ class App extends React.Component {
 
 ## 常见问题
 
-### 为什么 `Select` 的下拉箭头出现了偏移
+### 为什么 Select 的下拉箭头出现了偏移
 
 多半是因为基础组件版本混用引起的：
 
