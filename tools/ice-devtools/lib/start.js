@@ -10,5 +10,7 @@ module.exports = function start(cwd, opt) {
     logger.fatal(message.invalid);
   }
 
+  process.env.NODE_ENV = 'development';
+  
   require(`./${type}/start`)(cwd, opt);
 };

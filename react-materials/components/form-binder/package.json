@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/form-binder",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "ICE 表单数据获取方案",
   "main": "lib/index.js",
   "files": [
@@ -36,7 +36,9 @@
   "devDependencies": {
     "@icedesign/base": "^0.2.0",
     "@alifd/next": "^1.11.8",
-    "moment": "^2.23.0"
+    "moment": "^2.23.0",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
   },
   "componentConfig": {
     "name": "form-binder",

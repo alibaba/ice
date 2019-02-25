@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@alifd/next';
+import { injectIntl } from 'react-intl';
 import IceContainer from '@icedesign/container';
 import ContainerTitle from './components/ContainerTitle';
 import ContractTable from './components/ContractTable';
@@ -13,8 +14,8 @@ const mockData = () => {
     return {
       id: `00000${index}`,
       name: '聘用合同',
-      ourCompany: '杭州xxx科技有限公司',
-      otherCompany: '上海xxx科技有限公司',
+      ourCompany: '杭州xxx科技公司',
+      otherCompany: '上海xxx科技公司',
       amount: '999,999',
       currency: 'CNY',
       state: '签约中',
@@ -22,6 +23,7 @@ const mockData = () => {
   });
 };
 
+@injectIntl
 export default class GeneralTable extends Component {
   static displayName = 'GeneralTable';
 
@@ -67,12 +69,17 @@ export default class GeneralTable extends Component {
 
   render() {
     const { isLoading, dataSource } = this.state;
+    const {
+      intl: { formatMessage },
+    } = this.props;
     return (
       <Row gutter={20} wrap>
         <Col l="18">
           <IceContainer style={{ padding: '0' }}>
-            <ContainerTitle title="合同中心" />
-            <div style={{ padding: '20px' }}>
+            <ContainerTitle
+              title={formatMessage({ id: 'app.general.table.title' })}
+            />
+            <div style={{ minWidth: '960px', padding: '20px' }}>
               <SearchFilter fetchData={this.fetchData} />
               <ContractTable
                 isLoading={isLoading}

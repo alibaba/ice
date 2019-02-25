@@ -2,7 +2,6 @@
 const debug = require('debug')('ice:screenshot:general');
 const path = require('path');
 const imagemin = require('imagemin');
-const imageminPngquant = require('imagemin-pngquant');
 const fs = require('fs');
 const ora = require('ora');
 const getType = require('../utils/type');
@@ -35,9 +34,7 @@ module.exports = function screenshot(cwd, opt) {
       await screenshotDOMElement(url, selector, screenshotTempPath);
 
       // 图片压缩
-      await imagemin([screenshotTempPath], cwd, {
-        plugins: [imageminPngquant({ quality: '45-60' })],
-      });
+      await imagemin([screenshotTempPath], cwd);
 
       // 删除未压缩的图像
       fs.unlinkSync(screenshotTempPath);

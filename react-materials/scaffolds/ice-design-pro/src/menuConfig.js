@@ -4,14 +4,14 @@
 
 const headerMenuConfig = [
   {
-    name: '反馈',
+    name: 'feedback',
     path: 'https://github.com/alibaba/ice',
     external: true,
     newWindow: true,
     icon: 'message',
   },
   {
-    name: '帮助',
+    name: 'help',
     path: 'https://alibaba.github.io/ice',
     external: true,
     newWindow: true,
@@ -26,22 +26,22 @@ const asideMenuConfig = [
     icon: 'home2',
     children: [
       {
-        name: '监控页',
+        name: 'monitor',
         path: '/dashboard/monitor',
       },
     ],
   },
   {
-    name: '图表页',
+    name: 'chart',
     path: '/chart',
     icon: 'chart1',
     children: [
       {
-        name: '基础图表',
+        name: 'basic',
         path: '/chart/basic',
       },
       {
-        name: '通用图表',
+        name: 'general',
         path: '/chart/general',
       },
     ],
@@ -52,12 +52,12 @@ const asideMenuConfig = [
     icon: 'table',
     children: [
       {
-        name: '基础表格',
+        name: 'basic',
         path: '/table/basic',
         // authority: 'admin',
       },
       {
-        name: '通用表格',
+        name: 'general',
         path: '/table/general',
         // authority: 'user',
       },
@@ -66,61 +66,61 @@ const asideMenuConfig = [
   {
     name: '列表页',
     path: '/list',
-    icon: 'ul-list',
+    icon: 'copy',
     children: [
       {
-        name: '基础列表',
+        name: 'basic',
         path: '/list/basic',
       },
       {
-        name: '卡片列表',
-        path: '/list/card',
+        name: 'general',
+        path: '/list/general',
       },
     ],
   },
   {
-    name: '内容页',
-    path: '/portlets',
-    icon: 'publish',
+    name: 'profile',
+    path: '/profile',
+    icon: 'cascades',
     children: [
       {
-        name: '基础详情页',
-        path: '/portlets/base',
+        name: 'basic',
+        path: '/profile/basic',
       },
       {
-        name: '条款协议页',
-        path: '/portlets/terms',
+        name: 'terms',
+        path: '/profile/general',
       },
     ],
   },
   {
-    name: '结果页',
+    name: 'result',
     path: '/result',
-    icon: 'result',
+    icon: 'edit2',
     children: [
       {
-        name: '成功',
+        name: 'success',
         path: '/result/success',
       },
       {
-        name: '失败',
+        name: 'fail',
         path: '/result/fail',
       },
     ],
   },
   {
-    name: '个人页',
+    name: 'account',
     path: '/account',
-    icon: 'yonghu',
+    icon: 'person',
     children: [
       {
-        name: '个人设置',
+        name: 'setting',
         path: '/account/setting',
       },
     ],
   },
   {
-    name: '异常页',
+    name: 'exception',
     path: '/exception',
     icon: 'gaojingxinxi',
     children: [

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from '@alifd/next';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 export default class RankList extends Component {
@@ -31,7 +32,7 @@ export default class RankList extends Component {
         </Table>
         <div style={styles.footer}>
           <a href="#" style={styles.link}>
-            查看更多
+            <FormattedMessage id="app.dashboard.activity.more" />
           </a>
         </div>
       </div>

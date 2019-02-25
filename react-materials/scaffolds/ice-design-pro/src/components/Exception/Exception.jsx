@@ -1,47 +1,44 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Button } from '@alifd/next';
 import IceContainer from '@icedesign/container';
 import './Exception.scss';
 
 export default class Exception extends Component {
-  static displayName = 'Exception';
+  static defaultProps = {
+    statusCode: '400',
+    description: '抱歉，你访问的页面不存在',
+    image: 'https://img.alicdn.com/tfs/TB1ODH2GAvoK1RjSZPfXXXPKFXa-780-780.png',
+    backText: '返回首页',
+    redirect: '/',
+  };
+
+  static propTypes = {
+    statusCode: PropTypes.string,
+    description: PropTypes.string,
+    image: PropTypes.string,
+    backText: PropTypes.string,
+    redirect: PropTypes.string,
+  };
 
   render() {
+    const { statusCode, description, image, backText, redirect } = this.props;
     return (
-      <div className="basic-not-found">
-        <IceContainer>
-          <div style={styles.exceptionContent} className="exception-content">
-            <img
-              src="https://img.alicdn.com/tfs/TB1txw7bNrI8KJjy0FpXXb5hVXa-260-260.png"
-              style={styles.image}
-              className="imgException"
-              alt="页面不存在"
-            />
-            <div className="prompt">
-              <h3 style={styles.title} className="title">
-                抱歉，你访问的页面不存在
-              </h3>
-              <p style={styles.description} className="description">
-                您要找的页面没有找到，请返回<Link to="/">首页</Link>继续浏览
-              </p>
-            </div>
+      <IceContainer>
+        <div className="exception-content">
+          <img src={image} className="exception-image" alt="页面不存在" />
+          <div className="exception-prompt">
+            <h1 className="statuscode">{statusCode}</h1>
+            <p className="description">{description}</p>
+            <Button type="primary">
+              <Link to={redirect} className="back-text">
+                {backText}
+              </Link>
+            </Button>
           </div>
-        </IceContainer>
-      </div>
+        </div>
+      </IceContainer>
     );
   }
 }
-
-const styles = {
-  exceptionContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    color: '#333',
-  },
-  description: {
-    color: '#666',
-  },
-};

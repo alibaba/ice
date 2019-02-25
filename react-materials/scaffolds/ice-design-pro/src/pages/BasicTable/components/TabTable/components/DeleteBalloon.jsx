@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Balloon } from '@alifd/next';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 export default class DeleteBalloon extends Component {
@@ -34,7 +35,7 @@ export default class DeleteBalloon extends Component {
   render() {
     const visibleTrigger = (
       <Button type="secondary" warning>
-        删除
+        <FormattedMessage id="app.base.table.btn.delete" />
       </Button>
     );
 
