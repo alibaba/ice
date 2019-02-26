@@ -21,7 +21,7 @@ module.exports = (cwd, config, callback) => {
     {
       template: path.join(__dirname, `../template/component/index.html.hbs`),
       filename: 'index.html',
-      readme,
+      ...readme,
       demos
     }
   ]);
