@@ -63,6 +63,7 @@ class ComponentPanel extends Component {
             ),
           });
         } else {
+          component.close();
           interaction.notify({
             title: '组件下载成功，组件需要自行引入到页面中',
             body: importStatement ? `引用方法：${importStatement}` : `${npm}`,
