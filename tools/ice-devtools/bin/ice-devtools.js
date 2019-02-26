@@ -4,8 +4,13 @@ const chalk = require('chalk');
 const semver = require('semver');
 const packageJson = require('../package.json');
 const COMMANDS = require('../config/commands');
+const goldlog = require('../utils/goldlog');
 
 const cwd = process.cwd();
+
+goldlog('version', {
+  version: packageJson.version
+});
 
 /**
  * check node version
@@ -48,8 +53,15 @@ Object.entries(COMMANDS).forEach((entry) => {
     });
 
   command.action(function() {
-    const fn = require(`../lib/${entry[0]}`);
+    const cmdType = entry[0];
+
+    const fn = require(`../lib/${cmdType}`);
     const args = [cwd].concat(Array.prototype.slice.call(arguments));
+
+    goldlog(cmdType, {
+      args
+    });
+
     fn.apply(global, args);
   });
 });
