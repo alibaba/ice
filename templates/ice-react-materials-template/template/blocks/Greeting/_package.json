@@ -1,6 +1,7 @@
 {
   "name": "@icedesign/greeting-block-example",
   "version": "1.0.0",
+  "hellos": "aa",
   "description": "示例区块",
   "scripts": {
     "start": "ice-devtools start",
