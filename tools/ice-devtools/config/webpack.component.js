@@ -31,11 +31,13 @@ module.exports = function getWebpacksConfig(cwd) {
 
   const filePath = join(cwd, 'README.md');
   const markdown = fs.readFileSync(filePath, 'utf-8');
-  const { content: readme } = parseMarkdownParts(markdown);
+  const { content: readme, meta = {}} = parseMarkdownParts(markdown);
+
   config.plugin('html').use(HtmlWebpackPlugin, [
     {
       template: join(__dirname, `../template/component/index.html.hbs`),
       filename: 'index.html',
+      meta,
       readme,
       demos
     }

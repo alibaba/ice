@@ -456,33 +456,42 @@
 </head>
 
 <body>
-  <h1>飞冰组件开发服务 {{htmlWebpackPlugin.options.pkg.name}}</h1>
-  <div class="markdown">
-    {{{ htmlWebpackPlugin.options.readme }}}
-  </div>
-  {{#if htmlWebpackPlugin.options.demos.length}}
-  <h3>DEMO 列表</h3>
-  <div>
-    {{#each htmlWebpackPlugin.options.demos}}
-      <div class="preview">
-        <h3>{{title}}</h3>
-        <div class="markdown">
-          {{{ markdownContent }}}
-        </div>
-        <div class="code-box">
-          <div class="code-box-demo">
-            <div id="{{filename}}"></div>
-          </div>
+  <div class="container">
+    <h1>
+      {{#if htmlWebpackPlugin.options.meta.title}}
+        {{{ htmlWebpackPlugin.options.meta.title }}} 
+      {{/if}}
+      {{#if htmlWebpackPlugin.options.meta.chinese}}
+        {{{ htmlWebpackPlugin.options.meta.chinese }}} 
+      {{/if}}
+    </h1>
+    <div class="markdown">
+      {{{ htmlWebpackPlugin.options.readme }}}
+    </div>
+    {{#if htmlWebpackPlugin.options.demos.length}}
+    <h3>DEMO 列表</h3>
+    <div>
+      {{#each htmlWebpackPlugin.options.demos}}
+        <div class="preview">
+          <h3>{{title}}</h3>
           <div class="markdown">
-            <div class="highlight">
-              <pre><code lang="jsx">{{{ highlightedCode }}}</code></pre>
+            {{{ markdownContent }}}
+          </div>
+          <div class="code-box">
+            <div class="code-box-demo">
+              <div id="{{filename}}"></div>
+            </div>
+            <div class="markdown">
+              <div class="highlight">
+                <pre><code lang="jsx">{{{ highlightedCode }}}</code></pre>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    {{/each}}
+      {{/each}}
+    </div>
+    {{/if}}
   </div>
-  {{/if}}
   
   <script src="./index.js"></script>
 </body>
