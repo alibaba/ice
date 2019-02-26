@@ -74,9 +74,7 @@ function exec() {
       const fn = require(`../lib/${cmdType}`);
       const args = [cwd].concat(Array.prototype.slice.call(arguments));
 
-      goldlog(cmdType, {
-        args
-      });
+      goldlog(cmdType, {});
 
       fn.apply(global, args);
     });
