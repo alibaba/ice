@@ -3,7 +3,7 @@
  * @param {String} cwd 项目目录
  * @param {Object} options 命令行参数
  */
-
+/* eslint no-console:off */
 process.env.NODE_ENV = 'development';
 
 const chalk = require('chalk');
@@ -23,10 +23,14 @@ const generateRootCA = require('./config/generateRootCA');
 const prepareUrLs = require('./utils/prepareURLs');
 const getProxyConfig = require('./config/getProxyConfig');
 const openBrowser = require('react-dev-utils/openBrowser');
-
-/* eslint no-console:off */
+const goldlog = require('./utils/goldlog');
+const pkgData = require('../package.json');
 
 module.exports = async function(args, subprocess) {
+  goldlog('version', {
+    version: pkgData.version
+  });
+  goldlog('build');
 
   // 与 iceworks 客户端通信
   const send = function(data) {
