@@ -1,4 +1,9 @@
-# ice-scripts Changelog
+# Changelog
+
+## 1.8.8
+
+- [feat] 支持构建 ts 语法
+- [chore] 增加埋点
 
 ## 1.8.7
 
