@@ -18,7 +18,7 @@
     "@babel/types": "^7.0.0",
     "@icedesign/iceworks-scaffolder": "^0.3.0",
     "@icedesign/layout-builder": "^0.4.1",
-    "@icedesign/template-builder": "^1.0.10",
+    "@icedesign/template-builder": "^2.0.0",
     "@iceland/dsl2code": "^1.0.0",
     "@iceland/material-engine": "^1.0.0",
     "address": "^1.0.3",
