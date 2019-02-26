@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-react-materials-template",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "自定义物料源的初始模板",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
