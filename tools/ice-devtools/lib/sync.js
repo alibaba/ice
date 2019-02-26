@@ -25,10 +25,10 @@ async function requestUrl(data, token, url) {
     json: true,
     body: data,
   });
-  if (res.success === false && Array.isArray(res.data.fail)) {
-    res.data.fail.forEach((fail) =>
+  if (res.success === false &&  Array.isArray(res.data)) {
+    res.data.forEach((fail) =>
       console.log(
-        chalk.yellow(`物料${fail.name}入库失败, 原因: ${fail.reason}`)
+        chalk.yellow(`物料${fail.npm}入库失败, 原因: ${fail.reason}`)
       )
     );
   }
@@ -49,6 +49,7 @@ async function uploadData(datas, token, site) {
   try {
     for (let index = 0; index < datas.length; index++) {
       const data = datas[index];
+
       await requestUrl(data, token, url);
       const percent = Math.ceil(((index + 1) / datas.length) * 100);
       debug('index: %s, length: %s, percent: %s', index, datas.length, percent);
@@ -80,7 +81,12 @@ function dbReshape(db) {
     version: source.version,
     type: 'scaffold',
   }));
-  const all = blocks.concat(scaffolds);
+  const components = Array.isArray(db.components) ? db.components.map(({ source }) => ({
+    name: source.npm,
+    version: source.version,
+    type: 'comp',
+  })) : [];
+  const all = blocks.concat(scaffolds, components);
   debug('all : %j', all);
   const datas = [];
   const ONCE_LIMIT = 4; // 20个一批 太多了服务器受不了
@@ -88,6 +94,7 @@ function dbReshape(db) {
     const data = {
       blocks: [],
       scaffolds: [],
+      components: [],
     };
     for (let j = 0; j < ONCE_LIMIT && i + j < all.length; j++) {
       const element = all[i + j];
@@ -98,9 +105,11 @@ function dbReshape(db) {
         data.blocks.push(fullName);
       } else if (type === 'scaffold') {
         data.scaffolds.push(fullName);
+      } else if (type === 'comp') {
+        data.components.push(fullName)
       }
     }
-    if (data.blocks.length || data.scaffolds.length) {
+    if (data.blocks.length || data.scaffolds.length || data.components.length) {
       datas.push(data);
     }
   }
