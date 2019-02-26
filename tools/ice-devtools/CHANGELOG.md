@@ -1,4 +1,9 @@
-# ice-scripts Changelog
+# Changelog
+
+## 2.1.14
+ - [feat] 增加埋点
+ - [feat] 更新提醒
+ - [feat] 添加组件入库托管
 
 ## 2.1.13
 

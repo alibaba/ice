@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "2.1.13",
+  "version": "2.1.14",
   "description": "ice 物料开发者工具",
   "main": "bin/ice-devtools.js",
   "bin": {
@@ -35,6 +35,7 @@
     "@babel/preset-env": "7.1.0",
     "@babel/preset-react": "7.0.0",
     "async": "^2.6.1",
+    "axios": "^0.18.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-import": "^1.11.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
@@ -64,6 +65,7 @@
     "moment": "^2.22.2",
     "multimatch": "^2.1.0",
     "node-sass": "^4.11.0",
+    "npm-updater": "^3.0.3",
     "ora": "^3.0.0",
     "prismjs": "^1.15.0",
     "progress-bar-webpack-plugin": "^1.11.0",

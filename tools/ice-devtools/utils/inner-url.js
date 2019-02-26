@@ -1,4 +1,5 @@
 const debug = require('debug')('ice:util:inner-url');
+const FUSION_DESIGN_LOCAL_URL = 'aHR0cDovLzEyNy4wLjAuMTo3MDAx'
 const FUSION_DESIGN_DAILY_URL = 'aHR0cHM6Ly9mdXNpb24uYWxpYmFiYS5uZXQ=';
 const FUSION_DESIGN_PRE_URL = 'aHR0cHM6Ly9wcmUtZnVzaW9uLmFsaWJhYmEtaW5jLmNvbQ==';
 const FUSION_DESIGN_URL = 'aHR0cHM6Ly9mdXNpb24uYWxpYmFiYS1pbmMuY29t';
@@ -8,6 +9,9 @@ function base64ToAscii(str) {
 }
 
 const URLS = {
+  local: {
+    fusionDesignUrl: FUSION_DESIGN_LOCAL_URL,
+  },
   daily: {
     fusionDesignUrl: FUSION_DESIGN_DAILY_URL,
   },
