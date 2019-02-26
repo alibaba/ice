@@ -119,13 +119,13 @@ $ npm install typescript -D
 
 - 按需修改 Entry 入口
 
-如果将 `src/index.jsx` 的后缀做了修改，那么同步需要修改 `package.json` 里的 entry 字段：
+如果将 `src/index.js` 的后缀做了修改，那么同步需要修改 `package.json` 里的 entry 字段：
 
 ```diff
 // packgae.json
 buildConfig: {
--  entry: './src/index.jsx';
-+  entry: './src/index.tsx';
+-  entry: './src/index.js'
++  entry: './src/index.ts'
 }
 ```
 
