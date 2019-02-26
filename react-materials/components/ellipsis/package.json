@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ellipsis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "多行文字控制展示组件",
   "main": "lib/index.js",
   "files": [
@@ -29,6 +29,8 @@
     "@alifd/next": "^1.x"
   },
   "devDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
   },
   "peerDependencies": {
     "react": "^16.5.0",

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/notification",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "全局展示通知提醒信息。",
   "main": "lib/index.js",
   "files": [
@@ -32,7 +32,10 @@
     "@alifd/next": "^1.x",
     "rc-notification": "^1.4.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
+  },
   "componentConfig": {
     "name": "notification",
     "title": "全局展示通知提醒信息"
