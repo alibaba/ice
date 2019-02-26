@@ -1,10 +1,12 @@
 const debug = require('debug')('ice:start:block');
 const chalk = require('chalk');
+const { join } = require('path');
 
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 
 const getBaseConfig = require('../../config/webpack.component');
+const getDemos = require('../../utils/get-demos');
 const router = require('../../utils/demo-router');
 
 const PORT = 5000;
@@ -12,6 +14,14 @@ const PORT = 5000;
 module.exports = function blockDevStart(cwd, opt) {
   const config = getBaseConfig(cwd);
 
+  const demos = getDemos(cwd);
+
+  demos.map((demo) => {
+    const demoName = demo.filename;
+    const demoFile = join(cwd, 'demo', demoName + '.md');
+    config.entry(`__Component_Dev__.${demoName}`).add(demoFile);
+  });
+  
   // devServer
   let { port = PORT } = opt;
   port = parseInt(port, 10);
