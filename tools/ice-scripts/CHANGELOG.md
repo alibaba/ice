@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.9
+
+- [fix] 依赖 axios
+
 ## 1.8.8
 
 - [feat] 支持构建 ts 语法
