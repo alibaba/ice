@@ -3,7 +3,7 @@
  */
 
 import { push } from 'react-router-redux';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import { postUserLogout } from '../../api';
 <% if (redux.enabled && redux.authorityModule) { %>
 import { setAuthority } from '../../utils/authority';
@@ -55,7 +55,7 @@ export const userLogout = () => {
 
         dispatch(push('/user/login'));
       } else {
-        Feedback.toast.error('请稍后重试');
+        Message.error('请稍后重试');
       }
     } catch (error) {
       dispatch(userLogoutFailure(error));

@@ -9,7 +9,7 @@ export default class Footer extends PureComponent {
     return (
       <Layout.Footer className="ice-design-layout-footer" type={null}>
         <div className="ice-design-layout-footer-body">
-          <div style={{ filter: 'grayscale(100%)', opacity: 0.3 }}>
+          <div style={{ filter: 'grayscale(50)' }}>
             <Logo />
           </div>
           <div className="copyright">

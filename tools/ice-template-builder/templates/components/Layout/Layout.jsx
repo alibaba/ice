@@ -24,7 +24,7 @@ import MainRoutes from './MainRoutes';
 <% } %>
 
 
-import './Layout.scss';
+import './index.scss';
 
 
 <% if(redux.enabled && redux.registerLoginModule) { %>
