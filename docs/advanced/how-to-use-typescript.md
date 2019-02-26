@@ -33,19 +33,7 @@ ICE 提供了基于 TypeScript 的基础模板，可以从 Iceworks 模板界面
 
 ## 使用 TypeScript 编写 React 组件
 
-1. 安装类型依赖包
-
-在你的项目里为 JSX 和 React 安装声明文件
-
-```
-$ npm i @types/react @types/react-dom -D
-```
-
-2. 将项目根目录的 `tsconfig.json` 配置文件的 `compilerOptions` 里设置选项 `"jsx": "react"`
-
-3. 使用文件后缀 `.tsx` 替代 `.jsx`
-
-4. 在 TypeScript 开发环境下写 React 组件，与 ES6 的区别主要就是 Props 和 State 的定义不同，如下两种写法：
+在 TypeScript 开发环境下写 React 组件，与 ES6 的区别主要就是 Props 和 State 的定义不同，如下两种写法：
 
 - ES6 语法
 
@@ -144,7 +132,7 @@ $ renamex start -p "src/**/*.js" -r "[name].ts" -t no
 // packgae.json
 // 将 src/index.js 改为 src/index.tsx
 buildConfig: {
-  entry: './src/index.tsx'
+  entry: './src/index.tsx';
 }
 ```
 
