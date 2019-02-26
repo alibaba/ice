@@ -24,8 +24,6 @@ updater({
   tag,
   updateMessage,
   interval: '1d',
-  // for debug
-  // interval: '1s',
 }).catch(function(err) {
 }).then(exec);
 

@@ -35,6 +35,7 @@
     "@babel/preset-env": "7.1.0",
     "@babel/preset-react": "7.0.0",
     "async": "^2.6.1",
+    "axios": "^0.18.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-import": "^1.11.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",

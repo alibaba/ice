@@ -1,5 +1,5 @@
 const pkgData = require('../package.json');
-const request = require('request');
+const axios = require('axios');
 
 module.exports = goldlog;
 
@@ -29,9 +29,7 @@ function goldlog(action, extraData = {}) {
     }`;
   }, '');
 
-  // console.log('goldlog', gokey)
-
-  request({
+  axios({
     method: 'post',
     url: 'http://gm.mmstat.com/iceteam.iceworks.log',
     data: {
@@ -40,7 +38,7 @@ function goldlog(action, extraData = {}) {
       gokey: encodeURIComponent(gokey),
       logtype: '2',
     },
-  }, function (error, response, body) {
-    // console.log(error, body.toString());
+  }).then(() => {
+  }).catch((err) => {
   });
 };
