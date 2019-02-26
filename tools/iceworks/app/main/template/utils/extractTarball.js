@@ -7,6 +7,7 @@ const zlib = require('zlib');
 const tar = require('tar');
 const logger = require('../../logger');
 const { DetailError } = require('../../error-handler');
+const autoRetry = require('../../utils/autoRetry');
 
 /**
  * 将 tarbar 下的内容下载到指定目录，同时做路径转换
@@ -15,7 +16,7 @@ const { DetailError } = require('../../error-handler');
  * @param {string} source 源码对象描述
  *                 source.sourceCodeDirectory 源码存放的位置
  */
-module.exports = function extractTarball(
+function extractTarball(
   tarballURL,
   destDir,
   source = {},
@@ -32,6 +33,7 @@ module.exports = function extractTarball(
     const req = requestProgress(
       request({
         url: tarballURL,
+        timeout: 20000,
       })
     );
 
@@ -111,4 +113,13 @@ module.exports = function extractTarball(
           });
       });
   });
-};
+}
+
+// 超时自动重试
+const retryExtractTarball = autoRetry(extractTarball, 2, (err) => {
+  if (err.metadata && err.metadata.message !== 'ETIMEDOUT') {
+    throw (err);
+  }
+});
+
+module.exports = retryExtractTarball;

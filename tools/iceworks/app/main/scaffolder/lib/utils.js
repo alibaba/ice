@@ -16,6 +16,7 @@ const DetailError = require('../../error-handler');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
+const autoRetry = require('../../utils/autoRetry');
 
 /**
  * 批量下载 block 到页面中
@@ -137,7 +138,7 @@ async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName 
     throw err;
   }
 
-  [err, allFiles] = await to(extractBlock(
+  [err, allFiles] = await to(retryExtractBlock(
     path.join(componentsDir, blockName),
     tarballURL,
     clientPath,
@@ -177,47 +178,6 @@ function getProjectVersion(pkg) {
   return hasIceDesignBase ? '0.x' : '1.x';
 }
 
-function extractTarball(tarballURL, destDir) {
-  // 保证目录存在
-  // mkdirp.sync(dest);
-  return new Promise((resolve, reject) => {
-    debug('npmTarball', tarballURL);
-    const allFiles = [];
-    request
-      .get(tarballURL)
-      .on('error', reject)
-      .pipe(zlib.Unzip()) // eslint-disable-line
-      .pipe(tar.Parse()) // eslint-disable-line
-      .on('entry', (entry) => {
-        // npm 会自动生成 .npmignore, 这里需要过滤掉
-        const filterFileReg = /\.npmignore/;
-        if (filterFileReg.test(entry.path)) {
-          return;
-        }
-
-        const realPath = entry.path.replace(/^package\//, '');
-        debug('写入文件', realPath);
-        let destPath = path.join(destDir, realPath);
-
-        // deal with _ started file
-        // https://github.com/alibaba/ice/issues/226
-        const parsedDestPath = path.parse(destPath);
-        if (parsedDestPath.base === '_gitignore') {
-          parsedDestPath.base = parsedDestPath.base.replace(/^_/, '.');
-        }
-        destPath = path.format(parsedDestPath);
-
-        // 保证子文件夹存在
-        mkdirp.sync(path.dirname(destPath));
-        entry.pipe(fs.createWriteStream(destPath));
-        allFiles.push(destPath);
-      })
-      .on('end', () => {
-        resolve(allFiles);
-      });
-  });
-}
-
 /**
  * 把 block 下载到项目目录下，创建页面会使用到该功能
  * 添加 block 到页面中也使用该方法
@@ -242,7 +202,9 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
       .on('progress', (state) => {
         progressFunc(state);
       })
-      .on('error', reject)
+      .on('error', (err) => {
+        reject(err);
+      })
       .pipe(zlib.Unzip()) // eslint-disable-line
       .pipe(tar.Parse()) // eslint-disable-line
       .on('entry', (entry) => {
@@ -282,6 +244,13 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
       });
   });
 }
+
+// 超时自动重试
+const retryExtractBlock = autoRetry(extractBlock, 2, (err) => {
+  if (!err.code || (err.code !== 'ETIMEDOUT' && err.code !== 'ESOCKETTIMEDOUT')) {
+    throw (err);
+  }
+});
 
 /**
  * 从 registry 获取 npm 包的 tarbal URL
@@ -405,10 +374,9 @@ function getDependenciesFromCustom(block) {
 exports.extractCustomBlock = extractCustomBlock;
 exports.getDependenciesFromCustom = getDependenciesFromCustom;
 exports.getTarballURL = getTarballURL;
-exports.extractBlock = extractBlock;
+exports.extractBlock = retryExtractBlock;
 exports.getDependenciesFromNpm = getDependenciesFromNpm;
 exports.getDependenciesFromMaterial = getDependenciesFromMaterial;
-exports.extractTarball = extractTarball;
 exports.downloadBlockToPage = downloadBlockToPage;
 exports.downloadBlocksToPage = downloadBlocksToPage;
 

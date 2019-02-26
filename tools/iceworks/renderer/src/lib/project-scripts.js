@@ -68,10 +68,10 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
           callback(code, {
             title: '重装依赖失败',
             content:
-  <div>
-    <p>1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装</p>
-    <p>2. 已安装 tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息</p>
-  </div>,
+              <div>
+                <p>1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装</p>
+                <p>2. 已安装 tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息</p>
+              </div>,
           });
         } else {
           callback(code, {
@@ -86,6 +86,35 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
     }
   );
 };
+
+const doDependenciesInstall = (dependenciesInstallConfig, dependencies, callback, reInstall) => {
+  const {
+    cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
+    cwdClient, // 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
+    env,
+    shell,
+    shellArgs
+  } = dependenciesInstallConfig;
+
+  sessions.manager.new(
+    dependenciesInstallConfig,
+    (code) => {
+      if (code !== 0) {
+        if (reInstall) {
+          log.info('重试');
+          terms.writeln(cwd, '依赖安装重试');
+          doDependenciesInstall(dependenciesInstallConfig, dependencies, callback);
+        } else {
+          log.error('安装依赖失败', cwd, dependencies);
+          callback(1, dependencies);
+        }
+      } else {
+        log.info('安装依赖成功', cwd, dependencies);
+        callback(null, dependencies);
+      }
+    }
+  );
+}
 
 const getEnvByNodeFramework = (nodeFramework, isAli) => {
   const env = {};
@@ -252,7 +281,7 @@ export default {
   },
 
   /**
-   * 依赖单个安装，目前只支持client（前端）安装。
+   * 依赖单个/多个安装，目前只支持client（前端）安装。
    * TODO: 支持前后端选择安装，需要配合UI处理
    * deps： string
    */
@@ -291,26 +320,17 @@ export default {
       const cwdClient = project.clientPath;
       terms.writeln(cwd, '开始安装依赖');
 
-      sessions.manager.new(
-        {
-          cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
-          cwdClient, // 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
-          env,
-          shell: 'npm',
-          shellArgs: ['install', '--no-package-lock', installPrefix].concat(
-            dependencies
-          ),
-        },
-        (code) => {
-          if (code !== 0) {
-            log.error('安装依赖失败', cwd, dependencies);
-            callback(1, dependencies);
-          } else {
-            log.info('安装依赖成功', cwd, dependencies);
-            callback(null, dependencies);
-          }
-        }
-      );
+      const npmInstallConfig = {
+        cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
+        cwdClient, // 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
+        env,
+        shell: 'npm',
+        shellArgs: ['install', '--no-package-lock', installPrefix].concat(
+          dependencies
+        )
+      };
+
+      doDependenciesInstall(npmInstallConfig, dependencies, callback, true);
     }
   },
 
