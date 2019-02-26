@@ -6,22 +6,15 @@ category: 进阶指南
 
 ## 为什么使用 TypeScript
 
-TypeScript 拥有媲美 C# 的强大语法特性，比如类、函数重载、多态、抽象方法、接口、继承、泛型、属性、类似 Lambda 表达式的函数定义写法等等，社区基于 TypeScript 的应用也越来越多。
+TypeScript 是微软开发一款开源的编程语言，本质上是向 JavaScript 增加静态类型系统。它是 JavaScript 的超集，所有现有的 JavaScript 都可以不加改变就在其中使用。它是为大型软件开发而设计的，它最终编译产生 JavaScript，所以可以运行在浏览器、Node.js 等等的运行时环境。
 
-相对于 JavaScript，TypeScript 拥有以下这些独有的特性：
+TypeScript 拥有媲美 C# 的强大语法特性，比如强类型、类、函数重载、接口、继承等等，近两年来 TypeScript 在前端社区的发展越来越火热，也有越来越多的应用采用 TypeScript 书写，于此同时，飞冰（ICE）也在积极的拥抱 TypeScript 社区。
 
-- 更完善的类型定义，支持静态类型检查
-- 更完善的面向对象编程
-- 更完善的模块系统
-- 其他...
+本文就来介绍如何在飞冰（ICE）里使用 TypeScript。
 
-## 安装和初始化
+## 选择 TypeScript 模板初始化项目
 
-ICE 提供了基于 TypeScript 的基础模板，可以从 Iceworks 模板界面进行下载使用。
-
-![](https://img.alicdn.com/tfs/TB1.YxLHY2pK1RjSZFsXXaNlXXa-954-684.png)
-
-## 功能预览
+ICE 提供了基于 TypeScript 的基础模板，该模板将飞冰（ICE）本身的能力和 TypeScript 能力做了很好的融合：
 
 - 内置 @alifd/next 基础组件
 - 支持组件按需加载
@@ -31,14 +24,19 @@ ICE 提供了基于 TypeScript 的基础模板，可以从 Iceworks 模板界面
 
 ![ts-scaffold](https://img.alicdn.com/tfs/TB1JfdIH9zqK1RjSZPxXXc4tVXa-2861-1568.png)
 
-## 使用 TypeScript 编写 React 组件
+你只需要在 Iceworks 模板界面选择对应模板进行初始化：
 
-在 TypeScript 开发环境下写 React 组件，与 ES6 的区别主要就是 Props 和 State 的定义不同，如下两种写法：
+![](https://img.alicdn.com/tfs/TB1.YxLHY2pK1RjSZFsXXaNlXXa-954-684.png)
+
+初始化完成之后，接下来就是使用 TypeScript 编写代码了，所有以 `.tsx` 或者 `.ts` 结尾的文件都支持其语法。
+
+通过 TypeScript 写 React 组件，主要区别就是 Props 和 State 的定义，如下两种写法：
 
 - ES6 语法
 
 ```jsx
 import React from 'react';
+
 class App extends React.PureComponent {
   state = {
     name: 'ice',
@@ -56,6 +54,7 @@ App.propTypes = {
 
 ```jsx
 import * as React from 'react';
+
 interface IProps {
   name: string;
   age: number;
@@ -76,12 +75,12 @@ class App extends React.PureComponent<IProps, IState> {
 
 ## 已有项目如何迁移到 TypeScript
 
-#### 迁移步骤
+迁移步骤如下：
 
 - 升级构建工具 ice-scripts
 
 ```bash
-#  最新版支持 TypeScript 构建
+# ice-scripts 最新版支持 TypeScript 的语法构建
 $ npm update ice-script
 ```
 
@@ -91,7 +90,7 @@ $ npm update ice-script
 $ npm install typescript -D
 ```
 
-- 新建 .tsconfig 文件
+- 新增 .tsconfig 文件
 
 ```js
 {
@@ -114,25 +113,19 @@ $ npm install typescript -D
 }
 ```
 
-- 替换文件后缀
+- 按需修改文件后缀
 
-在 TypeScript 工程中推荐使用 `.tsx` 替代 `.jsx`、使用 `.ts` 替代 `.js`，以此保证构建工具的正常构建。这意味着需要批量将项目的后缀名进行相应的替换，这里推荐社区的一个工具包 [renamex-cli](https://www.npmjs.com/package/renamex-cli)
+在 TypeScript 工程中推荐使用 `.tsx` 替代 `.jsx`、使用 `.ts` 替代 `.js`，这里可以根据自身需求按需更改，一般情况下更改后缀之后需要修改部分语法，否则 ts 语法检测可能会不通过
 
-```bash
-# 安装
-$ npm i -g renamex-cli
+- 按需修改 Entry 入口
 
-# 使用
-$ renamex start -p "src/**/*.js" -r "[name].ts" -t no
-```
+如果将 `src/index.jsx` 的后缀做了修改，那么同步需要修改 `package.json` 里的 entry 字段：
 
-- 修改 Entry 入口
-
-```js
+```diff
 // packgae.json
-// 将 src/index.js 改为 src/index.tsx
 buildConfig: {
-  entry: './src/index.tsx';
+-  entry: './src/index.jsx';
++  entry: './src/index.tsx';
 }
 ```
 
