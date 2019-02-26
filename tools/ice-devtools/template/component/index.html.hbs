@@ -474,7 +474,7 @@
     <h3>DEMO 列表</h3>
     <div>
       {{#each htmlWebpackPlugin.options.demos}}
-        <div class="preview">
+        <div class="preview" id="container_{{filename}}">
           <h3>{{title}}</h3>
           <div class="markdown">
             {{{ markdownContent }}}
@@ -492,6 +492,12 @@
         </div>
       {{/each}}
     </div>
+    <ul class="demo-list">
+      <li>示例导航</li>
+      {{#each htmlWebpackPlugin.options.demos}}
+      <li><a href="#container_{{filename}}">{{title}}</a></li>
+      {{/each}}
+    </ul>
     {{/if}}
   </div>
   
