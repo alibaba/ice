@@ -70,12 +70,12 @@ module.exports = (buildConfig = {}, themeConfig) => {
     }
   ];
 
-  // if (buildConfig.uniteBaseComponent) {
-  //   sassLoadersConf.push({
-  //     loader: UNITE_BASE_COMPONENT_SASS_LOADER,
-  //     options: {}
-  //   });
-  // }
+  if (buildConfig.uniteBaseComponent) {
+    sassLoadersConf.push({
+      loader: UNITE_BASE_COMPONENT_SASS_LOADER,
+      options: {}
+    });
+  }
 
   const sassLoaderConf = [
     CSS_LOADER_CONF,
