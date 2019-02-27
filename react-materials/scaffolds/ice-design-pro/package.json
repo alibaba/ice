@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/pro-scaffold",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "该模板提供了 Redux、Mock、国际化、权限管理、注册登录等完整的方案，且内置了丰富的区块，主要用于展示现有区块的分类以及区块组合的效果，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/pro-scaffold@latest/build/index.html",
   "files": [
