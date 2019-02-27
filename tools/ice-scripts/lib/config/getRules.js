@@ -15,6 +15,8 @@ const POSTCSS_LOADER = require.resolve('postcss-loader');
 const SASS_LOADER = require.resolve('sass-loader');
 const CSS_HOT_LOADER = require.resolve('css-hot-loader');
 const URL_LOADER = require.resolve('url-loader');
+const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
+const UNITE_BASE_COMPONENT_SASS_LOADER = require.resolve('../loaders/uniteBaseComponentSassLoader.js');
 const URL_LOADER_LIMIT = 8192;
 
 function withCssHotLoader(loaders) {
@@ -40,6 +42,13 @@ const CSS_MODULE_CONF = {
 };
 module.exports = (buildConfig = {}, themeConfig) => {
   const babelConfig = getBabelConfig(buildConfig);
+
+  const theme = buildConfig.theme || buildConfig.themePackage;
+  if (theme) {
+    // eslint-disable-next-line no-console
+    console.log(colors.green('Info:'), '使用主题包', theme);
+  }
+
   const sassLoadersConf = [
     {
       loader: POSTCSS_LOADER,
@@ -51,33 +60,30 @@ module.exports = (buildConfig = {}, themeConfig) => {
         sourceMap: true,
       },
     },
+    {
+      loader: ICE_SKIN_LOADER,
+      options: {
+        themeFile:
+          theme && path.join(paths.appNodeModules, `${theme}/variables.scss`),
+        themeConfig,
+      },
+    }
   ];
 
-  const theme = buildConfig.theme || buildConfig.themePackage;
-
-  if (theme) {
-    // eslint-disable-next-line no-console
-    console.log(colors.green('Info:'), '使用主题包', theme);
-  }
-
-  const iceThemeLoaderConf = {
-    loader: require.resolve('ice-skin-loader'),
-    options: {
-      themeFile:
-        theme && path.join(paths.appNodeModules, `${theme}/variables.scss`),
-      themeConfig,
-    },
-  };
+  // if (buildConfig.uniteBaseComponent) {
+  //   sassLoadersConf.push({
+  //     loader: UNITE_BASE_COMPONENT_SASS_LOADER,
+  //     options: {}
+  //   });
+  // }
 
   const sassLoaderConf = [
     CSS_LOADER_CONF,
     ...sassLoadersConf,
-    iceThemeLoaderConf,
   ];
   const sassModuleConf = [
     CSS_MODULE_CONF,
     ...sassLoadersConf,
-    iceThemeLoaderConf,
   ];
   // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
   const miniCssExtractPluginLoader = { loader: MiniCssExtractPlugin.loader };
