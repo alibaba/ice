@@ -12,6 +12,7 @@ const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const WEBPACK_HOT_CLIENT = require.resolve('webpack-hot-client/client');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const getBabelConfig = require('./getBabelConfig');
 const { getPkgJSON } = require('../utils/pkg-json');
@@ -191,6 +192,11 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
       };
     }),
   ]);
+
+  // 依赖分析
+  if (process.env.ANALYZER) {
+    config.plugin('analyzer').use(BundleAnalyzerPlugin);
+  }
 
   config.plugin('hot').use(webpack.HotModuleReplacementPlugin);
   Object.entries(entries).forEach((entry) => {
