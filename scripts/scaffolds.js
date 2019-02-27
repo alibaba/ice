@@ -5,6 +5,7 @@ const scaffolds = [
   // 基础模板(2)
   'ice-design-pro',
   'ice-design-lite',
+  'ice-typescript-starter',
 
   // 行业模板(22)
   'ice-design-cms',

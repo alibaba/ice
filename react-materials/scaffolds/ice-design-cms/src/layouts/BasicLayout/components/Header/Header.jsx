@@ -75,7 +75,7 @@ export default class Header extends PureComponent {
                   <span className="user-department">技术部</span>
                 </div>
                 <Icon
-                  type="arrow-down-filling"
+                  type="arrow-down"
                   size="xxs"
                   className="icon-down"
                 />

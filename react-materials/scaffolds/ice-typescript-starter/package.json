@@ -1,0 +1,66 @@
+{
+  "name": "@icedesign/ts-scaffold",
+  "version": "1.0.2",
+  "description": "该模板基于 TypeScript 适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示",
+  "homepage": "https://unpkg.com/@icedesign/ts-scaffold@latest/build/index.html",
+  "files": [
+    "src/",
+    "build/",
+    "public/",
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc",
+    "tsconfig.json"
+  ],
+  "dependencies": {
+    "@alifd/next": "^1.x",
+    "@icedesign/theme": "^0.1.2",
+    "moment": "^2.23.0",
+    "prop-types": "^15.5.8",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.3",
+    "@types/react-dom": "^16.8.2",
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "ice-scripts": "^1.8.3",
+    "typescript": "^3.3.3"
+  },
+  "scripts": {
+    "start": "ice dev",
+    "build": "ice build",
+    "lint": "eslint . --ext '.js,.jsx' --fix"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/theme",
+    "entry": "src/index.tsx",
+    "output": {
+      "publicPath": "./"
+    }
+  },
+  "scaffoldConfig": {
+    "builder": "ice-scripts",
+    "name": "ice-typescript-starter",
+    "title": "ICE TypeScript Starter",
+    "categories": [
+      "基础模板"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB13AFlH6TpK1RjSZKPXXa3UpXa-2860-1580.png"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
