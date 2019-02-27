@@ -14,24 +14,24 @@ export default class OverviewPieChart extends Component {
     const i18n = (value) => formatMessage({ id: value });
     const mockData = [
       {
-        percent: '100',
+        percent: 100,
         title: i18n('app.list.project.overview.all'),
-        value: '3841',
+        value: 3841,
       },
       {
-        percent: '60',
+        percent: 60,
         title: i18n('app.list.project.overview.unsolved'),
-        value: '2931',
+        value: 2931,
       },
       {
-        percent: '10',
+        percent: 10,
         title: i18n('app.list.project.overview.pending'),
-        value: '384',
+        value: 384,
       },
       {
-        percent: '30',
+        percent: 30,
         title: i18n('app.list.project.overview.solved'),
-        value: '2398',
+        value: 2398,
       },
     ];
 
