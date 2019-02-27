@@ -8,7 +8,7 @@ module.exports = function demoLoader(markdown) {
 
   const filePath = this.resourcePath;
   const fileName = basename(filePath, '.md');
-  const mountNode = `const mountNode = document.getElementById('${fileName}');`;
+  const mountNode = `var mountNode = document.getElementById('${fileName}');`;
 
   if (existsSync(stylePath)) {
     const styleReq = JSON.stringify(stylePath);
