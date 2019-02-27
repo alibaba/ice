@@ -12,7 +12,7 @@ import services from '../services';
 
 const IceworksScaffolder = remote.require('@icedesign/iceworks-scaffolder');
 const { paths } = services;
-const { getClientPath, NODE_FRAMEWORKS, getServerPath } = paths;
+const { getClientPath,getClientSrcPath, NODE_FRAMEWORKS, getServerPath } = paths;
 
 const homeDir = os.homedir();
 
@@ -127,6 +127,8 @@ class Project {
 
   /**
    * 前端项目路径
+   * koa、koa2、midway: /client
+   * 常规项目：/
    */
   @computed
   get clientPath() {
@@ -138,7 +140,7 @@ class Project {
    */
   @computed
   get clientSrcPath() {
-    return getClientPath(this.root, this.nodeFramework, 'src');
+    return  getClientSrcPath(this.root, this.nodeFramework);
   }
 
   /**

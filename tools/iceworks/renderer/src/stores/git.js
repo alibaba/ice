@@ -47,7 +47,7 @@ class Git {
   initTools() {
     const { currentProject = {} } = Projects;
     const cwd = currentProject.fullPath;
-    if (cwd) {
+    if (cwd && pathExists.sync(cwd)) {
       this.gitTools = new GitTools(cwd);
     }
   }
@@ -110,6 +110,7 @@ class Git {
     } catch (error) {
       this.isGit = false;
       this.loading = false;
+      throw error;
     }
   }
 

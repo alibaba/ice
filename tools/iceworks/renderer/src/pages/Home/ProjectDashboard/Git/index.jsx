@@ -33,17 +33,32 @@ export default class GitPanel extends Component {
     // 初始化gitTools
     this.init();
   }
-  async componentWillMount() {
-    const { git, projects } = this.props;
 
-    await git.checkIsRepo();
+  init() {
+    const { git } = this.props;
+    git.initTools();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { git, projects } = this.props;
-
-    ipcRenderer.on('focus', this.handleReload.bind(this, false));
-    projects.on('change', this.onProjectChange);
+    try {
+      await git.checkIsRepo();
+      ipcRenderer.on('focus', this.handleReload.bind(this, false));
+      projects.on('change', this.onProjectChange);
+    } catch (error) {
+      let errMsg = (error && error.message) || '仓库地址错误';
+      if (error && error.message && error.message.includes('ENOENT')) {
+        errMsg = 'git 插件在当前项目不可用，请在插件设置中关闭。不可用原因可能为：项目读写权限问题，或者 simple-git 包在当前 node 环境下不可用';
+      }
+      Dialog.alert({
+        title: '提示',
+        content: (
+          <div style={{ width: 400 }}>
+            {errMsg}
+          </div>
+        )
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -62,11 +77,6 @@ export default class GitPanel extends Component {
     this.field.reset();
     await git.reset();
     await this.handleReload();
-  }
-
-  init() {
-    const { git } = this.props;
-    git.initTools();
   }
 
   handleGitInit = async () => {
@@ -187,7 +197,6 @@ export default class GitPanel extends Component {
   }
 
   onFilesChange = (selectedFiles) => {
-    console.log('selectedFiles: ', selectedFiles);
     const { git = {} } = this.props;
     git.selectedFiles = selectedFiles;
   }

@@ -1,5 +1,9 @@
 import gitPromie from 'simple-git/promise';
 import { Dialog } from '@icedesign/base';
+import services from '../services';
+
+const { log } = services;
+
 
 /**
  * 命令文档：https://web.npm.alibaba-inc.com/package/simple-git
@@ -27,6 +31,7 @@ const gitToolsMap = {
   checkIsRepo: { // 检查当前输入的是否是一个repo地址
     name: 'checkIsRepo',
     errMsg: '仓库地址错误',
+    errorless: true
   },
   add: { // git add
     name: 'add',
@@ -88,12 +93,15 @@ class GitTools {
   }
 
   run = async (toolName, ...opts) => {
-    const { name, errMsg, handleFunc } = gitToolsMap[toolName];
+    if (!this.cwd) {
+      log.debug('git-tools: 当前项目路径不存在');
+      return
+    }
+    const {name, errMsg, handleFunc, errorless} = gitToolsMap[toolName];
     try {
       let result;
       if (opts[0] !== undefined) {
         result = await this.git()[name](...opts);
-        console.log('result', result);
       } else {
         result = await this.git()[name]();
       }
@@ -102,7 +110,9 @@ class GitTools {
       }
       return result;
     } catch (error) {
-      this.showError(error, errMsg);
+      if (!errorless) {
+        this.showError(error, errMsg);
+      }
       throw error;
     }
   }
