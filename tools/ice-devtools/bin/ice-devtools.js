@@ -72,22 +72,15 @@ function exec() {
     command.action(function() {
       const cmdType = entry[0];
 
-      const fn = require(`../lib/${cmdType}`);
+      optionsAttachToEnv(command);
+
+      const fn = require(`../lib/${entry[0]}`);
       const args = [cwd].concat(Array.prototype.slice.call(arguments));
 
-<<<<<<< HEAD
-  command.action(function() {
-    optionsAttachToEnv(command);
-
-    const fn = require(`../lib/${entry[0]}`);
-    const args = [cwd].concat(Array.prototype.slice.call(arguments));
-    fn.apply(global, args);
-=======
       goldlog(cmdType, {});
 
       fn.apply(global, args);
     });
->>>>>>> master
   });
 
   // output help information on unknown commands
