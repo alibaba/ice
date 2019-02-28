@@ -56,7 +56,12 @@ class FormDialog extends Component {
                 <span style={styles.label}>标题</span>
               </Col>
               <Col span={18}>
-                <IceFormBinder required max={20} name="title" message="当前标题必填">
+                <IceFormBinder
+                  required
+                  max={20}
+                  name="title"
+                  message="当前标题必填"
+                >
                   <Input style={styles.formField} />
                 </IceFormBinder>
                 <IceFormError name="title" />
@@ -68,10 +73,7 @@ class FormDialog extends Component {
               </Col>
               <Col span={18}>
                 <IceFormBinder name="type">
-                  <Select
-                    dataSource={typeData}
-                    style={styles.formField}
-                  />
+                  <Select dataSource={typeData} style={styles.formField} />
                 </IceFormBinder>
               </Col>
             </Row>

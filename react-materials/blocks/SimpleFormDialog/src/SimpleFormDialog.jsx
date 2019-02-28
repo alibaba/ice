@@ -112,13 +112,13 @@ export default class SimpleFormDialog extends Component {
                 </Col>
                 <Col span={`${isMobile ? '18' : '16'}`}>
                   <IceFormBinder
+                    name="keywords"
                     required
                     min={2}
                     max={10}
                     message="当前字段必填，且最少 2 个字最多 10 个字"
                   >
                     <Input
-                      name="keywords"
                       style={styles.input}
                       placeholder="多关键词用英文 , 号分割"
                     />
@@ -128,9 +128,8 @@ export default class SimpleFormDialog extends Component {
               </Row>
               <Row style={styles.formRow}>
                 <Col>
-                  <IceFormBinder>
+                  <IceFormBinder name="type">
                     <RadioGroup
-                      name="type"
                       dataSource={[
                         {
                           value: 'post',
@@ -151,8 +150,12 @@ export default class SimpleFormDialog extends Component {
               </Row>
               <Row style={styles.formRow}>
                 <Col>
-                  <IceFormBinder>
-                    <Input.TextArea name="content" style={styles.input} placeholder="请输入详细内容" rows={4} />
+                  <IceFormBinder name="content">
+                    <Input.TextArea
+                      style={styles.input}
+                      placeholder="请输入详细内容"
+                      rows={4}
+                    />
                   </IceFormBinder>
                 </Col>
               </Row>

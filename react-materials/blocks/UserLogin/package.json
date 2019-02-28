@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/user-login-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "files": [
     "src/",
@@ -25,12 +25,12 @@
     "registry": "http://registry.npmjs.com"
   },
   "dependencies": {
-    "@icedesign/form-binder": "^0.1.3",
-    "prop-types": "^15.5.8",
+    "@icedesign/form-binder": "^1.x",
     "@alifd/next": "^1.x"
   },
   "devDependencies": {
     "@icedesign/theme": "^0.x",
+    "prop-types": "^15.5.8",
     "react": "*",
     "react-dom": "*"
   },

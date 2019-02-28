@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/simple-fluency-form-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "SimpleFluencyForm",
   "files": [
     "src/",
@@ -22,14 +22,12 @@
   ],
   "dependencies": {
     "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.3",
     "prop-types": "^15.5.8",
     "@alifd/next": "^1.x"
   },
   "devDependencies": {
     "@icedesign/theme": "^0.x",
     "react": "*",
-    "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "*"
   },
   "blockConfig": {

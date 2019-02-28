@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/card-list-block",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "适用于多卡片信息的展示",
   "author": "",
   "homepage": "https://unpkg.com/@icedesign/card-list-block/build/index.html",
@@ -25,10 +25,12 @@
   ],
   "dependencies": {
     "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.9",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
+    "@icedesign/form-binder": "^1.x",
     "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "blockConfig": {
     "name": "card-list",
