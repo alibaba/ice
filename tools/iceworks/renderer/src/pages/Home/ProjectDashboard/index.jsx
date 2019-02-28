@@ -19,6 +19,9 @@ import Proxies from './Proxies';
 import Def from './Def';
 import Git from './Git';
 
+import services from '../../../services';
+const { log } = services;
+
 const ExtensionMap = {
   [Assets.extensionName]: Assets,
   [Aliyun.extensionName]: Aliyun,
@@ -84,6 +87,11 @@ class ProjectDashboard extends Component {
   onSortStart = () => {
     this.props.extensions.sortStart();
   };
+
+  componentDidCatch(error, info) {     
+    log.error('extension error');
+    log.error(error, info);
+  }
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     if (oldIndex !== newIndex) {

@@ -39,11 +39,11 @@ export default class GitPanel extends Component {
     git.initTools();
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const { git, projects } = this.props;
     try {
-      await git.checkIsRepo();
-      ipcRenderer.on('focus', this.handleReload.bind(this, false));
+      git.checkIsRepo();
+      ipcRenderer.on('focus', this.handleReload);
       projects.on('change', this.onProjectChange);
     } catch (error) {
       let errMsg = (error && error.message) || '仓库地址错误';
@@ -72,27 +72,27 @@ export default class GitPanel extends Component {
     this.init();
   }
 
-  onProjectChange = async () => {
+  onProjectChange = () => {
     const { git } = this.props;
     this.field.reset();
-    await git.reset();
-    await this.handleReload();
+    git.reset();
+    this.handleReload(true);
   }
 
-  handleGitInit = async () => {
+  handleGitInit = () => {
     const { git } = this.props;
-    const initDone = await git.init();
+    const initDone = git.init();
     if (initDone) {
-      this.handleReload();
+      this.handleReload(true);
     }
   };
 
-  handleReload = async (showLoading = true) => {
+  handleReload = (showLoading = false) => {
     const { git } = this.props;
     if (showLoading) {
       git.reloading = true;
     }
-    await git.checkIsRepo();
+    git.checkIsRepo();
     git.reloading = false;
   };
 
@@ -183,15 +183,15 @@ export default class GitPanel extends Component {
 
   handleAddRemote = () => {
     const { git = {} } = this.props;
-    this.field.validate(async (errors, values) => {
+    this.field.validate((errors, values) => {
       if (errors) return;
       const { remoteUrl } = values;
       if (remoteUrl === git.remoteUrl) {
         return;
       }
-      const addDone = await git.addRemote(remoteUrl);
+      const addDone = git.addRemote(remoteUrl);
       if (addDone) {
-        this.handleReload();
+        this.handleReload(true);
       }
     });
   }
@@ -222,16 +222,16 @@ export default class GitPanel extends Component {
     return user;
   };
 
-  handleGitCommit = async () => {
+  handleGitCommit = () => {
     const { git = {} } = this.props;
     const user = this.getUserInfo();
-    const commitDone = await git.addAndCommit();
+    const commitDone = git.addAndCommit();
     if (commitDone) {
       Notification.success({
         message: 'Git 提交成功',
         duration: 8,
       });
-      this.handleReload();
+      this.handleReload(true);
     }
   }
 
@@ -340,7 +340,7 @@ export default class GitPanel extends Component {
     git.visibleDialogChangeRemote = true;
   }
 
-  handleGitNewBranchOpen = async () => {
+  handleGitNewBranchOpen = () => {
     const { git } = this.props;
     if (git.remoteUrl) {
       git.visibleDialogNewBranch = true;
@@ -349,18 +349,18 @@ export default class GitPanel extends Component {
     }
   };
 
-  handleGitBranchesOpen = async () => {
+  handleGitBranchesOpen = () => {
     const { git } = this.props;
     if (!git.remoteUrl) {
       Feedback.toast.error('当前项目未设置 git remote 地址');
       return;
     }
-    await git.getBranches();
+    git.getBranches();
   };
 
-  handlePull = async () => {
+  handlePull = () => {
     const { git } = this.props;
-    const pullDone = await git.pull();
+    const pullDone = git.pull();
     if (pullDone) {
       Notification.success({
         message: 'Git 拉取当前分支最新代码成功',
@@ -369,9 +369,9 @@ export default class GitPanel extends Component {
     }
   }
 
-  handlePush = async () => {
+  handlePush = () => {
     const { git } = this.props;
-    const pushDone = await git.push();
+    const pushDone = git.push();
     if (pushDone) {
       Notification.success({
         message: 'Git 推送当前分支本地代码成功',
@@ -459,7 +459,9 @@ export default class GitPanel extends Component {
                     style={{ color: '#3080FE' }}
                     placement={'top'}
                     tipText={'刷新'}
-                    onClick={this.handleReload}
+                    onClick={() => {
+                      this.handleReload(true);
+                    }}
                   >
                     <Icon type="reload" style={{ fontSize: 18 }} />
                   </ExtraButton>

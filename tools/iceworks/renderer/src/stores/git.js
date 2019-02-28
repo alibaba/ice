@@ -74,7 +74,7 @@ class Git {
   }
 
   @action
-  async reset() {
+  reset() {
     this.showMainPanel = false;
     this.currentStep = 0;
   }
