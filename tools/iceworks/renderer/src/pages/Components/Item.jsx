@@ -27,7 +27,8 @@ class Item extends Component {
   }
 
   download = () => {
-    const { data, download } = this.props;
+    const { data, download, component } = this.props;
+    component.currentComponent = data;
     download(data);
   }
 

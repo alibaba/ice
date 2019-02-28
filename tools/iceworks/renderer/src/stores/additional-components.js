@@ -8,6 +8,8 @@ import projects from './projects';
 class AdditionalComponents {
   @observable
   activeCategory = '全部';
+  @observable
+  componentsValue = [];
 
   constructor(components, material, iceBaseComponents = []) {
     this.material = material || '';
@@ -30,11 +32,12 @@ class AdditionalComponents {
     }
     components.forEach( (component) => {
       const { source = {}, importStatement, name } = component;
-      let newImportStatement;
       if (!importStatement) {
-        newImportStatement = `import { ${upperCamelCase(name)} } from '${source.npm}';`;
+        const cn = name.split('/').pop();
+        component.importStatement = `import { ${upperCamelCase(cn)} } from '${source.npm}';`;
+      } else {
+        component.importStatement = importStatement;
       }
-      component.importStatement = newImportStatement;
     });
   }
 

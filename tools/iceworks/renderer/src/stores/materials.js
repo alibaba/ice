@@ -224,6 +224,19 @@ class Materials {
     }
     return null;
   }
+
+  @action
+  updateComponents() {
+    const index = this.tabComponentActiveKey.split('_')[1];
+    if (index) {
+      const material = this.materials[index];
+      const components = material.components.iceBusinessComponents;
+      const iceBaseComponents = material.components.iceBaseComponents;
+      material.components = new AdditionalComponents(components, material, iceBaseComponents);
+    }
+
+  }
+
 }
 
 export default new Materials();

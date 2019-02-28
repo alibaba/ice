@@ -12,9 +12,9 @@ import Item from './Item';
 
 import services from '../../services';
 
-const { interaction } = services;
+const { interaction, log } = services;
 
-@inject('projects', 'component')
+@inject('projects', 'component', 'materials', 'progress')
 @observer
 class ComponentPanel extends Component {
   constructor(props) {
@@ -25,7 +25,6 @@ class ComponentPanel extends Component {
    * 点击模板分类菜单的回调
    */
   handleClick = (value) => {
-    console.log(value)
     const { material } = this.props;
     const components = material.components;
     if (components) {
@@ -36,14 +35,19 @@ class ComponentPanel extends Component {
   download = (data) => {
     const { component, material } = this.props;
     component.open();
+
   }
 
   handleDownloadComponent = () => {
-    const { component, projects } = this.props;
-    const { npm, version, importStatement } = component.source;
+    const { component, projects, materials, progress } = this.props;
+    const { currentComponent } = component;
+    const { npm, version } = currentComponent.source;
     const { currentProject } = projects;
 
     component.downloading = true;
+    progress.start();
+    progress.setStatusText('正在下载组件');
+    progress.setShowTerminal(true);
 
     projectScripts.npminstall(
       currentProject,
@@ -51,7 +55,9 @@ class ComponentPanel extends Component {
       false,
       (error, dependencies) => {
         component.downloading = false;
+        progress.end();
         if (error) {
+          log.error(`组件${npm}@${version}下载失败`);
           dialog.alert({
             title: '组件下载失败',
             content: (
@@ -64,9 +70,10 @@ class ComponentPanel extends Component {
           });
         } else {
           component.close();
+          materials.updateComponents();
           interaction.notify({
             title: '组件下载成功，组件需要自行引入到页面中',
-            body: importStatement ? `引用方法：${importStatement}` : `${npm}`,
+            body: component.importStatement ? `引用方法：${component.importStatement}` : `${npm}`,
             type: 'success',
           });
         }

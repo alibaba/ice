@@ -11,7 +11,7 @@ class Component {
   @observable
   downloading = false;
   @observable
-  source = {};
+  currentComponent = {};
 
   @computed
   get isDownloading() {
