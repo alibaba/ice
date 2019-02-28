@@ -52,10 +52,14 @@ export default class Subscribe extends Component {
             <Col xxs="16" s="8" l="6">
               <Row wrap>
                 <Col span="24">
-                  <FormBinder type="email" message="邮箱不合法" required>
+                  <FormBinder
+                    name="email"
+                    type="email"
+                    message="邮箱不合法"
+                    required
+                  >
                     <Input
                       size="large"
-                      name="email"
                       placeholder="请输入您的订阅邮箱..."
                       style={{ width: '100%' }}
                     />
