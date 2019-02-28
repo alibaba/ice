@@ -37,13 +37,10 @@ const SASS_BINARY_PATH = isDev
 const NODE_FRAMEWORKS = ['koa2', 'midway', 'midwayAli'];
 
 const getClientPath = (destDir, framework) => {
-  if (framework) {
-    if (framework === 'koa') {
-      return path.join(destDir); 
-    } else if (NODE_FRAMEWORKS.includes(framework)) {
-      return path.join(destDir, 'client'); 
-    }
+  if (framework && NODE_FRAMEWORKS.includes(framework)) {
+    return path.join(destDir, 'client'); 
   } else {
+    // 包含两种情况：framework为koa（即老koa项目）、纯前端项目
     return path.join(destDir); 
   }
 };

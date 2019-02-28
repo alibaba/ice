@@ -110,6 +110,7 @@ class GitTools {
       }
       return result;
     } catch (error) {
+      log.error(`git ${toolName} error: `, error);
       if (!errorless) {
         this.showError(error, errMsg);
       }
