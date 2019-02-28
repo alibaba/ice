@@ -14,7 +14,7 @@ import services from '../services';
 import history from '../history';
 import projects from './projects';
 
-const { settings, shared, scaffolder } = services;
+const { settings, shared } = services;
 
 class Materials {
   @observable
@@ -145,7 +145,7 @@ class Materials {
   loaderMaterial(index) {
     const material = this.materials[index];
     const location = history.location;
-    console.log('location ', location)
+    console.log('location ', location);
     // 当前物料是否已加载过
     if (material && !material.loaded) {
       let promiseAll;
@@ -156,17 +156,17 @@ class Materials {
         const iceBaseMaterial = iceVersion === '0.x' ? iceBaseMaterials[0] : iceBaseMaterials[1];
         promiseAll = Promise.all([
           this.fetchByMaterial(material),
-          this.fetchByMaterial(iceBaseMaterial)
+          this.fetchByMaterial(iceBaseMaterial),
         ]);
       } else {
         promiseAll = Promise.all([
-          this.fetchByMaterial(material)
+          this.fetchByMaterial(material),
         ]);
       }
 
       promiseAll.then(([
         body = {},
-        iceBaseComponents
+        iceBaseComponents,
       ]) => {
         const {
           blocks = [],
@@ -187,7 +187,6 @@ class Materials {
         material.loaded = true;
         material.data = body;
         material.error = null;
-
       }).catch((error) => {
         material.loaded = false;
         material.error = error;
@@ -234,9 +233,7 @@ class Materials {
       const iceBaseComponents = material.components.iceBaseComponents;
       material.components = new AdditionalComponents(components, material, iceBaseComponents);
     }
-
   }
-
 }
 
 export default new Materials();

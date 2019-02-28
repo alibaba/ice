@@ -1,6 +1,5 @@
 import { computed, toJS, observable } from 'mobx';
 import upperCamelCase from 'uppercamelcase';
-import services from '../services';
 import { isIceMaterial } from '../lib/utils';
 
 import projects from './projects';
@@ -24,13 +23,13 @@ class AdditionalComponents {
     // 如果是飞冰物料，同时是基础组件
     if (isIceMaterial(this.material.source) && iceBaseComponents.length > 0) {
       const npm = projects.currentProject.iceVersion === '0.x' ? '@icedesign/base' : '@alifd/next';
-      iceBaseComponents.forEach( component => {
+      iceBaseComponents.forEach((component) => {
         component.source = {
           npm,
         };
       });
     }
-    components.forEach( (component) => {
+    components.forEach((component) => {
       const { source = {}, importStatement, name } = component;
       if (!importStatement) {
         const cn = name.split('/').pop();
@@ -47,14 +46,14 @@ class AdditionalComponents {
     // 如果是飞冰物料，同时是基础组件
     if (isIceMaterial(this.material.source) && iceBaseComponents.length > 0) {
       const npm = projects.currentProject.iceVersion === '0.x' ? '@icedesign/base' : '@alifd/next';
-      const isDownloaded = dependencies[npm] ? true : false;
-      iceBaseComponents.forEach( component => {
+      const isDownloaded = !!dependencies[npm];
+      iceBaseComponents.forEach((component) => {
         component.isDownloaded = isDownloaded;
       });
     }
-    components.forEach( (component) => {
+    components.forEach((component) => {
       const { source = {} } = component;
-      if (dependencies[component.source.npm]) {
+      if (dependencies[source.npm]) {
         component.isDownloaded = true;
       } else {
         component.isDownloaded = false;
@@ -69,7 +68,7 @@ class AdditionalComponents {
   get categories() {
     // 默认展示全部
     if (isIceMaterial(this.material.source)) {
-      return ["全部", "业务组件", "基础组件"];
+      return ['全部', '业务组件', '基础组件'];
     }
 
     const categories = [];
@@ -99,27 +98,24 @@ class AdditionalComponents {
     if (isIceMaterial(this.material.source)) {
       if (this.activeCategory === '业务组件') {
         return this.iceBusinessComponents;
-      } else if (this.activeCategory === '基础组件') {
-        return this.iceBaseComponents;
-      };
-    } else {
-      const filterByCatefory = this.components.filter((item) => {
-        if (item.categories.includes(this.activeCategory)) {
-          return item;
-        }
-        return false;
-      });
-  
-      return toJS(filterByCatefory);
+      }
+      // this.activeCategory === '基础组件'
+      return this.iceBaseComponents;
     }
-   
+    const filterByCatefory = this.components.filter((item) => {
+      if (item.categories.includes(this.activeCategory)) {
+        return item;
+      }
+      return false;
+    });
+
+    return toJS(filterByCatefory);
   }
 
   @computed
   get components() {
     return toJS(this.componentsValue);
   }
-
 }
 
 export default AdditionalComponents;

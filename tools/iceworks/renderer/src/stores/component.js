@@ -1,9 +1,4 @@
-import { observable, action, computed, toJS } from 'mobx';
-import projects from './projects';
-import { isIceMaterial } from '../lib/utils';
-
-// store
-import progress from './progress';
+import { observable, action, computed } from 'mobx';
 
 class Component {
   @observable
@@ -37,7 +32,6 @@ class Component {
   close() {
     this.visible = false;
   }
-
 }
 
 export default new Component();
