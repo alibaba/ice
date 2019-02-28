@@ -36,15 +36,12 @@ const SASS_BINARY_PATH = isDev
 
 const NODE_FRAMEWORKS = ['koa2', 'midway', 'midwayAli'];
 
-const getClientPath = (destDir, framework, sourcePath = '') => {
-  if (framework) {
-    if (framework === 'koa') {
-      return path.join(destDir, 'client');
-    } else if (NODE_FRAMEWORKS.includes(framework)) {
-      return path.join(destDir, 'client', sourcePath);
-    }
+const getClientPath = (destDir, framework) => {
+  if (framework && NODE_FRAMEWORKS.includes(framework)) {
+    return path.join(destDir, 'client'); 
   } else {
-    return path.join(destDir, sourcePath);
+    // 包含两种情况：framework为koa（即老koa项目）、纯前端项目
+    return path.join(destDir); 
   }
 };
 
@@ -54,16 +51,17 @@ const getServerPath = (destDir, framework) => {
   }
   return null;
 };
-
-const getClientSrcFolder = (framework) => {
-  if (framework) {
-    if (framework === 'koa') {
-      return 'client';
-    } else if (NODE_FRAMEWORKS.includes(framework)) {
-      return 'src';
-    }
+/**
+ * 前端资源路径 koa: /client; koa2、midway: /client/src; 常规项目: /src
+ * @param {*} destDir 项目路径
+ * @param {*} framework 项目类型 koa koa2 midway ''
+ */
+const getClientSrcPath = (destDir, framework) => {
+  const clientPath = getClientPath(destDir, framework);
+  if (framework && framework === 'koa') {
+    return path.join(clientPath, 'client');
   } else {
-    return 'src';
+    return path.join(clientPath, 'src');
   }
 };
 
@@ -76,6 +74,6 @@ module.exports = {
   WIN_NPM_CMD,
   NODE_FRAMEWORKS,
   getClientPath,
-  getClientSrcFolder,
-  getServerPath,
+  getClientSrcPath,
+  getServerPath
 };

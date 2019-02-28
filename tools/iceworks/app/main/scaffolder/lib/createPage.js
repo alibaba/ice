@@ -81,13 +81,13 @@ module.exports = async function createPage({
         pkg: fs.readFileSync(pkgPath),
       });
       throw new DetailError('package.json 内存在语法错误', {
-        message: '请检查根目录下 package.json 的语法规范',
+        message: `请检查${clientPath}目录下 package.json 的语法规范`,
       });
     }
   } else {
     emitError(currentEvent, { message: '找不到 package.json' });
     throw new DetailError('找不到 package.json', {
-      message: '在项目根目录下找不到 package.json 文件',
+      message: `在${clientPath}目录下找不到 package.json 文件`,
     });
   }
   // 兼容依赖
