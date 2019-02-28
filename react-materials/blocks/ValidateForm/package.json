@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/validate-form-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "适用于简单的验证型表单",
   "author": "",
   "homepage": "https://unpkg.com/@icedesign/validate-form-block/build/index.html",
@@ -25,10 +25,12 @@
   ],
   "dependencies": {
     "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.9",
-    "prop-types": "^15.5.8",
-    "react": "^16.2.0",
+    "@icedesign/form-binder": "^1.x",
     "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^16.2.0"
   },
   "blockConfig": {
     "name": "validate-form",

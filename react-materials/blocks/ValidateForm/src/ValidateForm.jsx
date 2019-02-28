@@ -57,6 +57,7 @@ export default class ValidateForm extends Component {
               <div style={styles.formItem}>
                 <div style={styles.formLabel}>验证地址：</div>
                 <IceFormBinder
+                  name="url"
                   required
                   triggerType="onBlur"
                   message="验证地址必填"
@@ -64,7 +65,6 @@ export default class ValidateForm extends Component {
                   <Input
                     placeholder="https://alibaba.github.io/ice/"
                     type="url"
-                    name="url"
                     size="large"
                     style={{ width: '400px' }}
                   />
@@ -77,13 +77,13 @@ export default class ValidateForm extends Component {
                 <div style={styles.formLabel}>接收邮箱：</div>
                 <IceFormBinder
                   required
+                  name="email"
                   triggerType="onBlur"
                   message="邮箱地址必填"
                 >
                   <Input
                     placeholder="abc@example.com"
                     type="email"
-                    name="email"
                     size="large"
                     style={{ width: '400px' }}
                   />

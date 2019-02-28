@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/simple-form-dialog-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "简单的表单弹窗",
   "files": [
     "src/",
@@ -22,13 +22,13 @@
   ],
   "dependencies": {
     "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.3",
+    "@icedesign/form-binder": "^1.x",
     "enquire-js": "^0.1.2",
-    "prop-types": "^15.5.8",
     "@alifd/next": "^1.x"
   },
   "devDependencies": {
     "@icedesign/theme": "^0.x",
+    "prop-types": "^15.5.8",
     "react": "*",
     "react-dom": "*"
   },
