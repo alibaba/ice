@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/yunqi-homepage-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "云栖大会官方首页模板，适用于信息展示类的场景",
   "homepage": "https://unpkg.com/@icedesign/yunqi-homepage-scaffold@latest/build/index.html",
   "files": [
@@ -68,6 +68,11 @@
     "categories": [
       "官网模板"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1ZuTBtbwrBKNjSZPcXXXpapXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1ZuTBtbwrBKNjSZPcXXXpapXa-2840-1596.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1ZuTBtbwrBKNjSZPcXXXpapXa-2840-1596.png",
+      "https://img.alicdn.com/tfs/TB1qrh9Jr2pK1RjSZFsXXaNlXXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1Qc1XJpzqK1RjSZFCXXbbxVXa-2860-1580.png"
+    ]
   }
 }

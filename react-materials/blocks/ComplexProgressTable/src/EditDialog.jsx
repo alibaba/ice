@@ -21,20 +21,6 @@ class EditDialog extends Component {
     };
   }
 
-  // ICE: React Component 的生命周期
-
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillReceiveProps() {}
-
-  shouldComponentUpdate() {
-    return true;
-  }
-
-  componentWillUnmount() {}
-
   onOk = () => {
     this.refForm.validateAll((errors, values) => {
       if (errors) {
@@ -82,14 +68,11 @@ class EditDialog extends Component {
                   min={2}
                   max={26}
                   message="项目标题必填，且最少 2 个字最多 26 个字"
+                  name="title"
                 >
-                  <Input
-                    name="title"
-                    style={styles.input}
-                    placeholder="项目标题"
-                  />
+                  <Input style={styles.input} placeholder="项目标题" />
                 </IceFormBinder>
-                <IceFormError name="keywords" />
+                <IceFormError name="title" />
               </Col>
             </Row>
             <Row style={styles.formRow}>
@@ -98,8 +81,8 @@ class EditDialog extends Component {
               </Col>
               <Col span="16">
                 <div style={styles.progressWrapper}>
-                  <IceFormBinder type="number">
-                    <Range name="progress" marks={[0, 100]} />
+                  <IceFormBinder type="number" name="progress">
+                    <Range marks={[0, 100]} />
                   </IceFormBinder>
                 </div>
               </Col>
@@ -109,9 +92,8 @@ class EditDialog extends Component {
                 <label style={styles.formLabel}>优先级：</label>
               </Col>
               <Col span="16">
-                <IceFormBinder>
+                <IceFormBinder name="priority">
                   <RadioGroup
-                    name="priority"
                     dataSource={[
                       {
                         value: '高',

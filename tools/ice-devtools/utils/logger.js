@@ -42,3 +42,16 @@ exports.success = function(...args) {
   console.log(chalk.white(prefix), sep, msg);
   console.log();
 };
+
+
+/**
+ * Log a warn `message` to the console.
+ *
+ * @param {String} message
+ */
+exports.warn = function(...args) {
+  const msg = format.apply(format, args);
+  console.log();
+  console.log(chalk.yellow(prefix), sep, msg);
+  console.log();
+};

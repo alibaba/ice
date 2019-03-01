@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/usertrack-admin-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "该模板内置了丰富的区块，适用于埋点治理的管理系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/usertrack-admin-scaffold@latest/build/index.html",
   "files": [
@@ -67,7 +67,9 @@
     ],
     "screenshot": "https://img.alicdn.com/tfs/TB1LkGRDH2pK1RjSZFsXXaNlXXa-2860-1580.png",
     "screenshots": [
-      "https://img.alicdn.com/tfs/TB1LkGRDH2pK1RjSZFsXXaNlXXa-2860-1580.png"
+      "https://img.alicdn.com/tfs/TB1LkGRDH2pK1RjSZFsXXaNlXXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1YQNFcnZmx1VjSZFGXXax2XXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB12JyeJsfpK1RjSZFOXXa6nFXa-2860-1580.png"
     ]
   },
   "engines": {

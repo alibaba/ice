@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/user-table-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "可筛选过滤的用户类表格",
   "author": {
     "name": "ICE Team",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.4",
+    "@icedesign/form-binder": "^1.x",
     "@alifd/next": "^1.x"
   },
   "peerDependencies": {

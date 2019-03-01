@@ -18,7 +18,7 @@ const CreateFuncDialog = (WrapperElement) => {
       document.body.appendChild(container);
       instance = ReactDOM.render(
         <WrapperElement {...props} visible />,
-        container,
+        container
       );
     },
     // 隐藏并销毁弹窗
@@ -34,7 +34,7 @@ const CreateFuncDialog = (WrapperElement) => {
               instance = null;
               container.parentNode.removeChild(container);
             }, 1000);
-          },
+          }
         );
       }
     },
