@@ -1,16 +1,28 @@
 const fs = require('fs');
 const path = require('path');
+const rimraf = require('rimraf');
+const chalk = require('chalk');
 const hbs = require('handlebars');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const stripAnsi = require('strip-ansi');
 
 const getDemos = require('./get-demos');
 const getTempPath = require('./temp-path');
 const formatPathForWin = require('./format-path-for-win');
 const { parseMarkdownParts } = require('./markdown-helper');
 const logger = require('./logger');
+const formatWebpackMessages = require('./format-webpack-messages');
 
 module.exports = (cwd, config, callback) => {
+  const demoDir = path.join(cwd, 'build');
+
+  console.log();
+  console.log('clean', demoDir);
+  console.log();
+
+  rimraf.sync(demoDir);
+
   const demos = getDemos(cwd);
 
   const entryJS = generateEntryJS(demos);
@@ -48,16 +60,47 @@ module.exports = (cwd, config, callback) => {
     const info = stats.toJson();
 
     if (stats.hasErrors()) {
+      printErrors(info.errors);
       cb(info.errors);
-      logger.fatal(info.errors);
+      return;
     }
 
     if (stats.hasWarnings()) {
-      logger.warn(info.warnings);
+      printWarnings(info.warnings);
     }
+
+    console.log();
+    console.log(chalk.green('Write build/index.html'));
+    console.log();
     
     cb(null, info);
   });
+}
+
+function printWarnings(warnings) {
+  // Print warnings to the console.
+  var formatted = formatWebpackMessages({
+    warnings: warnings,
+    errors: []
+  });
+
+  for (var i = 0; i < formatted.warnings.length; i++) {
+    console.log();
+    console.log(chalk.yellow(stripAnsi(formatted.warnings[i])));
+  }
+}
+
+function printErrors(errors) {
+  // Print warnings to the console.
+  var formatted = formatWebpackMessages({
+    warnings: [],
+    errors: errors
+  });
+
+  for (var i = 0; i < formatted.errors.length; i++) {
+    console.log();
+    console.log(chalk.red(stripAnsi(formatted.errors[i])));
+  }
 }
 
 function generateEntryJS(demos) {
