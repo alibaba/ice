@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { Icon } from '@alifd/next';
-import cloneDeep from 'lodash.clonedeep';
+import cloneDeep from 'lodash/cloneDeep';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import CustomForm from '../CustomForm';
 

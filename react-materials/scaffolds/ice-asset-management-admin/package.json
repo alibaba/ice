@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/asset-management-scaffold",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "该模板内置了丰富的区块，适用于资产管理类的系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/asset-management-scaffold@latest/build/index.html",
   "files": [
@@ -69,9 +69,11 @@
     "categories": [
       "行业领域"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1rbjAzOLaK1RjSZFxXXamPFXa-2872-1580.png",
+    "screenshot": "https://img.alicdn.com/tfs/TB1bJCxJxnaK1RjSZFtXXbC2VXa-2860-1580.png",
     "screenshots": [
-      "https://img.alicdn.com/tfs/TB1rbjAzOLaK1RjSZFxXXamPFXa-2872-1580.png"
+      "https://img.alicdn.com/tfs/TB1bJCxJxnaK1RjSZFtXXbC2VXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1pXF_JpzqK1RjSZSgXXcpAVXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1zox7JxTpK1RjSZR0XXbEwXXa-2860-1580.png"
     ]
   },
   "engines": {

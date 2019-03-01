@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/account-panel-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "用户中心展示账户信息内容",
   "homepage": "https://unpkg.com/@icedesign/account-panel-block/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
@@ -23,11 +23,13 @@
     "access": "public"
   },
   "dependencies": {
+    "@alifd/next": "^1.x",
     "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.7",
-    "prop-types": "^15.5.8",
+    "@icedesign/form-binder": "^1.x"
+  },
+  "devDependencies": {
     "react": "^16.2.0",
-    "@alifd/next": "^1.x"
+    "react-dom": "^16.8.3"
   },
   "blockConfig": {
     "name": "account-panel",

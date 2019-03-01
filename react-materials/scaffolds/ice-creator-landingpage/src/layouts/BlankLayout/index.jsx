@@ -15,11 +15,7 @@ export default class BlankLayout extends Component {
         <Switch>
           {routerData.map((item, index) => {
             return item.component ? (
-              <Route
-                key={index}
-                path={item.path}
-                component={item.component}
-              />
+              <Route key={index} path={item.path} component={item.component} />
             ) : null;
           })}
 

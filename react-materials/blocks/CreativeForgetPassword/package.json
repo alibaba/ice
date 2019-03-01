@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/creative-forget-password-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "左右布局的忘记密码表单页",
   "homepage": "https://unpkg.com/@icedesign/creative-forget-password-block/build/index.html",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
@@ -24,10 +24,13 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/form-binder": "^0.1.7",
-    "prop-types": "^15.6.2",
-    "react": "^16.2.0",
+    "@icedesign/form-binder": "^1.x",
     "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "prop-types": "^15.6.2"
   },
   "blockConfig": {
     "name": "creative-forget-password",

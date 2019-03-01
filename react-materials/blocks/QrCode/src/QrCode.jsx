@@ -58,13 +58,12 @@ export default class QrCode extends Component {
                 二维码大小
               </Col>
               <Col l="20">
-                <IceFormBinder type="number">
+                <IceFormBinder type="number" name="size">
                   <NumberPicker
                     step={5}
                     min={150}
                     max={300}
                     inputWidth="60px"
-                    name="size"
                   />
                 </IceFormBinder>
               </Col>
@@ -116,7 +115,10 @@ export default class QrCode extends Component {
               </Col>
               <Col l="20">
                 <IceFormBinder name="url">
-                  <Input.TextArea style={{ width: '300px' }} placeholder="https://alibaba.github.io/ice/" />
+                  <Input.TextArea
+                    style={{ width: '300px' }}
+                    placeholder="https://alibaba.github.io/ice/"
+                  />
                 </IceFormBinder>
               </Col>
             </Row>

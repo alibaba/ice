@@ -76,7 +76,7 @@ const DATA = [
     percent: 60,
     status: 'ACTIVE',
     color: '#666',
-    state: '',
+    state: 'normal',
   },
   {
     id: 6,
@@ -122,7 +122,7 @@ const DATA = [
     percent: 45,
     status: 'CLOSED',
     color: '#f7da47',
-    state: '',
+    state: 'normal',
   },
   {
     id: 9,
@@ -137,7 +137,7 @@ const DATA = [
     percent: 50,
     status: 'PENDING',
     color: '#ee706d',
-    state: '',
+    state: 'normal',
   },
   {
     id: 10,
@@ -151,7 +151,7 @@ const DATA = [
     percent: 60,
     status: 'PENDING',
     color: '#ee706d',
-    state: '',
+    state: 'normal',
   },
   {
     id: 11,
@@ -168,7 +168,7 @@ const DATA = [
     percent: 30,
     status: 'ACTIVE',
     color: '#666',
-    state: '',
+    state: 'normal',
   },
   {
     id: 12,
@@ -183,7 +183,7 @@ const DATA = [
     percent: 40,
     status: 'PENDING',
     color: '#ee706d',
-    state: '',
+    state: 'normal',
   },
 ];
 

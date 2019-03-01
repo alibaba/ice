@@ -5,6 +5,7 @@ const semver = require('semver');
 const updater = require('npm-updater');
 const packageJson = require('../package.json');
 const COMMANDS = require('../config/commands');
+const optionsAttachToEnv = require('../utils/options-attach-to-env');
 const goldlog = require('../utils/goldlog');
 
 const cwd = process.cwd();
@@ -70,6 +71,8 @@ function exec() {
 
     command.action(function() {
       const cmdType = entry[0];
+
+      optionsAttachToEnv(command);
 
       const fn = require(`../lib/${cmdType}`);
       const args = [cwd].concat(Array.prototype.slice.call(arguments));

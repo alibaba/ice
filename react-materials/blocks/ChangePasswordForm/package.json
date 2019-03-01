@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/change-password-form-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "files": [
     "src/",
@@ -26,14 +26,14 @@
   },
   "dependencies": {
     "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.3",
-    "prop-types": "^15.5.8",
+    "@icedesign/form-binder": "^1.x",
     "@alifd/next": "^1.x"
   },
   "devDependencies": {
     "@icedesign/theme": "^0.x",
-    "react": "*",
-    "react-dom": "*"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "prop-types": "^15.5.8"
   },
   "blockConfig": {
     "name": "change-password-form",
