@@ -60,12 +60,16 @@ module.exports = (cwd, config, callback) => {
     const info = stats.toJson();
 
     if (stats.hasErrors()) {
+      console.log();
+      console.log(chalk.red('ERROR'));
       printErrors(info.errors);
       cb(info.errors);
       return;
     }
 
     if (stats.hasWarnings()) {
+      console.log();
+      console.log(chalk.yellow('WARNING'));
       printWarnings(info.warnings);
     }
 
