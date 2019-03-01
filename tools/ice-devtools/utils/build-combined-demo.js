@@ -84,32 +84,6 @@ module.exports = (cwd, config, callback) => {
   });
 }
 
-function printWarnings(warnings) {
-  // Print warnings to the console.
-  var formatted = formatWebpackMessages({
-    warnings: warnings,
-    errors: []
-  });
-
-  for (var i = 0; i < formatted.warnings.length; i++) {
-    console.log();
-    console.log(chalk.yellow(stripAnsi(formatted.warnings[i])));
-  }
-}
-
-function printErrors(errors) {
-  // Print warnings to the console.
-  var formatted = formatWebpackMessages({
-    warnings: [],
-    errors: errors
-  });
-
-  for (var i = 0; i < formatted.errors.length; i++) {
-    console.log();
-    console.log(chalk.red(stripAnsi(formatted.errors[i])));
-  }
-}
-
 function generateEntryJS(demos) {
   const hbsTemplatePath = path.join(__dirname, `../template/component/index.js.hbs`);
 
