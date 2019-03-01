@@ -24,8 +24,10 @@ module.exports = function componentBuild(workDir, opts) {
   const config = getBaseConfig(workDir);
 
   // HACK：放在回调中执行，是为了避免两个任务的 log 信息混在一起
-  buildCombinedDemo(workDir, config, () => {
-    compile(workDir, opts);
+  buildCombinedDemo(workDir, config, (err) => {
+    if (!err) {
+      compile(workDir, opts);
+    }
   });
 }
 
