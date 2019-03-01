@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.15
+ - [feat] 增加组件 demo 构建逻辑
+
 ## 2.1.14
  - [feat] 增加埋点
  - [feat] 更新提醒
