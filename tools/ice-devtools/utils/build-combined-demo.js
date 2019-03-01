@@ -12,7 +12,7 @@ const getTempPath = require('./temp-path');
 const formatPathForWin = require('./format-path-for-win');
 const { parseMarkdownParts } = require('./markdown-helper');
 const logger = require('./logger');
-const formatWebpackMessages = require('./format-webpack-messages');
+const formatMessages = require('webpack-format-messages');
 
 module.exports = (cwd, config, callback) => {
   const demoDir = path.join(cwd, 'build');
@@ -57,27 +57,30 @@ module.exports = (cwd, config, callback) => {
       return;
     }
 
-    const info = stats.toJson();
+    const messages = formatMessages(stats);
 
-    if (stats.hasErrors()) {
+    if (!messages.errors.length && !messages.warnings.length) {
       console.log();
-      console.log(chalk.red('ERROR'));
-      printErrors(info.errors);
-      cb(info.errors);
+      console.log(chalk.green('Demo build successfully!'));
+      console.log();
+      cb();
+    }
+
+    if (messages.errors.length) {
+      console.log(chalk.red('Failed to build demo.'));
+      console.log();
+      messages.errors.forEach(e => console.log(chalk.red(e)));
+      cb(messages.errors);
       return;
     }
 
-    if (stats.hasWarnings()) {
+    if (messages.warnings.length) {
+      console.log(chalk.yellow('Demo build with warnings.'));
       console.log();
-      console.log(chalk.yellow('WARNING'));
-      printWarnings(info.warnings);
+      messages.warnings.forEach(w => console.log(chalk.yellow(w)));
+      cb();
+      return;
     }
-
-    console.log();
-    console.log(chalk.green('Write build/index.html'));
-    console.log();
-    
-    cb(null, info);
   });
 }
 

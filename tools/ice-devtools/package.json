@@ -93,6 +93,7 @@
     "webpack-bundle-analyzer": "^3.0.4",
     "webpack-chain": "^5.2.0",
     "webpack-dev-server": "^3.1.10",
+    "webpack-format-messages": "^2.0.5",
     "webpack-hot-client": "^4.1.1",
     "webpack-plugin-import": "^0.2.1",
     "webpack-simple-progress-plugin": "^0.0.4",
