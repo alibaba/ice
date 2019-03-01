@@ -74,7 +74,7 @@ function exec() {
 
       optionsAttachToEnv(command);
 
-      const fn = require(`../lib/${entry[0]}`);
+      const fn = require(`../lib/${cmdType}`);
       const args = [cwd].concat(Array.prototype.slice.call(arguments));
 
       goldlog(cmdType, {});
