@@ -1,9 +1,5 @@
 # Changelog
 
-## 1.8.10
-
-- [fix] 增加 ts-loader 的 typescript 依赖
-
 ## 1.8.9
 
 - [fix] 依赖 axios
