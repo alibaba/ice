@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/title",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "标题组件",
   "main": "lib/index.js",
   "files": [

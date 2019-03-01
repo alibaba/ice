@@ -147,7 +147,7 @@ export default class IceMenu extends Component {
     }
   };
 
-  handleOpenChange = (openKeys: string[]) => {
+  handleOpenChange = (openKeys) => {
     this.setOpenKeys(openKeys);
 
     const { onOpenChange } = this.props;
