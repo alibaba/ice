@@ -6,7 +6,8 @@
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js"
+    "postinstall.js",
+    "build/"
   ],
   "repository": {
     "type": "git",
