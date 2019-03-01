@@ -5,7 +5,6 @@ const chalk = require('chalk');
 const hbs = require('handlebars');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const stripAnsi = require('strip-ansi');
 
 const getDemos = require('./get-demos');
 const getTempPath = require('./temp-path');
