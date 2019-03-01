@@ -6,6 +6,7 @@ const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
 const processEntry = require('./processEntry');
 const getEntryByPages = require('./getEntryByPages');
+const getResolveAlias = require('./getResolveAlias');
 const pkg = require('./packageJson');
 const checkTemplateHasReact = require('../utils/checkTemplateHasReact');
 const debug = require('../debug');
@@ -59,6 +60,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     resolve: {
       modules: [paths.appNodeModules, 'node_modules'],
       extensions: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx'],
+      alias: getResolveAlias(buildConfig),
     },
     externals:
       buildConfig.externals || hasExternalReact
