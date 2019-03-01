@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const rimraf = require('rimraf');
+const chalk = require('chalk');
 const hbs = require('handlebars');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -9,8 +11,17 @@ const getTempPath = require('./temp-path');
 const formatPathForWin = require('./format-path-for-win');
 const { parseMarkdownParts } = require('./markdown-helper');
 const logger = require('./logger');
+const formatMessages = require('webpack-format-messages');
 
 module.exports = (cwd, config, callback) => {
+  const demoDir = path.join(cwd, 'build');
+
+  console.log();
+  console.log('clean', demoDir);
+  console.log();
+
+  rimraf.sync(demoDir);
+
   const demos = getDemos(cwd);
 
   const entryJS = generateEntryJS(demos);
@@ -45,18 +56,30 @@ module.exports = (cwd, config, callback) => {
       return;
     }
 
-    const info = stats.toJson();
+    const messages = formatMessages(stats);
 
-    if (stats.hasErrors()) {
-      cb(info.errors);
-      logger.fatal(info.errors);
+    if (!messages.errors.length && !messages.warnings.length) {
+      console.log();
+      console.log(chalk.green('Demo build successfully!'));
+      console.log();
+      cb();
     }
 
-    if (stats.hasWarnings()) {
-      logger.warn(info.warnings);
+    if (messages.errors.length) {
+      console.log(chalk.red('Failed to build demo.'));
+      console.log();
+      messages.errors.forEach(e => console.log(chalk.red(e)));
+      cb(messages.errors);
+      return;
     }
-    
-    cb(null, info);
+
+    if (messages.warnings.length) {
+      console.log(chalk.yellow('Demo build with warnings.'));
+      console.log();
+      messages.warnings.forEach(w => console.log(chalk.yellow(w)));
+      cb();
+      return;
+    }
   });
 }
 
