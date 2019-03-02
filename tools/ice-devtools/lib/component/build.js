@@ -29,13 +29,11 @@ module.exports = function componentBuild(workDir, opts) {
   }
 
   // HACK：放在回调中执行，是为了避免两个任务的 log 信息混在一起
-  try {
-    buildCombinedDemo(workDir, config, (err) => {
+  buildCombinedDemo(workDir, config, (err) => {
+    if (!err) {
       compile(workDir, opts);
-    });
-  } catch(e) {
-    compile(workDir, opts);
-  }
+    }
+  });
 }
 
 function compile(workDir, opts) {
