@@ -11,12 +11,19 @@ const rimraf = require('rimraf');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 
+const pkgData = require('../package.json');
 const paths = require('./config/paths');
 const getEntries = require('./config/getEntry');
 const getWebpackConfigProd = require('./config/webpack.config.prod');
 const npmInstall = require('./helpers/npmInstall');
+const goldlog = require('./utils/goldlog');
 
 module.exports = function(options) {
+  goldlog('version', {
+    version: pkgData.version
+  });
+  goldlog('build');
+
   const { customWebpackConfig } = options || {};
 
   const cwd = process.cwd();

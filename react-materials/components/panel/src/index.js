@@ -8,3 +8,8 @@ Panel.Body = Body;
 Panel.Footer = Footer;
 
 export default Panel;
+export {
+  Header,
+  Body,
+  Footer,
+};

@@ -99,11 +99,15 @@ Options:
 
 ```
 "buildConfig": {
-  "entry": [
+  "entry": {
      "dashboard": 'src/dashboard/index.js',
      "about": 'src/about/index.js'
-  ]
+  }
 }
+
+
+然后在 public 目录新增对应的 `dashboard.html` 和 `about.html` 文件，新增的 html 内容请参考默认的 `public/index.html`。
+
 ```
 
 ## 自定义配置 - .webpackrc.js
@@ -206,7 +210,7 @@ module.exports = () => {
       },
     },
   };
-}
+};
 ```
 
 现在，替换「在导入时使用相对路径」这种方式，就像这样：
@@ -269,4 +273,3 @@ import styles from './index.module.scss';
 ## 代理配置 - proxyConfig
 
 参考 [Iceworks 插件-代理配置](#/docs/iceworks/plugins-proxy)
-

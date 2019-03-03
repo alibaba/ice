@@ -49,6 +49,7 @@ module.exports = function blockDevStart(cwd, opt) {
   const server = new WebpackDevServer(compiler, options.devServer);
   server.listen(port, '127.0.0.1', () => {
     console.log(' ');
-    console.log(chalk.green(`Starting at http://127.0.0.1:${port}`));
+    console.log(chalk.yellow(`Starting at http://127.0.0.1:${port}`));
+    console.log(' ');
   });
 };

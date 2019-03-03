@@ -37,7 +37,7 @@ const DATA = [
     name: '项目 E',
     member: '1,24,693',
     percent: 60,
-    state: '',
+    state: 'normal',
   },
   {
     id: 6,
@@ -58,7 +58,7 @@ const DATA = [
     name: '项目 H',
     member: '1,688',
     percent: 50,
-    state: '',
+    state: 'normal',
   },
 ];
 

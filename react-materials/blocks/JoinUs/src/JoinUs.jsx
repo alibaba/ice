@@ -51,7 +51,9 @@ export default class JoinUs extends Component {
           <div style={styles.head}>
             <h2 style={styles.title}>我们的团队</h2>
             <p style={styles.intro}>
-              我们是一支充满激情、志向远大、怀揣梦想的团队，<br />也是一个思维活跃、朝气蓬勃、团结互助的大家庭
+              我们是一支充满激情、志向远大、怀揣梦想的团队，
+              <br />
+              也是一个思维活跃、朝气蓬勃、团结互助的大家庭
             </p>
           </div>
           <FormBinderWrapper
@@ -69,10 +71,9 @@ export default class JoinUs extends Component {
                 style={styles.hozFormItem}
               >
                 <Col span={8}>
-                  <FormBinder required message="必填项">
+                  <FormBinder required message="必填项" name="username">
                     <Input
                       style={{ width: '100%', marginTop: '20px' }}
-                      name="username"
                       placeholder="姓名"
                     />
                   </FormBinder>
@@ -81,10 +82,14 @@ export default class JoinUs extends Component {
                   </div>
                 </Col>
                 <Col span={8}>
-                  <FormBinder type="email" required message="邮箱不合法">
+                  <FormBinder
+                    type="email"
+                    required
+                    message="邮箱不合法"
+                    name="email"
+                  >
                     <Input
                       style={{ width: '100%', marginTop: '20px' }}
-                      name="email"
                       placeholder="邮箱"
                     />
                   </FormBinder>
@@ -98,10 +103,10 @@ export default class JoinUs extends Component {
                     message="请输入合法的电话号码"
                     pattern={telPattern}
                     triggerType="onBlur"
+                    name="phone"
                   >
                     <Input
                       style={{ width: '100%', marginTop: '20px' }}
-                      name="phone"
                       placeholder="电话"
                     />
                   </FormBinder>
@@ -110,10 +115,9 @@ export default class JoinUs extends Component {
                   </div>
                 </Col>
                 <Col span={24} style={styles.verFormItem}>
-                  <FormBinder>
+                  <FormBinder name="jobtitle">
                     <Input
                       style={{ width: '100%', marginTop: '20px' }}
-                      name="jobtitle"
                       placeholder="职位"
                     />
                   </FormBinder>
@@ -123,11 +127,11 @@ export default class JoinUs extends Component {
                   className="ver-form-item"
                   style={styles.verFormItem}
                 >
-                  <FormBinder>
+                  <FormBinder name="content">
                     <Input.TextArea
                       style={{ width: '100%', marginTop: '20px' }}
-                      name="content"
-                      placeholder="一些自我介绍" />
+                      placeholder="一些自我介绍"
+                    />
                   </FormBinder>
                 </Col>
               </Row>

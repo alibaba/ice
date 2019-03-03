@@ -3,7 +3,7 @@ title: 组件升级 1.x 指南
 order: 4
 ---
 
-近期飞冰的基础组件 `@icedesign/base` 做了一次大版本的升级，伴随着这次升级，官方提供的业务组件、区块、模板都已经做了相应升级，如果业务项目需要升级请参考本篇文档。为了保证使用 0.x 版本组件的项目还能正常迭代，飞冰站点支持 0.x/1.x 版本的切换，通过页面底部的 select 进行切换即可。
+近期飞冰的基础组件 `@icedesign/base` 做了一次大版本的升级，伴随着这次升级，官方提供的业务组件、区块、模板都已经做了相应升级，如果业务项目需要升级请参考本篇文档。为了保证使用 0.x 版本组件的项目还能正常迭代，飞冰站点支持 0.x/1.x 版本的切换，通过页面右上角的按钮进行切换即可。
 
 ## 升级原因
 
@@ -22,15 +22,28 @@ order: 4
 
 适用于全新的项目，飞冰的官方物料（组件/区块/模板）已发布基于 1.x 的版本，按照原有链路直接使用即可
 
+### 老项目继续使用 0.x
+
+如果暂时没有升级 1.x 的必要，可以选择继续使用 0.x，不过要注意新增业务组件时需要根据[业务组件版本映射表](https://github.com/alibaba/ice/wiki/biz-components-version)选择正确的组件版本，比如 `@icedesign/title` 对应的 0.x 版本是 0.1.x，则安装依赖时需要携带上对应版本号：
+
+```bash
+$ npm i --save @icedesign/title@0.1.x
+```
+
 ### 老项目全量升级 1.x
 
 适用于代码量相对可控并且有升级需求的项目，下文会有详细的升级文档
 
 ### 老项目 1.x&0.x 共存
 
-适用于 0.x 的老项目，暂时没有精力升级，但是又需要使用 1.x 的部分组件。**注意这个方案可能会有一些隐藏问题，如果遇到了，请反馈给 ICE 团队。**1.x 和 0.x 混用最大的问题是组件样式可能会产生冲突，因此我们在工程上支持将 1.x 即 `@alifd/next` 组件的 className 改掉，避免样式冲突问题：
+如果是 0.x 的老项目，必须要使用某些 1.x 的组件 API，但是当下并没有精力全量升级，那么可以考虑这个方案。注意该方案存在一些不确定问题，一般情况不推荐该方案，存在问题：
 
-首先在项目的入口代码处通过 `ConfigProvider` 将所有组件 jsx 里的 prefix 改掉，prefix 请统一使用 `nextfd-`：
+- 由 react-transition-group 引起的 `AnimtateChild` 错误：与 npm 版本有关，目前无法稳定复现
+- 配置的主题难以保持 0.x&1.x 组件样式一致，可能会有所差异
+
+1.x 和 0.x 混用最大的问题是组件样式可能会产生冲突，因此我们在工程上支持将 1.x 即 `@alifd/next` 组件的 className 改掉，避免样式冲突问题：
+
+首先在项目的入口代码处通过 `ConfigProvider` 将所有组件 jsx 里的 className 改掉，prefix 请统一使用 `nextfd-`：
 
 ```js
 import { ConfigProvider } from '@alifd/next';
@@ -59,11 +72,11 @@ class App extends React.Component {
 
 然后重新 dev/build 即可。
 
-## 升级指南
+## 升级 1.x 指南
 
 ### 基础组件 0.x -> 1.x 升级
 
-- 将 package.json 里以及代码里依赖的 `@icedesign/base` 替换成 `@alifd/next`
+- 将 package.json 里以及代码里依赖的 `@icedesign/base` 替换成 `@alifd/next`，版本 `^1.13.0`
 - 按照[基础组件 API 变更](https://github.com/alibaba/ice/wiki/base-components-upgrade)逐步进行升级
 
 ### 主题包升级
@@ -72,4 +85,16 @@ class App extends React.Component {
 
 ### 业务组件升级指南
 
-按照 [业务组件版本映射表](https://github.com/alibaba/ice/wiki/biz-components-version) 对组件进行版本更换即可，除了 Layout 组件外其他业务组件均无 API 变更，只需要更改 package.json 里的版本号。
+如果是官方提供的业务组件，请按照 [业务组件版本映射表](https://github.com/alibaba/ice/wiki/biz-components-version) 对组件进行版本更换即可，除了 Layout 组件外其他业务组件均无 API 变更，只需要更改 package.json 里的版本号。如有未升级或者未在列表中的组件，请联系飞冰团队进行升级。
+
+如果是业务自身开发的业务组件，请参照 [业务组件升级依赖的基础组件到 1.x](https://github.com/alibaba/ice/wiki/upgrade-biz-components-1.x) 对业务组件进行升级发版，然后修改 package.json 中的依赖版本号。
+
+## 常见问题
+
+### 为什么 Select 的下拉箭头出现了偏移
+
+多半是因为基础组件版本混用引起的：
+
+- 如果是刻意混用，那么参考上述文档进行解决
+- 如果是 1.x(`@alifd/next`) 的项目不小心混入了 0.x(`@icedeisgn/base`) 的组件，第一保证项目没有直接依赖 `@icedeisgn/base`，第二保证依赖的业务组件没有依赖 `@icedeisgn/base`
+- 如果是 0.x(`@icedeisgn/base`) 的项目不小心混入了 1.x(`@alifd/next`) 的组件，第一保证项目没有直接依赖 `@alifd/next`，第二保证依赖的业务组件没有依赖 `@alifd/next`

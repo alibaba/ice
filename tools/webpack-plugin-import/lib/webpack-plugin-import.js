@@ -28,11 +28,12 @@ module.exports = class WebpackPluginImport {
   // 在 package.json 中通过 componentConfig 字段标记是否为 ICE 组件，如果是，则自动引入样式
   componentCheck(result) {
     if (
-      result 
-      && result.resourceResolveData
-      && result.resourceResolveData.descriptionFileData
-      && result.resourceResolveData.descriptionFileData.name === result.rawRequest
-      && result.resourceResolveData.descriptionFileData.componentConfig
+      result &&
+      result.resourceResolveData &&
+      result.resourceResolveData.descriptionFileData &&
+      result.resourceResolveData.descriptionFileData.name ===
+        result.rawRequest &&
+      result.resourceResolveData.descriptionFileData.componentConfig
     ) {
       return true;
     }
@@ -57,7 +58,7 @@ module.exports = class WebpackPluginImport {
           'after-resolve',
           (result = {}) => {
             return new Promise((resolve) => {
-              if (result.loaders && /\.jsx?$/i.test(result.resource)) {
+              if (result.loaders && /\.(ts|js)x?$/i.test(result.resource)) {
                 let needAdditionalStyle = false;
                 let stylePath = 'style.js';
 
@@ -78,8 +79,11 @@ module.exports = class WebpackPluginImport {
                 }
 
                 if (needAdditionalStyle) {
-                  const modPath = path.join(path.dirname(result.resource), stylePath);
- 
+                  const modPath = path.join(
+                    path.dirname(result.resource),
+                    stylePath
+                  );
+
                   if (fileExists(modPath)) {
                     result.loaders.push(
                       `${webpackLoaderRequire}?mod=${modPath}`

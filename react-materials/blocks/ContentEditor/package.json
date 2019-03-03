@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/content-editor-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "内容编辑器",
   "files": [
     "src/",
@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.2",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.1",
     "prop-types": "^15.5.8",

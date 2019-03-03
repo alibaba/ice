@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/creative-register-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "注册",
   "homepage": "https://unpkg.com/@icedesign/creative-register-block/build/index.html",
   "author": "思忠 <chenbinbin.cb@alibaba-inc.com>",
@@ -24,10 +24,13 @@
     "block"
   ],
   "dependencies": {
-    "@icedesign/form-binder": "^0.1.7",
+    "@icedesign/form-binder": "^1.x",
+    "@alifd/next": "^1.x"
+  },
+  "devDependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.2.0",
-    "@alifd/next": "^1.x"
+    "react-dom": "^16.2.0"
   },
   "blockConfig": {
     "name": "creative-register",

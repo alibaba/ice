@@ -1,4 +1,21 @@
-# ice-scripts Changelog
+# Changelog
+
+## 1.8.9
+
+- [fix] 依赖 axios
+
+## 1.8.8
+
+- [feat] 支持构建 ts 语法
+- [chore] 增加埋点
+
+## 1.8.8
+
+- [feat] 支持 TypeScript 构建
+
+## 1.8.7
+
+- [fix] ice-scripts 不固定ICE官方维护的包版本（ice-skin-loader&webpack-plugin-import）
 
 ## 1.8.6
 

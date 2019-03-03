@@ -6,7 +6,7 @@ const generateVarsByThemeConfig = require('./generateVarsByThemeConfig');
 
 let themeFileVars = '';
 let themeConfigVars = '';
-let importVarsCode = '';
+let projectPkgData = null;
 
 module.exports = function (source) {
   const options = loaderUtils.getOptions(this);
@@ -14,15 +14,24 @@ module.exports = function (source) {
   const { themeFile, themeConfig } = options;
   const modulePath = path.relative(this.rootContext, this.resourcePath);
 
-  // 使用 `@alifd/next` 的项目自动引入 next 变量，业务代码里无需手动 @import
-  if (!importVarsCode) {
+  if (!projectPkgData) {
     try {
-      const projectPkgData = require(path.resolve(this.rootContext, 'package.json'));
-      importVarsCode = projectPkgData.dependencies['@alifd/next'] ? `@import '~@alifd/next/lib/core/index.scss';` : ' ';
+      projectPkgData = require(path.resolve(this.rootContext, 'package.json'));
     } catch (err) {
       console.error(chalk.red('\n[Error] 读取 package.json 出错'), err);
-      importVarsCode = ' ';
+      projectPkgData = {};
     }
+  }
+
+  // 使用 `@alifd/next` 的项目，对于项目自身的 scss 文件自动引入 next 变量，业务代码里无需手动 @import
+  let importVarsCode = '';
+  if (
+    projectPkgData
+    && projectPkgData.dependencies
+    && projectPkgData.dependencies['@alifd/next']
+    && !/^node_modules\//.test(modulePath)
+  ) {
+    importVarsCode = `@import '~@alifd/next/lib/core/index.scss';`;
   }
 
   let prefixVars = '';
