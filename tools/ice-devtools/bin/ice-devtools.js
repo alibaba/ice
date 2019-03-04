@@ -6,10 +6,7 @@ const updater = require('npm-updater');
 const packageJson = require('../package.json');
 const COMMANDS = require('../config/commands');
 const optionsAttachToEnv = require('../utils/options-attach-to-env');
-<<<<<<< HEAD
-=======
 const goldlog = require('../utils/goldlog');
->>>>>>> master
 
 const cwd = process.cwd();
 
