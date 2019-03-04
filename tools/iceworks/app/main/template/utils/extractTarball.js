@@ -33,7 +33,7 @@ function extractTarball(
     const req = requestProgress(
       request({
         url: tarballURL,
-        timeout: 20000,
+        timeout: 10000,
       })
     );
 
@@ -116,7 +116,8 @@ function extractTarball(
 }
 
 // 超时自动重试
-const retryExtractTarball = autoRetry(extractTarball, 2, (err) => {
+const retryCount = 2;
+const retryExtractTarball = autoRetry(extractTarball, retryCount, (err) => {
   if (err.metadata && err.metadata.message !== 'ETIMEDOUT') {
     throw (err);
   }

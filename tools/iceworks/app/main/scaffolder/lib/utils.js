@@ -195,7 +195,7 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
     const req = requestProgress(
       request({
         url: tarballURL,
-        timeout: 20000,
+        timeout: 10000,
       })
     );
     req
@@ -246,7 +246,8 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
 }
 
 // 超时自动重试
-const retryExtractBlock = autoRetry(extractBlock, 2, (err) => {
+const retryCount = 2;
+const retryExtractBlock = autoRetry(extractBlock, retryCount, (err) => {
   if (!err.code || (err.code !== 'ETIMEDOUT' && err.code !== 'ESOCKETTIMEDOUT')) {
     throw (err);
   }

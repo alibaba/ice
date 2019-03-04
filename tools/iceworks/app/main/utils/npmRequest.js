@@ -21,7 +21,7 @@ function npmRequest({ name, version = 'latest', registry }) {
     request({
       url: pkgUrl,
       json: true,
-      timeout: 10000,
+      timeout: 5000,
     }, (err, response, json) => {
       if (err || !json) {
         reject(err || new Error(JSON.stringify(response.body)));
@@ -44,7 +44,8 @@ function npmRequest({ name, version = 'latest', registry }) {
 }
 
 // 超时自动重试
-const retryNpmRequest = autoRetry(npmRequest, 2, (err) => {
+const retryCount = 2;
+const retryNpmRequest = autoRetry(npmRequest, retryCount, (err) => {
   if (!err.code || (err.code !== 'ETIMEDOUT' && err.code !== 'ESOCKETTIMEDOUT')) {
     throw (err);
   }
