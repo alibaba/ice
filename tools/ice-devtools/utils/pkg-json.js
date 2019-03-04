@@ -45,7 +45,7 @@ function writeJSON(obj, jsonPath) {
   if (!fs.existsSync(jsonPath)) {
     logger.fatal('writeJSON:', message.invalid);
   }
-  const jsonString = JSON.stringify(obj, null, 4);
+  const jsonString = JSON.stringify(obj, null, 2);
   fs.writeFileSync(jsonPath, jsonString, 'utf-8');
 }
 
