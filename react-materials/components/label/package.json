@@ -39,5 +39,6 @@
   "componentConfig": {
     "name": "label",
     "title": "创建标签组件用来突出所要显示的信息"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/label@latest/build/index.html"
 }

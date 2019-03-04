@@ -40,5 +40,6 @@
   "componentConfig": {
     "name": "panel",
     "title": "面板组件"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/panel@latest/build/index.html"
 }

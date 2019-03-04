@@ -42,5 +42,6 @@
   "componentConfig": {
     "name": "balloon-confirm",
     "title": "ICE 气泡确认框"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/balloon-confirm@latest/build/index.html"
 }

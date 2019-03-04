@@ -44,5 +44,6 @@
   "componentConfig": {
     "name": "form-binder",
     "title": "ICE 表单数据获取方案"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/form-binder@latest/build/index.html"
 }

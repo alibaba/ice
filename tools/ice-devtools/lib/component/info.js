@@ -3,6 +3,11 @@ const innerNet = require('../../utils/inner-net');
 
 module.exports = function info(cwd) {
   const pkg = pkgJSON.getPkgJSON(cwd);
+  
+  if (pkg.homepage) {
+    return;
+  }
+
   const pkgName = pkg.name;
   const forInnerNet = innerNet.isTnpm(pkgName);
 

@@ -40,5 +40,6 @@
   "componentConfig": {
     "name": "ellipsis",
     "title": "多行文字控制展示组件"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/ellipsis@latest/build/index.html"
 }

@@ -40,5 +40,6 @@
   "componentConfig": {
     "name": "notification",
     "title": "全局展示通知提醒信息"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/notification@latest/build/index.html"
 }

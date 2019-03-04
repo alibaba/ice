@@ -43,5 +43,6 @@
   "componentConfig": {
     "name": "styled-menu",
     "title": "导航组件体验版"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/styled-menu@latest/build/index.html"
 }
