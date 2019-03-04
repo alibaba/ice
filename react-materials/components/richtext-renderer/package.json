@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/richtext-renderer",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "富文本组件 HTML 渲染器",
   "main": "lib/index.js",
   "files": [
@@ -38,5 +38,6 @@
   "componentConfig": {
     "name": "richtext-renderer",
     "title": "富文本组件 HTML 渲染器"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/richtext-renderer@latest/build/index.html"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/title",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "标题组件",
   "main": "lib/index.js",
   "files": [
@@ -43,5 +43,6 @@
   "componentConfig": {
     "name": "title",
     "title": "标题组件"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/title@latest/build/index.html"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/img",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ICE 图片组件。",
   "main": "lib/index.js",
   "files": [
@@ -44,5 +44,6 @@
   "componentConfig": {
     "name": "img",
     "title": "ICE 图片组件"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/img@latest/build/index.html"
 }

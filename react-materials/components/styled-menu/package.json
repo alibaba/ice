@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/styled-menu",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "ICE 导航组件体验版",
   "main": "lib/index.js",
   "files": [
@@ -43,5 +43,6 @@
   "componentConfig": {
     "name": "styled-menu",
     "title": "导航组件体验版"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/styled-menu@latest/build/index.html"
 }
