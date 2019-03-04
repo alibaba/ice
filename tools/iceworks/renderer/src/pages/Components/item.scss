@@ -8,7 +8,7 @@
   overflow: hidden;
   position: relative;
   width: 174px;
-  height: 100px;
+  height: 110px;
   padding: 0 5px;
   // cursor: pointer;
   transition: all 0.1s ease-in;
@@ -27,7 +27,8 @@
     font-size: 14px;
     color: #333333;
     margin: 0;
-    line-height: unset;
+    line-height: 17px;
+    height: 34px;
   }
   .component-card-name {
     font-size: 12px;

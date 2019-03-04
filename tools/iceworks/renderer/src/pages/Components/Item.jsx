@@ -49,17 +49,12 @@ class Item extends Component {
     const { data = {}, material, projects } = this.props;
     const { iceVersion } = projects.currentProject;
     const isAlibaba = services.settings.get('isAlibaba');
-    let url = 'https://github.com/alibaba/ice', preUrl;
-    if (data.source) {
-      const {npm, version} = data.source;
-      if (isAlibaba || data.source.npm.includes('@ali/')) {
-        preUrl = "https://unpkg.alibaba-inc.com/";
-      } else {
-        preUrl = "https://unpkg.com/";
-      }
-      url = `${preUrl}${npm}@${version}/build/index.html`;
+    let url = 'https://github.com/alibaba/ice';
+    let preUrl;
+    if (data.homepage) {
+      url = homepage;
     } else  {
-      // 没有source字段但是属于飞冰物料源，则判断是 飞冰基础组件
+      // 没有homepage字段但是属于飞冰物料源，则判断是 飞冰基础组件
       if(isIceMaterial(material.source)) {
         preUrl = iceVersion === '0.x' ? 
           "https://alibaba.github.io/ice/0.x/component/" :
@@ -86,7 +81,7 @@ class Item extends Component {
                 placement={'top'}
                 overlay={'已下载'}
               >
-                <Icon type="yixiazai" />
+                <Icon type="yixiazai" style={{color: 'rgb(48, 128, 254)'}} />
               </Tooltip>
             </div>
           )
