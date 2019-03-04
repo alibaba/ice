@@ -2,9 +2,9 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const colors = require('chalk');
 const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 const fs = require('fs');
+const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
-const path = require('path');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
@@ -104,21 +104,20 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
       'override.scss'
     );
   }
-
   if (iconScssPath && fs.existsSync(iconScssPath)) {
     const appendStylePluginOption = {
       type: 'sass',
       srcFile: iconScssPath,
       variableFile: variableFilePath,
       distMatch: (chunkName, compilerEntry, compilationPreparedChunks) => {
-        // TODO
         const entriesAndPreparedChunkNames = normalizeEntry(
           compilerEntry,
           compilationPreparedChunks
         );
         // 仅对 css 的 chunk 做 处理
         if (entriesAndPreparedChunkNames.length && /\.css$/.test(chunkName)) {
-          const assetsFromEntry = chunkName.replace(/\.\w+$/, '');
+          // css/index.css -> index
+          const assetsFromEntry = path.basename(chunkName, path.extname(chunkName));
           if (entriesAndPreparedChunkNames.indexOf(assetsFromEntry) !== -1) {
             return true;
           }
