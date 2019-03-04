@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/data-binder",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "ICE 前后端数据绑定、交互方案",
   "main": "lib/index.js",
   "files": [

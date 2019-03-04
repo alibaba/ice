@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ellipsis",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "多行文字控制展示组件",
   "main": "lib/index.js",
   "files": [
