@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/creator-landingpage-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "该模板适用于平台类登陆引导页，默认内置一个页面和五个不同风格的展示区块",
   "homepage": "https://unpkg.com/@icedesign/creator-landingpage-scaffold@latest/build/index.html",
   "files": [
@@ -57,6 +57,10 @@
     "categories": [
       "官网模板"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1WcWtqMmTBuNjy1XbXXaMrVXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1WcWtqMmTBuNjy1XbXXaMrVXa-2840-1596.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1WcWtqMmTBuNjy1XbXXaMrVXa-2840-1596.png",
+      "https://img.alicdn.com/tfs/TB1Y5ygJAvoK1RjSZFDXXXY3pXa-2860-1580.png"
+    ]
   }
 }
