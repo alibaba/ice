@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.18
+ - [fix] homepage url 随 npm 版本更新
+
 ## 2.1.17
  - [feat] 增加组件 homepage 字段
 
