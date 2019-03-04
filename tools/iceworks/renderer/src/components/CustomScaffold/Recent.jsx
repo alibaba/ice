@@ -45,15 +45,14 @@ class Recent extends Component {
             <div className="scaffold-flipcard">
               <div className="scaffold-flipcard-body">
                 <div style={{ display: 'flex', padding: '4px 0' }}>
-                  主题：{layoutConfig.themeConfig.theme}
-                </div>
-                <div style={{ display: 'flex', padding: '4px 0' }}>
-                  主色：<ColorBlock
+                  主色：
+                  <ColorBlock
                     backgroundColor={layoutConfig.themeConfig.primaryColor}
                   />
                 </div>
                 <div style={{ display: 'flex', padding: '4px 0' }}>
-                  辅色：<ColorBlock
+                  辅色：
+                  <ColorBlock
                     backgroundColor={layoutConfig.themeConfig.secondaryColor}
                   />
                 </div>
@@ -68,14 +67,16 @@ class Recent extends Component {
                   type="primary"
                 >
                   使用该模板
-                </Button>&nbsp;&nbsp;
+                </Button>
+                &nbsp;&nbsp;
                 <Button
                   type="secondary"
                   size="small"
                   onClick={this.handleEdit.bind(this, index)}
                 >
                   编辑
-                </Button>&nbsp;&nbsp;
+                </Button>
+                &nbsp;&nbsp;
                 <Button
                   size="small"
                   onClick={this.handleRemove.bind(this, index)}
