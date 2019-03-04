@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/scroll-screen-homepage-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "全屏展示的首页模板，支持锚点跳转定位和内置多种动画效果",
   "homepage": "https://unpkg.com/@icedesign/scroll-screen-homepage-scaffold@latest/build/index.html",
   "keywords": [
@@ -70,6 +70,11 @@
     "categories": [
       "官网模板"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1A0bMtRsmBKNjSZFsXXaXSVXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1A0bMtRsmBKNjSZFsXXaXSVXa-2840-1596.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1A0bMtRsmBKNjSZFsXXaXSVXa-2840-1596.png",
+      "https://img.alicdn.com/tfs/TB1O05aJpzqK1RjSZFvXXcB7VXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1DxX7JCzqK1RjSZFLXXcn2XXa-2860-1580.png"
+    ]
   }
 }

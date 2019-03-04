@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/create-activity-form-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "创建活动的表单",
   "files": [
     "src/",
@@ -22,7 +22,6 @@
   ],
   "dependencies": {
     "@icedesign/container": "^1.x",
-    "@icedesign/form-binder": "^0.1.3",
     "prop-types": "^15.5.8",
     "@alifd/next": "^1.x"
   },

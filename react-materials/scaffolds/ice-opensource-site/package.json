@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/opensource-site-scaffold",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "该模板基于 docsite，适用于开源站点类的场景，支持 markdown 文档和中英文国际化等功能。",
   "homepage": "https://alibaba.github.io/ice/scaffold-preview/ice-opensource-site/index.html",
   "devDependencies": {
@@ -61,7 +61,11 @@
     "categories": [
       "社区模板"
     ],
-    "screenshot": "https://img.alicdn.com/tfs/TB1d1QqXwHqK1RjSZFEXXcGMXXa-2840-1596.png"
+    "screenshot": "https://img.alicdn.com/tfs/TB1Smx6JAvoK1RjSZFwXXciCFXa-2860-1580.png",
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1Smx6JAvoK1RjSZFwXXciCFXa-2860-1580.png",
+      "https://img.alicdn.com/tfs/TB1.3hYJCzqK1RjSZFjXXblCFXa-2860-1580.png"
+    ]
   },
   "engines": {
     "node": ">=8.0.0"

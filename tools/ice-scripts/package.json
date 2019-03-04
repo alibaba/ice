@@ -1,6 +1,6 @@
 {
   "name": "ice-scripts",
-  "version": "1.8.7",
+  "version": "1.8.9",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
@@ -50,6 +50,8 @@
     "@babel/runtime": "^7.1.2",
     "address": "1.0.3",
     "autoprefixer": "9.1.5",
+    "awesome-typescript-loader": "5.2.1",
+    "axios": "^0.18.0",
     "babel-loader": "8.0.4",
     "babel-plugin-import": "1.9.1",
     "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",

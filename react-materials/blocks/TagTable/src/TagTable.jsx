@@ -99,8 +99,8 @@ export default class TagTable extends Component {
                   漏洞搜索:{' '}
                 </Col>
                 <Col span="10">
-                  <FormBinder>
-                    <Input name="name" placeholder="请输入漏洞名称" />
+                  <FormBinder name="name">
+                    <Input placeholder="请输入漏洞名称" />
                   </FormBinder>
                 </Col>
               </Row>
@@ -109,8 +109,8 @@ export default class TagTable extends Component {
                   处理状态:{' '}
                 </Col>
                 <Col span="10">
-                  <FormBinder>
-                    <Select name="isHandle" placeholder="请选择">
+                  <FormBinder name="isHandle">
+                    <Select placeholder="请选择">
                       <Select.Option value="">任意</Select.Option>
                       <Select.Option value="YES">已经处理</Select.Option>
                       <Select.Option value="NO">未处理</Select.Option>
@@ -123,15 +123,15 @@ export default class TagTable extends Component {
                   漏洞等级:{' '}
                 </Col>
                 <Col span="10">
-                  <FormBinder>
+                  <FormBinder name="levels">
                     <Select
-                      name="levels"
                       filterLocal={false}
                       fillProps="label"
                       placeholder="请选择"
                       mode="multiple"
                       showSearch
-                      dataSource={['严重', '高危', '中危', '低危']} />
+                      dataSource={['严重', '高危', '中危', '低危']}
+                    />
                   </FormBinder>
                 </Col>
               </Row>

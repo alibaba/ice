@@ -1,4 +1,20 @@
-# ice-scripts Changelog
+# Changelog
+
+## 2.1.15
+ - [feat] 增加组件 demo 构建逻辑
+
+## 2.1.14
+ - [feat] 增加埋点
+ - [feat] 更新提醒
+ - [feat] 添加组件入库托管
+
+## 2.1.13
+
+- [fix] 区块 external React 后预览错误
+
+## 2.1.12
+
+- [fix] 修改 npm registry 为官方默认值
 
 ## 2.1.10
 
