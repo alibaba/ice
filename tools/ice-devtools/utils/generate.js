@@ -1,5 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 const chalk = require('chalk');
+const fs = require('fs');
 const Metalsmith = require('metalsmith');
 const Handlebars = require('handlebars');
 const uppercamelcase = require('uppercamelcase');
@@ -15,6 +16,8 @@ const transform = require('./transform');
 const logger = require('./logger');
 const debug = require('debug')('ice:generate');
 const innerNet = require('../utils/inner-net');
+
+const TEMPLATE_PATH = '.template';
 
 // register handlebars helper
 Handlebars.registerHelper('if_eq', (a, b, opts) => {
@@ -37,8 +40,10 @@ Handlebars.registerHelper('unless_eq', (a, b, opts) => {
 module.exports = function generate(name, npmName, src, dest, done) {
   const opts = getOptions(name, src);
   debug('%j', { name, src, dest });
+
   const metalsmith = Metalsmith(path.join(src, 'template'));
   metalsmith.frontmatter(false);
+
   const data = Object.assign(metalsmith.metadata(), {
     name: kebabCase(npmName).replace(/^-/, ''),
     npmName: kebabCase(npmName).replace(/^-/, ''),
@@ -49,6 +54,7 @@ module.exports = function generate(name, npmName, src, dest, done) {
     registry: innerNet.getRegistry(npmName)
   });
   debug('%j', data);
+  
   opts.helpers &&
     Object.keys(opts.helpers).map((key) => {
       Handlebars.registerHelper(key, opts.helpers[key]);
@@ -64,8 +70,8 @@ module.exports = function generate(name, npmName, src, dest, done) {
     .use(askQuestions(opts.prompts))
     .use(filterFiles(opts.filters))
     .use(renderTemplateFiles(opts.skipInterpolation))
-    .use(transformFile(opts));
-  // .ignore(['*.jsx', '*.js']);
+    .use(transformFile(opts))
+    .ignore([TEMPLATE_PATH]);
 
   if (typeof opts.metalsmith === 'function') {
     opts.metalsmith(metalsmith, opts, helpers);
@@ -88,6 +94,17 @@ module.exports = function generate(name, npmName, src, dest, done) {
         }
       });
     });
+
+  // 如果模板内部有 .template 目录, 不走 render 逻辑，直接拷贝
+  const template = path.join(src, 'template', TEMPLATE_PATH);
+  if (fs.existsSync(template)) {
+    Metalsmith(template)
+      .source('.')
+      .destination(path.join(dest, TEMPLATE_PATH))
+      .build(function(err){
+        if (err) throw err;
+      });
+  }
 
   return data;
 };
