@@ -88,6 +88,7 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
   let iconScssPath;
   let skinOverridePath;
   let variableFilePath;
+  let themeNextVersion;
 
   if (themePackage) {
     variableFilePath = path.resolve(
@@ -103,12 +104,16 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
       themePackage,
       'override.scss'
     );
+
+    themeNextVersion = (/^@alif(e|d)\/theme-/.test(themePackage) || themePackage === '@icedesign/theme') ? '1.x' : '0.x';
   }
   if (iconScssPath && fs.existsSync(iconScssPath)) {
     const appendStylePluginOption = {
       type: 'sass',
       srcFile: iconScssPath,
       variableFile: variableFilePath,
+      compileThemeIcon: true,
+      themeNextVersion,
       distMatch: (chunkName, compilerEntry, compilationPreparedChunks) => {
         const entriesAndPreparedChunkNames = normalizeEntry(
           compilerEntry,
@@ -142,6 +147,8 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
         // type: 'sass', // 不需要指定 type，与 distMatch 互斥
         srcFile: skinOverridePath,
         distMatch: /\.css/,
+        themeNextVersion,
+        compileThemeIcon: false
       })
     );
   }
