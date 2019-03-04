@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/list",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "列表组件",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "build/"
   ],
   "repository": {
     "type": "git",

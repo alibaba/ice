@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/label",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "创建标签组件用来突出所要显示的信息",
   "main": "lib/index.js",
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js"
+    "postinstall.js",
+    "build/"
   ],
   "scripts": {
     "start": "ice-devtools start",

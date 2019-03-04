@@ -3,6 +3,8 @@ const marked = require('marked');
 const prismjs = require('prismjs');
 require('prismjs/components/prism-jsx');
 require('prismjs/components/prism-bash');
+require('prismjs/components/prism-json');
+
 const yaml = require('js-yaml');
 
 const compileES5 = require('./compile-es5');
@@ -21,7 +23,7 @@ var styleTemplate = `
 renderer.code = function (code, lang = 'jsx') {
   var html = prismjs.highlight(code, prismjs.languages[lang]);
 
-  if (lang === 'css' || lang === 'style' || lang === 'bash') {
+  if (lang === 'css' || lang === 'style' || lang === 'bash' || lang === 'json' || lang === 'jsx' || lang === 'html') {
     return util.format(styleTemplate, lang, lang, html, code);
   }
 

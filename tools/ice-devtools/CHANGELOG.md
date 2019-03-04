@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.16
+ - [feat] 增加 markdown 中代码片段支持类型
+
 ## 2.1.15
  - [feat] 增加组件 demo 构建逻辑
 

@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/notification",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "全局展示通知提醒信息。",
   "main": "lib/index.js",
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js"
+    "postinstall.js",
+    "build/"
   ],
   "repository": {
     "type": "git",
