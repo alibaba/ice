@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/img",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ICE 图片组件。",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "build/"
   ],
   "scripts": {
     "start": "ice-devtools start",

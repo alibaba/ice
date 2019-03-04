@@ -14,7 +14,7 @@ import { Pagination, Table } from '@alifd/next';
 
 @DataBinder({
   account: {
-    url: 'https://ice.alicdn.com/assets/mock/53141.json',
+    url: 'https://www.easy-mock.com/mock/5c7c9334869f506acc184ff7/ice/all',
     // ajax 参数参见：https://github.com/axios/axios
     defaultBindingData: {
       pagination: {
