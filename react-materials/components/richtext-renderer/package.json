@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -31,6 +32,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
   },
   "componentConfig": {
     "name": "richtext-renderer",

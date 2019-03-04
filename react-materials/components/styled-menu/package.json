@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/styled-menu",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "ICE 导航组件体验版",
   "main": "lib/index.js",
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js"
+    "postinstall.js",
+    "build/"
   ],
   "scripts": {
     "start": "ice-devtools start",

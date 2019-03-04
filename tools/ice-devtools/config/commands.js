@@ -31,6 +31,10 @@ module.exports = {
         name: '--analyzer',
         desc: 'bunlde analyzer',
       },
+      {
+        name: '--skip-demo',
+        desc: 'skip build demo',
+      },
     ],
   },
   screenshot: {

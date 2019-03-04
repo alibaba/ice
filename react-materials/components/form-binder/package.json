@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "build/"
   ],
   "scripts": {
     "start": "ice-devtools start",

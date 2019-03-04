@@ -240,7 +240,7 @@ class ListView extends Component {
 
 调用方法：
 
-```js
+```jsx
 @DataBinder({
   模块key: {
     url: 'xxx.json',
