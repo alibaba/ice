@@ -18,7 +18,7 @@ import { Button } from '@alifd/next';
 
 @DataBinder({
   fooData: {
-    url: 'https://ice.alicdn.com/assets/mock/53146.json',
+    url: 'https://www.easy-mock.com/mock/5c7c9334869f506acc184ff7/ice/formatter',
     // ajax 参数参见：https://github.com/axios/axios
     responseFormatter: (responseHandler, res, originResponse) => {
       // 拿到接口返回的 res 数据，做一些格式转换处理，使其符合 DataBinder 的要求

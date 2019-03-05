@@ -21,14 +21,14 @@ import {
 
 @DataBinder({
   foo1Data: {
-    url: 'https://ice.alicdn.com/assets/mock/53138.json',
+    url: 'https://www.easy-mock.com/mock/5c7c9334869f506acc184ff7/ice/foo1',
     // ajax 参数参见：https://github.com/axios/axios
     defaultBindingData: {
       foo: 'bar'
     }
   },
   foo2Data: {
-    url: 'http://dip.alibaba-inc.com/api/v2/services/schema/mock/53138',
+    url: 'https://www.easy-mock.com/mock/5c7c9334869f506acc184ff7/ice/foo2',
     // ajax 参数参见：https://github.com/axios/axios
     defaultBindingData: {
       foo: 'bar'

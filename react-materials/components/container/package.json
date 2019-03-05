@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/container",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
   "main": "lib/index.js",
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js"
+    "postinstall.js",
+    "build/"
   ],
   "scripts": {
     "start": "ice-devtools start",
@@ -37,5 +38,6 @@
   "componentConfig": {
     "name": "container",
     "title": "基础容器"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/container@latest/build/index.html"
 }

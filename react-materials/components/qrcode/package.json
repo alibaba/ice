@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/qrcode",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "飞冰 二维码组件",
   "main": "lib/index.js",
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js"
+    "postinstall.js",
+    "build/"
   ],
   "scripts": {
     "start": "ice-devtools start",
@@ -41,5 +42,6 @@
   "componentConfig": {
     "name": "qrcode",
     "title": "二维码组件"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/qrcode@latest/build/index.html"
 }
