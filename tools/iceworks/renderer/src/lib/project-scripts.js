@@ -10,7 +10,7 @@ import isAlibaba from './is-alibaba';
 
 const detectPort = remote.require('detect-port');
 
-const { log, folder, interaction, sessions } = services;
+const { log, folder, interaction, sessions, alilog } = services;
 
 // todo 后续抽出到独立套件保持独立更新
 // todo vue cli 后续需要升级
@@ -57,8 +57,16 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
     installConfig,
     (code) => {
       if (code !== 0) {
-        log.error('project-install-failed');
-        log.report('app', { action: 'project-install-failed' });
+        log.error('install-project-dependencies-error');
+        const error = new Error(`安装依赖失败`);
+        alilog.report({
+          type: 'install-project-dependencies-error',
+          msg: error.message,
+          stack: error.stack,
+          data: {
+            env: JSON.stringify(env)
+          }
+        }, 'error');
         if (reInstall) {
           log.info('执行 npm cache clean --force 重试');
           sessions.manager.new(npmCacheCLeanConfig, () => {
@@ -106,6 +114,16 @@ const doDependenciesInstall = (dependenciesInstallConfig, dependencies, callback
           doDependenciesInstall(dependenciesInstallConfig, dependencies, callback);
         } else {
           log.error('安装依赖失败', cwd, dependencies);
+          const error = new Error(`安装依赖失败`);
+          alilog.report({
+            type: 'install-dependencies-error',
+            msg: error.message,
+            stack: error.stack,
+            data: {
+              dependencies: dependencies.join('; '),
+              env: JSON.stringify(env)
+            }
+          }, 'error');
           callback(1, dependencies);
         }
       } else {
