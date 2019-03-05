@@ -21,6 +21,14 @@
         border-radius: $corner-2;
       }
     }
+    .collapse-btn {
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+      color: white;
+    }
 
     .menu-btn {
       position: fixed;

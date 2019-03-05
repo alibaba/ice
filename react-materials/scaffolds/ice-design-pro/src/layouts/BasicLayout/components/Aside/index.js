@@ -3,7 +3,7 @@ import cx from 'classnames';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { Nav } from '@alifd/next';
+import { Nav, Icon } from '@alifd/next';
 import { FormattedMessage } from 'react-intl';
 
 import Logo from '../Logo';
@@ -154,7 +154,6 @@ export default class Aside extends Component {
   };
 
   render() {
-    const { openDrawer } = this.state;
     const {
       location: { pathname },
       isMobile,
@@ -162,25 +161,33 @@ export default class Aside extends Component {
 
     return (
       <div
-        className={cx('ice-design-layout-aside', { 'open-drawer': openDrawer })}
+        className={cx('ice-design-layout-aside', { 'open-drawer': this.state.openDrawer })}
       >
         {isMobile && <Logo />}
 
-        {isMobile && !openDrawer && (
+        {isMobile && !this.state.openDrawer && (
           <a className="menu-btn" onClick={this.toggleMenu}>
             <FoundationSymbol type="menu" size="small" />
           </a>
         )}
 
+        {!isMobile && (
+          <a className="collapse-btn" onClick={this.toggleMenu}>
+            <Icon
+              type={this.state.openDrawer ? 'arrow-right' : 'arrow-left'}
+              size="small"
+            />
+          </a>
+        )}
+
         <Nav
-          style={{ width: 200 }}
+          style={{ width: this.state.openDrawer ? 60 : 200 }}
           direction="ver"
           activeDirection={null}
           selectedKeys={[pathname]}
           openKeys={this.state.openKeys}
           defaultSelectedKeys={[pathname]}
           onOpen={this.onOpenChange}
-          onSelect={this.onSelect}
         >
           {this.getNavMenuItems(asideMenuConfig)}
         </Nav>
