@@ -11,7 +11,7 @@ import { getDefaultProjectName } from '../lib/project-utils';
 import services from '../services';
 
 const IceworksScaffolder = remote.require('@icedesign/iceworks-scaffolder');
-const { paths } = services;
+const { paths, scaffolder } = services;
 const { getClientPath,getClientSrcPath, NODE_FRAMEWORKS, getServerPath } = paths;
 
 const homeDir = os.homedir();

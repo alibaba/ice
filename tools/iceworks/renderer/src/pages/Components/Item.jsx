@@ -52,7 +52,7 @@ class Item extends Component {
     let url = 'https://github.com/alibaba/ice';
     let preUrl;
     if (data.homepage) {
-      url = homepage;
+      url = data.homepage;
     } else  {
       // 没有homepage字段但是属于飞冰物料源，则判断是 飞冰基础组件
       if(isIceMaterial(material.source)) {
