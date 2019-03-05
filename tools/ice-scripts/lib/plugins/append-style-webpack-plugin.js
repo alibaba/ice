@@ -14,7 +14,7 @@ function convertCharStr2CSS(ch) {
   return '\\' + code;
 }
 
-function compileSass(srcPath, variableFile) {
+function compileSass(srcPath, variableFile, coreVarCode) {
   srcPath = String(srcPath);
   let scssContent = '';
   const basePath = path.resolve(srcPath, '..');
@@ -27,7 +27,7 @@ function compileSass(srcPath, variableFile) {
     try {
       const variableFileContent = fs.readFileSync(variableFile, 'utf-8');
       if (variableFileContent) {
-        scssContent = variableFileContent + scssContent;
+        scssContent = variableFileContent + coreVarCode + scssContent;
       }
     } catch (err) {
       // do nothing
@@ -73,6 +73,8 @@ module.exports = class AppendStylePlugin {
     this.type = options.type || 'sass'; // 源文件类型
     this.srcFile = options.srcFile; // 源文件
     this.variableFile = options.variableFile; // scss 变量文件
+    this.compileThemeIcon = options.compileThemeIcon; // 是否为主题的 icons.scss
+    this.themeNextVersion = options.themeNextVersion; // 主题包对应基础组件版本
     this.distMatch =
       options.distMatch instanceof RegExp // chunkName 去匹配的逻辑，正则或者函数
         ? (chunkName) => options.distMatch.test(chunkName)
@@ -86,6 +88,17 @@ module.exports = class AppendStylePlugin {
     const compilerEntry = compiler.options.entry;
     if (!srcFile || !distMatch) {
       return;
+    }
+
+    this.projectPath = compiler.context;
+    if (!this.pkgData) {
+      try {
+        const pkgPath = path.resolve(compiler.context, 'package.json');
+        this.pkgData = JSON.parse(fs.readFileSync(pkgPath));
+      } catch (err) {
+        console.error('append-style: 获取 package.json 出错', err);
+        this.pkgData = {};
+      }
     }
 
     compiler.hooks.compilation.tap('compilation', (compilation) => {
@@ -127,9 +140,19 @@ module.exports = class AppendStylePlugin {
     }
   }
 
-  compileToCSS(srcFile, variableFile) {
+  compileToCSS(srcFile, themeVariableFile) {
     if (this.type === 'sass') {
-      return compileSass(srcFile, variableFile);
+      const themeConfig = this.pkgData.themeConfig || {};
+      let coreVarCode = '';
+
+      if (this.compileThemeIcon && this.themeNextVersion === '1.x') {
+        // 1.x 主题包的 icons.scss 里使用了 css-prefix 变量，因此这里需要手动声明下
+        // 即便不手动声明，这里也需要支持自定义 css-prefix 能力
+        const cssPrefix = themeConfig['css-prefix'] || 'next-';
+        coreVarCode = `$css-prefix: '${cssPrefix}';`;
+      }
+
+      return compileSass(srcFile, themeVariableFile, coreVarCode);
     }
     let css = '';
     try {
