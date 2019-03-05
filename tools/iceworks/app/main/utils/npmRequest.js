@@ -2,6 +2,7 @@ const request = require('request');
 const semver = require('semver');
 const settings = require('../services/settings');
 const logger = require('../logger');
+const alilog = require('../alilog');
 const autoRetry = require('./autoRetry');
 
 /**
@@ -24,19 +25,29 @@ function npmRequest({ name, version = 'latest', registry }) {
       timeout: 5000,
     }, (err, response, json) => {
       if (err || !json) {
+        alilog.report({
+          type: 'get-tarball-info-error	',
+          msg: err.message,
+          stack: err.stack,
+          data: {
+            url: pkgUrl
+          }
+        }, 'error');
         reject(err || new Error(JSON.stringify(response.body)));
       } else {
         if (!semver.valid(version)) {
           version = json['dist-tags'][version];
         }
-        if (semver.valid(version)) {
-          if (json && json.versions && json.versions[version]) {
-            resolve(json.versions[version]);
-          } else {
-            reject(new Error(`${name}@${version} 尚未发布在 ${registryUrl}`));
-          }
+        if (semver.valid(version) && json && json.versions && json.versions[version]) {
+          resolve(json.versions[version]);
         } else {
-          reject(new Error(`${name}@${version} 尚未发布在 ${registryUrl}`));
+          const error = new Error(`${name}@${version} 尚未发布在 ${registryUrl}`);
+          alilog.report({
+            type: 'get-tarball-info-error	',
+            msg: error.message,
+            stack: error.message,
+          });
+          reject(error);
         }
       }
     });

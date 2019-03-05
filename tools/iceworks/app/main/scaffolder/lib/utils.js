@@ -16,6 +16,7 @@ const DetailError = require('../../error-handler');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
+const alilog = require('../../alilog');
 const autoRetry = require('../../utils/autoRetry');
 
 /**
@@ -203,6 +204,14 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
         progressFunc(state);
       })
       .on('error', (err) => {
+        alilog.report({
+          type: 'download-tarball-error',
+          msg: err.message,
+          stack: err.stack,
+          data: {
+            url: tarballURL
+          }
+        }, 'error');
         reject(err);
       })
       .pipe(zlib.Unzip()) // eslint-disable-line
