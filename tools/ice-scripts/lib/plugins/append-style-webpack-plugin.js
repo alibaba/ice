@@ -93,7 +93,8 @@ module.exports = class AppendStylePlugin {
     this.projectPath = compiler.context;
     if (!this.pkgData) {
       try {
-        this.pkgData = require(path.resolve(compiler.context, 'package.json'));
+        const pkgPath = path.resolve(compiler.context, 'package.json');
+        this.pkgData = JSON.parse(fs.readFileSync(pkgPath));
       } catch (err) {
         console.error('append-style: 获取 package.json 出错', err);
         this.pkgData = {};
@@ -139,7 +140,7 @@ module.exports = class AppendStylePlugin {
     }
   }
 
-  compileToCSS(srcFile, themeVariableFile, isIconScss) {
+  compileToCSS(srcFile, themeVariableFile) {
     if (this.type === 'sass') {
       const themeConfig = this.pkgData.themeConfig || {};
       let coreVarCode = '';
@@ -148,7 +149,7 @@ module.exports = class AppendStylePlugin {
         // 1.x 主题包的 icons.scss 里使用了 css-prefix 变量，因此这里需要手动声明下
         // 即便不手动声明，这里也需要支持自定义 css-prefix 能力
         const cssPrefix = themeConfig['css-prefix'] || 'next-';
-        coreVarCode = `$css-prefix: '${themeConfig['css-prefix']}';`;
+        coreVarCode = `$css-prefix: '${cssPrefix}';`;
       }
 
       return compileSass(srcFile, themeVariableFile, coreVarCode);
