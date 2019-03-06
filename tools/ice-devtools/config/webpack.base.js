@@ -25,15 +25,19 @@ const URL_LOADER_LIMIT = 8192;
 
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
+
   config
     .mode(process.env.NODE_ENV === 'production' ? 'production' : 'development');
+
+  const pkgJSON = getPkgJSON(cwd);
+  const { buildConfig = {}, themeConfig = {} } = pkgJSON;
 
   config.module
     .rule('babel')
     .test(/\.jsx?$/)
     .use('babel')
     .loader(BABEL_LOADER)
-    .options(getBabelConfig())
+    .options(getBabelConfig(buildConfig))
     .end();
 
   config.module
@@ -46,8 +50,6 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .loader(CSS_LOADER)
     .end();
 
-  const pkgJSON = getPkgJSON(cwd);
-  const { buildConfig = {}, themeConfig = {} } = pkgJSON;
   const theme = buildConfig.theme || buildConfig.themePackage;
 
   if (theme) {
@@ -239,8 +241,8 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     }])
     .end()
     .minimizer('css')
-    .use(OptimizeCSSAssetsPlugin, [{ 
-      cssProcessorOptions: { safe: true } 
+    .use(OptimizeCSSAssetsPlugin, [{
+      cssProcessorOptions: { safe: true }
     }]);
 
   return config;
