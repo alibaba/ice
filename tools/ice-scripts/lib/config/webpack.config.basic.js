@@ -58,7 +58,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
       buildConfig.output || {}
     ),
     resolve: {
-      modules: [paths.appNodeModules, 'node_modules'],
+      modules: ['node_modules', paths.appNodeModules],
       extensions: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx'],
       alias: getResolveAlias(buildConfig),
     },
