@@ -55,13 +55,13 @@ module.exports = function generate(options) {
   metalsmith.frontmatter(false);
 
   const data = Object.assign(metalsmith.metadata(), {
-    name: kebabCase(npmName).replace(/^-/, ''),
-    npmName: kebabCase(npmName).replace(/^-/, ''),
+    name: kebabCase(npmName || name).replace(/^-/, ''),
+    npmName: kebabCase(npmName || name).replace(/^-/, ''),
     className: uppercamelcase(name),
     kebabClassName: kebabCase(name).replace(/^-/, ''),
     inPlace: dest === process.cwd(),
     noEscape: true,
-    registry: innerNet.getRegistry(npmName)
+    registry: innerNet.getRegistry(npmName || name)
   });
   debug('%j', data);
   
@@ -106,7 +106,7 @@ module.exports = function generate(options) {
     });
 
   // 如果模板内部有 .template 目录, 不走 render 逻辑，直接拷贝
-  const template = path.join(src, 'template', TEMPLATE_PATH);
+  const template = path.join(src, TEMPLATE_PATH);
   if (fs.existsSync(template)) {
     Metalsmith(template)
       .source('.')

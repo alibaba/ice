@@ -138,9 +138,10 @@ async function initAsk(options = {}) {
               name: '@icedesign/ice-react-materials-template (React 标准模板)',
               value: '@icedesign/ice-react-materials-template'
             },
-            // TODO
-            // '@icedesign/ice-vue-materials-template',
-            // '@icedesign/universal-materials-template',
+            {
+              name: '@icedesign/ice-vue-materials-template (Vue 标准模板)',
+              value: '@icedesign/ice-vue-materials-template'
+            }
           ],
         },
       ])
@@ -171,11 +172,16 @@ function run(opt, argsOpt) {
   // 如果是本地模板则从缓存读取，反之从 npm 源下载初始模板
   if (isLocalPath(template)) {
     const templatePath = getTemplatePath(template);
-    const npmName = name;
+
     if (exists(templatePath)) {
-      generate(name, npmName, templatePath, cwd, (err, cb) => {
-        if (err) logger.fatal(err);
-        initCompletedMessage(cwd, name);
+      generate({
+        name, 
+        src: path.join(templatePath, 'template'), 
+        dest: cwd, 
+        callback: (err, cb) => {
+          if (err) logger.fatal(err);
+          initCompletedMessage(cwd, name);
+        }
       });
     } else {
       logger.fatal('Local template "%s" not found.', template);
@@ -198,14 +204,19 @@ function downloadAndGenerate({ template, tmp, to, name }) {
 
   // Remove if local template exists
   if (exists(tmp)) rm(tmp);
+
   download({ template })
     .then(() => {
       spinner.stop();
 
-      const npmName = name;
-      generate(name, npmName, tmp, to, (err, cb) => {
-        if (err) logger.fatal(err);
-        initCompletedMessage(to, name);
+      generate({
+        name, 
+        src: path.join(tmp, 'template'), 
+        dest: to,
+        callback: (err, cb) => {
+          if (err) logger.fatal(err);
+          initCompletedMessage(to, name);
+        }
       });
     })
     .catch((err) => {
