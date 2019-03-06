@@ -117,17 +117,17 @@ Options:
 
 ### babelExclude
 
-babel-loader 有一个 exclude 的配置，用于过滤某些目录下的文件不需要经过 babel 编译，按照社区的规范发出去的 npm 都应该经过 babel 编译，因此大多数工程（包括 ice-scripts）都会将该字段设置为 `node_modules`，用于加快构建的速度。如果你用到了某个未经 babel 编译的包，我们首先推荐你看下是否有其他选择，实在没有选择的话可以通过这个配置支持：
+babel-loader 有一个 exclude 的配置，用于过滤某些目录下的文件不需要经过 babel 编译，按照前端社区的规范三方 npm 包的代码都应该经过 babel 编译，因此大多数工程（包括 ice-scripts）都会将该字段设置为 `node_modules`，用于加快构建的速度。如果你用到了某个未经 babel 编译的包，我们首先推荐你看下是否有其他选择，实在没有选择的话可以通过这个配置支持：
 
 ```js
 "buildConfig": {
   // 配置特定包要经过 babel 编译
-  // 该字符串会经过 new RegExp 转换为正则然后传递给 babel-loader
+  // 该字符串会经过 new RegExp() 转换为正则然后传递给 babel-loader
   // 不同的 npm client 的路径可能有差异，请按照具体路径书写正则
   "babelExclude": "node_modules\/(?!_@ali_lib-ucc)"
 
-  // 配置所有包都经过 babel 编译，随便配置一个不存在的目录即可
-  "babelExclude": "bower_components"
+  // 配置所有文件都经过 babel 编译：可能带来编译慢或者构建出错问题，请谨慎使用
+  "babelExclude": false
 }
 ```
 
