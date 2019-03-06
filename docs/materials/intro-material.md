@@ -22,23 +22,23 @@ category: 物料
 
 基于飞冰的物料开发工具 ice-devtools 创建完物料仓库后，组件、区块、模板的开发都可以在这里开发完成，不再分散在各个仓库。
 
-5. 统一的开发体验
+2. 统一的开发体验
 
 无论是组件还是区块、模板，都可以用 ice-devtools 进行创建、构建、发布，每个物料都可以发布出可线上访问的 DEMO。[[示例]](https://unpkg.com/@icedesign/balloon-confirm@1.0.3/build/index.html)
 
-2. 可视化
+3. 可视化
 
 物料仓库可以被一键发布，并关联到 Iceworks 中，有哪些区块、模板、组件，每个的截图、 DEMO 一目了然。
 
 <img src="https://user-images.githubusercontent.com/1303018/53876460-ca253a00-4041-11e9-8ba0-62a621cff0b3.png" width="600" />
 
-3. 可搭建
+4. 可搭建
 
 基于 Iceworks 你可以使用这些物料，快速组装出页面。
 
 <img src="https://user-images.githubusercontent.com/1303018/53876555-035daa00-4042-11e9-9a20-df63710dc196.png" width="600" />
 
-4. 可分享
+5. 可分享
 
 每一个物料都会生成一个物料地址，可以被分享给其他人使用。
 
