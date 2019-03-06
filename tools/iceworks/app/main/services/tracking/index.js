@@ -7,7 +7,7 @@ const events = {
   generateLayout: '正在生成 Layout 文件',
   installBlockDeps: '正在下载区块依赖',
   installLayoutDeps: '正在下载 Layout 依赖',
-  generateBlocks: '正在生成区块',
+  generateBlocks: '正在请求区块数据',
   generatePage: '正在生成页面文件',
   appendConfig: '正在添加路由配置',
 };
