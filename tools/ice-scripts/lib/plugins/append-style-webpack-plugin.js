@@ -148,7 +148,7 @@ module.exports = class AppendStylePlugin {
       if (this.compileThemeIcon && this.themeNextVersion === '1.x') {
         // 1.x 主题包的 icons.scss 里使用了 css-prefix 变量，因此这里需要手动声明下
         // 即便不手动声明，这里也需要支持自定义 css-prefix 能力
-        const cssPrefix = themeConfig['css-prefix'] || 'next-';
+        const cssPrefix = themeConfig.nextPrefix || 'next-';
         coreVarCode = `$css-prefix: '${cssPrefix}';`;
       }
 

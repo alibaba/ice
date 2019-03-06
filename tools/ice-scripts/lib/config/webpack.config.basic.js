@@ -58,7 +58,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
       buildConfig.output || {}
     ),
     resolve: {
-      modules: [paths.appNodeModules, 'node_modules'],
+      modules: ['node_modules', paths.appNodeModules],
       extensions: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx'],
       alias: getResolveAlias(buildConfig),
     },
@@ -69,7 +69,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     module: {
       rules: getRules(buildConfig, themeConfig),
     },
-    plugins: getPlugins({ entry, buildConfig, themeConfig }),
+    plugins: getPlugins({ entry, buildConfig, themeConfig, pkg }),
     optimization: {
       splitChunks: {
         cacheGroups: {

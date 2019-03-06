@@ -16,7 +16,6 @@ const SASS_LOADER = require.resolve('sass-loader');
 const CSS_HOT_LOADER = require.resolve('css-hot-loader');
 const URL_LOADER = require.resolve('url-loader');
 const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
-const UNITE_BASE_COMPONENT_SASS_LOADER = require.resolve('../loaders/uniteBaseComponentSassLoader.js');
 const URL_LOADER_LIMIT = 8192;
 
 function withCssHotLoader(loaders) {
@@ -77,13 +76,6 @@ module.exports = (buildConfig = {}, themeConfig) => {
       },
     }
   ];
-
-  if (buildConfig.uniteBaseComponent) {
-    sassLoadersConf.push({
-      loader: UNITE_BASE_COMPONENT_SASS_LOADER,
-      options: {}
-    });
-  }
 
   const sassLoaderConf = [
     CSS_LOADER_CONF,
