@@ -28,7 +28,7 @@ category: 物料
 
 3. 可视化
 
-物料仓库可以被一键发布，并关联到 Iceworks 中，有哪些区块、模板、组件，每个的截图、 DEMO 一目了然。
+物料仓库可以被一键发布，并关联到 Iceworks 中，有哪些组件、区块、模板，每个的截图、 DEMO 一目了然。
 
 <img src="https://user-images.githubusercontent.com/1303018/53876460-ca253a00-4041-11e9-8ba0-62a621cff0b3.png" width="600" />
 
@@ -44,5 +44,5 @@ category: 物料
 
 6. 可扩展
 
-除了直接使用官方的物料脚手架，业务也可以定制自己的组件、区块模板及 webpack 配置等。
+除了直接使用官方的物料脚手架，业务也可以定制自己的物料模板及 webpack 配置等。
 
