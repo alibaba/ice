@@ -43,6 +43,14 @@ const CSS_MODULE_CONF = {
 module.exports = (buildConfig = {}, themeConfig) => {
   const babelConfig = getBabelConfig(buildConfig);
 
+  let babelExclude = /node_modules/;
+  if (buildConfig.babelExclude) {
+    // 某个依赖包需要 babel 编译（不同 npm 路径可能不同）：babelExclude: "node_modules\\/(?!_@ali_lib-ucc)"
+    // node_modules 都需要编译：babelExclude: "bower_components"，随便配置一个奇怪的地址覆盖默认值即可
+    babelExclude = new RegExp(buildConfig.babelExclude);
+    console.log(colors.green('Info:'), '配置了 babelExclude，new RegExp() 转化后的值：', babelExclude);
+  }
+
   const theme = buildConfig.theme || buildConfig.themePackage;
   if (theme) {
     // eslint-disable-next-line no-console
@@ -138,6 +146,8 @@ module.exports = (buildConfig = {}, themeConfig) => {
           loader: LESS_LOADER,
           options: {
             sourceMap: true,
+            // https://github.com/ant-design/ant-motion/issues/44
+            javascriptEnabled: true,
           },
         },
       ]),
@@ -161,14 +171,14 @@ module.exports = (buildConfig = {}, themeConfig) => {
     },
     {
       test: /\.jsx?$/,
-      exclude: /node_modules/,
+      exclude: babelExclude,
       loader: BABEL_LOADER,
       options: deepAssign({}, babelConfig, { cacheDirectory: true }),
     },
     // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'
     {
       test: /\.tsx?$/,
-      exclude: /node_modules/,
+      exclude: babelExclude,
       use: [
         {
           loader: BABEL_LOADER,
