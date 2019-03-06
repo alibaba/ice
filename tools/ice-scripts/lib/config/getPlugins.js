@@ -10,11 +10,12 @@ const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
+const CheckIceComponentsDepsPlugin = require('../plugins/check-ice-components-dep');
 const normalizeEntry = require('../utils/normalizeEntry');
 const paths = require('./paths');
 const getEntryHtmlPlugins = require('./getEntryHtmlPlugins');
 
-module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
+module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   const defineVriables = {
     'process.env.NODE_ENV': JSON.stringify(
       process.env.NODE_ENV || 'development'
@@ -37,6 +38,9 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry }) => {
     // FIX ISSUE: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
     new FilterWarningsPlugin({
       exclude: /Conflicting order between:/,
+    }),
+    new CheckIceComponentsDepsPlugin({
+      pkg
     }),
     new SimpleProgressPlugin(),
     new CaseSensitivePathsPlugin(),

@@ -69,7 +69,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     module: {
       rules: getRules(buildConfig, themeConfig),
     },
-    plugins: getPlugins({ entry, buildConfig, themeConfig }),
+    plugins: getPlugins({ entry, buildConfig, themeConfig, pkg }),
     optimization: {
       splitChunks: {
         cacheGroups: {
