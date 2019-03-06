@@ -37,11 +37,22 @@ Handlebars.registerHelper('unless_eq', (a, b, opts) => {
  * @param {String} dest
  * @param {Function} done
  */
-module.exports = function generate(name, npmName, src, dest, done) {
-  const opts = getOptions(name, src);
+module.exports = function generate(options) {
+  const {
+    src,
+    dest,
+    name,
+    npmName,
+    callback : done,
+    meta
+  } = options;
+
+  const opts = meta || getOptions(name, src);
   debug('%j', { name, src, dest });
 
-  const metalsmith = Metalsmith(path.join(src, 'template'));
+  debugger;
+  // const metalsmith = Metalsmith(path.join(src, 'template'));
+  const metalsmith = Metalsmith(src);
   metalsmith.frontmatter(false);
 
   const data = Object.assign(metalsmith.metadata(), {
@@ -71,7 +82,7 @@ module.exports = function generate(name, npmName, src, dest, done) {
     .use(filterFiles(opts.filters))
     .use(renderTemplateFiles(opts.skipInterpolation))
     .use(transformFile(opts))
-    .ignore([TEMPLATE_PATH]);
+    .ignore([TEMPLATE_PATH, 'meta.js']);
 
   if (typeof opts.metalsmith === 'function') {
     opts.metalsmith(metalsmith, opts, helpers);

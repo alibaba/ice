@@ -1,30 +1,44 @@
-const debug = require('debug')('ice:add:block');
 const inquirer = require('inquirer');
-const { existsSync: exists } = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const home = require('user-home');
-const { sync: rm } = require('rimraf');
-const ora = require('ora');
 const kebabCase = require('kebab-case');
-const logger = require('../../utils/logger');
-const localPath = require('../../utils/local-path');
-const download = require('../../utils/download');
-const generate = require('../../utils/generate');
-const pkgJSON = require('../../utils/pkg-json');
 const validateName = require('validate-npm-package-name');
 
-const isLocalPath = localPath.isLocalPath;
-const getTemplatePath = localPath.getTemplatePath;
+const logger = require('../../utils/logger');
+const generate = require('../../utils/generate');
+const meta = require('./meta');
 
 /**
- * @param{String} type 类型
  * @param{String} cwd 当前路径
  * @param{Object} opt 参数
  */
-module.exports = async function addScaffold(type, cwd, opt, argvOpt) {
-  const templateName = `@icedesign/ice-${type}-app-template`;
-  const answer = await inquirer.prompt([
+module.exports = async function addScaffold(cwd, opt = {}) {
+  const {
+    npmPrefix,
+    templatePath : src
+  } = opt;
+
+  const name = await getName(npmPrefix);
+  const npmName = getNpmName(name, npmPrefix);
+  const dest = path.join(cwd, 'scaffolds', name);
+
+  generate({
+    src,
+    dest,
+    name,
+    npmName,
+    meta,
+    callback: (err) => {
+      if (err) {
+        logger.fatal(err);
+      }
+      completedMessage(name, dest);
+    }
+  });
+};
+
+function defaultQuestion(npmPrefix) {
+  return [
     {
       type: 'input',
       name: 'name',
@@ -34,73 +48,31 @@ module.exports = async function addScaffold(type, cwd, opt, argvOpt) {
         if (!value) {
           return 'scaffold name cannot be empty';
         }
-        const name = generateNpmName(value, opt);
+        const name = getNpmName(value, npmPrefix);
         if (!validateName(name).validForNewPackages) {
           return `this scaffold name(${name}) has already exist. please retry`;
         }
         return true;
       },
     },
-  ]);
-  const scaffoldName = answer.name;
-  const name = generateNpmName(scaffoldName, opt);
-
-  const scaffoldPath = path.join(cwd, 'scaffolds', scaffoldName);
-  let templatePath = getTemplatePath(templateName);
-
-  debug('name: %j', { templateName, scaffoldName, templatePath });
-  let p = Promise.resolve();
-  if (!isLocalPath(templatePath) || !exists(templatePath)) {
-    p = p.then(() => downloadTemplate(templateName));
-    templatePath = await p;
-  }
-  const npmName = name;
-  generate(name, npmName, templatePath, scaffoldPath, (err, callback) => {
-    if (err) {
-      console.log(err);
-      logger.fatal(err);
-    }
-    completedMessage(scaffoldName, scaffoldPath);
-    callback();
-  });
-};
-
-function generateNpmName(name, opt) {
-  const kebabCaseName = kebabCase(name).replace(/^-/, '');
-
-  let npmName;
-
-  if (opt.scope) {
-    npmName = opt.scope + '/' + kebabCaseName;
-  } else if (opt.pkg && opt.pkg.name) {
-    npmName = `${opt.pkg.name}-${kebabCaseName}`;
-  } else {
-    npmName = kebabCaseName;
-  }
-
-  return npmName;
+  ];
 }
 
 /**
- * 下载生成模板
- * @param {String} template
+ * 获取文件名
  */
-function downloadTemplate(template) {
-  const downloadspinner = ora('downloading template');
-  downloadspinner.start();
+async function getName(npmPrefix) {
+  const questions = defaultQuestion(npmPrefix); 
+  const { name } = await inquirer.prompt(questions);
+  return name;
+}
 
-  const tmp = path.join(home, '.ice-templates', template);
-
-  if (exists(tmp)) rm(tmp);
-  return download({ template })
-    .then(() => {
-      downloadspinner.stop();
-      return tmp;
-    })
-    .catch((err) => {
-      downloadspinner.stop();
-      logger.fatal(`Failed to download repo ${template} : ${err.message}`);
-    });
+/**
+ * 获取 npm 包名
+ * @param {string} name
+ */
+function getNpmName(name, npmPrefix) {
+  return npmPrefix + kebabCase(name).replace(/^-/, '');
 }
 
 /**

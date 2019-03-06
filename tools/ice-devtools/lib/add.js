@@ -1,12 +1,13 @@
 const inquirer = require('inquirer');
 const path = require('path');
+const { existsSync: exists } = require('fs');
 const debug = require('debug')('ice:add:general');
 const logger = require('../utils/logger');
 const pkgJSON = require('../utils/pkg-json');
 const message = require('../utils/message');
-const { getLocalTemplate } = require('../utils/local-path');
 
 const MATERIAL_TEMPLATE_TYPE = ['block', 'component', 'scaffold'];
+
 const MATERIAL_TEMPLATE_QUESION = [
   {
     type: 'list',
@@ -25,41 +26,37 @@ const FRAMEWORK_TYPE_QUESION = [
   },
 ]
 
-module.exports = async function add(cwd, ...options) {
+module.exports = async function add(cwd) {
   debug('cwd: %s', cwd);
 
-  const [templateName, templateType] = options;
-  if (templateName && templateType) {
-    // eg. ice-devtools add ./templates/ice-vue-block-template block
-    await getArgvOptions(cwd, ...options);
-  } else {
-    await getAskOptions(cwd, ...options);
-  }
+  await getAskOptions(cwd);
 };
 
 /**
  * 通过询问的形式添加物料
  * @param {string} cwd
- * @param {Array} argvOpts
  */
-async function getAskOptions(cwd, ...argvOpts) {
+async function getAskOptions(cwd) {
   const pkg = pkgJSON.getPkgJSON(cwd);
 
-  const options = {
-    pkg
-  };
+  if (!pkg) {
+    logger.fatal(message.invalid);
+  }
 
-  // react、vue、etc...
-  let type;
+  // @vue-materials/xxx or @icedesign/my-materials-xxxx
+  let npmPrefix;
+  // react、vue...
+  let frameworkType;
 
-  if (pkg && pkg.materialConfig) {
-    type = pkg.materialConfig.type;
-  } else if (pkg && pkg.materials) {
-    // 兼容 ice 官方仓库
-    const { frameworkType } = await inquirer.prompt(FRAMEWORK_TYPE_QUESION);
-    type = frameworkType;
+  // ice 官方仓库
+  if (pkg.materials) {
+    const reslut = await inquirer.prompt(FRAMEWORK_TYPE_QUESION);
+    frameworkType = reslut.frameworkType;
+    npmPrefix = (type === 'react' ? '@icedesign' : `@${type}-materials`) + '/';
     cwd = path.join(cwd, `${type}-materials`);
-    options.scope = `@${type}-materials`;
+  } else if (pkg.materialConfig) {
+    frameworkType = pkg.materialConfig.type;
+    npmPrefix = `${pkg.name}-`;
   } else {
     logger.fatal(message.invalid);
   }
@@ -68,32 +65,50 @@ async function getAskOptions(cwd, ...argvOpts) {
   const { templateType } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
   debug('ans: %j', templateType);
 
-  require(`./${templateType}/add`)(type, cwd, options, ...argvOpts);
+  const templatePath = await getTemplatePath(frameworkType, templateType, cwd);
+
+  require(`./${templateType}/add`)(cwd, {
+    npmPrefix,
+    templatePath
+  });
 }
 
 /**
- * 通过命令行的形式添加物料，支持本地模板和 npm 包的形式
- * 本地模板：~/fs/path/to-custom-template
- * npm模板：to-custom-template
- * @param {Array} cwd          当前路径
- * @param {Array} templateName 模板名称
- * @param {Array} templateType 模板类型
- * @param {Array} options      命令行参数
+ * 获取模板路径
+ * @param {string} type 
+ * @param {string} cwd 
  */
-async function getArgvOptions(cwd, templateName, templateType, ...options) {
-  if (!MATERIAL_TEMPLATE_TYPE.includes(templateType)) {
-    logger.fatal('unknown argument:', templateType);
-  }
+async function getTemplatePath(frameworkType, templateType, cwd) {
+  const localTemplate = path.join(cwd, `.template/${templateType}`);
+  if (exists(localTemplate)) {
+    return localTemplate;
+  };
 
-  if (getLocalTemplate(templateName)) {
-    require(`./${templateType}/add`)(
-      null,
-      cwd,
-      { 
-        hasArgvOpts: true,
-        templateSource:  templateName
-      },
-      ...options
-    );
-  }
+  const templateName = `@icedesign/ice-${frameworkType}-${templateType}-template`;
+  const templatePath = await downloadTemplate(templateName);
+
+  return path.join(templatePath, 'template');
+}
+
+/**
+ * 下载模板
+ *
+ * @param {String} template
+ */
+function downloadTemplate(template) {
+  const downloadspinner = ora('downloading template');
+  downloadspinner.start();
+
+  const tmp = path.join(home, '.ice-templates', template);
+  debug('downloadTemplate', template);
+  if (exists(tmp)) rm(tmp);
+  return download({ template })
+    .then(() => {
+      downloadspinner.stop();
+      return tmp;
+    })
+    .catch((err) => {
+      downloadspinner.stop();
+      logger.fatal(`Failed to download repo ${template} : ${err.message}`);
+    });
 }
