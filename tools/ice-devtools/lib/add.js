@@ -79,10 +79,15 @@ async function getAskOptions(cwd) {
  * @param {string} cwd 
  */
 async function getTemplatePath(frameworkType, templateType, cwd) {
-  const localTemplate = path.join(cwd, `.template/${templateType}`);
+  let localTemplate = path.join(cwd, `.template/${templateType}`);
   if (exists(localTemplate)) {
     return localTemplate;
   };
+
+  // HACK: 兼容 ice-react-app-template
+  if (templateType === 'scaffold') {
+    templateType = 'app';
+  }
 
   const templateName = `@icedesign/ice-${frameworkType}-${templateType}-template`;
   const templatePath = await downloadTemplate(templateName);

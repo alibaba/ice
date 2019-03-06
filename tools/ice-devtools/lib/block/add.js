@@ -1,11 +1,11 @@
 const inquirer = require('inquirer');
 const path = require('path');
 const chalk = require('chalk');
-const kebabCase = require('kebab-case');
 const validateName = require('validate-npm-package-name');
 
 const logger = require('../../utils/logger');
 const generate = require('../../utils/generate');
+const { generateNpmNameByPrefix } = require('../../utils/npm');
 const meta = require('./meta');
 
 /**
@@ -18,8 +18,9 @@ module.exports = async function addBlock(cwd, opt = {}) {
     templatePath : src
   } = opt;
 
-  const name = await getBlockName(npmPrefix);
-  const npmName = getNpmName(name, npmPrefix);
+  const questions = defaultQuestion(npmPrefix); 
+  const { name } = await inquirer.prompt(questions);
+  const npmName = generateNpmNameByPrefix(name, npmPrefix);
   const dest = path.join(cwd, 'blocks', name);
 
   generate({
@@ -41,13 +42,13 @@ function defaultQuestion(npmPrefix) {
   return [
     {
       type: 'input',
-      name: 'blockName',
+      name: 'name',
       message: 'block name (e.g. ExampleBlock)',
       validate: (value) => {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
           return 'Name must be a Upper Camel Case word, e.g. ExampleBlock.';
         }
-        const npmName = getNpmName(value, npmPrefix);
+        const npmName = generateNpmNameByPrefix(value, npmPrefix);
         if (!validateName(npmName).validForNewPackages) {
           return `this block name(${npmName}) has already exist. please retry`;
         }
@@ -55,23 +56,6 @@ function defaultQuestion(npmPrefix) {
       },
     },
   ];
-}
-
-/**
- * 获取区块的文件名
- */
-async function getBlockName(npmPrefix) {
-  const questions = defaultQuestion(npmPrefix); 
-  const { blockName } = await inquirer.prompt(questions);
-  return blockName;
-}
-
-/**
- * 获取区块的 npm 名
- * @param {string} blockName
- */
-function getNpmName(blockName, npmPrefix) {
-  return npmPrefix + kebabCase(blockName).replace(/^-/, '');
 }
 
 /**

@@ -1,11 +1,11 @@
 const inquirer = require('inquirer');
 const path = require('path');
 const chalk = require('chalk');
-const kebabCase = require('kebab-case');
 const validateName = require('validate-npm-package-name');
 
 const logger = require('../../utils/logger');
 const generate = require('../../utils/generate');
+const { generateNpmNameByPrefix } = require('../../utils/npm');
 const meta = require('./meta');
 
 /**
@@ -18,8 +18,9 @@ module.exports = async function addScaffold(cwd, opt = {}) {
     templatePath : src
   } = opt;
 
-  const name = await getName(npmPrefix);
-  const npmName = getNpmName(name, npmPrefix);
+  const questions = defaultQuestion(npmPrefix); 
+  const { name } = await inquirer.prompt(questions);
+  const npmName = generateNpmNameByPrefix(name, npmPrefix);
   const dest = path.join(cwd, 'scaffolds', name);
 
   generate({
@@ -48,7 +49,7 @@ function defaultQuestion(npmPrefix) {
         if (!value) {
           return 'scaffold name cannot be empty';
         }
-        const name = getNpmName(value, npmPrefix);
+        const name = generateNpmNameByPrefix(value, npmPrefix);
         if (!validateName(name).validForNewPackages) {
           return `this scaffold name(${name}) has already exist. please retry`;
         }
@@ -56,23 +57,6 @@ function defaultQuestion(npmPrefix) {
       },
     },
   ];
-}
-
-/**
- * 获取文件名
- */
-async function getName(npmPrefix) {
-  const questions = defaultQuestion(npmPrefix); 
-  const { name } = await inquirer.prompt(questions);
-  return name;
-}
-
-/**
- * 获取 npm 包名
- * @param {string} name
- */
-function getNpmName(name, npmPrefix) {
-  return npmPrefix + kebabCase(name).replace(/^-/, '');
 }
 
 /**

@@ -50,7 +50,6 @@ module.exports = function generate(options) {
   const opts = meta || getOptions(name, src);
   debug('%j', { name, src, dest });
 
-  debugger;
   // const metalsmith = Metalsmith(path.join(src, 'template'));
   const metalsmith = Metalsmith(src);
   metalsmith.frontmatter(false);
