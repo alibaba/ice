@@ -6,6 +6,7 @@ const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
 const processEntry = require('./processEntry');
 const getEntryByPages = require('./getEntryByPages');
+const getResolveAlias = require('./getResolveAlias');
 const pkg = require('./packageJson');
 const checkTemplateHasReact = require('../utils/checkTemplateHasReact');
 const debug = require('../debug');
@@ -57,8 +58,9 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
       buildConfig.output || {}
     ),
     resolve: {
-      modules: [paths.appNodeModules, 'node_modules'],
+      modules: ['node_modules', paths.appNodeModules],
       extensions: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx'],
+      alias: getResolveAlias(buildConfig),
     },
     externals:
       buildConfig.externals || hasExternalReact
@@ -67,7 +69,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     module: {
       rules: getRules(buildConfig, themeConfig),
     },
-    plugins: getPlugins({ entry, buildConfig, themeConfig }),
+    plugins: getPlugins({ entry, buildConfig, themeConfig, pkg }),
     optimization: {
       splitChunks: {
         cacheGroups: {

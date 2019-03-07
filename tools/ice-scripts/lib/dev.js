@@ -30,7 +30,7 @@ module.exports = async function(args, subprocess) {
   goldlog('version', {
     version: pkgData.version
   });
-  goldlog('build');
+  goldlog('dev');
 
   // 与 iceworks 客户端通信
   const send = function(data) {
