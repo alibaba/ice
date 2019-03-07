@@ -15,7 +15,7 @@ const generate = require('../utils/generate');
 const localPath = require('../utils/local-path');
 const download = require('../utils/download');
 const innerNet = require('../utils/inner-net');
-const addComponent = require('./component/add');
+const addComponent = require('./add');
 
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
@@ -36,8 +36,8 @@ module.exports = async function init(cwd) {
     const answers = await initAsk(options);
 
     if (answers.type === 'component') {
-      addComponent('react', cwd, {
-        standalone: true,
+      addComponent(cwd, {
+        type: 'component',
         scope: answers.scope
       });
       return;

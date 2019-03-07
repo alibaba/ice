@@ -1,10 +1,14 @@
 const inquirer = require('inquirer');
 const path = require('path');
 const { existsSync: exists } = require('fs');
+const ora = require('ora');
+const home = require('user-home');
+const { sync: rm } = require('rimraf');
 const debug = require('debug')('ice:add:general');
 const logger = require('../utils/logger');
 const pkgJSON = require('../utils/pkg-json');
 const message = require('../utils/message');
+const download = require('../utils/download');
 
 const MATERIAL_TEMPLATE_TYPE = ['block', 'component', 'scaffold'];
 
@@ -26,10 +30,25 @@ const FRAMEWORK_TYPE_QUESION = [
   },
 ]
 
-module.exports = async function add(cwd) {
+module.exports = async function add(cwd, options = {}) {
   debug('cwd: %s', cwd);
 
-  await getAskOptions(cwd);
+  const type = process.env.TYPE || options.type;
+
+  // 独立的组件添加链路
+  if (type) {
+    const framework = process.env.FRAMEWORK;
+    const npmPrefix = options.scope ? `${options.scope}/` : '';
+    const templatePath = await getTemplatePath( framework || 'react', type, cwd);
+
+    require(`./${type}/add`)(cwd, {
+      npmPrefix,
+      templatePath,
+      standalone: true,
+    });
+  } else {
+    await getAskOptions(cwd);
+  }
 };
 
 /**

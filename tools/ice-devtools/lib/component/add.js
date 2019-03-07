@@ -15,13 +15,14 @@ const meta = require('./meta');
 module.exports = async function addComponent(cwd, opt = {}) {
   const {
     npmPrefix,
-    templatePath : src
+    templatePath : src,
+    standalone
   } = opt;
 
   const questions = defaultQuestion(npmPrefix); 
   const { name } = await inquirer.prompt(questions);
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
-  const dest = path.join(cwd, 'components', name);
+  const dest = standalone ? cwd : path.join(cwd, 'components', name);
 
   generate({
     src,
@@ -33,7 +34,7 @@ module.exports = async function addComponent(cwd, opt = {}) {
       if (err) {
         logger.fatal(err);
       }
-      completedMessage(name, dest);
+      completedMessage(name, dest, standalone);
     }
   });
 };

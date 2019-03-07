@@ -18,6 +18,16 @@ module.exports = {
   },
   add: {
     desc: 'add a new block/scaffold from a official templates',
+    options: [
+      {
+        name: '--framework [framework]',
+        desc: 'materail framework, e.g. react/vue',
+      },
+      {
+        name: '--type [type]',
+        desc: 'materail type, e.g. block/component/scaffold',
+      }
+    ],
   },
   start: {
     desc: 'Start Dev Server',
