@@ -15,7 +15,7 @@ $ npm install ice-devtools -g
 #### 区块预览
 
 ```
-$ cd blocks/Gretting
+$ cd blocks/ExampleBlock
 $ npm install
 $ npm run start
 ```
@@ -23,7 +23,7 @@ $ npm run start
 #### 模板预览
 
 ```
-$ cd scaffolds/lite
+$ cd scaffolds/ExampleScaffold
 $ npm install
 $ npm run start
 ```
