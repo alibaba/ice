@@ -75,6 +75,7 @@ module.exports = class AppendStylePlugin {
     this.variableFile = options.variableFile; // scss 变量文件
     this.compileThemeIcon = options.compileThemeIcon; // 是否为主题的 icons.scss
     this.themeNextVersion = options.themeNextVersion; // 主题包对应基础组件版本
+    this.pkg = options.pkg; // 项目的 package.json 内容
     this.distMatch =
       options.distMatch instanceof RegExp // chunkName 去匹配的逻辑，正则或者函数
         ? (chunkName) => options.distMatch.test(chunkName)
@@ -88,17 +89,6 @@ module.exports = class AppendStylePlugin {
     const compilerEntry = compiler.options.entry;
     if (!srcFile || !distMatch) {
       return;
-    }
-
-    this.projectPath = compiler.context;
-    if (!this.pkgData) {
-      try {
-        const pkgPath = path.resolve(compiler.context, 'package.json');
-        this.pkgData = JSON.parse(fs.readFileSync(pkgPath));
-      } catch (err) {
-        console.error('append-style: 获取 package.json 出错', err);
-        this.pkgData = {};
-      }
     }
 
     compiler.hooks.compilation.tap('compilation', (compilation) => {
@@ -142,7 +132,7 @@ module.exports = class AppendStylePlugin {
 
   compileToCSS(srcFile, themeVariableFile) {
     if (this.type === 'sass') {
-      const themeConfig = this.pkgData.themeConfig || {};
+      const themeConfig = this.pkg.themeConfig || {};
       let coreVarCode = '';
 
       if (this.compileThemeIcon && this.themeNextVersion === '1.x') {

@@ -111,6 +111,7 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
 
     themeNextVersion = (/^@alif(e|d)\/theme-/.test(themePackage) || themePackage === '@icedesign/theme') ? '1.x' : '0.x';
   }
+
   if (iconScssPath && fs.existsSync(iconScssPath)) {
     const appendStylePluginOption = {
       type: 'sass',
@@ -118,6 +119,7 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
       variableFile: variableFilePath,
       compileThemeIcon: true,
       themeNextVersion,
+      pkg,
       distMatch: (chunkName, compilerEntry, compilationPreparedChunks) => {
         const entriesAndPreparedChunkNames = normalizeEntry(
           compilerEntry,
@@ -137,6 +139,7 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
     plugins.push(new AppendStyleWebpackPlugin(appendStylePluginOption));
   }
 
+  // HACK 1.x 不会走到这个逻辑
   if (skinOverridePath && fs.existsSync(skinOverridePath)) {
     // eslint-disable-next-line no-console
     console.log(
@@ -152,7 +155,8 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
         srcFile: skinOverridePath,
         distMatch: /\.css/,
         themeNextVersion,
-        compileThemeIcon: false
+        compileThemeIcon: false,
+        pkg
       })
     );
   }
