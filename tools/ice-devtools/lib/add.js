@@ -15,7 +15,7 @@ const MATERIAL_TEMPLATE_TYPE = ['block', 'component', 'scaffold'];
 const MATERIAL_TEMPLATE_QUESION = [
   {
     type: 'list',
-    name: 'templateType',
+    name: 'type',
     message: 'Please select material type',
     choices: MATERIAL_TEMPLATE_TYPE,
   },
@@ -24,7 +24,7 @@ const MATERIAL_TEMPLATE_QUESION = [
 const FRAMEWORK_TYPE_QUESION = [
   {
     type: 'list',
-    name: 'frameworkType',
+    name: 'framework',
     message: 'Please select framework type',
     choices: ['react', 'vue']
   },
@@ -35,58 +35,91 @@ module.exports = async function add(cwd, options = {}) {
 
   const type = process.env.TYPE || options.type;
 
-  // 独立的组件添加链路
   if (type) {
-    const framework = process.env.FRAMEWORK;
-    const npmPrefix = options.scope ? `${options.scope}/` : '';
-    const templatePath = await getTemplatePath( framework || 'react', type, cwd);
-
-    require(`./${type}/add`)(cwd, {
-      npmPrefix,
-      templatePath,
-      standalone: true,
+    addForStandaloneProject(cwd, {
+      type,
+      ...options
     });
-  } else {
-    await getAskOptions(cwd);
+    return;
   }
-};
 
-/**
- * 通过询问的形式添加物料
- * @param {string} cwd
- */
-async function getAskOptions(cwd) {
   const pkg = pkgJSON.getPkgJSON(cwd);
-
+  
   if (!pkg) {
     logger.fatal(message.invalid);
   }
 
-  // @vue-materials/xxx or @icedesign/my-materials-xxxx
-  let npmPrefix;
-  // react、vue...
-  let frameworkType;
-
-  // ice 官方仓库
   if (pkg.materials) {
-    const reslut = await inquirer.prompt(FRAMEWORK_TYPE_QUESION);
-    frameworkType = reslut.frameworkType;
-    npmPrefix = (type === 'react' ? '@icedesign' : `@${type}-materials`) + '/';
-    cwd = path.join(cwd, `${type}-materials`);
-  } else if (pkg.materialConfig) {
-    frameworkType = pkg.materialConfig.type;
-    npmPrefix = `${pkg.name}-`;
+    addForIceProject(cwd);
+    return;
+  }
+
+  if (pkg.materialConfig) {
+    addForDefaultProject(cwd, {
+      pkg
+    });
   } else {
     logger.fatal(message.invalid);
   }
+};
+
+/**
+ * 独立的组件添加链路
+ * @param {*} cwd 
+ * @param {*} options 
+ */
+async function addForStandaloneProject(cwd, options) {
+  const { type } = options;
+
+  const framework = process.env.FRAMEWORK || 'react';
+  const npmPrefix = options.scope ? `${options.scope}/` : '';
+
+  const templatePath = await getTemplatePath( framework, type, cwd);
+
+  require(`./${type}/add`)(cwd, {
+    npmPrefix,
+    templatePath,
+    standalone: true,
+  });
+}
+
+/**
+ * 标准物料仓库
+ */
+async function addForDefaultProject(cwd, options) {
+  const {
+    pkg
+  } = options;
+
+  const framework = pkg.materialConfig.type;
+  const npmPrefix = `${pkg.name}-`;
 
   // block、scaffold、etc...
-  const { templateType } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
-  debug('ans: %j', templateType);
+  const { type } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
+  debug('ans: %j', type);
 
-  const templatePath = await getTemplatePath(frameworkType, templateType, cwd);
+  const templatePath = await getTemplatePath(framework, type, cwd);
 
-  require(`./${templateType}/add`)(cwd, {
+  require(`./${type}/add`)(cwd, {
+    npmPrefix,
+    templatePath
+  });
+}
+
+/**
+ * ice 官方仓库
+ * @param {*} cwd 
+ */
+async function addForIceProject(cwd) {
+  const { framework } = await inquirer.prompt(FRAMEWORK_TYPE_QUESION);
+  const { type } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
+
+  const npmPrefix = (framework === 'react' ? '@icedesign' : `@${framework}-materials`) + '/';
+  const templatePath = path.join(cwd, `templates/ice-${framework}-materials-template/template/.template/${type}`);
+
+  cwd = path.join(cwd, `${framework}-materials`);
+
+  require(`./${type}/add`)(cwd, {
     npmPrefix,
     templatePath
   });
@@ -98,13 +131,17 @@ async function getAskOptions(cwd) {
  * @param {string} cwd 
  */
 async function getTemplatePath(frameworkType, templateType, cwd) {
-  let templateRoot = path.join(cwd, `.template`);
-  let localTemplate = path.join(templateRoot, templateType);
-  if (exists(localTemplate)) {
-    return localTemplate;
-  } else if (exists(templateRoot)) {
-    logger.fatal(`template for ${templateType} is not found in .template` );
-  };
+  const templateRoot = path.join(cwd, `.template`);
+
+  if (exists(templateRoot)) {
+    const localTemplate = path.join(templateRoot, templateType);
+
+    if (exists(localTemplate)) {
+      return localTemplate;
+    } else {
+      logger.fatal(`template for ${templateType} is not found in .template` );
+    }
+  }
 
   // HACK: 兼容 ice-react-app-template
   if (templateType === 'scaffold') {
