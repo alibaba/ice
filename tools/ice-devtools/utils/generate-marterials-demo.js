@@ -7,7 +7,7 @@ module.exports = async function generateMaterialsDemo(tmpPath, appPath) {
 
   await generate({
     src: path.join(appPath, '.template/block'),
-    dest: path.join(appPath, 'blocks/BlockExample'),
+    dest: path.join(appPath, 'blocks/ExampleBlock'),
     name: `block-example`,
     npmName: `${pkg.name}-block-example`,
     version: '1.0.0',
@@ -16,7 +16,7 @@ module.exports = async function generateMaterialsDemo(tmpPath, appPath) {
 
   await generate({
     src: path.join(appPath, '.template/scaffold'),
-    dest: path.join(appPath, 'scaffolds/ScaffoldExample'),
+    dest: path.join(appPath, 'scaffolds/ExampleScaffold'),
     name: `scaffold-example`,
     npmName: `${pkg.name}-scaffold-example`,
     version: '1.0.0',
@@ -29,9 +29,9 @@ module.exports = async function generateMaterialsDemo(tmpPath, appPath) {
 
   await generate({
     src: path.join(appPath, '.template/component'),
-    dest: path.join(appPath, 'compoonents/ComponentExample'),
-    name: `compoonent-example`,
-    npmName: `${pkg.name}-compoonent-example`,
+    dest: path.join(appPath, 'components/ExampleComponent'),
+    name: `component-example`,
+    npmName: `${pkg.name}-component-example`,
     version: '1.0.0',
     description: '示例组件'
   });

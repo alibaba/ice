@@ -65,10 +65,9 @@ function generate(options, done) {
   metalsmith.frontmatter(false);
 
   const data = Object.assign(metalsmith.metadata(), {
-    name: kebabCase(npmName || name).replace(/^-/, ''),
+    name: kebabCase(name).replace(/^-/, ''),
     npmName: kebabCase(npmName || name).replace(/^-/, ''),
     className: uppercamelcase(name),
-    kebabClassName: kebabCase(name).replace(/^-/, ''),
     inPlace: dest === process.cwd(),
     noEscape: true,
     registry: innerNet.getRegistry(npmName || name),

@@ -71,7 +71,7 @@ async function initAsk(options = {}) {
     ? inquirer.prompt([
         {
           type: 'confirm',
-          message: '当前处于阿里内网环境,生成只在内网可用的物料仓库',
+          message: '当前处于阿里内网环境,生成只在内网可用的' + (type === 'component' ? '物料仓库' : '组件'),
           name: 'forInnerNet',
         },
       ])
@@ -228,12 +228,12 @@ function initCompletedMessage(appPath, appName) {
   console.log(chalk.cyan('    npm install'));
   console.log();
   console.log('  Starts the block development server.');
-  console.log(chalk.cyan('    cd blocks/Greeting'));
+  console.log(chalk.cyan('    cd blocks/ExampleBlock'));
   console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();
   console.log('  Starts the scaffold development server.');
-  console.log(chalk.cyan('    cd scaffolds/lite'));
+  console.log(chalk.cyan('    cd scaffolds/ExampleScaffold'));
   console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();

@@ -5,7 +5,7 @@ export default class {{className}} extends Component {
 
   render() {
     return (
-      <div className="{{kebabClassName}}">Hello {{className}}</div>
+      <div className="{{name}}">Hello {{className}}</div>
     );
   }
 }

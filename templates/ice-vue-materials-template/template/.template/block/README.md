@@ -1,4 +1,4 @@
-# {{name}}
+# {{npmName}}
 
 简介：{{title}}
 

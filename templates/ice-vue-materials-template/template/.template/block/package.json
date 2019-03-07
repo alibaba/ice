@@ -1,5 +1,5 @@
 {
-  "name": "{{name}}-block",
+  "name": "{{npmName}}",
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
