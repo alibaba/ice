@@ -21,7 +21,7 @@ module.exports = function getResolveAlias(buildConfig) {
       '@alife/next/reset.scss': '@icedesign/base/reset.scss',
 
       // sass 里 @import '~xxx'
-      '@alife/next/variables.scss': '@icedesign/base/lib/core/index.scss',
+      '@alife/next/variables.scss': '@icedesign/base/variables.scss',
       '@alife/next/lib/core/index.scss': '@icedesign/base/lib/core/index.scss',
 
       '@alife/next': '@icedesign/base'
