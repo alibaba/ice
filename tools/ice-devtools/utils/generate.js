@@ -9,7 +9,6 @@ const render = require('consolidate').handlebars.render;
 const path = require('path');
 const multimatch = require('multimatch');
 const kebabCase = require('kebab-case');
-const getOptions = require('./options');
 const ask = require('./ask');
 const filter = require('./filter');
 const transform = require('./transform');
@@ -44,10 +43,9 @@ module.exports = function generate(options) {
     name,
     npmName,
     callback : done,
-    meta
+    meta: opts
   } = options;
 
-  const opts = meta || getOptions(name, src);
   debug('%j', { name, src, dest });
 
   // const metalsmith = Metalsmith(path.join(src, 'template'));

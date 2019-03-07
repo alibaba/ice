@@ -15,6 +15,7 @@ const generate = require('../utils/generate');
 const localPath = require('../utils/local-path');
 const download = require('../utils/download');
 const innerNet = require('../utils/inner-net');
+const getOptions = require('../utils/options');
 const addComponent = require('./add');
 
 const isLocalPath = localPath.isLocalPath;
@@ -174,10 +175,14 @@ function run(opt, argsOpt) {
     const templatePath = getTemplatePath(template);
 
     if (exists(templatePath)) {
+      const src = path.join(templatePath, 'template');
+      const meta = getOptions(name, templatePath);
+
       generate({
         name, 
-        src: path.join(templatePath, 'template'), 
+        src,
         dest: cwd, 
+        meta,
         callback: (err, cb) => {
           if (err) logger.fatal(err);
           initCompletedMessage(cwd, name);
@@ -209,10 +214,14 @@ function downloadAndGenerate({ template, tmp, to, name }) {
     .then(() => {
       spinner.stop();
 
+      const src = path.join(tmp, 'template');
+      const meta = getOptions(name, tmp);
+
       generate({
         name, 
-        src: path.join(tmp, 'template'), 
+        src, 
         dest: to,
+        meta,
         callback: (err, cb) => {
           if (err) logger.fatal(err);
           initCompletedMessage(to, name);

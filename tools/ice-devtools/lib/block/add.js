@@ -28,7 +28,7 @@ module.exports = async function addBlock(cwd, opt = {}) {
     dest,
     name,
     npmName,
-    ...meta,
+    meta,
     callback: (err) => {
       if (err) {
         logger.fatal(err);
