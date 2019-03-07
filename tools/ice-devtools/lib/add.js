@@ -98,9 +98,12 @@ async function getAskOptions(cwd) {
  * @param {string} cwd 
  */
 async function getTemplatePath(frameworkType, templateType, cwd) {
-  let localTemplate = path.join(cwd, `.template/${templateType}`);
+  let templateRoot = path.join(cwd, `.template`);
+  let localTemplate = path.join(templateRoot, templateType);
   if (exists(localTemplate)) {
     return localTemplate;
+  } else if (exists(templateRoot)) {
+    logger.fatal(`template for ${templateType} is not found in .template` );
   };
 
   // HACK: 兼容 ice-react-app-template
