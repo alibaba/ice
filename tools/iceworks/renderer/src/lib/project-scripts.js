@@ -10,7 +10,7 @@ import isAlibaba from './is-alibaba';
 
 const detectPort = remote.require('detect-port');
 
-const { log, folder, interaction, sessions, alilog } = services;
+const { log, folder, interaction, sessions, alilog, shared } = services;
 
 // todo 后续抽出到独立套件保持独立更新
 // todo vue cli 后续需要升级
@@ -38,6 +38,14 @@ const { log, folder, interaction, sessions, alilog } = services;
 //   },
 // };
 
+/**
+ * 获取当前的 Env 对象
+ */
+const getEnv = () => {
+  const { env = {} } = shared;
+  return env.getEnv();
+};
+
 const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
   const installConfig = {
     cwd,
@@ -53,86 +61,97 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
     shellArgs: ['cache', 'clean', '--force'],
   };
 
-  sessions.manager.new(
-    installConfig,
-    (code) => {
-      if (code !== 0) {
-        log.error('install-project-dependencies-error');
-        const error = new Error(`安装依赖失败`);
-        alilog.report({
+  sessions.manager.new(installConfig, (code) => {
+    if (code !== 0) {
+      log.error('install-project-dependencies-error');
+      const error = new Error('安装依赖失败');
+      alilog.report(
+        {
           type: 'install-project-dependencies-error',
           msg: error.message,
           stack: error.stack,
           data: {
-            env: JSON.stringify(env)
-          }
-        }, 'error');
-        if (reInstall) {
-          log.info('执行 npm cache clean --force 重试');
-          sessions.manager.new(npmCacheCLeanConfig, () => {
-            doProjectInstall({ cwd, env, shell, callback });
-          });
-        } else if (shell === 'tnpm') {
-          callback(code, {
-            title: '重装依赖失败',
-            content:
-              <div>
-                <p>1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装</p>
-                <p>2. 已安装 tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息</p>
-              </div>,
-          });
-        } else {
-          callback(code, {
-            title: '重装依赖失败',
-            content:
-              '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
-          });
-        }
+            env: JSON.stringify(env),
+          },
+        },
+        'error'
+      );
+      if (reInstall) {
+        log.info('执行 npm cache clean --force 重试');
+        sessions.manager.new(npmCacheCLeanConfig, () => {
+          doProjectInstall({ cwd, env, shell, callback });
+        });
+      } else if (shell === 'tnpm') {
+        callback(code, {
+          title: '重装依赖失败',
+          content: (
+            <div>
+              <p>
+                1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install
+                --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装
+              </p>
+              <p>
+                2. 已安装
+                tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息
+              </p>
+            </div>
+          ),
+        });
       } else {
-        callback(0);
+        callback(code, {
+          title: '重装依赖失败',
+          content:
+            '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
+        });
       }
+    } else {
+      callback(0);
     }
-  );
+  });
 };
 
-const doDependenciesInstall = (dependenciesInstallConfig, dependencies, callback, reInstall) => {
-  const {
-    cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
-    cwdClient, // 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
-    env,
-    shell,
-    shellArgs
-  } = dependenciesInstallConfig;
+const doDependenciesInstall = (
+  dependenciesInstallConfig,
+  dependencies,
+  callback,
+  reInstall
+) => {
+  // cwd 项目目录，用于获取对应的 term，term 使用项目路径作为key存储
+  const { cwd, env } = dependenciesInstallConfig;
 
-  sessions.manager.new(
-    dependenciesInstallConfig,
-    (code) => {
-      if (code !== 0) {
-        if (reInstall) {
-          log.info('重试');
-          terms.writeln(cwd, '依赖安装重试');
-          doDependenciesInstall(dependenciesInstallConfig, dependencies, callback);
-        } else {
-          log.error('安装依赖失败', cwd, dependencies);
-          const error = new Error(`安装依赖失败`);
-          alilog.report({
+  sessions.manager.new(dependenciesInstallConfig, (code) => {
+    if (code !== 0) {
+      if (reInstall) {
+        log.info('重试');
+        terms.writeln(cwd, '依赖安装重试');
+        doDependenciesInstall(
+          dependenciesInstallConfig,
+          dependencies,
+          callback
+        );
+      } else {
+        log.error('安装依赖失败', cwd, dependencies);
+        const error = new Error('安装依赖失败');
+        alilog.report(
+          {
             type: 'install-dependencies-error',
             msg: error.message,
             stack: error.stack,
             data: {
               dependencies: dependencies.join('; '),
-              env: JSON.stringify(env)
-            }
-          }, 'error');
-          callback(1, dependencies);
-        }
-      } else {
-        log.info('安装依赖成功', cwd, dependencies);
-        callback(null, dependencies);
+              env: JSON.stringify(env),
+            },
+          },
+          'error'
+        );
+        callback(1, dependencies);
       }
+    } else {
+      log.info('安装依赖成功', cwd, dependencies);
+      callback(null, dependencies);
     }
-  );
-}
+  });
+};
 
 const getEnvByNodeFramework = (nodeFramework, isAli) => {
   const env = {};
@@ -227,9 +246,7 @@ export default {
               cwd: project.fullPath,
               shell: 'npm',
               shellArgs,
-              env: project.nodeFramework
-                ? {}
-                : { PORT: port },
+              env: project.nodeFramework ? {} : { PORT: port },
             },
             (code) => {
               project.devStop();
@@ -311,10 +328,13 @@ export default {
     const hasAli = dependencies.some((dep) => {
       return dep.startsWith('@ali/') || dep.startsWith('@alife/');
     });
+
+    // 检测到是否包含 midway 依赖
     const hasMidway = dependencies.some((dep) => {
       return dep.startsWith('midway');
     });
 
+    // 如果包含内网包返回内网的 registry 源
     const env = getEnvByNodeFramework(project.nodeFramework, hasAli);
 
     // TODO： 老代码遗留逻辑，兼容？
@@ -345,7 +365,7 @@ export default {
         shell: 'npm',
         shellArgs: ['install', '--no-package-lock', installPrefix].concat(
           dependencies
-        )
+        ),
       };
 
       doDependenciesInstall(npmInstallConfig, dependencies, callback, true);
@@ -374,7 +394,21 @@ export default {
             terms.writeln(cwd, '清理 node_modules 失败');
             reject(error);
           } else {
+            const env = getEnv();
+            const registry = isAlibaba()
+              ? 'https://registry.npm.alibaba-inc.com/'
+              : env.npm_config_registry;
             terms.writeln(cwd, '清理 node_modules 目录完成');
+            terms.writeln(cwd, `\n当前下载源：${registry}\n`);
+            if (
+              !isAlibaba() &&
+              registry.indexOf('registry.npm.taobao.org') === -1
+            ) {
+              terms.writeln(
+                cwd,
+                '推荐使用淘宝 NPM 镜像源 https://registry.npm.taobao.org 进行下载，可在设置面板进行设置\n'
+              );
+            }
             resolve();
           }
         });
@@ -412,13 +446,16 @@ export default {
       })
       .then((isAli) => {
         const env = getEnvByNodeFramework(project.nodeFramework, isAli);
-        doProjectInstall({
-          cwd: project.fullPath,
-          env,
-          shell: 'npm',
-          callback,
-        }, true);
+        console.log({ env });
+        doProjectInstall(
+          {
+            cwd: project.fullPath,
+            env,
+            shell: 'npm',
+            callback,
+          },
+          true
+        );
       });
   },
-
 };
