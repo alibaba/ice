@@ -84,12 +84,6 @@ class App extends React.PureComponent<IProps, IState> {
 $ npm update ice-script
 ```
 
-- 项目安装 TypeScript 开发依赖
-
-```bash
-$ npm install typescript -D
-```
-
 - 新增 .tsconfig 文件
 
 ```js
