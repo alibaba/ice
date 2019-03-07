@@ -58,14 +58,14 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
     (code) => {
       if (code !== 0) {
         log.error('install-project-dependencies-error');
-        const error = new Error(`安装依赖失败`);
+        const error = new Error('安装依赖失败');
         alilog.report({
           type: 'install-project-dependencies-error',
           msg: error.message,
           stack: error.stack,
           data: {
-            env: JSON.stringify(env)
-          }
+            env: JSON.stringify(env),
+          },
         }, 'error');
         if (reInstall) {
           log.info('执行 npm cache clean --force 重试');
@@ -76,10 +76,10 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
           callback(code, {
             title: '重装依赖失败',
             content:
-              <div>
-                <p>1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装</p>
-                <p>2. 已安装 tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息</p>
-              </div>,
+  <div>
+    <p>1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装</p>
+    <p>2. 已安装 tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息</p>
+  </div>,
           });
         } else {
           callback(code, {
@@ -101,7 +101,7 @@ const doDependenciesInstall = (dependenciesInstallConfig, dependencies, callback
     cwdClient, // 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
     env,
     shell,
-    shellArgs
+    shellArgs,
   } = dependenciesInstallConfig;
 
   sessions.manager.new(
@@ -114,15 +114,15 @@ const doDependenciesInstall = (dependenciesInstallConfig, dependencies, callback
           doDependenciesInstall(dependenciesInstallConfig, dependencies, callback);
         } else {
           log.error('安装依赖失败', cwd, dependencies);
-          const error = new Error(`安装依赖失败`);
+          const error = new Error('安装依赖失败');
           alilog.report({
             type: 'install-dependencies-error',
             msg: error.message,
             stack: error.stack,
             data: {
               dependencies: dependencies.join('; '),
-              env: JSON.stringify(env)
-            }
+              env: JSON.stringify(env),
+            },
           }, 'error');
           callback(1, dependencies);
         }
@@ -132,7 +132,7 @@ const doDependenciesInstall = (dependenciesInstallConfig, dependencies, callback
       }
     }
   );
-}
+};
 
 const getEnvByNodeFramework = (nodeFramework, isAli) => {
   const env = {};
@@ -345,7 +345,7 @@ export default {
         shell: 'npm',
         shellArgs: ['install', '--no-package-lock', installPrefix].concat(
           dependencies
-        )
+        ),
       };
 
       doDependenciesInstall(npmInstallConfig, dependencies, callback, true);

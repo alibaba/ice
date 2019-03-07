@@ -2,8 +2,7 @@
  * 用于管理物料加载与缓存的数据中心。
  */
 
-import { observable, action, computed, toJS , autorun, extendObservable} from 'mobx';
-import { Dialog } from '@icedesign/base';
+import { observable, action, computed, toJS } from 'mobx';
 import requestMaterial from '../lib/request-material';
 
 import AdditionalBlocks from './additional-blocks';
@@ -11,7 +10,7 @@ import AdditionalScaffolds from './additional-scaffolds';
 import filterMaterial from '../lib/filter-material';
 import services from '../services';
 
-const { settings, shared, log } = services;
+const { settings } = services;
 
 class Materials {
   @observable
@@ -122,7 +121,7 @@ class Materials {
       .catch((error) => {
         // 如果alicdn物料源访问超时 切换备份物料源
         if (
-          error.code && 
+          error.code &&
           (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT')
         ) {
           if (!isMaterialsBackup) {
@@ -130,16 +129,16 @@ class Materials {
           } else {
             startRecommendMaterials.loaded = true;
             const url = recommendMaterialSource.source;
-            startRecommendMaterials.error = `物料源加载失败，请确认网络是否能直接访问此链接 ${url}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`
+            startRecommendMaterials.error = `物料源加载失败，请确认网络是否能直接访问此链接 ${url}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
           }
         } else {
-            startRecommendMaterials.loaded = true;
-            startRecommendMaterials.error = `物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
+          startRecommendMaterials.loaded = true;
+          startRecommendMaterials.error = '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
         }
       });
   }
 
-  switchToBackupMaterials(fn = ()=>{}) {
+  switchToBackupMaterials(fn = () => {}) {
     settings.set('isMaterialsBackup', true);
     fn();
   }
@@ -177,7 +176,7 @@ class Materials {
         .catch((error) => {
           // 如果alicdn物料源访问超时 切换备份物料源
           if (
-            error.code && 
+            error.code &&
             (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT')
           ) {
             if (!isMaterialsBackup) {
@@ -189,9 +188,9 @@ class Materials {
               material.error = errMsg;
             }
           } else {
-              material.loaded = true;
-              const errMsg = `物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
-              material.error = errMsg;
+            material.loaded = true;
+            const errMsg = '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
+            material.error = errMsg;
           }
         });
     }

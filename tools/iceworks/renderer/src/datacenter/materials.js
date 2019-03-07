@@ -123,9 +123,9 @@ const getCategoriesByBlocks = (blocks) => {
   return Object.values(uniqueCategories);
 };
 
-export { 
-  // getScaffolds, 
-  getBlocks, 
-  // getLayouts, 
-  getCategoriesByBlocks 
+export {
+  // getScaffolds,
+  getBlocks,
+  // getLayouts,
+  getCategoriesByBlocks,
 };

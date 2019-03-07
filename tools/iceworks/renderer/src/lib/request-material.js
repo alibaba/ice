@@ -1,7 +1,7 @@
 import request from 'request';
 import services from '../services';
 
-const { alilog, autoRetry, log  } = services;
+const { alilog, log } = services;
 
 /**
  * 获取物料请求
@@ -23,7 +23,7 @@ function requestMaterial(uri, options = {}, ignoreReject) {
     headers: {
       'Cache-Control': 'no-cache',
     },
-    timeout: 5000
+    timeout: 5000,
   }, options);
 
   return new Promise((resolve, reject) => {
@@ -41,8 +41,8 @@ function requestMaterial(uri, options = {}, ignoreReject) {
               msg: error.message,
               stack: error.stack,
               data: {
-                url: uri
-              }
+                url: uri,
+              },
             }, 'error');
             reject(error);
           }
@@ -54,4 +54,4 @@ function requestMaterial(uri, options = {}, ignoreReject) {
   });
 }
 
-export default requestMaterial
+export default requestMaterial;

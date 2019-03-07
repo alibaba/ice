@@ -108,7 +108,7 @@ class Blocks {
 
   @action.bound
   fetchFailed(err) {
-    console.log(err)
+    console.log(err);
     this.isLoading = false;
   }
 

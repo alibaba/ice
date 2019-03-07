@@ -21,7 +21,7 @@ class BlockGroups {
   @action
   fetch() {
     this.isLoading = true;
-    return this.getBlockGroups().then(this.fetchSuccess).catch( error => {
+    return this.getBlockGroups().then(this.fetchSuccess).catch(() => {
       this.blockGroups = [];
       this.isLoading = false;
     });

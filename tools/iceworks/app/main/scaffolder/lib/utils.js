@@ -209,8 +209,8 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
           msg: err.message,
           stack: err.stack,
           data: {
-            url: tarballURL
-          }
+            url: tarballURL,
+          },
         }, 'error');
         reject(err);
       })

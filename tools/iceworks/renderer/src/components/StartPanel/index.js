@@ -45,7 +45,7 @@ class StartPanel extends Component {
     }
 
     if (startRecommendMaterials.error) {
-      return <EmptyTips size={120} style={{margin: '0 10px'}}>{startRecommendMaterials.error}</EmptyTips>
+      return <EmptyTips size={120} style={{ margin: '0 10px' }}>{startRecommendMaterials.error}</EmptyTips>;
     }
 
     return (
