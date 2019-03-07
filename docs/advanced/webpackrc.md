@@ -124,7 +124,7 @@ babel-loader 有一个 exclude 的配置，用于过滤某些目录下的文件�
   // 配置特定包要经过 babel 编译
   // 该字符串会经过 new RegExp() 转换为正则然后传递给 babel-loader
   // 不同的 npm client 的路径可能有差异，请按照具体路径书写正则
-  "babelExclude": "node_modules\/(?!_@ali_lib-ucc)"
+  "babelExclude": "node_modules\\/(?!_@ali_lib-ucc)"
 }
 ```
 
