@@ -326,11 +326,7 @@ export default {
 
     // 检测到含有 @ali 的包自动将路径设置为集团内部
     const hasAli = dependencies.some((dep) => {
-      return (
-        dep.startsWith('@ali/') ||
-        dep.startsWith('@alife/') ||
-        dep.startsWith('@alifd/')
-      );
+      return dep.startsWith('@ali/') || dep.startsWith('@alife/');
     });
 
     // 检测到是否包含 midway 依赖
