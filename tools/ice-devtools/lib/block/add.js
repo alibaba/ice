@@ -23,19 +23,18 @@ module.exports = async function addBlock(cwd, opt = {}) {
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
   const dest = path.join(cwd, 'blocks', name);
 
-  generate({
-    src,
-    dest,
-    name,
-    npmName,
-    meta,
-    callback: (err) => {
-      if (err) {
-        logger.fatal(err);
-      }
-      completedMessage(name, dest);
-    }
-  });
+  try {
+    await generate({
+      src,
+      dest,
+      name,
+      npmName,
+      meta
+    });
+    completedMessage(name, dest);
+  } catch(e) {
+    logger.fatal(e);
+  }
 };
 
 function defaultQuestion(npmPrefix) {

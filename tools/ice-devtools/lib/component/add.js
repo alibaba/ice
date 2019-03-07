@@ -24,19 +24,18 @@ module.exports = async function addComponent(cwd, opt = {}) {
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
   const dest = standalone ? cwd : path.join(cwd, 'components', name);
 
-  generate({
-    src,
-    dest,
-    name,
-    npmName,
-    meta,
-    callback: (err) => {
-      if (err) {
-        logger.fatal(err);
-      }
-      completedMessage(name, dest, standalone);
-    }
-  });
+  try {
+    await generate({
+      src,
+      dest,
+      name,
+      npmName,
+      meta
+    });
+    completedMessage(name, dest, standalone);
+  } catch(e) {
+    logger.fatal(e);
+  }
 };
 
 function defaultQuestion(prefix) {

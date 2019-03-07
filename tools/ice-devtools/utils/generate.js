@@ -19,13 +19,25 @@ const innerNet = require('../utils/inner-net');
 const TEMPLATE_PATH = '.template';
 
 // register handlebars helper
-Handlebars.registerHelper('if_eq', (a, b, opts) => {
-  return a === b ? opts.fn(this) : opts.inverse(this);
+Handlebars.registerHelper('if_eq', (a, b, meta) => {
+  return a === b ? meta.fn(this) : meta.inverse(this);
 });
 
-Handlebars.registerHelper('unless_eq', (a, b, opts) => {
-  return a === b ? opts.inverse(this) : opts.fn(this);
+Handlebars.registerHelper('unless_eq', (a, b, meta) => {
+  return a === b ? meta.inverse(this) : meta.fn(this);
 });
+
+module.exports = (options) => {
+  return new Promise((resolve, reject) => {
+    generate(options, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
 
 /**
  * Generate a template given a `src` and `dest`.
@@ -36,14 +48,14 @@ Handlebars.registerHelper('unless_eq', (a, b, opts) => {
  * @param {String} dest
  * @param {Function} done
  */
-module.exports = function generate(options) {
+function generate(options, done) {
   const {
     src,
     dest,
     name,
     npmName,
-    callback : done,
-    meta: opts
+    meta = {},
+    ...opts
   } = options;
 
   debug('%j', { name, src, dest });
@@ -59,32 +71,37 @@ module.exports = function generate(options) {
     kebabClassName: kebabCase(name).replace(/^-/, ''),
     inPlace: dest === process.cwd(),
     noEscape: true,
-    registry: innerNet.getRegistry(npmName || name)
+    registry: innerNet.getRegistry(npmName || name),
+    ...opts
   });
   debug('%j', data);
   
-  opts.helpers &&
-    Object.keys(opts.helpers).map((key) => {
-      Handlebars.registerHelper(key, opts.helpers[key]);
+  meta.helpers &&
+    Object.keys(meta.helpers).map((key) => {
+      Handlebars.registerHelper(key, meta.helpers[key]);
     });
 
   const helpers = { chalk, logger };
 
-  if (opts.metalsmith && typeof opts.metalsmith.before === 'function') {
-    opts.metalsmith.before(metalsmith, opts, helpers);
+  if (meta.metalsmith && typeof meta.metalsmith.before === 'function') {
+    meta.metalsmith.before(metalsmith, meta, helpers);
+  }
+
+  if (meta.prompts) {
+    metalsmith
+    .use(askQuestions(meta.prompts))
   }
 
   metalsmith
-    .use(askQuestions(opts.prompts))
-    .use(filterFiles(opts.filters))
-    .use(renderTemplateFiles(opts.skipInterpolation))
-    .use(transformFile(opts))
+    .use(filterFiles(meta.filters))
+    .use(renderTemplateFiles(meta.skipInterpolation))
+    .use(transformFile(meta))
     .ignore([TEMPLATE_PATH, 'meta.js']);
 
-  if (typeof opts.metalsmith === 'function') {
-    opts.metalsmith(metalsmith, opts, helpers);
-  } else if (opts.metalsmith && typeof opts.metalsmith.after === 'function') {
-    opts.metalsmith.after(metalsmith, opts, helpers);
+  if (typeof meta.metalsmith === 'function') {
+    meta.metalsmith(metalsmith, meta, helpers);
+  } else if (meta.metalsmith && typeof meta.metalsmith.after === 'function') {
+    meta.metalsmith.after(metalsmith, meta, helpers);
   }
 
   metalsmith
@@ -94,11 +111,11 @@ module.exports = function generate(options) {
     .build((err, files) => {
       // 需要显性控制从物料 meta.js 中提取出来的 message 展现时机
       done(err, () => {
-        if (typeof opts.complete === 'function') {
+        if (typeof meta.complete === 'function') {
           const helpers = { chalk, logger, files };
-          opts.complete(data, helpers);
+          meta.complete(data, helpers);
         } else {
-          logMessage(opts.completeMessage, data);
+          logMessage(meta.completeMessage, data);
         }
       });
     });

@@ -15,6 +15,7 @@ const download = require('../utils/download');
 const innerNet = require('../utils/inner-net');
 const getOptions = require('../utils/options');
 const addComponent = require('./add');
+const generateDemo = require('../utils/generate-marterials-demo');
 
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
@@ -154,7 +155,7 @@ async function initAsk(options = {}) {
  * @param {object} opt
  * @param {object} argsOpt
  */
-function run(opt, argsOpt) {
+async function run(opt, argsOpt) {
   let { template, name } = opt;
   const { cwd } = argsOpt;
   const tmp = path.join(home, '.ice-templates', template);
@@ -166,17 +167,7 @@ function run(opt, argsOpt) {
     if (exists(templatePath)) {
       const src = path.join(templatePath, 'template');
       const meta = getOptions(name, templatePath);
-
-      generate({
-        name, 
-        src,
-        dest: cwd, 
-        meta,
-        callback: (err, cb) => {
-          if (err) logger.fatal(err);
-          initCompletedMessage(cwd, name);
-        }
-      });
+      await generateProject(name, src, cwd, meta);
     } else {
       logger.fatal('Local template "%s" not found.', template);
     }
@@ -200,27 +191,32 @@ function downloadAndGenerate({ template, tmp, to, name }) {
   if (exists(tmp)) rm(tmp);
 
   download({ template })
-    .then(() => {
+    .then(async () => {
       spinner.stop();
 
       const src = path.join(tmp, 'template');
       const meta = getOptions(name, tmp);
-
-      generate({
-        name, 
-        src, 
-        dest: to,
-        meta,
-        callback: (err, cb) => {
-          if (err) logger.fatal(err);
-          initCompletedMessage(to, name);
-        }
-      });
+      await generateProject(name, src, to, meta);
     })
     .catch((err) => {
       spinner.stop();
       logger.fatal(`Failed to download repo ${template} : ${err.stack}`);
     });
+}
+
+async function generateProject(name, src, dest, meta) {
+  try {
+    await generate({
+      name,
+      src,
+      dest,
+      meta
+    });
+    await generateDemo(src, dest);
+    initCompletedMessage(src, dest, name);
+  } catch(e) {
+    logger.fatal(e);
+  }
 }
 
 function initCompletedMessage(appPath, appName) {
