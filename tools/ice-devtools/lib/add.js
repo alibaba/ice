@@ -130,7 +130,7 @@ async function addForIceProject(cwd) {
  * @param {string} type 
  * @param {string} cwd 
  */
-async function getTemplatePath(frameworkType, templateType, cwd) {
+async function getTemplatePath(framework, templateType, cwd) {
   const templateRoot = path.join(cwd, `.template`);
 
   if (exists(templateRoot)) {
@@ -143,15 +143,17 @@ async function getTemplatePath(frameworkType, templateType, cwd) {
     }
   }
 
+
   // HACK: 兼容 ice-react-app-template
   if (templateType === 'scaffold') {
     templateType = 'app';
   }
 
-  const templateName = `@icedesign/ice-${frameworkType}-${templateType}-template`;
-  const templatePath = await downloadTemplate(templateName);
+  const templateName = `@icedesign/ice-${framework}-materials-template`;
+  const tmp = await downloadTemplate(templateName);
+  const templatePath = path.join(tmp, `template/.template/${templateType}`);
 
-  return path.join(templatePath, 'template');
+  return templatePath;
 }
 
 /**
