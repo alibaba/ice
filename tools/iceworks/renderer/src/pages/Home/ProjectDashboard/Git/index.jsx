@@ -16,6 +16,7 @@ import Icon from '../../../../components/Icon';
 import DialogBranches from './components/DialogBranches';
 import DialogNewBranch from './components/DialogNewBranch';
 import DialogChangeRemote from './components/DialogChangeRemote';
+import PluginHoc from '../PluginHoc';
 
 const { Group: ButtonGroup } = Button;
 const { Group: CheckboxGroup } = Checkbox;
@@ -24,8 +25,9 @@ const steps = ["Git init", "关联仓库"];
 
 @inject('projects', 'git')
 @observer
-export default class GitPanel extends Component {
+class GitPanel extends Component {
   static extensionName = 'git';
+  static displayName = 'Git';
 
   constructor(props) {
     super(props);
@@ -43,12 +45,12 @@ export default class GitPanel extends Component {
     const { git, projects } = this.props;
     try {
       git.checkIsRepo();
-      ipcRenderer.on('focus', this.handleReload);
+      // ipcRenderer.on('focus', this.handleReload);
       projects.on('change', this.onProjectChange);
     } catch (error) {
       let errMsg = (error && error.message) || '仓库地址错误';
       if (error && error.message && error.message.includes('ENOENT')) {
-        errMsg = 'git 插件在当前项目不可用，请在插件设置中关闭。不可用原因可能为：项目读写权限问题，或者 simple-git 包在当前 node 环境下不可用';
+        errMsg = 'git 插件在当前项目不可用，请在插件设置中关闭，使用其他方式操作git。不可用原因可能为：项目读写权限问题，或者 simple-git 包在当前环境下不可用';
       }
       Dialog.alert({
         title: '提示',
@@ -64,7 +66,7 @@ export default class GitPanel extends Component {
   componentWillUnmount() {
     const { git, projects } = this.props;
 
-    ipcRenderer.removeListener('focus', this.handleReload);
+    // ipcRenderer.removeListener('focus', this.handleReload);
     projects.removeListener('change', this.onProjectChange);
   }
 
@@ -131,6 +133,7 @@ export default class GitPanel extends Component {
   renderStep1 = () => {
     const { git } = this.props;
     const { init } = this.field;
+
     return (
       <div
         style={{
@@ -283,7 +286,6 @@ export default class GitPanel extends Component {
   renderMainPanel = () => {
     const { git = {} } = this.props;
     const dataSource = this.getFiles();
-
     return (
       <div style={styles.mainPanel}>
         <div style={styles.topContainer}>
@@ -516,6 +518,9 @@ export default class GitPanel extends Component {
     );
   }
 }
+
+// export default GitPanel;
+export default PluginHoc(GitPanel);
 
 const styles = {
   statusTag: {

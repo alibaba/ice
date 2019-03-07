@@ -88,11 +88,6 @@ class ProjectDashboard extends Component {
     this.props.extensions.sortStart();
   };
 
-  componentDidCatch(error, info) {     
-    log.error('extension error');
-    log.error(error, info);
-  }
-
   onSortEnd = ({ oldIndex, newIndex }) => {
     if (oldIndex !== newIndex) {
       const { orderByName } = this.props.extensions;
