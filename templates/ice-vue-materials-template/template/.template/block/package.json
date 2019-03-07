@@ -1,30 +1,14 @@
 {
-  "name": "{{name}}",
+  "name": "{{name}}-block",
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
-  "files": [
-    "src/",
-    "build/",
-    "screenshot.png"
-  ],
+  "files": ["src/","lib/"],
   "license": "MIT",
-  "keywords": ["ice","react","block"],
-  "scripts": {
-    "start": "ice-devtools start",
-    "build": "ice-devtools build",
-    "screenshot": "ice-devtools screenshot",
-    "prepublishOnly": "npm run build && npm run screenshot"
-  },
+  "keywords": ["ice", "vue", "block"],
   "dependencies": {
-    "prop-types": "^15.5.8"
-  },
-  "devDependencies": {
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0"
-  },
-  "publishConfig": {
-    "registry": "{{registry}}"
+    "@vue-materials/basic-container": "^1.0.0",
+    "vue": "^2.5.16"
   },
   "blockConfig": {
     "name": "{{name}}",
@@ -33,6 +17,7 @@
       {{#each categories}}
         "{{@key}}"{{#if @last}} {{else}},{{/if}}
       {{/each}}
-    ]
+    ],
+    "screenshot": ""
   }
 }

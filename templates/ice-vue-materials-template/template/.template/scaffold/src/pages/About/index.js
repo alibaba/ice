@@ -1,14 +1,3 @@
-import React, { Component } from 'react';
-import Greeting from '../../components/Greeting';
+import About from './About.vue';
 
-export default class About extends Component {
-  render() {
-    const links = [
-      {
-        text: '返回首页',
-        path: '/',
-      },
-    ];
-    return <Greeting title="关于页面" links={links} />;
-  }
-}
+export default About;
