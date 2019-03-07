@@ -223,6 +223,7 @@ class SettingsMaterials {
         return {
           name: item.name,
           source: item.source,
+          backupSource: item.backupSource,
           builtIn: item.builtIn,
           type: item.type,
         };

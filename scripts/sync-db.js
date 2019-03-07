@@ -3,6 +3,7 @@ const co = require('co');
 const { readdirSync, readFileSync, writeFile } = require('fs');
 const path = require('path');
 const request = require('request');
+const { publishMaterialsDB } = require('./materials-db-publish');
 const scaffolds = require('./scaffolds');
 
 if (
@@ -47,6 +48,8 @@ sortScaffoldMaterials()
     Promise.all(tasks)
       .then(() => {
         console.log('All Done');
+        // 物料源数据发布到npm，作为兜底备份
+        publishMaterialsDB();
       })
       .catch((err) => {
         console.log('upload err', err);

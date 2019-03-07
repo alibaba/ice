@@ -12,6 +12,8 @@ const defaultSettings = {
   shortcutKey: 'CommandOrControl+alt+P',
   // 用户配置的物料源列表
   materials: defaultMaterials,
+  // 是否使用备用物料源
+  isMaterialsBackup: false
 };
 
 module.exports = {
@@ -24,6 +26,15 @@ module.exports = {
       const [key, value] = option;
       if (!this.has(key)) {
         this.set(key, value);
+      } else if (key === 'materials') {
+        // 重置用户本地的物料源配置，添加加了备份地址，保留原有额外设置，比如checked
+        const oldMaterials = this.get('materials');
+        const newMaterials = oldMaterials.map( (material, index) => {
+          return Object.assign(material, {
+            backupSource: value[index].backupSource
+          });
+        });
+        this.set(key, newMaterials);
       }
     });
   },
