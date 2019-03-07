@@ -5,9 +5,7 @@ const ora = require('ora');
 const home = require('user-home');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
-const tildify = require('tildify');
 const rm = require('rimraf').sync;
-const spawn = require('cross-spawn');
 const validateName = require('validate-npm-package-name');
 
 const logger = require('../utils/logger');
@@ -31,7 +29,6 @@ module.exports = async function init(cwd) {
     const options = Object.assign({ 
       cwd, 
       template: process.env.TEMPLATE,
-      localTemplate: process.env.LOCAL_TEMPLATE
     });
 
     const answers = await initAsk(options);
@@ -126,9 +123,7 @@ async function initAsk(options = {}) {
     },
   ]);
 
-  const customTemplatePath = options.template || options.localTemplate;
-
-  const { template } = await (!customTemplatePath
+  const { template } = await (!options.template
     ? inquirer.prompt([
         {
           type: 'list',
@@ -146,7 +141,7 @@ async function initAsk(options = {}) {
           ],
         },
       ])
-    : { template: customTemplatePath });
+    : { template: options.template });
 
   return {
     name: scope ? `${scope}/${name}` : name,
@@ -161,14 +156,8 @@ async function initAsk(options = {}) {
  */
 function run(opt, argsOpt) {
   let { template, name } = opt;
-  const { offline, cwd } = argsOpt;
+  const { cwd } = argsOpt;
   const tmp = path.join(home, '.ice-templates', template);
-
-  // 检查是否离线模式
-  if (offline) {
-    console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`);
-    template = tmp;
-  }
 
   // 如果是本地模板则从缓存读取，反之从 npm 源下载初始模板
   if (isLocalPath(template)) {

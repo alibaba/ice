@@ -74,7 +74,7 @@ async function addForStandaloneProject(cwd, options) {
   const framework = process.env.FRAMEWORK || 'react';
   const npmPrefix = options.scope ? `${options.scope}/` : '';
 
-  const templatePath = await getTemplatePath( framework, type, cwd);
+  const templatePath = await getTemplatePath(framework, type, cwd);
 
   require(`./${type}/add`)(cwd, {
     npmPrefix,
@@ -131,6 +131,12 @@ async function addForIceProject(cwd) {
  * @param {string} cwd 
  */
 async function getTemplatePath(framework, templateType, cwd) {
+  // from command args
+  if (process.env.TEMPLATE) {
+    return process.env.TEMPLATE;
+  }
+
+  // from local .template file
   const templateRoot = path.join(cwd, `.template`);
 
   if (exists(templateRoot)) {
@@ -143,12 +149,7 @@ async function getTemplatePath(framework, templateType, cwd) {
     }
   }
 
-
-  // HACK: 兼容 ice-react-app-template
-  if (templateType === 'scaffold') {
-    templateType = 'app';
-  }
-
+  // form npm package
   const templateName = `@icedesign/ice-${framework}-materials-template`;
   const tmp = await downloadTemplate(templateName);
   const templatePath = path.join(tmp, `template/.template/${templateType}`);

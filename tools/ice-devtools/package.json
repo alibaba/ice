@@ -80,7 +80,6 @@
     "sass-loader": "^7.1.0",
     "semver": "^5.6.0",
     "tar": "^2.2.1",
-    "tildify": "^1.2.0",
     "uglifyjs-webpack-plugin": "^2.1.2",
     "uppercamelcase": "^3.0.0",
     "url-loader": "^1.1.2",
