@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ts-scaffold",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "该模板基于 TypeScript 适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示",
   "homepage": "https://unpkg.com/@icedesign/ts-scaffold@latest/build/index.html",
   "files": [
@@ -33,8 +33,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "ice-scripts": "^1.8.3",
-    "typescript": "^3.3.3"
+    "ice-scripts": "^1.8.3"
   },
   "scripts": {
     "start": "ice dev",
