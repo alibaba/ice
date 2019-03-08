@@ -51,6 +51,7 @@
     "node-pty": "^0.7.6",
     "npm": "^5.6.0",
     "npm-run-path": "^2.0.2",
+    "nrm": "^1.1.0",
     "path-exists": "^3.0.0",
     "prettier": "^1.12.1",
     "ramda": "^0.25.0",

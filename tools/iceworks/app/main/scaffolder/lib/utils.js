@@ -1,3 +1,4 @@
+/* eslint: eslint-disable-next-line:0 prefer-const:0 */
 const debug = require('debug')('utils');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
@@ -22,56 +23,73 @@ const autoRetry = require('../../utils/autoRetry');
 /**
  * 批量下载 block 到页面中
  *
- * @param {string} clientPath 前端项目地址地址
- * @param {string} clientSrcPath 前端资源地址地址
+ * @param {string} clientPath 前端项目地址
+ * @param {string} clientSrcPath 前端资源地址
  * @param {array} blocks 区块数组
  * @param {string} pageName 页面名称
  */
-async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageName, progressFunc }) {
+async function downloadBlocksToPage({
+  clientPath,
+  clientSrcPath,
+  blocks,
+  pageName,
+  progressFunc,
+}) {
   let err, filesList, depList;
 
-  // eslint-disable-next-line prefer-const
-  [err, filesList] = await to(Promise.all(
-    blocks.map(async (block) => {
-      return await downloadBlockToPage({ clientPath, clientSrcPath, pageName, block }, progressFunc);
-    })
-  ));
+  [err, filesList] = await to(
+    Promise.all(
+      blocks.map(async (block) => {
+        return await downloadBlockToPage(
+          { clientPath, clientSrcPath, pageName, block },
+          progressFunc
+        );
+      })
+    )
+  );
   if (err) {
     throw err;
   }
 
   const pkg = getPackageByPath(clientPath);
   const projectVersion = getProjectVersion(pkg);
-  // eslint-disable-next-line prefer-const
-  [err, depList] = await to(Promise.all(
-    filesList.map(async (_, idx) => {
-      const block = blocks[idx];
-      // 根据项目版本下载依赖
-      // 兼容旧版物料源
-      if (block.npm && block.version && (block.type !== 'custom')) {
-        return getDependenciesFromNpm({
-          npm: block.npm,
-          version: block.version,
-        });
-      } else if (block.source && block.source.type === 'npm' && (block.type !== 'custom')) {
-        let version = block.source.version;
-        // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
-        if (projectVersion === '1.x') {
-          // 兼容没有'version-0.x'字段的情况
-          version = block.source['version-0.x'] || block.source.version;
+
+  [err, depList] = await to(
+    Promise.all(
+      filesList.map(async (_, idx) => {
+        const block = blocks[idx];
+        // 根据项目版本下载依赖
+        // 兼容旧版物料源
+        if (block.npm && block.version && block.type !== 'custom') {
+          return getDependenciesFromNpm({
+            npm: block.npm,
+            version: block.version,
+          });
+        } else if (
+          block.source &&
+          block.source.type === 'npm' &&
+          block.type !== 'custom'
+        ) {
+          let version = block.source.version;
+          // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
+          if (projectVersion === '1.x') {
+            // 兼容没有'version-0.x'字段的情况
+            version = block.source['version-0.x'] || block.source.version;
+          }
+          return getDependenciesFromNpm({
+            version,
+            npm: block.source.npm,
+            registry: block.source.registry,
+          });
+        } else if (block.type === 'custom') {
+          return getDependenciesFromCustom(block);
         }
-        return getDependenciesFromNpm({
-          version,
-          npm: block.source.npm,
-          registry: block.source.registry,
-        });
-      } else if (block.type === 'custom') {
-        return getDependenciesFromCustom(block);
-      }
-    })
-  ));
+      })
+    )
+  );
+
   if (err) {
-    throw err;
+    throw new Error('获取当前区块的依赖失败');
   }
 
   // 合并依赖
@@ -92,16 +110,28 @@ async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageNam
   };
 }
 
-async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName }, progressFunc) {
+async function downloadBlockToPage(
+  { clientPath, clientSrcPath, block, pageName },
+  progressFunc
+) {
   if (!block || (!block.source && block.type !== 'custom')) {
     throw new Error(
       'block need to have specified source at download block to page method.'
     );
   }
 
-  const componentsDir = path.join(clientSrcPath, 'pages', pageName, 'components');
+  // 区块下载目录
+  const componentsDir = path.join(
+    clientSrcPath,
+    'pages',
+    pageName,
+    'components'
+  );
+
   // 保证文件夹存在
   mkdirp.sync(componentsDir);
+
+  // 日志上报
   logger.report('app', {
     action: 'download-block',
     data: {
@@ -112,41 +142,46 @@ async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName 
   // 根据项目版本下载
   const pkg = getPackageByPath(clientPath);
   const projectVersion = getProjectVersion(pkg);
+  const blockName =
+    block.alias || upperCamelCase(block.name) || block.className;
 
-  let err,
-    tarballURL,
-    allFiles;
-  const blockName = block.alias || upperCamelCase(block.name) || block.className;
+  let err, tarballURL, allFiles;
 
+  // 通过 iceland 自定义的区块
   if (block.type === 'custom') {
-    [err, allFiles] = await to(extractCustomBlock(
-      block,
-      path.join(
-        componentsDir,
-        blockName
-      ),
-      progressFunc
-    ));
+    [err, allFiles] = await to(
+      extractCustomBlock(
+        block,
+        path.join(componentsDir, blockName),
+        progressFunc
+      )
+    );
     if (err) {
       throw new Error(`解压自定义区块${blockName}出错，请重试`);
     }
     return allFiles;
   }
 
-  // eslint-disable-next-line prefer-const
-  [err, tarballURL] = await to(materialUtils.getTarballURLBySource(block.source, projectVersion));
+  // 通过 npm 源获取区块
+  [err, tarballURL] = await to(
+    materialUtils.getTarballURLBySource(block.source, projectVersion)
+  );
+
   if (err) {
-    throw err;
+    throw new Error('请求区块 tarball 包失败');
   }
 
-  [err, allFiles] = await to(retryExtractBlock(
-    path.join(componentsDir, blockName),
-    tarballURL,
-    clientPath,
-    progressFunc
-  ));
+  [err, allFiles] = await to(
+    retryExtractBlock(
+      path.join(componentsDir, blockName),
+      tarballURL,
+      clientPath,
+      progressFunc
+    )
+  );
+
   if (err) {
-    if (err.code === 'ETIMEDOUT') {
+    if (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT') {
       throw new Error(`解压区块${blockName}超时，请重试`);
     }
     throw new Error(`解压区块${blockName}出错, 请重试`);
@@ -189,7 +224,12 @@ function getProjectVersion(pkg) {
  * @param ignoreFiles
  * @returns {Promise<any>}
  */
-function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) {
+function extractBlock(
+  destDir,
+  tarballURL,
+  clientPath,
+  progressFunc = () => {}
+) {
   return new Promise((resolve, reject) => {
     debug('npmTarball', tarballURL);
     const allFiles = [];
@@ -204,14 +244,17 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
         progressFunc(state);
       })
       .on('error', (err) => {
-        alilog.report({
-          type: 'download-tarball-error',
-          msg: err.message,
-          stack: err.stack,
-          data: {
-            url: tarballURL
-          }
-        }, 'error');
+        alilog.report(
+          {
+            type: 'download-tarball-error',
+            msg: err.message,
+            stack: err.stack,
+            data: {
+              url: tarballURL,
+            },
+          },
+          'error'
+        );
         reject(err);
       })
       .pipe(zlib.Unzip()) // eslint-disable-line
@@ -257,8 +300,11 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
 // 超时自动重试
 const retryCount = 2;
 const retryExtractBlock = autoRetry(extractBlock, retryCount, (err) => {
-  if (!err.code || (err.code !== 'ETIMEDOUT' && err.code !== 'ESOCKETTIMEDOUT')) {
-    throw (err);
+  if (
+    !err.code ||
+    (err.code !== 'ETIMEDOUT' && err.code !== 'ESOCKETTIMEDOUT')
+  ) {
+    throw err;
   }
 });
 
@@ -305,7 +351,7 @@ function getDependenciesFromNpm({ npm, version = 'latest', registry }) {
 }
 
 const lang = 'cn';
-exports.createInterpreter = function (type, data = {}, interpreter) {
+exports.createInterpreter = function(type, data = {}, interpreter) {
   const localeObj = config.locale[type] || config.locale.unknown;
   const message = localeObj[lang];
   return new Promise((resolve) => {
@@ -318,7 +364,7 @@ exports.createInterpreter = function (type, data = {}, interpreter) {
 /**
  * 检测是否是合法的 ICE 项目
  */
-exports.checkValidICEProject = function (dir) {
+exports.checkValidICEProject = function(dir) {
   if (!fs.existsSync(dir)) {
     return false;
   }
@@ -359,7 +405,10 @@ function extractCustomBlock(block, BlockDir, progressFunc) {
     const allFiles = [];
     const codeFileTree = block.code;
     mkdirp.sync(BlockDir);
-    fs.writeFileSync(path.join(BlockDir, 'index.jsx'), codeFileTree['index.jsx']);
+    fs.writeFileSync(
+      path.join(BlockDir, 'index.jsx'),
+      codeFileTree['index.jsx']
+    );
     allFiles.push(path.join(BlockDir, 'index.jsx'));
     progressFunc({
       percent: 1,
@@ -389,4 +438,3 @@ exports.getDependenciesFromNpm = getDependenciesFromNpm;
 exports.getDependenciesFromMaterial = getDependenciesFromMaterial;
 exports.downloadBlockToPage = downloadBlockToPage;
 exports.downloadBlocksToPage = downloadBlocksToPage;
-
