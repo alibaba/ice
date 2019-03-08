@@ -1,4 +1,5 @@
 const log = require('./logger');
+const alilog = require('./alilog');
 
 global.log = log;
 
@@ -38,10 +39,11 @@ services.createTouchBar = createTouchBar;
 process
   .on('error', (error) => {
     log.error(error.stack);
-    log.report('app', {
-      type: 'error',
-      error: JSON.stringify(error.message),
-    });
+    alilog.report({
+      type: 'process-error',
+      msg: error.message,
+      stack: error.stack,
+    }, 'error');
     dialog.showMessageBox({
       title: '程序异常',
       type: 'error',
@@ -53,11 +55,11 @@ process
   })
   .on('unhandledRejection', (reason, promise) => {
     log.error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
-    log.report('app', {
-      type: 'unhandled-rejection',
+    alilog.report({
+      type: 'process-unhandled-rejection',
       reason,
       promise,
-    });
+    }, 'error');
     dialog.showMessageBox({
       title: '程序异常',
       type: 'error',
@@ -69,10 +71,11 @@ process
   })
   .on('uncaughtException', (error) => {
     log.error(error.stack);
-    log.report('app', {
-      type: 'uncaught-exception',
-      error: JSON.stringify(error.message),
-    });
+    alilog.report({
+      type: 'process-uncaught-exception',
+      msg: JSON.stringify(error.message),
+      stack: error.stack,
+    }, 'error');
     dialog.showMessageBox({
       title: '程序异常',
       type: 'error',

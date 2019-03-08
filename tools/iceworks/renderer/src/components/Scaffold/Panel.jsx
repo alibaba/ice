@@ -26,6 +26,10 @@ class Panel extends Component {
     const { material } = this.props;
     const scaffolds = material.scaffolds || null;
 
+    if (material.error) {
+      return <EmptyTips size={120} style={{margin: '0 10px'}}>{material.error}</EmptyTips>;
+    }
+
     if (!scaffolds) {
       return <EmptyTips size={120}>加载中...</EmptyTips>;
     }

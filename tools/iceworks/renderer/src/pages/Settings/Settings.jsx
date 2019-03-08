@@ -6,21 +6,22 @@ import {
   Select,
   Field,
   Input,
-  Button,
+  Balloon,
 } from '@icedesign/base';
 import { remote } from 'electron';
 import Notification from '@icedesign/notification';
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 
-const { registries: originRegistries } = remote.require('./shared');
 import RecommendMaterials from './RecommendMaterials';
 import CustomMaterials from './CustomMaterials';
 import Separator from './Separator';
 import services from '../../services';
 import filterRegistry from '../../lib/filter-registry';
 import BrowserLink from '../../components/BrowserLink';
-const { settings, shared } = services;
+
+const { registries: originRegistries } = remote.require('./shared');
+const { settings, nrm } = services;
 const { Shell } = services.shells.shared;
 const { ExternalEditor, CUSTOM_EDITOR } = services.editors.shared;
 
@@ -45,6 +46,8 @@ class Setting extends Component {
     const isRegistryCustom = this.checkRegistryIsCustom(registry);
 
     this.state = {
+      testing: false,
+      speedData: '',
       userconfig: userconfig || {},
       currentEditor: userconfig.editor || 'VisualStudioCode', // 当前选择的浏览器
       editorShell: userconfig.editorShell || '',
@@ -113,6 +116,32 @@ class Setting extends Component {
     }
   };
 
+  handleTestSpeed = (value) => {
+    this.setState(
+      {
+        testing: true,
+      },
+      () => {
+        this.getDownloadSpeed(value);
+      }
+    );
+  };
+
+  getDownloadSpeed = (registry) => {
+    const nrmArgs = ['test', registry];
+    return nrm
+      .run(nrmArgs, { cwd: '' })
+      .then((data) => {
+        this.setState({
+          speedData: data,
+          testing: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     const formItemLayout = {
       className: 'settings-item',
@@ -134,12 +163,16 @@ class Setting extends Component {
       };
     });
 
+    const registriesSource = ['cnpm', 'npm'];
+
     const externalEditorSource = Object.keys(ExternalEditor).map((name) => {
       return {
         label: ExternalEditor[name],
         value: name,
       };
     });
+
+    const { testing, speedData } = this.state;
 
     return (
       <div className="settings">
@@ -199,22 +232,6 @@ class Setting extends Component {
               </BrowserLink>
             </FormItem>
 
-            <FormItem label="NPM 源" {...formItemLayout}>
-              <Select
-                style={{
-                  width: 300,
-                }}
-                autoWidth={true}
-                dataSource={registries}
-                {...init('registry', {
-                  initValue: this.state.registryCustomVisible
-                    ? '__custom_registry__'
-                    : this.state.userconfig.registry ||
-                      'http://registry.npmjs.org',
-                })}
-              />
-            </FormItem>
-
             <FormItem
               style={{
                 display: this.state.registryCustomVisible ? 'flex' : 'none',
@@ -238,6 +255,63 @@ class Setting extends Component {
                 })}
                 placeholder="请输入自定义源地址"
               />
+            </FormItem>
+
+            <FormItem label="NPM 源" {...formItemLayout}>
+              <Select
+                style={{
+                  width: 300,
+                }}
+                autoWidth
+                dataSource={registries}
+                {...init('registry', {
+                  initValue: this.state.registryCustomVisible
+                    ? '__custom_registry__'
+                    : this.state.userconfig.registry ||
+                      'http://registry.npmjs.org',
+                })}
+              />
+            </FormItem>
+
+            <FormItem label="测试下载速度" {...formItemLayout}>
+              {registriesSource.map((registry, idx) => {
+                return (
+                  <Balloon
+                    triggerType="click"
+                    align="t"
+                    key={idx}
+                    trigger={
+                      <span
+                        onClick={() => this.handleTestSpeed(registry)}
+                        style={{
+                          margin: '0 5px',
+                          padding: '4px 8px',
+                          borderRadius: '20px',
+                          border: '1px solid #dcdee3',
+                          background: '#fff',
+                          display: 'inline-block',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {registry}
+                      </span>
+                    }
+                    closable={false}
+                  >
+                    <div>
+                      {testing ? (
+                        '正在测速中，请稍等...'
+                      ) : (
+                        <div>
+                          {speedData.indexOf('ms') === -1
+                            ? '请求超时，请点击重新测试'
+                            : speedData}
+                        </div>
+                      )}
+                    </div>
+                  </Balloon>
+                );
+              })}
             </FormItem>
 
             <FormItem label="消息提示音" {...formItemLayout}>

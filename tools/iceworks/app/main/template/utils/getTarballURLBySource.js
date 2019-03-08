@@ -14,10 +14,11 @@
   * "projectVersion": "1.x" // "0.x"
 
  */
+const to = require('await-to-js').default;
 const npmRequest = require('../../utils/npmRequest');
 
 module.exports = function getTarballURLBySource(source = {}, projectVersion) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     let version = source.version;
     // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
     if (projectVersion === '1.x') {
@@ -25,14 +26,23 @@ module.exports = function getTarballURLBySource(source = {}, projectVersion) {
       version = source['version-0.x'] || source.version;
     }
 
-    npmRequest({
-      name: source.npm,
-      version,
-      registry: source.registry,
-    })
-      .then((pkgData) => {
-        resolve(pkgData.dist.tarball);
+    const registry =
+      typeof source.npm === 'string' && source.npm.startsWith('@icedesign')
+        ? 'https://registry.npm.taobao.org'
+        : source.registry;
+
+    let err, pkgData;
+    [err, pkgData] = await to(
+      npmRequest({
+        name: source.npm,
+        version,
+        registry,
       })
-      .catch(reject);
+    );
+    if (err) {
+      reject(err);
+    } else {
+      resolve(pkgData.dist.tarball);
+    }
   });
 };

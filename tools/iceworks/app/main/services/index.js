@@ -2,7 +2,9 @@ const editors = require('./editors');
 const folder = require('./folder');
 const interaction = require('./interaction');
 const log = require('../logger');
+const alilog = require('../alilog');
 const npm = require('./npm');
+const nrm = require('./nrm');
 const scaffolder = require('../scaffolder');
 const sessions = require('./sessions');
 const settings = require('./settings');
@@ -22,7 +24,9 @@ module.exports = {
   interaction,
   templateBuilderUtils,
   log,
+  alilog,
   npm,
+  nrm,
   scaffolder,
   sessions,
   settings,
