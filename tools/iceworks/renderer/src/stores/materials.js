@@ -14,7 +14,7 @@ import services from '../services';
 import history from '../history';
 import projects from './projects';
 
-const { settings } = services;
+const { settings, shared } = services;
 
 class Materials {
   @observable
@@ -179,12 +179,12 @@ class Materials {
         const { iceBaseMaterials } = shared;
         const iceBaseMaterial = iceVersion === '0.x' ? iceBaseMaterials[0] : iceBaseMaterials[1];
         promiseAll = Promise.all([
-          this.fetchByMaterial(material),
-          this.fetchByMaterial(iceBaseMaterial),
+          this.fetchByMaterial(source),
+          this.fetchByMaterial(iceBaseMaterial.source),
         ]);
       } else {
         promiseAll = Promise.all([
-          this.fetchByMaterial(material),
+          this.fetchByMaterial(source),
         ]);
       }
 
