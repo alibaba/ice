@@ -8,12 +8,10 @@ const semver = require("semver");
 function publishMaterialsDB() {
   
   // 1. 创建临时文件夹
-  const cwd = process.cwd();
-  const tempDir = path.join(cwd, 'tempDir');
-  rimraf.sync(tempDir);
-  let tempLibDir;
+  const tempDir = path.join(__dirname, 'tempDir');
+  rimraf.sync(tempDir); // 初始化删除
   fs.mkdirSync(tempDir);
-  tempLibDir = path.join(tempDir, 'lib');
+  const tempLibDir = path.join(tempDir, 'lib');
   fs.mkdirSync(tempLibDir);
 
   // 2 同步build下物料源配置文件到 tempDir/src 下
@@ -53,8 +51,8 @@ function publishMaterialsDB() {
   .then((pkgData) => {
     //  版本号自增1
     pkgConfig.version = semver.inc(pkgData.version, 'patch');
-    const pkg = path.join(tempDir, 'package.json');
-    fs.writeFileSync(pkg, JSON.stringify(pkgConfig));
+    const pkgPath = path.join(tempDir, 'package.json');
+    fs.writeFileSync(pkgPath, JSON.stringify(pkgConfig));
     // 4. 发布
     exec('npm publish', {
       cwd: tempDir

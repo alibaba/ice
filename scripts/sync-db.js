@@ -45,16 +45,15 @@ sortScaffoldMaterials()
 
     const tasks = files.map(createUploadTask);
 
-    Promise.all(tasks)
+    return Promise.all(tasks)
       .then(() => {
         console.log('All Done');
-        // 物料源数据发布到npm，作为兜底备份
-        return publishMaterialsDB();
       })
       .catch((err) => {
         console.log('upload err', err);
       });
   })
+  .then(publishMaterialsDB) // 物料源数据发布到npm，作为兜底备份
   .catch((err) => {
     console.log('sort err', err);
   });
