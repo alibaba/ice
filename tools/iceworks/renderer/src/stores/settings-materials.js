@@ -80,6 +80,7 @@ class SettingsMaterials {
     const saveMaterials = defaultMaterials.map((item) => ({ ...item }));
     this.builtInMaterialsValue = this.filterBuiltInMaterials(saveMaterials);
     settings.set('materials', saveMaterials);
+    settings.set('isMaterialsBackup', false);
     this.notification('官方物料源重置成功');
   }
 
@@ -223,6 +224,7 @@ class SettingsMaterials {
         return {
           name: item.name,
           source: item.source,
+          backupSource: item.backupSource,
           builtIn: item.builtIn,
           type: item.type,
         };

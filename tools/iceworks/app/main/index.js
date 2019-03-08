@@ -42,7 +42,7 @@ process
     alilog.report({
       type: 'process-error',
       msg: error.message,
-      stack: error.stack
+      stack: error.stack,
     }, 'error');
     dialog.showMessageBox({
       title: '程序异常',
@@ -57,8 +57,8 @@ process
     log.error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
     alilog.report({
       type: 'process-unhandled-rejection',
-      reason: reason,
-      promise: promise
+      reason,
+      promise,
     }, 'error');
     dialog.showMessageBox({
       title: '程序异常',
@@ -74,7 +74,7 @@ process
     alilog.report({
       type: 'process-uncaught-exception',
       msg: JSON.stringify(error.message),
-      stack: error.stack
+      stack: error.stack,
     }, 'error');
     dialog.showMessageBox({
       title: '程序异常',

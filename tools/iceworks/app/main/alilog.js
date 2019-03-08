@@ -7,7 +7,7 @@ const { app } = require('electron');
  * @param {string} topic 类型：info / error
  * @param {object} data 健值参数
  *  data = {
- *    type: '', // 标识具体action / 
+ *    type: '', // 标识具体action /
  * }
  */
 const report = (data = {}, topic = 'info') => {
@@ -22,26 +22,26 @@ const report = (data = {}, topic = 'info') => {
     APIVersion: '0.6.0', // sls 必须的参数
     platform: `${process.platform}_${process.arch}`, // app 信息
     version: app.getVersion(), // iceworks版本信息
-  }
+  };
 
   // 构造参数
   const totalData = Object.assign(data, baseData);
   const dataKeyArray = Object.keys(totalData);
   const param = dataKeyArray.reduce((finnalStr, currentKey, index) => {
     const currentData = typeof totalData[currentKey] === 'string'
-        ? totalData[currentKey]
-        : JSON.stringify(totalData[currentKey]);
-    return `${finnalStr}${currentKey}=${currentData}${ dataKeyArray.length - 1 === index ? '' : '&' }`;
+      ? totalData[currentKey]
+      : JSON.stringify(totalData[currentKey]);
+    return `${finnalStr}${currentKey}=${currentData}${dataKeyArray.length - 1 === index ? '' : '&'}`;
   }, '');
 
-  url = url + param;
+  url += param;
 
   request({
     url,
     timeout: 2000,
   });
-}
+};
 
 module.exports = {
-  report
+  report,
 };

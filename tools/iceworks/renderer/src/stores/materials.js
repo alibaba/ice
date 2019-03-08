@@ -10,7 +10,7 @@ import AdditionalScaffolds from './additional-scaffolds';
 import filterMaterial from '../lib/filter-material';
 import services from '../services';
 
-const { settings, shared } = services;
+const { settings } = services;
 
 class Materials {
   @observable
@@ -96,18 +96,20 @@ class Materials {
     });
   }
 
-  fetchByMaterial(material) {
-    return requestMaterial(material.source);
+  fetchByMaterial(source) {
+    return requestMaterial(source);
   }
 
   /**
    * 启动页推荐模板
    */
+  @action
   loadStartRecommendMaterials() {
-    const recommendMaterialSource = shared.defaultMaterials[0];
+    const recommendMaterialSource = settings.get('materials')[0];
+    const isMaterialsBackup = settings.get('isMaterialsBackup');
     const startRecommendMaterials = this.startRecommendMaterials;
-
-    this.fetchByMaterial(recommendMaterialSource)
+    const source = isMaterialsBackup ? recommendMaterialSource.backupSource : recommendMaterialSource.source;
+    this.fetchByMaterial(source)
       .then((body = {}) => {
         const scaffolds = body.scaffolds || [];
         const { startRecommendScaffolds } = new AdditionalScaffolds(scaffolds);
@@ -117,16 +119,40 @@ class Materials {
         startRecommendMaterials.error = null;
       })
       .catch((error) => {
-        startRecommendMaterials.loaded = false;
-        startRecommendMaterials.error = error;
+        // 如果alicdn物料源访问超时 切换备份物料源
+        if (
+          error.code &&
+          (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT')
+        ) {
+          if (!isMaterialsBackup) {
+            this.switchToBackupMaterials(this.loadStartRecommendMaterials.bind(this));
+          } else {
+            startRecommendMaterials.loaded = true;
+            const url = recommendMaterialSource.source;
+            startRecommendMaterials.error = `物料源加载失败，请确认网络是否能直接访问此链接 ${url}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
+          }
+        } else {
+          startRecommendMaterials.loaded = true;
+          startRecommendMaterials.error = '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
+        }
       });
   }
 
+  switchToBackupMaterials(fn = () => {}) {
+    settings.set('isMaterialsBackup', true);
+    fn();
+  }
+
+  @action
   loaderMaterial(index) {
     const material = this.materials[index];
+    if (!material) return;
+    const isMaterialsBackup = settings.get('isMaterialsBackup');
+    const source = isMaterialsBackup ? material.backupSource : material.source;
+
     // 当前物料是否已加载过
     if (material && !material.loaded) {
-      this.fetchByMaterial(material)
+      this.fetchByMaterial(source)
         .then((body = {}) => {
           const {
             blocks = [],
@@ -148,8 +174,24 @@ class Materials {
           material.error = null;
         })
         .catch((error) => {
-          material.loaded = false;
-          material.error = error;
+          // 如果alicdn物料源访问超时 切换备份物料源
+          if (
+            error.code &&
+            (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT')
+          ) {
+            if (!isMaterialsBackup) {
+              this.switchToBackupMaterials(this.loaderMaterial.bind(this));
+            } else {
+              material.loaded = true;
+              const url = material.source;
+              const errMsg = `物料源加载失败，请确认网络是否能直接访问此链接 ${url}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
+              material.error = errMsg;
+            }
+          } else {
+            material.loaded = true;
+            const errMsg = '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
+            material.error = errMsg;
+          }
         });
     }
   }

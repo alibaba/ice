@@ -26,12 +26,12 @@ function npmRequest({ name, version = 'latest', registry }) {
     }, (err, response, json) => {
       if (err || !json) {
         alilog.report({
-          type: 'get-tarball-info-error	',
+          type: 'get-tarball-info-error',
           msg: err.message,
           stack: err.stack,
           data: {
-            url: pkgUrl
-          }
+            url: pkgUrl,
+          },
         }, 'error');
         reject(err || new Error(JSON.stringify(response.body)));
       } else {
@@ -43,7 +43,7 @@ function npmRequest({ name, version = 'latest', registry }) {
         } else {
           const error = new Error(`${name}@${version} 尚未发布在 ${registryUrl}`);
           alilog.report({
-            type: 'get-tarball-info-error	',
+            type: 'get-tarball-info-error',
             msg: error.message,
             stack: error.message,
           });
