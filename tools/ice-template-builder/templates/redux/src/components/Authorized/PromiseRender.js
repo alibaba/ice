@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loading } from '@icedesign/base';
+import { Loading } from '@alifd/next';
 
 export default class PromiseRender extends React.PureComponent {
   state = {

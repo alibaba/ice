@@ -17,7 +17,7 @@ const CONFIG = {
   enableTheme: true,
 
   // 布局方式: fluid-layout、boxed-layout
-  layout: 'boxed-layout',
+  layout: 'fluid-layout',
 
   // 主题配置
   themeConfig: {
@@ -38,7 +38,7 @@ const CONFIG = {
     position: 'embed-fixed',
     mode: 'vertical',
     width: 200,
-    collapsed: false,
+    collapsed: true,
     enabled: true,
   },
 
@@ -62,9 +62,13 @@ const CONFIG = {
 };
 
 generateTemplate(CONFIG)
-  .then((res) => {
-    console.log('生成成功：', res);
+  .then(() => {
+    console.log();
+    console.log('     生成成功');
+    console.log();
   })
   .catch((err) => {
-    console.log('生成失败：', err);
+    console.log();
+    console.log('     生成失败：', err);
+    console.log();
   });

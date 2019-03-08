@@ -16,13 +16,13 @@
  */
 
 import { push } from 'react-router-redux';
-import { Feedback } from '@icedesign/base';
+import { Message } from '@alifd/next';
 import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAILURE,
 } from './constants';
-import { postUserRegister } from '../../api';
+import { postUserRegister } from '../../api/user';
 
 /**
  * Changes the input field of the form
@@ -61,13 +61,13 @@ export const userRegister = (params) => {
       const response = await postUserRegister(params);
 
       if (response.data.status === 200) {
-        Feedback.toast.success('注册成功');
+        Message.success('注册成功');
 
         dispatch(userRegisterSuccess(response.data));
 
         dispatch(push('/user/login'));
       } else {
-        Feedback.toast.error('注册失败');
+        Message.error('注册失败');
       }
 
       return response.data;
