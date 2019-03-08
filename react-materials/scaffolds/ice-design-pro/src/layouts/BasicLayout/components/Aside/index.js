@@ -25,6 +25,7 @@ export default class Aside extends Component {
 
     const openKeys = this.getDefaultOpenKeys();
     this.state = {
+      collapse: false,
       openDrawer: false,
       openKeys,
     };
@@ -39,6 +40,16 @@ export default class Aside extends Component {
     const { openDrawer } = this.state;
     this.setState({
       openDrawer: !openDrawer,
+    });
+  };
+
+  /**
+   * 折叠搜索切换
+   */
+  toggleCollapse = () => {
+    const { collapse } = this.state;
+    this.setState({
+      collapse: !collapse,
     });
   };
 
@@ -75,6 +86,7 @@ export default class Aside extends Component {
   onOpenChange = (openKeys) => {
     this.setState({
       openKeys,
+      openDrawer: false,
     });
     this.openKeysCache = openKeys;
   };
@@ -159,35 +171,43 @@ export default class Aside extends Component {
       isMobile,
     } = this.props;
 
+    const { openDrawer, collapse } = this.state;
+
     return (
       <div
-        className={cx('ice-design-layout-aside', { 'open-drawer': this.state.openDrawer })}
+        className={cx('ice-design-layout-aside', {
+          'open-drawer': openDrawer,
+        })}
       >
         {isMobile && <Logo />}
 
-        {isMobile && !this.state.openDrawer && (
+        {isMobile && !openDrawer && (
           <a className="menu-btn" onClick={this.toggleMenu}>
             <FoundationSymbol type="menu" size="small" />
           </a>
         )}
 
         {!isMobile && (
-          <a className="collapse-btn" onClick={this.toggleMenu}>
-            <Icon
-              type={this.state.openDrawer ? 'arrow-right' : 'arrow-left'}
-              size="small"
+          <a className="collapse-btn" onClick={this.toggleCollapse}>
+            <FoundationSymbol
+              key={collapse}
+              type={collapse ? 'transfer-right' : 'transfer-left'}
+              size="large"
             />
           </a>
         )}
 
         <Nav
-          style={{ width: this.state.openDrawer ? 60 : 200 }}
-          direction="ver"
+          style={{ width: collapse ? 60 : 200 }}
+          mode={collapse ? 'popup' : 'inline'}
+          iconOnly={collapse}
+          hasArrow={!collapse}
           activeDirection={null}
           selectedKeys={[pathname]}
           openKeys={this.state.openKeys}
           defaultSelectedKeys={[pathname]}
           onOpen={this.onOpenChange}
+          onSelect={this.onSelect}
         >
           {this.getNavMenuItems(asideMenuConfig)}
         </Nav>

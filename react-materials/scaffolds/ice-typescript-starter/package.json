@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ts-scaffold",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "该模板基于 TypeScript 适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示",
   "homepage": "https://unpkg.com/@icedesign/ts-scaffold@latest/build/index.html",
   "files": [
@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "@alifd/next": "^1.x",
-    "@icedesign/theme": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",

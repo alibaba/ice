@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/dashboard-scaffold",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "该模板适用于电商类的数据展示大盘，搭配简洁的暗色主题风格和图表类展示",
   "homepage": "https://unpkg.com/@icedesign/dashboard-scaffold@latest/build/index.html",
   "files": [
@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "@alifd/next": "^1.x",
-    "@icedesign/theme": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "@antv/data-set": "^0.10.1",
     "@icedesign/container": "^1.x",
     "@icedesign/foundation-symbol": "^1.0.1",

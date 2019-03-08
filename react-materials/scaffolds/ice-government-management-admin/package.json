@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/government-management-admin",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "该模板内置了丰富的区块，适用于政府类风格的管理类系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/government-management-admin@latest/build/index.html",
   "files": [
@@ -23,7 +23,7 @@
     "@icedesign/img": "^1.x",
     "@icedesign/label": "^1.x",
     "@icedesign/layout": "^1.x",
-    "@icedesign/theme": "^0.1.0",
+    "@icedesign/theme": "^1.x",
     "bizcharts": "^3.2.4",
     "classnames": "^2.2.5",
     "moment": "^2.23.0",

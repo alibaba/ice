@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/finance-dashboard",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "该模板适用于金融销售类的数据展示大盘，搭配简洁的暗色主题风格和图表类展示",
   "homepage": "https://unpkg.com/@icedesign/finance-dashboard@latest/build/index.html",
   "files": [
@@ -21,7 +21,7 @@
     "@icedesign/container": "^1.x",
     "@icedesign/foundation-symbol": "^1.0.1",
     "@icedesign/layout": "^1.x",
-    "@icedesign/theme": "^0.1.4",
+    "@icedesign/theme": "^1.x",
     "bizcharts": "^3.4.3",
     "classnames": "^2.2.5",
     "jquery": "^3.3.1",

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/yunqi-homepage-scaffold",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "云栖大会官方首页模板，适用于信息展示类的场景",
   "homepage": "https://unpkg.com/@icedesign/yunqi-homepage-scaffold@latest/build/index.html",
   "files": [
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@alifd/next": "^1.x",
-    "@icedesign/theme": "^0.1.0",
+    "@icedesign/theme": "^1.x",
     "@icedesign/container": "^1.x",
     "@icedesign/foundation-symbol": "^1.x",
     "@icedesign/layout": "^1.x",

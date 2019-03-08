@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/website-homepage-scaffold",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "该模板适用于产品类的首页介绍，默认内置一个页面和五个不同风格的展示区块",
   "homepage": "https://unpkg.com/@icedesign/website-homepage-scaffold@latest/build/index.html",
   "files": [
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@alifd/next": "^1.x",
-    "@icedesign/theme": "^0.1.0",
+    "@icedesign/theme": "^1.x",
     "@icedesign/container": "^1.x",
     "@icedesign/foundation-symbol": "^1.x",
     "@icedesign/img": "^1.x",

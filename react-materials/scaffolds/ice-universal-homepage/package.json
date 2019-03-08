@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/universal-homepage-scaffold",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "该模板适用于产品的首页介绍，默认只有一个页面，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/universal-homepage-scaffold@latest/build/index.html",
   "files": [
@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "@alifd/next": "^1.x",
-    "@icedesign/theme": "^0.1.0",
+    "@icedesign/theme": "^1.x",
     "@antv/data-set": "^0.9.6",
     "@icedesign/container": "^1.x",
     "@icedesign/img": "^1.x",
