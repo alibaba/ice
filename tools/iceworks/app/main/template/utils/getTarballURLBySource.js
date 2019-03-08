@@ -25,12 +25,20 @@ module.exports = function getTarballURLBySource(source = {}, projectVersion) {
       // 兼容没有'version-0.x'字段的情况
       version = source['version-0.x'] || source.version;
     }
+
+    const registry =
+      typeof source.npm === 'string' && source.npm.startsWith('@icedesign')
+        ? 'https://registry.npm.taobao.org'
+        : source.registry;
+
     let err, pkgData;
-    [err, pkgData] = await to(npmRequest({
-      name: source.npm,
-      version,
-      registry: source.registry,
-    }));
+    [err, pkgData] = await to(
+      npmRequest({
+        name: source.npm,
+        version,
+        registry,
+      })
+    );
     if (err) {
       reject(err);
     } else {
