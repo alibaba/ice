@@ -49,7 +49,7 @@ sortScaffoldMaterials()
       .then(() => {
         console.log('All Done');
         // 物料源数据发布到npm，作为兜底备份
-        publishMaterialsDB();
+        return publishMaterialsDB();
       })
       .catch((err) => {
         console.log('upload err', err);

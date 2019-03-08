@@ -129,6 +129,7 @@ class Materials {
     const isMaterialsBackup = settings.get('isMaterialsBackup');
     const startRecommendMaterials = this.startRecommendMaterials;
     const source = isMaterialsBackup ? recommendMaterialSource.backupSource : recommendMaterialSource.source;
+    
     this.fetchByMaterial(source)
       .then((body = {}) => {
         const scaffolds = body.scaffolds || [];
@@ -145,11 +146,11 @@ class Materials {
           (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT')
         ) {
           if (!isMaterialsBackup) {
-            this.switchToBackupMaterials(this.loadStartRecommendMaterials.bind(this));
+            settings.set('isMaterialsBackup', true);
+            this.loadStartRecommendMaterials();
           } else {
             startRecommendMaterials.loaded = true;
-            const url = recommendMaterialSource.source;
-            startRecommendMaterials.error = `物料源加载失败，请确认网络是否能直接访问此链接 ${url}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
+            startRecommendMaterials.error = `物料源加载失败，请确认网络是否能直接访问此链接 ${source}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
           }
         } else {
           startRecommendMaterials.loaded = true;
@@ -216,11 +217,11 @@ class Materials {
           (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT')
         ) {
           if (!isMaterialsBackup) {
-            this.switchToBackupMaterials(this.loaderMaterial.bind(this));
+            settings.set('isMaterialsBackup', true);
+            this.loaderMaterial(index);
           } else {
             material.loaded = true;
-            const url = material.source;
-            const errMsg = `物料源加载失败，请确认网络是否能直接访问此链接 ${url}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
+            const errMsg = `物料源加载失败，请确认网络是否能直接访问此链接 ${source}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
             material.error = errMsg;
           }
         } else {
