@@ -22,7 +22,7 @@ $ npm run start
 #### 模板预览
 
 ```
-$ cd my-project/scaffolds/ice-app
+$ cd my-project/scaffolds/ExampleScaffold
 $ npm install
 $ npm run start
 ```

@@ -1,7 +1,5 @@
 const { resolve } = require('path');
 
-console.log(resolve(__dirname, './src/index.js'));
-
 module.exports = {
   outputDir: 'build',
   publicPath: './',
