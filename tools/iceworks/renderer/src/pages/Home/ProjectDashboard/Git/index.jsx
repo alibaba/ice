@@ -16,6 +16,7 @@ import Icon from '../../../../components/Icon';
 import DialogBranches from './components/DialogBranches';
 import DialogNewBranch from './components/DialogNewBranch';
 import DialogChangeRemote from './components/DialogChangeRemote';
+import PluginHoc from '../PluginHoc';
 
 const { Group: ButtonGroup } = Button;
 const { Group: CheckboxGroup } = Checkbox;
@@ -24,8 +25,9 @@ const steps = ["Git init", "关联仓库"];
 
 @inject('projects', 'git')
 @observer
-export default class GitPanel extends Component {
+class GitPanel extends Component {
   static extensionName = 'git';
+  static displayName = 'Git';
 
   constructor(props) {
     super(props);
@@ -33,23 +35,38 @@ export default class GitPanel extends Component {
     // 初始化gitTools
     this.init();
   }
-  async componentWillMount() {
-    const { git, projects } = this.props;
 
-    await git.checkIsRepo();
+  init() {
+    const { git } = this.props;
+    git.initTools();
   }
 
   componentDidMount() {
     const { git, projects } = this.props;
-
-    ipcRenderer.on('focus', this.handleReload.bind(this, false));
-    projects.on('change', this.onProjectChange);
+    try {
+      git.checkIsRepo();
+      // ipcRenderer.on('focus', this.handleReload);
+      projects.on('change', this.onProjectChange);
+    } catch (error) {
+      let errMsg = (error && error.message) || '仓库地址错误';
+      if (error && error.message && error.message.includes('ENOENT')) {
+        errMsg = 'git 插件在当前项目不可用，请在插件设置中关闭，使用其他方式操作git。不可用原因可能为：项目读写权限问题，或者 simple-git 包在当前环境下不可用';
+      }
+      Dialog.alert({
+        title: '提示',
+        content: (
+          <div style={{ width: 400 }}>
+            {errMsg}
+          </div>
+        )
+      });
+    }
   }
 
   componentWillUnmount() {
     const { git, projects } = this.props;
 
-    ipcRenderer.removeListener('focus', this.handleReload);
+    // ipcRenderer.removeListener('focus', this.handleReload);
     projects.removeListener('change', this.onProjectChange);
   }
 
@@ -57,32 +74,27 @@ export default class GitPanel extends Component {
     this.init();
   }
 
-  onProjectChange = async () => {
+  onProjectChange = () => {
     const { git } = this.props;
     this.field.reset();
-    await git.reset();
-    await this.handleReload();
+    git.reset();
+    this.handleReload(true);
   }
 
-  init() {
+  handleGitInit = () => {
     const { git } = this.props;
-    git.initTools();
-  }
-
-  handleGitInit = async () => {
-    const { git } = this.props;
-    const initDone = await git.init();
+    const initDone = git.init();
     if (initDone) {
-      this.handleReload();
+      this.handleReload(true);
     }
   };
 
-  handleReload = async (showLoading = true) => {
+  handleReload = (showLoading = false) => {
     const { git } = this.props;
     if (showLoading) {
       git.reloading = true;
     }
-    await git.checkIsRepo();
+    git.checkIsRepo();
     git.reloading = false;
   };
 
@@ -121,6 +133,7 @@ export default class GitPanel extends Component {
   renderStep1 = () => {
     const { git } = this.props;
     const { init } = this.field;
+
     return (
       <div
         style={{
@@ -173,21 +186,20 @@ export default class GitPanel extends Component {
 
   handleAddRemote = () => {
     const { git = {} } = this.props;
-    this.field.validate(async (errors, values) => {
+    this.field.validate((errors, values) => {
       if (errors) return;
       const { remoteUrl } = values;
       if (remoteUrl === git.remoteUrl) {
         return;
       }
-      const addDone = await git.addRemote(remoteUrl);
+      const addDone = git.addRemote(remoteUrl);
       if (addDone) {
-        this.handleReload();
+        this.handleReload(true);
       }
     });
   }
 
   onFilesChange = (selectedFiles) => {
-    console.log('selectedFiles: ', selectedFiles);
     const { git = {} } = this.props;
     git.selectedFiles = selectedFiles;
   }
@@ -213,16 +225,16 @@ export default class GitPanel extends Component {
     return user;
   };
 
-  handleGitCommit = async () => {
+  handleGitCommit = () => {
     const { git = {} } = this.props;
     const user = this.getUserInfo();
-    const commitDone = await git.addAndCommit();
+    const commitDone = git.addAndCommit();
     if (commitDone) {
       Notification.success({
         message: 'Git 提交成功',
         duration: 8,
       });
-      this.handleReload();
+      this.handleReload(true);
     }
   }
 
@@ -274,7 +286,6 @@ export default class GitPanel extends Component {
   renderMainPanel = () => {
     const { git = {} } = this.props;
     const dataSource = this.getFiles();
-
     return (
       <div style={styles.mainPanel}>
         <div style={styles.topContainer}>
@@ -331,7 +342,7 @@ export default class GitPanel extends Component {
     git.visibleDialogChangeRemote = true;
   }
 
-  handleGitNewBranchOpen = async () => {
+  handleGitNewBranchOpen = () => {
     const { git } = this.props;
     if (git.remoteUrl) {
       git.visibleDialogNewBranch = true;
@@ -340,18 +351,18 @@ export default class GitPanel extends Component {
     }
   };
 
-  handleGitBranchesOpen = async () => {
+  handleGitBranchesOpen = () => {
     const { git } = this.props;
     if (!git.remoteUrl) {
       Feedback.toast.error('当前项目未设置 git remote 地址');
       return;
     }
-    await git.getBranches();
+    git.getBranches();
   };
 
-  handlePull = async () => {
+  handlePull = () => {
     const { git } = this.props;
-    const pullDone = await git.pull();
+    const pullDone = git.pull();
     if (pullDone) {
       Notification.success({
         message: 'Git 拉取当前分支最新代码成功',
@@ -360,9 +371,9 @@ export default class GitPanel extends Component {
     }
   }
 
-  handlePush = async () => {
+  handlePush = () => {
     const { git } = this.props;
-    const pushDone = await git.push();
+    const pushDone = git.push();
     if (pushDone) {
       Notification.success({
         message: 'Git 推送当前分支本地代码成功',
@@ -450,7 +461,9 @@ export default class GitPanel extends Component {
                     style={{ color: '#3080FE' }}
                     placement={'top'}
                     tipText={'刷新'}
-                    onClick={this.handleReload}
+                    onClick={() => {
+                      this.handleReload(true);
+                    }}
                   >
                     <Icon type="reload" style={{ fontSize: 18 }} />
                   </ExtraButton>
@@ -505,6 +518,9 @@ export default class GitPanel extends Component {
     );
   }
 }
+
+// export default GitPanel;
+export default PluginHoc(GitPanel);
 
 const styles = {
   statusTag: {

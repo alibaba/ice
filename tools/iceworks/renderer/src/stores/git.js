@@ -11,7 +11,7 @@ import Projects from './projects';
 class Git {
   @observable gitTools = null;
   // 初始化状态
-  @observable loading = true; // 插件初始化时loading状态
+  @observable loading = false; // 插件初始化时loading状态
   @observable showMainPanel = false; // 判断是否已经绑定仓库地址，已经绑定则展示主面板，否则展示引导步骤
   // 主要的变更状态
   @observable isGit = false; // 是否是一个 git 仓库
@@ -47,7 +47,7 @@ class Git {
   initTools() {
     const { currentProject = {} } = Projects;
     const cwd = currentProject.fullPath;
-    if (cwd) {
+    if (cwd && pathExists.sync(cwd)) {
       this.gitTools = new GitTools(cwd);
     }
   }
@@ -74,7 +74,7 @@ class Git {
   }
 
   @action
-  async reset() {
+  reset() {
     this.showMainPanel = false;
     this.currentStep = 0;
   }
@@ -83,6 +83,7 @@ class Git {
   async checkIsRepo() {
     const { currentProject = {} } = Projects;
     const cwd = currentProject.fullPath;
+    this.loading = true;
     try {
       const isRepo = await this.gitTools.run('checkIsRepo');
       const isGit = isRepo && pathExists.sync(path.join(cwd, '.git'));
@@ -110,6 +111,7 @@ class Git {
     } catch (error) {
       this.isGit = false;
       this.loading = false;
+      throw error;
     }
   }
 

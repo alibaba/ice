@@ -7,8 +7,12 @@ import requestMaterial from '../lib/request-material';
 
 import AdditionalBlocks from './additional-blocks';
 import AdditionalScaffolds from './additional-scaffolds';
+import AdditionalComponents from './additional-components';
 import filterMaterial from '../lib/filter-material';
+import { isIceMaterial } from '../lib/utils';
 import services from '../services';
+import history from '../history';
+import projects from './projects';
 
 const { settings } = services;
 
@@ -21,6 +25,8 @@ class Materials {
   tabBlockActiveKey = '';
   @observable
   tabScaffoldActiveKeyValue = '';
+  @observable
+  tabComponentActiveKey = '';
   @observable
   startRecommendMaterials = {};
 
@@ -57,9 +63,19 @@ class Materials {
     }
   }
 
+  @action
+  setComponentTabActiveKey(key, load = true) {
+    this.tabComponentActiveKey = key;
+    const index = key.split('_')[1];
+    if (load) {
+      this.loaderMaterial(index);
+    }
+  }
+
   initMaterials() {
     this.setBlockTabActiveKey(this.getBlockTabActiveKey(0), false);
     this.setScaffoldTabActiveKey(this.getScaffoldTabActiveKey(0), false);
+    this.setComponentTabActiveKey(this.getComponentTabActiveKey(0), false);
 
     // 加载第一个物料
     this.loaderMaterial(0);
@@ -71,6 +87,10 @@ class Materials {
 
   getScaffoldTabActiveKey(index) {
     return `scaffold_${index}`;
+  }
+
+  getComponentTabActiveKey(index) {
+    return `component_${index}`;
   }
 
   @computed
@@ -150,49 +170,65 @@ class Materials {
     const isMaterialsBackup = settings.get('isMaterialsBackup');
     const source = isMaterialsBackup ? material.backupSource : material.source;
 
-    // 当前物料是否已加载过
     if (material && !material.loaded) {
-      this.fetchByMaterial(source)
-        .then((body = {}) => {
-          const {
-            blocks = [],
-            scaffolds = [],
-            name,
-            ...attrs
-          } = body;
+      let promiseAll;
+      if (isIceMaterial(material.source)) {
+        // 根据组件版本获取对应的基础组件物料源
+        const { iceVersion } = projects.currentProject;
+        const { iceBaseMaterials } = shared;
+        const iceBaseMaterial = iceVersion === '0.x' ? iceBaseMaterials[0] : iceBaseMaterials[1];
+        promiseAll = Promise.all([
+          this.fetchByMaterial(material),
+          this.fetchByMaterial(iceBaseMaterial),
+        ]);
+      } else {
+        promiseAll = Promise.all([
+          this.fetchByMaterial(material),
+        ]);
+      }
 
-          Object.keys(attrs).forEach((key) => {
-            material[key] = attrs[key];
-          });
+      promiseAll.then(([
+        body = {},
+        iceBaseComponents,
+      ]) => {
+        const {
+          blocks = [],
+          scaffolds = [],
+          components = [],
+          name,
+          ...attrs
+        } = body;
 
-          // 双向绑定数据
-          material.blocks = new AdditionalBlocks(blocks);
-          material.scaffolds = new AdditionalScaffolds(scaffolds, material);
+        Object.keys(attrs).forEach((key) => {
+          material[key] = attrs[key];
+        })// 双向绑定数据
+        material.blocks = new AdditionalBlocks(blocks);
+        material.scaffolds = new AdditionalScaffolds(scaffolds, material);
+        material.components = new AdditionalComponents(components, material, iceBaseComponents);
 
-          material.loaded = true;
-          material.data = body;
-          material.error = null;
-        })
-        .catch((error) => {
-          // 如果alicdn物料源访问超时 切换备份物料源
-          if (
-            error.code &&
-            (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT')
-          ) {
-            if (!isMaterialsBackup) {
-              this.switchToBackupMaterials(this.loaderMaterial.bind(this));
-            } else {
-              material.loaded = true;
-              const url = material.source;
-              const errMsg = `物料源加载失败，请确认网络是否能直接访问此链接 ${url}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
-              material.error = errMsg;
-            }
+        material.loaded = true;
+        material.data = body;
+        material.error = null;
+      }).catch((error) => {
+        // 如果alicdn物料源访问超时 切换备份物料源
+        if (
+          error.code &&
+          (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT')
+        ) {
+          if (!isMaterialsBackup) {
+            this.switchToBackupMaterials(this.loaderMaterial.bind(this));
           } else {
             material.loaded = true;
-            const errMsg = '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
+            const url = material.source;
+            const errMsg = `物料源加载失败，请确认网络是否能直接访问此链接 ${url}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
             material.error = errMsg;
           }
-        });
+        } else {
+          material.loaded = true;
+          const errMsg = '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
+          material.error = errMsg;
+        }
+      });
     }
   }
 
@@ -214,6 +250,27 @@ class Materials {
       return toJS(material.data && material.data.scaffolds) || null;
     }
     return null;
+  }
+
+  @computed
+  get currentComponents() {
+    const index = this.tabComponentActiveKey.split('_')[1];
+    if (index) {
+      const material = this.materials[index];
+      return toJS(material.data && material.data.components) || null;
+    }
+    return null;
+  }
+
+  @action
+  updateComponents() {
+    const index = this.tabComponentActiveKey.split('_')[1];
+    if (index) {
+      const material = this.materials[index];
+      const components = material.components.iceBusinessComponents;
+      const iceBaseComponents = material.components.iceBaseComponents;
+      material.components = new AdditionalComponents(components, material, iceBaseComponents);
+    }
   }
 }
 

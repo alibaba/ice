@@ -13,6 +13,7 @@ export default class extends Component {
           justifyContent: 'center',
           flexDirection: 'column',
           minHeight: 140,
+          whiteSpace: 'initial',
           ...style,
         }}
       >

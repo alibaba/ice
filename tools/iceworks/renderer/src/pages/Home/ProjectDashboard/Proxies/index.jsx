@@ -14,6 +14,7 @@ import DashboardCard from '../../../../components/DashboardCard/';
 import ExtraButton from '../../../../components/ExtraButton/';
 import Icon from '../../../../components/Icon';
 import EmptyTips from '../../../../components/EmptyTips/';
+import PluginHoc from '../PluginHoc';
 
 const newRuleItem = ['', { enable: true }];
 
@@ -400,4 +401,4 @@ const styles = {
   },
 };
 
-export default Proxies;
+export default PluginHoc(Proxies);

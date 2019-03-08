@@ -54,59 +54,44 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
     shellArgs: ['install', '--no-package-lock'],
   };
 
-  const npmCacheCLeanConfig = {
+  const npmCacheCleanConfig = {
     cwd,
     env,
     shell,
     shellArgs: ['cache', 'clean', '--force'],
   };
 
-  sessions.manager.new(installConfig, (code) => {
-    if (code !== 0) {
-      log.error('install-project-dependencies-error');
-      const error = new Error('安装依赖失败');
-      alilog.report(
-        {
-          type: 'install-project-dependencies-error',
-          msg: error.message,
-          stack: error.stack,
-          data: {
-            env: JSON.stringify(env),
-          },
-        },
-        'error'
-      );
-      if (reInstall) {
-        log.info('执行 npm cache clean --force 重试');
-        sessions.manager.new(npmCacheCLeanConfig, () => {
-          doProjectInstall({ cwd, env, shell, callback });
-        });
-      } else if (shell === 'tnpm') {
-        callback(code, {
-          title: '重装依赖失败',
-          content: (
-            <div>
-              <p>
-                1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install
-                --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装
-              </p>
-              <p>
-                2. 已安装
-                tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息
-              </p>
-            </div>
-          ),
-        });
+
+  sessions.manager.new(
+    installConfig,
+    (code) => {
+      if (code !== 0) {
+        log.error('project-install-failed');
+        log.report('app', { action: 'project-install-failed' });
+        if (reInstall) {
+          log.info('执行 npm cache clean --force 重试');
+          sessions.manager.new(npmCacheCleanConfig, () => {
+            doProjectInstall({ cwd, env, shell, callback });
+          });
+        } else if (shell === 'tnpm') {
+          callback(code, {
+            title: '重装依赖失败',
+            content:
+  <div>
+    <p>1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装</p>
+    <p>2. 已安装 tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息</p>
+  </div>,
+          });
+        } else {
+          callback(code, {
+            title: '重装依赖失败',
+            content:
+              '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
+          });
+        }
       } else {
-        callback(code, {
-          title: '重装依赖失败',
-          content:
-            '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
-        });
+        callback(0);
       }
-    } else {
-      callback(0);
-    }
   });
 };
 

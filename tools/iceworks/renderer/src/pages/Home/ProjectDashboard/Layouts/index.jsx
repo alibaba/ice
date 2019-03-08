@@ -14,6 +14,7 @@ import LayoutBuilderAttribute from '../../../../components/CustomScaffold/Attrib
 import LayoutBuilderPreview from '../../../../components/Scaffold/Preview';
 import scanLayout from '../../../../datacenter/scanLayout';
 import services from '../../../../services';
+import PluginHoc from '../PluginHoc';
 
 const { templateBuilderUtils } = services;
 
@@ -21,7 +22,7 @@ import './Layouts.scss';
 
 @inject('projects')
 @observer
-export default class LayoutBuilder extends Component {
+class LayoutBuilder extends Component {
   static extensionName = 'layout-builder';
 
   constructor(props) {
@@ -279,3 +280,5 @@ export default class LayoutBuilder extends Component {
     );
   }
 }
+
+export default PluginHoc(LayoutBuilder)

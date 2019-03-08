@@ -100,6 +100,16 @@ class SidebarLayout extends Component {
                     <Link
                       onlyActiveOnIndex
                       activeClassName="active"
+                      to="components"
+                    >
+                      <Icon className="menu-icon" size="small" type="zujian" />
+                      <span className="menu-tip">组件</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      onlyActiveOnIndex
+                      activeClassName="active"
                       to="extensions"
                     >
                       <Icon className="menu-icon" size="small" type="puzzle" />

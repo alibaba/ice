@@ -22,6 +22,7 @@ import projects from '../../../../stores/projects';
 import GitTools from '../../../../lib/git-tools';
 
 import Client from './Client';
+import PluginHoc from '../PluginHoc';
 
 const { shared } = services;
 const decoder = new StringDecoder('utf8');
@@ -367,7 +368,7 @@ class Def extends Component {
           alignItems: 'center'
         }}
       >
-        <EmptyTips>该项目不是一个 Git 仓库，请在 Git 插件配置后使用</EmptyTips>
+        <EmptyTips>该项目不是一个 Git 仓库，请在 Git 插件配置后使用，或者手动初始化项目</EmptyTips>
         {/* 唤起 Git 插件 */}
       </div>
     );
@@ -428,4 +429,4 @@ const styles = {
   }
 };
 
-export default Def;
+export default PluginHoc(Def);

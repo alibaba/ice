@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
-import CateMenu from './CateMenu';
+import CateMenu from '../CateMenu';
 import EmptyTips from '../EmptyTips';
 import Item from './Item';
 
