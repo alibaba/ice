@@ -14,6 +14,7 @@ import DashboardCard from '../../../components/DashboardCard/';
 import dialog from '../../../components/dialog';
 import ExtraButton from '../../../components/ExtraButton/';
 import Icon from '../../../components/Icon';
+import PluginHoc from './PluginHoc';
 
 const STORE_KEY = 'extension:aliyun:data';
 
@@ -568,4 +569,4 @@ const styles = {
   },
 };
 
-export default Aliyun;
+export default PluginHoc(Aliyun);

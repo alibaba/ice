@@ -13,6 +13,7 @@ import EmptyTips from '../../../components/EmptyTips/';
 import ExtraButton from '../../../components/ExtraButton/';
 import Icon from '../../../components/Icon';
 import services from '../../../services';
+import PluginHoc from './PluginHoc';
 const { npm } = services;
 
 @inject('projects', 'installer')
@@ -428,4 +429,4 @@ const styles = {
   },
 };
 
-export default Dependencies;
+export default PluginHoc(Dependencies);
