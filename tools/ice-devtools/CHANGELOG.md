@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.19
+ - [feat] 支持 antd 组件样式加载
+ - [feat] dev 支持 ip 访问
+
 ## 2.1.18
  - [fix] homepage url 随 npm 版本更新
 
