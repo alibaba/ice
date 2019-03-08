@@ -273,6 +273,7 @@ class Setting extends Component {
               />
             </FormItem>
 
+            {/* TODO:
             <FormItem label="测试下载速度" {...formItemLayout}>
               {registriesSource.map((registry, idx) => {
                 return (
@@ -313,6 +314,7 @@ class Setting extends Component {
                 );
               })}
             </FormItem>
+             */}
 
             <FormItem label="消息提示音" {...formItemLayout}>
               <Switch
