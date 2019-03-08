@@ -44,20 +44,12 @@ sortScaffoldMaterials()
     );
 
     const tasks = files.map(createUploadTask);
-
-    return Promise.all(tasks)
-      .then(() => {
-        console.log('All Done');
-      })
-      .catch((err) => {
-        console.log('upload err', err);
-      });
+    return Promise.all(tasks);
   })
   .then(publishMaterialsDB) // 物料源数据发布到npm，作为兜底备份
-  .catch((err) => {
-    console.log('sort err', err);
-  });
-
+  .then(()=> {
+    console.log('all done');
+  })
 /**
  * 按照下载量进行排序推荐
  */
