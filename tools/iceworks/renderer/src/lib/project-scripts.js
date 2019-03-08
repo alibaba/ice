@@ -46,7 +46,7 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
     shellArgs: ['install', '--no-package-lock'],
   };
 
-  const npmCacheCLeanConfig = {
+  const npmCacheCleanConfig = {
     cwd,
     env,
     shell,
@@ -61,7 +61,7 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
         log.report('app', { action: 'project-install-failed' });
         if (reInstall) {
           log.info('执行 npm cache clean --force 重试');
-          sessions.manager.new(npmCacheCLeanConfig, () => {
+          sessions.manager.new(npmCacheCleanConfig, () => {
             doProjectInstall({ cwd, env, shell, callback });
           });
         } else if (shell === 'tnpm') {

@@ -171,7 +171,7 @@ function getPackageByPath(clientPath) {
  * 3. 都没有 则返回 1.x
  * @param {*} pkg
  */
-function getProjectVersion(pkg) {
+function getProjectVersion(pkg = {}) {
   const dependencies = pkg.dependencies || {};
   const hasIceDesignBase = dependencies['@icedesign/base'];
   return hasIceDesignBase ? '0.x' : '1.x';
@@ -411,4 +411,5 @@ exports.getDependenciesFromMaterial = getDependenciesFromMaterial;
 exports.extractTarball = extractTarball;
 exports.downloadBlockToPage = downloadBlockToPage;
 exports.downloadBlocksToPage = downloadBlocksToPage;
-
+exports.getPackageByPath = getPackageByPath;
+exports.getProjectVersion = getProjectVersion;
