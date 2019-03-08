@@ -4,7 +4,7 @@ import Block from '../src/index';
 Vue.config.productionTip = false;
 
 new Vue({
-  el: '#mountNode',
+  el: '#vue-demo-layout',
   components: { Block },
-  template: '<div class="vue-demo-layout"><Block/></div>',
+  template: '<Block/>',
 });
