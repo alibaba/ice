@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
-import { Input, Button, Checkbox, Feedback, CascaderSelect, Switch, DatePicker } from '@alifd/next';
+import { Input, Button, Checkbox, Message, CascaderSelect, Switch, DatePicker } from '@alifd/next';
 
 const cityData = [
   {
@@ -105,7 +105,7 @@ class Register extends Component {
       console.log({ errors })
 
       if (!errors) {
-        Feedback.toast.success('注册成功')
+        Message.success('注册成功')
       }
     });
   }

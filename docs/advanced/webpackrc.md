@@ -73,21 +73,11 @@ Options:
 
 除了提供主题配置和代理配置之外， ice-scripts 还提供了一些常用的构建配置项，方便开发者快速自定义配置，在 package.json 中新增 bulidConfig 字段，包含以下配置项：
 
-#### 配置项
+### 配置项
 
-```js
-// 配置项遵循 webpack 的配置规则：https://webpack.js.org/configuration/
-"buildConfig": {
-   "entry": "",             // 指定入口文件
-   "output": {},            // 指定输出配置项
-   "externals": "",         // 外部扩展配置
-   "localization": true     // 资源是否本地化
-}
-```
+#### 配置多 entry
 
-#### 配置示例
-
-如自定义 entry 的配置，默认会以 `src/index.js` 文件作为入口文件，配置在项目的 package.json 的 `buildConfig` 字段中；如果你需要改变默认的入口文件，可以自行修改即可生效。
+默认会以 `src/index.js` 文件作为入口文件，配置在项目的 package.json 的 `buildConfig` 字段中，如果你需要改变默认的入口文件，可以自行修改即可生效。
 
 ```js
 "buildConfig": {
@@ -97,18 +87,60 @@ Options:
 
 如果你的项目是多页应用，希望把 `src/pages` 的文件作为入口，那么可以这样配置：
 
-```
+```js
 "buildConfig": {
   "entry": {
-     "dashboard": 'src/dashboard/index.js',
-     "about": 'src/about/index.js'
+     "dashboard": "src/pages/dashboard/index.js",
+     "about": "src/pages/about/index.js"
   }
 }
-
-
-然后在 public 目录新增对应的 `dashboard.html` 和 `about.html` 文件，新增的 html 内容请参考默认的 `public/index.html`。
-
 ```
+
+然后在 public 目录新增对应的 `dashboard.html` 和 `about.html` 文件，新增的 HTML 内容请参考默认的 `public/index.html`。
+
+### babelPluginImportConfig
+
+[babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import) 用于支持一些 UI 组件包的按需加载以及样式自动引入，ice-scripts 默认支持了 `@icedesign/base` 和 `@alifd/next`，如果有其他需求可以使用该配置，比如 `antd`:
+
+```js
+"buildConfig": {
+  "babelPluginImportConfig": {
+    "libraryName": "antd",
+    "libraryDirectory": "es",
+    "style": true
+  }
+
+  // 或者多个 UI 组件的话也可以用数组的方式
+  "babelPluginImportConfig": [{}, {}]
+}
+```
+
+### babelExclude
+
+babel-loader 有一个 exclude 的配置，用于过滤某些目录下的文件不需要经过 babel 编译，按照前端社区的规范三方 npm 包的代码都应该经过 babel 编译，因此大多数工程（包括 ice-scripts）都会将该字段设置为 `node_modules`，用于加快构建的速度。如果你用到了某个未经 babel 编译的包，我们首先推荐你看下是否有其他选择，实在没有选择的话可以通过这个配置支持：
+
+```js
+"buildConfig": {
+  // 配置特定包要经过 babel 编译
+  // 该字符串会经过 new RegExp() 转换为正则然后传递给 babel-loader
+  // 不同的 npm client 的路径可能有差异，请按照具体路径书写正则
+  "babelExclude": "node_modules\\/(?!_@ali_lib-ucc)"
+}
+```
+
+### uniteBaseComponent
+
+> 社区用户无需关心该问题
+
+如果你使用了多个不同名称的基础包，请在目录下安装 `@icedesign/base` 并将该字段置为 `true`:
+
+```js
+"buildConfig": {
+  "uniteBaseComponent": true
+}
+```
+
+这样不同名的基础包都会重定向到 `@icedesign/base`，减少 bundle 的大小。
 
 ## 自定义配置 - .webpackrc.js
 

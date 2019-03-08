@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/list",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "列表组件",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -36,5 +37,6 @@
   "componentConfig": {
     "name": "list",
     "title": "列表组件"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/list@latest/build/index.html"
 }

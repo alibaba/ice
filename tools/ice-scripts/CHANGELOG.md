@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.8.10
+
+- [feat] 通过 `buildConfig.uniteBaseComponent` 将不同的基础包做统一
+- [fix] 依赖 typescript，解决云构建时找不到依赖的问题
+- [feat] 新增依赖检测功能：多版本、多基础组件、错误版本的业务组件等
+- [fix] 修复主题包 icons.scss 未构建问题
+- [fix] Proxy 支持更多配置
+- [feat] 支持 buildConfig.babelExclude
+- [feat] 支持 buildConfig.babelPluginImportConfig
+
 ## 1.8.9
 
 - [fix] 依赖 axios

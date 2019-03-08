@@ -21,14 +21,6 @@
         border-radius: $corner-2;
       }
     }
-    .collapse-btn {
-      cursor: pointer;
-      display: block;
-      width: 100%;
-      text-align: center;
-      margin-bottom: 20px;
-      color: white;
-    }
 
     .menu-btn {
       position: fixed;
@@ -39,7 +31,7 @@
       line-height: 40px;
       border-radius: 0 6px 6px 0;
       color: #fff;
-      background: #2077ff;
+      background: $color-brand1-6;
       text-align: center;
       cursor: pointer;
       z-index: 9;
@@ -47,6 +39,13 @@
       &:hover {
         color: #e7e7e7;
       }
+    }
+
+    .collapse-btn {
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
     }
   }
 }

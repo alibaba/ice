@@ -10,7 +10,7 @@ importStyle: true
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
-import { Input, Button, Checkbox, Feedback } from '@alifd/next';
+import { Input, Button, Checkbox, Message } from '@alifd/next';
 
 class Login extends Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class Login extends Component {
       console.log({ errors })
 
       if (!errors) {
-        Feedback.toast.success('登录成功')
+        Message.success('登录成功')
       }
     });
   }

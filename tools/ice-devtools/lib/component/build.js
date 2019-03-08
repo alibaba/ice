@@ -13,6 +13,7 @@ const getBabelConfig = require('../../config/getBabelConfig');
 const getBaseConfig = require('../../config/webpack.component');
 const ComponentStyleGenerator = require('../../utils/component-style-generator');
 const buildCombinedDemo = require('../../utils/build-combined-demo');
+const info = require('./info');
 
 const GLOB_PATTERN = '**/*';
 const babelOpt = getBabelConfig();
@@ -23,9 +24,15 @@ const babelOpt = getBabelConfig();
 module.exports = function componentBuild(workDir, opts) {
   const config = getBaseConfig(workDir);
 
+  if (process.env.SKIP_DEMO) {
+    compile(workDir, opts);
+    return;
+  }
+
   // HACK：放在回调中执行，是为了避免两个任务的 log 信息混在一起
   buildCombinedDemo(workDir, config, (err) => {
     if (!err) {
+      info(workDir);
       compile(workDir, opts);
     }
   });

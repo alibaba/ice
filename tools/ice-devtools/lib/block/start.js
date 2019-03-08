@@ -25,7 +25,7 @@ module.exports = function blockDevStart(cwd, opt) {
 
   config.devServer
     .compress(false)
-    .host('localhost')
+    .host('0.0.0.0')
     .disableHostCheck(true)
     .stats({
       colors: true,
@@ -47,7 +47,7 @@ module.exports = function blockDevStart(cwd, opt) {
   WebpackDevServer.addDevServerEntrypoints(options, options.devServer);
   const compiler = webpack(options);
   const server = new WebpackDevServer(compiler, options.devServer);
-  server.listen(port, '127.0.0.1', () => {
+  server.listen(port, '0.0.0.0', () => {
     console.log(' ');
     console.log(chalk.yellow(`Starting at http://127.0.0.1:${port}`));
     console.log(' ');
