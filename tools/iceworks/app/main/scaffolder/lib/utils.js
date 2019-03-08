@@ -89,7 +89,8 @@ async function downloadBlocksToPage({
   );
 
   if (err) {
-    throw new Error('获取当前区块的依赖失败');
+    err.message = '获取当前区块的依赖失败';
+    throw new Error(err);
   }
 
   // 合并依赖
@@ -168,7 +169,8 @@ async function downloadBlockToPage(
   );
 
   if (err) {
-    throw new Error('请求区块 tarball 包失败');
+    err.message = '请求区块 tarball 包失败';
+    throw new Error(err);
   }
 
   [err, allFiles] = await to(
