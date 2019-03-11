@@ -31,7 +31,7 @@ module.exports = {
         const oldMaterials = this.get('materials');
         const newMaterials = oldMaterials.map((material, index) => {
           return Object.assign(material, {
-            backupSource: value[index].backupSource,
+            backupSource: value[index] && value[index].backupSource,
           });
         });
         this.set(key, newMaterials);

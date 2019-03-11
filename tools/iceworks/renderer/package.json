@@ -10,7 +10,6 @@
     "@icedesign/notification": "^0.2.0",
     "@icedesign/skin": "^0.1.14",
     "@icedesign/template-builder": "^2.0.0",
-    "ali-oss": "^6.0.1",
     "ansi-html": "^0.0.7",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",

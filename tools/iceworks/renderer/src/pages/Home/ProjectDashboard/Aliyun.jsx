@@ -4,7 +4,6 @@ import { inject, observer } from 'mobx-react';
 import co from 'co';
 import fs from 'fs';
 import junk from 'junk';
-import oss from 'ali-oss';
 import path from 'path';
 import pathExists from 'path-exists';
 import React, { Component } from 'react';
@@ -15,6 +14,9 @@ import dialog from '../../../components/dialog';
 import ExtraButton from '../../../components/ExtraButton/';
 import Icon from '../../../components/Icon';
 import PluginHoc from './PluginHoc';
+import services from '../../../services';
+
+const { alioss } = services;
 
 const STORE_KEY = 'extension:aliyun:data';
 
@@ -166,28 +168,20 @@ class Aliyun extends Component {
     localStorage.setItem(STORE_KEY, base64Value);
   };
 
-  getOssStore = () => {
-    return new Promise((resolve, reject) => {
-      if (!this.state.accessKeyId || !this.state.accessKeySecret) {
-        Feedback.toast.error('请先输入 accessKeyId、accessKeySecret');
-        reject();
-      } else {
-        try {
-          var ossStore = oss({
-            region: this.state.region,
-            endpoint: regionMap[this.state.region].endpoint,
-            accessKeyId: this.state.accessKeyId,
-            accessKeySecret: this.state.accessKeySecret,
-            time: '200s',
-          });
-          ossStore.agent = false;
-          resolve(ossStore);
-        } catch (e) {
-          reject(e);
-        }
-      }
-    });
-  };
+  getOssConfig = () => {
+    if (!this.state.accessKeyId || !this.state.accessKeySecret) {
+      Feedback.toast.error('请先输入 accessKeyId、accessKeySecret');
+      return false;
+    } else {
+      return {
+        region: this.state.region,
+        endpoint: regionMap[this.state.region].endpoint,
+        accessKeyId: this.state.accessKeyId,
+        accessKeySecret: this.state.accessKeySecret,
+        time: '200s',
+      };
+    }
+  }
 
   handleClear = () => {
     this.setState(
@@ -206,37 +200,34 @@ class Aliyun extends Component {
     );
   };
 
-  hadnleRefeshBucket = () => {
-    this.getOssStore()
-      .then((ossStore) => {
-        co(ossStore.listBuckets())
-          .then((result) => {
-            const buckets = result.buckets;
-            const bucketOptions = buckets.map((bucket) => {
-              return {
-                label: bucket.name,
-                value: bucket.name,
-              };
-            });
-            Feedback.toast.success('Bucket 列表已刷新');
-            this.setState(
-              {
-                bucketOptions,
-                selectedBucket: bucketOptions[0].value,
-              },
-              this.saveAliossData
-            );
-          })
-          .catch((err = {}) => {
-            dialog.alert({
-              title: 'Bucket 列表刷新失败',
-              content: err.message,
-            });
-          });
-      })
-      .catch((e) => {
-        dialog.alert({ title: 'Bucket 列表刷新失败', content: e.message });
+  handleRefeshBucket = () => {
+    const ossConfig = this.getOssConfig();
+    if (!ossConfig) {
+      return;
+    }
+    alioss.getBuckets(ossConfig).then((result) => {
+      const buckets = result.buckets;
+      const bucketOptions = buckets.map((bucket) => {
+        return {
+          label: bucket.name,
+          value: bucket.name,
+        };
       });
+      Feedback.toast.success('Bucket 列表已刷新');
+      this.setState(
+        {
+          bucketOptions,
+          selectedBucket: bucketOptions[0].value,
+        },
+        this.saveAliossData
+      );
+    })
+    .catch((err = {}) => {
+      dialog.alert({
+        title: 'Bucket 列表刷新失败',
+        content: err.message,
+      });
+    });
   };
 
   handleUploadOss = () => {
@@ -276,25 +267,21 @@ class Aliyun extends Component {
             },
             (ok) => {
               if (ok) {
-                this.getOssStore()
-                  .then((ossStore) => {
-                    ossStore.setBucket(this.state.selectedBucket);
-                    Promise.all(
-                      assets.map((file) => {
-                        return this.upload2oss(
-                          ossStore,
-                          this.state.bucketDirectory,
-                          file
-                        );
-                      })
-                    ).then((uploadResult) => {
-                      this.renderUploadResult(uploadResult);
-                    });
-                  })
-                  .catch((e) => {
-                    dialog.alert({ title: '上传失败', content: e.message });
-                    this.setState({ isUploading: false });
-                  });
+                const ossConfig = this.getOssConfig();
+                if (!ossConfig) {
+                  return;
+                }
+                alioss.upload2oss(
+                  ossConfig, 
+                  this.state.selectedBucket,
+                  this.state.bucketDirectory,
+                  assets
+                ).then((uploadResult) => {
+                  this.renderUploadResult(uploadResult);
+                }).catch((e) => {
+                  dialog.alert({ title: '上传失败', content: e.message });
+                  this.setState({ isUploading: false });
+                });
               } else {
                 this.setState({ isUploading: false });
               }
@@ -307,40 +294,10 @@ class Aliyun extends Component {
     }
   };
 
-  upload2oss = (ossStore, paths, file) => {
-    let storeFilepath = path.join(paths, file.path);
-    storeFilepath = storeFilepath.replace(/\\/g, '/');
-    storeFilepath = storeFilepath.replace(/^\//, '');
-    return co(ossStore.put(storeFilepath, file.fullPath))
-      .then((object = {}) => {
-        if (object.res && object.res.status === 200) {
-          return Promise.resolve({
-            code: 0,
-            url: object.url,
-            path: file.path,
-          });
-        } else {
-          return Promise.resolve({
-            code: 1,
-            message: `上传失败，请检查网络连接 (${(object.res &&
-              object.res.status) ||
-              0})。`,
-          });
-        }
-      })
-      .catch((err) => {
-        return Promise.resolve({
-          code: 1,
-          message: err.message,
-          path: file.path,
-        });
-      });
-  };
-
   recursiveAssets = () => {
     const { projects } = this.props;
     const { currentProject } = projects;
-    const cwd = currentProject.client;
+    const cwd = currentProject.clientPath;
     const distPath = path.join(cwd, 'build');
     const assets = this.recursiveReaddirSync(distPath, distPath);
     return assets;
@@ -521,7 +478,7 @@ class Aliyun extends Component {
                 style={{ color: '#3080FE', marginLeft: 10 }}
                 placement={'top'}
                 tipText={'刷新 bukcet 列表'}
-                onClick={this.hadnleRefeshBucket}
+                onClick={this.handleRefeshBucket}
               >
                 <Icon type="reload" />
               </ExtraButton>
