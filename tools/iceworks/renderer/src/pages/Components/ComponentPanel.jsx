@@ -85,6 +85,10 @@ class ComponentPanel extends Component {
     const { material } = this.props;
     const components = material.components || null;
 
+    if (material.componentsError) {
+      return <EmptyTips size={120}>{material.componentsError}</EmptyTips>;
+    }
+
     if (!components) {
       return <EmptyTips size={120}>加载中...</EmptyTips>;
     }

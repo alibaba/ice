@@ -14,6 +14,8 @@ export default class extends Component {
           flexDirection: 'column',
           minHeight: 140,
           whiteSpace: 'initial',
+          margin: '0 20px',
+          lineHeight: 1.6,
           ...style,
         }}
       >
