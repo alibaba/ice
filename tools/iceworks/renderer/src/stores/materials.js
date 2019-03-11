@@ -169,7 +169,7 @@ class Materials {
     const material = this.materials[index];
     if (!material) return;
     const isMaterialsBackup = settings.get('isMaterialsBackup');
-    const source = isMaterialsBackup ? material.backupSource : material.source;
+    const source = (isMaterialsBackup && material.backupSource) ? material.backupSource : material.source;
 
     if (material && !material.loaded) {
       let promiseAll;
@@ -178,6 +178,7 @@ class Materials {
         const { iceVersion } = projects.currentProject;
         const { iceBaseMaterials } = shared;
         const iceBaseMaterial = iceVersion === '0.x' ? iceBaseMaterials[0] : iceBaseMaterials[1];
+
         promiseAll = Promise.all([
           this.fetchByMaterial(source),
           this.fetchByMaterial(iceBaseMaterial.source).catch((err) => {
@@ -212,9 +213,9 @@ class Materials {
         material.blocks = new AdditionalBlocks(blocks);
         material.scaffolds = new AdditionalScaffolds(scaffolds, material);
 
-        if (iceBaseComponents) {
+        // if (iceBaseComponents) {
           material.components = new AdditionalComponents(components, material, iceBaseComponents);
-        }
+        // }
 
         material.loaded = true;
         material.data = body;
