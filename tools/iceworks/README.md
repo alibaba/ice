@@ -16,7 +16,7 @@
 开发调试
 
 ```
-nvm use 8 // 安装 >= 8.10.0 && < 9 的版本
+// 保证 Node.js 版本 >= 8.10.0 && < 9 的版本
 yarn install
 yarn dev
 yarn start

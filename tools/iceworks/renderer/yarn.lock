@@ -74,9 +74,10 @@
   version "0.1.14"
   resolved "https://registry.yarnpkg.com/@icedesign/skin/-/skin-0.1.14.tgz#be8e62f467a5a2eabe79f54de23b0925e830dae2"
 
-"@icedesign/template-builder@^1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@icedesign/template-builder/-/template-builder-1.0.10.tgz#7b2b6dd30a467963776fffafa7152a16b0181b0f"
+"@icedesign/template-builder@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@icedesign/template-builder/-/template-builder-2.0.0.tgz#c9f1334758816ece3a3df255ee1ab478d533047c"
+  integrity sha512-Oczj3drfNp9oMW8KO1Hrsajl2U8kDtEl2i/sSV7ZnF4A+1gHsso9a1cda67iK6N0N4tMVQrhHmCsdb+Gyv2CsQ==
   dependencies:
     "@icedesign/base" "^0.2.2"
     "@icedesign/form-binder" "^0.1.11"
