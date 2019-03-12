@@ -47,8 +47,7 @@
   - 表格列表
 - 列表页
   - 文章列表
-  - 卡片列表
-  - 图文列表
+  - 项目列表
 - 内容页
   - 基础详情页
   - 条款协议页
@@ -73,6 +72,7 @@ ice-design-pro
 ├── src
 │   ├── components   // 公共组件
 │   ├── layouts      // 通用布局
+│   ├── locales      // i18n
 │   ├── pages        // 页面
 │   ├── index.js     // 应用入口
 │   ├── menuConfig   // 导航配置

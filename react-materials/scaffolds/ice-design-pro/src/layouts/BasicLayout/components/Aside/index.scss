@@ -8,14 +8,26 @@
       background: transparent;
       color: white;
     }
+    .next-nav .next-menu-item-text i {
+      margin-right: 8px;
+      font-weight: 500;
+    }
     .next-nav .next-menu-sub-menu .next-menu-item {
       transition: none;
-      
+
       &.next-selected,
       &:hover {
         background: $color-brand1-6;
         border-radius: $corner-2;
       }
+    }
+    .collapse-btn {
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+      color: white;
     }
 
     .menu-btn {

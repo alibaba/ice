@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/styled-menu",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "ICE 导航组件体验版",
   "main": "lib/index.js",
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js"
+    "postinstall.js",
+    "build/"
   ],
   "scripts": {
     "start": "ice-devtools start",
@@ -29,16 +30,19 @@
     "rc-menu": "^5.0.9",
     "@icedesign/foundation-symbol": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
+  },
   "peerDependencies": {
     "react": "^16.5.0"
   },
-  "typings": "lib/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
   "componentConfig": {
     "name": "styled-menu",
     "title": "导航组件体验版"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/styled-menu@latest/build/index.html"
 }

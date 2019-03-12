@@ -18,10 +18,24 @@ module.exports = {
         name: '-p --port [port]',
         desc: 'start port',
       },
+      {
+        name: '--analyzer',
+        desc: 'bunlde analyzer',
+      }
     ],
   },
   build: {
     desc: 'Build Component',
+    options: [
+      {
+        name: '--analyzer',
+        desc: 'bunlde analyzer',
+      },
+      {
+        name: '--skip-demo',
+        desc: 'skip build demo',
+      },
+    ],
   },
   screenshot: {
     desc: 'Create screenshot.png',

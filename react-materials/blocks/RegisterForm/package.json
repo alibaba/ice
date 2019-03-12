@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/register-form-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "注册表单",
   "main": "lib/index.js",
   "files": [
@@ -22,7 +22,6 @@
     "ice-block"
   ],
   "dependencies": {
-    "@icedesign/form-binder": "^0.1.4",
     "prop-types": "^15.5.8",
     "@alifd/next": "^1.x"
   },

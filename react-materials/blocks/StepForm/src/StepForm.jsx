@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import {
-  Grid,
-  Step,
-  Icon,
-} from '@alifd/next';
+import { Grid, Step, Icon } from '@alifd/next';
 
 import ItemForm from './ItemForm';
 import DeliveryForm from './DeliveryForm';
@@ -14,11 +10,9 @@ const { Row, Col } = Grid;
 export default class StepForm extends Component {
   static displayName = 'StepForm';
 
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);

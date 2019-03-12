@@ -1,9 +1,9 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Input, Button, Checkbox, Grid, Icon, Form } from '@alifd/next';
+import { Input, Checkbox, Grid, Icon, Form } from '@alifd/next';
 import './RegisterForm.scss';
 
-const { Row, Col } = Grid;
+const { Row } = Grid;
 const Item = Form.Item;
 
 export default class RegisterForm extends Component {
@@ -65,23 +65,27 @@ export default class RegisterForm extends Component {
             size="large"
           >
             <Item required requiredMessage="必填">
-              <Input maxLength={20} placeholder="会员名/邮箱/手机号"
+              <Input
+                maxLength={20}
+                placeholder="会员名/邮箱/手机号"
                 name="account"
-                innerBefore={<Icon
-                  type="account"
-                  size="small"
-                  style={styles.inputIcon}
-                />} />
+                innerBefore={
+                  <Icon type="account" size="small" style={styles.inputIcon} />
+                }
+              />
             </Item>
 
-            <Item
-
-              required
-              validator={this.checkPasswd}
-            >
+            <Item required validator={this.checkPasswd}>
               <Input
                 name="passwd"
-                innerBefore={<Icon type="account" test="lock" size="small" style={styles.inputIcon} />}
+                innerBefore={
+                  <Icon
+                    type="account"
+                    test="lock"
+                    size="small"
+                    style={styles.inputIcon}
+                  />
+                }
                 htmlType="password"
                 size="large"
                 placeholder="请输入密码"
@@ -91,24 +95,26 @@ export default class RegisterForm extends Component {
             <Item
               required
               validator={(rule, values, callback) =>
-                this.checkPasswd2(
-                  rule,
-                  values,
-                  callback,
-                  this.state.value
-                )
+                this.checkPasswd2(rule, values, callback, this.state.value)
               }
             >
               <Input
                 name="rePasswd"
-                innerBefore={<Icon type="account" test="lock" size="small" style={styles.inputIcon} />}
+                innerBefore={
+                  <Icon
+                    type="account"
+                    test="lock"
+                    size="small"
+                    style={styles.inputIcon}
+                  />
+                }
                 htmlType="password"
                 size="large"
                 placeholder="两次输入密码保持一致"
               />
             </Item>
 
-            <Item >
+            <Item>
               <Checkbox name="checkbox">记住账号</Checkbox>
             </Item>
 
@@ -120,21 +126,21 @@ export default class RegisterForm extends Component {
                 style={styles.submitBtn}
               >
                 注 册
-                </Form.Submit>
+              </Form.Submit>
             </Row>
 
             <Row className="tips" style={styles.tips}>
               <a href="/" style={styles.link}>
                 立即登录
-                </a>
+              </a>
               <span style={styles.line}>|</span>
               <a href="/" style={styles.link}>
                 忘记密码
-                </a>
+              </a>
             </Row>
           </Form>
+        </div>
       </div>
-      </div >
     );
   }
 }

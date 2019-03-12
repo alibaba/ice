@@ -7,6 +7,7 @@ const path = require('path');
 const postcssConfig = require('./postcssConfig');
 const paths = require('./paths');
 
+const AWESOME_TYPESCRIPT_LOADER = require.resolve('awesome-typescript-loader');
 const BABEL_LOADER = require.resolve('babel-loader');
 const CSS_LOADER = require.resolve('css-loader');
 const LESS_LOADER = require.resolve('less-loader');
@@ -14,6 +15,7 @@ const POSTCSS_LOADER = require.resolve('postcss-loader');
 const SASS_LOADER = require.resolve('sass-loader');
 const CSS_HOT_LOADER = require.resolve('css-hot-loader');
 const URL_LOADER = require.resolve('url-loader');
+const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const URL_LOADER_LIMIT = 8192;
 
 function withCssHotLoader(loaders) {
@@ -39,6 +41,21 @@ const CSS_MODULE_CONF = {
 };
 module.exports = (buildConfig = {}, themeConfig) => {
   const babelConfig = getBabelConfig(buildConfig);
+
+  let babelExclude = /node_modules/;
+  if (buildConfig.babelExclude) {
+    // 某个依赖包需要 babel 编译（不同 npm 路径可能不同）：babelExclude: "node_modules\\/(?!_@ali_lib-ucc)"
+    // node_modules 都需要编译：babelExclude: "bower_components"，随便配置一个奇怪的地址覆盖默认值即可
+    babelExclude = new RegExp(buildConfig.babelExclude);
+    console.log(colors.green('Info:'), '配置了 babelExclude，new RegExp() 转化后的值：', babelExclude);
+  }
+
+  const theme = buildConfig.theme || buildConfig.themePackage;
+  if (theme) {
+    // eslint-disable-next-line no-console
+    console.log(colors.green('Info:'), '使用主题包', theme);
+  }
+
   const sassLoadersConf = [
     {
       loader: POSTCSS_LOADER,
@@ -50,33 +67,23 @@ module.exports = (buildConfig = {}, themeConfig) => {
         sourceMap: true,
       },
     },
+    {
+      loader: ICE_SKIN_LOADER,
+      options: {
+        themeFile:
+          theme && path.join(paths.appNodeModules, `${theme}/variables.scss`),
+        themeConfig,
+      },
+    }
   ];
-
-  const theme = buildConfig.theme || buildConfig.themePackage;
-
-  if (theme) {
-    // eslint-disable-next-line no-console
-    console.log(colors.green('Info:'), '使用主题包', theme);
-  }
-
-  const iceThemeLoaderConf = {
-    loader: require.resolve('ice-skin-loader'),
-    options: {
-      themeFile:
-        theme && path.join(paths.appNodeModules, `${theme}/variables.scss`),
-      themeConfig,
-    },
-  };
 
   const sassLoaderConf = [
     CSS_LOADER_CONF,
     ...sassLoadersConf,
-    iceThemeLoaderConf,
   ];
   const sassModuleConf = [
     CSS_MODULE_CONF,
     ...sassLoadersConf,
-    iceThemeLoaderConf,
   ];
   // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
   const miniCssExtractPluginLoader = { loader: MiniCssExtractPlugin.loader };
@@ -131,6 +138,8 @@ module.exports = (buildConfig = {}, themeConfig) => {
           loader: LESS_LOADER,
           options: {
             sourceMap: true,
+            // https://github.com/ant-design/ant-motion/issues/44
+            javascriptEnabled: true,
           },
         },
       ]),
@@ -154,11 +163,27 @@ module.exports = (buildConfig = {}, themeConfig) => {
     },
     {
       test: /\.jsx?$/,
-      exclude: /node_modules/,
+      exclude: babelExclude,
       loader: BABEL_LOADER,
       options: deepAssign({}, babelConfig, { cacheDirectory: true }),
     },
-
+    // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'
+    {
+      test: /\.tsx?$/,
+      exclude: babelExclude,
+      use: [
+        {
+          loader: BABEL_LOADER,
+          options: deepAssign({}, babelConfig, { cacheDirectory: true }),
+        },
+        {
+          loader: AWESOME_TYPESCRIPT_LOADER,
+          options: {
+            useCache: false,
+          },
+        },
+      ],
+    },
     // extra url loader usage
     {
       test: /\.woff2?$/,

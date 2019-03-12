@@ -1,11 +1,12 @@
 {
   "name": "@icedesign/dynamic-icon",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "动态 Icon 组件",
   "main": "lib/index.js",
   "files": [
     "lib/",
-    "demo/"
+    "demo/",
+    "build/"
   ],
   "scripts": {
     "start": "ice-devtools start",
@@ -28,14 +29,13 @@
   "devDependencies": {
     "@alifd/next": "^1.x",
     "copy-to-clipboard": "^3.0.8",
-    "react-copy-to-clipboard": "^5.0.1"
-  },
-  "peerDependencies": {
+    "react-copy-to-clipboard": "^5.0.1",
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
   },
   "componentConfig": {
     "name": "dynamic-icon",
     "title": "动态 Icon 组件"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/data-binder@latest/build/index.html"
 }

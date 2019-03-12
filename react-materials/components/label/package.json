@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/label",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "创建标签组件用来突出所要显示的信息",
   "main": "lib/index.js",
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js"
+    "postinstall.js",
+    "build/"
   ],
   "scripts": {
     "start": "ice-devtools start",
@@ -28,6 +29,8 @@
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
   },
   "peerDependencies": {
     "react": "^16.5.0",
@@ -36,5 +39,6 @@
   "componentConfig": {
     "name": "label",
     "title": "创建标签组件用来突出所要显示的信息"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/label@latest/build/index.html"
 }

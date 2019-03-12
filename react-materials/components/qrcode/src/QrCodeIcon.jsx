@@ -1,3 +1,5 @@
+import React from 'react';
+
 const QrCodeIcon = (props) => (
   <div {...props}>
     <svg

@@ -3,14 +3,15 @@ const innerNet = require('../../utils/inner-net');
 
 module.exports = function info(cwd) {
   const pkg = pkgJSON.getPkgJSON(cwd);
+  const version = pkg.version;
   const pkgName = pkg.name;
   const forInnerNet = innerNet.isTnpm(pkgName);
 
-  let screenshotUrl = `https://unpkg.com/${pkgName}@latest/screenshot.png`;
-  let homepage = `https://unpkg.com/${pkgName}@latest/build/index.html`;
+  let screenshotUrl = `https://unpkg.com/${pkgName}@${version}/screenshot.png`;
+  let homepage = `https://unpkg.com/${pkgName}@${version}/build/index.html`;
   if (forInnerNet) {
-    screenshotUrl = `https://unpkg.alibaba-inc.com/${pkgName}@latest/screenshot.png`;
-    homepage = `https://unpkg.alibaba-inc.com/${pkgName}@latest/build/index.html`;
+    screenshotUrl = `https://unpkg.alibaba-inc.com/${pkgName}@${version}/screenshot.png`;
+    homepage = `https://unpkg.alibaba-inc.com/${pkgName}@${version}/build/index.html`;
   }
 
   pkg.homepage = homepage;

@@ -1,6 +1,36 @@
-# ice-scripts Changelog
+# Changelog
+
+## 2.1.18
+ - [fix] homepage url 随 npm 版本更新
+
+## 2.1.17
+ - [feat] 增加组件 homepage 字段
+
+## 2.1.16
+ - [feat] 增加 markdown 中代码片段支持类型
+
+## 2.1.15
+ - [feat] 增加组件 demo 构建逻辑
+
+## 2.1.14
+ - [feat] 增加埋点
+ - [feat] 更新提醒
+ - [feat] 添加组件入库托管
+
+## 2.1.13
+
+- [fix] 区块 external React 后预览错误
+
+## 2.1.12
+
+- [fix] 修改 npm registry 为官方默认值
+
+## 2.1.10
+
+- [chore] 组件和区块开发不 external React
 
 ## 2.1.9
+
 - [feat] 添加内部站点物料同步
 
 ## 2.1.8

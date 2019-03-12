@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/balloon-confirm",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "ICE 气泡确认框",
   "main": "lib/index.js",
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js"
+    "postinstall.js",
+    "build/"
   ],
   "repository": {
     "type": "git",
@@ -34,8 +35,13 @@
     "@alifd/next": "^1.x",
     "prop-types": "^15.5.8"
   },
+  "devDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
+  },
   "componentConfig": {
     "name": "balloon-confirm",
     "title": "ICE 气泡确认框"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/balloon-confirm@latest/build/index.html"
 }

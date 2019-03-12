@@ -23,50 +23,48 @@ export default class Filter extends Component {
           <Row wrap>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>所属应用</label>
-              <IceFormBinder>
-                <Input name="app" />
+              <IceFormBinder name="app">
+                <Input />
               </IceFormBinder>
             </Col>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>分类ID</label>
-              <IceFormBinder>
-                <Input name="id" />
+              <IceFormBinder name="id">
+                <Input />
               </IceFormBinder>
             </Col>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>标签ID</label>
-              <IceFormBinder>
-                <Input name="tag" />
+              <IceFormBinder name="tag">
+                <Input />
               </IceFormBinder>
             </Col>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>开始时间</label>
               <IceFormBinder
+                name="startTime"
                 valueFormatter={(date, strValue) => {
                   return strValue;
                 }}
               >
-                <DatePicker name="startTime" style={styles.filterTool} />
+                <DatePicker style={styles.filterTool} />
               </IceFormBinder>
             </Col>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>结束时间</label>
               <IceFormBinder
+                name="endTime"
                 valueFormatter={(date, strValue) => {
                   return strValue;
                 }}
               >
-                <DatePicker name="endTime" style={styles.filterTool} />
+                <DatePicker style={styles.filterTool} />
               </IceFormBinder>
             </Col>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>尺寸</label>
-              <IceFormBinder>
-                <Select
-                  name="size"
-                  placeholder="请选择"
-                  style={styles.filterTool}
-                >
+              <IceFormBinder name="size">
+                <Select placeholder="请选择" style={styles.filterTool}>
                   <Option value="small">Small</Option>
                   <Option value="medium">Medium</Option>
                   <Option value="large">Large</Option>
@@ -75,8 +73,8 @@ export default class Filter extends Component {
             </Col>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>删除状态</label>
-              <IceFormBinder>
-                <Select name="status" style={styles.filterTool}>
+              <IceFormBinder name="status">
+                <Select style={styles.filterTool}>
                   <Option value="success">成功</Option>
                   <Option value="failed">失败</Option>
                 </Select>
@@ -84,18 +82,14 @@ export default class Filter extends Component {
             </Col>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>讨论ID</label>
-              <IceFormBinder>
-                <Input name="commentId" />
+              <IceFormBinder name="commentId">
+                <Input />
               </IceFormBinder>
             </Col>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>置顶</label>
-              <IceFormBinder>
-                <Select
-                  name="isStick"
-                  placeholder="请选择"
-                  style={styles.filterTool}
-                >
+              <IceFormBinder name="isStick">
+                <Select placeholder="请选择" style={styles.filterTool}>
                   <Option value="all">不限</Option>
                   <Option value="stick">置顶</Option>
                   <Option value="not-stick">不置顶</Option>

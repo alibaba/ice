@@ -4,7 +4,6 @@ const path = require('path');
 const chalk = require('chalk');
 
 const BABEL_LOADER = require.resolve('babel-loader');
-const STYLE_LOADER = require.resolve('style-loader');
 const CSS_LOADER = require.resolve('css-loader');
 const SASS_LOADER = require.resolve('sass-loader');
 const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
@@ -12,6 +11,10 @@ const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const WEBPACK_HOT_CLIENT = require.resolve('webpack-hot-client/client');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require.resolve("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require.resolve('uglifyjs-webpack-plugin');
 
 const getBabelConfig = require('./getBabelConfig');
 const { getPkgJSON } = require('../utils/pkg-json');
@@ -23,11 +26,7 @@ const URL_LOADER_LIMIT = 8192;
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
   config
-    .mode(process.env.NODE_ENV === 'production' ? 'production' : 'development')
-    .externals({
-      react: 'React',
-      'react-dom': 'ReactDOM',
-    });
+    .mode(process.env.NODE_ENV === 'production' ? 'production' : 'development');
 
   config.module
     .rule('babel')
@@ -41,7 +40,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .rule('css')
     .test(/\.css$/)
     .use('style')
-    .loader(STYLE_LOADER)
+    .loader(MiniCssExtractPlugin.loader)
     .end()
     .use('css')
     .loader(CSS_LOADER)
@@ -65,7 +64,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .exclude.add(/\.module\.scss$/)
     .end()
     .use('style-loader')
-    .loader(STYLE_LOADER)
+    .loader(MiniCssExtractPlugin.loader)
     .end()
     .use('css-loader')
     .loader(CSS_LOADER)
@@ -84,7 +83,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   config.module
     .rule('cssmodule')
     .use('style-loader')
-    .loader(STYLE_LOADER)
+    .loader(MiniCssExtractPlugin.loader)
     .end()
     .test(/\.module\.scss$/)
     .use('css-loader')
@@ -187,6 +186,13 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     },
   ]);
 
+  config.plugin('css').use(MiniCssExtractPlugin, [
+    {
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    }
+  ]);
+
   config.plugin('import').use(WebpackPluginImport, [
     internalLibrary.map((libraryName) => {
       return {
@@ -195,6 +201,11 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
       };
     }),
   ]);
+
+  // 依赖分析
+  if (process.env.ANALYZER) {
+    config.plugin('analyzer').use(BundleAnalyzerPlugin);
+  }
 
   config.plugin('hot').use(webpack.HotModuleReplacementPlugin);
   Object.entries(entries).forEach((entry) => {
@@ -206,6 +217,31 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .path(cwd)
     .filename('[name].js')
     .publicPath('./');
+
+  config.optimization
+    .minimize(process.env.NODE_ENV === 'production')
+    .minimizer('js')
+    .use(UglifyJsPlugin, [{
+      cache: true,
+      parallel: true,
+      uglifyOptions: {
+        compress: {
+          unused: false,
+          warnings: false,
+        },
+        output: {
+          ascii_only: true,
+          comments: 'some',
+          beautify: false,
+        },
+        mangle: true,
+      },
+    }])
+    .end()
+    .minimizer('css')
+    .use(OptimizeCSSAssetsPlugin, [{ 
+      cssProcessorOptions: { safe: true } 
+    }]);
 
   return config;
 };

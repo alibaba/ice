@@ -38,7 +38,7 @@ async function writeToken() {
   const answers = await inquirer.prompt([
     {
       name: 'token',
-      message: 'Please input your https://fusion.design token: ',
+      message: 'Please input your fusion.design token: ',
       validate: function (input) {
         // Declare function as asynchronous, and save the done callback
         var done = this.async();

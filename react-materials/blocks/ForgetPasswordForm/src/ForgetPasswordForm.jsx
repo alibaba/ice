@@ -62,12 +62,9 @@ export default class ForgetPasswordForm extends Component {
                 required
                 type="email"
                 message="Email 地址不合法, 请检查"
+                name="email"
               >
-                <Input
-                  style={styles.input}
-                  name="email"
-                  placeholder="请输入邮箱地址"
-                />
+                <Input style={styles.input} placeholder="请输入邮箱地址" />
               </FormBinder>
               <div>
                 <FormError name="email" />

@@ -124,9 +124,3 @@ export default compose(
   withReducer,
   withConnect
 )(UserLogin);
-
-const styles = {
-  inputIcon: {
-    marginLeft: 10,
-  },
-};

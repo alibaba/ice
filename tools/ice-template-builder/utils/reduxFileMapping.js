@@ -21,11 +21,11 @@ const REDUX_TEMPLATE_FILE_MAPPING = {
   ],
   registerLoginModule: [
     'src/store/*',
+    'src/api/*',
     'src/pages/UserLogin/*',
     'src/pages/UserRegister/*',
     'src/layouts/UserLayout/*',
     'src/layouts/BasicLayout/BasicLayoutHoc.jsx',
-    'src/api/index.js',
     'mock/index.js',
   ],
   baseFiles: [

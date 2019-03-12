@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="https://g.alicdn.com/code/npm/??react/16.3.0/umd/react.development.js,react-dom/16.3.0/umd/react-dom.development.js"></script>
 
   <title>飞冰 DEMO 预览</title>
   <style>
@@ -455,6 +454,7 @@
       margin: 1em 2em;
     }
   </style>
+  <link rel="stylesheet" href="/__Component_Dev__.{{demoName}}.css"></link>
 </head>
 
 <body>
@@ -476,7 +476,7 @@
 
       <div class="code-box">
         <div class="code-box-demo">
-          <div id="mountNode"></div>
+          <div id="{{demoName}}"></div>
         </div>
         <div class="markdown">
           <div class="highlight">
@@ -498,13 +498,8 @@
 
 
   <script>
-    var mountNode = document.querySelector('#mountNode');
     function require(mod) {
       switch(mod) {
-        case 'react':
-          return React;
-        case 'react-dom':
-          return ReactDOM;
         case '{{ name }}':
           return __Component__.default;
         default:

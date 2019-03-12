@@ -13,6 +13,8 @@ module.exports = function getWebpacksConfig(cwd, type = 'react') {
 
   // 增加入口文件  index.js
   const entry = path.join(cwd, 'src/index.js');
+  const blockNodeModulesPath = path.join(cwd, '/node_modules/')
+
   const hbsTemplatePath = path.join(
     __dirname,
     `../template/preview/block-${type}-index.js.hbs`
@@ -23,9 +25,11 @@ module.exports = function getWebpacksConfig(cwd, type = 'react') {
   debug('%j', { entry, jsPath });
   const hbsTemplateContent = fs.readFileSync(hbsTemplatePath, 'utf-8');
   const compileTemplateContent = hbs.compile(hbsTemplateContent);
-  const isWin = process.platform === 'win32';
-  const realEntry = isWin ? entry.replace(/\\/g, '\\\\') : entry;
-  const jsTemplateContent = compileTemplateContent({ entry: realEntry });
+
+  const jsTemplateContent = compileTemplateContent({ 
+    entry: formatPath(entry),
+    blockNodeModulesPath: formatPath(blockNodeModulesPath)
+  });
 
   fs.writeFileSync(jsPath, jsTemplateContent);
 
@@ -43,3 +47,8 @@ module.exports = function getWebpacksConfig(cwd, type = 'react') {
   ]);
   return config;
 };
+
+function formatPath(p) {
+  const isWin = process.platform === 'win32';
+  return isWin ? p.replace(/\\/g, '\\\\') : p;
+}

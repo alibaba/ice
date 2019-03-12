@@ -1,12 +1,13 @@
 {
   "name": "@icedesign/panel",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "面板组件",
   "main": "lib/index.js",
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js"
+    "postinstall.js",
+    "build/"
   ],
   "scripts": {
     "start": "ice-devtools start",
@@ -29,6 +30,8 @@
     "@alifd/next": "^1.x"
   },
   "devDependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
   },
   "peerDependencies": {
     "react": "^16.5.0",
@@ -37,5 +40,6 @@
   "componentConfig": {
     "name": "panel",
     "title": "面板组件"
-  }
+  },
+  "homepage": "https://unpkg.com/@icedesign/panel@latest/build/index.html"
 }

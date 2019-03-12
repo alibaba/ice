@@ -1,7 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Input, Grid, Button, Form, SplitButton } from '@alifd/next';
+import { Input, Grid, Form } from '@alifd/next';
 
 import './ChangePasswordForm.scss';
 
@@ -10,7 +10,7 @@ const FormItem = Form.Item;
 
 const formItemLayout = {
   labelCol: { xxs: 7, s: 4, l: 3 },
-  wrapperCol: { xxs: 16, s: 10, l: 7 }
+  wrapperCol: { xxs: 16, s: 10, l: 7 },
 };
 
 export default class ChangePasswordForm extends Component {
@@ -78,7 +78,11 @@ export default class ChangePasswordForm extends Component {
           >
             <div style={styles.formContent}>
               <h2 style={styles.formTitle}>修改密码</h2>
-              <FormItem label="新密码：" {...formItemLayout} validator={this.checkPasswd}>
+              <FormItem
+                label="新密码："
+                {...formItemLayout}
+                validator={this.checkPasswd}
+              >
                 <Input
                   name="passwd"
                   htmlType="password"
@@ -86,14 +90,13 @@ export default class ChangePasswordForm extends Component {
                   placeholder="请重新输入新密码"
                 />
               </FormItem>
-              <FormItem label="确认密码：" {...formItemLayout} validator={(rule, values, callback) =>
-                this.checkPasswd2(
-                  rule,
-                  values,
-                  callback,
-                  this.state.value
-                )
-              }>
+              <FormItem
+                label="确认密码："
+                {...formItemLayout}
+                validator={(rule, values, callback) =>
+                  this.checkPasswd2(rule, values, callback, this.state.value)
+                }
+              >
                 <Input
                   name="rePasswd"
                   htmlType="password"
@@ -112,7 +115,7 @@ export default class ChangePasswordForm extends Component {
                   onClick={this.validateAllFormField}
                 >
                   提 交
-              </Form.Submit>
+                </Form.Submit>
               </Col>
             </Row>
           </Form>
