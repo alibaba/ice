@@ -10,13 +10,13 @@ class AdditionalComponents {
   @observable
   componentsValue = [];
 
-  constructor(components, material, iceBaseComponents = []) {
+  constructor(components, material, iceBaseComponents) {
     this.material = material || '';
     this.iceBusinessComponents = components;
-    this.iceBaseComponents = iceBaseComponents;
-    this.additionalSource(components, iceBaseComponents);
-    this.additionalIsDownloaded(components, iceBaseComponents);
-    this.componentsValue = components.concat(iceBaseComponents);
+    this.iceBaseComponents = iceBaseComponents || [];
+    this.additionalSource(components, this.iceBaseComponents);
+    this.additionalIsDownloaded(components, this.iceBaseComponents);
+    this.componentsValue = components.concat(this.iceBaseComponents);
   }
 
   additionalSource = (components, iceBaseComponents) => {
