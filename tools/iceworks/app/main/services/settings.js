@@ -29,10 +29,18 @@ module.exports = {
       } else if (key === 'materials') {
         // 重置用户本地的物料源配置，添加加了备份地址，保留原有额外设置，比如checked
         const oldMaterials = this.get('materials');
-        const newMaterials = oldMaterials.map((material, index) => {
-          return Object.assign(material, {
-            backupSource: value[index].backupSource,
-          });
+        const sourceToBackup = {};
+        defaultMaterials.forEach( obj => {
+          if (obj.backupSource) {
+            sourceToBackup[obj.source] = obj.backupSource;
+          }
+        });
+        const newMaterials = oldMaterials.map((material) => {
+          const backupSource = sourceToBackup[material.source];
+          if (backupSource) {
+            material.backupSource = backupSource;
+          }
+          return material;
         });
         this.set(key, newMaterials);
       }
