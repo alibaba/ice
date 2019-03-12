@@ -19,10 +19,12 @@ module.exports = (app, proxyConfig) => {
             proxyRes.headers['x-proxy-by'] = 'ice-proxy';
             proxyRes.headers['x-proxy-match'] = match;
             proxyRes.headers['x-proxy-target'] = target;
+
+            let distTarget = target;
             if (target && target.endsWith('/')) {
-              target = target.replace(/\/$/, '');
+              distTarget = target.replace(/\/$/, '');
             }
-            proxyRes.headers['x-proxy-target-path'] = target + req.url;
+            proxyRes.headers['x-proxy-target-path'] = distTarget + req.url;
           },
         }, proxyRule, { context: match });
 
