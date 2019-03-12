@@ -293,12 +293,12 @@ favicon, index.html 等。
 // index.js
 import styles from './index.module.scss';
 
-<Button className={styles.btn}>OK</Button>
+<Button className={styles.btn}>OK</Button>;
 ```
 
 ## Moment.js 优化
 
-基础组件包中将 moment 作为自己的 peerDependencies 而非 dependencies，所以用户需要自己在应用中引入 moment 的 cdn 文件 moment-with-locales.js 或者本地安装 moment 打包进自己的应用。对于后者，由于 moment 在引入 locale 文件时存在这样的代码：require('./locale/' + name)，如果用 webpack 构建，会打包进所有的 locale 文件，增加构建后文件的体积，ice-script 1.8.13 版本内置支持了按需加载多语言配置，在使用多语言包时只需要按照以下方式引用即可：
+基础组件包中将 moment 作为自己的 peerDependencies 而非 dependencies，所以用户需要自己在应用中引入 moment 的 cdn 文件 moment-with-locales.js 或者本地安装 moment 打包进自己的应用。对于后者，由于 moment 在引入 locale 文件时存在这样的代码：`require('./locale/' + name)`，如果用 webpack 构建，会打包进所有的 locale 文件，增加构建后文件的体积，ice-script 1.8.13 版本内置支持了按需加载多语言配置，在使用多语言包时只需要按照以下方式引用即可：
 
 ```
 // index.js
