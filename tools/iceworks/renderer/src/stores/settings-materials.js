@@ -242,7 +242,8 @@ class SettingsMaterials {
 
   filterBuiltInMaterials = (materials) => {
     // 如果用户物料源配置是否在推荐的物料源集合里，如果在则默认打开推荐列表的选项
-    const builtInMaterialsValue = RECOMMEND_MATERIALS.map((recommendMaterial) => {
+    const builtInMaterialsValue = shared.defaultMaterials.map((recommendMaterial) => {
+      recommendMaterial = {...recommendMaterial};
       const hasInUserMaterials = materials.some((userMaterial) => {
         return (
           equalSource(recommendMaterial.source, userMaterial.source) &&

@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx';
 import requestMaterial from '../lib/request-material';
-import { BLOCK_GROUPS_MATERIALS } from '../datacenter/materialsConfig';
+import services from '../services';
+
+const { shared } = services;
 
 /**
  * 用于管理 block groups 的 store 管理
@@ -14,7 +16,7 @@ class BlockGroups {
   @observable blockGroups = []; // 区块组合列表
 
   getBlockGroups() {
-    const uri = BLOCK_GROUPS_MATERIALS.source;
+    const uri = shared.blockGroupsMaterials.source;
     return requestMaterial(uri, true);
   }
 

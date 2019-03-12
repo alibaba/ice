@@ -3,12 +3,13 @@ import uppercamelcase from 'uppercamelcase';
 import uuid from 'uuid';
 
 import { getBlocks } from '../datacenter/materials';
-import { RECOMMEND_MATERIALS } from '../datacenter/materialsConfig';
 import projects from './projects';
 import blockGroups from './block-groups';
 
 import BlocksSearch from './blocks-search';
+import services from '../services';
 
+const { shared } = services;
 /**
  * 用于管理 block picker 的 store 管理
  */
@@ -221,7 +222,7 @@ class Blocks {
   getIceMaterial() {
     let iceIndex = -1;
     // 获取配置中的ice物料源source；
-    const { source } = RECOMMEND_MATERIALS.find((recommendMaterial) => {
+    const { source } = shared.defaultMaterials.find((recommendMaterial) => {
       return recommendMaterial.key === 'ice';
     });
     // 获取ice物料源及对应的index
