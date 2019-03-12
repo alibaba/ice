@@ -12,6 +12,7 @@ import newpage from './stores/newpage';
 import pageBlockPicker from './stores/page-block-picker';
 import projects from './stores/projects';
 import scaffold from './stores/scaffold';
+import component from './stores/component';
 import materials from './stores/materials';
 import switcher from './stores/switcher';
 import customBlocks from './stores/custom-blocks';
@@ -31,6 +32,7 @@ const {
   PageHome,
   PageScaffolds,
   PageBlocks,
+  PageComponents,
   PageExtensions,
   PageSettings,
 } = require('./router');
@@ -104,6 +106,7 @@ class App extends Component {
         pageBlockPicker={pageBlockPicker}
         projects={projects}
         scaffold={scaffold}
+        component={component}
         materials={materials}
         switcher={switcher}
         customBlocks={customBlocks}
@@ -116,26 +119,29 @@ class App extends Component {
         <Layout>
           <VisibleWrapper
             visible={
-              this.state.activePathname == '/' ||
-              this.state.activePathname == '/index.html'
+              this.state.activePathname === '/' ||
+              this.state.activePathname === '/index.html'
             }
           >
             <PageHome />
           </VisibleWrapper>
-          <VisibleWrapper visible={this.state.activePathname == '/scaffolds'}>
+          <VisibleWrapper visible={this.state.activePathname === '/scaffolds'}>
             <PageScaffolds />
           </VisibleWrapper>
-          <VisibleWrapper visible={this.state.activePathname == '/blocks'}>
+          <VisibleWrapper visible={this.state.activePathname === '/blocks'}>
             <PageBlocks />
+          </VisibleWrapper>
+          <VisibleWrapper visible={this.state.activePathname === '/components'}>
+            <PageComponents />
           </VisibleWrapper>
           <VisibleWrapper
             rerender={true}
-            visible={this.state.activePathname == '/settings'}
+            visible={this.state.activePathname === '/settings'}
           >
             <PageSettings />
           </VisibleWrapper>
 
-          <VisibleWrapper visible={this.state.activePathname == '/extensions'}>
+          <VisibleWrapper visible={this.state.activePathname === '/extensions'}>
             <PageExtensions />
           </VisibleWrapper>
         </Layout>
@@ -154,7 +160,7 @@ class VisibleWrapper extends Component {
       return null;
     }
 
-    if (!visible && this.rendered == false) {
+    if (!visible && this.rendered === false) {
       return null;
     }
 

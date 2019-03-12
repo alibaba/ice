@@ -17,7 +17,7 @@ function menuNode({ path, name, icon = 'home' }) {
   ]);
 }
 
-module.exports = async function({ name, path, icon, menuConfigFilePath }) {
+module.exports = async function ({ name, path, icon, menuConfigFilePath }) {
   path = `/${path}`.replace(/^\/+/, '/'); // 必须是 / 开头
 
   const menuContext = fs.readFileSync(menuConfigFilePath).toString();
@@ -33,7 +33,7 @@ module.exports = async function({ name, path, icon, menuConfigFilePath }) {
       ) {
         const menuExist = node.init.elements.some((oe) => {
           return oe.properties.some((op) => {
-            if (op.key.name == 'path' && op.value.value == path) {
+            if (op.key.name === 'path' && op.value.value === path) {
               return true;
             }
             return false;

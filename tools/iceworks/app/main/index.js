@@ -1,4 +1,6 @@
 const log = require('./logger');
+const alilog = require('./alilog');
+
 global.log = log;
 
 const checkEnv = require('./helper/checkEnv');
@@ -37,10 +39,11 @@ services.createTouchBar = createTouchBar;
 process
   .on('error', (error) => {
     log.error(error.stack);
-    log.report('app', {
-      type: 'error',
-      error: JSON.stringify(error.message),
-    });
+    alilog.report({
+      type: 'process-error',
+      msg: error.message,
+      stack: error.stack,
+    }, 'error');
     dialog.showMessageBox({
       title: '程序异常',
       type: 'error',
@@ -52,11 +55,11 @@ process
   })
   .on('unhandledRejection', (reason, promise) => {
     log.error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
-    log.report('app', {
-      type: 'unhandled-rejection',
+    alilog.report({
+      type: 'process-unhandled-rejection',
       reason,
       promise,
-    });
+    }, 'error');
     dialog.showMessageBox({
       title: '程序异常',
       type: 'error',
@@ -68,10 +71,11 @@ process
   })
   .on('uncaughtException', (error) => {
     log.error(error.stack);
-    log.report('app', {
-      type: 'uncaught-exception',
-      error: JSON.stringify(error.message),
-    });
+    alilog.report({
+      type: 'process-uncaught-exception',
+      msg: JSON.stringify(error.message),
+      stack: error.stack,
+    }, 'error');
     dialog.showMessageBox({
       title: '程序异常',
       type: 'error',
@@ -129,11 +133,11 @@ app.on('ready', async () => {
 
 app.on('will-finish-launching', () => {
   // 监听，处理从url唤起iceworks的参数
-  app.on('open-url', function (event, url) {
+  app.on('open-url', (event, url) => {
     // url = iceworks://?to=scaffolds
     const query = parse(url, true).query;
     if (Object.keys(query).length > 0) {
       settings.set('urlEvokeQuery', query);
     }
-  })
+  });
 });

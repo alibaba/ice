@@ -49,7 +49,7 @@ class Block extends Component {
     const { block, style, className = '' } = this.props;
     return (
       <div className={`preview-block ${className}`} style={style}>
-        <BlockDragHandle src={ block.type == 'custom'
+        <BlockDragHandle src={ block.type === 'custom'
           ? ( 'data:image/png;base64,' + this.props.customBlocks.getBlockImg(block.blockName) )
           : ( block.screenshot ) } />
         <div className="preview-block-operation">
@@ -96,8 +96,8 @@ class BlockPreviewer extends Component {
         block={block}
         orderIndex={orderIndex}
         {...other}
-        isFirset={orderIndex == 0}
-        isLast={orderCount - 1 == orderIndex}
+        isFirset={orderIndex ===  0}
+        isLast={orderCount - 1 ===  orderIndex}
       />
     );
   }

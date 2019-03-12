@@ -3,6 +3,7 @@ const { dialog } = require('electron');
 
 const sendToWebContents = require('./helper/sendToWebContents');
 const log = require('./logger');
+
 const networkPort = 8000;
 
 ipc.config.id = 'iceworks';
@@ -13,8 +14,8 @@ ipc.config.networkPort = networkPort;
  * ipc 服务，用于跨进程间的通信
  * 其他进程链接 ipc 服务后，进程则会挂起，不会主动退出。例如 build 命令就无法执行完成后主动退出。
  */
-ipc.serveNet(function() {
-  ipc.server.on('message', function({ message, path: projectPath }, socket) {
+ipc.serveNet(() => {
+  ipc.server.on('message', ({ message, path: projectPath }) => {
     if (message.type === 'sdk_status') {
       // 仅有 dev 需要与页面互通状态
       sendToWebContents(global.windows.home, 'sdk-dev-status', {
@@ -32,7 +33,7 @@ ipc.serveNet(function() {
   });
 });
 
-ipc.server.on('error', function(err) {
+ipc.server.on('error', (err) => {
   log.error('iceworks ipc Got an ERROR!', err);
   if (err && err.message && /listen eaddrinuse/i.test(err.message)) {
     dialog.showErrorBox(

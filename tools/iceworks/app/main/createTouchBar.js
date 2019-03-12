@@ -1,10 +1,11 @@
 const { resolve } = require('app-root-path');
-const { nativeImage, TouchBar, remote } = require('electron');
-const { TouchBarButton, TouchBarSpacer } = TouchBar;
+const { nativeImage, TouchBar } = require('electron');
+
+const { TouchBarButton } = TouchBar;
 
 function createIcon(path) {
   return nativeImage.createFromPath(
-    resolve('./static/touchbar/' + path + '.png')
+    resolve(`./static/touchbar/${path}.png`)
   );
 }
 

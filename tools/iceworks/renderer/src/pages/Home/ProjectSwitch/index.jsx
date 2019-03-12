@@ -48,7 +48,7 @@ class ProjectSwitch extends Component {
     const list = projects.list;
     const currentProject = projects.currentProject;
 
-    if (!currentProject || !list || list.length == 0) {
+    if (!currentProject || !list || list.length === 0) {
       return (
         <div style={{ textAlign: 'center', lineHeight: '100px' }}>暂无项目</div>
       );
@@ -56,7 +56,7 @@ class ProjectSwitch extends Component {
     return (
       <ul>
         {list.map((project, index) => {
-          const isActive = project.fullPath == currentProject.fullPath;
+          const isActive = project.fullPath === currentProject.fullPath;
           return (
             <Option
               isActive={isActive}

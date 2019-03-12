@@ -14,7 +14,7 @@ class BlockSlider extends Component {
 
   handleClick(index) {
     const { onClick } = this.props;
-    if ('function' == typeof onClick) {
+    if ('function' === typeof onClick) {
       onClick(index);
     }
   }
@@ -89,7 +89,7 @@ class BlockSlider extends Component {
         <div className="block-slider-trigger" />
         <ul className="block-category-nav">
           {blocksWithCategory.map(({ category, blocks }, index) => {
-            if (blocks.length == 0) {
+            if (blocks.length ===  0) {
               return null;
             }
             return (

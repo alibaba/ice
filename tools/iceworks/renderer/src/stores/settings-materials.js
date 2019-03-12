@@ -1,10 +1,8 @@
 import { Feedback } from '@icedesign/base';
 import { observable, action, computed, toJS } from 'mobx';
 import Notification from '@icedesign/notification';
-import cloneDeep from 'lodash.clonedeep';
 import equalSource from '../lib/equal-source';
 import filterMaterial from '../lib/filter-material';
-import { RECOMMEND_MATERIALS } from '../datacenter/materialsConfig';
 import services from '../services';
 
 const { settings, shared } = services;
@@ -53,7 +51,7 @@ class SettingsMaterials {
     return new Promise((resolve, reject) => {
       // 检测物料名以及 source
       const hasEmpty = this.customMaterialsValue.some((material) => {
-        return material.name.trim() == '' || material.source.trim() == '';
+        return material.name.trim() === '' || material.source.trim() === '';
       });
 
       if (hasEmpty) {
@@ -81,6 +79,7 @@ class SettingsMaterials {
     const saveMaterials = defaultMaterials.map((item) => ({ ...item }));
     this.builtInMaterialsValue = this.filterBuiltInMaterials(saveMaterials);
     settings.set('materials', saveMaterials);
+    settings.set('isMaterialsBackup', false);
     this.notification('官方物料源重置成功');
   }
 
@@ -224,6 +223,7 @@ class SettingsMaterials {
         return {
           name: item.name,
           source: item.source,
+          backupSource: item.backupSource,
           builtIn: item.builtIn,
           type: item.type,
         };
@@ -241,7 +241,10 @@ class SettingsMaterials {
 
   filterBuiltInMaterials = (materials) => {
     // 如果用户物料源配置是否在推荐的物料源集合里，如果在则默认打开推荐列表的选项
-    const builtInMaterialsValue = RECOMMEND_MATERIALS.map((recommendMaterial) => {
+    const builtInMaterialsValue = shared.defaultMaterials.map((recommendMaterial) => {
+      // TODO: 排查 shared.defaultMaterials 变成类mobx的observable的对象的原因
+      // 这里是一个类mobx的observable的对象，需要通过解构转换成简单js对象，否则渲染时读取为空对象，toJS无效。
+      recommendMaterial = {...recommendMaterial};
       const hasInUserMaterials = materials.some((userMaterial) => {
         return (
           equalSource(recommendMaterial.source, userMaterial.source) &&

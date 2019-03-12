@@ -103,7 +103,7 @@ class Updater extends Component {
 
   renderUpdater = () => {
     const { event, meta } = this.state;
-    if (event == 'update-available') {
+    if (event === 'update-available') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">
@@ -125,7 +125,7 @@ class Updater extends Component {
           </div>
         </div>
       );
-    } else if (event == 'update-not-available') {
+    } else if (event === 'update-not-available') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">当前已经是最新的版本。</div>
@@ -140,7 +140,7 @@ class Updater extends Component {
           </div>
         </div>
       );
-    } else if (event == 'download-progress') {
+    } else if (event === 'download-progress') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">正在下载更新...</div>
@@ -151,14 +151,14 @@ class Updater extends Component {
           />
         </div>
       );
-    } else if (event == 'unpack-updater') {
+    } else if (event === 'unpack-updater') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">正在解压更新...</div>
           <Progress showInfo={false} percent={100} size="medium" />
         </div>
       );
-    } else if (event == 'update-downloaded') {
+    } else if (event === 'update-downloaded') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">更新已完成。</div>
@@ -173,7 +173,7 @@ class Updater extends Component {
           </div>
         </div>
       );
-    } else if (event == 'error') {
+    } else if (event === 'error') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">更新失败!</div>
