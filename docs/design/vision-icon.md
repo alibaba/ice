@@ -24,7 +24,7 @@ order: 6
 
 ## 系统图标分解
 
-![Group 10@2x.jpg](https://img.alicdn.com/tfs/TB1hudLLH2pK1RjSZFsXXaNlXXa-2598-2048.jpg)
+![Group 10@2x.jpg](https://img.alicdn.com/tfs/TB1LJ8FLMDqK1RjSZSyXXaxEVXa-2600-994.jpg)
 
 ## 笔画
 
