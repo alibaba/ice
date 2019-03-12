@@ -3,7 +3,7 @@ import cx from 'classnames';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { Nav, Icon } from '@alifd/next';
+import { Nav } from '@alifd/next';
 import { FormattedMessage } from 'react-intl';
 
 import Logo from '../Logo';
