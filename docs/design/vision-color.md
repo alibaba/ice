@@ -10,7 +10,7 @@ order: 2
 
 ## 舒适 / 优雅 / 功能性
 
-![Group 2@2x.jpg](https://img.alicdn.com/tfs/TB1vGFBLHvpK1RjSZFqXXcXUVXa-2598-4062.jpg)
+![Group 2@2x.jpg](https://img.alicdn.com/tfs/TB1nnJPLSzqK1RjSZFHXXb3CpXa-1299-1882.png)
 
 ![Group 4@2x.jpg](https://img.alicdn.com/tfs/TB1tdN2LOLaK1RjSZFxXXamPFXa-2598-6852.jpg)
 
