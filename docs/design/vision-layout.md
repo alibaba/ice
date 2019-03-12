@@ -20,7 +20,7 @@ order: 3
 
 ## 页宽1440
 
-![Group 12@2x.png](https://img.alicdn.com/tfs/TB1l5NHLFzqK1RjSZSgXXcpAVXa-3140-1160.jpg)
+![Group 12@2x.png](https://img.alicdn.com/tfs/TB1ueM.LCzqK1RjSZPcXXbTepXa-3140-1160.png)
 
 ![Group 13@2x.jpg](https://img.alicdn.com/tfs/TB1t0tDLOrpK1RjSZFhXXXSdXXa-3140-1160.jpg)
 
