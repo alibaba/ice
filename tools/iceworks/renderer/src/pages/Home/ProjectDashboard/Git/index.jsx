@@ -1,7 +1,7 @@
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { 
-  Step, Button, Input, Field, 
+import {
+  Step, Button, Input, Field,
   Checkbox, Dialog, CascaderSelect, Dropdown,
   Menu, Loading, Feedback
 } from '@icedesign/base';
@@ -160,7 +160,7 @@ class GitPanel extends Component {
             />
             <br />
             {this.field.getError('remoteUrl') ? (
-              <span style={{ 
+              <span style={{
                 color: '#fa7070',
                 fontSize: 12,
                 display: 'inline-block',
@@ -308,7 +308,7 @@ class GitPanel extends Component {
               {
                 dataSource.map( item => {
                   return item;
-                }) 
+                })
               }
             </CheckboxGroup>
           </div>
@@ -332,6 +332,9 @@ class GitPanel extends Component {
             { git.selectedFiles.length !== 0 && !git.commitMsg && '输入信息提交' }
             { git.selectedFiles.length !== 0 && git.commitMsg && '提交' }
           </Button>
+        </div>
+        <div style={styles.bottomTips}>
+          变更信息不会实时刷新，提交前请先通过右上角的按钮更新状态
         </div>
       </div>
     );
@@ -398,7 +401,7 @@ class GitPanel extends Component {
     );
 
     return (
-      
+
       <DashboardCard >
         <Loading visible={git.reloading} style={{width: '100%', height: '100%'}} shape="fusion-reactor">
           <DashboardCard.Header>
@@ -584,5 +587,10 @@ const styles = {
   },
   fileItem: {
     paddingBottom: 4
+  },
+  bottomTips: {
+    fontSize: 12,
+    color: '#ccc',
+    marginTop: 8
   }
 };

@@ -56,7 +56,7 @@ class Item extends Component {
     } else  {
       // 没有homepage字段但是属于飞冰物料源，则判断是 飞冰基础组件
       if(isIceMaterial(material.source)) {
-        preUrl = iceVersion === '0.x' ? 
+        preUrl = iceVersion === '0.x' ?
           "https://alibaba.github.io/ice/0.x/component/" :
           "https://alibaba.github.io/ice/component/";
         url = preUrl + data.name.toLocaleLowerCase();
@@ -79,7 +79,7 @@ class Item extends Component {
             <div className="component-downloaded">
               <Tooltip
                 placement={'top'}
-                overlay={'已下载'}
+                overlay={'当前项目已依赖'}
               >
                 <Icon type="yixiazai" style={{color: 'rgb(48, 128, 254)'}} />
               </Tooltip>
@@ -90,18 +90,18 @@ class Item extends Component {
           <div  className="component-card-opt">
           {
             data.isDownloaded ? (
-              <Button 
-                size="small" 
-                onClick={this.import} 
+              <Button
+                size="small"
+                onClick={this.import}
                 type="primary">
-                引用复制
+                复制引入代码
               </Button>
             ) : (
-              <Button 
-                size="small" 
-                onClick={this.download} 
+              <Button
+                size="small"
+                onClick={this.download}
                 type="primary">
-                下载
+                安装
               </Button>
             )
           }
@@ -111,7 +111,7 @@ class Item extends Component {
             </Button>
           </div>
         </div>
-        
+
       </div>
     )
   }

@@ -129,7 +129,7 @@ class Materials {
     const isMaterialsBackup = settings.get('isMaterialsBackup');
     const startRecommendMaterials = this.startRecommendMaterials;
     const source = isMaterialsBackup ? recommendMaterialSource.backupSource : recommendMaterialSource.source;
-    
+
     this.fetchByMaterial(source)
       .then((body = {}) => {
         const scaffolds = body.scaffolds || [];
@@ -174,13 +174,17 @@ class Materials {
     if (material && !material.loaded) {
       let promiseAll;
       if (isIceMaterial(material.source)) {
-        // 根据组件版本获取对应的基础组件物料源
+        // HACK: 获取 ICE 物料源时一同获取基础组件数据
         const { iceVersion } = projects.currentProject;
         const { iceBaseMaterials } = shared;
         const iceBaseMaterial = iceVersion === '0.x' ? iceBaseMaterials[0] : iceBaseMaterials[1];
         promiseAll = Promise.all([
           this.fetchByMaterial(source),
-          this.fetchByMaterial(iceBaseMaterial.source),
+          this.fetchByMaterial(iceBaseMaterial.source).catch((err) => {
+            // 获取基础组件列表失败，不终止流程
+            material.componentsError = `基础组件列表加载失败，请确认网络是否能直接访问此链接 ${iceBaseMaterial.source}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
+            return null;
+          }),
         ]);
       } else {
         promiseAll = Promise.all([
@@ -202,31 +206,27 @@ class Materials {
 
         Object.keys(attrs).forEach((key) => {
           material[key] = attrs[key];
-        })// 双向绑定数据
+        })
+
+        // 双向绑定数据
         material.blocks = new AdditionalBlocks(blocks);
         material.scaffolds = new AdditionalScaffolds(scaffolds, material);
-        material.components = new AdditionalComponents(components, material, iceBaseComponents);
+
+        if (iceBaseComponents) {
+          material.components = new AdditionalComponents(components, material, iceBaseComponents);
+        }
 
         material.loaded = true;
         material.data = body;
         material.error = null;
       }).catch((error) => {
-        // 如果alicdn物料源访问超时 切换备份物料源
-        if (
-          error.code &&
-          (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT')
-        ) {
-          if (!isMaterialsBackup) {
-            settings.set('isMaterialsBackup', true);
-            this.loaderMaterial(index);
-          } else {
-            material.loaded = true;
-            const errMsg = `物料源加载失败，请确认网络是否能直接访问此链接 ${source}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
-            material.error = errMsg;
-          }
+        console.error('promiseAll.then error', error);
+        if (!isMaterialsBackup) {
+          settings.set('isMaterialsBackup', true);
+          this.loaderMaterial(index);
         } else {
           material.loaded = true;
-          const errMsg = '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
+          const errMsg = `物料源加载失败，请确认网络是否能直接访问此链接 ${source}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
           material.error = errMsg;
         }
       });
