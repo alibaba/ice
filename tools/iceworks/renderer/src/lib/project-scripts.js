@@ -6,9 +6,10 @@ import rimraf from 'rimraf';
 import dialog from '../components/dialog';
 import services from '../services';
 import terms from '../terms';
-import isAlibaba from './is-alibaba';
 
 const detectPort = remote.require('detect-port');
+
+const isAlibaba = services.settings.get('isAlibaba');
 
 const { log, folder, interaction, sessions, alilog, shared } = services;
 
@@ -380,13 +381,13 @@ export default {
             reject(error);
           } else {
             const env = getEnv();
-            const registry = isAlibaba()
+            const registry = isAlibaba
               ? 'https://registry.npm.alibaba-inc.com/'
               : env.npm_config_registry;
             terms.writeln(cwd, '清理 node_modules 目录完成');
             terms.writeln(cwd, `\n当前下载源：${registry}\n`);
             if (
-              !isAlibaba() &&
+              !isAlibaba &&
               registry.indexOf('registry.npm.taobao.org') === -1
             ) {
               terms.writeln(
@@ -427,7 +428,7 @@ export default {
         });
       })
       .then(() => {
-        return isAlibaba();
+        return isAlibaba;
       })
       .then((isAli) => {
         const env = getEnvByNodeFramework(project.nodeFramework, isAli);

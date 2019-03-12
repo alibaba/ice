@@ -33,7 +33,7 @@ class AdditionalComponents {
       const { source = {}, importStatement, name } = component;
       if (!importStatement) {
         const cn = name.split('/').pop();
-        component.importStatement = `import { ${upperCamelCase(cn)} } from '${source.npm}';`;
+        component.importStatement = `import ${upperCamelCase(cn)} from '${source.npm}';`;
       } else {
         component.importStatement = importStatement;
       }
