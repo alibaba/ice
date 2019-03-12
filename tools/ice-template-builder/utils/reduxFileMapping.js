@@ -31,7 +31,7 @@ const REDUX_TEMPLATE_FILE_MAPPING = {
   baseFiles: [
     'src/layouts/BasicLayout/MainRoutes.jsx',
     'src/pages/Dashboard/*',
-    'src/components/NotFound/*',
+    'src/components/Exception/*',
     'src/utils/formatter.js',
     'src/index.js',
     'src/menuConfig.js',
