@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
-import CateMenu from './CateMenu';
+import CateMenu from '../CateMenu';
 import EmptyTips from '../EmptyTips';
 import Item from './Item';
 
@@ -26,11 +26,15 @@ class Panel extends Component {
     const { material } = this.props;
     const scaffolds = material.scaffolds || null;
 
+    if (material.error) {
+      return <EmptyTips size={120} style={{margin: '0 10px'}}>{material.error}</EmptyTips>;
+    }
+
     if (!scaffolds) {
       return <EmptyTips size={120}>加载中...</EmptyTips>;
     }
 
-    if (Array.isArray(scaffolds.values) && scaffolds.values.length == 0) {
+    if (Array.isArray(scaffolds.values) && scaffolds.values.length === 0) {
       return (
         <div style={{ padding: 10 }}>
           <EmptyTips size={120}>当前物料源暂无模板</EmptyTips>

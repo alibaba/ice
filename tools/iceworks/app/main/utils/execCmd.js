@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 const { getEnv } = require('../env');
 
-module.exports = function(cmd, cwd) {
+module.exports = function (cmd, cwd) {
   return new Promise((resolve, reject) => {
     exec(
       cmd,

@@ -95,7 +95,7 @@ exports.registerShortcut = (app, windows) => {
     log.info('shortcutKey register success', shortcutKey);
     log.report('app', {
       action: 'shortcut-key',
-      shortcutKey: shortcutKey,
+      shortcutKey,
     });
   }
 

@@ -28,11 +28,15 @@ class Panel extends Component {
     const { material = {} } = this.props;
     const blocks = (material && material.blocks) || null;
 
+    if (material.error) {
+      return <EmptyTips size={120} style={{margin: '0 10px'}}>{material.error}</EmptyTips>;
+    }
+
     if (!blocks) {
       return <EmptyTips size={120}>加载中...</EmptyTips>;
     }
 
-    if (Array.isArray(blocks.values) && blocks.values.length == 0) {
+    if (Array.isArray(blocks.values) && blocks.values.length === 0) {
       return (
         <div style={{ padding: 10 }}>
           <EmptyTips size={120}>当前物料源暂无区块</EmptyTips>

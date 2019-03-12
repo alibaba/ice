@@ -9,6 +9,7 @@ import { inject, observer } from 'mobx-react';
 import { readdirSync } from '../../../lib/file-system';
 import DashboardCard from '../../../components/DashboardCard';
 import EmptyTips from '../../../components/EmptyTips';
+import PluginHoc from './PluginHoc';
 
 function recursiveReaddirSync(dirPath, rootDir) {
   let list = [];
@@ -302,7 +303,7 @@ class Todo extends Component {
           </div>
         </DashboardCard.Header>
         <DashboardCard.Body>
-          {this.state.files.length == 0 ? (
+          {this.state.files.length === 0 ? (
             <EmptyTips>暂无 TODO 项</EmptyTips>
           ) : (
             <table>
@@ -319,4 +320,4 @@ class Todo extends Component {
   }
 }
 
-export default Todo;
+export default PluginHoc(Todo);

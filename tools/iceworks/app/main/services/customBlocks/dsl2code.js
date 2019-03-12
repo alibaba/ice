@@ -17,8 +17,8 @@ module.exports = (json, materialEngine, callback) => {
       packageAlias: [{
         npmName: '@alife/next',
         npmAlias: '@icedesign/base',
-        version: '^0.2.3'
-      }]
+        version: '^0.2.3',
+      }],
     },
     materialEngine,
     'react'

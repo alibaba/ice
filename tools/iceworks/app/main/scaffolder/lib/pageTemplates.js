@@ -3,8 +3,9 @@ const path = require('path');
 const ejs = require('ejs');
 
 require('./makeTempDir');
+
 const templatesPath = path.join(__dirname, '../templates');
-module.exports = (libary, buildConfig) => {
+module.exports = (libary) => {
   return fs
     .readdirSync(templatesPath)
     .filter((fileName) => {
@@ -19,7 +20,7 @@ module.exports = (libary, buildConfig) => {
           // ejs options
         }),
         filePath,
-        fileName: file.replace(libary + '.', ''),
+        fileName: file.replace(`${libary}.`, ''),
       };
     });
 };

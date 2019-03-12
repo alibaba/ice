@@ -1,8 +1,6 @@
 const rimraf = require('rimraf');
-const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
-const request = require('request');
 const createIceApp = require('../../..');
 
 const tmpDirectory = path.join(__dirname, 'tmp');
@@ -15,7 +13,7 @@ module.exports = async () => {
     version: 'latest',
     projectName: '测试项目',
     destDir: tmpDirectory,
-    interpreter: ({ type, message, data }, callback) => {
+    interpreter: ({ type }, callback) => {
       switch (type) {
         // todo inquirer
         case 'DESTDIR_EXISTS_OVERRIDE':
@@ -29,9 +27,9 @@ module.exports = async () => {
       }
     },
   });
-  const pages = await createIceApp.scanPage({
-    destDir: tmpDirectory,
-  });
+  // const pages = await createIceApp.scanPage({
+  //   destDir: tmpDirectory,
+  // });
 
   rimraf.sync(tmpDirectory);
 };

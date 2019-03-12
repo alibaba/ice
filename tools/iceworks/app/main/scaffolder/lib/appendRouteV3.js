@@ -10,8 +10,8 @@ const routes = require('./routes');
 const config = require('../../config');
 
 const ROUTE_BLACK_LIST = ['*', '404', '502'];
-
-module.exports = async function({
+/* eslint-disable no-underscore-dangle */
+module.exports = async function ({
   clientPath,
   routePath,
   routeText,
@@ -45,9 +45,9 @@ module.exports = async function({
     routes.addRoute(ast.program.body, {
       path: routePath,
       childRoutes: [],
-      component: 'id ' + layoutClassName,
+      component: `id ${layoutClassName}`,
       indexRoute: {
-        component: 'id ' + pageFolderName,
+        component: `id ${pageFolderName}`,
       },
     });
     const { code } = routes._generateRoute({
@@ -130,12 +130,10 @@ module.exports = async function({
           if (part && part[0] === ':') {
             if (/id/i.test(part)) {
               return '1';
-            } else {
-              return part.replace(/^:/, '');
             }
-          } else {
-            return part;
+            return part.replace(/^:/, '');
           }
+          return part;
         })
         .join('/');
       const hasSameRoute = navsJsonData.asideNavs.some((r) => {
@@ -172,9 +170,9 @@ module.exports = async function({
             depth: null,
           })};
           const autoGenAsideNavs = ${util.inspect(navsJsonData.asideNavs, {
-            showHidden: false,
-            depth: null,
-          })};`,
+    showHidden: false,
+    depth: null,
+  })};`,
           config.prettier
         )
       );

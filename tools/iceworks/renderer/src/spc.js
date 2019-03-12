@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron';
 import { EventEmitter } from 'events';
 import terms from './terms';
 
+// eslint-disable-next-line
 let clientInstance = null;
 
 const CHANNEL_DATA = 'session:data';

@@ -36,6 +36,11 @@ export const PageBlocks = loadable({
   loading: Loading2,
 });
 
+export const PageComponents = loadable({
+  loader: () => import(/* webpackChunkName: "blocks" */ './pages/Components/'),
+  loading: Loading2,
+});
+
 export const PageExtensions = loadable({
   loader: () =>
     import(/* webpackChunkName: "extenstions" */ './pages/Extenstions/'),
