@@ -242,7 +242,8 @@ class SettingsMaterials {
   filterBuiltInMaterials = (materials) => {
     // 如果用户物料源配置是否在推荐的物料源集合里，如果在则默认打开推荐列表的选项
     const builtInMaterialsValue = shared.defaultMaterials.map((recommendMaterial) => {
-      // shared.defaultMaterials 在这里显示一个类mobx的observable的对象，需要通过解构转换成简单js对象
+      // TODO: 排查 shared.defaultMaterials 变成类mobx的observable的对象的原因
+      // 这里是一个类mobx的observable的对象，需要通过解构转换成简单js对象，否则渲染时读取为空对象，toJS无效。
       recommendMaterial = {...recommendMaterial};
       const hasInUserMaterials = materials.some((userMaterial) => {
         return (
