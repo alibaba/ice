@@ -14,6 +14,7 @@ const storage = require('./storage');
 const worker = require('./worker');
 const templateBuilderUtils = require('@icedesign/template-builder/utils/');
 const customBlocks = require('./customBlocks');
+const alioss = require('./alioss');
 const paths = require('../paths');
 
 const pty = require('node-pty');
@@ -36,5 +37,6 @@ module.exports = {
   worker,
   pty,
   customBlocks,
+  alioss,
   paths,
 };
