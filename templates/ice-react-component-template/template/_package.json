@@ -3,7 +3,7 @@
   "version": "{{version}}",
   "description": "{{description}}",
   "author": "{{author}}",
-  "files": ["demo/", "lib/"],
+  "files": ["demo/", "lib/", "build/"],
   "main": "lib/index.js",
   "repository": {
     "type": "git",

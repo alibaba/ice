@@ -146,8 +146,6 @@ babel-loader 有一个 exclude 的配置，用于过滤某些目录下的文件�
 
 ice-scripts 除了提供 buildConfig 用于快速的配置入口之外，也支持自定义配置需求，几乎可完全自定义 webpack 的所有配置项；在项目根目录新建 `.webpackrc.js` 文件对默认配置进行定制和覆盖。`.webpackrc.js` 文件需要导出一个函数，其支持的参数可以参考 `webpack` [官方文档](https://webpack.js.org/concepts/output/)。
 
-**正常情况下，我们不推荐使用 `.webpackrc.js` 的方式自定义配置，因为这可能给项目的长期维护带来负担。**如有需求可以先反馈给飞冰团队评估是否可以直接内置到 ice-scripts 或者通过 buildConfig 的方式支持。
-
 `.webpackrc.js` 文件采用操作系统中安装的 Node.js 所支持的语法，所以可以使用除了 `import`, `export` 等之外的几乎所有 ES6 语法。
 
 ```js

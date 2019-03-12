@@ -63,13 +63,13 @@ $ npm start
 ```
 .
 ├── README.md                  // 说明文档
-├── package.json   
-└── lib                        // 组件构建后的结果    
-│   └── index.js         
+├── package.json
+└── lib                        // 组件构建后的结果
+│   └── index.js
 └── src
 │   ├── index.js               // 组件入口
 │   ├── main.scss              // 组件自身的样式代码
-└── demo                        
+└── demo
     └── useage.md              // 组件 demo
 ```
 
@@ -137,4 +137,4 @@ $ npm publish
 $ npm run deploy
 ```
 
-附：独立的组件开发链路，可以查看[文档](https://github.com/alibaba/ice/wiki/%E7%8B%AC%E7%AB%8B%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B)
+附：独立的组件开发链路，可以查看[文档](https://github.com/alibaba/ice/wiki/develop-single-biz-component)
