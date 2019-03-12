@@ -36,7 +36,7 @@ order: 5
 
 以下是对通常折行的字号情况的行字数举例：
 
-![Group 8@2x.jpg](https://img.alicdn.com/tfs/TB1o18OLNTpK1RjSZFKXXa2wXXa-2580-1054.jpg)
+![Group 8@2x.jpg](https://img.alicdn.com/tfs/TB1ioBHLSzqK1RjSZFLXXcn2XXa-2580-856.jpg)
 
 ## 字体颜色
 
