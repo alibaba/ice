@@ -50,7 +50,7 @@ const defaultMaterials = [
     key: 'ice',
     name: '飞冰物料源',
     homepage: 'https://alibaba.github.io/ice/',
-    checked: false,
+    checked: true,
     builtIn: true,
     logo: 'https://img.alicdn.com/tfs/TB1JbQWoQUmBKNjSZFOXXab2XXa-242-134.png',
     description:
@@ -64,7 +64,7 @@ const defaultMaterials = [
     key: 'rax',
     name: '小程序物料源',
     homepage: 'https://developer.taobao.com/',
-    checked: false,
+    checked: true,
     builtIn: true,
     logo: 'https://img.alicdn.com/tfs/TB1_rYRvOAnBKNjSZFvXXaTKXXa-1120-960.png',
     description: '基于 Rax 的小程序应用的物料源集合',
@@ -76,7 +76,7 @@ const defaultMaterials = [
   {
     key: 'vue',
     name: 'Vue 物料源',
-    checked: false,
+    checked: true,
     builtIn: true,
     logo: 'https://img.alicdn.com/tfs/TB1JCw6oQ7mBKNjSZFyXXbydFXa-400-400.png',
     description:
@@ -89,7 +89,7 @@ const defaultMaterials = [
   {
     key: 'angular',
     name: 'Angular 物料源',
-    checked: false,
+    checked: true,
     builtIn: true,
     logo:
       'https://img.alicdn.com/tfs/TB1bJ3goOMnBKNjSZFoXXbOSFXa-1360-1360.png',
