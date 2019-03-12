@@ -3,7 +3,6 @@ import { observable, action, computed, toJS } from 'mobx';
 import Notification from '@icedesign/notification';
 import equalSource from '../lib/equal-source';
 import filterMaterial from '../lib/filter-material';
-import { RECOMMEND_MATERIALS } from '../datacenter/materialsConfig';
 import services from '../services';
 
 const { settings, shared } = services;
@@ -242,7 +241,10 @@ class SettingsMaterials {
 
   filterBuiltInMaterials = (materials) => {
     // 如果用户物料源配置是否在推荐的物料源集合里，如果在则默认打开推荐列表的选项
-    const builtInMaterialsValue = RECOMMEND_MATERIALS.map((recommendMaterial) => {
+    const builtInMaterialsValue = shared.defaultMaterials.map((recommendMaterial) => {
+      // TODO: 排查 shared.defaultMaterials 变成类mobx的observable的对象的原因
+      // 这里是一个类mobx的observable的对象，需要通过解构转换成简单js对象，否则渲染时读取为空对象，toJS无效。
+      recommendMaterial = {...recommendMaterial};
       const hasInUserMaterials = materials.some((userMaterial) => {
         return (
           equalSource(recommendMaterial.source, userMaterial.source) &&
