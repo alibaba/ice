@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.11
+
+- [fix] console.log 拼错
+
 ## 1.8.10
 
 - [feat] 通过 `buildConfig.uniteBaseComponent` 将不同的基础包做统一
