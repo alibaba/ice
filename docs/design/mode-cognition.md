@@ -18,9 +18,9 @@ order: 7
 * 表格，表单中，以⽂文字形式出现的场景
 * 详情⻚页，提交流程场景中
 
-![Group 3@2x.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550735550465-fa71a619-c745-49f6-86ac-4e5ec48a4164.png#align=left&display=inline&height=300&name=Group%203%402x.png&originHeight=1030&originWidth=2560&size=137829&width=746)
+![Group 3@2x.png](https://img.alicdn.com/tfs/TB1UG0KLMHqK1RjSZFkXXX.WFXa-2560-1030.png)
 
-![Group 4@2x.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550735579856-1ff4954e-d4f1-4f4a-a70e-498a69f9a7f8.png#align=left&display=inline&height=354&name=Group%204%402x.png&originHeight=1216&originWidth=2560&size=175988&width=746)
+![Group 4@2x.png](https://img.alicdn.com/tfs/TB1cGXHLQPoK1RjSZKbXXX1IXXa-2560-1216.png)
 
 ### 预期管理
 
@@ -34,7 +34,7 @@ order: 7
 * 上传图片、视频、文件场景
 * 加载过程，上传过程等需要等待的场景
 
-![Group 3@2x.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550735948473-e34ad085-02ba-40bf-a394-016712ba2b30.png#align=left&display=inline&height=701&name=Group%203%402x.png&originHeight=2404&originWidth=2558&size=307896&width=746)
+![Group 3@2x.png](https://img.alicdn.com/tfs/TB1IvhDLQvoK1RjSZFDXXXY3pXa-2558-2404.png)
 
 ## 减少未知挫败感
 
@@ -50,7 +50,7 @@ order: 7
 * 填写表单
 * 系统性搭建场景
 
-![Group@2x.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550736781912-2f2b7868-1b5e-4136-b194-8b1a574b1f1c.png#align=left&display=inline&height=1470&name=Group%402x.png&originHeight=5044&originWidth=2560&size=831360&width=746)
+![Group@2x.png](https://img.alicdn.com/tfs/TB1.PtBLOrpK1RjSZFhXXXSdXXa-2560-5044.png)
 
 #### 记忆减负
 
@@ -65,4 +65,4 @@ order: 7
 * 组织信息的场景
 
 
-![4 记忆减负 copy.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550737356771-15803f2b-23d3-4257-be80-87374ac4158e.png#align=left&display=inline&height=525&name=4%20%E8%AE%B0%E5%BF%86%E5%87%8F%E8%B4%9F%20copy.png&originHeight=1800&originWidth=2560&size=741231&width=746)
+![4 记忆减负 copy.png](https://img.alicdn.com/tfs/TB1v5dELG6qK1RjSZFmXXX0PFXa-2560-1702.png)

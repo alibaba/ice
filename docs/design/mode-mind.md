@@ -18,7 +18,7 @@ order: 9
 * 搭建场景
 * 预览场景
 
-![未有模块添加状态 copy 2.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550747844506-ee9203e6-5135-409f-9828-410f7ba98f6f.png#align=left&display=inline&height=500&name=%E6%9C%AA%E6%9C%89%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A0%E7%8A%B6%E6%80%81%20copy%202.png&originHeight=1634&originWidth=2440&size=1113401&width=746)
+![未有模块添加状态 copy 2.png](https://img.alicdn.com/tfs/TB13RxALH2pK1RjSZFsXXaNlXXa-2318-1490.png)
 
 #### 后台内容和前台呈现对应
 
@@ -32,7 +32,7 @@ order: 9
 * 页面搭建场景
 * 预览场景
 
-![11 前后台对应 建立心智联系.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550748051806-fe454a74-d561-4e30-88a9-a85b7a98357f.png#align=left&display=inline&height=550&name=11%20%E5%89%8D%E5%90%8E%E5%8F%B0%E5%AF%B9%E5%BA%94%20%E5%BB%BA%E7%AB%8B%E5%BF%83%E6%99%BA%E8%81%94%E7%B3%BB.png&originHeight=1800&originWidth=2440&size=907123&width=746)
+![11 前后台对应 建立心智联系.png](https://img.alicdn.com/tfs/TB1riRELQzoK1RjSZFlXXai4VXa-2350-1660.png)
 
 ## ⻚面框架一致
 
@@ -47,7 +47,7 @@ order: 9
 
 * 全局页面
 
-![未有模块添加状态 copy 3.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550748425505-c4a43779-17f2-4e2a-9cf8-0d94b303b535.png#align=left&display=inline&height=455&name=%E6%9C%AA%E6%9C%89%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A0%E7%8A%B6%E6%80%81%20copy%203.png&originHeight=1488&originWidth=2440&size=188342&width=746)
+![未有模块添加状态 copy 3.png](https://img.alicdn.com/tfs/TB1dHhFLFzqK1RjSZFCXXbbxVXa-2260-1344.png)
 
 ### 同类型功能设计上形式一致
 
@@ -63,4 +63,4 @@ order: 9
 * 对话框
 * 素材库
 
-![未有模块添加状态 copy 4.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550748713453-190b34f7-0de9-41ea-aff4-42b9b3f07389.png#align=left&display=inline&height=550&name=%E6%9C%AA%E6%9C%89%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A0%E7%8A%B6%E6%80%81%20copy%204.png&originHeight=1800&originWidth=2440&size=1056634&width=746)
+![未有模块添加状态 copy 4.png](https://img.alicdn.com/tfs/TB1v.XDLSzqK1RjSZFpXXakSXXa-2282-1502.png)

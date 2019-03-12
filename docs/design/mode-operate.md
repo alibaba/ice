@@ -18,7 +18,7 @@ order: 8
 * 页面和弹窗中的列表多选场景
 * 表格中的多选场景
 
-![Group 17@2x.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550743340767-743d9c8d-5248-4f97-8d06-8f393496367b.png#align=left&display=inline&height=3141&name=Group%2017%402x.png&originHeight=10780&originWidth=2560&size=701272&width=746)<br />
+![Group 17@2x.png](https://img.alicdn.com/tfs/TB1NHdaeDZmx1VjSZFGXXax2XXa-2474-10730.png)
 
 ### 批量操作
 
@@ -32,7 +32,7 @@ order: 8
 * 页面和弹窗中的列表多选场景
 * 表格中的多选场景
 
-![Group 7@2x.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550746277618-ac452720-b370-4810-b9a8-ff4e2991514e.png#align=left&display=inline&height=948&name=Group%207%402x.png&originHeight=3102&originWidth=2440&size=1780474&width=746)
+![Group 7@2x.png](https://img.alicdn.com/tfs/TB1wLNyLHPpK1RjSZFFXXa5PpXa-2440-3102.png)
 
 ## 快速定位查找信息
 
@@ -48,7 +48,7 @@ order: 8
 * 表格场景
 * 列表场景
 
-![6 批量上传 copy 4.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550747155355-f3cc805e-ce1c-4294-9b89-dba3d5ec9dc1.png#align=left&display=inline&height=528&name=6%20%E6%89%B9%E9%87%8F%E4%B8%8A%E4%BC%A0%20copy%204.png&originHeight=1726&originWidth=2440&size=193510&width=746)
+![6 批量上传 copy 4.png](https://img.alicdn.com/tfs/TB1HSd0LOLaK1RjSZFxXXamPFXa-2184-1564.png)
 
 ## 重要信息优先展示
 
@@ -66,7 +66,7 @@ order: 8
 * 无线搭建场景
 * 弹窗场景
 
-![6 批量上传 copy 2.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550747479419-fa8d8526-1d49-4eff-bc6e-638bf5d5b0b8.png#align=left&display=inline&height=528&name=6%20%E6%89%B9%E9%87%8F%E4%B8%8A%E4%BC%A0%20copy%202.png&originHeight=1726&originWidth=2440&size=863547&width=746)
+![6 批量上传 copy 2.png](https://img.alicdn.com/tfs/TB18CpKLQvoK1RjSZFwXXciCFXa-2172-1624.png)
 
 ### 深一层信息外化
 
@@ -80,7 +80,7 @@ order: 8
 * 信息展示场景
 * 表格场景
 
-![6 批量上传 copy 3.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9277/1550747530636-e0bca697-3cce-4e40-a6c7-8e11e3a976cc.png#align=left&display=inline&height=550&name=6%20%E6%89%B9%E9%87%8F%E4%B8%8A%E4%BC%A0%20copy%203.png&originHeight=1800&originWidth=2440&size=457592&width=746)
+![6 批量上传 copy 3.png](https://img.alicdn.com/tfs/TB1B2FyLHPpK1RjSZFFXXa5PpXa-2226-1590.png)
 
 ## 路径越短越好
 

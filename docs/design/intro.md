@@ -13,7 +13,7 @@ cover: https://gw.alicdn.com/tfs/TB1fcX1bkyWBuNjy0FpXXassXXa-1600-422.png
 
 我们认为中台产品是产品和用户对话媒介体，「舒适、有效、无缝」的沟通是设计体系需一贯秉承的设计语言。通过设计语言指导下的原则对设计实践提供有效的引导，从而扩展出具体的设计模式契合更具体的场景给到设计指引。
 
-![Desktop HD@2x.jpg](https://intranetproxy.alipay.com/skylark/lark/0/2019/jpeg/9277/1550195163386-a3518179-28e5-4cdd-8592-8ea3a1cb2b6c.jpeg#align=left&display=inline&height=249&name=Desktop%20HD%402x.jpg&originHeight=862&originWidth=2580&size=407795&status=done&width=746)
+![Desktop HD@2x.jpg](https://img.alicdn.com/tfs/TB1A8NCLNYaK1RjSZFnXXa80pXa-2580-1032.jpg)
 
 ## 有效
 
