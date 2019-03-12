@@ -209,9 +209,9 @@
   version "0.1.14"
   resolved "https://registry.yarnpkg.com/@icedesign/skin/-/skin-0.1.14.tgz#be8e62f467a5a2eabe79f54de23b0925e830dae2"
 
-"@icedesign/template-builder@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@icedesign/template-builder/-/template-builder-2.0.0.tgz#c9f1334758816ece3a3df255ee1ab478d533047c"
+"@icedesign/template-builder@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@icedesign/template-builder/-/template-builder-2.0.1.tgz#8ee6d33ab7d4c6b70cbd63730eed853763b7764d"
   dependencies:
     "@icedesign/base" "^0.2.2"
     "@icedesign/form-binder" "^0.1.11"
