@@ -11,4 +11,6 @@ order: 10
 - 令人震惊的组件编辑能力
 - 嵌入式面板，如影随形
 
+![](https://img.alicdn.com/tfs/TB1UnVfrzTpK1RjSZKPXXa3UpXa-2468-1672.png)
+
 可以在 [Fusion-工具](https://fusion.design/tool) 下载使用，使用文档参考 [FusionCool 使用文档](https://fusion.design/help.html#/design-use-cool)。
