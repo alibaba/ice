@@ -40,7 +40,8 @@ function publishMaterialsDB() {
     "author": "",
     "license": "MIT",
     "publishConfig": {
-      "registry": "http://registry.npmjs.com"
+      "registry": "http://registry.npmjs.com",
+      "access": "public"
     }
   };
   // 获取已发布版本号
