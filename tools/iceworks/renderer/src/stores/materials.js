@@ -175,7 +175,8 @@ class Materials {
       let promiseAll;
       if (isIceMaterial(material.source)) {
         // HACK: 获取 ICE 物料源时一同获取基础组件数据
-        const { iceVersion } = projects.currentProject;
+        const { currentProject } = projects;
+        const iceVersion = currentProject ? currentProject.iceVersion : '1.x';
         const { iceBaseMaterials } = shared;
         const iceBaseMaterial = iceVersion === '0.x' ? iceBaseMaterials[0] : iceBaseMaterials[1];
 
