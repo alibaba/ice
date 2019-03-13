@@ -7,6 +7,7 @@ import Tooltip from 'rc-tooltip';
 import { isIceMaterial } from '../../lib/utils';
 import services from '../../services';
 import Icon from '../../components/Icon';
+import dialog from '../../components/dialog';
 
 const { interaction } = services;
 
@@ -27,7 +28,17 @@ class Item extends Component {
   }
 
   download = () => {
-    const { data, download, component } = this.props;
+    const { data, download, component, projects } = this.props;
+    const { currentProject } = projects;
+    if (!currentProject) {
+      dialog.alert({
+        title: '提示',
+        content: (
+          <div> 请先新建项目 </div>
+        )
+      });
+      return;
+    }
     component.currentComponent = data;
     download(data);
   }
@@ -47,7 +58,8 @@ class Item extends Component {
     // sometimes data is not trustable
     // make sure url is a valid URL any time
     const { data = {}, material, projects } = this.props;
-    const { iceVersion } = projects.currentProject;
+    const { currentProject } = projects;
+    const iceVersion = currentProject ? currentProject.iceVersion : '1.x';
     const isAlibaba = services.settings.get('isAlibaba');
     let url = 'https://github.com/alibaba/ice';
     let preUrl;

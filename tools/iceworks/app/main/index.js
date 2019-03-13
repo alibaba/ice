@@ -44,30 +44,14 @@ process
       msg: error.message,
       stack: error.stack,
     }, 'error');
-    dialog.showMessageBox({
-      title: '程序异常',
-      type: 'error',
-      message: error.message,
-      callback: () => {
-        app.quit();
-      },
-    });
   })
   .on('unhandledRejection', (reason, promise) => {
     log.error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
     alilog.report({
       type: 'process-unhandled-rejection',
-      reason,
-      promise,
+      msg: reason,
+      stack: promise,
     }, 'error');
-    dialog.showMessageBox({
-      title: '程序异常',
-      type: 'error',
-      message: `App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`,
-      callback: () => {
-        app.quit();
-      },
-    });
   })
   .on('uncaughtException', (error) => {
     log.error(error.stack);
@@ -76,14 +60,6 @@ process
       msg: JSON.stringify(error.message),
       stack: error.stack,
     }, 'error');
-    dialog.showMessageBox({
-      title: '程序异常',
-      type: 'error',
-      message: `App uncaughtException$-${error}`,
-      callback: () => {
-        app.quit();
-      },
-    });
   });
 
 // 注册自定义协议,用于url唤起
