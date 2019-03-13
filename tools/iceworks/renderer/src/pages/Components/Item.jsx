@@ -59,16 +59,7 @@ class Item extends Component {
     // make sure url is a valid URL any time
     const { data = {}, material, projects } = this.props;
     const { currentProject } = projects;
-    if (!currentProject) {
-      dialog.alert({
-        title: '提示',
-        content: (
-          <div> 请先新建项目 </div>
-        )
-      });
-      return;
-    }
-    const { iceVersion } = currentProject;
+    const iceVersion = currentProject ? currentProject.iceVersion : '1.x';
     const isAlibaba = services.settings.get('isAlibaba');
     let url = 'https://github.com/alibaba/ice';
     let preUrl;
