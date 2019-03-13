@@ -46,7 +46,12 @@ sortScaffoldMaterials()
     const tasks = files.map(createUploadTask);
     return Promise.all(tasks);
   })
-  .then(publishMaterialsDB) // 物料源数据发布到npm，作为兜底备份
+  .then( () => {
+    // 物料源数据发布到npm，作为兜底备份
+    if (process.env.TRAVIS_BRANCH === 'production') {
+      publishMaterialsDB();
+    }
+  }) 
   .then(()=> {
     console.log('all done');
   })
