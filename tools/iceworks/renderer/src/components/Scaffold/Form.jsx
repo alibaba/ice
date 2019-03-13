@@ -62,7 +62,6 @@ class ScaffoldForm extends Component {
       && this.props.scaffold.scaffold.devDependencies.hasOwnProperty('ice-scripts');
 
     const showNodeOutside = !isAlibaba && hasIce;
-    const {currentProject} = this.props.projects;
 
     return (
       <div className="project-config-form">

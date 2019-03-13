@@ -22,7 +22,9 @@ class AdditionalComponents {
   additionalSource = (components, iceBaseComponents) => {
     // 如果是飞冰物料，同时是基础组件
     if (isIceMaterial(this.material.source) && iceBaseComponents.length > 0) {
-      const npm = projects.currentProject.iceVersion === '0.x' ? '@icedesign/base' : '@alifd/next';
+      const { currentProject } = projects;
+      const iceVersion = currentProject ? currentProject.iceVersion : '1.x';
+      const npm = iceVersion === '0.x' ? '@icedesign/base' : '@alifd/next';
       iceBaseComponents.forEach((component) => {
         component.source = {
           npm,
@@ -41,11 +43,16 @@ class AdditionalComponents {
   }
 
   additionalIsDownloaded = (components, iceBaseComponents) => {
-    const projectPkgData = projects.currentProject.getPkgData();
-    const { dependencies = {} } = projectPkgData;
+    const { currentProject } = projects;
+    let dependencies = {};
+    if (currentProject) {
+      const projectPkgData = currentProject.getPkgData();
+      dependencies = projectPkgData.dependencies || {};
+    }
     // 如果是飞冰物料，同时是基础组件
     if (isIceMaterial(this.material.source) && iceBaseComponents.length > 0) {
-      const npm = projects.currentProject.iceVersion === '0.x' ? '@icedesign/base' : '@alifd/next';
+      const iceVersion = currentProject ? currentProject.iceVersion : '1.x';
+      const npm = iceVersion === '0.x' ? '@icedesign/base' : '@alifd/next';
       const isDownloaded = !!dependencies[npm];
       iceBaseComponents.forEach((component) => {
         component.isDownloaded = isDownloaded;

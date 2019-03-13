@@ -82,6 +82,7 @@ const ScaffoldHoc = (WrappedComponent) => {
           this.props.scaffold.endProgress();
           this.props.scaffold.addNewProjectToProjects(currentPath, true); // true 用来标识提示用户安装依赖
           this.props.scaffold.pushRoute('/');
+          this.props.materials.updateComponents();
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
