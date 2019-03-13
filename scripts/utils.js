@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 
 function generateNpmrc(cwd) {
   const npmrc = path.join(cwd, 'npmrc');
