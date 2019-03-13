@@ -4,6 +4,7 @@ const fs = require('fs');
 const { exec } = require('child_process');
 const rimraf = require("rimraf");
 const semver = require("semver");
+const { generateNpmrc } = require('utils');
 
 function publishMaterialsDB() {
   
@@ -14,7 +15,10 @@ function publishMaterialsDB() {
   const tempLibDir = path.join(tempDir, 'lib');
   fs.mkdirSync(tempLibDir);
 
-  // 2 同步build下物料源配置文件到 tempDir/src 下
+  // 2. 创建 npmrc 文件
+  generateNpmrc(tempDir);
+
+  // 3 同步build下物料源配置文件到 tempDir/src 下
   const buildPath = path.resolve(__dirname, '../build');
   fs.readdirSync(buildPath).map(
     (filename) => {
@@ -24,7 +28,7 @@ function publishMaterialsDB() {
     }
   );
 
-  // 3. 创建 package.json 文件
+  // 4. 创建 package.json 文件
   const pkgConfig = {
     "name": "@icedesign/materails-db",
     "version": "1.0.0",
@@ -52,7 +56,7 @@ function publishMaterialsDB() {
     pkgConfig.version = semver.inc(pkgData.version, 'patch');
     const pkgPath = path.join(tempDir, 'package.json');
     fs.writeFileSync(pkgPath, JSON.stringify(pkgConfig));
-    // 4. 发布
+    // 5. 发布
     exec('npm publish', {
       cwd: tempDir
     }, (error, stdout, stderr) => {
