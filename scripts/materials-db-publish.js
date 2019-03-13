@@ -4,7 +4,7 @@ const fs = require('fs');
 const { exec } = require('child_process');
 const rimraf = require("rimraf");
 const semver = require("semver");
-const { generateNpmrc } = require('utils');
+const { generateNpmrc } = require('./utils');
 
 function publishMaterialsDB() {
   
@@ -40,7 +40,8 @@ function publishMaterialsDB() {
     "author": "",
     "license": "MIT",
     "publishConfig": {
-      "registry": "http://registry.npmjs.com"
+      "registry": "http://registry.npmjs.com",
+      "access": "public"
     }
   };
   // 获取已发布版本号
