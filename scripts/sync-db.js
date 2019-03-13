@@ -47,12 +47,13 @@ sortScaffoldMaterials()
     return Promise.all(tasks);
   })
   .then(() => {
+    // 物料源数据发布到npm，作为兜底备份
     if (process.env.TRAVIS_BRANCH === 'production') {
       return publishMaterialsDB();
     } else {
       return Promise.resolve();
     }
-  }) // 物料源数据发布到npm，作为兜底备份
+  })
   .then(()=> {
     console.log('all done');
   })
