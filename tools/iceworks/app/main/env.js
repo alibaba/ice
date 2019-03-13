@@ -4,6 +4,7 @@ const path = require('path');
 
 const settings = require('./services/settings');
 const is = require('electron-is');
+
 const isWin = is.windows();
 
 const { APP_BIN_PATH, SASS_BINARY_PATH } = require('./paths');
@@ -23,9 +24,7 @@ exports.getEnv = () => {
     COLORTERM: 'truecolor',
     TERM: 'xterm-256color',
     ICEWORKS_IPC: 'yes',
-    LANG: app.getLocale().replace('-', '_') + '.UTF-8',
-    TERM: 'xterm-256color',
-    COLORTERM: 'truecolor',
+    LANG: `${app.getLocale().replace('-', '_')}.UTF-8`,
   });
 
   const pathEnv = [APP_BIN_PATH, npmEnv.PATH, process.env.PATH].filter(

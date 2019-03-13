@@ -13,7 +13,7 @@ const Popup = Overlay.Popup;
  */
 @inject('progress', 'projects')
 @observer
-export default class ProgressWrap extends Component {
+class ProgressWrap extends Component {
 
   render() {
     const { projects, styleOffset } = this.props;
@@ -116,3 +116,5 @@ export default class ProgressWrap extends Component {
     );
   }
 }
+
+export default ProgressWrap;

@@ -19,7 +19,7 @@ class AddPackage extends Component {
     projectScripts.npminstall(
       currentProject,
       installer.deps,
-      installer.type == 'devDependencies',
+      installer.type === 'devDependencies',
       (error, dependencies) => {
         installer.installing = false;
         if (error) {
@@ -84,7 +84,7 @@ class AddPackage extends Component {
             {/*
               <input
                 disabled={this.props.installer.installing}
-                checked={this.props.installer.type == 'devDependencies'}
+                checked={this.props.installer.type === 'devDependencies'}
                 type="checkbox"
                 name="devDependencies"
                 id="devDependencies"
@@ -113,7 +113,7 @@ class AddPackage extends Component {
               size="small"
               type="primary"
               disabled={
-                this.props.installer.deps.trim() == '' ||
+                this.props.installer.deps.trim() === '' ||
                 this.props.installer.installing
               }
               onClick={this.handleNpminstallOk}

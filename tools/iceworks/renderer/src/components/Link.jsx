@@ -19,7 +19,7 @@ class Link extends Component {
 
   render() {
     const classes = classnames({
-      active: prettyUrl(this.props.to) == history.location.pathname,
+      active: prettyUrl(this.props.to) === history.location.pathname,
     });
 
     return (

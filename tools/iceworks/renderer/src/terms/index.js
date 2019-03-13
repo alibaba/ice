@@ -38,10 +38,8 @@ function rowsOffset(rows) {
 }
 
 class Terms {
-  constructor() {}
-
   new(cwd, container) {
-    if (typeof terms[cwd] == 'undefined') {
+    if (typeof terms[cwd] === 'undefined') {
       const term = new window.Terminal(termDefaultOptions);
       // 判断 cwd 必须存在
       if (pathExists.sync(cwd)) {
@@ -60,7 +58,7 @@ class Terms {
       }, 1000 / 60);
 
       term.attachCustomKeyEventHandler((e) => {
-        if (e.ctrlKey && e.key == 'd') {
+        if (e.ctrlKey && e.key === 'd') {
           return false;
         }
       });
@@ -68,7 +66,7 @@ class Terms {
       terms[cwd].open(container);
       terms[cwd].fit();
 
-      if (typeof terms[cwd].ptyProcess == 'undefined') {
+      if (typeof terms[cwd].ptyProcess === 'undefined') {
         this.new(terms[cwd], cwd);
       }
 
@@ -90,7 +88,7 @@ class Terms {
       cwd,
       env: env.getEnv(),
     });
-    ptyProcess.on('data', function(data) {
+    ptyProcess.on('data', (data) => {
       term.write(data);
     });
     // todo 禁用命令行输入

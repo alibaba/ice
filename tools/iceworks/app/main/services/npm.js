@@ -1,7 +1,4 @@
 const { exec } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const pathExists = require('path-exists');
 
 const { getEnv } = require('../env');
 
@@ -41,7 +38,7 @@ const NPM = {
 
     return new Promise((resolve, reject) => {
       const ps = new Session({
-        cwd: cwd,
+        cwd,
         shell: 'npm',
         shellArgs: args,
       });
@@ -53,7 +50,7 @@ const NPM = {
           reject(
             new CmdError('runcmd', {
               cmd: 'npm',
-              args: args,
+              args,
             })
           );
         }
@@ -61,7 +58,7 @@ const NPM = {
     });
   },
 
-  
+
 };
 
 module.exports = NPM;

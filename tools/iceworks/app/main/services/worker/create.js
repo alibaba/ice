@@ -1,4 +1,4 @@
-/* global log:true */
+// global log:true
 
 const generateProject = require('./generate-project');
 const log = require('../../logger');
@@ -14,12 +14,12 @@ class CreateManager {
     const option = Object.assign(
       {},
       {
-        targetPath: targetPath, // 项目路径
+        targetPath, // 项目路径
         scaffold: data.scaffold,
         projectName: data.projectName,
         isCustomScaffold: data.isCustomScaffold,
         layoutConfig: data.layoutConfig,
-        progressFunc: progressFunc,
+        progressFunc,
         nodeFramework: data.nodeFramework,
       }
     );
@@ -41,6 +41,7 @@ class CreateManager {
    */
   destroy() {
     let req = null;
+    // eslint-disable-next-line no-cond-assign
     while ((req = reqQueue.pop())) {
       req.abort();
     }

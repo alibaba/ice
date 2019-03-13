@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.12
+
+- [fix] 修复 proxy target 语法错误
+
 ## 1.8.11
 
 - [fix] console.log 拼错

@@ -5,6 +5,7 @@
  */
 module.exports = (win, ...args) => {
   if (win && !win.isDestroyed()) {
+    // eslint-disable-next-line
     win.webContents.send.apply(win.webContents, args);
   }
 };

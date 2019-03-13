@@ -10,6 +10,7 @@ import React, { Component } from 'react';
 import dayjs from 'dayjs';
 import Notification from '@icedesign/notification';
 import orderBy from 'lodash.orderby';
+import { Dialog } from '@icedesign/base';
 
 import { readdirSync } from '../../../../lib/file-system';
 import DashboardCard from '../../../../components/DashboardCard/';
@@ -23,7 +24,7 @@ import services from '../../../../services';
 const { log, interaction, scaffolder } = services;
 
 import './index.scss';
-import { Dialog } from '@icedesign/base';
+import PluginHoc from '../PluginHoc';
 
 function formatDate(date) {
   return dayjs(date).format('YYYY-MM-DD hh:mm');
@@ -135,7 +136,7 @@ class PagesCard extends Component {
 
   renderPageList = () => {
     const { pages } = this.state;
-    if (pages && pages.length == 0) {
+    if (pages && pages.length === 0) {
       return <EmptyTips>暂无页面</EmptyTips>;
     }
     // 按时间倒叙
@@ -215,4 +216,4 @@ class PagesCard extends Component {
   }
 }
 
-export default PagesCard;
+export default PluginHoc(PagesCard);
