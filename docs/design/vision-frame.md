@@ -98,8 +98,4 @@ order: 4
 
 解法：侧边导航增加二级类目入口
 
-<<<<<<< HEAD
 ![Group 9@2x.jpg](https://img.alicdn.com/tfs/TB1mnfDLFzqK1RjSZSgXXcpAVXa-2822-1294.png)
-=======
-![Group 9@2x.jpg](https://img.alicdn.com/tfs/TB1AhBLLMHqK1RjSZFPXXcwapXa-1854-1232.png)
->>>>>>> 6ea510e6e01506383a80cb9b86cd7e177da5be23
