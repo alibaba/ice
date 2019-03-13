@@ -4,7 +4,7 @@ const fs = require('fs');
 const { exec } = require('child_process');
 const rimraf = require("rimraf");
 const semver = require("semver");
-const { generateNpmrc } = require('utils');
+const { generateNpmrc } = require('./utils');
 
 function publishMaterialsDB() {
   
