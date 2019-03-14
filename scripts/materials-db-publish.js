@@ -64,7 +64,8 @@ function publishMaterialsDB() {
       if(error) {
         console.error(error);
         rimraf.sync(tempDir);
-        throw error;
+        return
+        // throw error;
       }
       console.log('发布完成: ' + stdout);
       rimraf.sync(tempDir);
