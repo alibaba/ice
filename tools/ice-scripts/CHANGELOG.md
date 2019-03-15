@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.13
+
+- [feat] 只打包有过引用的 moment 语言文件
+
 ## 1.8.12
 
 - [fix] 修复 proxy target 语法错误
