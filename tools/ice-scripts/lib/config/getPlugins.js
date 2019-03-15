@@ -27,13 +27,14 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
     defineVriables.THEME = JSON.stringify(themeConfig.theme);
   }
 
+  const filename = process.env.HASH ? '[name].[hash:6].css' : '[name].css';
+  const chunkFilename = process.env.HASH ? '[id].[hash:6].css': '[id].css';
+
   const plugins = [
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
-      filename: process.env.HASH ? 'css/[name].[hash:6].css' : 'css/[name].css',
-      chunkFilename: process.env.HASH
-        ? 'css/[id].[hash:6].css'
-        : 'css/[id].css',
+      filename: path.join(buildConfig.outputAssetsPath.css || '', filename),
+      chunkFilename: path.join(buildConfig.outputAssetsPath.css || '', chunkFilename),
     }),
     // FIX ISSUE: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
     new FilterWarningsPlugin({
@@ -70,6 +71,11 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
         stylePath: 'style.js',
       },
     ]),
+    // Moment.js is an extremely popular library that bundles large locale files
+    // by default due to how Webpack interprets its code. This is a practical
+    // solution that requires the user to opt into importing specific locales.
+    // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ];
 
   // 增加 html 输出，支持多页面应用
