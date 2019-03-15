@@ -33,8 +33,8 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   const plugins = [
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
-      filename: path.join(buildConfig.outputAssetsDir.css || '', filename),
-      chunkFilename: path.join(buildConfig.outputAssetsDir.css || '', chunkFilename),
+      filename: path.join(buildConfig.outputAssetsPath.css || '', filename),
+      chunkFilename: path.join(buildConfig.outputAssetsPath.css || '', chunkFilename),
     }),
     // FIX ISSUE: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
     new FilterWarningsPlugin({

@@ -50,10 +50,10 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     buildConfig.output.path = path.resolve(paths.appDirectory, buildConfig.output.path);
   }
 
-  buildConfig.outputAssetsDir = {
+  buildConfig.outputAssetsPath = {
     css: 'css',
     js: 'js',
-    ...buildConfig.outputAssetsDir
+    ...buildConfig.outputAssetsPath
   };
 
   debug.info('hasExternalReact', hasExternalReact);
@@ -65,7 +65,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     output: Object.assign(
       {
         path: paths.appBuild,
-        filename: path.join(buildConfig.outputAssetsDir.js || '', (process.env.HASH ? '[name].[hash:6].js' : '[name].js')),
+        filename: path.join(buildConfig.outputAssetsPath.js || '', (process.env.HASH ? '[name].[hash:6].js' : '[name].js')),
         publicPath: paths.servedPath,
       },
       buildConfig.output || {}

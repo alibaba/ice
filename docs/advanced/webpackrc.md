@@ -158,11 +158,11 @@ babel-loader 有一个 exclude 的配置，用于过滤某些目录下的文件�
 
 ```js
 "buildConfig": {
-  "outputAssetsDir": {
-    // 修改为 build/css-dist/ build/js-dist/
+  "outputAssetsPath": {
+    // 示例1：修改为 build/css-dist/ build/js-dist/
     "css": "css-dist",
     "js": "js-dist",
-    // js 和 css 都直接放在 build/ 下
+    // 示例2：js 和 css 都直接放在 build/ 下
     "css": "",
     "js": ""
   }
