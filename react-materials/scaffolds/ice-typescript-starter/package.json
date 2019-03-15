@@ -17,6 +17,8 @@
   "dependencies": {
     "@alifd/next": "^1.x",
     "@icedesign/theme": "^0.1.2",
+    "@types/react": "^16.8.3",
+    "@types/react-dom": "^16.8.2",
     "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",
@@ -24,8 +26,6 @@
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
-    "@types/react": "^16.8.3",
-    "@types/react-dom": "^16.8.2",
     "babel-eslint": "^8.0.3",
     "eslint": "^4.13.1",
     "eslint-config-airbnb": "^16.1.0",
