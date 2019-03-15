@@ -296,9 +296,9 @@ import styles from './index.module.scss';
 <Button className={styles.btn}>OK</Button>;
 ```
 
-## Moment.js 优化
+## Moment.js 按需加载
 
-基础组件包中将 moment 作为自己的 peerDependencies 而非 dependencies，所以用户需要自己在应用中引入 moment 的 cdn 文件 moment-with-locales.js 或者本地安装 moment 打包进自己的应用。对于后者，由于 moment 在引入 locale 文件时存在这样的代码：`require('./locale/' + name)`，如果用 webpack 构建，会打包进所有的 locale 文件，增加构建后文件的体积，ice-script 1.8.13 版本内置支持了按需加载多语言配置，在使用多语言包时只需要按照以下方式引用即可：
+基础组件 `@alifd/next` 里的时间相关组件依赖了 moment，但是为了业务可以优化 moment 的包大小，所以 `@alifd/next` 里将 moment 作为自己的 peerDependencies 而非 dependencies，因此项目使用到时间组件时需要自行引入 moment 依赖。moment 里有针对国际化语言的大量代码，如果不做任何处理的话会导致 bundle 变大，因此 ice-scripts 默认对 moment 文案做了按需加载，只有通过 `import './locale/zh-cn'` 才会引入对应文案代码。
 
 ```
 // index.js
