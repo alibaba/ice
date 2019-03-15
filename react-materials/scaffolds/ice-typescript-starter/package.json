@@ -16,9 +16,9 @@
   ],
   "dependencies": {
     "@alifd/next": "^1.x",
-    "@icedesign/theme": "^0.1.2",
     "@types/react": "^16.8.3",
     "@types/react-dom": "^16.8.2",
+    "@icedesign/theme": "^1.x",
     "moment": "^2.23.0",
     "prop-types": "^15.5.8",
     "react": "^16.4.1",

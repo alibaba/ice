@@ -70,7 +70,7 @@ async function getRawShellEnv() {
       buffers.push(data);
     });
 
-    child.on('close', (code, signal) => {
+    child.on('close', () => {
       done = true;
       process.removeListener('exit', cleanup);
       if (buffers.length) {
@@ -173,7 +173,7 @@ exports.getActiveCodePage = function getActiveCodePage() {
     return Promise.resolve(null);
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const windir = process.env.windir || 'C:\\Windows';
     const path = Path.join(windir, 'System32', 'chcp.com');
 
@@ -191,7 +191,7 @@ exports.getActiveCodePage = function getActiveCodePage() {
       buffers.push(data);
     });
 
-    child.on('close', (code) => {
+    child.on('close', () => {
       if (errorThrown) {
         resolve(null);
         return;

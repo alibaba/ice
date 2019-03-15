@@ -7,11 +7,12 @@ import pathExists from 'path-exists';
 import semver from 'semver';
 
 import { getDefaultProjectName } from '../lib/project-utils';
-const IceworksScaffolder = remote.require('@icedesign/iceworks-scaffolder');
 
 import services from '../services';
-const { paths } = services;
-const { getClientPath, NODE_FRAMEWORKS, getServerPath } = paths;
+
+const IceworksScaffolder = remote.require('@icedesign/iceworks-scaffolder');
+const { paths, scaffolder } = services;
+const { getClientPath,getClientSrcPath, NODE_FRAMEWORKS, getServerPath } = paths;
 
 const homeDir = os.homedir();
 
@@ -60,7 +61,7 @@ class Project {
   @observable
   needInstallDeps = false; // 是否为新项目? 新项目首次打开提示安装依赖
   @observable
-  nodeFramework = ''; //服务端模板类型
+  nodeFramework = ''; // 服务端模板类型
 
   // data
   @observable
@@ -96,7 +97,7 @@ class Project {
 
     this.scaffold = new IceworksScaffolder({
       cwd: this.root,
-      interpreter: function({ type, message, data }, next) {
+      interpreter({ type, message, data }, next) {
         console.log(type, message, data);
         switch (type) {
           case 'EMTPY_PAGE_TEMPLATE':
@@ -124,28 +125,30 @@ class Project {
     return this.root;
   }
 
-  /** 
+  /**
    * 前端项目路径
+   * koa、koa2、midway: /client
+   * 常规项目：/
    */
   @computed
   get clientPath() {
-    return  getClientPath(this.root, this.nodeFramework);
+    return getClientPath(this.root, this.nodeFramework);
   }
 
-  /** 
+  /**
    * 前端资源路径
    */
   @computed
   get clientSrcPath() {
-    return  getClientPath(this.root, this.nodeFramework, 'src');
+    return  getClientSrcPath(this.root, this.nodeFramework);
   }
 
-  /** 
+  /**
    * 前端项目路径
    */
   @computed
   get serverPath() {
-    return  getServerPath(this.root, this.nodeFramework);
+    return getServerPath(this.root, this.nodeFramework);
   }
 
   /**
@@ -166,12 +169,19 @@ class Project {
         pkgPath = Path.join(clientPath, 'package.json');
         pkgData = fs.readFileSync(pkgPath);
         pkgData = JSON.parse(String(pkgData));
-      } 
+      }
       return pkgData;
     } catch (e) {
-      console.error(pkgPath + ' 不存在');
+      console.error(`${pkgPath} 不存在`);
       return null;
     }
+  }
+
+  @computed
+  get iceVersion() {
+    const { utils } = scaffolder;
+    const pkg = this.getPkgData();
+    return utils.getProjectVersion(pkg);
   }
 
   @action
@@ -311,6 +321,7 @@ class Project {
 
   @action
   batchUpdate(data) {
+    // eslint-disable-next-line
     for (const key in data) {
       this[key] = data[key];
     }
@@ -428,11 +439,10 @@ class Project {
       // 兼容老koa模板
       if (pkgData.templateType === 'Koa' || pkgData.templateType === 'koa') {
         return 'koa';
-      } else if (NODE_FRAMEWORKS.includes(pkgData.templateType)) { 
+      } else if (NODE_FRAMEWORKS.includes(pkgData.templateType)) {
         return pkgData.templateType;
-      }else {
-        return '';
       }
+      return '';
     }
     return '';
   }

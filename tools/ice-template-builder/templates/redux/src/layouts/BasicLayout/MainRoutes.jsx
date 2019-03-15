@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, Switch, Route } from 'react-router-dom';
 
-import NotFound from '../../components/NotFound';
+import Exception from '../../components/Exception';
 import { asideMenuConfig } from '../../menuConfig';
 import { routerData } from '../../routerConfig';
 
@@ -91,7 +91,7 @@ class MainRoutes extends Component {
         <Redirect exact from="/" to="/dashboard/monitor" />
 
         {/* 未匹配到的路由重定向到 404 */}
-        <Route component={NotFound} />
+        <Route component={Exception} />
       </Switch>
     );
   }

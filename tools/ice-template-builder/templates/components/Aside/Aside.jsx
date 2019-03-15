@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
+import FoundationSymbol from '@icedesign/foundation-symbol';
 import { Link } from 'react-router-dom';
 import { enquire } from 'enquire-js';
 import { withRouter } from 'react-router';
-import Menu, { SubMenu, Item as MenuItem } from '@icedesign/menu';
-import cx from 'classnames';
-import FoundationSymbol from 'foundation-symbol';
-import { Icon } from '@icedesign/base';
+import { Nav } from '@alifd/next';
 import Logo from '../Logo';
 import { asideMenuConfig } from '../../../../menuConfig';
 
@@ -13,8 +12,10 @@ import { asideMenuConfig } from '../../../../menuConfig';
 import Authorized from '../../../../utils/Authorized';
 <% } %>
 
-import './scss/dark.scss';
-import './scss/light.scss';
+import './Aside.scss';
+
+const SubNav = Nav.SubNav;
+const NavItem = Nav.Item;
 @withRouter
 export default class Aside extends Component {
   static propTypes = {};
@@ -167,27 +168,25 @@ export default class Aside extends Component {
 
       if (childrenItems && childrenItems.length > 0) {
         return (
-          <SubMenu
+          <SubNav
             key={index}
-            title={
-              <span>
-                {item.icon ? (
-                  <FoundationSymbol size="small" type={item.icon} />
-                ) : null}
-                <span className="ice-menu-collapse-hide">{item.name}</span>
-              </span>
+            icon={
+              item.icon ? (
+                <FoundationSymbol size="small" type={item.icon} />
+              ) : null
             }
+            label={<span className="ice-menu-collapse-hide">{item.name}</span>}
           >
             {childrenItems}
-          </SubMenu>
+          </SubNav>
         );
       }
       return null;
     }
     return (
-      <MenuItem key={item.path}>
+      <NavItem key={item.path}>
         <Link to={item.path}>{item.name}</Link>
-      </MenuItem>
+      </NavItem>
     );
   };
 
@@ -207,7 +206,7 @@ export default class Aside extends Component {
   <% } %>
 
   render() {
-    const { openDrawer } = this.state;
+    const { openDrawer, collapse } = this.state;
     const {
       location: { pathname },
       isMobile,
@@ -222,32 +221,33 @@ export default class Aside extends Component {
         {isMobile &&
           !openDrawer && (
             <a className="menu-btn" onClick={this.toggleMenu}>
-              <Icon type="category" size="small" />
+              <FoundationSymbol type="menu" size="small" />
             </a>
           )}
 
         {!isMobile && (
           <a className="collapse-btn" onClick={this.toggleCollapse}>
-            <Icon
-              type={this.state.collapse ? 'arrow-right' : 'arrow-left'}
-              size="small"
+            <FoundationSymbol
+              key={collapse}
+              type={collapse ? 'transfer-right' : 'transfer-left'}
+              size="large"
             />
           </a>
         )}
 
-        <Menu
-          style={{ width: this.state.collapse ? 60 : 200 }}
-          inlineCollapsed={this.state.collapse}
-          mode="inline"
+        <Nav
+          style={{ width: collapse ? 60 : 200 }}
+          mode={collapse ? 'popup' : 'inline'}
+          iconOnly={collapse}
+          hasArrow={!collapse}
           selectedKeys={[pathname]}
           openKeys={this.state.openKeys}
           defaultSelectedKeys={[pathname]}
-          // defaultOpenKeys={this.getDefaultOpenKeys()}
-          onOpenChange={this.onOpenChange}
-          onClick={this.onMenuClick}
+          onOpen={this.onOpenChange}
+          onSelect={this.onMenuClick}
         >
           {this.getNavMenuItems(asideMenuConfig)}
-        </Menu>
+        </Nav>
       </div>
     );
   }

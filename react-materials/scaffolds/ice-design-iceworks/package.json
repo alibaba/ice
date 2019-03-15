@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/iceworks-homepage-scaffold",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "该模板适用于工具类产品的首页介绍，默认内置一个页面和不同风格的展示区块",
   "homepage": "https://unpkg.com/@icedesign/iceworks-homepage-scaffold@latest/build/index.html",
   "files": [
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@alifd/next": "^1.x",
-    "@icedesign/theme": "^0.1.0",
+    "@icedesign/theme": "^1.x",
     "@icedesign/container": "^1.x",
     "@icedesign/layout": "^1.x",
     "moment": "^2.23.0",

@@ -12,11 +12,10 @@ import projectScripts from '../../../../lib/project-scripts';
 import dialog from '../../../../components/dialog';
 import Progress from '../../../../components/Progress';
 import services from '../../../../services';
+import './index.scss';
 
-let container;
 const { log, npm, interaction, scaffolder } = services;
 const FormItem = Form.Item;
-import './index.scss';
 
 const generatePageName = (pages = []) => {
   return `page${pages.length > 0 ? pages.length + 1 : ''}`;
@@ -28,13 +27,14 @@ const generateNavName = (pages = []) => {
 
 const pageExists = (pages, name = '') => {
   return pages.some((n) => {
-    return n.toLowerCase() == name.trim().toLowerCase();
+    return n.toLowerCase() === name.trim().toLowerCase();
   });
 };
 
 @inject('projects', 'newpage', 'blocks', 'customBlocks', 'progress')
 @observer
 class PageConfig extends Component {
+  /* eslint-disable react/require-default-props */
   static propTypes = {
     newpage: PropTypes.object,
     progress: PropTypes.object,
@@ -43,6 +43,7 @@ class PageConfig extends Component {
     selectedBlocks: PropTypes.array,
     libary: PropTypes.string,
   };
+  /* eslint-enable react/require-default-props */
 
   constructor(props) {
     super(props);
@@ -79,10 +80,10 @@ class PageConfig extends Component {
 
         // 创建页面
         const config = {
-          name: libraryType == 'react' ? uppercamelcase(pageName) : pageName,
-          layout: layout,
-          blocks: blocks,
-          nodeFramework: currentProject.nodeFramework
+          name: libraryType === 'react' ? uppercamelcase(pageName) : pageName,
+          layout,
+          blocks,
+          nodeFramework: currentProject.nodeFramework,
         };
         console.info('createPage config:', config);
         let createResult;
@@ -101,7 +102,7 @@ class PageConfig extends Component {
               );
               log.debug('add dependencies', this.props.newpage.targetPath);
               return new Promise((resolve) => {
-                if (Object.keys(dependencies).length == 0) {
+                if (Object.keys(dependencies).length === 0) {
                   resolve(true);
                 } else {
                   const npmArgs = [
@@ -135,7 +136,7 @@ class PageConfig extends Component {
               let routerConfig;
 
               // angular 的模板生成的路由
-              if (libraryType == 'angular') {
+              if (libraryType === 'angular') {
                 routerConfig = {
                   path: toJS(values.routePath),
                   pagePath: createResult.output.page,
@@ -182,14 +183,14 @@ class PageConfig extends Component {
               console.error(error);
               dialog.notice({
                 title: '生成页面失败',
-                error: error,
+                error,
               });
               progress.reset();
               this.props.newpage.isCreating = false;
             })
             .then(() => {
               return currentProject.scaffold.removePreviewPage({
-                nodeFramework: currentProject.nodeFramework
+                nodeFramework: currentProject.nodeFramework,
               });
             })
             .then(() => {
@@ -204,11 +205,11 @@ class PageConfig extends Component {
             applicationType = currentProject.getApplicationType();
           }
 
-           // 进度条
+          // 进度条
           progress.start(true);
           progress.setStatusText('正在生成页面');
           progress.setSectionCount(blocks.length);
-          
+
           scaffolder
             .createPage({
               pageName: toJS(values.pageName), // 页面名
@@ -216,9 +217,9 @@ class PageConfig extends Component {
               routeText: toJS(values.routeText), // 路由导航名
               clientPath: currentProject.clientPath,
               clientSrcPath: currentProject.clientSrcPath,
-              layout: layout,
-              blocks: blocks,
-              excludeLayout: applicationType == 'react', // hack react 的模板不生成 layout
+              layout,
+              blocks,
+              excludeLayout: applicationType === 'react', // hack react 的模板不生成 layout
               // hack vue
               libary: this.props.libary,
               progressFunc: progress.handleProgressFunc,
@@ -263,7 +264,7 @@ class PageConfig extends Component {
                       currentProject,
                       dependenciesFormat(dependencies).join(' '),
                       false,
-                      (error, dependencies) => {
+                      (error) => {
                         if (error) {
                           log.error('genereator page install dependencies error');
                           log.info('reinstall page dependencies');
@@ -275,7 +276,7 @@ class PageConfig extends Component {
                           next(true);
                         }
                       }
-                    )
+                    );
                     break;
                   default:
                     next(true);
@@ -286,13 +287,13 @@ class PageConfig extends Component {
               log.error('generate-page', error);
               dialog.notice({
                 title: '生成页面失败',
-                error: error,
+                error,
               });
               progress.reset();
               this.props.newpage.isCreating = false;
             })
             .then((goon) => {
-              if (goon == false) {
+              if (goon === false) {
                 progress.end();
                 this.props.newpage.isCreating = false;
               } else {
@@ -321,7 +322,7 @@ class PageConfig extends Component {
 
                 // 移除 previewPage 临时文件
                 return scaffolder.removePreviewPage({
-                  clientSrcPath: currentProject.clientSrcPath
+                  clientSrcPath: currentProject.clientSrcPath,
                 });
               }
             })
@@ -336,12 +337,6 @@ class PageConfig extends Component {
     });
   };
 
-  // 卸载组件
-  // handleAfterClose = () => {
-  //   ReactDOM.unmountComponentAtNode(container);
-  //   container.parentNode.removeChild(container);
-  // };
-
   render() {
     const { init } = this.field;
     const { projects, newpage } = this.props;
@@ -350,9 +345,9 @@ class PageConfig extends Component {
     if (currentProject) {
       applicationType = currentProject.getApplicationType();
     }
-    const isIceApp = applicationType == 'ice'; // create-react-app 的项目
-    const isAngularApp = applicationType == 'angular'; // @angular/cli 的项目
-    const isRaxApp = applicationType == 'rax'; // rax 类型的项目
+    const isIceApp = applicationType === 'ice'; // create-react-app 的项目
+    const isAngularApp = applicationType === 'angular'; // @angular/cli 的项目
+    const isRaxApp = applicationType === 'rax'; // rax 类型的项目
 
     const formItemLayout = {
       labelCol: {

@@ -75,6 +75,10 @@ module.exports = (buildConfig = {}) => {
       ],
       ['babel-plugin-import', { libraryName: '@alife/next' }, '@alife/next'],
       ['babel-plugin-import', { libraryName: '@alifd/next' }, '@alifd/next'],
+
+      buildConfig.babelPluginImportConfig ? [
+        'babel-plugin-import', buildConfig.babelPluginImportConfig
+      ] : null
     ]),
   };
 };

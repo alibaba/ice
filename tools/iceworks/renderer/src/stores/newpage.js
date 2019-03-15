@@ -1,12 +1,11 @@
 import { observable, action, computed } from 'mobx';
-import path from 'path';
 import { ipcRenderer } from 'electron';
+import EventEmitter from 'events';
 
 import { scanPages } from '../lib/project-utils';
 // store
 import progress from './progress';
 import projects from './projects';
-import EventEmitter from 'events';
 
 import projectScripts from '../lib/project-scripts';
 import scanLayout from '../datacenter/scanLayout';
@@ -20,7 +19,7 @@ import scanLayout from '../datacenter/scanLayout';
 /**
  * 新建页面
  */
-class NewPage extends EventEmitter{
+class NewPage extends EventEmitter {
   @observable
   layouts = []; // 所有 layouts
   @observable
@@ -43,11 +42,11 @@ class NewPage extends EventEmitter{
   constructor() {
     super();
     ipcRenderer.on('processTracking', (event, process, eventName) => {
-      progress.setStatusText(process) 
+      progress.setStatusText(process);
       progress.setShowTerminal(eventName === 'installBlockDeps');
     });
     ipcRenderer.on('progressVisible', (event, visible) => {
-        progress.setShowProgress(visible);
+      progress.setShowProgress(visible);
     });
   }
 
@@ -86,7 +85,7 @@ class NewPage extends EventEmitter{
         const applicationType = p.getApplicationType();
         const libraryTYpe = p.getLibraryType();
         // react 项目不启动服务
-        if (!(libraryTYpe == 'react' && applicationType == 'react')) {
+        if (!(libraryTYpe === 'react' && applicationType === 'react')) {
           projectScripts.start(p);
         }
       }
@@ -100,7 +99,6 @@ class NewPage extends EventEmitter{
   @action
   fetch() {
     const destDir = projects.currentProject.clientSrcPath;
-    const type = projects.currentProject.getLibraryType(); // 当前项目框架库类型
     this.loading = true;
     Promise.all([
       scanLayout({ targetPath: destDir }),
@@ -131,7 +129,7 @@ class NewPage extends EventEmitter{
     if (Array.isArray(localLayouts) && localLayouts.length) {
       if (defaultLayout) {
         currentLayout =
-          localLayouts.find((l) => l.folderName == defaultLayout) ||
+          localLayouts.find((l) => l.folderName === defaultLayout) ||
           localLayouts[0];
       } else {
         currentLayout = localLayouts[0];
@@ -160,8 +158,6 @@ class NewPage extends EventEmitter{
   setCurrentLayout(layout) {
     this.currentLayout = layout;
   }
-
-
 }
 
 export default new NewPage();

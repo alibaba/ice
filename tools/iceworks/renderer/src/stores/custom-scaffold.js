@@ -181,7 +181,7 @@ class CustomScaffold {
       let scaffoldConfigStores = this.scaffoldConfigStores;
       if (this.editScaffoldConigId) {
         scaffoldConfigStores = scaffoldConfigStores.map((s) => {
-          if (s.id == this.editScaffoldConigId) {
+          if (s.id === this.editScaffoldConigId) {
             scaffoldConfig.id = this.editScaffoldConigId;
             return scaffoldConfig;
           }
@@ -214,7 +214,7 @@ class CustomScaffold {
   @action
   editScaffoldConfigByIndex(index) {
     const editScaffoldConfig = this.scaffoldConfigStores.find(
-      (scaffoldConfig, k) => k == index
+      (scaffoldConfig, k) => k === index
     );
     this.editScaffoldConigId = editScaffoldConfig.id;
     this.setLayoutConfig(editScaffoldConfig.layoutConfig);

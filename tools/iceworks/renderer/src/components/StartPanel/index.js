@@ -44,24 +44,28 @@ class StartPanel extends Component {
       return <EmptyTips size={120}>加载中...</EmptyTips>;
     }
 
+    if (startRecommendMaterials.error) {
+      return <EmptyTips size={120} style={{ margin: '0 10px' }}>{startRecommendMaterials.error}</EmptyTips>;
+    }
+
     return (
       <div className="start-panel">
         {scaffolds.length ? (
           <div className="start-recommend-scaffolds">
             {scaffolds.map((material, index) => {
-    
               return (
                 <ScaffoldItem
                   key={index}
                   createProject={this.props.handleSelectedScaffold}
                   data={material}
-                  isOfficialSource={true}
+                  isOfficialSource
                 />
               );
             })}
           </div>
         ) : (
           <img
+            alt="项目为空"
             src="https://img.alicdn.com/tfs/TB1WNNxjBHH8KJjy0FbXXcqlpXa-780-780.png"
             style={{
               width: 200,

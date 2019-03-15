@@ -3,6 +3,7 @@ const co = require('co');
 const { readdirSync, readFileSync, writeFile } = require('fs');
 const path = require('path');
 const request = require('request');
+const { publishMaterialsDB } = require('./materials-db-publish');
 const scaffolds = require('./scaffolds');
 
 if (
@@ -43,19 +44,19 @@ sortScaffoldMaterials()
     );
 
     const tasks = files.map(createUploadTask);
-
-    Promise.all(tasks)
-      .then(() => {
-        console.log('All Done');
-      })
-      .catch((err) => {
-        console.log('upload err', err);
-      });
+    return Promise.all(tasks);
   })
-  .catch((err) => {
-    console.log('sort err', err);
-  });
-
+  .then(() => {
+    // 物料源数据发布到npm，作为兜底备份
+    if (process.env.TRAVIS_BRANCH === 'production') {
+      return publishMaterialsDB();
+    } else {
+      return Promise.resolve();
+    }
+  })
+  .then(()=> {
+    console.log('all done');
+  })
 /**
  * 按照下载量进行排序推荐
  */

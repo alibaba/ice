@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const BABEL_LOADER = require.resolve('babel-loader');
 const CSS_LOADER = require.resolve('css-loader');
 const SASS_LOADER = require.resolve('sass-loader');
+const LESS_LOADER = require.resolve('less-loader');
 const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
 const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const WEBPACK_HOT_CLIENT = require.resolve('webpack-hot-client/client');
@@ -25,15 +26,19 @@ const URL_LOADER_LIMIT = 8192;
 
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
+
   config
     .mode(process.env.NODE_ENV === 'production' ? 'production' : 'development');
+
+  const pkgJSON = getPkgJSON(cwd);
+  const { buildConfig = {}, themeConfig = {} } = pkgJSON;
 
   config.module
     .rule('babel')
     .test(/\.jsx?$/)
     .use('babel')
     .loader(BABEL_LOADER)
-    .options(getBabelConfig())
+    .options(getBabelConfig(buildConfig))
     .end();
 
   config.module
@@ -46,8 +51,6 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .loader(CSS_LOADER)
     .end();
 
-  const pkgJSON = getPkgJSON(cwd);
-  const { buildConfig = {}, themeConfig = {} } = pkgJSON;
   const theme = buildConfig.theme || buildConfig.themePackage;
 
   if (theme) {
@@ -77,6 +80,24 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .options({
       themeFile: theme && path.join(appNodeModules, `${theme}/variables.scss`),
       themeConfig,
+    })
+    .end();
+
+    config.module
+    .rule('less')
+    .test(/\.less$/)
+    .exclude.add(/\.module\.less$/)
+    .end()
+    .use('style-loader')
+    .loader(MiniCssExtractPlugin.loader)
+    .end()
+    .use('css-loader')
+    .loader(CSS_LOADER)
+    .end()
+    .use('less-loader')
+    .loader(LESS_LOADER)
+    .options({
+      javascriptEnabled: true
     })
     .end();
 
@@ -239,8 +260,8 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     }])
     .end()
     .minimizer('css')
-    .use(OptimizeCSSAssetsPlugin, [{ 
-      cssProcessorOptions: { safe: true } 
+    .use(OptimizeCSSAssetsPlugin, [{
+      cssProcessorOptions: { safe: true }
     }]);
 
   return config;

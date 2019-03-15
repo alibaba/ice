@@ -18,13 +18,15 @@ class PageBlockPicker {
 
   @computed
   get isDownloading() {
-    return this.downloading == true;
+    return this.downloading === true;
   }
 
   @action
   blockHasConflict(selectedBlocks) {
     const blocksNames = this.existBlocks.map((n) => n.toLowerCase()); // 已经存在的 block 名称
     let confilict = '';
+
+    // eslint-disable-next-line no-restricted-syntax
     for (const block of selectedBlocks) {
       if (blocksNames.includes(block.alias.toLowerCase())) {
         confilict = block.alias;
@@ -51,7 +53,7 @@ class PageBlockPicker {
   startProgress(showProgress = true) {
     progress.setStatusText('正在生成区块');
     progress.start(showProgress);
-  } 
+  }
 
   /**
    * 结束进度条

@@ -106,6 +106,7 @@ class BasicForm extends Component {
             </IceFormBinder>
           </div>
 
+          {/*
           {value.enableTheme ? (
             <div style={styles.formItem}>
               <span style={styles.title}>选择主题：</span>
@@ -121,6 +122,7 @@ class BasicForm extends Component {
               </IceFormBinder>
             </div>
           ) : null}
+          */}
 
           {value.enableTheme ? (
             <div style={styles.formItem}>

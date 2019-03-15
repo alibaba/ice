@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/creator-admin-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "该模板适用于创作者发布文章，帖子类的管理后台",
   "homepage": "https://unpkg.com/@icedesign/creator-admin-scaffold@latest/build/index.html",
   "author": "noyobo <nongyoubao@alibaba-inc.com>",
@@ -22,7 +22,7 @@
     "@icedesign/foundation-symbol": "^1.x",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
-    "@icedesign/theme": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "bizcharts": "^3.2.0",
     "classnames": "^2.2.6",
     "enquire-js": "0.1.x",

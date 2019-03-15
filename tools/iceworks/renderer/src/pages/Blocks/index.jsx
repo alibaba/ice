@@ -131,7 +131,7 @@ class PageBlocks extends Component {
 
   renderBlockTabs = () => {
     const { materials } = this.props.materials;
-    if (!materials || materials.length == 0) {
+    if (!materials || materials.length === 0) {
       return (
         <div style={{ padding: 10, textAlign: 'center' }}>
           <EmptyTips size={120}>

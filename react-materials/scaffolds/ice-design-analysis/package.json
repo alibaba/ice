@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/analysis-scaffold",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "该模板适用于可视化实时数据的大屏展示，默认只有一个页面，内置饼图、柱状图等图形",
   "homepage": "https://unpkg.com/@icedesign/analysis-scaffold@latest/build/index.html",
   "files": [
@@ -16,7 +16,7 @@
   "dependencies": {
     "@alifd/next": "^1.11.8",
     "@icedesign/container": "^1.0.0",
-    "@icedesign/theme": "^0.1.0",
+    "@icedesign/theme": "^1.x",
     "echarts": "^4.0.4",
     "echarts-for-react": "^2.0.8",
     "moment": "^2.24.0",

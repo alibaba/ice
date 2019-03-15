@@ -15,7 +15,6 @@ const mockData = () => {
       id: `00000${index}`,
       name: '聘用合同',
       ourCompany: '杭州xxx科技公司',
-      otherCompany: '上海xxx科技公司',
       amount: '999,999',
       currency: 'CNY',
       state: '签约中',
@@ -79,7 +78,7 @@ export default class GeneralTable extends Component {
             <ContainerTitle
               title={formatMessage({ id: 'app.general.table.title' })}
             />
-            <div style={{ minWidth: '960px', padding: '20px' }}>
+            <div style={{ padding: '20px' }}>
               <SearchFilter fetchData={this.fetchData} />
               <ContractTable
                 isLoading={isLoading}

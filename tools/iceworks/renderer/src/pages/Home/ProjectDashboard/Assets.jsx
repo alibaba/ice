@@ -14,6 +14,7 @@ import ExtraButton from '../../../components/ExtraButton/';
 import Icon from '../../../components/Icon';
 import services from '../../../services';
 import projectScripts from '../../../lib/project-scripts';
+import PluginHoc from './PluginHoc';
 
 const { folder } = services;
 
@@ -280,4 +281,4 @@ class Assets extends Component {
 
 const styles = {};
 
-export default Assets;
+export default PluginHoc(Assets);

@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "2.1.18",
+  "version": "2.1.19",
   "description": "ice 物料开发者工具",
   "main": "bin/ice-devtools.js",
   "bin": {
@@ -57,6 +57,7 @@
     "inquirer": "^6.2.0",
     "js-yaml": "^3.12.1",
     "kebab-case": "^1.0.0",
+    "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "marked": "^0.6.0",
     "metalsmith": "^2.3.0",

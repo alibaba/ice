@@ -1,3 +1,4 @@
+/* eslint-disable import/no-dynamic-require */
 const chai = require('chai');
 // Using Should style
 chai.should();

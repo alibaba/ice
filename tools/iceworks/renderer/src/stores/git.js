@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import pathExists from 'path-exists';
 import path from 'path';
 import { Feedback } from '@icedesign/base';
@@ -7,12 +7,11 @@ import GitTools from '../lib/git-tools';
 
 // store
 import Projects from './projects';
-import { access } from 'fs';
 
 class Git {
   @observable gitTools = null;
   // 初始化状态
-  @observable loading = true; // 插件初始化时loading状态
+  @observable loading = false; // 插件初始化时loading状态
   @observable showMainPanel = false; // 判断是否已经绑定仓库地址，已经绑定则展示主面板，否则展示引导步骤
   // 主要的变更状态
   @observable isGit = false; // 是否是一个 git 仓库
@@ -48,7 +47,7 @@ class Git {
   initTools() {
     const { currentProject = {} } = Projects;
     const cwd = currentProject.fullPath;
-    if (cwd) {
+    if (cwd && pathExists.sync(cwd)) {
       this.gitTools = new GitTools(cwd);
     }
   }
@@ -68,14 +67,14 @@ class Git {
       return false;
     }
   }
-  
+
   @action
   async doEmptyCommit() {
-    await this.gitTools.run('commit', 'init commit', [], {'--allow-empty':null});
+    await this.gitTools.run('commit', 'init commit', [], { '--allow-empty': null });
   }
 
   @action
-  async reset() {
+  reset() {
     this.showMainPanel = false;
     this.currentStep = 0;
   }
@@ -84,6 +83,7 @@ class Git {
   async checkIsRepo() {
     const { currentProject = {} } = Projects;
     const cwd = currentProject.fullPath;
+    this.loading = true;
     try {
       const isRepo = await this.gitTools.run('checkIsRepo');
       const isGit = isRepo && pathExists.sync(path.join(cwd, '.git'));
@@ -111,6 +111,7 @@ class Git {
     } catch (error) {
       this.isGit = false;
       this.loading = false;
+      throw error;
     }
   }
 
@@ -118,7 +119,7 @@ class Git {
     const statusMap = ['conflicted', 'not_added', 'modified', 'created', 'deleted', 'renamed'];
     let unstagedFiles = [];
     if (status && status.files && status.files.length > 0) {
-      statusMap.forEach( item => {
+      statusMap.forEach((item) => {
         unstagedFiles = unstagedFiles.concat(status[item]);
       });
     }
@@ -196,10 +197,9 @@ class Git {
 
   @action
   async getBranches() {
-
     Feedback.toast.show({
-      type: "loading",
-      content: "Git fetching",
+      type: 'loading',
+      content: 'Git fetching',
     });
 
     try {
@@ -236,7 +236,6 @@ class Git {
 
       this.branchesCheckout = branchesCheckout;
       this.visibleDialogBranches = true;
-
     } catch (error) {
       Feedback.toast.hide();
       this.visibleDialogBranches = false;
@@ -270,8 +269,8 @@ class Git {
   @action
   async push() {
     Feedback.toast.show({
-      type: "loading",
-      content: "Git push",
+      type: 'loading',
+      content: 'Git push',
     });
     try {
       await this.gitTools.run('push', 'origin', this.currentBranch);
@@ -286,8 +285,8 @@ class Git {
   @action
   async pull() {
     Feedback.toast.show({
-      type: "loading",
-      content: "Git pull",
+      type: 'loading',
+      content: 'Git pull',
     });
     try {
       await this.gitTools.run('pull', 'origin', this.currentBranch);
@@ -328,9 +327,8 @@ class Git {
   @action
   nextStep() {
     const s = this.currentStep + 1;
-    this.currentStep = s > 2 ? 2 : s
+    this.currentStep = s > 2 ? 2 : s;
   }
-
 }
 
 export default new Git();
