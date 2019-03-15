@@ -27,13 +27,14 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
     defineVriables.THEME = JSON.stringify(themeConfig.theme);
   }
 
+  const filename = process.env.HASH ? '[name].[hash:6].css' : '[name].css';
+  const chunkFilename = process.env.HASH ? '[id].[hash:6].css': '[id].css';
+
   const plugins = [
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
-      filename: process.env.HASH ? 'css/[name].[hash:6].css' : 'css/[name].css',
-      chunkFilename: process.env.HASH
-        ? 'css/[id].[hash:6].css'
-        : 'css/[id].css',
+      filename: path.join(buildConfig.outputAssetsDir.css || '', filename),
+      chunkFilename: path.join(buildConfig.outputAssetsDir.css || '', chunkFilename),
     }),
     // FIX ISSUE: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
     new FilterWarningsPlugin({

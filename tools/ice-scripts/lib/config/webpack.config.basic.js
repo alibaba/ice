@@ -1,5 +1,6 @@
 const { differenceWith } = require('lodash');
 const webpackMerge = require('webpack-merge');
+const path = require('path');
 
 const getUserConfig = require('./getUserConfig');
 const getRules = require('./getRules');
@@ -45,7 +46,18 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
   const { themeConfig = {} } = pkg;
   const hasExternalReact = checkTemplateHasReact(paths.appHtml);
 
+  if (buildConfig.output && buildConfig.output.path) {
+    buildConfig.output.path = path.resolve(paths.appDirectory, buildConfig.output.path);
+  }
+
+  buildConfig.outputAssetsDir = {
+    css: 'css',
+    js: 'js',
+    ...buildConfig.outputAssetsDir
+  };
+
   debug.info('hasExternalReact', hasExternalReact);
+
   const webpackConfig = {
     mode: process.env.NODE_ENV,
     context: paths.appDirectory,
@@ -53,7 +65,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     output: Object.assign(
       {
         path: paths.appBuild,
-        filename: process.env.HASH ? 'js/[name].[hash:6].js' : 'js/[name].js',
+        filename: path.join(buildConfig.outputAssetsDir.js || '', (process.env.HASH ? '[name].[hash:6].js' : '[name].js')),
         publicPath: paths.servedPath,
       },
       buildConfig.output || {}
@@ -64,7 +76,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
       alias: getResolveAlias(buildConfig),
     },
     externals: {
-      ...(hasExternalReact ? { react: 'window.React', 'react-dom': 'window.ReactDOM' } : {})
+      ...(hasExternalReact ? { react: 'window.React', 'react-dom': 'window.ReactDOM' } : {}),
       ...buildConfig.externals,
     },
     module: {
