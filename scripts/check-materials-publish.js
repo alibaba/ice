@@ -3,17 +3,6 @@ const fs = require('fs');
 const glob = require('glob');
 const npmRequestJson = require('npm-request-json');
 const path = require('path');
-const { generateNpmrc } = require('./utils');
-
-// 1. 创建 npmrc 文件
-try {
-  const cwd = process.cwd();
-  generateNpmrc(cwd);
-  console.log('npmrc 文件创建成功');
-} catch (error) {
-  console.error(error);
-  process.exit(1);
-}
 
 function scanPackageJson(pattern) {
   return new Promise((resolve, reject) => {

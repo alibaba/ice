@@ -38,11 +38,7 @@ function publishMaterialsDB() {
       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
-    "license": "MIT",
-    "publishConfig": {
-      "registry": "http://registry.npmjs.com",
-      "access": "public"
-    }
+    "license": "MIT"
   };
   // 获取已发布版本号
   const NPM_REGISTRY = process.env.NPM_REGISTRY || 'registry.npmjs.com';

@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 function generateNpmrc(cwd) {
-  const npmrc = path.join(cwd, 'npmrc');
+  const npmrc = path.join(cwd, '.npmrc');
   
   const NPM_EMAIL = process.env.NPM_EMAIL;
   const NPM_TOKEN = process.env.NPM_TOKEN;
