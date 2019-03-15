@@ -142,6 +142,52 @@ babel-loader 有一个 exclude 的配置，用于过滤某些目录下的文件�
 
 这样不同名的基础包都会重定向到 `@icedesign/base`，减少 bundle 的大小。
 
+### 修改构建后的文件目录
+
+```js
+"buildConfig": {
+  "output": {
+    "path": "dist"
+  }
+}
+```
+
+### 修改构建后的 css/js 文件目录
+
+默认情况下 css 在 `build/css/` 下，js 在 `build/js/` 下，可以通过 `outputAssetsDir` 配置修改：
+
+```js
+"buildConfig": {
+  "outputAssetsPath": {
+    // 示例1：修改为 build/css-dist/ build/js-dist/
+    "css": "css-dist",
+    "js": "js-dist",
+    // 示例2：js 和 css 都直接放在 build/ 下
+    "css": "",
+    "js": ""
+  }
+}
+```
+
+### 修改 externals
+
+```js
+"buildConfig": {
+  "externals": {
+    "jquery": "window.$"
+  }
+}
+```
+
+另外，ice-scripts 会根据 `public/*.html` 里是否通过 script 标签引入了 React 来推导是否需要生成 React 相关的 externals，这个 externals 会跟用户配置直接 merge：
+
+```json
+{
+  "react": "window.React",
+  "react-dom": "window.ReactDOM"
+}
+```
+
 ## 自定义配置 - .webpackrc.js
 
 ice-scripts 除了提供 buildConfig 用于快速的配置入口之外，也支持自定义配置需求，几乎可完全自定义 webpack 的所有配置项；在项目根目录新建 `.webpackrc.js` 文件对默认配置进行定制和覆盖。`.webpackrc.js` 文件需要导出一个函数，其支持的参数可以参考 `webpack` [官方文档](https://webpack.js.org/concepts/output/)。
@@ -164,20 +210,6 @@ module.exports = (context) => {
 ```
 
 以下为一些常见的自定义需求：
-
-### 修改编译的路径为 dist
-
-```js
-const path = require('path');
-
-module.exports = (context) => {
-  return {
-    output: {
-      path: path.resolve('dist'),
-    },
-  };
-};
-```
 
 ### 修改 publicPath
 
