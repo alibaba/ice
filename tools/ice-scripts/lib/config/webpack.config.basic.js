@@ -44,6 +44,7 @@ const pluginsUnique = (uniques) => {
 module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
   const { themeConfig = {} } = pkg;
   const hasExternalReact = checkTemplateHasReact(paths.appHtml);
+
   debug.info('hasExternalReact', hasExternalReact);
   const webpackConfig = {
     mode: process.env.NODE_ENV,
@@ -62,10 +63,10 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
       extensions: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx'],
       alias: getResolveAlias(buildConfig),
     },
-    externals:
-      buildConfig.externals || hasExternalReact
-        ? { react: 'window.React', 'react-dom': 'window.ReactDOM' }
-        : {},
+    externals: {
+      ...(hasExternalReact ? { react: 'window.React', 'react-dom': 'window.ReactDOM' } : {})
+      ...buildConfig.externals,
+    },
     module: {
       rules: getRules(buildConfig, themeConfig),
     },
