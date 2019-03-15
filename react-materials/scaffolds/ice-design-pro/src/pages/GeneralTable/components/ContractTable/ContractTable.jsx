@@ -66,12 +66,6 @@ export default class ContractTable extends Component {
         width: 160,
       },
       {
-        title: '对方公司',
-        dataIndex: 'otherCompany',
-        key: 'otherCompany',
-        width: 160,
-      },
-      {
         title: '合同金额',
         dataIndex: 'amount',
         key: 'amount',

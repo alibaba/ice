@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/contract-management-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "该模板内置了高级表单搜索和表格区块，适用于合同管理类和多表格展示的系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/contract-management-scaffold@latest/build/index.html",
   "files": [
@@ -20,7 +20,7 @@
     "@icedesign/foundation-symbol": "^1.x",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
-    "@icedesign/theme": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "classnames": "^2.2.5",
     "lodash.clonedeep": "^4.5.0",
     "moment": "^2.23.0",

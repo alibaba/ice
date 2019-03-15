@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/library-management-admin",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "该模板内置了基础的表单和表格区块，适用于项目图书馆管理类系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/library-management-admin@latest/build/index.html",
   "files": [
@@ -21,7 +21,7 @@
     "@icedesign/foundation-symbol": "^1.x",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
-    "@icedesign/theme": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "classnames": "^2.2.5",
     "moment": "^2.23.0",
     "prop-types": "^15.5.8",
