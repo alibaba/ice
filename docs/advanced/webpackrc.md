@@ -154,7 +154,7 @@ babel-loader 有一个 exclude 的配置，用于过滤某些目录下的文件�
 
 ### 修改构建后的 css/js 文件目录
 
-默认情况下 css 在 `build/css/` 下，js 在 `build/js/` 下，可以通过 `outputAssetsDir` 配置修改：
+默认情况下 css 在 `build/css/` 下，js 在 `build/js/` 下，可以通过 `outputAssetsPath` 配置修改：
 
 ```js
 "buildConfig": {
