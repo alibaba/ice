@@ -35,5 +35,10 @@
   "protocols": {
     "name": "iceworks",
     "schemes": ["iceworks"]
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": true,
+    "allowToChangeInstallationDirectory": true
   }
 }
