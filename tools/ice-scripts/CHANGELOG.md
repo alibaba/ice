@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.8.13
+
+- [feat] 内置对 moment 的多语言优化
+- [feat] 支持 outputAssetsPath 配置
+- [fix] 修复 externals 的逻辑
+
 ## 1.8.12
 
 - [fix] 修复 proxy target 语法错误
