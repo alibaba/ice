@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/voice-chat-admin-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "该模板内置了丰富的区块，适用于智能语音对话类管理系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/voice-chat-admin-scaffold@latest/build/index.html",
   "files": [
@@ -22,7 +22,7 @@
     "@icedesign/label": "^1.x",
     "@icedesign/layout": "^1.x",
     "@icedesign/panel": "^1.x",
-    "@icedesign/theme": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "bizcharts": "^3.2.4",
     "classnames": "^2.2.5",
     "moment": "^2.23.0",

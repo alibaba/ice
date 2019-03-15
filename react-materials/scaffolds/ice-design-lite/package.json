@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/lite-scaffold",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "该模板适用于从 0 到 1 开始搭建项目，内置基础的页面，路由和菜单展示",
   "homepage": "https://unpkg.com/@icedesign/lite-scaffold@latest/build/index.html",
   "files": [
@@ -18,7 +18,7 @@
     "@icedesign/container": "^1.x",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
-    "@icedesign/theme": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "axios": "^0.17.1",
     "bizcharts": "latest",
     "classnames": "^2.2.5",
