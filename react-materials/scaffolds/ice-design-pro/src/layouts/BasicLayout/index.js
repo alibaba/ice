@@ -67,7 +67,7 @@ export default class BasicLayout extends Component {
             profile={profile}
             handleLogout={userLogout}
           />
-          <Layout.Section scrollable>
+          <Layout.Section>
             <Layout.Aside width="auto" type={null}>
               <Aside isMobile={isMobile} />
             </Layout.Aside>
