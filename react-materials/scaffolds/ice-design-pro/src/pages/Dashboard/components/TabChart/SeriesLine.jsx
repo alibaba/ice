@@ -59,7 +59,7 @@ export default class SeriesLine extends Component {
           padding={[40, 35, 40, 35]}
         >
           <Axis name="month" />
-          <Axis name="temperature" label={{ formatter: val => `${val}` }} />
+          <Axis name="temperature" label={{ formatter: (val) => `${val}` }} />
           <Tooltip crosshairs={{ type: 'y' }} />
           <Geom
             type="line"

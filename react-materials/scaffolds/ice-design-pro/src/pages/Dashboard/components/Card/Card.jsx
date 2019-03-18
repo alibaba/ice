@@ -20,7 +20,7 @@ export default class Card extends Component {
     const { title, summary, link } = this.props;
     return (
       <IceContainer style={styles.container}>
-        <Row>
+        <Row wrap>
           <Col l="18" style={styles.content}>
             <div style={styles.head}>
               <h3 style={styles.title}>{title}</h3>
@@ -51,7 +51,6 @@ export default class Card extends Component {
 
 const styles = {
   container: {
-    minWidth: '1080px',
     overflow: 'scroll',
     padding: '0',
   },
