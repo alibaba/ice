@@ -36,6 +36,9 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   config.module
     .rule('babel')
     .test(/\.jsx?$/)
+    .exclude
+      .add(/node_modules/)
+      .end()
     .use('babel')
     .loader(BABEL_LOADER)
     .options(getBabelConfig(buildConfig))
