@@ -39,7 +39,7 @@ export default class BasicLine extends Component {
           height={300}
           data={data}
           scale={cols}
-          forceFit
+          // forceFit
           padding={[40, 35, 40, 35]}
         >
           <Axis name="year" />
