@@ -16,7 +16,7 @@ module.exports = {
    */
   selector: (properties = ['openDirectory', 'createDirectory']) => {
     return new Promise((resolve, reject) => {
-      dialog.showOpenDialog({ properties: properties }, (paths) => {
+      dialog.showOpenDialog({ properties }, (paths) => {
         if (paths && paths.length > 0) {
           resolve(paths);
         } else {

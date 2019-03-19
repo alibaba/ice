@@ -3,9 +3,6 @@ import IceContainer from '@icedesign/container';
 import { Tab } from '@alifd/next';
 import LineChart from './LineChart';
 import Head from './Head';
-import './FlowStatistics.scss';
-
-const TabPane = Tab.Item;
 
 const MOCK_DATA = {
   threeMonths: {

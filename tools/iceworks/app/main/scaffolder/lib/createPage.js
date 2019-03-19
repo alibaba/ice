@@ -7,7 +7,6 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const upperCamelCase = require('uppercamelcase');
 const pathExists = require('path-exists');
-const to = require('await-to-js').default;
 
 const utils = require('./utils');
 const pageTemplates = require('./pageTemplates');
@@ -16,7 +15,6 @@ const prettier = require('prettier');
 
 const DetailError = require('../../error-handler');
 const config = require('../../config');
-const materialUtils = require('../../template/utils');
 const appendRouteV3 = require('./appendRouteV3');
 const appendRouteV4 = require('./appendRouteV4');
 const appendMenuV4 = require('./appendMenuV4');
@@ -53,12 +51,11 @@ module.exports = async function createPage({
   preview = false, // 用来生成 preview page 做预览使用
   builtIn = false, // 如果设置为 true, 文件冲突情况下不再询问, 直接忽略
   libary = 'react', // hack 用于识别 vue 项目做特殊处理
-  excludeLayout = false,
-  progressFunc
+  // excludeLayout = false,
+  progressFunc,
 }) {
-
   // 初始参数
-  let fileList = [];
+  const fileList = [];
   let layoutName = '';
   if (layout) { // 兼容没有layout的情况，比如通过打开项目引入的项目很可能没有。
     layoutName = layout.name;
@@ -81,18 +78,17 @@ module.exports = async function createPage({
     } catch (e) {
       emitError(currentEvent, {
         message: 'package.json 内存在语法错误',
-        pkg: fs.readFileSync(pkgPath)
+        pkg: fs.readFileSync(pkgPath),
       });
       throw new DetailError('package.json 内存在语法错误', {
-        message: `请检查根目录下 package.json 的语法规范`,
+        message: `请检查${clientPath}目录下 package.json 的语法规范`,
       });
     }
   } else {
     emitError(currentEvent, { message: '找不到 package.json' });
     throw new DetailError('找不到 package.json', {
-      message: `在项目根目录下找不到 package.json 文件`,
+      message: `在${clientPath}目录下找不到 package.json 文件`,
     });
-
   }
   // 兼容依赖
   pkg.dependencies = pkg.dependencies || {};
@@ -133,7 +129,7 @@ module.exports = async function createPage({
   // 3. 下载区块
   if (Array.isArray(blocks)) {
     // className、relativePath用于ejs模板语言生成page.jsx
-    blocks.forEach( block => {
+    blocks.forEach((block) => {
       const blockFolderName = block.alias || upperCamelCase(block.name) || block.className; // block 目录名
       // 转换了 alias 的名称
       const blockClassName = upperCamelCase(
@@ -142,8 +138,8 @@ module.exports = async function createPage({
       block.className = blockClassName;
       // block 的相对路径,生成到页面的 components 下面
       block.relativePath = `./components/${blockFolderName}`;
-    })
- 
+    });
+
     // 下载区块到页面，返回区块的依赖
     let dependencies = {};
     currentEvent = 'generateBlocks';
@@ -152,13 +148,12 @@ module.exports = async function createPage({
     try {
       const deps = await utils.downloadBlocksToPage({
         clientPath,
-        clientSrcPath, 
-        blocks, 
+        clientSrcPath,
+        blocks,
         pageName: pageFolderName,
-        progressFunc
+        progressFunc,
       });
       dependencies = deps.dependencies;
- 
     } catch (error) {
       emitProgress(false);
       throw error;
@@ -233,7 +228,7 @@ module.exports = async function createPage({
       const fileExt = path.extname(dist);
 
       let parser = libary === 'vue' ? 'vue' : 'babylon';
-      if (fileExt == '.scss') {
+      if (fileExt === '.scss') {
         parser = 'scss';
       }
       const rendered = prettier.format(
@@ -243,9 +238,11 @@ module.exports = async function createPage({
 
       fileList.push(dist);
       fs.writeFileSync(dist, rendered, 'utf-8');
+      // eslint-disable-next-line
       return prev & 0x1;
     } catch (err) {
       console.log('err', err);
+      // eslint-disable-next-line
       return prev & 0x0;
     }
   }, 0x1);
@@ -253,9 +250,9 @@ module.exports = async function createPage({
   /**
    * 5. 更新 routes.jsx
    */
-  let  routeFilePath = path.join(clientSrcPath, 'routes.jsx');
-  const  routerConfigFilePath = path.join(clientSrcPath, 'routerConfig.js');
-  const  menuConfigFilePath = path.join(clientSrcPath, 'menuConfig.js');
+  let routeFilePath = path.join(clientSrcPath, 'router.jsx');
+  const routerConfigFilePath = path.join(clientSrcPath, 'routerConfig.js');
+  const menuConfigFilePath = path.join(clientSrcPath, 'menuConfig.js');
 
   if (!fs.existsSync(routeFilePath)) {
     // hack 兼容 vue 物料 router
@@ -290,6 +287,7 @@ module.exports = async function createPage({
     });
     await appendRouteV4({
       routePath,
+      routeFilePath,
       routerConfigFilePath,
       pageFolderName,
       layoutName,

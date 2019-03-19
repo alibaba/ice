@@ -1,3 +1,4 @@
+/* eslint: eslint-disable-next-line:0 prefer-const:0 */
 const debug = require('debug')('utils');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
@@ -16,130 +17,173 @@ const DetailError = require('../../error-handler');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
+const alilog = require('../../alilog');
+const autoRetry = require('../../utils/autoRetry');
 
 /**
  * 批量下载 block 到页面中
  *
- * @param {string} clientPath 前端项目地址地址
- * @param {string} clientSrcPath 前端资源地址地址
+ * @param {string} clientPath 前端项目地址
+ * @param {string} clientSrcPath 前端资源地址
  * @param {array} blocks 区块数组
  * @param {string} pageName 页面名称
  */
-async function downloadBlocksToPage({ clientPath, clientSrcPath, blocks, pageName, progressFunc }) {
+async function downloadBlocksToPage({
+  clientPath,
+  clientSrcPath,
+  blocks,
+  pageName,
+  progressFunc,
+}) {
   let err, filesList, depList;
 
-  [err, filesList] = await to(Promise.all(
-    blocks.map( async (block) => {
-      return await downloadBlockToPage({ clientPath, clientSrcPath, pageName, block }, progressFunc);
-    })
-  ));
+  [err, filesList] = await to(
+    Promise.all(
+      blocks.map(async (block) => {
+        return await downloadBlockToPage(
+          { clientPath, clientSrcPath, pageName, block },
+          progressFunc
+        );
+      })
+    )
+  );
   if (err) {
     throw err;
   }
 
   const pkg = getPackageByPath(clientPath);
   const projectVersion = getProjectVersion(pkg);
-  [err, depList] = await to(Promise.all(
-    filesList.map( async (_, idx) => {
-      const block = blocks[idx];
-      // 根据项目版本下载依赖
-      // 兼容旧版物料源
-      if (block.npm && block.version && ( block.type != 'custom' ) ) {
-        return getDependenciesFromNpm({
-          npm: block.npm,
-          version: block.version,
-        });
-      } else if (block.source && block.source.type == 'npm' && ( block.type != 'custom' ) ) {
-        let version = block.source.version;
-        // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
-        if (projectVersion === '1.x')  {
-          // 兼容没有'version-0.x'字段的情况
-          version = block.source['version-0.x'] || block.source.version;
+
+  [err, depList] = await to(
+    Promise.all(
+      filesList.map(async (_, idx) => {
+        const block = blocks[idx];
+        // 根据项目版本下载依赖
+        // 兼容旧版物料源
+        if (block.npm && block.version && block.type !== 'custom') {
+          return getDependenciesFromNpm({
+            npm: block.npm,
+            version: block.version,
+          });
+        } else if (
+          block.source &&
+          block.source.type === 'npm' &&
+          block.type !== 'custom'
+        ) {
+          let version = block.source.version;
+          // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
+          if (projectVersion === '1.x') {
+            // 兼容没有'version-0.x'字段的情况
+            version = block.source['version-0.x'] || block.source.version;
+          }
+          return getDependenciesFromNpm({
+            version,
+            npm: block.source.npm,
+            registry: block.source.registry,
+          });
+        } else if (block.type === 'custom') {
+          return getDependenciesFromCustom(block);
         }
-        return getDependenciesFromNpm({
-          version,
-          npm: block.source.npm,
-          registry: block.source.registry,
-        });
-      } else if (block.type == 'custom') {
-        return getDependenciesFromCustom(block);
-      }
-    })
-  ));
+      })
+    )
+  );
+
   if (err) {
-    throw err;
+    err.message = '获取当前区块的依赖失败';
+    throw new Error(err);
   }
 
   // 合并依赖
   const dependenciesAll = {};
-  depList.forEach(({ dependencies, }) => {
+  depList.forEach(({ dependencies }) => {
     Object.assign(dependenciesAll, dependencies);
   });
   // 过滤已有依赖
   const filterDependencies = {};
   Object.keys(dependenciesAll).forEach((dep) => {
+    // eslint-disable-next-line no-prototype-builtins
     if (!pkg.dependencies.hasOwnProperty(dep)) {
       filterDependencies[dep] = dependenciesAll[dep];
     }
   });
   return {
-    dependencies: filterDependencies
+    dependencies: filterDependencies,
   };
-
 }
 
-async function downloadBlockToPage({ clientPath, clientSrcPath, block, pageName }, progressFunc) {
-  if (!block || ( !block.source && block.type != 'custom' )) {
+async function downloadBlockToPage(
+  { clientPath, clientSrcPath, block, pageName },
+  progressFunc
+) {
+  if (!block || (!block.source && block.type !== 'custom')) {
     throw new Error(
       'block need to have specified source at download block to page method.'
     );
   }
 
-  const componentsDir = path.join(clientSrcPath, 'pages', pageName, 'components');
+  // 区块下载目录
+  const componentsDir = path.join(
+    clientSrcPath,
+    'pages',
+    pageName,
+    'components'
+  );
+
   // 保证文件夹存在
   mkdirp.sync(componentsDir);
+
+  // 日志上报
   logger.report('app', {
     action: 'download-block',
     data: {
       name: block.name,
-    }
+    },
   });
 
   // 根据项目版本下载
   const pkg = getPackageByPath(clientPath);
   const projectVersion = getProjectVersion(pkg);
+  const blockName =
+    block.alias || upperCamelCase(block.name) || block.className;
 
   let err, tarballURL, allFiles;
-  const blockName = block.alias || upperCamelCase(block.name) || block.className;
 
-  if(block.type == 'custom'){
-    [err, allFiles] = await to(extractCustomBlock(
-      block,
-      path.join(
-        componentsDir,
-        blockName
-      ),
-      progressFunc
-    ));
+  // 通过 iceland 自定义的区块
+  if (block.type === 'custom') {
+    [err, allFiles] = await to(
+      extractCustomBlock(
+        block,
+        path.join(componentsDir, blockName),
+        progressFunc
+      )
+    );
     if (err) {
       throw new Error(`解压自定义区块${blockName}出错，请重试`);
-    } 
+    }
     return allFiles;
   }
 
-  [err, tarballURL] = await to(materialUtils.getTarballURLBySource(block.source, projectVersion));
-  if (err) {
-    throw err;
-  } 
+  // 通过 npm 源获取区块
+  [err, tarballURL] = await to(
+    materialUtils.getTarballURLBySource(block.source, projectVersion)
+  );
 
-  [err, allFiles] = await to(extractBlock(
-    path.join( componentsDir, blockName ),
-    tarballURL,
-    clientPath,
-    progressFunc
-  ));
   if (err) {
-    if (err.code === 'ETIMEDOUT') {
+    err.message = '请求区块 tarball 包失败';
+    throw new Error(err);
+  }
+
+  [err, allFiles] = await to(
+    retryExtractBlock(
+      path.join(componentsDir, blockName),
+      tarballURL,
+      clientPath,
+      progressFunc
+    )
+  );
+
+  if (err) {
+    if (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT') {
       throw new Error(`解压区块${blockName}超时，请重试`);
     }
     throw new Error(`解压区块${blockName}出错, 请重试`);
@@ -154,7 +198,9 @@ function getPackageByPath(clientPath) {
     try {
       const packageText = fs.readFileSync(pkgPath);
       return JSON.parse(packageText.toString());
-    } catch (e) {}
+    } catch (e) {
+      logger.error(e);
+    }
   }
 }
 
@@ -162,54 +208,12 @@ function getPackageByPath(clientPath) {
  * 1. 有 @icedesign/base 相关依赖 则返回 0.x
  * 2. 只有 @alifd/next 相关依赖 则返回 1.x
  * 3. 都没有 则返回 1.x
- * @param {*} pkg 
+ * @param {*} pkg
  */
-function getProjectVersion(pkg) {
+function getProjectVersion(pkg = {}) {
   const dependencies = pkg.dependencies || {};
   const hasIceDesignBase = dependencies['@icedesign/base'];
   return hasIceDesignBase ? '0.x' : '1.x';
-
-}
-
-function extractTarball(tarballURL, destDir) {
-  // 保证目录存在
-  // mkdirp.sync(dest);
-  return new Promise((resolve, reject) => {
-    debug('npmTarball', tarballURL);
-    const allFiles = [];
-    request
-      .get(tarballURL)
-      .on('error', reject)
-      .pipe(zlib.Unzip()) // eslint-disable-line
-      .pipe(tar.Parse()) // eslint-disable-line
-      .on('entry', (entry) => {
-        // npm 会自动生成 .npmignore, 这里需要过滤掉
-        const filterFileReg = /\.npmignore/;
-        if (filterFileReg.test(entry.path)) {
-          return;
-        }
-
-        const realPath = entry.path.replace(/^package\//, '');
-        debug('写入文件', realPath);
-        let destPath = path.join(destDir, realPath);
-
-        // deal with _ started file
-        // https://github.com/alibaba/ice/issues/226
-        const parsedDestPath = path.parse(destPath);
-        if (parsedDestPath.base == '_gitignore') {
-          parsedDestPath.base = parsedDestPath.base.replace(/^_/, '.');
-        }
-        destPath = path.format(parsedDestPath);
-
-        // 保证子文件夹存在
-        mkdirp.sync(path.dirname(destPath));
-        entry.pipe(fs.createWriteStream(destPath));
-        allFiles.push(destPath);
-      })
-      .on('end', () => {
-        resolve(allFiles);
-      });
-  });
 }
 
 /**
@@ -222,21 +226,39 @@ function extractTarball(tarballURL, destDir) {
  * @param ignoreFiles
  * @returns {Promise<any>}
  */
-function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) {
+function extractBlock(
+  destDir,
+  tarballURL,
+  clientPath,
+  progressFunc = () => {}
+) {
   return new Promise((resolve, reject) => {
     debug('npmTarball', tarballURL);
     const allFiles = [];
     const req = requestProgress(
       request({
         url: tarballURL,
-        timeout: 20000
+        timeout: 10000,
       })
     );
     req
       .on('progress', (state) => {
         progressFunc(state);
       })
-      .on('error', reject)
+      .on('error', (err) => {
+        alilog.report(
+          {
+            type: 'download-tarball-error',
+            msg: err.message,
+            stack: err.stack,
+            data: {
+              url: tarballURL,
+            },
+          },
+          'error'
+        );
+        reject(err);
+      })
       .pipe(zlib.Unzip()) // eslint-disable-line
       .pipe(tar.Parse()) // eslint-disable-line
       .on('entry', (entry) => {
@@ -277,6 +299,17 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
   });
 }
 
+// 超时自动重试
+const retryCount = 2;
+const retryExtractBlock = autoRetry(extractBlock, retryCount, (err) => {
+  if (
+    !err.code ||
+    (err.code !== 'ETIMEDOUT' && err.code !== 'ESOCKETTIMEDOUT')
+  ) {
+    throw err;
+  }
+});
+
 /**
  * 从 registry 获取 npm 包的 tarbal URL
  * @param {*} npm
@@ -284,7 +317,7 @@ function extractBlock(destDir, tarballURL, clientPath, progressFunc = () => {}) 
  */
 function getTarballURL(npm, version = 'latest') {
   return new Promise((resolve, reject) => {
-    npmRequest({ name: npm, version: version })
+    npmRequest({ name: npm, version })
       .then((pkgData) => {
         resolve(pkgData.dist.tarball);
       })
@@ -300,7 +333,7 @@ function getTarballURL(npm, version = 'latest') {
  */
 function getDependenciesFromNpm({ npm, version = 'latest', registry }) {
   return new Promise((resolve, reject) => {
-    npmRequest({ name: npm, version: version, registry })
+    npmRequest({ name: npm, version, registry })
       .then((pkgData) => {
         resolve({
           dependencies: pkgData.dependencies || {},
@@ -342,7 +375,9 @@ exports.checkValidICEProject = function(dir) {
   try {
     const pkg = require(pkgPath);
     return 'scaffoldConfig' in pkg || 'buildConfig' in pkg;
-  } catch (err) {}
+  } catch (err) {
+    logger.error(err);
+  }
 
   try {
     const abcPath = path.join(dir, 'abc.json');
@@ -367,12 +402,15 @@ async function getDependenciesFromMaterial(material = {}) {
 /**
  * 解压自定义区块
  */
-function extractCustomBlock (block, BlockDir) {
-  return new Promise((resolve, reject) => {
+function extractCustomBlock(block, BlockDir, progressFunc) {
+  return new Promise((resolve) => {
     const allFiles = [];
-    let codeFileTree = block.code;
+    const codeFileTree = block.code;
     mkdirp.sync(BlockDir);
-    fs.writeFileSync(path.join(BlockDir, 'index.jsx'), codeFileTree['index.jsx']);
+    fs.writeFileSync(
+      path.join(BlockDir, 'index.jsx'),
+      codeFileTree['index.jsx']
+    );
     allFiles.push(path.join(BlockDir, 'index.jsx'));
     progressFunc({
       percent: 1,
@@ -381,7 +419,7 @@ function extractCustomBlock (block, BlockDir) {
   });
 }
 
-function getDependenciesFromCustom (block) {
+function getDependenciesFromCustom(block) {
   return new Promise((resolve) => {
     const customDependencies = JSON.parse(block.dep);
     const dependencies = {};
@@ -389,7 +427,7 @@ function getDependenciesFromCustom (block) {
       dependencies[dep.npmName] = dep.version;
     });
     resolve({
-      dependencies: dependencies
+      dependencies,
     });
   });
 }
@@ -397,10 +435,10 @@ function getDependenciesFromCustom (block) {
 exports.extractCustomBlock = extractCustomBlock;
 exports.getDependenciesFromCustom = getDependenciesFromCustom;
 exports.getTarballURL = getTarballURL;
-exports.extractBlock = extractBlock;
+exports.extractBlock = retryExtractBlock;
 exports.getDependenciesFromNpm = getDependenciesFromNpm;
 exports.getDependenciesFromMaterial = getDependenciesFromMaterial;
-exports.extractTarball = extractTarball;
 exports.downloadBlockToPage = downloadBlockToPage;
 exports.downloadBlocksToPage = downloadBlocksToPage;
-
+exports.getPackageByPath = getPackageByPath;
+exports.getProjectVersion = getProjectVersion;

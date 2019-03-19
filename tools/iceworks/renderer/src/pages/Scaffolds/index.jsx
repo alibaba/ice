@@ -36,7 +36,7 @@ class Scaffolds extends Component {
 
   renderScaffoldsTabPanel = () => {
     const { materials, getScaffoldTabActiveKey } = this.props.materials;
-    if (!materials || materials.length == 0) {
+    if (!materials || materials.length === 0) {
       return null;
     }
     return materials.map((material, index) => {

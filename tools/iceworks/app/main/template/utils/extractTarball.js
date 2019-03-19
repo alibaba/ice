@@ -7,6 +7,7 @@ const zlib = require('zlib');
 const tar = require('tar');
 const logger = require('../../logger');
 const { DetailError } = require('../../error-handler');
+const autoRetry = require('../../utils/autoRetry');
 
 /**
  * 将 tarbar 下的内容下载到指定目录，同时做路径转换
@@ -15,7 +16,7 @@ const { DetailError } = require('../../error-handler');
  * @param {string} source 源码对象描述
  *                 source.sourceCodeDirectory 源码存放的位置
  */
-module.exports = function extractTarball(
+function extractTarball(
   tarballURL,
   destDir,
   source = {},
@@ -32,6 +33,7 @@ module.exports = function extractTarball(
     const req = requestProgress(
       request({
         url: tarballURL,
+        timeout: 10000,
       })
     );
 
@@ -48,7 +50,7 @@ module.exports = function extractTarball(
         }));
       })
       .pipe(zlib.Unzip()) // eslint-disable-line babel/new-cap
-      .on('error', (error) => {
+      .on('error', () => {
         reject(new DetailError('已中止创建', {
           message: '',
           stack: '',
@@ -78,7 +80,7 @@ module.exports = function extractTarball(
         // deal with _ started file
         // https://github.com/alibaba/ice/issues/226
         const parsedDestPath = path.parse(destPath);
-        if (parsedDestPath.base == '_gitignore') {
+        if (parsedDestPath.base === '_gitignore') {
           parsedDestPath.base = parsedDestPath.base.replace(/^_/, '.');
         }
         destPath = path.format(parsedDestPath);
@@ -91,7 +93,7 @@ module.exports = function extractTarball(
         }
         logger.info('extractTarball', destPath);
         allFiles.push(destPath);
-        const writeStream = new Promise(streamResolve => {
+        const writeStream = new Promise((streamResolve) => {
           entry
             .pipe(fs.createWriteStream(destPath))
             .on('finish', () => streamResolve());
@@ -111,4 +113,14 @@ module.exports = function extractTarball(
           });
       });
   });
-};
+}
+
+// 超时自动重试
+const retryCount = 2;
+const retryExtractTarball = autoRetry(extractTarball, retryCount, (err) => {
+  if (err.metadata && err.metadata.message !== 'ETIMEDOUT') {
+    throw (err);
+  }
+});
+
+module.exports = retryExtractTarball;

@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/builder-platfrom-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "该模板适用于云构建类的数据展示和管理后台",
   "homepage": "https://unpkg.com/@icedesign/builder-platfrom-scaffold@latest/build/index.html",
   "files": [
@@ -32,7 +32,7 @@
     "@icedesign/foundation-symbol": "^1.x",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
-    "@icedesign/theme": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "classnames": "^2.2.5",
     "highcharts": "^6.1.1",
     "moment": "^2.23.0",

@@ -16,7 +16,7 @@ const { Option } = Select;
 
 @inject('scaffold', 'projects')
 @observer
-export default class ScaffoldForm extends Component {
+class ScaffoldForm extends Component {
 
   openProjectDirectory = () => {
     if (!this.props.scaffold.isCreating) {
@@ -62,7 +62,6 @@ export default class ScaffoldForm extends Component {
       && this.props.scaffold.scaffold.devDependencies.hasOwnProperty('ice-scripts');
 
     const showNodeOutside = !isAlibaba && hasIce;
-    const {currentProject} = this.props.projects;
 
     return (
       <div className="project-config-form">
@@ -185,3 +184,5 @@ export default class ScaffoldForm extends Component {
     );
   }
 }
+
+export default ScaffoldForm;

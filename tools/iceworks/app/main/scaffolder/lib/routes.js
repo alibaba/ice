@@ -57,6 +57,7 @@ exports.addRoute = (programBody, route, position = 'before') => {
     return Object.keys(obj).map((key) => {
       const value = obj[key];
 
+      /* eslint-disable */
       const propertyValue = Array.isArray(value)
         ? babelTypes.identifier(JSON.stringify(value))
         : typeof value === 'object'
@@ -64,6 +65,7 @@ exports.addRoute = (programBody, route, position = 'before') => {
           : /^id /.test(value)
             ? babelTypes.identifier(value.slice(3))
             : babelTypes.stringLiteral(value);
+      /* eslint-enable */
 
       return babelTypes.objectProperty(
         babelTypes.identifier(key),
@@ -112,15 +114,15 @@ exports.addImports = (programBody, imports = []) => {
   imports
     .filter((importStatement) => {
       const { type, ref } = importStatement;
+      /* eslint-disable no-shadow */
       const path = `./${type}s/${ref}`;
       if (ref in imported) {
         return false;
-      } else {
-        importStatement.path = path;
-        return true;
       }
+      importStatement.path = path;
+      return true;
     })
-    .forEach(({ ref, path }, idx) => {
+    .forEach(({ ref, path }) => {
       // // 插入到最后一行 import 语句
       // programBody.splice(
       //   importDeclarations.length + idx - 1,
@@ -194,13 +196,13 @@ exports.removeRoute = (programBody, path) => {
   } = routeVariableDeclarator;
 
   routeVariableDeclarator.init.elements = elements.filter(
-    (objectExpression, idx) => {
+    (objectExpression) => {
       let needFirstLevelRoute = true;
       objectExpression.properties.forEach((pty) => {
         if (
           pty.key &&
           pty.key.name === 'path' &&
-          pty.value.value === '/' + paths[0] &&
+          pty.value.value === `/${paths[0]}` &&
           paths[1] === undefined
         ) {
           needFirstLevelRoute = false;
@@ -237,7 +239,7 @@ exports.removeRoute = (programBody, path) => {
 };
 
 // exports.removeRouteByPageName(ast.program.body, 'NotFound');
-exports.removeRouteByPageName = function(programBody, pageName) {
+exports.removeRouteByPageName = function (programBody, pageName) {
   const paths = [];
   const routeVariableDeclaration = findRouteDeclaration(programBody);
   if (!routeVariableDeclaration) {
@@ -382,9 +384,8 @@ function findRouteDeclaration(programBody = []) {
   });
   if (declaration) {
     return declaration;
-  } else {
-    return null;
   }
+  return null;
 }
 
 // const ast = exports._parseRoute(`
@@ -420,7 +421,6 @@ function isIdentifier(node, name) {
   const isId = node && node.type === 'Identifier';
   if (name) {
     return isId && node && node.name === name;
-  } else {
-    return isId;
   }
+  return isId;
 }

@@ -27,19 +27,21 @@ class AdditionalScaffolds {
       return sortScaffolds;
     }
 
-    let isNewlyScaffold = [];
+    const isNewlyScaffold = [];
     let days = 0;
     const nowDate = new Date();
     while (!isNewlyScaffold.length) {
-      days = days + 7;
+      days += 7;
       // eslint-disable-next-line no-loop-func
       sortScaffolds.forEach((item) => {
         const blockCreatedDate = new Date(item.publishTime);
+        /* eslint-disable no-underscore-dangle */
         const _isNew = nowDate - blockCreatedDate < days * 24 * 60 * 60 * 1000;
         if (_isNew) {
           isNewlyScaffold.push(item);
         }
         item._isNew = _isNew;
+        /* eslint-enable no-underscore-dangle */
       });
     }
     return sortScaffolds;
@@ -94,6 +96,7 @@ class AdditionalScaffolds {
       if (item.categories.includes(this.activeCategory)) {
         return item;
       }
+      return false;
     });
 
     return toJS(filterByCatefory);

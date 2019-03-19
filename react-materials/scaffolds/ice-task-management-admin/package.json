@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/task-management-admin-scaffold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "该模板内置了丰富的图表和表格区块，适用于项目任务管理类系统，使用时需要根据需求进行删除和添加",
   "homepage": "https://unpkg.com/@icedesign/task-management-admin-scaffold@latest/build/index.html",
   "files": [
@@ -21,7 +21,7 @@
     "@icedesign/foundation-symbol": "^1.x",
     "@icedesign/img": "^1.x",
     "@icedesign/layout": "^1.x",
-    "@icedesign/theme": "^0.1.2",
+    "@icedesign/theme": "^1.x",
     "bizcharts": "^3.2.2",
     "classnames": "^2.2.5",
     "immutable": "^4.0.0-rc.12",

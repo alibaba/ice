@@ -62,7 +62,7 @@ class User extends Component {
       let sessionCookies = this.webview.getWebContents().session.cookies;
       sessionCookies.get({}, (error, cookies) => {
         for (let i = 0, len = cookies.length; i < len; i++) {
-          if (cookies[i].name == 'login_user') {
+          if (cookies[i].name === 'login_user') {
             // eslint-disable-next-line
             let userData = JSON.parse(Base64.decode(cookies[i].value));
             this.saveUser(userData);
@@ -80,7 +80,7 @@ class User extends Component {
   };
 
   handleWebviewIpcmsssage = ({ channel, args }) => {
-    if (channel == 'login-success') {
+    if (channel === 'login-success') {
       const user = args[0];
       localStorage.setItem('login:user', JSON.stringify(user));
       this.props.user.close();

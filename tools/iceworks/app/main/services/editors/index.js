@@ -31,6 +31,7 @@ module.exports = {
       if (!editorShell) {
         exception.catch(new ExternalEditorError('启动脚本为空'));
       } else {
+        // eslint-disable-next-line no-template-curly-in-string
         editorShell = editorShell.replace('${cwd}', path);
 
         exec(editorShell, (error) => {

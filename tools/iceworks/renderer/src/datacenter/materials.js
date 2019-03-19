@@ -12,7 +12,7 @@ const { settings } = services;
 function fetchMaterialsData() {
   let materials = settings.get('materials'); // 获取物料接口
   materials = filterMaterial(materials);
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const requestPromise = materials.map((material) => {
       return requestMaterial(material.source, true);
     });
@@ -26,26 +26,26 @@ function fetchMaterialsData() {
     });
 
     Promise.all(requestPromise).then((requestResult) => {
-      requestResult.forEach( (res, index) => {
+      requestResult.forEach((res, index) => {
         materialDatas[index].body = res || {};
-      })
+      });
       resolve(materialDatas);
-    });
+    }).catch(reject);
   });
 }
 
 // 获取所有物料模板
-const getScaffolds = () => {
-  return fetchMaterialsData().then((materialDatas) => {
-    return materialDatas.map((materials) => {
-      return {
-        name: materials.name,
-        source: materials.source,
-        data: materials.body.scaffolds,
-      };
-    });
-  });
-};
+// const getScaffolds = () => {
+//   return fetchMaterialsData().then((materialDatas) => {
+//     return materialDatas.map((materials) => {
+//       return {
+//         name: materials.name,
+//         source: materials.source,
+//         data: materials.body.scaffolds,
+//       };
+//     });
+//   });
+// };
 
 /**
  * 获取所有物料中可用的 layouts
@@ -56,7 +56,7 @@ const getBlocks = (type = '') => {
   return fetchMaterialsData().then((materialDatas) => {
     if (type) {
       materialDatas = materialDatas.filter((materials) => {
-        return materials.body.type == type;
+        return materials.body.type === type;
       });
     }
     return materialDatas.map((materials) => {
@@ -73,22 +73,22 @@ const getBlocks = (type = '') => {
  * 获取所有物料中可用的 layouts
  * @param {stirng} type 物料的类型，根据项目类型获取对应源的物料
  */
-const getLayouts = (type = '') => {
-  return fetchMaterialsData().then((materialDatas) => {
-    if (type) {
-      materialDatas = materialDatas.filter((materials) => {
-        return materials.body.type == type;
-      });
-    }
-    return materialDatas.map((materials) => {
-      return {
-        name: materials.name,
-        source: materials.source,
-        data: materials.body.layouts,
-      };
-    });
-  });
-};
+// const getLayouts = (type = '') => {
+//   return fetchMaterialsData().then((materialDatas) => {
+//     if (type) {
+//       materialDatas = materialDatas.filter((materials) => {
+//         return materials.body.type === type;
+//       });
+//     }
+//     return materialDatas.map((materials) => {
+//       return {
+//         name: materials.name,
+//         source: materials.source,
+//         data: materials.body.layouts,
+//       };
+//     });
+//   });
+// };
 
 // 区块分类逻辑
 const getCategoriesByBlocks = (blocks) => {
@@ -123,4 +123,9 @@ const getCategoriesByBlocks = (blocks) => {
   return Object.values(uniqueCategories);
 };
 
-export { getScaffolds, getBlocks, getLayouts, getCategoriesByBlocks };
+export {
+  // getScaffolds,
+  getBlocks,
+  // getLayouts,
+  getCategoriesByBlocks,
+};

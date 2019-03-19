@@ -59,7 +59,7 @@ class BlockPicker extends Component {
     const { materials, isLoading, type, currentTabKey } = this.props.blocks;
     const { blockGroups } = this.props.blockGroups;
     const { style = {}, handleOpenPreviewPage, handleBlocksAdd,  generatePage } = this.props;
-    if (!isLoading && materials.length == 0) {
+    if (!isLoading && materials.length === 0) {
       return (
         <div
           style={{
@@ -156,7 +156,7 @@ class BlockPicker extends Component {
                 </Tab.TabPane>
               );
             })}
-            {type == 'react' && (
+            {type === 'react' && (
               <Tab.TabPane
                 tab="自定义区块"
                 key="-1"

@@ -2,10 +2,9 @@ import { remote } from 'electron';
 import React from 'react';
 import { Dialog } from '@icedesign/base';
 
-// eslint-disable-next-line
+/* eslint-disable */
 let Client;
 try {
-  // eslint-disable-next-line
   Client = remote.require(DEF_CLIENT);
 } catch (e) {
   Client = {

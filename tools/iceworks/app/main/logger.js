@@ -28,7 +28,7 @@ function logger(type, ...args) {
     args.unshift(`[${type}]`);
   }
   const logFunc = log[type] || log.info;
-  logFunc.apply(null, args);
+  logFunc(...args);
 }
 
 const uploadLog = () => {
@@ -42,7 +42,7 @@ const uploadLog = () => {
  */
 const report = (type, data = {}) => {
   const realData = {
-    platform: process.platform + '_' + process.arch,
+    platform: `${process.platform}_${process.arch}`,
     id: userId,
     type,
   };

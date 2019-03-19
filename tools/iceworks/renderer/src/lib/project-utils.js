@@ -1,8 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import { log } from './bridge';
+import services from '../services';
+
+const { log } = services;
 
 /* eslint-disable no-empty */
+/* eslint-disable camelcase */
 
 /**
  * 检测是否符合 iceworks 运行的项目
@@ -177,7 +180,7 @@ export const validateProjectName = (proejctName) => {
   // var builtins = require('builtins')
   const blacklist = ['node_modules', 'favicon.ico'];
 
-  const done = function(warnings, errors) {
+  const done = function (warnings, errors) {
     const result = {
       validForNewPackages: errors.length === 0 && warnings.length === 0,
       validForOldPackages: errors.length === 0,
@@ -189,7 +192,7 @@ export const validateProjectName = (proejctName) => {
     return result;
   };
 
-  const validate = function(name) {
+  const validate = function (name) {
     const warnings = [];
     const errors = [];
 
@@ -302,17 +305,16 @@ export const scanPages = (targetPath) => {
  *
  * @param {Array|Object} dependencies  依赖包名
  */
-export const dependenciesFormat = function(dependencies) {
+export const dependenciesFormat = function (dependencies) {
   if (Array.isArray(dependencies)) {
     return dependencies;
-  } else {
-    return Object.entries(dependencies).map((depGroup) => {
-      return depGroup.join('@');
-    });
   }
+  return Object.entries(dependencies).map((depGroup) => {
+    return depGroup.join('@');
+  });
 };
 
-export const mergeDependenciesToPkg = function(dependencies, clientPath) {
+export const mergeDependenciesToPkg = function (dependencies, clientPath) {
   const packageFile = path.join(clientPath, 'package.json');
   return new Promise((resolve, reject) => {
     let pkgData;
@@ -326,7 +328,8 @@ export const mergeDependenciesToPkg = function(dependencies, clientPath) {
       fs.writeFileSync(packageFile, JSON.stringify(pkgData, null, 2));
       resolve();
     } catch (e) {
+      /* eslint-disable-next-line prefer-promise-reject-errors */
       reject(`package.json 不存在或存在语法错误 检查${packageFile}`);
     }
   });
-}
+};

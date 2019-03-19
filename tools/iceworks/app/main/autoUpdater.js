@@ -13,8 +13,8 @@ let win = null;
 function sendStatusToWindow(event, meta = null) {
   log.info(event, meta);
   sendToWebContents(win, 'updater-message', {
-    event: event,
-    meta: meta,
+    event,
+    meta,
   });
 }
 
@@ -84,25 +84,25 @@ const Updater = {
       // 每间隔三小时监测软件更新
     }, 1000 * 60 * 60 * 3);
 
-    ipcMain.on('updater-check', (event, data) => {
+    ipcMain.on('updater-check', () => {
       // 检查更新
       autoUpdater.checkForUpdates().catch((e) => {
         sendStatusToWindow('error', e);
         log.error('Failed handling checkForUpdates:', e);
       });
     });
-    ipcMain.on('updater-close', (event, data) => {
+    ipcMain.on('updater-close', () => {
       // 关闭
       win.close();
     });
-    ipcMain.on('updater-start', (event, data) => {
+    ipcMain.on('updater-start', () => {
       // 开始下载
       autoUpdater.downloadUpdate().catch((e) => {
         sendStatusToWindow('error', e);
         log.error('Failed handling downloadUpdate:', e);
       });
     });
-    ipcMain.on('updater-install', (event, data) => {
+    ipcMain.on('updater-install', () => {
       // 退出并安装
       autoUpdater.quitAndInstall();
     });
