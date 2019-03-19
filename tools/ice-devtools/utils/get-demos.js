@@ -15,7 +15,9 @@ module.exports = function getDemos(projectDir) {
       const filePath = join(demoPath, filename);
       const content = readFileSync(filePath, 'utf-8');
 
-      const { meta, highlightedCode, content: markdownContent } = parseMarkdownParts(content);
+      const { meta, highlightedCode, content: markdownContent } = parseMarkdownParts(content, {
+        sliceCode: true
+      });
 
       filename = filename.replace(/\.md$/, '');
       const href = `/preview/?demo=${filename}`;
