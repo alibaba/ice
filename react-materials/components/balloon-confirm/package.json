@@ -1,12 +1,11 @@
 {
   "name": "@icedesign/balloon-confirm",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "ICE 气泡确认框",
   "main": "lib/index.js",
   "files": [
     "lib/",
     "demo/",
-    "postinstall.js",
     "build/"
   ],
   "repository": {
@@ -16,8 +15,7 @@
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
-    "prepublishOnly": "npm run build",
-    "postinstall": "node ./postinstall.js"
+    "prepublishOnly": "npm run build"
   },
   "license": "MIT",
   "keywords": [
