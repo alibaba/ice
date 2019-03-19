@@ -24,13 +24,17 @@ const prepareUrLs = require('./utils/prepareURLs');
 const getProxyConfig = require('./config/getProxyConfig');
 const openBrowser = require('react-dev-utils/openBrowser');
 const goldlog = require('./utils/goldlog');
+const getCliOptionsByProgram = require('./utils/getCliOptionsByProgram')
 const pkgData = require('../package.json');
+const log = require('./utils/log');
 
-module.exports = async function(args, subprocess) {
+module.exports = async function(program, subprocess) {
+  const cliOptions = getCliOptionsByProgram(program);
   goldlog('version', {
     version: pkgData.version
   });
-  goldlog('dev');
+  goldlog('dev', cliOptions);
+  log.verbose('init cliOptions', cliOptions);
 
   // 与 iceworks 客户端通信
   const send = function(data) {
@@ -41,10 +45,10 @@ module.exports = async function(args, subprocess) {
   };
 
   const cwd = process.cwd();
-  const HOST = args.host || '0.0.0.0';
-  const PORT = args.port || 4444;
+  const HOST = program.host || '0.0.0.0';
+  const PORT = program.port || 4444;
   let httpsConfig;
-  let protocol = args.https ? 'https' : 'http';
+  let protocol = program.https ? 'https' : 'http';
 
   if (protocol == 'https') {
     try {
@@ -94,7 +98,7 @@ module.exports = async function(args, subprocess) {
   let isFirstCompile = true;
   const compiler = webpack(webpackConfig);
   // eslint-disable-next-line global-require
-  let devServerConfig = require('./config/webpack.server.config')(args);
+  let devServerConfig = require('./config/webpack.server.config')(program);
   if ('devServer' in webpackConfig) {
     // merge user config
     devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);

@@ -17,14 +17,17 @@ const getEntries = require('./config/getEntry');
 const getWebpackConfigProd = require('./config/webpack.config.prod');
 const npmInstall = require('./helpers/npmInstall');
 const goldlog = require('./utils/goldlog');
+const log = require('./utils/log');
 
 module.exports = function(options) {
+  const { customWebpackConfig, program } = options || {};
+  const cliOptions = getCliOptionsByProgram(program);
+
   goldlog('version', {
     version: pkgData.version
   });
-  goldlog('build');
-
-  const { customWebpackConfig } = options || {};
+  goldlog('build', cliOptions);
+  log.verbose('build cliOptions', cliOptions);
 
   const cwd = process.cwd();
   const entries = getEntries(cwd);

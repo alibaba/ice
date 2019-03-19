@@ -10,7 +10,7 @@ const getEntryByPages = require('./getEntryByPages');
 const getResolveAlias = require('./getResolveAlias');
 const pkg = require('./packageJson');
 const checkTemplateHasReact = require('../utils/checkTemplateHasReact');
-const debug = require('../debug');
+const log = require('../utils/log');
 const paths = require('./paths');
 
 /**
@@ -56,7 +56,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     ...buildConfig.outputAssetsPath
   };
 
-  debug.info('hasExternalReact', hasExternalReact);
+  log.verbose('hasExternalReact', hasExternalReact);
 
   const webpackConfig = {
     mode: process.env.NODE_ENV,

@@ -41,7 +41,9 @@ validationSassAvailable()
   .then(() => {
     // eslint-disable-next-line
     const build = require('../lib/build');
-    build();
+    build({
+      program
+    });
   })
   .catch((err) => {
     // eslint-disable-next-line
