@@ -1,9 +1,3 @@
-/**
- * 构建项目生成 dist ，根据传入的路径地址，按照 ICE page 的规则搜寻代码，并启动编译服务
- * @param {String} cwd 项目目录
- * @param {Object} options 命令行参数
- */
-
 // TODO: 感觉不太合适
 process.env.NODE_ENV = 'production';
 
@@ -20,11 +14,24 @@ const getWebpackConfigProd = require('./config/webpack.config.prod');
 const npmInstall = require('./helpers/npmInstall');
 const goldlog = require('./utils/goldlog');
 const log = require('./utils/log');
+const cliInstance = require('./utils/cliInstance');
 const validationSassAvailable = require('./utils/validationSassAvailable');
 
+/**
+ * 构建项目
+ *  - cli 调用
+ *  - 云构建方法调用
+ *
+ * @param {Object} options 命令行参数
+ */
 module.exports = async function(options) {
   const { customWebpackConfig, cliOptions } = options || {};
   const cwd = process.cwd();
+
+  // 云构建不走 cli，而是直接调用 build 方法，因此这里需要设置下 cli 参数
+  if (cliOptions) {
+    cliInstance.set(cliOptions);
+  }
 
   goldlog('version', {
     version: pkgData.version

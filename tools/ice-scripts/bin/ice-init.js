@@ -10,6 +10,6 @@ program
   .option('-s, --scaffold <port>', '模板 npm 包名')
   .parse(process.argv);
 
-cliInstance.init(program);
+cliInstance.initByProgram(program);
 
 init(cliInstance.get());

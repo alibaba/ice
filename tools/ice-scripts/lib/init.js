@@ -4,7 +4,7 @@ const pkgData = require('../package.json');
 const log = require('./utils/log');
 
 /**
- * 初始化项目
+ * 初始化项目：cli 调用；方法调用
  *
  * @param {String} cwd 项目目录
  * @param {Object} options 命令行参数

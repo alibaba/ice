@@ -1,13 +1,11 @@
 /**
- * get cliOptions by program
- *
- * @param {object} program commander
+ * manage cli options
  */
 const camelcase = require('camelcase');
 
 let cliOptions = {};
 
-exports.init = (program) => {
+exports.initByProgram = (program) => {
   cliOptions = {};
   program.options.map((option) => {
     const key = camelcase(option.long, {
@@ -21,4 +19,9 @@ exports.init = (program) => {
 
 exports.get = (key) => {
   return key ? cliOptions[key] : cliOptions;
+}
+
+exports.set = (options) => {
+  cliOptions = options;
+  return cliOptions;
 }

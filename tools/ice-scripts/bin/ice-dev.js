@@ -26,7 +26,7 @@ program
   )
   .parse(process.argv);
 
-cliInstance.init(program);
+cliInstance.initByProgram(program);
 const cliOptions = cliInstance.get();
 
 validationSassAvailable();
