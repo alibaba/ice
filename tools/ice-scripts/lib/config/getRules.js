@@ -6,6 +6,7 @@ const path = require('path');
 
 const postcssConfig = require('./postcssConfig');
 const paths = require('./paths');
+const cliInstance = require('../utils/cliInstance');
 
 const AWESOME_TYPESCRIPT_LOADER = require.resolve('awesome-typescript-loader');
 const BABEL_LOADER = require.resolve('babel-loader');
@@ -19,7 +20,7 @@ const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const URL_LOADER_LIMIT = 8192;
 
 function withCssHotLoader(loaders) {
-  if (process.env.NODE_ENV !== 'production' && !process.env.DISABLED_RELOAD) {
+  if (process.env.NODE_ENV !== 'production' && !cliInstance.get('disabledReload')) {
     return [CSS_HOT_LOADER].concat(loaders);
   }
   return loaders;

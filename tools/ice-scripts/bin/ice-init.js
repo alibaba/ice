@@ -4,11 +4,12 @@
 
 const program = require('commander');
 const init = require('../lib/init');
+const cliInstance = require('../lib/utils/cliInstance');
 
 program
   .option('-s, --scaffold <port>', '模板 npm 包名')
   .parse(process.argv);
 
-init({
-  scaffold: program.scaffold
-});
+cliInstance.init(program);
+
+init(cliInstance.get());

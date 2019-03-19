@@ -4,12 +4,14 @@
  * @param {Object} options 命令行参数
  */
 
+// TODO: 感觉不太合适
 process.env.NODE_ENV = 'production';
 
 const gulp = require('gulp');
 const rimraf = require('rimraf');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
+const { collectDetail } = require('@alifd/fusion-collector');
 
 const pkgData = require('../package.json');
 const paths = require('./config/paths');
@@ -18,10 +20,11 @@ const getWebpackConfigProd = require('./config/webpack.config.prod');
 const npmInstall = require('./helpers/npmInstall');
 const goldlog = require('./utils/goldlog');
 const log = require('./utils/log');
+const validationSassAvailable = require('./utils/validationSassAvailable');
 
-module.exports = function(options) {
-  const { customWebpackConfig, program } = options || {};
-  const cliOptions = getCliOptionsByProgram(program);
+module.exports = async function(options) {
+  const { customWebpackConfig, cliOptions } = options || {};
+  const cwd = process.cwd();
 
   goldlog('version', {
     version: pkgData.version
@@ -29,7 +32,18 @@ module.exports = function(options) {
   goldlog('build', cliOptions);
   log.verbose('build cliOptions', cliOptions);
 
-  const cwd = process.cwd();
+  validationSassAvailable();
+
+  try {
+    collectDetail({
+      rootDir: cwd, // 项目根地址
+      basicPackage: ['@alifd/next', '@icedesign/base', '@alife/next'], // 主体包名称
+      kit: 'ice-scripts', // 统计的来源
+    });
+  } catch (err) {
+    log.warn('collectDetail error', err);
+  }
+
   const entries = getEntries(cwd);
   // eslint-disable-next-line
   const packageData = require(paths.appPackageJson);

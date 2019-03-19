@@ -4,6 +4,7 @@ const webpackMerge = require('webpack-merge');
 const webpack = require('webpack');
 
 const getWebpackConfigBasic = require('./webpack.config.basic');
+const cliInstance = require('../utils/cliInstance');
 
 module.exports = function getWebpackConfigDev({ entry, buildConfig = {} }) {
   const plugins = [];
@@ -11,17 +12,17 @@ module.exports = function getWebpackConfigDev({ entry, buildConfig = {} }) {
   const baseConfig = getWebpackConfigBasic({ entry, buildConfig });
 
   // 热更新
-  if (!process.env.DISABLED_RELOAD) {
+  if (!cliInstance.get('disabledReload')) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
   // 依赖分析
-  if (process.env.ANALYZER) {
+  if (cliInstance.get('analyzer')) {
     plugins.push(
       new BundleAnalyzerPlugin({
         // use a fixed port
         // http://127.0.0.1:$PORT/report.html
-        analyzerPort: process.env.ANALYZER_PORT || '9000',
+        analyzerPort: cliInstance.get('analyzerPort') || '9000',
       })
     );
   }

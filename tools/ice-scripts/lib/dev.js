@@ -3,6 +3,7 @@
  * @param {String} cwd 项目目录
  * @param {Object} options 命令行参数
  */
+
 /* eslint no-console:off */
 process.env.NODE_ENV = 'development';
 
@@ -24,12 +25,10 @@ const prepareUrLs = require('./utils/prepareURLs');
 const getProxyConfig = require('./config/getProxyConfig');
 const openBrowser = require('react-dev-utils/openBrowser');
 const goldlog = require('./utils/goldlog');
-const getCliOptionsByProgram = require('./utils/getCliOptionsByProgram')
 const pkgData = require('../package.json');
 const log = require('./utils/log');
 
-module.exports = async function(program, subprocess) {
-  const cliOptions = getCliOptionsByProgram(program);
+module.exports = async function(cliOptions, subprocess) {
   goldlog('version', {
     version: pkgData.version
   });
@@ -45,10 +44,11 @@ module.exports = async function(program, subprocess) {
   };
 
   const cwd = process.cwd();
-  const HOST = program.host || '0.0.0.0';
-  const PORT = program.port || 4444;
+
+  const HOST = cliOptions.host || '0.0.0.0';
+  const PORT = cliOptions.port || 4444;
   let httpsConfig;
-  let protocol = program.https ? 'https' : 'http';
+  let protocol = cliOptions.https ? 'https' : 'http';
 
   if (protocol == 'https') {
     try {
@@ -71,7 +71,7 @@ module.exports = async function(program, subprocess) {
   const packageData = require(paths.appPackageJson);
   // get ice config by package.ice
 
-  if (process.env.DISABLED_RELOAD) {
+  if (cliOptions.disabledReload) {
     console.log(chalk.yellow('Warn:'), '关闭了热更新（hot-reload）功能');
   }
   const webpackConfig = getWebpackConfigDev({
