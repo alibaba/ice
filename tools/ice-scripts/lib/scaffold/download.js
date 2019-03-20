@@ -25,6 +25,7 @@ module.exports = ({ npmName, projectDir }) => {
  *
  * @param {Object} options npm, version, destDir
  */
+function downloadAndFilterNpmFiles(npm, version, destDir) {
   const npmTarball = `${npmUtils.getRegistry(npm)}/${npm}/-/${npm}-${version}.tgz`;
   log.verbose('downloadAndFilterNpmFiles', npmTarball, destDir);
 
