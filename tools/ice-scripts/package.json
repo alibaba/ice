@@ -64,7 +64,6 @@
     "copy-webpack-plugin": "4.5.3",
     "css-hot-loader": "1.4.2",
     "css-loader": "1.0.1",
-    "decamelize": "^2.0.0",
     "deep-assign": "2.0.0",
     "deepmerge": "2.1.1",
     "detect-port": "1.2.3",

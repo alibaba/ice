@@ -1,10 +1,12 @@
+const cliInstance = require('../utils/cliInstance');
+
 module.exports = () => {
   return {
     // historyApiFallback: true,
     disableHostCheck: true,
     compress: true,
     clientLogLevel: 'none',
-    hot: !process.env.DISABLED_RELOAD,
+    hot: !cliInstance.get('disabledReload'),
     publicPath: '/',
     quiet: true,
     watchOptions: {

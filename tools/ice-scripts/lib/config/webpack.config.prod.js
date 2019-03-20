@@ -4,23 +4,25 @@ const webpackMerge = require('webpack-merge');
 const colors = require('chalk');
 
 const getWebpackConfigBasic = require('./webpack.config.basic');
+const cliInstance = require('../utils/cliInstance');
 
 module.exports = function getWebpackConfigProd({ entry, buildConfig }) {
   const baseConfig = getWebpackConfigBasic({ entry, buildConfig });
+  const sourcemap = cliInstance.get('sourcemap');
 
   console.log(
     colors.green('Info:'),
-    'process.env.SOURCEMAP',
-    process.env.SOURCEMAP
+    'cli options sourcemap',
+    sourcemap
   );
 
   return webpackMerge(baseConfig, {
-    devtool: process.env.SOURCEMAP || 'none',
+    devtool: sourcemap || 'none',
     optimization: {
-      minimize: !process.env.DEBUG,
+      minimize: !cliInstance.get('debug'),
       minimizer: [
         new UglifyJsPlugin({
-          sourceMap: process.env.SOURCEMAP && process.env.SOURCEMAP !== 'none',
+          sourceMap: sourcemap && sourcemap !== 'none',
           cache: true,
           parallel: true,
           uglifyOptions: {
