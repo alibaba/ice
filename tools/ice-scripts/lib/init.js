@@ -25,8 +25,8 @@ module.exports = async function(cliOptions) {
   log.info('使用模板：', distScaffold);
 
   try {
-    await initProject({ scaffold, projectDir });
-    log.info('初始化项目成功');
+    await initProject({ scaffold: distScaffold, projectDir });
+    log.info('初始化项目成功，安装依赖后执行 npm run start 开始调试');
   } catch(err) {
     log.error('初始化项目失败', err);
   }

@@ -12,4 +12,4 @@ program
 
 cliInstance.initByProgram(program);
 
-init(cliInstance.get()).then(() => {});
+init(cliInstance.get());

@@ -2,17 +2,26 @@
  * 根据模板 npm 包名初始化项目
  */
 const path = require('path');
+const fs = require('fs');
 const fse = require('fs-extra');
 const uuid = require('uuid/v1');
+const rimraf = require('rimraf');
+const inquirer = require('inquirer');
+
 const log = require('../utils/log');
 const download = require('./download');
-const rimraf = require('rimraf');
 
 module.exports = ({ scaffold, projectDir }) => {
-  // TODO: 检测 projectDir 是否为空文件夹
-  return download({
-    npmName: scaffold,
-    projectDir
+  return checkEmpty(projectDir).then((canGoOn) => {
+    if (!canGoOn) {
+      log.error('用户取消退出！');
+      process.exit(1);
+    } else {
+      return download({
+        npmName: scaffold,
+        projectDir
+      });
+    }
   }).then(() => {
     try {
       // 删除 build/
@@ -28,6 +37,8 @@ module.exports = ({ scaffold, projectDir }) => {
 }
 
 function modifyPkg(pkgPath) {
+  log.verbose('modifyPkg', pkgPath)
+
   const pkgData = fse.readJsonSync(pkgPath);
 
   delete pkgData.files;
@@ -42,4 +53,27 @@ function modifyPkg(pkgPath) {
     spaces: 2
   });
   return;
+}
+
+
+function checkEmpty(dir) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(dir, function(err, files) {
+      if (files && files.length) {
+        // 有文件
+        return inquirer.prompt({
+          type: 'confirm',
+          name: 'goOn',
+          message: '当前文件夹下存在其他文件，继续生成可能会覆盖，确认继续吗？',
+          default: true
+        }).then((answer) => {
+          return resolve(answer.goOn);
+        }).catch((err) => {
+          return resolve(false);
+        });
+      } else {
+        return resolve(true)
+      }
+    });
+  });
 }
