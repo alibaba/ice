@@ -4,6 +4,19 @@ category: Iceworks
 order: 3
 ---
 
+Iceworks 提供了海量的模板供用户进行选择用以新建项目。如果我们提供的模板不能满足你的需求，我们还提供了能力帮助你快速自定义模板。
+
+## 模板市场
+
+在模板市场中，你可以：
+
+- 根据**物料源**查看模板列表；
+- 根据**分类**筛选模板列表；
+- 点击「刷新」获取最新模板；
+- 点击「预览」在线预览模板。
+
+![模板市场](https://img.alicdn.com/tfs/TB1timqM3HqK1RjSZFgXXa7JXXa-1425-818.gif)
+
 ## 自定义模板
 
 ![](https://img.alicdn.com/tfs/TB17Virx_tYBeNjy1XdXXXXyVXa-862-572.gif)

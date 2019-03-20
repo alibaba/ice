@@ -1,10 +1,16 @@
 ---
-title: 已有项目接入 Iceworks
+title: 项目管理-新建项目
 category: Iceworks
-order: 15
+order: 0
 ---
 
-将已有项目接入到 Icewokrs 中，需要增加对应信息的项目描述
+Iceworks 提供了两种方式开始你的项目管理。
+
+## 从已有的项目中导入
+
+![从已有的项目中打开](https://img.alicdn.com/tfs/TB1TPiuMVzqK1RjSZFCXXbbxVXa-875-580.gif)
+
+将已有项目接入到 Icewokrs 中，需要增加对应信息的项目描述。
 
 ## 1. 描述项目可被 Iceworks 识别
 
@@ -48,3 +54,11 @@ order: 15
   }
 }
 ```
+
+## 使用模板创建
+
+在项目面板点击「项目选项卡」，点击「创建项目」，选择一个模板创建项目（如果没有合适的模板，你也可以[自定义模板](./marterial-scaffold)）。
+
+创建项目成功后将提示你是否自动安装依赖，请选择「是」。
+
+![使用模板创建项目](https://img.alicdn.com/tfs/TB13eWtM3HqK1RjSZFEXXcGMXXa-875-580.gif)
