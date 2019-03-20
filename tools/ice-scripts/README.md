@@ -5,25 +5,20 @@ Cli dev tool for ice.
 ## Install
 
 ```bash
-npm install ice-scripts --save-dev # -g for global
+npm install ice-scripts -g
+
+ice -h
 ```
 
 ## Cli
 
 ```
-Usage: ice <command> [options]
+mkdir ice-project
+cd ice-project
 
-Options:
-
-  -V, --version  output the version number
-  -h, --help     output usage information
-
-Commands:
-
-  build          build project
-  dev            start server
-  init           init project by scaffold
-  help [cmd]     display help for [cmd]
+ice init
+ice dev
+ice build
 ```
 
 ## Methods
