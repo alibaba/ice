@@ -18,20 +18,26 @@ const cliInstance = require('./utils/cliInstance');
 const validationSassAvailable = require('./utils/validationSassAvailable');
 
 /**
- * 构建项目
- *  - cli 调用
- *  - 云构建方法调用
+ * 构建项目：cli 调用；云构建方法调用
+ *
+ * 因为 build 方法有可能被直接调用，因此需要保证自身功能的完整性
  *
  * @param {Object} options 命令行参数
  */
 module.exports = async function(options) {
-  const { customWebpackConfig, cliOptions } = options || {};
+  let { customWebpackConfig, cliOptions } = options || {};
   const cwd = process.cwd();
 
-  // 云构建不走 cli，而是直接调用 build 方法，因此这里需要设置下 cli 参数
-  if (cliOptions) {
-    cliInstance.set(cliOptions);
-  }
+  const defaultCliOptions = {
+    sourcemap: 'none',
+    projectType: 'web',
+    injectBabel: 'polyfill'
+  };
+  cliOptions = {
+    ...defaultCliOptions,
+    ...cliOptions
+  };
+  cliInstance.set(cliOptions);
 
   goldlog('version', {
     version: pkgData.version

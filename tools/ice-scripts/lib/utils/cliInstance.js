@@ -11,7 +11,11 @@ exports.initByProgram = (program) => {
     const key = camelcase(option.long, {
       pascalCase: false
     });
-    cliOptions[key] = program[key];
+
+    // 不传参数时是 undefined，这里不判断的话，lib/build 里跟 default 参数 merge 会有问题
+    if (program[key] !== undefined) {
+      cliOptions[key] = program[key];
+    }
   });
 
   return cliOptions;

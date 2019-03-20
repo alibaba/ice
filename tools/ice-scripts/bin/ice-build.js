@@ -15,14 +15,13 @@ const build = require('../lib/build');
 program
   .option('--debug', 'debug 模式下不压缩')
   .option('--hash', '构建后的资源带 hash 版本')
-  .option('--sourcemap <type>', '构建后的资源带 sourcemap 文件', /^([a-z-]*source-map|eval|none)$/i, 'none')
-  .option('--project-type <type>', '项目类型, node|nodejs|web', /^(node|nodejs|web)$/i, 'web')
+  .option('--sourcemap <type>', '构建后的资源带 sourcemap 文件', /^([a-z-]*source-map|eval|none)$/i)
+  .option('--project-type <type>', '项目类型, node|nodejs|web', /^(node|nodejs|web)$/i)
   .option('-s, --skip-install', '跳过安装依赖')
   .option(
     '--inject-babel <type>',
     '注入 babel 运行环境, Enum: polyfill|runtime',
-    /^(polyfill|runtime)$/,
-    'polyfill'
+    /^(polyfill|runtime)$/
   )
   .parse(process.argv);
 
