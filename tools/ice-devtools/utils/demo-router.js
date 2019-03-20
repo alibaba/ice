@@ -36,7 +36,9 @@ module.exports = function router(app, cwd) {
     }
 
     const demoContent = fs.readFileSync(demoFile, 'utf-8');
-    const { highlightedCode, content, meta } = parseMarkdownParts(demoContent);
+    const { highlightedCode, content, meta } = parseMarkdownParts(demoContent, {
+      sliceCode: true
+    });
 
     const compileTemplateContent = compile(DEMO_TEMPLATE);
 
