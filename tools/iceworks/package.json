@@ -16,6 +16,7 @@
     "updates": "gulp publish",
     "upload": "gulp oss",
     "upload-log": "gulp oss-log",
+    "sync-db": "gulp sync-db",
     "lint": "npm run lint:render && npm run lint:main",
     "lint:render": "eslint -c ./.eslintrc ./renderer/src --fix",
     "lint:main": "eslint -c ./.eslintrc ./app/main --fix",
