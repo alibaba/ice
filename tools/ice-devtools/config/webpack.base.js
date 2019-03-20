@@ -149,6 +149,24 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .end();
 
   config.module
+    .rule('cssmodule')
+    .use('style-loader')
+    .loader(MiniCssExtractPlugin.loader)
+    .end()
+    .test(/\.module\.less$/)
+    .use('css-loader')
+    .loader(CSS_LOADER)
+    .options({
+      sourceMap: true,
+      modules: true,
+      localIdentName: '[folder]--[local]--[hash:base64:7]',
+    })
+    .end()
+    .use('less-loader')
+    .loader(LESS_LOADER)
+    .end();
+
+  config.module
     .rule('woff2')
     .test(/\.woff2?$/)
     .use('url-loader')
