@@ -84,7 +84,7 @@ class App extends React.PureComponent<IProps, IState> {
 $ npm update ice-script
 ```
 
-- 新增 .tsconfig 文件
+- 新增 `tsconfig.json` 文件
 
 ```js
 {

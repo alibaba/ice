@@ -9,12 +9,13 @@ const SASS_LOADER = require.resolve('sass-loader');
 const LESS_LOADER = require.resolve('less-loader');
 const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
 const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
+const AWESOME_TYPESCRIPT_LOADER = require.resolve('awesome-typescript-loader');
 const WEBPACK_HOT_CLIENT = require.resolve('webpack-hot-client/client');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require.resolve("optimize-css-assets-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require.resolve('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require.resolve('uglifyjs-webpack-plugin');
 
 const getBabelConfig = require('./getBabelConfig');
@@ -32,13 +33,34 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
 
   const pkgJSON = getPkgJSON(cwd);
   const { buildConfig = {}, themeConfig = {} } = pkgJSON;
+  const babelConfig = getBabelConfig(buildConfig);
 
   config.module
     .rule('babel')
     .test(/\.jsx?$/)
+    .exclude
+      .add(/node_modules/)
+      .end()
     .use('babel')
     .loader(BABEL_LOADER)
-    .options(getBabelConfig(buildConfig))
+    .options(babelConfig)
+    .end();
+
+  config.module
+    .rule('typescript')
+    .test(/\.tsx?$/)
+    .exclude
+      .add(/node_modules/)
+      .end()
+    .use('babel')
+    .loader(BABEL_LOADER)
+    .options(babelConfig)
+    .end()
+    .use('typescript')
+    .loader(AWESOME_TYPESCRIPT_LOADER)
+    .options({
+      useCache: false,
+    })
     .end();
 
   config.module
@@ -197,7 +219,9 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   config.resolve.extensions
     .add('.js')
     .add('.jsx')
-    .add('.json');
+    .add('.json')
+    .add('.ts')
+    .add('.tsx');
 
   config.plugin('progress').use(SimpleProgressPlugin);
 
