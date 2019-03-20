@@ -3,7 +3,6 @@ const co = require('co');
 const { readdirSync, readFileSync, writeFile } = require('fs');
 const path = require('path');
 const request = require('request');
-const { publishMaterialsDB } = require('./materials-db-publish');
 const scaffolds = require('./scaffolds');
 
 if (
