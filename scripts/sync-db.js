@@ -43,19 +43,11 @@ sortScaffoldMaterials()
     );
 
     const tasks = files.map(createUploadTask);
-
-    Promise.all(tasks)
-      .then(() => {
-        console.log('All Done');
-      })
-      .catch((err) => {
-        console.log('upload err', err);
-      });
+    return Promise.all(tasks);
   })
-  .catch((err) => {
-    console.log('sort err', err);
-  });
-
+  .then(()=> {
+    console.log('all done');
+  })
 /**
  * 按照下载量进行排序推荐
  */

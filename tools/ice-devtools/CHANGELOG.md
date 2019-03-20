@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.20
+ - [feat] 引入 babel-plugin-transform-runtime
+ - [feat] 支持编译 ts
+ - [fix] markdown 中 code 解析时的默认 lang
+ - [fix] README 中代码片段被 slice 的问题
+
 ## 2.1.19
  - [feat] 支持 antd 组件样式加载
  - [feat] dev 支持 ip 访问

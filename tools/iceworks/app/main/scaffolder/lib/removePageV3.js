@@ -6,10 +6,10 @@ const routes = require('./routes');
 const InteractiveFileReplacement = require('./interactiveFileReplacement');
 
 // 需要清理干净所有新创建的内容，包括 package.json 里面、page、blocks 等，现在没清理 package.json
-module.exports = async function({ 
-  clientSrcPath, 
-  pageFolderName  // 页面文件夹名
- }) {
+module.exports = async function ({
+  clientSrcPath,
+  pageFolderName, // 页面文件夹名
+}) {
   // 删除 page 和 blocks 文件
   const pagePath = path.join(clientSrcPath, `/pages/${pageFolderName}`);
   rimraf.sync(pagePath);
@@ -26,13 +26,14 @@ module.exports = async function({
       tagPrefix: '// <!-- auto generated routes start -->',
       tagSuffix: '// <!-- auto generated routes end -->',
     });
-
+    // eslint-disable-next-line no-underscore-dangle
     const ast = routes._parseRoute(routeReplacement.getFileContent());
     routes.removeImports(ast.program.body, [
       { type: 'page', ref: pageFolderName },
     ]);
     routes.removeRouteByPageName(ast.program.body, pageFolderName);
 
+    // eslint-disable-next-line no-underscore-dangle
     const { code } = routes._generateRoute({
       type: 'Program',
       body: ast.program.body,

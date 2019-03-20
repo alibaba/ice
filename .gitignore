@@ -7,6 +7,7 @@ mochawesome-report
 package-lock.json
 yarn.lock
 yarn-error.log
+tempDir
 
 */blocks/**/lib/
 */layouts/**/lib/

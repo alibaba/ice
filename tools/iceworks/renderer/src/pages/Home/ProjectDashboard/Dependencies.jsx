@@ -13,6 +13,7 @@ import EmptyTips from '../../../components/EmptyTips/';
 import ExtraButton from '../../../components/ExtraButton/';
 import Icon from '../../../components/Icon';
 import services from '../../../services';
+import PluginHoc from './PluginHoc';
 const { npm } = services;
 
 @inject('projects', 'installer')
@@ -222,7 +223,7 @@ class Dependencies extends Component {
 
   renderDependencies = (deps, type = 'dependencies') => {
     const depsArr = Object.keys(deps);
-    if (depsArr.length == 0) {
+    if (depsArr.length === 0) {
       return <EmptyTips style={{ minHeight: 40 }}>暂无依赖项</EmptyTips>;
     }
     return (
@@ -428,4 +429,4 @@ const styles = {
   },
 };
 
-export default Dependencies;
+export default PluginHoc(Dependencies);

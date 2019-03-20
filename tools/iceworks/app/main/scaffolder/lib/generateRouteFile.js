@@ -1,6 +1,7 @@
 const util = require('util');
 
 // example
+// eslint-disable-next-line
 `/**
  * 定义应用路由
  */
@@ -63,7 +64,7 @@ module.exports = function generateRouteFile(dir, routes) {
   const layouts = [];
   // console.log(dir, routes);
   const imports =
-    routes
+    `${routes
       .map((route) => {
         // redirect 一类的没用
         let layoutImportStatement = '';
@@ -77,11 +78,10 @@ module.exports = function generateRouteFile(dir, routes) {
           return `${layoutImportStatement}import ${route.page} from './pages/${
             route.page
           }';`;
-        } else {
-          return '';
         }
+        return '';
       })
-      .join('\n') + '\n';
+      .join('\n')}\n`;
 
   const routeMap = {};
   routes.forEach((route) => {
@@ -106,14 +106,14 @@ module.exports = function generateRouteFile(dir, routes) {
       .replace(/^\//, '') // 去掉第一个 /
       .split('/');
     if (splited.length === 1) {
-      routeMap['/' + splited[0]] = createRouteNode({
-        path: '/' + splited[0],
+      routeMap[`/${splited[0]}`] = createRouteNode({
+        path: `/${splited[0]}`,
         layoutName: route.layout,
         indexRouteComponent: route.page,
       });
-    } else if (!routeMap['/' + splited[0]]) {
-      routeMap['/' + splited[0]] = createRouteNode({
-        path: '/' + splited[0],
+    } else if (!routeMap[`/${splited[0]}`]) {
+      routeMap[`/${splited[0]}`] = createRouteNode({
+        path: `/${splited[0]}`,
         layoutName: route.layout,
         indexRouteComponent: route.page,
         childRoutes: [
@@ -124,7 +124,7 @@ module.exports = function generateRouteFile(dir, routes) {
         ],
       });
     } else {
-      routeMap['/' + splited[0]].childRoutes.push(
+      routeMap[`/${splited[0]}`].childRoutes.push(
         createRouteNode({
           path: splited.slice(1).join('/'),
           layoutName: route.page,
@@ -150,9 +150,11 @@ module.exports = function generateRouteFile(dir, routes) {
       showHidden: false,
       depth: null,
     })
+    // eslint-disable-next-line no-useless-escape
     .replace(/\'@@([a-zA-Z0-9]+)@@\'/g, ($1, $2) => {
       return $2;
     });
+  // eslint-disable-next-line no-useless-escape
   const importsResult = imports.replace(/\'@@([a-zA-Z0-9]+)@@\'/g, ($1, $2) => {
     return $2;
   });

@@ -19,7 +19,7 @@ const notify = (title = '错误提示', error, done) => {
   let str = '';
   let stackHtml = '';
 
-  if (typeof error == 'string') {
+  if (typeof error === 'string') {
     message = error;
   } else {
     message = error.message;

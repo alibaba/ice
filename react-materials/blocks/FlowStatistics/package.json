@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/flow-statistics-block",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "files": [
     "src/",
@@ -38,7 +38,7 @@
   },
   "blockConfig": {
     "name": "flow-statistics",
-    "screenshot": "https://unpkg.com/@icedesign/flow-statistics-block/screenshot.png",
+    "screenshot": "https://unpkg.com/@icedesign/flow-statistics-block@latest/screenshot.png",
     "title": "流量统计",
     "categories": [
       "图表",
@@ -47,5 +47,5 @@
     "themePackage": "@icedesign/theme",
     "version-0.x": "0.1.7"
   },
-  "homepage": "https://unpkg.com/@icedesign/flow-statistics-block/build/index.html"
+  "homepage": "https://unpkg.com/@icedesign/flow-statistics-block@latest/build/index.html"
 }

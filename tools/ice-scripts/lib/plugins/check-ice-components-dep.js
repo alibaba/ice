@@ -84,7 +84,7 @@ module.exports = class CheckDepsPlugin {
       Object.keys(depModules).forEach((moduleName) => {
         const deprecatedMsg = deprecatedComponents[moduleName];
         if (deprecatedMsg) {
-          consolw.log(colors.yellow('Warning: '),deprecatedMsg);
+          console.log(colors.yellow('Warning: '),deprecatedMsg);
         }
       });
 

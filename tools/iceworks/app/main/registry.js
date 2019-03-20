@@ -54,7 +54,7 @@ function getPathToBatchFile() {
 const batchFilePath = getPathToBatchFile();
 
 function readRegistry(key, activeCodePage) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const proc = spawn(batchFilePath, [key, activeCodePage.toString()], {
       cwd: undefined,
     });
@@ -107,6 +107,6 @@ exports.readRegistryKeySafe = async function readRegistryKeySafe(key) {
     log.debug('Unable to resolve active code page');
     return [];
   }
-
+  // eslint-disable-next-line
   return await readRegistry(key, activeCodePage);
 };

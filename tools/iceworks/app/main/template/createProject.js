@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const utils = require('./utils');
+const to = require('await-to-js').default;
 
 /**
  * destDir 项目解压路径: 项目文件夹下/client文件夹下
@@ -14,14 +15,21 @@ module.exports = async function createProject(
   { destDir, scaffold, projectName, interpreter, progressFunc },
   afterCreateRequest
 ) {
-  const tarballURL = await utils.getTarballURLBySource(scaffold.source);
-  const extractedFiles = await utils.extractTarball(
+  let err, tarballURL, extractedFiles;
+  [err, tarballURL] = await to(utils.getTarballURLBySource(scaffold.source));
+  if (err) {
+    throw err;
+  }
+  [err, extractedFiles] = await to(utils.extractTarball(
     tarballURL,
     destDir,
     scaffold.source,
     progressFunc,
     afterCreateRequest
-  );
+  ));
+  if (err) {
+    throw err;
+  }
 
   // 写 package.json 文件
   const pkgJSONPath = path.join(destDir, 'package.json');
@@ -38,7 +46,7 @@ module.exports = async function createProject(
 
     fs.writeFileSync(
       pkgJSONPath,
-      JSON.stringify(pkgJSON, null, 2) + '\n',
+      `${JSON.stringify(pkgJSON, null, 2)}\n`,
       'utf-8'
     );
   } catch (error) {

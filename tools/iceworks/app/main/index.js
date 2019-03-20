@@ -1,4 +1,6 @@
 const log = require('./logger');
+const alilog = require('./alilog');
+
 global.log = log;
 
 const checkEnv = require('./helper/checkEnv');
@@ -37,49 +39,27 @@ services.createTouchBar = createTouchBar;
 process
   .on('error', (error) => {
     log.error(error.stack);
-    log.report('app', {
-      type: 'error',
-      error: JSON.stringify(error.message),
-    });
-    dialog.showMessageBox({
-      title: '程序异常',
-      type: 'error',
-      message: error.message,
-      callback: () => {
-        app.quit();
-      },
-    });
+    alilog.report({
+      type: 'process-error',
+      msg: error.message,
+      stack: error.stack,
+    }, 'error');
   })
   .on('unhandledRejection', (reason, promise) => {
     log.error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
-    log.report('app', {
-      type: 'unhandled-rejection',
-      reason,
-      promise,
-    });
-    dialog.showMessageBox({
-      title: '程序异常',
-      type: 'error',
-      message: `App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`,
-      callback: () => {
-        app.quit();
-      },
-    });
+    alilog.report({
+      type: 'process-unhandled-rejection',
+      msg: reason,
+      stack: promise,
+    }, 'error');
   })
   .on('uncaughtException', (error) => {
     log.error(error.stack);
-    log.report('app', {
-      type: 'uncaught-exception',
-      error: JSON.stringify(error.message),
-    });
-    dialog.showMessageBox({
-      title: '程序异常',
-      type: 'error',
-      message: `App uncaughtException$-${error}`,
-      callback: () => {
-        app.quit();
-      },
-    });
+    alilog.report({
+      type: 'process-uncaught-exception',
+      msg: JSON.stringify(error.message),
+      stack: error.stack,
+    }, 'error');
   });
 
 // 注册自定义协议,用于url唤起
@@ -129,11 +109,11 @@ app.on('ready', async () => {
 
 app.on('will-finish-launching', () => {
   // 监听，处理从url唤起iceworks的参数
-  app.on('open-url', function (event, url) {
+  app.on('open-url', (event, url) => {
     // url = iceworks://?to=scaffolds
     const query = parse(url, true).query;
     if (Object.keys(query).length > 0) {
       settings.set('urlEvokeQuery', query);
     }
-  })
+  });
 });

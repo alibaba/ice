@@ -19,7 +19,7 @@ function windowHomeRouter(windows, { state, title, url }) {
   }
 }
 
-exports.trayMenu = (app, windows, tray) => {
+exports.trayMenu = (app, windows) => {
   const template = [
     {
       label: '关于 Iceworks',

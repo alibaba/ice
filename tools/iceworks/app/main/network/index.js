@@ -7,20 +7,17 @@ module.exports = {
   isAlibaba() {
     return new Promise((resolve) => {
       request({
-        url:
-          'http://img.daily.taobaocdn.net/tps/TB12WD8XEw7LKJjyzdKXXaShXXa-2-2.png',
+        url: 'https://ice.alibaba-inc.com/check.node',
         timeout: 1000,
-      })
-        .on('response', function(response) {
-          if (response.statusCode === 200) {
-            resolve(true);
-          } else {
-            resolve(false);
-          }
-        })
-        .on('error', () => {
+      }, function (error, response, body) {
+        if (error) {
           resolve(false);
-        });
+        } else if (response.statusCode === 200 && /success/.test(body)) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      })
     });
   },
 };

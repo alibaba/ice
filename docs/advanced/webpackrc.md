@@ -142,11 +142,55 @@ babel-loader 有一个 exclude 的配置，用于过滤某些目录下的文件�
 
 这样不同名的基础包都会重定向到 `@icedesign/base`，减少 bundle 的大小。
 
+### 修改构建后的文件目录
+
+```js
+"buildConfig": {
+  "output": {
+    "path": "dist"
+  }
+}
+```
+
+### 修改构建后的 css/js 文件目录
+
+默认情况下 css 在 `build/css/` 下，js 在 `build/js/` 下，可以通过 `outputAssetsPath` 配置修改：
+
+```js
+"buildConfig": {
+  "outputAssetsPath": {
+    // 示例1：修改为 build/css-dist/ build/js-dist/
+    "css": "css-dist",
+    "js": "js-dist",
+    // 示例2：js 和 css 都直接放在 build/ 下
+    "css": "",
+    "js": ""
+  }
+}
+```
+
+### 修改 externals
+
+```js
+"buildConfig": {
+  "externals": {
+    "jquery": "window.$"
+  }
+}
+```
+
+另外，ice-scripts 会根据 `public/*.html` 里是否通过 script 标签引入了 React 来推导是否需要生成 React 相关的 externals，这个 externals 会跟用户配置直接 merge：
+
+```json
+{
+  "react": "window.React",
+  "react-dom": "window.ReactDOM"
+}
+```
+
 ## 自定义配置 - .webpackrc.js
 
 ice-scripts 除了提供 buildConfig 用于快速的配置入口之外，也支持自定义配置需求，几乎可完全自定义 webpack 的所有配置项；在项目根目录新建 `.webpackrc.js` 文件对默认配置进行定制和覆盖。`.webpackrc.js` 文件需要导出一个函数，其支持的参数可以参考 `webpack` [官方文档](https://webpack.js.org/concepts/output/)。
-
-**正常情况下，我们不推荐使用 `.webpackrc.js` 的方式自定义配置，因为这可能给项目的长期维护带来负担。**如有需求可以先反馈给飞冰团队评估是否可以直接内置到 ice-scripts 或者通过 buildConfig 的方式支持。
 
 `.webpackrc.js` 文件采用操作系统中安装的 Node.js 所支持的语法，所以可以使用除了 `import`, `export` 等之外的几乎所有 ES6 语法。
 
@@ -166,20 +210,6 @@ module.exports = (context) => {
 ```
 
 以下为一些常见的自定义需求：
-
-### 修改编译的路径为 dist
-
-```js
-const path = require('path');
-
-module.exports = (context) => {
-  return {
-    output: {
-      path: path.resolve('dist'),
-    },
-  };
-};
-```
 
 ### 修改 publicPath
 
@@ -295,7 +325,17 @@ favicon, index.html 等。
 // index.js
 import styles from './index.module.scss';
 
-<Button className={styles.btn}>OK</Button>
+<Button className={styles.btn}>OK</Button>;
+```
+
+## Moment.js 按需加载
+
+基础组件 `@alifd/next` 里的时间相关组件依赖了 moment，但是为了业务可以优化 moment 的包大小，所以 `@alifd/next` 里将 moment 作为自己的 peerDependencies 而非 dependencies，因此项目使用到时间组件时需要自行引入 moment 依赖。moment 里有针对国际化语言的大量代码，如果不做任何处理的话会导致 bundle 变大，因此 ice-scripts 默认对 moment 文案做了按需加载，只有通过 `import './locale/zh-cn'` 才会引入对应文案代码。
+
+```
+// index.js
+
+import 'moment/locale/xx.js';
 ```
 
 ## 主题配置 - themeConfig

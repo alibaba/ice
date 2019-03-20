@@ -15,8 +15,8 @@ import Img from '@icedesign/img';
 class App extends Component {
 
   state = {
-    url1: 'https://img.alicdn.com/tps/TB1qfWuMVXXXXcEXpXXXXXXXXXX-434-254.png',
-    url2: 'https://img.alicdn.com/tps/TB1_AZdNFXXXXbLXVXXXXXXXXXX-500-1063.jpg'
+    url1: 'https://img.alicdn.com/tfs/TB1vyxuwHrpK1RjSZTEXXcWAVXa-1350-900.jpg',
+    url2: 'https://img.alicdn.com/tfs/TB1A8NCLNYaK1RjSZFnXXa80pXa-2580-1032.jpg'
   };
 
   changeImgs = () => {
@@ -73,7 +73,7 @@ class App extends Component {
 
 function getImgs(url) {
   if (url === 'https://img.alicdn.com/imgextra/i3/2779138589/TB2_gtLlrBmpuFjSZFuXXaG_XXa_!!2779138589.jpg') {
-    return 'https://img.alicdn.com/tps/TB1qfWuMVXXXXcEXpXXXXXXXXXX-434-254.png';
+    return 'https://img.alicdn.com/tfs/TB1vyxuwHrpK1RjSZTEXXcWAVXa-1350-900.jpg';
   }
 
   return 'https://img.alicdn.com/imgextra/i3/2779138589/TB2_gtLlrBmpuFjSZFuXXaG_XXa_!!2779138589.jpg';

@@ -15,7 +15,7 @@ class PreviewLoading extends Component {
   constructor(props) {
     super(props);
     const queryObject = queryString.parse(window.location.search);
-    const isMobile = decodeURIComponent(queryObject.mobile) == 'true';
+    const isMobile = decodeURIComponent(queryObject.mobile) === 'true';
     this.state = {
       dervice: isMobile ? 'mobile' : 'desktop',
     };
@@ -23,7 +23,7 @@ class PreviewLoading extends Component {
 
   componentDidMount() {
     const queryObject = queryString.parse(window.location.search);
-    const isMobile = decodeURIComponent(queryObject.mobile) == 'true';
+    const isMobile = decodeURIComponent(queryObject.mobile) === 'true';
     this.webviewLoaded = false;
     if (this.webview && isMobile) {
       this.webview.addEventListener('did-finish-load', () => {
@@ -86,9 +86,9 @@ class PreviewLoading extends Component {
     if (type !== this.state.dervice) {
       this.setState({ dervice: type }, () => {
         const dervice = this.state.dervice;
-        if (dervice == 'mobile') {
+        if (dervice === 'mobile') {
           this.enableDeviceEmulation({ width: 375, height: 667 });
-        } else if (dervice == 'pad') {
+        } else if (dervice === 'pad') {
           this.enableDeviceEmulation({ width: 768, height: 1024 }, 0.75);
         } else {
           this.disableDeviceEmulation();
@@ -118,9 +118,9 @@ class PreviewLoading extends Component {
           <div
             className={classnames({
               'previewer-wrapper': true,
-              'previewer-wrapper-mobile': this.state.dervice == 'mobile',
-              'previewer-wrapper-pad': this.state.dervice == 'pad',
-              'previewer-wrapper-desktop': this.state.dervice == 'desktop',
+              'previewer-wrapper-mobile': this.state.dervice === 'mobile',
+              'previewer-wrapper-pad': this.state.dervice === 'pad',
+              'previewer-wrapper-desktop': this.state.dervice === 'desktop',
             })}
           >
             <div className="previewer-header">

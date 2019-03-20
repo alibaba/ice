@@ -17,23 +17,25 @@ class AdditionalBlocks {
       return !!block.publishTime;
     });
 
-    if (sortBlocks.length == 0) {
+    if (sortBlocks.length === 0) {
       return blocks;
     }
 
-    let isNewlyBlock = [];
+    const isNewlyBlock = [];
     let days = 0;
     const nowDate = new Date();
     while (!isNewlyBlock.length) {
-      days = days + 7;
+      days += 7;
       // eslint-disable-next-line no-loop-func
       sortBlocks.forEach((item) => {
         const blockCreatedDate = new Date(item.publishTime);
+        /* eslint-disable no-underscore-dangle */
         const _isNew = nowDate - blockCreatedDate < days * 24 * 60 * 60 * 1000;
         if (_isNew) {
           isNewlyBlock.push(item);
         }
         item._isNew = _isNew;
+        /* eslint-enable no-underscore-dangle */
       });
     }
     this.newBlocks = isNewlyBlock;
@@ -48,13 +50,14 @@ class AdditionalBlocks {
         blocks: this.newBlocks,
       });
     }
-
-    for (let key of this.blocks.keys()) {
+    /* eslint-disable no-restricted-syntax */
+    for (const key of this.blocks.keys()) {
       result.push({
         category: key,
         blocks: toJS(this.blocks.get(key)),
       });
     }
+    /* eslint-enable no-restricted-syntax */
 
     return result;
   }

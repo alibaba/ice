@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 
 function progress(percentage) {
-  if (percentage == 0 || percentage == 1) {
+  if (percentage === 0 || percentage === 1) {
     return null;
   }
   return Math.floor(percentage * 100) + '%';
