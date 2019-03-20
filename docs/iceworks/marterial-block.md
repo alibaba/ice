@@ -1,5 +1,5 @@
 ---
-title: 物料-区块
+title: 物料-区块面板
 category: Iceworks
 order: 4
 ---

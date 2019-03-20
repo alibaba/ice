@@ -1,5 +1,5 @@
 ---
-title: 物料-模板
+title: 物料-模板面板
 category: Iceworks
 order: 3
 ---

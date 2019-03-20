@@ -1,7 +1,7 @@
 ---
 title: 项目管理-集成环境
 category: Iceworks
-order: 1
+order: 2
 ---
 
 Iceworks 提供了项目管理中的集成环境，点击项目面板，进入到项目的集成环境。
