@@ -21,23 +21,11 @@ const MATERIAL_TEMPLATE_QUESION = [
   },
 ];
 
-const FRAMEWORK_TYPE_QUESION = [
-  {
-    type: 'list',
-    name: 'framework',
-    message: 'Please select framework type',
-    choices: ['react', 'vue']
-  },
-]
-
 module.exports = async function add(cwd, options = {}) {
   debug('cwd: %s', cwd);
 
-  const type = process.env.TYPE || options.type;
-
-  if (type) {
+  if (options.type) {
     addForStandaloneProject(cwd, {
-      type,
       ...options
     });
     return;
@@ -47,11 +35,6 @@ module.exports = async function add(cwd, options = {}) {
   
   if (!pkg) {
     logger.fatal(message.invalid);
-  }
-
-  if (pkg.materials) {
-    addForIceProject(cwd);
-    return;
   }
 
   if (pkg.materialConfig) {
@@ -99,25 +82,6 @@ async function addForDefaultProject(cwd, options) {
   debug('ans: %j', type);
 
   const templatePath = await getTemplatePath(framework, type, cwd);
-
-  require(`./${type}/add`)(cwd, {
-    npmPrefix,
-    templatePath
-  });
-}
-
-/**
- * ice 官方仓库
- * @param {*} cwd 
- */
-async function addForIceProject(cwd) {
-  const { framework } = await inquirer.prompt(FRAMEWORK_TYPE_QUESION);
-  const { type } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
-
-  const npmPrefix = (framework === 'react' ? '@icedesign' : `@${framework}-materials`) + '/';
-  const templatePath = path.join(cwd, `templates/ice-${framework}-materials-template/template/.template/${type}`);
-
-  cwd = path.join(cwd, `${framework}-materials`);
 
   require(`./${type}/add`)(cwd, {
     npmPrefix,
