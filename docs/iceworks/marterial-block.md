@@ -18,7 +18,3 @@ Iceworks 提供了丰富的区块供用户进行选择用以新建页面。如�
 - 点击「源码」查看区块源码 —— 你可以发起 Pull Request 帮助我们完善区块。
 
 ![区块市场](https://img.alicdn.com/tfs/TB1fa9rM5rpK1RjSZFhXXXSdXXa-1425-818.gif)
-
-## 自定义区块
-
-_文档编写中..._
