@@ -15,13 +15,14 @@ const meta = require('./meta');
 module.exports = async function addScaffold(cwd, opt = {}) {
   const {
     npmPrefix,
-    templatePath : src
+    templatePath : src,
+    standalone
   } = opt;
 
   const questions = defaultQuestion(npmPrefix); 
   const { name } = await inquirer.prompt(questions);
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
-  const dest = path.join(cwd, 'scaffolds', name);
+  const dest = standalone ? path.join(cwd, name) : path.join(cwd, 'scaffolds', name);
 
   try {
     await generate({
@@ -31,7 +32,7 @@ module.exports = async function addScaffold(cwd, opt = {}) {
       npmName,
       meta
     });
-    completedMessage(name, dest);
+    completedMessage(name, dest, standalone);
   } catch(e) {
     logger.fatal(e);
   }
@@ -63,7 +64,7 @@ function defaultQuestion(npmPrefix) {
  * @param {string} scaffoldName 脚手架模板名称
  * @param {string} scaffoldPath 脚手架模板路径
  */
-function completedMessage(scaffoldName, scaffoldPath) {
+function completedMessage(scaffoldName, scaffoldPath, standalone) {
   console.log();
   console.log(`Success! Created ${scaffoldName} at ${scaffoldPath}`);
   console.log(
@@ -71,7 +72,11 @@ function completedMessage(scaffoldName, scaffoldPath) {
   );
   console.log();
   console.log('  Starts the development server.');
-  console.log(chalk.cyan(`    cd scaffolds/${scaffoldName}`));
+  if (standalone) {
+    console.log(chalk.cyan(`    cd ${scaffoldName}`));
+  } else {
+    console.log(chalk.cyan(`    cd scaffolds/${scaffoldName}`));
+  }
   console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();

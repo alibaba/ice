@@ -13,34 +13,37 @@ const generate = require('../utils/generate');
 const localPath = require('../utils/local-path');
 const download = require('../utils/download');
 const innerNet = require('../utils/inner-net');
-const addComponent = require('./add');
+const add = require('./add');
 const generateDemo = require('../utils/generate-marterials-demo');
 
 const isLocalPath = localPath.isLocalPath;
 
 module.exports = async function init(cwd) {
   try {
+    const type = process.env.TYPE || 'material';
+    const template = process.env.TEMPLATE;
+
     // 检查当前目录是否为空
-    if (fs.readdirSync(cwd).length) {
+    if (fs.readdirSync(cwd).length && type === 'material') {
       logger.fatal('Workdir %s is not empty.', cwd);
     }
 
     const options = Object.assign({ 
       cwd, 
-      template: process.env.TEMPLATE,
+      type,
+      template,
     });
 
     const answers = await initAsk(options);
 
-    if (answers.type === 'component') {
-      addComponent(cwd, {
-        type: 'component',
-        scope: answers.scope
+    if (options.type === 'material') {
+      run(answers, options);
+    } else {
+      add(cwd, {
+        template,
+        ...answers
       });
-      return;
     }
-
-    run(answers, options);
   } catch (error) {
     logger.fatal(error);
   }
@@ -50,26 +53,12 @@ module.exports = async function init(cwd) {
  * 初始询问
  */
 async function initAsk(options = {}) {
-  const { type } = await inquirer.prompt([
-    {
-      type: 'list',
-      message: 'please select the project type',
-      name: 'type',
-      default: 'material',
-      choices: [
-        'material',
-        'component'
-      ],
-    },
-  ]);
-
   const isInnerNet = await innerNet.isInnerNet();
-
   const { forInnerNet } = await (isInnerNet
     ? inquirer.prompt([
         {
           type: 'confirm',
-          message: '当前处于阿里内网环境,生成只在内网可用的' + (type === 'component' ? '物料仓库' : '组件'),
+          message: '当前处于阿里内网环境,生成只在内网可用的物料',
           name: 'forInnerNet',
         },
       ])
@@ -94,9 +83,9 @@ async function initAsk(options = {}) {
     },
   ]);
 
-  if (type === 'component') {
+  if (options.type !== 'material') {
     return {
-      type: 'component',
+      type: options.type,
       scope: scope
     };
   }
@@ -137,12 +126,12 @@ async function initAsk(options = {}) {
           name: 'template',
           choices: [
             {
-              name: '@icedesign/ice-react-materials-template (React 标准模板)',
-              value: '@icedesign/ice-react-materials-template'
+              name: '@icedesign/ice-react-material-template (React 标准模板)',
+              value: '@icedesign/ice-react-material-template'
             },
             {
-              name: '@icedesign/ice-vue-materials-template (Vue 标准模板)',
-              value: '@icedesign/ice-vue-materials-template'
+              name: '@icedesign/ice-vue-material-template (Vue 标准模板)',
+              value: '@icedesign/ice-vue-material-template'
             }
           ],
         },

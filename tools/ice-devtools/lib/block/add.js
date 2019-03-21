@@ -15,13 +15,14 @@ const meta = require('./meta');
 module.exports = async function addBlock(cwd, opt = {}) {
   const {
     npmPrefix,
-    templatePath : src
+    templatePath : src,
+    standalone
   } = opt;
 
   const questions = defaultQuestion(npmPrefix); 
   const { name } = await inquirer.prompt(questions);
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
-  const dest = path.join(cwd, 'blocks', name);
+  const dest = standalone ? path.join(cwd, name) : path.join(cwd, 'blocks', name);
 
   try {
     await generate({
@@ -31,7 +32,7 @@ module.exports = async function addBlock(cwd, opt = {}) {
       npmName,
       meta
     });
-    completedMessage(name, dest);
+    completedMessage(name, dest, standalone);
   } catch(e) {
     logger.fatal(e);
   }
@@ -62,13 +63,17 @@ function defaultQuestion(npmPrefix) {
  * @param {string} blockName 区块名称
  * @param {string} blockPath 区块路径
  */
-function completedMessage(blockName, blockPath) {
+function completedMessage(blockName, blockPath, standalone) {
   console.log();
   console.log(`Success! Created ${blockName} at ${blockPath}`);
   console.log(`Inside ${blockName} directory, you can run several commands:`);
   console.log();
   console.log('  Starts the development server.');
-  console.log(chalk.cyan(`    cd blocks/${blockName}`));
+  if (standalone) {
+    console.log(chalk.cyan(`    cd ${blockName}`));
+  } else {
+    console.log(chalk.cyan(`    cd blocks/${blockName}`));
+  }
   console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();

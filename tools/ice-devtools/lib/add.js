@@ -9,6 +9,7 @@ const logger = require('../utils/logger');
 const pkgJSON = require('../utils/pkg-json');
 const message = require('../utils/message');
 const download = require('../utils/download');
+const { isLocalPath } = require('../utils/local-path');
 
 const MATERIAL_TEMPLATE_TYPE = ['block', 'component', 'scaffold'];
 
@@ -38,7 +39,7 @@ module.exports = async function add(cwd, options = {}) {
   }
 
   if (pkg.materialConfig) {
-    addForDefaultProject(cwd, {
+    addForMaterialProject(cwd, {
       pkg
     });
   } else {
@@ -52,12 +53,12 @@ module.exports = async function add(cwd, options = {}) {
  * @param {*} options 
  */
 async function addForStandaloneProject(cwd, options) {
-  const { type } = options;
+  const { type, template } = options;
 
-  const framework = process.env.FRAMEWORK || 'react';
+  const framework = 'react';
   const npmPrefix = options.scope ? `${options.scope}/` : '';
 
-  const templatePath = await getTemplatePath(framework, type, cwd);
+  const templatePath = await getTemplatePath(framework, type, cwd, template);
 
   require(`./${type}/add`)(cwd, {
     npmPrefix,
@@ -69,7 +70,7 @@ async function addForStandaloneProject(cwd, options) {
 /**
  * 标准物料仓库
  */
-async function addForDefaultProject(cwd, options) {
+async function addForMaterialProject(cwd, options) {
   const {
     pkg
   } = options;
@@ -94,10 +95,14 @@ async function addForDefaultProject(cwd, options) {
  * @param {string} type 
  * @param {string} cwd 
  */
-async function getTemplatePath(framework, templateType, cwd) {
-  // from command args
-  if (process.env.TEMPLATE) {
-    return process.env.TEMPLATE;
+async function getTemplatePath(framework, templateType, cwd, template) {
+  // from local path
+  if (template && isLocalPath(template)) {
+    const templatePath = path.join(template, `template/${templateType}`);
+    if (exists(templatePath)) {
+      return templatePath;
+    }
+    logger.fatal(`template is not found in ${templatePath}` );
   }
 
   // from local .template file
@@ -114,9 +119,9 @@ async function getTemplatePath(framework, templateType, cwd) {
   }
 
   // form npm package
-  const templateName = `@icedesign/ice-${framework}-materials-template`;
+  const templateName = template || `@icedesign/ice-${framework}-material-template`;
   const tmp = await downloadTemplate(templateName);
-  const templatePath = path.join(tmp, `template/.template/${templateType}`);
+  const templatePath = path.join(tmp, `template/${templateType}`);
 
   return templatePath;
 }
