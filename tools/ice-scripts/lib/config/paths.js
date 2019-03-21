@@ -48,10 +48,20 @@ function resolveApp(relativePath) {
 
 const isOldKoa = process.env.PROJECT_TYPE == 'node';
 
+function getAppHtmlPath() {
+  const appPackage = require(resolveApp('package.json'));
+  const buildConfig = appPackage.buildConfig || {};
+  // eg. demo/index.html
+  if (buildConfig.htmlTemplatePath) {
+    return resolveApp(buildConfig.htmlTemplatePath);
+  }
+  return isOldKoa ? resolveApp('client/index.html') : resolveApp('public/index.html');
+}
+
 module.exports = {
   appBuild: resolveApp('build') ,
   appPublic: resolveApp('public') ,
-  appHtml: isOldKoa ? resolveApp('client/index.html') : resolveApp('public/index.html'),
+  appHtml: getAppHtmlPath(),
   appFavicon: isOldKoa ? resolveApp('client/favicon.png') : resolveApp('public/favicon.png'),
   appFaviconIco: isOldKoa ? resolveApp('client/favicon.ico') : resolveApp('public/favicon.ico'),
   appPackageJson: resolveApp('package.json'),
