@@ -14,7 +14,6 @@
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "dependencies": {
-    "@vue-materials/basic-container": "^1.0.0",
     "vue": "^2.5.16"
   },
   "devDependencies": {

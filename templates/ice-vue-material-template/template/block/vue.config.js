@@ -1,5 +1,3 @@
-const { resolve } = require('path');
-
 module.exports = {
   outputDir: 'build',
   publicPath: './',
@@ -8,13 +6,8 @@ module.exports = {
       .entryPoints.clear()
       .end()
       .entry('index')
-      .add('./demo/index.js')
+      .add('./demo/index')
       .end();
-
-    config
-      .externals({
-        vue: 'Vue',
-      });
 
     config
       .plugin('html')

@@ -1,17 +1,15 @@
 <template>
-  <div class="{{name}}">
+  <div class="example-block">
     <basic-container>
-      <h1>{{className}}</h1>
+      <h1>ExampleBlock</h1>
     </basic-container>
   </div>
 </template>
 
 <script>
-import BasicContainer from '@vue-materials/basic-container'
 
 export default {
-  components: { BasicContainer },
-  name: '{{className}}',
+  name: 'ExampleBlock',
 
   data() {
     return {}
@@ -25,7 +23,7 @@ export default {
 </script>
 
 <style>
-  .{{name}} {
+  .example-block {
 
   }
 </style>
