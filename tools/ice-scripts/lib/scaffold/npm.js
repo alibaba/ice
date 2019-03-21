@@ -10,6 +10,7 @@ const cacheData = {};
  */
 function getNpmInfo(npm) {
   if (cacheData[npm]) {
+    return cacheData[npm];
   }
 
   const register = getRegistry(npm);

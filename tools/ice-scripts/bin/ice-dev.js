@@ -31,7 +31,7 @@ const cliOptions = cliInstance.get();
 
 validationSassAvailable();
 
-// TODO: 这是啥
+// 是否可交互：目前没用
 const isInteractive = process.stdout.isTTY;
 
 const DEFAULT_PORT = program.port || process.env.PORT || 4444;

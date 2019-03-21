@@ -84,6 +84,7 @@
     "node-sass": "4.9.0",
     "npmlog": "^4.1.2",
     "optimize-css-assets-webpack-plugin": "5.0.1",
+    "ora": "^3.2.0",
     "path-exists": "3.0.0",
     "postcss-loader": "3.0.0",
     "postcss-safe-parser": "4.0.1",

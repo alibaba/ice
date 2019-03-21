@@ -6,6 +6,7 @@ const fse = require('fs-extra')
 const tar = require('tar');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
+const ora = require('ora');
 const npmUtils = require('./npm');
 const log = require('../utils/log');
 
@@ -29,10 +30,13 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
   const npmTarball = `${npmUtils.getRegistry(npm)}/${npm}/-/${npm}-${version}.tgz`;
   log.verbose('downloadAndFilterNpmFiles', npmTarball, destDir);
 
+  const downloadSpinner = ora('dowload scaffold npm……');
+  downloadSpinner.start();
   return axios.get(npmTarball, {
     responseType:'stream'
   }).then((response) => {
 
+    const allWriteStream = [];
     return new Promise((resolve, reject) => {
       response.data
         .pipe(zlib.Unzip())
@@ -44,12 +48,28 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
           const destPath = path.join(destDir, path.dirname(realPath), filename);
 
           fse.ensureFileSync(destPath);
-          entry.pipe(fs.createWriteStream(destPath));
+
+          const writeStream = new Promise((streamResolve) => {
+            entry
+              .pipe(fs.createWriteStream(destPath))
+              .on('finish', () => streamResolve());
+          });
+          allWriteStream.push(writeStream);
         })
         .on('end', () => {
-          resolve();
+          Promise
+            .all(allWriteStream)
+            .then(() => {
+              downloadSpinner.stop()
+              resolve();
+            })
+            .catch((err) => {
+              downloadSpinner.stop()
+              reject(err);
+            });
         })
         .on('error', (err) => {
+          downloadSpinner.stop()
           reject(err);
         });
     });

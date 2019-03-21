@@ -46,6 +46,8 @@ function modifyPkg(pkgPath) {
   delete pkgData.buildConfig.output;
   delete pkgData.scaffoldConfig;
   delete pkgData.homepage;
+  delete pkgData.scripts.screenshot;
+  delete pkgData.scripts.prepublishOnly;
 
   pkgData.name += uuid();
 
@@ -65,7 +67,7 @@ function checkEmpty(dir) {
           type: 'confirm',
           name: 'goOn',
           message: '当前文件夹下存在其他文件，继续生成可能会覆盖，确认继续吗？',
-          default: true
+          default: false
         }).then((answer) => {
           return resolve(answer.goOn);
         }).catch((err) => {
