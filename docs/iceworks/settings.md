@@ -73,3 +73,7 @@ Iceworks 没法覆盖所有用户的编辑器选择，或者安装是绿色版�
 NPM 源的配置将决定 Iceworks 在安装依赖时的数据源。Iceworks 默认提供了 npm/cnpm/tnpm 等源，亦可通过自定义的方式指定源 URL。
 
 ![自定义 NPM 源](https://img.alicdn.com/tfs/TB1UJe4M5rpK1RjSZFhXXXSdXXa-1740-1200.jpg)
+
+### 登录
+
+对于阿里内部用户，Iceworks 提供了登录功能，登录后便可以使用一些与阿里内部环境有关的插件和能力。
