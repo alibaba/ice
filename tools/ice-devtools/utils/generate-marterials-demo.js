@@ -2,7 +2,7 @@ const path = require('path');
 const generate = require('./generate');
 const pkgJSON = require('./pkg-json');
 
-module.exports = async function generateMaterialsDemo(tmpPath, appPath) {
+module.exports = async function generateMaterialsDemo(appPath) {
   const pkg = pkgJSON.getPkgJSON(appPath);
 
   await generate({

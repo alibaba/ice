@@ -5,10 +5,6 @@
   "author": "{{author}}",
   "files": ["demo/", "lib/", "build/"],
   "main": "lib/index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba/ice"
-  },
   "scripts": {
     "start": "ice-devtools start",
     "build": "ice-devtools build",
@@ -28,8 +24,7 @@
     "react-dom": "^16.3.0"
   },
   "peerDependencies": {
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0"
+    "react": "^16.3.0"
   },
   "componentConfig": {
     "name": "{{name}}",

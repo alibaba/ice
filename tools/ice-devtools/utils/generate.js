@@ -1,15 +1,12 @@
 /* eslint no-unused-expressions: 0 */
 const chalk = require('chalk');
-const fs = require('fs');
 const Metalsmith = require('metalsmith');
 const Handlebars = require('handlebars');
 const uppercamelcase = require('uppercamelcase');
 const async = require('async');
 const render = require('consolidate').handlebars.render;
-const path = require('path');
 const multimatch = require('multimatch');
 const kebabCase = require('kebab-case');
-const easyfile = require('easyfile');
 const ask = require('./ask');
 const filter = require('./filter');
 const transform = require('./transform');
@@ -119,12 +116,6 @@ function generate(options, done) {
         }
       });
     });
-
-  // 如果模板内部有 .template 目录, 不走 render 逻辑，直接拷贝
-  const template = path.join(src, TEMPLATE_PATH);
-  if (fs.existsSync(template)) {
-    easyfile.copy(template, path.join(dest, TEMPLATE_PATH));
-  }
 
   return data;
 };

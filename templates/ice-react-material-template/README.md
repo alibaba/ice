@@ -1,8 +1,8 @@
-# ice-vue-materials-template
+# ice-react-material-template
 
 ## 简介
 
-用于 ice-devtools init 初始化时的物料仓库模板
+用于 ice-devtools init 初始化时的物料仓库模板，基于 react 和 next 组件库
 
 ## 使用
 
@@ -15,6 +15,14 @@ $ ice-devtools init
 
 ```
 $ cd my-project/blocks/ExampleBlock
+$ npm install
+$ npm run start
+```
+
+#### 布局预览
+
+```
+$cd my-project/layouts/ExampleComponent
 $ npm install
 $ npm run start
 ```

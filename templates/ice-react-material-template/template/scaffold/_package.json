@@ -16,7 +16,11 @@
     "src/",
     "build/",
     "public/",
-    "screenshot.png"
+    "tests/",
+    "_gitignore",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc"
   ],
   "devDependencies": {
     "babel-eslint": "^8.0.3",
@@ -36,10 +40,16 @@
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "publishConfig": {
+    "access": "public",
     "registry": "{{registry}}"
   },
   "buildConfig": {
-    "entry": "src/index.js"
+    "theme": "@icedesign/theme",
+    "entry": "src/index.js",
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    }
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",

@@ -1,4 +1,3 @@
-const exists = require('fs').existsSync;
 const path = require('path');
 const fs = require('fs');
 const ora = require('ora');
@@ -7,18 +6,17 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const rm = require('rimraf').sync;
 const validateName = require('validate-npm-package-name');
+const easyfile = require('easyfile');
 
 const logger = require('../utils/logger');
 const generate = require('../utils/generate');
 const localPath = require('../utils/local-path');
 const download = require('../utils/download');
 const innerNet = require('../utils/inner-net');
-const getOptions = require('../utils/options');
 const addComponent = require('./add');
 const generateDemo = require('../utils/generate-marterials-demo');
 
 const isLocalPath = localPath.isLocalPath;
-const getTemplatePath = localPath.getTemplatePath;
 
 module.exports = async function init(cwd) {
   try {
@@ -104,7 +102,7 @@ async function initAsk(options = {}) {
   }
 
   const projectName = path.basename(options.cwd);
-  const { name } = await inquirer.prompt([
+  const { name, description } = await inquirer.prompt([
     {
       type: 'input',
       message: 'materials name',
@@ -121,6 +119,13 @@ async function initAsk(options = {}) {
         }
         return true;
       },
+    },
+    {
+      name: 'description',
+      type: 'string',
+      label: 'description',
+      message: 'description',
+      default: 'This is a material project',
     },
   ]);
 
@@ -147,6 +152,7 @@ async function initAsk(options = {}) {
   return {
     name: scope ? `${scope}/${name}` : name,
     template,
+    description
   };
 }
 
@@ -156,24 +162,38 @@ async function initAsk(options = {}) {
  * @param {object} argsOpt
  */
 async function run(opt, argsOpt) {
-  let { template, name } = opt;
-  const { cwd } = argsOpt;
-  const tmp = path.join(home, '.ice-templates', template);
+  const { template, name, description } = opt;
+  const { cwd: dest } = argsOpt;
+
+  // init material project
+  await generate({
+    name,
+    version: '1.0.0',
+    description,
+    src: path.join(__dirname, `../template/init`),
+    dest
+  });
+
+  let templatePath;
 
   // 如果是本地模板则从缓存读取，反之从 npm 源下载初始模板
   if (isLocalPath(template)) {
-    const templatePath = getTemplatePath(template);
-
-    if (exists(templatePath)) {
-      const src = path.join(templatePath, 'template');
-      const meta = getOptions(name, templatePath);
-      await generateProject(name, src, cwd, meta);
-    } else {
+    if (!fs.existsSync(template)) {
       logger.fatal('Local template "%s" not found.', template);
+    } else {
+      templatePath = template;
     }
   } else {
-    downloadAndGenerate({ template, tmp, to: cwd, name });
+    templatePath = await downloadTemplate(template);
   }
+
+  // clone template
+  easyfile.copy(path.join(templatePath, 'template'), path.join(dest, '.template'));
+
+  // generate demo
+  await generateDemo(dest);
+
+  initCompletedMessage(dest, name);
 }
 
 /**
@@ -183,40 +203,23 @@ async function run(opt, argsOpt) {
  * @param {string} to        写入路径
  * @param {string} name      项目名称
  */
-function downloadAndGenerate({ template, tmp, to, name }) {
+function downloadTemplate(template) {
   const spinner = ora('downloading template');
   spinner.start();
 
+  const tmp = path.join(home, '.ice-templates', template);
   // Remove if local template exists
-  if (exists(tmp)) rm(tmp);
+  if (fs.existsSync(tmp)) rm(tmp);
 
-  download({ template })
+  return download({ template })
     .then(async () => {
       spinner.stop();
-
-      const src = path.join(tmp, 'template');
-      const meta = getOptions(name, tmp);
-      await generateProject(name, src, to, meta);
+      return tmp;
     })
     .catch((err) => {
       spinner.stop();
       logger.fatal(`Failed to download repo ${template} : ${err.stack}`);
     });
-}
-
-async function generateProject(name, src, dest, meta) {
-  try {
-    await generate({
-      name,
-      src,
-      dest,
-      meta
-    });
-    await generateDemo(src, dest);
-    initCompletedMessage(src, dest, name);
-  } catch(e) {
-    logger.fatal(e);
-  }
 }
 
 function initCompletedMessage(appPath, appName) {
