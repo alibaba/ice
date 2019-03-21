@@ -53,6 +53,7 @@
     "universal-router": "^6.0.0",
     "uppercamelcase": "^3.0.0",
     "uuid": "^3.2.1",
+    "vscode-uri": "^1.0.6",
     "xterm": "3.4.1"
   },
   "resolutions": {

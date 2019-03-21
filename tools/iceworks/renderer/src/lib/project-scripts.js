@@ -93,7 +93,7 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
       } else {
         callback(0);
       }
-  });
+    });
 };
 
 const doDependenciesInstall = (

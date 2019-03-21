@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import Notification from '@icedesign/notification';
 import orderBy from 'lodash.orderby';
 import { Dialog } from '@icedesign/base';
+import Uri from 'vscode-uri';
 
 import { readdirSync } from '../../../../lib/file-system';
 import DashboardCard from '../../../../components/DashboardCard/';
@@ -21,7 +22,7 @@ import EmptyTips from '../../../../components/EmptyTips';
 import dialog from '../../../../components/dialog';
 
 import services from '../../../../services';
-const { log, interaction, scaffolder } = services;
+const { log, interaction, scaffolder, editors, settings } = services;
 
 import './index.scss';
 import PluginHoc from '../PluginHoc';
@@ -100,6 +101,28 @@ class PagesCard extends Component {
     this.props.newpage.toggle();
   };
 
+  // 编辑中打开
+  // 目前只支持 vscode、sublime，因为其他编辑器直接打开文件，目录只有当前文件的目录，如果打开项目在打开文件会打开两个窗口。体验比较差，过滤。
+  handleOpenEditor = (fileName) => {
+    const editor = settings.get('editor');
+    const { projects } = this.props;
+    let uriFolder = `${projects.currentProject.fullPath}`;
+    let uriFile = `${projects.currentProject.fullPath}/src/pages/${fileName}/${fileName}.jsx`;
+    if (editor === 'VisualStudioCode') {
+      uriFolder = Uri.file(uriFolder).toString();
+      uriFile = Uri.file(uriFile).toString();
+      editors.open(uriFolder, ['--folder-uri'], true);
+      setTimeout(()=> {
+        editors.open(uriFile, ['--file-uri'], true);
+      }, 500)
+    } else {
+      editors.open(uriFolder, [], true);
+      setTimeout(()=> {
+        editors.open(uriFile, [], true);
+      }, 500)
+    }
+  };
+
   handlePageDelete = (name) => {
     const { projects, newpage } = this.props;
     const { currentProject } = projects;
@@ -136,6 +159,8 @@ class PagesCard extends Component {
 
   renderPageList = () => {
     const { pages } = this.state;
+    const editor = settings.get('editor');
+    console.log(editor)
     if (pages && pages.length === 0) {
       return <EmptyTips>暂无页面</EmptyTips>;
     }
@@ -148,7 +173,15 @@ class PagesCard extends Component {
       }
       return (
         <div className="page-item" key={page.name} data-path={page.fullPath}>
-          <div className="name">{page.name}</div>
+          {
+            editor === 'VisualStudioCode' || editor === 'SublimeText' ? (
+              <a className="page-item-name" onClick={() => {
+                this.handleOpenEditor(page.name);
+              }}>{page.name}</a>
+            ) : (
+              <div>{page.name}</div>
+            )
+          }
           <div className="operational">
             <span className="page-creat-time">{page.birthtime}</span>
             <ExtraButton

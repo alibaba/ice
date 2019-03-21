@@ -208,14 +208,14 @@ class Materials {
 
         Object.keys(attrs).forEach((key) => {
           material[key] = attrs[key];
-        })
+        });
 
         // 双向绑定数据
         material.blocks = new AdditionalBlocks(blocks);
         material.scaffolds = new AdditionalScaffolds(scaffolds, material);
 
         // if (iceBaseComponents) {
-          material.components = new AdditionalComponents(components, material, iceBaseComponents);
+        material.components = new AdditionalComponents(components, material, iceBaseComponents);
         // }
 
         material.loaded = true;
