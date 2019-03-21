@@ -11,8 +11,8 @@
   "license": "MIT",
   "keywords": ["ice","react","block"],
   "scripts": {
-    "start": "ice-devtools start",
-    "build": "ice-devtools build",
+    "start": "ice dev",
+    "build": "ice build",
     "screenshot": "ice-devtools screenshot",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
@@ -21,7 +21,17 @@
   },
   "devDependencies": {
     "react": "^16.3.0",
-    "react-dom": "^16.3.0"
+    "react-dom": "^16.3.0",
+    "ice-scripts": "^1.6.7"
+  },
+  "buildConfig": {
+    "theme": "@icedesign/theme",
+    "entry": "demo/index.js",
+    "localization": false,
+    "output": {
+      "publicPath": "./"
+    },
+    "htmlTemplatePath": "demo/index.html"
   },
   "publishConfig": {
     "registry": "{{registry}}"
