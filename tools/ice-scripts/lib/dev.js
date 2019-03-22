@@ -1,8 +1,7 @@
 /**
- * 启动服务，根据传入的路径地址，按照 ICE page 的规则搜寻代码，并启动编译服务
- * @param {String} cwd 项目目录
- * @param {Object} options 命令行参数
+ * 启动服务：cli 调用
  */
+
 /* eslint no-console:off */
 process.env.NODE_ENV = 'development';
 
@@ -25,12 +24,14 @@ const getProxyConfig = require('./config/getProxyConfig');
 const openBrowser = require('react-dev-utils/openBrowser');
 const goldlog = require('./utils/goldlog');
 const pkgData = require('../package.json');
+const log = require('./utils/log');
 
-module.exports = async function(args, subprocess) {
+module.exports = async function(cliOptions, subprocess) {
   goldlog('version', {
     version: pkgData.version
   });
-  goldlog('dev');
+  goldlog('dev', cliOptions);
+  log.verbose('init cliOptions', cliOptions);
 
   // 与 iceworks 客户端通信
   const send = function(data) {
@@ -41,10 +42,11 @@ module.exports = async function(args, subprocess) {
   };
 
   const cwd = process.cwd();
-  const HOST = args.host || '0.0.0.0';
-  const PORT = args.port || 4444;
+
+  const HOST = cliOptions.host || '0.0.0.0';
+  const PORT = cliOptions.port || 4444;
   let httpsConfig;
-  let protocol = args.https ? 'https' : 'http';
+  let protocol = cliOptions.https ? 'https' : 'http';
 
   if (protocol == 'https') {
     try {
@@ -67,12 +69,13 @@ module.exports = async function(args, subprocess) {
   const packageData = require(paths.appPackageJson);
   // get ice config by package.ice
 
-  if (process.env.DISABLED_RELOAD) {
+  if (cliOptions.disabledReload) {
     console.log(chalk.yellow('Warn:'), '关闭了热更新（hot-reload）功能');
   }
   const webpackConfig = getWebpackConfigDev({
     entry: entries,
     buildConfig: packageData.buildConfig || packageData.ice,
+
   });
 
   if (iceworksClient.available) {
@@ -94,7 +97,7 @@ module.exports = async function(args, subprocess) {
   let isFirstCompile = true;
   const compiler = webpack(webpackConfig);
   // eslint-disable-next-line global-require
-  let devServerConfig = require('./config/webpack.server.config')(args);
+  let devServerConfig = require('./config/webpack.server.config')(program);
   if ('devServer' in webpackConfig) {
     // merge user config
     devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);

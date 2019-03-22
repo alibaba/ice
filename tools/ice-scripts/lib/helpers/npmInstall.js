@@ -1,9 +1,11 @@
-const runCmd = require('./runCmd');
-const getNpm = require('./getNpm');
 const { fork } = require('child_process');
 
+const runCmd = require('./runCmd');
+const getNpm = require('./getNpm');
+const cliInstance = require('../utils/cliInstance');
+
 module.exports = () => {
-  if (process.env.SKIP_INSTALL) {
+  if (cliInstance.get('skipInstall')) {
     return Promise.resolve();
   }
   return getNpm().then((npm) => {

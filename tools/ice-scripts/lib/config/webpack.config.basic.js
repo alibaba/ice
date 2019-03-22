@@ -10,8 +10,9 @@ const getEntryByPages = require('./getEntryByPages');
 const getResolveAlias = require('./getResolveAlias');
 const pkg = require('./packageJson');
 const checkTemplateHasReact = require('../utils/checkTemplateHasReact');
-const debug = require('../debug');
+const log = require('../utils/log');
 const paths = require('./paths');
+const cliInstance = require('../utils/cliInstance');
 
 /**
  * 可以在 buildConfig 中覆盖的配置项:
@@ -56,7 +57,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     ...buildConfig.outputAssetsPath
   };
 
-  debug.info('hasExternalReact', hasExternalReact);
+  log.verbose('hasExternalReact', hasExternalReact);
 
   const webpackConfig = {
     mode: process.env.NODE_ENV,
@@ -65,7 +66,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     output: Object.assign(
       {
         path: paths.appBuild,
-        filename: path.join(buildConfig.outputAssetsPath.js || '', (process.env.HASH ? '[name].[hash:6].js' : '[name].js')),
+        filename: path.join(buildConfig.outputAssetsPath.js || '', (cliInstance.get('hash') ? '[name].[hash:6].js' : '[name].js')),
         publicPath: paths.servedPath,
       },
       buildConfig.output || {}

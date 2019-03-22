@@ -2,6 +2,7 @@
  * 编译设置
  * @param {Object} buildConfig 定义在 package.json 的字段
  */
+const cliInstance = require('../utils/cliInstance');
 
 function resolvePlugin(plugins) {
   return plugins.filter(Boolean).map((plugin) => {
@@ -57,7 +58,7 @@ module.exports = (buildConfig = {}) => {
       '@babel/plugin-syntax-import-meta',
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       '@babel/plugin-proposal-json-strings',
-      process.env.INJECT_BABEL === 'runtime'
+      cliInstance.get('injectBabel') === 'runtime'
         ? [
             '@babel/plugin-transform-runtime',
             {
