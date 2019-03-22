@@ -2,6 +2,8 @@ const { realpathSync } = require('fs');
 const { resolve } = require('path');
 const url = require('url');
 
+const cliInstance = require('../utils/cliInstance');
+
 function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
 }
@@ -46,7 +48,7 @@ function resolveApp(relativePath) {
   return resolve(appDirectory, relativePath);
 }
 
-const isOldKoa = process.env.PROJECT_TYPE == 'node';
+const isOldKoa = cliInstance.get('projectType') == 'node';
 
 module.exports = {
   appBuild: resolveApp('build') ,

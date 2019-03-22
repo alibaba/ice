@@ -3,13 +3,16 @@
 'use strict';
 
 const program = require('commander');
+const detect = require('detect-port');
+const inquirer = require('inquirer');
 
+const dev = require('../lib/dev');
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
-const optionsAttachToEnv = require('../lib/utils/optionsAttachToEnv');
+const cliInstance = require('../lib/utils/cliInstance');
 
 program
   .option('-p, --port <port>', '服务端口号')
-  .option('-h, --host <host>', '服务主机名')
+  .option('-h, --host <host>', '服务主机名', '0.0.0.0')
   .option('--https', '开启 https ')
   .option('--analyzer', '开启构建分析')
   .option('--analyzer-port', '设置分析端口号')
@@ -23,21 +26,18 @@ program
   )
   .parse(process.argv);
 
-const detect = require('detect-port');
-const inquirer = require('inquirer');
+cliInstance.initByProgram(program);
+const cliOptions = cliInstance.get();
 
+validationSassAvailable();
+
+// 是否可交互：目前没用
 const isInteractive = process.stdout.isTTY;
 
-optionsAttachToEnv(program);
-
 const DEFAULT_PORT = program.port || process.env.PORT || 4444;
-const HOST = program.host || process.env.HOST || '0.0.0.0';
 const defaultPort = parseInt(DEFAULT_PORT, 10);
 
-validationSassAvailable()
-  .then(() => {
-    return detect(defaultPort);
-  })
+detect(defaultPort)
   .then((newPort) => {
     return new Promise((resolve) => {
       if (newPort === defaultPort) {
@@ -64,21 +64,11 @@ validationSassAvailable()
     });
   })
   .then((port) => {
-    const dev = require('../lib/dev');
     if (port == null) {
       // We have not found a port.
       process.exit(500);
     }
-    dev(
-      Object.assign({}, program, {
-        port: parseInt(port, 10),
-        host: HOST,
-        devType: 'project',
-      })
-    );
-  })
-  .catch((err) => {
-    console.log(err);
-    console.error('ice-scripts exited unexpectedly.');
-    process.exit(1);
+
+    cliOptions.port = parseInt(port, 10);
+    dev(cliOptions);
   });

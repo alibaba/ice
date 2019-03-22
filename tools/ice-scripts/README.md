@@ -5,17 +5,50 @@ Cli dev tool for ice.
 ## Install
 
 ```bash
-npm install -g ice-scripts
+$ npm install ice-scripts -g
+
+$ ice --help
 ```
 
-## Use
+## Cli
+
+> Recommended cli way
 
 ```
-# use Iceworks create project like: example/
+$ mkdir ice-project
+$ cd ice-project
 
-$ cd example
+$ ice init
 $ ice dev
 $ ice build
 ```
 
-详细使用文档请参考 [TODO]()。
+## Methods
+
+> Not recommended
+
+### init({ scaffold })
+
+init project by scaffold:
+
+```js
+const { init } = require('ice-scripts');
+
+await init({
+  scaffold: '@icedesign/lite-scaffold'
+});
+```
+
+### build({ customWebpackConfig, cliOptions })
+
+build project:
+
+```js
+const { build } = require('ice-scripts');
+
+await build({
+  customWebpackConfig: {},
+  // ref to bin/ice-build.js
+  cliOptions: {}
+});
+```

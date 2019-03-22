@@ -11,7 +11,8 @@ program
   .version(packageInfo.version)
   .usage('<command> [options]')
   .command('build', 'build project')
-  .command('dev', 'start server');
+  .command('dev', 'start server')
+  .command('init', 'init project by scaffold');
 
 program.parse(process.argv);
 

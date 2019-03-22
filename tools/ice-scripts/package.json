@@ -11,9 +11,7 @@
     "clear": "rm -rf test/fixtures/*/build/ && rm -rf test/fixtures/*/.happypack/",
     "webpack": "npm run clear && node ./test/compiler.js",
     "start": "http-server ./test/fixtures/ -o -c-1 -p 8081",
-    "test": "npm run clear && istanbul cover _mocha ./test/*-test.js -- ",
-    "test:update": "npm test -- --updateExpect",
-    "test:watch": "npm test -- --watch "
+    "test": "LOG_LEVEL=verbose jest"
   },
   "keywords": [
     "ice"
@@ -64,14 +62,13 @@
     "copy-webpack-plugin": "4.5.3",
     "css-hot-loader": "1.4.2",
     "css-loader": "1.0.1",
-    "debug": "4.0.1",
-    "decamelize": "^2.0.0",
     "deep-assign": "2.0.0",
     "deepmerge": "2.1.1",
     "detect-port": "1.2.3",
     "extract-css-assets-webpack-plugin": "0.2.5",
     "file-loader": "2.0.0",
     "find-root": "^1.1.0",
+    "fs-extra": "^7.0.1",
     "gulp": "3.9.1",
     "html-webpack-plugin": "3.2.0",
     "http-proxy-middleware": "0.19.0",
@@ -81,22 +78,26 @@
     "less-loader": "4.1.0",
     "lodash": "4.17.11",
     "mini-css-extract-plugin": "0.4.4",
-    "mkdirp": "0.5.1",
+    "mkdirp": "^0.5.1",
     "node-easy-cert": "1.3.0",
     "node-ipc": "9.1.1",
     "node-sass": "4.9.0",
+    "npmlog": "^4.1.2",
     "optimize-css-assets-webpack-plugin": "5.0.1",
+    "ora": "^3.2.0",
     "path-exists": "3.0.0",
     "postcss-loader": "3.0.0",
     "postcss-safe-parser": "4.0.1",
     "react-dev-utils": "5.0.2",
     "react-hot-loader": "4.3.11",
-    "rimraf": "2.6.2",
+    "rimraf": "^2.6.2",
     "sass-loader": "7.1.0",
     "semver": "^5.6.0",
+    "tar": "^2.2.1",
     "typescript": "^3.3.3333",
     "uglifyjs-webpack-plugin": "1.3.0",
     "url-loader": "1.1.2",
+    "uuid": "^3.3.2",
     "webpack": "4.20.2",
     "webpack-bundle-analyzer": "3.0.3",
     "webpack-dev-mock": "0.1.2",
@@ -105,18 +106,17 @@
     "webpack-merge": "4.1.4",
     "webpack-plugin-import": "^0.2.3",
     "webpack-simple-progress-plugin": "0.0.4",
-    "webpack-sources": "1.3.0"
+    "webpack-sources": "1.3.0",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "@icedesign/base": "^0.2.5",
-    "coveralls": "^3.0.0",
     "del": "^3.0.0",
-    "expect": "^23.2.0",
     "glob": "^7.0.6",
     "http-server": "^0.11.1",
     "istanbul": "^0.4.5",
+    "jest": "^24.5.0",
     "minimist": "^1.2.0",
-    "mkdirp": "^0.5.1",
-    "mocha": "^4.0.1"
+    "mkdirp": "^0.5.1"
   }
 }

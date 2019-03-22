@@ -14,6 +14,7 @@ const CheckIceComponentsDepsPlugin = require('../plugins/check-ice-components-de
 const normalizeEntry = require('../utils/normalizeEntry');
 const paths = require('./paths');
 const getEntryHtmlPlugins = require('./getEntryHtmlPlugins');
+const cliInstance = require('../utils/cliInstance');
 
 module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   const defineVriables = {
@@ -27,14 +28,12 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
     defineVriables.THEME = JSON.stringify(themeConfig.theme);
   }
 
-  const filename = process.env.HASH ? '[name].[hash:6].css' : '[name].css';
-  // const chunkFilename = process.env.HASH ? '[id].[hash:6].css': '[id].css';
+  const filename = cliInstance.get('hash') ? '[name].[hash:6].css' : '[name].css';
 
   const plugins = [
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
-      filename: path.join(buildConfig.outputAssetsPath.css || '', filename),
-      // chunkFilename: path.join(buildConfig.outputAssetsPath.css || '', chunkFilename),
+      filename: path.join(buildConfig.outputAssetsPath.css || '', filename)
     }),
     // FIX ISSUE: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
     new FilterWarningsPlugin({
