@@ -15,12 +15,12 @@ $ ice --help
 > Recommended cli way
 
 ```
-mkdir ice-project
-cd ice-project
+$ mkdir ice-project
+$ cd ice-project
 
-ice init
-ice dev
-ice build
+$ ice init
+$ ice dev
+$ ice build
 ```
 
 ## Methods
@@ -46,7 +46,7 @@ build project:
 ```js
 const { build } = require('ice-scripts');
 
-await init({
+await build({
   customWebpackConfig: {},
   // ref to bin/ice-build.js
   cliOptions: {}
