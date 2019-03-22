@@ -60,16 +60,16 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
           Promise
             .all(allWriteStream)
             .then(() => {
-              downloadSpinner.stop()
+              downloadSpinner.succeed('download npm succeed!')
               resolve();
             })
             .catch((err) => {
-              downloadSpinner.stop()
+              downloadSpinner.fail('download npm fail!')
               reject(err);
             });
         })
         .on('error', (err) => {
-          downloadSpinner.stop()
+          downloadSpinner.fail('download npm fail!')
           reject(err);
         });
     });

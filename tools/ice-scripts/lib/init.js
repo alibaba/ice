@@ -20,12 +20,14 @@ module.exports = async function(cliOptions) {
   let { scaffold, projectDir } = cliOptions || {};
   projectDir = projectDir || process.cwd();
 
-  const distScaffold = await selectScaffold(scaffold);
+  if (!scaffold) {
+    scaffold = await selectScaffold(scaffold);
+  }
 
-  log.info('使用模板：', distScaffold);
+  log.info('使用模板：', scaffold);
 
   try {
-    await initProject({ scaffold: distScaffold, projectDir });
+    await initProject({ scaffold, projectDir });
     log.info('初始化项目成功，安装依赖后执行 npm run start 开始调试');
   } catch(err) {
     log.error('初始化项目失败', err);
@@ -33,10 +35,6 @@ module.exports = async function(cliOptions) {
 };
 
 function selectScaffold(scaffold) {
-  if (scaffold) {
-    return Promise.resolve(scaffold);
-  }
-
   const defaultScaffold = '@icedesign/lite-scaffold';
   return inquirer.prompt({
     type: 'list',
