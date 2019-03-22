@@ -37,7 +37,7 @@ module.exports = async function(options) {
     ...defaultCliOptions,
     ...cliOptions
   };
-  cliInstance.set(cliOptions);
+  cliInstance.reset(cliOptions);
 
   goldlog('version', {
     version: pkgData.version

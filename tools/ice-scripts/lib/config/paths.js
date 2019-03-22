@@ -2,6 +2,7 @@ const { realpathSync } = require('fs');
 const { resolve } = require('path');
 const url = require('url');
 
+const pkgData = require('../config/packageJson');
 const cliInstance = require('../utils/cliInstance');
 
 function resolveSDK(relativePath) {
@@ -50,10 +51,22 @@ function resolveApp(relativePath) {
 
 const isOldKoa = cliInstance.get('projectType') == 'node';
 
+function getAppHtmlPath() {
+  let relativePath = '';
+  if (isOldKoa) {
+    relativePath = 'client/index.html';
+  } else if (pkgData.type === 'block') {
+    relativePath = 'demo/index.html';
+  } else {
+    relativePath = 'public/index.html';
+  }
+  return resolveApp(relativePath);
+}
+
 module.exports = {
   appBuild: resolveApp('build') ,
   appPublic: resolveApp('public') ,
-  appHtml: isOldKoa ? resolveApp('client/index.html') : resolveApp('public/index.html'),
+  appHtml: getAppHtmlPath(),
   appFavicon: isOldKoa ? resolveApp('client/favicon.png') : resolveApp('public/favicon.png'),
   appFaviconIco: isOldKoa ? resolveApp('client/favicon.ico') : resolveApp('public/favicon.ico'),
   appPackageJson: resolveApp('package.json'),

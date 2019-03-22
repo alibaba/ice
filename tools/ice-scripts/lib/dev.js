@@ -97,7 +97,7 @@ module.exports = async function(cliOptions, subprocess) {
   let isFirstCompile = true;
   const compiler = webpack(webpackConfig);
   // eslint-disable-next-line global-require
-  let devServerConfig = require('./config/webpack.server.config')(program);
+  let devServerConfig = require('./config/webpack.server.config')();
   if ('devServer' in webpackConfig) {
     // merge user config
     devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);
