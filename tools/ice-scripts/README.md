@@ -5,12 +5,14 @@ Cli dev tool for ice.
 ## Install
 
 ```bash
-npm install ice-scripts -g
+$ npm install ice-scripts -g
 
-ice -h
+$ ice --help
 ```
 
 ## Cli
+
+> Recommended cli way
 
 ```
 mkdir ice-project
@@ -22,6 +24,8 @@ ice build
 ```
 
 ## Methods
+
+> Not recommended
 
 ### init({ scaffold })
 
