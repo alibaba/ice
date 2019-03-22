@@ -27,11 +27,9 @@
   "buildConfig": {
     "theme": "@icedesign/theme",
     "entry": "demo/index.js",
-    "localization": false,
     "output": {
       "publicPath": "./"
-    },
-    "htmlTemplatePath": "demo/index.html"
+    }
   },
   "publishConfig": {
     "registry": "{{registry}}"
