@@ -1,7 +1,7 @@
 ---
 title: React 基础知识和介绍
 order: 5
-category: 入门指引
+
 ---
 
 > React 是 21 世纪人类智慧的结晶。

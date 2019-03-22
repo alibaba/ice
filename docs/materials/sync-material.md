@@ -1,7 +1,7 @@
 ---
 title: 物料托管
 order: 8
-category: 物料
+
 ---
 
 ## 物料托管
@@ -19,10 +19,10 @@ category: 物料
 
 ## 使用物料
  `npm run sync` 命令运行完成以后，会返回如下内容:
- 
+
 > 物料同步完成
 > 物料源地址: https://fusion.design/api/v1/sites/xxxx/materials
-> 请在 Iceworks 设置面板中添加自定义物料源 
+> 请在 Iceworks 设置面板中添加自定义物料源
 
 把物料源地址`https://fusion.design/api/v1/sites/xxxx/materials`， 添加到 Iceworks 自定义物料源就可以使用。
 
