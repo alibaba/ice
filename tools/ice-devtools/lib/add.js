@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const path = require('path');
-const { existsSync: exists } = require('fs');
+const { existsSync } = require('fs');
 const ora = require('ora');
 const home = require('user-home');
 const { sync: rm } = require('rimraf');
@@ -48,17 +48,16 @@ module.exports = async function add(cwd, options = {}) {
 };
 
 /**
- * 独立的组件添加链路
+ * 创建一个独立的组件/区块
  * @param {*} cwd 
  * @param {*} options 
  */
 async function addForStandaloneProject(cwd, options) {
   const { type, template } = options;
 
-  const framework = 'react';
   const npmPrefix = options.scope ? `${options.scope}/` : '';
 
-  const templatePath = await getTemplatePath(framework, type, cwd, template);
+  const templatePath = await getTemplatePath(type, cwd, template);
 
   require(`./${type}/add`)(cwd, {
     npmPrefix,
@@ -68,21 +67,20 @@ async function addForStandaloneProject(cwd, options) {
 }
 
 /**
- * 标准物料仓库
+ * 在物料仓库中新增一个组件/区块
  */
 async function addForMaterialProject(cwd, options) {
   const {
     pkg
   } = options;
 
-  const framework = pkg.materialConfig.type;
   const npmPrefix = `${pkg.name}-`;
 
   // block、scaffold、etc...
   const { type } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
   debug('ans: %j', type);
 
-  const templatePath = await getTemplatePath(framework, type, cwd);
+  const templatePath = await getTemplatePath(type, cwd);
 
   require(`./${type}/add`)(cwd, {
     npmPrefix,
@@ -95,11 +93,11 @@ async function addForMaterialProject(cwd, options) {
  * @param {string} type 
  * @param {string} cwd 
  */
-async function getTemplatePath(framework, templateType, cwd, template) {
+async function getTemplatePath(templateType, cwd, template) {
   // from local path
   if (template && isLocalPath(template)) {
     const templatePath = path.join(template, `template/${templateType}`);
-    if (exists(templatePath)) {
+    if (existsSync(templatePath)) {
       return templatePath;
     }
     logger.fatal(`template is not found in ${templatePath}` );
@@ -108,10 +106,10 @@ async function getTemplatePath(framework, templateType, cwd, template) {
   // from local .template file
   const templateRoot = path.join(cwd, `.template`);
 
-  if (exists(templateRoot)) {
+  if (existsSync(templateRoot)) {
     const localTemplate = path.join(templateRoot, templateType);
 
-    if (exists(localTemplate)) {
+    if (existsSync(localTemplate)) {
       return localTemplate;
     } else {
       logger.fatal(`template for ${templateType} is not found in .template` );
@@ -119,7 +117,7 @@ async function getTemplatePath(framework, templateType, cwd, template) {
   }
 
   // form npm package
-  const templateName = template || `@icedesign/ice-${framework}-material-template`;
+  const templateName = template || `@icedesign/ice-react-material-template`; // 老项目新增物料 & 组件独立创建链路 会使用 `@icedesign/ice-react-material-template`
   const tmp = await downloadTemplate(templateName);
   const templatePath = path.join(tmp, `template/${templateType}`);
 
@@ -137,7 +135,7 @@ function downloadTemplate(template) {
 
   const tmp = path.join(home, '.ice-templates', template);
   debug('downloadTemplate', template);
-  if (exists(tmp)) rm(tmp);
+  if (existsSync(tmp)) rm(tmp);
   return download({ template })
     .then(() => {
       downloadspinner.stop();

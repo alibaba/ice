@@ -2,21 +2,11 @@ const debug = require('debug')('ice:start:block');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const chalk = require('chalk');
-const getBlockType = require('../../utils/block-type');
 const getBaseConfig = require('../../config/webpack.block');
-const logger = require('../../utils/logger');
 const PORT = 5000;
 
 module.exports = function blockDevStart(cwd, opt) {
-  const blockType = getBlockType(cwd);
-
-  let config;
-
-  if (blockType === 'react') {
-    config = getBaseConfig(cwd, blockType);
-  } else {
-    logger.fatal(`${blockType} is not support by defalut, use 'npm start' instead`);
-  }
+  const config = getBaseConfig(cwd, 'react');
 
   // devServer
   let { port = PORT } = opt;

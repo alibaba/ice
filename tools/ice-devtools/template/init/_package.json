@@ -25,6 +25,5 @@
     "registry": "{{registry}}"
   },
   "materialConfig": {
-    "type": "react"
   }
 }
