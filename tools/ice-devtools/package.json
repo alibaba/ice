@@ -49,6 +49,7 @@
     "cross-spawn": "^6.0.5",
     "css-loader": "^1.0.1",
     "debug": "^2.6.3",
+    "easyfile": "^0.2.0",
     "file-loader": "^3.0.1",
     "handlebars": "^4.0.12",
     "handlebars-loader": "^1.7.0",

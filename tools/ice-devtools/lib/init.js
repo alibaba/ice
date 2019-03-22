@@ -1,44 +1,49 @@
-const exists = require('fs').existsSync;
 const path = require('path');
 const fs = require('fs');
 const ora = require('ora');
 const home = require('user-home');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
-const tildify = require('tildify');
 const rm = require('rimraf').sync;
-const spawn = require('cross-spawn');
 const validateName = require('validate-npm-package-name');
+const easyfile = require('easyfile');
 
 const logger = require('../utils/logger');
 const generate = require('../utils/generate');
 const localPath = require('../utils/local-path');
 const download = require('../utils/download');
 const innerNet = require('../utils/inner-net');
-const addComponent = require('./component/add');
+const add = require('./add');
+const generateDemo = require('../utils/generate-marterials-demo');
 
 const isLocalPath = localPath.isLocalPath;
-const getTemplatePath = localPath.getTemplatePath;
 
-module.exports = async function init(cwd, ...args) {
+module.exports = async function init(cwd) {
   try {
+    const type = process.env.TYPE || 'material';
+    const template = process.env.TEMPLATE;
+
     // 检查当前目录是否为空
-    if (fs.readdirSync(cwd).length) {
+    if (fs.readdirSync(cwd).length && type === 'material') {
       logger.fatal('Workdir %s is not empty.', cwd);
     }
 
-    const options = Object.assign({ cwd }, { args: [...args] });
+    const options = Object.assign({ 
+      cwd, 
+      type,
+      template,
+    });
+
     const answers = await initAsk(options);
 
-    if (answers.type === 'component') {
-      addComponent('react', cwd, {
-        standalone: true,
-        scope: answers.scope
+    if (options.type === 'material') {
+      run(answers, options);
+    } else {
+      add(cwd, {
+        template,
+        ...answers
       });
-      return;
     }
-
-    run(answers, options);
   } catch (error) {
     logger.fatal(error);
   }
@@ -48,26 +53,12 @@ module.exports = async function init(cwd, ...args) {
  * 初始询问
  */
 async function initAsk(options = {}) {
-  const { type } = await inquirer.prompt([
-    {
-      type: 'list',
-      message: 'please select the project type',
-      name: 'type',
-      default: 'material',
-      choices: [
-        'material',
-        'component'
-      ],
-    },
-  ]);
-
   const isInnerNet = await innerNet.isInnerNet();
-
   const { forInnerNet } = await (isInnerNet
     ? inquirer.prompt([
         {
           type: 'confirm',
-          message: '当前处于阿里内网环境,生成只在内网可用的物料仓库',
+          message: '当前处于阿里内网环境,生成只在内网可用的物料',
           name: 'forInnerNet',
         },
       ])
@@ -92,15 +83,15 @@ async function initAsk(options = {}) {
     },
   ]);
 
-  if (type === 'component') {
+  if (options.type !== 'material') {
     return {
-      type: 'component',
+      type: options.type,
       scope: scope
     };
   }
 
   const projectName = path.basename(options.cwd);
-  const { name } = await inquirer.prompt([
+  const { name, description } = await inquirer.prompt([
     {
       type: 'input',
       message: 'materials name',
@@ -118,11 +109,16 @@ async function initAsk(options = {}) {
         return true;
       },
     },
+    {
+      name: 'description',
+      type: 'string',
+      label: 'description',
+      message: 'description',
+      default: 'This is a material project',
+    },
   ]);
 
-  const templatePath = getLocalTemplatePath(options.args);
-
-  const { template } = await (!templatePath
+  const { template } = await (!options.template
     ? inquirer.prompt([
         {
           type: 'list',
@@ -130,20 +126,22 @@ async function initAsk(options = {}) {
           name: 'template',
           choices: [
             {
-              name: '@icedesign/ice-react-materials-template (React 标准模板)',
-              value: '@icedesign/ice-react-materials-template'
+              name: '@icedesign/ice-react-material-template (React 标准模板)',
+              value: '@icedesign/ice-react-material-template'
             },
-            // TODO
-            // '@icedesign/ice-vue-materials-template',
-            // '@icedesign/universal-materials-template',
+            {
+              name: '@icedesign/ice-vue-material-template (Vue 标准模板)',
+              value: '@icedesign/ice-vue-material-template'
+            }
           ],
         },
       ])
-    : { template: templatePath });
+    : { template: options.template });
 
   return {
     name: scope ? `${scope}/${name}` : name,
     template,
+    description
   };
 }
 
@@ -152,32 +150,39 @@ async function initAsk(options = {}) {
  * @param {object} opt
  * @param {object} argsOpt
  */
-function run(opt, argsOpt) {
-  let { template, name } = opt;
-  const { offline, cwd } = argsOpt;
-  const tmp = path.join(home, '.ice-templates', template);
+async function run(opt, argsOpt) {
+  const { template, name, description } = opt;
+  const { cwd: dest } = argsOpt;
 
-  // 检查是否离线模式
-  if (offline) {
-    console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`);
-    template = tmp;
-  }
+  // init material project
+  await generate({
+    name,
+    version: '1.0.0',
+    description,
+    src: path.join(__dirname, `../template/init`),
+    dest
+  });
+
+  let templatePath;
 
   // 如果是本地模板则从缓存读取，反之从 npm 源下载初始模板
   if (isLocalPath(template)) {
-    const templatePath = getTemplatePath(template);
-    const npmName = name;
-    if (exists(templatePath)) {
-      generate(name, npmName, templatePath, cwd, (err, cb) => {
-        if (err) logger.fatal(err);
-        initCompletedMessage(cwd, name);
-      });
-    } else {
+    if (!fs.existsSync(template)) {
       logger.fatal('Local template "%s" not found.', template);
+    } else {
+      templatePath = template;
     }
   } else {
-    downloadAndGenerate({ template, tmp, to: cwd, name });
+    templatePath = await downloadTemplate(template);
   }
+
+  // clone template
+  easyfile.copy(path.join(templatePath, 'template'), path.join(dest, '.template'));
+
+  // generate demo
+  await generateDemo(dest);
+
+  initCompletedMessage(dest, name);
 }
 
 /**
@@ -187,84 +192,23 @@ function run(opt, argsOpt) {
  * @param {string} to        写入路径
  * @param {string} name      项目名称
  */
-function downloadAndGenerate({ template, tmp, to, name }) {
+function downloadTemplate(template) {
   const spinner = ora('downloading template');
   spinner.start();
 
+  const tmp = path.join(home, '.ice-templates', template);
   // Remove if local template exists
-  if (exists(tmp)) rm(tmp);
-  download({ template })
-    .then(() => {
-      spinner.stop();
+  if (fs.existsSync(tmp)) rm(tmp);
 
-      const npmName = name;
-      generate(name, npmName, tmp, to, (err, cb) => {
-        if (err) logger.fatal(err);
-        initCompletedMessage(to, name);
-      });
+  return download({ template })
+    .then(async () => {
+      spinner.stop();
+      return tmp;
     })
     .catch((err) => {
       spinner.stop();
       logger.fatal(`Failed to download repo ${template} : ${err.stack}`);
     });
-}
-
-/**
- * TODO: 不够优雅，需要重构
- * 依赖安装
- * @param {string} to     项目名称
- * @param {string} cb     用来显性控制从 meta.js 里面读取的 message 展现时机
- */
-function tryNPMInstall({ to, cb }) {
-  inquirer
-    .prompt([
-      {
-        type: 'confirm',
-        name: 'needNPMInstall',
-        message: 'Do you need run `npm install` right now?',
-      },
-    ])
-    .then((answers) => {
-      if (answers.needNPMInstall) {
-        // todo 日志没有高亮
-        const npm = spawn('npm', ['install'], { cwd: to });
-
-        npm.stdout.on('data', (data) => {
-          console.log(`${data}`);
-        });
-
-        npm.stderr.on('data', (data) => {
-          console.log(`${data}`);
-        });
-
-        npm.on('close', (code) => {
-          console.log('npm install finished.');
-          cb();
-        });
-      }
-    });
-}
-
-/**
- * 获取本地模板路径
- * @param {array} options
- */
-function getLocalTemplatePath(options = []) {
-  const [, template] = options;
-  if (!template) {
-    return null;
-  }
-
-  if (!isLocalPath(template)) {
-    logger.fatal('Local path "%s" is invalid.', template);
-  }
-
-  const templatePath = getTemplatePath(template);
-  if (!exists(templatePath)) {
-    logger.fatal('Local template "%s" not found.', template);
-  }
-
-  return template;
 }
 
 function initCompletedMessage(appPath, appName) {
@@ -276,12 +220,12 @@ function initCompletedMessage(appPath, appName) {
   console.log(chalk.cyan('    npm install'));
   console.log();
   console.log('  Starts the block development server.');
-  console.log(chalk.cyan('    cd blocks/Greeting'));
+  console.log(chalk.cyan('    cd blocks/ExampleBlock'));
   console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();
   console.log('  Starts the scaffold development server.');
-  console.log(chalk.cyan('    cd scaffolds/lite'));
+  console.log(chalk.cyan('    cd scaffolds/ExampleScaffold'));
   console.log(chalk.cyan('    npm install'));
   console.log(chalk.cyan('    npm start'));
   console.log();
