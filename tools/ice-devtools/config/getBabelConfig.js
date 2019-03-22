@@ -50,7 +50,13 @@ module.exports = (buildConfig = {}) => {
       ['babel-plugin-import', { libraryName: '@alifd/next' }, '@alifd/next'],
       ['babel-plugin-import', { libraryName: 'antd', style: true }, 'antd'],
       [
-        '@babel/plugin-transform-runtime'
+        '@babel/plugin-transform-runtime',
+        {
+          "corejs": false,
+          "helpers": false,
+          "regenerator": true,
+          "useESModules": false
+        }
       ]
     ]),
   };
