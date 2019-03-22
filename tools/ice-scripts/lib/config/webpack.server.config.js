@@ -1,4 +1,6 @@
 const cliInstance = require('../utils/cliInstance');
+const pkgData = require('./packageJson');
+const demoRouter = require('../utils/demoRouter');
 
 module.exports = () => {
   return {
@@ -22,5 +24,6 @@ module.exports = () => {
         next();
       });
     },
+    after: pkgData.type === 'component' ? demoRouter : null,
   };
 };

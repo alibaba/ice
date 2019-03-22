@@ -25,30 +25,29 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const goldlog = require('./utils/goldlog');
 const pkgData = require('../package.json');
 const log = require('./utils/log');
+const demoRouter = require('./utils/demoRouter');
 
-module.exports = async function(cliOptions, subprocess) {
+module.exports = async function (cliOptions, subprocess) {
   goldlog('version', {
-    version: pkgData.version
+    version: pkgData.version,
   });
   goldlog('dev', cliOptions);
   log.verbose('init cliOptions', cliOptions);
 
   // 与 iceworks 客户端通信
-  const send = function(data) {
+  const send = function (data) {
     iceworksClient.send(data);
     if (subprocess && typeof subprocess.send === 'function') {
       subprocess.send(data);
     }
   };
 
-  const cwd = process.cwd();
-
   const HOST = cliOptions.host || '0.0.0.0';
   const PORT = cliOptions.port || 4444;
   let httpsConfig;
   let protocol = cliOptions.https ? 'https' : 'http';
 
-  if (protocol == 'https') {
+  if (protocol === 'https') {
     try {
       const ca = await generateRootCA();
       httpsConfig = {
@@ -63,7 +62,8 @@ module.exports = async function(cliOptions, subprocess) {
 
   const isInteractive = false; // process.stdout.isTTY;
   const urls = prepareUrLs(protocol, HOST, PORT);
-  const entries = getEntries(cwd);
+  const entries = getEntries();
+
   const proxyConfig = getProxyConfig();
   // eslint-disable-next-line import/no-dynamic-require
   const packageData = require(paths.appPackageJson);
@@ -75,7 +75,6 @@ module.exports = async function(cliOptions, subprocess) {
   const webpackConfig = getWebpackConfigDev({
     entry: entries,
     buildConfig: packageData.buildConfig || packageData.ice,
-
   });
 
   if (iceworksClient.available) {

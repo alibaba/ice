@@ -17,6 +17,9 @@ const SASS_LOADER = require.resolve('sass-loader');
 const CSS_HOT_LOADER = require.resolve('css-hot-loader');
 const URL_LOADER = require.resolve('url-loader');
 const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
+const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
+const DEMO_LOADER = require.resolve('../loaders/componentDemoLoader');
+
 const URL_LOADER_LIMIT = 8192;
 
 function withCssHotLoader(loaders) {
@@ -229,6 +232,16 @@ module.exports = (buildConfig = {}, themeConfig) => {
         limit: URL_LOADER_LIMIT,
         name: 'assets/[hash].[ext]',
       },
+    },
+    {
+      test: /\.md$/i,
+      loader: DEMO_LOADER,
+      options: {},
+    },
+    {
+      test: /\.hbs$/i,
+      loader: HANDLEBARS_LOADER,
+      options: {},
     },
   ];
 };

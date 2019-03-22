@@ -1,6 +1,9 @@
 const path = require('path');
 const colors = require('chalk');
 
+const paths = require('./paths');
+const pkgData = require('./packageJson');
+
 module.exports = function getResolveAlias(buildConfig) {
   let alias = {};
 
@@ -26,6 +29,10 @@ module.exports = function getResolveAlias(buildConfig) {
 
       '@alife/next': '@icedesign/base'
     };
+  }
+
+  if (pkgData.type === 'component') {
+    alias[pkgData.name] = path.resolve(paths.appDirectory, 'src/index.js');
   }
 
   return alias;

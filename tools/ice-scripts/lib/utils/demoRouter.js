@@ -2,9 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const hbs = require('handlebars');
 
-const getDemos = require('./get-demos');
-const { getPkgJSON } = require('./pkg-json');
-const { parseMarkdownParts } = require('./markdown-helper');
+const { appDirectory } = require('../config/paths');
+const getDemos = require('./getDemos');
+const { getPkgJSON } = require('./pkgJson');
+const { parseMarkdownParts } = require('./markdownHelper');
 
 const DEMO_TEMPLATE = path.join(__dirname, '../template/component/demo.hbs');
 const HOME_TEMPLATE = path.join(__dirname, '../template/component/home.hbs');
@@ -16,9 +17,11 @@ function compile(hbsPath) {
   return compileTemplateContent;
 }
 
-module.exports = function router(app, cwd) {
-  const demos = getDemos(cwd);
-  const pkg = getPkgJSON(cwd);
+module.exports = function router(app) {
+
+  console.log('routerxxxxxxx');
+  const demos = getDemos(appDirectory);
+  const pkg = getPkgJSON(appDirectory);
   const pkgName = pkg.name;
 
   app.get('/preview', async (req, res, next) => {
@@ -29,7 +32,7 @@ module.exports = function router(app, cwd) {
       return;
     }
 
-    const demoFile = path.join(cwd, 'demo', demo + '.md');
+    const demoFile = path.join(appDirectory, 'demo', demo + '.md');
     if (!fs.existsSync(demoFile)) {
       res.redirect('/');
       return;
@@ -37,7 +40,7 @@ module.exports = function router(app, cwd) {
 
     const demoContent = fs.readFileSync(demoFile, 'utf-8');
     const { highlightedCode, content, meta } = parseMarkdownParts(demoContent, {
-      sliceCode: true
+      sliceCode: true,
     });
 
     const compileTemplateContent = compile(DEMO_TEMPLATE);
@@ -46,12 +49,12 @@ module.exports = function router(app, cwd) {
       demoName: demo,
       name: pkgName, // 组件 npm名
       meta: Object.keys(meta).map((key) => ({ key, value: meta[key] })),
-      highlightedCode: highlightedCode,
+      highlightedCode,
       markdownContent: content,
       demos,
-     });
+    });
 
-     res.send(jsTemplateContent);
+    res.send(jsTemplateContent);
   });
 
   app.get('/', async (req, res, next) => {
@@ -59,9 +62,9 @@ module.exports = function router(app, cwd) {
 
     const jsTemplateContent = compileTemplateContent({
       demos,
-      pkg: pkgName
-     });
+      pkg: pkgName,
+    });
 
-     res.send(jsTemplateContent);
+    res.send(jsTemplateContent);
   });
 }
