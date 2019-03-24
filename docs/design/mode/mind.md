@@ -1,7 +1,7 @@
 ---
-title: 设计模式-心智统一
-category: 中后台设计体系
-order: 9
+title: 心智统一
+
+order: 3
 ---
 
 ## 映射呈现一致

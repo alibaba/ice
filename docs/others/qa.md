@@ -1,6 +1,6 @@
 ---
 title: 常见问题 QA
-category: 其它
+
 order: 1
 ---
 

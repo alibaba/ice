@@ -1,7 +1,7 @@
 ---
 title: 菜单设计
 order: 3
-category: ICE Design Pro
+
 ---
 
 在模板中，菜单按照一定的约定进行配置，用来描述菜单栏的结构关系。菜单信息配置在 src/menuConfig.js 中，这样设计的目的主要有以下几点：

@@ -1,6 +1,6 @@
 ---
 title: 如何使用 ICE 组件
-category: 入门指引
+
 order: 6
 ---
 
