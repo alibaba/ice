@@ -1,7 +1,7 @@
 ---
-title: 设计模式-认知减负
-category: 中后台设计体系
-order: 7
+title: 认知减负
+
+order: 1
 ---
 
 ## 更细腻的反馈和引导

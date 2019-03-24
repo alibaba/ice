@@ -1,7 +1,7 @@
 ---
 title: JavaScript 基础知识
 order: 4
-category: 入门指引
+
 ---
 
 写前端必须要掌握一定基础的 JavaScript 语言知识，本文档将介绍绝大部分常用的 JavaScript 语言基础知识，同样概念添加 Java 语言对比，帮你快速学习理解。

@@ -1,7 +1,7 @@
 ---
 title: 使用 Iceworks 创建 create-react-app 的项目
 order: 7
-category: 进阶指南
+
 ---
 
 飞冰默认使用 [ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts) 作为开发工具，但是如果你想使用社区的 [create-react-app](https://github.com/facebook/create-react-app) 开发项目，我们也在 Iceworks 里提供了基于 create-react-app 的模板，支持按需引入飞冰基础组件，添加区块等能力。
