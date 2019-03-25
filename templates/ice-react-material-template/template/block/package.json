@@ -21,8 +21,7 @@
   },
   "devDependencies": {
     "react": "^16.3.0",
-    "react-dom": "^16.3.0",
-    "ice-scripts": "^1.6.7"
+    "react-dom": "^16.3.0"
   },
   "buildConfig": {
     "theme": "@icedesign/theme",
