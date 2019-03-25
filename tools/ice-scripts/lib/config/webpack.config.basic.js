@@ -54,7 +54,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
   buildConfig.outputAssetsPath = {
     css: 'css',
     js: 'js',
-    ...buildConfig.outputAssetsPath
+    ...buildConfig.outputAssetsPath,
   };
 
   log.verbose('hasExternalReact', hasExternalReact);

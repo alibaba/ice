@@ -92,7 +92,7 @@ function generateEntryJS(demos) {
   const tempPath = getTempPath();
   const jsPath = path.join(tempPath, `component-index.js`);
 
-  const jsTemplateContent = compileTemplateContent({ 
+  const jsTemplateContent = compileTemplateContent({
     demos: demos.map((demo) => {
       return {
         path: formatPathForWin(demo.filePath)

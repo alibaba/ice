@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const cliInstance = require('../utils/cliInstance');
 
 const pkg = {};
 

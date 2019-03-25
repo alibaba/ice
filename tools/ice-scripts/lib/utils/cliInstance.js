@@ -21,7 +21,7 @@ exports.initByProgram = (program) => {
 
   if (pkgData.type === 'block' || pkgData.type === 'component') {
     // 组件和区块都使用 runtime
-    cliOptions.injectBabel = 'runtime';
+    // cliOptions.injectBabel = 'runtime';
   }
 
   return cliOptions;

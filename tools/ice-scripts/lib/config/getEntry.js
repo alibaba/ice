@@ -1,7 +1,10 @@
 // 读取需要编译的文件
-const fs = require('fs');
 const colors = require('chalk');
 const path = require('path');
+
+const paths = require('./paths');
+const pkgData = require('./packageJson');
+const getDemos = require('../utils/component/getDemos');
 
 /**
  * 获取项目中符合 src/pages/xxxx/index.jsx 的文件
@@ -9,29 +12,34 @@ const path = require('path');
  * @return {Object} entry 的 kv 对象
  */
 
-module.exports = function getEntry(cwd) {
-  const appDirectory = fs.realpathSync(cwd);
-  const packageFilePath = path.resolve(appDirectory, 'package.json');
-  // eslint-disable-next-line import/no-dynamic-require
-  const packageData = require(packageFilePath);
+module.exports = function getEntry() {
 
-  // 需要区分项目类型，新版的项目直接返回 src/index.js
-  if (packageData) {
-    let entry;
+  if (pkgData.type === 'component') {
+    const entry = {};
+    const demos = getDemos(paths.appDirectory);
 
-    // 兼容 iceworks 旧项目 package.json 里的 ice 字段。
-    if (packageData.ice && packageData.ice.entry) {
-      entry = packageData.ice.entry;
-    }
+    demos.forEach((demo) => {
+      const demoName = demo.filename;
+      const demoFile = path.join(paths.appDirectory, 'demo', `${demoName}.md`);
+      entry[`__Component_Dev__.${demoName}`] = demoFile;
+    });
 
-    if (packageData.buildConfig && packageData.buildConfig.entry) {
-      entry = packageData.buildConfig.entry;
-    }
+    return entry;
+  }
 
-    if (entry) {
-      // eslint-disable-next-line no-console
-      console.log(colors.green('Info:'), 'package.json 存在 entry 配置');
-      return entry;
-    }
+  let entry;
+  // 兼容 iceworks 旧项目 package.json 里的 ice 字段。
+  if (pkgData.ice && pkgData.ice.entry) {
+    entry = pkgData.ice.entry;
+  }
+
+  if (pkgData.buildConfig && pkgData.buildConfig.entry) {
+    entry = pkgData.buildConfig.entry;
+  }
+
+  if (entry) {
+    // eslint-disable-next-line no-console
+    console.log(colors.green('Info:'), 'package.json 存在 entry 配置');
+    return entry;
   }
 };
