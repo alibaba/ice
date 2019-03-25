@@ -54,10 +54,12 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
   buildConfig.outputAssetsPath = {
     css: 'css',
     js: 'js',
-    ...buildConfig.outputAssetsPath
+    ...buildConfig.outputAssetsPath,
   };
 
   log.verbose('hasExternalReact', hasExternalReact);
+
+  log.info('--inject-babel: ', cliInstance.get('injectBabel'));
 
   const webpackConfig = {
     mode: process.env.NODE_ENV,

@@ -7,8 +7,7 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const { collectDetail } = require('@alifd/fusion-collector');
 
-const pkgData = require('../package.json');
-const paths = require('./config/paths');
+const iceScriptsPkgData = require('../package.json');
 const getEntries = require('./config/getEntry');
 const getWebpackConfigProd = require('./config/webpack.config.prod');
 const npmInstall = require('./helpers/npmInstall');
@@ -16,6 +15,8 @@ const goldlog = require('./utils/goldlog');
 const log = require('./utils/log');
 const cliInstance = require('./utils/cliInstance');
 const validationSassAvailable = require('./utils/validationSassAvailable');
+const pkgData = require('./config/packageJson');
+const componentBuild = require('./component/build');
 
 /**
  * 构建项目：cli 调用；云构建方法调用
@@ -24,47 +25,52 @@ const validationSassAvailable = require('./utils/validationSassAvailable');
  *
  * @param {Object} options 命令行参数
  */
-module.exports = async function(options) {
+module.exports = async function (options) {
   let { customWebpackConfig, cliOptions } = options || {};
   const cwd = process.cwd();
 
   const defaultCliOptions = {
     sourcemap: 'none',
     projectType: 'web',
-    injectBabel: 'polyfill'
+    injectBabel: 'polyfill',
+    skipDemo: false,
   };
   cliOptions = {
     ...defaultCliOptions,
-    ...cliOptions
+    ...cliOptions,
   };
-  cliInstance.set(cliOptions);
+  cliInstance.reset(cliOptions);
 
   goldlog('version', {
-    version: pkgData.version
+    version: iceScriptsPkgData.version,
   });
   goldlog('build', cliOptions);
   log.verbose('build cliOptions', cliOptions);
 
-  validationSassAvailable();
-
-  try {
-    collectDetail({
-      rootDir: cwd, // 项目根地址
-      basicPackage: ['@alifd/next', '@icedesign/base', '@alife/next'], // 主体包名称
-      kit: 'ice-scripts', // 统计的来源
-    });
-  } catch (err) {
-    log.warn('collectDetail error', err);
+  if (pkgData.type === 'component') {
+    // 组件构建
+    return componentBuild(pkgData.buildConfig);
   }
 
-  const entries = getEntries(cwd);
-  // eslint-disable-next-line
-  const packageData = require(paths.appPackageJson);
-  // get ice config by package.ice
 
+  if (pkgData.type === 'project') {
+    validationSassAvailable();
+
+    try {
+      collectDetail({
+        rootDir: cwd, // 项目根地址
+        basicPackage: ['@alifd/next', '@icedesign/base', '@alife/next'], // 主体包名称
+        kit: 'ice-scripts', // 统计的来源
+      });
+    } catch (err) {
+      log.warn('collectDetail error', err);
+    }
+  }
+
+  const entries = getEntries();
   let webpackConfig = getWebpackConfigProd({
     entry: entries,
-    buildConfig: packageData.buildConfig || packageData.ice,
+    buildConfig: pkgData.buildConfig || pkgData.ice,
   });
   webpackConfig = webpackMerge(webpackConfig, customWebpackConfig);
 

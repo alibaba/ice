@@ -7,12 +7,12 @@ let connected = false;
 const ON_ICEWORKS = typeof process.env.ICEWORKS_IPC !== 'undefined';
 
 if (ON_ICEWORKS) {
-  ipc.connectToNet('iceworks', function() {
-    ipc.of.iceworks.on('connect', function() {
+  ipc.connectToNet('iceworks', () => {
+    ipc.of.iceworks.on('connect', () => {
       connected = true;
       console.log('iceworks ipc 链接成功');
     });
-    ipc.of.iceworks.on('disconnect', function() {
+    ipc.of.iceworks.on('disconnect', () => {
       connected = false;
       ipc.log('disconnected from iceworks');
     });
