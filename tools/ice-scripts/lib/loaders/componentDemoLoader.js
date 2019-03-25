@@ -1,6 +1,6 @@
 const { join, basename } = require('path');
 const { existsSync } = require('fs');
-const { parseMarkdownParts } = require('../utils/markdownHelper');
+const { parseMarkdownParts } = require('../utils/component/markdownHelper');
 
 module.exports = function demoLoader(markdown) {
   const { compiledCode } = parseMarkdownParts(markdown, {

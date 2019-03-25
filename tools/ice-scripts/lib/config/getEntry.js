@@ -4,7 +4,7 @@ const path = require('path');
 
 const paths = require('./paths');
 const pkgData = require('./packageJson');
-const getDemos = require('../utils/getDemos');
+const getDemos = require('../utils/component/getDemos');
 
 /**
  * 获取项目中符合 src/pages/xxxx/index.jsx 的文件

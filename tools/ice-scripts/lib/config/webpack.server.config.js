@@ -1,9 +1,9 @@
 const cliInstance = require('../utils/cliInstance');
 const pkgData = require('./packageJson');
-const demoRouter = require('../utils/demoRouter');
+const demoRouter = require('../utils/component/demoRouter');
 
 module.exports = () => {
-  return {
+  const options = {
     // historyApiFallback: true,
     disableHostCheck: true,
     compress: true,
@@ -24,6 +24,12 @@ module.exports = () => {
         next();
       });
     },
-    after: pkgData.type === 'component' ? demoRouter : null,
   };
+
+  if (pkgData.type === 'component') {
+    options.after = demoRouter;
+    options.contentBase = false;
+  }
+
+  return options;
 };

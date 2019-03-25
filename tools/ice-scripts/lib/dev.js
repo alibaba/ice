@@ -25,7 +25,6 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const goldlog = require('./utils/goldlog');
 const pkgData = require('../package.json');
 const log = require('./utils/log');
-const demoRouter = require('./utils/demoRouter');
 
 module.exports = async function (cliOptions, subprocess) {
   goldlog('version', {
