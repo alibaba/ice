@@ -14,7 +14,7 @@ const shelljs = require('shelljs');
 const spawn = require('cross-spawn');
 const UglifyJS = require('uglify-es');
 const writeFile = require('write');
-const request = require('request');
+const rp = require('request-promise');
 
 const colors = gutil.colors;
 const isMac = process.platform === 'darwin';
@@ -555,28 +555,62 @@ gulp.task('build-dist', ['build'], () => {
 
 // 同步官网物料数据
 gulp.task('sync-db', () => {
-  request(
+  const MATERIALS_SOURCE = [
     {
       url: 'https://ice.alicdn.com/assets/react-materials.json',
-      json: true,
+      name: 'react-materials',
     },
-    (error, response, body) => {
-      if (body) {
-        const distDir = path.join(
-          __dirname,
-          'renderer',
-          'src',
-          'datacenter',
-          'react-materials.json'
-        );
-        writeFile(distDir, JSON.stringify(body, null, 2))
-          .then(() => {
-            console.log('同步物料 db 数据完成');
-          })
-          .catch((err) => {
-            console.log('同步物料 db 数据出错:', err);
-          });
-      }
-    }
-  );
+    {
+      url: 'https://ice.alicdn.com/assets/rax-materials.json',
+      name: 'rax-materials',
+    },
+    {
+      url: 'http://ice.alicdn.com/assets/vue-materials.json',
+      name: 'vue-materials',
+    },
+    {
+      url: 'https://ice.alicdn.com/assets/angular-materials.json',
+      name: 'angular-materials',
+    },
+    {
+      url: 'https://ice.alicdn.com/assets/base-components.json',
+      name: 'base-components',
+    },
+    {
+      url: 'https://ice.alicdn.com/assets/base-components-1.x.json',
+      name: 'base-components-1.x',
+    },
+  ];
+
+  const getMaterialsData = (material = {}) => {
+    return rp({
+      url: material.url,
+      json: true,
+    }).then((response) => {
+      const distDir = path.join(
+        __dirname,
+        'renderer',
+        'src',
+        'datacenter',
+        'data',
+        `${material.name}.json`
+      );
+      console.log(`物料数据 ${material.name} 下载完成`);
+      return writeFile(distDir, JSON.stringify(response, null, 2));
+    });
+  };
+
+  const tasks = MATERIALS_SOURCE.map((material) => {
+    return getMaterialsData(material);
+  });
+
+  Promise.all(tasks)
+    .then(() => {
+      console.log();
+      console.log('   同步物料 db 数据完成');
+      console.log();
+    })
+    .catch((err) => {
+      console.log('同步物料 db 数据出错:', err);
+    });
 });

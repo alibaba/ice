@@ -13,10 +13,6 @@ import { isIceMaterial } from '../lib/utils';
 import services from '../services';
 import projects from './projects';
 
-const BUILTIN_DATA = require('../datacenter/react-materials');
-
-console.log('BUILT_IN_DATA:', BUILTIN_DATA);
-
 const { settings, shared } = services;
 
 class Materials {
@@ -146,7 +142,11 @@ class Materials {
         .then((body = {}) => {
           fn(body);
         })
-        .catch(() => {
+        .catch((error) => {
+          // TODO: 这里的 error 可能有那些原因
+          console.log(error);
+
+          // 如果 alicdn 物料源访问超时 切换备份内置的物料源数据
           if (!this.useBuiltinData) {
             this.useBuiltinData = true;
             this.loadStartRecommendMaterials();
@@ -157,7 +157,7 @@ class Materials {
           }
         });
     } else {
-      fn(BUILTIN_DATA);
+      fn(require('../datacenter/data/react-materials'));
     }
   }
 
@@ -165,7 +165,9 @@ class Materials {
   loaderMaterial(index) {
     const material = this.materials[index];
     if (!material) return;
-    const source = material.source;
+
+    const { currentProject } = projects;
+    const iceVersion = currentProject ? currentProject.iceVersion : '1.x';
     const fn = (data, iceBaseComponents) => {
       const {
         blocks = [],
@@ -197,16 +199,14 @@ class Materials {
       if (material && !material.loaded) {
         let promiseAll;
         if (isIceMaterial(material.source)) {
-          // HACK: 获取 ICE 物料源时一同获取基础组件数据
-          // 因为 ICE 物料源会有一份单独的基础组件数据，其他的没有？
-          const { currentProject } = projects;
-          const iceVersion = currentProject ? currentProject.iceVersion : '1.x';
           const { iceBaseMaterials } = shared;
           const iceBaseMaterial =
             iceVersion === '0.x' ? iceBaseMaterials[0] : iceBaseMaterials[1];
 
           promiseAll = Promise.all([
-            this.fetchByMaterial(source),
+            this.fetchByMaterial(material.source),
+            // HACK: 获取 ICE 物料源时一同获取基础组件数据
+            // 因为 ICE 物料源会有一份单独的基础组件数据，其他的没有
             this.fetchByMaterial(iceBaseMaterial.source).catch(() => {
               // 获取基础组件列表失败，不终止流程
               material.componentsError = `基础组件列表加载失败，请确认网络是否能直接访问此链接 ${
@@ -216,7 +216,7 @@ class Materials {
             }),
           ]);
         } else {
-          promiseAll = Promise.all([this.fetchByMaterial(source)]);
+          promiseAll = Promise.all([this.fetchByMaterial(material.source)]);
         }
 
         promiseAll
@@ -225,18 +225,44 @@ class Materials {
           })
           .catch((error) => {
             console.error('promiseAll.then error', error);
-            if (!this.useBuiltinData && isIceMaterial(material.source)) {
+            // 判断是否是官方提供的物料源
+            // 只有官方提供的物料源才会走兜底逻辑使用内置的物料数据
+            if (
+              !this.useBuiltinData &&
+              material.source.includes('ice.alicdn.com')
+            ) {
               this.useBuiltinData = true;
               this.loaderMaterial(index);
             } else {
               material.loaded = true;
-              const errMsg = `物料源加载失败，请确认网络是否能直接访问此链接 ${source}，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题`;
+              const errMsg =
+                '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
               material.error = errMsg;
             }
           });
       }
     } else {
-      fn(BUILTIN_DATA);
+      const matchsArray = material.source.match(/assets\/(\S*)\.json/) || [];
+      const sourceName = matchsArray.length ? matchsArray[1] : '';
+
+      if (sourceName) {
+        const materialsData = require(`../datacenter/data/${sourceName}`);
+
+        // 如果是官方提供的 React 物料源单独获取基础组件数据
+        let iceComponentsData = [];
+        if (isIceMaterial(material.source)) {
+          const iceComponentsSourceName =
+            iceVersion === '0.x' ? 'base-components' : 'base-components-1.x';
+          iceComponentsData = require(`../datacenter/data/${iceComponentsSourceName}`);
+        }
+
+        fn(materialsData, iceComponentsData);
+      } else {
+        material.loaded = true;
+        const errMsg =
+          '内置物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
+        material.error = errMsg;
+      }
     }
   }
 

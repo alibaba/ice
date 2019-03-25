@@ -93,6 +93,8 @@
     "postcss-loader": "^2.1.5",
     "react-dev-utils": "^5.0.1",
     "react-hot-loader": "^4.3.2",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.0.3",
     "shelljs": "^0.8.1",
