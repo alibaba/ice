@@ -1,7 +1,7 @@
 ---
 title: 如何实现前后端通信
 order: 9
-category: 入门指引
+
 ---
 
 实现前后端通信，我们推荐使用 axios 或 DataBinder 与后端 HTTP API 接口通信的方案。

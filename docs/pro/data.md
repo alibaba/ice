@@ -1,7 +1,7 @@
 ---
 title: 数据方案
 order: 7
-category: ICE Design Pro
+
 ---
 
 在模板中，我们集成了 Redux 作为应用的状态管理，但这不是唯一的，你可以选择你熟悉的其他状态管理类的库。

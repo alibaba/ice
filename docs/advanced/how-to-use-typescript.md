@@ -1,7 +1,7 @@
 ---
 title: 如何使用 TypeScript
 order: 10
-category: 进阶指南
+
 ---
 
 ## 为什么使用 TypeScript

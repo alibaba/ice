@@ -1,7 +1,7 @@
 ---
 title: 组件版本号规则
 order: 2
-category: 其它
+
 ---
 
 ICE 的 npm 包默认遵守 [Semver](https://semver.org/) 语义化版本 2.0 的规则。
