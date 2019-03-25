@@ -1,7 +1,6 @@
 const debug = require('debug')('ice:start:block');
 const chalk = require('chalk');
 const { join } = require('path');
-const chalk = require('chalk');
 
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
