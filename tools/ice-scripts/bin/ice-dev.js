@@ -6,8 +6,10 @@ const program = require('commander');
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 
+
 const dev = require('../lib/dev');
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
+const checkUpdater = require('../lib/utils/checkUpdater');
 const cliInstance = require('../lib/utils/cliInstance');
 
 program
@@ -37,7 +39,10 @@ const isInteractive = process.stdout.isTTY;
 const DEFAULT_PORT = program.port || process.env.PORT || 4444;
 const defaultPort = parseInt(DEFAULT_PORT, 10);
 
-detect(defaultPort)
+checkUpdater()
+  .then(() => {
+    return detect(defaultPort);
+  })
   .then((newPort) => {
     return new Promise((resolve) => {
       if (newPort === defaultPort) {

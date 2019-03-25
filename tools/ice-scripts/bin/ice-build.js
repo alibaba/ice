@@ -5,6 +5,7 @@
 const program = require('commander');
 const cliInstance = require('../lib/utils/cliInstance');
 const build = require('../lib/build');
+const checkUpdater = require('../lib/utils/checkUpdater');
 
 /**
  * --project-type 参数说明
@@ -26,9 +27,9 @@ program
   )
   .parse(process.argv);
 
-cliInstance.initByProgram(program);
-
-// eslint-disable-next-line
-build({
-  cliOptions: cliInstance.get()
+checkUpdater().then(() => {
+  cliInstance.initByProgram(program);
+  build({
+    cliOptions: cliInstance.get()
+  });
 });
