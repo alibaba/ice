@@ -1,3 +1,6 @@
+/**
+ * get demos from demo dir
+ */
 const { readdirSync, readFileSync, existsSync } = require('fs');
 const { join } = require('path');
 

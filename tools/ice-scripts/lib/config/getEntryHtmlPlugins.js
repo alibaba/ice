@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
 const paths = require('./paths');
 const getFaviconPath = require('../utils/getFaviconPath');
 const pkgData = require('./packageJson');
