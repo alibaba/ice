@@ -20,14 +20,12 @@ module.exports = async function getDB(cwd) {
   const pkgs = db[`${type}s`];
   if (Array.isArray(pkgs)) {
     const pkgjson = pkgJSON.getPkgJSON(cwd);
-    debug()
     pkgs.push({
       source: {
         npm: pkgjson.name,
         version: pkgjson.version,
       }
     });
-    debug('fake db: %j', db);
     return db;
   }
 
