@@ -1,7 +1,7 @@
 ---
 title: 开发环境配置
 order: 1
-category: 入门指引
+
 ---
 
 飞冰的开发环境依赖于 Node.js，如您已经安装了 Node.js 且版本号符合 \*LTS 版本，则可以忽略此文档。
