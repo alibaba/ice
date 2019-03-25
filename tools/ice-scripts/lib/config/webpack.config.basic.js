@@ -86,7 +86,16 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
       rules: getRules(buildConfig, themeConfig),
     },
     plugins: getPlugins({ entry, buildConfig, themeConfig, pkg }),
-    optimization: {
+  };
+
+  if (pkg.type === 'component' || pkg.type === 'block') {
+    buildConfig.disableVendor = true;
+  }
+
+  if (buildConfig.disableVendor) {
+    log.info('buildCondfig.disableVendor', buildConfig.disableVendor);
+  } else {
+    webpackConfig.optimization = {
       splitChunks: {
         cacheGroups: {
           vendor: {
@@ -97,8 +106,8 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
           },
         },
       },
-    },
-  };
+    };
+  }
 
   const userConfig = getUserConfig();
   const finalWebpackConfig = webpackMerge({
