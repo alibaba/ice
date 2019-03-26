@@ -32,7 +32,7 @@ module.exports = function getResolveAlias(buildConfig) {
   }
 
   if (pkgData.type === 'component') {
-    alias[pkgData.name] = path.resolve(paths.appDirectory, 'src/index.js');
+    alias[pkgData.name] = path.resolve(paths.appDirectory, 'src/index');
   }
 
   return alias;
