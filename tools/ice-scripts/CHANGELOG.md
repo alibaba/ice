@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.9.0
+
+- [feat] 支持 init 项目
+- [feat] 支持 dev/build 区块&业务组件
+- [feat] 新增 buildConfig.disableVendor 配置
+- [feat] dev/build 前检测是否已安装依赖
+- [chore] 移除部分无用的依赖
+
 ## 1.8.13
 
 - [feat] 内置对 moment 的多语言优化
