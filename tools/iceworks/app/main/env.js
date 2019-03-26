@@ -12,13 +12,17 @@ const { APP_BIN_PATH, SASS_BINARY_PATH } = require('./paths');
 exports.SASS_BINARY_PATH = SASS_BINARY_PATH;
 
 exports.getEnv = () => {
+  // https://github.com/sindresorhus/npm-run-path
+  // Returns the augmented process.env object.
   const npmEnv = npmRunPath.env();
+
+  // Merge process.env、npmEnv and custom environment variables
   const env = Object.assign({}, process.env, npmEnv, {
     // eslint-disable-next-line
     npm_config_registry: settings.get('registry'),
     // eslint-disable-next-line
     yarn_registry: settings.get('registry'),
-    SASS_BINARY_PATH,
+    // SASS_BINARY_PATH,
     CLICOLOR: 1,
     FORCE_COLOR: 1,
     COLORTERM: 'truecolor',
@@ -27,7 +31,7 @@ exports.getEnv = () => {
     LANG: `${app.getLocale().replace('-', '_')}.UTF-8`,
   });
 
-  const pathEnv = [APP_BIN_PATH, npmEnv.PATH, process.env.PATH].filter(
+  const pathEnv = [process.env.PATH, npmEnv.PATH, APP_BIN_PATH].filter(
     (p) => !!p
   );
 
