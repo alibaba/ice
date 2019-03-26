@@ -15,7 +15,7 @@ const rimraf = require('rimraf');
 const log = require('../utils/log');
 const { appDirectory } = require('../config/paths');
 const getBabelConfig = require('../config/getBabelConfig');
-const ComponentStyleGenerator = require('../utils/component/component-style-generator');
+const ComponentStyleGenerator = require('./component-style-generator');
 
 module.exports = function componentBuild(buildConfig = {}) {
   const babelOpt = getBabelConfig(buildConfig, true);

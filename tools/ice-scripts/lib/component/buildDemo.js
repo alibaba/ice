@@ -11,8 +11,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const getWebpackConfig = require('../config/webpack.config.basic');
 const { appDirectory } = require('../config/paths');
-const getDemos = require('../utils/component/getDemos');
-const { parseMarkdownParts } = require('../utils/component/markdownHelper');
+const getDemos = require('./getDemos');
+const { parseMarkdownParts } = require('./markdownHelper');
 const logger = require('../utils/log');
 
 module.exports = (buildConfig, callback) => {

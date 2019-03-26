@@ -5,13 +5,13 @@ const fs = require('fs');
 const path = require('path');
 const hbs = require('handlebars');
 
-const { appDirectory } = require('../../config/paths');
+const { appDirectory } = require('../config/paths');
 const getDemos = require('./getDemos');
 const { getPkgJSON } = require('./pkgJson');
 const { parseMarkdownParts } = require('./markdownHelper');
 
-const DEMO_TEMPLATE = path.join(__dirname, '../../template/component/demo.hbs');
-const HOME_TEMPLATE = path.join(__dirname, '../../template/component/home.hbs');
+const DEMO_TEMPLATE = path.join(__dirname, '../template/component/demo.hbs');
+const HOME_TEMPLATE = path.join(__dirname, '../template/component/home.hbs');
 
 function compile(hbsPath) {
   const hbsTemplateContent = fs.readFileSync(hbsPath, 'utf-8');
