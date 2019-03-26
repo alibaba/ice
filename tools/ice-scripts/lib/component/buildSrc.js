@@ -18,8 +18,7 @@ const getBabelConfig = require('../config/getBabelConfig');
 const ComponentStyleGenerator = require('../utils/component/component-style-generator');
 
 module.exports = function componentBuild(buildConfig = {}) {
-  // TODO: 使用这份 babel 配置是否有问题
-  const babelOpt = getBabelConfig(buildConfig);
+  const babelOpt = getBabelConfig(buildConfig, true);
 
   const srcDir = path.join(appDirectory, 'src');
   const libDir = path.join(appDirectory, 'lib');
@@ -55,7 +54,7 @@ module.exports = function componentBuild(buildConfig = {}) {
   log.info('Generated style.js');
 
   styleGenerator.writeIndexScss();
-  log.info('Generated index.js');
+  log.info('Generated index.scss');
 
   function compileJS(file) {
     const source = path.join(srcDir, file);

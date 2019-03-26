@@ -24,6 +24,7 @@ const getProxyConfig = require('./config/getProxyConfig');
 const openBrowser = require('react-dev-utils/openBrowser');
 const goldlog = require('./utils/goldlog');
 const pkgData = require('../package.json');
+const projectPkgData = require('./config/packageJson');
 const log = require('./utils/log');
 
 module.exports = async function (cliOptions, subprocess) {
@@ -31,7 +32,7 @@ module.exports = async function (cliOptions, subprocess) {
     version: pkgData.version,
   });
   goldlog('dev', cliOptions);
-  log.verbose('init cliOptions', cliOptions);
+  log.verbose('dev cliOptions', cliOptions);
 
   // 与 iceworks 客户端通信
   const send = function (data) {
@@ -62,18 +63,14 @@ module.exports = async function (cliOptions, subprocess) {
   const isInteractive = false; // process.stdout.isTTY;
   const urls = prepareUrLs(protocol, HOST, PORT);
   const entries = getEntries();
-
   const proxyConfig = getProxyConfig();
-  // eslint-disable-next-line import/no-dynamic-require
-  const packageData = require(paths.appPackageJson);
-  // get ice config by package.ice
 
   if (cliOptions.disabledReload) {
     console.log(chalk.yellow('Warn:'), '关闭了热更新（hot-reload）功能');
   }
   const webpackConfig = getWebpackConfigDev({
     entry: entries,
-    buildConfig: packageData.buildConfig || packageData.ice,
+    buildConfig: projectPkgData.buildConfig || projectPkgData.ice,
   });
 
   if (iceworksClient.available) {
