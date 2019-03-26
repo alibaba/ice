@@ -36,5 +36,6 @@ module.exports = function getResolveAlias(buildConfig) {
     alias[pkgData.name] = path.resolve(paths.appDirectory, 'src/index');
   }
 
+  alias['@babel/runtime'] = path.resolve(__dirname, '../../node_modules/@babel/runtime');
   return alias;
 };
