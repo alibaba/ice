@@ -55,7 +55,7 @@ module.exports = (buildConfig, callback) => {
 
   compiler.run((err, stats) => {
     if (err) {
-      console.error(err.stack || err);
+      logger.error(err.stack || err);
       if (err.details) {
         logger.fatal(err.details);
       }

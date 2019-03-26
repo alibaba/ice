@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
+const log = require('../utils/log');
 const pkg = {};
 
 try {
@@ -19,7 +19,7 @@ try {
   }
 
 } catch (err) {
-  console.log('获取项目 package.json 失败, 检查是否有语法错误. ');
+  log.error('获取项目 package.json 失败, 检查是否有语法错误. ');
   throw err;
 }
 

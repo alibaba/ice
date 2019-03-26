@@ -2,11 +2,10 @@
  * 启动服务：cli 调用
  */
 
-/* eslint no-console:off */
 process.env.NODE_ENV = 'development';
 
-const chalk = require('chalk');
 const fs = require('fs');
+const chalk = require('chalk');
 const clearConsole = require('react-dev-utils/clearConsole');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const webpack = require('webpack');
@@ -56,7 +55,7 @@ module.exports = async function (cliOptions, subprocess) {
       };
     } catch (err) {
       protocol = 'http';
-      console.log(chalk.red('HTTPS 证书生成失败，已转换为HTTP'));
+      log.info('HTTPS 证书生成失败，已转换为HTTP');
     }
   }
 
@@ -66,7 +65,7 @@ module.exports = async function (cliOptions, subprocess) {
   const proxyConfig = getProxyConfig();
 
   if (cliOptions.disabledReload) {
-    console.log(chalk.yellow('Warn:'), '关闭了热更新（hot-reload）功能');
+    log.warn('关闭了热更新（hot-reload）功能');
   }
   const webpackConfig = getWebpackConfigDev({
     entry: entries,
@@ -150,12 +149,10 @@ module.exports = async function (cliOptions, subprocess) {
 
     if (isSuccessful) {
       if (stats.stats) {
-        console.log(chalk.green('Compiled successfully'));
+        log.info('Compiled successfully');
       } else {
-        console.log(
-          chalk.green(
-            `Compiled successfully in ${(json.time / 1000).toFixed(1)}s!`
-          )
+        log.info(
+          `Compiled successfully in ${(json.time / 1000).toFixed(1)}s!`
         );
       }
     }
@@ -164,10 +161,10 @@ module.exports = async function (cliOptions, subprocess) {
       if (messages.errors.length > 1) {
         messages.errors.length = 1;
       }
-      console.log(chalk.red('Failed to compile.\n'));
+      log.error('Failed to compile.\n');
       console.log(messages.errors.join('\n\n'));
     } else if (messages.warnings.length) {
-      console.log(chalk.yellow('Compiled with warnings.'));
+      log.warn('Compiled with warnings.');
       console.log();
       messages.warnings.forEach((message) => {
         console.log(message);

@@ -1,10 +1,10 @@
 // 读取需要编译的文件
-const colors = require('chalk');
 const path = require('path');
 
 const paths = require('./paths');
 const pkgData = require('./packageJson');
 const getDemos = require('../component/getDemos');
+const log = require('../utils/log');
 
 /**
  * 获取项目中符合 src/pages/xxxx/index.jsx 的文件
@@ -39,7 +39,7 @@ module.exports = function getEntry() {
 
   if (entry) {
     // eslint-disable-next-line no-console
-    console.log(colors.green('Info:'), 'package.json 存在 entry 配置');
+    log.info('package.json 存在 entry 配置');
     return entry;
   }
 };

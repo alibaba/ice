@@ -10,7 +10,7 @@ const { collectDetail } = require('@alifd/fusion-collector');
 const iceScriptsPkgData = require('../package.json');
 const getEntries = require('./config/getEntry');
 const getWebpackConfigProd = require('./config/webpack.config.prod');
-const npmInstall = require('./helpers/npmInstall');
+const npmInstall = require('./utils/npmInstall');
 const goldlog = require('./utils/goldlog');
 const log = require('./utils/log');
 const cliInstance = require('./utils/cliInstance');
@@ -113,10 +113,9 @@ module.exports = async function (options) {
 
   gulp.start('build', (err) => {
     if (err) {
-      console.log('ICE BUILD ERROR');
-      console.log(err.stack);
+      log.error('ICE BUILD ERROR', err);
     } else {
-      console.log('ICE build finished');
+      log.info('ICE build finished');
     }
   });
 };

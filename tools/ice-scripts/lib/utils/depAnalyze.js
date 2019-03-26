@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const babel = require('babel-core');
+
 const babelPluginImport = interopRequire('babel-plugin-import');
 const babelPluginTransformImport = interopRequire(
   'babel-plugin-transform-es2015-modules-commonjs'

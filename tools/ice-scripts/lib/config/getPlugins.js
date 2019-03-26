@@ -1,5 +1,4 @@
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const colors = require('chalk');
 const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
@@ -15,6 +14,7 @@ const normalizeEntry = require('../utils/normalizeEntry');
 const paths = require('./paths');
 const getEntryHtmlPlugins = require('./getEntryHtmlPlugins');
 const cliInstance = require('../utils/cliInstance');
+const log = require('../utils/log');
 
 module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   const defineVriables = {
@@ -81,10 +81,7 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   Array.prototype.push.apply(plugins, getEntryHtmlPlugins(entry));
 
   if (paths.publicUrl === './') {
-    console.log(
-      colors.green('Info:'),
-      '离线化构建项目，自动下载网络资源，请耐心等待'
-    );
+    log.info('离线化构建项目，自动下载网络资源，请耐心等待');
     plugins.push(
       new ExtractCssAssetsWebpackPlugin({
         outputPath: 'assets',
@@ -147,11 +144,7 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   // HACK 1.x 不会走到这个逻辑
   if (skinOverridePath && fs.existsSync(skinOverridePath)) {
     // eslint-disable-next-line no-console
-    console.log(
-      colors.green('Info:'),
-      '皮肤 override 文件存在',
-      path.join(themePackage, 'override.scss')
-    );
+    log.info('皮肤 override 文件存在', path.join(themePackage, 'override.scss'));
     plugins.push(
       new AppendStyleWebpackPlugin({
         variableFile: variableFilePath,
