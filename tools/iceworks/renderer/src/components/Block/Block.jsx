@@ -140,32 +140,6 @@ class Block extends Component {
               )}
             </div>
           </div>
-
-          // <div className="panel">
-          //   <span className="preview" onClick={this.openBlockImgPreview}>
-          //     <Tooltip
-          //       afterVisibleChange={this.afterVisibleChange}
-          //       placement={'bottom'}
-          //       overlay={'预览效果图'}
-          //     >
-          //       <Icon type="02magnifyingglasspluszoom" />
-          //     </Tooltip>
-          //   </span>
-          //   {block.homepage && (
-          //     <span className="preview" onClick={this.openBlockOnlinePreview}>
-          //       <Tooltip placement={'bottom'} overlay={'在线预览'}>
-          //         <Icon type="eye" />
-          //       </Tooltip>
-          //     </span>
-          //   )}
-          //   {block.repository && (
-          //     <span className="repo" onClick={this.openBlockGithub}>
-          //       <Tooltip placement={'bottom'} overlay={'查看源码'}>
-          //         <Icon type="github" />
-          //       </Tooltip>
-          //     </span>
-          //   )}
-          // </div>
         )}
       </div>
     );
