@@ -44,14 +44,14 @@ function defaultQuestion(prefix) {
     {
       type: 'input',
       name: 'name',
-      message: 'block name (e.g. ExampleComponent)',
+      message: 'component name (e.g. ExampleComponent)',
       validate: (value) => {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
           return 'Name must be a Upper Camel Case word, e.g. ExampleComponent.';
         }
         const npmName = generateNpmNameByPrefix(value, prefix);
         if (!validateName(npmName).validForNewPackages) {
-          return `this block name(${npmName}) has already exist. please retry`;
+          return `this component name(${npmName}) has already exist. please retry`;
         }
         return true;
       },
