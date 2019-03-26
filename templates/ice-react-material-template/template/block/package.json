@@ -21,17 +21,14 @@
   },
   "devDependencies": {
     "react": "^16.3.0",
-    "react-dom": "^16.3.0",
-    "ice-scripts": "^1.6.7"
+    "react-dom": "^16.3.0"
   },
   "buildConfig": {
     "theme": "@icedesign/theme",
     "entry": "demo/index.js",
-    "localization": false,
     "output": {
       "publicPath": "./"
-    },
-    "htmlTemplatePath": "demo/index.html"
+    }
   },
   "publishConfig": {
     "registry": "{{registry}}"

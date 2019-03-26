@@ -6,9 +6,9 @@ const getBaseConfig = require('../../config/webpack.block');
 const PORT = 5000;
 
 module.exports = function blockDevStart(cwd, opt) {
-  console.log(' ');
-  console.log(chalk.yellow(`WARNING: 当前的区块预览方式即将被废弃，升级访问 https://github.com/alibaba/ice/wiki/block-preview`));
-  console.log(' ');
+  console.log();
+  console.log(chalk.yellow(`WARNING: 当前的区块预览方式将不再维护，升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade`));
+  console.log();
 
   const config = getBaseConfig(cwd, 'react');
 

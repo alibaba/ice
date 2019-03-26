@@ -8,6 +8,7 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const propsSchemaGenerator = require('props-schema-generator');
 const rimraf = require('rimraf');
+const chalk = require('chalk');
 
 const getBabelConfig = require('../../config/getBabelConfig');
 const getBaseConfig = require('../../config/webpack.component');
@@ -22,6 +23,10 @@ const babelOpt = getBabelConfig();
  * 构建项目
  */
 module.exports = function componentBuild(workDir, opts) {
+  console.log();
+  console.log(chalk.yellow(`WARNING: 当前的区块构建方式将不再维护，升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade`));
+  console.log();
+
   const config = getBaseConfig(workDir);
 
   if (process.env.SKIP_DEMO) {
