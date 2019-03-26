@@ -52,7 +52,6 @@ module.exports = async function (options) {
   if (!installedDeps) {
     log.error('项目依赖未安装，请先安装依赖。');
     process.exit(1);
-    return;
   }
 
   if (pkgData.type === 'component') {

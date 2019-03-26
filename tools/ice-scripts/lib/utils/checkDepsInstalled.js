@@ -6,8 +6,8 @@ const fs = require('fs');
 
 module.exports = function(projectDirectory) {
   try {
-    const files = fs.readdirSync(path.resolve(projectDirectory, 'node_modules'));
-    return files.length > 0;
+    fs.statSync(path.resolve(projectDirectory, 'node_modules'));
+    return true
   } catch(err) {
     return false;
   }
