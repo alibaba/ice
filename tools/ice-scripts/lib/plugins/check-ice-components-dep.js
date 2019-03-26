@@ -4,10 +4,11 @@
  */
 const path = require('path');
 const findRoot = require('find-root');
-const colors = require('chalk');
 const semver = require('semver');
 const bizComponentsVersion = require('./bizComponentsVersion');
 const deprecatedComponents = require('./deprecatedComponents');
+
+const log = require('../utils/log');
 
 const depModules = {};
 
@@ -51,14 +52,14 @@ module.exports = class CheckDepsPlugin {
       Object.keys(depModules).forEach((moduleName) => {
         const versions = depModules[moduleName];
         if (versions.length > 1) {
-          console.log(colors.yellow('Warning: '), `项目依赖了 ${moduleName} 的两个版本，`, colors.green(versions));
+          log.warn(`项目依赖了 ${moduleName} 的两个版本，`, versions);
         }
       });
 
       // 2. 多份基础组件
       const baseComponentDeps = ['@icedesign/base', '@alife/next', '@ali/ice'].filter(name => depModules[name]);
       if (baseComponentDeps.length > 1) {
-        console.log(colors.red('Error: '), `项目依赖了多份基础组件 ${baseComponentDeps}，建议通过配置 buildConfig.uniteBaseComponent 优化`);
+        log.warn(`项目依赖了多份基础组件 ${baseComponentDeps}，建议通过配置 buildConfig.uniteBaseComponent 优化`);
       }
 
       // 3. 业务组件与基础组件的版本对应关系
@@ -84,7 +85,7 @@ module.exports = class CheckDepsPlugin {
       Object.keys(depModules).forEach((moduleName) => {
         const deprecatedMsg = deprecatedComponents[moduleName];
         if (deprecatedMsg) {
-          console.log(colors.yellow('Warning: '),deprecatedMsg);
+          log.warn(deprecatedMsg);
         }
       });
 
@@ -132,12 +133,12 @@ function checkBizComponentVersion(npmName, npmVersion, baseVersion) {
 
   if (!semverVersion) {
     // 没有对应的（未升级）
-    console.log(colors.yellow('Warning: '), `${npmName} 暂时没有符合基础组件 ${baseVersion} 的版本，建议联系 ICE 团队协助升级`);
+    log.warn(`${npmName} 暂时没有符合基础组件 ${baseVersion} 的版本，建议联系 ICE 团队协助升级`);
   }
 
   if (!semver.satisfies(npmVersion, semverVersion)) {
     // 不符合版本
-    console.log(colors.red('Error: '), `项目使用的基础组件版本是 ${baseVersion}，业务组件 ${npmName}@${npmVersion} 不符合版本要求 ${semverVersion}，建议选择正确的组件版本`);
+    log.warn(`项目使用的基础组件版本是 ${baseVersion}，业务组件 ${npmName}@${npmVersion} 不符合版本要求 ${semverVersion}，建议选择正确的组件版本`);
   }
 }
 

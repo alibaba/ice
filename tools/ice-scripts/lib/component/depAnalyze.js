@@ -1,26 +1,26 @@
 const fs = require('fs');
 const path = require('path');
-const babel = require('babel-core');
-const babelPluginImport = interopRequire('babel-plugin-import');
-const babelPluginTransformImport = interopRequire(
+const babel = require('@babel/core');
+const babelPluginTransformLibImport = interopRequire(
+  'babel-plugin-transform-lib-import'
+);
+const babelPluginTransformModulesCommonjs = interopRequire(
   'babel-plugin-transform-es2015-modules-commonjs'
 );
-const babelPluginExport = interopRequire(
+const babelPluginTransformExport = interopRequire(
   'babel-plugin-transform-export-extensions'
 );
 
 function interopRequire(id) {
-  const module = require(id);
-  return module && module.__esModule ? module.default : module;
+  const mod = require(id);
+  return mod && mod.__esModule ? mod.default : mod;
 }
 
 function getFileContent(filepath) {
   try {
     return (
       String(fs.readFileSync(filepath))
-        // 简单干掉注释
-        // 对于 '//img.alicdn.com/xxx' 或者 http://xxxx 会误伤
-        // 但是下面处理还是正则提取 import 语句实现的 风险很低很低
+        // simply remove comments
         .replace(/\/\/.*/g, '')
         .replace(/\/\*[\s\S]*?\*\//g, '')
     );
@@ -61,9 +61,11 @@ function analyzeDependenciesImport(str) {
 
   const transformed = babel.transform(importStatements, {
     plugins: [
-      babelPluginExport,
-      [babelPluginTransformImport, { noInterop: true }],
-      [babelPluginImport, { libraryName: '@icedesign/base' }],
+      babelPluginTransformExport,
+      [babelPluginTransformModulesCommonjs, { noInterop: true }],
+      [babelPluginTransformLibImport, { libraryName: '@icedesign/base' }, '@icedesign/base'],
+      [babelPluginTransformLibImport, { libraryName: '@alife/next' }, '@alife/next'],
+      [babelPluginTransformLibImport, { libraryName: '@alifd/next' }, '@alifd/next'],
     ],
   });
 
@@ -87,21 +89,15 @@ function dedupe(arr) {
   return Object.keys(map);
 }
 
-// 为了让 require.resolve 可以解析 .jsx 文件
+// 为了让 require.resolve 可以解析 .jsx 和 .vue 文件
 require.extensions['.jsx'] = require.extensions['.js'];
+require.extensions['.vue'] = require.extensions['.js'];
 const tracedFiles = {};
-module.exports = function(entryFilename) {
+module.exports = function(entryFilePath) {
   let result = [];
-  trace(require.resolve(entryFilename));
-  return dedupe(result).filter(function(moduleName) {
-    return (
-      !/^\./.test(moduleName) &&
-      // 基础组件
-      (/(@icedesign\/base)[$\/]lib/.test(moduleName) ||
-        // 业务组件
-        /^(@icedesign\/)\w+/.test(moduleName))
-    );
-  });
+  trace(require.resolve(entryFilePath));
+
+  return dedupe(result);
 
   // effect 有副作用的递归
   function trace(filename) {

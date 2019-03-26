@@ -1,5 +1,4 @@
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const colors = require('chalk');
 const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
@@ -14,6 +13,8 @@ const CheckIceComponentsDepsPlugin = require('../plugins/check-ice-components-de
 const normalizeEntry = require('../utils/normalizeEntry');
 const paths = require('./paths');
 const getEntryHtmlPlugins = require('./getEntryHtmlPlugins');
+const cliInstance = require('../utils/cliInstance');
+const log = require('../utils/log');
 
 module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   const defineVriables = {
@@ -27,14 +28,12 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
     defineVriables.THEME = JSON.stringify(themeConfig.theme);
   }
 
-  const filename = process.env.HASH ? '[name].[hash:6].css' : '[name].css';
-  const chunkFilename = process.env.HASH ? '[id].[hash:6].css': '[id].css';
+  const filename = cliInstance.get('hash') ? '[name].[hash:6].css' : '[name].css';
 
   const plugins = [
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
-      filename: path.join(buildConfig.outputAssetsPath.css || '', filename),
-      chunkFilename: path.join(buildConfig.outputAssetsPath.css || '', chunkFilename),
+      filename: path.join(buildConfig.outputAssetsPath.css || '', filename)
     }),
     // FIX ISSUE: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
     new FilterWarningsPlugin({
@@ -82,10 +81,7 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   Array.prototype.push.apply(plugins, getEntryHtmlPlugins(entry));
 
   if (paths.publicUrl === './') {
-    console.log(
-      colors.green('Info:'),
-      '离线化构建项目，自动下载网络资源，请耐心等待'
-    );
+    log.info('离线化构建项目，自动下载网络资源，请耐心等待');
     plugins.push(
       new ExtractCssAssetsWebpackPlugin({
         outputPath: 'assets',
@@ -148,11 +144,7 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   // HACK 1.x 不会走到这个逻辑
   if (skinOverridePath && fs.existsSync(skinOverridePath)) {
     // eslint-disable-next-line no-console
-    console.log(
-      colors.green('Info:'),
-      '皮肤 override 文件存在',
-      path.join(themePackage, 'override.scss')
-    );
+    log.info('皮肤 override 文件存在', path.join(themePackage, 'override.scss'));
     plugins.push(
       new AppendStyleWebpackPlugin({
         variableFile: variableFilePath,
