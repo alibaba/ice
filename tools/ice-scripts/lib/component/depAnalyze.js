@@ -1,13 +1,16 @@
 const fs = require('fs');
 const path = require('path');
-const babel = require('babel-core');
+const babel = require('@babel/core');
 
 const babelPluginImport = interopRequire('babel-plugin-import');
 const babelPluginTransformImport = interopRequire(
-  'babel-plugin-transform-es2015-modules-commonjs'
+  '@babel/plugin-transform-modules-commonjs'
 );
-const babelPluginExport = interopRequire(
-  'babel-plugin-transform-export-extensions'
+const babelPluginExportDefault = interopRequire(
+  '@babel/plugin-proposal-export-default-from'
+);
+const babelPluginExportNameSpace = interopRequire(
+  '@babel/plugin-proposal-export-namespace-from'
 );
 
 function interopRequire(id) {
@@ -62,7 +65,8 @@ function analyzeDependenciesImport(str) {
 
   const transformed = babel.transform(importStatements, {
     plugins: [
-      babelPluginExport,
+      babelPluginExportDefault,
+      babelPluginExportNameSpace,
       [babelPluginTransformImport, { noInterop: true }],
       [babelPluginImport, { libraryName: '@icedesign/base' }],
     ],
