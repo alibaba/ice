@@ -43,7 +43,7 @@
     "screenshot": "https://unpkg.com/@icedesign/rich-editor-block/screenshot.png",
     "title": "富文本编辑器",
     "categories": [
-      "表单"
+      "富文本编辑器"
     ],
     "themePackage": "@icedesign/theme",
     "version-0.x": "0.1.10"

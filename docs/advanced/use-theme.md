@@ -1,7 +1,7 @@
 ---
 title: 配置项目主题
 order: 9
-category: 进阶指南
+
 ---
 
 > 该能力需要满足项目依赖的基础组件为 `@alifd/next`，如果依赖的是 `@icedesign/base` 请参考 [这篇文档](https://github.com/alibaba/ice/wiki/0.x-theme)

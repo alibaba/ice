@@ -1,7 +1,7 @@
 ---
 title: 插件-阿里云 OSS
 category: Iceworks
-order: 1
+order: 7
 ---
 
 阿里云 OSS 插件可以一键将构建结果上传到您的 OSS bucket 中。

@@ -1,6 +1,5 @@
 ---
 title: 设计语言
-category: 中后台设计体系
 order: 1
 cover: https://gw.alicdn.com/tfs/TB1fcX1bkyWBuNjy0FpXXassXXa-1600-422.png
 ---

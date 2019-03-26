@@ -1,6 +1,6 @@
 ---
-title: 视觉-色彩
-category: 中后台设计体系
+title: 色彩
+
 order: 2
 ---
 

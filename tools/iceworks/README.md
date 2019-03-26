@@ -11,43 +11,37 @@
 |- gulp etc. # 开发辅助工具等，publish 阶段构建完成后可以 remove 掉
 ```
 
-# dev
+## 开发调试
 
-开发调试
+保证 Node.js 版本 >= 8.10.0 && < 9 的版本
 
 ```
-// 保证 Node.js 版本 >= 8.10.0 && < 9 的版本
 yarn install
 yarn dev
 yarn start
 ```
 
-# pack
+## 打包
 
-打包应用，根据当前操作系统打包对应平台的软件。目前支持 `darwin` `win32 x64`
+根据当前操作系统打包对应平台的软件，目前支持 `darwin` `win32 x64`。
 
 ```
 yarn run build
 yarn run dist
 ```
 
-**注意**
+> **注意** Mac 打包需要有对应的的开发者证书（否则发布后的软件无法正常更新）证书由管理员管理。
 
-Mac 打包需要有对应的的开发者证书（否则发布后的软件无法正常更新）证书由管理员管理。
-
-# 推送软件更新，发布软件
+## 发布
 
 ```
 yarn run upload
 ```
 
-**注意**
+> **注意** 上传过程中需要输入 OSS 的 Access Key Secret。
+> 操作需分别在对应系统中执行。
 
-上传过程中需要输入 OSS 的 Access Key Secret。
+## 更新官网的下载地址
 
-> 以上操作分别在对应系统执行
-
-# 更新 https://alibaba.github.io/ice/iceworks 的下载地址
-
-1. 执行 `yarn run updates`
-2. 将生成的 `updates.json` 上传到 oss 根目录
+1. 执行 `yarn run updates`；
+2. 将生成的 `updates.json` 上传到 oss 根目录。

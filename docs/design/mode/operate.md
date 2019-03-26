@@ -1,7 +1,7 @@
 ---
-title: 设计模式-操作提效
-category: 中后台设计体系
-order: 8
+title: 操作提效
+
+order: 2
 ---
 
 ## 避免重复操作

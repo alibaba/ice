@@ -1,7 +1,7 @@
 ---
 title: 开发区块
 order: 3
-category: 物料
+
 ---
 
 ## 基础规范

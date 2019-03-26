@@ -1,7 +1,7 @@
 ---
 title: 物料开发规范
 order: 6
-category: 物料
+
 ---
 
 ## 飞冰设计思路
