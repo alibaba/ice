@@ -47,6 +47,17 @@ const getEnv = () => {
   return env.getEnv();
 };
 
+/**
+ * 获取当前 registry 源信息
+ * @param {string} value
+ */
+const getRegistryInfo = (value) => {
+  const { registries = [] } = shared;
+  return registries.find((item) => {
+    return item.value === value || item.name === value;
+  });
+};
+
 const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
   const installConfig = {
     cwd,
@@ -62,37 +73,42 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
     shellArgs: ['cache', 'clean', '--force'],
   };
 
-
-  sessions.manager.new(
-    installConfig,
-    (code) => {
-      if (code !== 0) {
-        log.error('project-install-failed');
-        log.report('app', { action: 'project-install-failed' });
-        if (reInstall) {
-          log.info('执行 npm cache clean --force 重试');
-          sessions.manager.new(npmCacheCleanConfig, () => {
-            doProjectInstall({ cwd, env, shell, callback });
-          });
-        } else if (shell === 'tnpm') {
-          callback(code, {
-            title: '重装依赖失败',
-            content:
-  <div>
-    <p>1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装</p>
-    <p>2. 已安装 tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息</p>
-  </div>,
-          });
-        } else {
-          callback(code, {
-            title: '重装依赖失败',
-            content:
-              '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
-          });
-        }
+  sessions.manager.new(installConfig, (code) => {
+    if (code !== 0) {
+      log.error('project-install-failed');
+      log.report('app', { action: 'project-install-failed' });
+      if (reInstall) {
+        log.info('执行 npm cache clean --force 重试');
+        sessions.manager.new(npmCacheCleanConfig, () => {
+          doProjectInstall({ cwd, env, shell, callback });
+        });
+      } else if (shell === 'tnpm' || shell === 'cnpm') {
+        const registryInfo = getRegistryInfo(shell);
+        callback(code, {
+          title: '重装依赖失败',
+          content: (
+            <div>
+              <p>
+                1. 请检查 {shell} 命令是否安装了，没有请执行 $ [sudo] npm
+                install --registry={registryInfo.value} -g {shell} 进行安装
+              </p>
+              <p>
+                2. 已安装 {shell}
+                ，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息
+              </p>
+            </div>
+          ),
+        });
       } else {
-        callback(0);
+        callback(code, {
+          title: '重装依赖失败',
+          content:
+            '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
+        });
       }
+    } else {
+      callback(0);
+    }
   });
 };
 
@@ -140,12 +156,12 @@ const doDependenciesInstall = (
 };
 
 const getEnvByNodeFramework = (nodeFramework, isAli) => {
-  const env = {};
+  const env = getEnv();
   if (isAli || nodeFramework === 'midwayAli') {
     console.debug('安装依赖 - 检测为内网环境 / 内部 midway 项目');
     // 检测到内网环境自动将路径设置为集团内部
-    env.npm_config_registry = 'http://registry.npm.alibaba-inc.com';
-    env.yarn_registry = 'http://registry.npm.alibaba-inc.com';
+    env.npm_config_registry = 'https://registry.npm.alibaba-inc.com';
+    env.yarn_registry = 'https://registry.npm.alibaba-inc.com';
   }
   return env;
 };
@@ -342,13 +358,14 @@ export default {
 
       const cwd = project.fullPath;
       const cwdClient = project.clientPath;
+      const registryInfo = getRegistryInfo(env.npm_config_registry);
       terms.writeln(cwd, '开始安装依赖');
 
       const npmInstallConfig = {
         cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
         cwdClient, // 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
         env,
-        shell: 'npm',
+        shell: registryInfo.name || 'npm',
         shellArgs: ['install', '--no-package-lock', installPrefix].concat(
           dependencies
         ),
@@ -432,12 +449,12 @@ export default {
       })
       .then((isAli) => {
         const env = getEnvByNodeFramework(project.nodeFramework, isAli);
-        console.log({ env });
+        const registryInfo = getRegistryInfo(env.npm_config_registry);
         doProjectInstall(
           {
             cwd: project.fullPath,
             env,
-            shell: 'npm',
+            shell: registryInfo.name || 'npm',
             callback,
           },
           true
