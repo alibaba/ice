@@ -5,7 +5,7 @@
 const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
-const iceDepAnalyzer = require('./dep-analyze');
+const iceDepAnalyzer = require('./depAnalyze');
 
 function getPkgJSON(cwd, module) {
   const jsonPath = path.join(cwd, 'node_modules', module, './package.json');

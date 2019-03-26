@@ -2,7 +2,6 @@
  * manage cli options
  */
 const camelcase = require('camelcase');
-const pkgData = require('../config/packageJson');
 
 let cliOptions = {};
 
@@ -18,11 +17,6 @@ exports.initByProgram = (program) => {
       cliOptions[key] = program[key];
     }
   });
-
-  if (pkgData.type === 'block' || pkgData.type === 'component') {
-    // 组件和区块都使用 runtime
-    // cliOptions.injectBabel = 'runtime';
-  }
 
   return cliOptions;
 }
