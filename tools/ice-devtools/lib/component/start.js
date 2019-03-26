@@ -12,9 +12,9 @@ const router = require('../../utils/demo-router');
 const PORT = 5000;
 
 module.exports = function blockDevStart(cwd, opt) {
-  console.log(' ');
-  console.log(chalk.yellow(`WARNING: 当前的组件预览方式将不再维护，升级访问 https://github.com/alibaba/ice/wiki/block-preview`));
-  console.log(' ');
+  console.log();
+  console.log(chalk.yellow(`WARNING: 当前的组件预览方式将不再维护，升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade`));
+  console.log();
 
   const config = getBaseConfig(cwd);
 
@@ -64,8 +64,8 @@ module.exports = function blockDevStart(cwd, opt) {
   const compiler = webpack(options);
   const server = new WebpackDevServer(compiler, options.devServer);
   server.listen(port, '0.0.0.0', () => {
-    console.log(' ');
+    console.log();
     console.log(chalk.yellow(`Starting at http://127.0.0.1:${port}`));
-    console.log(' ');
+    console.log();
   });
 };

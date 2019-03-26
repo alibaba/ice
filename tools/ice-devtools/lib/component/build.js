@@ -23,9 +23,9 @@ const babelOpt = getBabelConfig();
  * 构建项目
  */
 module.exports = function componentBuild(workDir, opts) {
-  console.log(' ');
-  console.log(chalk.yellow(`WARNING: 当前的区块构建方式将不再维护，升级访问 https://github.com/alibaba/ice/wiki/block-preview`));
-  console.log(' ');
+  console.log();
+  console.log(chalk.yellow(`WARNING: 当前的区块构建方式将不再维护，升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade`));
+  console.log();
 
   const config = getBaseConfig(workDir);
 
