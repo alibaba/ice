@@ -1,5 +1,7 @@
 # ice-react-materials-template
 
+【废弃】ice-devtools 1.1.x 以此仓库作为模板创建物料，迁移至 ice-react-material-template
+
 ## 简介
 
 用于 ice-devtools init 初始化时的物料仓库模板，基于 react 和 next 组件库

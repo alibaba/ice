@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.0
+ - [feat] 支持 vue 物料源
+ - [feat] 支持 自定义物料模板
+ - [refactor] 分离 block/component dev 和 build 逻辑
+ - [revert] babel-plugin-transform-runtime
+
 ## 2.1.20
  - [feat] 引入 babel-plugin-transform-runtime
  - [feat] 支持编译 ts
@@ -7,22 +13,28 @@
  - [fix] README 中代码片段被 slice 的问题
 
 ## 2.1.19
+
  - [feat] 支持 antd 组件样式加载
  - [feat] dev 支持 ip 访问
 
 ## 2.1.18
+
  - [fix] homepage url 随 npm 版本更新
 
 ## 2.1.17
+
  - [feat] 增加组件 homepage 字段
 
 ## 2.1.16
+
  - [feat] 增加 markdown 中代码片段支持类型
 
 ## 2.1.15
+
  - [feat] 增加组件 demo 构建逻辑
 
 ## 2.1.14
+
  - [feat] 增加埋点
  - [feat] 更新提醒
  - [feat] 添加组件入库托管

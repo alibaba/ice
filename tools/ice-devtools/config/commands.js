@@ -3,9 +3,13 @@ module.exports = {
     desc: 'generate a new project from a template',
     options: [
       {
-        name: '--offline',
-        desc: 'use cached template',
+        name: '--template [template]',
+        desc: 'use npm template'
       },
+      {
+        name: '--type [type]',
+        desc: 'materail type, e.g. block/component',
+      }
     ],
   },
   add: {

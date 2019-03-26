@@ -52,7 +52,7 @@ module.exports = function generate(cwd) {
 
   const { type } = materialConfig;
   generateDatabase({
-    name: type ? `${type}-materials` : 'db',
+    name: type ? `${type}-materials` : 'materials',
     type,
     path: cwd,
     options: materialConfig,

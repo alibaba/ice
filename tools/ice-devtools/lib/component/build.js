@@ -8,6 +8,7 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const propsSchemaGenerator = require('props-schema-generator');
 const rimraf = require('rimraf');
+const chalk = require('chalk');
 
 const getBabelConfig = require('../../config/getBabelConfig');
 const getBaseConfig = require('../../config/webpack.component');
@@ -22,6 +23,15 @@ const babelOpt = getBabelConfig();
  * 构建项目
  */
 module.exports = function componentBuild(workDir, opts) {
+  console.log();
+  console.log(chalk.yellow(`[WARNING] 此功能将在下个版本废弃，请使用 ice-scripts 开发/构建`));
+  console.log();
+  console.log(chalk.cyan('    npm install ice-scripts@latest -g'));
+  console.log(chalk.cyan('    ice build'));
+  console.log();
+  console.log('升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade');
+  console.log();
+
   const config = getBaseConfig(workDir);
 
   if (process.env.SKIP_DEMO) {

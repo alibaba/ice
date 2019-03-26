@@ -1,0 +1,55 @@
+{
+  "name": "{{npmName}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "author": "{{author}}",
+  "files": ["src/", "lib/", "build/", "screenshot.png"],
+  "license": "MIT",
+  "keywords": ["ice", "vue", "block"],
+  "scripts": {
+    "start": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "screenshot": "ice-devtools screenshot",
+    "prepublishOnly": "npm run build && npm run screenshot"
+  },
+  "dependencies": {
+    "vue": "^2.5.16"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-eslint": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "publishConfig": {
+    "registry": "{{registry}}"
+  },
+  "blockConfig": {
+    "name": "{{name}}",
+    "title": "{{title}}",
+    "categories": [
+      {{#each categories}}
+        "{{@key}}"{{#if @last}} {{else}},{{/if}}
+      {{/each}}
+    ],
+    "screenshot": ""
+  }
+}

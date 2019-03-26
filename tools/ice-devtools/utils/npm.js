@@ -2,6 +2,7 @@ const request = require('request');
 const debug = require('debug')('ice:util:npm');
 const semver = require('semver');
 const chalk = require('chalk');
+const kebabCase = require('kebab-case');
 const innerNet = require('../utils/inner-net');
 
 const cacheData = {};
@@ -142,6 +143,14 @@ function getNpmTime(npm, version = 'latest') {
     });
 }
 
+/**
+ * 获取 npm 包名
+ * @param {string} name
+ */
+function generateNpmNameByPrefix(name, npmPrefix) {
+  return npmPrefix + kebabCase(name).replace(/^-/, '');
+}
+
 
 module.exports = {
   getNpmInfo,
@@ -150,4 +159,5 @@ module.exports = {
   getLatestVersion,
   getNpmTime,
   getNpmLatestSemverVersion,
+  generateNpmNameByPrefix
 };

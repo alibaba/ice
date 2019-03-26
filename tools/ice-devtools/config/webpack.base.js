@@ -25,6 +25,9 @@ const internalLibrary = require('../utils/internal-library');
 const URL_LOADER = require.resolve('url-loader');
 const URL_LOADER_LIMIT = 8192;
 
+  // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
+const MiniCssExtractPluginLoader = MiniCssExtractPlugin.loader;
+
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   const config = new WebpackConfig();
 
@@ -66,8 +69,11 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
   config.module
     .rule('css')
     .test(/\.css$/)
+    .exclude
+      .add(/\.module\.css$/)
+      .end()
     .use('style')
-    .loader(MiniCssExtractPlugin.loader)
+    .loader(MiniCssExtractPluginLoader)
     .end()
     .use('css')
     .loader(CSS_LOADER)
@@ -89,7 +95,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .exclude.add(/\.module\.scss$/)
     .end()
     .use('style-loader')
-    .loader(MiniCssExtractPlugin.loader)
+    .loader(MiniCssExtractPluginLoader)
     .end()
     .use('css-loader')
     .loader(CSS_LOADER)
@@ -105,13 +111,13 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     })
     .end();
 
-    config.module
+  config.module
     .rule('less')
     .test(/\.less$/)
     .exclude.add(/\.module\.less$/)
     .end()
     .use('style-loader')
-    .loader(MiniCssExtractPlugin.loader)
+    .loader(MiniCssExtractPluginLoader)
     .end()
     .use('css-loader')
     .loader(CSS_LOADER)
@@ -125,10 +131,25 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
 
   config.module
     .rule('cssmodule')
+    .test(/\.module\.css$/)
     .use('style-loader')
-    .loader(MiniCssExtractPlugin.loader)
+    .loader(MiniCssExtractPluginLoader)
     .end()
+    .use('css-loader')
+    .loader(CSS_LOADER)
+    .options({
+      sourceMap: true,
+      modules: true,
+      localIdentName: '[folder]--[local]--[hash:base64:7]',
+    })
+    .end();
+
+  config.module
+    .rule('scss-cssmodule')
     .test(/\.module\.scss$/)
+    .use('style-loader')
+    .loader(MiniCssExtractPluginLoader)
+    .end()
     .use('css-loader')
     .loader(CSS_LOADER)
     .options({
@@ -146,6 +167,24 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
       themeFile: theme && path.join(appNodeModules, `${theme}/variables.scss`),
       themeConfig,
     })
+    .end();
+
+  config.module
+    .rule('less-cssmodule')
+    .test(/\.module\.less$/)
+    .use('style-loader')
+    .loader(MiniCssExtractPluginLoader)
+    .end()
+    .use('css-loader')
+    .loader(CSS_LOADER)
+    .options({
+      sourceMap: true,
+      modules: true,
+      localIdentName: '[folder]--[local]--[hash:base64:7]',
+    })
+    .end()
+    .use('less-loader')
+    .loader(LESS_LOADER)
     .end();
 
   config.module

@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "2.1.20",
+  "version": "2.2.0",
   "description": "ice 物料开发者工具",
   "main": "bin/ice-devtools.js",
   "bin": {
@@ -31,7 +31,6 @@
     "@babel/plugin-proposal-throw-expressions": "7.0.0",
     "@babel/plugin-syntax-dynamic-import": "7.0.0",
     "@babel/plugin-syntax-import-meta": "7.0.0",
-    "@babel/plugin-transform-runtime": "^7.3.4",
     "@babel/preset-env": "7.1.0",
     "@babel/preset-react": "7.0.0",
     "async": "^2.6.1",
@@ -49,6 +48,7 @@
     "cross-spawn": "^6.0.5",
     "css-loader": "^1.0.1",
     "debug": "^2.6.3",
+    "easyfile": "^0.2.0",
     "file-loader": "^3.0.1",
     "handlebars": "^4.0.12",
     "handlebars-loader": "^1.7.0",

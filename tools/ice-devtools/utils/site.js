@@ -15,9 +15,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 function getLocalSite(cwd) {
   const pkgJSON = pkg.getPkgJSON(cwd);
-  if (!pkgJSON.materialConfig) {
-    logger.fatal('not materialConfig in package.json');
-  }
+
   // 读取到 fusion-site 字段 如果读到了就直接返回
   if (pkgJSON.materialConfig && pkgJSON.materialConfig['fusion-site']) {
     const site = pkgJSON.materialConfig['fusion-site'];
@@ -35,10 +33,11 @@ function writeLocalSite(cwd, site) {
     name: site.name,
     url: `${SITE_URL}/api/v1/sites/${site.id}/materials`,
   };
-  pkgJSON.materialConfig['fusion-site'] = siteData;
 
-  pkg.writePkgJSON(pkgJSON, cwd);
-
+  if (pkgJSON.materialConfig) {
+    pkgJSON.materialConfig['fusion-site'] = siteData;
+    pkg.writePkgJSON(pkgJSON, cwd);
+  }
   return siteData;
 }
 
@@ -154,7 +153,7 @@ async function getSite(cwd, token) {
 
   site = await selectSite(sites);
 
-  return writeLocalSite(cwd, site);;
+  return writeLocalSite(cwd, site);
 }
 
 module.exports = {
