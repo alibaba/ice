@@ -68,7 +68,7 @@ module.exports = class ComponentStyleGenerator {
       return this.deps;
     } else {
       const deps = iceDepAnalyzer(
-        require.resolve(path.join(this.cwd, 'src/index'))
+        path.join(this.cwd, 'src/index')
       );
 
       this.deps = this.filterDeps(deps);
