@@ -12,7 +12,7 @@ $ ice --help
 
 ## Cli
 
-> Recommended cli way
+> Recommended
 
 ```
 $ mkdir ice-project
@@ -35,7 +35,9 @@ init project by scaffold:
 const { init } = require('ice-scripts');
 
 await init({
-  scaffold: '@icedesign/lite-scaffold'
+  scaffold: '@icedesign/lite-scaffold',
+  // Default: process.cwd()
+  projectDir: ''
 });
 ```
 

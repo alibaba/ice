@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const colors = require('chalk');
+const log = require('../utils/log');
 
 const walk = function walk(dir) {
   let results = [];
@@ -47,7 +47,7 @@ module.exports = () => {
         entryObj[pageName] = filePath;
       }
     });
-    console.log(colors.green('Info:'), 'entry 未指定，使用 pages 作为默认。');
+    log.info('entry 未指定，使用 pages 作为默认。');
     return entryObj;
   } catch (err) {
     throw err;

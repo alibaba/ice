@@ -6,7 +6,6 @@ const program = require('commander');
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 
-
 const dev = require('../lib/dev');
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 const checkUpdater = require('../lib/utils/checkUpdater');
@@ -29,7 +28,6 @@ program
   .parse(process.argv);
 
 cliInstance.initByProgram(program);
-const cliOptions = cliInstance.get();
 
 validationSassAvailable();
 
@@ -74,6 +72,7 @@ checkUpdater()
       process.exit(500);
     }
 
-    cliOptions.port = parseInt(port, 10);
+    cliInstance.set('port', parseInt(port, 10))
+    const cliOptions = cliInstance.get();
     dev(cliOptions);
   });

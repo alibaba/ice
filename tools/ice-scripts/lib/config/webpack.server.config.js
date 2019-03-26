@@ -1,6 +1,6 @@
 const cliInstance = require('../utils/cliInstance');
 const pkgData = require('./packageJson');
-const demoRouter = require('../utils/component/demoRouter');
+const demoRouter = require('../component/demoRouter');
 
 module.exports = () => {
   const options = {

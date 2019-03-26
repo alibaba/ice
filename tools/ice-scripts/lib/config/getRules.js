@@ -1,5 +1,4 @@
 const getBabelConfig = require('./getBabelConfig');
-const colors = require('chalk');
 const deepAssign = require('deep-assign');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
@@ -7,6 +6,7 @@ const path = require('path');
 const postcssConfig = require('./postcssConfig');
 const paths = require('./paths');
 const cliInstance = require('../utils/cliInstance');
+const log = require('../utils/log');
 
 const AWESOME_TYPESCRIPT_LOADER = require.resolve('awesome-typescript-loader');
 const BABEL_LOADER = require.resolve('babel-loader');
@@ -51,13 +51,12 @@ module.exports = (buildConfig = {}, themeConfig) => {
     // 某个依赖包需要 babel 编译（不同 npm 路径可能不同）：babelExclude: "node_modules\\/(?!_@ali_lib-ucc)"
     // node_modules 都需要编译：babelExclude: "bower_components"，随便配置一个奇怪的地址覆盖默认值即可
     babelExclude = new RegExp(buildConfig.babelExclude);
-    console.log(colors.green('Info:'), '配置了 babelExclude，new RegExp() 转化后的值：', babelExclude);
+    log.info('配置了 babelExclude，new RegExp() 转化后的值：', babelExclude);
   }
 
   const theme = buildConfig.theme || buildConfig.themePackage;
   if (theme) {
-    // eslint-disable-next-line no-console
-    console.log(colors.green('Info:'), '使用主题包', theme);
+    log.info('使用主题包', theme);
   }
 
   const sassLoadersConf = [

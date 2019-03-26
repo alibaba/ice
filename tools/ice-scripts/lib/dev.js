@@ -2,11 +2,10 @@
  * 启动服务：cli 调用
  */
 
-/* eslint no-console:off */
 process.env.NODE_ENV = 'development';
 
-const chalk = require('chalk');
 const fs = require('fs');
+const chalk = require('chalk');
 const clearConsole = require('react-dev-utils/clearConsole');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const webpack = require('webpack');
@@ -24,6 +23,7 @@ const getProxyConfig = require('./config/getProxyConfig');
 const openBrowser = require('react-dev-utils/openBrowser');
 const goldlog = require('./utils/goldlog');
 const pkgData = require('../package.json');
+const projectPkgData = require('./config/packageJson');
 const log = require('./utils/log');
 
 module.exports = async function (cliOptions, subprocess) {
@@ -31,7 +31,7 @@ module.exports = async function (cliOptions, subprocess) {
     version: pkgData.version,
   });
   goldlog('dev', cliOptions);
-  log.verbose('init cliOptions', cliOptions);
+  log.verbose('dev cliOptions', cliOptions);
 
   // 与 iceworks 客户端通信
   const send = function (data) {
@@ -55,25 +55,21 @@ module.exports = async function (cliOptions, subprocess) {
       };
     } catch (err) {
       protocol = 'http';
-      console.log(chalk.red('HTTPS 证书生成失败，已转换为HTTP'));
+      log.info('HTTPS 证书生成失败，已转换为HTTP');
     }
   }
 
   const isInteractive = false; // process.stdout.isTTY;
   const urls = prepareUrLs(protocol, HOST, PORT);
   const entries = getEntries();
-
   const proxyConfig = getProxyConfig();
-  // eslint-disable-next-line import/no-dynamic-require
-  const packageData = require(paths.appPackageJson);
-  // get ice config by package.ice
 
   if (cliOptions.disabledReload) {
-    console.log(chalk.yellow('Warn:'), '关闭了热更新（hot-reload）功能');
+    log.warn('关闭了热更新（hot-reload）功能');
   }
   const webpackConfig = getWebpackConfigDev({
     entry: entries,
-    buildConfig: packageData.buildConfig || packageData.ice,
+    buildConfig: projectPkgData.buildConfig || projectPkgData.ice,
   });
 
   if (iceworksClient.available) {
@@ -153,12 +149,10 @@ module.exports = async function (cliOptions, subprocess) {
 
     if (isSuccessful) {
       if (stats.stats) {
-        console.log(chalk.green('Compiled successfully'));
+        log.info('Compiled successfully');
       } else {
-        console.log(
-          chalk.green(
-            `Compiled successfully in ${(json.time / 1000).toFixed(1)}s!`
-          )
+        log.info(
+          `Compiled successfully in ${(json.time / 1000).toFixed(1)}s!`
         );
       }
     }
@@ -167,10 +161,10 @@ module.exports = async function (cliOptions, subprocess) {
       if (messages.errors.length > 1) {
         messages.errors.length = 1;
       }
-      console.log(chalk.red('Failed to compile.\n'));
+      log.error('Failed to compile.\n');
       console.log(messages.errors.join('\n\n'));
     } else if (messages.warnings.length) {
-      console.log(chalk.yellow('Compiled with warnings.'));
+      log.warn('Compiled with warnings.');
       console.log();
       messages.warnings.forEach((message) => {
         console.log(message);

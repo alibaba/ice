@@ -14,14 +14,14 @@ function resolvePlugin(plugins) {
   });
 }
 
-module.exports = (buildConfig = {}) => {
+module.exports = (buildConfig = {}, buildComponentSrc) => {
   return {
     babelrc: buildConfig.babelrc || false,
     presets: resolvePlugin([
       [
         '@babel/preset-env',
         {
-          modules: false,
+          modules: buildComponentSrc ? 'commonjs' : false,
           useBuiltIns: 'entry',
           targets: {
             browsers: [

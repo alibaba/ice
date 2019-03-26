@@ -86,8 +86,14 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
       rules: getRules(buildConfig, themeConfig),
     },
     plugins: getPlugins({ entry, buildConfig, themeConfig, pkg }),
+    optimization: {
+      splitChunks: {
+        cacheGroups: {},
+      },
+    }
   };
 
+  // HACK
   if (pkg.type === 'component' || pkg.type === 'block') {
     buildConfig.disableVendor = true;
   }
@@ -95,16 +101,12 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
   if (buildConfig.disableVendor) {
     log.info('buildCondfig.disableVendor', buildConfig.disableVendor);
   } else {
-    webpackConfig.optimization = {
-      splitChunks: {
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendor',
-            chunks: 'initial',
-            minChunks: 2,
-          },
-        },
+    webpackConfig.optimization.splitChunks.cacheGroups = {
+      vendor: {
+        test: /[\\/]node_modules[\\/]/,
+        name: 'vendor',
+        chunks: 'initial',
+        minChunks: 2,
       },
     };
   }

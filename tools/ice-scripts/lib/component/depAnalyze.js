@@ -1,11 +1,6 @@
-/**
- * 解析获取依赖的组件（生成 style.js 的 import 语法）
- */
-
 const fs = require('fs');
 const path = require('path');
 const babel = require('@babel/core');
-
 const babelPluginTransformLibImport = interopRequire(
   'babel-plugin-transform-lib-import'
 );
@@ -37,6 +32,7 @@ function getFileContent(filepath) {
 
 // require()
 function analyzeDependenciesRequire(str) {
+  var _result = null;
   const result = [];
   let reg = /require\(["']([^\)]+)["']\)/g;
   while ((_result = reg.exec(str))) {
@@ -97,9 +93,9 @@ function dedupe(arr) {
 require.extensions['.jsx'] = require.extensions['.js'];
 require.extensions['.vue'] = require.extensions['.js'];
 const tracedFiles = {};
-module.exports = function(entryFilename) {
+module.exports = function(entryFilePath) {
   let result = [];
-  trace(require.resolve(entryFilename));
+  trace(require.resolve(entryFilePath));
 
   return dedupe(result);
 

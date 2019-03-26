@@ -1,5 +1,4 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const webpackMerge = require('webpack-merge');
 const webpack = require('webpack');
 

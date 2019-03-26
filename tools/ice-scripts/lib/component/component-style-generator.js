@@ -5,7 +5,7 @@
 const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
-const iceDepAnalyzer = require('./dep-analyze');
+const iceDepAnalyzer = require('./depAnalyze');
 
 function getPkgJSON(cwd, module) {
   const jsonPath = path.join(cwd, 'node_modules', module, './package.json');
@@ -68,7 +68,7 @@ module.exports = class ComponentStyleGenerator {
       return this.deps;
     } else {
       const deps = iceDepAnalyzer(
-        require.resolve(path.join(this.cwd, 'src/index'))
+        path.join(this.cwd, 'src/index')
       );
 
       this.deps = this.filterDeps(deps);
@@ -130,7 +130,7 @@ require('${this.absoulte ? mainScssAbsPath : './main.scss'}');
 ${importSatements}
 
 // 组件自身样式
-@import '${this.absoulte ? mainScssAbsPath : './main.scss'};'
+@import '${this.absoulte ? mainScssAbsPath : './main.scss'}';
 `;
     fs.writeFileSync(dest, content, 'utf-8');
     return dest;
