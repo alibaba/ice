@@ -1,13 +1,13 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules/
 
 # production
-/build
-/dist
-/tmp
-/lib
+build/
+dist/
+tmp/
+lib/
 
 # misc
 .idea/
