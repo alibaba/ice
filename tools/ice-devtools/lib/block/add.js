@@ -22,7 +22,7 @@ module.exports = async function addBlock(cwd, opt = {}) {
   const questions = defaultQuestion(npmPrefix); 
   const { name } = await inquirer.prompt(questions);
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
-  const dest = standalone ? path.join(cwd, name) : path.join(cwd, 'blocks', name);
+  const dest = standalone ? cwd : path.join(cwd, 'blocks', name);
 
   try {
     await generate({
@@ -30,7 +30,8 @@ module.exports = async function addBlock(cwd, opt = {}) {
       dest,
       name,
       npmName,
-      meta
+      meta,
+      skipGitIgnore: !standalone // 物料仓库中，不处理 _gitignore 文件
     });
     completedMessage(name, dest, standalone);
   } catch(e) {
@@ -69,9 +70,7 @@ function completedMessage(blockName, blockPath, standalone) {
   console.log(`Inside ${blockName} directory, you can run several commands:`);
   console.log();
   console.log('  Starts the development server.');
-  if (standalone) {
-    console.log(chalk.cyan(`    cd ${blockName}`));
-  } else {
+  if (!standalone) {
     console.log(chalk.cyan(`    cd blocks/${blockName}`));
   }
   console.log(chalk.cyan('    npm install'));

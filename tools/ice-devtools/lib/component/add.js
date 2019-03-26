@@ -22,7 +22,7 @@ module.exports = async function addComponent(cwd, opt = {}) {
   const questions = defaultQuestion(npmPrefix); 
   const { name } = await inquirer.prompt(questions);
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
-  const dest = standalone ? path.join(cwd, name) : path.join(cwd, 'components', name);
+  const dest = standalone ? cwd : path.join(cwd, 'components', name);
 
   try {
     await generate({
@@ -30,7 +30,8 @@ module.exports = async function addComponent(cwd, opt = {}) {
       dest,
       name,
       npmName,
-      meta
+      meta,
+      skipGitIgnore: !standalone // 物料仓库中，不处理 _gitignore 文件
     });
     completedMessage(name, dest, standalone);
   } catch(e) {
@@ -43,14 +44,14 @@ function defaultQuestion(prefix) {
     {
       type: 'input',
       name: 'name',
-      message: 'block name (e.g. ExampleComponent)',
+      message: 'component name (e.g. ExampleComponent)',
       validate: (value) => {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
           return 'Name must be a Upper Camel Case word, e.g. ExampleComponent.';
         }
         const npmName = generateNpmNameByPrefix(value, prefix);
         if (!validateName(npmName).validForNewPackages) {
-          return `this block name(${npmName}) has already exist. please retry`;
+          return `this component name(${npmName}) has already exist. please retry`;
         }
         return true;
       },
@@ -69,9 +70,7 @@ function completedMessage(name, path, standalone) {
   console.log(`Inside ${name} directory, you can run several commands:`);
   console.log();
   console.log('  Starts the development server.');
-  if (standalone) {
-    console.log(chalk.cyan(`    cd ${name}`));
-  } else {
+  if (!standalone) {
     console.log(chalk.cyan(`    cd components/${name}`));
   }
   console.log(chalk.cyan('    npm install'));

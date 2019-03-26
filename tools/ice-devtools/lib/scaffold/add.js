@@ -22,7 +22,7 @@ module.exports = async function addScaffold(cwd, opt = {}) {
   const questions = defaultQuestion(npmPrefix); 
   const { name } = await inquirer.prompt(questions);
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
-  const dest = standalone ? path.join(cwd, name) : path.join(cwd, 'scaffolds', name);
+  const dest = standalone ? cwd : path.join(cwd, 'scaffolds', name);
 
   try {
     await generate({
@@ -30,7 +30,8 @@ module.exports = async function addScaffold(cwd, opt = {}) {
       dest,
       name,
       npmName,
-      meta
+      meta,
+      skipGitIgnore: !standalone // 物料仓库中，不处理 _gitignore 文件
     });
     completedMessage(name, dest, standalone);
   } catch(e) {
@@ -72,9 +73,7 @@ function completedMessage(scaffoldName, scaffoldPath, standalone) {
   );
   console.log();
   console.log('  Starts the development server.');
-  if (standalone) {
-    console.log(chalk.cyan(`    cd ${scaffoldName}`));
-  } else {
+  if (!standalone) {
     console.log(chalk.cyan(`    cd scaffolds/${scaffoldName}`));
   }
   console.log(chalk.cyan('    npm install'));

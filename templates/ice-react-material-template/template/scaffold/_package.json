@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@alifd/next": "^1.10.1",
-    "@icedesign/theme": "^1.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.2.2"
@@ -45,7 +44,6 @@
     "registry": "{{registry}}"
   },
   "buildConfig": {
-    "theme": "@icedesign/theme",
     "entry": "src/index.js",
     "localization": false,
     "output": {

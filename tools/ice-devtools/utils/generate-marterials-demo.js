@@ -24,7 +24,8 @@ module.exports = async function generateMaterialsDemo(appPath) {
       npmName: `${pkg.name}-example-${type}`,
       version: '1.0.0',
       title: `demo ${type}`,
-      description: '示例'
+      description: '示例',
+      skipGitIgnore: true
     });
   }
 }

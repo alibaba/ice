@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.0
+ - [feat] 支持 vue 物料源
+ - [feat] 支持 自定义物料模板
+ - [refactor] 分离 block/component dev 和 build 逻辑
+ - [revert] babel-plugin-transform-runtime
+
 ## 2.1.20
  - [feat] 引入 babel-plugin-transform-runtime
  - [feat] 支持编译 ts

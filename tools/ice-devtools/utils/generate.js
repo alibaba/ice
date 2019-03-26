@@ -92,7 +92,7 @@ function generate(options, done) {
   metalsmith
     .use(filterFiles(meta.filters))
     .use(renderTemplateFiles(meta.skipInterpolation))
-    .use(transformFile(meta))
+    .use(transformFile(data.skipGitIgnore))
     .ignore([TEMPLATE_PATH, 'meta.js']);
 
   if (typeof meta.metalsmith === 'function') {
@@ -132,9 +132,12 @@ function askQuestions(prompts) {
   };
 }
 
-function transformFile() {
+function transformFile(skipGitIgnore) {
   return (files, metalsmith, done) => {
-    transform(files, metalsmith.metadata(), done);
+    transform(files, {
+      ...metalsmith.metadata(),
+      skipGitIgnore
+    }, done);
   };
 }
 
