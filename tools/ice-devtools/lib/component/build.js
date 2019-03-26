@@ -24,7 +24,12 @@ const babelOpt = getBabelConfig();
  */
 module.exports = function componentBuild(workDir, opts) {
   console.log();
-  console.log(chalk.yellow(`WARNING: 当前的区块构建方式将不再维护，升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade`));
+  console.log(chalk.yellow(`[WARNING] 此功能将在下个版本废弃，请使用 ice-scripts 开发/构建`));
+  console.log();
+  console.log(chalk.cyan('    npm install ice-scripts@latest -g'));
+  console.log(chalk.cyan('    ice build'));
+  console.log();
+  console.log('升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade');
   console.log();
 
   const config = getBaseConfig(workDir);
