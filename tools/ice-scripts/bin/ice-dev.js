@@ -21,15 +21,15 @@ program
     /^(polyfill|runtime)$/,
     'polyfill'
   )
+  .option('--webpackrc <path>', '设置webpackrc.js的路径')
   .parse(process.argv);
 
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 
 const isInteractive = process.stdout.isTTY;
-
 optionsAttachToEnv(program);
-
+console.log('1', process.env.WEBPACKRC)
 const DEFAULT_PORT = program.port || process.env.PORT || 4444;
 const HOST = program.host || process.env.HOST || '0.0.0.0';
 const defaultPort = parseInt(DEFAULT_PORT, 10);
