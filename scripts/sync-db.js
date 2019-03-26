@@ -3,7 +3,6 @@ const co = require('co');
 const { readdirSync, readFileSync, writeFile } = require('fs');
 const path = require('path');
 const request = require('request');
-const { publishMaterialsDB } = require('./materials-db-publish');
 const scaffolds = require('./scaffolds');
 
 if (
@@ -45,14 +44,6 @@ sortScaffoldMaterials()
 
     const tasks = files.map(createUploadTask);
     return Promise.all(tasks);
-  })
-  .then(() => {
-    // 物料源数据发布到npm，作为兜底备份
-    if (process.env.TRAVIS_BRANCH === 'production') {
-      return publishMaterialsDB();
-    } else {
-      return Promise.resolve();
-    }
   })
   .then(()=> {
     console.log('all done');

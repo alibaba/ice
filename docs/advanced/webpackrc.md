@@ -1,7 +1,7 @@
 ---
 title: ice-scripts 使用指南
 order: 1
-category: 进阶指南
+
 ---
 
 飞冰项目默认使用 [ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts) 作为开发工具，ice-scripts 提供了丰富的功能帮助我们提高开发效率：

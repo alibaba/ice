@@ -1,7 +1,7 @@
 ---
 title: 插件-代理配置
 category: Iceworks
-order: 2
+order: 13
 ---
 
 在使用代理功能时，请先明确一下问题：

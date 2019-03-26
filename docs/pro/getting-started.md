@@ -1,7 +1,7 @@
 ---
 title: 开始使用
 order: 1
-category: ICE Design Pro
+
 ---
 
 基于海量高质量可复用区块，通过 GUI 工具快速搭建的一套中后台模板。
