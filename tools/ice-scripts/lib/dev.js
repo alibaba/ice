@@ -25,6 +25,7 @@ const goldlog = require('./utils/goldlog');
 const pkgData = require('../package.json');
 const projectPkgData = require('./config/packageJson');
 const log = require('./utils/log');
+const checkDepsInstalled = require('./utils/checkDepsInstalled');
 
 module.exports = async function (cliOptions, subprocess) {
   goldlog('version', {
@@ -40,6 +41,13 @@ module.exports = async function (cliOptions, subprocess) {
       subprocess.send(data);
     }
   };
+
+  const installedDeps = checkDepsInstalled(paths.appDirectory);
+  if (!installedDeps) {
+    log.error('项目依赖未安装，请先安装依赖。');
+    process.exit(1);
+    return;
+  }
 
   const HOST = cliOptions.host || '0.0.0.0';
   const PORT = cliOptions.port || 4444;
