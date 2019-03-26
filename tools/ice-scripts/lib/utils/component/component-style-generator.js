@@ -130,7 +130,7 @@ require('${this.absoulte ? mainScssAbsPath : './main.scss'}');
 ${importSatements}
 
 // 组件自身样式
-@import '${this.absoulte ? mainScssAbsPath : './main.scss'};'
+@import '${this.absoulte ? mainScssAbsPath : './main.scss'}';
 `;
     fs.writeFileSync(dest, content, 'utf-8');
     return dest;
