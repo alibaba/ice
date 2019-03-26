@@ -33,16 +33,16 @@ module.exports = async function getDB(cwd) {
   const paths = await globby(['*.json'], {cwd: dbBasePath});
   debug('db json files: %j', paths);
 
-  let fileIndex = paths.indexOf('react-materials.json');
+  let fileIndex = paths.indexOf('materials.json');
 
   if (fileIndex < 0) {
-    console.log(chalk.red('build/react-materials.json can\'t be find'));
+    console.log(chalk.red('materials.json can\'t be find'));
     return null;
   }
   const dbPath = path.join(dbBasePath, paths[fileIndex]);
   db = pkgJSON.getJSON(dbPath);
   if (!Array.isArray(db.blocks) || !Array.isArray(db.scaffolds)) {
-    console.error(`build/react-materials.json is not a valid materials json`);
+    console.error(`${dbPath} is not a valid materials json`);
     return null;
   }
   return db;
