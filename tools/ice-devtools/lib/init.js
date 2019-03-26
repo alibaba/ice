@@ -24,7 +24,7 @@ module.exports = async function init(cwd) {
     const template = process.env.TEMPLATE;
 
     // 检查当前目录是否为空
-    if (fs.readdirSync(cwd).length && type === 'material') {
+    if (fs.readdirSync(cwd).length) {
       logger.fatal('Workdir %s is not empty.', cwd);
     }
 

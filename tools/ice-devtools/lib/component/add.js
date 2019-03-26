@@ -22,7 +22,7 @@ module.exports = async function addComponent(cwd, opt = {}) {
   const questions = defaultQuestion(npmPrefix); 
   const { name } = await inquirer.prompt(questions);
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
-  const dest = standalone ? path.join(cwd, name) : path.join(cwd, 'components', name);
+  const dest = standalone ? cwd : path.join(cwd, 'components', name);
 
   try {
     await generate({
@@ -70,9 +70,7 @@ function completedMessage(name, path, standalone) {
   console.log(`Inside ${name} directory, you can run several commands:`);
   console.log();
   console.log('  Starts the development server.');
-  if (standalone) {
-    console.log(chalk.cyan(`    cd ${name}`));
-  } else {
+  if (!standalone) {
     console.log(chalk.cyan(`    cd components/${name}`));
   }
   console.log(chalk.cyan('    npm install'));
