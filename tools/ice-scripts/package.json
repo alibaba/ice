@@ -65,6 +65,7 @@
     "deepmerge": "2.1.1",
     "detect-port": "1.2.3",
     "extract-css-assets-webpack-plugin": "0.2.5",
+    "file-loader": "^3.0.1",
     "find-root": "^1.1.0",
     "fs-extra": "^7.0.1",
     "glob": "^7.0.6",
