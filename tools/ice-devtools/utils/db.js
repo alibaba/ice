@@ -1,32 +1,48 @@
 const debug = require('debug')('ice:util:db');
-const inquirer = require('inquirer');
 const path = require('path');
-const fs = require('fs');
 const chalk = require('chalk');
 const globby = require('globby');
 
-const { promisify } = require('util');
-const [readFile, writeFile] = [fs.readFile, fs.writeFile].map((fn) =>
-  promisify(fn)
-);
 
-const pkgJSON = require('../utils/pkg-json');
+const pkgJSON = require('./pkg-json');
+const getType = require('./type');
+
 
 module.exports = async function getDB(cwd) {
+  let db = {
+    blocks: [],
+    components: [],
+    scaffolds: [],
+  };
+
+  // 优先单个发版本
+  const type = getType(cwd);
+  const pkgs = db[`${type}s`];
+  if (Array.isArray(pkgs)) {
+    const pkgjson = pkgJSON.getPkgJSON(cwd);
+    pkgs.push({
+      source: {
+        npm: pkgjson.name,
+        version: pkgjson.version,
+      }
+    });
+    return db;
+  }
+
   const dbBasePath = path.join(cwd, 'build');
   const paths = await globby(['*.json'], {cwd: dbBasePath});
   debug('db json files: %j', paths);
 
-  let fileIndex = paths.indexOf('react-materials.json');
+  let fileIndex = paths.indexOf('materials.json');
 
   if (fileIndex < 0) {
-    console.log(chalk.red('build/react-materials.json can\'t be find'));
+    console.log(chalk.red('materials.json can\'t be find'));
     return null;
   }
   const dbPath = path.join(dbBasePath, paths[fileIndex]);
-  const db = pkgJSON.getJSON(dbPath);
+  db = pkgJSON.getJSON(dbPath);
   if (!Array.isArray(db.blocks) || !Array.isArray(db.scaffolds)) {
-    console.error(`build/react-materials.json is not a valid materials json`);
+    console.error(`${dbPath} is not a valid materials json`);
     return null;
   }
   return db;

@@ -2,21 +2,20 @@ const debug = require('debug')('ice:start:block');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const chalk = require('chalk');
-const getBlockType = require('../../utils/block-type');
 const getBaseConfig = require('../../config/webpack.block');
-const getVueConfig = require('../../config/webpack.vue.block');
 const PORT = 5000;
 
 module.exports = function blockDevStart(cwd, opt) {
-  const blockType = getBlockType(cwd);
+  console.log();
+  console.log(chalk.yellow(`[WARNING] 此功能将在下个版本废弃，请使用 ice-scripts 开发/构建`));
+  console.log();
+  console.log(chalk.cyan('    npm install ice-scripts@latest -g'));
+  console.log(chalk.cyan('    ice dev'));
+  console.log();
+  console.log('升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade');
+  console.log();
 
-  let config;
-
-  if (blockType === 'vue') {
-    config = getVueConfig(cwd, blockType);
-  } else {
-    config = getBaseConfig(cwd, blockType);
-  }
+  const config = getBaseConfig(cwd, 'react');
 
   // devServer
   let { port = PORT } = opt;

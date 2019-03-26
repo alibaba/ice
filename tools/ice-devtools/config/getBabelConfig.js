@@ -48,10 +48,7 @@ module.exports = (buildConfig = {}) => {
       ],
       ['babel-plugin-import', { libraryName: '@alife/next' }, '@alife/next'],
       ['babel-plugin-import', { libraryName: '@alifd/next' }, '@alifd/next'],
-      ['babel-plugin-import', { libraryName: 'antd', style: true }, 'antd'],
-      [
-        '@babel/plugin-transform-runtime'
-      ]
+      ['babel-plugin-import', { libraryName: 'antd', style: true }, 'antd']
     ]),
   };
 };

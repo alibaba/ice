@@ -1,99 +1,148 @@
 const inquirer = require('inquirer');
 const path = require('path');
+const { existsSync } = require('fs');
+const ora = require('ora');
+const home = require('user-home');
+const { sync: rm } = require('rimraf');
 const debug = require('debug')('ice:add:general');
 const logger = require('../utils/logger');
 const pkgJSON = require('../utils/pkg-json');
 const message = require('../utils/message');
-const { getLocalTemplate } = require('../utils/local-path');
+const download = require('../utils/download');
+const { isLocalPath } = require('../utils/local-path');
 
 const MATERIAL_TEMPLATE_TYPE = ['block', 'component', 'scaffold'];
+
 const MATERIAL_TEMPLATE_QUESION = [
   {
     type: 'list',
-    name: 'templateType',
+    name: 'type',
     message: 'Please select material type',
     choices: MATERIAL_TEMPLATE_TYPE,
   },
 ];
 
-const FRAMEWORK_TYPE_QUESION = [
-  {
-    type: 'list',
-    name: 'frameworkType',
-    message: 'Please select framework type',
-    choices: ['react', 'vue']
-  },
-]
-
-module.exports = async function add(cwd, ...options) {
+module.exports = async function add(cwd, options = {}) {
   debug('cwd: %s', cwd);
 
-  const [templateName, templateType] = options;
-  if (templateName && templateType) {
-    // eg. ice-devtools add ./templates/ice-vue-block-template block
-    await getArgvOptions(cwd, ...options);
+  if (options.type) {
+    addForStandaloneProject(cwd, {
+      ...options
+    });
+    return;
+  }
+
+  const pkg = pkgJSON.getPkgJSON(cwd);
+  
+  if (!pkg) {
+    logger.fatal(message.invalid);
+  }
+
+  if (pkg.materialConfig) {
+    addForMaterialProject(cwd, {
+      pkg
+    });
   } else {
-    await getAskOptions(cwd, ...options);
+    logger.fatal(message.invalid);
   }
 };
 
 /**
- * 通过询问的形式添加物料
- * @param {string} cwd
- * @param {Array} argvOpts
+ * 创建一个独立的组件/区块
+ * @param {*} cwd 
+ * @param {*} options 
  */
-async function getAskOptions(cwd, ...argvOpts) {
-  const pkg = pkgJSON.getPkgJSON(cwd);
+async function addForStandaloneProject(cwd, options) {
+  const { type, template } = options;
 
-  const options = {
-    pkg
-  };
+  const npmPrefix = options.scope ? `${options.scope}/` : '';
 
-  // react、vue、etc...
-  let type;
+  const templatePath = await getTemplatePath(type, cwd, template);
 
-  if (pkg && pkg.materialConfig) {
-    type = pkg.materialConfig.type;
-  } else if (pkg && pkg.materials) {
-    // 兼容 ice 官方仓库
-    const { frameworkType } = await inquirer.prompt(FRAMEWORK_TYPE_QUESION);
-    type = frameworkType;
-    cwd = path.join(cwd, `${type}-materials`);
-    options.scope = `@${type}-materials`;
-  } else {
-    logger.fatal(message.invalid);
-  }
-
-  // block、scaffold、etc...
-  const { templateType } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
-  debug('ans: %j', templateType);
-
-  require(`./${templateType}/add`)(type, cwd, options, ...argvOpts);
+  require(`./${type}/add`)(cwd, {
+    npmPrefix,
+    templatePath,
+    standalone: true,
+  });
 }
 
 /**
- * 通过命令行的形式添加物料，支持本地模板和 npm 包的形式
- * 本地模板：~/fs/path/to-custom-template
- * npm模板：to-custom-template
- * @param {Array} cwd          当前路径
- * @param {Array} templateName 模板名称
- * @param {Array} templateType 模板类型
- * @param {Array} options      命令行参数
+ * 在物料仓库中新增一个组件/区块
  */
-async function getArgvOptions(cwd, templateName, templateType, ...options) {
-  if (!MATERIAL_TEMPLATE_TYPE.includes(templateType)) {
-    logger.fatal('unknown argument:', templateType);
+async function addForMaterialProject(cwd, options) {
+  const {
+    pkg
+  } = options;
+
+  const npmPrefix = `${pkg.name}-`;
+
+  // block、scaffold、etc...
+  const { type } = await inquirer.prompt(MATERIAL_TEMPLATE_QUESION);
+  debug('ans: %j', type);
+
+  const templatePath = await getTemplatePath(type, cwd);
+
+  require(`./${type}/add`)(cwd, {
+    npmPrefix,
+    templatePath
+  });
+}
+
+/**
+ * 获取模板路径
+ * @param {string} type 
+ * @param {string} cwd 
+ */
+async function getTemplatePath(templateType, cwd, template) {
+  // from local path
+  if (template && isLocalPath(template)) {
+    const templatePath = path.join(template, `template/${templateType}`);
+    if (existsSync(templatePath)) {
+      return templatePath;
+    }
+    logger.fatal(`template is not found in ${templatePath}` );
   }
 
-  if (getLocalTemplate(templateName)) {
-    require(`./${templateType}/add`)(
-      null,
-      cwd,
-      { 
-        hasArgvOpts: true,
-        templateSource:  templateName
-      },
-      ...options
-    );
+  // from local .template file
+  const templateRoot = path.join(cwd, `.template`);
+
+  if (existsSync(templateRoot)) {
+    const localTemplate = path.join(templateRoot, templateType);
+
+    if (existsSync(localTemplate)) {
+      return localTemplate;
+    } else {
+      logger.fatal(`template for ${templateType} is not found in .template` );
+    }
   }
+
+  // form npm package
+  const templateName = template || `@icedesign/ice-react-material-template`; // 老项目新增物料 & 组件独立创建链路 会使用 `@icedesign/ice-react-material-template`
+  const tmp = await downloadTemplate(templateName);
+  const templatePath = path.join(tmp, `template/${templateType}`);
+
+  return templatePath;
+}
+
+/**
+ * 下载模板
+ *
+ * @param {String} template
+ */
+function downloadTemplate(template) {
+  const downloadspinner = ora('downloading template');
+  downloadspinner.start();
+
+  const tmp = path.join(home, '.ice-templates', template);
+  debug('downloadTemplate', template);
+  if (existsSync(tmp)) rm(tmp);
+  return download({ template })
+    .then(() => {
+      downloadspinner.stop();
+      return tmp;
+    })
+    .catch((err) => {
+      downloadspinner.stop();
+      logger.fatal(`Failed to download repo ${template} : ${err.message}`);
+    });
 }
