@@ -30,7 +30,8 @@ module.exports = async function addBlock(cwd, opt = {}) {
       dest,
       name,
       npmName,
-      meta
+      meta,
+      skipGitIgnore: !standalone // 物料仓库中，不处理 _gitignore 文件
     });
     completedMessage(name, dest, standalone);
   } catch(e) {
