@@ -1,9 +1,15 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 const paths = require('./paths');
 const getFaviconPath = require('../utils/getFaviconPath');
+const pkgData = require('./packageJson');
 
 module.exports = function getEntryHtmlPlugins(entries) {
+
+  if (pkgData.type === 'component') {
+    return [
+    ];
+  }
+
   if (typeof entries === 'string' || Array.isArray(entries)) {
     return [
       new HtmlWebpackPlugin({

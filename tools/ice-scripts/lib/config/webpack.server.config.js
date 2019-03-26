@@ -1,10 +1,14 @@
+const cliInstance = require('../utils/cliInstance');
+const pkgData = require('./packageJson');
+const demoRouter = require('../component/demoRouter');
+
 module.exports = () => {
-  return {
+  const options = {
     // historyApiFallback: true,
     disableHostCheck: true,
     compress: true,
     clientLogLevel: 'none',
-    hot: !process.env.DISABLED_RELOAD,
+    hot: !cliInstance.get('disabledReload'),
     publicPath: '/',
     quiet: true,
     watchOptions: {
@@ -21,4 +25,11 @@ module.exports = () => {
       });
     },
   };
+
+  if (pkgData.type === 'component') {
+    options.after = demoRouter;
+    options.contentBase = false;
+  }
+
+  return options;
 };

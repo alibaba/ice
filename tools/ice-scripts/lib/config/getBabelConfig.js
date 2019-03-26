@@ -2,6 +2,7 @@
  * 编译设置
  * @param {Object} buildConfig 定义在 package.json 的字段
  */
+const cliInstance = require('../utils/cliInstance');
 
 function resolvePlugin(plugins) {
   return plugins.filter(Boolean).map((plugin) => {
@@ -13,14 +14,14 @@ function resolvePlugin(plugins) {
   });
 }
 
-module.exports = (buildConfig = {}) => {
+module.exports = (buildConfig = {}, buildComponentSrc) => {
   return {
     babelrc: buildConfig.babelrc || false,
     presets: resolvePlugin([
       [
         '@babel/preset-env',
         {
-          modules: false,
+          modules: buildComponentSrc ? 'commonjs' : false,
           useBuiltIns: 'entry',
           targets: {
             browsers: [
@@ -57,17 +58,15 @@ module.exports = (buildConfig = {}) => {
       '@babel/plugin-syntax-import-meta',
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       '@babel/plugin-proposal-json-strings',
-      process.env.INJECT_BABEL === 'runtime'
-        ? [
-            '@babel/plugin-transform-runtime',
-            {
-              corejs: false,
-              helpers: true,
-              regenerator: true,
-              useESModules: false,
-            },
-          ]
-        : null,
+      (cliInstance.get('injectBabel') === 'runtime' || buildComponentSrc) ? [
+        '@babel/plugin-transform-runtime',
+        {
+          corejs: false,
+          helpers: true,
+          regenerator: true,
+          useESModules: false,
+        },
+      ] : null,
       [
         'babel-plugin-import',
         { libraryName: '@icedesign/base' },
@@ -77,8 +76,8 @@ module.exports = (buildConfig = {}) => {
       ['babel-plugin-import', { libraryName: '@alifd/next' }, '@alifd/next'],
 
       buildConfig.babelPluginImportConfig ? [
-        'babel-plugin-import', buildConfig.babelPluginImportConfig
-      ] : null
+        'babel-plugin-import', buildConfig.babelPluginImportConfig,
+      ] : null,
     ]),
   };
 };

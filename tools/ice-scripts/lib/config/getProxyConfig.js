@@ -3,9 +3,9 @@
  */
 const path = require('path');
 const fs = require('fs');
-const colors = require('chalk');
 
-// TODO 抽离为单独的组件
+const log = require('../utils/log');
+
 module.exports = (opts = {}) => {
   const { cwd = process.cwd() } = opts;
 
@@ -17,10 +17,7 @@ module.exports = (opts = {}) => {
       const pkgData = JSON.parse(pkgContext.toString());
 
       if (pkgData.proxyConfig) {
-        console.log(
-          colors.green('Info:'),
-          'package.json 存在 proxyConfig 代理配置'
-        );
+        log.info('package.json 存在 proxyConfig 代理配置');
 
         if (
           Object.prototype.toString.apply(pkgData.proxyConfig) ===

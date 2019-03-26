@@ -1,13 +1,11 @@
 /**
- * 启动服务，根据传入的路径地址，按照 ICE page 的规则搜寻代码，并启动编译服务
- * @param {String} cwd 项目目录
- * @param {Object} options 命令行参数
+ * 启动服务：cli 调用
  */
-/* eslint no-console:off */
+
 process.env.NODE_ENV = 'development';
 
-const chalk = require('chalk');
 const fs = require('fs');
+const chalk = require('chalk');
 const clearConsole = require('react-dev-utils/clearConsole');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const webpack = require('webpack');
@@ -25,28 +23,38 @@ const getProxyConfig = require('./config/getProxyConfig');
 const openBrowser = require('react-dev-utils/openBrowser');
 const goldlog = require('./utils/goldlog');
 const pkgData = require('../package.json');
+const projectPkgData = require('./config/packageJson');
+const log = require('./utils/log');
+const checkDepsInstalled = require('./utils/checkDepsInstalled');
 
-module.exports = async function(args, subprocess) {
+module.exports = async function (cliOptions, subprocess) {
   goldlog('version', {
-    version: pkgData.version
+    version: pkgData.version,
   });
-  goldlog('dev');
+  goldlog('dev', cliOptions);
+  log.verbose('dev cliOptions', cliOptions);
 
   // 与 iceworks 客户端通信
-  const send = function(data) {
+  const send = function (data) {
     iceworksClient.send(data);
     if (subprocess && typeof subprocess.send === 'function') {
       subprocess.send(data);
     }
   };
 
-  const cwd = process.cwd();
-  const HOST = args.host || '0.0.0.0';
-  const PORT = args.port || 4444;
-  let httpsConfig;
-  let protocol = args.https ? 'https' : 'http';
+  const installedDeps = checkDepsInstalled(paths.appDirectory);
+  if (!installedDeps) {
+    log.error('项目依赖未安装，请先安装依赖。');
+    process.exit(1);
+    return;
+  }
 
-  if (protocol == 'https') {
+  const HOST = cliOptions.host || '0.0.0.0';
+  const PORT = cliOptions.port || 4444;
+  let httpsConfig;
+  let protocol = cliOptions.https ? 'https' : 'http';
+
+  if (protocol === 'https') {
     try {
       const ca = await generateRootCA();
       httpsConfig = {
@@ -55,24 +63,21 @@ module.exports = async function(args, subprocess) {
       };
     } catch (err) {
       protocol = 'http';
-      console.log(chalk.red('HTTPS 证书生成失败，已转换为HTTP'));
+      log.info('HTTPS 证书生成失败，已转换为HTTP');
     }
   }
 
   const isInteractive = false; // process.stdout.isTTY;
   const urls = prepareUrLs(protocol, HOST, PORT);
-  const entries = getEntries(cwd);
+  const entries = getEntries();
   const proxyConfig = getProxyConfig();
-  // eslint-disable-next-line import/no-dynamic-require
-  const packageData = require(paths.appPackageJson);
-  // get ice config by package.ice
 
-  if (process.env.DISABLED_RELOAD) {
-    console.log(chalk.yellow('Warn:'), '关闭了热更新（hot-reload）功能');
+  if (cliOptions.disabledReload) {
+    log.warn('关闭了热更新（hot-reload）功能');
   }
   const webpackConfig = getWebpackConfigDev({
     entry: entries,
-    buildConfig: packageData.buildConfig || packageData.ice,
+    buildConfig: projectPkgData.buildConfig || projectPkgData.ice,
   });
 
   if (iceworksClient.available) {
@@ -94,7 +99,7 @@ module.exports = async function(args, subprocess) {
   let isFirstCompile = true;
   const compiler = webpack(webpackConfig);
   // eslint-disable-next-line global-require
-  let devServerConfig = require('./config/webpack.server.config')(args);
+  let devServerConfig = require('./config/webpack.server.config')();
   if ('devServer' in webpackConfig) {
     // merge user config
     devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);
@@ -152,12 +157,10 @@ module.exports = async function(args, subprocess) {
 
     if (isSuccessful) {
       if (stats.stats) {
-        console.log(chalk.green('Compiled successfully'));
+        log.info('Compiled successfully');
       } else {
-        console.log(
-          chalk.green(
-            `Compiled successfully in ${(json.time / 1000).toFixed(1)}s!`
-          )
+        log.info(
+          `Compiled successfully in ${(json.time / 1000).toFixed(1)}s!`
         );
       }
     }
@@ -166,10 +169,10 @@ module.exports = async function(args, subprocess) {
       if (messages.errors.length > 1) {
         messages.errors.length = 1;
       }
-      console.log(chalk.red('Failed to compile.\n'));
+      log.error('Failed to compile.\n');
       console.log(messages.errors.join('\n\n'));
     } else if (messages.warnings.length) {
-      console.log(chalk.yellow('Compiled with warnings.'));
+      log.warn('Compiled with warnings.');
       console.log();
       messages.warnings.forEach((message) => {
         console.log(message);

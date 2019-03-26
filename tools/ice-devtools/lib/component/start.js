@@ -21,7 +21,7 @@ module.exports = function blockDevStart(cwd, opt) {
     const demoFile = join(cwd, 'demo', demoName + '.md');
     config.entry(`__Component_Dev__.${demoName}`).add(demoFile);
   });
-  
+
   // devServer
   let { port = PORT } = opt;
   port = parseInt(port, 10);
