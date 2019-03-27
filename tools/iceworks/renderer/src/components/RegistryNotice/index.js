@@ -8,10 +8,6 @@ const isAlibaba = settings.get('isAlibaba');
 const taobaoRegistry = 'https://registry.npm.taobao.org';
 
 class RegistryNotice extends Component {
-  state = {
-    checked: false,
-  };
-
   isTaobaoRegistry = () => {
     if (currentRegistry.includes('taobao')) {
       return true;
@@ -21,16 +17,15 @@ class RegistryNotice extends Component {
 
   settingRegistry = () => {
     settings.set('registry', taobaoRegistry);
+    settings.set('checkedRegistry', true);
   };
 
-  cancel = () => {
-    this.setState({
-      checked: true,
-    });
+  handleCancel = () => {
+    settings.set('checkedRegistry', true);
   };
 
   render() {
-    const { checked } = this.state;
+    const checked = settings.get('checkedRegistry');
 
     return (
       <div className="setting-registy-dialog">
@@ -45,7 +40,7 @@ class RegistryNotice extends Component {
                 if (ok) {
                   this.settingRegistry();
                 } else {
-                  this.cancel();
+                  this.handleCancel();
                 }
               }
             )
