@@ -111,16 +111,16 @@ class PagesCard extends Component {
     if (editor === 'VisualStudioCode') {
       uriFolder = Uri.file(uriFolder).toString();
       uriFile = Uri.file(uriFile).toString();
-      editorOpenFile(uriFolder, uriFile, ['--folder-uri'], ['--file-uri']);
+      this.editorOpenFile(uriFolder, uriFile, ['--folder-uri'], ['--file-uri']);
     } else {
-      editorOpenFile(uriFolder, uriFile);
+      this.editorOpenFile(uriFolder, uriFile);
     }
   };
 
   editorOpenFile(folder, file, folderOpt = [], fileOpt = []) {
     editors.open(folder, folderOpt, true);
     setTimeout(()=> {
-      editors.open(uriFile, fileOpt, true);
+      editors.open(file, fileOpt, true);
     }, 1000)
   }
 
