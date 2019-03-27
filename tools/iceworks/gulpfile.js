@@ -102,8 +102,8 @@ async function getUpload2oss() {
     {
       type: 'input',
       name: 'id',
-      message: '请输入 Access KeyId',
-      default: 'LTAIpfdX8L8sa98T',
+      message: '请输入 Access KeyId (默认值读取: process.env.ACCESS_KEY)',
+      default: process.env.ACCESS_KEY || '',
     },
     {
       type: 'input',
@@ -138,7 +138,7 @@ async function getUpload2oss() {
       '=>',
       paths.join('/')
     );
-  
+
     return co(iceworksStore.put(paths.join('/'), file))
       .then((object = {}) => {
         if (object.res && object.res.status == 200) {
