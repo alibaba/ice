@@ -47,8 +47,8 @@ function extractTarball(
         alilog.report(
           {
             type: 'download-tarball-error',
-            msg: err.message,
-            stack: err.stack,
+            msg: error.message,
+            stack: error.stack,
             data: {
               url: tarballURL,
             },
