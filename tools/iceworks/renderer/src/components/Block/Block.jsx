@@ -110,9 +110,13 @@ class Block extends Component {
           <div className="block-flipcard">
             <div className="block-flipcard-body">
               <h2>{block.title}</h2>
-              <div>
-                <p>{block.description}</p>
-              </div>
+              {
+                block.description && (
+                  <div>
+                    <p>{block.description}</p>
+                  </div>
+                )
+              }
             </div>
             <div className="block-flipcard-panel">
               <span className="preview" onClick={this.openBlockImgPreview}>
