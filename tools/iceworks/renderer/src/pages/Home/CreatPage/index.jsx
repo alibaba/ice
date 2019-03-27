@@ -127,7 +127,6 @@ class CreatePage extends Component {
         onCancel={this.handleCancelCreate}
         onClose={this.handleCancelCreate}
         onOk={this.handleCancelCreate}
-        // afterClose={this.resetData}
         closable="mask,close"
       >
         <div className="careate-page">
