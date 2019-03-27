@@ -1,27 +1,49 @@
 ---
 title: ice-scripts 使用指南
 order: 1
-
 ---
 
-飞冰项目默认使用 [ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts) 作为开发工具，ice-scripts 提供了丰富的功能帮助我们提高开发效率：
+[ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts) 是飞冰（ICE）React 链路的开发者工具，类似 vue-cli 与 vue 的关系。ice-scripts 提供了丰富的功能帮助我们开发 React 项目：
 
-- 命令行工具
-- 主题配置
-- 代理配置
-- 自定义 webpack 配置
-- Mock
+- 完善的命令行工具
+- 支持项目/业务组件/区块的开发&构建
+- 基于 Fusion 体系的主题配置
+- 完善的自定义 webpack 配置
 - ……
 
-本文会讲述 ice-scripts 完整的使用指南。PS: 请保证 ice-scripts 版本为 1.1.0 及以上。
+本文会讲述 ice-scripts 完整的使用指南。
+
+## 安装
+
+```bash
+$ npm i -g ice-scripts
+$ ice --help
+```
+
+当然你也可以将其作为项目级依赖：`npm i --save-dev ice-scripts`
 
 ## 命令行工具
 
 ice-scripts 提供了 `dev/build` 的开发命令，如果使用 Iceworks 开发，那么大多数时候你不需要关心这些命令。
 
+### ice init
+
+根据模板初始化项目：
+
+```bash
+$ ice init --help
+
+Usage: ice-init [options]
+
+Options:
+
+  -s, --scaffold <port>  模板 npm 包名
+  -h, --help             output usage information
+```
+
 ### ice dev
 
-启动调试服务
+启动调试服务：
 
 ```bash
 $ ice dev --help
@@ -55,7 +77,7 @@ $ ice dev --https
 
 ### ice build
 
-构建代码
+构建项目代码
 
 ```plain
 $ ice build --help
@@ -65,8 +87,12 @@ Usage: ice-build [options]
 Options:
   --debug                debug 模式下不压缩
   --hash                 构建后的资源带 hash 版本
-  --project-type <type>  项目类型, node|web (default: "web")
-  --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime (default: "polyfill")
+  --sourcemap <type>     构建后的资源带 sourcemap 文件
+  --project-type <type>  项目类型, node|nodejs|web
+  -s, --skip-install     跳过安装依赖
+  --skip-demo            跳过构建 build/index.html 的环节
+  --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime
+  -h, --help             output usage information
 ```
 
 ## 构建配置 - buildConfig
@@ -96,7 +122,7 @@ Options:
 }
 ```
 
-然后在 public 目录新增对应的 `dashboard.html` 和 `about.html` 文件，新增的 HTML 内容请参考默认的 `public/index.html`。
+然后在 public 目录新增对应的 `dashboard.html` 和 `about.html` 文件，新增的 HTML 内容请参考默认的 `public/index.html`。多 entry 的情况构建时会额外生成 vendor.js/css，需要自行在 html 里引入（public 目录会自动引入），也可以通过下面的 `buildConfig.disableVendor` 禁止生成 vendor 文件。
 
 ### babelPluginImportConfig
 
@@ -185,6 +211,16 @@ babel-loader 有一个 exclude 的配置，用于过滤某些目录下的文件�
 {
   "react": "window.React",
   "react-dom": "window.ReactDOM"
+}
+```
+
+### 禁用生成 vendor
+
+在多 entry 的情况下，构建时除了每个 entry 会生成一个 bundle 文件外，同时会根据依赖生成 vendor.css&vendor.js，如果不需要生成这个文件，可以通过下面的方式配置：
+
+```js
+"buildConfig": {
+  "disableVendor": true
 }
 ```
 

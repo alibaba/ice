@@ -1,16 +1,25 @@
 ---
 title: 开发模板
-order: 5
-
+order: 2
 ---
 
-## 简介
+## 添加模板
 
-在飞冰中，模板处于物料的最上层，通过区块、布局、页面可组合成模板，使用者可以直接基于模板进行项目开发；因此，模板开发的背后本质上是指开发一套基础的脚手架模板，提供给使用者作为基础工程进行项目初始化。
+```bash
+$ cd my-materials
+$ idev add scaffold
+```
 
-![templates](https://cdn.nlark.com/lark/0/2018/png/71071/1543805991182-68f85b6d-c26a-4793-b4c4-b5565292e9b0.png)
+根据提示输入对应的模板信息，添加完成后会在  `my-materials/scaffolds/`  目录下新增一个模板，进入到该目录下，运行以下命令进行开发，假设初始化的模板为 `TestScaffold` :
 
-## 模板开发规则
+```bash
+$ cd scaffolds/TestScaffold
+
+# 启动服务
+$ npm start
+```
+
+## 开发模板
 
 模板开发遵循模开发规则，上面讲到这里的模板本质上是指开发一套基础的脚手架模板，提供给使用者作为基础工程进行项目初始化，因此，模板开发还需要遵循以下规则：
 
@@ -19,7 +28,7 @@ order: 5
 - 路由配置：通过 `src/routerConfig.js` 配置路由
 - 页面配置：通过 `src/pages` 配置页面
 
-### 配置**脚本**
+### 配置 npm 命令
 
 脚手架模板约定 `package.json`  里需要声明  `scripts`  字段，且必须存在  `start:npm start`  和 `build:npm run build` 脚本，通过  `npm run start`  与  `npm run build`  可启动项目调试服务与应用构建功能。大家在使用 Iceworks 时，会经常用到 Iceworks 项目面板顶部的   启动调试服务、构建项目\_\_ \_\_等功能，其背后的原理则是通过 GUI 的形式去调用了 CLI 的命令。比如我们为飞冰项目提供的  [ice-scripts](https://github.com/alibaba/ice/tree/master/tools/ice-scripts)。
 
@@ -45,12 +54,12 @@ Iceworks 会识别模板中定义的  `scripts`  字段中的 `start` 和 `bui
 
 **menuConfig 格式：**
 
-```javascript
+```js
 const asideMenuConfig = [
-    name: 'Dashboard',
-    path: '/dashboard',
-    icon: 'home2',
-]
+  name: 'Dashboard',
+  path: '/dashboard',
+  icon: 'home2',
+];
 
 export default asideMenuConfig;
 ```
@@ -97,3 +106,7 @@ template
 ```
 
 如上只约定了模板开发的最简目录结构，只需要确保有必须的文件既可以，其他完全可以自定义约定和按需实现，比如如何根据 menuConfig 映射到对应的 UI，如果将 routerConfig 映射到对应的路由表等等。
+
+## 发布模板
+
+开发完成后，按照 npm 的命令将模板发布到 npm。

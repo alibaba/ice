@@ -1,147 +1,85 @@
 ---
 title: 使用 ice-devtools
-order: 2
-
+order: 1
 ---
 
 ## 物料简介
 
-在飞冰中，组件、区块、布局、页面、模板统称为物料，由飞冰团队维护，基于这些物料结合 Iceworks 可以快速搭建中后台应用。
+在飞冰（ICE）体系里，我们定义了一个「物料」的概念，基于物料我们可以快速创建一个前端项目，物料由不同粒度的几个部分组成：
 
-在实际项目中，官方提供的物料源和设计风格可能不满足某些业务场景， 也可能你想基于已有的业务进行沉淀，形成一套自己团队风格的物料源，基于此我们提供了一套完整的开发规范和开发者工具 ice-devtools 来支持自定义物料源的能力，工具在设计层面是去中心化的方案，可以支持自定义接入 react 、vue 、angular 等不同框架物料，只需满足一定的约定和规范即可。
+- 模板：一个样板工程，一般会包含通用的布局、工程配置、页面模块等，可以用来初始化项目
+- 区块：代码片段，对业务通用场景抽象，可以通过工具快速将区块对应的代码复制到项目里
+- 业务组件：面向业务的组件体系，相较于区块来说功能比较复杂、抽象度较高、灵活性较低（只能通过属性控制），项目里通过第三方依赖使用
 
-## 名词解释
+飞冰（ICE）团队维护了一套相对质量较高的物料帮助项目提效，但在实际场景里，很多业务、团队会有自己的模板、区块、业务组件，我们把这些统称为自定义物料，同时提供了 ice-devtools 这个工具协助业务开发自身的物料体系。当物料开发完成之后，接下来就是如何使用这份物料，对于这个流程我们有一套完善的流程：
 
-- 物料：指组件、区块、布局、页面、模板的统称
-- 物料源：物料接入 Iceworks 的 URL 地址 ，本质上是一份 JSON 数据，如飞冰官方物料源 [https://ice.alicdn.com/assets/react-materials.json](https://ice.alicdn.com/assets/react-materials.json)
+- 在 [fusion.design](https://fusion.design/) 上创建业务站点（注意：内部业务请使用内部站点）
+- 使用 ice-devtools 本地开发物料
+- 使用 ice-devtools 生成物料数据（json）并同步到对应的 Fusion 站点，此时会生成一个物料数据的 url
+  - Fusion 对应的业务站点相当于业务的一个门户网站，可以快速了解业务的物料体系
+- 在 Iceworks 里通过自定义物料功能添加上述的 url
+  - Iceworks 对应的自定义物料让开发者在开发项目过程中可以快速使用业务的相关物料
 
-## 开发者工具
+## ice-devtools 使用
 
-#### 环境准备
+ice-devtools 本身不耦合于任何框架和工程，这意味着基于 ice-devtools 可以开发 React/Vue/... 各种前端体系的物料。
 
-- 操作系统：支持 macOS，Windows
-- 运行环境：建议选择  [LTS 版本](http://nodejs.org/)，最低要求 8.x。
-
-#### 安装工具
+### 安装工具
 
 ```bash
-// 安装
 $ npm install ice-devtools -g
 
-// 检查是否安装成功
-$ ice-devtools -V
-=> 2.0.0
+# 检查是否安装成功
+$ idev -V
+=> 2.2.0
 ```
 
-## 快速开始
-
-### 初始化项目
-
-开始自定义物料之前，需要先使用 ice-devtools 初始化一个约定的物料项目，可以把它理解为在日常开始做项目之前，需要先约定好项目目录结构和开发规范，这里开发物料也是同样的原则。
+### 初始化物料项目
 
 ```bash
-// 新建物料项目
+# 新建物料项目
 $ mkdir my-materilas & cd my-materilas
 
-// 初始化物料项目
+# 初始化物料项目
 $ ice-devtools init
-
-// 项目名称
-? materials name：
-
-// 选择初始的物料模板
-? materials template： (Use arrow keys)
-❯ @icedesign/ice-react-materials-template (React 标准模板)
-
-// 版本
-? materials version：
-
-// 描述
-? materials description：
 ```
 
-> 注释：初始化的物料库内置了一个区块和模板，默认是已经发到 npm 上的，生成项目后可直接生成数据，这样有利于快速将物料添加到 Iceworks，完成一个基础的流程。
+init 之后会生成如下的目录结构：
 
-### 生成物料源
-
-完成初始化后，进入到项目根目录执行以下命令，可生成物料源数据：
-
-```bash
-$ cd my-materials
-
-// 生成的物料源数据在 build 目录下
-$ npm run generate
 ```
-
-对于生成好的物料源数据，我们可以选择将这个文件  托管到 [fusion](https://fusion.design/) 或 [unpkg](https://unpkg.com/#/) 上，来生成一个可访问的 URL。分别对应如下命令：
-
-发布到 fusion
-
-```bash
-$ npm run sync
-```
-
-发布到 unpkg
-
-```bash
-$ npm run sync-unpkg
-```
-
-将对应的地址，复制粘贴到 Iceworks 设置面板的新增物料源位置，保存之后即可看到 Iceworks 的模板和区块界面出现了我们刚刚添加的自定义物料。
-
-![Iceworks](https://cdn.nlark.com/lark/0/2018/png/71071/1543576468368-d5e730c2-af08-462e-9743-935da0f9131a.png)
-
-自此，自定义物料到对接 Iceworks 的示例流程就基本完成，接下来我们来分析初始的目录结构。
-
-## 目录结构
-
-接着上面的步骤，我们发现初始化的目录结构主要包含 blocks、scaffolds 这两个子目录， 这里针对每个目录做详细的说明：
-
-```json
 my-materials/
-    │
-    ├── blocks                      // 区块
-    │      └── Greeting
-    │
-    ├── scaffolds                   // 脚手架模板
-    │      └── lite
-    │
-    ├── .editorconfig
-    ├── .eslintignore
-    ├── .eslintrc
-    ├── .gitignore
-    ├── .prettierignore
-    ├── .prettierrc
-    ├── LICENSE
-    ├── README.md
-    └── package.json
+  ├── .template     // 自定义模板
+  │   ├── block
+  │   ├── component
+  │   └── scaffold
+  ├── build         // 存放生成的物料数据
+  ├── blocks
+  │   ├── ExampleBlock
+  ├── components
+  │   └── ExampleComponent
+  └── scaffolds
+      └── ExampleScaffold
 ```
 
-#### blocks
+### 开发物料
 
-通过对大量的中后台系统进行对比发现，在很多场景下 UI 的展示在很大程度上能进行一定的复用，我们对这类的需求抽象为区块，本质上可以理解为一段代码片段，可以通过工具 Iceworks 进行快速组合，直接下载到项目进行二次开发， 减少重复的 UI 编码工作，提高复用率，默认包含一个 Greeting 示例区块。
+初始化完成后就可以按照目录结构开发对应的物料，每种物料的开发都有对应文档可以参考。
 
-#### scaffolds
+### 生成物料数据
 
-该目录用来存放脚手架模板代码，初始化项目里默认包含示例 ice-design-lite 脚手架，一个模板脚手架本质上是一个完整的项目，你可以基于该模板进行二次开发，也可以通过工具自定义生成。
-
-#### 其他文件
-
-除了以上目录，其他根目录下的文件主要为配置型的文件，如 Eslint 等。
-
-生成项目目录结构后，我们可以先初始化 git 操作，进行一次 commit：
+在物料开发完成并发布对应 npm 之后，就可以生成物料源数据了：
 
 ```bash
-$ cd my-materials
-$ git init
-$ git add .
-$ git commit -m "feat: init materials"
-$ git push
+# 生成的物料源数据在 build 目录下
+$ npm run generate
+$ ls build/
+materials.json
 ```
 
-## 后记
+目前这只是一份静态数据，想要在 Iceworks 里使用这份物料的话需要将其托管在某些服务上，参考「物料数据托管」章节。
 
-这里我们只简单介绍了如何使用开发者工具快速初始化一个私有的物料项目，然后生成数据接入 Iceworks 的流程，以及对初始化目录的分析，接下来我们看看如何添加物料：
+### 物料数据托管
 
-- [区块开发](https://alibaba.github.io/ice/docs/materials/add-block)
-- [模板开发](https://alibaba.github.io/ice/docs/materials/add-templates)
+参考「物料数据托管」章节。
+
+附：关于物料开发，我们推荐通过一个项目/仓库开发当前业务的所有物料，因为这样更便于管理和持续维护。如果需要单独开发一个业务组件/区块，可以参考[文档](https://github.com/alibaba/ice/wiki/develop-single-biz-component)
