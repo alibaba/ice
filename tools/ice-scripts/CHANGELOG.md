@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.2
+
+- [fix] 移除掉 babel-runtime 的 alias，防止项目依赖里有不同版本导致无法构建
+- [chore] 不写死 webpack 的依赖版本，防止多份 webpack 导致构建报错
+
 ## 1.9.1
 
 - [fix] 修复 @babel/runtime alias 路径错误问题
