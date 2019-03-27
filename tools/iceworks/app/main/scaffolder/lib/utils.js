@@ -435,7 +435,6 @@ function getDependenciesFromCustom(block) {
 exports.extractCustomBlock = extractCustomBlock;
 exports.getDependenciesFromCustom = getDependenciesFromCustom;
 exports.getTarballURL = getTarballURL;
-exports.extractBlock = retryExtractBlock;
 exports.getDependenciesFromNpm = getDependenciesFromNpm;
 exports.getDependenciesFromMaterial = getDependenciesFromMaterial;
 exports.downloadBlockToPage = downloadBlockToPage;
