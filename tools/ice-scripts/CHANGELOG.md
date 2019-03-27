@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.1
+
+- [fix] 修复 @babel/runtime alias 路径错误问题
+
 ## 1.9.0
 
 - [feat] 支持 init 项目
