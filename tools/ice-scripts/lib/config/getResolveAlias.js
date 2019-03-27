@@ -37,7 +37,7 @@ module.exports = function getResolveAlias(buildConfig) {
   }
 
   // 项目不需要单独依赖 @babel/runtime
-  alias['@babel/runtime'] = path.resolve(require.resolve('@babel/runtime/package.json'), '../');;
+  alias['@babel/runtime'] = path.resolve(require.resolve('@babel/runtime/package.json'), '../');
 
   return alias;
 };
