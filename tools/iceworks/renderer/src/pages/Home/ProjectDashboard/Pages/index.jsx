@@ -111,17 +111,18 @@ class PagesCard extends Component {
     if (editor === 'VisualStudioCode') {
       uriFolder = Uri.file(uriFolder).toString();
       uriFile = Uri.file(uriFile).toString();
-      editors.open(uriFolder, ['--folder-uri'], true);
-      setTimeout(()=> {
-        editors.open(uriFile, ['--file-uri'], true);
-      }, 500)
+      editorOpenFile(uriFolder, uriFile, ['--folder-uri'], ['--file-uri']);
     } else {
-      editors.open(uriFolder, [], true);
-      setTimeout(()=> {
-        editors.open(uriFile, [], true);
-      }, 500)
+      editorOpenFile(uriFolder, uriFile);
     }
   };
+
+  editorOpenFile(folder, file, folderOpt = [], fileOpt = []) {
+    editors.open(folder, folderOpt, true);
+    setTimeout(()=> {
+      editors.open(uriFile, fileOpt, true);
+    }, 1000)
+  }
 
   handlePageDelete = (name) => {
     const { projects, newpage } = this.props;
@@ -160,7 +161,6 @@ class PagesCard extends Component {
   renderPageList = () => {
     const { pages } = this.state;
     const editor = settings.get('editor');
-    console.log(editor)
     if (pages && pages.length === 0) {
       return <EmptyTips>暂无页面</EmptyTips>;
     }

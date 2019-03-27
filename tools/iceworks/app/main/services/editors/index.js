@@ -16,9 +16,9 @@ module.exports = {
    *
    * @param {String} path 打开的文件或者文件夹路径
    */
-  open: async (path, options, closeNotify = false) => {
+  open: async (path, options, notify = false) => {
     const selectedExternalEditor = settings.get('editor') || null;
-    if (selectedExternalEditor && !closeNotify) {
+    if (selectedExternalEditor && notify) {
       interaction.notify({
         title: '正在启动编辑器',
         body: selectedExternalEditor,
