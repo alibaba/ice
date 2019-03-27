@@ -24,7 +24,7 @@ $ ice --help
 
 ## 命令行工具
 
-ice-scripts 提供了 `dev/build` 的开发命令，如果使用 Iceworks 开发，那么大多数时候你不需要关心这些命令。
+ice-scripts 提供了 `init/dev/build` 的开发命令，如果使用 Iceworks 开发，那么大多数时候你不需要关心这些命令。
 
 ### ice init
 
