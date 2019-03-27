@@ -1,7 +1,6 @@
 ---
 title: Simple Usage
 order: 1
-importStyle: true
 ---
 
 本 Demo 演示一行文字的用法。
