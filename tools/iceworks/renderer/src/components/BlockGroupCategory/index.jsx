@@ -10,20 +10,18 @@ import './index.scss';
 @observer
 class BlockGroupCategory extends Component {
   static propTypes = {
-    handleOpenPreviewPage: PropTypes.func,
     generatePage:  PropTypes.func,
     handleBlocksAdd: PropTypes.func
   };
 
   static defaultProps = {
-    handleOpenPreviewPage: () => {},
     generatePage: () => {},
     handleBlocksAdd: () => {}
   };
 
   render() {
     const { blockGroups, isLoading } = this.props.blockGroups;
-    const { generatePage, handleOpenPreviewPage, handleBlocksAdd } = this.props;
+    const { generatePage, handleBlocksAdd } = this.props;
 
     if (!isLoading && blockGroups.length === 0) {
       return (
@@ -59,7 +57,6 @@ class BlockGroupCategory extends Component {
               <BlockGroup
                 key={index}
                 blockGroup={blockGroup}
-                handleOpenPreviewPage={handleOpenPreviewPage}
                 generatePage={generatePage}
                 handleBlocksAdd={handleBlocksAdd}
               />
