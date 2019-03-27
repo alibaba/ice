@@ -27,6 +27,7 @@ yarn start
 打包应用，根据当前操作系统打包对应平台的软件。目前支持 `darwin` `win32 x64`
 
 ```
+yarn run sync-db
 yarn run build
 yarn run dist
 ```
