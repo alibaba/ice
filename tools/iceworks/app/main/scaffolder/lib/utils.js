@@ -301,14 +301,11 @@ function extractBlock(
 
 // 超时自动重试
 const retryCount = 2;
-const retryExtractBlock = autoRetry(extractBlock, retryCount, (err) => {
-  if (
-    !err.code ||
-    (err.code !== 'ETIMEDOUT' && err.code !== 'ESOCKETTIMEDOUT')
-  ) {
-    throw err;
-  }
-});
+const retryExtractBlock = autoRetry(
+  extractBlock, 
+  retryCount, 
+  (err) => err.code && (err.code == 'ETIMEDOUT' || err.code == 'ESOCKETTIMEDOUT')
+);
 
 /**
  * 从 registry 获取 npm 包的 tarbal URL

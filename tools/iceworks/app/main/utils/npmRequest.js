@@ -56,10 +56,8 @@ function npmRequest({ name, version = 'latest', registry }) {
 
 // 超时自动重试
 const retryCount = 2;
-const retryNpmRequest = autoRetry(npmRequest, retryCount, (err) => {
-  if (!err.code || (err.code !== 'ETIMEDOUT' && err.code !== 'ESOCKETTIMEDOUT')) {
-    throw (err);
-  }
-});
-
-module.exports = retryNpmRequest;
+module.exports = autoRetry(
+  npmRequest, 
+  retryCount, 
+  (err) => err.code && (err.code == 'ETIMEDOUT' || err.code == 'ESOCKETTIMEDOUT')
+);
