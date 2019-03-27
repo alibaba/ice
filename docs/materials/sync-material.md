@@ -1,24 +1,42 @@
 ---
-title: 物料托管
-order: 8
-
+title: 物料数据托管
+order: 5
 ---
 
-## 物料托管
+在项目根目录运行 `npm run generate` 之后，会生成一个静态 json 数据，接下来我们需要将这份数据进行托管使用，目前提供两种方式：
 
-在项目根目录，运行`npm run generate`之后。可以完成物料源静态数据的生成。
-关于物料的元数据描述，本质上是一份JSON数据， 可以放在任何可以提供http服务的地方。
+| 特性             |   fusion.design   |   unpkg       |
+|-----------------|-------------------|---------------|
+|  官方推荐        |   是              |    一般        |
+|  生成门户网站     |   能              |    不能        |
+|在 Iceworks 中使用 |   能              |    能         |
+|  需要登录注册帐号  |   需要            |    不需要       |
 
-实际中，我们发现，提供公网可访问的物料源对于许多用户都是一个难题，为此我们和[Fusion Design](https://fusion.design)合作. 集成[Fusion Design](https://fusion.design)的能力到官方开发工具。
+以上是两种方案的对比，可以根据自身的需求选择，以下为两种方案的操作方式：
 
 
-运行`npm run generate`之后，可以在根目录运行 `npm run sync`， 第一次使用需要到[Fusion Design](https://fusion.design)注册账号并建立站点。具体操作步骤见
-[Fusion Design 建站文档](https://fusion.design/help.html#dev-create-site)
+## 托管在 fusion.design
 
-此后这些信息会缓存下来，想要清理这些缓存数据，可以使用`idev clear`。
+首先在 [fusion.design](https://fusion.design) 上注册账号，然后根据[文档](https://fusion.design/help.html#dev-create-site)新建站点，接着执行命令：
+
+```bash
+# 根据提示填写帐号 token -> 选择同步的站点
+$ npm run sync
+```
+
+同步完成后，一方面可以在 fusion.design 上看到站点的物料，另一方面可以在 Iceworks 里将对应物料数据 url 添加到自定义物料源里使用。
+
+## 托管在 unpkg
+
+```bash
+$ npm run sync-unpkg
+```
+
+本质上是将 `build` 目录发布为一个 npm 包，然后通过 unpkg 里访问这个包里的 json 文件。
 
 ## 使用物料
- `npm run sync` 命令运行完成以后，会返回如下内容:
+
+`npm run sync` 命令运行完成以后，会返回如下内容:
 
 > 物料同步完成
 > 物料源地址: https://fusion.design/api/v1/sites/xxxx/materials
