@@ -57,7 +57,6 @@ module.exports = {
   APP_PATH,
   NPM_CLI,
   NRM_CLI,
-  SASS_BINARY_PATH,
   NODE_PATH,
   WIN_NPM_CMD,
   NODE_FRAMEWORKS,
