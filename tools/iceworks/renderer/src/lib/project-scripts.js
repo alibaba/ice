@@ -155,13 +155,19 @@ const doDependenciesInstall = (
   });
 };
 
-const getEnvByNodeFramework = (nodeFramework, isAli) => {
-  const env = getEnv();
-  if (isAli || nodeFramework === 'midwayAli') {
-    console.debug('安装依赖 - 检测为内网环境 / 内部 midway 项目');
+/**
+ * 根据内网环境更新 env
+ * @param {string} isAli
+ */
+const getEnvByAli = (isAli) => {
+  let env = {};
+  if (isAli) {
+    console.debug('安装依赖 - 检测为内网环境默认使用内网源');
     // 检测到内网环境自动将路径设置为集团内部
     env.npm_config_registry = 'https://registry.npm.alibaba-inc.com';
     env.yarn_registry = 'https://registry.npm.alibaba-inc.com';
+  } else {
+    env = getEnv();
   }
   return env;
 };
@@ -326,23 +332,8 @@ export default {
     let dependencies = deps.split(/\s+/);
     dependencies = dependencies.filter((d) => !!d.trim());
 
-    // 检测到含有 @ali 的包自动将路径设置为集团内部
-    const hasAli = dependencies.some((dep) => {
-      return dep.startsWith('@ali/') || dep.startsWith('@alife/');
-    });
-
-    // 检测到是否包含 midway 依赖
-    const hasMidway = dependencies.some((dep) => {
-      return dep.startsWith('midway');
-    });
-
     // 如果包含内网包返回内网的 registry 源
-    const env = getEnvByNodeFramework(project.nodeFramework, hasAli);
-
-    // TODO： 老代码遗留逻辑，兼容？
-    if (hasAli && hasMidway) {
-      dependencies[dependencies.indexOf('midway')] = '@ali/midway';
-    }
+    const env = getEnvByAli(isAlibaba);
 
     if (dependencies.length > 0) {
       dependencies = dependencies.map((dep) => {
@@ -445,10 +436,7 @@ export default {
         });
       })
       .then(() => {
-        return isAlibaba;
-      })
-      .then((isAli) => {
-        const env = getEnvByNodeFramework(project.nodeFramework, isAli);
+        const env = getEnvByAli(isAlibaba);
         const registryInfo = getRegistryInfo(env.npm_config_registry);
         doProjectInstall(
           {
