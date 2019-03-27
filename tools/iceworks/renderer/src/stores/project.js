@@ -12,7 +12,7 @@ import services from '../services';
 
 const IceworksScaffolder = remote.require('@icedesign/iceworks-scaffolder');
 const { paths, scaffolder } = services;
-const { getClientPath,getClientSrcPath, NODE_FRAMEWORKS, getServerPath } = paths;
+const { getClientPath, getClientSrcPath, NODE_FRAMEWORKS, getServerPath } = paths;
 
 const homeDir = os.homedir();
 
@@ -140,7 +140,7 @@ class Project {
    */
   @computed
   get clientSrcPath() {
-    return  getClientSrcPath(this.root, this.nodeFramework);
+    return getClientSrcPath(this.root, this.nodeFramework);
   }
 
   /**
