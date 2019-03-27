@@ -15,13 +15,11 @@ class BlockPicker extends Component {
 
   static propTypes = {
     handleBlocksAdd: PropTypes.func,
-    handleOpenPreviewPage: PropTypes.func,
     generatePage: PropTypes.func,
   };
 
   static defaultProps = {
     handleBlocksAdd: () => {},
-    handleOpenPreviewPage: () => {},
     generatePage: () => {},
   };
 
@@ -58,7 +56,7 @@ class BlockPicker extends Component {
   render() {
     const { materials, isLoading, type, currentTabKey } = this.props.blocks;
     const { blockGroups } = this.props.blockGroups;
-    const { style = {}, handleOpenPreviewPage, handleBlocksAdd,  generatePage } = this.props;
+    const { style = {}, handleBlocksAdd,  generatePage } = this.props;
     if (!isLoading && materials.length === 0) {
       return (
         <div
@@ -136,7 +134,6 @@ class BlockPicker extends Component {
                   {material.key === 'iceBlockGroups' ? (
                     <BlockGroupCategory 
                       generatePage={generatePage}
-                      handleOpenPreviewPage={handleOpenPreviewPage}
                       handleBlocksAdd={handleBlocksAdd}
                     />
                   ) : (

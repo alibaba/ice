@@ -80,14 +80,6 @@ class NewPage extends EventEmitter {
       if (this.visible) {
         this.reset();
         this.fetch();
-
-        const p = projects.currentProject;
-        const applicationType = p.getApplicationType();
-        const libraryTYpe = p.getLibraryType();
-        // react 项目不启动服务
-        if (!(libraryTYpe === 'react' && applicationType === 'react')) {
-          projectScripts.start(p);
-        }
       }
     }
   }

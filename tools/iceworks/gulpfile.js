@@ -14,6 +14,7 @@ const shelljs = require('shelljs');
 const spawn = require('cross-spawn');
 const UglifyJS = require('uglify-es');
 const writeFile = require('write');
+const rp = require('request-promise');
 
 const colors = gutil.colors;
 const isMac = process.platform === 'darwin';
@@ -138,22 +139,21 @@ async function getUpload2oss() {
       '=>',
       paths.join('/')
     );
-  
+
     return co(iceworksStore.put(paths.join('/'), file))
       .then((object = {}) => {
         if (object.res && object.res.status == 200) {
           gutil.log(colors.green('上传成功'), object.url);
           return 0;
-        } else {
-          gutil.log(colors.red('上传失败'), file);
-          return 1;
         }
+        gutil.log(colors.red('上传失败'), file);
+        return 1;
       })
       .catch(() => {
         gutil.log(colors.red('上传失败'), file);
         return 1;
       });
-  }
+  };
 }
 
 gulp.task('compile:after:css', ['compile:prod'], () => {
@@ -290,7 +290,7 @@ gulp.task('dist:win', (done) => {
     }
   );
   ls.on('close', (code) => {
-    if (code == 0) {
+    if (code === 0) {
       gutil.log(colors.green('exe 打包完成'));
     } else {
       gutil.log(colors.red('exe 打包失败'));
@@ -448,7 +448,7 @@ gulp.task('dist', () => {
   }
 });
 
-gulp.task('oss', async function() {
+gulp.task('oss', async () => {
   const upload2oss = await getUpload2oss();
 
   const version = require('./out/package.json').version;
@@ -517,33 +517,100 @@ gulp.task('oss-log', async () => {
   const upload2oss = await getUpload2oss();
   const version = require('./out/package.json').version;
   const productNameLowCase = productName.toLowerCase();
-  const filepaths = [{
-    from: 'dist/updates.json', // iceworks 下的相对路径
-    to: ['updates.json'] // oss 对应 bucket 下的相对路径
-  }, {
-    from: 'changelog/changelog.json',
-    to: ['changelog.json']
-  }, {
-    from: `changelog/${version}.json`,
-    to: [`changelog/${version}.json`]
-  }, {
-    from: 'dist/updates.json',
-    to: ['assets', `${productNameLowCase}-updates.json`]
-  }, {
-    from: 'changelog/changelog.json',
-    to: ['assets', `${productNameLowCase}-changelog.json`]
-  }];
+  const filepaths = [
+    {
+      from: 'dist/updates.json', // iceworks 下的相对路径
+      to: ['updates.json'], // oss 对应 bucket 下的相对路径
+    },
+    {
+      from: 'changelog/changelog.json',
+      to: ['changelog.json'],
+    },
+    {
+      from: `changelog/${version}.json`,
+      to: [`changelog/${version}.json`],
+    },
+    {
+      from: 'dist/updates.json',
+      to: ['assets', `${productNameLowCase}-updates.json`],
+    },
+    {
+      from: 'changelog/changelog.json',
+      to: ['assets', `${productNameLowCase}-changelog.json`],
+    },
+  ];
   // 上传
-  filepaths.forEach( async filepath => {
+  filepaths.forEach(async (filepath) => {
     const fromDir = path.join(__dirname, filepath.from);
     const code = await upload2oss(filepath.to, fromDir);
     if (code !== 0) {
-      gutil.log( colors.red(`${fromDir} => ${filepath.to.join('/')} error`) );
+      gutil.log(colors.red(`${fromDir} => ${filepath.to.join('/')} error`));
     }
   });
-
-})
+});
 
 gulp.task('build-dist', ['build'], () => {
   gulp.start(['dist']);
+});
+
+// 同步官网物料数据
+gulp.task('sync-db', () => {
+  const MATERIALS_SOURCE = [
+    {
+      url: 'https://ice.alicdn.com/assets/react-materials.json',
+      name: 'react-materials',
+    },
+    {
+      url: 'https://ice.alicdn.com/assets/rax-materials.json',
+      name: 'rax-materials',
+    },
+    {
+      url: 'http://ice.alicdn.com/assets/vue-materials.json',
+      name: 'vue-materials',
+    },
+    {
+      url: 'https://ice.alicdn.com/assets/angular-materials.json',
+      name: 'angular-materials',
+    },
+    {
+      url: 'https://ice.alicdn.com/assets/base-components.json',
+      name: 'base-components',
+    },
+    {
+      url: 'https://ice.alicdn.com/assets/base-components-1.x.json',
+      name: 'base-components-1.x',
+    },
+  ];
+
+  const getMaterialsData = (material = {}) => {
+    return rp({
+      url: material.url,
+      json: true,
+    }).then((response) => {
+      const distDir = path.join(
+        __dirname,
+        'renderer',
+        'src',
+        'datacenter',
+        'data',
+        `${material.name}.json`
+      );
+      console.log(`物料数据 ${material.name} 下载完成`);
+      return writeFile(distDir, JSON.stringify(response, null, 2));
+    });
+  };
+
+  const tasks = MATERIALS_SOURCE.map((material) => {
+    return getMaterialsData(material);
+  });
+
+  Promise.all(tasks)
+    .then(() => {
+      console.log();
+      console.log('   同步物料 db 数据完成');
+      console.log();
+    })
+    .catch((err) => {
+      console.log('同步物料 db 数据出错:', err);
+    });
 });

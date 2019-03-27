@@ -15,14 +15,12 @@ import './BlockGroup.scss';
 class BlockGroup extends Component {
 
   static propTypes = {
-    handleOpenPreviewPage: PropTypes.func,
     generatePage: PropTypes.func,
     handleBlocksAdd: PropTypes.func,
     blockGroup: PropTypes.object  
   };
 
   static defaultProps = {
-    handleOpenPreviewPage: () => {},
     generatePage: () => {},
     handleBlocksAdd: () => {},
     blockGroup: {}
@@ -66,7 +64,7 @@ class BlockGroup extends Component {
 
   render() {
     const { 
-      blockGroup, handleOpenPreviewPage, generatePage, 
+      blockGroup, generatePage, 
       newpage, pageBlockPicker
     } = this.props;
     const blocks = this.getBlocks();
