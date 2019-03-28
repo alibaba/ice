@@ -59,11 +59,11 @@ const getRegistryInfo = (value) => {
 };
 
 const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
-  const installConfig = {
+  let installConfig = {
     cwd,
     env,
     shell,
-    shellArgs: ['install', '--no-package-lock'],
+    shellArgs: ['install'],
   };
 
   const npmCacheCleanConfig = {
@@ -73,42 +73,56 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
     shellArgs: ['cache', 'clean', '--force'],
   };
 
-  sessions.manager.new(installConfig, (code) => {
-    if (code !== 0) {
-      log.error('project-install-failed');
-      log.report('app', { action: 'project-install-failed' });
-      if (reInstall) {
-        log.info('执行 npm cache clean --force 重试');
-        sessions.manager.new(npmCacheCleanConfig, () => {
-          doProjectInstall({ cwd, env, shell, callback });
-        });
-      } else if (shell === 'tnpm' || shell === 'cnpm') {
-        const registryInfo = getRegistryInfo(shell);
-        callback(code, {
-          title: '重装依赖失败',
-          content: (
-            <div>
-              <p>
-                1. 请检查 {shell} 命令是否安装了，没有请执行 $ [sudo] npm
-                install --registry={registryInfo.value} -g {shell} 进行安装
-              </p>
-              <p>
-                2. 已安装 {shell}
-                ，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息
-              </p>
-            </div>
-          ),
-        });
-      } else {
-        callback(code, {
-          title: '重装依赖失败',
-          content:
-            '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
-        });
-      }
-    } else {
-      callback(0);
+  const npmClientCheckConfig = {
+    cwd,
+    env,
+    shell,
+    shellArgs: ['-v'],
+  };
+
+  sessions.manager.new(npmClientCheckConfig, (status) => {
+    if (status !== 0) {
+      installConfig.shell = 'npm';
+      installConfig.shellArgs.push(`--registry=${env.npm_config_registry}`);
     }
+
+    sessions.manager.new(installConfig, (code) => {
+      if (code !== 0) {
+        log.error('project-install-failed');
+        log.report('app', { action: 'project-install-failed' });
+        if (reInstall) {
+          log.info('执行 npm cache clean --force 重试');
+          sessions.manager.new(npmCacheCleanConfig, () => {
+            doProjectInstall({ cwd, env, shell, callback });
+          });
+        } else if (shell === 'tnpm' || shell === 'cnpm') {
+          const registryInfo = getRegistryInfo(shell);
+          callback(code, {
+            title: '重装依赖失败',
+            content: (
+              <div>
+                <p>
+                  1. 请检查 {shell} 命令是否安装了，没有请执行 $ [sudo] npm
+                  install --registry={registryInfo.value} -g {shell} 进行安装
+                </p>
+                <p>
+                  2. 已安装 {shell}
+                  ，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息
+                </p>
+              </div>
+            ),
+          });
+        } else {
+          callback(code, {
+            title: '重装依赖失败',
+            content:
+              '请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息',
+          });
+        }
+      } else {
+        callback(0);
+      }
+    });
   });
 };
 
@@ -161,11 +175,10 @@ const doDependenciesInstall = (
  */
 const getEnvByAli = (isAli) => {
   let env = {};
-  if (isAli) {
+  if (!isAli) {
     console.debug('安装依赖 - 检测为内网环境默认使用内网源');
     // 检测到内网环境自动将路径设置为集团内部
     env.npm_config_registry = 'https://registry.npm.alibaba-inc.com';
-    env.yarn_registry = 'https://registry.npm.alibaba-inc.com';
   } else {
     env = getEnv();
   }
