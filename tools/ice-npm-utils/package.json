@@ -1,0 +1,19 @@
+{
+  "name": "ice-npm-utils",
+  "version": "1.0.0",
+  "description": "npm utils for ice",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "npmlog": "^4.1.2",
+    "semver": "^6.0.0"
+  },
+  "devDependencies": {
+    "jest": "^24.5.0"
+  }
+}
