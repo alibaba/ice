@@ -1,7 +1,3 @@
-/**
- * 即将废弃的代码
- */
-
 const { getUnpkgHost } = require('ice-npm-utils');
 const pkgJSON = require('../../utils/pkg-json');
 
