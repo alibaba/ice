@@ -175,7 +175,7 @@ const doDependenciesInstall = (
  */
 const getEnvByAli = (isAli) => {
   let env = {};
-  if (!isAli) {
+  if (isAli) {
     console.debug('安装依赖 - 检测为内网环境默认使用内网源');
     // 检测到内网环境自动将路径设置为集团内部
     env.npm_config_registry = 'https://registry.npm.alibaba-inc.com';
