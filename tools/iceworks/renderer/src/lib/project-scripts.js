@@ -59,7 +59,7 @@ const getRegistryInfo = (value) => {
 };
 
 const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
-  let installConfig = {
+  const installConfig = {
     cwd,
     env,
     shell,
