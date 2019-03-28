@@ -121,9 +121,9 @@ class PagesCard extends Component {
   };
 
   editorOpenFile = (folder, file, folderOpt = [], fileOpt = []) => {
-    editors.open(folder, folderOpt, true);
+    editors.open(folder, folderOpt, false);
     setTimeout(()=> {
-      editors.open(file, fileOpt, true);
+      editors.open(file, fileOpt, false);
     }, 1000)
   }
 
