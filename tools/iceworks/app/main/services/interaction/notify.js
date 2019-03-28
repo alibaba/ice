@@ -32,5 +32,5 @@ module.exports = ({ title, body, type = 'success', url, onClick }) => {
   }
 
   notification.show();
-  log.info(`[Notification] ${title}: ${body}`);
+  logger.info(`[Notification] ${title}: ${body}`);
 };

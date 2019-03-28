@@ -53,7 +53,7 @@ exports.registerApp = (app, windows) => {
       }
     })
     .on('before-quit', () => {
-      log.report('app', { action: 'before-quit' });
+      logger.report('app', { action: 'before-quit' });
       console.log('before-quit');
       if (isMac) {
         BrowserWindow.getAllWindows().forEach((currentWindow) => {
@@ -92,8 +92,8 @@ exports.registerShortcut = (app, windows) => {
   });
 
   if (ret) {
-    log.info('shortcutKey register success', shortcutKey);
-    log.report('app', {
+    logger.info('shortcutKey register success', shortcutKey);
+    logger.report('app', {
       action: 'shortcut-key',
       shortcutKey,
     });

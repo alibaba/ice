@@ -11,7 +11,7 @@ autoUpdater.logger = log;
 let win = null;
 
 function sendStatusToWindow(event, meta = null) {
-  log.info(event, meta);
+  logger.info(event, meta);
   sendToWebContents(win, 'updater-message', {
     event,
     meta,
@@ -79,7 +79,7 @@ const Updater = {
     setInterval(() => {
       autoUpdater.checkForUpdates().catch((e) => {
         sendStatusToWindow('error', e);
-        log.error('Failed handling checkForUpdates:', e);
+        logger.error('Failed handling checkForUpdates:', e);
       });
       // 每间隔三小时监测软件更新
     }, 1000 * 60 * 60 * 3);
@@ -88,7 +88,7 @@ const Updater = {
       // 检查更新
       autoUpdater.checkForUpdates().catch((e) => {
         sendStatusToWindow('error', e);
-        log.error('Failed handling checkForUpdates:', e);
+        logger.error('Failed handling checkForUpdates:', e);
       });
     });
     ipcMain.on('updater-close', () => {
@@ -99,22 +99,22 @@ const Updater = {
       // 开始下载
       autoUpdater.downloadUpdate().catch((e) => {
         sendStatusToWindow('error', e);
-        log.error('Failed handling downloadUpdate:', e);
+        logger.error('Failed handling downloadUpdate:', e);
       });
     });
     ipcMain.on('updater-install', () => {
       // 退出并安装
       autoUpdater.quitAndInstall();
     });
-    log.info('Updater starting...');
+    logger.info('Updater starting...');
     // 自动检测更新
     autoUpdater.checkForUpdates().catch((e) => {
-      log.error('Failed handling checkForUpdatesAndNotify:', e);
+      logger.error('Failed handling checkForUpdatesAndNotify:', e);
     });
   },
   checkForUpdatesAndNotify() {
     autoUpdater.checkForUpdatesAndNotify().catch((e) => {
-      log.error('Failed handling checkForUpdatesAndNotify:', e);
+      logger.error('Failed handling checkForUpdatesAndNotify:', e);
     });
   },
 };

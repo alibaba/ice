@@ -33,7 +33,7 @@ const NPM = {
     }
 
     const cwd = options.cwd;
-    log.debug('npm', args.join(' '), cwd);
+    logger.debug('npm', args.join(' '), cwd);
     args.push('--scripts-prepend-node-path=auto');
 
     return new Promise((resolve, reject) => {

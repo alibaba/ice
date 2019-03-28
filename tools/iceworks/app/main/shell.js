@@ -183,7 +183,7 @@ exports.getActiveCodePage = function getActiveCodePage() {
     let errorThrown = false;
 
     child.on('error', (error) => {
-      log.error('unable to resolve active code page', error);
+      logger.error('unable to resolve active code page', error);
       errorThrown = true;
     });
 
@@ -208,7 +208,7 @@ exports.getActiveCodePage = function getActiveCodePage() {
           resolve(parsedInt);
         }
       } else {
-        log.debug(`regex did not match output: '${output}'`);
+        logger.debug(`regex did not match output: '${output}'`);
         resolve(null);
       }
     });

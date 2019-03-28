@@ -38,7 +38,7 @@ services.createTouchBar = createTouchBar;
 
 process
   .on('error', (error) => {
-    log.error(error.stack);
+    logger.error(error.stack);
     alilog.report({
       type: 'process-error',
       msg: error.message,
@@ -46,7 +46,7 @@ process
     }, 'error');
   })
   .on('unhandledRejection', (reason, promise) => {
-    log.error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
+    logger.error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
     alilog.report({
       type: 'process-unhandled-rejection',
       msg: reason,
@@ -54,7 +54,7 @@ process
     }, 'error');
   })
   .on('uncaughtException', (error) => {
-    log.error(error.stack);
+    logger.error(error.stack);
     alilog.report({
       type: 'process-uncaught-exception',
       msg: JSON.stringify(error.message),
@@ -70,11 +70,11 @@ app.on('ready', async () => {
     await installExtensions();
   }
   // settings.clear();
-  log.info('process.version:', process.version);
-  log.info('process.platform:', process.platform);
-  log.info('process.arch:', process.arch);
-  log.info('process.versions.modules:', process.versions.modules);
-  log.report('app', {
+  logger.info('process.version:', process.version);
+  logger.info('process.platform:', process.platform);
+  logger.info('process.arch:', process.arch);
+  logger.info('process.versions.modules:', process.versions.modules);
+  logger.report('app', {
     action: 'launch',
     version: app.getVersion(),
     platform: process.platform,

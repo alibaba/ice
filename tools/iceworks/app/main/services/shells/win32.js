@@ -65,12 +65,12 @@ exports.getAvailableShells = async function getAvailableShells() {
 function addErrorTracing(context, cp) {
   cp.stderr.on('data', (chunk) => {
     const text = chunk instanceof Buffer ? chunk.toString() : chunk;
-    log.debug(`[${context}] stderr: '${text}'`);
+    logger.debug(`[${context}] stderr: '${text}'`);
   });
 
   cp.on('exit', (code) => {
     if (code !== 0) {
-      log.debug(`[${context}] exit code: ${code}`);
+      logger.debug(`[${context}] exit code: ${code}`);
     }
   });
 }

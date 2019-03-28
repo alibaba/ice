@@ -65,7 +65,7 @@ function readRegistry(key, activeCodePage) {
       if (errorThrown) {
         resolve([]);
       } else if (code !== 0) {
-        log.debug(`Unable to find registry key - exit code ${code} returned`);
+        logger.debug(`Unable to find registry key - exit code ${code} returned`);
         resolve([]);
       } else {
         const output = Buffer.concat(buffers).toString('utf8');
@@ -80,7 +80,7 @@ function readRegistry(key, activeCodePage) {
 
     proc.on('error', (err) => {
       errorThrown = true;
-      log.debug('An error occurred while trying to find the program', err);
+      logger.debug('An error occurred while trying to find the program', err);
     });
   });
 }
@@ -96,7 +96,7 @@ function readRegistry(key, activeCodePage) {
 exports.readRegistryKeySafe = async function readRegistryKeySafe(key) {
   const exists = await pathExists(batchFilePath);
   if (!exists) {
-    log.error(
+    logger.error(
       `Unable to find batch script at expected location: '${batchFilePath}'`
     );
     return [];
@@ -104,7 +104,7 @@ exports.readRegistryKeySafe = async function readRegistryKeySafe(key) {
 
   const activeCodePage = await getActiveCodePage();
   if (!activeCodePage) {
-    log.debug('Unable to resolve active code page');
+    logger.debug('Unable to resolve active code page');
     return [];
   }
   // eslint-disable-next-line

@@ -29,7 +29,7 @@ const getAvailableEditors = async function getAvailableEditors() {
     return editorCache;
   }
 
-  log.warn(
+  logger.warn(
     `Platform not currently supported for resolving editors: ${
       process.platform
     }`

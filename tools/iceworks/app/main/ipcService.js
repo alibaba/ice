@@ -28,13 +28,13 @@ ipc.serveNet(() => {
         path: projectPath,
       });
     } else {
-      log.warn('未处理的消息内容', message);
+      logger.warn('未处理的消息内容', message);
     }
   });
 });
 
 ipc.server.on('error', (err) => {
-  log.error('iceworks ipc Got an ERROR!', err);
+  logger.error('iceworks ipc Got an ERROR!', err);
   if (err && err.message && /listen eaddrinuse/i.test(err.message)) {
     dialog.showErrorBox(
       '启动异常',
@@ -46,6 +46,6 @@ ipc.server.on('error', (err) => {
 module.exports = {
   init: () => {
     ipc.server.start();
-    log.info('iceworks ipc started at', networkPort);
+    logger.info('iceworks ipc started at', networkPort);
   },
 };

@@ -69,7 +69,7 @@ module.exports = (_options, afterCreateRequest) => {
       }
     })
     .then(() => {
-      log.report('app', {
+      logger.report('app', {
         action: isCustomScaffold
           ? 'custom-generator-project'
           : (nodeFramework || 'generator-project'),
@@ -102,7 +102,7 @@ function getOptions(_options, nodeFramework = '', isNode = false) {
     progressFunc: _options.progressFunc,
     projectName: _options.projectName,
     interpreter: ({ type, message }, next) => {
-      log.info('generate project', type, message);
+      logger.info('generate project', type, message);
       switch (type) {
         case 'FILE_CREATED':
           next(true);

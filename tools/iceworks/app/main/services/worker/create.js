@@ -27,11 +27,11 @@ class CreateManager {
       reqQueue.push(req);
     })
       .then(() => {
-        log.info('generator process complete');
+        logger.info('generator process complete');
         done(null);
       })
       .catch((error) => {
-        log.error('create project error', error);
+        logger.error('create project error', error);
         done(error);
       });
   }
