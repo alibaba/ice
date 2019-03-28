@@ -57,7 +57,6 @@ function modifyPkg(pkgPath) {
   return;
 }
 
-
 function checkEmpty(dir) {
   return new Promise((resolve, reject) => {
     fs.readdir(dir, function(err, files) {
