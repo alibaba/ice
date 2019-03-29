@@ -2,7 +2,6 @@ import { Button, Feedback, Dialog, Input, CascaderSelect, Balloon } from '@icede
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
 import { EventEmitter } from 'events';
 import { inject, observer } from 'mobx-react';
-import { ipcRenderer, remote, shell } from 'electron';
 import { StringDecoder } from 'string_decoder';
 import gitPromie from 'simple-git/promise';
 import React, { Component } from 'react';

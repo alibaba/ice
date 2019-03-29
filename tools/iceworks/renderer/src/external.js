@@ -1,7 +1,7 @@
-import { shell, remote } from 'electron';
+import { shell } from 'electron';
+import services from './services';
 
-const services = remote.getGlobal('services');
-const log = services.log;
+const { log } = services;
 
 export const openInEditor = (path) => {
   services.editors.open(path);

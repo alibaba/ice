@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
 
-import { remote } from 'electron';
+import { remote, shell } from 'electron';
 import './App.scss';
 
 const appName = remote.app.getName();
+const version = remote.app.getVersion();
 
 class About extends Component {
   constructor(props) {
     super(props);
-
-    this.remote = remote;
-    this.state = {
-      version: remote.app.getVersion(),
-    };
   }
 
   openLink = (event) => {
     const link = event.target;
-    this.remote.shell.openExternal(link.href);
     event.preventDefault();
+    shell.openExternal(link.href);
   };
 
   render() {
@@ -31,7 +27,7 @@ class About extends Component {
           <div className="appname">
             <b>{appName}</b>
           </div>
-          <div className="version">版本 {this.state.version}</div>
+          <div className="version">版本 {version}</div>
           <div className="copyright">
             版权所有 &copy; 2018 阿里巴巴集团 保留所有权利
           </div>
