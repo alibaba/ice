@@ -107,30 +107,42 @@ class Block extends Component {
           </div>
         )}
         {enterCount > 0 && (
-          <div className="panel">
-            <span className="preview" onClick={this.openBlockImgPreview}>
-              <Tooltip
-                afterVisibleChange={this.afterVisibleChange}
-                placement={'bottom'}
-                overlay={'预览效果图'}
-              >
-                <Icon type="02magnifyingglasspluszoom" />
-              </Tooltip>
-            </span>
-            {block.homepage && (
-              <span className="preview" onClick={this.openBlockOnlinePreview}>
-                <Tooltip placement={'bottom'} overlay={'在线预览'}>
-                  <Icon type="eye" />
+          <div className="block-flipcard">
+            <div className="block-flipcard-body">
+              <h2>{block.title}</h2>
+              {
+                block.description && (
+                  <div>
+                    <p>{block.description}</p>
+                  </div>
+                )
+              }
+            </div>
+            <div className="block-flipcard-panel">
+              <span className="preview" onClick={this.openBlockImgPreview}>
+                <Tooltip
+                  afterVisibleChange={this.afterVisibleChange}
+                  placement={'bottom'}
+                  overlay={'预览效果图'}
+                >
+                  <Icon type="02magnifyingglasspluszoom" />
                 </Tooltip>
               </span>
-            )}
-            {block.repository && (
-              <span className="repo" onClick={this.openBlockGithub}>
-                <Tooltip placement={'bottom'} overlay={'查看源码'}>
-                  <Icon type="github" />
-                </Tooltip>
-              </span>
-            )}
+              {block.homepage && (
+                <span className="preview" onClick={this.openBlockOnlinePreview}>
+                  <Tooltip placement={'bottom'} overlay={'在线预览'}>
+                    <Icon type="eye" />
+                  </Tooltip>
+                </span>
+              )}
+              {block.repository && (
+                <span className="repo" onClick={this.openBlockGithub}>
+                  <Tooltip placement={'bottom'} overlay={'查看源码'}>
+                    <Icon type="github" />
+                  </Tooltip>
+                </span>
+              )}
+            </div>
           </div>
         )}
       </div>

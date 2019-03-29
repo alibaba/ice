@@ -36,8 +36,9 @@ function requestMaterial(uri, options = {}, ignoreReject) {
           if (ignoreReject) {
             resolve(null);
           } else {
+            const type = getMaterialType(options);
             alilog.report({
-              type: 'request-material-error',
+              type: `request-${type}-material-error`,
               msg: error.message,
               stack: error.stack,
               data: {
@@ -53,5 +54,19 @@ function requestMaterial(uri, options = {}, ignoreReject) {
     );
   });
 }
+
+/**
+ * 获取物料类型，区分官方物料和自定义物料两类
+ * @param {Object} options
+ * @return {string} official: 官网物料 custom：自定义物料
+ */
+function getMaterialType(options = {}) {
+  const officialMaterial = options.uri.includes('ice.alicdn.com');
+  if (officialMaterial) {
+    return 'official';
+  }
+  return 'custom';
+}
+
 
 export default requestMaterial;

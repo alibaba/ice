@@ -13,7 +13,8 @@ const { ExternalEditorError } = require('./shared');
 
 exports.launchExternalEditor = async function launchExternalEditor(
   path,
-  editor
+  editor,
+  options = []
 ) {
   const editorPath = editor.path;
   logger.debug(editor, editorPath);
@@ -27,5 +28,6 @@ exports.launchExternalEditor = async function launchExternalEditor(
     );
   }
 
-  spawn(editorPath, [path]);
+  const editorArgs = [].concat(options, [path]);
+  spawn(editorPath, editorArgs);
 };

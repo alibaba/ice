@@ -39,8 +39,8 @@ const registries = [
   },
   {
     name: 'tnpm',
-    value: 'http://registry.npm.alibaba-inc.com',
-    label: 'tnpm - http://registry.npm.alibaba-inc.com',
+    value: 'https://registry.npm.alibaba-inc.com',
+    label: 'tnpm - https://registry.npm.alibaba-inc.com',
   },
 ];
 exports.registries = registries;
@@ -56,7 +56,8 @@ const defaultMaterials = [
     description:
       '基于 ICE Design 设计语言，专业视觉设计，每周物料更新，丰富组合区块，不同领域模板',
     source: 'https://ice.alicdn.com/assets/react-materials.json',
-    backupSource: 'https://cdn.jsdelivr.net/npm/@icedesign/materails-db@latest/lib/react-materials.json',
+    backupSource:
+      'https://cdn.jsdelivr.net/npm/@icedesign/materails-db@latest/lib/react-materials.json',
     tags: ['官方', 'React', 'ICE'],
     type: 'react',
   },
@@ -69,7 +70,8 @@ const defaultMaterials = [
     logo: 'https://img.alicdn.com/tfs/TB1_rYRvOAnBKNjSZFvXXaTKXXa-1120-960.png',
     description: '基于 Rax 的小程序应用的物料源集合',
     source: 'https://ice.alicdn.com/assets/rax-materials.json',
-    backupSource: 'https://cdn.jsdelivr.net/npm/@icedesign/materails-db@latest/lib/rax-materials.json',
+    backupSource:
+      'https://cdn.jsdelivr.net/npm/@icedesign/materails-db@latest/lib/rax-materials.json',
     tags: ['官方', 'Rax', 'Miniapp'],
     type: 'rax',
   },
@@ -82,7 +84,8 @@ const defaultMaterials = [
     description:
       '飞冰官方和 Vue 社区贡献者共建的物料源，基于 Element UI 组件库',
     source: 'http://ice.alicdn.com/assets/vue-materials.json',
-    backupSource: 'https://cdn.jsdelivr.net/npm/@icedesign/materails-db@latest/lib/vue-materials.json',
+    backupSource:
+      'https://cdn.jsdelivr.net/npm/@icedesign/materails-db@latest/lib/vue-materials.json',
     tags: ['推荐', 'Vue', 'Element UI'],
     type: 'vue',
   },
@@ -96,10 +99,11 @@ const defaultMaterials = [
     description:
       '飞冰官方和 Angular 社区贡献者共建的物料源，基于 Material UI 组件库',
     source: 'https://ice.alicdn.com/assets/angular-materials.json',
-    backupSource: 'https://cdn.jsdelivr.net/npm/@icedesign/materails-db@latest/lib/angular-materials.json',
+    backupSource:
+      'https://cdn.jsdelivr.net/npm/@icedesign/materails-db@latest/lib/angular-materials.json',
     tags: ['推荐', 'Angular', 'Material UI'],
     type: 'angular',
-  }
+  },
 ];
 exports.defaultMaterials = defaultMaterials;
 

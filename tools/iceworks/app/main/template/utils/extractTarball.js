@@ -44,6 +44,17 @@ function extractTarball(
         progressFunc(state);
       })
       .on('error', (error = {}) => {
+        alilog.report(
+          {
+            type: 'download-tarball-error',
+            msg: error.message,
+            stack: error.stack,
+            data: {
+              url: tarballURL,
+            },
+          },
+          'error'
+        );
         reject(new DetailError(`链接 ${tarballURL} 请求失败`, {
           message: error.message,
           stack: error.stack,
@@ -117,10 +128,8 @@ function extractTarball(
 
 // 超时自动重试
 const retryCount = 2;
-const retryExtractTarball = autoRetry(extractTarball, retryCount, (err) => {
-  if (err.metadata && err.metadata.message !== 'ETIMEDOUT') {
-    throw (err);
-  }
-});
-
-module.exports = retryExtractTarball;
+module.exports = autoRetry(
+  extractTarball, 
+  retryCount, 
+  (err) => err.metadata && err.metadata.message == 'ETIMEDOUT'
+);
