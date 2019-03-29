@@ -13,7 +13,7 @@ const to = require('await-to-js').default;
 
 const config = require('../../config');
 
-const DetailError = require('../../error-handler');
+const { DetailError } = require('../../error-handler');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
@@ -302,8 +302,8 @@ function extractBlock(
 // 超时自动重试
 const retryCount = 2;
 const retryExtractBlock = autoRetry(
-  extractBlock, 
-  retryCount, 
+  extractBlock,
+  retryCount,
   (err) => err.code && (err.code == 'ETIMEDOUT' || err.code == 'ESOCKETTIMEDOUT')
 );
 

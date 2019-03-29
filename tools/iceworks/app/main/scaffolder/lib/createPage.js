@@ -13,7 +13,7 @@ const pageTemplates = require('./pageTemplates');
 
 const prettier = require('prettier');
 
-const DetailError = require('../../error-handler');
+const { DetailError } = require('../../error-handler');
 const config = require('../../config');
 const appendRouteV3 = require('./appendRouteV3');
 const appendRouteV4 = require('./appendRouteV4');
