@@ -1,5 +1,10 @@
 [
   {
+    "changelog": ["修复：修复发布异常问题"],
+    "releaseDate": "2019年03月29日",
+    "version": "2.18.1"
+  },
+  {
     "changelog": [
       "功能：优先使用系统的 node/npm 环境",
       "功能：支持 npm/cnpm/tnpm client",
