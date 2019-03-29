@@ -47,12 +47,23 @@ const getEnv = () => {
   return env.getEnv();
 };
 
+/**
+ * 获取当前 registry 源信息
+ * @param {string} value
+ */
+const getRegistryInfo = (value) => {
+  const { registries = [] } = shared;
+  return registries.find((item) => {
+    return item.value === value || item.name === value;
+  });
+};
+
 const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
   const installConfig = {
     cwd,
     env,
     shell,
-    shellArgs: ['install', '--no-package-lock'],
+    shellArgs: ['install'],
   };
 
   const npmCacheCleanConfig = {
@@ -62,10 +73,20 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
     shellArgs: ['cache', 'clean', '--force'],
   };
 
+  const npmClientCheckConfig = {
+    cwd,
+    env,
+    shell,
+    shellArgs: ['-v'],
+  };
 
-  sessions.manager.new(
-    installConfig,
-    (code) => {
+  sessions.manager.new(npmClientCheckConfig, (status) => {
+    if (status !== 0) {
+      installConfig.shell = 'npm';
+      installConfig.shellArgs.push(`--registry=${env.npm_config_registry}`);
+    }
+
+    sessions.manager.new(installConfig, (code) => {
       if (code !== 0) {
         log.error('project-install-failed');
         log.report('app', { action: 'project-install-failed' });
@@ -74,14 +95,22 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
           sessions.manager.new(npmCacheCleanConfig, () => {
             doProjectInstall({ cwd, env, shell, callback });
           });
-        } else if (shell === 'tnpm') {
+        } else if (shell === 'tnpm' || shell === 'cnpm') {
+          const registryInfo = getRegistryInfo(shell);
           callback(code, {
             title: '重装依赖失败',
-            content:
-  <div>
-    <p>1. 请检查 tnpm 命令是否安装了，没有请执行 $ [sudo] npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm 进行安装</p>
-    <p>2. 已安装 tnpm，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息</p>
-  </div>,
+            content: (
+              <div>
+                <p>
+                  1. 请检查 {shell} 命令是否安装了，没有请执行 $ [sudo] npm
+                  install --registry={registryInfo.value} -g {shell} 进行安装
+                </p>
+                <p>
+                  2. 已安装 {shell}
+                  ，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息
+                </p>
+              </div>
+            ),
           });
         } else {
           callback(code, {
@@ -93,6 +122,7 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
       } else {
         callback(0);
       }
+    });
   });
 };
 
@@ -139,13 +169,18 @@ const doDependenciesInstall = (
   });
 };
 
-const getEnvByNodeFramework = (nodeFramework, isAli) => {
-  const env = {};
-  if (isAli || nodeFramework === 'midwayAli') {
-    console.debug('安装依赖 - 检测为内网环境 / 内部 midway 项目');
+/**
+ * 根据内网环境更新 env
+ * @param {string} isAli
+ */
+const getEnvByAli = (isAli) => {
+  let env = {};
+  if (isAli) {
+    console.debug('安装依赖 - 检测为内网环境默认使用内网源');
     // 检测到内网环境自动将路径设置为集团内部
-    env.npm_config_registry = 'http://registry.npm.alibaba-inc.com';
-    env.yarn_registry = 'http://registry.npm.alibaba-inc.com';
+    env.npm_config_registry = 'https://registry.npm.alibaba-inc.com';
+  } else {
+    env = getEnv();
   }
   return env;
 };
@@ -310,23 +345,8 @@ export default {
     let dependencies = deps.split(/\s+/);
     dependencies = dependencies.filter((d) => !!d.trim());
 
-    // 检测到含有 @ali 的包自动将路径设置为集团内部
-    const hasAli = dependencies.some((dep) => {
-      return dep.startsWith('@ali/') || dep.startsWith('@alife/');
-    });
-
-    // 检测到是否包含 midway 依赖
-    const hasMidway = dependencies.some((dep) => {
-      return dep.startsWith('midway');
-    });
-
     // 如果包含内网包返回内网的 registry 源
-    const env = getEnvByNodeFramework(project.nodeFramework, hasAli);
-
-    // TODO： 老代码遗留逻辑，兼容？
-    if (hasAli && hasMidway) {
-      dependencies[dependencies.indexOf('midway')] = '@ali/midway';
-    }
+    const env = getEnvByAli(isAlibaba);
 
     if (dependencies.length > 0) {
       dependencies = dependencies.map((dep) => {
@@ -342,13 +362,14 @@ export default {
 
       const cwd = project.fullPath;
       const cwdClient = project.clientPath;
+      const registryInfo = getRegistryInfo(env.npm_config_registry);
       terms.writeln(cwd, '开始安装依赖');
 
       const npmInstallConfig = {
         cwd, // 项目目录，用于获取对应的term，term使用项目路径作为key存储
         cwdClient, // 是否是node模板，如果是node模板，此时安装目录于普通前端模板不同
         env,
-        shell: 'npm',
+        shell: registryInfo.name || 'npm',
         shellArgs: ['install', '--no-package-lock', installPrefix].concat(
           dependencies
         ),
@@ -428,16 +449,13 @@ export default {
         });
       })
       .then(() => {
-        return isAlibaba;
-      })
-      .then((isAli) => {
-        const env = getEnvByNodeFramework(project.nodeFramework, isAli);
-        console.log({ env });
+        const env = getEnvByAli(isAlibaba);
+        const registryInfo = getRegistryInfo(env.npm_config_registry);
         doProjectInstall(
           {
             cwd: project.fullPath,
             env,
-            shell: 'npm',
+            shell: registryInfo.name || 'npm',
             callback,
           },
           true

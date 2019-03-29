@@ -17,7 +17,6 @@ $block-screenshot-img-height: $block-screenshot-height - 6px;
   width: $block-width;
   height: $block-screenshot-width / 16 * 9 + 44px + 6px;
   padding: $block-padding;
-  cursor: pointer;
   transition: all 0.1s ease-in;
   &:hover {
     box-shadow: 0px 0px 2px 1px rgba(48, 128, 254, 1);
@@ -77,36 +76,53 @@ $block-screenshot-img-height: $block-screenshot-height - 6px;
     }
   }
   &:hover {
-    .panel {
-      bottom: 3px;
-      opacity: 1;
+    .block-flipcard {
+      display: block;
     }
   }
-  .panel {
-    transition: all 0.1s ease-in;
+  .block-flipcard {
+    display: none;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 3px;
     position: absolute;
+    top: 0;
+    left: 0;
     right: 0;
-    bottom: -20px;
-    text-align: center;
+    bottom: 0;
+  }
+  .block-flipcard-body {
     font-size: 12px;
-    opacity: 0;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
-    .info,
+    color: #666666;
+    padding: 14px;
+    padding-bottom: 0;
+    h2 {
+      font-size: 14px;
+      color: #333333;
+      margin: 0;
+    }
+    p {
+      font-size: 12px;
+      line-height: 18px;
+      margin: 0;
+    }
+  }
+  .block-flipcard-panel {
+    position: absolute;
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    left: 0;
     .preview,
     .repo {
-      color: $color-text1-2;
-      padding: 6px 4px;
+      // color: $color-text1-2;
+      padding: 0 10px;
       &:hover {
+        cursor: pointer;
         color: $color-link-3;
       }
-    }
-    .preview-icon {
-      position: relative;
-      top: 2px;
-      width: 16px;
-      height: 16px;
     }
   }
 }
