@@ -1,11 +1,11 @@
 import { shell } from 'electron';
 import services from './services';
-
-const { log } = services;
+import glodlog from './lib/glodlog';
 
 export const openInEditor = (path) => {
   services.editors.open(path);
-  log.report('external', {
+  glodlog.log({
+    type: 'external', 
     action: 'open-external-editor',
     path,
   });
@@ -13,7 +13,8 @@ export const openInEditor = (path) => {
 
 export const openInShell = (path) => {
   services.shells.open(path);
-  log.report('external', {
+  glodlog.log({
+    type: 'external', 
     action: 'open-in-shell',
     path,
   });
@@ -21,7 +22,8 @@ export const openInShell = (path) => {
 
 export const openInFinder = (path) => {
   services.folder.open(path);
-  log.report('external', {
+  glodlog.log({
+    type: 'external', 
     action: 'open-in-finder',
     path,
   });
@@ -29,7 +31,8 @@ export const openInFinder = (path) => {
 
 export const openInBrowser = (url) => {
   shell.openExternal(url);
-  log.report('external', {
+  glodlog.log({
+    type: 'external', 
     action: 'open-in-browser',
     url,
   });

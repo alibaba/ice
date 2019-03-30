@@ -90,7 +90,6 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
     sessions.manager.new(installConfig, (code) => {
       if (code !== 0) {
         log.error('project-install-failed');
-        log.report('app', { action: 'project-install-failed' });
         if (reInstall) {
           log.info('执行 npm cache clean --force 重试');
           sessions.manager.new(npmCacheCleanConfig, () => {
