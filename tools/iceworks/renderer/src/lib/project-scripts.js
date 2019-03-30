@@ -133,39 +133,53 @@ const doDependenciesInstall = (
   reInstall
 ) => {
   // cwd 项目目录，用于获取对应的 term，term 使用项目路径作为key存储
-  const { cwd, env } = dependenciesInstallConfig;
+  const { cwd, env, shell } = dependenciesInstallConfig;
 
-  sessions.manager.new(dependenciesInstallConfig, (code) => {
-    if (code !== 0) {
-      if (reInstall) {
-        log.info('重试');
-        terms.writeln(cwd, '依赖安装重试');
-        doDependenciesInstall(
-          dependenciesInstallConfig,
-          dependencies,
-          callback
-        );
-      } else {
-        log.error('安装依赖失败', cwd, dependencies);
-        const error = new Error('安装依赖失败');
-        alilog.report(
-          {
-            type: 'install-dependencies-error',
-            msg: error.message,
-            stack: error.stack,
-            data: {
-              dependencies: dependencies.join('; '),
-              env: JSON.stringify(env),
-            },
-          },
-          'error'
-        );
-        callback(1, dependencies);
-      }
-    } else {
-      log.info('安装依赖成功', cwd, dependencies);
-      callback(null, dependencies);
+  const npmClientCheckConfig = {
+    cwd,
+    env,
+    shell,
+    shellArgs: ['-v'],
+  };
+
+  sessions.manager.new(npmClientCheckConfig, (status) => {
+    if (status !== 0) {
+      dependenciesInstallConfig.shell = 'npm';
+      dependenciesInstallConfig.shellArgs.push(`--registry=${env.npm_config_registry}`);
     }
+
+    sessions.manager.new(dependenciesInstallConfig, (code) => {
+      if (code !== 0) {
+        if (reInstall) {
+          log.info('重试');
+          terms.writeln(cwd, '依赖安装重试');
+          doDependenciesInstall(
+            dependenciesInstallConfig,
+            dependencies,
+            callback
+          );
+        } else {
+          log.error('安装依赖失败', cwd, dependencies);
+          const error = new Error('安装依赖失败');
+          alilog.report(
+            {
+              type: 'install-dependencies-error',
+              msg: error.message,
+              stack: error.stack,
+              data: {
+                dependencies: dependencies.join('; '),
+                env: JSON.stringify(env),
+              },
+            },
+            'error'
+          );
+          callback(1, dependencies);
+        }
+      } else {
+        log.info('安装依赖成功', cwd, dependencies);
+        callback(null, dependencies);
+      }
+    });
   });
 };
 
