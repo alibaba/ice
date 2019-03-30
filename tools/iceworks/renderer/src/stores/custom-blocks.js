@@ -8,6 +8,7 @@ import fecha from 'fecha';
 import request from 'request';
 import requestProgress from 'request-progress';
 import services from '../services';
+import logger from '../lib/logger';
 
 const defaultWorkspacePath = path.join(os.homedir(), '.iceworks');
 // const devWorkbenchPath = 'http://127.0.0.1:3333/src/pages/workbench/index.html';
@@ -353,7 +354,7 @@ class CustomBlocks {
     this.workBenchWindow.webContents.executeJavaScript(`window.IceLand.materialData = ${this.materialData}`, true);
     // 回调参数和官方文档描述不符
     this.workBenchWindow.webContents.on('console-message', (level, sourceId, message, line) => {
-      console.log(message, line);
+      logger.log(message, line);
       if (line === 133 || line === 125) {
         const passBackData = JSON.parse(message);
         if (passBackData) {
@@ -435,16 +436,16 @@ class CustomBlocks {
     delete this.blocksStorage[name];
     fs.remove(path.join(defaultWorkspacePath, 'blocks', name), (error) => {
       if (error) {
-        console.error(error);
+        logger.error(error);
       } else {
-        console.info('删除区块数据');
+        logger.info('删除区块数据');
       }
     });
     fs.remove(path.join(defaultWorkspacePath, 'images', name), (error) => {
       if (error) {
-        console.error(error);
+        logger.error(error);
       } else {
-        console.info('删除区块截图');
+        logger.info('删除区块截图');
       }
     });
   }

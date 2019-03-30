@@ -7,6 +7,7 @@ import Notification from '@icedesign/notification';
 import Project from './project';
 // utils
 import { isProject } from '../lib/project-utils';
+import logger from '../lib/logger';
 import services from '../services';
 
 const { folder, storage, interaction } = services;
@@ -118,17 +119,17 @@ class Projects extends EventEmitter {
         }
       })
       .catch(() => {
-        console.log('取消选择');
+        logger.log('取消选择');
       });
   }
 
   @action
   remove(path, shiftDelete) {
-    console.debug('删除项目', path, shiftDelete);
+    logger.debug('删除项目', path, shiftDelete);
 
     if (shiftDelete) {
       const trashRemove = shell.moveItemToTrash(path);
-      console.debug('删除到回收站', trashRemove);
+      logger.debug('删除到回收站', trashRemove);
     }
 
     const isRemoveCurrent =

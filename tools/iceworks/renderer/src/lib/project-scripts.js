@@ -6,6 +6,7 @@ import rimraf from 'rimraf';
 import dialog from '../components/dialog';
 import services from '../services';
 import terms from '../terms';
+import logger from './logger';
 
 const detectPort = remote.require('detect-port');
 
@@ -190,7 +191,7 @@ const doDependenciesInstall = (
 const getEnvByAli = (isAli) => {
   let env = {};
   if (isAli) {
-    console.debug('安装依赖 - 检测为内网环境默认使用内网源');
+    logger.debug('安装依赖 - 检测为内网环境默认使用内网源');
     // 检测到内网环境自动将路径设置为集团内部
     env.npm_config_registry = 'https://registry.npm.alibaba-inc.com';
   } else {
@@ -300,8 +301,8 @@ export default {
           );
         })
         .catch((error) => {
-          console.error(error);
-          console.log('取消');
+          logger.error(error);
+          logger.log('取消');
         });
     }
   },

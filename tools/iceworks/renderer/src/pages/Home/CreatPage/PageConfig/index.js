@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 
 import { dependenciesFormat } from '../../../../lib/project-utils';
 import projectScripts from '../../../../lib/project-scripts';
+import logger from '../../../../lib/logger';
 import dialog from '../../../../components/dialog';
 import Progress from '../../../../components/Progress';
 import services from '../../../../services';
@@ -85,15 +86,15 @@ class PageConfig extends Component {
           blocks,
           nodeFramework: currentProject.nodeFramework,
         };
-        console.info('createPage config:', config);
+        logger.info('createPage config:', config);
         let createResult;
         if (currentProject.scaffold && currentProject.scaffold.isAvailable()) {
-          console.info('使用 .iceworks 模板新建');
+          logger.info('使用 .iceworks 模板新建');
           currentProject.scaffold
             .createPage(config)
             .then((result) => {
               createResult = result;
-              console.info('create result:', createResult);
+              logger.info('create result:', createResult);
               const dependencies = toJS(result.dependencies);
               log.info(
                 'new page dependencies',
@@ -180,7 +181,7 @@ class PageConfig extends Component {
             })
             .catch((error) => {
               log.error('generate-page', error);
-              console.error(error);
+              logger.error(error);
               dialog.notice({
                 title: '生成页面失败',
                 error,
@@ -224,7 +225,7 @@ class PageConfig extends Component {
               libary: this.props.libary,
               progressFunc: progress.handleProgressFunc,
               interpreter: ({ type, message, data }, next) => {
-                console.log(type, message);
+                logger.log(type, message);
                 switch (type) {
                   case 'UNSUPPORTED_DESTPATH':
                     Feedback.toast.error(message);

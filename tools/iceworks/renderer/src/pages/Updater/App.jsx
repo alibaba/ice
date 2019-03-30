@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
 import { Button, Progress } from '@icedesign/base';
 import requestMaterial from '../../lib/request-material';
+import logger from '../../lib/logger';
 import { hot } from 'react-hot-loader';
 
 const OSS_CDN_DOMAIN = __OSS_CDN_DOMAIN__;
@@ -92,11 +93,11 @@ class Updater extends Component {
               });
             }
           } else {
-            console.log(res);
+            logger.log(res);
           }
         })
         .catch((err) => {
-          console.log(err);
+          logger.log(err);
         });
     }
   };

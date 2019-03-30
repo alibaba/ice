@@ -1,5 +1,6 @@
 import request from 'request';
 import services from '../services';
+import logger from './logger';
 
 const { alilog, log } = services;
 
@@ -32,7 +33,7 @@ function requestMaterial(uri, options = {}, ignoreReject) {
         const error = err || body.error;
         if (error) {
           log.error(`物料请求失败，地址: ${uri}，错误：${error}`);
-          console.error(`物料请求失败，地址: ${uri}，错误：${error}`);
+          logger.error(`物料请求失败，地址: ${uri}，错误：${error}`);
           if (ignoreReject) {
             resolve(null);
           } else {
