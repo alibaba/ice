@@ -1,7 +1,7 @@
-const log = require('./logger');
+const logger = require('./logger');
 const alilog = require('./alilog');
 
-global.log = log;
+global.log = logger;
 
 const checkEnv = require('./helper/checkEnv');
 const network = require('./network');
