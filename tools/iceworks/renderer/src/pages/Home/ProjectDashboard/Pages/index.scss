@@ -12,6 +12,11 @@
     top: -1px;
     position: relative;
   }
+  a.page-item-name {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .page-tip-content {

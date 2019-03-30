@@ -31,7 +31,7 @@ const gitToolsMap = {
   checkIsRepo: { // 检查当前输入的是否是一个repo地址
     name: 'checkIsRepo',
     errMsg: '仓库地址错误',
-    errorless: true
+    errorless: true,
   },
   add: { // git add
     name: 'add',
@@ -95,9 +95,9 @@ class GitTools {
   run = async (toolName, ...opts) => {
     if (!this.cwd) {
       log.debug('git-tools: 当前项目路径不存在');
-      return
+      return;
     }
-    const {name, errMsg, handleFunc, errorless} = gitToolsMap[toolName];
+    const { name, errMsg, handleFunc, errorless } = gitToolsMap[toolName];
     try {
       let result;
       if (opts[0] !== undefined) {

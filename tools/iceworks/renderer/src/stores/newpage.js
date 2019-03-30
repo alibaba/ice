@@ -7,7 +7,6 @@ import { scanPages } from '../lib/project-utils';
 import progress from './progress';
 import projects from './projects';
 
-import projectScripts from '../lib/project-scripts';
 import scanLayout from '../datacenter/scanLayout';
 
 // useStrict(true); // 严格模式，只能内部修改值
@@ -50,7 +49,6 @@ class NewPage extends EventEmitter {
     });
   }
 
-
   @computed
   get isCreating() {
     return this.isCreatingValue;
@@ -80,14 +78,6 @@ class NewPage extends EventEmitter {
       if (this.visible) {
         this.reset();
         this.fetch();
-
-        const p = projects.currentProject;
-        const applicationType = p.getApplicationType();
-        const libraryTYpe = p.getLibraryType();
-        // react 项目不启动服务
-        if (!(libraryTYpe === 'react' && applicationType === 'react')) {
-          projectScripts.start(p);
-        }
       }
     }
   }
@@ -100,10 +90,7 @@ class NewPage extends EventEmitter {
   fetch() {
     const destDir = projects.currentProject.clientSrcPath;
     this.loading = true;
-    Promise.all([
-      scanLayout({ targetPath: destDir }),
-      scanPages(destDir),
-    ])
+    Promise.all([scanLayout({ targetPath: destDir }), scanPages(destDir)])
       .then(this.fetchSuccess)
       .catch(this.fetchFailed);
   }

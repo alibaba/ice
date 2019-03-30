@@ -59,6 +59,7 @@ process
       type: 'process-uncaught-exception',
       msg: JSON.stringify(error.message),
       stack: error.stack,
+      error: JSON.stringify(error)
     }, 'error');
   });
 
