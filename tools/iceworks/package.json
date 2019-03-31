@@ -10,7 +10,7 @@
     "postinstall": "npm run appInstall && npm run rendererIntall",
     "start": "electron app",
     "dev": "gulp dev",
-    "build": "gulp build",
+    "build": "npm run lint && gulp build",
     "dist": "gulp dist",
     "build-dist": "gulp build-dist",
     "updates": "gulp publish",

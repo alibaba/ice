@@ -14,10 +14,9 @@ module.exports = function autoRetry(fn, maxTryTimes, retryCondition) {
       } catch (err) {
         if (retryCondition(err) && maxTryTimes > tryTimes) {
           return await inner();
-        } else {
-          throw err;
         }
+        throw err;
       }
-    })();
+    }());
   };
 };

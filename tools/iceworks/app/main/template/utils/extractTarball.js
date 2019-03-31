@@ -132,5 +132,5 @@ const retryCount = 2;
 module.exports = autoRetry(
   extractTarball,
   retryCount,
-  (err) => err.metadata && err.metadata.message == 'ETIMEDOUT'
+  (err) => err.metadata && err.metadata.message === 'ETIMEDOUT'
 );
