@@ -5,7 +5,10 @@ const {
   getLatestVersion,
   getNpmInfo,
   getNpmClient,
+  checkAliInternal,
 } = require('../lib/index');
+
+jest.setTimeout(10 * 1000);
 
 test('getNpmRegistry custom registry', () => {
   const customRegistry = 'https://registry.custom.com';
@@ -97,4 +100,12 @@ test('getNpmClient', () => {
   expect(getNpmClient('@alife/ice-test')).toBe(ali);
   expect(getNpmClient('@alipay/ice-test')).toBe(ali);
   expect(getNpmClient('@alixxx/ice-test')).toBe(defaultData);
+});
+
+
+test('checkAliInternal', () => {
+  return checkAliInternal().then((internal) => {
+    console.log('checkAliInternal', internal);
+    expect(internal).toBeBoolean();
+  });
 });

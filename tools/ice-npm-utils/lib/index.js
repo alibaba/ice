@@ -124,6 +124,18 @@ function getNpmClient(npmName = '') {
   return 'npm';
 }
 
+function checkAliInternal() {
+  return axios({
+    url: 'https://ice.alibaba-inc.com/check.node',
+    timeout: 1000,
+  }).catch((err) => {
+    log.verbose('checkAliInternal error: ', err);
+    return false;
+  }).then((response) => {
+    return response.status === 200 && /success/.test(response.data);
+  });
+};
+
 module.exports = {
   getLatestVersion,
   getNpmLatestSemverVersion,
@@ -132,4 +144,5 @@ module.exports = {
   getNpmClient,
   isAliNpm,
   getNpmInfo,
+  checkAliInternal,
 };
