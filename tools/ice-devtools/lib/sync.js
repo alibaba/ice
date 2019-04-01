@@ -3,10 +3,9 @@ const chalk = require('chalk');
 const rp = require('request-promise-native');
 const ora = require('ora');
 const inquirer = require('inquirer');
-const { isAliNpm } = require('ice-npm-utils');
+const { isAliNpm, checkAliInternal } = require('ice-npm-utils');
 const getDB = require('../utils/db');
 const tokenUtil = require('../utils/token');
-const innerNet = require('../utils/inner-net');
 const pkgJSON = require('../utils/pkg-json');
 
 let fusionDesignUrl;
@@ -120,7 +119,7 @@ function dbReshape(db) {
   return datas;
 }
 module.exports = async function sync(cwd, opt) {
-  const isInnerNet = await innerNet.isInnerNet();
+  const isInnerNet = await checkAliInternal();
   let innerSync = false;
   if (isInnerNet) {
     const { inner } = await inquirer.prompt([
