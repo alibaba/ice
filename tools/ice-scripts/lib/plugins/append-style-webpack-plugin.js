@@ -9,9 +9,9 @@ const sass = require('node-sass');
 function convertCharStr2CSS(ch) {
   let code = ch.charCodeAt(0).toString(16);
   while (code.length < 4) {
-    code = '0' + code;
+    code = `0${code}`;
   }
-  return '\\' + code;
+  return `\\${code}`;
 }
 
 function compileSass(srcPath, variableFile, coreVarCode) {
@@ -53,7 +53,7 @@ function compileSass(srcPath, variableFile, coreVarCode) {
     css = cssResult.css
       .toString('utf-8') // 这里 result 是个对象，css 是个 buffer
       .replace(/content:\s*(?:\'|\")([\u0080-\uffff])(?:\'|\")/g, (str, $1) => {
-        return 'content: "' + convertCharStr2CSS($1) + '"';
+        return `content: "${convertCharStr2CSS($1)}"`;
       });
   } catch (err) {
     return '';

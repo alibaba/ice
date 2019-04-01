@@ -7,13 +7,12 @@ const download = require('../../lib/scaffold/download');
 const projectDir = path.join(__dirname, '../tempDir/download');
 
 test('download', () => {
-
   rimraf.sync(projectDir);
   mkdirp.sync(projectDir);
 
   return download({
     npmName: '@icedesign/lite-scaffold',
-    projectDir
+    projectDir,
   }).then(() => {
     expect(1).toBe(1);
   });

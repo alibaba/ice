@@ -13,13 +13,13 @@ module.exports = function getDemos(projectDir) {
   }
 
   return readdirSync(demoPath)
-    .filter(file => /\.md$/.test(file))
+    .filter((file) => /\.md$/.test(file))
     .map((filename) => {
       const filePath = join(demoPath, filename);
       const content = readFileSync(filePath, 'utf-8');
 
       const { meta, highlightedCode, content: markdownContent } = parseMarkdownParts(content, {
-        sliceCode: true
+        sliceCode: true,
       });
 
       filename = filename.replace(/\.md$/, '');
@@ -33,7 +33,7 @@ module.exports = function getDemos(projectDir) {
         highlightedCode,
         markdownContent,
       };
-    }).sort(function (a, b) {
+    }).sort((a, b) => {
       return a.order - b.order;
     });
 };

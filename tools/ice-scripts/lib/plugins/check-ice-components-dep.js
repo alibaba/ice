@@ -13,7 +13,6 @@ const log = require('../utils/log');
 const depModules = {};
 
 module.exports = class CheckDepsPlugin {
-
   constructor(options) {
     this.pkg = options.pkg || {};
   }
@@ -24,7 +23,6 @@ module.exports = class CheckDepsPlugin {
       const npmInfos = [];
 
       compilation.modules.forEach((module) => {
-
         if (!module.resource) {
           return;
         }
@@ -57,7 +55,7 @@ module.exports = class CheckDepsPlugin {
       });
 
       // 2. 多份基础组件
-      const baseComponentDeps = ['@icedesign/base', '@alife/next', '@ali/ice'].filter(name => depModules[name]);
+      const baseComponentDeps = ['@icedesign/base', '@alife/next', '@ali/ice'].filter((name) => depModules[name]);
       if (baseComponentDeps.length > 1) {
         log.warn(`项目依赖了多份基础组件 ${baseComponentDeps}，建议通过配置 buildConfig.uniteBaseComponent 优化`);
       }
@@ -70,14 +68,14 @@ module.exports = class CheckDepsPlugin {
       if (depFeNext && !depFdNext) {
         // 只依赖了 0.x 的项目应该使用 0.x 的业务组件
         Object.keys(depModules).forEach((moduleName) => {
-          checkBizComponentVersion(moduleName, depModules[moduleName][0], '0.x')
+          checkBizComponentVersion(moduleName, depModules[moduleName][0], '0.x');
         });
       }
 
       if (depFdNext && !depFeNext) {
         // 只依赖了 1.x 的项目应该使用 1.x 的业务组件
         Object.keys(depModules).forEach((moduleName) => {
-          checkBizComponentVersion(moduleName, depModules[moduleName][0], '1.x')
+          checkBizComponentVersion(moduleName, depModules[moduleName][0], '1.x');
         });
       }
 
@@ -92,8 +90,7 @@ module.exports = class CheckDepsPlugin {
       callback();
     });
   }
-
-}
+};
 
 // Get closest package definition from path
 function getClosestPackage(modulePath) {
@@ -103,7 +100,7 @@ function getClosestPackage(modulePath) {
   // Catch findRoot or require errors
   try {
     root = findRoot(modulePath);
-    pkg = require(path.join(root, "package.json"));
+    pkg = require(path.join(root, 'package.json'));
   } catch (e) {
     return null;
   }
@@ -113,12 +110,12 @@ function getClosestPackage(modulePath) {
   // https://github.com/jsdnxx/find-root/issues/2
   // https://github.com/date-fns/date-fns/issues/264#issuecomment-265128399
   if (!pkg.name) {
-    return getClosestPackage(path.resolve(root, ".."));
+    return getClosestPackage(path.resolve(root, '..'));
   }
 
   return {
     package: pkg,
-    path: root
+    path: root,
   };
 }
 

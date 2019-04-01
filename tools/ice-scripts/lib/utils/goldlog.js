@@ -16,7 +16,7 @@ function goldlog(action, extraData = {}) {
     data: {
       ...extraData,
       // 这里可以加一些全局参数
-    }
+    },
   };
 
   const dataKeyArray = Object.keys(realData);
@@ -42,4 +42,4 @@ function goldlog(action, extraData = {}) {
   }).then(() => {
   }).catch((err) => {
   });
-};
+}

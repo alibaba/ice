@@ -15,6 +15,9 @@
     "node": true,
     "commonjs": true
   },
+  "globals": {
+    "expect": "off"
+  },
   "plugins": ["react", "babel"],
   "rules": {
     "arrow-parens": [2, "always"],

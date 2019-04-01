@@ -28,7 +28,7 @@ module.exports = function getResolveAlias(buildConfig) {
       '@alife/next/variables.scss': '@icedesign/base/variables.scss',
       '@alife/next/lib/core/index.scss': '@icedesign/base/lib/core/index.scss',
 
-      '@alife/next': '@icedesign/base'
+      '@alife/next': '@icedesign/base',
     };
   }
 

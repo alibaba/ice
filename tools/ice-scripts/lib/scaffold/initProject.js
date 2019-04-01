@@ -20,7 +20,7 @@ module.exports = ({ scaffold, projectDir }) => {
     } else {
       return download({
         npmName: scaffold,
-        projectDir
+        projectDir,
       });
     }
   }).then(() => {
@@ -30,7 +30,7 @@ module.exports = ({ scaffold, projectDir }) => {
 
       // 修正 package.json
       modifyPkg(path.join(projectDir, 'package.json'));
-    } catch(err) {
+    } catch (err) {
       log.warn('修正项目文件失败', err);
     }
 
@@ -40,13 +40,11 @@ module.exports = ({ scaffold, projectDir }) => {
       // generate abc.json
       generateAbcFile(projectDir);
     }
-    return;
   });
-
-}
+};
 
 function modifyPkg(pkgPath) {
-  log.verbose('modifyPkg', pkgPath)
+  log.verbose('modifyPkg', pkgPath);
 
   const pkgData = fse.readJsonSync(pkgPath);
 
@@ -61,29 +59,27 @@ function modifyPkg(pkgPath) {
   pkgData.name += uuid();
 
   fse.writeJSONSync(pkgPath, pkgData, {
-    spaces: 2
+    spaces: 2,
   });
-  return;
 }
 
 function checkEmpty(dir) {
   return new Promise((resolve, reject) => {
-    fs.readdir(dir, function(err, files) {
+    fs.readdir(dir, (err, files) => {
       if (files && files.length) {
         // 有文件
         return inquirer.prompt({
           type: 'confirm',
           name: 'goOn',
           message: '当前文件夹下存在其他文件，继续生成可能会覆盖，确认继续吗？',
-          default: false
+          default: false,
         }).then((answer) => {
           return resolve(answer.goOn);
         }).catch((err) => {
           return resolve(false);
         });
-      } else {
-        return resolve(true)
       }
+      return resolve(true);
     });
   });
 }
@@ -97,6 +93,6 @@ function generateAbcFile(projectDir) {
   };
 
   fse.writeJSONSync(path.resolve(projectDir, 'abc.json'), abcData, {
-    spaces: 2
+    spaces: 2,
   });
 }

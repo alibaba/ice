@@ -1,4 +1,4 @@
-'use strict';
+
 module.exports = function normalizeEntry(entry, preparedChunks) {
   const preparedName = preparedChunks
     .filter((module) => {
