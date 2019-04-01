@@ -36,12 +36,13 @@ class LocaleProvider extends PureComponent {
   render() {
     const { locale, children } = this.props;
 
+    const myLocale = localeInfo[locale]
+      ? localeInfo[locale]
+      : localeInfo['en-US'];
+
     return (
-      <IntlProvider
-        locale={localeInfo[locale].appLocale}
-        messages={localeInfo[locale].appMessages}
-      >
-        <ConfigProvider locale={localeInfo[locale].nextLocale}>
+      <IntlProvider locale={myLocale.appLocale} messages={myLocale.appMessages}>
+        <ConfigProvider locale={myLocale.nextLocale}>
           {React.Children.only(children)}
         </ConfigProvider>
       </IntlProvider>
