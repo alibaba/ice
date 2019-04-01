@@ -3,11 +3,13 @@ const chalk = require('chalk');
 const rp = require('request-promise-native');
 const ora = require('ora');
 const inquirer = require('inquirer');
+const { isAliNpm, checkAliInternal } = require('ice-npm-utils');
 const getDB = require('../utils/db');
 const tokenUtil = require('../utils/token');
-const innerNet = require('../utils/inner-net');
 const pkgJSON = require('../utils/pkg-json');
+
 let fusionDesignUrl;
+
 /**
  * 上传数据
  * @param {Object} datas
@@ -25,7 +27,7 @@ async function requestUrl(data, token, url) {
     json: true,
     body: data,
   });
-  if (res.success === false &&  Array.isArray(res.data)) {
+  if (res.success === false && Array.isArray(res.data)) {
     res.data.forEach((fail) =>
       console.log(
         chalk.yellow(`物料${fail.npm}入库失败, 原因: ${fail.reason}`)
@@ -117,10 +119,10 @@ function dbReshape(db) {
   return datas;
 }
 module.exports = async function sync(cwd, opt) {
-  const isInnerNet = await innerNet.isInnerNet();
+  const isInnerNet = await checkAliInternal();
   let innerSync = false;
   if (isInnerNet) {
-    const {inner} = await inquirer.prompt([
+    const { inner } = await inquirer.prompt([
       {
         type: 'confirm',
         message: '您正处于内网环境,请问是否需要同步到内部站点',
@@ -131,8 +133,8 @@ module.exports = async function sync(cwd, opt) {
     innerSync = inner;
   }
 
-  const { name: pkgname} = pkgJSON.getPkgJSON(cwd);
-  if (innerNet.isTnpm(pkgname) && !innerSync) {
+  const { name: pkgname } = pkgJSON.getPkgJSON(cwd);
+  if (isAliNpm(pkgname) && !innerSync) {
     console.log(chalk.red(`${pkgname} 为内网项目, 禁止同步到外网`));
     return;
   }

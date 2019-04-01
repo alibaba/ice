@@ -1,6 +1,6 @@
 {
   "name": "ice-devtools",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "ice 物料开发者工具",
   "main": "bin/ice-devtools.js",
   "bin": {
@@ -53,6 +53,7 @@
     "handlebars": "^4.0.12",
     "handlebars-loader": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
+    "ice-npm-utils": "^1.0.1",
     "ice-skin-loader": "^0.2.0",
     "imagemin": "^6.0.0",
     "inquirer": "^6.2.0",

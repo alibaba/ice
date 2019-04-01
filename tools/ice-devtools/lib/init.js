@@ -7,12 +7,12 @@ const chalk = require('chalk');
 const rm = require('rimraf').sync;
 const validateName = require('validate-npm-package-name');
 const easyfile = require('easyfile');
+const { checkAliInternal } = require('ice-npm-utils');
 
 const logger = require('../utils/logger');
 const generate = require('../utils/generate');
 const localPath = require('../utils/local-path');
 const download = require('../utils/download');
-const innerNet = require('../utils/inner-net');
 const add = require('./add');
 const generateDemo = require('../utils/generate-marterials-demo');
 
@@ -28,8 +28,8 @@ module.exports = async function init(cwd) {
       logger.fatal('Workdir %s is not empty.', cwd);
     }
 
-    const options = Object.assign({ 
-      cwd, 
+    const options = Object.assign({
+      cwd,
       type,
       template,
     });
@@ -53,7 +53,7 @@ module.exports = async function init(cwd) {
  * 初始询问
  */
 async function initAsk(options = {}) {
-  const isInnerNet = await innerNet.isInnerNet();
+  const isInnerNet = await checkAliInternal();
   const { forInnerNet } = await (isInnerNet
     ? inquirer.prompt([
         {

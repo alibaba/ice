@@ -7,12 +7,12 @@ const async = require('async');
 const render = require('consolidate').handlebars.render;
 const multimatch = require('multimatch');
 const kebabCase = require('kebab-case');
+const { getNpmRegistry } = require('ice-npm-utils');
 const ask = require('./ask');
 const filter = require('./filter');
 const transform = require('./transform');
 const logger = require('./logger');
 const debug = require('debug')('ice:generate');
-const innerNet = require('../utils/inner-net');
 
 const TEMPLATE_PATH = '.template';
 
@@ -68,11 +68,11 @@ function generate(options, done) {
     className: uppercamelcase(name),
     inPlace: dest === process.cwd(),
     noEscape: true,
-    registry: innerNet.getRegistry(npmName || name),
+    registry: getNpmRegistry(npmName || name),
     ...opts
   });
   debug('%j', data);
-  
+
   meta.helpers &&
     Object.keys(meta.helpers).map((key) => {
       Handlebars.registerHelper(key, meta.helpers[key]);

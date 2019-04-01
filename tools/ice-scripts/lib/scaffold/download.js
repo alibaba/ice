@@ -7,7 +7,7 @@ const tar = require('tar');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 const ora = require('ora');
-const npmUtils = require('./npm');
+const npmUtils = require('ice-npm-utils');
 const log = require('../utils/log');
 
 module.exports = ({ npmName, projectDir }) => {
@@ -27,7 +27,7 @@ module.exports = ({ npmName, projectDir }) => {
  * @param {Object} options npm, version, destDir
  */
 function downloadAndFilterNpmFiles(npm, version, destDir) {
-  const npmTarball = `${npmUtils.getRegistry(npm)}/${npm}/-/${npm}-${version}.tgz`;
+  const npmTarball = `${npmUtils.getNpmRegistry(npm)}/${npm}/-/${npm}-${version}.tgz`;
   log.verbose('downloadAndFilterNpmFiles', npmTarball, destDir);
 
   const downloadSpinner = ora('dowload scaffold npm……');
