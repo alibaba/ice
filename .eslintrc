@@ -16,7 +16,8 @@
     "commonjs": true
   },
   "globals": {
-    "expect": "off"
+    "expect": "off",
+    "jest": "off"
   },
   "plugins": ["react", "babel"],
   "rules": {

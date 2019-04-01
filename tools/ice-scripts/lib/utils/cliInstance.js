@@ -7,7 +7,7 @@ let cliOptions = {};
 
 exports.initByProgram = (program) => {
   cliOptions = {};
-  program.options.map((option) => {
+  program.options.forEach((option) => {
     const key = camelcase(option.long, {
       pascalCase: false,
     });

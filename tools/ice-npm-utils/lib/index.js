@@ -137,7 +137,7 @@ function checkAliInternal() {
   }).then((response) => {
     return response.status === 200 && /success/.test(response.data);
   });
-};
+}
 
 module.exports = {
   getLatestVersion,
