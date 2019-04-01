@@ -1,5 +1,4 @@
 const path = require('path');
-const colors = require('chalk');
 
 const paths = require('./paths');
 const pkgData = require('./packageJson');

@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle, import/no-dynamic-require, no-cond-assign, no-useless-escape */
+
 const fs = require('fs');
 const path = require('path');
 const babel = require('@babel/core');

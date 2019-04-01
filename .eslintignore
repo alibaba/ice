@@ -14,9 +14,23 @@ coverage/
 **/*.min.js
 
 # templorarily ignore tools
-tools/
-!tools/ice-npm-utils
-!tools/ice-scripts
+tools/clean-css-parallel
+tools/css-prefix-plugin
+tools/eslint-config-ice
+tools/extract-css-assets-webpack-plugin
+tools/ice-devtools
+tools/ice-layout-builder
+# tools/ice-npm-utils
+# tools/ice-scripts
+tools/ice-skin-loader
+tools/ice-template-builder
+tools/iceworks
+tools/iceworks-scaffolder
+tools/koa-generator
+tools/props-schema-generator
+tools/uglify-parallel
+tools/webpack-dev-mock
+tools/webpack-plugin-import
 
 **/templates/**
 **/components/*/lib

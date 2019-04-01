@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle, no-useless-escape */
+
 const assert = require('assert');
 const ConcatSource = require('webpack-sources').ConcatSource;
 const fs = require('fs');

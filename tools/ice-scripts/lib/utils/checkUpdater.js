@@ -1,5 +1,6 @@
 const updater = require('npm-updater');
 const packageJson = require('../../package.json');
+const log = require('./log');
 
 module.exports = function () {
   const tag = 'latest';
@@ -13,5 +14,6 @@ module.exports = function () {
     updateMessage,
     interval: '1d',
   }).catch((err) => {
+    log.verbose('check updater error', err);
   });
 };

@@ -49,7 +49,7 @@ function resolveApp(relativePath) {
   return resolve(appDirectory, relativePath);
 }
 
-const isOldKoa = cliInstance.get('projectType') == 'node';
+const isOldKoa = cliInstance.get('projectType') === 'node';
 
 function getAppHtmlPath() {
   let relativePath = '';

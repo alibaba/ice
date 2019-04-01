@@ -1,3 +1,4 @@
+/* eslint-disable import/no-dynamic-require */
 /**
  * 检测 ICE 组件的依赖问题
  *  - 部分代码直接借鉴了 duplicate-package-checker-webpack-plugin
@@ -19,9 +20,6 @@ module.exports = class CheckDepsPlugin {
 
   apply(compiler) {
     compiler.hooks.emit.tapAsync('CheckDepsPlugin', (compilation, callback) => {
-      const projectPath = compilation.compiler.context;
-      const npmInfos = [];
-
       compilation.modules.forEach((module) => {
         if (!module.resource) {
           return;
@@ -35,7 +33,6 @@ module.exports = class CheckDepsPlugin {
         }
 
         const pkg = closestPackage.package;
-        const packagePath = closestPackage.path;
 
         if (!depModules[pkg.name]) {
           depModules[pkg.name] = [pkg.version];
@@ -125,7 +122,6 @@ function checkBizComponentVersion(npmName, npmVersion, baseVersion) {
     return;
   }
 
-  const version = npmVersion;
   const semverVersion = bizComponentsVersion[npmName][baseVersion];
 
   if (!semverVersion) {

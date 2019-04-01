@@ -25,7 +25,7 @@ module.exports = function router(app) {
   const pkg = getPkgJSON(appDirectory);
   const pkgName = pkg.name;
 
-  app.get('/preview', async (req, res, next) => {
+  app.get('/preview', async (req, res) => {
     const { demo } = req.query;
 
     if (undefined === demo) {
@@ -58,7 +58,7 @@ module.exports = function router(app) {
     res.send(jsTemplateContent);
   });
 
-  app.get('/', async (req, res, next) => {
+  app.get('/', async (req, res) => {
     const compileTemplateContent = compile(HOME_TEMPLATE);
 
     const jsTemplateContent = compileTemplateContent({

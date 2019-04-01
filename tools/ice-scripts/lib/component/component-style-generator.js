@@ -27,7 +27,7 @@ module.exports = class ComponentStyleGenerator {
     require.extensions['.jsx'] = require.extensions['.js'];
   }
 
-  mkdirp(p, opts, made) {
+  mkdirpSync = (p, opts, made) => {
     return mkdirp.sync(p, opts, made);
   }
 
@@ -60,6 +60,8 @@ module.exports = class ComponentStyleGenerator {
       if (pkgJSON && (pkgJSON.componentConfig || pkgJSON.stylePath)) {
         return true;
       }
+
+      return false;
     });
   }
 
@@ -81,7 +83,7 @@ module.exports = class ComponentStyleGenerator {
 
   writeStyleJS(dest) {
     dest = dest || path.join(this.destPath, 'style.js');
-    this.mkdirp(path.dirname(dest));
+    this.mkdirpSync(path.dirname(dest));
     const deps = this.compileDeps();
     const cwd = this.cwd;
     const importSatements = deps.map((module) => {
@@ -111,7 +113,7 @@ require('${this.absoulte ? mainScssAbsPath : './main.scss'}');
 
   writeIndexScss(dest) {
     dest = dest || path.join(this.destPath, 'index.scss');
-    this.mkdirp(path.dirname(dest));
+    this.mkdirpSync(path.dirname(dest));
     const deps = this.compileDeps();
     const cwd = this.cwd;
     const importSatements = deps.map((module) => {

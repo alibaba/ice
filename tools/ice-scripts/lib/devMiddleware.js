@@ -15,7 +15,7 @@ module.exports = (app, proxyConfig) => {
           target,
           changeOrigin: true,
           logLevel: 'warn',
-          onProxyRes: function onProxyReq(proxyRes, req, res) {
+          onProxyRes: function onProxyReq(proxyRes, req) {
             proxyRes.headers['x-proxy-by'] = 'ice-proxy';
             proxyRes.headers['x-proxy-match'] = match;
             proxyRes.headers['x-proxy-target'] = target;

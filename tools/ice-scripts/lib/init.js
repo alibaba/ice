@@ -21,7 +21,7 @@ module.exports = async function (cliOptions) {
   projectDir = projectDir || process.cwd();
 
   if (!scaffold) {
-    scaffold = await selectScaffold(scaffold);
+    scaffold = await selectScaffold();
   }
 
   log.info('使用模板：', scaffold);
@@ -34,7 +34,7 @@ module.exports = async function (cliOptions) {
   }
 };
 
-function selectScaffold(scaffold) {
+function selectScaffold() {
   const defaultScaffold = '@icedesign/lite-scaffold';
   return inquirer.prompt({
     type: 'list',

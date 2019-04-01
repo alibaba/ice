@@ -64,7 +64,7 @@ function modifyPkg(pkgPath) {
 }
 
 function checkEmpty(dir) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     fs.readdir(dir, (err, files) => {
       if (files && files.length) {
         // 有文件
@@ -75,7 +75,8 @@ function checkEmpty(dir) {
           default: false,
         }).then((answer) => {
           return resolve(answer.goOn);
-        }).catch((err) => {
+        }).catch((promptErr) => {
+          log.verbose('inquirer error', promptErr);
           return resolve(false);
         });
       }
