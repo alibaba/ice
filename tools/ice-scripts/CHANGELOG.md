@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.9.3
+
+- [fix] 内网 init 项目未生成 abc.json
+- [fix] 组件 build 未合并自定义 buildConfig
+- [chore] 接入 ice-npm-utils
+
 ## 1.9.2
 
 - [fix] 移除掉 babel-runtime 的 alias，防止项目依赖里有不同版本导致无法构建
