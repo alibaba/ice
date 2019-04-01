@@ -1,12 +1,18 @@
 # Changelog
 
+## 2.2.1
+
+- [chore] 接入 ice-npm-utils，代替原先的 npm 相关方法
+
 ## 2.2.0
+
  - [feat] 支持 vue 物料源
  - [feat] 支持 自定义物料模板
  - [refactor] 分离 block/component dev 和 build 逻辑
  - [revert] babel-plugin-transform-runtime
 
 ## 2.1.20
+
  - [feat] 引入 babel-plugin-transform-runtime
  - [feat] 支持编译 ts
  - [fix] markdown 中 code 解析时的默认 lang

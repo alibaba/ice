@@ -15,6 +15,7 @@ coverage/
 
 # templorarily ignore tools
 tools/
+!tools/ice-npm-utils
 
 **/templates/**
 **/components/*/lib

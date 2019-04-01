@@ -1,7 +1,6 @@
 const axios = require('axios');
 const semver = require('semver');
-const chalk = require('chalk');
-const log = require('../utils/log');
+const log = require('./log');
 
 const cacheData = {};
 
@@ -10,10 +9,10 @@ const cacheData = {};
  */
 function getNpmInfo(npm) {
   if (cacheData[npm]) {
-    return cacheData[npm];
+    return Promise.resolve(cacheData[npm]);
   }
 
-  const register = getRegistry(npm);
+  const register = getNpmRegistry(npm);
   const url = `${register}/${npm}`;
   log.verbose('getNpmInfo', url);
 
@@ -33,7 +32,7 @@ function getNpmInfo(npm) {
  * 获取某个 npm 的所有版本号
  */
 function getVersions(npm) {
-  return getNpmInfo(npm).then(function (body) {
+  return getNpmInfo(npm).then((body) => {
     const versions = Object.keys(body.versions);
     return versions;
   });
@@ -61,7 +60,7 @@ function getLatestSemverVersion(baseVersion, versions) {
  * @param {String} baseVersion 指定的基准 version
  */
 function getNpmLatestSemverVersion(npm, baseVersion) {
-  return getVersions(npm).then(function (versions) {
+  return getVersions(npm).then((versions) => {
     return getLatestSemverVersion(baseVersion, versions);
   });
 }
@@ -72,10 +71,10 @@ function getNpmLatestSemverVersion(npm, baseVersion) {
  * @param {String} npm
  */
 function getLatestVersion(npm) {
-  return getNpmInfo(npm).then(function (data) {
+  return getNpmInfo(npm).then((data) => {
     if (!data['dist-tags'] || !data['dist-tags'].latest) {
       log.error('没有 latest 版本号', data);
-      return Promise.reject(new Error('没有 latest 版本号'));
+      return Promise.reject(new Error('Error: 没有 latest 版本号'));
     }
 
     const latestVersion = data['dist-tags'].latest;
@@ -84,17 +83,69 @@ function getLatestVersion(npm) {
   });
 }
 
-function getRegistry(npmname) {
-  if (/^(@alife|@ali|@alipay)/.test(npmname)) {
+function isAliNpm(npmName) {
+  return /^(@alife|@ali|@alipay)\//.test(npmName);
+}
+
+function getNpmRegistry(npmName = '') {
+  if (process.env.REGISTRY) {
+    log.info('Custom Npm Registry', process.env.REGISTRY);
+    return process.env.REGISTRY;
+  }
+
+  if (isAliNpm(npmName)) {
     return 'https://registry.npm.alibaba-inc.com';
   }
 
-  // TODO: cnpm or npm
+  // TODO: maybe default should be: registry.npm.com
   return 'https://registry.npm.taobao.org';
 }
+
+function getUnpkgHost(npmName = '') {
+  if (process.env.UNPKG) {
+    log.info('Custom Unpkg Host', process.env.UNPKG);
+    return process.env.UNPKG;
+  }
+
+  if (isAliNpm(npmName)) {
+    return 'https://unpkg.alibaba-inc.com';
+  }
+
+  return 'https://unpkg.com';
+}
+
+function getNpmClient(npmName = '') {
+  if (process.env.NPM_CLIENT) {
+    log.info('Custom Npm Client', process.env.NPM_CLIENT);
+    return process.env.NPM_CLIENT;
+  }
+
+  if (isAliNpm(npmName)) {
+    return 'tnpm';
+  }
+
+  return 'npm';
+}
+
+function checkAliInternal() {
+  return axios({
+    url: 'https://ice.alibaba-inc.com/check.node',
+    timeout: 1000,
+  }).catch((err) => {
+    log.verbose('checkAliInternal error: ', err);
+    return false;
+  }).then((response) => {
+    return response.status === 200 && /success/.test(response.data);
+  });
+};
 
 module.exports = {
   getLatestVersion,
   getNpmLatestSemverVersion,
-  getRegistry
+  getNpmRegistry,
+  getUnpkgHost,
+  getNpmClient,
+  isAliNpm,
+  getNpmInfo,
+  checkAliInternal,
 };

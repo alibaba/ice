@@ -16,5 +16,5 @@ test('download', () => {
     projectDir
   }).then(() => {
     expect(1).toBe(1);
-  })
+  });
 });

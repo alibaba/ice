@@ -6,7 +6,9 @@ const tar = require('tar');
 const home = require('user-home');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
-const npmUtils = require('./npm');
+const {
+  getNpmRegistry, getNpmLatestSemverVersion, getLatestVersion,
+} = require('ice-npm-utils');
 
 module.exports = (options = {}) => {
   const template = options.template;
@@ -53,7 +55,7 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
       }
     }
 
-    const npmTarball = `https://registry.npmjs.org/${npm}/-/${npm}-${version}.tgz`;
+    const npmTarball = `${getNpmRegistry(npm)}/${npm}/-/${npm}-${version}.tgz`;
     taskComplete.entryPipe = false;
     request
       .get(npmTarball)
@@ -98,7 +100,7 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
  */
 function getNpmVersion(npm, version) {
   if (version) {
-    return npmUtils.getNpmLatestSemverVersion(npm, version);
+    return getNpmLatestSemverVersion(npm, version);
   }
-  return npmUtils.getLatestVersion(npm);
+  return getLatestVersion(npm);
 }

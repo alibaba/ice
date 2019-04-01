@@ -5,11 +5,11 @@ const mkdirp = require('mkdirp');
 const moment = require('moment');
 const chalk = require('chalk');
 const uppercamelcase = require('uppercamelcase');
+const { getNpmInfo } = require('ice-npm-utils');
 
 const depAnalyze = require('./dep-analyze');
-const npm = require('./npm');
 
-const DEFAULT_REGISTRY = 'http://registry.npmjs.org';
+const DEFAULT_REGISTRY = 'http://registry.npmjs.com';
 
 function generatePartciple(payload, source) {
   if (process.env.PARTICIPLE) {
@@ -368,7 +368,7 @@ function gatherScaffolds(pattern, SPACE) {
 function appendFieldFromNpm(item) {
   const registry = DEFAULT_REGISTRY;
   const { npm, version } = item;
-  return npm.getNpmInfo(npm).then((body) => {
+  return getNpmInfo(npm).then((body) => {
     const latestVersionBody = body.versions[version];
     if (!latestVersionBody) {
       // check version is not published
