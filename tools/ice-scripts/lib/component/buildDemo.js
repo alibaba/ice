@@ -39,6 +39,7 @@ module.exports = (buildConfig, callback) => {
         css: '',
         js: '',
       },
+      ...buildConfig
     },
   });
 
