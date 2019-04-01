@@ -1,5 +1,14 @@
 [
   {
+    "changelog": [
+      "修复：使用内置 npm client 修复",
+      "修复：启动 npm 源检查问题修复",
+      "修复：未定义语法问题修复"
+    ],
+    "releaseDate": "2019年04月01日",
+    "version": "2.18.2"
+  },
+  {
     "changelog": ["修复：修复发布异常问题"],
     "releaseDate": "2019年03月29日",
     "version": "2.18.1"

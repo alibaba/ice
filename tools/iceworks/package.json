@@ -1,7 +1,7 @@
 {
   "name": "iceworks",
   "private": true,
-  "version": "2.18.1",
+  "version": "2.18.2",
   "description": "ICE Desktop Application.",
   "scripts": {
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
