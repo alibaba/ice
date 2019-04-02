@@ -13,7 +13,7 @@ const detectPort = remote.require('detect-port');
 
 const isAlibaba = services.settings.get('isAlibaba');
 
-const { folder, interaction, sessions, alilog, shared } = services;
+const { folder, interaction, sessions, shared } = services;
 
 // todo 后续抽出到独立套件保持独立更新
 // todo vue cli 后续需要升级
@@ -134,20 +134,11 @@ const doDependenciesInstall = (
           callback
         );
       } else {
-        const error = new Error('安装依赖失败');
+        const error = new Error(`安装依赖失败: ${JSON.stringify({
+          dependencies,
+          env
+        })}`);
         logger.error(error);
-        alilog.report(
-          {
-            type: 'install-dependencies-error',
-            msg: error.message,
-            stack: error.stack,
-            data: {
-              dependencies: dependencies.join('; '),
-              env: JSON.stringify(env),
-            },
-          },
-          'error'
-        );
         callback(1, dependencies);
       }
     } else {
