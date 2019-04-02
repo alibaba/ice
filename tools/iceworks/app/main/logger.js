@@ -31,10 +31,6 @@ function logger(type, ...args) {
   logFunc(...args);
 }
 
-const uploadLog = () => {
-  // TODO: load and parse electron logger txt but cannot find location
-};
-
 /**
  * 发送日志埋点，记录到 aplus 平台
  * @param {String} type 记录日志类型
@@ -84,7 +80,6 @@ const report = (type, data = {}) => {
 
 module.exports = {
   report,
-  uploadLog,
   debug: logger.bind(null, 'debug'),
   error: logger.bind(null, 'error'),
   info: logger.bind(null, 'info'),
