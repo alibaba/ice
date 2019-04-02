@@ -12,7 +12,7 @@
     "url": "https://github.com/alibaba/ice"
   },
   "devDependencies": {
-    "ali-oss": "^5.1.1",
+    "ali-oss": "^6.1.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
