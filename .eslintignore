@@ -1,9 +1,5 @@
 # 忽略目录
 build/
-tests/
-demo/
-react-materials/layouts/**/lib/
-react-materials/blocks/**/lib/
 node_modules/
 
 # node 覆盖率文件
@@ -31,6 +27,3 @@ tools/props-schema-generator
 tools/uglify-parallel
 tools/webpack-dev-mock
 tools/webpack-plugin-import
-
-**/templates/**
-**/components/*/lib
