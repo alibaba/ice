@@ -1,5 +1,6 @@
 const debug = require('debug')('ice:util:url');
-const FUSION_DESIGN_LOCAL_URL = 'http://127.0.0.1:7001'
+
+const FUSION_DESIGN_LOCAL_URL = 'http://127.0.0.1:7001';
 const FUSION_DESIGN_DAILY_URL = 'https://fusion.taobao.net';
 const FUSION_DESIGN_PRE_URL = 'https://pre-www.fusion.design';
 const FUSION_DESIGN_URL = 'https://fusion.design';
@@ -24,11 +25,11 @@ module.exports = function getUrl() {
   if (url) {
     return url;
   }
-  const {ENV} = process.env;
+  const { ENV } = process.env;
   url = URLS[ENV];
   if (!url) {
     url = URLS.prod;
   }
   debug('url: %j', url);
   return url;
-}
+};

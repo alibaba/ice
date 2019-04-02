@@ -11,11 +11,11 @@ module.exports = async function generateMaterialsDemo(appPath) {
   const pkg = pkgJSON.getPkgJSON(appPath);
 
   // block component ...
-  const types = readdirSync(path.join(appPath, '.template')).filter(file =>
+  const types = readdirSync(path.join(appPath, '.template')).filter((file) =>
     statSync(path.join(appPath, '.template', file)).isDirectory()
   );
 
-  for(let i = 0; i < types.length; i ++) {
+  for (let i = 0; i < types.length; i++) {
     const type = types[i];
     await generate({
       src: path.join(appPath, `.template/${type}`),
@@ -25,7 +25,7 @@ module.exports = async function generateMaterialsDemo(appPath) {
       version: '1.0.0',
       title: `demo ${type}`,
       description: '示例',
-      skipGitIgnore: true
+      skipGitIgnore: true,
     });
   }
-}
+};

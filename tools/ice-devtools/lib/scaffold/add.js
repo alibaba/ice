@@ -15,11 +15,11 @@ const meta = require('./meta');
 module.exports = async function addScaffold(cwd, opt = {}) {
   const {
     npmPrefix,
-    templatePath : src,
-    standalone
+    templatePath: src,
+    standalone,
   } = opt;
 
-  const questions = defaultQuestion(npmPrefix); 
+  const questions = defaultQuestion(npmPrefix);
   const { name } = await inquirer.prompt(questions);
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
   const dest = standalone ? cwd : path.join(cwd, 'scaffolds', name);
@@ -31,10 +31,10 @@ module.exports = async function addScaffold(cwd, opt = {}) {
       name,
       npmName,
       meta,
-      skipGitIgnore: !standalone // 物料仓库中，不处理 _gitignore 文件
+      skipGitIgnore: !standalone, // 物料仓库中，不处理 _gitignore 文件
     });
     completedMessage(name, dest, standalone);
-  } catch(e) {
+  } catch (e) {
     logger.fatal(e);
   }
 };

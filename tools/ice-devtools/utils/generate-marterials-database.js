@@ -26,7 +26,7 @@ function generatePartciple(payload, source) {
 }
 
 function filterDeps(deps) {
-  return deps.filter(function(moduleName) {
+  return deps.filter((moduleName) => {
     return (
       !/^\./.test(moduleName) &&
       // 基础组件
@@ -413,10 +413,10 @@ module.exports = function generateMaterialsDatabases(
         scaffolds,
       };
 
-      const file = path.join(distDir, materialName + '.json');
-      fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
+      const file = path.join(distDir, `${materialName}.json`);
+      fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
       console.log();
-      console.log(`Created ${materialName} json at: ` + chalk.yellow(file));
+      console.log(`Created ${materialName} json at: ${chalk.yellow(file)}`);
       console.log();
     })
     .catch((err) => {

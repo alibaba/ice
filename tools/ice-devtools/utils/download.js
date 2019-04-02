@@ -65,7 +65,7 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
       .pipe(zlib.Unzip())
       .pipe(tar.Parse())
       .on('entry', (entry) => {
-        const templatePathReg = new RegExp(`(package\/template\/)`);
+        const templatePathReg = new RegExp('(package\/template\/)');
 
         let realPath;
         let destPath;

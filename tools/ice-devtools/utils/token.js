@@ -39,9 +39,9 @@ async function writeToken() {
     {
       name: 'token',
       message: 'Please input your fusion.design token: ',
-      validate: function (input) {
+      validate(input) {
         // Declare function as asynchronous, and save the done callback
-        var done = this.async();
+        const done = this.async();
         if (typeof input === 'string' && input) {
           done(null, true);
         } else {

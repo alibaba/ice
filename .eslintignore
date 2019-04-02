@@ -18,7 +18,7 @@ tools/clean-css-parallel
 tools/css-prefix-plugin
 tools/eslint-config-ice
 tools/extract-css-assets-webpack-plugin
-tools/ice-devtools
+# tools/ice-devtools
 tools/ice-layout-builder
 # tools/ice-npm-utils
 # tools/ice-scripts

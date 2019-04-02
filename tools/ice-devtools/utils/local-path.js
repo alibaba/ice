@@ -7,5 +7,5 @@ function isLocalPath(templatePath) {
 }
 
 module.exports = {
-  isLocalPath
+  isLocalPath,
 };

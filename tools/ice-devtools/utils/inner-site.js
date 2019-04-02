@@ -56,7 +56,7 @@ async function fetchSites(token) {
   let sites;
   try {
     sites = await new Promise((resl, reject) => {
-      request(options, function (err, res, body) {
+      request(options, (err, res, body) => {
         if (err) {
           console.err(err);
           reject(err);
@@ -137,7 +137,6 @@ async function selectSite(sites) {
 }
 
 async function getSite(cwd, token) {
-
   let site = getLocalSite(cwd);
   // 有则直接用本地的site
   if (site) {
@@ -154,7 +153,7 @@ async function getSite(cwd, token) {
 
   site = await selectSite(sites);
 
-  return writeLocalSite(cwd, site);;
+  return writeLocalSite(cwd, site);
 }
 
 module.exports = {

@@ -69,7 +69,7 @@ function setDefault(opts, key, val) {
       default: val,
     };
   } else {
-    prompts[key]['default'] = val;
+    prompts[key].default = val;
   }
 }
 
@@ -81,7 +81,7 @@ function setValidateName(opts) {
     const its = validateName(name);
     if (!its.validForNewPackages) {
       const errors = (its.errors || []).concat(its.warnings || []);
-      return 'Sorry, ' + errors.join(' and ') + '.';
+      return `Sorry, ${errors.join(' and ')}.`;
     }
     if (typeof customValidate === 'function') return customValidate(name);
     return true;

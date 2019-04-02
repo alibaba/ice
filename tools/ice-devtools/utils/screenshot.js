@@ -34,11 +34,11 @@ async function screenBySelector(page, opts = {}) {
     clip: opts.noClip
       ? null
       : {
-          x: rect.left - padding,
-          y: rect.top - padding,
-          width: rect.width + padding * 2,
-          height: rect.height + padding * 2,
-        },
+        x: rect.left - padding,
+        y: rect.top - padding,
+        width: rect.width + padding * 2,
+        height: rect.height + padding * 2,
+      },
   });
 }
 

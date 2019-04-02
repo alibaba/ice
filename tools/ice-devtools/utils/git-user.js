@@ -10,6 +10,6 @@ module.exports = () => {
   } catch (e) {}
 
   name = name && JSON.stringify(name.toString().trim()).slice(1, -1);
-  email = email && ' <' + email.toString().trim() + '>';
+  email = email && ` <${email.toString().trim()}>`;
   return (name || '') + (email || '');
 };

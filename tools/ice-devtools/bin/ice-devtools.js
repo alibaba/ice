@@ -12,11 +12,11 @@ const cwd = process.cwd();
 
 // 统计用户版本
 goldlog('version', {
-  version: packageJson.version
+  version: packageJson.version,
 });
 
 const tag = 'latest';
-const updateMessage = '你可以执行 npm install -g ice-devtools@' + tag + ' 来安装此版本\n';
+const updateMessage = `你可以执行 npm install -g ice-devtools@${tag} 来安装此版本\n`;
 
 // 提醒用户安装最新版本
 updater({
@@ -25,7 +25,7 @@ updater({
   tag,
   updateMessage,
   interval: '1d',
-}).catch(function(err) {
+}).catch((err) => {
 }).then(exec);
 
 /**
@@ -37,13 +37,13 @@ function checkNodeVersion(wanted, id) {
   if (!semver.satisfies(process.version, wanted)) {
     console.log(
       chalk.red(
-        'You are using Node ' +
-          process.version +
-          ', but this version of ' +
-          id +
-          ' requires Node ' +
-          wanted +
-          '.\nPlease upgrade your Node version.'
+        `You are using Node ${
+          process.version
+        }, but this version of ${
+          id
+        } requires Node ${
+          wanted
+        }.\nPlease upgrade your Node version.`
       )
     );
     process.exit(1);
@@ -69,7 +69,7 @@ function exec() {
         command = command.option(opt.name, opt.desc);
       });
 
-    command.action(function() {
+    command.action(function () {
       const cmdType = entry[0];
 
       optionsAttachToEnv(command);
@@ -93,7 +93,7 @@ function exec() {
   program.arguments('<command>').action((cmd) => {
     program.outputHelp();
     console.log();
-    console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}.`));
+    console.log(`  ${chalk.red(`Unknown command ${chalk.yellow(cmd)}.`)}`);
     console.log();
   });
 }
