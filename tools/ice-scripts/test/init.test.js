@@ -11,7 +11,7 @@ test('init', () => {
 
   return init({
     scaffold: '@icedesign/lite-scaffold',
-    projectDir
+    projectDir,
   }).then(() => {
     expect(1).toBe(1);
   });

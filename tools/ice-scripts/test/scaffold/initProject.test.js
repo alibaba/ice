@@ -12,9 +12,9 @@ test('initProject', () => {
 
   return initProject({
     scaffold: '@icedesign/lite-scaffold',
-    projectDir
+    projectDir,
   }).then(() => {
     // rimraf.sync(projectDir);
     expect(1).toBe(1);
-  })
+  });
 });
