@@ -79,7 +79,7 @@ const ScaffoldHoc = (WrappedComponent) => {
         })
         .then((cpmpleteConfig) => {
           // eslint-disable-next-line no-console
-          logger.log(cpmpleteConfig); //  完成后的结果展示
+          logger.info(cpmpleteConfig); //  完成后的结果展示
           this.props.scaffold.endProgress();
           this.props.scaffold.addNewProjectToProjects(currentPath, true); // true 用来标识提示用户安装依赖
           this.props.scaffold.pushRoute('/');

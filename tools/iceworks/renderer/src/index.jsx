@@ -12,7 +12,7 @@ import Error from './pages/Error';
 import logger from './lib/logger';
 import './global.scss';
 
-logger.log('dom ready', window.js_ready - window.dom_start);
+logger.info('dom ready', window.js_ready - window.dom_start);
 
 // 载入自定义全局样式
 const container = document.createElement('div');
@@ -31,7 +31,7 @@ try {
   ReactDOM.render(<App />, container, () => {
     removeLoading();
     window.app_rendered = Date.now();
-    logger.log('app rendered', window.app_rendered - window.dom_start);
+    logger.info('app rendered', window.app_rendered - window.dom_start);
   });
 } catch (e) {
   ReactDOM.render(<Error error={e} />, container, () => {

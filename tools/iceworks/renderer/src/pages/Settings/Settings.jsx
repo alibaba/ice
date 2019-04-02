@@ -79,7 +79,7 @@ class Setting extends Component {
         Notification.destroy();
         Notification.success({ message: '设置变更已保存' });
       } catch (e) {
-        logger.log('提示失败', e);
+        logger.info('提示失败', e);
       }
     }, 300);
   };
@@ -139,7 +139,7 @@ class Setting extends Component {
         });
       })
       .catch((err) => {
-        logger.log(err);
+        logger.info(err);
       });
   };
 

@@ -166,7 +166,7 @@ class Dependencies extends Component {
         this.setState({ dependencies, devDependencies }, this.updateInstalled);
       } catch (e) {
         this.setState({ dependencies, devDependencies });
-        logger.log('package.json 文件 parse 失败'); // eslint-disable-line no-console
+        logger.info('package.json 文件 parse 失败'); // eslint-disable-line no-console
         logger.error(e); // eslint-disable-line no-console
       }
     } else {

@@ -22,7 +22,7 @@ export const isProject = async (projectPath) => {
     pkgData = JSON.parse(pkgData.toString());
     return pkgData;
   } catch (e) {
-    log.error(e);
+    logger.error(e);
     return false;
   }
 };

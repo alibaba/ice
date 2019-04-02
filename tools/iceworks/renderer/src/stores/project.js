@@ -99,7 +99,7 @@ class Project {
     this.scaffold = new IceworksScaffolder({
       cwd: this.root,
       interpreter({ type, message, data }, next) {
-        logger.log(type, message, data);
+        logger.info(type, message, data);
         switch (type) {
           case 'EMTPY_PAGE_TEMPLATE':
             next(false);

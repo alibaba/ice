@@ -100,18 +100,18 @@ class NewPage extends EventEmitter {
   @action.bound
   fetchSuccess([layouts, pages]) {
     const projectPkgData = projects.currentProject.getPkgData();
-    logger.log('scaned layouts', layouts);
+    logger.info('scaned layouts', layouts);
 
     const scaffoldConfig =
       (projectPkgData && projectPkgData.scaffoldConfig) || {};
 
-    logger.log('scaffoldConfig data', scaffoldConfig);
+    logger.info('scaffoldConfig data', scaffoldConfig);
 
     const defaultLayout = scaffoldConfig.defaultLayout;
 
     const localLayouts = layouts.filter((n) => n.localization);
 
-    logger.log('localLayouts', localLayouts, defaultLayout);
+    logger.info('localLayouts', localLayouts, defaultLayout);
 
     let currentLayout = layouts[0];
     if (Array.isArray(localLayouts) && localLayouts.length) {
@@ -133,7 +133,7 @@ class NewPage extends EventEmitter {
   @action.bound
   fetchFailed(...args) {
     this.loading = false;
-    logger.log(args);
+    logger.info(args);
   }
 
   @action

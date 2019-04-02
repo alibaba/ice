@@ -58,7 +58,7 @@ class ComponentPanel extends Component {
         component.downloading = false;
         progress.end();
         if (error) {
-          log.error(`组件${npm}@${version}下载失败`);
+          logger.error(`组件${npm}@${version}下载失败`);
           dialog.alert({
             title: '组件下载失败',
             content: (

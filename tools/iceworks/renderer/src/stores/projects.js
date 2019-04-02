@@ -119,7 +119,7 @@ class Projects extends EventEmitter {
         }
       })
       .catch(() => {
-        logger.log('取消选择');
+        logger.info('取消选择');
       });
   }
 

@@ -145,7 +145,7 @@ class Materials {
         })
         .catch((error) => {
           // TODO: 这里的 error 可能有那些原因
-          logger.log(error);
+          logger.info(error);
 
           // 如果 alicdn 物料源访问超时 切换备份内置的物料源数据
           if (!this.useBuiltinData) {

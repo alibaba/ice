@@ -58,7 +58,7 @@ class User extends Component {
   };
 
   handleDidFinishLoad = () => {
-    logger.log('login-page 加载完成');
+    logger.info('login-page 加载完成');
     if (this.webview.src.indexOf('/iceworks-login') != -1) {
       let sessionCookies = this.webview.getWebContents().session.cookies;
       sessionCookies.get({}, (error, cookies) => {

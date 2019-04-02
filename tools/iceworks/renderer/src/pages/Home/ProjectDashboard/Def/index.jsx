@@ -261,7 +261,7 @@ class Def extends Component {
     } 
 
     // eslint-disable-next-line
-    logger.log(currentBranch, '提交完成，开始进入前端发布');
+    logger.info(currentBranch, '提交完成，开始进入前端发布');
     client.run({
       hideBuildMessage: true,
       // eslint-disable-next-line

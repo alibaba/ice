@@ -110,7 +110,7 @@ class Blocks {
 
   @action.bound
   fetchFailed(err) {
-    logger.log(err);
+    logger.info(err);
     this.isLoading = false;
   }
 

@@ -91,7 +91,7 @@ class GitTools {
 
   run = async (toolName, ...opts) => {
     if (!this.cwd) {
-      log.debug('git-tools: 当前项目路径不存在');
+      logger.debug('git-tools: 当前项目路径不存在');
       return;
     }
     const { name, errMsg, handleFunc, errorless } = gitToolsMap[toolName];
@@ -107,7 +107,7 @@ class GitTools {
       }
       return result;
     } catch (error) {
-      log.error(`git ${toolName} error: `, error);
+      logger.error(`git ${toolName} error: `, error);
       if (!errorless) {
         this.showError(error, errMsg);
       }

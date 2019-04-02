@@ -93,11 +93,11 @@ class Updater extends Component {
               });
             }
           } else {
-            logger.log(res);
+            logger.info(res);
           }
         })
         .catch((err) => {
-          logger.log(err);
+          logger.info(err);
         });
     }
   };

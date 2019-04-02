@@ -354,7 +354,7 @@ class CustomBlocks {
     this.workBenchWindow.webContents.executeJavaScript(`window.IceLand.materialData = ${this.materialData}`, true);
     // 回调参数和官方文档描述不符
     this.workBenchWindow.webContents.on('console-message', (level, sourceId, message, line) => {
-      logger.log(message, line);
+      logger.info(message, line);
       if (line === 133 || line === 125) {
         const passBackData = JSON.parse(message);
         if (passBackData) {

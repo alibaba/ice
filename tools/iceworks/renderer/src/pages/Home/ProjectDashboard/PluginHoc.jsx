@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import services from '../../../services';
 import DashboardCard from '../../../components/DashboardCard';
 import EmptyTips from '../../../components/EmptyTips/';
-
-const { log, alilog } = services;
 
 const PluginHoc = (WrappedComponent) => {
 
@@ -21,16 +18,8 @@ const PluginHoc = (WrappedComponent) => {
 
     componentDidCatch(error, info) {   
       const extension = WrappedComponent.extensionName || WrappedComponent.displayName || WrappedComponent.name;
-      log.error(`${extension} error`);
-      log.error(error, info);
-      // alilog({
-      //   type: 'extension-error',
-      //   msg: error.message,
-      //   stack: error.stack,
-      //   data: {
-      //     name: extension
-      //   }
-      // }, 'error');
+      logger.error(`${extension} error`);
+      logger.error(error, info);
       this.props.git.loading = false;
       this.setState({ hasError: true });
     }

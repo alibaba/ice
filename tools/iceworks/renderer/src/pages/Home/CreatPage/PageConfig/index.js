@@ -15,7 +15,7 @@ import Progress from '../../../../components/Progress';
 import services from '../../../../services';
 import './index.scss';
 
-const { log, npm, interaction, scaffolder } = services;
+const { npm, interaction, scaffolder } = services;
 const FormItem = Form.Item;
 
 const generatePageName = (pages = []) => {
@@ -96,12 +96,12 @@ class PageConfig extends Component {
               createResult = result;
               logger.info('create result:', createResult);
               const dependencies = toJS(result.dependencies);
-              log.info(
+              logger.info(
                 'new page dependencies',
                 this.props.newpage.targetPath,
                 dependencies
               );
-              log.debug('add dependencies', this.props.newpage.targetPath);
+              logger.debug('add dependencies', this.props.newpage.targetPath);
               return new Promise((resolve) => {
                 if (Object.keys(dependencies).length === 0) {
                   resolve(true);
@@ -115,11 +115,11 @@ class PageConfig extends Component {
                   npm
                     .run(npmArgs, { cwd: this.props.newpage.targetPath })
                     .then(() => {
-                      log.info('genereator page install dependencies success');
+                      logger.info('genereator page install dependencies success');
                       resolve(true);
                     })
                     .catch(() => {
-                      log.error('genereator page install dependencies error');
+                      logger.error('genereator page install dependencies error');
                       resolve(false);
                     });
                 }
@@ -172,7 +172,7 @@ class PageConfig extends Component {
               });
               this.props.newpage.emit('generate-page-success');
 
-              log.info('generate-page-success', 'page 创建成功');
+              logger.info('generate-page-success', 'page 创建成功');
 
               progress.end();
               this.props.newpage.isCreating = false;
@@ -180,7 +180,7 @@ class PageConfig extends Component {
               this.props.newpage.toggle();
             })
             .catch((error) => {
-              log.error('generate-page', error);
+              logger.error('generate-page', error);
               logger.error(error);
               dialog.notice({
                 title: '生成页面失败',
@@ -195,10 +195,10 @@ class PageConfig extends Component {
               });
             })
             .then(() => {
-              log.debug('移除临时页面成功');
+              logger.debug('移除临时页面成功');
             })
             .catch((error) => {
-              log.debug('移除临时页面失败', error);
+              logger.debug('移除临时页面失败', error);
             });
         } else {
           let applicationType = '';
@@ -225,13 +225,13 @@ class PageConfig extends Component {
               libary: this.props.libary,
               progressFunc: progress.handleProgressFunc,
               interpreter: ({ type, message, data }, next) => {
-                logger.log(type, message);
+                logger.info(type, message);
                 switch (type) {
                   case 'UNSUPPORTED_DESTPATH':
                     Feedback.toast.error(message);
                     break;
                   case 'DESTDIR_EXISTS_OVERRIDE':
-                    log.warn('DESTDIR_EXISTS_OVERRIDE', values.pageName);
+                    logger.warn('DESTDIR_EXISTS_OVERRIDE', values.pageName);
                     interaction.confirm(
                       {
                         type: 'info',
@@ -247,17 +247,17 @@ class PageConfig extends Component {
                     );
                     break;
                   case 'FILE_CREATED':
-                    data.forEach((file) => log.info(file));
+                    data.forEach((file) => logger.info(file));
                     next(true);
                     break;
                   case 'ADD_DEPENDENCIES':
                     const dependencies = data;
-                    log.info(
+                    logger.info(
                       'new page dependencies',
                       this.props.newpage.targetPath,
                       dependencies
                     );
-                    log.debug(
+                    logger.debug(
                       'add dependencies',
                       this.props.newpage.targetPath
                     );
@@ -267,11 +267,11 @@ class PageConfig extends Component {
                       false,
                       (error) => {
                         if (error) {
-                          log.error('genereator page install dependencies error');
-                          log.info('reinstall page dependencies');
+                          logger.error('genereator page install dependencies error');
+                          logger.info('reinstall page dependencies');
                           next(false);
                         } else {
-                          log.info(
+                          logger.info(
                             'genereator page install dependencies success'
                           );
                           next(true);
@@ -285,7 +285,7 @@ class PageConfig extends Component {
               },
             })
             .catch((error) => {
-              log.error('generate-page', error);
+              logger.error('generate-page', error);
               dialog.notice({
                 title: '生成页面失败',
                 error,
@@ -314,7 +314,7 @@ class PageConfig extends Component {
                 });
                 this.props.newpage.emit('generate-page-success');
 
-                log.info('generate-page-success', 'page 创建成功');
+                logger.info('generate-page-success', 'page 创建成功');
 
                 progress.end();
                 this.props.newpage.isCreating = false;
@@ -328,10 +328,10 @@ class PageConfig extends Component {
               }
             })
             .then(() => {
-              log.debug('移除临时页面成功');
+              logger.debug('移除临时页面成功');
             })
             .catch((error) => {
-              log.debug('移除临时页面失败', error);
+              logger.debug('移除临时页面失败', error);
             });
         }
       }

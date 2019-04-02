@@ -111,10 +111,10 @@ class PageBlockPicker extends Component {
           (error) => {
             if (error) {
               this.writeDependencies(blocksDependencies, clientPath);
-              log.error('安装区块依赖失败');
+              logger.error('安装区块依赖失败');
               reject(new Error('安装区块依赖失败'));
             } else {
-              log.info('安装区块依赖成功');
+              logger.info('安装区块依赖成功');
               resolve();
             }
           }
