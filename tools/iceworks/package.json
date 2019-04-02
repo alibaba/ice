@@ -1,7 +1,7 @@
 {
   "name": "iceworks",
   "private": true,
-  "version": "2.18.2",
+  "version": "2.19.0",
   "description": "ICE Desktop Application.",
   "scripts": {
     "rebuild-node-pty": "electron-rebuild -f -w app/node_modules/node-pty -m app",
@@ -9,7 +9,7 @@
     "rendererIntall": "cd renderer && yarn install",
     "postinstall": "npm run appInstall && npm run rendererIntall",
     "start": "electron app",
-    "dev": "gulp dev",
+    "dev": "npm run sync-db && gulp dev",
     "build": "npm run lint && gulp build",
     "dist": "gulp dist",
     "build-dist": "gulp build-dist",
