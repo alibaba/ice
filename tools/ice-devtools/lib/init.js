@@ -102,9 +102,9 @@ async function initAsk(options = {}) {
         if (!value) {
           return 'cannot be empty, please enter again';
         }
-        const name = scope ? `${scope}/${value}` : value;
-        if (forInnerNet && !validateName(name).validForNewPackages) {
-          return `this material name(${name}) has already exist. please enter again`;
+        const materialsName = scope ? `${scope}/${value}` : value;
+        if (forInnerNet && !validateName(materialsName).validForNewPackages) {
+          return `this material name(${materialsName}) has already exist. please enter again`;
         }
         return true;
       },

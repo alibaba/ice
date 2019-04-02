@@ -6,8 +6,8 @@ const message = require('../utils/message');
 
 const generateMaterialsDatabases = require('../utils/generate-marterials-database');
 
-function generateDatabase({ name, type, path, options }) {
-  generateMaterialsDatabases(name, type, path, options).then(() => {
+function generateDatabase({ name, type, filepath, options }) {
+  generateMaterialsDatabases(name, type, filepath, options).then(() => {
     showLog();
   });
 }
@@ -25,7 +25,7 @@ function generateMultiDatabase(materials, cwd) {
 
   tasks.reduce((p, f) => {
     return p.then(f);
-  }, Promise.resolve()).then((r) => {
+  }, Promise.resolve()).then(() => {
     showLog();
   });
 }

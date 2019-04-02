@@ -59,6 +59,7 @@ async function addForStandaloneProject(cwd, options) {
 
   const templatePath = await getTemplatePath(type, cwd, template);
 
+  /* eslint-disable-next-line import/no-dynamic-require */
   require(`./${type}/add`)(cwd, {
     npmPrefix,
     templatePath,
@@ -82,6 +83,7 @@ async function addForMaterialProject(cwd, options) {
 
   const templatePath = await getTemplatePath(type, cwd);
 
+  /* eslint-disable-next-line import/no-dynamic-require */
   require(`./${type}/add`)(cwd, {
     npmPrefix,
     templatePath,

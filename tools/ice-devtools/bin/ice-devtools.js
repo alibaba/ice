@@ -25,7 +25,7 @@ updater({
   tag,
   updateMessage,
   interval: '1d',
-}).catch((err) => {
+}).catch(() => {
 }).then(exec);
 
 /**
@@ -64,17 +64,21 @@ function exec() {
       .command(entry[0])
       .description(chalk.green(entry[1].desc));
 
-    entry[1].options &&
+    if (entry[1].options) {
       entry[1].options.forEach((opt) => {
         command = command.option(opt.name, opt.desc);
       });
+    }
 
     command.action(function () {
       const cmdType = entry[0];
 
       optionsAttachToEnv(command);
 
+      /* eslint-disable-next-line import/no-dynamic-require */
       const fn = require(`../lib/${cmdType}`);
+
+      /* eslint-disable-next-line prefer-rest-params */
       const args = [cwd].concat(Array.prototype.slice.call(arguments));
 
       goldlog(cmdType, {});

@@ -74,7 +74,7 @@ function generate(options, done) {
   debug('%j', data);
 
   meta.helpers &&
-    Object.keys(meta.helpers).map((key) => {
+    Object.keys(meta.helpers).forEach((key) => {
       Handlebars.registerHelper(key, meta.helpers[key]);
     });
 
@@ -109,8 +109,8 @@ function generate(options, done) {
       // 需要显性控制从物料 meta.js 中提取出来的 message 展现时机
       done(err, () => {
         if (typeof meta.complete === 'function') {
-          const helpers = { chalk, logger, files };
-          meta.complete(data, helpers);
+          const thisHelpers = { chalk, logger, files };
+          meta.complete(data, thisHelpers);
         } else {
           logMessage(meta.completeMessage, data);
         }
@@ -207,6 +207,7 @@ function renderTemplateFiles(skipInterpolation) {
             err.message = `[${file}] ${err.message}`;
             return next(err);
           }
+          /* eslint-disable-next-line no-buffer-constructor */
           files[file].contents = new Buffer(res);
           next();
         });

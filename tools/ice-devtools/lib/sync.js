@@ -52,6 +52,7 @@ async function uploadData(datas, token, site) {
     for (let index = 0; index < datas.length; index++) {
       const data = datas[index];
 
+      /* eslint-disable-next-line no-await-in-loop */
       await requestUrl(data, token, url);
       const percent = Math.ceil(((index + 1) / datas.length) * 100);
       debug('index: %s, length: %s, percent: %s', index, datas.length, percent);
@@ -118,7 +119,7 @@ function dbReshape(db) {
 
   return datas;
 }
-module.exports = async function sync(cwd, opt) {
+module.exports = async function sync(cwd) {
   const isInnerNet = await checkAliInternal();
   let innerSync = false;
   if (isInnerNet) {

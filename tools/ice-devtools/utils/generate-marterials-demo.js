@@ -17,6 +17,7 @@ module.exports = async function generateMaterialsDemo(appPath) {
 
   for (let i = 0; i < types.length; i++) {
     const type = types[i];
+    /* eslint-disable-next-line no-await-in-loop */
     await generate({
       src: path.join(appPath, `.template/${type}`),
       dest: path.join(appPath, `${type}s/Example${uppercamelcase(type)}`),

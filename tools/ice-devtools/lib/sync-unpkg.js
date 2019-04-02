@@ -7,13 +7,14 @@ const {
 
 const pkg = require('../utils/pkg-json');
 
-module.exports = function sync(cwd, opt) {
+module.exports = function sync(cwd) {
   const pkgJSON = pkg.getPkgJSON(cwd);
   const cmd = getNpmClient(pkgJSON.name);
 
   const process = spawn(cmd, ['publish'], { stdio: 'inherit' });
 
   process.on('close', (code) => {
+    /* eslint-disable-next-line eqeqeq */
     if (code == 0) {
       const materialType = pkgJSON.materialConfig.type;
       const materialJSON = materialType ? `${materialType}-materials.json` : 'materials.json';

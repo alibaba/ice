@@ -13,7 +13,10 @@ const babelPluginTransformExport = interopRequire(
 );
 
 function interopRequire(id) {
+  /* eslint-disable-next-line import/no-dynamic-require */
   const mod = require(id);
+
+  /* eslint-disable-next-line no-underscore-dangle */
   return mod && mod.__esModule ? mod.default : mod;
 }
 
@@ -33,9 +36,14 @@ function getFileContent(filepath) {
 
 // require()
 function analyzeDependenciesRequire(str) {
+  /* eslint-disable-next-line no-underscore-dangle */
   let _result = null;
   const result = [];
+
+  /* eslint-disable-next-line no-useless-escape */
   const reg = /require\(["']([^\)]+)["']\)/g;
+
+  /* eslint-disable-next-line no-cond-assign */
   while ((_result = reg.exec(str))) {
     result.push(_result[1]);
   }
@@ -49,9 +57,12 @@ function analyzeDependenciesRequire(str) {
 // export XXX from 'yyy';
 function analyzeDependenciesImport(str) {
   const result = [];
+  /* eslint-disable-next-line no-underscore-dangle */
   let _result = null;
   let importStatements = '';
   const reg = /(import|export).*from.*/g;
+
+  /* eslint-disable-next-line no-cond-assign */
   while ((_result = reg.exec(str))) {
     importStatements += `${_result[0]}\n`;
   }
@@ -107,6 +118,8 @@ module.exports = function (entryFilename) {
     }
     tracedFiles[filename] = true;
     const fileContent = getFileContent(filename);
+
+    /* eslint-disable-next-line no-underscore-dangle */
     const _result = dedupe(analyzeDependencies(fileContent));
 
     result = result.concat(_result);

@@ -2,7 +2,6 @@ const path = require('path');
 const metadata = require('read-metadata');
 const { existsSync: exists } = require('fs');
 const getGitUser = require('./git-user');
-const validateName = require('validate-npm-package-name');
 
 /**
  * Read prompts metadata.
@@ -39,6 +38,7 @@ function getMetadata(dir) {
   if (exists(json)) {
     opts = metadata.sync(json);
   } else if (exists(js)) {
+    /* eslint-disable-next-line import/no-dynamic-require */
     const req = require(path.resolve(js));
     if (req !== Object(req)) {
       throw new Error('meta.js needs to expose an object');
@@ -71,19 +71,4 @@ function setDefault(opts, key, val) {
   } else {
     prompts[key].default = val;
   }
-}
-
-function setValidateName(opts) {
-  const name = opts.prompts.name;
-  const customValidate = name.validate;
-  console.log('name:', name);
-  name.validate = (name) => {
-    const its = validateName(name);
-    if (!its.validForNewPackages) {
-      const errors = (its.errors || []).concat(its.warnings || []);
-      return `Sorry, ${errors.join(' and ')}.`;
-    }
-    if (typeof customValidate === 'function') return customValidate(name);
-    return true;
-  };
 }

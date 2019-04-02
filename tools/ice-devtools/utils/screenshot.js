@@ -29,6 +29,7 @@ async function screenBySelector(page, opts = {}) {
   }
 
   // 页面渲染完毕后，开始截图
+  /* eslint-disable-next-line no-return-await */
   return await page.screenshot({
     path,
     clip: opts.noClip
@@ -36,8 +37,8 @@ async function screenBySelector(page, opts = {}) {
       : {
         x: rect.left - padding,
         y: rect.top - padding,
-        width: rect.width + padding * 2,
-        height: rect.height + padding * 2,
+        width: rect.width + (padding * 2),
+        height: rect.height + (padding * 2),
       },
   });
 }

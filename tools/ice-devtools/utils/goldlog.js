@@ -1,4 +1,3 @@
-const pkgData = require('../package.json');
 const axios = require('axios');
 
 module.exports = goldlog;
@@ -39,6 +38,6 @@ function goldlog(action, extraData = {}) {
       logtype: '2',
     },
   }).then(() => {
-  }).catch((err) => {
+  }).catch(() => {
   });
 }

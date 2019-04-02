@@ -62,11 +62,11 @@ function defaultQuestion(prefix) {
 /**
  * 下载完成后的提示信息
  * @param {string} name 组件名称
- * @param {string} path 组件路径
+ * @param {string} filepath 组件路径
  */
-function completedMessage(name, path, standalone) {
+function completedMessage(name, filepath, standalone) {
   console.log();
-  console.log(`Success! Created ${name} at ${path}`);
+  console.log(`Success! Created ${name} at ${filepath}`);
   console.log(`Inside ${name} directory, you can run several commands:`);
   console.log();
   console.log('  Starts the development server.');
