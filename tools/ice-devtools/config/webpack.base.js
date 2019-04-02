@@ -15,6 +15,7 @@ const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const WebpackPluginImport = require('webpack-plugin-import');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const OptimizeCSSAssetsPlugin = require.resolve('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require.resolve('uglifyjs-webpack-plugin');
 
@@ -25,7 +26,7 @@ const internalLibrary = require('../utils/internal-library');
 const URL_LOADER = require.resolve('url-loader');
 const URL_LOADER_LIMIT = 8192;
 
-  // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
+// refs: https://github.com/webpack-contrib/mini-css-extract-plugin
 const MiniCssExtractPluginLoader = MiniCssExtractPlugin.loader;
 
 module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
@@ -42,8 +43,8 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .rule('babel')
     .test(/\.jsx?$/)
     .exclude
-      .add(/node_modules/)
-      .end()
+    .add(/node_modules/)
+    .end()
     .use('babel')
     .loader(BABEL_LOADER)
     .options(babelConfig)
@@ -53,8 +54,8 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .rule('typescript')
     .test(/\.tsx?$/)
     .exclude
-      .add(/node_modules/)
-      .end()
+    .add(/node_modules/)
+    .end()
     .use('babel')
     .loader(BABEL_LOADER)
     .options(babelConfig)
@@ -70,8 +71,8 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .rule('css')
     .test(/\.css$/)
     .exclude
-      .add(/\.module\.css$/)
-      .end()
+    .add(/\.module\.css$/)
+    .end()
     .use('style')
     .loader(MiniCssExtractPluginLoader)
     .end()
@@ -125,7 +126,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .use('less-loader')
     .loader(LESS_LOADER)
     .options({
-      javascriptEnabled: true
+      javascriptEnabled: true,
     })
     .end();
 
@@ -272,9 +273,9 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
 
   config.plugin('css').use(MiniCssExtractPlugin, [
     {
-      filename: "[name].css",
-      chunkFilename: "[id].css"
-    }
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    },
   ]);
 
   config.plugin('import').use(WebpackPluginImport, [
@@ -324,7 +325,7 @@ module.exports = function getWebpackBaseConfig(cwd, entries = {}) {
     .end()
     .minimizer('css')
     .use(OptimizeCSSAssetsPlugin, [{
-      cssProcessorOptions: { safe: true }
+      cssProcessorOptions: { safe: true },
     }]);
 
   return config;

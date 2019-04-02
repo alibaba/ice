@@ -19,10 +19,10 @@ const getBuckets = async (options) => {
     }, 'error');
     logger.error('oss-getbuckets-error:', err);
     return Promise.reject(err);
-  })
-}
+  });
+};
 
-const upload2oss = async (options, selectedBucket, bucketDirectory='/', assets) => {
+const upload2oss = async (options, selectedBucket, bucketDirectory = '/', assets) => {
   const ossStore = getOssStore(options);
   await ossStore.setBucket(selectedBucket);
   return Promise.all(
@@ -37,14 +37,8 @@ const upload2oss = async (options, selectedBucket, bucketDirectory='/', assets) 
             url: object.url,
             path: file.path,
           });
-        } else {
-          return Promise.resolve({
-            code: 1,
-            message: `上传失败，请检查网络连接 (${(object.res &&
-              object.res.status) ||
-              0})。`,
-          });
         }
+<<<<<<< HEAD
       })
       .catch((err) => {
         alilog.report({
@@ -53,17 +47,33 @@ const upload2oss = async (options, selectedBucket, bucketDirectory='/', assets) 
           stack: err.stack,
         }, 'error');
         logger.error('oss-upload-error:', err);
+=======
+>>>>>>> origin/iceworks/release-2.19.0
         return Promise.resolve({
           code: 1,
-          message: err.message,
-          path: file.path,
+          message: `上传失败，请检查网络连接 (${(object.res &&
+              object.res.status) ||
+              0})。`,
         });
       })
+        .catch((err) => {
+          alilog.report({
+            type: 'oss-upload-error',
+            msg: err.message,
+            stack: err.stack,
+          }, 'error');
+          log.error('oss-upload-error:', err);
+          return Promise.resolve({
+            code: 1,
+            message: err.message,
+            path: file.path,
+          });
+        });
     })
   );
-}
+};
 
 module.exports = {
   getBuckets,
-  upload2oss
+  upload2oss,
 };

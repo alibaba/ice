@@ -20,7 +20,7 @@ module.exports = function ask(prompts, data, done) {
   async.eachSeries(
     Object.keys(prompts),
     (key, next) => {
-      prompt(data, key, prompts[key], next);
+      promptFn(data, key, prompts[key], next);
     },
     done
   );
@@ -35,7 +35,7 @@ module.exports = function ask(prompts, data, done) {
  * @param {Function} done
  */
 
-function prompt(data, key, prompt, done) {
+function promptFn(data, key, prompt, done) {
   // skip prompts whose when condition is not met
   if (prompt.when && !evaluate(prompt.when, data)) {
     return done();
@@ -43,7 +43,7 @@ function prompt(data, key, prompt, done) {
 
   let promptDefault = prompt.default;
   if (typeof prompt.default === 'function') {
-    promptDefault = function() {
+    promptDefault = function () {
       return prompt.default.bind(this)(data);
     };
   }

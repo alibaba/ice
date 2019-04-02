@@ -2,6 +2,7 @@ import { observer, inject } from 'mobx-react';
 import React, { Component } from 'react';
 
 import projectScripts from '../../lib/project-scripts';
+import logger from '../../lib/logger';
 import CateMenu from '../../components/CateMenu';
 import EmptyTips from '../../components/EmptyTips';
 import dialog from '../../components/dialog';
@@ -12,7 +13,7 @@ import Item from './Item';
 
 import services from '../../services';
 
-const { interaction, log } = services;
+const { interaction, } = services;
 
 @inject('projects', 'component', 'materials', 'progress')
 @observer

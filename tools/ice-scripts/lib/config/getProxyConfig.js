@@ -26,7 +26,9 @@ module.exports = (opts = {}) => {
           return pkgData.proxyConfig;
         }
       }
-    } catch (e) {}
+    } catch (err) {
+      log.verbose('读取 proxyConfig 出错', err);
+    }
   }
 
   return null;

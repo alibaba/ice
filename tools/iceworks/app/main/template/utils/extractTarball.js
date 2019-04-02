@@ -8,6 +8,7 @@ const tar = require('tar');
 const logger = require('../../logger');
 const { DetailError } = require('../../error-handler');
 const autoRetry = require('../../utils/autoRetry');
+const alilog = require('../../alilog');
 
 /**
  * 将 tarbar 下的内容下载到指定目录，同时做路径转换
@@ -129,7 +130,7 @@ function extractTarball(
 // 超时自动重试
 const retryCount = 2;
 module.exports = autoRetry(
-  extractTarball, 
-  retryCount, 
-  (err) => err.metadata && err.metadata.message == 'ETIMEDOUT'
+  extractTarball,
+  retryCount,
+  (err) => err.metadata && err.metadata.message === 'ETIMEDOUT'
 );

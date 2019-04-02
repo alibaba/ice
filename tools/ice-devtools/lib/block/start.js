@@ -1,3 +1,5 @@
+/* Deprecated */
+/* eslint-disable */
 const debug = require('debug')('ice:start:block');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');

@@ -13,7 +13,7 @@ module.exports = function getWebpacksConfig(cwd, type = 'react') {
 
   // 增加入口文件  index.js
   const entry = path.join(cwd, 'src/index.js');
-  const blockNodeModulesPath = path.join(cwd, '/node_modules/')
+  const blockNodeModulesPath = path.join(cwd, '/node_modules/');
 
   const hbsTemplatePath = path.join(
     __dirname,
@@ -26,9 +26,9 @@ module.exports = function getWebpacksConfig(cwd, type = 'react') {
   const hbsTemplateContent = fs.readFileSync(hbsTemplatePath, 'utf-8');
   const compileTemplateContent = hbs.compile(hbsTemplateContent);
 
-  const jsTemplateContent = compileTemplateContent({ 
+  const jsTemplateContent = compileTemplateContent({
     entry: formatPath(entry),
-    blockNodeModulesPath: formatPath(blockNodeModulesPath)
+    blockNodeModulesPath: formatPath(blockNodeModulesPath),
   });
 
   fs.writeFileSync(jsPath, jsTemplateContent);

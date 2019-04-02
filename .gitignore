@@ -8,6 +8,7 @@ package-lock.json
 yarn.lock
 yarn-error.log
 tempDir
+coverage/
 
 */blocks/**/lib/
 */layouts/**/lib/

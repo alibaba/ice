@@ -3,6 +3,7 @@
  */
 const fse = require('fs-extra');
 const path = require('path');
+const npmUtils = require('ice-npm-utils');
 const cliInstance = require('../utils/cliInstance');
 const buildSrc = require('./buildSrc');
 const buildDemo = require('./buildDemo');
@@ -32,15 +33,10 @@ function modifyPkgHomePage() {
 
   const version = pkg.version;
   const pkgName = pkg.name;
-
-  if (/^(@alife|@ali|@alipay)/.test(pkgName)) {
-    homepage = `https://unpkg.alibaba-inc.com/${pkgName}@${version}/build/index.html`;
-  } else {
-    homepage = `https://unpkg.com/${pkgName}@${version}/build/index.html`;
-  }
+  const homepage = `${npmUtils.getUnpkgHost(pkgName)}/${pkgName}@${version}/build/index.html`;
 
   pkg.homepage = homepage;
   fse.writeJsonSync(pkgPath, pkg, {
-    spaces: 2
+    spaces: 2,
   });
 }

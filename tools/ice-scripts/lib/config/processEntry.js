@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+
 const appDirectory = fs.realpathSync(process.cwd());
 const hotDevClientPath = require.resolve('react-dev-utils/webpackHotDevClient');
 

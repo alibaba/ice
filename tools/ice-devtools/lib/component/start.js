@@ -1,3 +1,5 @@
+/* Deprecated */
+/* eslint-disable */
 const debug = require('debug')('ice:start:block');
 const chalk = require('chalk');
 const { join } = require('path');

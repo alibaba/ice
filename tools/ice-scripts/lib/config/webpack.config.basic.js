@@ -90,7 +90,7 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
       splitChunks: {
         cacheGroups: {},
       },
-    }
+    },
   };
 
   // HACK

@@ -39,6 +39,7 @@ module.exports = (buildConfig, callback) => {
         css: '',
         js: '',
       },
+      ...buildConfig,
     },
   });
 
@@ -110,7 +111,7 @@ function generateEntryJS(demos) {
 function getReadme(cwd) {
   const filePath = path.join(cwd, 'README.md');
   const markdown = fs.readFileSync(filePath, 'utf-8');
-  const { content: readme, meta = {}} = parseMarkdownParts(markdown);
+  const { content: readme, meta = {} } = parseMarkdownParts(markdown);
 
   return {
     meta,

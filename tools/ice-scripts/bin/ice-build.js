@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-'use strict';
 
 const program = require('commander');
 const cliInstance = require('../lib/utils/cliInstance');
@@ -30,6 +29,6 @@ program
 checkUpdater().then(() => {
   cliInstance.initByProgram(program);
   build({
-    cliOptions: cliInstance.get()
+    cliOptions: cliInstance.get(),
   });
 });

@@ -1,6 +1,8 @@
 const fs = require('fs');
 const pathExists = require('path-exists');
 
+const log = require('./log');
+
 module.exports = (htmlFile) => {
   let hasReact = false;
   if (pathExists.sync(htmlFile)) {
@@ -14,7 +16,9 @@ module.exports = (htmlFile) => {
       if (reactReg.test(htmlContent)) {
         hasReact = true;
       }
-    } catch (e) {}
+    } catch (err) {
+      log.verbose('checkTemplateHasReact error:', err);
+    }
   }
 
   return hasReact;

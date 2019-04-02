@@ -55,7 +55,7 @@ async function fetchSites(token) {
   let sites;
   try {
     sites = await new Promise((resl, reject) => {
-      request(options, function (err, res, body) {
+      request(options, (err, res, body) => {
         if (err) {
           console.err(err);
           reject(err);
@@ -63,18 +63,18 @@ async function fetchSites(token) {
         }
 
         if (res.statusCode !== 200) {
-          const err = new Error(`Response Code: ${res.statusCode}`);
-          err.response = res;
-          err.statusCode = res.statusCode;
+          const reqErr = new Error(`Response Code: ${res.statusCode}`);
+          reqErr.response = res;
+          reqErr.statusCode = res.statusCode;
           debug('res: %j\n%j', res, options);
-          reject(err);
+          reject(reqErr);
           return;
         }
         if (!body.success) {
-          const err = new Error('Response Body Not success');
-          err.response = body;
+          const reqErr = new Error('Response Body Not success');
+          reqErr.response = body;
           debug('body: %j\n%j', body, options);
-          reject(err);
+          reject(reqErr);
           return;
         }
         resl(body.data);
@@ -97,7 +97,9 @@ async function fetchSites(token) {
       console.log('鉴权失败,请前往 https://fusion.design 重新获取Token 或 请站点所有者把你添加为站点成员.');
       console.log(`Token文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
       console.log(`添加成员文档: ${chalk.yellow('https://fusion.design/help.html#/site-user-management')}`);
-      response.success === false && console.log(`错误信息: ${chalk.red(response.message)}`);
+      if (response.success === false) {
+        console.log(`错误信息: ${chalk.red(response.message)}`);
+      }
       console.log();
       console.log();
       tokenUtil.clearToken();
@@ -107,14 +109,6 @@ async function fetchSites(token) {
   }
 
   return sites;
-}
-
-function TokenFirstLyMessage() {
-  console.log();
-  console.log();
-  console.log(`如果这是你第一次使用该功能,或者不知道如何获取Token。\n请查看文档: ${chalk.yellow('https://fusion.design/help.html#/dev-create-site')}`);
-  console.log();
-  console.log();
 }
 
 async function selectSite(sites) {
@@ -136,7 +130,6 @@ async function selectSite(sites) {
 }
 
 async function getSite(cwd, token) {
-
   let site = getLocalSite(cwd);
   // 有则直接用本地的site
   if (site) {

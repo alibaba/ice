@@ -4,7 +4,7 @@ const { parseMarkdownParts } = require('../component/markdownHelper');
 
 module.exports = function demoLoader(markdown) {
   const { compiledCode } = parseMarkdownParts(markdown, {
-    sliceCode: true
+    sliceCode: true,
   });
   const stylePath = join(process.cwd(), 'src/main.scss');
 
@@ -14,8 +14,7 @@ module.exports = function demoLoader(markdown) {
 
   if (existsSync(stylePath)) {
     const styleReq = JSON.stringify(stylePath);
-    return `${mountNode}require(${styleReq});` + compiledCode;
-  } else {
-    return mountNode + compiledCode;
+    return `${mountNode}require(${styleReq});${compiledCode}`;
   }
-}
+  return mountNode + compiledCode;
+};
