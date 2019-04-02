@@ -56,8 +56,9 @@ test('getUnpkgHost', () => {
 });
 
 test('getLatestVersion should throw error when no dist-tags', () => {
-  return getLatestVersion('http')
-          .catch(err => expect(err).toMatch('error'));
+  return getLatestVersion('http').catch((err) => {
+    expect(err).toMatch('error');
+  });
 });
 
 test('getLatestVersion', () => {
@@ -76,7 +77,7 @@ test('getNpmLatestSemverVersion', () => {
 
 
 test('getNpmInfo 404 error case', () => {
-  return getNpmInfo('not-exis-npm-error').catch(err => {
+  return getNpmInfo('not-exis-npm-error').catch((err) => {
     expect(err.message).toMatch('Request failed');
   });
 });

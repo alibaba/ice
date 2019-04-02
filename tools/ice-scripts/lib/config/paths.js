@@ -49,7 +49,7 @@ function resolveApp(relativePath) {
   return resolve(appDirectory, relativePath);
 }
 
-const isOldKoa = cliInstance.get('projectType') == 'node';
+const isOldKoa = cliInstance.get('projectType') === 'node';
 
 function getAppHtmlPath() {
   let relativePath = '';
@@ -64,8 +64,8 @@ function getAppHtmlPath() {
 }
 
 module.exports = {
-  appBuild: resolveApp('build') ,
-  appPublic: resolveApp('public') ,
+  appBuild: resolveApp('build'),
+  appPublic: resolveApp('public'),
   appHtml: getAppHtmlPath(),
   appFavicon: isOldKoa ? resolveApp('client/favicon.png') : resolveApp('public/favicon.png'),
   appFaviconIco: isOldKoa ? resolveApp('client/favicon.ico') : resolveApp('public/favicon.ico'),

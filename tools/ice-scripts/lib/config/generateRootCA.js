@@ -37,9 +37,9 @@ function generateRootCA() {
 module.exports = function getRootCA() {
   return (easyCert.isRootCAFileExists()
     ? Promise.resolve({
-        key: path.join(rootDirPath, 'rootCA.key'),
-        cert: path.join(rootDirPath, 'rootCa.crt'),
-      })
+      key: path.join(rootDirPath, 'rootCA.key'),
+      cert: path.join(rootDirPath, 'rootCa.crt'),
+    })
     : generateRootCA()
   ).then((ca) => {
     log.info('当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)');

@@ -37,6 +37,6 @@ function modifyPkgHomePage() {
 
   pkg.homepage = homepage;
   fse.writeJsonSync(pkgPath, pkg, {
-    spaces: 2
+    spaces: 2,
   });
 }

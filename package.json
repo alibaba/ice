@@ -12,7 +12,7 @@
     "generate:docs": "node ./scripts/generate-docs-database",
     "generate": "npm run generate:materials && npm run generate:docs",
     "lint": "npm run lint:nofix -- --fix",
-    "lint:nofix": "eslint --cache --ext .js .vue .jsx react-materials vue-materials",
+    "lint:nofix": "eslint --cache --ext .js .vue .jsx react-materials vue-materials tools",
     "format": "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffolds/*/src/**/*.js scaffolds/*/src/**/*.jsx tools/**/*.js --write"
   },
   "repository": {

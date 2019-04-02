@@ -1,3 +1,4 @@
+/* eslint-disable import/no-dynamic-require */
 /**
  * 检测 ICE 组件的依赖问题
  *  - 部分代码直接借鉴了 duplicate-package-checker-webpack-plugin
@@ -13,18 +14,13 @@ const log = require('../utils/log');
 const depModules = {};
 
 module.exports = class CheckDepsPlugin {
-
   constructor(options) {
     this.pkg = options.pkg || {};
   }
 
   apply(compiler) {
     compiler.hooks.emit.tapAsync('CheckDepsPlugin', (compilation, callback) => {
-      const projectPath = compilation.compiler.context;
-      const npmInfos = [];
-
       compilation.modules.forEach((module) => {
-
         if (!module.resource) {
           return;
         }
@@ -37,7 +33,6 @@ module.exports = class CheckDepsPlugin {
         }
 
         const pkg = closestPackage.package;
-        const packagePath = closestPackage.path;
 
         if (!depModules[pkg.name]) {
           depModules[pkg.name] = [pkg.version];
@@ -57,7 +52,7 @@ module.exports = class CheckDepsPlugin {
       });
 
       // 2. 多份基础组件
-      const baseComponentDeps = ['@icedesign/base', '@alife/next', '@ali/ice'].filter(name => depModules[name]);
+      const baseComponentDeps = ['@icedesign/base', '@alife/next', '@ali/ice'].filter((name) => depModules[name]);
       if (baseComponentDeps.length > 1) {
         log.warn(`项目依赖了多份基础组件 ${baseComponentDeps}，建议通过配置 buildConfig.uniteBaseComponent 优化`);
       }
@@ -70,14 +65,14 @@ module.exports = class CheckDepsPlugin {
       if (depFeNext && !depFdNext) {
         // 只依赖了 0.x 的项目应该使用 0.x 的业务组件
         Object.keys(depModules).forEach((moduleName) => {
-          checkBizComponentVersion(moduleName, depModules[moduleName][0], '0.x')
+          checkBizComponentVersion(moduleName, depModules[moduleName][0], '0.x');
         });
       }
 
       if (depFdNext && !depFeNext) {
         // 只依赖了 1.x 的项目应该使用 1.x 的业务组件
         Object.keys(depModules).forEach((moduleName) => {
-          checkBizComponentVersion(moduleName, depModules[moduleName][0], '1.x')
+          checkBizComponentVersion(moduleName, depModules[moduleName][0], '1.x');
         });
       }
 
@@ -92,8 +87,7 @@ module.exports = class CheckDepsPlugin {
       callback();
     });
   }
-
-}
+};
 
 // Get closest package definition from path
 function getClosestPackage(modulePath) {
@@ -103,7 +97,7 @@ function getClosestPackage(modulePath) {
   // Catch findRoot or require errors
   try {
     root = findRoot(modulePath);
-    pkg = require(path.join(root, "package.json"));
+    pkg = require(path.join(root, 'package.json'));
   } catch (e) {
     return null;
   }
@@ -113,12 +107,12 @@ function getClosestPackage(modulePath) {
   // https://github.com/jsdnxx/find-root/issues/2
   // https://github.com/date-fns/date-fns/issues/264#issuecomment-265128399
   if (!pkg.name) {
-    return getClosestPackage(path.resolve(root, ".."));
+    return getClosestPackage(path.resolve(root, '..'));
   }
 
   return {
     package: pkg,
-    path: root
+    path: root,
   };
 }
 
@@ -128,7 +122,6 @@ function checkBizComponentVersion(npmName, npmVersion, baseVersion) {
     return;
   }
 
-  const version = npmVersion;
   const semverVersion = bizComponentsVersion[npmName][baseVersion];
 
   if (!semverVersion) {

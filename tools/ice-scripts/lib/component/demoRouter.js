@@ -25,7 +25,7 @@ module.exports = function router(app) {
   const pkg = getPkgJSON(appDirectory);
   const pkgName = pkg.name;
 
-  app.get('/preview', async (req, res, next) => {
+  app.get('/preview', async (req, res) => {
     const { demo } = req.query;
 
     if (undefined === demo) {
@@ -33,7 +33,7 @@ module.exports = function router(app) {
       return;
     }
 
-    const demoFile = path.join(appDirectory, 'demo', demo + '.md');
+    const demoFile = path.join(appDirectory, 'demo', `${demo}.md`);
     if (!fs.existsSync(demoFile)) {
       res.redirect('/');
       return;
@@ -58,7 +58,7 @@ module.exports = function router(app) {
     res.send(jsTemplateContent);
   });
 
-  app.get('/', async (req, res, next) => {
+  app.get('/', async (req, res) => {
     const compileTemplateContent = compile(HOME_TEMPLATE);
 
     const jsTemplateContent = compileTemplateContent({
@@ -68,4 +68,4 @@ module.exports = function router(app) {
 
     res.send(jsTemplateContent);
   });
-}
+};

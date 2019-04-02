@@ -1,6 +1,9 @@
+/* eslint-disable no-underscore-dangle, import/no-dynamic-require, no-cond-assign, no-useless-escape */
+
 const fs = require('fs');
 const path = require('path');
 const babel = require('@babel/core');
+
 const babelPluginTransformLibImport = interopRequire(
   'babel-plugin-transform-lib-import'
 );
@@ -32,9 +35,9 @@ function getFileContent(filepath) {
 
 // require()
 function analyzeDependenciesRequire(str) {
-  var _result = null;
+  let _result = null;
   const result = [];
-  let reg = /require\(["']([^\)]+)["']\)/g;
+  const reg = /require\(["']([^\)]+)["']\)/g;
   while ((_result = reg.exec(str))) {
     result.push(_result[1]);
   }
@@ -48,11 +51,11 @@ function analyzeDependenciesRequire(str) {
 // export XXX from 'yyy';
 function analyzeDependenciesImport(str) {
   const result = [];
-  var _result = null;
+  let _result = null;
   let importStatements = '';
-  let reg = /(import|export).*from.*/g;
+  const reg = /(import|export).*from.*/g;
   while ((_result = reg.exec(str))) {
-    importStatements += _result[0] + '\n';
+    importStatements += `${_result[0]}\n`;
   }
 
   if (!importStatements) {
@@ -93,7 +96,7 @@ function dedupe(arr) {
 require.extensions['.jsx'] = require.extensions['.js'];
 require.extensions['.vue'] = require.extensions['.js'];
 const tracedFiles = {};
-module.exports = function(entryFilePath) {
+module.exports = function (entryFilePath) {
   let result = [];
   trace(require.resolve(entryFilePath));
 
@@ -109,7 +112,7 @@ module.exports = function(entryFilePath) {
     const _result = dedupe(analyzeDependencies(fileContent));
 
     result = result.concat(_result);
-    _result.forEach(function(module) {
+    _result.forEach((module) => {
       if (/^\./.test(module)) {
         const modulePath = require.resolve(
           path.join(path.dirname(filename), module)

@@ -2,16 +2,13 @@ const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
 const zlib = require('zlib');
-const fse = require('fs-extra')
+const fse = require('fs-extra');
 const tar = require('tar');
-const rimraf = require('rimraf');
-const mkdirp = require('mkdirp');
 const ora = require('ora');
 const npmUtils = require('ice-npm-utils');
 const log = require('../utils/log');
 
 module.exports = ({ npmName, projectDir }) => {
-
   return npmUtils.getLatestVersion(npmName).then((npmVersion) => {
     return downloadAndFilterNpmFiles(
       npmName,
@@ -33,9 +30,8 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
   const downloadSpinner = ora('dowload scaffold npm……');
   downloadSpinner.start();
   return axios.get(npmTarball, {
-    responseType:'stream'
+    responseType: 'stream',
   }).then((response) => {
-
     const allWriteStream = [];
     return new Promise((resolve, reject) => {
       response.data
@@ -60,19 +56,18 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
           Promise
             .all(allWriteStream)
             .then(() => {
-              downloadSpinner.succeed('download npm succeed!')
+              downloadSpinner.succeed('download npm succeed!');
               resolve();
             })
             .catch((err) => {
-              downloadSpinner.fail('download npm fail!')
+              downloadSpinner.fail('download npm fail!');
               reject(err);
             });
         })
         .on('error', (err) => {
-          downloadSpinner.fail('download npm fail!')
+          downloadSpinner.fail('download npm fail!');
           reject(err);
         });
     });
-
   });
 }
