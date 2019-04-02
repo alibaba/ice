@@ -8,7 +8,7 @@ const network = require('./network');
 const spc = require('./spc');
 const parse = require('url-parse');
 
-const { app, dialog } = require('electron');
+const { app } = require('electron');
 
 const { appMenu } = require('./menu');
 const { registerApp, registerShortcut } = require('./app');
@@ -59,7 +59,7 @@ process
       type: 'process-uncaught-exception',
       msg: JSON.stringify(error.message),
       stack: error.stack,
-      error: JSON.stringify(error)
+      error: JSON.stringify(error),
     }, 'error');
   });
 
