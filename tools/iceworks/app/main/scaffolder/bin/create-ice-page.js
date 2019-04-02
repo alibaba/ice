@@ -61,7 +61,3 @@ createICEApp
   .then(() => {
     console.log('success');
   });
-
-// createICEApp.getTemplateList.getScaffordingList().then(x => {
-//   console.log(x);
-// });

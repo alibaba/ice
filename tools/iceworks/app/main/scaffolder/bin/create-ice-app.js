@@ -39,7 +39,6 @@ createICEApp
       switch (type) {
         // todo inquirer
         case 'DESTDIR_EXISTS_OVERRIDE':
-          console.log();
           inquirer
             .prompt([
               {

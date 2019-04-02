@@ -29,10 +29,10 @@ if (isMac) {
 exports.registerApp = (app, windows) => {
   app
     .on('will-quit', () => {
-      console.log('will-quit');
+      logger.info('will-quit');
     })
     .on('window-all-closed', () => {
-      console.log('window-all-closed');
+      logger.info('window-all-closed');
       // 等待进程都关闭后退出程序
       if (isWin) {
         sessions.manager
@@ -55,7 +55,7 @@ exports.registerApp = (app, windows) => {
     })
     .on('before-quit', () => {
       glodlog.record({ type: 'app', action: 'before-quit' });
-      console.log('before-quit');
+      logger.info('before-quit');
       if (isMac) {
         BrowserWindow.getAllWindows().forEach((currentWindow) => {
           currentWindow.destroy();
