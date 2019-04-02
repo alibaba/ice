@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2
+
+- [fix] 修复 generate 时 npm 不存在的 bug
+
 ## 2.2.1
 
 - [chore] 接入 ice-npm-utils，代替原先的 npm 相关方法

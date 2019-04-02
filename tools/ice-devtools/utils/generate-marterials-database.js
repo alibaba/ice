@@ -4,8 +4,7 @@ const glob = require('glob');
 const mkdirp = require('mkdirp');
 const chalk = require('chalk');
 const uppercamelcase = require('uppercamelcase');
-// BUG: getNpmTime
-const { getNpmTime } = require('ice-npm-utils');
+const { getNpmTime } = require('./npm');
 
 const depAnalyze = require('./dep-analyze');
 
