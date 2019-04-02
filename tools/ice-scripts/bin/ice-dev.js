@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-'use strict';
 
 const program = require('commander');
 const detect = require('detect-port');
@@ -72,7 +71,7 @@ checkUpdater()
       process.exit(500);
     }
 
-    cliInstance.set('port', parseInt(port, 10))
+    cliInstance.set('port', parseInt(port, 10));
     const cliOptions = cliInstance.get();
     dev(cliOptions);
   });

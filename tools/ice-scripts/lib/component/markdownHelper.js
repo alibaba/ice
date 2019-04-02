@@ -18,10 +18,10 @@ const LANGS = [
   'json',
   'jsx',
   'js',
-  'html'
+  'html',
 ];
 
-var styleTemplate = `
+const styleTemplate = `
   <div class="markdown">
     <div class="highlight highlight-%s">
       <pre><code language="%s">%s</code></pre>
@@ -36,7 +36,7 @@ renderer.code = function (code, lang) {
     lang = 'jsx';
   }
 
-  var html = prismjs.highlight(code, prismjs.languages[lang]);
+  const html = prismjs.highlight(code, prismjs.languages[lang]);
   if (LANGS.indexOf(lang) > -1) {
     return util.format(styleTemplate, lang, lang, html, code);
   }
@@ -45,44 +45,44 @@ renderer.code = function (code, lang) {
 };
 
 renderer.heading = function (text, level) {
-  var escapedText = text.replace(/\s+/g, '-');
+  let escapedText = text.replace(/\s+/g, '-');
   escapedText = escapedText.toLowerCase();
   escapedText = escapedText.replace(/^-+?|-+?$/, '');
-  return '<h' + level + '>' + text + '<a id="user-content-' + escapedText + '" name="' +
-    escapedText +
-    '" class="anchor" aria-hidden="true" href="#' +
-    escapedText +
-    '"><span class="octicon octicon-link"></span></a></h' + level + '>';
+  return `<h${level}>${text}<a id="user-content-${escapedText}" name="${
+    escapedText
+  }" class="anchor" aria-hidden="true" href="#${
+    escapedText
+  }"><span class="octicon octicon-link"></span></a></h${level}>`;
 };
 
 renderer.link = function (href, title, text) {
   if (href.indexOf('http') === 0) {
-    return '<a href="' + href + '" title="' + title + '">' + text + '</a>';
+    return `<a href="${href}" title="${title}">${text}</a>`;
   }
-  var fileindex = href.lastIndexOf('/');
-  var filename = href.substr(fileindex + 1);
+  const fileindex = href.lastIndexOf('/');
+  const filename = href.substr(fileindex + 1);
   if (/^([-\w]+)\.md$/.test(filename)) {
     href = href.replace(/\.md$/, '.html');
   }
   title = title || text;
-  return '<a href="' + href + '" title="' + title + '">' + text + '</a>';
+  return `<a href="${href}" title="${title}">${text}</a>`;
 };
 
 marked.setOptions({
-  renderer
+  renderer,
 });
 
 exports.formatMarkdown = function formatMarkdown(md) {
-  var markdownHtml = marked(md);
+  const markdownHtml = marked(md);
   return markdownHtml;
-}
+};
 
 exports.parseMarkdownParts = function parseMarkdownParts(md, options = {}) {
   // 获取 meta 信息
   function split(str) {
     if (str.slice(0, 3) !== '---') return;
-    var matcher = /\n(\.{3}|-{3})/g;
-    var metaEnd = matcher.exec(str);
+    const matcher = /\n(\.{3}|-{3})/g;
+    const metaEnd = matcher.exec(str);
     return metaEnd && [str.slice(0, metaEnd.index), str.slice(matcher.lastIndex)];
   }
 
@@ -90,7 +90,7 @@ exports.parseMarkdownParts = function parseMarkdownParts(md, options = {}) {
   const result = {
     meta: {},
     content: md,
-    code: ''
+    code: '',
   };
 
   if (splited) {
@@ -114,4 +114,4 @@ exports.parseMarkdownParts = function parseMarkdownParts(md, options = {}) {
   result.content = marked(result.content);
 
   return result;
-}
+};

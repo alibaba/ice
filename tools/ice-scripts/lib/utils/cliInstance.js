@@ -7,9 +7,9 @@ let cliOptions = {};
 
 exports.initByProgram = (program) => {
   cliOptions = {};
-  program.options.map((option) => {
+  program.options.forEach((option) => {
     const key = camelcase(option.long, {
-      pascalCase: false
+      pascalCase: false,
     });
 
     // 不传参数时是 undefined，这里不判断的话，lib/build 里跟 default 参数 merge 会有问题
@@ -19,18 +19,18 @@ exports.initByProgram = (program) => {
   });
 
   return cliOptions;
-}
+};
 
 exports.reset = (options) => {
   cliOptions = options;
   return cliOptions;
-}
+};
 
 exports.get = (key) => {
   return key ? cliOptions[key] : cliOptions;
-}
+};
 
 exports.set = (key, value) => {
   cliOptions[key] = value;
   return cliOptions;
-}
+};

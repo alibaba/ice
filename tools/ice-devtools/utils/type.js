@@ -1,4 +1,3 @@
-const path = require('path');
 const pkgJSON = require('./pkg-json');
 
 /**

@@ -19,6 +19,8 @@ module.exports = function screenshot(cwd, opt) {
   }
 
   const port = opt.port || 8990;
+
+  /* eslint-disable-next-line import/no-dynamic-require */
   const { selector, servePath, urlpath } = require(`./${type}/screenshot`)(cwd);
   const tempPath = getTempPath();
   const screenshotTempPath = path.join(tempPath, 'screenshot.png'); // 临时地址
@@ -45,8 +47,12 @@ module.exports = function screenshot(cwd, opt) {
     } finally {
       server.close();
       spin.stop();
+
+      /* eslint-disable-next-line import/no-dynamic-require */
       require(`./${type}/info`)(cwd, opt);
-      opt.callback && opt.callback();
+      if (opt.callback) {
+        opt.callback();
+      }
     }
   })();
 };

@@ -8,4 +8,4 @@ module.exports = {
   // '@ali/ice-form-binder': '请迁移至 @icedesign/form-binder@0.x',
   // '@ali/ice-qrcode': '请迁移至 @icedesign/qrcode@0.x',
   // '@ali/ice-img': '请迁移至 @icedesign/img@0.x',
-}
+};

@@ -7,6 +7,7 @@ const fse = require('fs-extra');
 const uuid = require('uuid/v1');
 const rimraf = require('rimraf');
 const inquirer = require('inquirer');
+const { checkAliInternal } = require('ice-npm-utils');
 
 const log = require('../utils/log');
 const download = require('./download');
@@ -19,7 +20,7 @@ module.exports = ({ scaffold, projectDir }) => {
     } else {
       return download({
         npmName: scaffold,
-        projectDir
+        projectDir,
       });
     }
   }).then(() => {
@@ -29,15 +30,21 @@ module.exports = ({ scaffold, projectDir }) => {
 
       // 修正 package.json
       modifyPkg(path.join(projectDir, 'package.json'));
-    } catch(err) {
+    } catch (err) {
       log.warn('修正项目文件失败', err);
     }
-  });
 
-}
+    return checkAliInternal();
+  }).then((isAliInternal) => {
+    if (isAliInternal) {
+      // generate abc.json
+      generateAbcFile(projectDir);
+    }
+  });
+};
 
 function modifyPkg(pkgPath) {
-  log.verbose('modifyPkg', pkgPath)
+  log.verbose('modifyPkg', pkgPath);
 
   const pkgData = fse.readJsonSync(pkgPath);
 
@@ -52,30 +59,41 @@ function modifyPkg(pkgPath) {
   pkgData.name += uuid();
 
   fse.writeJSONSync(pkgPath, pkgData, {
-    spaces: 2
+    spaces: 2,
   });
-  return;
 }
 
-
 function checkEmpty(dir) {
-  return new Promise((resolve, reject) => {
-    fs.readdir(dir, function(err, files) {
+  return new Promise((resolve) => {
+    fs.readdir(dir, (err, files) => {
       if (files && files.length) {
         // 有文件
         return inquirer.prompt({
           type: 'confirm',
           name: 'goOn',
           message: '当前文件夹下存在其他文件，继续生成可能会覆盖，确认继续吗？',
-          default: false
+          default: false,
         }).then((answer) => {
           return resolve(answer.goOn);
-        }).catch((err) => {
+        }).catch((promptErr) => {
+          log.verbose('inquirer error', promptErr);
           return resolve(false);
         });
-      } else {
-        return resolve(true)
       }
+      return resolve(true);
     });
+  });
+}
+
+function generateAbcFile(projectDir) {
+  log.info('内网环境，生成 abc.json');
+
+  const abcData = {
+    type: 'iceworks',
+    builder: '@ali/builder-iceworks',
+  };
+
+  fse.writeJSONSync(path.resolve(projectDir, 'abc.json'), abcData, {
+    spaces: 2,
   });
 }

@@ -1,5 +1,5 @@
-'use strict';
-
+/* Deprecated */
+/* eslint-disable */
 const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
@@ -36,7 +36,7 @@ module.exports = class ComponentStyleGenerator {
       if (/^\./.test(dep)) {
         return false;
       }
-      
+
       const isInteranlLibrary = internalLibrary.some((library) => {
         return library.test(dep);
       });

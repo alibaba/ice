@@ -1,3 +1,5 @@
+/* Deprecated */
+/* eslint-disable */
 const { parseMarkdownParts } = require('./markdown-helper');
 const { join, basename } = require('path');
 const { existsSync } = require('fs');

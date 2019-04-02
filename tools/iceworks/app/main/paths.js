@@ -26,10 +26,9 @@ const NODE_FRAMEWORKS = ['koa2', 'midway', 'midwayAli'];
 const getClientPath = (destDir, framework) => {
   if (framework && NODE_FRAMEWORKS.includes(framework)) {
     return path.join(destDir, 'client');
-  } else {
-    // 包含两种情况：framework为koa（即老koa项目）、纯前端项目
-    return path.join(destDir);
   }
+  // 包含两种情况：framework为koa（即老koa项目）、纯前端项目
+  return path.join(destDir);
 };
 
 const getServerPath = (destDir, framework) => {
@@ -47,9 +46,8 @@ const getClientSrcPath = (destDir, framework) => {
   const clientPath = getClientPath(destDir, framework);
   if (framework && framework === 'koa') {
     return path.join(clientPath, 'client');
-  } else {
-    return path.join(clientPath, 'src');
   }
+  return path.join(clientPath, 'src');
 };
 
 module.exports = {

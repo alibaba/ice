@@ -3,12 +3,12 @@ const fs = require('fs');
 const url = require('url');
 const path = require('path');
 
-module.exports = function(cwd, port) {
+module.exports = function (cwd, port) {
   const server = http
-    .createServer(function(req, res) {
+    .createServer((req, res) => {
       const pathname = cwd + url.parse(req.url).pathname; // 对于文件路径统一处理
 
-      fs.exists(pathname, function(exists) {
+      fs.exists(pathname, (exists) => {
         if (exists) {
           switch (
             path.extname(pathname) // 不同文件返回不同类型
@@ -36,7 +36,7 @@ module.exports = function(cwd, port) {
                 'Content-Type': 'application/octet-stream',
               });
           }
-          fs.readFile(pathname, function(err, data) {
+          fs.readFile(pathname, (err, data) => {
             // console.log((new Date()).toLocaleString() + " " + pathname);
             res.end(data);
           });

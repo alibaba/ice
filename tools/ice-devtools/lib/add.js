@@ -27,20 +27,20 @@ module.exports = async function add(cwd, options = {}) {
 
   if (options.type) {
     addForStandaloneProject(cwd, {
-      ...options
+      ...options,
     });
     return;
   }
 
   const pkg = pkgJSON.getPkgJSON(cwd);
-  
+
   if (!pkg) {
     logger.fatal(message.invalid);
   }
 
   if (pkg.materialConfig) {
     addForMaterialProject(cwd, {
-      pkg
+      pkg,
     });
   } else {
     logger.fatal(message.invalid);
@@ -49,8 +49,8 @@ module.exports = async function add(cwd, options = {}) {
 
 /**
  * 创建一个独立的组件/区块
- * @param {*} cwd 
- * @param {*} options 
+ * @param {*} cwd
+ * @param {*} options
  */
 async function addForStandaloneProject(cwd, options) {
   const { type, template } = options;
@@ -59,6 +59,7 @@ async function addForStandaloneProject(cwd, options) {
 
   const templatePath = await getTemplatePath(type, cwd, template);
 
+  /* eslint-disable-next-line import/no-dynamic-require */
   require(`./${type}/add`)(cwd, {
     npmPrefix,
     templatePath,
@@ -71,7 +72,7 @@ async function addForStandaloneProject(cwd, options) {
  */
 async function addForMaterialProject(cwd, options) {
   const {
-    pkg
+    pkg,
   } = options;
 
   const npmPrefix = `${pkg.name}-`;
@@ -82,16 +83,17 @@ async function addForMaterialProject(cwd, options) {
 
   const templatePath = await getTemplatePath(type, cwd);
 
+  /* eslint-disable-next-line import/no-dynamic-require */
   require(`./${type}/add`)(cwd, {
     npmPrefix,
-    templatePath
+    templatePath,
   });
 }
 
 /**
  * 获取模板路径
- * @param {string} type 
- * @param {string} cwd 
+ * @param {string} type
+ * @param {string} cwd
  */
 async function getTemplatePath(templateType, cwd, template) {
   // from local path
@@ -100,24 +102,23 @@ async function getTemplatePath(templateType, cwd, template) {
     if (existsSync(templatePath)) {
       return templatePath;
     }
-    logger.fatal(`template is not found in ${templatePath}` );
+    logger.fatal(`template is not found in ${templatePath}`);
   }
 
   // from local .template file
-  const templateRoot = path.join(cwd, `.template`);
+  const templateRoot = path.join(cwd, '.template');
 
   if (existsSync(templateRoot)) {
     const localTemplate = path.join(templateRoot, templateType);
 
     if (existsSync(localTemplate)) {
       return localTemplate;
-    } else {
-      logger.fatal(`template for ${templateType} is not found in .template` );
     }
+    logger.fatal(`template for ${templateType} is not found in .template`);
   }
 
   // form npm package
-  const templateName = template || `@icedesign/ice-react-material-template`; // 老项目新增物料 & 组件独立创建链路 会使用 `@icedesign/ice-react-material-template`
+  const templateName = template || '@icedesign/ice-react-material-template'; // 老项目新增物料 & 组件独立创建链路 会使用 `@icedesign/ice-react-material-template`
   const tmp = await downloadTemplate(templateName);
   const templatePath = path.join(tmp, `template/${templateType}`);
 

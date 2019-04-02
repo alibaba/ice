@@ -33,14 +33,14 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   const plugins = [
     new webpack.DefinePlugin(defineVriables),
     new MiniCssExtractPlugin({
-      filename: path.join(buildConfig.outputAssetsPath.css || '', filename)
+      filename: path.join(buildConfig.outputAssetsPath.css || '', filename),
     }),
     // FIX ISSUE: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
     new FilterWarningsPlugin({
       exclude: /Conflicting order between:/,
     }),
     new CheckIceComponentsDepsPlugin({
-      pkg
+      pkg,
     }),
     new SimpleProgressPlugin(),
     new CaseSensitivePathsPlugin(),
@@ -154,7 +154,7 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
         distMatch: /\.css/,
         themeNextVersion,
         compileThemeIcon: false,
-        pkg
+        pkg,
       })
     );
   }

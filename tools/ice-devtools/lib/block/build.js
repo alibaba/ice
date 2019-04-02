@@ -1,3 +1,5 @@
+/* Deprecated */
+/* eslint-disable */
 const webpack = require('webpack');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const chalk = require('chalk');

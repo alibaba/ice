@@ -6,14 +6,14 @@ const message = require('../utils/message');
 
 const generateMaterialsDatabases = require('../utils/generate-marterials-database');
 
-function generateDatabase({ name, type, path, options }) {
-  generateMaterialsDatabases(name, type, path, options).then(() => {
+function generateDatabase({ name, type, filepath, options }) {
+  generateMaterialsDatabases(name, type, filepath, options).then(() => {
     showLog();
   });
 }
 
 function generateMultiDatabase(materials, cwd) {
-  const tasks = materials.map(material => {
+  const tasks = materials.map((material) => {
     return () => {
       return generateMaterialsDatabases(
         material.type ? `${material.type}-materials` : 'db',
@@ -25,7 +25,7 @@ function generateMultiDatabase(materials, cwd) {
 
   tasks.reduce((p, f) => {
     return p.then(f);
-  }, Promise.resolve()).then((r) => {
+  }, Promise.resolve()).then(() => {
     showLog();
   });
 }
@@ -39,8 +39,8 @@ function showLog() {
 
 module.exports = function generate(cwd) {
   const pkgJson = pkg.getPkgJSON(cwd);
-  const { materialConfig, materials} = pkgJson;
-  
+  const { materialConfig, materials } = pkgJson;
+
   if (materials && materials.length) {
     generateMultiDatabase(materials, cwd);
     return;

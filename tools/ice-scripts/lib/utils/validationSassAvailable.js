@@ -1,6 +1,6 @@
 const colors = require('chalk');
 
-module.exports = function() {
+module.exports = function () {
   try {
     const sassInfo = require('node-sass').info;
     console.log('sassInfo', sassInfo);

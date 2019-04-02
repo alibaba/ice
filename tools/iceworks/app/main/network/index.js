@@ -9,7 +9,7 @@ module.exports = {
       request({
         url: 'https://ice.alibaba-inc.com/check.node',
         timeout: 1000,
-      }, function (error, response, body) {
+      }, (error, response, body) => {
         if (error) {
           resolve(false);
         } else if (response.statusCode === 200 && /success/.test(body)) {
@@ -17,7 +17,7 @@ module.exports = {
         } else {
           resolve(false);
         }
-      })
+      });
     });
   },
 };

@@ -1,5 +1,4 @@
 
-const pkgData = require('../../package.json');
 const axios = require('axios');
 
 module.exports = goldlog;
@@ -16,7 +15,7 @@ function goldlog(action, extraData = {}) {
     data: {
       ...extraData,
       // 这里可以加一些全局参数
-    }
+    },
   };
 
   const dataKeyArray = Object.keys(realData);
@@ -40,6 +39,6 @@ function goldlog(action, extraData = {}) {
       logtype: '2',
     },
   }).then(() => {
-  }).catch((err) => {
+  }).catch(() => {
   });
-};
+}

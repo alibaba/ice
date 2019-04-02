@@ -6,5 +6,5 @@ module.exports = [
   /^@alife\/next\/lib\/([^/]+)/,
   /@alifd\/.*/,
   /^@alifd\/next\/lib\/([^/]+)/,
-  /@ali\/ice-.*/
-]
+  /@ali\/ice-.*/,
+];

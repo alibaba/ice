@@ -27,7 +27,7 @@ module.exports = class ComponentStyleGenerator {
     require.extensions['.jsx'] = require.extensions['.js'];
   }
 
-  mkdirp(p, opts, made) {
+  mkdirpSync = (p, opts, made) => {
     return mkdirp.sync(p, opts, made);
   }
 
@@ -60,20 +60,21 @@ module.exports = class ComponentStyleGenerator {
       if (pkgJSON && (pkgJSON.componentConfig || pkgJSON.stylePath)) {
         return true;
       }
+
+      return false;
     });
   }
 
   compileDeps() {
     if (this.deps) {
       return this.deps;
-    } else {
-      const deps = iceDepAnalyzer(
-        path.join(this.cwd, 'src/index')
-      );
-
-      this.deps = this.filterDeps(deps);
-      return this.deps;
     }
+    const deps = iceDepAnalyzer(
+      path.join(this.cwd, 'src/index')
+    );
+
+    this.deps = this.filterDeps(deps);
+    return this.deps;
   }
 
   getMainScssAbsPath() {
@@ -82,18 +83,17 @@ module.exports = class ComponentStyleGenerator {
 
   writeStyleJS(dest) {
     dest = dest || path.join(this.destPath, 'style.js');
-    this.mkdirp(path.dirname(dest));
+    this.mkdirpSync(path.dirname(dest));
     const deps = this.compileDeps();
     const cwd = this.cwd;
-    const importSatements = deps.map(function (module) {
+    const importSatements = deps.map((module) => {
       if (fs.existsSync(path.join(cwd, 'node_modules', module, 'style.js'))) {
         return `require('${module}/style.js');`;
       } else if (fs.existsSync(path.join(cwd, 'node_modules', module, 'lib/style.js'))) {
         return `require('${module}/lib/style.js');`;
-      } else {
-        return '';
       }
-    }).join('\n')
+      return '';
+    }).join('\n');
     const mainScssAbsPath = this.getMainScssAbsPath();
     const content = `// 组件依赖样式
 ${importSatements}
@@ -113,18 +113,17 @@ require('${this.absoulte ? mainScssAbsPath : './main.scss'}');
 
   writeIndexScss(dest) {
     dest = dest || path.join(this.destPath, 'index.scss');
-    this.mkdirp(path.dirname(dest));
+    this.mkdirpSync(path.dirname(dest));
     const deps = this.compileDeps();
     const cwd = this.cwd;
-    const importSatements = deps.map(function (module) {
+    const importSatements = deps.map((module) => {
       if (fs.existsSync(path.join(cwd, 'node_modules', module, 'index.scss'))) {
         return `@import '~${module}/index.scss';`;
       } else if (fs.existsSync(path.join(cwd, 'node_modules', module, 'lib/index.scss'))) {
         return `@import '~${module}/lib/index.scss';`;
-      } else {
-        return '';
       }
-    }).join('\n')
+      return '';
+    }).join('\n');
     const mainScssAbsPath = this.getMainScssAbsPath();
     const content = `// 组件依赖
 ${importSatements}
