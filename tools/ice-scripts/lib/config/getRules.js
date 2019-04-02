@@ -77,7 +77,7 @@ module.exports = (buildConfig = {}, themeConfig) => {
           theme && path.join(paths.appNodeModules, `${theme}/variables.scss`),
         themeConfig,
       },
-    }
+    },
   ];
 
   const sassLoaderConf = [

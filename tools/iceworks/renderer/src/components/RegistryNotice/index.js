@@ -3,7 +3,7 @@ import dialog from '../dialog';
 import services from '../../services';
 
 const { settings } = services;
-const currentRegistry = settings.get('registry');
+const currentRegistry = settings.get('registry') || '';
 const isAlibaba = settings.get('isAlibaba');
 const taobaoRegistry = 'https://registry.npm.taobao.org';
 

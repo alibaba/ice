@@ -304,7 +304,7 @@ const retryCount = 2;
 const retryExtractBlock = autoRetry(
   extractBlock,
   retryCount,
-  (err) => err.code && (err.code == 'ETIMEDOUT' || err.code == 'ESOCKETTIMEDOUT')
+  (err) => err.code && (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT')
 );
 
 /**
@@ -350,7 +350,7 @@ function getDependenciesFromNpm({ npm, version = 'latest', registry }) {
 }
 
 const lang = 'cn';
-exports.createInterpreter = function(type, data = {}, interpreter) {
+exports.createInterpreter = function (type, data = {}, interpreter) {
   const localeObj = config.locale[type] || config.locale.unknown;
   const message = localeObj[lang];
   return new Promise((resolve) => {
@@ -363,7 +363,7 @@ exports.createInterpreter = function(type, data = {}, interpreter) {
 /**
  * 检测是否是合法的 ICE 项目
  */
-exports.checkValidICEProject = function(dir) {
+exports.checkValidICEProject = function (dir) {
   if (!fs.existsSync(dir)) {
     return false;
   }

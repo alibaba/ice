@@ -7,4 +7,4 @@ module.exports = function getTempPath() {
     fs.mkdirSync(TEMP_PATH);
   }
   return TEMP_PATH;
-}
+};

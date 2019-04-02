@@ -27,7 +27,8 @@ const checkDepsInstalled = require('./utils/checkDepsInstalled');
  * @param {Object} options 命令行参数
  */
 module.exports = async function (options) {
-  let { customWebpackConfig, cliOptions } = options || {};
+  const { customWebpackConfig } = options || {};
+  let { cliOptions } = options || {};
   const cwd = process.cwd();
 
   const defaultCliOptions = {

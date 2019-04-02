@@ -53,5 +53,5 @@ module.exports = {
   getPkgJSON,
   writePkgJSON,
   getJSON,
-  writeJSON
+  writeJSON,
 };

@@ -13,7 +13,6 @@ const log = require('../utils/log');
  */
 
 module.exports = function getEntry() {
-
   if (pkgData.type === 'component') {
     const entry = {};
     const demos = getDemos(paths.appDirectory);

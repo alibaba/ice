@@ -30,7 +30,7 @@ module.exports = {
         // 重置用户本地的物料源配置，初始化物料源新增字段添加，保留用户设置
         const oldMaterials = this.get('materials');
         const defaultMaterialsObj = {};
-        defaultMaterials.forEach( obj => {
+        defaultMaterials.forEach((obj) => {
           if (obj.backupSource) {
             defaultMaterialsObj[obj.source] = obj;
           }

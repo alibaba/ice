@@ -1,3 +1,5 @@
+/* Deprecated */
+/* eslint-disable */
 const util = require('util');
 const marked = require('marked');
 const prismjs = require('prismjs');
