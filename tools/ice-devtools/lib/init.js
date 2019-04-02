@@ -41,7 +41,7 @@ module.exports = async function init(cwd) {
     } else {
       add(cwd, {
         template,
-        ...answers
+        ...answers,
       });
     }
   } catch (error) {
@@ -56,12 +56,12 @@ async function initAsk(options = {}) {
   const isInnerNet = await checkAliInternal();
   const { forInnerNet } = await (isInnerNet
     ? inquirer.prompt([
-        {
-          type: 'confirm',
-          message: '当前处于阿里内网环境,生成只在内网可用的物料',
-          name: 'forInnerNet',
-        },
-      ])
+      {
+        type: 'confirm',
+        message: '当前处于阿里内网环境,生成只在内网可用的物料',
+        name: 'forInnerNet',
+      },
+    ])
     : { forInnerNet: false });
 
   const { scope } = forInnerNet ? await inquirer.prompt([
@@ -72,7 +72,7 @@ async function initAsk(options = {}) {
       default: '@ali',
       choices: [
         '@ali',
-        '@alife'
+        '@alife',
       ],
     },
   ]) : await inquirer.prompt([
@@ -86,7 +86,7 @@ async function initAsk(options = {}) {
   if (options.type !== 'material') {
     return {
       type: options.type,
-      scope: scope
+      scope,
     };
   }
 
@@ -102,9 +102,9 @@ async function initAsk(options = {}) {
         if (!value) {
           return 'cannot be empty, please enter again';
         }
-        const name = scope ? `${scope}/${value}` : value;
-        if (forInnerNet && !validateName(name).validForNewPackages) {
-          return `this material name(${name}) has already exist. please enter again`;
+        const materialsName = scope ? `${scope}/${value}` : value;
+        if (forInnerNet && !validateName(materialsName).validForNewPackages) {
+          return `this material name(${materialsName}) has already exist. please enter again`;
         }
         return true;
       },
@@ -120,28 +120,28 @@ async function initAsk(options = {}) {
 
   const { template } = await (!options.template
     ? inquirer.prompt([
-        {
-          type: 'list',
-          message: 'please select the initial material template?',
-          name: 'template',
-          choices: [
-            {
-              name: '@icedesign/ice-react-material-template (React 标准模板)',
-              value: '@icedesign/ice-react-material-template'
-            },
-            {
-              name: '@icedesign/ice-vue-material-template (Vue 标准模板)',
-              value: '@icedesign/ice-vue-material-template'
-            }
-          ],
-        },
-      ])
+      {
+        type: 'list',
+        message: 'please select the initial material template?',
+        name: 'template',
+        choices: [
+          {
+            name: '@icedesign/ice-react-material-template (React 标准模板)',
+            value: '@icedesign/ice-react-material-template',
+          },
+          {
+            name: '@icedesign/ice-vue-material-template (Vue 标准模板)',
+            value: '@icedesign/ice-vue-material-template',
+          },
+        ],
+      },
+    ])
     : { template: options.template });
 
   return {
     name: scope ? `${scope}/${name}` : name,
     template,
-    description
+    description,
   };
 }
 
@@ -159,8 +159,8 @@ async function run(opt, argsOpt) {
     name,
     version: '1.0.0',
     description,
-    src: path.join(__dirname, `../template/init`),
-    dest
+    src: path.join(__dirname, '../template/init'),
+    dest,
   });
 
   let templatePath;
@@ -238,7 +238,7 @@ function initCompletedMessage(appPath, appName) {
   console.log('  You will see your materials in Iceworks');
   console.log();
   console.log('  We suggest that you can sync the materials json to fusion or unpkg by run: ');
-  console.log(chalk.cyan('    npm run sync') + '  or  ' + chalk.cyan('npm run sync-unpkg'));
+  console.log(`${chalk.cyan('    npm run sync')}  or  ${chalk.cyan('npm run sync-unpkg')}`);
   console.log();
   console.log('Happy hacking!');
 }

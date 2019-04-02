@@ -1,5 +1,6 @@
 const debug = require('debug')('ice:util:inner-url');
-const FUSION_DESIGN_LOCAL_URL = 'aHR0cDovLzEyNy4wLjAuMTo3MDAx'
+
+const FUSION_DESIGN_LOCAL_URL = 'aHR0cDovLzEyNy4wLjAuMTo3MDAx';
 const FUSION_DESIGN_DAILY_URL = 'aHR0cHM6Ly9mdXNpb24uYWxpYmFiYS5uZXQ=';
 const FUSION_DESIGN_PRE_URL = 'aHR0cHM6Ly9wcmUtZnVzaW9uLmFsaWJhYmEtaW5jLmNvbQ==';
 const FUSION_DESIGN_URL = 'aHR0cHM6Ly9mdXNpb24uYWxpYmFiYS1pbmMuY29t';
@@ -28,7 +29,7 @@ module.exports = function getUrl() {
   if (url) {
     return url;
   }
-  const {ENV} = process.env;
+  const { ENV } = process.env;
   url = URLS[ENV];
   if (!url) {
     url = URLS.prod;
@@ -37,4 +38,4 @@ module.exports = function getUrl() {
   url.fusionDesignUrl = base64ToAscii(url.fusionDesignUrl);
   debug('url: %j', url);
   return url;
-}
+};

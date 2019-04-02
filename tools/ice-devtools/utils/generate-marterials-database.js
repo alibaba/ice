@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const mkdirp = require('mkdirp');
-const moment = require('moment');
 const chalk = require('chalk');
 const uppercamelcase = require('uppercamelcase');
-const { getNpmInfo } = require('ice-npm-utils');
+// BUG: getNpmTime
+const { getNpmTime } = require('ice-npm-utils');
 
 const depAnalyze = require('./dep-analyze');
 
@@ -26,10 +26,11 @@ function generatePartciple(payload, source) {
 }
 
 function filterDeps(deps) {
-  return deps.filter(function(moduleName) {
+  return deps.filter((moduleName) => {
     return (
       !/^\./.test(moduleName) &&
       // 基础组件
+      /* eslint-disable no-useless-escape */
       (/(@icedesign\/base)[$\/]lib/.test(moduleName) ||
         // 业务组件
         /^(@icedesign\/)\w+/.test(moduleName))
@@ -163,8 +164,8 @@ function generateBlocks(files, SPACE, type, done) {
       if (item.source.type !== 'npm') {
         return Promise.resolve();
       }
-      return npm
-        .getNpmTime(item.source.npm, item.source.version)
+
+      return getNpmTime(item.source.npm, item.source.version)
         .then(([code, npmResult]) => {
           if (code === 0) {
             item.publishTime = npmResult.created;
@@ -200,6 +201,7 @@ function generateScaffolds(files, SPACE, done) {
     const generatorJsonPath = path.resolve(pkgPath, '../generator.json');
     const generatorJson = {};
     if (fs.existsSync(generatorJsonPath)) {
+      /* eslint-disable-next-line import/no-dynamic-require */
       Object.assign(generatorJson, require(generatorJsonPath));
     }
 
@@ -234,8 +236,7 @@ function generateScaffolds(files, SPACE, done) {
     };
 
     tasks.push(
-      npm
-        .getNpmTime(pkg.name, pkg.version, registry)
+      getNpmTime(pkg.name, pkg.version, registry)
         .then(([code, npmResult]) => {
           if (code === 0) {
             payload.publishTime = npmResult.created;
@@ -358,31 +359,6 @@ function gatherScaffolds(pattern, SPACE) {
   });
 }
 
-/**
- * 从 npm 源补充字段
- * @param {*} npm npm 名
- * @param {*} version 版本号
- * @param {*} registry
- * @param {Object} appender 需要补充的字段, key 是返回的字段, 对应的 value 是 registry 返回的字段
- */
-function appendFieldFromNpm(item) {
-  const registry = DEFAULT_REGISTRY;
-  const { npm, version } = item;
-  return getNpmInfo(npm).then((body) => {
-    const latestVersionBody = body.versions[version];
-    if (!latestVersionBody) {
-      // check version is not published
-      throw new Error(`${npm}@${version} is not published at ${registry}`);
-    }
-    const TIMEFMT = 'YYYY-MM-DD HH:mm';
-    return Object.assign({}, item, {
-      createdTime: moment(body.time.created).format(TIMEFMT),
-      publishTime: moment(latestVersionBody.publish_time).format(TIMEFMT),
-      keywords: latestVersionBody.keywords || [],
-    });
-  });
-}
-
 // entry and run
 module.exports = function generateMaterialsDatabases(
   materialName,
@@ -413,10 +389,10 @@ module.exports = function generateMaterialsDatabases(
         scaffolds,
       };
 
-      const file = path.join(distDir, materialName + '.json');
-      fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
+      const file = path.join(distDir, `${materialName}.json`);
+      fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
       console.log();
-      console.log(`Created ${materialName} json at: ` + chalk.yellow(file));
+      console.log(`Created ${materialName} json at: ${chalk.yellow(file)}`);
       console.log();
     })
     .catch((err) => {

@@ -52,11 +52,12 @@ async function uploadData(datas, token, site) {
     for (let index = 0; index < datas.length; index++) {
       const data = datas[index];
 
+      /* eslint-disable-next-line no-await-in-loop */
       await requestUrl(data, token, url);
       const percent = Math.ceil(((index + 1) / datas.length) * 100);
       debug('index: %s, length: %s, percent: %s', index, datas.length, percent);
       spinner.text = `Sync to ${baseUrl}, Now: ${chalk.green(
-        percent + '%'
+        `${percent}%`
       )}`;
     }
     spinner.succeed(`已经通知 ${baseUrl} 入库物料, 入库为耗时操作, 请耐心等待`);
@@ -108,7 +109,7 @@ function dbReshape(db) {
       } else if (type === 'scaffold') {
         data.scaffolds.push(fullName);
       } else if (type === 'comp') {
-        data.components.push(fullName)
+        data.components.push(fullName);
       }
     }
     if (data.blocks.length || data.scaffolds.length || data.components.length) {
@@ -118,7 +119,7 @@ function dbReshape(db) {
 
   return datas;
 }
-module.exports = async function sync(cwd, opt) {
+module.exports = async function sync(cwd) {
   const isInnerNet = await checkAliInternal();
   let innerSync = false;
   if (isInnerNet) {
@@ -170,7 +171,7 @@ module.exports = async function sync(cwd, opt) {
     console.log();
     console.log('物料同步完成');
     console.log(`物料源地址: ${chalk.green(site.url)}`);
-    console.log(`请在 Iceworks 设置面板中添加自定义物料源`);
+    console.log('请在 Iceworks 设置面板中添加自定义物料源');
     console.log();
     console.log();
   } catch (error) {

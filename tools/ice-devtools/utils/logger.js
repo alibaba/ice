@@ -12,7 +12,7 @@ const sep = chalk.gray('·');
  *
  * @param {String} message
  */
-exports.log = function(...args) {
+exports.log = function (...args) {
   const msg = format.apply(format, args);
   console.log(chalk.white(prefix), sep, msg);
 };
@@ -22,7 +22,7 @@ exports.log = function(...args) {
  *
  * @param {String} message
  */
-exports.fatal = function(...args) {
+exports.fatal = function (...args) {
   if (args[0] instanceof Error) args[0] = args[0].message.trim();
   const msg = format.apply(format, args);
   console.log();
@@ -36,7 +36,7 @@ exports.fatal = function(...args) {
  *
  * @param {String} message
  */
-exports.success = function(...args) {
+exports.success = function (...args) {
   const msg = format.apply(format, args);
   console.log();
   console.log(chalk.white(prefix), sep, msg);
@@ -49,7 +49,7 @@ exports.success = function(...args) {
  *
  * @param {String} message
  */
-exports.warn = function(...args) {
+exports.warn = function (...args) {
   const msg = format.apply(format, args);
   console.log();
   console.log(chalk.yellow(prefix), sep, msg);

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const babel = require('@babel/core');
+
 const babelPluginTransformLibImport = interopRequire(
   'babel-plugin-transform-lib-import'
 );
@@ -12,7 +13,10 @@ const babelPluginTransformExport = interopRequire(
 );
 
 function interopRequire(id) {
+  /* eslint-disable-next-line import/no-dynamic-require */
   const mod = require(id);
+
+  /* eslint-disable-next-line no-underscore-dangle */
   return mod && mod.__esModule ? mod.default : mod;
 }
 
@@ -32,9 +36,14 @@ function getFileContent(filepath) {
 
 // require()
 function analyzeDependenciesRequire(str) {
-  var _result = null;
+  /* eslint-disable-next-line no-underscore-dangle */
+  let _result = null;
   const result = [];
-  let reg = /require\(["']([^\)]+)["']\)/g;
+
+  /* eslint-disable-next-line no-useless-escape */
+  const reg = /require\(["']([^\)]+)["']\)/g;
+
+  /* eslint-disable-next-line no-cond-assign */
   while ((_result = reg.exec(str))) {
     result.push(_result[1]);
   }
@@ -48,11 +57,14 @@ function analyzeDependenciesRequire(str) {
 // export XXX from 'yyy';
 function analyzeDependenciesImport(str) {
   const result = [];
-  var _result = null;
+  /* eslint-disable-next-line no-underscore-dangle */
+  let _result = null;
   let importStatements = '';
-  let reg = /(import|export).*from.*/g;
+  const reg = /(import|export).*from.*/g;
+
+  /* eslint-disable-next-line no-cond-assign */
   while ((_result = reg.exec(str))) {
-    importStatements += _result[0] + '\n';
+    importStatements += `${_result[0]}\n`;
   }
 
   if (!importStatements) {
@@ -93,7 +105,7 @@ function dedupe(arr) {
 require.extensions['.jsx'] = require.extensions['.js'];
 require.extensions['.vue'] = require.extensions['.js'];
 const tracedFiles = {};
-module.exports = function(entryFilename) {
+module.exports = function (entryFilename) {
   let result = [];
   trace(require.resolve(entryFilename));
 
@@ -106,10 +118,12 @@ module.exports = function(entryFilename) {
     }
     tracedFiles[filename] = true;
     const fileContent = getFileContent(filename);
+
+    /* eslint-disable-next-line no-underscore-dangle */
     const _result = dedupe(analyzeDependencies(fileContent));
 
     result = result.concat(_result);
-    _result.forEach(function(module) {
+    _result.forEach((module) => {
       if (/^\./.test(module)) {
         const modulePath = require.resolve(
           path.join(path.dirname(filename), module)
