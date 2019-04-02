@@ -78,7 +78,7 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
   sessions.manager.new(installConfig, (code) => {
     if (code !== 0) {
       logger.error(new Error('project-install-failed'));
-      glodlog.log({ type: 'app', action: 'project-install-failed' });
+      glodlog.record({ type: 'app', action: 'project-install-failed' });
       if (reInstall) {
         logger.info('执行 npm cache clean --force 重试');
         sessions.manager.new(npmCacheCleanConfig, () => {

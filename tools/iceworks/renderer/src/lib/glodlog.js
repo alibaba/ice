@@ -1,7 +1,7 @@
 import request from 'request';
 
 export default {
-  log: (data) => {
+  record: (data) => {
     const realData = {
       ...data,
       platform: `${process.platform}_${process.arch}`,

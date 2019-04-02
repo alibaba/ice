@@ -49,7 +49,7 @@ class BlockGroup extends Component {
   onBlockGroupClick = () => {
     const { handleBlocksAdd, blockGroup } = this.props;
     const blocks = this.getBlocks();
-    glodlog.log({
+    glodlog.record({
       type: 'app', 
       action: 'add-block-group',
       data: {
