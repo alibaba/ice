@@ -17,7 +17,6 @@ const { DetailError } = require('../../error-handler');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
-const alilog = require('../../alilog');
 const glodlog = require('../../glodlog');
 const autoRetry = require('../../utils/autoRetry');
 
@@ -200,8 +199,8 @@ function getPackageByPath(clientPath) {
     try {
       const packageText = fs.readFileSync(pkgPath);
       return JSON.parse(packageText.toString());
-    } catch (e) {
-      logger.error(e);
+    } catch (error) {
+      logger.error(error);
     }
   }
 }
@@ -247,18 +246,12 @@ function extractBlock(
       .on('progress', (state) => {
         progressFunc(state);
       })
-      .on('error', (err) => {
-        alilog.report(
-          {
-            type: 'download-tarball-error',
-            msg: err.message,
-            stack: err.stack,
-            data: {
-              url: tarballURL,
-            },
-          },
-          'error'
-        );
+      .on('error', (error) => {
+        error.name = 'download-tarball-error';
+        error.data = {
+          url: tarballURL,
+        };
+        logger.error(error);
         reject(err);
       })
       .pipe(zlib.Unzip()) // eslint-disable-line
@@ -374,15 +367,15 @@ exports.checkValidICEProject = function (dir) {
   try {
     const pkg = require(pkgPath);
     return 'scaffoldConfig' in pkg || 'buildConfig' in pkg;
-  } catch (err) {
-    logger.error(err);
+  } catch (error) {
+    logger.error(error);
   }
 
   try {
     const abcPath = path.join(dir, 'abc.json');
     const abc = require(abcPath);
     return abc.repository.type === 'project' && abc.type === 'ice';
-  } catch (err) {
+  } catch (error) {
     return false;
   }
 };

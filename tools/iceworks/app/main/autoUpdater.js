@@ -77,18 +77,20 @@ const Updater = {
   },
   register: () => {
     setInterval(() => {
-      autoUpdater.checkForUpdates().catch((e) => {
-        sendStatusToWindow('error', e);
-        logger.error('Failed handling checkForUpdates:', e);
+      autoUpdater.checkForUpdates().catch((error) => {
+        sendStatusToWindow('error', error);
+        error.message = `Failed handling checkForUpdates: ${error.message}`
+        logger.error(error);
       });
       // 每间隔三小时监测软件更新
     }, 1000 * 60 * 60 * 3);
 
     ipcMain.on('updater-check', () => {
       // 检查更新
-      autoUpdater.checkForUpdates().catch((e) => {
-        sendStatusToWindow('error', e);
-        logger.error('Failed handling checkForUpdates:', e);
+      autoUpdater.checkForUpdates().catch((error) => {
+        sendStatusToWindow('error', error);
+        error.message = `Failed handling checkForUpdates: ${error.message}`
+        logger.error(error);
       });
     });
     ipcMain.on('updater-close', () => {
@@ -97,9 +99,10 @@ const Updater = {
     });
     ipcMain.on('updater-start', () => {
       // 开始下载
-      autoUpdater.downloadUpdate().catch((e) => {
-        sendStatusToWindow('error', e);
-        logger.error('Failed handling downloadUpdate:', e);
+      autoUpdater.downloadUpdate().catch((error) => {
+        sendStatusToWindow('error', error);
+        error.message = `Failed handling downloadUpdate: ${error.message}`;
+        logger.error(error);
       });
     });
     ipcMain.on('updater-install', () => {
@@ -108,13 +111,15 @@ const Updater = {
     });
     logger.info('Updater starting...');
     // 自动检测更新
-    autoUpdater.checkForUpdates().catch((e) => {
-      logger.error('Failed handling checkForUpdatesAndNotify:', e);
+    autoUpdater.checkForUpdates().catch((error) => {
+      error.message = `Failed handling checkForUpdatesAndNotify: ${error.message}`;
+      logger.error(error);
     });
   },
   checkForUpdatesAndNotify() {
     autoUpdater.checkForUpdatesAndNotify().catch((e) => {
-      logger.error('Failed handling checkForUpdatesAndNotify:', e);
+      error.message = `Failed handling checkForUpdatesAndNotify: ${error.message}`;
+      logger.error(error);
     });
   },
 };

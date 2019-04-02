@@ -96,9 +96,7 @@ function readRegistry(key, activeCodePage) {
 exports.readRegistryKeySafe = async function readRegistryKeySafe(key) {
   const exists = await pathExists(batchFilePath);
   if (!exists) {
-    logger.error(
-      `Unable to find batch script at expected location: '${batchFilePath}'`
-    );
+    logger.error(new Error(`Unable to find batch script at expected location: '${batchFilePath}'`));
     return [];
   }
 

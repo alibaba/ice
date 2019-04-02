@@ -38,7 +38,6 @@
     "ejs": "^2.5.7",
     "electron-devtools-installer": "^2.2.4",
     "electron-is": "^2.4.1",
-    "electron-log": "^2.2.13",
     "electron-settings": "^3.2.0",
     "electron-store": "^2.0.0",
     "electron-updater": "^2.21.10",

@@ -1,5 +1,4 @@
 const logger = require('./logger');
-const alilog = require('./alilog');
 const glodlog = require('./glodlog');
 
 const checkEnv = require('./helper/checkEnv');
@@ -37,29 +36,17 @@ services.createTouchBar = createTouchBar;
 
 process
   .on('error', (error) => {
-    logger.error(error.stack);
-    alilog.report({
-      type: 'process-error',
-      msg: error.message,
-      stack: error.stack,
-    }, 'error');
+    error.name = 'process-error';
+    logger.error(error);
   })
   .on('unhandledRejection', (reason, promise) => {
-    logger.error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
-    alilog.report({
-      type: 'process-unhandled-rejection',
-      msg: reason,
-      stack: promise,
-    }, 'error');
+    const error = new Error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
+    error.name = 'process-unhandled-rejection';
+    logger.error(error);
   })
   .on('uncaughtException', (error) => {
-    logger.error(error.stack);
-    alilog.report({
-      type: 'process-uncaught-exception',
-      msg: JSON.stringify(error.message),
-      stack: error.stack,
-      error: JSON.stringify(error),
-    }, 'error');
+    error.name = 'process-uncaught-exception';
+    logger.error(error);
   });
 
 // 注册自定义协议,用于url唤起

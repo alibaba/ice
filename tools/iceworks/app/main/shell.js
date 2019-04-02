@@ -183,7 +183,8 @@ exports.getActiveCodePage = function getActiveCodePage() {
     let errorThrown = false;
 
     child.on('error', (error) => {
-      logger.error('unable to resolve active code page', error);
+      error.name = 'unable-to-resolve-active-code-page';
+      logger.error(error);
       errorThrown = true;
     });
 

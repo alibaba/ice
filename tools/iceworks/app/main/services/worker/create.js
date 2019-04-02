@@ -31,7 +31,8 @@ class CreateManager {
         done(null);
       })
       .catch((error) => {
-        logger.error('create project error', error);
+        error.name = 'create-project-error';
+        logger.error(error);
         done(error);
       });
   }

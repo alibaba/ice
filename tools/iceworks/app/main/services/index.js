@@ -2,7 +2,6 @@ const editors = require('./editors');
 const folder = require('./folder');
 const interaction = require('./interaction');
 const glodlog = require('../glodlog');
-const alilog = require('../alilog');
 const npm = require('./npm');
 const nrm = require('./nrm');
 const scaffolder = require('../scaffolder');
@@ -26,7 +25,6 @@ module.exports = {
   interaction,
   templateBuilderUtils,
   log,
-  alilog,
   npm,
   nrm,
   scaffolder,

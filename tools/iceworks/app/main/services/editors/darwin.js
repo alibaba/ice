@@ -77,7 +77,8 @@ const findApplication = async function findApplication(editor) {
 
       logger.info(`Command line interface for ${editor} not found at '${path}'`);
     } catch (error) {
-      logger.error(`Unable to locate ${editor} installation`, error);
+      error.name = `Unable-to-locate-${editor}-installation`;
+      logger.error(error);
     }
   }
 
