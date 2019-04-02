@@ -59,7 +59,7 @@ const upload2oss = async (options, selectedBucket, bucketDirectory = '/', assets
             msg: err.message,
             stack: err.stack,
           }, 'error');
-          log.error('oss-upload-error:', err);
+          logger.error('oss-upload-error:', err);
           return Promise.resolve({
             code: 1,
             message: err.message,

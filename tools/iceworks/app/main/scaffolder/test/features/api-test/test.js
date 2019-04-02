@@ -7,9 +7,5 @@ rimraf.sync(tmpDirectory);
 mkdirp.sync(tmpDirectory);
 
 module.exports = async () => {
-  // console.log('createIceApp', createIceApp);
-
-  // const categories = await createIceApp.getCategories();
-  // console.log(categories);
   rimraf.sync(tmpDirectory);
 };

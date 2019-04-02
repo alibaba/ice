@@ -9,7 +9,7 @@ const { ipcMain, BrowserWindow } = require('electron');
 
 const { globalShortcut } = require('electron');
 
-const log = require('./logger');
+const logger = require('./logger');
 const { isWin, isMac } = require('./shared');
 const dau = require('./dau');
 const sessions = require('./services/sessions');

@@ -3,7 +3,7 @@
 const ChildProcess = require('child_process');
 const os = require('os');
 const Path = require('path');
-const log = require('./logger');
+const logger = require('./logger');
 
 const { isWin, isMac } = require('./shared');
 

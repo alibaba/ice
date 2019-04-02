@@ -62,7 +62,6 @@ export default (
  */
 module.exports = function generateRouteFile(dir, routes) {
   const layouts = [];
-  // console.log(dir, routes);
   const imports =
     `${routes
       .map((route) => {
@@ -132,8 +131,6 @@ module.exports = function generateRouteFile(dir, routes) {
       );
     }
   });
-
-  // console.log(routeMap);
 
   // todo route 生成算法
   const routeGenerated = Object.keys(routeMap)

@@ -8,8 +8,6 @@ rimraf.sync(tmpDirectory);
 mkdirp.sync(tmpDirectory);
 
 module.exports = async () => {
-  // console.log('createIceApp', createIceApp);
-
   const categories = await createIceApp.getCategories();
 
   const cat = categories[0];
@@ -20,6 +18,5 @@ module.exports = async () => {
   blocks[0].should.to.be.an('object');
   blocks[0].id.should.to.be.a('number');
   blocks[0].npm.should.to.be.a('string');
-  // console.log(blocks);
   rimraf.sync(tmpDirectory);
 };

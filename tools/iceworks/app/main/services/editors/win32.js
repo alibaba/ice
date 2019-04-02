@@ -1,7 +1,7 @@
 const Path = require('path');
 const pathExists = require('path-exists');
 const { ExternalEditor } = require('./shared');
-const log = require('../../logger');
+const logger = require('../../logger');
 
 const { readRegistryKeySafe } = require('../../registry');
 

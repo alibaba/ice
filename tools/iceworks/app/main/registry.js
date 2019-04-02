@@ -2,7 +2,7 @@ const Path = require('path');
 const pathExists = require('path-exists');
 const { spawn } = require('child_process');
 const { APP_PATH } = require('./paths');
-const log = require('./logger');
+const logger = require('./logger');
 
 // 查询注册表
 

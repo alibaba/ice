@@ -1,4 +1,4 @@
-const log = require('../logger');
+const logger = require('../logger');
 const Session = require('./sessions/Session');
 const { NRM_CLI } = require('../paths');
 

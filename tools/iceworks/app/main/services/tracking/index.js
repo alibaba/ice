@@ -1,5 +1,5 @@
 const { webContents } = require('electron');
-const log = require('../../logger');
+const logger = require('../../logger');
 
 const events = {
   checkingPathValid: '正在检查路径是否合法',

@@ -1,4 +1,4 @@
-const log = require('./logger');
+const logger = require('./logger');
 const { ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const { createUpdaterWindow } = require('./windowList');
@@ -7,7 +7,7 @@ const sendToWebContents = require('./helper/sendToWebContents');
 const notify = require('./services/interaction/notify');
 
 autoUpdater.autoDownload = false;
-autoUpdater.logger = log;
+autoUpdater.logger = logger;
 let win = null;
 
 function sendStatusToWindow(event, meta = null) {

@@ -1,6 +1,6 @@
 const request = require('request');
 const { app } = require('electron');
-const log = require('./logger');
+const logger = require('./logger');
 
 /**
  * 阿里云 SLS 服务，日志上报方法
@@ -41,7 +41,7 @@ const report = (data = {}, topic = 'info') => {
     timeout: 2000,
   }, (err) => {
     if (err) {
-      log.error(err);
+      logger.error(err);
     }
   });
 };

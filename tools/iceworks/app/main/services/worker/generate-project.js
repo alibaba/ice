@@ -3,9 +3,8 @@ const path = require('path');
 const pathExists = require('path-exists');
 const templateBuilderUtils = require('@icedesign/template-builder/utils/');
 const template = require('../../template');
-const log = require('../../logger');
-const settings = require('../settings');
 const logger = require('../../logger');
+const settings = require('../settings');
 const nodeScaffoldInfo = require('../../config/nodeScaffold');
 const { getClientPath, getServerPath } = require('../../paths');
 

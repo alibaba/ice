@@ -8,8 +8,6 @@ const spawnSync = require('child_process').spawnSync;
 
 console.log('CREATE ICE APP');
 
-// console.log('Cli tool not implamented yet. cc @zhuoling.lcl');
-
 createICEApp
   .createPage({
     destDir,

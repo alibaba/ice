@@ -2,7 +2,7 @@ const ipc = require('node-ipc');
 const { dialog } = require('electron');
 
 const sendToWebContents = require('./helper/sendToWebContents');
-const log = require('./logger');
+const logger = require('./logger');
 
 const networkPort = 8000;
 

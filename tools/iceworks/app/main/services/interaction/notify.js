@@ -2,7 +2,7 @@
 const { resolve } = require('app-root-path');
 const { shell, Notification } = require('electron');
 
-const log = require('../../logger');
+const logger = require('../../logger');
 const settings = require('../settings');
 
 const iconMap = {

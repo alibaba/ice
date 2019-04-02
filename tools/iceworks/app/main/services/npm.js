@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 
 const { getEnv } = require('../env');
 
-const log = require('../logger');
+const logger = require('../logger');
 const Session = require('./sessions/Session');
 
 class CmdError extends Error {

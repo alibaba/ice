@@ -1,5 +1,5 @@
 const { getEnv } = require('../env');
-const log = require('../logger');
+const logger = require('../logger');
 const { exec } = require('child_process');
 
 module.exports = function () {

@@ -1,7 +1,7 @@
 // global log:true
 
 const generateProject = require('./generate-project');
-const log = require('../../logger');
+const logger = require('../../logger');
 
 /**
  * 新建项目流程

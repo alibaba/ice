@@ -29,7 +29,6 @@ console.log({
   pkgVersion,
 });
 
-// console.log('Cli tool not implamented yet. cc @zhuoling.lcl');
 createICEApp
   .createProject({
     scaffolding: pkgName,
