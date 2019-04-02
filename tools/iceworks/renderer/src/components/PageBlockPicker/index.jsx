@@ -18,9 +18,10 @@ import {
 import Progress from '../Progress';
 import dialog from '../dialog';
 import services from '../../services';
+import logger from '../../lib/logger';
 import './index.scss';
 
-const { scaffolder, log } = services;
+const { scaffolder } = services;
 
 // 向页面新增 block 的功能
 // 包括展示现有 page 下的 blocks 以及选择新 block 的管理

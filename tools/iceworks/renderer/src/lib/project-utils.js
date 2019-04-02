@@ -1,8 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import services from '../services';
-
-const { log } = services;
+import logger from '../lib/logger';
 
 /* eslint-disable no-empty */
 /* eslint-disable camelcase */

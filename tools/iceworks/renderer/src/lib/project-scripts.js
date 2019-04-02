@@ -12,7 +12,7 @@ const detectPort = remote.require('detect-port');
 
 const isAlibaba = services.settings.get('isAlibaba');
 
-const { log, folder, interaction, sessions, alilog, shared } = services;
+const { folder, interaction, sessions, alilog, shared } = services;
 
 // todo 后续抽出到独立套件保持独立更新
 // todo vue cli 后续需要升级
