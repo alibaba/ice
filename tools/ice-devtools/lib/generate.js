@@ -54,7 +54,7 @@ module.exports = function generate(cwd) {
   generateDatabase({
     name: type ? `${type}-materials` : 'materials',
     type,
-    path: cwd,
+    filepath: cwd,
     options: materialConfig,
   });
 };
