@@ -1,7 +1,7 @@
 const OSS = require('ali-oss');
 const path = require('path');
 const alilog = require('../alilog');
-const log = require('../logger');
+const logger = require('../logger');
 
 const getOssStore = (options) => {
   const ossStore = new OSS(options);
@@ -38,7 +38,6 @@ const upload2oss = async (options, selectedBucket, bucketDirectory = '/', assets
             path: file.path,
           });
         }
-<<<<<<< HEAD
       })
       .catch((err) => {
         alilog.report({
@@ -47,8 +46,6 @@ const upload2oss = async (options, selectedBucket, bucketDirectory = '/', assets
           stack: err.stack,
         }, 'error');
         logger.error('oss-upload-error:', err);
-=======
->>>>>>> origin/iceworks/release-2.19.0
         return Promise.resolve({
           code: 1,
           message: `上传失败，请检查网络连接 (${(object.res &&

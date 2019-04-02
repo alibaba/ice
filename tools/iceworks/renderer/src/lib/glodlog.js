@@ -28,5 +28,5 @@ export default {
         logtype: '2',
       },
     });
-  };
+  }
 }
