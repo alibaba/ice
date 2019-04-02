@@ -15,11 +15,11 @@ const meta = require('./meta');
 module.exports = async function addComponent(cwd, opt = {}) {
   const {
     npmPrefix,
-    templatePath : src,
-    standalone
+    templatePath: src,
+    standalone,
   } = opt;
 
-  const questions = defaultQuestion(npmPrefix); 
+  const questions = defaultQuestion(npmPrefix);
   const { name } = await inquirer.prompt(questions);
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
   const dest = standalone ? cwd : path.join(cwd, 'components', name);
@@ -31,10 +31,10 @@ module.exports = async function addComponent(cwd, opt = {}) {
       name,
       npmName,
       meta,
-      skipGitIgnore: !standalone // 物料仓库中，不处理 _gitignore 文件
+      skipGitIgnore: !standalone, // 物料仓库中，不处理 _gitignore 文件
     });
     completedMessage(name, dest, standalone);
-  } catch(e) {
+  } catch (e) {
     logger.fatal(e);
   }
 };
@@ -62,11 +62,11 @@ function defaultQuestion(prefix) {
 /**
  * 下载完成后的提示信息
  * @param {string} name 组件名称
- * @param {string} path 组件路径
+ * @param {string} filepath 组件路径
  */
-function completedMessage(name, path, standalone) {
+function completedMessage(name, filepath, standalone) {
   console.log();
-  console.log(`Success! Created ${name} at ${path}`);
+  console.log(`Success! Created ${name} at ${filepath}`);
   console.log(`Inside ${name} directory, you can run several commands:`);
   console.log();
   console.log('  Starts the development server.');

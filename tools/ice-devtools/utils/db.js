@@ -24,16 +24,16 @@ module.exports = async function getDB(cwd) {
       source: {
         npm: pkgjson.name,
         version: pkgjson.version,
-      }
+      },
     });
     return db;
   }
 
   const dbBasePath = path.join(cwd, 'build');
-  const paths = await globby(['*.json'], {cwd: dbBasePath});
+  const paths = await globby(['*.json'], { cwd: dbBasePath });
   debug('db json files: %j', paths);
 
-  let fileIndex = paths.indexOf('materials.json');
+  const fileIndex = paths.indexOf('materials.json');
 
   if (fileIndex < 0) {
     console.log(chalk.red('materials.json can\'t be find'));
@@ -46,4 +46,4 @@ module.exports = async function getDB(cwd) {
     return null;
   }
   return db;
-}
+};

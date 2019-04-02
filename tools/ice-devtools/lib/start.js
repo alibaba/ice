@@ -1,3 +1,5 @@
+/* Deprecated */
+/* eslint-disable */
 const debug = require('debug')('ice:start:general');
 const getType = require('../utils/type');
 const logger = require('../utils/logger');
@@ -11,6 +13,6 @@ module.exports = function start(cwd, opt) {
   }
 
   process.env.NODE_ENV = 'development';
-  
+
   require(`./${type}/start`)(cwd, opt);
 };

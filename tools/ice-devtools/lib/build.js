@@ -1,3 +1,5 @@
+/* Deprecated */
+/* eslint-disable */
 const debug = require('debug')('ice:build:general');
 const getType = require('../utils/type');
 const logger = require('../utils/logger');
@@ -11,6 +13,6 @@ module.exports = function build(cwd, opt) {
   }
 
   process.env.NODE_ENV = 'production';
-  
+
   require(`./${type}/build`)(cwd, opt);
 };

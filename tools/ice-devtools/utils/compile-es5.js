@@ -1,3 +1,5 @@
+/* Deprecated */
+/* eslint-disable */
 const babel = require('@babel/core');
 const getBabelConfig = require('../config/getBabelConfig');
 

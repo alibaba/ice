@@ -1,3 +1,5 @@
+/* Deprecated */
+/* eslint-disable */
 const { createReadStream, createWriteStream, writeFileSync } = require('fs');
 const babel = require('@babel/core');
 const chokidar = require('chokidar');

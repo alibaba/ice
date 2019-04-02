@@ -35,7 +35,7 @@ module.exports = (options) => {
       }
     });
   });
-}
+};
 
 /**
  * Generate a template given a `src` and `dest`.
@@ -69,12 +69,12 @@ function generate(options, done) {
     inPlace: dest === process.cwd(),
     noEscape: true,
     registry: getNpmRegistry(npmName || name),
-    ...opts
+    ...opts,
   });
   debug('%j', data);
 
   meta.helpers &&
-    Object.keys(meta.helpers).map((key) => {
+    Object.keys(meta.helpers).forEach((key) => {
       Handlebars.registerHelper(key, meta.helpers[key]);
     });
 
@@ -86,7 +86,7 @@ function generate(options, done) {
 
   if (meta.prompts) {
     metalsmith
-    .use(askQuestions(meta.prompts))
+      .use(askQuestions(meta.prompts));
   }
 
   metalsmith
@@ -109,8 +109,8 @@ function generate(options, done) {
       // 需要显性控制从物料 meta.js 中提取出来的 message 展现时机
       done(err, () => {
         if (typeof meta.complete === 'function') {
-          const helpers = { chalk, logger, files };
-          meta.complete(data, helpers);
+          const thisHelpers = { chalk, logger, files };
+          meta.complete(data, thisHelpers);
         } else {
           logMessage(meta.completeMessage, data);
         }
@@ -118,7 +118,7 @@ function generate(options, done) {
     });
 
   return data;
-};
+}
 
 /**
  * Create a middleware for asking questions.
@@ -136,7 +136,7 @@ function transformFile(skipGitIgnore) {
   return (files, metalsmith, done) => {
     transform(files, {
       ...metalsmith.metadata(),
-      skipGitIgnore
+      skipGitIgnore,
     }, done);
   };
 }
@@ -174,14 +174,14 @@ function renderTemplateFiles(skipInterpolation) {
     Object.keys(metalsmithMetadata).forEach((key) => {
       if (key === 'type') {
         if (
-          metalsmithMetadata[key]['react'] &&
-          metalsmithMetadata[key]['vue']
+          metalsmithMetadata[key].react &&
+          metalsmithMetadata[key].vue
         ) {
-          metalsmithMetadata['materialType'] = ['react', 'vue'];
-        } else if (metalsmithMetadata[key]['react']) {
-          metalsmithMetadata['materialType'] = 'react';
-        } else if (metalsmithMetadata[key]['vue']) {
-          metalsmithMetadata['materialType'] = 'vue';
+          metalsmithMetadata.materialType = ['react', 'vue'];
+        } else if (metalsmithMetadata[key].react) {
+          metalsmithMetadata.materialType = 'react';
+        } else if (metalsmithMetadata[key].vue) {
+          metalsmithMetadata.materialType = 'vue';
         }
       }
     });
@@ -207,6 +207,7 @@ function renderTemplateFiles(skipInterpolation) {
             err.message = `[${file}] ${err.message}`;
             return next(err);
           }
+          /* eslint-disable-next-line no-buffer-constructor */
           files[file].contents = new Buffer(res);
           next();
         });
@@ -227,16 +228,16 @@ function logMessage(message, data) {
   render(message, data, (err, res) => {
     if (err) {
       console.error(
-        '\n   Error when rendering template complete message: ' +
-          err.message.trim()
+        `\n   Error when rendering template complete message: ${
+          err.message.trim()}`
       );
     } else {
       console.log(
-        '\n' +
+        `\n${
           res
             .split(/\r?\n/g)
-            .map((line) => '   ' + line)
-            .join('\n')
+            .map((line) => `   ${line}`)
+            .join('\n')}`
       );
     }
   });
