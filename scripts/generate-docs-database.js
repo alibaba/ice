@@ -1,12 +1,18 @@
+/**
+ * 生成文档数据
+ */
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const markTwain = require('mark-twain');
+const fse = require('fs-extra');
 const { cut } = require('./participle');
 
 const docsDir = path.resolve(__dirname, '../docs');
 const destDir = path.join(__dirname, '../build');
 const dest = path.join(destDir, 'docs.json');
+
+fse.ensureFileSync(dest);
 
 // 与目录对应，补全目录的顺序以及展示 title
 const allCategories = [

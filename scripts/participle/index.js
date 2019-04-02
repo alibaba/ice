@@ -4,22 +4,24 @@ jieba.load({
   userDict: './scripts/participle/userDict.utf8',
 });
 const ignoreWordsHash = {};
-const ignoreWords = [
-  ',',
-  '.',
-  ':',
-  '。',
-  '；',
-  '：',
-  '（',
-  '）',
-  '-',
-  '*',
-  '<',
-  '>',
-].forEach((v) => {
-  ignoreWordsHash[v] = true;
-});
+
+// const ignoreWords = [
+//   ',',
+//   '.',
+//   ':',
+//   '。',
+//   '；',
+//   '：',
+//   '（',
+//   '）',
+//   '-',
+//   '*',
+//   '<',
+//   '>',
+// ].forEach((v) => {
+//   ignoreWordsHash[v] = true;
+// });
+
 /**
  * 中文分词, 默认间隔符为空格
  * @param {String} str

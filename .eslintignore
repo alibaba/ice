@@ -9,6 +9,8 @@ coverage/
 **/*-min.js
 **/*.min.js
 
+templates
+
 # templorarily ignore tools
 tools/clean-css-parallel
 tools/css-prefix-plugin
