@@ -18,6 +18,7 @@ const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
 const alilog = require('../../alilog');
+const glodlog = require('../../glodlog');
 const autoRetry = require('../../utils/autoRetry');
 
 /**
@@ -133,7 +134,8 @@ async function downloadBlockToPage(
   mkdirp.sync(componentsDir);
 
   // 日志上报
-  logger.report('app', {
+  glodlog.record({
+    type: 'app', 
     action: 'download-block',
     data: {
       name: block.name,

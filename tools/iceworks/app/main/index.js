@@ -1,7 +1,6 @@
 const logger = require('./logger');
 const alilog = require('./alilog');
-
-global.log = logger;
+const glodlog = require('./glodlog');
 
 const checkEnv = require('./helper/checkEnv');
 const network = require('./network');
@@ -75,11 +74,10 @@ app.on('ready', async () => {
   logger.info('process.platform:', process.platform);
   logger.info('process.arch:', process.arch);
   logger.info('process.versions.modules:', process.versions.modules);
-  logger.report('app', {
+  glodlog.record({
+    type: 'app', 
     action: 'launch',
-    version: app.getVersion(),
-    platform: process.platform,
-    arch: process.arch,
+    version: app.getVersion()
   });
   settings.init();
   const homeWindow = createHomeWindow(app);

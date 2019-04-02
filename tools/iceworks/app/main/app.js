@@ -10,6 +10,7 @@ const { ipcMain, BrowserWindow } = require('electron');
 const { globalShortcut } = require('electron');
 
 const logger = require('./logger');
+const glodlog = require('./glodlog');
 const { isWin, isMac } = require('./shared');
 const dau = require('./dau');
 const sessions = require('./services/sessions');
@@ -53,7 +54,7 @@ exports.registerApp = (app, windows) => {
       }
     })
     .on('before-quit', () => {
-      logger.report('app', { action: 'before-quit' });
+      glodlog.record({ type: 'app', action: 'before-quit' });
       console.log('before-quit');
       if (isMac) {
         BrowserWindow.getAllWindows().forEach((currentWindow) => {
@@ -93,7 +94,8 @@ exports.registerShortcut = (app, windows) => {
 
   if (ret) {
     logger.info('shortcutKey register success', shortcutKey);
-    logger.report('app', {
+    glodlog.record({
+      type: 'app', 
       action: 'shortcut-key',
       shortcutKey,
     });

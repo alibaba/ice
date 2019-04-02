@@ -1,7 +1,7 @@
 const editors = require('./editors');
 const folder = require('./folder');
 const interaction = require('./interaction');
-const logger = require('../logger');
+const glodlog = require('../glodlog');
 const alilog = require('../alilog');
 const npm = require('./npm');
 const nrm = require('./nrm');
@@ -20,6 +20,7 @@ const paths = require('../paths');
 const pty = require('node-pty');
 
 module.exports = {
+  glodlog,
   editors,
   folder,
   interaction,

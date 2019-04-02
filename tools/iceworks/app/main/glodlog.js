@@ -1,6 +1,15 @@
-import request from 'request';
+const request = require('request');
+const macaddress = require('macaddress');
 
-export default {
+let userId = 0;
+macaddress.one((err, macAddr) => {
+  if (!err) {
+    // todo get user id when we have a user system
+    userId = macAddr;
+  }
+});
+
+module.exports = {
   record: (data) => {
     const realData = {
       ...data,

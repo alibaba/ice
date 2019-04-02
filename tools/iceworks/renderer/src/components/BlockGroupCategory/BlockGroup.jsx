@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import Icon from '../Icon';
-import glodlog from '../../lib/glodlog';
+import { glodlog } from '../../services';
 import { Button } from '@icedesign/base';
 
 import './BlockGroup.scss';

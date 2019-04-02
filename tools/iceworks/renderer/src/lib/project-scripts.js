@@ -7,13 +7,12 @@ import dialog from '../components/dialog';
 import services from '../services';
 import terms from '../terms';
 import logger from './logger';
-import glodlog from './glodlog';
 
 const detectPort = remote.require('detect-port');
 
 const isAlibaba = services.settings.get('isAlibaba');
 
-const { folder, interaction, sessions, shared } = services;
+const { folder, interaction, sessions, shared, glodlog } = services;
 
 // todo 后续抽出到独立套件保持独立更新
 // todo vue cli 后续需要升级

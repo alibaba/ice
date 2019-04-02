@@ -4,6 +4,7 @@ const pathExists = require('path-exists');
 const templateBuilderUtils = require('@icedesign/template-builder/utils/');
 const template = require('../../template');
 const logger = require('../../logger');
+const glodlog = require('../../glodlog');
 const settings = require('../settings');
 const nodeScaffoldInfo = require('../../config/nodeScaffold');
 const { getClientPath, getServerPath } = require('../../paths');
@@ -68,7 +69,8 @@ module.exports = (_options, afterCreateRequest) => {
       }
     })
     .then(() => {
-      logger.report('app', {
+      glodlog.record({
+        type: 'app', 
         action: isCustomScaffold
           ? 'custom-generator-project'
           : (nodeFramework || 'generator-project'),
