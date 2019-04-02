@@ -1,95 +1,27 @@
 {
   "name": "ice-workspace",
-  "version": "0.0.3-0",
+  "version": "1.0.0",
   "scripts": {
-    "start": "ice-devtools start",
-    "publish": "lerna publish",
-    "bootstrap": "lerna bootstrap",
-    "setup": "lerna setup",
-    "sync": "node scripts/sync-db.js",
-    "check": "node scripts/check-materials-publish.js",
-    "generate:materials": "ice-devtools generate",
+    "upload-oss": "node scripts/upload-oss.js",
     "generate:docs": "node ./scripts/generate-docs-database",
-    "generate": "npm run generate:materials && npm run generate:docs",
     "lint": "npm run lint:nofix -- --fix",
-    "lint:nofix": "eslint --cache --ext .js .vue .jsx react-materials vue-materials tools",
-    "format": "prettier blocks/*/src/**/*.js blocks/*/src/**/*.jsx layouts/*/src/**/*.js layouts/*/src/**/*.jsx scaffolds/*/src/**/*.js scaffolds/*/src/**/*.jsx tools/**/*.js --write"
+    "lint:nofix": "eslint --cache --ext .js .jsx ./"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/ice"
   },
   "devDependencies": {
-    "@vue/cli-plugin-eslint": "^3.0.0-beta.6",
-    "@vue/cli-service": "^3.0.0-beta.6",
-    "@vue/eslint-config-airbnb": "^3.0.0-beta.6",
-    "@vue/eslint-config-standard": "^3.0.0-rc.7",
     "ali-oss": "^5.1.1",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.1.2",
-    "babel-plugin-import": "^1.6.3",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
-    "babel-plugin-transform-export-extensions": "^6.22.0",
-    "babel-plugin-transform-lib-import": "^0.1.0",
-    "chalk": "^2.4.1",
-    "co": "^4.6.0",
-    "cross-spawn": "^6.0.5",
-    "cz-conventional-changelog": "^2.1.0",
+    "babel-eslint": "^10.0.1",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "eslint-plugin-vue": "^4.5.0",
-    "findup": "^0.1.5",
-    "ghooks": "^2.0.2",
-    "ice-devtools": "^2.1.1",
-    "lerna": "^2.5.1",
+    "fs-extra": "^7.0.1",
     "mark-twain": "^2.0.2",
-    "mkdirp": "^0.5.1",
-    "moment": "^2.20.1",
-    "nodejieba": "^2.2.5",
-    "npm-request-json": "^1.0.3",
-    "ora": "^3.0.0",
-    "path-exists": "^3.0.0",
-    "queue": "^4.4.2",
-    "request": "^2.83.0",
-    "request-promise": "^4.2.2",
-    "rimraf": "^2.6.2",
-    "semver": "^5.6.0",
-    "semver-regex": "^1.0.0",
-    "uppercamelcase": "^3.0.0",
-    "vue-template-compiler": "^2.5.17"
-  },
-  "config": {
-    "ghooks": {
-      "commit-msg": "./scripts/validate-commit-msg.js"
-    },
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "materials": [
-    {
-      "directory": "react-materials",
-      "type": "react"
-    },
-    {
-      "directory": "vue-materials",
-      "type": "vue"
-    },
-    {
-      "directory": "angular-materials",
-      "type": "angular"
-    },
-    {
-      "directory": "rax-materials",
-      "platform": "mobile",
-      "type": "rax"
-    }
-  ],
-  "dependencies": {
-    "@alifd/next": "^1.11.7"
+    "nodejieba": "^2.2.5"
   }
 }

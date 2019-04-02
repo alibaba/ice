@@ -1,8 +1,0 @@
-{
-  "version": "0.1.0",
-  "menuConfigFilePath": "${workspaceRoot}/src/menuConfig.ts",
-  "routerConfigFilePath": "${workspaceRoot}/src/routerConfig.ts",
-  "templates": {
-    "pageFolder": "${workspaceRoot}/.iceworks/pageTemplate/"
-  }
-}

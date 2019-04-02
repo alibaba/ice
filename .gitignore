@@ -10,15 +10,12 @@ yarn-error.log
 tempDir
 coverage/
 
-*/blocks/**/lib/
-*/layouts/**/lib/
 .eslintcache
 databases
 build
 .vscode/
 tools/ice-scripts/lib/ICE_CA
 .tmp/
-react-materials/components/**/lib
 
 npmrc
 tools/extract-css-assets-webpack-plugin/test/actual/
