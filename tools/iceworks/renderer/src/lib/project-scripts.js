@@ -77,7 +77,7 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
 
   sessions.manager.new(installConfig, (code) => {
     if (code !== 0) {
-      logger.error('project-install-failed');
+      logger.error(new Error('project-install-failed'));
       glodlog.log({ type: 'app', action: 'project-install-failed' });
       if (reInstall) {
         logger.info('执行 npm cache clean --force 重试');
@@ -134,8 +134,8 @@ const doDependenciesInstall = (
           callback
         );
       } else {
-        logger.error('安装依赖失败', cwd, dependencies);
         const error = new Error('安装依赖失败');
+        logger.error(error);
         alilog.report(
           {
             type: 'install-dependencies-error',

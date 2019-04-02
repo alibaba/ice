@@ -119,7 +119,7 @@ class PageConfig extends Component {
                       resolve(true);
                     })
                     .catch(() => {
-                      logger.error('genereator page install dependencies error');
+                      logger.error(new Error('genereator page install dependencies error'));
                       resolve(false);
                     });
                 }
@@ -180,7 +180,6 @@ class PageConfig extends Component {
               this.props.newpage.toggle();
             })
             .catch((error) => {
-              logger.error('generate-page', error);
               logger.error(error);
               dialog.notice({
                 title: '生成页面失败',
@@ -267,7 +266,7 @@ class PageConfig extends Component {
                       false,
                       (error) => {
                         if (error) {
-                          logger.error('genereator page install dependencies error');
+                          logger.error(new Error('genereator page install dependencies error'));
                           logger.info('reinstall page dependencies');
                           next(false);
                         } else {
@@ -285,7 +284,7 @@ class PageConfig extends Component {
               },
             })
             .catch((error) => {
-              logger.error('generate-page', error);
+              logger.error(error);
               dialog.notice({
                 title: '生成页面失败',
                 error,

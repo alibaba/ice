@@ -8,7 +8,7 @@ import '@icedesign/base/reset.scss';
 import 'rc-tooltip/assets/bootstrap.css';
 
 import App from './App';
-import Error from './pages/Error';
+import ErrorCom from './pages/Error';
 import logger from './lib/logger';
 import './global.scss';
 
@@ -34,7 +34,7 @@ try {
     logger.info('app rendered', window.app_rendered - window.dom_start);
   });
 } catch (e) {
-  ReactDOM.render(<Error error={e} />, container, () => {
+  ReactDOM.render(<ErrorCom error={e} />, container, () => {
     removeLoading();
   });
 }

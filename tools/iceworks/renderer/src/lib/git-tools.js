@@ -107,7 +107,8 @@ class GitTools {
       }
       return result;
     } catch (error) {
-      logger.error(`git ${toolName} error: `, error);
+      error.message = `git ${toolName} error: ${error.message}`
+      logger.error(error);
       if (!errorless) {
         this.showError(error, errMsg);
       }

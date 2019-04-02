@@ -32,7 +32,8 @@ function requestMaterial(uri, options = {}, ignoreReject) {
       (err, res, body) => {
         const error = err || body.error;
         if (error) {
-          logger.error(`物料请求失败，地址: ${uri}，错误：${error}`);
+          error.message = `物料请求失败，地址: ${uri}，错误：${error.message}`
+          logger.error(error);
           if (ignoreReject) {
             resolve(null);
           } else {

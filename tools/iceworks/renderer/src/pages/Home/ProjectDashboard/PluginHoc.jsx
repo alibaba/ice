@@ -16,10 +16,10 @@ const PluginHoc = (WrappedComponent) => {
       };
     }
 
-    componentDidCatch(error, info) {   
+    componentDidCatch(error) {   
       const extension = WrappedComponent.extensionName || WrappedComponent.displayName || WrappedComponent.name;
-      logger.error(`${extension} error`);
-      logger.error(error, info);
+      error.message = `${extension} error: ${error.message}`
+      logger.error(error);
       this.props.git.loading = false;
       this.setState({ hasError: true });
     }

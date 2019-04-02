@@ -225,7 +225,7 @@ class Materials {
             fn(body, iceBaseComponents);
           })
           .catch((error) => {
-            logger.error('promiseAll.then error', error);
+            logger.error(error);
             // 判断是否是官方提供的物料源
             // 只有官方提供的物料源才会走兜底逻辑使用内置的物料数据
             if (

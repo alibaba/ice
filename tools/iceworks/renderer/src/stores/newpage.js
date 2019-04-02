@@ -72,7 +72,7 @@ class NewPage extends EventEmitter {
   @action
   toggle() {
     if (!this.targetPath) {
-      logger.error('新建页面未设置 targetPath');
+      logger.error(new Error('新建页面未设置 targetPath'));
     } else {
       this.visible = !this.visible;
       // 每次展开更新数据

@@ -194,7 +194,7 @@ class LayoutBuilder extends Component {
     } else {
       this.hideDialog();
       Feedback.toast.error('当前项目不存在');
-      logger.error('项目不存在');
+      logger.error(new Error('项目不存在'));
     }
   };
 

@@ -173,7 +173,7 @@ class Project {
       }
       return pkgData;
     } catch (e) {
-      logger.error(`${pkgPath} 不存在`);
+      logger.error(new Error(`${pkgPath} 不存在`));
       return null;
     }
   }
