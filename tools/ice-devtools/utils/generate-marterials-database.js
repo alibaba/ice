@@ -98,8 +98,7 @@ function generateMaterialsData(files, SPACE, type, done) {
   const result = files.map((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
 
-    // 后续统一为 materialConfig，并且优先读取 materialConfig
-    const materialConfig = pkg.materialConfig || pkg[`${type}Config`] || {};
+    const materialConfig = pkg[`${type}Config`] || {};
     // 兼容 snapshot 字段
     const screenshot = materialConfig.screenshot || materialConfig.snapshot;
 
