@@ -9,7 +9,7 @@ module.exports = function generate(cwd) {
   const pkgJson = pkg.getPkgJSON(cwd);
   const { materialConfig } = pkgJson;
 
-  // 全局的 materialConfig，目前只作为标识，没有任何实际用途
+  // 全局的 materialConfig，字段会生成在全局 json 上
   if (!materialConfig) {
     logger.fatal(message.invalid);
   }
