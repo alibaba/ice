@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.3
+
+- [refactor] 重构 generate 代码：合并重复代码，移除无用代码
+- [feat] 批量查 npm 接口控制并发个数
+- [feat] 物料配置优先读取 materialConfig，再读取 typeConfig
+- [feat] 增加 logger.verbose 和 logger.info 两个方法
+
 ## 2.2.2
 
 - [fix] 修复 generate 时 npm 不存在的 bug
