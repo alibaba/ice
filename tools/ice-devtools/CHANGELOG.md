@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.4
+
+- [fix] 撤销 materialConfig 的更改
+
 ## 2.2.3
 
 - [refactor] 重构 generate 代码：合并重复代码，移除无用代码

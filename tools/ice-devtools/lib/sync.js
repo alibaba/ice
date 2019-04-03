@@ -38,6 +38,10 @@ async function requestUrl(data, token, url) {
 
 /**
  * 上传数据
+ *
+ * XXX: 目前是只把 materials.json 里的 name/version/type 字段拿过去，然后在 Fusion 服务端再拼装完整数据，
+ * 这样后续物料源数据协议无法保障（考虑优化，然后单个物料那块也要完善数据）
+ *
  * @param {Array<Object>} datas
  * @param {String} token
  * @param {Object} site

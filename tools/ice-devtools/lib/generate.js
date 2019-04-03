@@ -9,7 +9,7 @@ module.exports = function generate(cwd) {
   const pkgJson = pkg.getPkgJSON(cwd);
   const { materialConfig } = pkgJson;
 
-  // 目前 materialConfig 不需要实际字段
+  // 全局的 materialConfig，字段会生成在全局 json 上
   if (!materialConfig) {
     logger.fatal(message.invalid);
   }
@@ -22,6 +22,7 @@ module.exports = function generate(cwd) {
     pkgJson.name,
     cwd,
     filename,
+    materialConfig,
   ).then(() => {
     console.log(chalk.cyan('Success! materials db generated'));
     console.log();

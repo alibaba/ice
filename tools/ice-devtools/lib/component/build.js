@@ -51,8 +51,7 @@ module.exports = function componentBuild(workDir, opts) {
       const pkgName = pkg.name;
 
       const screenshotUrl = `${getUnpkgHost(pkgName)}/${pkgName}@${version}/screenshot.png`;
-      const configKey = pkg.materialConfig ? 'materialConfig' : 'componentConfig';
-      pkg[configKey].screenshot = screenshotUrl;
+      pkg.componentConfig.screenshot = screenshotUrl;
 
       compile(workDir, opts);
     }

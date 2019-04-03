@@ -21,7 +21,8 @@ const DEFAULT_REGISTRY = 'http://registry.npmjs.com';
 module.exports = function generateMaterialsDatabases(
   materialName,
   materialPath,
-  materialFilename
+  materialFilename,
+  materialConfig,
 ) {
   logger.verbose('generateMaterialsDatabases start', materialName, materialPath, materialFilename);
 
@@ -37,6 +38,7 @@ module.exports = function generateMaterialsDatabases(
       logger.info('数据收集完成，开始写入文件');
 
       const data = {
+        ...materialConfig,
         name: materialName, // 物料池名
         blocks,
         components,
@@ -98,8 +100,7 @@ function generateMaterialsData(files, SPACE, type, done) {
   const result = files.map((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
 
-    // 后续统一为 materialConfig，并且优先读取 materialConfig
-    const materialConfig = pkg.materialConfig || pkg[`${type}Config`] || {};
+    const materialConfig = pkg[`${type}Config`] || {};
     // 兼容 snapshot 字段
     const screenshot = materialConfig.screenshot || materialConfig.snapshot;
 
@@ -129,17 +130,24 @@ function generateMaterialsData(files, SPACE, type, done) {
       // 站点模板预览需要多张截图
       screenshots: materialConfig.screenshots || [screenshot],
 
-      // ice-scripts/create-react-appr，Iceworks 里选择模板里使用，不是 ice-scripts 给出提示
+      // ice-scripts/create-react-app，Iceworks 里选择模板里使用，不是 ice-scripts 给出提示
       builder: materialConfig.builder,
 
       // 没有使用
       thumbnail: materialConfig.thumbnail,
       sketchURL: materialConfig.sketchURL,
+
+      // 支持用户自定义的配置
+      customConfig: materialConfig.customConfig || null,
     };
 
     if (type === 'block') {
-      payload.source['version-0.x'] = pkg.version;
-      payload.source.version = materialConfig['version-0.x'] || pkg.version;
+      if (materialConfig['version-0.x']) {
+        // 仅官方 react 物料会走到这个逻辑，Iceworks 端会区分
+        payload.source['version-0.x'] = pkg.version;
+        payload.source.version = materialConfig['version-0.x'] || pkg.version;
+      }
+
       payload.source.sourceCodeDirectory = 'src/';
 
       // 解析区块依赖：payload.features.useComponents
