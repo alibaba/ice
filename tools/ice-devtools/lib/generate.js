@@ -22,6 +22,7 @@ module.exports = function generate(cwd) {
     pkgJson.name,
     cwd,
     filename,
+    materialConfig,
   ).then(() => {
     console.log(chalk.cyan('Success! materials db generated'));
     console.log();

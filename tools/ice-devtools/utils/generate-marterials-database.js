@@ -21,7 +21,8 @@ const DEFAULT_REGISTRY = 'http://registry.npmjs.com';
 module.exports = function generateMaterialsDatabases(
   materialName,
   materialPath,
-  materialFilename
+  materialFilename,
+  materialConfig,
 ) {
   logger.verbose('generateMaterialsDatabases start', materialName, materialPath, materialFilename);
 
@@ -37,6 +38,7 @@ module.exports = function generateMaterialsDatabases(
       logger.info('数据收集完成，开始写入文件');
 
       const data = {
+        ...materialConfig,
         name: materialName, // 物料池名
         blocks,
         components,
