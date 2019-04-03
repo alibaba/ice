@@ -58,9 +58,8 @@ module.exports = function screenshot(cwd, opt) {
       const screenshotUrl = `${getUnpkgHost(pkgName)}/${pkgName}@${version}/screenshot.png`;
       const homepage = `${getUnpkgHost(pkgName)}/${pkgName}@${version}/build/index.html`;
 
-      const configKey = pkg.materialConfig ? 'materialConfig' : `${type}Config`;
       pkg.homepage = homepage;
-      pkg[configKey].screenshot = screenshotUrl;
+      pkg[`${type}Config`].screenshot = screenshotUrl;
 
       if (opt.callback) {
         opt.callback();
