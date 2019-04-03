@@ -18,9 +18,9 @@ electronLog.transports.sls = ({data, level}) => {
 
   // log 基础信息，保留字段, 如果传入参数有这些字段会被覆盖。
   const body = {
-    type: error.name,
+    error_name: error.name,
     error_stack: error.stack,
-    error_data: error.data,
+    error_data: JSON.stringify(error),
     message,
     __topic__: level, // 日志类型
     APIVersion: '0.6.0', // sls 必须的参数
