@@ -18,6 +18,18 @@ exports.log = function (...args) {
 };
 
 /**
+ * debug log
+ */
+exports.verbose = function (...args) {
+  if (process.env.LOG_LEVEL !== 'verbose') {
+    return;
+  }
+
+  const msg = format.apply(format, args);
+  console.log(chalk.white(prefix), sep, msg);
+};
+
+/**
  * Log an error `message` to the console and exit.
  *
  * @param {String} message

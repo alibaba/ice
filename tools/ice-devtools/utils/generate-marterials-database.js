@@ -5,10 +5,55 @@ const mkdirp = require('mkdirp');
 const chalk = require('chalk');
 const uppercamelcase = require('uppercamelcase');
 const { getNpmTime } = require('./npm');
+const logger = require('./logger');
 
 const depAnalyze = require('./dep-analyze');
 
 const DEFAULT_REGISTRY = 'http://registry.npmjs.com';
+
+/**
+ * 生成物料数据文件：
+ *  - 收集所有物料路径
+ *  - [批量]根据每个物料的 package.json 组装原数据
+ *  - [批量]从 npm 查询包信息补全数据
+ *  - 写入 build 文件夹
+ */
+module.exports = function generateMaterialsDatabases(
+  materialName,
+  materialPath,
+  options
+) {
+  logger.verbose('generateMaterialsDatabases start', materialName, materialPath, options);
+
+  const distDir = path.resolve(process.cwd(), 'build');
+  mkdirp.sync(distDir);
+
+  return Promise.all([
+    gather('blocks/*/package.json', materialPath, 'block'),
+    gather('components/*/package.json', materialPath, 'component'),
+    gatherScaffolds('scaffolds/*/package.json', materialPath),
+  ])
+    .then(([blocks, components, scaffolds]) => {
+      logger.info('数据收集完成，开始写入文件');
+
+      const data = {
+        name: materialName, // 物料池名
+        ...options,
+        blocks,
+        components,
+        scaffolds,
+      };
+
+      const file = path.join(distDir, `${materialName}.json`);
+      fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
+      console.log();
+      console.log(`Created ${materialName} json at: ${chalk.yellow(file)}`);
+      console.log();
+    })
+    .catch((err) => {
+      console.log('uncaught error:\n', err.stack);
+    });
+};
 
 function generatePartciple(payload, source) {
   if (process.env.PARTICIPLE) {
@@ -38,13 +83,23 @@ function filterDeps(deps) {
 }
 
 /**
- * 生成 blocks 信息列表
+ * 生成 blocks/components 数据
+ *
  * @param {*} files
  * @param {*} SPACE
  * @param {String} type | block or react
  */
 function generateBlocks(files, SPACE, type, done) {
   const result = [];
+
+  /**
+   * TODO: 这部分代码有比较严重的性能问题
+   *
+   * 构造每个物料的数据：
+   *  - 读取 package.json 数据
+   *  - 区块：根据 src/index.js 分析依赖
+   *  - 使用 jieba 分词，感觉并没有意义
+   */
   files.forEach((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
     const indexPoint = path.resolve(SPACE, pkgPath, '../src/index.js');
@@ -158,12 +213,16 @@ function generateBlocks(files, SPACE, type, done) {
     result.push(payload);
   });
 
+  // 并行从 npm 查询包信息并补全数据
+  // TODO: 需要控制并行的个数
+  logger.info(`通过 npm 查询 ${type} 信息开始，个数：${result.length}`);
   Promise.all(
     result.map((item) => {
       if (item.source.type !== 'npm') {
         return Promise.resolve();
       }
 
+      // 确保对应包已发布
       return getNpmTime(item.source.npm, item.source.version)
         .then(([code, npmResult]) => {
           if (code === 0) {
@@ -188,12 +247,16 @@ function generateBlocks(files, SPACE, type, done) {
       console.log();
       process.exit(1);
     }
+
+    logger.info(`通过 npm 查询 ${type} 信息完成`);
     done(result);
   });
 }
 
 function generateScaffolds(files, SPACE, done) {
   const tasks = [];
+
+  // TODO: 代码要重构，逻辑重新梳理
   const result = files.map((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
 
@@ -292,6 +355,9 @@ function generateScaffolds(files, SPACE, done) {
 
     return payload;
   });
+
+  // TODO: 控制并行个数
+  logger.info('通过 npm 查询模板信息开始，模板个数', tasks.length);
   Promise.all(tasks).then((allCheckStatus) => {
     const failedStatus = allCheckStatus.filter((n) => typeof n !== 'undefined');
     if (failedStatus.length > 0) {
@@ -304,6 +370,8 @@ function generateScaffolds(files, SPACE, done) {
       console.log();
       process.exit(1);
     }
+
+    logger.info('通过 npm 查询模板信息成功', tasks.length);
     done(result);
   });
 }
@@ -314,6 +382,7 @@ function generateScaffolds(files, SPACE, done) {
  * @param {*} SPACE
  */
 function gather(pattern, SPACE, type) {
+  logger.verbose('gather start', pattern);
   return new Promise((resolve, reject) => {
     glob(
       pattern,
@@ -326,6 +395,7 @@ function gather(pattern, SPACE, type) {
           console.log('err:', err);
           reject(err);
         } else {
+          logger.verbose('gather end', pattern, files.length);
           generateBlocks(files, SPACE, type, resolve);
         }
       }
@@ -339,6 +409,7 @@ function gather(pattern, SPACE, type) {
  * @param {*} SPACE
  */
 function gatherScaffolds(pattern, SPACE) {
+  logger.verbose('gather start', pattern);
   return new Promise((resolve, reject) => {
     glob(
       pattern,
@@ -351,50 +422,10 @@ function gatherScaffolds(pattern, SPACE) {
           console.log('err:', err);
           reject(err);
         } else {
+          logger.verbose('gather end', pattern, files.length);
           generateScaffolds(files, SPACE, resolve);
         }
       }
     );
   });
 }
-
-// entry and run
-module.exports = function generateMaterialsDatabases(
-  materialName,
-  materialType,
-  materialPath,
-  options
-) {
-  const distDir = path.resolve(process.cwd(), 'build');
-  mkdirp.sync(distDir);
-
-  return Promise.resolve(materialPath)
-    .then((space) => {
-      return Promise.all([
-        gather('blocks/*/package.json', space, 'block'),
-        gather('layouts/*/package.json', space, 'layout'),
-        gather('components/*/package.json', space, 'component'),
-        gatherScaffolds('scaffolds/*/package.json', space),
-      ]);
-    })
-    .then(([blocks, layouts, components, scaffolds]) => {
-      const data = {
-        name: materialName, // 物料池名
-        type: materialType,
-        ...options,
-        blocks,
-        layouts,
-        components,
-        scaffolds,
-      };
-
-      const file = path.join(distDir, `${materialName}.json`);
-      fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
-      console.log();
-      console.log(`Created ${materialName} json at: ${chalk.yellow(file)}`);
-      console.log();
-    })
-    .catch((err) => {
-      console.log('uncaught error:\n', err.stack);
-    });
-};
