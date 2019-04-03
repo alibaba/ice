@@ -27,6 +27,7 @@ module.exports = class ComponentStyleGenerator {
     require.extensions['.jsx'] = require.extensions['.js'];
   }
 
+  // eslint-disable-next-line class-methods-use-this
   mkdirpSync(p, opts, made) {
     return mkdirp.sync(p, opts, made);
   }
