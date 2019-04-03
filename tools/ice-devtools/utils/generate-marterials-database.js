@@ -21,9 +21,9 @@ const DEFAULT_REGISTRY = 'http://registry.npmjs.com';
 module.exports = function generateMaterialsDatabases(
   materialName,
   materialPath,
-  options
+  materialFilename
 ) {
-  logger.verbose('generateMaterialsDatabases start', materialName, materialPath, options);
+  logger.verbose('generateMaterialsDatabases start', materialName, materialPath, materialFilename);
 
   const distDir = path.resolve(process.cwd(), 'build');
   mkdirp.sync(distDir);
@@ -38,13 +38,12 @@ module.exports = function generateMaterialsDatabases(
 
       const data = {
         name: materialName, // 物料池名
-        ...options,
         blocks,
         components,
         scaffolds,
       };
 
-      const file = path.join(distDir, `${materialName}.json`);
+      const file = path.join(distDir, `${materialFilename}.json`);
       fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
       console.log();
       console.log(`Created ${materialName} json at: ${chalk.yellow(file)}`);
@@ -99,11 +98,8 @@ function generateMaterialsData(files, SPACE, type, done) {
   const result = files.map((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
 
-    // blockConfig or layoutConfig
-    const configKey = `${type}Config`;
-
     // 后续统一为 materialConfig，并且优先读取 materialConfig
-    const materialConfig = pkg.materialConfig || pkg[configKey] || {};
+    const materialConfig = pkg.materialConfig || pkg[`${type}Config`] || {};
     // 兼容 snapshot 字段
     const screenshot = materialConfig.screenshot || materialConfig.snapshot;
 

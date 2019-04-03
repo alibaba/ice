@@ -11,12 +11,13 @@ const path = require('path');
 const propsSchemaGenerator = require('props-schema-generator');
 const rimraf = require('rimraf');
 const chalk = require('chalk');
+const { getUnpkgHost } = require('ice-npm-utils');
 
+const pkgJSON = require('../../utils/pkg-json');
 const getBabelConfig = require('../../config/getBabelConfig');
 const getBaseConfig = require('../../config/webpack.component');
 const ComponentStyleGenerator = require('../../utils/component-style-generator');
 const buildCombinedDemo = require('../../utils/build-combined-demo');
-const info = require('./info');
 
 const GLOB_PATTERN = '**/*';
 const babelOpt = getBabelConfig();
@@ -44,7 +45,15 @@ module.exports = function componentBuild(workDir, opts) {
   // HACK：放在回调中执行，是为了避免两个任务的 log 信息混在一起
   buildCombinedDemo(workDir, config, (err) => {
     if (!err) {
-      info(workDir);
+      // buildDemo 之后更新 package.json 的 homepage 字段
+      const pkg = pkgJSON.getPkgJSON(workDir);
+      const version = pkg.version;
+      const pkgName = pkg.name;
+
+      const screenshotUrl = `${getUnpkgHost(pkgName)}/${pkgName}@${version}/screenshot.png`;
+      const configKey = pkg.materialConfig ? 'materialConfig' : 'componentConfig';
+      pkg[configKey].screenshot = screenshotUrl;
+
       compile(workDir, opts);
     }
   });
