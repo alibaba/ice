@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icon-css-gg" width="512" height="512">
-  <path fill="#fff" d="M0 0h512v512H0z"/>
-  <path fill="#e8112d" d="M192 0h128v512H192z"/>
-  <path fill="#e8112d" d="M0 187.733h512v136.534H0z"/>
-  <path id="a" fill="#f9dd16" d="M45.991 305.778l23.342-24.89h209.991v-49.777H69.334L45.99 206.222z"/>
-  <use width="36" height="24" transform="matrix(0 1.06667 -.9375 0 496 -17.068)" xlink:href="#a"/>
-  <use width="36" height="24" transform="matrix(0 -1.06667 .9375 0 16 529.068)" xlink:href="#a"/>
-  <use width="36" height="24" transform="rotate(180 256 256)" xlink:href="#a"/>
-</svg>
