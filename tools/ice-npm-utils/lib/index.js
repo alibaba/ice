@@ -16,9 +16,7 @@ function getNpmInfo(npm) {
   const url = `${register}/${npm}`;
   log.verbose('getNpmInfo start', url);
 
-  return axios.get(url, {
-    timeout: 3 * 1000,
-  }).then((response) => {
+  return axios.get(url).then((response) => {
     const body = response.data;
 
     if (body.error) {
