@@ -129,17 +129,24 @@ function generateMaterialsData(files, SPACE, type, done) {
       // 站点模板预览需要多张截图
       screenshots: materialConfig.screenshots || [screenshot],
 
-      // ice-scripts/create-react-appr，Iceworks 里选择模板里使用，不是 ice-scripts 给出提示
+      // ice-scripts/create-react-app，Iceworks 里选择模板里使用，不是 ice-scripts 给出提示
       builder: materialConfig.builder,
 
       // 没有使用
       thumbnail: materialConfig.thumbnail,
       sketchURL: materialConfig.sketchURL,
+
+      // 支持用户自定义的配置
+      customConfig: materialConfig.customConfig || null,
     };
 
     if (type === 'block') {
-      payload.source['version-0.x'] = pkg.version;
-      payload.source.version = materialConfig['version-0.x'] || pkg.version;
+      if (materialConfig['version-0.x']) {
+        // 仅官方 react 物料会走到这个逻辑，Iceworks 端会区分
+        payload.source['version-0.x'] = pkg.version;
+        payload.source.version = materialConfig['version-0.x'] || pkg.version;
+      }
+
       payload.source.sourceCodeDirectory = 'src/';
 
       // 解析区块依赖：payload.features.useComponents

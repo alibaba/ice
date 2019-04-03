@@ -9,7 +9,11 @@ function getType(workdir) {
   const json = pkgJSON.getPkgJSON(workdir);
 
   // 优先读取 materialConfig
-  if (json.materialConfig && json.materialConfig.type) {
+  if (
+    json.materialConfig
+    && json.materialConfig.type
+    && ['block', 'component', 'scaffold'].indexOf(json.materialConfig.type) !== -1
+  ) {
     return json.materialConfig.type;
   }
 
