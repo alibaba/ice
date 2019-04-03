@@ -4,9 +4,9 @@ const glob = require('glob');
 const mkdirp = require('mkdirp');
 const chalk = require('chalk');
 const uppercamelcase = require('uppercamelcase');
+const BluebirdPromise = require('bluebird');
 const { getNpmTime } = require('./npm');
 const logger = require('./logger');
-
 const depAnalyze = require('./dep-analyze');
 
 const DEFAULT_REGISTRY = 'http://registry.npmjs.com';
@@ -90,8 +90,6 @@ function filterDeps(deps) {
  * @param {String} type | block or react
  */
 function generateBlocks(files, SPACE, type, done) {
-  const result = [];
-
   /**
    * TODO: 这部分代码有比较严重的性能问题
    *
@@ -100,7 +98,7 @@ function generateBlocks(files, SPACE, type, done) {
    *  - 区块：根据 src/index.js 分析依赖
    *  - 使用 jieba 分词，感觉并没有意义
    */
-  files.forEach((pkgPath) => {
+  const result = files.map((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
     const indexPoint = path.resolve(SPACE, pkgPath, '../src/index.js');
 
@@ -210,52 +208,24 @@ function generateBlocks(files, SPACE, type, done) {
       payload.repository = pkg.repository.url;
     }
 
-    result.push(payload);
+    return payload;
   });
 
   // 并行从 npm 查询包信息并补全数据
-  // TODO: 需要控制并行的个数
-  logger.info(`通过 npm 查询 ${type} 信息开始，个数：${result.length}`);
-  Promise.all(
-    result.map((item) => {
-      if (item.source.type !== 'npm') {
-        return Promise.resolve();
-      }
+  const concurrency = 10;
+  logger.info(`通过 npm 查询 ${type} 信息开始，个数：${result.length}，并行个数：${concurrency}`);
 
-      // 确保对应包已发布
-      return getNpmTime(item.source.npm, item.source.version)
-        .then(([code, npmResult]) => {
-          if (code === 0) {
-            item.publishTime = npmResult.created;
-            item.updateTime = npmResult.modified;
-            return Promise.resolve();
-          }
-          item.publishTime = null;
-          item.updateTime = null;
-          return Promise.resolve(npmResult);
-        });
-    })
-  ).then((allCheckStatus) => {
-    const failedStatus = allCheckStatus.filter((n) => typeof n !== 'undefined');
-    if (failedStatus.length > 0) {
-      failedStatus.forEach((status) => {
-        console.error(status.npm, status.version);
-        console.error(status.message);
-      });
-      console.log();
-      console.error(chalk.red('material db generate error'));
-      console.log();
-      process.exit(1);
-    }
-
+  BluebirdPromise.map(result, (item) => {
+    return mergeNpmInfoData(item);
+  }, {
+    concurrency,
+  }).then((data) => {
     logger.info(`通过 npm 查询 ${type} 信息完成`);
-    done(result);
+    done(data);
   });
 }
 
 function generateScaffolds(files, SPACE, done) {
-  const tasks = [];
-
   // TODO: 代码要重构，逻辑重新梳理
   const result = files.map((pkgPath) => {
     const pkg = JSON.parse(fs.readFileSync(path.join(SPACE, pkgPath)));
@@ -296,20 +266,6 @@ function generateScaffolds(files, SPACE, done) {
       // publishTime: pkg.publishTime || new Date().toISOString(),
       features: {},
     };
-
-    tasks.push(
-      getNpmTime(pkg.name, pkg.version, registry)
-        .then(([code, npmResult]) => {
-          if (code === 0) {
-            payload.publishTime = npmResult.created;
-            payload.updateTime = npmResult.modified;
-            return Promise.resolve();
-          }
-          payload.publishTime = null;
-          payload.updateTime = null;
-          return Promise.resolve(npmResult);
-        })
-    );
 
     generatePartciple(payload, {
       title: pkg.scaffoldConfig.title,
@@ -356,23 +312,16 @@ function generateScaffolds(files, SPACE, done) {
     return payload;
   });
 
-  // TODO: 控制并行个数
-  logger.info('通过 npm 查询模板信息开始，模板个数', tasks.length);
-  Promise.all(tasks).then((allCheckStatus) => {
-    const failedStatus = allCheckStatus.filter((n) => typeof n !== 'undefined');
-    if (failedStatus.length > 0) {
-      failedStatus.forEach((status) => {
-        console.error(status.npm, status.version);
-        console.error(status.message);
-      });
-      console.log();
-      console.error(chalk.red('material db generate error'));
-      console.log();
-      process.exit(1);
-    }
+  const concurrency = 10;
+  logger.info(`通过 npm 查询模板信息开始，模板个数：${result.length}，并行个数：${concurrency}`);
 
-    logger.info('通过 npm 查询模板信息成功', tasks.length);
-    done(result);
+  BluebirdPromise.map(result, (item) => {
+    return mergeNpmInfoData(item);
+  }, {
+    concurrency,
+  }).then((data) => {
+    logger.info('通过 npm 查询模板信息成功');
+    done(data);
   });
 }
 
@@ -427,5 +376,22 @@ function gatherScaffolds(pattern, SPACE) {
         }
       }
     );
+  });
+}
+
+function mergeNpmInfoData(materialItem) {
+  return getNpmTime(
+    materialItem.source.npm,
+    materialItem.source.version,
+  ).then(([code, npmResult]) => {
+    if (code === 0) {
+      materialItem.publishTime = npmResult.created;
+      materialItem.updateTime = npmResult.modified;
+    } else {
+      materialItem.publishTime = null;
+      materialItem.updateTime = null;
+    }
+
+    return materialItem;
   });
 }
