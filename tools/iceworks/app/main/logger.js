@@ -25,7 +25,7 @@ electronLog.transports.sls = ({data, level}) => {
     __topic__: level, // 日志类型
     APIVersion: '0.6.0', // sls 必须的参数
     platform: `${process.platform}_${process.arch}`, // app 信息
-    version: app.getVersion(), // iceworks版本信息
+    iceworks_version: app.getVersion(), // iceworks版本信息
   };
 
   const dataKeyArray = Object.keys(body);

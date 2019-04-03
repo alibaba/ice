@@ -1,5 +1,4 @@
 /* eslint: eslint-disable-next-line:0 prefer-const:0 */
-const debug = require('debug')('utils');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
@@ -234,7 +233,7 @@ function extractBlock(
   progressFunc = () => {}
 ) {
   return new Promise((resolve, reject) => {
-    debug('npmTarball', tarballURL);
+    logger.debug('npmTarball', tarballURL);
     const allFiles = [];
     const req = requestProgress(
       request({
@@ -276,7 +275,7 @@ function extractBlock(
           destPath = path.join(destDir, realPath);
         }
 
-        debug('写入文件', destPath);
+        logger.debug('写入文件', destPath);
         if (fs.existsSync(destPath)) {
           // 默认不覆盖用户文件
           return;
