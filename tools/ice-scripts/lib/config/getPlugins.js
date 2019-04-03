@@ -7,6 +7,7 @@ const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const CheckIceComponentsDepsPlugin = require('../plugins/check-ice-components-dep');
@@ -75,6 +76,14 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
     // solution that requires the user to opt into importing specific locales.
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
+    new CopyWebpackPlugin([
+      {
+        from: paths.appPublic,
+        to: paths.appBuild,
+        ignore: ['index.html'],
+      },
+    ]),
   ];
 
   // 增加 html 输出，支持多页面应用
