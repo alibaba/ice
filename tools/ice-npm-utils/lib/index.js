@@ -14,15 +14,19 @@ function getNpmInfo(npm) {
 
   const register = getNpmRegistry(npm);
   const url = `${register}/${npm}`;
-  log.verbose('getNpmInfo', url);
+  log.verbose('getNpmInfo start', url);
 
-  return axios.get(url).then((response) => {
+  return axios.get(url, {
+    timeout: 1000,
+  }).then((response) => {
     const body = response.data;
 
     if (body.error) {
+      log.verbose('getNpmInfo error', body.error);
       return Promise.reject(new Error(body.error));
     }
 
+    log.verbose('getNpmInfo success', url);
     cacheData[npm] = body;
     return body;
   });
