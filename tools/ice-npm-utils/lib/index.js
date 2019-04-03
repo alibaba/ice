@@ -91,7 +91,6 @@ function isAliNpm(npmName) {
 
 function getNpmRegistry(npmName = '') {
   if (process.env.REGISTRY) {
-    log.info('Custom Npm Registry', process.env.REGISTRY);
     return process.env.REGISTRY;
   }
 
@@ -105,7 +104,6 @@ function getNpmRegistry(npmName = '') {
 
 function getUnpkgHost(npmName = '') {
   if (process.env.UNPKG) {
-    log.info('Custom Unpkg Host', process.env.UNPKG);
     return process.env.UNPKG;
   }
 
@@ -118,7 +116,6 @@ function getUnpkgHost(npmName = '') {
 
 function getNpmClient(npmName = '') {
   if (process.env.NPM_CLIENT) {
-    log.info('Custom Npm Client', process.env.NPM_CLIENT);
     return process.env.NPM_CLIENT;
   }
 
@@ -132,7 +129,7 @@ function getNpmClient(npmName = '') {
 function checkAliInternal() {
   return axios({
     url: 'https://ice.alibaba-inc.com/check.node',
-    timeout: 1000,
+    timeout: 3 * 1000,
   }).catch((err) => {
     log.verbose('checkAliInternal error: ', err);
     return false;
