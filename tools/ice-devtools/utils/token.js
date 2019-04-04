@@ -11,17 +11,12 @@ const [readFile, writeFile] = [fs.readFile, fs.writeFile].map((fn) =>
 const TOKEN_PATH = path.join(getTempPath(), '.token');
 
 async function tokenPrepare() {
-  let token;
   const tokenExists = fs.existsSync(TOKEN_PATH);
   if (!tokenExists) {
     return writeToken();
   }
   const tokenFile = await readFile(TOKEN_PATH, 'utf-8');
-  try {
-    token = JSON.parse(tokenFile).token;
-  } catch (error) {
-    token = null;
-  }
+  const token = JSON.parse(tokenFile).token;
 
   if (!token) {
     return writeToken();
