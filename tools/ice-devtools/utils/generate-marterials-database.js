@@ -21,10 +21,9 @@ const DEFAULT_REGISTRY = 'http://registry.npmjs.com';
 module.exports = function generateMaterialsDatabases(
   materialName,
   materialPath,
-  materialFilename,
   materialConfig,
 ) {
-  logger.verbose('generateMaterialsDatabases start', materialName, materialPath, materialFilename);
+  logger.verbose('generateMaterialsDatabases start', materialName, materialPath);
 
   const distDir = path.resolve(process.cwd(), 'build');
   mkdirp.sync(distDir);
@@ -45,7 +44,7 @@ module.exports = function generateMaterialsDatabases(
         scaffolds,
       };
 
-      const file = path.join(distDir, `${materialFilename}.json`);
+      const file = path.join(distDir, 'materials.json');
       fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
       console.log();
       console.log(`Created ${materialName} json at: ${chalk.yellow(file)}`);
@@ -198,18 +197,11 @@ function generateMaterialsData(files, SPACE, type, done) {
 
   // 根据 npm 信息补全物料数据：publishTime, updateTime
   BluebirdPromise.map(result, (materialItem) => {
-    return getNpmTime(
-      materialItem.source.npm,
-      materialItem.source.version,
-    ).then(([code, npmResult]) => {
-      if (code === 0) {
-        materialItem.publishTime = npmResult.created;
-        materialItem.updateTime = npmResult.modified;
-      } else {
-        materialItem.publishTime = null;
-        materialItem.updateTime = null;
-      }
-
+    const npmName = materialItem.source.npm;
+    const version = materialItem.source.version;
+    return getNpmTime(npmName, version).then((time) => {
+      materialItem.publishTime = time.created;
+      materialItem.updateTime = time.modified;
       return materialItem;
     });
   }, {

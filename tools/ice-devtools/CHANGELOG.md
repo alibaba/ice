@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.5
+
+- [feat] 移除 materialConfig.type 的兼容逻辑，统一生成 `materials.json`
+- [fix] getNpmTime 出错直接终止命令
+- [fix] sync 命令异常处理不恰当，无法获取错误堆栈以及退出状态码不符合标准
+
 ## 2.2.4
 
 - [fix] 撤销 materialConfig 的更改
