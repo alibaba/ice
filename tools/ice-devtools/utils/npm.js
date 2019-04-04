@@ -23,16 +23,16 @@ function getNpmTime(npm, version = 'latest') {
     .then((data) => {
       if (!data.time) {
         console.error(chalk.red('time 字段不存在'));
-        return Promise.reject(new Error('time 字段不存在'));
+        return Promise.reject(new Error(`${npm}@${version} time 字段不存在`));
       }
       // 传进来的可能是 latest 这种非 数字型的 版本号
       const distTags = data['dist-tags'];
       version = distTags[version] || version;
       const { versions } = data;
       if (!versions || versions[version] === undefined) {
-        throw new Error(`${npm}@${version} 未发布! 禁止提交!`);
+        return Promise.reject(new Error(`${npm}@${version} 未发布! 禁止提交!`));
       }
-      return [0, data.time];
+      return data.time;
     })
     .catch((err) => {
       if (
@@ -41,26 +41,10 @@ function getNpmTime(npm, version = 'latest') {
         || err.message === 'not_found' // npm
       ) {
         // 这种情况是该 npm 包名一次都没有发布过
-        return [
-          1,
-          {
-            error: err,
-            npm,
-            version,
-            message: '[ERR checkAndQueryNpmTime] npm 包未发布! 禁止提交!',
-          },
-        ];
+        return Promise.reject(new Error(`[ERR checkAndQueryNpmTime] ${npm}@${version} 包未发布! 禁止提交!`));
       }
 
-      return [
-        1,
-        {
-          error: err,
-          npm,
-          version,
-          message: `[ERR checkAndQueryNpmTime] ${err.message}`,
-        },
-      ];
+      return Promise.reject(err);
     });
 }
 

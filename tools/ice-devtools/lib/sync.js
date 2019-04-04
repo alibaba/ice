@@ -154,19 +154,8 @@ module.exports = async function sync(cwd) {
   }
 
   const db = await getDB(cwd);
-  if (!db) {
-    return;
-  }
-
   const token = await tokenUtil.tokenPrepare();
-  if (!token) {
-    return;
-  }
-
   const site = await siteUtil.getSite(cwd, token);
-  if (!site) {
-    return;
-  }
 
   try {
     const datas = dbReshape(db);
@@ -180,6 +169,6 @@ module.exports = async function sync(cwd) {
     console.log();
   } catch (error) {
     console.log(chalk.red('sync fail'));
-    console.log(error);
+    throw error;
   }
 };
