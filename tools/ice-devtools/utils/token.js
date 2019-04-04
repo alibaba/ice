@@ -16,7 +16,13 @@ async function tokenPrepare() {
     return writeToken();
   }
   const tokenFile = await readFile(TOKEN_PATH, 'utf-8');
-  const token = JSON.parse(tokenFile).token;
+
+  let token;
+  try {
+    token = JSON.parse(tokenFile).token;
+  } catch (error) {
+    token = null;
+  }
 
   if (!token) {
     return writeToken();

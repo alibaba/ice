@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.6
+
+- [fix] 修复 token 不存在时的 bug
+
 ## 2.2.5
 
 - [feat] 移除 materialConfig.type 的兼容逻辑，统一生成 `materials.json`
