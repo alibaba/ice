@@ -3,12 +3,12 @@ const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const { promisify } = require('util');
-const getTempPath = require('./temp-path');
+const getConfigPath = require('./config-path');
 
 const [readFile, writeFile] = [fs.readFile, fs.writeFile].map((fn) =>
   promisify(fn)
 );
-const TOKEN_PATH = path.join(getTempPath(), '.token');
+const TOKEN_PATH = path.join(getConfigPath(), '.token');
 
 async function tokenPrepare() {
   const tokenExists = fs.existsSync(TOKEN_PATH);
