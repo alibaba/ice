@@ -1,6 +1,5 @@
 const debug = require('debug')('ice:util:db');
 const path = require('path');
-const chalk = require('chalk');
 const globby = require('globby');
 
 const pkgJSON = require('./pkg-json');
