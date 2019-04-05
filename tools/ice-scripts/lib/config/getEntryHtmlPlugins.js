@@ -2,10 +2,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const paths = require('./paths');
 const getFaviconPath = require('../utils/getFaviconPath');
 const pkgData = require('./packageJson');
-const getEntryByPages = require('./getEntryByPages');
 
 module.exports = function getEntryHtmlPlugins(entries) {
   if (pkgData.type === 'component') {
+    // build 组件 demo -> build，自定义该插件
+    // dev 组件 demo，通过 router 来实现，不需要该插件
     return [];
   }
 
@@ -23,12 +24,7 @@ module.exports = function getEntryHtmlPlugins(entries) {
     ];
   }
 
-  // entry 未指定的情况使用 pages 作为默认
-  const entriesPages = Object.keys(getEntryByPages() || {});
-  const entriesNames = entriesPages.map((entryPage) => {
-    return entryPage.match(/pages\/(\S*)\/index/)[1];
-  });
-
+  const entriesNames = Object.keys(entries);
   return entriesNames.map((entryName) => {
     return new HtmlWebpackPlugin({
       excludeChunks: entriesNames.filter((n) => n !== entryName),
