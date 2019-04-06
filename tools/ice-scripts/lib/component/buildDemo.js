@@ -26,9 +26,6 @@ module.exports = (buildConfig, callback) => {
   const readme = getReadme(appDirectory);
 
   const webpackConfig = getWebpackConfig({
-    entry: {
-      index: entryJS,
-    },
     buildConfig: {
       output: {
         path: path.resolve(appDirectory, 'build'),
@@ -38,6 +35,9 @@ module.exports = (buildConfig, callback) => {
       outputAssetsPath: {
         css: '',
         js: '',
+      },
+      entry: {
+        index: entryJS,
       },
       ...buildConfig,
     },
@@ -88,6 +88,7 @@ module.exports = (buildConfig, callback) => {
 };
 
 function generateEntryJS(demos) {
+  // TODO: 这个临时文件路径优化下
   const hbsTemplatePath = path.join(__dirname, '../template/component/index.js.hbs');
   const hbsTemplateContent = fs.readFileSync(hbsTemplatePath, 'utf-8');
   const compileTemplateContent = hbs.compile(hbsTemplateContent);

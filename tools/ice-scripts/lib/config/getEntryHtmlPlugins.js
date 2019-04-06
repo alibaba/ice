@@ -5,8 +5,9 @@ const pkgData = require('./packageJson');
 
 module.exports = function getEntryHtmlPlugins(entries) {
   if (pkgData.type === 'component') {
-    return [
-    ];
+    // build 组件 demo -> build，自定义该插件
+    // dev 组件 demo，通过 router 来实现，不需要该插件
+    return [];
   }
 
   if (typeof entries === 'string' || Array.isArray(entries)) {
@@ -22,6 +23,7 @@ module.exports = function getEntryHtmlPlugins(entries) {
       }),
     ];
   }
+
   const entriesNames = Object.keys(entries);
   return entriesNames.map((entryName) => {
     return new HtmlWebpackPlugin({
