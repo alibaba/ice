@@ -76,7 +76,7 @@ module.exports = async function (cliOptions, subprocess) {
     log.warn('关闭了热更新（hot-reload）功能');
   }
 
-  const buildConfig = projectPkgData.buildConfig || projectPkgData.ice;
+  const buildConfig = projectPkgData.buildConfig || projectPkgData.ice || {};
 
   if (projectPkgData.type === 'component') {
     // dev 组件：每个 demo 是一个 entry
