@@ -73,34 +73,28 @@ module.exports = {
     '0.x': '<1.x',
     '1.x': '>=1.x',
   },
-  '@ali/ice-loading': {
-    '0.x': '<1.x',
-  },
   '@ali/ice-addres': {
     '0.x': '<4.x',
   },
   '@ali/ice-add-image': {
     '0.x': '<2.x',
+    '1.x': '>=2.x',
   },
   '@ali/ice-add-item': {
     '0.x': '<1.x',
+    '1.x': '>=1.x',
   },
   '@ali/ice-add-link': {
     '0.x': '<1.x',
   },
   '@ali/ice-add-tag': {
     '0.x': '<1.x',
+    '1.x': '>=1.x',
   },
   '@ali/ice-light-wangwang': {
     '0.x': '<2.x',
   },
   '@ali/ice-bind': {
-    '0.x': '<1.x',
-  },
-  '@ali/ice-cookie': {
-    '0.x': '<1.x',
-  },
-  '@ali/ice-events': {
     '0.x': '<1.x',
   },
 };
