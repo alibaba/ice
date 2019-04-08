@@ -70,7 +70,7 @@ module.exports = (_options, afterCreateRequest) => {
     })
     .then(() => {
       glodlog.record({
-        type: 'app', 
+        type: 'app',
         action: isCustomScaffold
           ? 'custom-generator-project'
           : (nodeFramework || 'generator-project'),

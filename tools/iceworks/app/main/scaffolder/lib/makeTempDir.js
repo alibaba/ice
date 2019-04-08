@@ -3,7 +3,7 @@ const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 const os = require('os');
 const path = require('path');
-const logger = require('../../logger')
+const logger = require('../../logger');
 
 const ICE_TEMPDIR = path.join(os.tmpdir(), uuid);
 mkdirp.sync(ICE_TEMPDIR);

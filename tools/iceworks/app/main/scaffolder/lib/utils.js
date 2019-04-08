@@ -133,7 +133,7 @@ async function downloadBlockToPage(
 
   // 日志上报
   glodlog.record({
-    type: 'app', 
+    type: 'app',
     action: 'download-block',
     data: {
       name: block.name,
@@ -251,7 +251,7 @@ function extractBlock(
           url: tarballURL,
         };
         logger.error(error);
-        reject(err);
+        reject(error);
       })
       .pipe(zlib.Unzip()) // eslint-disable-line
       .pipe(tar.Parse()) // eslint-disable-line

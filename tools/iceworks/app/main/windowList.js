@@ -3,7 +3,7 @@ const { windowURL, isMac, isWin } = require('./shared');
 
 const createTouchBar = require('./createTouchBar');
 const sessions = require('./services/sessions');
-const logger =  require('./logger');
+const logger = require('./logger');
 
 let quiting = false;
 let forceClose = false;

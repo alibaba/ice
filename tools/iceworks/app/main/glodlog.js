@@ -14,19 +14,19 @@ module.exports = {
     const realData = {
       ...data,
       platform: `${process.platform}_${process.arch}`,
-      id: userId
+      id: userId,
     };
-  
+
     const dataKeyArray = Object.keys(realData);
     const gokey = dataKeyArray.reduce((finnalStr, currentKey, index) => {
       const currentData = typeof realData[currentKey] === 'string'
-          ? realData[currentKey]
-          : JSON.stringify(realData[currentKey]);
+        ? realData[currentKey]
+        : JSON.stringify(realData[currentKey]);
       return `${finnalStr}${currentKey}=${currentData}${
         dataKeyArray.length - 1 === index ? '' : '&'
       }`;
     }, '');
-  
+
     request({
       method: 'POST',
       url: 'http://gm.mmstat.com/iceteam.iceworks.log',
@@ -37,5 +37,5 @@ module.exports = {
         logtype: '2',
       },
     });
-  }
-}
+  },
+};
