@@ -1,12 +1,10 @@
 import { Button } from '@icedesign/base';
-import electron from 'electron';
+import { shell } from 'electron';
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import { observer } from 'mobx-react';
 import handleViewport from 'react-in-viewport';
 import dialog from '../../components/dialog';
-
-const shell = electron.shell;
 
 @observer
 class ScaffoldItem extends Component {
