@@ -21,7 +21,7 @@
 
 :dart: **[`ICEWORKS 桌面工具`](https://alibaba.github.io/ice/iceworks)** 极速上手，全链路工程支持：多项目管理、页面路由管理、包依赖管理、零配置本地构建、代理配置、一键发布等，`效率提升 100%`；插件化的工作台，可自定义插件启用，让前端开发得心应手。
 
-:art: **[`ICE DESIGN 设计语言`](https://alibaba.github.io/ice/design.html)** 传统平台界面的设计语言存在着的一些不足，比如色彩单一，大量线条的使用，分割化明显。将这些不足归类一下就是界面单调、雷同性明显、缺少惊喜。我们认为新的平台类视觉风格可以打破这些束缚，尝试一些新的探索，启发传统的设计认知,因此结合当下设计趋势，构思了平台产品设计语言 ICE DESIGN。
+:art: **[`ICE DESIGN 设计语言`](https://alibaba.github.io/ice/design)** 传统平台界面的设计语言存在着的一些不足，比如色彩单一，大量线条的使用，分割化明显。将这些不足归类一下就是界面单调、雷同性明显、缺少惊喜。我们认为新的平台类视觉风格可以打破这些束缚，尝试一些新的探索，启发传统的设计认知,因此结合当下设计趋势，构思了平台产品设计语言 ICE DESIGN。
 
 ## 开始使用
 
@@ -33,7 +33,7 @@
 
 |<img alt="React" src="https://user-images.githubusercontent.com/677114/42611693-f921fc7c-85c9-11e8-8de1-6d6013b92f69.png" width="48">| <img alt="Vue" src="https://user-images.githubusercontent.com/677114/42611543-44ef4502-85c9-11e8-9ef9-e9f98477c646.png" width="48">|<img alt="Angular" src="https://user-images.githubusercontent.com/677114/42611627-99ac22c2-85c9-11e8-845b-b8470452eb26.png" width="48">
 | :---: | :---: | :---: |
-| [React](https://github.com/alibaba/ice/tree/master/react-materials) | [Vue](https://github.com/alibaba/ice/tree/master/vue-materials) | [Angular](https://github.com/alibaba/ice/tree/master/angular-materials) | 
+| [React](https://github.com/ice-lab/react-materials) | [Vue](https://github.com/ice-lab/vue-materials) | [Angular](https://github.com/ice-lab/angular-materials) | 
 
 ## 浏览器兼容性
 
