@@ -7,6 +7,7 @@ import pathExists from 'path-exists';
 import semver from 'semver';
 
 import { getDefaultProjectName } from '../lib/project-utils';
+import logger from '../lib/logger';
 
 import services from '../services';
 
@@ -98,7 +99,7 @@ class Project {
     this.scaffold = new IceworksScaffolder({
       cwd: this.root,
       interpreter({ type, message, data }, next) {
-        console.log(type, message, data);
+        logger.info(type, message, data);
         switch (type) {
           case 'EMTPY_PAGE_TEMPLATE':
             next(false);
@@ -172,7 +173,7 @@ class Project {
       }
       return pkgData;
     } catch (e) {
-      console.error(`${pkgPath} 不存在`);
+      logger.error(new Error(`${pkgPath} 不存在`));
       return null;
     }
   }

@@ -3,6 +3,7 @@ import uppercamelcase from 'uppercamelcase';
 import uuid from 'uuid';
 
 import { getBlocks } from '../datacenter/materials';
+import logger from '../lib/logger';
 import projects from './projects';
 import blockGroups from './block-groups';
 
@@ -109,7 +110,7 @@ class Blocks {
 
   @action.bound
   fetchFailed(err) {
-    console.log(err);
+    logger.info(err);
     this.isLoading = false;
   }
 

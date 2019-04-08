@@ -2,24 +2,18 @@ import { Button, Feedback, Dialog, Input, CascaderSelect, Balloon } from '@icede
 import { FormBinderWrapper, FormBinder, FormError } from '@icedesign/form-binder';
 import { EventEmitter } from 'events';
 import { inject, observer } from 'mobx-react';
-import { ipcRenderer, remote, shell } from 'electron';
 import { StringDecoder } from 'string_decoder';
-import gitPromie from 'simple-git/promise';
 import React, { Component } from 'react';
-import pathExists from 'path-exists';
-import path from 'path';
 import Notification from '@icedesign/notification';
 
 import DashboardCard from '../../../../components/DashboardCard';
 import EmptyTips from '../../../../components/EmptyTips';
-import ExtraButton from '../../../../components/ExtraButton';
 import Icon from '../../../../components/Icon';
 import services from '../../../../services';
 import spc from '../../../../spc';
 import dialog from '../../../../components/dialog';
 import projects from '../../../../stores/projects';
-
-import GitTools from '../../../../lib/git-tools';
+import logger from '../../../../lib/logger';
 
 import Client from './Client';
 import PluginHoc from '../PluginHoc';
@@ -138,7 +132,7 @@ class Def extends Component {
     try {
       await this.cloudPublish('daily');
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   };
 
@@ -146,7 +140,7 @@ class Def extends Component {
     try {
       await this.cloudPublish('prod');
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   };
 
@@ -267,7 +261,7 @@ class Def extends Component {
     } 
 
     // eslint-disable-next-line
-    console.log(currentBranch, '提交完成，开始进入前端发布');
+    logger.info(currentBranch, '提交完成，开始进入前端发布');
     client.run({
       hideBuildMessage: true,
       // eslint-disable-next-line

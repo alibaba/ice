@@ -3,6 +3,7 @@ const { windowURL, isMac, isWin } = require('./shared');
 
 const createTouchBar = require('./createTouchBar');
 const sessions = require('./services/sessions');
+const logger =  require('./logger');
 
 let quiting = false;
 let forceClose = false;
@@ -14,7 +15,7 @@ function appStateKeeper(app, win) {
   });
   app.on('before-quit', () => {
     quiting = true;
-    console.log('before-quit on state keeper');
+    logger.info('before-quit on state keeper');
     if (!win.isDestroyed()) {
       win.destroy();
     }

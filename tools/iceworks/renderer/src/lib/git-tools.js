@@ -1,9 +1,6 @@
 import gitPromie from 'simple-git/promise';
 import { Dialog } from '@icedesign/base';
-import services from '../services';
-
-const { log } = services;
-
+import logger from '../lib/logger';
 
 /**
  * 命令文档：https://web.npm.alibaba-inc.com/package/simple-git
@@ -94,7 +91,7 @@ class GitTools {
 
   run = async (toolName, ...opts) => {
     if (!this.cwd) {
-      log.debug('git-tools: 当前项目路径不存在');
+      logger.debug('git-tools: 当前项目路径不存在');
       return;
     }
     const { name, errMsg, handleFunc, errorless } = gitToolsMap[toolName];
@@ -110,7 +107,8 @@ class GitTools {
       }
       return result;
     } catch (error) {
-      log.error(`git ${toolName} error: `, error);
+      error.message = `git ${toolName} error: ${error.message}`
+      logger.error(error);
       if (!errorless) {
         this.showError(error, errMsg);
       }

@@ -12,6 +12,7 @@ import DashboardCard from '../../../components/DashboardCard/';
 import EmptyTips from '../../../components/EmptyTips/';
 import ExtraButton from '../../../components/ExtraButton/';
 import Icon from '../../../components/Icon';
+import logger from '../../../lib/logger';
 import services from '../../../services';
 import PluginHoc from './PluginHoc';
 const { npm } = services;
@@ -165,8 +166,8 @@ class Dependencies extends Component {
         this.setState({ dependencies, devDependencies }, this.updateInstalled);
       } catch (e) {
         this.setState({ dependencies, devDependencies });
-        console.log('package.json 文件 parse 失败'); // eslint-disable-line no-console
-        console.error(e); // eslint-disable-line no-console
+        logger.info('package.json 文件 parse 失败'); // eslint-disable-line no-console
+        logger.error(e); // eslint-disable-line no-console
       }
     } else {
       this.setState({ dependencies, devDependencies });

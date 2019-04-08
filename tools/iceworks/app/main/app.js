@@ -9,7 +9,8 @@ const { ipcMain, BrowserWindow } = require('electron');
 
 const { globalShortcut } = require('electron');
 
-const log = require('./logger');
+const logger = require('./logger');
+const glodlog = require('./glodlog');
 const { isWin, isMac } = require('./shared');
 const dau = require('./dau');
 const sessions = require('./services/sessions');
@@ -28,10 +29,10 @@ if (isMac) {
 exports.registerApp = (app, windows) => {
   app
     .on('will-quit', () => {
-      console.log('will-quit');
+      logger.info('will-quit');
     })
     .on('window-all-closed', () => {
-      console.log('window-all-closed');
+      logger.info('window-all-closed');
       // 等待进程都关闭后退出程序
       if (isWin) {
         sessions.manager
@@ -53,8 +54,8 @@ exports.registerApp = (app, windows) => {
       }
     })
     .on('before-quit', () => {
-      log.report('app', { action: 'before-quit' });
-      console.log('before-quit');
+      glodlog.record({ type: 'app', action: 'before-quit' });
+      logger.info('before-quit');
       if (isMac) {
         BrowserWindow.getAllWindows().forEach((currentWindow) => {
           currentWindow.destroy();
@@ -92,8 +93,9 @@ exports.registerShortcut = (app, windows) => {
   });
 
   if (ret) {
-    log.info('shortcutKey register success', shortcutKey);
-    log.report('app', {
+    logger.info('shortcutKey register success', shortcutKey);
+    glodlog.record({
+      type: 'app', 
       action: 'shortcut-key',
       shortcutKey,
     });

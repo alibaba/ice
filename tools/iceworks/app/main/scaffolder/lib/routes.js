@@ -415,7 +415,6 @@ function findRouteDeclaration(programBody = []) {
 //   body: ast.program.body
 // });
 //
-// console.log(code);
 
 function isIdentifier(node, name) {
   const isId = node && node.type === 'Identifier';

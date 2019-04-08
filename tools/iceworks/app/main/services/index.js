@@ -1,8 +1,7 @@
 const editors = require('./editors');
 const folder = require('./folder');
 const interaction = require('./interaction');
-const log = require('../logger');
-const alilog = require('../alilog');
+const glodlog = require('../glodlog');
 const npm = require('./npm');
 const nrm = require('./nrm');
 const scaffolder = require('../scaffolder');
@@ -20,12 +19,12 @@ const paths = require('../paths');
 const pty = require('node-pty');
 
 module.exports = {
+  glodlog,
   editors,
   folder,
   interaction,
   templateBuilderUtils,
   log,
-  alilog,
   npm,
   nrm,
   scaffolder,

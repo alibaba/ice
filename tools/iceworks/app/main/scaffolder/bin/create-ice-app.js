@@ -29,7 +29,6 @@ console.log({
   pkgVersion,
 });
 
-// console.log('Cli tool not implamented yet. cc @zhuoling.lcl');
 createICEApp
   .createProject({
     scaffolding: pkgName,
@@ -40,7 +39,6 @@ createICEApp
       switch (type) {
         // todo inquirer
         case 'DESTDIR_EXISTS_OVERRIDE':
-          console.log();
           inquirer
             .prompt([
               {

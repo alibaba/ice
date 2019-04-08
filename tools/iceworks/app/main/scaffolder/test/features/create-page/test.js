@@ -6,8 +6,6 @@ const tmpDirectory = path.join(__dirname, 'tmp');
 rimraf.sync(tmpDirectory);
 mkdirp.sync(tmpDirectory);
 
-// console.log('createIceApp', createIceApp);
-
 module.exports = async () => {
   rimraf.sync(tmpDirectory);
 };

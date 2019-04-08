@@ -1,7 +1,5 @@
-const log = require('./logger');
-const alilog = require('./alilog');
-
-global.log = log;
+const logger = require('./logger');
+const glodlog = require('./glodlog');
 
 const checkEnv = require('./helper/checkEnv');
 const network = require('./network');
@@ -38,29 +36,17 @@ services.createTouchBar = createTouchBar;
 
 process
   .on('error', (error) => {
-    log.error(error.stack);
-    alilog.report({
-      type: 'process-error',
-      msg: error.message,
-      stack: error.stack,
-    }, 'error');
+    error.name = 'process-error';
+    logger.error(error);
   })
   .on('unhandledRejection', (reason, promise) => {
-    log.error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
-    alilog.report({
-      type: 'process-unhandled-rejection',
-      msg: reason,
-      stack: promise,
-    }, 'error');
+    const error = new Error(`App Unhandled Rejection at:, ${promise}, 'reason:', ${reason}`);
+    error.name = 'process-unhandled-rejection';
+    logger.error(error);
   })
   .on('uncaughtException', (error) => {
-    log.error(error.stack);
-    alilog.report({
-      type: 'process-uncaught-exception',
-      msg: JSON.stringify(error.message),
-      stack: error.stack,
-      error: JSON.stringify(error),
-    }, 'error');
+    error.name = 'process-uncaught-exception';
+    logger.error(error);
   });
 
 // 注册自定义协议,用于url唤起
@@ -71,15 +57,14 @@ app.on('ready', async () => {
     await installExtensions();
   }
   // settings.clear();
-  log.info('process.version:', process.version);
-  log.info('process.platform:', process.platform);
-  log.info('process.arch:', process.arch);
-  log.info('process.versions.modules:', process.versions.modules);
-  log.report('app', {
+  logger.info('process.version:', process.version);
+  logger.info('process.platform:', process.platform);
+  logger.info('process.arch:', process.arch);
+  logger.info('process.versions.modules:', process.versions.modules);
+  glodlog.record({
+    type: 'app', 
     action: 'launch',
-    version: app.getVersion(),
-    platform: process.platform,
-    arch: process.arch,
+    version: app.getVersion()
   });
   settings.init();
   const homeWindow = createHomeWindow(app);

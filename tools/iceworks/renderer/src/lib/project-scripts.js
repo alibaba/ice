@@ -6,12 +6,13 @@ import rimraf from 'rimraf';
 import dialog from '../components/dialog';
 import services from '../services';
 import terms from '../terms';
+import logger from './logger';
 
 const detectPort = remote.require('detect-port');
 
 const isAlibaba = services.settings.get('isAlibaba');
 
-const { log, folder, interaction, sessions, alilog, shared } = services;
+const { folder, interaction, sessions, shared, glodlog } = services;
 
 // todo 后续抽出到独立套件保持独立更新
 // todo vue cli 后续需要升级
@@ -75,10 +76,10 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
 
   sessions.manager.new(installConfig, (code) => {
     if (code !== 0) {
-      log.error('project-install-failed');
-      log.report('app', { action: 'project-install-failed' });
+      logger.error(new Error('project-install-failed'));
+      glodlog.record({ type: 'app', action: 'project-install-failed' });
       if (reInstall) {
-        log.info('执行 npm cache clean --force 重试');
+        logger.info('执行 npm cache clean --force 重试');
         sessions.manager.new(npmCacheCleanConfig, () => {
           doProjectInstall({ cwd, env, shell, callback });
         });
@@ -124,7 +125,7 @@ const doDependenciesInstall = (
   sessions.manager.new(dependenciesInstallConfig, (code) => {
     if (code !== 0) {
       if (reInstall) {
-        log.info('重试');
+        logger.info('重试');
         terms.writeln(cwd, '依赖安装重试');
         doDependenciesInstall(
           dependenciesInstallConfig,
@@ -132,24 +133,15 @@ const doDependenciesInstall = (
           callback
         );
       } else {
-        log.error('安装依赖失败', cwd, dependencies);
-        const error = new Error('安装依赖失败');
-        alilog.report(
-          {
-            type: 'install-dependencies-error',
-            msg: error.message,
-            stack: error.stack,
-            data: {
-              dependencies: dependencies.join('; '),
-              env: JSON.stringify(env),
-            },
-          },
-          'error'
-        );
+        const error = new Error(`安装依赖失败: ${JSON.stringify({
+          dependencies,
+          env
+        })}`);
+        logger.error(error);
         callback(1, dependencies);
       }
     } else {
-      log.info('安装依赖成功', cwd, dependencies);
+      logger.info('安装依赖成功', cwd, dependencies);
       callback(null, dependencies);
     }
   });
@@ -162,7 +154,7 @@ const doDependenciesInstall = (
 const getEnvByAli = (isAli) => {
   let env = {};
   if (isAli) {
-    console.debug('安装依赖 - 检测为内网环境默认使用内网源');
+    logger.debug('安装依赖 - 检测为内网环境默认使用内网源');
     // 检测到内网环境自动将路径设置为集团内部
     env.npm_config_registry = 'https://registry.npm.alibaba-inc.com';
   } else {
@@ -184,7 +176,7 @@ export default {
     const libraryType = project.getLibraryType();
     if (sessions.startProxy.has(project.fullPath)) {
       project.devStart();
-      log.debug('服务已启动');
+      logger.debug('服务已启动');
     } else {
       // @HACK angular 默认端口为 4200
       let DEFAULT_PORT = 4444;
@@ -272,8 +264,7 @@ export default {
           );
         })
         .catch((error) => {
-          console.error(error);
-          console.log('取消');
+          logger.error(error);
         });
     }
   },
@@ -369,7 +360,7 @@ export default {
    * 依赖全量安装/重装，都是client和server共同执行。
    */
   install: ({ project, reinstall = true }, callback) => {
-    log.debug('开始安装', project.fullPath);
+    logger.debug('开始安装', project.fullPath);
     const cwd = project.fullPath;
     const nodeModulesPaths = [];
     nodeModulesPaths.push(path.join(project.clientPath, 'node_modules'));
@@ -381,7 +372,7 @@ export default {
       if (reinstall) {
         terms.writeln(cwd, '正在清理 node_modules 目录请稍等...');
         rimraf(nodeModulesPaths[0], (error) => {
-          log.debug('node_modules 删除成功');
+          logger.debug('node_modules 删除成功');
           if (error) {
             terms.writeln(cwd, '清理 node_modules 失败');
             reject(error);

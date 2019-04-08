@@ -496,6 +496,11 @@ ejs@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.6.1.tgz#498ec0d495655abc6f23cd61868d926464071aa0"
 
+electron-log@^3.0.4:
+  version "3.0.4"
+  resolved "http://registry.npm.taobao.org/electron-log/download/electron-log-3.0.4.tgz#d2e296157999f540621300183662882bb6d14991"
+  integrity sha1-0uKWFXmZ9UBiEwAYNmKIK7bRSZE=
+
 encoding@^0.1.11:
   version "0.1.12"
   resolved "https://registry.yarnpkg.com/encoding/-/encoding-0.1.12.tgz#538b66f3ee62cd1ab51ec323829d1f9480c74beb"

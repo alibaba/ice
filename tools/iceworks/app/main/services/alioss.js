@@ -1,7 +1,6 @@
 const OSS = require('ali-oss');
 const path = require('path');
-const alilog = require('../alilog');
-const log = require('../logger');
+const logger = require('../logger');
 
 const getOssStore = (options) => {
   const ossStore = new OSS(options);
@@ -11,13 +10,9 @@ const getOssStore = (options) => {
 
 const getBuckets = async (options) => {
   const ossStore = getOssStore(options);
-  return ossStore.listBuckets().catch((err) => {
-    alilog.report({
-      type: 'oss-getbuckets-error',
-      msg: err.message,
-      stack: err.stack,
-    }, 'error');
-    log.error('oss-getbuckets-error:', err);
+  return ossStore.listBuckets().catch((error) => {
+    error.name = 'oss-getbuckets-error';
+    logger.error(error);
     return Promise.reject(err);
   });
 };
@@ -38,6 +33,10 @@ const upload2oss = async (options, selectedBucket, bucketDirectory = '/', assets
             path: file.path,
           });
         }
+      })
+      .catch((error) => {
+        error.name = 'oss-upload-error';
+        logger.error(error);
         return Promise.resolve({
           code: 1,
           message: `上传失败，请检查网络连接 (${(object.res &&
@@ -45,19 +44,6 @@ const upload2oss = async (options, selectedBucket, bucketDirectory = '/', assets
               0})。`,
         });
       })
-        .catch((err) => {
-          alilog.report({
-            type: 'oss-upload-error',
-            msg: err.message,
-            stack: err.stack,
-          }, 'error');
-          log.error('oss-upload-error:', err);
-          return Promise.resolve({
-            code: 1,
-            message: err.message,
-            path: file.path,
-          });
-        });
     })
   );
 };
