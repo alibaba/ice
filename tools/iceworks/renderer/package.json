@@ -27,6 +27,7 @@
     "kebab-case": "^1.0.0",
     "line-by-line": "^0.1.6",
     "lodash.orderby": "^4.6.0",
+    "mkdirp": "^0.5.1",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "path-exists": "^3.0.0",
