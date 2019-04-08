@@ -189,7 +189,10 @@ class PageBlocks extends Component {
         }
       >
         {this.renderMaterialsTabPanel()}
-        {this.renderCustomBlocksTabPanel()}
+        {/* 隐藏自定义区块功能
+          this.renderCustomBlocksTabPanel()
+          */
+        }
       </Tab>
     );
   };
