@@ -70,8 +70,6 @@ module.exports = (buildConfig = {}, buildComponentSrc) => {
     })
   );
 
-  console.log(222, plugins);
-
   return {
     babelrc: buildConfig.babelrc || false,
     presets: resolvePlugin([
