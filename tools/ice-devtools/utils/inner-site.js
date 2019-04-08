@@ -142,7 +142,7 @@ async function getSite(cwd, token) {
 
   const sites = await fetchSites(token);
   if (!sites) {
-    return;
+    throw new Error('fetchSites failed');
   }
 
   site = await selectSite(sites);

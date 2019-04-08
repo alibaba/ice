@@ -7,6 +7,8 @@ const pkgJSON = require('./pkg-json');
  */
 function getType(workdir) {
   const json = pkgJSON.getPkgJSON(workdir);
+
+  // 兼容逻辑
   if ('blockConfig' in json) {
     return 'block';
   }

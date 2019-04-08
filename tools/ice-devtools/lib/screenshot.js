@@ -1,9 +1,10 @@
-/* eslint wrap-iife:0 */
 const debug = require('debug')('ice:screenshot:general');
 const path = require('path');
 const imagemin = require('imagemin');
 const fs = require('fs');
 const ora = require('ora');
+const { getUnpkgHost } = require('ice-npm-utils');
+const pkgJSON = require('../utils/pkg-json');
 const getType = require('../utils/type');
 const logger = require('../utils/logger');
 const createlocalServer = require('../utils/local-server');
@@ -27,6 +28,7 @@ module.exports = function screenshot(cwd, opt) {
 
   const url = `http://127.0.0.1:${port}${urlpath}`;
 
+  /* eslint wrap-iife:0 */
   (async function execute() {
     const server = createlocalServer(servePath, port);
     const spin = ora('screenshoting ...');
@@ -48,8 +50,17 @@ module.exports = function screenshot(cwd, opt) {
       server.close();
       spin.stop();
 
-      /* eslint-disable-next-line import/no-dynamic-require */
-      require(`./${type}/info`)(cwd, opt);
+      // 截图后更新 package.json 的字段
+      const pkg = pkgJSON.getPkgJSON(cwd);
+      const version = pkg.version;
+      const pkgName = pkg.name;
+
+      const screenshotUrl = `${getUnpkgHost(pkgName)}/${pkgName}@${version}/screenshot.png`;
+      const homepage = `${getUnpkgHost(pkgName)}/${pkgName}@${version}/build/index.html`;
+
+      pkg.homepage = homepage;
+      pkg[`${type}Config`].screenshot = screenshotUrl;
+
       if (opt.callback) {
         opt.callback();
       }

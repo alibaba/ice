@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const iceDepAnalyzer = require('./dep-analyze');
 const internalLibrary = require('./internal-library');
+const getMaterialType = require('./type');
 
 function getPkgJSON(cwd, module) {
   const jsonPath = path.join(cwd, 'node_modules', module, './package.json');
@@ -46,11 +47,7 @@ module.exports = class ComponentStyleGenerator {
         return true;
       }
 
-      // 在 package.json 中标明为组件
-      const pkgJSON = getPkgJSON(this.cwd, dep);
-      if (pkgJSON && pkgJSON.componentConfig) {
-        return true;
-      }
+      return getMaterialType(this.cwd) === 'component';
     });
   }
 
