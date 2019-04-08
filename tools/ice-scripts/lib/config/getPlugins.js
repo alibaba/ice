@@ -16,6 +16,7 @@ const paths = require('./paths');
 const getEntryHtmlPlugins = require('./getEntryHtmlPlugins');
 const cliInstance = require('../utils/cliInstance');
 const log = require('../utils/log');
+const pkgData = require('./packageJson');
 
 module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   const defineVriables = {
@@ -76,14 +77,6 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
     // solution that requires the user to opt into importing specific locales.
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-
-    new CopyWebpackPlugin([
-      {
-        from: paths.appPublic,
-        to: paths.appBuild,
-        ignore: ['index.html'],
-      },
-    ]),
   ];
 
   // 增加 html 输出，支持多页面应用
@@ -167,5 +160,19 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
       })
     );
   }
+
+  // 构建项目时将 public 目录下的静态文件夹复制到构建目录下
+  if (pkgData.type === 'project') {
+    plugins.push(
+      new CopyWebpackPlugin([
+        {
+          from: paths.appPublic,
+          to: paths.appBuild,
+          ignore: ['index.html'],
+        },
+      ])
+    );
+  }
+
   return plugins;
 };
