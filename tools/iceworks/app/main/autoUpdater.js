@@ -79,7 +79,7 @@ const Updater = {
     setInterval(() => {
       autoUpdater.checkForUpdates().catch((error) => {
         sendStatusToWindow('error', error);
-        error.message = `Failed handling checkForUpdates: ${error.message}`
+        error.message = `Failed handling checkForUpdates: ${error.message}`;
         logger.error(error);
       });
       // 每间隔三小时监测软件更新
@@ -89,7 +89,7 @@ const Updater = {
       // 检查更新
       autoUpdater.checkForUpdates().catch((error) => {
         sendStatusToWindow('error', error);
-        error.message = `Failed handling checkForUpdates: ${error.message}`
+        error.message = `Failed handling checkForUpdates: ${error.message}`;
         logger.error(error);
       });
     });
@@ -117,7 +117,7 @@ const Updater = {
     });
   },
   checkForUpdatesAndNotify() {
-    autoUpdater.checkForUpdatesAndNotify().catch((e) => {
+    autoUpdater.checkForUpdatesAndNotify().catch((error) => {
       error.message = `Failed handling checkForUpdatesAndNotify: ${error.message}`;
       logger.error(error);
     });

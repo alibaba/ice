@@ -6,7 +6,7 @@ const settings = require('../settings');
 module.exports = (json, materialEngine, callback) => {
   const isAlibaba = settings.get('isAlibaba');
   glodlog.record({
-    type: 'app', 
+    type: 'app',
     action: 'iceland-save-block',
     group: isAlibaba ? 'alibaba' : 'outer',
   });

@@ -135,7 +135,7 @@ const doDependenciesInstall = (
       } else {
         const error = new Error(`安装依赖失败: ${JSON.stringify({
           dependencies,
-          env
+          env,
         })}`);
         logger.error(error);
         callback(1, dependencies);

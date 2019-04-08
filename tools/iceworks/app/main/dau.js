@@ -12,7 +12,7 @@ module.exports = {
       logger.debug('dav record');
       statStorage.set(currentDate);
       glodlog.record({
-        type: 'app', 
+        type: 'app',
         action: 'dau',
         group: isAlibaba ? 'alibaba' : 'outer',
       });

@@ -13,7 +13,7 @@ const getBuckets = async (options) => {
   return ossStore.listBuckets().catch((error) => {
     error.name = 'oss-getbuckets-error';
     logger.error(error);
-    return Promise.reject(err);
+    return Promise.reject(error);
   });
 };
 
@@ -33,17 +33,22 @@ const upload2oss = async (options, selectedBucket, bucketDirectory = '/', assets
             path: file.path,
           });
         }
-      })
-      .catch((error) => {
-        error.name = 'oss-upload-error';
-        logger.error(error);
         return Promise.resolve({
           code: 1,
           message: `上传失败，请检查网络连接 (${(object.res &&
-              object.res.status) ||
-              0})。`,
+            object.res.status) ||
+            0})。`,
         });
       })
+        .catch((error) => {
+          error.name = 'oss-upload-error';
+          logger.error(error);
+          return Promise.resolve({
+            code: 1,
+            message: error.message,
+            path: file.path,
+          });
+        });
     })
   );
 };
