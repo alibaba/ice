@@ -3,12 +3,12 @@ const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 const os = require('os');
 const path = require('path');
-const debug = require('debug')('tempDir');
+const logger = require('../../logger')
 
 const ICE_TEMPDIR = path.join(os.tmpdir(), uuid);
 mkdirp.sync(ICE_TEMPDIR);
 
-debug(ICE_TEMPDIR);
+logger.debug(ICE_TEMPDIR);
 
 process.on('exit', () => {
   // clean tmp

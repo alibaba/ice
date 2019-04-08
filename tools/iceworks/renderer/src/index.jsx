@@ -8,10 +8,11 @@ import '@icedesign/base/reset.scss';
 import 'rc-tooltip/assets/bootstrap.css';
 
 import App from './App';
-import Error from './pages/Error';
+import ErrorCom from './pages/Error';
+import logger from './lib/logger';
 import './global.scss';
 
-console.log('dom ready', window.js_ready - window.dom_start);
+logger.info('dom ready', window.js_ready - window.dom_start);
 
 // 载入自定义全局样式
 const container = document.createElement('div');
@@ -30,10 +31,10 @@ try {
   ReactDOM.render(<App />, container, () => {
     removeLoading();
     window.app_rendered = Date.now();
-    console.log('app rendered', window.app_rendered - window.dom_start);
+    logger.info('app rendered', window.app_rendered - window.dom_start);
   });
 } catch (e) {
-  ReactDOM.render(<Error error={e} />, container, () => {
+  ReactDOM.render(<ErrorCom error={e} />, container, () => {
     removeLoading();
   });
 }

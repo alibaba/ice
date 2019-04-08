@@ -1,7 +1,7 @@
 const Path = require('path');
 const pathExists = require('path-exists');
 const { ExternalEditor } = require('./shared');
-const log = require('../../logger');
+const logger = require('../../logger');
 
 const { readRegistryKeySafe } = require('../../registry');
 
@@ -212,7 +212,7 @@ async function findApplication(editor) {
   } = extractApplicationInformation(editor, keys);
 
   if (!isExpectedInstallation(editor, displayName, publisher)) {
-    log.debug(
+    logger.debug(
       `Registry entry for ${editor} did not match expected publisher settings`
     );
     return null;
@@ -221,7 +221,7 @@ async function findApplication(editor) {
   const path = getExecutableShim(editor, installLocation);
   const exists = await pathExists(path);
   if (!exists) {
-    log.debug(`Command line interface for ${editor} not found at '${path}'`);
+    logger.debug(`Command line interface for ${editor} not found at '${path}'`);
     return null;
   }
 

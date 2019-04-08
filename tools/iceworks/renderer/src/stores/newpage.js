@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 import EventEmitter from 'events';
 
 import { scanPages } from '../lib/project-utils';
+import logger from '../lib/logger';
 // store
 import progress from './progress';
 import projects from './projects';
@@ -71,7 +72,7 @@ class NewPage extends EventEmitter {
   @action
   toggle() {
     if (!this.targetPath) {
-      console.error('新建页面未设置 targetPath');
+      logger.error(new Error('新建页面未设置 targetPath'));
     } else {
       this.visible = !this.visible;
       // 每次展开更新数据
@@ -99,18 +100,18 @@ class NewPage extends EventEmitter {
   @action.bound
   fetchSuccess([layouts, pages]) {
     const projectPkgData = projects.currentProject.getPkgData();
-    console.log('scaned layouts', layouts);
+    logger.info('scaned layouts', layouts);
 
     const scaffoldConfig =
       (projectPkgData && projectPkgData.scaffoldConfig) || {};
 
-    console.log('scaffoldConfig data', scaffoldConfig);
+    logger.info('scaffoldConfig data', scaffoldConfig);
 
     const defaultLayout = scaffoldConfig.defaultLayout;
 
     const localLayouts = layouts.filter((n) => n.localization);
 
-    console.log('localLayouts', localLayouts, defaultLayout);
+    logger.info('localLayouts', localLayouts, defaultLayout);
 
     let currentLayout = layouts[0];
     if (Array.isArray(localLayouts) && localLayouts.length) {
@@ -132,7 +133,7 @@ class NewPage extends EventEmitter {
   @action.bound
   fetchFailed(...args) {
     this.loading = false;
-    console.log(args);
+    logger.info(args);
   }
 
   @action

@@ -241,7 +241,7 @@ module.exports = async function createPage({
       // eslint-disable-next-line
       return prev & 0x1;
     } catch (err) {
-      console.log('err', err);
+      logger.error(err);
       // eslint-disable-next-line
       return prev & 0x0;
     }

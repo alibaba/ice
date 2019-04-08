@@ -18,6 +18,7 @@ import CustomMaterials from './CustomMaterials';
 import Separator from './Separator';
 import services from '../../services';
 import filterRegistry from '../../lib/filter-registry';
+import logger from '../../lib/logger';
 import BrowserLink from '../../components/BrowserLink';
 
 const { registries: originRegistries } = remote.require('./shared');
@@ -78,7 +79,7 @@ class Setting extends Component {
         Notification.destroy();
         Notification.success({ message: '设置变更已保存' });
       } catch (e) {
-        console.log('提示失败', e);
+        logger.info('提示失败', e);
       }
     }, 300);
   };
@@ -138,7 +139,7 @@ class Setting extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        logger.info(err);
       });
   };
 

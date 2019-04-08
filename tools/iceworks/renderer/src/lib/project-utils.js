@@ -1,8 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import services from '../services';
-
-const { log } = services;
+import logger from '../lib/logger';
 
 /* eslint-disable no-empty */
 /* eslint-disable camelcase */
@@ -24,7 +22,7 @@ export const isProject = async (projectPath) => {
     pkgData = JSON.parse(pkgData.toString());
     return pkgData;
   } catch (e) {
-    log.error(e);
+    logger.error(e);
     return false;
   }
 };

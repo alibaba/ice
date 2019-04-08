@@ -8,8 +8,6 @@ const spawnSync = require('child_process').spawnSync;
 
 console.log('CREATE ICE APP');
 
-// console.log('Cli tool not implamented yet. cc @zhuoling.lcl');
-
 createICEApp
   .createPage({
     destDir,
@@ -63,7 +61,3 @@ createICEApp
   .then(() => {
     console.log('success');
   });
-
-// createICEApp.getTemplateList.getScaffordingList().then(x => {
-//   console.log(x);
-// });

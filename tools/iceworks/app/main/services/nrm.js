@@ -1,4 +1,4 @@
-const log = require('../logger');
+const logger = require('../logger');
 const Session = require('./sessions/Session');
 const { NRM_CLI } = require('../paths');
 
@@ -27,7 +27,7 @@ const nrm = {
     }
 
     const cwd = options.cwd || process.cwd();
-    log.debug('nrm', args.join(' '), cwd);
+    logger.debug('nrm', args.join(' '), cwd);
 
     return new Promise((resolve, reject) => {
       const ps = new Session({

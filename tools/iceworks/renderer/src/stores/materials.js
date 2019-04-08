@@ -10,6 +10,7 @@ import AdditionalScaffolds from './additional-scaffolds';
 import AdditionalComponents from './additional-components';
 import filterMaterial from '../lib/filter-material';
 import { isIceMaterial } from '../lib/utils';
+import logger from '../lib/logger';
 import services from '../services';
 import projects from './projects';
 
@@ -144,7 +145,7 @@ class Materials {
         })
         .catch((error) => {
           // TODO: 这里的 error 可能有那些原因
-          console.log(error);
+          logger.info(error);
 
           // 如果 alicdn 物料源访问超时 切换备份内置的物料源数据
           if (!this.useBuiltinData) {
@@ -224,7 +225,7 @@ class Materials {
             fn(body, iceBaseComponents);
           })
           .catch((error) => {
-            console.error('promiseAll.then error', error);
+            logger.error(error);
             // 判断是否是官方提供的物料源
             // 只有官方提供的物料源才会走兜底逻辑使用内置的物料数据
             if (

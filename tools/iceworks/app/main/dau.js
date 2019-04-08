@@ -1,5 +1,6 @@
 const { statStorage } = require('./services/storage');
 const logger = require('./logger');
+const glodlog = require('./glodlog');
 const settings = require('./services/settings');
 
 module.exports = {
@@ -10,7 +11,8 @@ module.exports = {
     if (prevDate !== currentDate) {
       logger.debug('dav record');
       statStorage.set(currentDate);
-      logger.report('app', {
+      glodlog.record({
+        type: 'app', 
         action: 'dau',
         group: isAlibaba ? 'alibaba' : 'outer',
       });

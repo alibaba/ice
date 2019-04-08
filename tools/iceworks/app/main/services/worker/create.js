@@ -1,7 +1,7 @@
 // global log:true
 
 const generateProject = require('./generate-project');
-const log = require('../../logger');
+const logger = require('../../logger');
 
 /**
  * 新建项目流程
@@ -27,11 +27,12 @@ class CreateManager {
       reqQueue.push(req);
     })
       .then(() => {
-        log.info('generator process complete');
+        logger.info('generator process complete');
         done(null);
       })
       .catch((error) => {
-        log.error('create project error', error);
+        error.name = 'create-project-error';
+        logger.error(error);
         done(error);
       });
   }

@@ -14,7 +14,6 @@ class AddPackage extends Component {
   handleNpminstallOk = () => {
     const { installer, projects } = this.props;
     const { currentProject } = projects;
-    // console.info('添加依赖:', installer.type, installer.cwd, installer.deps);
     installer.installing = true;
     projectScripts.npminstall(
       currentProject,

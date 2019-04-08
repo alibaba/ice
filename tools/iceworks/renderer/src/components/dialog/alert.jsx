@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dialog } from '@icedesign/base';
+import logger from '../../lib/logger';
 
 /**
  * 全局提示模块
@@ -18,7 +19,7 @@ const notify = (
     if (typeof done === 'function') done();
   }
   if (error) {
-    console.error(error);
+    logger.error(error);
   }
   Dialog.alert({
     className: 'notice-dialog',

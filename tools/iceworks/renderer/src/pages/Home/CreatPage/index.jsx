@@ -1,12 +1,6 @@
-import { computed, autorun, toJS } from 'mobx';
 import { Dialog, Button, Feedback } from '@icedesign/base';
 import { inject, observer } from 'mobx-react';
-import { URL } from 'url';
 import React, { Component } from 'react';
-import { remote } from 'electron';
-
-import { dependenciesFormat } from '../../../lib/project-utils';
-import services from '../../../services';
 
 // components
 import {
@@ -15,12 +9,7 @@ import {
   LayoutPicker as BlockPickerLayouts,
 } from '../../../components/BlockPicker/';
 import Icon from '../../../components/Icon';
-import dialog from '../../../components/dialog';
-
 import PageConfig from './PageConfig';
-
-const { log, npm, shared, interaction, scaffolder } = services;
-
 import './index.scss';
 
 @inject('projects', 'newpage', 'blocks', 'customBlocks', 'progress')
