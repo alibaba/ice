@@ -73,9 +73,6 @@ module.exports = {
     '0.x': '<1.x',
     '1.x': '>=1.x',
   },
-  '@ali/ice-addres': {
-    '0.x': '<4.x',
-  },
   '@ali/ice-add-image': {
     '0.x': '<2.x',
     '1.x': '>=2.x',
@@ -84,17 +81,26 @@ module.exports = {
     '0.x': '<1.x',
     '1.x': '>=1.x',
   },
-  '@ali/ice-add-link': {
-    '0.x': '<1.x',
-  },
   '@ali/ice-add-tag': {
     '0.x': '<1.x',
     '1.x': '>=1.x',
   },
-  '@ali/ice-light-wangwang': {
-    '0.x': '<2.x',
-  },
   '@ali/ice-bind': {
+    '0.x': '<1.x',
+  },
+  '@ali/ice-addres': {
+    '0.x': '<4.x',
+  },
+  '@ali/ice-add-link': {
+    '0.x': '<1.x',
+  },
+  '@ali/ice-form': {
+    '0.x': '<1.x',
+  },
+  '@ali/ice-tag-picker': {
+    '0.x': '<1.x',
+  },
+  '@ali/ice-h5-preview': {
     '0.x': '<1.x',
   },
 };
