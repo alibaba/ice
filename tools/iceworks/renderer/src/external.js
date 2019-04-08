@@ -4,7 +4,7 @@ import { glodlog, editors, shells, folder } from './services';
 export const openInEditor = (path) => {
   editors.open(path);
   glodlog.record({
-    type: 'external', 
+    type: 'external',
     action: 'open-external-editor',
     path,
   });
@@ -13,7 +13,7 @@ export const openInEditor = (path) => {
 export const openInShell = (path) => {
   shells.open(path);
   glodlog.record({
-    type: 'external', 
+    type: 'external',
     action: 'open-in-shell',
     path,
   });
@@ -22,7 +22,7 @@ export const openInShell = (path) => {
 export const openInFinder = (path) => {
   folder.open(path);
   glodlog.record({
-    type: 'external', 
+    type: 'external',
     action: 'open-in-finder',
     path,
   });
@@ -31,7 +31,7 @@ export const openInFinder = (path) => {
 export const openInBrowser = (url) => {
   shell.openExternal(url);
   glodlog.record({
-    type: 'external', 
+    type: 'external',
     action: 'open-in-browser',
     url,
   });

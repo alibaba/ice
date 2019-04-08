@@ -1,15 +1,16 @@
 const electronLog = require('electron-log');
 const { app } = require('electron');
 const util = require('util');
+const request = require('request');
 
 electronLog.transports.file.level = 'info';
 electronLog.transports.file.fileName = 'main.log';
 electronLog.transports.file.maxSize = 30 * 1024 * 1024;
 
 // SLS config：配置参照 https://help.aliyun.com/document_detail/31752.html?spm=a2c4g.11186623.6.707.614f8bdceHbp2w&accounttraceid=3835f51f-2862-4a2c-a8e7-fc695d89c700
-electronLog.transports.sls = ({data, level}) => {
+electronLog.transports.sls = ({ data, level }) => {
   const error = level === 'error' ? data[0] : {};
-  const message = level !== 'error' ? util.format.apply(util, data) : error.message;
+  const message = level !== 'error' ? util.format(...data) : error.message;
 
   const project = 'iceworks';
   const logstore = 'iceworks-log';

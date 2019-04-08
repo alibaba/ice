@@ -24,7 +24,6 @@ module.exports = {
   folder,
   interaction,
   templateBuilderUtils,
-  log,
   npm,
   nrm,
   scaffolder,

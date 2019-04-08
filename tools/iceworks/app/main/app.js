@@ -95,7 +95,7 @@ exports.registerShortcut = (app, windows) => {
   if (ret) {
     logger.info('shortcutKey register success', shortcutKey);
     glodlog.record({
-      type: 'app', 
+      type: 'app',
       action: 'shortcut-key',
       shortcutKey,
     });
