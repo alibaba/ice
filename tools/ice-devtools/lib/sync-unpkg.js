@@ -16,8 +16,7 @@ module.exports = function sync(cwd) {
   process.on('close', (code) => {
     /* eslint-disable-next-line eqeqeq */
     if (code == 0) {
-      const materialType = pkgJSON.materialConfig.type;
-      const materialJSON = materialType ? `${materialType}-materials.json` : 'materials.json';
+      const materialJSON = 'materials.json';
       const materialUrl = `${getUnpkgHost(pkgJSON.name)}/${pkgJSON.name}@latest/build/${materialJSON}`;
 
       console.log();

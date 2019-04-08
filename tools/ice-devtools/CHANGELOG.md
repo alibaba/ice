@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.2.6
+
+- [fix] 修复 token 不存在时的 bug
+
+## 2.2.5
+
+- [feat] 移除 materialConfig.type 的兼容逻辑，统一生成 `materials.json`
+- [fix] getNpmTime 出错直接终止命令
+- [fix] sync 命令异常处理不恰当，无法获取错误堆栈以及退出状态码不符合标准
+
+## 2.2.4
+
+- [fix] 撤销 materialConfig 的更改
+
+## 2.2.3
+
+- [refactor] 重构 generate 代码：合并重复代码，移除无用代码
+- [feat] 批量查 npm 接口控制并发个数
+- [feat] 物料配置优先读取 materialConfig，再读取 typeConfig
+- [feat] 增加 logger.verbose 和 logger.info 两个方法
+
+## 2.2.2
+
+- [fix] 修复 generate 时 npm 不存在的 bug
+
 ## 2.2.1
 
 - [chore] 接入 ice-npm-utils，代替原先的 npm 相关方法
