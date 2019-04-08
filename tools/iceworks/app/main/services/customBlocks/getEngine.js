@@ -21,13 +21,13 @@ module.exports = (materialData) => {
     logger.debug('dav record');
     icelandStatStorage.set(currentDate);
     glodlog.record({
-      type: 'app', 
+      type: 'app',
       action: 'iceland-dau',
       group: isAlibaba ? 'alibaba' : 'outer',
     });
   }
   glodlog.record({
-    type: 'app', 
+    type: 'app',
     action: 'iceland-open-workbench',
     group: isAlibaba ? 'alibaba' : 'outer',
   });

@@ -62,9 +62,9 @@ app.on('ready', async () => {
   logger.info('process.arch:', process.arch);
   logger.info('process.versions.modules:', process.versions.modules);
   glodlog.record({
-    type: 'app', 
+    type: 'app',
     action: 'launch',
-    version: app.getVersion()
+    version: app.getVersion(),
   });
   settings.init();
   const homeWindow = createHomeWindow(app);
