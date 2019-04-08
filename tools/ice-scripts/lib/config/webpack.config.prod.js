@@ -6,8 +6,8 @@ const getWebpackConfigBasic = require('./webpack.config.basic');
 const cliInstance = require('../utils/cliInstance');
 const log = require('../utils/log');
 
-module.exports = function getWebpackConfigProd({ entry, buildConfig }) {
-  const baseConfig = getWebpackConfigBasic({ entry, buildConfig });
+module.exports = function getWebpackConfigProd({ buildConfig }) {
+  const baseConfig = getWebpackConfigBasic({ buildConfig });
   const sourcemap = cliInstance.get('sourcemap');
 
   log.info('cli options sourcemap', sourcemap);
