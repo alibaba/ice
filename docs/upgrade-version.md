@@ -24,7 +24,7 @@ order: 4
 
 ### 老项目继续使用 0.x
 
-如果暂时没有升级 1.x 的必要，可以选择继续使用 0.x，不过要注意新增业务组件时需要根据[业务组件版本映射表](https://github.com/alibaba/ice/wiki/biz-components-version)选择正确的组件版本，比如 `@icedesign/title` 对应的 0.x 版本是 0.1.x，则安装依赖时需要携带上对应版本号：
+如果暂时没有升级 1.x 的必要，可以选择继续使用 0.x，不过要注意新增业务组件时需要根据[业务组件版本映射表](https://www.yuque.com/ice-team/wiki/dxerqp)选择正确的组件版本，比如 `@icedesign/title` 对应的 0.x 版本是 0.1.x，则安装依赖时需要携带上对应版本号：
 
 ```bash
 $ npm i --save @icedesign/title@0.1.x
@@ -78,7 +78,7 @@ react&react-dom 请升级至 16.x。
 ### 基础组件 0.x -> 1.x 升级
 
 - 将 package.json 里以及代码里依赖的 `@icedesign/base` 替换成 `@alifd/next`，版本 `^1.13.0`
-- 按照[基础组件 API 变更](https://github.com/alibaba/ice/wiki/base-components-upgrade)逐步进行升级
+- 按照[基础组件 API 变更](https://www.yuque.com/ice-team/wiki/uhgv4c)逐步进行升级
 
 ### 主题包升级
 
@@ -86,9 +86,9 @@ react&react-dom 请升级至 16.x。
 
 ### 业务组件升级指南
 
-如果是官方提供的业务组件，请按照 [业务组件版本映射表](https://github.com/alibaba/ice/wiki/biz-components-version) 对组件进行版本更换即可，只需要更改 package.json 里的版本号，有少量组件有 API 变更具体参考文档处理。如有未升级或者未在列表中的组件，请联系飞冰团队进行升级。
+如果是官方提供的业务组件，请按照 [业务组件版本映射表](https://www.yuque.com/ice-team/wiki/dxerqp) 对组件进行版本更换即可，只需要更改 package.json 里的版本号，有少量组件有 API 变更具体参考文档处理。如有未升级或者未在列表中的组件，请联系飞冰团队进行升级。
 
-如果是业务自身开发的业务组件，请参照 [业务组件升级依赖的基础组件到 1.x](https://github.com/alibaba/ice/wiki/upgrade-biz-components-1.x) 对业务组件进行升级发版，然后修改 package.json 中的依赖版本号。
+如果是业务自身开发的业务组件，请参照 [业务组件升级依赖的基础组件到 1.x](https://www.yuque.com/ice-team/wiki/yvbw6s) 对业务组件进行升级发版，然后修改 package.json 中的依赖版本号。
 
 ## 常见问题
 

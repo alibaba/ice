@@ -1,7 +1,6 @@
 ---
 title: 如何实现页面间的跳转
-
-order: 2
+order: 5
 ---
 
 本文档介绍使用 react-router 的单页面应用如何实现页面跳转。

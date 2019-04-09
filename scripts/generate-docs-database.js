@@ -33,16 +33,12 @@ const allCategories = [
         title: 'Iceworks',
       },
       {
-        dir: 'materials',
-        title: '物料',
-      },
-      {
         dir: 'pro',
         title: 'ICE Design Pro',
       },
       {
-        dir: 'others',
-        title: '其他',
+        dir: 'materials',
+        title: '物料',
       },
 
       // 单独页面展示设计文档
