@@ -146,7 +146,7 @@ $ npm run sync-unpkg
 ![](https://img.alicdn.com/tfs/TB1o4AyxXzqK1RjSZFCXXbbxVXa-1740-1200.png)
 
 
-### 最定义模板
+### 自定义模板
 
 ice-devtools 内置了 React/Vue 两套官方物料模板，如果是 React/Vue 体系的用户可以直接基于这两套模板初始化，初始化完成后可以在 .template 里对文件结构、工程配置等做定制，后续执行 idev add 时会读取 `.template` 下对应的目录进行初始化。
 

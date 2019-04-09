@@ -3,8 +3,7 @@ title: 常见问题
 order: 3
 ---
 
-> 持续更新...
-> 如有问题可以到 <https://github.com/alibaba/ice/issues/new> 反馈
+> 持续更新……如有问题可以到 <https://github.com/alibaba/ice/issues/new> 反馈
 
 ## 使用飞冰（ICE）是否需要懂一些前端知识？
 
