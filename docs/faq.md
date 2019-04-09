@@ -10,7 +10,7 @@ order: 3
 
 毫无疑问是需要的，我们在努力降低前端开发的门槛，但一些基础的前端知识还是需要具备的，比如 JavaScript 的基础预发、前后端如何通信等。
 
-为了便于快速入门前端知识，我们整理了一份 [前端基础知识列表](https://github.com/alibaba/ice/wiki/fed-basic-knowledge)，希望能帮助到开发者。
+为了便于快速入门前端知识，我们整理了一份 [前端基础知识列表](https://www.yuque.com/ice-team/wiki/bvka91)，希望能帮助到开发者。
 
 ## 常用的组件有哪些推荐？
 

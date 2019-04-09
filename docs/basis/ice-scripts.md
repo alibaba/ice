@@ -280,7 +280,7 @@ module.exports = (context) => {
 };
 ```
 
-[详细说明](https://github.com/alibaba/ice/wiki/webpack-publicPath)
+[详细说明](https://www.yuque.com/ice-team/wiki/euzk0b)
 
 ### 使用 DefinePlugin
 
