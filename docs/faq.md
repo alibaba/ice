@@ -20,16 +20,6 @@ order: 3
 
 由于 ICE 优先使用 React 16+，其需要的最低 IE 版本为 11，如果您需要在以下的版本使用，您可能需要引入一些 polyfill 来支持 `Map`, `Set` 等特性。参考[React 官网说明](https://reactjs.org/blog/2017/09/26/react-v16.0.html#javascript-environment-requirements)。
 
-以下代码可以帮助你在低版本 IE 下自动跳转到我们提供的提示浏览器升级页面。当然您也可以使用自定义的浏览器升级页面。
-
-```
-<!--[if lt IE 11]>
-<script>location.href = "//www.taobao.com/markets/tbhome/ali-page-updater"; </script>
-<![endif]-->
-```
-
-添加如上代码后，如果使用 IE11 及以下浏览器访问页面，则会自动跳转到统一引导升级浏览器的页面。
-
 ## WebStorm/IDEA 编辑器卡顿现象
 
 由于项目在安装依赖后，产生文件夹 `node_modules` 含有较多的碎小文件，编辑器在索引文件引起的卡顿。

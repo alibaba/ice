@@ -30,10 +30,10 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 基于这套概念，飞冰（ICE）在社区的参与下目前主要建立起如下物料体系：
 
-|  物料名称  |  维护者  |  框架 |  工程体系  |  基础组件 |
-|-----------|---------|------|-----------|----------|
-|React 物料 | 官方     | React |ice-scripts| Fusion |
-|Vue 物料   | 社区     | Vue   | Vue CLI  | Element  |
+|  物料名称  |  维护者  |  框架 |  工程体系  |  基础组件 | 代码仓库 |
+|-----------|---------|------|-----------|----------|---------|
+|React 物料 | 官方     | React |ice-scripts| Fusion | [react-materials](https://github.com/ice-lab/react-materials) |
+|Vue 物料   | 社区     | Vue   | Vue CLI  | Element  | [vue-materials](https://github.com/ice-lab/vue-materials) |
 
 如果有兴趣共建社区物料体系，比如小程序、Angular 等，欢迎联系飞冰（ICE）团队，我们会给予社区参与者最大的帮助。
 
