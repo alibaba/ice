@@ -37,7 +37,7 @@ Usage: ice-init [options]
 
 Options:
 
-  -s, --scaffold <port>  模板 npm 包名
+  -s, --scaffold         模板 npm 包名，可不传
   -h, --help             output usage information
 ```
 
