@@ -24,14 +24,8 @@ class AddPackage extends Component {
     newDeps.forEach((newDep) => {
       Object.keys(projectDeps).forEach((projectDep) => {
         if (newDep.name === projectDep) {
-          const {
-            major: newDepMajor,
-            version: newDepVersion,
-          } = semver.minVersion(newDep.version);
-          const { major: projectDepMajor } = semver.minVersion(
-            projectDeps[projectDep]
-          );
-
+          const { major: newDepMajor, version: newDepVersion } = semver.minVersion(newDep.version);
+          const { major: projectDepMajor } = semver.minVersion(projectDeps[projectDep]);
           if (newDepMajor > projectDepMajor) {
             newDepsArr.push(`${newDep.name}@${newDepVersion}`);
             projectDepsArr.push(`${newDep.name}@${projectDeps[projectDep]}`);
