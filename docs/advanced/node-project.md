@@ -1,14 +1,14 @@
 ---
-title: Koa 项目
-order: 5
-
+title: 在 Node.js 中使用飞冰
+order: 3
+hide: true
 ---
 
 ## 开始使用
 
 ### 简介
 
-基于 Iceworks 能够一键生成 Ice 和 Node 的前后端分离的项目；前端使用 React 技术栈，后端使用 Koa 2.x 作为服务端开发框架。
+基于 Iceworks 能够一键生成 Ice 和 Node.js 的前后端分离的项目，前端使用 React 技术栈，后端使用 Koa/Midway 框架。
 
 ### 特性
 

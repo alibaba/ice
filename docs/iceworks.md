@@ -1,11 +1,11 @@
 ---
 title: Iceworks 快速开始
-order: 3
+order: 2
 ---
 
 **零环境搭建** **零配置** **简单易用**
 
-Iceworks 是 ICE 推出的辅助开发者快速开发中后台前端应用的 GUI 软件，目前支持 macOS 和 Windows 两大平台。通过 [Iceworks](#/iceworks) 点击下载按钮即可。
+Iceworks 是飞冰（ICE）推出的辅助开发者快速开发中后台前端应用的 GUI 软件，目前支持 macOS 和 Windows 两大平台。通过 [Iceworks](#/iceworks) 点击下载按钮即可。
 
 ## 创建项目
 
