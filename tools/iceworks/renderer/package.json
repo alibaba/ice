@@ -26,6 +26,7 @@
     "js-base64": "^2.4.5",
     "junk": "^2.1.0",
     "kebab-case": "^1.0.0",
+    "latest-version": "^5.1.0",
     "line-by-line": "^0.1.6",
     "lodash.orderby": "^4.6.0",
     "mkdirp": "^0.5.1",
