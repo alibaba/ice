@@ -129,9 +129,8 @@ project-name
 
 <body>
   <div id="ice-container"></div>
-  <script src="https://g.alicdn.com/code/npm/??react/16.2.0/umd/react.development.js,react-dom/16.2.0/umd/react-dom.development.js"></script>
-<script type="text/javascript" src="./index.js"></script></body>
-
+  <script type="text/javascript" src="./index.js"></script>
+</body>
 </html>
 ```
 
