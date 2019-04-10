@@ -3,9 +3,10 @@ title: Iceworks 快速开始
 order: 2
 ---
 
-**零环境搭建** **零配置** **简单易用**
+[Iceworks](#/iceworks) 是基于 Electron 开发的 GUI 开发工具，我们希望通过 Iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目。另外对于 Iceworks 我们也有一些规划正在执行之中：
 
-Iceworks 是飞冰（ICE）推出的辅助开发者快速开发中后台前端应用的 GUI 软件，目前支持 macOS 和 Windows 两大平台。通过 [Iceworks](#/iceworks) 点击下载按钮即可。
+- 升级前端开发模式，提供云+端的开发链路，不再依赖本地的开发环境
+- 更加完整的对接不同的工程体系，任何项目都可以通过简单的配置即可在 Iceworks 中开发
 
 ## 创建项目
 
