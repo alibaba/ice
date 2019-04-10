@@ -9,7 +9,7 @@ import logger from '../../../lib/logger';
 import services from '../../../services';
 import dialog from '../../../components/dialog';
 
-const { interaction } = services;
+const { interaction, settings } = services;
 
 @inject('projects', 'installer')
 @observer
@@ -79,7 +79,8 @@ class AddPackage extends Component {
     const newDeps = deps
       .split(/\s+/)
       .filter((dep) => !!dep.trim())
-      .filter((dep) => dep.lastIndexOf('@') === -1);
+      .filter((dep) => dep.lastIndexOf('@') > 0);
+
     if (!newDeps.length) {
       return this.startNpmInstall();
     }
@@ -93,8 +94,11 @@ class AddPackage extends Component {
     }
 
     // 获取当前项目存在依赖的最新版本，根据最新版本进行提示
+    const registryUrl = settings.get('registry') || 'http://registry.npmjs.org';
     const getLatestVersion = existDeps.map((dep) =>
-      latestVersion(dep).then((v) => Promise.resolve({ name: dep, version: v }))
+      latestVersion(dep, { registryUrl }).then((v) =>
+        Promise.resolve({ name: dep, version: v })
+      )
     );
     Promise.all(getLatestVersion)
       .then((result) => {
