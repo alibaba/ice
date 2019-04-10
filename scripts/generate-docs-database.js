@@ -36,10 +36,6 @@ const allCategories = [
         dir: 'pro',
         title: 'ICE Design Pro',
       },
-      {
-        dir: 'materials',
-        title: '物料',
-      },
 
       // 单独页面展示设计文档
       {
