@@ -24,8 +24,13 @@ class AddPackage extends Component {
     newDeps.forEach((newDep) => {
       Object.keys(projectDeps).forEach((projectDep) => {
         if (newDep.name === projectDep) {
-          const { major: newDepMajor, version: newDepVersion } = semver.minVersion(newDep.version);
-          const { major: projectDepMajor } = semver.minVersion(projectDeps[projectDep]);
+          const {
+            major: newDepMajor,
+            version: newDepVersion,
+          } = semver.minVersion(newDep.version);
+          const { major: projectDepMajor } = semver.minVersion(
+            projectDeps[projectDep]
+          );
           if (newDepMajor > projectDepMajor) {
             newDepsArr.push(`${newDep.name}@${newDepVersion}`);
             projectDepsArr.push(`${newDep.name}@${projectDeps[projectDep]}`);
@@ -63,23 +68,23 @@ class AddPackage extends Component {
    * 包版本对比检查
    */
   checkPackageVersion = (deps) => {
-    const { projects = {} } = this.props;
-    const { currentProject: { pkgData = {} } } = projects;
-    const projectDeps = pkgData.dependencies || {};
+    const {
+      projects: { currentProject },
+    } = this.props;
+    const {
+      pkgData: { dependencies: projectDeps },
+    } = currentProject;
 
     // 新增的依赖是否有指定版本，过滤掉指定版本的依赖
-    let newDeps = deps.split(/\s+/).filter((dep) => !!dep.trim());
-    newDeps = newDeps.filter((dep) => {
-      if (dep.lastIndexOf('@') > 0) {
-        return false;
-      }
-      return true;
-    });
+    const newDeps = deps
+      .split(/\s+/)
+      .filter((dep) => !!dep.trim())
+      .filter((dep) => dep.lastIndexOf('@') === -1);
     if (!newDeps.length) {
       return this.startNpmInstall();
     }
 
-    // 项目中是否存在新增的依赖
+    // 新增的依赖是否在项目中
     const existDeps = newDeps.filter((dep) =>
       Object.keys(projectDeps).includes(dep)
     );
