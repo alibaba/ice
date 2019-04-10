@@ -44,8 +44,6 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 1. 通过 GUI 屏蔽前端工程及环境配置的复杂度
 2. 借助 GUI 提供更加丰富的能力：比如基于丰富的模板创建项目、根据区块组装新页面、Git 面板、依赖管理等
 
-[了解更多](#/docs/iceworks)
-
 ### ice-scripts
 
 基于 Webpack 的工程工具，主要用于开发构建 React 项目，与 Create React App 相比主要有以下差异化：
@@ -54,15 +52,11 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 - 更加简单的自定义配置能力
 - 支持业务组件的开发构建
 
-[了解更多](#/docs/basis/ice-scripts)
-
 ### ice-devtools
 
 物料开发&管理工具，ice-devtools 提供了物料从初始化到发布的完整链路，在此基础上我们约定了一套物料协议，保证基于 ice-devtools 开发的物料可以直接在 Iceworks 中使用。
 
 ice-devtools 不仅支持业务自定义自身的物料模板，同时也支持 React/Vue 等不同框架的物料模板，如有除此之外的需求，欢迎联系我们。
-
-[了解更多](#/docs/advanced/custom-materials)
 
 ## 谁在使用
 
