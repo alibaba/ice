@@ -3,8 +3,6 @@ title: 使用 ice-devtools 开发自定义物料
 order: 1
 ---
 
-## 物料开发流程
-
 前面提到的物料大多是官方物料，但是在实际的开发中，很多业务都需要自己的物料体系，比如定制的模板、附带业务属性的组件等，因此我们基于 ice-devtools 这个工具提供了自定义物料的开发链路。大体流程如下：
 
 - 使用 ice-devtools 在本地开发物料
@@ -37,12 +35,14 @@ $ idev -V
 
 ### 初始化物料项目
 
+通过 `idev init` 命令可以初始化一个物料项目：
+
 ```bash
 # 新建物料项目
 $ mkdir my-materilas & cd my-materilas
 
 # 初始化物料项目
-$ ice-devtools init
+$ idev init
 ```
 
 init 之后会生成如下的目录结构：
@@ -126,6 +126,8 @@ $ npm run sync
 ```
 
 #### 托管在 unpkg
+
+通过 `sync-unpkg` 命令发布 npm 包：
 
 ```bash
 $ npm run sync-unpkg

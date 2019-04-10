@@ -22,7 +22,7 @@ $ ice --help
 
 当然你也可以将其作为项目级依赖：`npm i --save-dev ice-scripts`
 
-## 命令行工具
+## 命令行能力
 
 ice-scripts 提供了 `init/dev/build` 的开发命令，如果使用 Iceworks 开发，那么大多数时候你不需要关心这些命令。
 

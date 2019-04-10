@@ -28,12 +28,12 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 - 区块：与组件相比灵活性较高，功能相对比较简单，对应代码量也比较少，业务里会将区块的代码复制到项目里使用
 - 模板：样板工程，通常会包含通用的布局、常用页面、工程配置等，常在初始化项目时使用
 
-基于这套概念，飞冰（ICE）在社区的参与下目前主要建立起如下物料体系：
+基于这套理念，飞冰（ICE）在社区的参与下目前主要建立起如下物料体系：
 
 |  物料名称  |  维护者  |  框架 |  工程体系  |  基础组件 | 代码仓库 |
 |-----------|---------|------|-----------|----------|---------|
 |React 物料 | 官方     | React |ice-scripts| Fusion | [github](https://github.com/ice-lab/react-materials) |
-|Vue 物料   | 社区     | Vue   | Vue CLI  | Element  | [github](https://github.com/ice-lab/vue-materials) |
+|Vue 物料   | 社区+官方 | Vue   | Vue CLI  | Element | [github](https://github.com/ice-lab/vue-materials) |
 
 如果有兴趣共建社区物料体系，比如小程序、Angular 等，欢迎联系飞冰（ICE）团队，我们会给予社区参与者最大的帮助。
 
@@ -41,13 +41,10 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 基于 Electron 开发的 GUI 开发工具，Iceworks 核心解决如下两个问题：
 
-1. 屏蔽前端工程及环境的复杂度
+1. 通过 GUI 屏蔽前端工程及环境配置的复杂度
 2. 借助 GUI 提供更加丰富的能力：比如基于丰富的模板创建项目、根据区块组装新页面、Git 面板、依赖管理等
 
-在此基础上，Iceworks 也在一直进化，当前的一些方向：
-
-- 升级前端开发模式，提供云+端的开发链路
-- 更加完整的对接不同的工程体系，任何项目都可以通过简单的配置即可在 Iceworks 中开发
+[了解更多](#/docs/iceworks)
 
 ### ice-scripts
 
@@ -57,11 +54,15 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 - 更加简单的自定义配置能力
 - 支持业务组件的开发构建
 
+[了解更多](#/docs/basis/ice-scripts)
+
 ### ice-devtools
 
 物料开发&管理工具，ice-devtools 提供了物料从初始化到发布的完整链路，在此基础上我们约定了一套物料协议，保证基于 ice-devtools 开发的物料可以直接在 Iceworks 中使用。
 
 ice-devtools 不仅支持业务自定义自身的物料模板，同时也支持 React/Vue 等不同框架的物料模板，如有除此之外的需求，欢迎联系我们。
+
+[了解更多](#/docs/advanced/custom-materials)
 
 ## 谁在使用
 
