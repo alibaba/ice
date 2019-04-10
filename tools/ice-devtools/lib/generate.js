@@ -31,6 +31,8 @@ module.exports = function generate(cwd) {
     console.log();
     console.log('The build folder is ready to be deployed.');
     console.log();
+  }).catch((e) => {
+    logger.fatal(e);
   });
 };
 
@@ -232,6 +234,8 @@ function generateMaterialsData(files, SPACE, type, done) {
   }).then((data) => {
     logger.info(`通过 npm 查询 ${type} 信息完成`);
     done(data);
+  }).catch((e) => {
+    logger.fatal(e);
   });
 }
 
