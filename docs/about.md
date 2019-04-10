@@ -80,4 +80,4 @@ ice-devtools 不仅支持业务自定义自身的物料模板，同时也支持 
 * 反馈/建议：<https://github.com/alibaba/ice/issues/new>
 * 答疑钉钉群，内部同学请搜索「飞冰（ICE）万能群」：
 
-  <img src="https://img.alicdn.com/tfs/TB1UKaqEsbpK1RjSZFyXXX_qFXa-970-1280.jpg" width="300" />
+  <img src="https://img.alicdn.com/tfs/TB1pzg_QhjaK1RjSZKzXXXVwXXa-970-1280.jpg" width="300" />
