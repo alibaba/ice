@@ -7,6 +7,7 @@ const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const AppendStyleWebpackPlugin = require('../plugins/append-style-webpack-plugin');
 const CheckIceComponentsDepsPlugin = require('../plugins/check-ice-components-dep');
@@ -15,6 +16,7 @@ const paths = require('./paths');
 const getEntryHtmlPlugins = require('./getEntryHtmlPlugins');
 const cliInstance = require('../utils/cliInstance');
 const log = require('../utils/log');
+const pkgData = require('./packageJson');
 
 module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   const defineVriables = {
@@ -158,5 +160,19 @@ module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
       })
     );
   }
+
+  // 构建项目时将 public 目录下的静态文件夹复制到构建目录下
+  if (pkgData.type === 'project') {
+    plugins.push(
+      new CopyWebpackPlugin([
+        {
+          from: paths.appPublic,
+          to: paths.appBuild,
+          ignore: ['index.html'],
+        },
+      ])
+    );
+  }
+
   return plugins;
 };

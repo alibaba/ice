@@ -1,10 +1,9 @@
 ---
 title: 配置项目主题
-order: 9
-
+order: 5
 ---
 
-> 该能力需要满足项目依赖的基础组件为 `@alifd/next`，如果依赖的是 `@icedesign/base` 请参考 [这篇文档](https://github.com/alibaba/ice/wiki/0.x-theme)
+> 该能力需要满足项目依赖的基础组件为 `@alifd/next`，如果依赖的是 `@icedesign/base` 请参考 [这篇文档](https://www.yuque.com/ice-team/wiki/cur1z3)
 
 飞冰（ICE）默认的主题是蓝色系，无法满足所有项目的需求，因此我们通过工程方式支持一键换肤的能力。有两种方式配置主题：
 
@@ -13,7 +12,7 @@ order: 9
 
 **注意两种方案不能同时使用，请按需选择其一。**
 
-## 配置主题包方式
+## 方式一：配置主题包
 
 ### 选择主题包
 
@@ -66,7 +65,7 @@ import { Icon } from 'react';
 
 注意：工程工具使用 ice-scripts 才能使用这个能力
 
-## 配置变量方式
+## 方式二：配置 scss 变量
 
 在 `package.json` 里配置主品牌色：
 

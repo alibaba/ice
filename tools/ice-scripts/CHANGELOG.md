@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.9.4
+
+- [fix] 将 webpack 固定在 `4.28.x`，解决 npm 扁平化 + webpack 4.29 导致动态 import 语法报错问题
+- [feat] 优化 getEntry 逻辑，支持传统多页面需求
+- [feat] 增加 copyplugin，将 public 里的文件 copy 到 build
+- [feat] uniteBaseComponent 支持指定基础包名
+- [fix] 修复 babelImportConfig 不支持数组的问题
+- [chore] 补全业务组件的升级版本数据
+
 ## 1.9.3
 
 - [fix] 内网 init 项目未生成 abc.json
