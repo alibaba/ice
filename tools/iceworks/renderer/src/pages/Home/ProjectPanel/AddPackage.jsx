@@ -79,7 +79,7 @@ class AddPackage extends Component {
     const newDeps = deps
       .split(/\s+/)
       .filter((dep) => !!dep.trim())
-      .filter((dep) => dep.lastIndexOf('@') > 0);
+      .filter((dep) => !dep.startsWith('@') || dep.lastIndexOf('@') > 0);
 
     if (!newDeps.length) {
       return this.startNpmInstall();
