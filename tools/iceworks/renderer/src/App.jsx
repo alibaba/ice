@@ -62,13 +62,18 @@ class App extends Component {
   componentWillMount = () => {
     // 过滤用户设置的fusion，bizchart物料源。
     const materials = settings.get('materials');
-    settings.set('materials', materials.filter(material => {
-      if (['Fusion 物料源', 'Bizchart 物料源'].includes(material.name)) {
-        return false;
-      }
-      return true;
-    }));
-  }
+    if (materials && materials.length) {
+      settings.set(
+        'materials',
+        materials.filter((material) => {
+          if (['Fusion 物料源', 'Bizchart 物料源'].includes(material.name)) {
+            return false;
+          }
+          return true;
+        })
+      );
+    }
+  };
 
   componentDidMount() {
     this.unlisten = history.listen((location, action) => {
@@ -80,7 +85,7 @@ class App extends Component {
     const urlEvokeQuery = settings.get('urlEvokeQuery');
     if (urlEvokeQuery && urlEvokeQuery.to) {
       history.push(urlEvokeQuery.to);
-      settings.set('urlEvokeQuery', Object.assign(urlEvokeQuery, {to: ''}));
+      settings.set('urlEvokeQuery', Object.assign(urlEvokeQuery, { to: '' }));
     }
 
     ipcRenderer.on('router.push', (event, { url, state, title }) => {
