@@ -1,10 +1,7 @@
 ---
-title: 如何使用 TypeScript
-order: 10
-
+title: 使用 TypeScript
+order: 3
 ---
-
-## 为什么使用 TypeScript
 
 TypeScript 是微软开发一款开源的编程语言，本质上是向 JavaScript 增加静态类型系统。它是 JavaScript 的超集，所有现有的 JavaScript 都可以不加改变就在其中使用。它是为大型软件开发而设计的，它最终编译产生 JavaScript，所以可以运行在浏览器、Node.js 等等的运行时环境。
 
@@ -77,14 +74,7 @@ class App extends React.PureComponent<IProps, IState> {
 
 迁移步骤如下：
 
-- 升级构建工具 ice-scripts
-
-```bash
-# ice-scripts 最新版支持 TypeScript 的语法构建
-$ npm update ice-script
-```
-
-- 新增 `tsconfig.json` 文件
+### 新增 tsconfig.json 文件
 
 ```js
 {
@@ -107,11 +97,11 @@ $ npm update ice-script
 }
 ```
 
-- 按需修改文件后缀
+### 按需修改文件后缀
 
 在 TypeScript 工程中推荐使用 `.tsx` 替代 `.jsx`、使用 `.ts` 替代 `.js`，这里可以根据自身需求按需更改，一般情况下更改后缀之后需要修改部分语法，否则 ts 语法检测可能会不通过
 
-- 按需修改 Entry 入口
+### 按需修改 Entry 入口
 
 如果将 `src/index.js` 的后缀做了修改，那么同步需要修改 `package.json` 里的 entry 字段：
 

@@ -9,7 +9,6 @@ const { collectDetail } = require('@alifd/fusion-collector');
 
 const paths = require('./config/paths');
 const iceScriptsPkgData = require('../package.json');
-const getEntries = require('./config/getEntry');
 const getWebpackConfigProd = require('./config/webpack.config.prod');
 const goldlog = require('./utils/goldlog');
 const log = require('./utils/log');
@@ -74,9 +73,7 @@ module.exports = async function (options) {
     }
   }
 
-  const entries = getEntries();
   let webpackConfig = getWebpackConfigProd({
-    entry: entries,
     buildConfig: pkgData.buildConfig || pkgData.ice,
   });
   webpackConfig = webpackMerge(webpackConfig, customWebpackConfig);
