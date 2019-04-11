@@ -56,10 +56,9 @@ class ScaffoldForm extends Component {
   }
 
   render() {
+    const { builder } = this.props.scaffold.scaffold;
     const isAlibaba = services.settings.get('isAlibaba');
-    const hasIce =
-      this.props.scaffold.scaffold.devDependencies
-      && this.props.scaffold.scaffold.devDependencies.hasOwnProperty('ice-scripts');
+    const hasIce = builder && builder === 'ice-scripts';
 
     const showNodeOutside = !isAlibaba && hasIce;
 
