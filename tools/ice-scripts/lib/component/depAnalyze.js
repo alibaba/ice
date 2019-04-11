@@ -13,6 +13,9 @@ const babelPluginTransformModulesCommonjs = interopRequire(
 const babelPluginTransformExport = interopRequire(
   'babel-plugin-transform-export-extensions'
 );
+const babelPluginExportDefault = interopRequire(
+  '@babel/plugin-proposal-export-default-from'
+);
 
 function interopRequire(id) {
   const mod = require(id);
@@ -64,6 +67,7 @@ function analyzeDependenciesImport(str) {
 
   const transformed = babel.transform(importStatements, {
     plugins: [
+      babelPluginExportDefault,
       babelPluginTransformExport,
       [babelPluginTransformModulesCommonjs, { noInterop: true }],
       [babelPluginTransformLibImport, { libraryName: '@icedesign/base' }, '@icedesign/base'],
