@@ -3,10 +3,10 @@ const webpackMerge = require('webpack-merge');
 const path = require('path');
 
 const getUserConfig = require('./getUserConfig');
+const getEntry = require('./getEntry');
 const getRules = require('./getRules');
 const getPlugins = require('./getPlugins');
 const processEntry = require('./processEntry');
-const getEntryByPages = require('./getEntryByPages');
 const getResolveAlias = require('./getResolveAlias');
 const pkg = require('./packageJson');
 const checkTemplateHasReact = require('../utils/checkTemplateHasReact');
@@ -43,9 +43,13 @@ const pluginsUnique = (uniques) => {
   };
 };
 
-module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
+module.exports = function getWebpackConfigBasic({ buildConfig = {} }) {
   const { themeConfig = {} } = pkg;
   const hasExternalReact = checkTemplateHasReact(paths.appHtml);
+
+  // webpack rc
+  const webpackRcConfig = getUserConfig();
+  const entry = getEntry(buildConfig, webpackRcConfig);
 
   if (buildConfig.output && buildConfig.output.path) {
     buildConfig.output.path = path.resolve(paths.appDirectory, buildConfig.output.path);
@@ -111,17 +115,11 @@ module.exports = function getWebpackConfigBasic({ entry, buildConfig = {} }) {
     };
   }
 
-  const userConfig = getUserConfig();
   const finalWebpackConfig = webpackMerge({
     customizeArray: pluginsUnique(['HtmlWebpackPlugin']),
-  })(webpackConfig, userConfig);
+  })(webpackConfig, webpackRcConfig);
 
-  // 单页应用 or 多页应用
-  if (finalWebpackConfig.entry) {
-    finalWebpackConfig.entry = processEntry(finalWebpackConfig.entry);
-  } else {
-    finalWebpackConfig.entry = processEntry(getEntryByPages());
-  }
+  finalWebpackConfig.entry = processEntry(finalWebpackConfig.entry);
 
   return finalWebpackConfig;
 };
