@@ -1,5 +1,7 @@
 # Changelog
 
+## 2.2.7
+
 ## 2.2.6
 
 - [fix] 修复 token 不存在时的 bug
