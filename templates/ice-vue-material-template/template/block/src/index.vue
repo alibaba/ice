@@ -1,8 +1,6 @@
 <template>
   <div class="example-block">
-    <basic-container>
-      <h1>ExampleBlock</h1>
-    </basic-container>
+    <h1>ExampleBlock</h1>
   </div>
 </template>
 

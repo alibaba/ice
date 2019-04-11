@@ -5,10 +5,9 @@ const webpack = require('webpack');
 const getWebpackConfigBasic = require('./webpack.config.basic');
 const cliInstance = require('../utils/cliInstance');
 
-module.exports = function getWebpackConfigDev({ entry, buildConfig = {} }) {
+module.exports = function getWebpackConfigDev({ buildConfig = {} }) {
   const plugins = [];
-
-  const baseConfig = getWebpackConfigBasic({ entry, buildConfig });
+  const baseConfig = getWebpackConfigBasic({ buildConfig });
 
   // 热更新
   if (!cliInstance.get('disabledReload')) {

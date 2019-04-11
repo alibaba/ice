@@ -15,6 +15,61 @@ function resolvePlugin(plugins) {
 }
 
 module.exports = (buildConfig = {}, buildComponentSrc) => {
+  let importConfig = [{
+    libraryName: '@icedesign/base',
+  }, {
+    libraryName: '@alife/next',
+  }, {
+    libraryName: '@alifd/next',
+  }];
+  const customImportConfig = buildConfig.babelPluginImportConfig;
+
+  if (customImportConfig) {
+    if (Array.isArray(customImportConfig)) {
+      importConfig = importConfig.concat(customImportConfig);
+    } else {
+      importConfig.push(customImportConfig);
+    }
+  }
+
+  let plugins = [
+    // Stage 0
+    '@babel/plugin-proposal-function-bind',
+    // Stage 1
+    '@babel/plugin-proposal-export-default-from',
+    '@babel/plugin-proposal-logical-assignment-operators',
+    ['@babel/plugin-proposal-optional-chaining', { loose: false }],
+    ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
+    ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: false }],
+    '@babel/plugin-proposal-do-expressions',
+    // Stage 2
+    ['@babel/plugin-proposal-decorators', { legacy: true }],
+    '@babel/plugin-proposal-function-sent',
+    '@babel/plugin-proposal-export-namespace-from',
+    '@babel/plugin-proposal-numeric-separator',
+    '@babel/plugin-proposal-throw-expressions',
+    // Stage 3
+    '@babel/plugin-syntax-dynamic-import',
+    '@babel/plugin-syntax-import-meta',
+    ['@babel/plugin-proposal-class-properties', { loose: true }],
+    '@babel/plugin-proposal-json-strings',
+    (cliInstance.get('injectBabel') === 'runtime' || buildComponentSrc) ? [
+      '@babel/plugin-transform-runtime',
+      {
+        corejs: false,
+        helpers: true,
+        regenerator: true,
+        useESModules: false,
+      },
+    ] : null,
+  ];
+
+  plugins = plugins.concat(
+    importConfig.map((itemConfig) => {
+      return ['babel-plugin-import', itemConfig, itemConfig.libraryName];
+    })
+  );
+
   return {
     babelrc: buildConfig.babelrc || false,
     presets: resolvePlugin([
@@ -37,47 +92,6 @@ module.exports = (buildConfig = {}, buildComponentSrc) => {
       ],
       '@babel/preset-react',
     ]),
-    plugins: resolvePlugin([
-      // Stage 0
-      '@babel/plugin-proposal-function-bind',
-      // Stage 1
-      '@babel/plugin-proposal-export-default-from',
-      '@babel/plugin-proposal-logical-assignment-operators',
-      ['@babel/plugin-proposal-optional-chaining', { loose: false }],
-      ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
-      ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: false }],
-      '@babel/plugin-proposal-do-expressions',
-      // Stage 2
-      ['@babel/plugin-proposal-decorators', { legacy: true }],
-      '@babel/plugin-proposal-function-sent',
-      '@babel/plugin-proposal-export-namespace-from',
-      '@babel/plugin-proposal-numeric-separator',
-      '@babel/plugin-proposal-throw-expressions',
-      // Stage 3
-      '@babel/plugin-syntax-dynamic-import',
-      '@babel/plugin-syntax-import-meta',
-      ['@babel/plugin-proposal-class-properties', { loose: true }],
-      '@babel/plugin-proposal-json-strings',
-      (cliInstance.get('injectBabel') === 'runtime' || buildComponentSrc) ? [
-        '@babel/plugin-transform-runtime',
-        {
-          corejs: false,
-          helpers: true,
-          regenerator: true,
-          useESModules: false,
-        },
-      ] : null,
-      [
-        'babel-plugin-import',
-        { libraryName: '@icedesign/base' },
-        '@icedesign/base',
-      ],
-      ['babel-plugin-import', { libraryName: '@alife/next' }, '@alife/next'],
-      ['babel-plugin-import', { libraryName: '@alifd/next' }, '@alifd/next'],
-
-      buildConfig.babelPluginImportConfig ? [
-        'babel-plugin-import', buildConfig.babelPluginImportConfig,
-      ] : null,
-    ]),
+    plugins: resolvePlugin(plugins),
   };
 };

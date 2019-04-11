@@ -15,7 +15,7 @@ module.exports = function (buildConfig = {}) {
     return;
   }
 
-  // HACK：放在回调中执行，是为了避免两个任务的 log 信息混在一起
+  // 放在回调中执行，是为了避免两个任务的 log 信息混在一起
   buildDemo(buildConfig, (err) => {
     if (!err) {
       // modify package.json homepage
