@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.5
+
+
 ## 1.9.4
 
 - [fix] 将 webpack 固定在 `4.28.x`，解决 npm 扁平化 + webpack 4.29 导致动态 import 语法报错问题
