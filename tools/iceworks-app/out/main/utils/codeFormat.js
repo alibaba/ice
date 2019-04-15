@@ -1,1 +1,0 @@
-const e=require("prettier"),r=require("../config");module.exports=function(t,i){return e.format(t,Object.assign({},r.prettier,i))};

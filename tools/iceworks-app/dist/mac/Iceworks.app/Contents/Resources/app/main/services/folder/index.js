@@ -1,1 +1,0 @@
-const{shell:e,dialog:o}=require("electron");module.exports={open:o=>{e.showItemInFolder(o)},selector:(e=["openDirectory","createDirectory"])=>new Promise((r,t)=>{o.showOpenDialog({properties:e},e=>{e&&e.length>0?r(e):t()})})};

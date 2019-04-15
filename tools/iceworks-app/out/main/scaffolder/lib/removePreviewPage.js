@@ -1,1 +1,0 @@
-const e=require("path"),r=require("path-exists"),a=require("./removePageV3"),t=require("./removePageV4");module.exports=async function({clientSrcPath:i}){const o=e.join(i,"routerConfig.js");r.sync(o)?await t({clientSrcPath:i,pageFolderName:"IceworksPreviewPage",routerPath:"/IceworksPreviewPage"}):await a({clientSrcPath:i,pageFolderName:"IceworksPreviewPage"})};

@@ -1,1 +1,0 @@
-const e=require("../../config"),n="cn";module.exports=function(n,o={},c){const t=(e.locale[n]||e.locale.unknown).cn;return new Promise(e=>{c({type:n,message:t,data:o},n=>{e(n)})})};

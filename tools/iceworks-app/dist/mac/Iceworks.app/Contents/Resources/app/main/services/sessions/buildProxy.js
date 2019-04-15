@@ -1,1 +1,0 @@
-const s=require("./manager");class e{constructor(){this.sessions={}}start(e,t=(()=>{})){const n=s.new(e,t);this.sessions[e.cwd]=n,n.on("exit",()=>{this.delete(e.cwd)})}has(s){return!!this.sessions[s]}delete(s){delete this.sessions[s]}checkRuning(){return Object.keys(this.sessions).length>0}}module.exports=new e;

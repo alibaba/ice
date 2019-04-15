@@ -1,0 +1,39 @@
+{
+  "publish": [
+    {
+      "provider": "generic",
+      "url": "http://iceworks.oss-cn-hangzhou.aliyuncs.com/${os}"
+    }
+  ],
+  "appId": "com.alibaba-inc.ice",
+  "asar": false,
+  "directories": {
+    "app": "out"
+  },
+  "extraResources": [
+    {
+      "from": "./bin-${platform}",
+      "to": "./bin"
+    },
+    {
+      "from": "./binary/${platform}",
+      "to": "./binary"
+    }
+  ],
+  "files": ["**/*"],
+  "mac": {
+    "category": "iceworks.app.category.type",
+    "icon": "build/icons/mac/icon.icns"
+  },
+  "win": {
+    "icon": "build/icons/win/icon.ico",
+    "artifactName": "${productName}-setup-${version}.${ext}"
+  },
+  "dmg": {
+    "iconSize": 160
+  },
+  "protocols": {
+    "name": "iceworks",
+    "schemes": ["iceworks"]
+  }
+}
