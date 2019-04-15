@@ -11,23 +11,16 @@ const compileES5 = require('./compile-es5');
 
 const renderer = new marked.Renderer();
 
-const LANGS = [
-  'css',
-  'style',
-  'bash',
-  'json',
-  'jsx',
-  'js',
-  'html',
-];
+let importStyle = false;
 
-const styleTemplate = `
+// css 注入到页面中
+const styleTemplate = '<style>%s</style>';
+const codeTemplate = `
   <div class="markdown">
     <div class="highlight highlight-%s">
       <pre><code language="%s">%s</code></pre>
     </div>
   </div>
-  <style>%s</style>
 `;
 
 renderer.code = function (code, lang) {
@@ -35,24 +28,21 @@ renderer.code = function (code, lang) {
   if (!lang) {
     lang = 'jsx';
   }
+  const html = prismjs.highlight(code, prismjs.languages[lang] || prismjs.languages.html);
 
-  const html = prismjs.highlight(code, prismjs.languages[lang]);
-  if (LANGS.indexOf(lang) > -1) {
-    return util.format(styleTemplate, lang, lang, html, code);
+  if (importStyle) {
+    if (lang === 'css' || lang === 'style') {
+      return util.format(styleTemplate, code);
+    }
   }
-
-  return html;
+  return util.format(codeTemplate, lang, lang, html);
 };
 
 renderer.heading = function (text, level) {
   let escapedText = text.replace(/\s+/g, '-');
   escapedText = escapedText.toLowerCase();
   escapedText = escapedText.replace(/^-+?|-+?$/, '');
-  return `<h${level}>${text}<a id="user-content-${escapedText}" name="${
-    escapedText
-  }" class="anchor" aria-hidden="true" href="#${
-    escapedText
-  }"><span class="octicon octicon-link"></span></a></h${level}>`;
+  return `<h${level}>${text}<a id="user-content-${escapedText}" name="${escapedText}" class="anchor" aria-hidden="true" href="#${escapedText}"><span class="octicon octicon-link"></span></a></h${level}>`;
 };
 
 renderer.link = function (href, title, text) {
@@ -98,19 +88,28 @@ exports.parseMarkdownParts = function parseMarkdownParts(md, options = {}) {
     result.content = splited[1];
   }
 
-  if (options.sliceCode) {
-    const CODE_REG = /(````)(?:jsx?)([^\1]*?)(\1)/g;
+  importStyle = !!result.meta.importStyle;
 
-    const codeMatched = CODE_REG.exec(result.content);
-    if (codeMatched) {
-      result.code = codeMatched[2] || '';
-      result.content = result.content.slice(0, codeMatched.index);
+  if (options.sliceCode) {
+    const JSX_REG = /(````)(?:jsx?)([^\1]*?)(\1)/g;
+    const STYLE_REG = /(````)(?:css|style?)([^\1]*?)(\1)/g;
+
+    const jsxMatched = JSX_REG.exec(result.content);
+    const styleMatched = STYLE_REG.exec(result.content);
+
+    if (jsxMatched) {
+      result.code = jsxMatched[2] || '';
+      result.content = result.content.replace(jsxMatched[0], '');
+    }
+
+    if (styleMatched) {
+      const styleCode = styleMatched[2] || '';
+      result.highlightedStyle = prismjs.highlight(styleCode.trim(), prismjs.languages.css);
     }
 
     result.highlightedCode = prismjs.highlight(result.code.trim(), prismjs.languages.jsx);
     result.compiledCode = compileES5(result.code);
   }
-
   result.content = marked(result.content);
 
   return result;
