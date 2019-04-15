@@ -37,11 +37,6 @@ module.exports = function (pkgData, buildType) {
       buildConfig.entry = {
         index: generateEntryJs(demos),
       };
-      // buildConfig.output = {
-      //   path: path.resolve(paths.appDirectory, 'build'),
-      //   publicPath: './',
-      //   filename: '[name].js',
-      // };
       buildConfig.output = {
         publicPath: './',
       };
