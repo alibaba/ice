@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { ipcRenderer } from 'electron';
+import { hot } from 'react-hot-loader';
+import { ipcRenderer, remote } from 'electron';
+import semver from 'semver';
 import { Button, Progress } from '@icedesign/base';
 import requestMaterial from '../../lib/request-material';
 import logger from '../../lib/logger';
-import { hot } from 'react-hot-loader';
-
-const OSS_CDN_DOMAIN = __OSS_CDN_DOMAIN__;
+import services from '../../services';
 
 // 载入默认全局样式 normalize 、.clearfix 和一些 mixin 方法等
 import '@icedesign/base/reset.scss';
 import './App.scss';
+
+const { settings } = services;
+const OSS_CDN_DOMAIN = __OSS_CDN_DOMAIN__;
 
 class Updater extends Component {
   constructor(props) {
@@ -41,8 +44,8 @@ class Updater extends Component {
           this.fetchVersionLog(meta);
         }
         this.setState({
-          event: event,
-          meta: meta,
+          event,
+          meta,
         });
       }
     });
@@ -77,8 +80,40 @@ class Updater extends Component {
   };
 
   handleUpdaterInstall = () => {
+    this.checkRaxAndAngularMaterials();
+
     ipcRenderer.send('app-quit-install');
     ipcRenderer.send('updater-install');
+  };
+
+  /**
+   * 2.19.0 版本删除小程序和 Angular 的物料源，旧版本升级会进行检查并删除
+   */
+  checkRaxAndAngularMaterials = () => {
+    const { meta = {} } = this.state;
+    const materials = settings.get('materials');
+    const APP_VERSION = remote.app.getVersion();
+    const CHECK_VERSION = '2.19.0';
+
+    if (
+      semver.lt(APP_VERSION, CHECK_VERSION) &&
+      semver.gte(meta.version, CHECK_VERSION)
+    ) {
+      if (materials && materials.length) {
+        settings.set(
+          'materials',
+          materials.filter((material) => {
+            if (
+              ['小程序物料源', 'Angular 物料源'].includes(material.name) &&
+              material.builtIn
+            ) {
+              return false;
+            }
+            return true;
+          })
+        );
+      }
+    }
   };
 
   fetchVersionLog = (meta) => {
