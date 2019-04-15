@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import io from 'socket.io-client';
+import socket from '@libs/socket';
 import menuConfig from '../menuConfig';
 import routerConfig from '../routerConfig';
-import Aside from '../components/Aside';
-import RouteRender from '../components/RouteRender';
-import ConnectionBar from '../components/ConnectionBar';
-
-const endpoint = 'http://127.0.0.1:7001';
-const socket = io(endpoint);
+import Aside from '@components/Aside';
+import RouteRender from '@components/RouteRender';
+import ConnectionBar from '@components/ConnectionBar';
 
 class MainLayout extends Component {
   state = {
@@ -19,17 +16,12 @@ class MainLayout extends Component {
       this.setState({
         connect: true,
       });
-      socket.emit('chat', 'Hello World!!!');
     });
 
     socket.on('disconnect', () => {
       this.setState({
         connect: false,
       });
-    });
-
-    socket.on('res', (msg) => {
-      console.log('res from server: %s!', msg);
     });
   }
 

@@ -1,1 +1,0 @@
-const e=require("./locale");module.exports={locale:e,prettier:{singleQuote:!0,trailingComma:"es5"},routesTagPrefix:"",routesTagSuffix:"",navsTagPrefix:"",navsTagSuffix:""};

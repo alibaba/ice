@@ -1,1 +1,0 @@
-const{statStorage:e}=require("./services/storage"),r=require("./logger"),t=require("./glodlog"),o=require("./services/settings");module.exports={record(){const a=o.get("isAlibaba"),s=(new Date).toDateString();e.get()!==s&&(r.debug("dav record"),e.set(s),t.record({type:"app",action:"dau",group:a?"alibaba":"outer"}))}};

@@ -1,1 +1,0 @@
-const e=require("rimraf"),r=require("path"),t=require("mkdirp"),a=require("../../.."),o=r.join(__dirname,"tmp");e.sync(o),t.sync(o),module.exports=(async()=>{const r=(await a.getCategories())[0],t=await a.getBlockList({category:r.name});t.should.to.be.an("array"),t[0].should.to.be.an("object"),t[0].id.should.to.be.a("number"),t[0].npm.should.to.be.a("string"),e.sync(o)});
