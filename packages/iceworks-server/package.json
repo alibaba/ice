@@ -1,0 +1,48 @@
+{
+  "name": "iceworks-server",
+  "version": "1.0.0",
+  "description": "iceworks server",
+  "private": true,
+  "dependencies": {
+    "egg-scripts": "^2.10.0",
+    "egg-socket.io": "^4.1.5",
+    "midway": "^1.0.0",
+    "socket.io-client": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.5.5",
+    "egg-ci": "^1.8.0",
+    "midway-bin": "1",
+    "midway-mock": "1",
+    "tslib": "^1.8.1",
+    "tslint-midway-contrib": "1",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=egg-server-iceworks-server --framework=midway",
+    "stop": "egg-scripts stop --title=egg-server-iceworks-server",
+    "start_build": "npm run build && NODE_ENV=development midway-bin dev",
+    "dev": "NODE_ENV=local midway-bin dev --ts",
+    "debug": "NODE_ENV=local midway-bin debug --ts",
+    "test": "npm run lint && midway-bin test --ts",
+    "cov": "midway-bin cov --ts",
+    "lint": "tslint -c tslint.json --project .",
+    "ci": "npm run cov",
+    "build": "midway-bin build -c"
+  },
+  "ci": {
+    "version": "8, 10"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "chenbin92",
+  "license": "MIT"
+}

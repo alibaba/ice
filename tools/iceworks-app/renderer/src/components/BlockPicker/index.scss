@@ -1,0 +1,220 @@
+.block-picker-wrapper {
+  width: calc(100vw - 50px);
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  > .header {
+    height: 46px;
+    line-height: 46px;
+    background-color: #eee;
+    padding: 0 20px;
+  }
+  > .body {
+    display: flex;
+    flex: auto;
+  }
+  > .footer {
+    height: 46px;
+    line-height: 46px;
+    background-color: #eee;
+    padding: 0 20px;
+    text-align: center;
+    .next-btn:first-child {
+      margin-right: 10px;
+    }
+  }
+}
+// overwrite
+.block-picker-dialog {
+  overflow: hidden;
+  .next-dialog-body {
+    padding: 0;
+    border-radius: 6px;
+  }
+}
+
+/************** panel *********************/
+// input.blocks-search-input {
+//   background-image: url('../../static/search.png');
+//   background-position: 98% center;
+//   background-repeat: no-repeat;
+//   background-size: 17px 17px;
+//   border: 1px solid #eee;
+//   border-radius: 3px;
+//   font-size: 12px;
+//   height: 28px;
+//   line-height: 28px;
+//   text-indent: 10px;
+//   width: 100%;
+//   transition: all 0.15s ease-in;
+//   &:focus {
+//     outline: none;
+//     border: 1px solid $color-brand1-5;
+//   }
+//   &::placeholder {
+//     color: #999;
+//   }
+// }
+.block-picker-panel {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  &-header {
+    height: 40px;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    > .title {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 40px;
+      width: 140px;
+      padding-left: 20px;
+      color: #333;
+    }
+  }
+  &-wrapper {
+    flex: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    height: 10px;
+  }
+}
+
+.block-picker-tab-parent {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  > .next-tabs-content {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    > .next-tabs-tabpane.active {
+      display: flex !important;
+      flex: auto;
+      flex-direction: column;
+    }
+  }
+  .next-tabs-nav-extra {
+    float: right;
+    line-height: 40px;
+  }
+  .next-tabs-bar {
+    border-bottom: 1px solid #f3f3f3;
+  }
+}
+.block-picker-tab {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  // .next-tabs-bar {
+  //   overflow-y: auto;
+  //   min-width: 120px;
+  //   max-width: 120px;
+  //   border-bottom: none !important;
+  // }
+  .next-tabs-content {
+    overflow-y: auto;
+    flex: auto;
+    display: flex;
+  }
+}
+
+/* ===============  previewer ======================= */
+
+.preview-wrapper {
+  flex: 0 0 38%;
+  padding: 0 20px;
+  border-left: 2px solid #f3f3f3;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 1000px) {
+    & {
+      flex: 0 0 242px;
+    }
+  }
+  .page-editor-preview {
+    padding: 2px;
+    filter: drop-shadow(0 0 2px rgba(210, 199, 199, 0.7));
+    flex: auto;
+    overflow-y: auto;
+  }
+}
+
+/* ================================ layout ============================ */
+.layout-options-wrapper {
+  flex-direction: row;
+  flex: 0 0 60px;
+  height: 60px;
+  position: relative;
+  border-bottom: 2px solid #f3f3f3;
+
+  .layout-title {
+    margin-top: 10px;
+    height: 40px;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 40px;
+    width: 140px;
+    padding-left: 20px;
+    color: #333;
+  }
+  .layout-loading {
+    height: 40px;
+    line-height: 40px;
+    position: absolute;
+    left: 120px;
+    right: 20px;
+    top: 10px;
+    font-size: 14px;
+    color: #999;
+  }
+  .layout-options-body {
+    position: absolute;
+    left: 140px;
+    right: 20px;
+    top: 0px;
+    height: 60px;
+    padding-top: 10px;
+    padding-left: 3px;
+    overflow-x: auto;
+  }
+  .layout-option + .layout-option {
+    margin-left: 20px;
+  }
+}
+
+.layout-option {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  float: left;
+  align-items: center;
+  justify-content: conter;
+  box-shadow: 0px 0px 2px 1px #d6e6ff;
+  border-radius: 10px;
+  cursor: pointer;
+  &.layout-option-selected {
+    opacity: 1;
+    box-shadow: 0px 0px 2px 1px rgba(48, 128, 254, 1);
+  }
+  .layout-option-screenshots {
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 4px;
+    .layout-option-screenshots-img {
+      width: 50px;
+      height: 50px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+    }
+  }
+}

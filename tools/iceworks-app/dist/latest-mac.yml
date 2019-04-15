@@ -1,0 +1,10 @@
+version: 2.19.0
+files:
+  - url: Iceworks-2.19.0-mac.zip
+    sha512: t7VESS6XXaRBYUcjYXyqvwLVmwnlzyCt32wnpd4l25USHvexNjUa5cmOQEeaXYy+H6PGndhhuku1XU1t9pp/JA==
+  - url: Iceworks-2.19.0.dmg
+    sha512: 3PR2XgMAVrPZ3jk4KT6S8eMbhJOQwUinWQlSFy7cMngH22GrSOOWrCQu1HFqEz4+TI/BUDMHbss0lUpW/D132A==
+    size: 94484706
+path: Iceworks-2.19.0-mac.zip
+sha512: t7VESS6XXaRBYUcjYXyqvwLVmwnlzyCt32wnpd4l25USHvexNjUa5cmOQEeaXYy+H6PGndhhuku1XU1t9pp/JA==
+releaseDate: '2019-04-12T07:07:12.602Z'

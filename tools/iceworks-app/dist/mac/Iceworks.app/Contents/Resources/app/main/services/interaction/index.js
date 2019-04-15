@@ -1,0 +1,1 @@
+const r=require("./notify"),e=require("./alert"),i=require("./confirm");module.exports={notify:r,alert:e,confirm:i};

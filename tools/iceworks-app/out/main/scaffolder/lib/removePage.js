@@ -1,0 +1,1 @@
+const e=require("path"),r=require("path-exists"),a=require("./removePageV3"),t=require("./removePageV4");module.exports=async function({clientSrcPath:i,pageFolderName:o}){const c=e.join(i,"routerConfig.js");r.sync(c)?await t({clientSrcPath:i,pageFolderName:o}):await a({clientSrcPath:i,pageFolderName:o})};

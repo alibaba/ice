@@ -1,0 +1,1 @@
+module.exports={CUSTOM_EDITOR:"CustomShell",ExternalEditor:{VisualStudioCode:"Visual Studio Code",SublimeText:"Sublime Text 3",Atom:"Atom",WebStorm:"WebStorm",CustomShell:"\u81ea\u5b9a\u4e49\u7f16\u8f91\u5668\u542f\u52a8\u811a\u672c"},ExternalEditorError:class extends Error{constructor(t,e={}){super(t),this.metadata=e}}};

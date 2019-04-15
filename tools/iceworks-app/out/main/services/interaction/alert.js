@@ -1,0 +1,1 @@
+const{dialog:e}=require("electron");module.exports=(({title:o,message:s})=>{const t=windows&&windows.home;e.showMessageBox(t,{type:"error",title:o,message:s})});

@@ -1,0 +1,1 @@
+const{isWin:e}=require("../../shared");let r={Terminal:"Terminal",iTerm2:"iTerm2"};e&&(r={Cmd:"Command Prompt",PowerShell:"PowerShell",GitBash:"Git Bash"}),module.exports={Shell:r,ExternalShellError:class extends Error{constructor(e,r={}){super(e),this.metadata=r}}};

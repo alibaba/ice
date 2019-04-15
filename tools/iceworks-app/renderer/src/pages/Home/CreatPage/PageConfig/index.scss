@@ -1,0 +1,28 @@
+.next-form-item {
+  margin-bottom: 0 !important;
+}
+
+.next-form {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  .next-form-item + .next-form-item {
+    margin-top: 20px !important;
+  }
+}
+
+.create-process {
+  width: 320px;
+  margin: 12px auto 0 auto;
+  padding-left: 22px;
+  font-size: 12px;
+  color: #2eca9c;
+}
+
+.overlay-demo {
+  border: 1px solid #999;
+  padding: 10px;
+  width: 600px;
+  height: 300px;
+  background: #fff;
+  box-shadow: 2px 2px 20px rgba(0,0,0,0.15);
+}

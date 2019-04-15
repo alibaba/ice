@@ -1,0 +1,1 @@
+const r=require("uuid").v4(),e=require("rimraf"),i=require("mkdirp"),u=require("os"),o=require("path"),s=require("../../logger"),q=o.join(u.tmpdir(),r);i.sync(q),s.debug(q),process.on("exit",()=>{e.sync(q)}),module.exports=q;

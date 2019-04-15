@@ -1,0 +1,42 @@
+.custom-materials {
+  margin-bottom: 20px;
+
+  .cm-list, .cm-list-empty {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .cm-list-empty {
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+
+  .cm-item {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    padding: 0 20px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background-color: #fefefe;
+    box-shadow: 0px 0px 2px 1px rgba(47, 53, 55, 0.1);
+
+    .cm-item-name {
+      width: 20%;
+      font-weight: bold;
+    }
+
+    .cm-item-source {
+      width: 50%;
+    }
+
+    .cm-item-action {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

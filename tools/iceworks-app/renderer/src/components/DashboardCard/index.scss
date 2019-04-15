@@ -1,0 +1,39 @@
+.dashboard-card-wrapper {
+  .dashboard-card {
+    border-radius: 6px;
+    background-color: #fff;
+    height: 280px;
+  }
+  .dashboard-card-header {
+    height: 45px;
+    line-height: 24px;
+    background-color: #f9fbff;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+    flex-direction: row;
+    justify-content: space-between;
+    > div {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .dashboard-card-body {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    overflow-y: auto;
+    padding: 0 10px;
+    max-height: 280px - 45px;
+    min-height: 280px - 45px;
+    box-sizing: border-box;
+    .dashboard-card-body-innner {
+      overflow-x: auto;
+      padding: 10px 0;
+      min-height: 280px - 45px;
+    }
+  }
+}

@@ -1,0 +1,1 @@
+const{getEnv:e}=require("../env"),n=require("../logger"),{exec:r}=require("child_process");module.exports=function(){r("node --version",{env:e()},(e,r,o)=>{n.debug("node version:",r+o)}),r("npm --version",{env:e()},(e,r,o)=>{n.debug("npm version:",r+o)})};

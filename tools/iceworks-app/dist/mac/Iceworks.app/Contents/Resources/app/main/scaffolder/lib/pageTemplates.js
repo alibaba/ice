@@ -1,0 +1,1 @@
+const e=require("fs"),r=require("path"),i=require("ejs");require("./makeTempDir");const t=r.join(__dirname,"../templates");module.exports=(a=>e.readdirSync(t).filter(e=>0===e.indexOf(a)).map(n=>{const l=r.join(t,n),m=e.readFileSync(l,"utf-8");return{compile:i.compile(m,{}),filePath:l,fileName:n.replace(`${a}.`,"")}}));
