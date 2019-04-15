@@ -80,16 +80,16 @@ class Updater extends Component {
   };
 
   handleUpdaterInstall = () => {
-    this.checkRaxAndAngularMaterials();
+    this.checkRaxMaterials();
 
     ipcRenderer.send('app-quit-install');
     ipcRenderer.send('updater-install');
   };
 
   /**
-   * 2.19.0 版本删除小程序和 Angular 的物料源，旧版本升级会进行检查并删除
+   * 2.19.0 版本删除小程序的物料源，旧版本升级会进行检查并删除
    */
-  checkRaxAndAngularMaterials = () => {
+  checkRaxMaterials = () => {
     const { meta = {} } = this.state;
     const materials = settings.get('materials');
     const APP_VERSION = remote.app.getVersion();
@@ -103,10 +103,7 @@ class Updater extends Component {
         settings.set(
           'materials',
           materials.filter((material) => {
-            if (
-              ['小程序物料源', 'Angular 物料源'].includes(material.name) &&
-              material.builtIn
-            ) {
+            if (['rax'].includes(material.key) && material.builtIn) {
               return false;
             }
             return true;
