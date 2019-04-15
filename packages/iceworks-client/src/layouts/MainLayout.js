@@ -4,6 +4,7 @@ import menuConfig from '../menuConfig';
 import routerConfig from '../routerConfig';
 import Aside from '../components/Aside';
 import RouteRender from '../components/RouteRender';
+import ConnectionBar from '../components/ConnectionBar';
 
 const endpoint = 'http://127.0.0.1:7001';
 const socket = io(endpoint);
@@ -35,17 +36,9 @@ class MainLayout extends Component {
   render() {
     const { connect } = this.state;
     return (
-      <div className="main-layout">
-        <div
-          style={{
-            background: '#e83030',
-            color: '#fff',
-            padding: '10px 0',
-            textAlign: 'center',
-          }}
-        >
-          {connect ? '已连接' : '连接中断'}
-        </div>
+      <div className="mainLayout">
+        <ConnectionBar connect={connect} />
+
         <Aside menuData={menuConfig} />
 
         {routerConfig.map((route, index) => (
