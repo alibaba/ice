@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import io from 'socket.io-client';
+import socket from '@libs/socket';
 import menuConfig from '../menuConfig';
 import routerConfig from '../routerConfig';
 import Aside from '../components/Aside';
 import RouteRender from '../components/RouteRender';
-
-const endpoint = 'http://127.0.0.1:7001';
-const socket = io(endpoint);
 
 class MainLayout extends Component {
   state = {
