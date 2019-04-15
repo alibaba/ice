@@ -4,6 +4,7 @@ const url = require('url');
 
 const pkgData = require('../config/packageJson');
 const cliInstance = require('../utils/cliInstance');
+const getBuildConfig = require('./getBuildConfig');
 
 function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
@@ -13,7 +14,7 @@ function resolveSDK(relativePath) {
 const getPublicUrl = (appPackageJson) => {
   // eslint-disable-next-line
   const appPackage = require(appPackageJson);
-  const buildConfig = appPackage.buildConfig || {};
+  const buildConfig = getBuildConfig(pkgData);
   if (buildConfig && (buildConfig.publicURL || buildConfig.publicUrl)) {
     return buildConfig.publicURL || buildConfig.publicUrl;
   }
