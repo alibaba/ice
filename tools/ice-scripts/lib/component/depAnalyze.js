@@ -2,25 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const babel = require('@babel/core');
-
-const babelPluginTransformLibImport = interopRequire(
-  'babel-plugin-transform-lib-import'
-);
-const babelPluginTransformModulesCommonjs = interopRequire(
-  'babel-plugin-transform-es2015-modules-commonjs'
-);
-const babelPluginTransformExport = interopRequire(
-  'babel-plugin-transform-export-extensions'
-);
-const babelPluginExportDefault = interopRequire(
-  '@babel/plugin-proposal-export-default-from'
-);
-
-function interopRequire(id) {
-  const mod = require(id);
-  return mod && mod.__esModule ? mod.default : mod;
-}
 
 function getFileContent(filepath) {
   try {
@@ -45,42 +26,6 @@ function analyzeDependenciesRequire(str) {
     result.push(_result[1]);
   }
   return result;
-}
-
-// import { Button } from 'yyy';
-// import { XYZ as xyz } from 'yyy';
-// import XX from 'yyy/lib/yyy';
-// export default from 'xxx';
-// export XXX from 'yyy';
-function analyzeDependenciesImport(str) {
-  const result = [];
-  let _result = null;
-  let importStatements = '';
-  const reg = /(import|export).*from.*/g;
-  while ((_result = reg.exec(str))) {
-    importStatements += `${_result[0]}\n`;
-  }
-
-  if (!importStatements) {
-    return result;
-  }
-
-  const transformed = babel.transform(importStatements, {
-    plugins: [
-      babelPluginExportDefault,
-      babelPluginTransformExport,
-      [babelPluginTransformModulesCommonjs, { noInterop: true }],
-      [babelPluginTransformLibImport, { libraryName: '@icedesign/base' }, '@icedesign/base'],
-      [babelPluginTransformLibImport, { libraryName: '@alife/next' }, '@alife/next'],
-      [babelPluginTransformLibImport, { libraryName: '@alifd/next' }, '@alifd/next'],
-    ],
-  });
-
-  return analyzeDependenciesRequire(transformed.code);
-}
-
-function analyzeDependencies(str) {
-  return analyzeDependenciesImport(str).concat(analyzeDependenciesRequire(str));
 }
 
 // 数组去重
@@ -113,7 +58,8 @@ module.exports = function (entryFilePath) {
     }
     tracedFiles[filename] = true;
     const fileContent = getFileContent(filename);
-    const _result = dedupe(analyzeDependencies(fileContent));
+    // 编译后代码和依赖模块应该均符合commonjs规范，分析require依赖即可
+    const _result = dedupe(analyzeDependenciesRequire(fileContent));
 
     result = result.concat(_result);
     _result.forEach((module) => {
