@@ -4,8 +4,10 @@
   "description": "iceworks server",
   "private": true,
   "dependencies": {
+    "egg-scripts": "^2.10.0",
+    "egg-socket.io": "^4.1.5",
     "midway": "^1.0.0",
-    "egg-scripts": "^2.10.0"
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",

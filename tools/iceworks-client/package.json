@@ -9,7 +9,8 @@
     "react": "^16.8.6",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.0"
+    "react-router-dom": "^5.0.0",
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",

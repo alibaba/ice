@@ -10,7 +10,7 @@ export class UserController {
   @get('/:id')
   async getUser(ctx): Promise<void> {
     const id: number = ctx.params.id;
-    const user: IUserResult = await this.service.getUser({id});
-    ctx.body = {success: true, message: 'OK', data: user};
+    const user: IUserResult = await this.service.getUser({ id });
+    ctx.body = { success: true, message: 'OK', data: user };
   }
 }
