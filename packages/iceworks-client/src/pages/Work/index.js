@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RouteRender from '../../components/RouteRender';
+import RouteRender from '@components/RouteRender';
 
 export default class Work extends Component {
   render() {
