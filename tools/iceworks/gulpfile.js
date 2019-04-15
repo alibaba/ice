@@ -1,4 +1,4 @@
-/* eslint camelcase:0, array-callback-return:0 */
+/* eslint camelcase:0, array-callback-return:0, space-before-function-paren:0 */
 const cleancss = require('gulp-clean-css');
 const co = require('co');
 const es = require('event-stream');
