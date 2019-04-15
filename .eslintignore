@@ -27,7 +27,5 @@ packages/ice-skin-loader
 packages/ice-template-builder
 packages/iceworks-scaffolder
 
-# 忽略 tools 部分包
-# tools/ice-devtools
-# tools/ice-scripts
-tools/iceworks
+# tools
+tools/iceworks/renderer/public/
