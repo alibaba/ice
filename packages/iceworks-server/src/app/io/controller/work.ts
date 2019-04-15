@@ -1,7 +1,5 @@
-'use strict';
-
-module.exports = (app) => {
-  class Controller extends app.Controller {
+export default (app) => {
+  return class Controller extends app.Controller {
     async index() {
       const message = this.ctx.args[0];
       console.log('=============');
@@ -10,6 +8,5 @@ module.exports = (app) => {
       const say = await 'Hello Man!';
       this.ctx.socket.emit('res', say);
     }
-  }
-  return Controller;
+  };
 };

@@ -11,11 +11,7 @@ export = (appInfo: any) => {
   config.io = {
     namespace: {
       '/': {
-        connectionMiddleware: ['auth'],
-        packetMiddleware: ['filter'],
-      },
-      '/chat': {
-        connectionMiddleware: ['auth'],
+        connectionMiddleware: [],
         packetMiddleware: [],
       },
     },
