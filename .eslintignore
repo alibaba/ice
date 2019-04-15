@@ -26,3 +26,6 @@ packages/ice-layout-builder
 packages/ice-skin-loader
 packages/ice-template-builder
 packages/iceworks-scaffolder
+
+# tools
+tools/iceworks/renderer/public/
