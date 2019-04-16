@@ -41,6 +41,7 @@ class AdditionalBlocks {
     this.newBlocks = isNewlyBlock;
     return blocks;
   };
+
   @computed
   get blocksWithCategory() {
     const result = [];

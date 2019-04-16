@@ -55,14 +55,14 @@ module.exports = async function ({
     ImportDeclaration(pathNode) {
       const { node } = pathNode;
       if (
-        t.isStringLiteral(node.source) &&
-        node.source.value === pageImportPath
+        t.isStringLiteral(node.source)
+        && node.source.value === pageImportPath
       ) {
         // 获取页面对应的组件名。
         node.specifiers.forEach((specifier) => {
           if (
-            t.isImportDefaultSpecifier(specifier) &&
-            t.isIdentifier(specifier.local)
+            t.isImportDefaultSpecifier(specifier)
+            && t.isIdentifier(specifier.local)
           ) {
             componentName = specifier.local.name;
           }
@@ -76,8 +76,8 @@ module.exports = async function ({
   traverse(routerConfigAST, {
     VariableDeclarator({ node }) {
       if (
-        t.isIdentifier(node.id, { name: ROUTER_CONFIG }) &&
-        t.isArrayExpression(node.init)
+        t.isIdentifier(node.id, { name: ROUTER_CONFIG })
+        && t.isArrayExpression(node.init)
       ) {
         // 过滤path
         node.init.elements = node.init.elements.filter((element) => {
@@ -113,8 +113,8 @@ module.exports = async function ({
     traverse(menuConfigAST, {
       VariableDeclarator(pathNode) {
         if (
-          t.isIdentifier(pathNode.node.id, { name: MENU_CONFIG }) &&
-          t.isArrayExpression(pathNode.node.init)
+          t.isIdentifier(pathNode.node.id, { name: MENU_CONFIG })
+          && t.isArrayExpression(pathNode.node.init)
         ) {
           // 移除menu配置
           pathNode.node.init.elements = removePageMenuConfig(pathNode.node.init.elements, routerPath);

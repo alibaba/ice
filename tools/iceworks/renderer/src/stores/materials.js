@@ -19,14 +19,19 @@ const { settings, shared } = services;
 class Materials {
   @observable
   materials = [];
+
   @observable
   refreshing = false;
+
   @observable
   tabBlockActiveKey = '';
+
   @observable
   tabScaffoldActiveKeyValue = '';
+
   @observable
   tabComponentActiveKey = '';
+
   @observable
   startRecommendMaterials = {};
 
@@ -153,8 +158,7 @@ class Materials {
             this.loadStartRecommendMaterials();
           } else {
             startRecommendMaterials.loaded = true;
-            startRecommendMaterials.error =
-              '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
+            startRecommendMaterials.error = '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
           }
         });
     } else {
@@ -201,8 +205,7 @@ class Materials {
         let promiseAll;
         if (isIceMaterial(material.source)) {
           const { iceBaseMaterials } = shared;
-          const iceBaseMaterial =
-            iceVersion === '0.x' ? iceBaseMaterials[0] : iceBaseMaterials[1];
+          const iceBaseMaterial = iceVersion === '0.x' ? iceBaseMaterials[0] : iceBaseMaterials[1];
 
           promiseAll = Promise.all([
             this.fetchByMaterial(material.source),
@@ -229,15 +232,14 @@ class Materials {
             // 判断是否是官方提供的物料源
             // 只有官方提供的物料源才会走兜底逻辑使用内置的物料数据
             if (
-              !this.useBuiltinData &&
-              material.source.includes('ice.alicdn.com')
+              !this.useBuiltinData
+              && material.source.includes('ice.alicdn.com')
             ) {
               this.useBuiltinData = true;
               this.loaderMaterial(index);
             } else {
               material.loaded = true;
-              const errMsg =
-                '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
+              const errMsg = '物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
               material.error = errMsg;
             }
           });
@@ -252,16 +254,14 @@ class Materials {
         // 如果是官方提供的 React 物料源单独获取基础组件数据
         let iceComponentsData = [];
         if (isIceMaterial(material.source)) {
-          const iceComponentsSourceName =
-            iceVersion === '0.x' ? 'base-components' : 'base-components-1.x';
+          const iceComponentsSourceName = iceVersion === '0.x' ? 'base-components' : 'base-components-1.x';
           iceComponentsData = require(`../datacenter/data/${iceComponentsSourceName}`);
         }
 
         fn(materialsData, iceComponentsData);
       } else {
         material.loaded = true;
-        const errMsg =
-          '内置物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
+        const errMsg = '内置物料源加载失败，建议将此问题反馈给飞冰（ICE）团队，在菜单中点击: 帮助 => 反馈问题';
         material.error = errMsg;
       }
     }
