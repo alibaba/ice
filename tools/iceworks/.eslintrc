@@ -43,6 +43,8 @@
     "import/no-unresolved": 0,
     "import/no-extraneous-dependencies": 0,
     "import/prefer-default-export": 0,
+    "import/order": 1,
+    "import/named": 1,
     "prefer-destructuring": 0,
     "no-param-reassign": 0,
     "no-return-assign": 0,
