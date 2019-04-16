@@ -31,9 +31,9 @@ function appStateKeeper(app, win) {
       // windows 平台，给与提示
       // eslint-disable-next-line no-lonely-if
       if (
-        (sessions.buildProxy.checkRuning() ||
-          sessions.startProxy.checkRuning()) &&
-        !forceClose
+        (sessions.buildProxy.checkRuning()
+          || sessions.startProxy.checkRuning())
+        && !forceClose
       ) {
         event.preventDefault();
         dialog.showMessageBox(

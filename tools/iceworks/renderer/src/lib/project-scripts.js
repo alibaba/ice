@@ -90,11 +90,24 @@ const doProjectInstall = ({ cwd, env, shell, callback }, reInstall) => {
           content: (
             <div>
               <p>
-                1. 请检查 {shell} 命令是否安装了，没有请执行 $ [sudo] npm
-                install --registry={registryInfo.value} -g {shell} 进行安装
+                1. 请检查
+                {' '}
+                {shell}
+                {' '}
+命令是否安装了，没有请执行 $ [sudo] npm
+                install --registry=
+                {registryInfo.value}
+                {' '}
+-g
+                {' '}
+                {shell}
+                {' '}
+进行安装
               </p>
               <p>
-                2. 已安装 {shell}
+                2. 已安装
+                {' '}
+                {shell}
                 ，请检查网络连接是否正常，可展开【运行日志】日志查看详细反馈信息
               </p>
             </div>
@@ -197,7 +210,11 @@ export default {
                 title: '端口冲突',
                 content: (
                   <div style={{ lineHeight: '24px' }}>
-                    <div>默认端口 `{DEFAULT_PORT}` 已被占用</div>
+                    <div>
+默认端口 `
+                      {DEFAULT_PORT}
+` 已被占用
+                    </div>
                     <div>
                       是否使用
                       <input
@@ -384,8 +401,8 @@ export default {
             terms.writeln(cwd, '清理 node_modules 目录完成');
             terms.writeln(cwd, `\n当前下载源：${registry}\n`);
             if (
-              !isAlibaba &&
-              registry.indexOf('registry.npm.taobao.org') === -1
+              !isAlibaba
+              && registry.indexOf('registry.npm.taobao.org') === -1
             ) {
               terms.writeln(
                 cwd,

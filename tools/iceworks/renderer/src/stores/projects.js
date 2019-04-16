@@ -16,7 +16,9 @@ const { projectsStorage, recordStorage } = storage;
 /* eslint no-console:off */
 /** 项目列表存储管理 */
 class Projects extends EventEmitter {
-  @observable list = []; // 项目列表
+  @observable list = [];
+
+  // 项目列表
   @observable currentProject; // 当前项目
 
   // 安装面板可见
@@ -132,8 +134,7 @@ class Projects extends EventEmitter {
       logger.debug('删除到回收站', trashRemove);
     }
 
-    const isRemoveCurrent =
-      this.currentProject && this.currentProject.fullPath === path;
+    const isRemoveCurrent = this.currentProject && this.currentProject.fullPath === path;
 
     this.list = this.list.filter((project) => project.fullPath !== path);
 

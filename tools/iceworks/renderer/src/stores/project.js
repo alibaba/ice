@@ -23,23 +23,35 @@ const homeDir = os.homedir();
 
 class Project {
   @observable
-  hasScriptsBuild = false; // build 命令
+  hasScriptsBuild = false;
+
+  // build 命令
   @observable
-  hasScriptsStart = false; // start 命令
+  hasScriptsStart = false;
+
+  // start 命令
   @observable
-  isDependenciesInstalling = false; // 所有项目安装中
+  isDependenciesInstalling = false;
+
+  // 所有项目安装中
   @observable
   isPageCreating = false;
+
   @observable
   isProjectExist = true;
+
   @observable
   projectName = '';
+
   @observable
   pkgData = {};
+
   @observable
   logs = [];
+
   @observable
   terminalVisible = false;
+
   /**
    * 服务状态
    *
@@ -47,20 +59,32 @@ class Project {
    */
   @observable
   statusDev = 'normal';
+
   @observable
   statusBuild = 'normal';
+
   @observable
   serverUrl = '';
+
   @observable
   serverPort = 4444;
+
   @observable
-  statusCompile = 'normal'; // 项目的编译状态
+  statusCompile = 'normal';
+
+  // 项目的编译状态
   @observable
-  statusCompileProgress = 0; // 编译进度
+  statusCompileProgress = 0;
+
+  // 编译进度
   @observable
-  statusCloudBuild = 'normal'; // 编译进度
+  statusCloudBuild = 'normal';
+
+  // 编译进度
   @observable
-  needInstallDeps = false; // 是否为新项目? 新项目首次打开提示安装依赖
+  needInstallDeps = false;
+
+  // 是否为新项目? 新项目首次打开提示安装依赖
   @observable
   nodeFramework = ''; // 服务端模板类型
 
@@ -81,19 +105,18 @@ class Project {
       this.statusDev = 'notexist';
     }
 
-    this.projectName =
-      (this.pkgData && this.pkgData.title) ||
-      getDefaultProjectName(this.fullPath);
+    this.projectName = (this.pkgData && this.pkgData.title)
+      || getDefaultProjectName(this.fullPath);
 
     this.hasScriptsStart = !!(
-      this.pkgData &&
-      this.pkgData.scripts &&
-      this.pkgData.scripts.start
+      this.pkgData
+      && this.pkgData.scripts
+      && this.pkgData.scripts.start
     );
     this.hasScriptsBuild = !!(
-      this.pkgData &&
-      this.pkgData.scripts &&
-      this.pkgData.scripts.build
+      this.pkgData
+      && this.pkgData.scripts
+      && this.pkgData.scripts.build
     );
 
     this.scaffold = new IceworksScaffolder({
@@ -197,19 +220,18 @@ class Project {
       this.statusDev = 'normal';
     }
 
-    this.projectName =
-      (this.pkgData && this.pkgData.title) ||
-      getDefaultProjectName(this.fullPath);
+    this.projectName = (this.pkgData && this.pkgData.title)
+      || getDefaultProjectName(this.fullPath);
 
     this.hasScriptsStart = !!(
-      this.pkgData &&
-      this.pkgData.scripts &&
-      this.pkgData.scripts.start
+      this.pkgData
+      && this.pkgData.scripts
+      && this.pkgData.scripts.start
     );
     this.hasScriptsBuild = !!(
-      this.pkgData &&
-      this.pkgData.scripts &&
-      this.pkgData.scripts.build
+      this.pkgData
+      && this.pkgData.scripts
+      && this.pkgData.scripts.build
     );
   }
 
@@ -226,8 +248,7 @@ class Project {
       return defaultType;
     }
 
-    const libraryType =
-      pkgData && pkgData.scaffoldConfig && pkgData.scaffoldConfig.type;
+    const libraryType = pkgData && pkgData.scaffoldConfig && pkgData.scaffoldConfig.type;
 
     if (libraryType) {
       return libraryType;
@@ -246,9 +267,8 @@ class Project {
     // 不够通用的逻辑
     const hasVue = vueDeps.some((d) => allDeps.includes(d));
     const hasReact = reactDeps.some((d) => allDeps.includes(d));
-    const reactWithoutIce =
-      this.pkgData.templateType &&
-      this.pkgData.templateType === 'react';
+    const reactWithoutIce = this.pkgData.templateType
+      && this.pkgData.templateType === 'react';
     const hasAngularCli = angularDeps.some((d) => allDeps.includes(d));
 
     if (hasVue) {
@@ -297,12 +317,10 @@ class Project {
     // 不够通用的逻辑
     const hasVue = vueDeps.some((d) => allDeps.includes(d));
     const hasReact = reactDeps.some((d) => allDeps.includes(d));
-    const reactWithoutIce =
-      this.pkgData.templateType &&
-      this.pkgData.templateType === 'react';
-    const customIceMaterial =
-      this.pkgData.templateType &&
-      this.pkgData.templateType === 'custom';
+    const reactWithoutIce = this.pkgData.templateType
+      && this.pkgData.templateType === 'react';
+    const customIceMaterial = this.pkgData.templateType
+      && this.pkgData.templateType === 'custom';
     const hasAngularCli = angularDeps.some((d) => allDeps.includes(d));
 
     if (hasVue) {
@@ -334,6 +352,7 @@ class Project {
     this.statusDev = 'working';
     this.statusCompileProgress = 0;
   }
+
   // 停止调试服务
   @action
   devStop() {
@@ -341,14 +360,17 @@ class Project {
     this.statusCompileProgress = 0;
     this.serverUrl = '';
   }
+
   @action
   buildStart() {
     this.statusBuild = 'building';
   }
+
   @action
   buildDone() {
     this.statusBuild = 'done';
   }
+
   @action
   buildFailed() {
     this.statusBuild = 'failed';
@@ -358,6 +380,7 @@ class Project {
   installStart() {
     this.isDependenciesInstalling = true;
   }
+
   @action
   installDone() {
     this.isDependenciesInstalling = false;
@@ -383,6 +406,7 @@ class Project {
   get isWorking() {
     return this.statusDev === 'working';
   }
+
   // 操作不可用
   @computed
   get actionDisabled() {
@@ -397,15 +421,13 @@ class Project {
     if (!this.pkgData) {
       return true;
     }
-    const icescriptsRequired =
-      this.pkgData.devDependencies &&
-      (this.pkgData.devDependencies['ice-scripts'] ||
-        this.pkgData.devDependencies['@vue/cli-service']);
+    const icescriptsRequired = this.pkgData.devDependencies
+      && (this.pkgData.devDependencies['ice-scripts']
+        || this.pkgData.devDependencies['@vue/cli-service']);
 
     // support create-react-app
-    const reactWithoutIceValidate =
-      this.pkgData.templateType &&
-      this.pkgData.templateType === 'react';
+    const reactWithoutIceValidate = this.pkgData.templateType
+      && this.pkgData.templateType === 'react';
 
     // 关键字匹配，存在 ice-scaffold 字符表示适配 iceworks
     const keywordsHasIce = (this.pkgData.keywords || []).includes(
@@ -415,17 +437,16 @@ class Project {
     const icesdriptsVersion = semver.valid(semver.coerce(icescriptsRequired));
 
     // todo vue cli 是被 hack 通过检测，需要后面抽出套机进行处理
-    const icescriptsAvailable =
-      icescriptsRequired === 'latest' ||
-      icescriptsRequired === 'beta' ||
-      (icesdriptsVersion && semver.gte(icesdriptsVersion, '1.0.0'));
+    const icescriptsAvailable = icescriptsRequired === 'latest'
+      || icescriptsRequired === 'beta'
+      || (icesdriptsVersion && semver.gte(icesdriptsVersion, '1.0.0'));
 
     const unavailable = !(
-      this.exists &&
-      this.isProjectExist &&
-      this.hasScriptsBuild &&
-      this.hasScriptsStart &&
-      (icescriptsAvailable || reactWithoutIceValidate || keywordsHasIce)
+      this.exists
+      && this.isProjectExist
+      && this.hasScriptsBuild
+      && this.hasScriptsStart
+      && (icescriptsAvailable || reactWithoutIceValidate || keywordsHasIce)
     );
 
     return unavailable;
@@ -440,7 +461,7 @@ class Project {
       // 兼容老koa模板
       if (pkgData.templateType === 'Koa' || pkgData.templateType === 'koa') {
         return 'koa';
-      } else if (NODE_FRAMEWORKS.includes(pkgData.templateType)) {
+      } if (NODE_FRAMEWORKS.includes(pkgData.templateType)) {
         return pkgData.templateType;
       }
       return '';
