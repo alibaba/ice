@@ -9,21 +9,6 @@ function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
 }
 
-// We use "buildConfig.publicURL" at which the app is served.
-const getPublicUrl = (appPackageJson) => {
-  // eslint-disable-next-line
-  const appPackage = require(appPackageJson);
-  const buildConfig = appPackage.buildConfig || {};
-  if (buildConfig && (buildConfig.publicURL || buildConfig.publicUrl)) {
-    return buildConfig.publicURL || buildConfig.publicUrl;
-  }
-  if (buildConfig.localization) {
-    return './';
-  }
-  // 默认值为相对于当前域名绝对路径
-  return '/';
-};
-
 function ensureSlash(path, needsSlash) {
   const hasSlash = path.endsWith('/');
   if (hasSlash && !needsSlash) {
@@ -36,11 +21,32 @@ function ensureSlash(path, needsSlash) {
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-function getServedPath(appPackageJson) {
-  const publicUrl = getPublicUrl(appPackageJson);
-  // publicUrl 不存在的情况下，则使用 homepage 作为部署路径
-  const servedUrl = publicUrl ? url.parse(publicUrl).pathname : '/';
-  return ensureSlash(servedUrl, true);
+function getPublicPath(appPackageJson) {
+  let publicPath;
+
+  // eslint-disable-next-line
+  const appPackage = require(appPackageJson);
+  const buildConfig = appPackage.buildConfig || {};
+
+  // 定制逻辑
+  if (buildConfig.localization) {
+    publicPath = './';
+  }
+
+  // 兼容逻辑： buildConfig 自定义 publicURL/publicUrl？
+  if (buildConfig.publicURL || buildConfig.publicUrl) {
+    publicPath = url.parse(buildConfig.publicURL || buildConfig.publicUrl).pathname;
+  }
+
+  // buildConfig 自定义 output.publicPath
+  if (buildConfig.output && buildConfig.output.publicPath) {
+    publicPath = buildConfig.output.publicPath;
+  }
+
+  // 默认 '/'
+  publicPath = publicPath || '/';
+
+  return ensureSlash(publicPath, true);
 }
 
 const appDirectory = realpathSync(process.cwd());
@@ -74,8 +80,7 @@ module.exports = {
   appSrc: resolveApp('src'),
   appNodeModules: resolveApp('node_modules'),
   sdkNodeModules: resolveSDK('../../node_modules'),
-  publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json')),
+  publicPath: getPublicPath(resolveApp('package.json')),
   resolveApp,
   appDirectory,
 };

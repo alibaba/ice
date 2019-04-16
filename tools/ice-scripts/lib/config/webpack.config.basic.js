@@ -73,7 +73,7 @@ module.exports = function getWebpackConfigBasic({ buildConfig = {} }) {
       {
         path: paths.appBuild,
         filename: path.join(buildConfig.outputAssetsPath.js || '', (cliInstance.get('hash') ? '[name].[hash:6].js' : '[name].js')),
-        publicPath: paths.servedPath,
+        publicPath: paths.publicPath,
       },
       buildConfig.output || {}
     ),
