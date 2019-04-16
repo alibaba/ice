@@ -7,7 +7,7 @@ const remote = {
     const remoteConfig = {
       level: 'error',
     };
-    const alilog = alifeLogger.singleton({
+    const remoteLog = alifeLogger.singleton({
       pid: 'cippwynyfx@7e33275a2b3909b',
       enableSPA: true,
       useFmp: true,
@@ -24,7 +24,7 @@ const remote = {
 
       return (...args) => {
         if (needLog) {
-          alilog.error(args[0]);
+          remoteLog.error(args[0]);
         }
 
         rawMethod(...args);
@@ -36,6 +36,7 @@ const remote = {
   },
 };
 
+const GLOBAL_NAEME = 'iceworks';
 prefix.reg(loglevel);
 prefix.apply(loglevel, {
   template: '[%t] %l (%n):',
@@ -43,7 +44,7 @@ prefix.apply(loglevel, {
     return level.toUpperCase();
   },
   nameFormatter(name) {
-    return name || 'iceworks';
+    return name || GLOBAL_NAEME;
   },
   timestampFormatter(date) {
     return date.toISOString();
