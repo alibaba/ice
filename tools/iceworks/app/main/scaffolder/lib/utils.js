@@ -64,10 +64,10 @@ async function downloadBlocksToPage({
             npm: block.npm,
             version: block.version,
           });
-        } else if (
-          block.source &&
-          block.source.type === 'npm' &&
-          block.type !== 'custom'
+        } if (
+          block.source
+          && block.source.type === 'npm'
+          && block.type !== 'custom'
         ) {
           let version = block.source.version;
           // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
@@ -80,7 +80,7 @@ async function downloadBlocksToPage({
             npm: block.source.npm,
             registry: block.source.registry,
           });
-        } else if (block.type === 'custom') {
+        } if (block.type === 'custom') {
           return getDependenciesFromCustom(block);
         }
       })
@@ -143,8 +143,7 @@ async function downloadBlockToPage(
   // 根据项目版本下载
   const pkg = getPackageByPath(clientPath);
   const projectVersion = getProjectVersion(pkg);
-  const blockName =
-    block.alias || upperCamelCase(block.name) || block.className;
+  const blockName = block.alias || upperCamelCase(block.name) || block.className;
 
   let err, tarballURL, allFiles;
 

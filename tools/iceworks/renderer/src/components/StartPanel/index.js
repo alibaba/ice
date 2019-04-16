@@ -23,11 +23,13 @@ class StartPanel extends Component {
   };
 
   componentDidMount() {
-    this.props.materials.loadStartRecommendMaterials();
+    const { materials } = this.props;
+    materials.loadStartRecommendMaterials();
   }
 
   openExistProject = () => {
-    this.props.projects.addFromFinder();
+    const { projects } = this.props;
+    projects.addFromFinder();
   };
 
   gotoCreateProject = () => {
@@ -37,6 +39,7 @@ class StartPanel extends Component {
   render() {
     const {
       materials: { startRecommendMaterials },
+      handleSelectedScaffold,
     } = this.props;
     const { scaffolds = [] } = startRecommendMaterials;
 
@@ -56,7 +59,7 @@ class StartPanel extends Component {
               return (
                 <ScaffoldItem
                   key={index}
-                  createProject={this.props.handleSelectedScaffold}
+                  createProject={handleSelectedScaffold}
                   data={material}
                   isOfficialSource
                 />

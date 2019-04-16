@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-const createICEApp = require('../lib');
 const path = require('path');
 
 const cwd = process.cwd();
 const destDir = path.join(cwd, process.argv[3] || '');
 const inquirer = require('inquirer');
 const spawnSync = require('child_process').spawnSync;
+const createICEApp = require('../lib');
 
 console.log('CREATE ICE APP');
 

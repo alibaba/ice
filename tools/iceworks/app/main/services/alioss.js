@@ -35,9 +35,9 @@ const upload2oss = async (options, selectedBucket, bucketDirectory = '/', assets
         }
         return Promise.resolve({
           code: 1,
-          message: `上传失败，请检查网络连接 (${(object.res &&
-            object.res.status) ||
-            0})。`,
+          message: `上传失败，请检查网络连接 (${(object.res
+            && object.res.status)
+            || 0})。`,
         });
       })
         .catch((error) => {

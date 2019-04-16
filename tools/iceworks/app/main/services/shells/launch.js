@@ -17,7 +17,7 @@ exports.launchShell = async (shell, path) => {
 
   if (is.osx()) {
     return Darwin.launch(shell, path);
-  } else if (is.windows()) {
+  } if (is.windows()) {
     return Win32.launch(shell, path);
   }
   // else if (__LINUX__) {

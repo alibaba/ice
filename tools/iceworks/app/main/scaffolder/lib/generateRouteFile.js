@@ -62,25 +62,24 @@ export default (
  */
 module.exports = function generateRouteFile(dir, routes) {
   const layouts = [];
-  const imports =
-    `${routes
-      .map((route) => {
-        // redirect 一类的没用
-        let layoutImportStatement = '';
-        if (route.page) {
-          if (route.layout && !layouts.includes(route.layout)) {
-            layouts.push(route.layout);
-            layoutImportStatement = `import ${route.layout} from './layouts/${
-              route.layout
-            }';\n`;
-          }
-          return `${layoutImportStatement}import ${route.page} from './pages/${
-            route.page
-          }';`;
+  const imports = `${routes
+    .map((route) => {
+      // redirect 一类的没用
+      let layoutImportStatement = '';
+      if (route.page) {
+        if (route.layout && !layouts.includes(route.layout)) {
+          layouts.push(route.layout);
+          layoutImportStatement = `import ${route.layout} from './layouts/${
+            route.layout
+          }';\n`;
         }
-        return '';
-      })
-      .join('\n')}\n`;
+        return `${layoutImportStatement}import ${route.page} from './pages/${
+          route.page
+        }';`;
+      }
+      return '';
+    })
+    .join('\n')}\n`;
 
   const routeMap = {};
   routes.forEach((route) => {
