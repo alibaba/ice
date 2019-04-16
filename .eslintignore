@@ -11,21 +11,21 @@ coverage/
 
 templates
 
-# templorarily ignore tools
-tools/clean-css-parallel
-tools/css-prefix-plugin
-tools/eslint-config-ice
-tools/extract-css-assets-webpack-plugin
-# tools/ice-devtools
-tools/ice-layout-builder
-# tools/ice-npm-utils
-# tools/ice-scripts
-tools/ice-skin-loader
-tools/ice-template-builder
-tools/iceworks
-tools/iceworks-scaffolder
-tools/koa-generator
-tools/props-schema-generator
-tools/uglify-parallel
-tools/webpack-dev-mock
-tools/webpack-plugin-import
+# 忽略 packages 部分包
+# packages/ice-npm-utils
+packages/clean-css-parallel
+packages/css-prefix-plugin
+packages/eslint-config-ice
+packages/extract-css-assets-webpack-plugin
+packages/koa-generator
+packages/props-schema-generator
+packages/uglify-parallel
+packages/webpack-dev-mock
+packages/webpack-plugin-import
+packages/ice-layout-builder
+packages/ice-skin-loader
+packages/ice-template-builder
+packages/iceworks-scaffolder
+
+# tools
+tools/iceworks/renderer/public/
