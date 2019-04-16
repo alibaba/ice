@@ -23,4 +23,4 @@ module.exports = function checkEmpty(dir) {
       return resolve(true);
     });
   });
-}
+};
