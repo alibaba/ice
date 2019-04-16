@@ -5,7 +5,6 @@
 process.env.NODE_ENV = 'development';
 
 const fs = require('fs');
-const path = require('path');
 const chalk = require('chalk');
 const clearConsole = require('react-dev-utils/clearConsole');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -15,6 +14,7 @@ const deepmerge = require('deepmerge');
 const openBrowser = require('react-dev-utils/openBrowser');
 
 const paths = require('./config/paths');
+const getBuildConfig = require('./config/getBuildConfig');
 const getWebpackConfigDev = require('./config/webpack.config.dev');
 const devMiddleware = require('./devMiddleware');
 const iceworksClient = require('./iceworksClient');
@@ -26,7 +26,6 @@ const pkgData = require('../package.json');
 const projectPkgData = require('./config/packageJson');
 const log = require('./utils/log');
 const checkDepsInstalled = require('./utils/checkDepsInstalled');
-const getDemos = require('./component/getDemos');
 
 module.exports = async function (cliOptions, subprocess) {
   goldlog('version', {
@@ -75,22 +74,7 @@ module.exports = async function (cliOptions, subprocess) {
   if (cliOptions.disabledReload) {
     log.warn('关闭了热更新（hot-reload）功能');
   }
-
-  const buildConfig = projectPkgData.buildConfig || projectPkgData.ice || {};
-
-  if (projectPkgData.type === 'component') {
-    // dev 组件：每个 demo 是一个 entry
-    const componentEntry = {};
-    const demos = getDemos(paths.appDirectory);
-
-    demos.forEach((demo) => {
-      const demoName = demo.filename;
-      const demoFile = path.join(paths.appDirectory, 'demo', `${demoName}.md`);
-      componentEntry[`__Component_Dev__.${demoName}`] = demoFile;
-    });
-
-    buildConfig.entry = componentEntry;
-  }
+  const buildConfig = getBuildConfig(projectPkgData, 'dev');
 
   const webpackConfig = getWebpackConfigDev({
     buildConfig,

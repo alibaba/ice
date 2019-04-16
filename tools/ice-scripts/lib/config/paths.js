@@ -4,6 +4,7 @@ const url = require('url');
 
 const pkgData = require('../config/packageJson');
 const cliInstance = require('../utils/cliInstance');
+const getBuildConfig = require('./getBuildConfig');
 
 function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
@@ -21,12 +22,9 @@ function ensureSlash(path, needsSlash) {
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-function getPublicPath(appPackageJson) {
+function getPublicPath() {
   let publicPath;
-
-  // eslint-disable-next-line
-  const appPackage = require(appPackageJson);
-  const buildConfig = appPackage.buildConfig || {};
+  const buildConfig = getBuildConfig(pkgData);
 
   // 定制逻辑
   if (buildConfig.localization) {
@@ -80,7 +78,7 @@ module.exports = {
   appSrc: resolveApp('src'),
   appNodeModules: resolveApp('node_modules'),
   sdkNodeModules: resolveSDK('../../node_modules'),
-  publicPath: getPublicPath(resolveApp('package.json')),
+  publicPath: getPublicPath(),
   resolveApp,
   appDirectory,
 };
