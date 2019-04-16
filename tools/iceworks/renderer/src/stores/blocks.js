@@ -17,26 +17,42 @@ const { shared } = services;
 class Blocks {
   @observable
   visible = false;
+
   @observable
   isLoading = true;
+
   @observable
   keywords = [];
+
   @observable
-  originKeywords = ''; // 原搜索关键词
+  originKeywords = '';
+
+  // 原搜索关键词
   @observable
-  materialsValue = []; // 物料源列表
+  materialsValue = [];
+
+  // 物料源列表
   @observable
   originBlocks = [];
+
   @observable
   categories = [];
+
   @observable
-  selected = []; // 区块选择器已选择的区块
+  selected = [];
+
+  // 区块选择器已选择的区块
   @observable
   isSorting = false;
+
   @observable
-  showModal = false; // 图片预览弹窗
+  showModal = false;
+
+  // 图片预览弹窗
   @observable
-  previewBlock = {}; // 当前预览的区块
+  previewBlock = {};
+
+  // 当前预览的区块
   @observable
   currentTabKey = '0'; // 记录当前选中的Tab
 
@@ -120,6 +136,7 @@ class Blocks {
   }
 
   timer = null;
+
   // search 关键字搜索
   @action
   search(key) {
@@ -204,11 +221,10 @@ class Blocks {
 
   generateBlockAliasName(blockAlias, count, existBlocks) {
     const name = count === 0 ? blockAlias : blockAlias + count;
-    const isConflict =
-      this.selected.some((block) => {
-        return block.alias === name;
-      }) ||
-      existBlocks.some((blockName) => {
+    const isConflict = this.selected.some((block) => {
+      return block.alias === name;
+    })
+      || existBlocks.some((blockName) => {
         return blockName === name;
       });
 

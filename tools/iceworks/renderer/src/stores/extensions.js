@@ -13,6 +13,7 @@ const { settings } = services;
 class Extensions {
   @observable
   orderByNameValue = [];
+
   @observable
   isSorting = false;
 

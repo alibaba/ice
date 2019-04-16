@@ -365,7 +365,7 @@ class PageConfig extends Component {
         onClose={this.handleClose}
         onCancel={this.handleClose}
         // afterClose={this.handleAfterClose}
-        footer={
+        footer={(
           <div>
             <Button
               disabled={this.props.newpage.isCreating}
@@ -383,7 +383,7 @@ class PageConfig extends Component {
               确定
             </Button>
           </div>
-        }
+)}
       >
         <Form
           size="small"
@@ -473,4 +473,3 @@ class PageConfig extends Component {
 }
 
 export default PageConfig;
-

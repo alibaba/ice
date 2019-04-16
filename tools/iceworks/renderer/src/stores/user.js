@@ -3,6 +3,7 @@ import { observable, action } from 'mobx';
 
 class User {
   @observable visible = false;
+
   @observable data = {}
 
   @action
