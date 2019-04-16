@@ -1,4 +1,4 @@
-const path = require('path');
+const { resolve } = require('path');
 
 module.exports = (context) => {
   return {
@@ -7,8 +7,9 @@ module.exports = (context) => {
     },
     resolve: {
       alias: {
-        '@components': path.resolve(__dirname, 'src/components/'),
-        '@utils': path.resolve(__dirname, 'src/utils/'),
+        '@layouts': resolve(__dirname, 'src/layouts/'),
+        '@components': resolve(__dirname, 'src/components/'),
+        '@utils': resolve(__dirname, 'src/utils/'),
       },
     },
   };

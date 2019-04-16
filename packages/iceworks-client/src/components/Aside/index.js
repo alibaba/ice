@@ -10,7 +10,7 @@ export default class Aside extends Component {
   };
 
   getSubMenuOrItem = (item, index) => {
-    if (item.children && item.children.some((child) => child.name)) {
+    if (item.children && item.children.some(child => child.name)) {
       const childrenItems = this.getNavMenuItems(item.children);
 
       if (childrenItems && childrenItems.length > 0) {

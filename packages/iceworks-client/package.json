@@ -4,8 +4,11 @@
   "description": "",
   "dependencies": {
     "@alifd/next": "^1.13.13",
+    "@alifd/theme-2": "^0.0.22",
+    "@alifd/theme-4": "^0.0.13",
     "@icedesign/theme": "^1.0.0",
     "classnames": "^2.2.6",
+    "deepmerge": "^3.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-document-title": "^2.0.3",

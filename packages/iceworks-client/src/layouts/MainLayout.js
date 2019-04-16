@@ -3,6 +3,7 @@ import socket from '@utils/socket';
 import Aside from '@components/Aside';
 import RouteRender from '@components/RouteRender';
 import ConnectionBar from '@components/ConnectionBar';
+import ThemeToggler from '@components/ThemeToggler';
 import menuConfig from '../menuConfig';
 import routerConfig from '../routerConfig';
 
@@ -32,6 +33,8 @@ class MainLayout extends Component {
         <ConnectionBar connect={connect} />
 
         <Aside menuData={menuConfig} />
+
+        <ThemeToggler />
 
         {routerConfig.map((route, index) => (
           <RouteRender key={index} {...route} />

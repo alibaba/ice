@@ -18,6 +18,7 @@
     "react/jsx-filename-extension": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "arrow-body-style": 0,
-    "react/no-array-index-key": 0
+    "react/no-array-index-key": 0,
+    "import/prefer-default-export": 0
   }
 }
