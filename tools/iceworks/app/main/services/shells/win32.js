@@ -2,7 +2,7 @@ const { spawn } = require('child_process');
 const Path = require('path');
 
 const { readRegistryKeySafe } = require('../../registry');
-const log = require('../../logger');
+const logger = require('../../logger');
 const { Shell } = require('./shared');
 
 const Default = Shell.Cmd;
@@ -65,12 +65,12 @@ exports.getAvailableShells = async function getAvailableShells() {
 function addErrorTracing(context, cp) {
   cp.stderr.on('data', (chunk) => {
     const text = chunk instanceof Buffer ? chunk.toString() : chunk;
-    log.debug(`[${context}] stderr: '${text}'`);
+    logger.debug(`[${context}] stderr: '${text}'`);
   });
 
   cp.on('exit', (code) => {
     if (code !== 0) {
-      log.debug(`[${context}] exit code: ${code}`);
+      logger.debug(`[${context}] exit code: ${code}`);
     }
   });
 }

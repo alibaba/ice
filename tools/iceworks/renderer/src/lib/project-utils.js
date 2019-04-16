@@ -1,8 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import services from '../services';
-
-const { log } = services;
+import logger from './logger';
 
 /* eslint-disable no-empty */
 /* eslint-disable camelcase */
@@ -24,7 +22,7 @@ export const isProject = async (projectPath) => {
     pkgData = JSON.parse(pkgData.toString());
     return pkgData;
   } catch (e) {
-    log.error(e);
+    logger.error(e);
     return false;
   }
 };
@@ -90,9 +88,9 @@ export const getDefaultProjectName = (projectPath) => {
 
   function is_letter(code) {
     return (
-      (code >= 97 && code <= 122) ||
-      (code >= 65 && code <= 90) ||
-      (code >= 0xaa && UNICODE.letter.test(String.fromCharCode(code)))
+      (code >= 97 && code <= 122)
+      || (code >= 65 && code <= 90)
+      || (code >= 0xaa && UNICODE.letter.test(String.fromCharCode(code)))
     );
   }
 
@@ -126,14 +124,14 @@ export const getDefaultProjectName = (projectPath) => {
   function isValid(ch) {
     const code = ch.charCodeAt(0);
     return (
-      is_letter(code) ||
-      is_digit(code) ||
-      ch === '.' ||
-      ch === '_' ||
-      is_unicode_connector_punctuation(ch) ||
-      is_unicode_format(ch) ||
-      is_unicode_combining_mark(ch) ||
-      is_unicode_digit(ch)
+      is_letter(code)
+      || is_digit(code)
+      || ch === '.'
+      || ch === '_'
+      || is_unicode_connector_punctuation(ch)
+      || is_unicode_format(ch)
+      || is_unicode_combining_mark(ch)
+      || is_unicode_digit(ch)
     );
   }
 
@@ -147,9 +145,9 @@ export const getDefaultProjectName = (projectPath) => {
    */
   function replaceAt(value, index, character) {
     return (
-      value.substr(0, index) +
-      character +
-      value.substr(index + character.length)
+      value.substr(0, index)
+      + character
+      + value.substr(index + character.length)
     );
   }
 
@@ -260,8 +258,8 @@ export const validateProjectName = (proejctName) => {
         const user = nameMatch[1];
         const pkg = nameMatch[2];
         if (
-          encodeURIComponent(user) === user &&
-          encodeURIComponent(pkg) === pkg
+          encodeURIComponent(user) === user
+          && encodeURIComponent(pkg) === pkg
         ) {
           return done(warnings, errors);
         }

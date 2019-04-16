@@ -2,14 +2,7 @@ import { Button, Tab, Dialog, Feedback, Progress } from '@icedesign/base';
 import { hot } from 'react-hot-loader';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-
 import { shell } from 'electron';
-import fecha from 'fecha';
-
-import './index.scss';
-
-const TabPane = Tab.TabPane;
-const Toast = Feedback.toast;
 
 import BlockPanel from '../../components/Block/Panel';
 import EmptyTips from '../../components/EmptyTips/';
@@ -18,6 +11,10 @@ import CustomBlockForm from '../../components/Block/CustomBlockForm';
 import CustomBlockPanel from '../../components/Block/CustomBlockPanel';
 import CustomBlockTrigger from '../../components/Block/Trigger';
 import BlockRenameForm from '../../components/Block/BlockRenameForm';
+import './index.scss';
+
+const TabPane = Tab.TabPane;
+const Toast = Feedback.toast;
 
 @inject('materials', 'customBlocks')
 @observer
@@ -119,14 +116,19 @@ class PageBlocks extends Component {
 
   renderCustomBlocksTabPanel = () => {
     const { blocksStorage } = this.props.customBlocks;
-    return (
-      <TabPane tab="自定义区块" key={-1} onClick={this.handleShowCustomBlocks.bind(this, true)}>
-        <div className="scaffold-items-wrapper">
-          <CustomBlockTrigger onClick={this.handleOpen} />
-          <CustomBlockPanel blocks={blocksStorage} />
-        </div>
-      </TabPane>
-    );
+    const hasCustomBlock = Object.keys(blocksStorage).length > 0;
+    if (hasCustomBlock) {
+      return (
+        <TabPane tab="自定义区块" key={-1} onClick={this.handleShowCustomBlocks.bind(this, true)}>
+          <div className="scaffold-items-wrapper" style={{ marginTop: '20px' }}>
+            <div className="custom-block-notice">由于自定义区块功能目前存在使用体验问题已下线，以下是您自定义的区块列表记录</div>
+            {/* <CustomBlockTrigger onClick={this.handleOpen} /> */}
+            <CustomBlockPanel blocks={blocksStorage} />
+          </div>
+        </TabPane>
+      );
+    }
+    return null;
   };
 
   renderBlockTabs = () => {
@@ -189,7 +191,10 @@ class PageBlocks extends Component {
         }
       >
         {this.renderMaterialsTabPanel()}
-        {this.renderCustomBlocksTabPanel()}
+        {/* 隐藏自定义区块功能
+          this.renderCustomBlocksTabPanel()
+          */
+        }
       </Tab>
     );
   };

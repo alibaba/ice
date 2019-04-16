@@ -9,7 +9,7 @@ let shellCache = null;
 const Default = (() => {
   if (is.osx()) {
     return Darwin.Default;
-  } else if (is.windows()) {
+  } if (is.windows()) {
     return Win32.Default;
   } // else {
   //   return Linux.Default;
@@ -24,7 +24,7 @@ const getAvailableShells = async () => {
   if (is.osx()) {
     shellCache = await Darwin.getAvailableShells();
     return shellCache;
-  } else if (is.windows()) {
+  } if (is.windows()) {
     shellCache = await Win32.getAvailableShells();
     return shellCache;
   } // else if (is.linux()) {
