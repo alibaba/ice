@@ -5,25 +5,26 @@ import alifeLogger from 'alife-logger';
 const remote = {
   apply(logger) {
     const remoteConfig = {
-      level: 'error'
+      level: 'error',
     };
-    const __bl = alifeLogger.singleton({
+    const alilog = alifeLogger.singleton({
       pid: 'cippwynyfx@7e33275a2b3909b',
       enableSPA: true,
       useFmp: true,
-      sendResource:true,
-      imgUrl: 'https://arms-retcode.aliyuncs.com/r.png?'
+      sendResource: true,
+      imgUrl: 'https://arms-retcode.aliyuncs.com/r.png?',
     });
-    
+
     const originalFactory = logger.methodFactory;
-    logger.methodFactory = function remoteMethodFactory(methodName, logLevel, loggerName) {
+    // eslint-disable-next-line
+    logger.methodFactory = function (methodName, logLevel, loggerName) {
       const rawMethod = originalFactory(methodName, logLevel, loggerName);
       const levelVal = logger.levels[methodName.toUpperCase()];
       const needLog = levelVal >= logger.levels[remoteConfig.level.toUpperCase()];
 
       return (...args) => {
         if (needLog) {
-          __bl.error(args[0]);
+          alilog.error(args[0]);
         }
 
         rawMethod(...args);
@@ -32,7 +33,7 @@ const remote = {
     logger.setLevel(logger.getLevel());
 
     return logger;
-  }
+  },
 };
 
 prefix.reg(loglevel);
