@@ -16,5 +16,5 @@ ReactDOM.render(
       <Route path="/" component={MainLayout} />
     </Router>
   </LocaleProvider>,
-  ICE_CONTAINER
+  ICE_CONTAINER,
 );
