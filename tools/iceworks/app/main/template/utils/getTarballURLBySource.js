@@ -26,10 +26,9 @@ module.exports = function getTarballURLBySource(source = {}, projectVersion) {
       version = source['version-0.x'] || source.version;
     }
 
-    const registry =
-      typeof source.npm === 'string' && source.npm.startsWith('@icedesign')
-        ? 'https://registry.npm.taobao.org'
-        : source.registry;
+    const registry = typeof source.npm === 'string' && source.npm.startsWith('@icedesign')
+      ? 'https://registry.npm.taobao.org'
+      : source.registry;
 
     let err, pkgData;
     [err, pkgData] = await to(

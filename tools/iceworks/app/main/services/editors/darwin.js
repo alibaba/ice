@@ -1,7 +1,7 @@
-const { ExternalEditor } = require('./shared');
 const appPath = require('app-path');
 const Path = require('path');
 const pathExists = require('path-exists');
+const { ExternalEditor } = require('./shared');
 const logger = require('../../logger');
 
 exports.parse = function parse(label) {

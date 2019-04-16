@@ -7,6 +7,7 @@ import projects from './projects';
 class AdditionalComponents {
   @observable
   activeCategory = '全部';
+
   @observable
   componentsValue = [];
 

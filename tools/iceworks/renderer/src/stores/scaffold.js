@@ -33,26 +33,38 @@ const WORKSPACE_KEY = 'iceworks-workspace';
 class Scaffold {
   @observable
   scaffoldValue = null;
+
   @observable
   layoutConfigValue = null;
+
   @observable
-  isLegalProjectName = false; // 没有被使用过的变量
+  isLegalProjectName = false;
+
+  // 没有被使用过的变量
   @observable
   projectName = '';
+
   @observable
   projectFolderName = '';
+
   @observable
   projectFolderNameValidation = '';
+
   @observable
   scaffolds = [];
+
   @observable
   visible = false;
+
   @observable
   tabScaffoldActiveKey = '';
+
   @observable
   workspacePath = localStorage.getItem(WORKSPACE_KEY) || defaultWorkspacePath;
+
   @observable
   nodeFramework = '';
+
   @observable
   isNode = false;
 
@@ -250,11 +262,11 @@ class Scaffold {
   get isDisabled() {
     // 以下情况禁用创建按钮
     return (
-      !this.scaffoldValue ||
-      this.projectFolderName.trim() === '' || // 项目名为空
-      this.projectFolderNameValidation !== '' || // 含错误信息
+      !this.scaffoldValue
+      || this.projectFolderName.trim() === '' // 项目名为空
+      || this.projectFolderNameValidation !== '' // 含错误信息
       // !this.isLegalProjectName || // 合法项目名
-      (progress && progress.visible)// 非初始状态
+      || (progress && progress.visible)// 非初始状态
     );
   }
 

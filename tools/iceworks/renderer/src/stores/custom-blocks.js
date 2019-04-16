@@ -21,40 +21,75 @@ const presentWorkbenchPath = onlineWorkbenchPath;
 
 class CustomBlocks {
   blockSaving = false;
+
   materialData = '';
+
   materialEngine = null;
+
   blockCounter = 0;
+
   paintOffset = {};
+
   paintHeight = 0;
+
   paintWidth = 0;
+
   iconData = '';
+
   dataLoading = false;
+
   capture = false;
+
   requestCount = 0;
+
   @observable blockEditing = false;
+
   @observable workBenchWindow = null;
+
   @observable visible = false;
+
   @observable showCustomBlocks = false;
+
   @observable isDisabled = false;
+
   @observable blockName = '';
+
   @observable blockAlias = '';
+
   @observable currentBlock = {};
+
   @observable blockJSON = '';
+
   @observable blockCode = {};
+
   @observable blockNameValidation = '';
+
   @observable renameVisible = false;
+
   @observable renameBlockName = '';
+
   @observable renameBlockAlias = '';
+
   @observable renameBlock = '';
+
   @observable blockDeps = [];
+
   @observable blocksStorage = {};
+
   @observable showModal = false;
+
   @observable previewBlock = {};
+
   @observable materialProgress = 0;
+
   @observable progressVisible = false;
+
   @observable progressRemaining = 0;
+
   @observable progressSpeed = 0;
+
   @observable progressTitle = '';
+
   @observable errorVisible = false;
 
   deepClone(value) {

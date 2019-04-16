@@ -2,14 +2,28 @@ import { observable, action, computed } from 'mobx';
 
 class Progress {
   @observable statusText = '';
+
   @observable visible = false;
+
   @observable showProgress = false;
+
   @observable showTerminal = false;
-  @observable progressValue = 0; // 进度
-  @observable progressSpeedValue = 0; // 下载速度
-  @observable progressRemainingValue = 0; // 剩余时间
-  @observable progressSection = 100; //
-  @observable SectionCount = 1; // 多文件下载合并进度, 几段
+
+  @observable progressValue = 0;
+
+  // 进度
+  @observable progressSpeedValue = 0;
+
+  // 下载速度
+  @observable progressRemainingValue = 0;
+
+  // 剩余时间
+  @observable progressSection = 100;
+
+  //
+  @observable SectionCount = 1;
+
+  // 多文件下载合并进度, 几段
   @observable currentCount = 1; // 每段长度
 
   @action

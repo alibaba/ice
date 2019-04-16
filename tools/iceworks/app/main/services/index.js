@@ -1,3 +1,5 @@
+const templateBuilderUtils = require('@icedesign/template-builder/utils/');
+const pty = require('node-pty');
 const editors = require('./editors');
 const folder = require('./folder');
 const interaction = require('./interaction');
@@ -11,12 +13,10 @@ const shared = require('../shared');
 const shells = require('./shells');
 const storage = require('./storage');
 const worker = require('./worker');
-const templateBuilderUtils = require('@icedesign/template-builder/utils/');
 const customBlocks = require('./customBlocks');
 const alioss = require('./alioss');
 const paths = require('../paths');
 
-const pty = require('node-pty');
 
 module.exports = {
   glodlog,

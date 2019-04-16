@@ -7,6 +7,7 @@ import { getCategoriesByBlocks } from '../datacenter/materials';
 class MaterialBlocks {
   @observable
   keywords = [];
+
   @observable
   newBlocks = [];
 
@@ -65,14 +66,15 @@ class MaterialBlocks {
     });
     return blocks;
   }
+
   @computed
   get blocksWithCategory() {
     const result = [];
     if (
-      Array.isArray(this.newBlocks) &&
-      this.newBlocks.length > 0 &&
-      this.keywords &&
-      this.keywords.length === 0
+      Array.isArray(this.newBlocks)
+      && this.newBlocks.length > 0
+      && this.keywords
+      && this.keywords.length === 0
     ) {
       result.push({
         category: '最新',

@@ -21,21 +21,35 @@ import scanLayout from '../datacenter/scanLayout';
  */
 class NewPage extends EventEmitter {
   @observable
-  layouts = []; // 所有 layouts
+  layouts = [];
+
+  // 所有 layouts
   @observable
   loading = true;
+
   @observable
-  currentLayout = []; // 当前选中的 layout
+  currentLayout = [];
+
+  // 当前选中的 layout
   @observable
-  visible = false; // 控制弹窗展示
+  visible = false;
+
+  // 控制弹窗展示
   @observable
-  savePageVisible = false; // 控制 page 保存 dialog 的显示
+  savePageVisible = false;
+
+  // 控制 page 保存 dialog 的显示
   @observable
-  isCreatingValue = false; // 用于控制 pageConfig 确定按钮 loading 状态
+  isCreatingValue = false;
+
+  // 用于控制 pageConfig 确定按钮 loading 状态
   @observable
   createProcess = '';
+
   @observable
-  createProcessEventName = ''; // 新建页面过程中的事件名
+  createProcessEventName = '';
+
+  // 新建页面过程中的事件名
   @observable
   progressVisible = false;
 
@@ -102,8 +116,7 @@ class NewPage extends EventEmitter {
     const projectPkgData = projects.currentProject.getPkgData();
     logger.info('scaned layouts', layouts);
 
-    const scaffoldConfig =
-      (projectPkgData && projectPkgData.scaffoldConfig) || {};
+    const scaffoldConfig = (projectPkgData && projectPkgData.scaffoldConfig) || {};
 
     logger.info('scaffoldConfig data', scaffoldConfig);
 
@@ -116,9 +129,8 @@ class NewPage extends EventEmitter {
     let currentLayout = layouts[0];
     if (Array.isArray(localLayouts) && localLayouts.length) {
       if (defaultLayout) {
-        currentLayout =
-          localLayouts.find((l) => l.folderName === defaultLayout) ||
-          localLayouts[0];
+        currentLayout = localLayouts.find((l) => l.folderName === defaultLayout)
+          || localLayouts[0];
       } else {
         currentLayout = localLayouts[0];
       }
@@ -129,6 +141,7 @@ class NewPage extends EventEmitter {
     this.pages = pages; // 获取页面数，用于生产页面时，默认的页面名
     this.loading = false;
   }
+
   // fetch failed 回调
   @action.bound
   fetchFailed(...args) {

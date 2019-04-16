@@ -1,10 +1,10 @@
+const parse = require('url-parse');
 const logger = require('./logger');
 const glodlog = require('./glodlog');
 
 const checkEnv = require('./helper/checkEnv');
 const network = require('./network');
 const spc = require('./spc');
-const parse = require('url-parse');
 
 const { app } = require('electron');
 
