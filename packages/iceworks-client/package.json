@@ -5,7 +5,10 @@
   "dependencies": {
     "@alifd/next": "^1.13.13",
     "@icedesign/theme": "^1.0.0",
+    "alife-logger": "^1.5.1",
     "classnames": "^2.2.6",
+    "loglevel": "^1.6.1",
+    "loglevel-plugin-prefix": "^0.8.4",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-document-title": "^2.0.3",
