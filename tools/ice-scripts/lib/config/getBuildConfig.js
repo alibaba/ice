@@ -2,15 +2,13 @@ const path = require('path');
 const getDemos = require('../component/getDemos');
 const generateEntryJs = require('../component/generateEntryJs');
 
-module.exports = function (pkgData, buildType) {
+module.exports = function (pkgData, cmdType) {
   const buildConfig = pkgData.buildConfig || pkgData.ice || {};
 
   if (pkgData.type === 'block') {
+    // buildConfig 内置区块的构建配置
     buildConfig.entry = 'demo/index.js';
-    if (buildType === 'build') {
-      buildConfig.output = {
-        publicPath: './',
-      };
+    if (cmdType === 'build') {
       buildConfig.outputAssetsPath = {
         css: '',
         js: '',
@@ -19,7 +17,7 @@ module.exports = function (pkgData, buildType) {
   }
 
   if (pkgData.type === 'component') {
-    if (buildType === 'dev') {
+    if (cmdType === 'dev') {
       // 组件 dev, demo 是一个 entry
       const componentEntry = {};
       const demos = getDemos(process.cwd());
@@ -31,20 +29,17 @@ module.exports = function (pkgData, buildType) {
       });
 
       buildConfig.entry = componentEntry;
-    } else if (buildType === 'buildDemo') {
+    } else if (cmdType === 'buildDemo') {
       // 构建组件demo+文档 -> build/index.html，构造 entry
       const demos = getDemos(process.cwd());
       buildConfig.entry = {
         index: generateEntryJs(demos),
       };
-      buildConfig.output = {
-        publicPath: './',
-      };
       buildConfig.outputAssetsPath = {
         css: '',
         js: '',
       };
-    } else if (buildType === 'buildSrc') {
+    } else if (cmdType === 'buildSrc') {
       // 构建 src -> lib
     }
   }
