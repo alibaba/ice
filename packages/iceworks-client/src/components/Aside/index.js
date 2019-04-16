@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export default class Aside extends Component {
+  static defaultProps = {
+    menuData: [],
+  };
+
+  static propTypes = {
+    menuData: PropTypes.array,
+  };
+
   getNavMenuItems = (menuData) => {
     return menuData.map((item, index) => {
       return this.getSubMenuOrItem(item, index);
@@ -10,7 +18,7 @@ export default class Aside extends Component {
   };
 
   getSubMenuOrItem = (item, index) => {
-    if (item.children && item.children.some((child) => child.name)) {
+    if (item.children && item.children.some(child => child.name)) {
       const childrenItems = this.getNavMenuItems(item.children);
 
       if (childrenItems && childrenItems.length > 0) {
@@ -35,7 +43,3 @@ export default class Aside extends Component {
     return <div>{this.getNavMenuItems(menuData)}</div>;
   }
 }
-
-Aside.propTypes = {
-  menuData: PropTypes.array,
-};

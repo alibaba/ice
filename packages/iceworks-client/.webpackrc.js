@@ -8,7 +8,7 @@ module.exports = (context) => {
     resolve: {
       alias: {
         '@components': path.resolve(__dirname, 'src/components/'),
-        '@libs': path.resolve(__dirname, 'src/libs/'),
+        '@utils': path.resolve(__dirname, 'src/utils/'),
       },
     },
   };

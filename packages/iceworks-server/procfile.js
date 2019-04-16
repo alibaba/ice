@@ -1,15 +1,11 @@
 // you can use this file to deploy by pandora
 // please use 'npm i pandora --save' first
 
-'use strict';
-
-module.exports = pandora => {
-
+module.exports = (pandora) => {
   /**
    * default is fork mode
    */
-  pandora
-    .fork('iceworks-server', require.resolve('midway/server'));
+  pandora.fork('iceworks-server', require.resolve('midway/server'));
 
   /**
    * you can use cluster mode to start application
@@ -28,5 +24,4 @@ module.exports = pandora => {
    * more features please visit our document.
    * https://github.com/midwayjs/pandora/
    */
-
 };
