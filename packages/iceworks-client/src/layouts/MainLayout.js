@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import socket from '@libs/socket';
-import menuConfig from '../menuConfig';
-import routerConfig from '../routerConfig';
+import socket from '@utils/socket';
 import Aside from '@components/Aside';
 import RouteRender from '@components/RouteRender';
 import ConnectionBar from '@components/ConnectionBar';
+import menuConfig from '../menuConfig';
+import routerConfig from '../routerConfig';
 
 class MainLayout extends Component {
   state = {
