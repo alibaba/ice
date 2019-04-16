@@ -22,7 +22,7 @@ import EmptyTips from '../../../../components/EmptyTips';
 import dialog from '../../../../components/dialog';
 
 import services from '../../../../services';
-const { log, interaction, scaffolder, editors, settings } = services;
+const { scaffolder, editors, settings } = services;
 
 import './index.scss';
 import PluginHoc from '../PluginHoc';
@@ -140,12 +140,12 @@ class PagesCard extends Component {
           pageFolderName: name
         })
         .then(() => {
-          log.debug('删除页面成功');
+          logger.debug('删除页面成功');
           Notification.success({ message: `删除页面 ${name} 成功` });
           this.serachPages();
         })
         .catch((error) => {
-          log.debug('删除页面失败', error);
+          logger.debug('删除页面失败', error);
           dialog.notice({ title: '删除页面失败', error: error });
         });
       }

@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 import EventEmitter from 'events';
 
 import { scanPages } from '../lib/project-utils';
+import logger from '../lib/logger';
 // store
 import progress from './progress';
 import projects from './projects';
@@ -20,21 +21,35 @@ import scanLayout from '../datacenter/scanLayout';
  */
 class NewPage extends EventEmitter {
   @observable
-  layouts = []; // 所有 layouts
+  layouts = [];
+
+  // 所有 layouts
   @observable
   loading = true;
+
   @observable
-  currentLayout = []; // 当前选中的 layout
+  currentLayout = [];
+
+  // 当前选中的 layout
   @observable
-  visible = false; // 控制弹窗展示
+  visible = false;
+
+  // 控制弹窗展示
   @observable
-  savePageVisible = false; // 控制 page 保存 dialog 的显示
+  savePageVisible = false;
+
+  // 控制 page 保存 dialog 的显示
   @observable
-  isCreatingValue = false; // 用于控制 pageConfig 确定按钮 loading 状态
+  isCreatingValue = false;
+
+  // 用于控制 pageConfig 确定按钮 loading 状态
   @observable
   createProcess = '';
+
   @observable
-  createProcessEventName = ''; // 新建页面过程中的事件名
+  createProcessEventName = '';
+
+  // 新建页面过程中的事件名
   @observable
   progressVisible = false;
 
@@ -71,7 +86,7 @@ class NewPage extends EventEmitter {
   @action
   toggle() {
     if (!this.targetPath) {
-      console.error('新建页面未设置 targetPath');
+      logger.error(new Error('新建页面未设置 targetPath'));
     } else {
       this.visible = !this.visible;
       // 每次展开更新数据
@@ -99,25 +114,23 @@ class NewPage extends EventEmitter {
   @action.bound
   fetchSuccess([layouts, pages]) {
     const projectPkgData = projects.currentProject.getPkgData();
-    console.log('scaned layouts', layouts);
+    logger.info('scaned layouts', layouts);
 
-    const scaffoldConfig =
-      (projectPkgData && projectPkgData.scaffoldConfig) || {};
+    const scaffoldConfig = (projectPkgData && projectPkgData.scaffoldConfig) || {};
 
-    console.log('scaffoldConfig data', scaffoldConfig);
+    logger.info('scaffoldConfig data', scaffoldConfig);
 
     const defaultLayout = scaffoldConfig.defaultLayout;
 
     const localLayouts = layouts.filter((n) => n.localization);
 
-    console.log('localLayouts', localLayouts, defaultLayout);
+    logger.info('localLayouts', localLayouts, defaultLayout);
 
     let currentLayout = layouts[0];
     if (Array.isArray(localLayouts) && localLayouts.length) {
       if (defaultLayout) {
-        currentLayout =
-          localLayouts.find((l) => l.folderName === defaultLayout) ||
-          localLayouts[0];
+        currentLayout = localLayouts.find((l) => l.folderName === defaultLayout)
+          || localLayouts[0];
       } else {
         currentLayout = localLayouts[0];
       }
@@ -128,11 +141,12 @@ class NewPage extends EventEmitter {
     this.pages = pages; // 获取页面数，用于生产页面时，默认的页面名
     this.loading = false;
   }
+
   // fetch failed 回调
   @action.bound
   fetchFailed(...args) {
     this.loading = false;
-    console.log(args);
+    logger.info(args);
   }
 
   @action

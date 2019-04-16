@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-const createICEApp = require('../lib');
 const path = require('path');
 
 const cwd = process.cwd();
 const destDir = path.join(cwd, process.argv[3] || '');
 const inquirer = require('inquirer');
 const spawnSync = require('child_process').spawnSync;
+const createICEApp = require('../lib');
 
 console.log('CREATE ICE APP');
 
@@ -29,7 +29,6 @@ console.log({
   pkgVersion,
 });
 
-// console.log('Cli tool not implamented yet. cc @zhuoling.lcl');
 createICEApp
   .createProject({
     scaffolding: pkgName,
@@ -40,7 +39,6 @@ createICEApp
       switch (type) {
         // todo inquirer
         case 'DESTDIR_EXISTS_OVERRIDE':
-          console.log();
           inquirer
             .prompt([
               {

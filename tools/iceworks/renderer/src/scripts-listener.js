@@ -15,7 +15,6 @@ export default {
       // ice dev 发送的消息
       // eslint-disable-next-line no-unused-vars
       const { action, message, data = {} } = eventMessage;
-      // console.log(action, message, data);
       const project = projects.getProject(path);
       if (project) {
         project.batchUpdate(data);

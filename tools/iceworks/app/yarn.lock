@@ -2074,9 +2074,10 @@ electron-is@^2.4.1:
     electron-is-dev "^0.3.0"
     semver "^5.3.0"
 
-electron-log@^2.2.13:
-  version "2.2.17"
-  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-2.2.17.tgz#e71e2ebb949fc96ded7cdb99eeee7202e48981d2"
+electron-log@^3.0.4:
+  version "3.0.4"
+  resolved "http://registry.npm.taobao.org/electron-log/download/electron-log-3.0.4.tgz#d2e296157999f540621300183662882bb6d14991"
+  integrity sha1-0uKWFXmZ9UBiEwAYNmKIK7bRSZE=
 
 electron-positioner@^3.0.0:
   version "3.0.1"

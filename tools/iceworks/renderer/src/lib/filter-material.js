@@ -13,9 +13,9 @@ export default function filterMaterial(materials) {
     }
     // 内网用户只透出 react 物料
     if (
-      isAlibaba &&
-      material.builtIn &&
-      !['react', 'rax'].includes(material.type)
+      isAlibaba
+      && material.builtIn
+      && !['react', 'rax'].includes(material.type)
     ) {
       return false;
     }
