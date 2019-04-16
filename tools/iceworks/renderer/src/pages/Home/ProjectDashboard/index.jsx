@@ -19,9 +19,6 @@ import Proxies from './Proxies';
 import Def from './Def';
 import Git from './Git';
 
-import services from '../../../services';
-const { log } = services;
-
 const ExtensionMap = {
   [Assets.extensionName]: Assets,
   [Aliyun.extensionName]: Aliyun,

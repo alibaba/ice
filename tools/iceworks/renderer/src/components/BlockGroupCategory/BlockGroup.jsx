@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import Tooltip from 'rc-tooltip';
 import PropTypes from 'prop-types';
 import Icon from '../Icon';
-import services from '../../services';
+import { glodlog } from '../../services';
 import { Button } from '@icedesign/base';
-
-const { log } = services;
 
 import './BlockGroup.scss';
 
@@ -52,8 +49,8 @@ class BlockGroup extends Component {
   onBlockGroupClick = () => {
     const { handleBlocksAdd, blockGroup } = this.props;
     const blocks = this.getBlocks();
-    // 埋点
-    log.report('app', {
+    glodlog.record({
+      type: 'app', 
       action: 'add-block-group',
       data: {
         name: blockGroup.name

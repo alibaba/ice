@@ -62,20 +62,6 @@ const defaultMaterials = [
     type: 'react',
   },
   {
-    key: 'rax',
-    name: '小程序物料源',
-    homepage: 'https://developer.taobao.com/',
-    checked: true,
-    builtIn: true,
-    logo: 'https://img.alicdn.com/tfs/TB1_rYRvOAnBKNjSZFvXXaTKXXa-1120-960.png',
-    description: '基于 Rax 的小程序应用的物料源集合',
-    source: 'https://ice.alicdn.com/assets/rax-materials.json',
-    backupSource:
-      'https://cdn.jsdelivr.net/npm/@icedesign/materails-db@latest/lib/rax-materials.json',
-    tags: ['官方', 'Rax', 'Miniapp'],
-    type: 'rax',
-  },
-  {
     key: 'vue',
     name: 'Vue 物料源',
     checked: true,

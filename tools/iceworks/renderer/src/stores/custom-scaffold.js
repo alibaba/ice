@@ -77,12 +77,16 @@ const DEFAULT_LAYOUT_CONFIG = {
 
 class CustomScaffold {
   editScaffoldConigId = null;
+
   @observable
   visible = false;
+
   @observable
   scaffoldValue = DEFAULT_SCAFFOLD;
+
   @observable
   layoutConfigValue = DEFAULT_LAYOUT_CONFIG;
+
   @observable
   scaffoldConfigStoresValue = []; // 将用户的模板操作记录保存下来
 
@@ -196,6 +200,7 @@ class CustomScaffold {
       resolve();
     });
   }
+
   /**
    * 删除模板数据到记录项
    * @param {Number} 模板索引值
@@ -207,6 +212,7 @@ class CustomScaffold {
     });
     this.saveCustomScaffoldConfigToStores();
   }
+
   /**
    * 编辑模板数据到记录项
    * @param {Number} 模板索引值

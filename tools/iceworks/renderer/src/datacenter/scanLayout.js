@@ -9,8 +9,7 @@ import path from 'path';
  * 扫描规则: 根据 layouts 目录中的文件夹名称进行匹配
  * 1. 优先匹配
  */
-const defaultImage =
-  'https://gw.alicdn.com/tfs/TB1Qby8ex9YBuNjy0FfXXXIsVXa-976-974.png';
+const defaultImage = 'https://gw.alicdn.com/tfs/TB1Qby8ex9YBuNjy0FfXXXIsVXa-976-974.png';
 
 async function scanLayout({ targetPath }) {
   const layoutsPath = path.join(targetPath, 'layouts');

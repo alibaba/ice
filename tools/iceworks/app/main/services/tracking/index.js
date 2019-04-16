@@ -1,5 +1,5 @@
 const { webContents } = require('electron');
-const log = require('../../logger');
+const logger = require('../../logger');
 
 const events = {
   checkingPathValid: '正在检查路径是否合法',
@@ -17,11 +17,11 @@ function emitProcess(eventName, blockName = '') {
   contents.forEach((content) => {
     content.send('processTracking', events[eventName] + blockName, eventName);
   });
-  log.info(eventName);
+  logger.info(eventName);
 }
 
 function emitError(errorName, args) {
-  log.debug(errorName, JSON.stringify(args));
+  logger.debug(errorName, JSON.stringify(args));
 }
 
 function emitProgress(visible) {
