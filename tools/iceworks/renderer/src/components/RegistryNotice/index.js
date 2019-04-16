@@ -31,19 +31,19 @@ class RegistryNotice extends Component {
       <div className="setting-registy-dialog">
         {!this.isTaobaoRegistry() && !checked && !isAlibaba
           ? dialog.confirm(
-              {
-                title: '提示',
-                content:
+            {
+              title: '提示',
+              content:
                   '检测到当前下载源不是淘宝源，建议切换到 npm 淘宝镜像源，下载体验更加。',
-              },
-              (ok) => {
-                if (ok) {
-                  this.settingRegistry();
-                } else {
-                  this.handleCancel();
-                }
+            },
+            (ok) => {
+              if (ok) {
+                this.settingRegistry();
+              } else {
+                this.handleCancel();
               }
-            )
+            }
+          )
           : null}
       </div>
     );

@@ -1,6 +1,6 @@
 import gitPromie from 'simple-git/promise';
 import { Dialog } from '@icedesign/base';
-import logger from '../lib/logger';
+import logger from './logger';
 
 /**
  * 命令文档：https://web.npm.alibaba-inc.com/package/simple-git
