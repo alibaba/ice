@@ -9,6 +9,7 @@ import { getLocale } from '@utils/locale';
 
 import '@alifd/next/reset.scss';
 import './global.scss';
+import './variables.scss';
 
 const locale = getLocale();
 const ICE_CONTAINER = document.getElementById('iceworks');
