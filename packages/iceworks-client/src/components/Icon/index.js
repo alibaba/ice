@@ -6,7 +6,9 @@ const fontFamily = 'iceworks';
 const prefix = 'iceworks';
 
 // icon url: http://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=568722&keyword=
-const Icon = ({ className, size, type, ...other }) => {
+const Icon = ({
+  className, size, type, ...other
+}) => {
   const classes = cx({
     [`${fontFamily}`]: true,
     [`${prefix}-${size}`]: !!size,

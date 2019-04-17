@@ -5,7 +5,7 @@ import { withTheme } from '@components/ThemeProvider';
 import styles from './index.module.scss';
 
 const ThemeToggler = ({ theme }) => {
-  const { theme: currentTheme, toggleTheme } = theme;
+  const { toggleTheme } = theme;
   return (
     <div key="xx" className={styles.themeToggler} onClick={toggleTheme}>
       <Icon type="projects" size="small" />
