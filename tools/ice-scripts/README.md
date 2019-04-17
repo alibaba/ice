@@ -1,6 +1,6 @@
-# ice scripts
+# ice-scripts
 
-Cli dev tool for ice.
+A cli tool for React Development. [Docs](https://ice.work/docs/basis/ice-scripts).
 
 ## Install
 
@@ -14,10 +14,11 @@ $ ice --help
 
 > Recommended
 
-```
+```bash
 $ mkdir ice-project
 $ cd ice-project
 
+# support init project/component/block
 $ ice init
 $ ice dev
 $ ice build
@@ -35,9 +36,11 @@ init project by scaffold:
 const { init } = require('ice-scripts');
 
 await init({
-  scaffold: '@icedesign/lite-scaffold',
+  template: '@icedesign/lite-scaffold',
   // Default: process.cwd()
   projectDir: ''
+  // component/block/project, Default: project
+  type: ''
 });
 ```
 
