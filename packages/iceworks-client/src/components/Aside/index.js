@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import styles from './index.module.scss';
 
 export default class Aside extends Component {
   getNavMenuItems = (menuData) => {
@@ -32,7 +33,7 @@ export default class Aside extends Component {
 
   render() {
     const { menuData = [] } = this.props;
-    return <div>{this.getNavMenuItems(menuData)}</div>;
+    return <div className={styles.aside}>{this.getNavMenuItems(menuData)}</div>;
   }
 }
 

@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import '@alifd/next/reset.scss';
 
-import MainLayout from '@layouts/MainLayout';
+import MainLayout from '@layouts/MainLayout/index';
 import LocaleProvider from '@components/LocaleProvider';
 import { ThemeProvider } from '@components/ThemeProvider';
 import { getLocale } from '@utils/locale';
 
+import '@alifd/next/reset.scss';
+import './global.scss';
+
 const locale = getLocale();
-const ICE_CONTAINER = document.getElementById('ice-container');
+const ICE_CONTAINER = document.getElementById('iceworks');
 
 ReactDOM.render(
   <LocaleProvider locale={locale}>
@@ -19,5 +21,5 @@ ReactDOM.render(
       </Router>
     </ThemeProvider>
   </LocaleProvider>,
-  ICE_CONTAINER
+  ICE_CONTAINER,
 );

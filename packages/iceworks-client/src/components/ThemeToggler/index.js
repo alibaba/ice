@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@alifd/next';
+import Icon from '@components/Icon';
 import { withTheme } from '@components/ThemeProvider';
+import styles from './index.module.scss';
 
 const ThemeToggler = ({ theme }) => {
   const { theme: currentTheme, toggleTheme } = theme;
   return (
-    <Button type="primary" onClick={toggleTheme}>
-      主题: {currentTheme}
-    </Button>
+    <div key="xx" className={styles.themeToggler} onClick={toggleTheme}>
+      <Icon type="projects" size="small" />
+      主题
+    </div>
   );
 };
 

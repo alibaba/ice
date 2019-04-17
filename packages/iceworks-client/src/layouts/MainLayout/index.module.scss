@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    flex: auto 1 1;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .main {
+    flex: auto 1 1;
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
