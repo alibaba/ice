@@ -3,58 +3,60 @@ title: 如何实现静态资源的按需加载
 order: 7
 ---
 
-当页面规模、依赖组件达到一定量之后，打包后的文件也会随之增大，但在浏览某个页面的时候并不需要一次性加载所有内容，只需要当前页面的资源即可，此时可以参考本文档实现静态资源的切割及按需加载。
+当页面规模、依赖组件达到一定量之后，打包后的文件也会随之增大，但在浏览某个页面的时候并不需要一次性加载所有内容，只需加载当前页面的资源即可，此时可以参考本文档实现静态资源的切割及按需加载。
 
-## 基本用法
+## React.lazy
 
-通过 <https://www.npmjs.com/package/react-loadable> 组件能轻松完成项目应用的按需加载。
+React 16.x 版本提供了动态加载组件的标准化能力 —— [`React.lazy`](https://reactjs.org/docs/code-splitting.html#reactlazy) API。
 
-1. 首先需要安装该依赖包 `react-loadable`
-2. 对页面进行按需加载配置
-
-修改 `src/pages/Home/index.js` 文件内容
-
+**正常加载组件**
 ```js
-// before: src/pages/Home/index.js
-import Home from './Home';
+import OtherComponent from './OtherComponent';
 
-export default Home;
+function MyComponent() {
+  return (
+    <div>
+      <OtherComponent />
+    </div>
+  );
+}
 ```
 
----
-
+**按需动态加载组件**
 ```js
-// after: src/pages/Home/index.js
-import Loadable from 'react-loadable';
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
 
-// 定义加载组件，用于在加载过程中显示加载动画
-const Loading = () => {
-  return <div>loading...</div>;
-};
-
-export default loadable({
-  loader: () => import('./Home'),
-  loading: Loading,
-});
+function MyComponent() {
+  return (
+    <div>
+      <OtherComponent />
+    </div>
+  );
+}
 ```
 
-经过这样的修改打包后，`Home` 则会打包成 `0.js` ，当访问到 Home 页面时则会自动加载 `0.js` 。
-
-> 0 代表一个编号, 可能还会是其他数字。
-
-## 定义构建出的文件名称
-
-当页面比较多的时候，就无法知道 `0.js` `1.js` 对应的到底是哪个页面。此时可以编号的名称。
-
-`/* webpackChunkName: "编号名称" */` 注释语法声明当前的模块名。
-
+## Suspense
+由于网络传输原因，加载组件需要花费一定的时间，为了提升用户体验，一般会加一个 loading 组件平滑过渡。
+React 内置的 `<Suspense>` 组件已为我们实现了此功能。
 ```js
-// src/pages/Home/index.js
-import Loadable from 'react-loadable';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
 
-export default loadable({
-  loader: () => import(/* webpackChunkName: "home" */ './Home')
-});
+const Home = lazy(() => import('./routes/Home'));
+const About = lazy(() => import('./routes/About'));
+
+const App = () => (
+  <Router>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Switch>
+        <Route exact path="/" component={Home}/>
+        <Route path="/about" component={About}/>
+      </Switch>
+    </Suspense>
+  </Router>
+);
 ```
+`fallback` 属性值为等待组件加载时你想渲染的任何 React 元素。
 
-经过注释声明后，打包后的文件名为 `home.js`，其他未声明的还是以数字定义文件名。
+
+*提示：React 版本大于 16.x 的项目建议使用 React.lazy，否则的话建议使用三方组件库 [react-loadable](https://github.com/jamiebuilds/react-loadable)。*
