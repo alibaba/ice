@@ -28,8 +28,8 @@ module.exports = async function ({ name, path, icon, menuConfigFilePath }) {
   traverse(menuConfigAST, {
     VariableDeclarator({ node }) {
       if (
-        t.isIdentifier(node.id, { name: MENU_CONFIG }) &&
-        t.isArrayExpression(node.init)
+        t.isIdentifier(node.id, { name: MENU_CONFIG })
+        && t.isArrayExpression(node.init)
       ) {
         const menuExist = node.init.elements.some((oe) => {
           return oe.properties.some((op) => {

@@ -1,11 +1,12 @@
 const dsl2code = require('@iceland/dsl2code').default;
 const codeFormat = require('../../utils/codeFormat');
-const logger = require('../../logger');
+const glodlog = require('../../glodlog');
 const settings = require('../settings');
 
 module.exports = (json, materialEngine, callback) => {
   const isAlibaba = settings.get('isAlibaba');
-  logger.report('app', {
+  glodlog.record({
+    type: 'app',
     action: 'iceland-save-block',
     group: isAlibaba ? 'alibaba' : 'outer',
   });

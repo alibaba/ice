@@ -58,10 +58,6 @@ class Block extends Component {
     openInBrowser(block.repository);
   };
 
-  // afterVisibleChange = (visible) => {
-  //   console.log('afterVisibleChange:', visible);
-  // };
-
   render() {
     const { block, originKeywords = '', innerRef, enterCount } = this.props;
     let title = block.title;

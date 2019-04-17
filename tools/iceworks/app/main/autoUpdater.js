@@ -1,17 +1,17 @@
-const log = require('./logger');
 const { ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
+const logger = require('./logger');
 const { createUpdaterWindow } = require('./windowList');
 
 const sendToWebContents = require('./helper/sendToWebContents');
 const notify = require('./services/interaction/notify');
 
 autoUpdater.autoDownload = false;
-autoUpdater.logger = log;
+autoUpdater.logger = logger;
 let win = null;
 
 function sendStatusToWindow(event, meta = null) {
-  log.info(event, meta);
+  logger.info(event, meta);
   sendToWebContents(win, 'updater-message', {
     event,
     meta,
@@ -77,18 +77,20 @@ const Updater = {
   },
   register: () => {
     setInterval(() => {
-      autoUpdater.checkForUpdates().catch((e) => {
-        sendStatusToWindow('error', e);
-        log.error('Failed handling checkForUpdates:', e);
+      autoUpdater.checkForUpdates().catch((error) => {
+        sendStatusToWindow('error', error);
+        error.message = `Failed handling checkForUpdates: ${error.message}`;
+        logger.error(error);
       });
       // 每间隔三小时监测软件更新
     }, 1000 * 60 * 60 * 3);
 
     ipcMain.on('updater-check', () => {
       // 检查更新
-      autoUpdater.checkForUpdates().catch((e) => {
-        sendStatusToWindow('error', e);
-        log.error('Failed handling checkForUpdates:', e);
+      autoUpdater.checkForUpdates().catch((error) => {
+        sendStatusToWindow('error', error);
+        error.message = `Failed handling checkForUpdates: ${error.message}`;
+        logger.error(error);
       });
     });
     ipcMain.on('updater-close', () => {
@@ -97,24 +99,27 @@ const Updater = {
     });
     ipcMain.on('updater-start', () => {
       // 开始下载
-      autoUpdater.downloadUpdate().catch((e) => {
-        sendStatusToWindow('error', e);
-        log.error('Failed handling downloadUpdate:', e);
+      autoUpdater.downloadUpdate().catch((error) => {
+        sendStatusToWindow('error', error);
+        error.message = `Failed handling downloadUpdate: ${error.message}`;
+        logger.error(error);
       });
     });
     ipcMain.on('updater-install', () => {
       // 退出并安装
       autoUpdater.quitAndInstall();
     });
-    log.info('Updater starting...');
+    logger.info('Updater starting...');
     // 自动检测更新
-    autoUpdater.checkForUpdates().catch((e) => {
-      log.error('Failed handling checkForUpdatesAndNotify:', e);
+    autoUpdater.checkForUpdates().catch((error) => {
+      error.message = `Failed handling checkForUpdatesAndNotify: ${error.message}`;
+      logger.error(error);
     });
   },
   checkForUpdatesAndNotify() {
-    autoUpdater.checkForUpdatesAndNotify().catch((e) => {
-      log.error('Failed handling checkForUpdatesAndNotify:', e);
+    autoUpdater.checkForUpdatesAndNotify().catch((error) => {
+      error.message = `Failed handling checkForUpdatesAndNotify: ${error.message}`;
+      logger.error(error);
     });
   },
 };

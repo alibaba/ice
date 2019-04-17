@@ -15,6 +15,7 @@ import ExtraButton from '../../../../components/ExtraButton/';
 import Icon from '../../../../components/Icon';
 import EmptyTips from '../../../../components/EmptyTips/';
 import PluginHoc from '../PluginHoc';
+import logger from '../../../../lib/logger';
 
 const newRuleItem = ['', { enable: true }];
 
@@ -85,7 +86,7 @@ class Proxies extends Component {
 
         fs.writeFile(pkgFilePath, JSON.stringify(pkgData, null, 2), cb);
       } catch (e) {
-        console.error(pkgFilePath + ' 不存在');
+        logger.error(pkgFilePath + ' 不存在');
       }
     }
   };

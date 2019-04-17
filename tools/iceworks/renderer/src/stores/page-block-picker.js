@@ -9,10 +9,15 @@ import progress from './progress';
 class PageBlockPicker {
   @observable
   visible = false;
+
   projectPath = '';
+
   componentsPath = '';
+
   blocksPath = '';
+
   existBlocks = [];
+
   @observable
   downloading = false;
 

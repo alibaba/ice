@@ -3,6 +3,7 @@ import { Dialog } from '@icedesign/base';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import logger from '../../lib/logger';
 
 import './index.scss';
 
@@ -57,7 +58,7 @@ class User extends Component {
   };
 
   handleDidFinishLoad = () => {
-    console.log('login-page 加载完成');
+    logger.info('login-page 加载完成');
     if (this.webview.src.indexOf('/iceworks-login') != -1) {
       let sessionCookies = this.webview.getWebContents().session.cookies;
       sessionCookies.get({}, (error, cookies) => {

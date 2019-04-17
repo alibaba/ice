@@ -9,10 +9,18 @@ const { shared } = services;
  */
 class BlockGroups {
   @observable visible = false;
+
   @observable isLoading = true;
-  @observable blocks = []; // 单个区块组合中包含的区块列表
-  @observable showModal = false; // 图片预览弹窗
-  @observable previewBlocks = []; // 当前预览的区块组合
+
+  @observable blocks = [];
+
+  // 单个区块组合中包含的区块列表
+  @observable showModal = false;
+
+  // 图片预览弹窗
+  @observable previewBlocks = [];
+
+  // 当前预览的区块组合
   @observable blockGroups = []; // 区块组合列表
 
   getBlockGroups() {

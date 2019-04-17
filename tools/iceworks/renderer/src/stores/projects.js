@@ -7,6 +7,7 @@ import Notification from '@icedesign/notification';
 import Project from './project';
 // utils
 import { isProject } from '../lib/project-utils';
+import logger from '../lib/logger';
 import services from '../services';
 
 const { folder, storage, interaction } = services;
@@ -15,7 +16,9 @@ const { projectsStorage, recordStorage } = storage;
 /* eslint no-console:off */
 /** 项目列表存储管理 */
 class Projects extends EventEmitter {
-  @observable list = []; // 项目列表
+  @observable list = [];
+
+  // 项目列表
   @observable currentProject; // 当前项目
 
   // 安装面板可见
@@ -118,21 +121,20 @@ class Projects extends EventEmitter {
         }
       })
       .catch(() => {
-        console.log('取消选择');
+        logger.info('取消选择');
       });
   }
 
   @action
   remove(path, shiftDelete) {
-    console.debug('删除项目', path, shiftDelete);
+    logger.debug('删除项目', path, shiftDelete);
 
     if (shiftDelete) {
       const trashRemove = shell.moveItemToTrash(path);
-      console.debug('删除到回收站', trashRemove);
+      logger.debug('删除到回收站', trashRemove);
     }
 
-    const isRemoveCurrent =
-      this.currentProject && this.currentProject.fullPath === path;
+    const isRemoveCurrent = this.currentProject && this.currentProject.fullPath === path;
 
     this.list = this.list.filter((project) => project.fullPath !== path);
 

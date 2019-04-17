@@ -4,6 +4,14 @@ import { Link } from 'react-router-dom';
 import styles from './index.module.scss';
 
 export default class Aside extends Component {
+  static defaultProps = {
+    menuData: [],
+  };
+
+  static propTypes = {
+    menuData: PropTypes.array,
+  };
+
   getNavMenuItems = (menuData) => {
     return menuData.map((item, index) => {
       return this.getSubMenuOrItem(item, index);
@@ -36,7 +44,3 @@ export default class Aside extends Component {
     return <div className={styles.aside}>{this.getNavMenuItems(menuData)}</div>;
   }
 }
-
-Aside.propTypes = {
-  menuData: PropTypes.array,
-};

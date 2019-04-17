@@ -1,93 +1,51 @@
-const axios = require('axios');
 const electronLog = require('electron-log');
-const is = require('electron-is');
-const macaddress = require('macaddress');
+const { app } = require('electron');
+const util = require('util');
+const request = require('request');
 
-const isDev = is.windows();
+electronLog.transports.file.level = 'info';
+electronLog.transports.file.fileName = 'main.log';
+electronLog.transports.file.maxSize = 30 * 1024 * 1024;
 
-let userId = 0;
+// SLS config：配置参照 https://help.aliyun.com/document_detail/31752.html?spm=a2c4g.11186623.6.707.614f8bdceHbp2w&accounttraceid=3835f51f-2862-4a2c-a8e7-fc695d89c700
+electronLog.transports.sls = ({ data, level }) => {
+  const error = level === 'error' ? data[0] : {};
+  const message = level !== 'error' ? util.format(...data) : error.message;
 
-macaddress.one((err, macAddr) => {
-  if (!err) {
-    // todo get user id when we have a user system
-    userId = macAddr;
-  }
-});
-let log;
+  const project = 'iceworks';
+  const logstore = 'iceworks-log';
+  const host = 'cn-hangzhou.log.aliyuncs.com';
+  let url = `http://${project}.${host}/logstores/${logstore}/track?`;
 
-if (isDev) {
-  log = console;
-} else {
-  log = electronLog;
-  log.transports.file.level = 'silly'; // 开启完整的日志模式
-  log.transports.file.maxSize = 30 * 1024 * 1024;
-}
-
-function logger(type, ...args) {
-  if (isDev) {
-    args.unshift(`[${type}]`);
-  }
-  const logFunc = log[type] || log.info;
-  logFunc(...args);
-}
-
-const uploadLog = () => {
-  // TODO: load and parse electron logger txt but cannot find location
-};
-
-/**
- * 发送日志埋点，记录到 aplus 平台
- * @param {String} type 记录日志类型
- * @param {Object} data gokey
- */
-const report = (type, data = {}) => {
-  const realData = {
-    platform: `${process.platform}_${process.arch}`,
-    id: userId,
-    type,
+  // log 基础信息，保留字段, 如果传入参数有这些字段会被覆盖。
+  const body = {
+    error_name: error.name,
+    error_stack: error.stack,
+    error_data: JSON.stringify(error),
+    message,
+    __topic__: level, // 日志类型
+    APIVersion: '0.6.0', // sls 必须的参数
+    platform: `${process.platform}_${process.arch}`, // app 信息
+    iceworks_version: app.getVersion(), // iceworks版本信息
   };
 
-  if (data.action) {
-    realData.action = data.action;
-    delete data.action;
-  }
-
-  if (Object.keys(data).length > 0) {
-    realData.data = data;
-  }
-
-  const dataKeyArray = Object.keys(realData);
-
-  const gokey = dataKeyArray.reduce((finnalStr, currentKey, index) => {
-    const currentData =
-      typeof realData[currentKey] === 'string'
-        ? realData[currentKey]
-        : JSON.stringify(realData[currentKey]);
-    return `${finnalStr}${currentKey}=${currentData}${
-      dataKeyArray.length - 1 === index ? '' : '&'
-    }`;
+  const dataKeyArray = Object.keys(body);
+  const param = dataKeyArray.reduce((finnalStr, currentKey, index) => {
+    const currentData = typeof body[currentKey] === 'string'
+      ? body[currentKey]
+      : JSON.stringify(body[currentKey]);
+    return `${finnalStr}${currentKey}=${currentData}${dataKeyArray.length - 1 === index ? '' : '&'}`;
   }, '');
 
-  axios({
-    method: 'post',
-    url: 'http://gm.mmstat.com/iceteam.iceworks.log',
-    data: {
-      cache: Math.random(),
-      gmkey: 'CLK',
-      gokey: encodeURIComponent(gokey),
-      logtype: '2',
-    },
-  })
-    .then(() => {})
-    .catch(() => {});
-};
+  url += param;
 
-module.exports = {
-  report,
-  uploadLog,
-  debug: logger.bind(null, 'debug'),
-  error: logger.bind(null, 'error'),
-  info: logger.bind(null, 'info'),
-  verbose: logger.bind(null, 'verbose'),
-  warn: logger.bind(null, 'warn'),
+  request({
+    url,
+    timeout: 2000,
+  }, () => {
+    // do nothing
+  });
 };
+electronLog.transports.sls.level = 'info';
+
+module.exports = electronLog;

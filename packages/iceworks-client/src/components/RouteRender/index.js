@@ -13,6 +13,10 @@ const RouteRender = (route = {}) => {
   );
 };
 
+RouteRender.defaultProps = {
+  routerData: {},
+};
+
 RouteRender.propTypes = {
   routerData: PropTypes.object,
 };

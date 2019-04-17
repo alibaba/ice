@@ -1,5 +1,4 @@
 /* eslint: eslint-disable-next-line:0 prefer-const:0 */
-const debug = require('debug')('utils');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
@@ -17,7 +16,7 @@ const { DetailError } = require('../../error-handler');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
 const logger = require('../../logger');
-const alilog = require('../../alilog');
+const glodlog = require('../../glodlog');
 const autoRetry = require('../../utils/autoRetry');
 
 /**
@@ -65,10 +64,10 @@ async function downloadBlocksToPage({
             npm: block.npm,
             version: block.version,
           });
-        } else if (
-          block.source &&
-          block.source.type === 'npm' &&
-          block.type !== 'custom'
+        } if (
+          block.source
+          && block.source.type === 'npm'
+          && block.type !== 'custom'
         ) {
           let version = block.source.version;
           // 注意！！！ 由于接口设计问题，version-0.x 字段实质指向1.x版本！
@@ -81,7 +80,7 @@ async function downloadBlocksToPage({
             npm: block.source.npm,
             registry: block.source.registry,
           });
-        } else if (block.type === 'custom') {
+        } if (block.type === 'custom') {
           return getDependenciesFromCustom(block);
         }
       })
@@ -133,7 +132,8 @@ async function downloadBlockToPage(
   mkdirp.sync(componentsDir);
 
   // 日志上报
-  logger.report('app', {
+  glodlog.record({
+    type: 'app',
     action: 'download-block',
     data: {
       name: block.name,
@@ -143,8 +143,7 @@ async function downloadBlockToPage(
   // 根据项目版本下载
   const pkg = getPackageByPath(clientPath);
   const projectVersion = getProjectVersion(pkg);
-  const blockName =
-    block.alias || upperCamelCase(block.name) || block.className;
+  const blockName = block.alias || upperCamelCase(block.name) || block.className;
 
   let err, tarballURL, allFiles;
 
@@ -198,8 +197,8 @@ function getPackageByPath(clientPath) {
     try {
       const packageText = fs.readFileSync(pkgPath);
       return JSON.parse(packageText.toString());
-    } catch (e) {
-      logger.error(e);
+    } catch (error) {
+      logger.error(error);
     }
   }
 }
@@ -233,7 +232,7 @@ function extractBlock(
   progressFunc = () => {}
 ) {
   return new Promise((resolve, reject) => {
-    debug('npmTarball', tarballURL);
+    logger.debug('npmTarball', tarballURL);
     const allFiles = [];
     const req = requestProgress(
       request({
@@ -245,19 +244,13 @@ function extractBlock(
       .on('progress', (state) => {
         progressFunc(state);
       })
-      .on('error', (err) => {
-        alilog.report(
-          {
-            type: 'download-tarball-error',
-            msg: err.message,
-            stack: err.stack,
-            data: {
-              url: tarballURL,
-            },
-          },
-          'error'
-        );
-        reject(err);
+      .on('error', (error) => {
+        error.name = 'download-tarball-error';
+        error.data = {
+          url: tarballURL,
+        };
+        logger.error(error);
+        reject(error);
       })
       .pipe(zlib.Unzip()) // eslint-disable-line
       .pipe(tar.Parse()) // eslint-disable-line
@@ -281,7 +274,7 @@ function extractBlock(
           destPath = path.join(destDir, realPath);
         }
 
-        debug('写入文件', destPath);
+        logger.debug('写入文件', destPath);
         if (fs.existsSync(destPath)) {
           // 默认不覆盖用户文件
           return;
@@ -372,15 +365,15 @@ exports.checkValidICEProject = function (dir) {
   try {
     const pkg = require(pkgPath);
     return 'scaffoldConfig' in pkg || 'buildConfig' in pkg;
-  } catch (err) {
-    logger.error(err);
+  } catch (error) {
+    logger.error(error);
   }
 
   try {
     const abcPath = path.join(dir, 'abc.json');
     const abc = require(abcPath);
     return abc.repository.type === 'project' && abc.type === 'ice';
-  } catch (err) {
+  } catch (error) {
     return false;
   }
 };
