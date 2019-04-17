@@ -14,6 +14,8 @@ program
 
 checkUpdater().then(() => {
   cliInstance.initByProgram(program);
+
+  // ice init component/block
   const type = program.args[0] || 'project';
   cliInstance.set('type', type);
 
