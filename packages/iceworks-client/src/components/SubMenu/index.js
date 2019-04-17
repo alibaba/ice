@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './index.module.scss';
 
 const SubMenu = ({ data, title }) => {
@@ -9,9 +9,14 @@ const SubMenu = ({ data, title }) => {
       {title ? <h2 className={styles.subMenuTitle}>{title}</h2> : null}
       {data.map((item) => {
         return (
-          <Link key={item.path} to={item.path} className={styles.subMenuItem}>
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={styles.subMenuItem}
+            activeStyle={{ background: '#eee' }}
+          >
             {item.name}
-          </Link>
+          </NavLink>
         );
       })}
     </div>

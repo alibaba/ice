@@ -6,10 +6,15 @@ import styles from './index.module.scss';
 
 const NavigationBar = ({ menuData }) => {
   return (
-    <div className={styles.aside}>
+    <div className={styles.navBar}>
       {menuData.map((item) => {
         return (
-          <NavLink to={item.path} key={item.path} className={styles.navItem}>
+          <NavLink
+            to={item.path}
+            key={item.path}
+            className={styles.navItem}
+            activeStyle={{ borderLeft: '3px solid #fff' }}
+          >
             <Icon
               type={item.icon}
               size="large"
