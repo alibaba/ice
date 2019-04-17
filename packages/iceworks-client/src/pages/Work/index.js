@@ -12,10 +12,10 @@ const Work = ({ routes }) => {
 
   return (
     <div className={styles.workPage}>
-      {/* render sub menu */}
+      {/* render work submenu */}
       <SubMenu data={subMenuData} title="工程管理" />
 
-      {/* render sub route */}
+      {/* render work subroute */}
       {routes.map((route, i) => (
         <RouteRender key={i} {...route} />
       ))}

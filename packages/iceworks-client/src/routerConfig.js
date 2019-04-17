@@ -4,6 +4,10 @@ import Dev from './pages/Dev';
 import Build from './pages/Build';
 import Material from './pages/Material';
 import Setting from './pages/Setting';
+import SettingGeneral from './pages/SettingGeneral';
+import SettingMaterial from './pages/SettingMaterial';
+import SettingPanel from './pages/SettingPanel';
+import SettingAdvanced from './pages/SettingAdvanced';
 
 // Then our route config
 const routerConfig = [
@@ -35,6 +39,28 @@ const routerConfig = [
   {
     path: '/setting',
     component: Setting,
+    routes: [
+      {
+        path: '/setting/general',
+        component: SettingGeneral,
+        exact: true,
+      },
+      {
+        path: '/setting/material',
+        component: SettingMaterial,
+        exact: true,
+      },
+      {
+        path: '/setting/panel',
+        component: SettingPanel,
+        exact: true,
+      },
+      {
+        path: '/setting/advanced',
+        component: SettingAdvanced,
+        exact: true,
+      },
+    ],
   },
 ];
 
