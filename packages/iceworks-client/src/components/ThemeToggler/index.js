@@ -4,15 +4,20 @@ import { Button } from '@alifd/next';
 import { withTheme } from '@components/ThemeProvider';
 
 const ThemeToggler = ({ theme }) => {
-  return <Button type="primary">主题: {theme}</Button>;
+  const { theme: currentTheme, toggleTheme } = theme;
+  return (
+    <Button type="primary" onClick={toggleTheme}>
+      主题: {currentTheme}
+    </Button>
+  );
 };
 
 ThemeToggler.defaultProps = {
-  theme: '',
+  theme: {},
 };
 
 ThemeToggler.propTypes = {
-  theme: PropTypes.string,
+  theme: PropTypes.object,
 };
 
 export default withTheme(ThemeToggler);

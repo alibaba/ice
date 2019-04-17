@@ -3,10 +3,14 @@ import deepmerge from 'deepmerge';
 import createThemeProvider from './createThemeProvider';
 import createWithTheme from './createWithTheme';
 
-export default (defaultTheme) => {
+const createTheme = ({ defaultTheme, themes }) => {
   const ThemeContext = React.createContext(defaultTheme);
 
-  const ThemeProvider = createThemeProvider(defaultTheme, ThemeContext);
+  const ThemeProvider = createThemeProvider({
+    defaultTheme,
+    ThemeContext,
+    themes,
+  });
 
   const withTheme = createWithTheme(ThemeContext);
 
@@ -25,3 +29,5 @@ export default (defaultTheme) => {
     useTheme,
   };
 };
+
+export default createTheme;
