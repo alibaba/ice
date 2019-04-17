@@ -222,8 +222,8 @@ const routerConfig = [
     component: UserLayout,
   },
   {
-    path: '/noraml',
-    component: NoramlLayout,
+    path: '/normal',
+    component: NormalLayout,
   },
   ...
 ]
