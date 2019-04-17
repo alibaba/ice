@@ -50,8 +50,13 @@ prefix.apply(loglevel, {
     return date.toISOString();
   },
 });
-remote.apply(loglevel);
 
-loglevel.setLevel('trace');
+if (process.env.NODE_ENV === 'development') {
+  loglevel.setLevel('trace');
+} else {
+  remote.apply(loglevel);
+
+  loglevel.setLevel('info');
+}
 
 export default loglevel;
