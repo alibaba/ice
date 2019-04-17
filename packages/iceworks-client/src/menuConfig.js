@@ -3,12 +3,12 @@ const menuConfig = [
   {
     name: '项目',
     path: '/project',
-    icon: 'home2',
+    icon: 'projects',
   },
   {
     name: '工程',
     path: '/work',
-    icon: 'home2',
+    icon: 'zujian',
     children: [
       {
         name: 'dev',
@@ -23,12 +23,12 @@ const menuConfig = [
   {
     name: '物料',
     path: '/material',
-    icon: 'home2',
+    icon: 'template',
   },
   {
     name: '设置',
     path: '/setting',
-    icon: 'home2',
+    icon: 'settings',
   },
 ];
 

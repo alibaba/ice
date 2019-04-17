@@ -1,0 +1,17 @@
+.subMenu {
+  width: 240px;
+  background: #fff;
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.08);
+
+  .subMenuTitle {
+    margin: 15px;
+  }
+
+  .subMenuItem {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 15px;
+    color: #666;
+  }
+}

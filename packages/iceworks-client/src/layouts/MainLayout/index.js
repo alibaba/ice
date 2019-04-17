@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import socket from '@utils/socket';
-import Aside from '@components/Aside';
+import NavigationBar from '@components/NavigationBar';
 import RouteRender from '@components/RouteRender';
 import ConnectionBar from '@components/ConnectionBar';
 import GlobalBar from '@components/GlobalBar';
@@ -10,7 +10,7 @@ import styles from './index.module.scss';
 
 class MainLayout extends Component {
   state = {
-    connect: false,
+    connect: true,
   };
 
   componentDidMount() {
@@ -29,14 +29,12 @@ class MainLayout extends Component {
 
   render() {
     const { connect } = this.state;
-    // const layoutStyles = connect ? {} : { paddingTop: '40px' };
-    // style={{ ...layoutStyles }}
     return (
       <div className={styles.container}>
         {connect ? null : <ConnectionBar connect={connect} />}
 
         <div className={styles.content}>
-          <Aside menuData={menuConfig} />
+          <NavigationBar menuData={menuConfig} />
 
           <div className={styles.main}>
             {routerConfig.map((route, index) => (
