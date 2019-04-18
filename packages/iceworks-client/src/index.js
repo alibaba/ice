@@ -7,6 +7,7 @@ import LocaleProvider from '@components/LocaleProvider';
 import { ThemeProvider } from '@components/ThemeProvider';
 import { getLocale } from '@utils/locale';
 
+import '@utils/logger';
 import '@alifd/next/reset.scss';
 import './global.scss';
 import './variables.scss';
@@ -22,5 +23,5 @@ ReactDOM.render(
       </Router>
     </ThemeProvider>
   </LocaleProvider>,
-  ICE_CONTAINER,
+  ICE_CONTAINER
 );
