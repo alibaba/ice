@@ -1,8 +1,10 @@
+@import '../../variables.scss';
+
 .connectionBar {
   flex: auto 0 0;
   height: 40px;
-  background: #e83030;
-  color: #fff;
+  background: $warning-color;
+  color: $white;
   display: flex;
   align-items: center;
   justify-content: center;

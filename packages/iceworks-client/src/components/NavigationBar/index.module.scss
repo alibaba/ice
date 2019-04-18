@@ -1,6 +1,8 @@
+@import '../../variables.scss';
+
 .navBar {
-  background: $color-brand1-6;
-  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+  background: $brand-color-secondary;
+  box-shadow: $shadow-right;
 
   .navItem {
     display: flex;
@@ -9,15 +11,15 @@
     flex-direction: column;
     width: 78px;
     height: 78px;
-    border-left: 3px solid $color-brand1-6;
+    border-left: 3px solid $brand-color-secondary;
 
     .navItemIcon {
-      color: #eee;
+      color: $white;
       margin-bottom: 4px;
     }
 
     .navItemText {
-      color: #fff;
+      color: $white;
     }
   }
 }

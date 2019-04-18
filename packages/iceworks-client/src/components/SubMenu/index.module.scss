@@ -1,7 +1,9 @@
+@import '../../variables.scss';
+
 .subMenu {
   width: 240px;
-  background: #fff;
-  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.08);
+  background: $white;
+  box-shadow: $shadow-right;
 
   .subMenuTitle {
     margin: 15px;
@@ -12,7 +14,7 @@
     align-items: center;
     height: 48px;
     padding: 0 15px;
-    color: #666;
+    color: $text-color-secondary;
     text-decoration: none;
   }
 }

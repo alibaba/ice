@@ -10,7 +10,7 @@ import styles from './index.module.scss';
 
 class MainLayout extends Component {
   state = {
-    connect: true,
+    connect: false,
   };
 
   componentDidMount() {

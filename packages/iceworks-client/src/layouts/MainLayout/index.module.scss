@@ -1,8 +1,10 @@
+@import '../../variables.scss';
+
 .container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: #f0f2f5;
+  background: $brand-color-normal;
 
   .content {
     display: flex;
