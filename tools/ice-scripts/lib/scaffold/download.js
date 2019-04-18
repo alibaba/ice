@@ -58,7 +58,7 @@ function downloadAndFilterNpmFiles(npm, version, destDir, formatFile) {
             entry
               .pipe(fs.createWriteStream(destPath))
               .on('finish', () => {
-                formatFile = formatFile || Promise.resolve;
+                formatFile = formatFile || Promise.resolve.bind(Promise);
                 return formatFile(destPath).then(streamResolve);
               });
           });
