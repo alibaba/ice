@@ -36,7 +36,9 @@ module.exports = function componentBuild(buildConfig = {}) {
     switch (path.extname(files[i])) {
       case '.js':
       case '.jsx':
-        compileJS(files[i]);
+      case '.ts':
+      case '.tsx':
+        compileSource(files[i]);
         break;
       default:
         copyTask(files[i]);
@@ -56,7 +58,7 @@ module.exports = function componentBuild(buildConfig = {}) {
   styleGenerator.writeIndexScss();
   log.info('Generated index.scss');
 
-  function compileJS(file) {
+  function compileSource(file) {
     const source = path.join(srcDir, file);
     const dest = path.join(libDir, file);
     const destData = path.parse(dest);
@@ -66,7 +68,10 @@ module.exports = function componentBuild(buildConfig = {}) {
 
     // make sure dir exists
     mkdirp.sync(destData.dir);
-    const { code } = babel.transformFileSync(source, babelOpt);
+    // filename need to expose to @babel/preset-typescript
+    const { code } = babel.transformFileSync(source, Object.assign(babelOpt, {
+      filename: file,
+    }));
     writeFileSync(path.format(destData), code, 'utf-8');
     log.info(`Compile ${file}`);
   }

@@ -91,6 +91,7 @@ module.exports = (buildConfig = {}, buildComponentSrc) => {
           },
         },
       ],
+      '@babel/preset-typescript',
       '@babel/preset-react',
     ]),
     plugins: resolvePlugin(plugins),
