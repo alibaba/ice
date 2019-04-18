@@ -37,8 +37,17 @@ Usage: ice-init [options]
 
 Options:
 
-  -s, --scaffold         模板 npm 包名，可不传
+  -t, --template         模板 npm 包名，可不传
   -h, --help             output usage information
+```
+
+根据模板初始化组件/区块：
+
+```bash
+# 初始化组件
+$ ice init component
+# 初始化区块
+$ ice init block
 ```
 
 ### ice dev

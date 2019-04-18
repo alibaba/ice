@@ -8,12 +8,13 @@ const ora = require('ora');
 const npmUtils = require('ice-npm-utils');
 const log = require('../utils/log');
 
-module.exports = ({ npmName, projectDir }) => {
+module.exports = ({ npmName, projectDir, formatFile }) => {
   return npmUtils.getLatestVersion(npmName).then((npmVersion) => {
     return downloadAndFilterNpmFiles(
       npmName,
       npmVersion,
-      projectDir
+      projectDir,
+      formatFile
     );
   });
 };
@@ -23,7 +24,7 @@ module.exports = ({ npmName, projectDir }) => {
  *
  * @param {Object} options npm, version, destDir
  */
-function downloadAndFilterNpmFiles(npm, version, destDir) {
+function downloadAndFilterNpmFiles(npm, version, destDir, formatFile) {
   const npmTarball = `${npmUtils.getNpmRegistry(npm)}/${npm}/-/${npm}-${version}.tgz`;
   log.verbose('downloadAndFilterNpmFiles', npmTarball, destDir);
 
@@ -39,8 +40,16 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
         .pipe(tar.Parse())
         .on('entry', (entry) => {
           const realPath = entry.path.replace('package/', '');
+          let filename = path.basename(realPath);
+
           // _gitignore -> .gitignore
-          const filename = path.basename(realPath).replace(/^_/, '.');
+          // 特殊逻辑：_package.json -> package.json
+          if (filename === '_package.json') {
+            filename = filename.replace(/^_/, '');
+          } else {
+            filename = filename.replace(/^_/, '.');
+          }
+
           const destPath = path.join(destDir, path.dirname(realPath), filename);
 
           fse.ensureFileSync(destPath);
@@ -48,7 +57,10 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
           const writeStream = new Promise((streamResolve) => {
             entry
               .pipe(fs.createWriteStream(destPath))
-              .on('finish', () => streamResolve());
+              .on('finish', () => {
+                formatFile = formatFile || Promise.resolve;
+                return formatFile(destPath).then(streamResolve);
+              });
           });
           allWriteStream.push(writeStream);
         })
