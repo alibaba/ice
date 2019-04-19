@@ -23,5 +23,5 @@ ReactDOM.render(
       </Router>
     </ThemeProvider>
   </LocaleProvider>,
-  ICE_CONTAINER
+  ICE_CONTAINER,
 );
