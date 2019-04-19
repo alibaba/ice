@@ -2,13 +2,13 @@
 import { useMappedState, useDispatch } from '@src/store';
 import { useCallback } from 'react';
 
-const useMaterial = () => {
+const useMaterial = (value = [], action) => {
   const { data } = useMappedState(
     useCallback((state) => ({ data: state }), []),
   );
 
   const dispatch = useDispatch();
-  const onChange = useCallback(() => dispatch({ type: 'CHANGE', text: 'Use Hooks' }), []);
+  const onChange = useCallback(() => dispatch(action), value);
 
   return { data, onChange };
 };
