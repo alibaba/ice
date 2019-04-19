@@ -12,7 +12,8 @@ program
   .usage('<command> [options]')
   .command('build', 'build project')
   .command('dev', 'start server')
-  .command('init', 'init project by scaffold');
+  .command('init', 'init project by scaffold')
+  .command('add', 'add block');
 
 program.parse(process.argv);
 
