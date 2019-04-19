@@ -6,14 +6,13 @@ import MainLayout from '@layouts/MainLayout/index';
 import LocaleProvider from '@components/LocaleProvider';
 import { ThemeProvider } from '@components/ThemeProvider';
 import { getLocale } from '@utils/locale';
-import { makeStore, StoreContext } from '@src/store';
+import { store, StoreContext } from '@src/store';
 
 import '@utils/logger';
 import '@alifd/next/reset.scss';
 import './global.scss';
 import './variables.scss';
 
-const store = makeStore();
 const locale = getLocale();
 const ICE_CONTAINER = document.getElementById('iceworks');
 

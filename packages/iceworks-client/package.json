@@ -18,7 +18,9 @@
     "react-intl": "^2.8.0",
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
     "redux-react-hook": "^3.3.1",
+    "redux-starter-kit": "^0.4.3",
     "socket.io-client": "^2.2.0",
     "url-parse": "^1.4.6"
   },

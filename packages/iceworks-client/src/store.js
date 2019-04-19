@@ -1,19 +1,18 @@
-import { createStore } from 'redux';
+import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
 import { create } from 'redux-react-hook';
+import logger from 'redux-logger';
+import rootReducer from './reducers';
 
-function todos(state = [], action) {
-  switch (action.type) {
-    case 'CHANGE':
-      return state.concat([action.text]);
-    default:
-      return state;
-  }
-}
+const preloadedState = { todos: ['Use Redux'] };
+const middleware = [...getDefaultMiddleware(), logger];
+const enhancers = [];
 
-const INITIAL_STATE = ['Use Redux'];
-
-export function makeStore() {
-  return createStore(todos, INITIAL_STATE);
-}
+export const store = configureStore({
+  reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== 'production',
+  preloadedState,
+  middleware,
+  enhancers,
+});
 
 export const { StoreContext, useDispatch, useMappedState } = create();
