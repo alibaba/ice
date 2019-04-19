@@ -18,10 +18,10 @@ $ ice --help
 $ mkdir ice-project
 $ cd ice-project
 
-# support init project/component/block
-$ ice init
+$ ice init project # also support component/block
 $ ice dev
 $ ice build
+$ ice add block
 ```
 
 ## Methods
