@@ -1,13 +1,8 @@
 import React from 'react';
-import ThemeToggler from '@components/ThemeToggler';
 import styles from './index.module.scss';
 
 const GlobalBar = () => {
-  return (
-    <div className={styles.globalBar}>
-      <ThemeToggler />
-    </div>
-  );
+  return <div className={styles.globalBar}>Global Bar</div>;
 };
 
 export default GlobalBar;
