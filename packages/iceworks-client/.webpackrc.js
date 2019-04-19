@@ -11,6 +11,7 @@ module.exports = (context) => {
         '@src': resolve(__dirname, 'src/'),
         '@layouts': resolve(__dirname, 'src/layouts/'),
         '@components': resolve(__dirname, 'src/components/'),
+        '@hooks': resolve(__dirname, 'src/hooks'),
         '@utils': resolve(__dirname, 'src/utils/'),
       },
     },
