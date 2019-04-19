@@ -12,7 +12,7 @@ const log = require('../utils/log');
 const download = require('./download');
 
 module.exports = ({ template, projectDir, type }) => {
-  const tempDir = path.resolve(projectDir, '.temp');
+  const tempDir = path.resolve(projectDir, '.ice_scripts_temp');
   let answerOptions;
 
   return getAnswerOptions(type)
