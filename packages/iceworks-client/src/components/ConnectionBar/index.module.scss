@@ -1,6 +1,11 @@
+@import '../../variables.scss';
+
 .connectionBar {
-  background: #e83030;
-  color: #fff;
-  padding: 10px 0;
-  text-align: center;
+  flex: auto 0 0;
+  height: 40px;
+  background: $warning-color;
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

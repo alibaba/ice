@@ -4,9 +4,11 @@
   "description": "",
   "dependencies": {
     "@alifd/next": "^1.13.13",
-    "@icedesign/theme": "^1.0.0",
-    "alife-logger": "^1.5.1",
+    "@alifd/theme-2": "^0.0.22",
+    "@alifd/theme-3": "^0.1.0",
     "classnames": "^2.2.6",
+    "deepmerge": "^3.2.0",
+    "alife-logger": "^1.5.1",
     "loglevel": "^1.6.1",
     "loglevel-plugin-prefix": "^0.8.4",
     "prop-types": "^15.7.2",
@@ -15,7 +17,8 @@
     "react-dom": "^16.8.6",
     "react-intl": "^2.8.0",
     "react-router-dom": "^5.0.0",
-    "socket.io-client": "^2.2.0"
+    "socket.io-client": "^2.2.0",
+    "url-parse": "^1.4.6"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
@@ -33,7 +36,7 @@
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
   "buildConfig": {
-    "theme": "@icedesign/theme",
+    "theme": "@alifd/theme-2",
     "entry": "src/index.js",
     "localization": false
   },
