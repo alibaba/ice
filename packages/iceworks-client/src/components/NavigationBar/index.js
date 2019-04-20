@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import styles from './index.module.scss';
 
@@ -20,7 +21,9 @@ const NavigationBar = ({ menuData }) => {
               size="large"
               className={styles.navItemIcon}
             />
-            <span className={styles.navItemText}>{item.name}</span>
+            <span className={styles.navItemText}>
+              <FormattedMessage id={item.name} />
+            </span>
           </NavLink>
         );
       })}

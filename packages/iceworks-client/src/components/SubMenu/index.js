@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
 const SubMenu = ({ data, title }) => {
@@ -15,7 +16,7 @@ const SubMenu = ({ data, title }) => {
             className={styles.subMenuItem}
             activeStyle={{ background: '#eee' }}
           >
-            {item.name}
+            <FormattedMessage id={item.name} />
           </NavLink>
         );
       })}

@@ -1,12 +1,12 @@
 // Then our route config
 const menuConfig = [
   {
-    name: '项目',
+    name: 'iceworks.menu.project',
     path: '/project',
     icon: 'projects',
   },
   {
-    name: '工程',
+    name: 'iceworks.menu.work',
     path: '/work',
     icon: 'zujian',
     children: [
@@ -21,29 +21,29 @@ const menuConfig = [
     ],
   },
   {
-    name: '物料',
+    name: 'iceworks.menu.material',
     path: '/material',
     icon: 'template',
   },
   {
-    name: '设置',
+    name: 'iceworks.menu.setting',
     path: '/setting',
     icon: 'settings',
     children: [
       {
-        name: '通用设置',
+        name: 'iceworks.menu.setting.general',
         path: '/setting/general',
       },
       {
-        name: '物料设置',
+        name: 'iceworks.menu.setting.material',
         path: '/setting/material',
       },
       {
-        name: '面板设置',
+        name: 'iceworks.menu.setting.panel',
         path: '/setting/panel',
       },
       {
-        name: '高级设置',
+        name: 'iceworks.menu.setting.advanced',
         path: '/setting/advanced',
       },
     ],
