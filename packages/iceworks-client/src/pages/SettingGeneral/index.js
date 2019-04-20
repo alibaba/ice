@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Radio } from '@alifd/next';
 import { LocalContext, localeInfos } from '@components/Locale';
 import map from 'lodash.map';
@@ -6,7 +6,7 @@ import map from 'lodash.map';
 const RadioGroup = Radio.Group;
 
 const SettingGeneral = () => {
-  const { setLocale, locale } = React.useContext(LocalContext);
+  const { setLocale, locale } = useContext(LocalContext);
   const languageList = map(localeInfos, ({ label }, key) => ({
     value: key,
     label,
