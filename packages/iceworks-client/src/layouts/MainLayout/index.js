@@ -4,8 +4,8 @@ import NavigationBar from '@components/NavigationBar';
 import RouteRender from '@components/RouteRender';
 import ConnectionBar from '@components/ConnectionBar';
 import GlobalBar from '@components/GlobalBar';
-import menuConfig from '../../menuConfig';
-import routerConfig from '../../routerConfig';
+import menuConfig from '@src/menuConfig';
+import routerConfig from '@src/routerConfig';
 import styles from './index.module.scss';
 
 class MainLayout extends Component {
