@@ -34,16 +34,23 @@ function generateRootCA() {
   });
 }
 
-module.exports = function getRootCA() {
-  return (easyCert.isRootCAFileExists()
-    ? Promise.resolve({
-      key: path.join(rootDirPath, 'rootCA.key'),
-      cert: path.join(rootDirPath, 'rootCa.crt'),
+module.exports = async function getCertificate() {
+  if (!easyCert.isRootCAFileExists()) {
+    await generateRootCA();
+  }
+  const certPath = path.join(rootDirPath, 'rootCa.crt');
+  log.info('当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)');
+  console.log('   ', certPath);
+  return new Promise((resolve, reject) => {
+    easyCert.getCertificate('localhost', (error, keyContent, crtContent) => {
+      if (!error) {
+        resolve({
+          key: keyContent,
+          cert: crtContent
+        });
+      } else {
+        reject(error);
+      }
     })
-    : generateRootCA()
-  ).then((ca) => {
-    log.info('当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)');
-    console.log('   ', ca.cert);
-    return ca;
-  });
-};
+  })
+}

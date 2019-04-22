@@ -18,7 +18,7 @@ const paths = require('./config/paths');
 const getWebpackConfigDev = require('./config/webpack.config.dev');
 const devMiddleware = require('./devMiddleware');
 const iceworksClient = require('./iceworksClient');
-const generateRootCA = require('./config/generateRootCA');
+const getCertificate = require('./config/getCertificate');
 const prepareUrLs = require('./utils/prepareURLs');
 const getProxyConfig = require('./config/getProxyConfig');
 const goldlog = require('./utils/goldlog');
@@ -57,10 +57,10 @@ module.exports = async function (cliOptions, subprocess) {
 
   if (protocol === 'https') {
     try {
-      const ca = await generateRootCA();
+      const cert = await getCertificate();
       httpsConfig = {
-        key: fs.readFileSync(ca.key),
-        cert: fs.readFileSync(ca.cert),
+        key: cert.key,
+        cert: cert.cert,
       };
     } catch (err) {
       protocol = 'http';
