@@ -8,7 +8,7 @@ const paths = require('./paths');
 const cliInstance = require('../utils/cliInstance');
 const log = require('../utils/log');
 
-const AWESOME_TYPESCRIPT_LOADER = require.resolve('awesome-typescript-loader');
+const TYPESCRIPT_LOADER = require.resolve('ts-loader');
 const BABEL_LOADER = require.resolve('babel-loader');
 const CSS_LOADER = require.resolve('css-loader');
 const LESS_LOADER = require.resolve('less-loader');
@@ -91,7 +91,7 @@ module.exports = (buildConfig = {}, themeConfig) => {
   // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
   const miniCssExtractPluginLoader = { loader: MiniCssExtractPlugin.loader };
 
-  if (paths.publicUrl === './') {
+  if (buildConfig.localization) {
     miniCssExtractPluginLoader.options = { publicPath: '../' };
   }
   return [
@@ -170,7 +170,7 @@ module.exports = (buildConfig = {}, themeConfig) => {
       loader: BABEL_LOADER,
       options: deepAssign({}, babelConfig, { cacheDirectory: true }),
     },
-    // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'
+    // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
     {
       test: /\.tsx?$/,
       exclude: babelExclude,
@@ -180,10 +180,9 @@ module.exports = (buildConfig = {}, themeConfig) => {
           options: deepAssign({}, babelConfig, { cacheDirectory: true }),
         },
         {
-          loader: AWESOME_TYPESCRIPT_LOADER,
-          options: {
-            useCache: false,
-          },
+          loader: TYPESCRIPT_LOADER,
+          // disable type checker
+          options: { transpileOnly: true },
         },
       ],
     },
