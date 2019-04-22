@@ -256,9 +256,7 @@ function escapeHandlebars() {
       (file, next) => {
         const str = files[file].contents.toString();
         const newStr = str.replace(/\\{\\{([^{}]+)\\}\\}/g, '{{ $1 }}');
-        if (/\\{\\{([^{}]+)\\}\\}/g.test(str)) {
-          console.log(newStr);
-        }
+
         /* eslint-disable-next-line no-buffer-constructor */
         files[file].contents = new Buffer(newStr);
         next();
