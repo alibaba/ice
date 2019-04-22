@@ -1,13 +1,22 @@
-import { createModel } from '@store';
+import logger from '@utils/logger';
 
-export default createModel('projects', {
+export default {
+  namespace: 'projects',
   state: {
+    inited: false,
     dataSource: [],
   },
   reducers: {
     async init() {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      if (this.state.inited) {
+        return {};
+      }
+      await new Promise(resolve => setTimeout(() => {
+        logger.debug('fetched projects.');
+        resolve();
+      }, 1000));
       return {
+        inited: true,
         dataSource: [
           {
             name: 'project 1',
@@ -25,4 +34,4 @@ export default createModel('projects', {
       };
     },
   },
-});
+};

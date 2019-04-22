@@ -1,24 +1,14 @@
-import Model from './model';
 
-const models = {};
+import project from '@models/project';
+import projects from '@models/projects';
+import materials from '@models/materials';
+import Store from './store';
 
-export function createModel(name, config) {
-  if (models[name]) {
-    throw new Error(`Please do not repeat create model: ${name}.`);
-  }
+const store = new Store();
+store.registerModel(project);
+store.registerModel(projects);
+store.registerModel(materials);
 
-  models[name] = new Model(config);
-  return models[name];
-}
+export default store;
 
-export function getModel(name) {
-  const model = models[name];
-  if (!model) {
-    throw new Error(`Not found the model：${name}`);
-  }
-  return model;
-}
-
-export function useModel(name) {
-  return getModel(name).useModel();
-}
+export const useModel = store.useModel.bind(store);

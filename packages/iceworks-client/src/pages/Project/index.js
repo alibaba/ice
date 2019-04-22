@@ -3,14 +3,19 @@ import { Input } from '@alifd/next';
 import { useModel } from '@store';
 
 const Project = () => {
-  const [projectState, project] = useModel('project');
-  const [projectsState, projects] = useModel('projects');
-  const [materialsState] = useModel('materials');
+  const [project] = useModel('project');
+  const [projects] = useModel('projects');
+  const [materials] = useModel('materials');
+
+  const { state: projectState } = project;
+  const { state: projectsState } = projects;
+  const { state: materialsState } = materials;
 
   useEffect(() => {
     (async () => {
       await project.init();
       await projects.init();
+      await materials.init();
     })();
   }, []);
 
@@ -37,7 +42,7 @@ const Project = () => {
         />
       </div>
       <div>
-        <div>materialsState</div>
+        <div>materials</div>
         <ul>
           {materialsState.dataSource.map(({ name }, index) => {
             return <li key={index}>{name}</li>;

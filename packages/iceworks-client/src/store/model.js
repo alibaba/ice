@@ -25,15 +25,13 @@ class Model {
 
   useModel = () => {
     const [, setState] = useState();
-    // 使用useEffect实现发布订阅
     useEffect(() => {
       const index = this.queue.length;
       this.queue.push(setState);
       return () => this.queue.splice(index, 1);
     });
-    return [this.state, this.methods];
+    return [{ ...this.methods, state: this.state }];
   }
-
 
   createMethod(type) {
     const method = (...args) => {

@@ -7,7 +7,6 @@ import LocaleProvider from '@components/Locale';
 import { ThemeProvider } from '@components/ThemeProvider';
 
 import '@utils/logger';
-import '@models';
 import '@alifd/next/reset.scss';
 import './global.scss';
 import './variables.scss';
