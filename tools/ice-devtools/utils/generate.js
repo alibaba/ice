@@ -93,6 +93,7 @@ function generate(options, done) {
     .use(filterFiles(meta.filters))
     .use(renderTemplateFiles(meta.skipInterpolation))
     .use(transformFile(data.skipGitIgnore))
+    .use(escapeHandlebars())
     .ignore([TEMPLATE_PATH, 'meta.js']);
 
   if (typeof meta.metalsmith === 'function') {
@@ -241,4 +242,28 @@ function logMessage(message, data) {
       );
     }
   });
+}
+
+/**
+ * 转义 \{\{ xxx \}\} 到 {{ xxx }}
+ */
+function escapeHandlebars() {
+  return (files, _metalsmith, done) => {
+    const keys = Object.keys(files);
+
+    async.each(
+      keys,
+      (file, next) => {
+        const str = files[file].contents.toString();
+        const newStr = str.replace(/\\{\\{([^{}]+)\\}\\}/g, '{{ $1 }}');
+        if (/\\{\\{([^{}]+)\\}\\}/g.test(str)) {
+          console.log(newStr);
+        }
+        /* eslint-disable-next-line no-buffer-constructor */
+        files[file].contents = new Buffer(newStr);
+        next();
+      },
+      done
+    );
+  };
 }

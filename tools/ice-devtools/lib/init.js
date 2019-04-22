@@ -134,6 +134,10 @@ async function initAsk(options = {}) {
             name: '@icedesign/ice-vue-material-template (Vue 标准模板)',
             value: '@icedesign/ice-vue-material-template',
           },
+          {
+            name: '@icedesign/ice-angular-material-template (Angular 标准模板)',
+            value: '@icedesign/ice-angular-material-template',
+          },
         ],
       },
     ])

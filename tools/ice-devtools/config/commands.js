@@ -43,6 +43,12 @@ module.exports = {
   },
   screenshot: {
     desc: 'Create screenshot.png',
+    options: [
+      {
+        name: '-p --port [port]',
+        desc: 'port',
+      }
+    ],
   },
   generate: {
     desc: 'Generate materials json',
