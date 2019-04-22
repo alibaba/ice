@@ -12,6 +12,10 @@ const StoreProvider = ({ initialState, children }) => {
   );
 };
 
+StoreProvider.defaultProps = {
+  initialState: null,
+};
+
 StoreProvider.propTypes = {
   initialState: PropTypes.any,
   children: PropTypes.element.isRequired,
