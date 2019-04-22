@@ -1,0 +1,8 @@
+<div>
+  <header>
+    <ul>
+      <li *ngFor="let item of headerMenus"><a routerLink="\{\{item.path\}\}" routerLinkActive="active">\{\{item.name\}\}</a></li>
+    </ul>
+  </header>
+  <router-outlet></router-outlet>
+</div>
