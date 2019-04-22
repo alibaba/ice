@@ -3,6 +3,8 @@ const goldlog = require('./utils/goldlog');
 const pkgData = require('../package.json');
 const log = require('./utils/log');
 const initProject = require('./scaffold/initProject');
+const initMaterial = require('./scaffold/initMaterial');
+const checkEmpty = require('./utils/checkEmpty');
 
 /**
  * 初始化项目：cli 调用；方法调用
@@ -17,33 +19,53 @@ module.exports = async function (cliOptions) {
   goldlog('init', cliOptions);
   log.verbose('init cliOptions', cliOptions);
 
-  let { scaffold, projectDir } = cliOptions || {};
+  // eslint-disable-next-line prefer-const
+  let { template, projectDir, type } = cliOptions || {};
   projectDir = projectDir || process.cwd();
 
-  if (!scaffold) {
-    scaffold = await selectScaffold();
+  const canGoOn = await checkEmpty(projectDir);
+  if (!canGoOn) {
+    log.error('用户取消退出！');
+    process.exit(1);
   }
 
-  log.info('使用模板：', scaffold);
+  if (!template) {
+    template = await selectTemplate(type);
+  }
 
-  try {
-    await initProject({ scaffold, projectDir });
-    log.info('初始化项目成功，安装依赖后执行 npm run start 开始调试');
-  } catch (err) {
-    log.error('初始化项目失败', err);
+  log.info('使用模板：', template);
+
+  if (type === 'project') {
+    try {
+      await initProject({ template, projectDir });
+      log.info('初始化项目成功，安装依赖后执行 npm run start 开始调试');
+    } catch (err) {
+      log.error('初始化项目失败', err);
+    }
+  } else {
+    try {
+      await initMaterial({ template, projectDir, type });
+      log.info('初始化成功，安装依赖后执行 npm run start 开始调试');
+    } catch (err) {
+      log.error('初始化失败', err);
+    }
   }
 };
 
-function selectScaffold() {
-  const defaultScaffold = '@icedesign/lite-scaffold';
+function selectTemplate(type) {
+  if (type !== 'project') {
+    return Promise.resolve('@icedesign/ice-react-material-template');
+  }
+
+  const defaultTemplate = '@icedesign/lite-scaffold';
   return inquirer.prompt({
     type: 'list',
-    name: 'scaffold',
+    name: 'template',
     message: '请选择对应的模板（也可以通过 -s, --scaffold 自定义模板对应的 npm）',
-    default: defaultScaffold,
+    default: defaultTemplate,
     choices: [{
       name: 'Lite 模板，功能比较轻量',
-      value: defaultScaffold,
+      value: defaultTemplate,
     }, {
       name: 'TypeScript 模板，内置了对 TypeScript 的支持',
       value: '@icedesign/ts-scaffold',
@@ -52,9 +74,9 @@ function selectScaffold() {
       value: '@icedesign/pro-scaffold',
     }],
   }).then((answer) => {
-    return answer.scaffold || defaultScaffold;
+    return answer.template || defaultTemplate;
   }).catch((err) => {
     log.error('选择模板出错，使用默认模板', err);
-    return defaultScaffold;
+    return defaultTemplate;
   });
 }

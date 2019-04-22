@@ -2,27 +2,18 @@
  * 根据模板 npm 包名初始化项目
  */
 const path = require('path');
-const fs = require('fs');
 const fse = require('fs-extra');
 const uuid = require('uuid/v1');
 const rimraf = require('rimraf');
-const inquirer = require('inquirer');
 const { checkAliInternal } = require('ice-npm-utils');
 
 const log = require('../utils/log');
 const download = require('./download');
 
-module.exports = ({ scaffold, projectDir }) => {
-  return checkEmpty(projectDir).then((canGoOn) => {
-    if (!canGoOn) {
-      log.error('用户取消退出！');
-      process.exit(1);
-    } else {
-      return download({
-        npmName: scaffold,
-        projectDir,
-      });
-    }
+module.exports = ({ template, projectDir }) => {
+  return download({
+    npmName: template,
+    projectDir,
   }).then(() => {
     try {
       // 删除 build/
@@ -60,28 +51,6 @@ function modifyPkg(pkgPath) {
 
   fse.writeJSONSync(pkgPath, pkgData, {
     spaces: 2,
-  });
-}
-
-function checkEmpty(dir) {
-  return new Promise((resolve) => {
-    fs.readdir(dir, (err, files) => {
-      if (files && files.length) {
-        // 有文件
-        return inquirer.prompt({
-          type: 'confirm',
-          name: 'goOn',
-          message: '当前文件夹下存在其他文件，继续生成可能会覆盖，确认继续吗？',
-          default: false,
-        }).then((answer) => {
-          return resolve(answer.goOn);
-        }).catch((promptErr) => {
-          log.verbose('inquirer error', promptErr);
-          return resolve(false);
-        });
-      }
-      return resolve(true);
-    });
   });
 }
 
