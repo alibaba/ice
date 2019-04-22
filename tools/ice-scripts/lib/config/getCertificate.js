@@ -1,56 +1,45 @@
+const mkcert = require('mkcert');
+const fs = require('fs-extra');
 const path = require('path');
-const EasyCert = require('node-easy-cert');
 const log = require('../utils/log');
 
 const rootDirPath = path.resolve(__dirname, '../ICE_CA');
-const options = {
-  rootDirPath,
-  defaultCertAttrs: [
-    { name: 'countryName', value: 'CN' },
-    { name: 'organizationName', value: 'ICE Team' },
-    { shortName: 'ST', value: 'HZ' },
-    { shortName: 'OU', value: 'ICE SSL CA' },
-  ],
-};
-const easyCert = new EasyCert(options);
 
-function generateRootCA() {
-  const rootOptions = {
-    commonName: 'ICE Scripts SSL CA',
-    overwrite: true,
-  };
-
+function generateCA() {
   return new Promise((resolve, reject) => {
-    easyCert.generateRootCA(rootOptions, (error, keyPath, crtPath) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve({
-          key: keyPath,
-          cert: crtPath,
-        });
-      }
+    mkcert.createCA({
+      organization: 'ICE Team',
+      countryCode: 'CN',
+      state: 'ZJ',
+      locality: 'HZ',
+      validityDays: 3650,
+    }).then((ca) => {
+      fs.writeFileSync('../ICE_CA/rootCa.key', ca.key);
+      fs.writeFileSync('../ICE_CA/rootCa.crt', ca.cert);
+      resolve({
+        key: path.join(rootDirPath, 'rootCa.key'),
+        cert: path.join(rootDirPath, 'rootCa.cert'),
+      });
+    }).catch((err) => {
+      reject(err);
     });
   });
 }
 
 module.exports = async function getCertificate() {
-  if (!easyCert.isRootCAFileExists()) {
-    await generateRootCA();
-  }
   const certPath = path.join(rootDirPath, 'rootCa.crt');
+  const keyPath = path.join(rootDirPath, 'rootCa.key');
+  if (!fs.existsSync(certPath) || !fs.existsSync(keyPath)) {
+    await generateCA();
+  }
   log.info('当前使用的 HTTPS 证书路径(如有需要请手动信任此文件)');
   console.log('   ', certPath);
   return new Promise((resolve, reject) => {
-    easyCert.getCertificate('localhost', (error, keyContent, crtContent) => {
-      if (!error) {
-        resolve({
-          key: keyContent,
-          cert: crtContent,
-        });
-      } else {
-        reject(error);
-      }
-    });
+    mkcert.createCert({
+      domains: ['127.0.0.1', 'localhost'],
+      validityDays: 365,
+      caKey: fs.readFileSync(keyPath),
+      caCert: fs.readFileSync(certPath),
+    }).then(resolve).catch(reject);
   });
 };
