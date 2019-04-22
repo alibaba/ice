@@ -8,13 +8,14 @@ const rm = require('rimraf').sync;
 const validateName = require('validate-npm-package-name');
 const easyfile = require('easyfile');
 const { checkAliInternal } = require('ice-npm-utils');
+const uppercamelcase = require('uppercamelcase');
 
 const logger = require('../utils/logger');
 const generate = require('../utils/generate');
 const localPath = require('../utils/local-path');
 const download = require('../utils/download');
+const pkgJSON = require('../utils/pkg-json');
 const add = require('./add');
-const generateDemo = require('../utils/generate-marterials-demo');
 
 const isLocalPath = localPath.isLocalPath;
 
@@ -180,9 +181,36 @@ async function run(opt, argsOpt) {
   easyfile.copy(path.join(templatePath, 'template'), path.join(dest, '.template'));
 
   // generate demo
-  await generateDemo(dest);
+  await generateMaterialsDemo(dest);
 
   initCompletedMessage(dest, name);
+}
+
+/**
+ * generate demo for material project
+ */
+async function generateMaterialsDemo(appPath) {
+  const pkg = pkgJSON.getPkgJSON(appPath);
+
+  // block component ...
+  const types = fs.readdirSync(path.join(appPath, '.template')).filter((file) =>
+    fs.statSync(path.join(appPath, '.template', file)).isDirectory()
+  );
+
+  for (let i = 0; i < types.length; i++) {
+    const type = types[i];
+    /* eslint-disable-next-line no-await-in-loop */
+    await generate({
+      src: path.join(appPath, `.template/${type}`),
+      dest: path.join(appPath, `${type}s/Example${uppercamelcase(type)}`),
+      name: `example-${type}`,
+      npmName: `${pkg.name}-example-${type}`,
+      version: '1.0.0',
+      title: `demo ${type}`,
+      description: '示例',
+      skipGitIgnore: true,
+    });
+  }
 }
 
 /**
