@@ -5,6 +5,7 @@ export default {
   state: {
     inited: false,
     dataSource: [],
+    currentId: '',
   },
   reducers: {
     async init() {
@@ -17,21 +18,47 @@ export default {
       }, 1000));
       return {
         inited: true,
+        currentId: '0',
         dataSource: [
           {
-            name: 'project 1',
+            id: '0',
+            name: 'projectA',
           },
           {
-            name: 'project 2',
+            id: '1',
+            name: 'projectB',
+          },
+          {
+            id: '2',
+            name: 'projectC',
           },
         ],
       };
     },
     async add(project) {
       await new Promise(resolve => setTimeout(resolve, 1000));
+
+      const { dataSource } = this.state;
       return {
-        dataSource: [].concat(this.state.dataSource).concat([project]),
+        dataSource: [].concat(dataSource).concat([{ ...project, id: dataSource.length }]),
       };
+    },
+    async remove(selectedId) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return {
+        dataSource: [].concat(this.state.dataSource.filter(({ id }) => id !== selectedId)),
+      };
+    },
+    async setCurrent(currentId) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      return {
+        ...this.state,
+        currentId,
+      };
+    },
+    getCurrent() {
+      return this.state.dataSource.filter(({ id }) => id === this.state.currentId)[0] || {};
     },
   },
 };

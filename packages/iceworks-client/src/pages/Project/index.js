@@ -1,35 +1,44 @@
 import React, { useEffect } from 'react';
-import { Input } from '@alifd/next';
+import { Input, Button } from '@alifd/next';
 import { useModel } from '@store';
 
 const Project = () => {
-  const [project] = useModel('project');
   const [projects] = useModel('projects');
   const [materials] = useModel('materials');
 
-  const { state: projectState } = project;
   const { state: projectsState } = projects;
   const { state: materialsState } = materials;
 
   useEffect(() => {
     (async () => {
-      await project.init();
       await projects.init();
       await materials.init();
     })();
   }, []);
 
+  const currentProject = projects.getCurrent();
+
   return (
     <div>
       <h2>Project</h2>
       <div>
-        {projectState.name}
+        now project: {currentProject.name}
       </div>
       <div>
         <div>list</div>
         <ul>
-          {projectsState.dataSource.map(({ name }, index) => {
-            return <li key={index}>{name}</li>;
+          {projectsState.dataSource.map((projectData, index) => {
+            const { name, id } = projectData;
+            return (
+              <li key={index}>
+                <a onClick={async () => { await projects.setCurrent(id); }}>
+                  {name}
+                </a>
+                <Button onClick={async () => { await projects.remove(id); }}>
+                  删除
+                </Button>
+              </li>
+            );
           })}
         </ul>
       </div>

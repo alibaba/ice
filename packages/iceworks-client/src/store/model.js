@@ -106,6 +106,7 @@ class Model {
     if (this.state === newState) {
       return false;
     }
+
     const keys = Object.keys(newState);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
