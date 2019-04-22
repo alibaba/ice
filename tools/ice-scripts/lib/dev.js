@@ -4,7 +4,6 @@
 
 process.env.NODE_ENV = 'development';
 
-const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 const clearConsole = require('react-dev-utils/clearConsole');

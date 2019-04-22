@@ -46,11 +46,11 @@ module.exports = async function getCertificate() {
       if (!error) {
         resolve({
           key: keyContent,
-          cert: crtContent
+          cert: crtContent,
         });
       } else {
         reject(error);
       }
-    })
-  })
-}
+    });
+  });
+};
