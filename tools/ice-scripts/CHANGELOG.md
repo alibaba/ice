@@ -1,7 +1,15 @@
 # Changelog
 
-## 1.9.5
+## 1.10.0
 
+- [feat] 组件开发支持 importStyle 能力 #1755
+- [fix] 组件开发 export default from 报错问题 #1763
+- [chore] 不再锁死依赖版本 #1794
+- [feat] 支持 `add block` 命令 #1791
+- [feat] 支持 `init block/component` #1790
+- [feat] 内置 block 的 buildConfig，entry/output #1817
+- [fix] 修复自定义 output.publicPath 的问题 #1821
+- [feat] 组件 src->lib 支持 ts，同时将 style.js 的生成逻辑后置 Close #1800
 
 ## 1.9.4
 
