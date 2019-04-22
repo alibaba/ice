@@ -12,14 +12,16 @@ module.exports = (context) => {
         '@layouts': resolve(__dirname, 'src/layouts/'),
         '@components': resolve(__dirname, 'src/components/'),
         '@utils': resolve(__dirname, 'src/utils/'),
+        '@store': resolve(__dirname, 'src/store/'),
+        '@models': resolve(__dirname, 'src/models/'),
       },
     },
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-        }
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        },
       }),
-    ]
+    ],
   };
 };
