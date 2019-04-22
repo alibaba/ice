@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import StoreContext from './storeContext';
+import StoreContext from './StoreContext';
 
 /**
  * Provide a useStore function to synchronize data to the global store
@@ -7,7 +7,6 @@ import StoreContext from './storeContext';
  */
 function useStore(cb) {
   const [store, setStore] = useContext(StoreContext);
-
   const [data, setData] = useState(true);
 
   useEffect(() => {

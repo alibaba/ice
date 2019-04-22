@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -6,7 +6,7 @@ import MainLayout from '@layouts/MainLayout/index';
 import LocaleProvider from '@components/LocaleProvider';
 import { ThemeProvider } from '@components/ThemeProvider';
 import { getLocale } from '@utils/locale';
-import { StoreContext } from '@store';
+import StoreProvider from '@store/StoreProvider';
 
 import '@utils/logger';
 import '@alifd/next/reset.scss';
@@ -16,10 +16,8 @@ import './variables.scss';
 const locale = getLocale();
 
 const App = () => {
-  const [data, setData] = useState();
-
   return (
-    <StoreContext.Provider value={[data, setData]}>
+    <StoreProvider>
       <LocaleProvider locale={locale}>
         <ThemeProvider>
           <Router>
@@ -27,10 +25,8 @@ const App = () => {
           </Router>
         </ThemeProvider>
       </LocaleProvider>
-    </StoreContext.Provider>
+    </StoreProvider>
   );
 };
 
-const ICE_CONTAINER = document.getElementById('iceworks');
-
-ReactDOM.render(<App />, ICE_CONTAINER);
+ReactDOM.render(<App />, document.getElementById('iceworks'));

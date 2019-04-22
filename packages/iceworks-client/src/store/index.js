@@ -1,4 +1,5 @@
-import StoreContext from './storeContext';
+import StoreContext from './StoreContext';
+import StoreProvider from './StoreProvider';
 import useStore from './useStore';
 
-export { StoreContext, useStore };
+export { StoreContext, StoreProvider, useStore };
