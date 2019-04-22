@@ -23,12 +23,6 @@
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
   },
-  "buildConfig": {
-    "entry": "demo/index.js",
-    "output": {
-      "publicPath": "./"
-    }
-  },
   "publishConfig": {
     "registry": "{{registry}}"
   },
