@@ -47,7 +47,7 @@ module.exports = {
       {
         name: '-p --port [port]',
         desc: 'port',
-      }
+      },
     ],
   },
   generate: {
