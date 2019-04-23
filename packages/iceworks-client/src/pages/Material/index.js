@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useModel } from '@store';
 
 const Material = () => {
-  const [materials] = useModel('materials');
+  const materials = useModel('materials');
   const { state } = materials;
 
   const handleClick = () => {

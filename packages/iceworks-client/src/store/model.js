@@ -35,7 +35,7 @@ class Model {
         this.queue.splice(index, 1);
       };
     });
-    return [{ ...this.methods, state: this.state }];
+    return { ...this.methods, state: this.state };
   }
 
   createMethod(type) {

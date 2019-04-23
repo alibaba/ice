@@ -3,9 +3,9 @@ import { Input, Button } from '@alifd/next';
 import { useModel } from '@store';
 
 const Project = () => {
-  const [projects] = useModel('projects');
-  const [project] = useModel('project');
-  const [materials] = useModel('materials');
+  const projects = useModel('projects');
+  const project = useModel('project');
+  const materials = useModel('materials');
 
   const { state: projectState } = project;
   const { state: { dataSource } } = projects;
