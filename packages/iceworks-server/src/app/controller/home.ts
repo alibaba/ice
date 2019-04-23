@@ -4,7 +4,7 @@ import { controller, get, provide } from 'midway';
 @controller('/')
 export class HomeController {
   @get('/')
-  async index(ctx) {
-    ctx.body = `Welcome to midwayjs!`;
+  async render(ctx) {
+    await ctx.render('index.html');
   }
 }
