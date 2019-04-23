@@ -3,25 +3,15 @@ import logger from '@utils/logger';
 export default {
   namespace: 'projects',
   state: {
-    inited: false,
     dataSource: [],
-    current: {},
   },
   reducers: {
-    async init() {
-      if (this.state.inited) {
-        return {};
-      }
+    async refresh() {
       await new Promise(resolve => setTimeout(() => {
         logger.debug('fetched projects.');
         resolve();
       }, 1000));
       return {
-        inited: true,
-        current: {
-          id: '0',
-          name: 'projectA',
-        },
         dataSource: [
           {
             id: '0',
@@ -50,14 +40,6 @@ export default {
       await new Promise(resolve => setTimeout(resolve, 1000));
       return {
         dataSource: [].concat(this.state.dataSource.filter(({ id }) => id !== selectedId)),
-      };
-    },
-    async setCurrent(currentId) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      return {
-        ...this.state,
-        current: this.state.dataSource.filter(({ id }) => id === currentId)[0],
       };
     },
   },

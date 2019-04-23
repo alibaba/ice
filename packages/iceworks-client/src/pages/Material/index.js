@@ -10,7 +10,7 @@ const Material = () => {
 
   useEffect(() => {
     (async () => {
-      await materials.init();
+      await materials.refresh();
     })();
   }, []);
 

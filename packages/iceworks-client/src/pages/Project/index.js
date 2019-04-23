@@ -4,37 +4,51 @@ import { useModel } from '@store';
 
 const Project = () => {
   const [projects] = useModel('projects');
+  const [project] = useModel('project');
   const [materials] = useModel('materials');
 
+  const { state: projectState } = project;
   const { state: projectsState } = projects;
   const { state: materialsState } = materials;
 
   useEffect(() => {
     (async () => {
-      await projects.init();
-      await materials.init();
+      await project.refresh();
+      await projects.refresh();
+      await materials.refresh();
     })();
   }, []);
-
-  const currentProject = projectsState.current;
 
   return (
     <div>
       <h2>Project</h2>
       <div>
-        now project: {currentProject.name}
+        now project: {projectState.name}
+        <div>
+          my pages:
+          <ul>
+            {projectState.pages.map(({ name }) => {
+              return name;
+            })}
+          </ul>
+        </div>
       </div>
       <div>
-        <div>list</div>
+        <div>my projects</div>
         <ul>
           {projectsState.dataSource.map((projectData, index) => {
             const { name, id } = projectData;
             return (
               <li key={index}>
-                <a onClick={async () => { await projects.setCurrent(id); }}>
+                <a onClick={async () => { await project.setData(projectData); }}>
                   {name}
                 </a>
-                <Button onClick={async () => { await projects.remove(id); }}>
+                <Button
+                  onClick={async () => {
+                    await projects.remove(id);
+                    await project.refresh();
+                  }}
+                >
                   删除
                 </Button>
               </li>
@@ -51,7 +65,7 @@ const Project = () => {
         />
       </div>
       <div>
-        <div>materials</div>
+        <div>my materials</div>
         <ul>
           {materialsState.dataSource.map(({ name }, index) => {
             return <li key={index}>{name}</li>;

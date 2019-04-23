@@ -16,9 +16,7 @@ class Model {
     this.state = state;
     this.reducers = reducers;
 
-    // state 是否发生变化，loading 是否发生变化
     this.isChanged = false;
-    // 更新状态的队列
     this.queue = [];
 
     this.methods = {};
