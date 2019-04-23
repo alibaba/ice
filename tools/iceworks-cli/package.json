@@ -1,0 +1,20 @@
+{
+  "name": "iceworks-cli",
+  "version": "1.0.0",
+  "description": "start and open the iceworks web",
+  "main": "bin/iceworks.js",
+  "bin": {
+    "iceworks": "bin/iceworks.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chenbin92",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "cross-spawn": "^6.0.5",
+    "portfinder": "^1.0.20"
+  }
+}
