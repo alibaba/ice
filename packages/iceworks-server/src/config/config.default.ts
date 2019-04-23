@@ -10,7 +10,7 @@ export = (appInfo: any) => {
   config.middleware = [];
 
   config.static = {
-    dir: path.join(appInfo.baseDir, 'app/public'),
+    dir: path.join(appInfo.baseDir, 'app/view'),
     prefix: '/',
   };
 
