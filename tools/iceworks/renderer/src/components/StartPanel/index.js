@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { Button } from '@icedesign/base';
-
 import EmptyTips from '../EmptyTips';
 import { Item as ScaffoldItem, ScaffoldHoc } from '../Scaffold';
 import CreateProjectDialog from '../CreateProjectDialog';

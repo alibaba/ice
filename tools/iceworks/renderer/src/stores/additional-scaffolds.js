@@ -1,5 +1,4 @@
 import { computed, toJS, observable } from 'mobx';
-import services from '../services';
 
 class AdditionalScaffolds {
   @observable
@@ -63,7 +62,6 @@ class AdditionalScaffolds {
     const categories = [];
 
     this.scaffoldsValue.forEach((item) => {
-
       if (Array.isArray(item.categories)) {
         item.categories.forEach((currentValue) => {
           if (!categories.includes(currentValue)) {
