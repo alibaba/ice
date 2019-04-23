@@ -4,7 +4,6 @@ import logger from '@utils/logger';
 export default {
   namespace: 'materials',
   state: {
-    inited: false,
     dataSource: [],
   },
   reducers: {
