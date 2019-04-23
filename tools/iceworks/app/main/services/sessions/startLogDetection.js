@@ -2,7 +2,6 @@
  * 据日志情况分析进程状态
  */
 const stripAnsi = require('strip-ansi');
-
 const sendToWebContents = require('../../helper/sendToWebContents');
 
 const serverURLRegex = /https?:\/\/((?:\d+\.\d+\.\d+\.\d+)|localhost):(\d{2,}\/?)/g;

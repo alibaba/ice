@@ -1,5 +1,5 @@
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const pathExists = require('path-exists');
 const templateBuilderUtils = require('@icedesign/template-builder/utils/');
 const template = require('../../template');

@@ -1,6 +1,5 @@
 const { BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const { windowURL, isMac, isWin } = require('./shared');
-
 const createTouchBar = require('./createTouchBar');
 const sessions = require('./services/sessions');
 const logger = require('./logger');

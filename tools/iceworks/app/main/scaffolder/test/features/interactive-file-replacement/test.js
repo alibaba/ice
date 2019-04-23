@@ -1,6 +1,6 @@
-const rimraf = require('rimraf');
 const fs = require('fs');
 const path = require('path');
+const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 const InteractiveFileReplacement = require('../../../lib/interactiveFileReplacement');
 

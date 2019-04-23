@@ -1,7 +1,6 @@
 import { computed, toJS, observable } from 'mobx';
 import upperCamelCase from 'uppercamelcase';
 import { isIceMaterial } from '../lib/utils';
-
 import projects from './projects';
 
 class AdditionalComponents {
