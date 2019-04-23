@@ -16,7 +16,7 @@ const Project = () => {
     })();
   }, []);
 
-  const currentProject = projects.getCurrent();
+  const currentProject = projectsState.current;
 
   return (
     <div>

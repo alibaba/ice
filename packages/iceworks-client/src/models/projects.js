@@ -5,7 +5,7 @@ export default {
   state: {
     inited: false,
     dataSource: [],
-    currentId: '',
+    current: {},
   },
   reducers: {
     async init() {
@@ -18,7 +18,10 @@ export default {
       }, 1000));
       return {
         inited: true,
-        currentId: '0',
+        current: {
+          id: '0',
+          name: 'projectA',
+        },
         dataSource: [
           {
             id: '0',
@@ -54,11 +57,8 @@ export default {
 
       return {
         ...this.state,
-        currentId,
+        current: this.state.dataSource.filter(({ id }) => id === currentId)[0],
       };
-    },
-    getCurrent() {
-      return this.state.dataSource.filter(({ id }) => id === this.state.currentId)[0] || {};
     },
   },
 };
