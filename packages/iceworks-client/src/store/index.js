@@ -1,6 +1,6 @@
 
 import projects from '@models/projects';
-import project from '@models/project';
+import project from '@models/currentProject';
 import materials from '@models/materials';
 import Store from './store';
 
