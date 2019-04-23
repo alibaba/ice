@@ -8,7 +8,7 @@ const Project = () => {
   const [materials] = useModel('materials');
 
   const { state: projectState } = project;
-  const { state: projectsState } = projects;
+  const { state: { dataSource } } = projects;
   const { state: materialsState } = materials;
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Project = () => {
       <div>
         <div>my projects</div>
         <ul>
-          {projectsState.dataSource.map((projectData, index) => {
+          {dataSource.map((projectData, index) => {
             const { name, id } = projectData;
             return (
               <li key={index}>
