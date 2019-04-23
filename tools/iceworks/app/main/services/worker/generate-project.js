@@ -22,14 +22,12 @@ module.exports = (_options, afterCreateRequest) => {
 
   let fn;
   let createClient;
-  let needCreateDefflow;
+  const needCreateDefflow = isAlibaba;
   if (isCustomScaffold) {
-    needCreateDefflow = isAlibaba;
     layoutConfig.directory = targetPath;
     layoutConfig.name = projectName;
     fn = templateBuilderUtils.generateTemplate(layoutConfig);
   } else {
-    needCreateDefflow = isAlibaba && scaffold.builder === 'ice-scripts';
     if (nodeFramework) {
       // @TODO afterCreateRequest
       // 解压node模板的promise
