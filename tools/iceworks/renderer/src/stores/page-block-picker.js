@@ -1,6 +1,5 @@
-import { observable, action, computed } from 'mobx';
 import path from 'path';
-
+import { observable, action, computed } from 'mobx';
 import { readdirSync } from '../lib/file-system';
 
 // store

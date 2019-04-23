@@ -1,6 +1,6 @@
+import path from 'path';
 import { Dialog } from '@icedesign/base';
 import { remote } from 'electron';
-import path from 'path';
 import React from 'react';
 import rimraf from 'rimraf';
 import dialog from '../components/dialog';
