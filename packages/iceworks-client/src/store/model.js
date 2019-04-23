@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import shallowequal from 'shallowequal';
 
 const isPromise = (fn) => {
   if (fn instanceof Promise) {
@@ -101,18 +102,7 @@ class Model {
       return true;
     }
 
-    if (this.state === newState) {
-      return false;
-    }
-
-    const keys = Object.keys(newState);
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      if (this.state[key] !== newState[key]) {
-        return true;
-      }
-    }
-    return false;
+    return shallowequal(this.state, newState);
   }
 }
 
