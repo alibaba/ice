@@ -14,11 +14,17 @@ function generateCA() {
       locality: 'HZ',
       validityDays: 3650,
     }).then((ca) => {
-      fs.writeFileSync('../ICE_CA/rootCa.key', ca.key);
-      fs.writeFileSync('../ICE_CA/rootCa.crt', ca.cert);
+      if (!fs.existsSync(rootDirPath)) {
+        // create ICE_CA folder if not exists
+        fs.mkdirSync(rootDirPath);
+      }
+      const keyPath = path.join(rootDirPath, 'rootCa.key');
+      const certPath = path.join(rootDirPath, 'rootCa.crt');
+      fs.writeFileSync(keyPath, ca.key);
+      fs.writeFileSync(certPath, ca.cert);
       resolve({
-        key: path.join(rootDirPath, 'rootCa.key'),
-        cert: path.join(rootDirPath, 'rootCa.cert'),
+        key: keyPath,
+        cert: certPath,
       });
     }).catch((err) => {
       reject(err);
