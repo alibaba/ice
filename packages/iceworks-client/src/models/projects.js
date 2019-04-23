@@ -1,7 +1,6 @@
 import logger from '@utils/logger';
 
 export default {
-  namespace: 'projects',
   state: {
     dataSource: [],
   },

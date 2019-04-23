@@ -5,9 +5,9 @@ import materials from '@models/materials';
 import Store from './store';
 
 const store = new Store();
-store.registerModel(project);
-store.registerModel(projects);
-store.registerModel(materials);
+store.registerModel('project', project);
+store.registerModel('projects', projects);
+store.registerModel('materials', materials);
 
 export default store;
 

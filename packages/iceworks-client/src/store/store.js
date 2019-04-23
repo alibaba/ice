@@ -3,8 +3,7 @@ import Model from './model';
 export default class Store {
   models = {};
 
-  registerModel(config) {
-    const { namespace } = config;
+  registerModel(namespace, config) {
     if (this.models[namespace]) {
       throw new Error(`Please do not repeat create model: ${namespace}.`);
     }
