@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-angular-material-template",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "基于 Angular 自定义物料源的初始模板",
   "files": [
     "template"
@@ -20,7 +20,6 @@
     "url": "https://github.com/alibaba/ice"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.com"
+    "access": "public"
   }
 }
