@@ -1,5 +1,4 @@
 const { exec } = require('child_process');
-
 const { findEditorOrDefault } = require('./lookup');
 const { launchExternalEditor } = require('./launch');
 const exception = require('../../exception');

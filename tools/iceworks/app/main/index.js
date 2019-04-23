@@ -1,13 +1,10 @@
 const parse = require('url-parse');
 const logger = require('./logger');
 const glodlog = require('./glodlog');
-
 const checkEnv = require('./helper/checkEnv');
 const network = require('./network');
 const spc = require('./spc');
-
 const { app } = require('electron');
-
 const { appMenu } = require('./menu');
 const { registerApp, registerShortcut } = require('./app');
 const { createHomeWindow, createTouchBar } = require('./windowList');

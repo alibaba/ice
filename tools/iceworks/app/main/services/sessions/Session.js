@@ -2,7 +2,6 @@ const { EventEmitter } = require('events');
 const { StringDecoder } = require('string_decoder');
 const defaultShell = require('default-shell');
 const is = require('electron-is');
-
 const { getEnv } = require('../../env');
 const { WIN_NPM_CMD } = require('../../paths');
 

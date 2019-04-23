@@ -1,5 +1,5 @@
-const appPath = require('app-path');
 const Path = require('path');
+const appPath = require('app-path');
 const pathExists = require('path-exists');
 const { ExternalEditor } = require('./shared');
 const logger = require('../../logger');

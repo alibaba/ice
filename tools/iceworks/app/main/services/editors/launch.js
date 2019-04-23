@@ -1,6 +1,5 @@
 const { spawn } = require('child_process');
 const pathExists = require('path-exists');
-
 const logger = require('../../logger');
 const { ExternalEditorError } = require('./shared');
 
