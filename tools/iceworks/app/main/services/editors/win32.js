@@ -1,9 +1,8 @@
 const Path = require('path');
 const pathExists = require('path-exists');
-const { ExternalEditor } = require('./shared');
 const logger = require('../../logger');
-
 const { readRegistryKeySafe } = require('../../registry');
+const { ExternalEditor } = require('./shared');
 
 exports.parse = function parse(label) {
   if (label === ExternalEditor.Atom) {

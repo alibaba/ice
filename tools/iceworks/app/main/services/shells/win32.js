@@ -1,6 +1,5 @@
 const { spawn } = require('child_process');
 const Path = require('path');
-
 const { readRegistryKeySafe } = require('../../registry');
 const logger = require('../../logger');
 const { Shell } = require('./shared');

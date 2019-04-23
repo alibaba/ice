@@ -1,6 +1,5 @@
 const { Menu, shell, BrowserWindow } = require('electron');
 const electronLog = require('electron-log');
-
 const { isMac, isWin, isDev } = require('./shared');
 const autoUpdater = require('./autoUpdater');
 const sendToWebContents = require('./helper/sendToWebContents');
