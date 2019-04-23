@@ -29,9 +29,7 @@ module.exports = (_options, afterCreateRequest) => {
     layoutConfig.name = projectName;
     fn = templateBuilderUtils.generateTemplate(layoutConfig);
   } else {
-    const scaffoldDevDeps = (scaffold && scaffold.devDependencies) || {};
-    // needCreateDefflow = nodeFramework ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
-    needCreateDefflow = isAlibaba && scaffoldDevDeps['ice-scripts'];
+    needCreateDefflow = isAlibaba && scaffold.builder === 'ice-scripts';
     if (nodeFramework) {
       // @TODO afterCreateRequest
       // 解压node模板的promise
