@@ -1,15 +1,13 @@
 {
-  "name": "@ali/ng-template",
-  "version": "0.0.11",
-  "description": "自定义物料源的初始模板",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "name": "@icedesign/ice-angular-material-template",
+  "version": "0.0.1",
+  "description": "基于 Angular 自定义物料源的初始模板",
   "files": [
     "template"
   ],
   "keywords": [
     "ice",
+    "angular",
     "ice-template"
   ],
   "author": {
@@ -23,6 +21,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "http://registry.npm.alibaba-inc.com"
+    "registry": "http://registry.npmjs.com"
   }
 }
