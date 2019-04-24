@@ -17,5 +17,10 @@ export = (appInfo: any) => {
     },
   };
 
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,PUT,POST,DELETE'
+  };
+
   return config;
 };

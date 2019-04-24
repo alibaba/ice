@@ -6,4 +6,9 @@ export = {
     enable: true,
     package: 'egg-socket.io',
   },
+
+  cors: {
+    enable: true,
+    package: 'egg-cors',
+  }
 };

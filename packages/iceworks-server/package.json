@@ -4,9 +4,13 @@
   "description": "iceworks server",
   "private": true,
   "dependencies": {
+    "conf": "^4.0.1",
+    "egg-cors": "^2.2.0",
     "egg-scripts": "^2.10.0",
     "egg-socket.io": "^4.1.5",
+    "junk": "^3.1.0",
     "midway": "^1.0.0",
+    "mkdirp": "^0.5.1",
     "socket.io-client": "^2.2.0"
   },
   "devDependencies": {

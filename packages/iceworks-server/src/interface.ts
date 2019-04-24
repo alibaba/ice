@@ -1,23 +1,21 @@
 /**
- * @description User-Service parameters
- */
-export interface IUserOptions {
-  id: number;
-}
-
-/**
  * @description User-Service response
  */
-export interface IUserResult {
-  id: number;
-  username: string;
-  phone: string;
-  email?: string;
+export interface IProject {
+  folderPath: string;
+}
+
+export interface IProjectsResult {
+  projects: IProject[]
+}
+export interface IProjectResult {
+  project: IProject
 }
 
 /**
  * @description User-Service abstractions
  */
-export interface IUserService {
-  getUser(options: IUserOptions): Promise<IUserResult>;
+export interface IProjectService {
+  getProjects(): Promise<IProjectsResult>;
+  getCurrent(): Promise<IProjectResult>;
 }

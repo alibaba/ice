@@ -3,24 +3,9 @@ import logger from '@utils/logger';
 export default {
   dataSource: [],
   async refresh() {
-    await new Promise(resolve => setTimeout(() => {
-      logger.debug('fetched projects.');
-      resolve();
-    }, 1000));
-    this.dataSource = [
-      {
-        id: '0',
-        name: 'projectA',
-      },
-      {
-        id: '1',
-        name: 'projectB',
-      },
-      {
-        id: '2',
-        name: 'projectC',
-      },
-    ];
+    const response = await fetch('http://localhost:7001/api/project');
+    const data = await response.json();
+    this.dataSource = data.projects;
   },
   add(project) {
     const { dataSource } = this;
