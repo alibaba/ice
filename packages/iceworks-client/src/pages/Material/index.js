@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import stores from '@stores';
 
 const Material = () => {
-  const materials = stores.useStroe('materials');
+  const materials = stores.useStore('materials');
 
   const handleClick = () => {
   };

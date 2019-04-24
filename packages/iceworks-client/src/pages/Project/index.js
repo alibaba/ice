@@ -3,9 +3,9 @@ import { Input, Button } from '@alifd/next';
 import stores from '@stores';
 
 const Project = () => {
-  const projects = stores.useStroe('projects');
-  const project = stores.useStroe('project');
-  const materials = stores.useStroe('materials');
+  const projects = stores.useStore('projects');
+  const project = stores.useStore('project');
+  const materials = stores.useStore('materials');
 
   useEffect(() => {
     (async () => {
