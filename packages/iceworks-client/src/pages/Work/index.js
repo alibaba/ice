@@ -16,9 +16,11 @@ const Work = ({ routes }) => {
       <SubMenu data={subMenuData} title="工程管理" />
 
       {/* render work subroute */}
-      {routes.map((route, i) => (
-        <RouteRender key={i} {...route} />
-      ))}
+      <div className={styles.main}>
+        {routes.map((route, i) => (
+          <RouteRender key={i} {...route} />
+        ))}
+      </div>
     </div>
   );
 };
