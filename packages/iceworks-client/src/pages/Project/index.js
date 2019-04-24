@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
 import { Input, Button } from '@alifd/next';
-import { useModel } from '@store';
+import stores from '@stores';
 
 const Project = () => {
-  const projects = useModel('projects');
-  const project = useModel('project');
-  const materials = useModel('materials');
-
-  const { state: projectState } = project;
-  const { state: { dataSource } } = projects;
-  const { state: materialsState } = materials;
+  const projects = stores.useStroe('projects');
+  const project = stores.useStroe('project');
+  const materials = stores.useStroe('materials');
 
   useEffect(() => {
     (async () => {
@@ -23,11 +19,11 @@ const Project = () => {
     <div>
       <h2>Project</h2>
       <div>
-        now project: {projectState.name}
+        now project: {project.state.name}
         <div>
           my pages:
           <ul>
-            {projectState.pages.map(({ name }) => {
+            {project.state.pages.map(({ name }) => {
               return name;
             })}
           </ul>
@@ -36,7 +32,7 @@ const Project = () => {
       <div>
         <div>my projects</div>
         <ul>
-          {dataSource.map((projectData, index) => {
+          {projects.dataSource.map((projectData, index) => {
             const { name, id } = projectData;
             return (
               <li key={index}>
@@ -59,15 +55,15 @@ const Project = () => {
       <div>
         <Input
           type="text"
-          onPressEnter={async (event) => {
-            await projects.add({ name: event.target.value });
+          onPressEnter={(event) => {
+            projects.add({ name: event.target.value });
           }}
         />
       </div>
       <div>
         <div>my materials</div>
         <ul>
-          {materialsState.dataSource.map(({ name }, index) => {
+          {materials.dataSource.map(({ name }, index) => {
             return <li key={index}>{name}</li>;
           })}
         </ul>

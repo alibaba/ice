@@ -1,24 +1,21 @@
 import React, { useEffect } from 'react';
-import { useModel } from '@store';
+import stores from '@stores';
 
 const Material = () => {
-  const materials = useModel('materials');
-  const { state } = materials;
+  const materials = stores.useStroe('materials');
 
   const handleClick = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      await materials.refresh();
-    })();
+    materials.refresh();
   }, []);
 
   return (
     <div onClick={handleClick}>
       <h2>Material</h2>
       <p>
-        {state.dataSource.map(({ name }) => {
+        {materials.dataSource.map(({ name }) => {
           return name;
         })}
       </p>
