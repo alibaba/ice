@@ -73,7 +73,14 @@ function gather(pattern, SPACE, type) {
           reject(err);
         } else {
           logger.verbose('gather end', pattern, files.length);
-          generateMaterialsData(files, SPACE, type, resolve, reject);
+          generateMaterialsData(files, SPACE, type)
+            .then((data) => {
+              logger.info(`通过 npm 查询 ${type} 信息完成`);
+              resolve(data);
+            })
+            .catch((error) => {
+              reject(error);
+            });
         }
       }
     );
@@ -87,7 +94,7 @@ function gather(pattern, SPACE, type) {
  * @param {*} SPACE
  * @param {String} type | block or react
  */
-function generateMaterialsData(files, SPACE, type, done, error) {
+function generateMaterialsData(files, SPACE, type) {
   /**
    * 构造每个物料的数据：
    *  - 读取 package.json 数据
@@ -193,7 +200,7 @@ function generateMaterialsData(files, SPACE, type, done, error) {
   logger.info(`通过 npm 查询 ${type} 信息开始，个数：${result.length}，并行个数：${concurrency}`);
 
   // 根据 npm 信息补全物料数据：publishTime, updateTime
-  BluebirdPromise.map(result, (materialItem) => {
+  return BluebirdPromise.map(result, (materialItem) => {
     const npmName = materialItem.source.npm;
     const version = materialItem.source.version;
     return getNpmTime(npmName, version).then((time) => {
@@ -203,11 +210,6 @@ function generateMaterialsData(files, SPACE, type, done, error) {
     });
   }, {
     concurrency,
-  }).then((data) => {
-    logger.info(`通过 npm 查询 ${type} 信息完成`);
-    done(data);
-  }).catch((err) => {
-    error(err);
   });
 }
 
