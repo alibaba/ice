@@ -1,8 +1,7 @@
 {
   "name": "iceworks-server",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.0",
   "description": "iceworks server",
-  "private": true,
   "dependencies": {
     "egg-scripts": "^2.10.0",
     "egg-socket.io": "^4.1.5",

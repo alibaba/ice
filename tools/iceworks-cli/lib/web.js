@@ -3,9 +3,6 @@ const spawn = require('cross-spawn');
 const portfinder = require('portfinder');
 const chalk = require('chalk');
 
-const SERVER_PATH = path.join(__dirname, 'node_modules', 'iceworks-server');
-const CLIENT_PATH = path.join(__dirname, 'node_modules', 'iceworks-client');
-
 async function web(options = {}) {
   const host = options.host || 'http://127.0.0.1';
 
@@ -25,7 +22,7 @@ async function web(options = {}) {
   env.PORT = opts.port;
   spawn.sync('npm', ['run', 'dev'], {
     stdio: 'ignore',
-    cwd: SERVER_PATH,
+    cwd: path.join(process.cwd(), 'server'),
     env,
   });
 }

@@ -7,7 +7,8 @@
     "iceworks": "bin/iceworks.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node ./lib/downloadAndInstall.js"
   },
   "author": "chenbin92",
   "license": "MIT",
@@ -15,6 +16,14 @@
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "cross-spawn": "^6.0.5",
-    "portfinder": "^1.0.20"
-  }
+    "execa": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "portfinder": "^1.0.20",
+    "request": "^2.88.0",
+    "request-progress": "^3.0.0",
+    "tar": "^2.0.0",
+    "tarball-extract": "^0.0.6",
+    "zlib": "^1.0.5"
+  },
+  "__npminstall_done": false
 }

@@ -8,14 +8,9 @@ program
   .command('web')
   .description('start and open the iceworks web')
   .option(
-    '-H, --host <host>',
-    'Host used for the UI server (default: localhost)'
-  )
-  .option(
     '-p, --port <port>',
-    'Port used for the UI server (by default search for available port)'
+    'Port used for the iceworks web server (by default search for available port)'
   )
-  .option('-D, --dev', 'Run in dev mode')
   .action((cmd) => {
     require('../lib/web')(cleanArgs(cmd));
   });
