@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { {{className}} } from './index.component';
+import { <%= className %> } from './index.component';
 
 @NgModule({
-  declarations: [{{className}}],
+  declarations: [<%= className %>],
   imports: [BrowserModule],
   providers: [],
-  bootstrap: [{{className}}],
+  bootstrap: [<%= className %>],
 })
 export class BlockModule {}

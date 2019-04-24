@@ -1,10 +1,9 @@
 /* eslint no-unused-expressions: 0 */
 const chalk = require('chalk');
 const Metalsmith = require('metalsmith');
-const Handlebars = require('handlebars');
 const uppercamelcase = require('uppercamelcase');
 const async = require('async');
-const render = require('consolidate').handlebars.render;
+const render = require('consolidate').ejs.render;
 const multimatch = require('multimatch');
 const kebabCase = require('kebab-case');
 const { getNpmRegistry } = require('ice-npm-utils');
@@ -15,15 +14,6 @@ const logger = require('./logger');
 const debug = require('debug')('ice:generate');
 
 const TEMPLATE_PATH = '.template';
-
-// register handlebars helper
-Handlebars.registerHelper('if_eq', (a, b, meta) => {
-  return a === b ? meta.fn(this) : meta.inverse(this);
-});
-
-Handlebars.registerHelper('unless_eq', (a, b, meta) => {
-  return a === b ? meta.inverse(this) : meta.fn(this);
-});
 
 module.exports = (options) => {
   return new Promise((resolve, reject) => {
@@ -73,11 +63,6 @@ function generate(options, done) {
   });
   debug('%j', data);
 
-  meta.helpers &&
-    Object.keys(meta.helpers).forEach((key) => {
-      Handlebars.registerHelper(key, meta.helpers[key]);
-    });
-
   const helpers = { chalk, logger };
 
   if (meta.metalsmith && typeof meta.metalsmith.before === 'function') {
@@ -93,7 +78,6 @@ function generate(options, done) {
     .use(filterFiles(meta.filters))
     .use(renderTemplateFiles(meta.skipInterpolation))
     .use(transformFile(data.skipGitIgnore))
-    .use(escapeHandlebars())
     .ignore([TEMPLATE_PATH, 'meta.js']);
 
   if (typeof meta.metalsmith === 'function') {
@@ -198,10 +182,6 @@ function renderTemplateFiles(skipInterpolation) {
           return next();
         }
         const str = files[file].contents.toString();
-        // do not attempt to render files that do not have mustaches
-        if (!/{{([^{}]+)}}/g.test(str)) {
-          return next();
-        }
 
         render(str, metalsmithMetadata, (err, res) => {
           if (err) {
@@ -242,26 +222,4 @@ function logMessage(message, data) {
       );
     }
   });
-}
-
-/**
- * 转义 \{\{ xxx \}\} 到 {{ xxx }}
- */
-function escapeHandlebars() {
-  return (files, _metalsmith, done) => {
-    const keys = Object.keys(files);
-
-    async.each(
-      keys,
-      (file, next) => {
-        const str = files[file].contents.toString();
-        const newStr = str.replace(/\\{\\{([^{}]+)\\}\\}/g, '{{ $1 }}');
-
-        /* eslint-disable-next-line no-buffer-constructor */
-        files[file].contents = new Buffer(newStr);
-        next();
-      },
-      done
-    );
-  };
 }

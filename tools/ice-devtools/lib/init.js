@@ -166,6 +166,7 @@ async function run(opt, argsOpt) {
     description,
     src: path.join(__dirname, '../template/init'),
     dest,
+    categories: {},
   });
 
   let templatePath;
@@ -213,6 +214,7 @@ async function generateMaterialsDemo(appPath) {
       title: `demo ${type}`,
       description: '示例',
       skipGitIgnore: true,
+      categories: {},
     });
   }
 }

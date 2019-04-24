@@ -1,15 +1,19 @@
 {
-  "name": "{{npmName}}",
-  "version": "{{version}}",
-  "description": "{{description}}",
-  "author": "{{author}}",
+  "name": "<%= npmName %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
+  "author": "<%= author %>",
   "files": [
     "src/",
     "build/",
     "screenshot.png"
   ],
   "license": "MIT",
-  "keywords": ["ice","react","block"],
+  "keywords": [
+    "ice",
+    "react",
+    "block"
+  ],
   "scripts": {
     "start": "ice dev",
     "build": "ice build",
@@ -30,15 +34,11 @@
     }
   },
   "publishConfig": {
-    "registry": "{{registry}}"
+    "registry": "<%= registry %>"
   },
   "blockConfig": {
-    "name": "{{name}}",
-    "title": "{{title}}",
-    "categories": [
-      {{#each categories}}
-        "{{@key}}"{{#if @last}} {{else}},{{/if}}
-      {{/each}}
-    ]
+    "name": "<%= name %>",
+    "title": "<%= title %>",
+    "categories": <%- JSON.stringify(Object.keys(categories)) %>
   }
 }

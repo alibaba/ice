@@ -1,5 +1,5 @@
-# {{name}}
+# <%= name %>
 
-简介：{{title}}
+简介：<%= title %>
 
-{{description}}
+<%= description %>

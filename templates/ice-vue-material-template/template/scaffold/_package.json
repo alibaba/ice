@@ -1,8 +1,8 @@
 {
-  "name": "{{npmName}}",
-  "version": "{{version}}",
-  "description": "{{description}}",
-  "author": "{{author}}",
+  "name": "<%= npmName %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
+  "author": "",
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -56,12 +56,12 @@
     "not ie <= 8"
   ],
   "publishConfig": {
-    "registry": "{{registry}}"
+    "registry": "<%= registry %>"
   },
   "scaffoldConfig": {
     "builder": "vue-cli-service",
-    "name": "{{name}}",
-    "title": "{{title}}",
+    "name": "<%= name %>",
+    "title": "<%= title %>",
     "categories": [
       "基础模板"
     ]

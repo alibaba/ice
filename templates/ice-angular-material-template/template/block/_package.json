@@ -1,8 +1,7 @@
 {
-  "name": "{{npmName}}",
-  "version": "{{version}}",
-  "description": "{{description}}",
-  "author": "{{author}}",
+  "name": "<%= npmName %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,18 +9,14 @@
     "screenshot": "ice-devtools screenshot",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
-  "keywords": ["ice","angular","block"],
+  "keywords": ["ice", "angular", "block"],
   "publishConfig": {
-    "registry": "{{registry}}"
+    "registry": "<%= registry %>"
   },
   "blockConfig": {
-    "name": "{{name}}",
-    "title": "{{title}}",
-    "categories": [
-      {{#each categories}}
-        "{{@key}}"{{#if @last}} {{else}},{{/if}}
-      {{/each}}
-    ]
+    "name": "<%= name %>",
+    "title": "<%= title %>",
+    "categories": <%- JSON.stringify(Object.keys(categories)) %>
   },
   "dependencies": {
     "@angular/animations": "~7.2.0",

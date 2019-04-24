@@ -1,8 +1,8 @@
 {
-  "name": "{{name}}",
-  "version": "{{version}}",
-  "description": "{{description}}",
-  "author": "{{author}}",
+  "name": "<%= name %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
+  "author": "",
   "scripts": {
     "deploy": "npm run generate && npm run sync",
     "generate": "ice-devtools generate",
@@ -22,8 +22,7 @@
     "eslint-plugin-react": "^7.5.1"
   },
   "publishConfig": {
-    "registry": "{{registry}}"
+    "registry": "<%= registry %>"
   },
-  "materialConfig": {
-  }
+  "materialConfig": {}
 }
