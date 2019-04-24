@@ -16,7 +16,6 @@ module.exports = function extractTarball(
   destDir,
   progressFunc = () => {}
 ) {
-  console.log({ destDir });
   return new Promise((resolve, reject) => {
     const allFiles = [];
     const allWriteStream = [];
@@ -64,7 +63,6 @@ module.exports = function extractTarball(
         allWriteStream.push(writeStream);
       })
       .on('end', () => {
-        console.log('end', tarballURL);
         progressFunc({
           percent: 1,
         });

@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+
+/* eslint quotes:0, prefer-template:0 */
 const chalk = require('chalk');
 const program = require('commander');
 const checkVersion = require('../lib/checkVersion');

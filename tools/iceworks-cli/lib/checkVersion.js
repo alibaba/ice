@@ -1,3 +1,4 @@
+/* eslint prefer-template:0 */
 const request = require('request');
 const semver = require('semver');
 const chalk = require('chalk');
