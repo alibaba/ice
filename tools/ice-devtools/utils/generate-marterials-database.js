@@ -73,17 +73,15 @@ function gather(pattern, SPACE, type) {
           reject(err);
         } else {
           logger.verbose('gather end', pattern, files.length);
-          generateMaterialsData(files, SPACE, type)
-            .then((data) => {
-              logger.info(`通过 npm 查询 ${type} 信息完成`);
-              resolve(data);
-            })
-            .catch((error) => {
-              reject(error);
-            });
+          resolve(files);
         }
       }
     );
+  }).then((files) => {
+    return generateMaterialsData(files, SPACE, type);
+  }).then((data) => {
+    logger.info(`通过 npm 查询 ${type} 信息完成`);
+    return data;
   });
 }
 
