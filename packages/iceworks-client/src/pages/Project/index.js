@@ -3,9 +3,7 @@ import { Input, Button } from '@alifd/next';
 import stores from '@stores';
 
 const Project = () => {
-  const projects = stores.useStore('projects');
-  const project = stores.useStore('project');
-  const materials = stores.useStore('materials');
+  const [projects, project, materials] = stores.userStores(['projects', 'project', 'materials']);
 
   useEffect(() => {
     project.refresh();
