@@ -1,4 +1,5 @@
 /* eslint camelcase:0, array-callback-return:0, space-before-function-paren:0 */
+const path = require('path');
 const cleancss = require('gulp-clean-css');
 const co = require('co');
 const es = require('event-stream');
@@ -8,7 +9,6 @@ const gulp = require('gulp');
 const gutil = require('gulp-util');
 const inquirer = require('inquirer');
 const oss = require('ali-oss');
-const path = require('path');
 const pathExists = require('path-exists');
 const replace = require('gulp-replace');
 const shelljs = require('shelljs');
@@ -22,7 +22,6 @@ const isMac = process.platform === 'darwin';
 const isWin32_x64 = process.platform === 'win32' && process.arch === 'x64';
 const isLinux_x64 = process.platform === 'linux' && process.arch === 'x64';
 
-const appPkg = require('./app/package.json');
 
 const productName = appPkg.productName;
 
@@ -185,6 +184,7 @@ gulp.task('clean', () => {
 // webpack 编译
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
+const appPkg = require('./app/package.json');
 
 gulp.task('compile:dev', (done) => {
   process.env.NODE_ENV = 'development';

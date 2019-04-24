@@ -1,5 +1,5 @@
-import { ipcRenderer } from 'electron';
 import { EventEmitter } from 'events';
+import { ipcRenderer } from 'electron';
 import terms from './terms';
 
 // eslint-disable-next-line

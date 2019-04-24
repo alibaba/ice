@@ -3,7 +3,6 @@ import * as fit from 'xterm/lib/addons/fit/fit';
 // import * as webLinks from 'xterm/lib/addons/webLinks/webLinks';
 import defaultShell from 'default-shell';
 import pathExists from 'path-exists';
-
 import services from '../services';
 
 const { pty } = services;

@@ -1,5 +1,5 @@
-const OSS = require('ali-oss');
 const path = require('path');
+const OSS = require('ali-oss');
 const logger = require('../logger');
 
 const getOssStore = (options) => {
