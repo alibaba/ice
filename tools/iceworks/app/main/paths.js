@@ -1,5 +1,5 @@
-const is = require('electron-is');
 const path = require('path');
+const is = require('electron-is');
 
 const isDev = is.dev();
 

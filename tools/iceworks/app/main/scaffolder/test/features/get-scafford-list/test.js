@@ -1,5 +1,5 @@
-const rimraf = require('rimraf');
 const path = require('path');
+const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 const createIceApp = require('../../..');
 

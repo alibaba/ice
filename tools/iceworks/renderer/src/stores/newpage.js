@@ -1,14 +1,13 @@
+import EventEmitter from 'events';
 import { observable, action, computed } from 'mobx';
 import { ipcRenderer } from 'electron';
-import EventEmitter from 'events';
-
 import { scanPages } from '../lib/project-utils';
 import logger from '../lib/logger';
 // store
+import scanLayout from '../datacenter/scanLayout';
 import progress from './progress';
 import projects from './projects';
 
-import scanLayout from '../datacenter/scanLayout';
 
 // useStrict(true); // 严格模式，只能内部修改值
 

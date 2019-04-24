@@ -1,7 +1,6 @@
 // Packages
 const { resolve } = require('app-root-path');
 const { shell, Notification } = require('electron');
-
 const logger = require('../../logger');
 const settings = require('../settings');
 

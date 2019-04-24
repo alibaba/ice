@@ -1,13 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const pathExists = require('path-exists');
-const prettier = require('prettier');
 const util = require('util');
 const vm = require('vm');
-
+const pathExists = require('path-exists');
+const prettier = require('prettier');
+const config = require('../../config');
 const InteractiveFileReplacement = require('./interactiveFileReplacement');
 const routes = require('./routes');
-const config = require('../../config');
 
 const ROUTE_BLACK_LIST = ['*', '404', '502'];
 /* eslint-disable no-underscore-dangle */

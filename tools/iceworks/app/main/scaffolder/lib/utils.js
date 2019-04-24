@@ -1,17 +1,15 @@
 /* eslint: eslint-disable-next-line:0 prefer-const:0 */
 const fs = require('fs');
-const mkdirp = require('mkdirp');
 const path = require('path');
+const zlib = require('zlib');
+const mkdirp = require('mkdirp');
 const request = require('request');
 const tar = require('tar');
 const upperCamelCase = require('uppercamelcase');
-const zlib = require('zlib');
 const requestProgress = require('request-progress');
 const pathExists = require('path-exists');
 const to = require('await-to-js').default;
-
 const config = require('../../config');
-
 const { DetailError } = require('../../error-handler');
 const materialUtils = require('../../template/utils');
 const npmRequest = require('../../utils/npmRequest');
