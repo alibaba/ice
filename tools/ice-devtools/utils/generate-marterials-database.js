@@ -49,9 +49,6 @@ module.exports = function generateMaterialsDatabases(
       console.log();
       console.log(`Created ${materialName} json at: ${chalk.yellow(file)}`);
       console.log();
-    })
-    .catch((err) => {
-      console.log('uncaught error:\n', err.stack);
     });
 };
 
@@ -76,7 +73,7 @@ function gather(pattern, SPACE, type) {
           reject(err);
         } else {
           logger.verbose('gather end', pattern, files.length);
-          generateMaterialsData(files, SPACE, type, resolve);
+          generateMaterialsData(files, SPACE, type, resolve, reject);
         }
       }
     );
@@ -90,7 +87,7 @@ function gather(pattern, SPACE, type) {
  * @param {*} SPACE
  * @param {String} type | block or react
  */
-function generateMaterialsData(files, SPACE, type, done) {
+function generateMaterialsData(files, SPACE, type, done, error) {
   /**
    * 构造每个物料的数据：
    *  - 读取 package.json 数据
@@ -209,6 +206,8 @@ function generateMaterialsData(files, SPACE, type, done) {
   }).then((data) => {
     logger.info(`通过 npm 查询 ${type} 信息完成`);
     done(data);
+  }).catch((err) => {
+    error(err);
   });
 }
 
