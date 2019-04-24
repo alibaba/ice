@@ -1,0 +1,19 @@
+.devCard {
+  .btnGroup {
+    display: flex;
+    justify-content: space-between;
+
+    .btn {
+      display: inline-flex;
+      margin: 0 10px;
+    }
+
+    .icon {
+      margin-right: 5px;
+    }
+  }
+
+  .content {
+    margin: 20px 0;
+  }
+}
