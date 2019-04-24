@@ -1,17 +1,24 @@
-import React from 'react';
-import { useMaterial } from '@models/material';
+import React, { useEffect } from 'react';
+import stores from '@stores';
 
 const Material = () => {
-  const [data, fetchData] = useMaterial();
+  const materials = stores.useStore('materials');
 
   const handleClick = () => {
-    fetchData();
   };
+
+  useEffect(() => {
+    materials.refresh();
+  }, []);
 
   return (
     <div onClick={handleClick}>
       <h2>Material</h2>
-      <p>{data && data.name}</p>
+      <p>
+        {materials.dataSource.map(({ name }) => {
+          return name;
+        })}
+      </p>
     </div>
   );
 };
