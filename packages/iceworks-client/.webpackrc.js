@@ -14,6 +14,7 @@ module.exports = (context) => {
         '@utils': resolve(__dirname, 'src/utils/'),
         '@store': resolve(__dirname, 'src/store/'),
         '@models': resolve(__dirname, 'src/models/'),
+        '@hooks': resolve(__dirname, 'src/hooks'),
       },
     },
     plugins: [
