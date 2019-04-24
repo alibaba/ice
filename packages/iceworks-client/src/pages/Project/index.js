@@ -8,22 +8,20 @@ const Project = () => {
   const materials = stores.useStore('materials');
 
   useEffect(() => {
-    (async () => {
-      await project.refresh();
-      await projects.refresh();
-      await materials.refresh();
-    })();
+    project.refresh();
+    projects.refresh();
+    materials.refresh();
   }, []);
 
   return (
     <div>
       <h2>Project</h2>
       <div>
-        now project: {project.state.name}
+        now project: {project.dataSource.name}
         <div>
           my pages:
           <ul>
-            {project.state.pages.map(({ name }) => {
+            {project.dataSource.pages.map(({ name }) => {
               return name;
             })}
           </ul>

@@ -1,7 +1,7 @@
 import logger from '@utils/logger';
 
 export default {
-  state: {
+  dataSource: {
     id: '0',
     name: 'projectA',
     pages: [
@@ -13,7 +13,7 @@ export default {
       resolve();
     }, 1000));
 
-    this.state = {
+    this.dataSource = {
       id: '0',
       name: 'projectA',
       pages: [
@@ -27,11 +27,11 @@ export default {
   async addPage(page) {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const { pages } = this.state;
+    const { pages } = this.dataSource;
     this.pages = [].concat(pages).concat([{ ...page, id: pages.length }]);
   },
   async setData(project) {
     await new Promise(resolve => setTimeout(resolve, 1000));
-    this.state = project;
+    this.dataSource = project;
   },
 };
