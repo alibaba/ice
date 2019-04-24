@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 const chalk = require('chalk');
 const program = require('commander');
+const checkVersion = require('../lib/checkVersion');
+
+checkVersion();
 
 program.version(require('../package').version).usage('<command> [options]');
 

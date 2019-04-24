@@ -7,7 +7,6 @@
     "iceworks": "bin/iceworks.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node ./lib/downloadAndInstall.js"
   },
   "author": "chenbin92",
@@ -24,6 +23,9 @@
     "tar": "^2.0.0",
     "tarball-extract": "^0.0.6",
     "zlib": "^1.0.5"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   },
   "__npminstall_done": false
 }
