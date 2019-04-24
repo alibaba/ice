@@ -1,12 +1,12 @@
 import react from 'react';
+import Fiy from 'fiy';
 import projects from './projects';
 import currentProject from './currentProject';
 import materials from './materials';
-import Fizzz from 'fiy';
 
-const fizzz = new Fizzz(react);
-fizzz.registerStore('materials', materials);
-fizzz.registerStore('project', currentProject);
-fizzz.registerStore('projects', projects);
+const fiy = new Fiy(react);
+fiy.registerStore('materials', materials);
+fiy.registerStore('project', currentProject);
+fiy.registerStore('projects', projects);
 
-export default fizzz;
+export default fiy;
