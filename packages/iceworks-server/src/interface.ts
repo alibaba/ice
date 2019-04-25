@@ -152,12 +152,33 @@ export interface IProject {
   pages: IPage[];
 
   /**
+   * 获取项目内的布局
+   */
+  getLayouts(): Promise<ILayout[]>;
+
+  /**
+   * 获取单个布局的信息
+   */
+  getLayout(layoutName: string): Promise<ILayout>;
+
+  /**
    * 获取项目内的页面
    */
   getPages(): Promise<IPage[]>;
 
   /**
+   * 获取单个页面的信息
+   * 
+   * @param pageName 页面名
+   */
+  getPage(pageName): Promise<IPage>;
+
+  /**
    * 添加页面
+   * 
+   * - 根据布局和区块生成页面文件
+   * - 添加菜单
+   * - 添加路由
    * 
    * @param page 页面配置
    */
@@ -169,7 +190,6 @@ export interface IProject {
    * @param pageName 页面名
    */
   removePage(pageName: string): Promise<void>;
-
 
   /**
    * 更新页面

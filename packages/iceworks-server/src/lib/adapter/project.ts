@@ -3,7 +3,7 @@ import * as pathExists from 'path-exists';
 import * as fs from 'fs';
 import junk from 'junk';
 import * as util from 'util';
-import { IProject, IPage } from '../../interface';
+import { IPage } from '../../interface';
 const originalReaddir = util.promisify(fs.readdir);
 
 const readdir = async (targetPath) => {
@@ -35,7 +35,7 @@ const recursive = async function(dirPath) {
   return list;
 };
 
-export default class Project implements IProject {
+export default class Project {
   public readonly name: string;
 
   public readonly folderPath: string;
