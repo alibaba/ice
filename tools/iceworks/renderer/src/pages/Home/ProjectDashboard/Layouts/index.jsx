@@ -14,6 +14,7 @@ import LayoutBuilderAttribute from '../../../../components/CustomScaffold/Attrib
 import LayoutBuilderPreview from '../../../../components/Scaffold/Preview';
 import scanLayout from '../../../../datacenter/scanLayout';
 import services from '../../../../services';
+import logger from '../../../../lib/logger';
 import PluginHoc from '../PluginHoc';
 
 const { templateBuilderUtils } = services;
@@ -176,7 +177,7 @@ class LayoutBuilder extends Component {
       templateBuilderUtils
         .generatorLayout(layoutConfig)
         .then((layouDeps) => {
-          console.info('新增布局用到的依赖', layouDeps);
+          logger.info('新增布局用到的依赖', layouDeps);
           return Promise.resolve({ currentPath, layoutConfig });
         })
         .then(() => {
@@ -184,7 +185,7 @@ class LayoutBuilder extends Component {
           this.hideDialog();
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           Feedback.toast.error(
             `${layoutConfig.name} 自定义布局生成失败, ${e.message}`
           );
@@ -193,7 +194,7 @@ class LayoutBuilder extends Component {
     } else {
       this.hideDialog();
       Feedback.toast.error('当前项目不存在');
-      console.error('项目不存在');
+      logger.error(new Error('项目不存在'));
     }
   };
 

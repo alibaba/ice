@@ -1,11 +1,10 @@
-const babylon = require('babylon');
 const fs = require('fs');
+const babylon = require('babylon');
 const generator = require('babel-generator').default;
 const prettier = require('prettier');
 const t = require('babel-types');
 const traverse = require('babel-traverse').default; // https://astexplorer.net/
 const upperCamelCase = require('uppercamelcase');
-
 const config = require('../../config');
 
 function routeNode({ path, layout = '', component }) {
@@ -76,8 +75,8 @@ module.exports = async function ({
         ifRouterConfigNeedLayout = node.specifiers.some((specifier) => {
           if (t.isImportDefaultSpecifier(specifier)) {
             if (
-              t.isIdentifier(specifier.local) &&
-              specifier.local.name === ROUTER_CONFIG
+              t.isIdentifier(specifier.local)
+              && specifier.local.name === ROUTER_CONFIG
             ) {
               return true;
             }
@@ -95,8 +94,8 @@ module.exports = async function ({
     },
     VariableDeclarator({ node }) {
       if (
-        t.isIdentifier(node.id, { name: ROUTER_CONFIG }) &&
-        t.isArrayExpression(node.init)
+        t.isIdentifier(node.id, { name: ROUTER_CONFIG })
+        && t.isArrayExpression(node.init)
       ) {
         // 针对 ROUTER_CONFIG 变量做处理
         let pageIndex = -1;
@@ -148,8 +147,8 @@ module.exports = async function ({
         componentImported = node.specifiers.some((specifier) => {
           if (t.isImportDefaultSpecifier(specifier)) {
             if (
-              t.isIdentifier(specifier.local) &&
-              specifier.local.name === pageFolderName
+              t.isIdentifier(specifier.local)
+              && specifier.local.name === pageFolderName
             ) {
               return true;
             }
@@ -162,8 +161,8 @@ module.exports = async function ({
         layoutImported = node.specifiers.some((specifier) => {
           if (t.isImportDefaultSpecifier(specifier)) {
             if (
-              t.isIdentifier(specifier.local) &&
-              specifier.local.name === upperCamelCase(layoutName)
+              t.isIdentifier(specifier.local)
+              && specifier.local.name === upperCamelCase(layoutName)
             ) {
               return true;
             }

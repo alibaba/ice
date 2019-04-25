@@ -1,8 +1,7 @@
 const ipc = require('node-ipc');
 const { dialog } = require('electron');
-
 const sendToWebContents = require('./helper/sendToWebContents');
-const log = require('./logger');
+const logger = require('./logger');
 
 const networkPort = 8000;
 
@@ -28,24 +27,28 @@ ipc.serveNet(() => {
         path: projectPath,
       });
     } else {
-      log.warn('未处理的消息内容', message);
+      logger.warn('未处理的消息内容', message);
     }
   });
 });
 
-ipc.server.on('error', (err) => {
-  log.error('iceworks ipc Got an ERROR!', err);
-  if (err && err.message && /listen eaddrinuse/i.test(err.message)) {
-    dialog.showErrorBox(
-      '启动异常',
-      'Iceworks IPC 启动失败，可能启动了多个 Iceworks 请先退出'
-    );
+ipc.server.on('error', (error) => {
+  if (error) {
+    if (error.message && /listen eaddrinuse/i.test(error.message)) {
+      dialog.showErrorBox(
+        '启动异常',
+        'Iceworks IPC 启动失败，可能启动了多个 Iceworks 请先退出'
+      );
+    }
+
+    error.message = `iceworks ipc Got an ERROR!: ${error.message}`;
+    logger.error(error);
   }
 });
 
 module.exports = {
   init: () => {
     ipc.server.start();
-    log.info('iceworks ipc started at', networkPort);
+    logger.info('iceworks ipc started at', networkPort);
   },
 };

@@ -1,3 +1,5 @@
+/* eslint camelcase:0, array-callback-return:0, space-before-function-paren:0 */
+const path = require('path');
 const cleancss = require('gulp-clean-css');
 const co = require('co');
 const es = require('event-stream');
@@ -7,7 +9,6 @@ const gulp = require('gulp');
 const gutil = require('gulp-util');
 const inquirer = require('inquirer');
 const oss = require('ali-oss');
-const path = require('path');
 const pathExists = require('path-exists');
 const replace = require('gulp-replace');
 const shelljs = require('shelljs');
@@ -18,12 +19,9 @@ const rp = require('request-promise');
 
 const colors = gutil.colors;
 const isMac = process.platform === 'darwin';
-// eslint-disable-next-line
 const isWin32_x64 = process.platform === 'win32' && process.arch === 'x64';
-// eslint-disable-next-line
 const isLinux_x64 = process.platform === 'linux' && process.arch === 'x64';
 
-const appPkg = require('./app/package.json');
 
 const productName = appPkg.productName;
 
@@ -142,7 +140,7 @@ async function getUpload2oss() {
 
     return co(iceworksStore.put(paths.join('/'), file))
       .then((object = {}) => {
-        if (object.res && object.res.status == 200) {
+        if (object.res && object.res.status === 200) {
           gutil.log(colors.green('上传成功'), object.url);
           return 0;
         }
@@ -186,6 +184,7 @@ gulp.task('clean', () => {
 // webpack 编译
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
+const appPkg = require('./app/package.json');
 
 gulp.task('compile:dev', (done) => {
   process.env.NODE_ENV = 'development';
@@ -258,7 +257,7 @@ gulp.task('dist:mac', (done) => {
     }
   );
   ls.on('close', (code) => {
-    if (code == 0) {
+    if (code === 0) {
       gutil.log(colors.green('dmg 打包完成'));
     } else {
       gutil.log(colors.red('dmg 打包失败'));
@@ -272,7 +271,7 @@ gulp.task('electron-rebuild', (done) => {
     stdio: 'inherit',
   });
   ls.on('close', (code) => {
-    if (code == 0) {
+    if (code === 0) {
       gutil.log(colors.green('rebuild 打包完成'));
     } else {
       gutil.log(colors.red('rebuild 打包失败'));

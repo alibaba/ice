@@ -1,7 +1,7 @@
 const assert = require('assert');
-const ConcatSource = require('webpack-sources').ConcatSource;
 const fs = require('fs');
 const path = require('path');
+const ConcatSource = require('webpack-sources').ConcatSource;
 const sass = require('node-sass');
 
 /* eslint no-console: 0 */

@@ -8,20 +8,24 @@ const cliInstance = require('../utils/cliInstance');
 const buildSrc = require('./buildSrc');
 const buildDemo = require('./buildDemo');
 const { appDirectory } = require('../config/paths');
+const getBuildConfig = require('../config/getBuildConfig');
 
-module.exports = function (buildConfig = {}) {
+module.exports = function (pkgData) {
+  const buildSrcBuildConfig = getBuildConfig(pkgData, 'buildSrc');
+  const buildDemoBuildConfig = getBuildConfig(pkgData, 'buildDemo');
+
   if (cliInstance.get('skipDemo')) {
-    buildSrc(buildConfig);
+    buildSrc(buildSrcBuildConfig);
     return;
   }
 
   // 放在回调中执行，是为了避免两个任务的 log 信息混在一起
-  buildDemo(buildConfig, (err) => {
+  buildDemo(buildDemoBuildConfig, (err) => {
     if (!err) {
       // modify package.json homepage
       modifyPkgHomePage();
 
-      buildSrc(buildConfig);
+      buildSrc(buildSrcBuildConfig);
     }
   });
 };

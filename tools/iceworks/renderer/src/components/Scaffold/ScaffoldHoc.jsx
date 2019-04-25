@@ -1,6 +1,7 @@
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import logger from '../../lib/logger';
 
 const ScaffoldHoc = (WrappedComponent) => {
   @inject('materials', 'scaffold', 'customScaffold')
@@ -78,7 +79,7 @@ const ScaffoldHoc = (WrappedComponent) => {
         })
         .then((cpmpleteConfig) => {
           // eslint-disable-next-line no-console
-          console.log(cpmpleteConfig); //  完成后的结果展示
+          logger.info(cpmpleteConfig); //  完成后的结果展示
           this.props.scaffold.endProgress();
           this.props.scaffold.addNewProjectToProjects(currentPath, true); // true 用来标识提示用户安装依赖
           this.props.scaffold.pushRoute('/');
@@ -86,7 +87,7 @@ const ScaffoldHoc = (WrappedComponent) => {
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
-          console.error(error);
+          logger.error(error);
           this.props.scaffold.resetProgress();
         });
     };

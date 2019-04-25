@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { Button } from '@icedesign/base';
-
-import EmptyTips from '../../components/EmptyTips';
+import EmptyTips from '../EmptyTips';
 import { Item as ScaffoldItem, ScaffoldHoc } from '../Scaffold';
 import CreateProjectDialog from '../CreateProjectDialog';
 import history from '../../history';
@@ -23,11 +22,13 @@ class StartPanel extends Component {
   };
 
   componentDidMount() {
-    this.props.materials.loadStartRecommendMaterials();
+    const { materials } = this.props;
+    materials.loadStartRecommendMaterials();
   }
 
   openExistProject = () => {
-    this.props.projects.addFromFinder();
+    const { projects } = this.props;
+    projects.addFromFinder();
   };
 
   gotoCreateProject = () => {
@@ -37,6 +38,7 @@ class StartPanel extends Component {
   render() {
     const {
       materials: { startRecommendMaterials },
+      handleSelectedScaffold,
     } = this.props;
     const { scaffolds = [] } = startRecommendMaterials;
 
@@ -56,7 +58,7 @@ class StartPanel extends Component {
               return (
                 <ScaffoldItem
                   key={index}
-                  createProject={this.props.handleSelectedScaffold}
+                  createProject={handleSelectedScaffold}
                   data={material}
                   isOfficialSource
                 />
@@ -80,10 +82,14 @@ class StartPanel extends Component {
         </div>
         <div className="buttons">
           <Button type="primary" onClick={this.openExistProject}>
-            <Icon type="folderplus" /> 打开项目
+            <Icon type="folderplus" />
+            {' '}
+打开项目
           </Button>
           <Button type="primary" onClick={this.gotoCreateProject}>
-            <Icon type="plus" /> {scaffolds.length ? '更多模板' : '创建项目'}
+            <Icon type="plus" />
+            {' '}
+            {scaffolds.length ? '更多模板' : '创建项目'}
           </Button>
         </div>
         <CreateProjectDialog />

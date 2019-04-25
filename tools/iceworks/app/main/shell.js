@@ -3,8 +3,7 @@
 const ChildProcess = require('child_process');
 const os = require('os');
 const Path = require('path');
-const log = require('./logger');
-
+const logger = require('./logger');
 const { isWin, isMac } = require('./shared');
 
 /**
@@ -183,7 +182,8 @@ exports.getActiveCodePage = function getActiveCodePage() {
     let errorThrown = false;
 
     child.on('error', (error) => {
-      log.error('unable to resolve active code page', error);
+      error.name = 'unable-to-resolve-active-code-page';
+      logger.error(error);
       errorThrown = true;
     });
 
@@ -208,7 +208,7 @@ exports.getActiveCodePage = function getActiveCodePage() {
           resolve(parsedInt);
         }
       } else {
-        log.debug(`regex did not match output: '${output}'`);
+        logger.debug(`regex did not match output: '${output}'`);
         resolve(null);
       }
     });

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from '@icedesign/base';
 import { inject, observer } from 'mobx-react';
-import electron from 'electron';
+import { shell, clipboard } from 'electron';
 import Tooltip from 'rc-tooltip';
 
 import { isIceMaterial } from '../../lib/utils';
@@ -12,9 +12,6 @@ import dialog from '../../components/dialog';
 const { interaction } = services;
 
 import './item.scss';
-
-const shell = electron.shell;
-const clipboard = electron.clipboard;
 
 @inject('projects', 'component')
 @observer

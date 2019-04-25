@@ -1,10 +1,9 @@
-const babylon = require('babylon');
 const fs = require('fs');
+const babylon = require('babylon');
 const generator = require('babel-generator').default;
 const prettier = require('prettier');
 const t = require('babel-types');
 const traverse = require('babel-traverse').default;
-
 const config = require('../../config');
 
 const MENU_CONFIG = 'asideMenuConfig'; // AST 解析 menuConfig.js 的变量名
@@ -28,8 +27,8 @@ module.exports = async function ({ name, path, icon, menuConfigFilePath }) {
   traverse(menuConfigAST, {
     VariableDeclarator({ node }) {
       if (
-        t.isIdentifier(node.id, { name: MENU_CONFIG }) &&
-        t.isArrayExpression(node.init)
+        t.isIdentifier(node.id, { name: MENU_CONFIG })
+        && t.isArrayExpression(node.init)
       ) {
         const menuExist = node.init.elements.some((oe) => {
           return oe.properties.some((op) => {

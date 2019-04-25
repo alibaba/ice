@@ -2,17 +2,14 @@
  * 创建页面
  */
 const fs = require('fs');
+const path = require('path');
 const kebabCase = require('kebab-case');
 const mkdirp = require('mkdirp');
-const path = require('path');
 const upperCamelCase = require('uppercamelcase');
 const pathExists = require('path-exists');
-
+const prettier = require('prettier');
 const utils = require('./utils');
 const pageTemplates = require('./pageTemplates');
-
-const prettier = require('prettier');
-
 const { DetailError } = require('../../error-handler');
 const config = require('../../config');
 const appendRouteV3 = require('./appendRouteV3');
@@ -241,7 +238,7 @@ module.exports = async function createPage({
       // eslint-disable-next-line
       return prev & 0x1;
     } catch (err) {
-      console.log('err', err);
+      logger.error(err);
       // eslint-disable-next-line
       return prev & 0x0;
     }

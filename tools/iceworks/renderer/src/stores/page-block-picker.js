@@ -1,6 +1,5 @@
-import { observable, action, computed } from 'mobx';
 import path from 'path';
-
+import { observable, action, computed } from 'mobx';
 import { readdirSync } from '../lib/file-system';
 
 // store
@@ -9,10 +8,15 @@ import progress from './progress';
 class PageBlockPicker {
   @observable
   visible = false;
+
   projectPath = '';
+
   componentsPath = '';
+
   blocksPath = '';
+
   existBlocks = [];
+
   @observable
   downloading = false;
 

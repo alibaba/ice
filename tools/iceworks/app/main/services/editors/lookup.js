@@ -2,7 +2,7 @@ const { ExternalEditorError } = require('./shared');
 const { getAvailableEditors: getAvailableEditorsDarwin } = require('./darwin');
 const { getAvailableEditors: getAvailableEditorsWindows } = require('./win32');
 const is = require('electron-is');
-const log = require('../../logger');
+const logger = require('../../logger');
 
 // import { getAvailableEditors as getAvailableEditorsLinux } from './linux';
 
@@ -29,7 +29,7 @@ const getAvailableEditors = async function getAvailableEditors() {
     return editorCache;
   }
 
-  log.warn(
+  logger.warn(
     `Platform not currently supported for resolving editors: ${
       process.platform
     }`

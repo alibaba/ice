@@ -10,6 +10,7 @@ const { settings, shared } = services;
 class SettingsMaterials {
   @observable
   builtInMaterialsValue = [];
+
   @observable
   customMaterialsValue = [];
 
@@ -171,16 +172,16 @@ class SettingsMaterials {
         this.builtInMaterialsValue
       ); // 所有已勾选的物料用于判断冲突
       if (
-        selectedMaterial.key === 'fusion' &&
-        materialsChecked.ice &&
-        checked
+        selectedMaterial.key === 'fusion'
+        && materialsChecked.ice
+        && checked
       ) {
         this.notification('Fusion 物料源和飞冰物料源不能同时选择', 'error');
         reject(true);
       } else if (
-        selectedMaterial.key === 'ice' &&
-        materialsChecked.fusion &&
-        checked
+        selectedMaterial.key === 'ice'
+        && materialsChecked.fusion
+        && checked
       ) {
         this.notification('飞冰物料源和 Fusion 物料源不能同时选择', 'error');
         reject(true);
@@ -247,8 +248,8 @@ class SettingsMaterials {
       recommendMaterial = { ...recommendMaterial };
       const hasInUserMaterials = materials.some((userMaterial) => {
         return (
-          equalSource(recommendMaterial.source, userMaterial.source) &&
-          userMaterial.builtIn
+          equalSource(recommendMaterial.source, userMaterial.source)
+          && userMaterial.builtIn
         );
       });
       recommendMaterial.checked = hasInUserMaterials;

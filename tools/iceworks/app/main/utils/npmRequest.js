@@ -2,7 +2,6 @@ const request = require('request');
 const semver = require('semver');
 const settings = require('../services/settings');
 const logger = require('../logger');
-const alilog = require('../alilog');
 const autoRetry = require('./autoRetry');
 
 /**
@@ -26,14 +25,11 @@ function npmRequest({ name, version = 'latest', registry }) {
     }, (err, response, json) => {
       if (err || !json) {
         const error = err || new Error(JSON.stringify(response.body));
-        alilog.report({
-          type: 'get-tarball-info-error',
-          msg: error.message,
-          stack: error.stack,
-          data: {
-            url: pkgUrl,
-          },
-        }, 'error');
+        error.name = 'get-tarball-info-error';
+        error.data = {
+          url: pkgUrl,
+        };
+        logger.error(error);
         reject(error);
       } else {
         if (!semver.valid(version)) {
@@ -43,11 +39,8 @@ function npmRequest({ name, version = 'latest', registry }) {
           resolve(json.versions[version]);
         } else {
           const error = new Error(`${name}@${version} 尚未发布在 ${registryUrl}`);
-          alilog.report({
-            type: 'get-tarball-info-error',
-            msg: error.message,
-            stack: error.message,
-          });
+          error.name = 'get-tarball-info-error';
+          logger.error(error);
           reject(error);
         }
       }
