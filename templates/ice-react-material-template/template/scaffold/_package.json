@@ -1,8 +1,7 @@
 {
-  "name": "{{npmName}}",
-  "version": "{{version}}",
-  "description": "{{description}}",
-  "author": "{{author}}",
+  "name": "<%= npmName %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
   "engines": {
     "node": ">=8.0.0"
   },
@@ -41,7 +40,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "{{registry}}"
+    "registry": "<%= registry %>"
   },
   "buildConfig": {
     "entry": "src/index.js",
@@ -52,8 +51,8 @@
   },
   "scaffoldConfig": {
     "builder": "ice-scripts",
-    "name": "{{npmName}}",
-    "title": "{{title}}",
+    "name": "<%= npmName %>",
+    "title": "<%= title %>",
     "categories": [
       "基础模板"
     ]

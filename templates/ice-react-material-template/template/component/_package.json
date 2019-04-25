@@ -1,9 +1,12 @@
 {
-  "name": "{{npmName}}",
-  "version": "{{version}}",
-  "description": "{{description}}",
-  "author": "{{author}}",
-  "files": ["demo/", "lib/", "build/"],
+  "name": "<%= npmName %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
+  "files": [
+    "demo/",
+    "lib/",
+    "build/"
+  ],
   "main": "lib/index.js",
   "stylePath": "style.js",
   "scripts": {
@@ -12,10 +15,14 @@
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",
-  "keywords": ["ice", "react", "component"],
+  "keywords": [
+    "ice",
+    "react",
+    "component"
+  ],
   "publishConfig": {
     "access": "public",
-    "registry": "{{registry}}"
+    "registry": "<%= registry %>"
   },
   "dependencies": {
     "prop-types": "^15.5.8"
@@ -28,12 +35,8 @@
     "react": "^16.3.0"
   },
   "componentConfig": {
-    "name": "{{name}}",
-    "title": "{{title}}",
-    "categories": [
-      {{#each categories}}
-        "{{@key}}"{{#if @last}} {{else}},{{/if}}
-      {{/each}}
-    ]
+    "name": "<%= name %>",
+    "title": "<%= title %>",
+    "categories": <%- JSON.stringify(Object.keys(categories)) %>
   }
 }
