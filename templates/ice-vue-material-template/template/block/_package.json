@@ -2,7 +2,6 @@
   "name": "<%= npmName %>",
   "version": "<%= version %>",
   "description": "<%= description %>",
-  "author": "<%= author %>",
   "files": [
     "src/",
     "lib/",
@@ -54,7 +53,7 @@
   "blockConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",
-    "categories": <%- JSON.stringify(Object.keys(categories)) %>
+    "categories": <%- JSON.stringify(Object.keys(categories)) %>,
     "screenshot": ""
   }
 }
