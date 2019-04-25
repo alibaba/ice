@@ -1,5 +1,6 @@
-/* eslint camelcase:0, array-callback-return:0, space-before-function-paren:0 */
+/* eslint camelcase:0, array-callback-return:0, space-before-function-paren:0, import/order:0 */
 const path = require('path');
+const rp = require('request-promise');
 const cleancss = require('gulp-clean-css');
 const co = require('co');
 const es = require('event-stream');
@@ -15,13 +16,12 @@ const shelljs = require('shelljs');
 const spawn = require('cross-spawn');
 const UglifyJS = require('uglify-es');
 const writeFile = require('write');
-const rp = require('request-promise');
+const appPkg = require('./app/package.json');
 
 const colors = gutil.colors;
 const isMac = process.platform === 'darwin';
 const isWin32_x64 = process.platform === 'win32' && process.arch === 'x64';
 const isLinux_x64 = process.platform === 'linux' && process.arch === 'x64';
-
 
 const productName = appPkg.productName;
 
@@ -184,7 +184,6 @@ gulp.task('clean', () => {
 // webpack 编译
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
-const appPkg = require('./app/package.json');
 
 gulp.task('compile:dev', (done) => {
   process.env.NODE_ENV = 'development';
