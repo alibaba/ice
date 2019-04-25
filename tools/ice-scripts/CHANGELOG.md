@@ -2,6 +2,11 @@
 
 ## 1.10.1
 
+- [fix] 组件&区块 build 指定 publicPath #1849
+- [fix] 修复https证书无效问题
+- [fix] 资源路径引用问题 #1856
+- [chore] 初始化物料使用 ejs 语法替换 handlebars
+
 ## 1.10.0
 
 - [feat] 组件开发支持 importStyle 能力 #1755
