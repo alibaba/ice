@@ -1,10 +1,9 @@
 /* eslint no-unused-expressions: 0 */
 const chalk = require('chalk');
 const Metalsmith = require('metalsmith');
-const Handlebars = require('handlebars');
 const uppercamelcase = require('uppercamelcase');
 const async = require('async');
-const render = require('consolidate').handlebars.render;
+const render = require('consolidate').ejs.render;
 const multimatch = require('multimatch');
 const kebabCase = require('kebab-case');
 const { getNpmRegistry } = require('ice-npm-utils');
@@ -15,15 +14,6 @@ const logger = require('./logger');
 const debug = require('debug')('ice:generate');
 
 const TEMPLATE_PATH = '.template';
-
-// register handlebars helper
-Handlebars.registerHelper('if_eq', (a, b, meta) => {
-  return a === b ? meta.fn(this) : meta.inverse(this);
-});
-
-Handlebars.registerHelper('unless_eq', (a, b, meta) => {
-  return a === b ? meta.inverse(this) : meta.fn(this);
-});
 
 module.exports = (options) => {
   return new Promise((resolve, reject) => {
@@ -72,11 +62,6 @@ function generate(options, done) {
     ...opts,
   });
   debug('%j', data);
-
-  meta.helpers &&
-    Object.keys(meta.helpers).forEach((key) => {
-      Handlebars.registerHelper(key, meta.helpers[key]);
-    });
 
   const helpers = { chalk, logger };
 
@@ -197,10 +182,6 @@ function renderTemplateFiles(skipInterpolation) {
           return next();
         }
         const str = files[file].contents.toString();
-        // do not attempt to render files that do not have mustaches
-        if (!/{{([^{}]+)}}/g.test(str)) {
-          return next();
-        }
 
         render(str, metalsmithMetadata, (err, res) => {
           if (err) {

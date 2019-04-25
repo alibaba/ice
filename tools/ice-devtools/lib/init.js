@@ -134,6 +134,10 @@ async function initAsk(options = {}) {
             name: '@icedesign/ice-vue-material-template (Vue 标准模板)',
             value: '@icedesign/ice-vue-material-template',
           },
+          {
+            name: '@icedesign/ice-angular-material-template (Angular 标准模板)',
+            value: '@icedesign/ice-angular-material-template',
+          },
         ],
       },
     ])
@@ -162,6 +166,7 @@ async function run(opt, argsOpt) {
     description,
     src: path.join(__dirname, '../template/init'),
     dest,
+    categories: {},
   });
 
   let templatePath;
@@ -209,6 +214,7 @@ async function generateMaterialsDemo(appPath) {
       title: `demo ${type}`,
       description: '示例',
       skipGitIgnore: true,
+      categories: {},
     });
   }
 }
