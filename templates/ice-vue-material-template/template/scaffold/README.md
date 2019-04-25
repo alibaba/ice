@@ -1,1 +1,1 @@
-# {{npmName}}
+# <%= npmName %>
