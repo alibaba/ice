@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@alifd/next';
+import socket from '@utils/socket';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
@@ -9,12 +10,21 @@ import styles from './index.module.scss';
 
 const Dev = () => {
   const { on, toggleModal } = useModal();
+
+  const dev = () => {
+    socket.emit('dev', 'dev!!!');
+
+    socket.on('TASK:DEV:RESPONSE', (res) => {
+      console.log('TASK:DEV:RESPONSE:', res);
+    });
+  };
+
   return (
     <Card title="启动服务" subTitle="用于开发环境" className={styles.devCard}>
       <div className={styles.btnGroup}>
         {/* Left Button Group */}
         <div className={styles.leftBtnGroup}>
-          <Button type="primary" className={styles.btn}>
+          <Button type="primary" className={styles.btn} onClick={dev}>
             <Icon type="start" className={styles.icon} />
             运行
           </Button>

@@ -18,6 +18,8 @@ class MainLayout extends Component {
       this.setState({
         connect: true,
       });
+
+      socket.emit('work', 'Hello World!!!');
     });
 
     socket.on('disconnect', () => {
