@@ -9,9 +9,7 @@ module.exports = () => {
     console.log();
     console.log(
       chalk.red(
-        `You must upgrade node to ${
-          packageConfig.engines.node
-        } to use iceworks-cli`
+        `You must upgrade node to ${packageConfig.engines.node} to use iceworks`
       )
     );
     console.log();
@@ -20,7 +18,7 @@ module.exports = () => {
 
   request(
     {
-      url: 'https://registry.npmjs.org/iceworks-cli',
+      url: 'https://registry.npmjs.org/iceworks',
       timeout: 1000,
     },
     (err, res, body) => {
@@ -29,7 +27,7 @@ module.exports = () => {
         const localVersion = packageConfig.version;
         if (semver.lt(localVersion, latestVersion)) {
           console.log(
-            chalk.yellow('  A newer version of iceworks-cli is available.')
+            chalk.yellow('  A newer version of iceworks is available.')
           );
           console.log();
           console.log('  latest:    ' + chalk.green(latestVersion));

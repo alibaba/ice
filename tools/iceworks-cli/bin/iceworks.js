@@ -43,7 +43,7 @@ program.commands.forEach((c) => c.on('--help', () => console.log()));
 program.parse(process.argv);
 
 if (!process.argv.slice(2).length) {
-  program.outputHelp();
+  require('../lib/web')(cleanArgs());
 }
 
 function camelize(str) {
@@ -54,13 +54,15 @@ function camelize(str) {
 // extract only actual options into a fresh object.
 function cleanArgs(cmd) {
   const args = {};
-  cmd.options.forEach((o) => {
-    const key = camelize(o.long.replace(/^--/, ''));
-    // if an option is not present and Command has a method with the same name
-    // it should not be copied
-    if (typeof cmd[key] !== 'function' && typeof cmd[key] !== 'undefined') {
-      args[key] = cmd[key];
-    }
-  });
+  if (cmd) {
+    cmd.options.forEach((o) => {
+      const key = camelize(o.long.replace(/^--/, ''));
+      // if an option is not present and Command has a method with the same name
+      // it should not be copied
+      if (typeof cmd[key] !== 'function' && typeof cmd[key] !== 'undefined') {
+        args[key] = cmd[key];
+      }
+    });
+  }
   return args;
 }
