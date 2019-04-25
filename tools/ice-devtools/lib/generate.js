@@ -23,5 +23,8 @@ module.exports = function generate(cwd) {
     console.log();
     console.log('The build folder is ready to be deployed.');
     console.log();
+  }).catch((error) => {
+    console.log(chalk.red(' generate fail!\n'), error);
+    process.exit(1);
   });
 };
