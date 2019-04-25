@@ -3,6 +3,7 @@ import { Button } from '@alifd/next';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
+import XtermTerminal from '@components/XtermTerminal';
 import useModal from '@hooks/useModal';
 import styles from './index.module.scss';
 
@@ -40,7 +41,9 @@ const Dev = () => {
       </div>
 
       {/* Content */}
-      <div className={styles.content}>MainContent</div>
+      <div className={styles.content}>
+        <XtermTerminal />
+      </div>
 
       {/* Modal */}
       <Modal visible={on} onCancel={toggleModal}>
