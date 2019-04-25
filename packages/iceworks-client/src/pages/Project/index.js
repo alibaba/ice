@@ -3,12 +3,11 @@ import { Input, Button } from '@alifd/next';
 import stores from '@stores';
 
 const Project = () => {
-  const [projects, project, materials] = stores.userStores(['projects', 'project', 'materials']);
+  const [projects, project] = stores.userStores(['projects', 'project']);
 
   useEffect(() => {
     project.refresh();
     projects.refresh();
-    materials.refresh();
   }, []);
 
   return (
@@ -55,14 +54,6 @@ const Project = () => {
             projects.add({ name: event.target.value });
           }}
         />
-      </div>
-      <div>
-        <div>my materials</div>
-        <ul>
-          {materials.dataSource.map(({ name }, index) => {
-            return <li key={index}>{name}</li>;
-          })}
-        </ul>
       </div>
     </div>
   );
