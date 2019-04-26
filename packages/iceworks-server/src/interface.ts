@@ -37,10 +37,33 @@ export interface IProjectMenu {
 
 
 /**
- * TODO 依赖信息
+ * 依赖信息
  */
 export interface IDependency {
+  /**
+   * 是否本地依赖 devDependencies ？
+   */
+  dev: boolean;
 
+  /**
+   * 名称
+   */
+  name: string;
+
+  /**
+   * 指定版本：^1.0.1 / ~1.0.1 / 0.0.x
+   */
+  specifyingVersion: string;
+
+  /**
+   * 当前本地版本：1.0.3
+   */
+  localVersion?: string;
+
+  /**
+   * 是否可更新：当远程有 1.0.4 时，该值为 true
+   */
+  canUpdate?: boolean;
 }
 
 /**
@@ -213,6 +236,25 @@ export interface IProject {
    * @param block 区块信息
    */
   addBlock(pageName: string, block: IBlock): Promise<IPage>;
+
+  /**
+   * 获取项目内的依赖
+   */
+  getDependencies(): Promise<IDependency[]>;
+
+  /**
+   * 升级项目中的某个依赖
+   * 
+   * @param denpendency 指定依赖
+   */
+  upgradeDependency(denpendency: {name: string, isDev: boolean}): Promise<IDependency>;
+
+  /**
+   * 添加依赖
+   * 
+   * @param dependencies 依赖列表
+   */
+  addDependencies(dependencies: IDependency[]): Promise<IDependency[]>;
 
   /**
    * 添加菜单
