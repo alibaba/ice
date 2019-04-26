@@ -20,10 +20,15 @@ const Dev = () => {
   };
 
   return (
-    <Card title="启动服务" subTitle="用于开发环境" className={styles.devCard}>
-      <div className={styles.btnGroup}>
+    <Card
+      title="启动服务"
+      subTitle="用于开发环境"
+      contentHeight="100%"
+      className={styles.devCard}
+    >
+      <div className={styles.actionBar}>
         {/* Left Button Group */}
-        <div className={styles.leftBtnGroup}>
+        <div className={styles.leftActionBar}>
           <Button type="primary" className={styles.btn} onClick={dev}>
             <Icon type="start" className={styles.icon} />
             运行
@@ -35,7 +40,7 @@ const Dev = () => {
         </div>
 
         {/* Right Button Group */}
-        <div className={styles.rightBtnGroup}>
+        <div className={styles.rightActionBar}>
           <Button.Group>
             <Button type="primary">
               <Icon type="pc" /> 日志

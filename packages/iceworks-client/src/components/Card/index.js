@@ -4,7 +4,14 @@ import { Card as NextCard } from '@alifd/next';
 
 const Card = ({ children, style, ...props }) => {
   return (
-    <NextCard {...props} style={{ border: 'none', height: '100%', ...style }}>
+    <NextCard
+      style={{
+        border: 'none',
+        height: '100%',
+        ...style,
+      }}
+      {...props}
+    >
       {children}
     </NextCard>
   );

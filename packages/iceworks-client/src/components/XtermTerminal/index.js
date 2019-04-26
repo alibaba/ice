@@ -13,12 +13,12 @@ Terminal.applyAddon(webLinks);
 const XtermTerminal = () => {
   const xtermRef = useRef(null);
 
-  const term = new Terminal({
-    cols: 100,
-    rows: 20,
-  });
-
   useEffect(() => {
+    const term = new Terminal({
+      cols: 100,
+      rows: 30,
+    });
+
     term.open(xtermRef.current);
     term.write('\x1B[1;3;31mIceworks CLI\x1B[0m $ ');
     socket.on('output', (data) => {
