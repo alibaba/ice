@@ -4,32 +4,32 @@ import * as Conf from 'conf';
 import * as mkdirp from 'mkdirp';
 
  // @TODO
- const defaultCwd = path.join(__dirname, '../../data');
- mkdirp.sync(defaultCwd);
+const defaultCwd = path.join(__dirname, '../../data');
+mkdirp.sync(defaultCwd);
 
 class DataStore extends Conf {
-	constructor(options?) {
-		options = {
-			name: 'config',
-			...options
-		};
+  constructor(options?) {
+    options = {
+      name: 'config',
+      ...options
+    };
 
-		if (options.cwd) {
-			options.cwd = path.isAbsolute(options.cwd) ? options.cwd : path.join(defaultCwd, options.cwd);
-		} else {
-			options.cwd = defaultCwd;
-		}
+    if (options.cwd) {
+      options.cwd = path.isAbsolute(options.cwd) ? options.cwd : path.join(defaultCwd, options.cwd);
+    } else {
+      options.cwd = defaultCwd;
+    }
 
-		options.configName = options.name;
-		delete options.name;
-		super(options);
-	}
+    options.configName = options.name;
+    delete options.name;
+    super(options);
+  }
 }
 
 const NAMESPACE_SUFFIX = '-srouce';
 
 class Store extends EventEmitter {
-  private key: string = '';
+  private key = '';
   private store: Conf;
 
   constructor(namespace: string) {
@@ -48,14 +48,14 @@ class Store extends EventEmitter {
   }
 
   add(value: string): void {
-    let values = this.store.get(this.key);
+    const values = this.store.get(this.key);
     if (Array.isArray(values)) {
       this.store.set(this.key, values.filter((v) => v !== value).unshift(value));
     }
   }
 
   remove(value: string): void {
-    let values = this.store.get(this.key) || [];
+    const values = this.store.get(this.key) || [];
     if (Array.isArray(values)) {
       this.store.set(this.key, values.filter((v) => v !== value));
     }
@@ -75,8 +75,8 @@ class Store extends EventEmitter {
   }
 }
 
-export const statStorage = new Store('stat');// 统计记录
-export const recordStorage = new Store('record');// 项目使用记录
-export const projectsStorage = new Store('projects');// 所有项目列表
-export const workspaceStorage = new Store('workspace');// 工作空间
-export const icelandStatStorage = new Store('iceland-stat');// Iceland 统计记录
+export const statStorage = new Store('stat'); // 统计记录
+export const recordStorage = new Store('record'); // 项目使用记录
+export const projectsStorage = new Store('projects'); // 所有项目列表
+export const workspaceStorage = new Store('workspace'); // 工作空间
+export const icelandStatStorage = new Store('iceland-stat'); // Iceland 统计记录

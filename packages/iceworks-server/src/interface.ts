@@ -12,7 +12,7 @@ export interface IProjectMenu {
   /**
    * 位置
    */
-  position: 'head'|'side';
+  position: 'head' | 'side';
 
   /**
    * 名称
@@ -58,7 +58,7 @@ export interface IProjectTodo {
      * 文本
      */
     text: string;
-  }>
+  }>;
 }
 
 /**
@@ -112,32 +112,32 @@ export interface IPage {
   /**
    * 名称
    */
-  name: string,
+  name: string;
 
   /**
    * 文件路径
    */
-  folderPath: string,
+  folderPath: string;
 
   /**
    * 此文件的创建时间的时间戳
    */
-  birthtime: string,
+  birthtime: string;
 
   /**
    * 上次访问此文件的时间戳
    */
-  atime?: string,
+  atime?: string;
 
   /**
    * 上次更改文件状态的时间戳
    */
-  ctime?: string,
+  ctime?: string;
 
   /**
    * 上次修改此文件的时间戳
    */
-  mtime?: string,
+  mtime?: string;
 
   /**
    * 页面内的区块
@@ -216,39 +216,39 @@ export interface IProject {
 
   /**
    * 获取单个页面的信息
-   * 
+   *
    * @param pageName 页面名
    */
   getPage(pageName): Promise<IPage>;
 
   /**
    * 添加页面
-   * 
+   *
    * - 根据布局和区块生成页面文件
    * - 添加菜单
    * - 添加路由
-   * 
+   *
    * @param page 页面配置
    */
   addPage(page: IAddPageParam): Promise<IPage>;
 
   /**
    * 删除项目内的页面
-   * 
+   *
    * @param pageName 页面名
    */
   removePage(pageName: string): Promise<void>;
 
   /**
    * 更新页面
-   * 
+   *
    * @param page 页面信息
    */
   updatePage(page: IPage): Promise<IPage>;
 
   /**
    * 添加区块列表
-   * 
+   *
    * @param pageName 页面名称
    * @param blocks 区块列表
    */
@@ -256,7 +256,7 @@ export interface IProject {
 
   /**
    * 添加区块
-   * 
+   *
    * @param pageName 页面名称
    * @param block 区块信息
    */
@@ -269,14 +269,14 @@ export interface IProject {
 
   /**
    * 升级项目中的某个依赖
-   * 
+   *
    * @param denpendency 指定依赖
    */
   upgradeDependency(denpendency: {name: string, isDev: boolean}): Promise<IDependency>;
 
   /**
    * 添加依赖
-   * 
+   *
    * @param dependencies 依赖列表
    */
   addDependencies(dependencies: IDependency[]): Promise<IDependency[]>;
@@ -288,24 +288,24 @@ export interface IProject {
 
   /**
    * 添加菜单
-   * 
+   *
    * @param menu 菜单配置
    */
   addMenu(menu: IProjectMenu): Promise<IProjectMenu>;
 
   /**
    * 添加路由
-   * 
+   *
    * @param router 路由配置
    */
   addRouter(router: IProjectRouter): Promise<IProjectRouter>;
 }
 
 export interface IProjectsResult {
-  projects: IProject[]
+  projects: IProject[];
 }
 export interface IProjectResult {
-  project: IProject
+  project: IProject;
 }
 
 export interface IProjectService {

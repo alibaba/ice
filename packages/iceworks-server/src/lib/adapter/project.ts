@@ -17,8 +17,8 @@ const recursive = async function(dirPath) {
   const list = [];
   const files = await readdir(dirPath);
   files.forEach(function(file) {
-    let fullPath = path.join(dirPath, file);
-    let stats = fs.lstatSync(fullPath);
+    const fullPath = path.join(dirPath, file);
+    const stats = fs.lstatSync(fullPath);
     if (stats.isDirectory()) {
       const { atime, birthtime, ctime, mtime } = stats;
       list.push({
@@ -52,6 +52,6 @@ export default class Project {
   }
 
   async getPages(): Promise<IPage[]> {
-    return await recursive(path.join(this.folderPath, 'src', 'pages'));
+    return recursive(path.join(this.folderPath, 'src', 'pages'));
   }
 }
