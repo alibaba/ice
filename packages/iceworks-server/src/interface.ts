@@ -35,6 +35,31 @@ export interface IProjectMenu {
   newWindow: boolean;
 }
 
+/**
+ * 项目中的 Todo
+ */
+export interface IProjectTodo {
+  /**
+   * 文件路径
+   */
+  filePath: string;
+
+  /**
+   * 文件内的 todo
+   */
+  messages: Array<{
+
+    /**
+     * 在第几行
+     */
+    line: string;
+
+    /**
+     * 文本
+     */
+    text: string;
+  }>
+}
 
 /**
  * 依赖信息
@@ -255,6 +280,11 @@ export interface IProject {
    * @param dependencies 依赖列表
    */
   addDependencies(dependencies: IDependency[]): Promise<IDependency[]>;
+
+  /**
+   * 获取项目内的 todo
+   */
+  getTodos(): Promise<IProjectTodo[]>;
 
   /**
    * 添加菜单
