@@ -2,7 +2,15 @@
  * TODO 项目中的路由
  */
 export interface IProjectRouter {
+  /**
+   * URL 路径
+   */
+  path: string;
 
+  /**
+   * 页面名
+   */
+  pageName: string;
 }
 
 /**
@@ -12,7 +20,7 @@ export interface IProjectMenu {
   /**
    * 位置
    */
-  position: 'head' | 'side';
+  position: 'header' | 'aside';
 
   /**
    * 名称
@@ -20,19 +28,19 @@ export interface IProjectMenu {
   name: string;
 
   /**
-   * 路径
+   * URL 路径
    */
   path: string;
 
   /**
    * 图标标识
    */
-  icon: string;
+  icon?: string;
 
   /**
    * 是否新窗口打开
    */
-  newWindow: boolean;
+  newWindow?: boolean;
 }
 
 /**
@@ -287,6 +295,11 @@ export interface IProject {
   getTodos(): Promise<IProjectTodo[]>;
 
   /**
+   * 获取项目菜单
+   */
+  getMenus(): Promise<IProjectMenu[]>;
+
+  /**
    * 添加菜单
    *
    * @param menu 菜单配置
@@ -294,11 +307,44 @@ export interface IProject {
   addMenu(menu: IProjectMenu): Promise<IProjectMenu>;
 
   /**
+   * 删除菜单
+   *
+   * @param menu 菜单配置
+   */
+  removeMenu(menu: IProjectMenu): Promise<void>;
+
+  /**
+   * 更新菜单
+   *
+   * @param menu 菜单配置
+   */
+  updateMenu(menu: IProjectMenu): Promise<IProjectMenu>;
+
+  /**
+   * 获取项目路由
+   */
+  getRouters(): Promise<IProjectRouter[]>;
+
+  /**
    * 添加路由
    *
    * @param router 路由配置
    */
   addRouter(router: IProjectRouter): Promise<IProjectRouter>;
+
+  /**
+   * 删除路由
+   *
+   * @param path 路由路径
+   */
+  removeRouter(path: string): Promise<void>;
+
+  /**
+   * 更新路由
+   *
+   * @param router 路由配置
+   */
+  updateMenu(router: IProjectRouter): Promise<IProjectRouter>;
 }
 
 export interface IProjectsResult {
