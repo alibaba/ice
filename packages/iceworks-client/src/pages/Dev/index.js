@@ -1,5 +1,9 @@
 import React from 'react';
 import { Button } from '@alifd/next';
+import {
+  ICEWORKS_TASK_DEV_OPEN,
+  ICEWORKS_TASK_DEV_DATA,
+} from 'iceworks-events';
 import socket from '@utils/socket';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
@@ -12,10 +16,10 @@ const Dev = () => {
   const { on, toggleModal } = useModal();
 
   const dev = () => {
-    socket.emit('dev', 'dev!!!');
+    socket.emit(ICEWORKS_TASK_DEV_OPEN, 'dev');
 
-    socket.on('TASK:DEV:RESPONSE', (res) => {
-      console.log('TASK:DEV:RESPONSE:', res);
+    socket.on(ICEWORKS_TASK_DEV_DATA, (data) => {
+      console.log(ICEWORKS_TASK_DEV_DATA, data);
     });
   };
 
