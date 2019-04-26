@@ -4,16 +4,17 @@ import {
   ICEWORKS_TASK_DEV_OPEN,
   ICEWORKS_TASK_DEV_DATA,
 } from 'iceworks-events';
-import socket from '@utils/socket';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import XtermTerminal from '@components/XtermTerminal';
 import useModal from '@hooks/useModal';
+import { useSocket } from '@hooks/useSocket';
 import styles from './index.module.scss';
 
 const Dev = () => {
   const { on, toggleModal } = useModal();
+  const socket = useSocket();
 
   const dev = () => {
     socket.emit(ICEWORKS_TASK_DEV_OPEN, 'dev');

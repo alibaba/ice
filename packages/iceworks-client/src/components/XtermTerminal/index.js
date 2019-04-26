@@ -1,8 +1,8 @@
-import React, { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef } from 'react';
+// import PropTypes from 'prop-types';
 import { Terminal } from 'xterm';
 import { ICEWORKS_TASK_DEV_DATA } from 'iceworks-events';
-import socket from '@utils/socket';
+import { useSocket } from '@hooks/useSocket';
 import * as fit from 'xterm/dist/addons/fit/fit';
 import * as webLinks from 'xterm/dist/addons/webLinks/webLinks';
 import 'xterm/dist/xterm.css';
@@ -14,18 +14,17 @@ Terminal.applyAddon(webLinks);
 const XtermTerminal = () => {
   const xtermRef = useRef(null);
 
-  useEffect(() => {
-    const term = new Terminal({
-      cols: 100,
-      rows: 30,
-    });
+  const term = new Terminal({
+    cols: 100,
+    rows: 30,
+  });
 
-    term.open(xtermRef.current);
-    term.write('\x1B[1;3;31mIceworks CLI\x1B[0m $ ');
-    socket.on(ICEWORKS_TASK_DEV_DATA, (data) => {
-      term.write(data);
-    });
-  }, []);
+  term.open(xtermRef.current);
+  term.write('\x1B[1;3;31mIceworks CLI\x1B[0m $ ');
+
+  useSocket(ICEWORKS_TASK_DEV_DATA, (data) => {
+    term.write(data);
+  });
 
   return <div ref={xtermRef} className={styles.xtermContainer} />;
 };

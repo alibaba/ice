@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import socket from '@utils/socket';
+import React, { useState } from 'react';
+import { useSocket } from '@hooks/useSocket';
 import NavigationBar from '@components/NavigationBar';
 import RouteRender from '@components/RouteRender';
 import ConnectionBar from '@components/ConnectionBar';
@@ -8,47 +8,28 @@ import menuConfig from '@src/menuConfig';
 import routerConfig from '@src/routerConfig';
 import styles from './index.module.scss';
 
-class MainLayout extends Component {
-  state = {
-    connect: false,
-  };
+const MainLayout = () => {
+  const [connect, setConnect] = useState(false);
+  useSocket('connect', () => setConnect({ connect: true }));
+  useSocket('disconnect', () => setConnect({ connect: false }));
 
-  componentDidMount() {
-    socket.on('connect', () => {
-      this.setState({
-        connect: true,
-      });
+  return (
+    <div className={styles.container}>
+      {connect ? null : <ConnectionBar connect={connect} />}
 
-      socket.emit('work', 'Hello World!!!');
-    });
+      <div className={styles.content}>
+        <NavigationBar menuData={menuConfig} />
 
-    socket.on('disconnect', () => {
-      this.setState({
-        connect: false,
-      });
-    });
-  }
-
-  render() {
-    const { connect } = this.state;
-    return (
-      <div className={styles.container}>
-        {connect ? null : <ConnectionBar connect={connect} />}
-
-        <div className={styles.content}>
-          <NavigationBar menuData={menuConfig} />
-
-          <div className={styles.main}>
-            {routerConfig.map((route, index) => (
-              <RouteRender key={index} {...route} />
-            ))}
-          </div>
+        <div className={styles.main}>
+          {routerConfig.map((route, index) => (
+            <RouteRender key={index} {...route} />
+          ))}
         </div>
-
-        <GlobalBar />
       </div>
-    );
-  }
-}
+
+      <GlobalBar />
+    </div>
+  );
+};
 
 export default MainLayout;
