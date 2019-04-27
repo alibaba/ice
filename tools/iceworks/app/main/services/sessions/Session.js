@@ -2,8 +2,10 @@ const { EventEmitter } = require('events');
 const { StringDecoder } = require('string_decoder');
 const defaultShell = require('default-shell');
 const is = require('electron-is');
+const nodePty = require('node-pty');
 const { getEnv } = require('../../env');
 const { WIN_NPM_CMD } = require('../../paths');
+
 
 const isWin = is.windows();
 
@@ -13,7 +15,7 @@ const createNodePtyError = () => new Error(
 
 let spawn;
 try {
-  spawn = require('node-pty').spawn;
+  spawn = nodePty.spawn;
 } catch (err) {
   throw createNodePtyError();
 }

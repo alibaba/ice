@@ -16,6 +16,7 @@ build
 .vscode/
 tools/ice-scripts/lib/ICE_CA
 .tmp/
+.history/
 
 npmrc
 tools/extract-css-assets-webpack-plugin/test/actual/

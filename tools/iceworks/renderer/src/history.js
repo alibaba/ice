@@ -1,5 +1,5 @@
 // import createHistory from 'history/createBrowserHistory';
-import createHashHistory from 'history/createHashHistory';
+import { createHashHistory } from 'history';
 
 const history = createHashHistory();
 

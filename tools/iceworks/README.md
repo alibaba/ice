@@ -13,12 +13,14 @@
 
 ## 开发调试
 
-保证 Node.js 版本 >= 8.10.0 && < 9 的版本
+目前Node.js版本为10.x，可参见.node-version
 
 ```
 yarn install
 yarn dev
 yarn start
+
+# 如遇node-pty报错，请先实行 `yarn rebuild-node-pty`
 ```
 
 ## 打包
