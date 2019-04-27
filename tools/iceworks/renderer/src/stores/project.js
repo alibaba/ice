@@ -419,9 +419,9 @@ class Project {
     if (!this.pkgData) {
       return true;
     }
+    console.log(this.pkgData);
     const icescriptsRequired = this.pkgData.devDependencies
-      && (this.pkgData.devDependencies['ice-scripts']
-        || this.pkgData.devDependencies['@vue/cli-service']);
+      && (this.pkgData.devDependencies['ice-scripts'] || this.pkgData.devDependencies['@vue/cli-service']);
 
     // support create-react-app
     const reactWithoutIceValidate = this.pkgData.templateType
