@@ -184,6 +184,7 @@ gulp.task('clean', () => {
 // webpack 编译
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
+const appPkg = require('./app/package.json');
 
 gulp.task('compile:dev', (done) => {
   process.env.NODE_ENV = 'development';

@@ -91,7 +91,10 @@ module.exports = (buildConfig = {}, themeConfig) => {
   // refs: https://github.com/webpack-contrib/mini-css-extract-plugin
   const miniCssExtractPluginLoader = { loader: MiniCssExtractPlugin.loader };
 
-  if (buildConfig.localization) {
+  // 一些后端路由的情况下 publicPath会设为'./'， 需处理构建后资源引用的相对地址
+  const shouldUseRelativeAssetPaths = paths.publicPath === './';
+  // buildConfig.localization为true的情况publicPath将被指定为'./'
+  if (shouldUseRelativeAssetPaths) {
     miniCssExtractPluginLoader.options = { publicPath: '../' };
   }
   return [
