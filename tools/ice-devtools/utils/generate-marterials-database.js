@@ -49,9 +49,6 @@ module.exports = function generateMaterialsDatabases(
       console.log();
       console.log(`Created ${materialName} json at: ${chalk.yellow(file)}`);
       console.log();
-    })
-    .catch((err) => {
-      console.log('uncaught error:\n', err.stack);
     });
 };
 
@@ -76,10 +73,15 @@ function gather(pattern, SPACE, type) {
           reject(err);
         } else {
           logger.verbose('gather end', pattern, files.length);
-          generateMaterialsData(files, SPACE, type, resolve);
+          resolve(files);
         }
       }
     );
+  }).then((files) => {
+    return generateMaterialsData(files, SPACE, type);
+  }).then((data) => {
+    logger.info(`通过 npm 查询 ${type} 信息完成`);
+    return data;
   });
 }
 
@@ -90,7 +92,7 @@ function gather(pattern, SPACE, type) {
  * @param {*} SPACE
  * @param {String} type | block or react
  */
-function generateMaterialsData(files, SPACE, type, done) {
+function generateMaterialsData(files, SPACE, type) {
   /**
    * 构造每个物料的数据：
    *  - 读取 package.json 数据
@@ -196,7 +198,7 @@ function generateMaterialsData(files, SPACE, type, done) {
   logger.info(`通过 npm 查询 ${type} 信息开始，个数：${result.length}，并行个数：${concurrency}`);
 
   // 根据 npm 信息补全物料数据：publishTime, updateTime
-  BluebirdPromise.map(result, (materialItem) => {
+  return BluebirdPromise.map(result, (materialItem) => {
     const npmName = materialItem.source.npm;
     const version = materialItem.source.version;
     return getNpmTime(npmName, version).then((time) => {
@@ -206,9 +208,6 @@ function generateMaterialsData(files, SPACE, type, done) {
     });
   }, {
     concurrency,
-  }).then((data) => {
-    logger.info(`通过 npm 查询 ${type} 信息完成`);
-    done(data);
   });
 }
 

@@ -2,22 +2,20 @@
  * 用于创建项目的状态与进度
  */
 
+import os from 'os';
+import path from 'path';
 import { Dialog } from '@icedesign/base';
 import { observable, action, computed, toJS } from 'mobx';
 import { shell } from 'electron';
-
 import mkdirp from 'mkdirp';
 import Notification from '@icedesign/notification';
-import os from 'os';
-import path from 'path';
 import pathExists from 'path-exists';
 import React from 'react';
-
 import { checkProject } from '../lib/project-utils';
-import customScaffold from './custom-scaffold';
 import dialog from '../components/dialog';
 import history from '../history';
 import services from '../services';
+import customScaffold from './custom-scaffold';
 
 // store
 import progress from './progress';

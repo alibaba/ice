@@ -1,7 +1,6 @@
 const path = require('path');
 const pathExists = require('path-exists');
 const rimraf = require('rimraf');
-
 const routes = require('./routes');
 const InteractiveFileReplacement = require('./interactiveFileReplacement');
 

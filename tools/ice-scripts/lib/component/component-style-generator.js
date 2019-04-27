@@ -70,8 +70,9 @@ module.exports = class ComponentStyleGenerator {
     if (this.deps) {
       return this.deps;
     }
+    // analyze lib dir
     const deps = iceDepAnalyzer(
-      path.join(this.cwd, 'src/index')
+      path.join(this.destPath, 'index')
     );
 
     this.deps = this.filterDeps(deps);

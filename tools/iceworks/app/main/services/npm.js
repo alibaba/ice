@@ -1,7 +1,5 @@
 const { exec } = require('child_process');
-
 const { getEnv } = require('../env');
-
 const logger = require('../logger');
 const Session = require('./sessions/Session');
 
