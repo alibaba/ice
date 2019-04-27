@@ -9,6 +9,10 @@ module.exports = function (pkgData, cmdType) {
     // buildConfig 内置区块的构建配置
     buildConfig.entry = 'demo/index.js';
     if (cmdType === 'build') {
+      buildConfig.output = {
+        ...buildConfig.output,
+        publicPath: './',
+      };
       buildConfig.outputAssetsPath = {
         css: '',
         js: '',
@@ -34,6 +38,10 @@ module.exports = function (pkgData, cmdType) {
       const demos = getDemos(process.cwd());
       buildConfig.entry = {
         index: generateEntryJs(demos),
+      };
+      buildConfig.output = {
+        ...buildConfig.output,
+        publicPath: './',
       };
       buildConfig.outputAssetsPath = {
         css: '',

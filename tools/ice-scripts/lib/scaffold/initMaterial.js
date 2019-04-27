@@ -5,9 +5,10 @@ const path = require('path');
 const fse = require('fs-extra');
 const fs = require('fs');
 const { promisify } = require('util');
-const Handlebars = require('handlebars');
+const ejs = require('ejs');
 const camelCase = require('camelcase');
 const inquirer = require('inquirer');
+const { getNpmRegistry } = require('ice-npm-utils');
 const log = require('../utils/log');
 const download = require('./download');
 
@@ -25,11 +26,17 @@ module.exports = ({ template, projectDir, type }) => {
         npmName: template,
         projectDir: tempDir,
         formatFile: (filePath) => {
+          if (/\.png$/.test(filePath)) {
+            return Promise.resolve();
+          }
+
           return promisify(fs.readFile)(filePath).then((data) => {
             let newData;
             try {
-              newData = Handlebars.compile(data.toString())(answerOptions);
+              newData = ejs.render(data.toString(), answerOptions);
             } catch (err) {
+              log.warn('模板编译出错', filePath);
+              console.log(err);
               newData = data.toString();
             }
             return promisify(fs.writeFile)(filePath, newData);
@@ -85,7 +92,10 @@ function getAnswerOptions(type) {
       title: `Example ${type}`,
       description: `Example ${type}`,
       version: '1.0.0',
-      categories: ['其他'],
+      categories: {
+        其他: true,
+      },
+      registry: getNpmRegistry(npmName),
     };
   });
 }
