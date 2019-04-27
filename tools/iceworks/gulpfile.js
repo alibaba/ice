@@ -185,6 +185,8 @@ gulp.task('clean', () => {
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 
+const productName = appPkg.productName;
+
 gulp.task('compile:dev', (done) => {
   process.env.NODE_ENV = 'development';
 

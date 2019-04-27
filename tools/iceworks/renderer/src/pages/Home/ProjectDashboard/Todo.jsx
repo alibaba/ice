@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 import fs from 'fs';
-import isBinaryFile from 'isbinaryfile';
+import { isBinaryFileSync } from 'isbinaryfile';
 import LineByLine from 'line-by-line';
 import path from 'path';
 import React, { Component } from 'react';
@@ -15,17 +15,17 @@ function recursiveReaddirSync(dirPath, rootDir) {
   let list = [];
   let stats;
   const files = readdirSync(dirPath);
-  const ignoreFiles = ['node_modules']
+  const ignoreFiles = ['node_modules'];
 
-  files.forEach(function(file) {
+  files.forEach((file) => {
     if (ignoreFiles.includes(file)) {
-      return
+      return;
     }
     let fullPath = path.join(dirPath, file);
     stats = fs.lstatSync(fullPath);
     if (stats.isDirectory()) {
       list = list.concat(recursiveReaddirSync(fullPath, rootDir));
-    } else if (!isBinaryFile.sync(fullPath)) {
+    } else if (!isBinaryFileSync(fullPath)) {
       list.push([path.relative(rootDir, fullPath), fullPath]);
     }
   });
@@ -88,7 +88,7 @@ function retrieveMessagesFromLine(lineString, lineNumber) {
   };
   const messages = [];
 
-  Object.keys(messageChecks).forEach(function(checkName) {
+  Object.keys(messageChecks).forEach((checkName) => {
     let matchResults = lineString.match(messageChecks[checkName].regex);
     let checker = messageChecks[checkName];
     let thisMessage;
@@ -149,7 +149,7 @@ class Todo extends Component {
       const srcDir = currentProject.clientSrcPath;
       const files = recursiveReaddirSync(srcDir, srcDir);
       this.setState({
-        files: []
+        files: [],
       });
 
       if (files.length > 0) {
@@ -175,10 +175,10 @@ class Todo extends Component {
    * @return  {String}
    */
   getPaddedLineNumber(lineNumber, totalLinesNumber) {
-    var paddedLineNumberString = '' + lineNumber;
+    let paddedLineNumberString = `${  lineNumber}`;
 
-    while (paddedLineNumberString.length < ('' + totalLinesNumber).length) {
-      paddedLineNumberString = ' ' + paddedLineNumberString;
+    while (paddedLineNumberString.length < (`${  totalLinesNumber}`).length) {
+      paddedLineNumberString = ` ${  paddedLineNumberString}`;
     }
 
     return paddedLineNumberString;
@@ -205,12 +205,12 @@ class Todo extends Component {
     let finalLabelString;
     let finalNoteString;
 
-    finalNoteString = '  [Line ' + paddedLineNumber + '] ';
+    finalNoteString = `  [Line ${  paddedLineNumber  }] `;
 
     finalLabelString = individualMessage.label;
 
     if (individualMessage.author) {
-      finalLabelString += ' from ' + individualMessage.author + ': ';
+      finalLabelString += ` from ${  individualMessage.author  }: `;
     } else {
       finalLabelString += ': ';
     }
@@ -241,7 +241,7 @@ class Todo extends Component {
     const clientSrcPath = currentProject.clientSrcPath;
     return (
       <td style={{ lineHeight: '20px' }}>
-        <div>{ clientSrcPath + '/' + messagesInfo.path }</div>
+        <div>{ `${clientSrcPath  }/${  messagesInfo.path}` }</div>
         <ul style={{ paddingLeft: '2em', fontSize: '0.8em', color: '#666' }}>
           {messagesInfo.messages.map((message, index) => {
             return (
@@ -263,7 +263,7 @@ class Todo extends Component {
       if (line.length < lineLengthLimit) {
         let messages = retrieveMessagesFromLine(line, currentFileLineNumber);
 
-        messages.forEach(function(message) {
+        messages.forEach((message) => {
           fileMessages.messages.push(message);
         });
       }
@@ -298,8 +298,10 @@ class Todo extends Component {
           <div>
             TODO
             <span style={{ paddingLeft: 10, fontSize: 12, color: '#666' }}>
-              ({this.todoCount(this.state.files)})
-            </span>
+              (
+{this.todoCount(this.state.files)}
+)
+</span>
           </div>
         </DashboardCard.Header>
         <DashboardCard.Body>
