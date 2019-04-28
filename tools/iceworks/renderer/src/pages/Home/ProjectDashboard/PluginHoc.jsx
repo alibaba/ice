@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import DashboardCard from '../../../components/DashboardCard';
 import EmptyTips from '../../../components/EmptyTips/';
+import logger from '../../../lib/logger';
 
 const PluginHoc = (WrappedComponent) => {
 
