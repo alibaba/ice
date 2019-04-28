@@ -5,7 +5,6 @@ const generator = require('babel-generator').default;
 const traverse = require('babel-traverse').default;
 const t = require('babel-types');
 const rimraf = require('rimraf');
-
 const prettier = require('prettier');
 const config = require('../../config');
 

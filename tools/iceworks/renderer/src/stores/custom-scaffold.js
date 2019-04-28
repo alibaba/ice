@@ -1,6 +1,5 @@
 import { observable, action, computed, toJS } from 'mobx';
 import uuidv1 from 'uuid/v1';
-
 import {
   calcPrimaryColors,
   calcSecondaryColor,

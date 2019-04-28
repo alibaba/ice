@@ -1,5 +1,5 @@
-import pathExists from 'path-exists';
 import fs from 'fs';
+import pathExists from 'path-exists';
 import junk from 'junk';
 
 export const readdirSync = (targetPath) => {

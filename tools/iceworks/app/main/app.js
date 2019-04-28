@@ -8,7 +8,6 @@ const { ipcMain, BrowserWindow } = require('electron');
 // generate- 跟模板、脚手架生成器相关
 
 const { globalShortcut } = require('electron');
-
 const logger = require('./logger');
 const glodlog = require('./glodlog');
 const { isWin, isMac } = require('./shared');

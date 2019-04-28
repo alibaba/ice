@@ -1,18 +1,13 @@
-/* Deprecated */
-/* eslint-disable */
-const debug = require('debug')('ice:start:general');
-const getType = require('../utils/type');
-const logger = require('../utils/logger');
-const message = require('../utils/message');
 
-module.exports = function start(cwd, opt) {
-  const type = getType(cwd);
-  debug('type %s', type);
-  if (!type) {
-    logger.fatal(message.invalid);
-  }
+const chalk = require('chalk');
 
-  process.env.NODE_ENV = 'development';
-
-  require(`./${type}/start`)(cwd, opt);
+module.exports = function build() {
+  console.log();
+  console.log(chalk.yellow('[ERROR] 此功能已废弃，请使用 ice-scripts 开发/构建'));
+  console.log();
+  console.log(chalk.cyan('    npm install ice-scripts@latest -g'));
+  console.log(chalk.cyan('    ice build'));
+  console.log();
+  console.log('升级访问 https://github.com/alibaba/ice/wiki/ice-devtools-upgrade');
+  console.log();
 };

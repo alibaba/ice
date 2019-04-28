@@ -1,5 +1,4 @@
 import { observable, computed, toJS } from 'mobx';
-
 import { getCategoriesByBlocks } from '../datacenter/materials';
 
 class AdditionalBlocks {

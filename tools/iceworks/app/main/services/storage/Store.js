@@ -1,5 +1,5 @@
-const ElectronStore = require('electron-store');
 const EventEmitter = require('events');
+const ElectronStore = require('electron-store');
 
 /**
  * 仅存储字符串文本信息

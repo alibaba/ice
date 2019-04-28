@@ -1,8 +1,7 @@
+import path from 'path';
 import { observable, action } from 'mobx';
 import pathExists from 'path-exists';
-import path from 'path';
 import { Feedback } from '@icedesign/base';
-
 import GitTools from '../lib/git-tools';
 
 // store

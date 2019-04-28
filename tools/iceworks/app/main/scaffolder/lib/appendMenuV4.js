@@ -1,10 +1,9 @@
-const babylon = require('babylon');
 const fs = require('fs');
+const babylon = require('babylon');
 const generator = require('babel-generator').default;
 const prettier = require('prettier');
 const t = require('babel-types');
 const traverse = require('babel-traverse').default;
-
 const config = require('../../config');
 
 const MENU_CONFIG = 'asideMenuConfig'; // AST 解析 menuConfig.js 的变量名

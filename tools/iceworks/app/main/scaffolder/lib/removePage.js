@@ -1,6 +1,5 @@
 const path = require('path');
 const pathExists = require('path-exists');
-
 const removePageV3 = require('./removePageV3');
 const removePageV4 = require('./removePageV4');
 

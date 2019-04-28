@@ -1,11 +1,10 @@
-const babylon = require('babylon');
 const fs = require('fs');
+const babylon = require('babylon');
 const generator = require('babel-generator').default;
 const prettier = require('prettier');
 const t = require('babel-types');
 const traverse = require('babel-traverse').default; // https://astexplorer.net/
 const upperCamelCase = require('uppercamelcase');
-
 const config = require('../../config');
 
 function routeNode({ path, layout = '', component }) {
