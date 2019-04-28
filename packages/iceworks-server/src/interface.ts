@@ -1,5 +1,25 @@
 /**
- * 项目中的路由
+ * TODO 物料的模板信息
+ */
+export interface IMaterialScaffold {
+
+}
+
+/**
+ * TODO 物料的区块信息
+ */
+export interface IMaterialBlock {
+
+}
+/**
+ * TODO 物料的组件信息
+ */
+export interface IMaterialComponent {
+
+}
+
+/**
+ * 项目的路由
  */
 export interface IProjectRouter {
   /**
@@ -14,7 +34,7 @@ export interface IProjectRouter {
 }
 
 /**
- * 项目中的 mock
+ * 项目的 mock
  */
 export interface IProjectMock {
   /**
@@ -39,7 +59,7 @@ export interface IProjectMock {
 }
 
 /**
- * 项目中的菜单
+ * 项目的菜单
  */
 export interface IProjectMenu {
   /**
@@ -69,7 +89,7 @@ export interface IProjectMenu {
 }
 
 /**
- * 项目中的 Todo
+ * 项目的 Todo
  */
 export interface IProjectTodo {
   /**
@@ -95,18 +115,13 @@ export interface IProjectTodo {
 }
 
 /**
- * 依赖信息
+ * 项目的依赖信息
  */
-export interface IDependency {
+export interface IProjectDependency {
   /**
-   * 是否本地依赖 devDependencies ？
+   * 包名
    */
-  dev: boolean;
-
-  /**
-   * 名称
-   */
-  name: string;
+  package: string;
 
   /**
    * 指定版本：^1.0.1 / ~1.0.1 / 0.0.x
@@ -122,26 +137,79 @@ export interface IDependency {
    * 是否可更新：当远程有 1.0.4 时，该值为 true
    */
   canUpdate?: boolean;
+
+  /**
+   * 是否本地依赖 devDependencies ？
+   */
+  dev: boolean;
 }
 
 /**
- * TODO 区块
+ * 项目的区块
  */
-export interface IBlock {
+export interface IProjectBlock {
+  /**
+   * 名称
+   */
+  name: string;
+
+  /**
+   * 本地文件夹路径
+   */
+  folderPath?: string;
+
+  /**
+   * 背景图
+   */
+  image?: string;
+}
+
+/**
+ * 项目的组件
+ */
+export interface IProjectComponent {
+  /**
+   * 名称
+   */
+  name: string;
+
+  /**
+   * 是否可更新
+   */
+  canUpdate?: boolean;
+}
+
+/**
+ * 项目的模板
+ */
+export interface IProjectScaffold {
+  /**
+   * 名称
+   */
+  name: string;
+
+  /**
+   * 标题
+   */
+  title: string;
+
+  /**
+   * 背景图
+   */
+  image?: string;
+}
+
+/**
+ * TODO 项目的布局
+ */
+export interface IProjectLayout {
 
 }
 
 /**
- * TODO 布局
+ * 项目的页面
  */
-export interface ILayout {
-
-}
-
-/**
- * 页面
- */
-export interface IPage {
+export interface IProjectPage {
   /**
    * 名称
    */
@@ -175,7 +243,7 @@ export interface IPage {
   /**
    * 页面内的区块
    */
-  blocks?: IBlock[];
+  blocks?: IProjectBlock[];
 }
 
 /**
@@ -190,12 +258,12 @@ export interface IAddPageParam {
   /**
    * 使用的布局
    */
-  layout: ILayout;
+  layout: IProjectLayout;
 
   /**
    * 页面内的区块
    */
-  blocks?: IBlock[];
+  blocks?: IProjectBlock[];
 
   /**
    * 路由路径
@@ -225,37 +293,44 @@ export interface IProject {
   /**
    * 项目内的布局
    */
-  layouts: ILayout[];
+  layouts: IProjectLayout[];
 
   /**
    * 项目内的页面
    */
-  pages: IPage[];
+  pages: IProjectPage[];
 
   /**
    * 获取项目内的布局
    */
-  getLayouts(): Promise<ILayout[]>;
+  getLayouts(): Promise<IProjectLayout[]>;
 
   /**
    * 获取单个布局的信息
    */
-  getLayout(layoutName: string): Promise<ILayout>;
+  getLayout(layoutName: string): Promise<IProjectLayout>;
 
   /**
-   * 获取项目内的页面
+   * 获取项目内的页面信息
    */
-  getPages(): Promise<IPage[]>;
+  getPages(): Promise<IProjectPage[]>;
 
   /**
    * 获取单个页面的信息
    *
    * @param pageName 页面名
    */
-  getPage(pageName): Promise<IPage>;
+  getPage(pageName): Promise<IProjectPage>;
 
   /**
-   * 添加页面
+   * 添加多个页面到项目
+   *
+   * @param pages 页面配置信息
+   */
+  addPages(pages: IAddPageParam[]): Promise<IProjectPage[]>;
+
+  /**
+   * 添加单个页面到项目
    *
    * - 根据布局和区块生成页面文件
    * - 添加菜单
@@ -263,7 +338,7 @@ export interface IProject {
    *
    * @param page 页面配置
    */
-  addPage(page: IAddPageParam): Promise<IPage>;
+  addPage(page: IAddPageParam): Promise<IProjectPage>;
 
   /**
    * 删除项目内的页面
@@ -277,42 +352,82 @@ export interface IProject {
    *
    * @param page 页面信息
    */
-  updatePage(page: IPage): Promise<IPage>;
+  updatePage(page: IProjectPage): Promise<IProjectPage>;
+
+  /**
+   * 获取区块列表
+   * 
+   * @param pageName 页面名称，如果无则获取项目的区块
+   */
+  getBlocks(pageName?: string): Promise<IProjectBlock[]>;
 
   /**
    * 添加区块列表
    *
-   * @param pageName 页面名称
    * @param blocks 区块列表
+   * @param pageName 页面名称，如果无则添加区块列表到项目
    */
-  addBlocks(pageName: string, blocks: IBlock[]): Promise<IPage>;
+  addBlocks(blocks: IMaterialBlock[], pageName?: string): Promise<IProjectBlock[]>;
 
   /**
    * 添加区块
    *
-   * @param pageName 页面名称
    * @param block 区块信息
+   * @param pageName 页面名称，如果无则添加区块的项目
    */
-  addBlock(pageName: string, block: IBlock): Promise<IPage>;
+  addBlock(block: IMaterialBlock, pageName?: string): Promise<IProjectBlock>;
+
+  /**
+   * 获取项目内的组件
+   */
+  getComponents(): Promise<IProjectComponent[]>;
+
+  /**
+   * 添加多个组件到项目
+   * 
+   * @param components 组件信息
+   */
+  addComponents(components: IMaterialComponent[]): Promise<IProjectComponent[]>;
+
+  /**
+   * 添加组件到项目
+   * 
+   * @param component 组件信息
+   */
+  addComponent(component: IMaterialComponent): Promise<IProjectComponent>;
+
+  /**
+   * 升级某个组件
+   * 
+   * @param name 组件名
+   */
+  upgradeComponent(name: string): Promise<IProjectComponent>;
 
   /**
    * 获取项目内的依赖
    */
-  getDependencies(): Promise<IDependency[]>;
+  getDependencies(): Promise<IProjectDependency[]>;
+
+  /**
+   * 添加多个依赖到项目
+   *
+   * @param dependencies 依赖列表
+   */
+  addDependencies(dependencies: IProjectDependency[]): Promise<IProjectDependency[]>;
+
+  /**
+   * 添加依赖到项目
+   *
+   * @param dependency 依赖信息
+   */
+  addDependency(dependency: IProjectDependency): Promise<IProjectDependency>;
 
   /**
    * 升级项目中的某个依赖
    *
    * @param denpendency 指定依赖
    */
-  upgradeDependency(denpendency: {name: string, isDev: boolean}): Promise<IDependency>;
-
-  /**
-   * 添加依赖
-   *
-   * @param dependencies 依赖列表
-   */
-  addDependencies(dependencies: IDependency[]): Promise<IDependency[]>;
+  upgradeDependency(denpendency: {name: string, isDev: boolean}): Promise<IProjectDependency>;
 
   /**
    * 获取项目内的 todo
@@ -323,6 +438,13 @@ export interface IProject {
    * 获取项目菜单
    */
   getMenus(): Promise<IProjectMenu[]>;
+
+  /**
+   * 添加多个菜单到项目
+   *
+   * @param menus 多个菜单配置
+   */
+  addMenus(menus: IProjectMenu[]): Promise<IProjectMenu[]>;
 
   /**
    * 添加菜单
@@ -351,6 +473,13 @@ export interface IProject {
   getRouters(): Promise<IProjectRouter[]>;
 
   /**
+   * 添加多个路由到项目
+   *
+   * @param routers 多个路由配置
+   */
+  addRouters(routers: IProjectRouter[]): Promise<IProjectRouter[]>;
+
+  /**
    * 添加路由
    *
    * @param router 路由配置
@@ -369,12 +498,19 @@ export interface IProject {
    *
    * @param router 路由配置
    */
-  updateMenu(router: IProjectRouter): Promise<IProjectRouter>;
+  updateRouter(router: IProjectRouter): Promise<IProjectRouter>;
 
   /**
    * 获取项目的数据模拟配置
    */
   getMocks(): Promise<IProjectMock[]>;
+
+  /**
+   * 添加多个数据模拟到项目
+   * 
+   * @param mocks 数据模拟配置
+   */
+  addMocks(mocks: IProjectMock[]): Promise<IProjectMock[]>;
 
   /**
    * 添加数据模拟
@@ -388,7 +524,7 @@ export interface IProject {
    * 
    * @param mock 数据模拟配置
    */
-  addMock(mock: IProjectMock): Promise<void>;
+  removeMock(mock: IProjectMock): Promise<void>;
 
   /**
    * 更新数据模拟
