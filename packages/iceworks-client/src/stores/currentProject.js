@@ -1,5 +1,3 @@
-import logger from '@utils/logger';
-
 export default {
   dataSource: {
     id: '0',
