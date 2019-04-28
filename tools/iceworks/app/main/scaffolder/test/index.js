@@ -1,9 +1,9 @@
 /* eslint-disable import/no-dynamic-require */
-const chai = require('chai');
 // Using Should style
 chai.should();
 const fs = require('fs');
 const path = require('path');
+const chai = require('chai');
 
 describe('create ice app', () => {
   const fixturesDir = path.join(__dirname, 'features');

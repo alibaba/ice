@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Button } from '@alifd/next';
+import Card from '@components/Card';
 
 export default class Dev extends Component {
   state = {};
 
   render() {
     return (
-      <div>
-        <Button type="primary">Start Dev</Button>
-        <div>log...</div>
-      </div>
+      <Card title="启动服务" subTitle="用于开发环境">
+        content
+      </Card>
     );
   }
 }

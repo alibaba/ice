@@ -1,8 +1,7 @@
 const uuid = require('uuid');
 const { EventEmitter } = require('events');
-
-const Session = require('./Session');
 const spc = require('../../spc');
+const Session = require('./Session');
 
 const sessions = {};
 

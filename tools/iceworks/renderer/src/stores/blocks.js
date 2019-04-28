@@ -1,14 +1,12 @@
 import { observable, action, computed, autorun } from 'mobx';
 import uppercamelcase from 'uppercamelcase';
 import uuid from 'uuid';
-
 import { getBlocks } from '../datacenter/materials';
 import logger from '../lib/logger';
+import services from '../services';
 import projects from './projects';
 import blockGroups from './block-groups';
-
 import BlocksSearch from './blocks-search';
-import services from '../services';
 
 const { shared } = services;
 /**

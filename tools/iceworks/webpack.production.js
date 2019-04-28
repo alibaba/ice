@@ -2,7 +2,6 @@ const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin
 const merge = require('webpack-merge');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
-
 const common = require('./webpack.common');
 
 const config = {

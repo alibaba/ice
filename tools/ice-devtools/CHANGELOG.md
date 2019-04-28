@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.0
+
+- [refactor] 移除原先构建开发业务组件&区块的功能及代码（break change）
+- [fix] 修复 generate 失败未退出问题
+- [fix] 修复上传文件不存在时状态码不规范问题
+- [feat] 支持 angular 模板
+- [refactor] 模版语法从 handlebars 改为 ejs（break change）
+
 ## 2.2.6
 
 - [fix] 修复 token 不存在时的 bug

@@ -4,14 +4,13 @@
 
 import { observable, action, computed, toJS } from 'mobx';
 import requestMaterial from '../lib/request-material';
-
-import AdditionalBlocks from './additional-blocks';
-import AdditionalScaffolds from './additional-scaffolds';
-import AdditionalComponents from './additional-components';
 import filterMaterial from '../lib/filter-material';
 import { isIceMaterial } from '../lib/utils';
 import logger from '../lib/logger';
 import services from '../services';
+import AdditionalComponents from './additional-components';
+import AdditionalBlocks from './additional-blocks';
+import AdditionalScaffolds from './additional-scaffolds';
 import projects from './projects';
 
 const { settings, shared } = services;

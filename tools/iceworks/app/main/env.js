@@ -1,7 +1,6 @@
 const { app } = require('electron');
 const npmRunPath = require('npm-run-path');
 const path = require('path');
-
 const is = require('electron-is');
 const settings = require('./services/settings');
 
