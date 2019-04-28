@@ -1,5 +1,5 @@
 /**
- * TODO 项目中的路由
+ * 项目中的路由
  */
 export interface IProjectRouter {
   /**
@@ -11,6 +11,31 @@ export interface IProjectRouter {
    * 页面名
    */
   pageName: string;
+}
+
+/**
+ * 项目中的 mock
+ */
+export interface IProjectMock {
+  /**
+   * 路径
+   */
+  path: string;
+
+  /**
+   * 方法
+   */
+  method: string;
+
+  /**
+   * 状态码
+   */
+  status: number;
+
+  /**
+   * 返回主体
+   */
+  body: string;
 }
 
 /**
@@ -345,6 +370,32 @@ export interface IProject {
    * @param router 路由配置
    */
   updateMenu(router: IProjectRouter): Promise<IProjectRouter>;
+
+  /**
+   * 获取项目的数据模拟配置
+   */
+  getMocks(): Promise<IProjectMock[]>;
+
+  /**
+   * 添加数据模拟
+   * 
+   * @param mock 数据模拟配置
+   */
+  addMock(mock: IProjectMock): Promise<IProjectMock>;
+
+  /**
+   * 删除数据模拟
+   * 
+   * @param mock 数据模拟配置
+   */
+  addMock(mock: IProjectMock): Promise<void>;
+
+  /**
+   * 更新数据模拟
+   * 
+   * @param mock 数据模拟配置
+   */
+  updateMock(mock: IProjectMock): Promise<IProjectMock>;
 }
 
 export interface IProjectsResult {
