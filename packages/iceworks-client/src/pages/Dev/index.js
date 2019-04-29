@@ -10,18 +10,17 @@ import Modal from '@components/Modal';
 import XtermTerminal from '@components/XtermTerminal';
 import useModal from '@hooks/useModal';
 import { useSocket } from '@hooks/useSocket';
+import logger from '@utils/logger';
 import styles from './index.module.scss';
 
 const Dev = () => {
   const { on, toggleModal } = useModal();
-  const socket = useSocket();
+  const socket = useSocket(ICEWORKS_TASK_DEV_DATA, (data) => {
+    logger.debug(ICEWORKS_TASK_DEV_DATA, data);
+  });
 
   const dev = () => {
     socket.emit(ICEWORKS_TASK_DEV_OPEN, 'dev');
-
-    socket.on(ICEWORKS_TASK_DEV_DATA, (data) => {
-      console.log(ICEWORKS_TASK_DEV_DATA, data);
-    });
   };
 
   return (
