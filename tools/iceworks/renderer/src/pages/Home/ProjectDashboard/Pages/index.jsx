@@ -20,6 +20,7 @@ import Icon from '../../../../components/Icon';
 import EmptyTips from '../../../../components/EmptyTips';
 
 import dialog from '../../../../components/dialog';
+import logger from '../../../../lib/logger';
 
 import services from '../../../../services';
 const { scaffolder, editors, settings } = services;
