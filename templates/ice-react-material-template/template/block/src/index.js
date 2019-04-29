@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './index.module.css';
 
-export default class {{className}} extends Component {
-  static displayName = '{{className}}';
+export default class <%= className %> extends Component {
+  static displayName = '<%= className %>';
 
   static propTypes = {
     value: PropTypes.string
@@ -22,8 +22,8 @@ export default class {{className}} extends Component {
 
   render() {
     return (
-      <div className={styles['{{name}}']}>
-        {{name}}
+      <div className={styles['<%= name %>']}>
+        <%= name %>
       </div>
     );
   }

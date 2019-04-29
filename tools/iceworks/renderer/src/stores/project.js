@@ -1,14 +1,12 @@
+import os from 'os';
+import Path from 'path';
 import { observable, action, computed } from 'mobx';
 import { remote } from 'electron';
 import fs from 'fs-extra';
-import os from 'os';
-import Path from 'path';
 import pathExists from 'path-exists';
 import semver from 'semver';
-
 import { getDefaultProjectName } from '../lib/project-utils';
 import logger from '../lib/logger';
-
 import services from '../services';
 
 const IceworksScaffolder = remote.require('@icedesign/iceworks-scaffolder');
@@ -421,9 +419,9 @@ class Project {
     if (!this.pkgData) {
       return true;
     }
+    console.log(this.pkgData);
     const icescriptsRequired = this.pkgData.devDependencies
-      && (this.pkgData.devDependencies['ice-scripts']
-        || this.pkgData.devDependencies['@vue/cli-service']);
+      && (this.pkgData.devDependencies['ice-scripts'] || this.pkgData.devDependencies['@vue/cli-service']);
 
     // support create-react-app
     const reactWithoutIceValidate = this.pkgData.templateType

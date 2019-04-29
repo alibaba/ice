@@ -1,7 +1,7 @@
-import { observable, action } from 'mobx';
-import { remote } from 'electron';
 import os from 'os';
 import path from 'path';
+import { observable, action } from 'mobx';
+import { remote } from 'electron';
 import fs from 'fs-extra';
 import mkdirp from 'mkdirp';
 import fecha from 'fecha';

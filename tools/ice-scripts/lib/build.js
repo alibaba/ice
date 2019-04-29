@@ -8,6 +8,7 @@ const webpackMerge = require('webpack-merge');
 const { collectDetail } = require('@alifd/fusion-collector');
 
 const paths = require('./config/paths');
+const getBuildConfig = require('./config/getBuildConfig');
 const iceScriptsPkgData = require('../package.json');
 const getWebpackConfigProd = require('./config/webpack.config.prod');
 const goldlog = require('./utils/goldlog');
@@ -56,9 +57,10 @@ module.exports = async function (options) {
 
   if (pkgData.type === 'component') {
     // 组件构建
-    return componentBuild(pkgData.buildConfig);
+    return componentBuild(pkgData);
   }
 
+  const buildConfig = getBuildConfig(pkgData, 'build');
   if (pkgData.type === 'project') {
     validationSassAvailable();
 
@@ -74,7 +76,7 @@ module.exports = async function (options) {
   }
 
   let webpackConfig = getWebpackConfigProd({
-    buildConfig: pkgData.buildConfig || pkgData.ice,
+    buildConfig,
   });
   webpackConfig = webpackMerge(webpackConfig, customWebpackConfig);
 

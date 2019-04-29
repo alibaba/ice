@@ -40,7 +40,7 @@ module.exports = function router(app) {
     }
 
     const demoContent = fs.readFileSync(demoFile, 'utf-8');
-    const { highlightedCode, content, meta } = parseMarkdownParts(demoContent, {
+    const { highlightedCode, content, meta, highlightedStyle } = parseMarkdownParts(demoContent, {
       sliceCode: true,
     });
 
@@ -53,6 +53,7 @@ module.exports = function router(app) {
       highlightedCode,
       markdownContent: content,
       demos,
+      highlightedStyle,
     });
 
     res.send(jsTemplateContent);

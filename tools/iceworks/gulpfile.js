@@ -1,4 +1,6 @@
-/* eslint camelcase:0, array-callback-return:0, space-before-function-paren:0 */
+/* eslint camelcase:0, array-callback-return:0, space-before-function-paren:0, import/order:0 */
+const path = require('path');
+const rp = require('request-promise');
 const cleancss = require('gulp-clean-css');
 const co = require('co');
 const es = require('event-stream');
@@ -8,21 +10,18 @@ const gulp = require('gulp');
 const gutil = require('gulp-util');
 const inquirer = require('inquirer');
 const oss = require('ali-oss');
-const path = require('path');
 const pathExists = require('path-exists');
 const replace = require('gulp-replace');
 const shelljs = require('shelljs');
 const spawn = require('cross-spawn');
 const UglifyJS = require('uglify-es');
 const writeFile = require('write');
-const rp = require('request-promise');
+const appPkg = require('./app/package.json');
 
 const colors = gutil.colors;
 const isMac = process.platform === 'darwin';
 const isWin32_x64 = process.platform === 'win32' && process.arch === 'x64';
 const isLinux_x64 = process.platform === 'linux' && process.arch === 'x64';
-
-const appPkg = require('./app/package.json');
 
 const productName = appPkg.productName;
 
