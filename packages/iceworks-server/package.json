@@ -9,8 +9,6 @@
     "execa": "^1.0.0",
     "iceworks-events": "^0.1.0",
     "midway": "^1.0.0",
-    "node-pty": "^0.8.1",
-    "pty.js": "^0.3.1",
     "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
