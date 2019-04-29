@@ -283,6 +283,21 @@ export interface IProject {
   pages: IProjectPage[];
 
   /**
+   * TODO 启动调试服务
+   */
+  startDev(): Promise<Event>;
+
+  /**
+   * TODO 停止调试服务
+   */
+  stopDev(): Promise<Event>;
+
+  /**
+   * TODO 执行构建
+   */
+  build(): Promise<Event>;
+
+  /**
    * 获取项目内的布局
    */
   getLayouts(): Promise<IProjectLayout[]>;
