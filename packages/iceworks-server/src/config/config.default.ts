@@ -5,7 +5,7 @@ export = (appInfo: any) => {
   config.keys = appInfo.name + '_1555062042825_9790';
 
   // add your config here
-  config.middleware = [];
+  config.middleware = [ 'client' ];
 
   // socket.io
   config.io = {
@@ -20,6 +20,13 @@ export = (appInfo: any) => {
   config.cors = {
     origin: '*',
     allowMethods: 'GET,PUT,POST,DELETE'
+  }
+  
+  config.view = {
+    defaultViewEngine: 'nunjucks',
+    mapping: {
+      '.html': 'nunjucks',
+    },
   };
 
   return config;

@@ -1,6 +1,9 @@
 // had enabled by midway
 export = {
-  static: true,
+  nunjucks: {
+    enable: true,
+    package: 'egg-view-nunjucks',
+  },
 
   io: {
     enable: true,

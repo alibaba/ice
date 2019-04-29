@@ -1,22 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Context as SocketContext } from '@hooks/useSocket';
 import styles from './index.module.scss';
 
-const ConnectionBar = ({ connect }) => {
+const ConnectionBar = () => {
   return (
-    <div className={styles.connectionBar}>
-      {connect ? (
-        <FormattedMessage id="iceworks.global.connect" />
-      ) : (
-        <FormattedMessage id="iceworks.global.disconnect" />
+    <SocketContext.Consumer>
+      {value => (
+        <div className={styles.connectionBar}>
+          {value[1] ? (
+            <FormattedMessage id="iceworks.global.connect" />
+          ) : (
+            <FormattedMessage id="iceworks.global.disconnect" />
+          )}
+        </div>
       )}
-    </div>
+    </SocketContext.Consumer>
   );
 };
 
 ConnectionBar.propTypes = {
-  connect: PropTypes.bool.isRequired,
 };
 
 export default ConnectionBar;
