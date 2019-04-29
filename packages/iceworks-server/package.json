@@ -8,8 +8,7 @@
     "egg-socket.io": "^4.1.5",
     "execa": "^1.0.0",
     "iceworks-events": "^0.1.0",
-    "midway": "^1.0.0",
-    "socket.io-client": "^2.2.0"
+    "midway": "^1.0.0"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",
