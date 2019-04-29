@@ -9,18 +9,23 @@
       rel="stylesheet"
     />
     <link
-      href="//unpkg.com/iceworks-client@1.0.0-beta.0/build/css/index.css"
+      href="{{clientPath}}css/index.css"
       rel="stylesheet"
     />
     <link
       rel="shortcut icon"
-      href="//unpkg.com/iceworks-client@1.0.0-beta.0/build/favicon.png"
+      href="{{clientPath}}favicon.png"
     />
     <title>iceworks</title>
   </head>
 
   <body>
     <div id="iceworks"></div>
-    <script src="//unpkg.com/iceworks-client@1.0.0-beta.0/build/js"></script>
+    <script>
+      window.iceworksConfig = {
+        socketUrl: "{{socketUrl}}",
+      };
+    </script>
+    <script src="{{clientPath}}js/index.js"></script>
   </body>
 </html>
