@@ -26,10 +26,10 @@ class DataStore extends Conf {
   }
 }
 
-const NAMESPACE_SUFFIX: string = '-srouce';
+const NAMESPACE_SUFFIX = '-srouce';
 
 class Store extends EventEmitter {
-  private key: string = '';
+  private key = '';
   private store: Conf;
 
   constructor(namespace: string) {

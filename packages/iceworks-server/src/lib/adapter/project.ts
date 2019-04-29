@@ -3,7 +3,7 @@ import * as pathExists from 'path-exists';
 import * as fs from 'fs';
 import junk from 'junk';
 import * as util from 'util';
-import { IPage } from '../../interface';
+import { IProjectPage } from '../../interface';
 const originalReaddir = util.promisify(fs.readdir);
 
 const readdir = async (targetPath) => {
@@ -40,7 +40,7 @@ export default class Project {
 
   public readonly folderPath: string;
 
-  public pages: IPage[] = [];
+  public pages: IProjectPage[] = [];
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
@@ -51,7 +51,7 @@ export default class Project {
     this.pages = await this.getPages();
   }
 
-  async getPages(): Promise<IPage[]> {
+  async getPages(): Promise<IProjectPage[]> {
     return recursive(path.join(this.folderPath, 'src', 'pages'));
   }
 }

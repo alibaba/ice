@@ -20,8 +20,8 @@ export = (appInfo: any) => {
   config.cors = {
     origin: '*',
     allowMethods: 'GET,PUT,POST,DELETE'
-  }
-  
+  };
+
   config.view = {
     defaultViewEngine: 'nunjucks',
     mapping: {

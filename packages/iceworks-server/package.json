@@ -39,7 +39,8 @@
     "debug": "NODE_ENV=local midway-bin debug --ts",
     "test": "npm run lint && midway-bin test --ts",
     "cov": "midway-bin cov --ts",
-    "lint": "tslint -c tslint.json --project .",
+    "lint": "tslint --fix -c tslint.json --project .",
+    "lint-nofix": "tslint -c tslint.json --project .",
     "ci": "npm run cov",
     "build": "midway-bin build -c"
   },

@@ -356,7 +356,7 @@ export interface IProject {
 
   /**
    * 获取区块列表
-   * 
+   *
    * @param pageName 页面名称，如果无则获取项目的区块
    */
   getBlocks(pageName?: string): Promise<IProjectBlock[]>;
@@ -384,21 +384,21 @@ export interface IProject {
 
   /**
    * 添加多个组件到项目
-   * 
+   *
    * @param components 组件信息
    */
   addComponents(components: IMaterialComponent[]): Promise<IProjectComponent[]>;
 
   /**
    * 添加组件到项目
-   * 
+   *
    * @param component 组件信息
    */
   addComponent(component: IMaterialComponent): Promise<IProjectComponent>;
 
   /**
    * 升级某个组件
-   * 
+   *
    * @param name 组件名
    */
   upgradeComponent(name: string): Promise<IProjectComponent>;
@@ -507,38 +507,38 @@ export interface IProject {
 
   /**
    * 添加多个数据模拟到项目
-   * 
+   *
    * @param mocks 数据模拟配置
    */
   addMocks(mocks: IProjectMock[]): Promise<IProjectMock[]>;
 
   /**
    * 添加数据模拟
-   * 
+   *
    * @param mock 数据模拟配置
    */
   addMock(mock: IProjectMock): Promise<IProjectMock>;
 
   /**
    * 删除数据模拟
-   * 
+   *
    * @param mock 数据模拟配置
    */
   removeMock(mock: IProjectMock): Promise<void>;
 
   /**
    * 更新数据模拟
-   * 
+   *
    * @param mock 数据模拟配置
    */
   updateMock(mock: IProjectMock): Promise<IProjectMock>;
 }
 
 export interface IProjectsResult {
-  projects: IProject[];
+  projects: any[];
 }
 export interface IProjectResult {
-  project: IProject;
+  project: any;
 }
 
 export interface IProjectService {
