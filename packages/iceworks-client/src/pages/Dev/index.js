@@ -1,19 +1,39 @@
 import React from 'react';
 import { Button } from '@alifd/next';
+import {
+  ICEWORKS_TASK_DEV_OPEN,
+  ICEWORKS_TASK_DEV_DATA,
+} from 'iceworks-events';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
+import XtermTerminal from '@components/XtermTerminal';
 import useModal from '@hooks/useModal';
+import { useSocket } from '@hooks/useSocket';
+import logger from '@utils/logger';
 import styles from './index.module.scss';
 
 const Dev = () => {
   const { on, toggleModal } = useModal();
+  const socket = useSocket(ICEWORKS_TASK_DEV_DATA, (data) => {
+    logger.debug(ICEWORKS_TASK_DEV_DATA, data);
+  });
+
+  const dev = () => {
+    socket.emit(ICEWORKS_TASK_DEV_OPEN, 'dev');
+  };
+
   return (
-    <Card title="启动服务" subTitle="用于开发环境" className={styles.devCard}>
-      <div className={styles.btnGroup}>
+    <Card
+      title="启动服务"
+      subTitle="用于开发环境"
+      contentHeight="100%"
+      className={styles.devCard}
+    >
+      <div className={styles.actionBar}>
         {/* Left Button Group */}
-        <div className={styles.leftBtnGroup}>
-          <Button type="primary" className={styles.btn}>
+        <div className={styles.leftActionBar}>
+          <Button type="primary" className={styles.btn} onClick={dev}>
             <Icon type="start" className={styles.icon} />
             运行
           </Button>
@@ -24,7 +44,7 @@ const Dev = () => {
         </div>
 
         {/* Right Button Group */}
-        <div className={styles.rightBtnGroup}>
+        <div className={styles.rightActionBar}>
           <Button.Group>
             <Button type="primary">
               <Icon type="pc" /> 日志
@@ -40,7 +60,9 @@ const Dev = () => {
       </div>
 
       {/* Content */}
-      <div className={styles.content}>MainContent</div>
+      <div className={styles.content}>
+        <XtermTerminal />
+      </div>
 
       {/* Modal */}
       <Modal visible={on} onCancel={toggleModal}>

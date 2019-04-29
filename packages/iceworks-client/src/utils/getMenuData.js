@@ -18,7 +18,6 @@ function formatterMenuData() {
 function getMenuData() {
   const { pathname } = urlParse(window.location.href);
   const pathnamePrefix = `/${pathname.split('/')[1]}`;
-  // console.log({ pathnamePrefix });
   return formatterMenuData()[pathnamePrefix];
 }
 
