@@ -17,5 +17,12 @@ export = (appInfo: any) => {
     },
   };
 
+  config.view = {
+    defaultViewEngine: 'nunjucks',
+    mapping: {
+      '.html': 'nunjucks',
+    },
+  };
+
   return config;
 };
