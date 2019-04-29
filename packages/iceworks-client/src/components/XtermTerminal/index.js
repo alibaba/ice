@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import { Terminal } from 'xterm';
 import { ICEWORKS_TASK_DEV_DATA } from 'iceworks-events';
@@ -19,8 +19,11 @@ const XtermTerminal = () => {
     rows: 30,
   });
 
-  term.open(xtermRef.current);
-  term.write('\x1B[1;3;31mIceworks CLI\x1B[0m $ ');
+  useEffect(() => {
+    term.open(xtermRef.current);
+    term.fit();
+    term.write('\x1B[1;3;31mIceworks CLI\x1B[0m $ ');
+  }, []);
 
   useSocket(ICEWORKS_TASK_DEV_DATA, (data) => {
     term.write(data);
