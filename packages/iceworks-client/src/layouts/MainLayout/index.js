@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useSocket } from '@hooks/useSocket';
+import React from 'react';
 import NavigationBar from '@components/NavigationBar';
 import RouteRender from '@components/RouteRender';
 import ConnectionBar from '@components/ConnectionBar';
@@ -9,13 +8,9 @@ import routerConfig from '@src/routerConfig';
 import styles from './index.module.scss';
 
 const MainLayout = () => {
-  const [connect, setConnect] = useState(false);
-  useSocket('connect', () => setConnect({ connect: true }));
-  useSocket('disconnect', () => setConnect({ connect: false }));
-
   return (
     <div className={styles.container}>
-      {connect ? null : <ConnectionBar connect={connect} />}
+      <ConnectionBar />
 
       <div className={styles.content}>
         <NavigationBar menuData={menuConfig} />
