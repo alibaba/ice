@@ -1,5 +1,7 @@
 import { shell } from 'electron';
-import { glodlog, editors, shells, folder } from './services';
+import services from './services';
+
+const { glodlog, editors, shells, folder } = services;
 
 export const openInEditor = (path) => {
   editors.open(path);
