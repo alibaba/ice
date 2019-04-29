@@ -11,7 +11,7 @@ function useSocket(eventName, callback) {
 
       return () => socket.removeListener(eventName, callback);
     }
-  });
+  }, []);
 
   return socket;
 }
