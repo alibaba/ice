@@ -1,22 +1,4 @@
-/**
- * TODO 物料的模板信息
- */
-export interface IMaterialScaffold {
-
-}
-
-/**
- * TODO 物料的区块信息
- */
-export interface IMaterialBlock {
-
-}
-/**
- * TODO 物料的组件信息
- */
-export interface IMaterialComponent {
-
-}
+import { IMaterialBlock, IMaterialComponent } from './material';
 
 /**
  * 项目的路由
@@ -532,16 +514,4 @@ export interface IProject {
    * @param mock 数据模拟配置
    */
   updateMock(mock: IProjectMock): Promise<IProjectMock>;
-}
-
-export interface IProjectsResult {
-  projects: any[];
-}
-export interface IProjectResult {
-  project: any;
-}
-
-export interface IProjectService {
-  getProjects(): Promise<IProjectsResult>;
-  getCurrent(): Promise<IProjectResult>;
 }
