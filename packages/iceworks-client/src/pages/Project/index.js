@@ -1,15 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Input, Button } from '@alifd/next';
 import stores from '@stores';
 
 const Project = () => {
   const [projects, project] = stores.userStores(['projects', 'project']);
-
-  useEffect(() => {
-    project.refresh();
-    projects.refresh();
-  }, []);
-
   return (
     <div>
       <h2>Project</h2>

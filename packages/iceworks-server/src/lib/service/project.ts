@@ -6,7 +6,7 @@ import Project from '../adapter/project';
 @provide('projectService')
 export class ProjectService implements IProjectService {
   async getProjects(): Promise<IProjectsResult> {
-    const projectFolderPaths = storage.get('projects') || [];
+    const projectFolderPaths = storage.get('projects');
     return {
       projects: await Promise.all(projectFolderPaths.map(async (projectFolderPath) => {
         const project = new Project(projectFolderPath);
@@ -26,7 +26,6 @@ export class ProjectService implements IProjectService {
   }
 
   async setCurrent(folderPath: string): Promise<IProjectResult> {
-    console.log('folderPath:::', folderPath);
     storage.set('currentProject', folderPath);
     const project = new Project(folderPath);
     await project.load();
