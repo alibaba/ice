@@ -1,12 +1,12 @@
 import { provide } from 'midway';
 import { IProjectService, IProjectsResult, IProjectResult } from '../../interface';
-import { projectsStorage, recordStorage } from '../storage';
+import storage from '../storage';
 import Project from '../adapter/project';
 
 @provide('projectService')
 export class ProjectService implements IProjectService {
   async getProjects(): Promise<IProjectsResult> {
-    const projectFolderPaths = projectsStorage.get() || [];
+    const projectFolderPaths = storage.get('projects') || [];
     return {
       projects: await Promise.all(projectFolderPaths.map(async (projectFolderPath) => {
         const project = new Project(projectFolderPath);
@@ -17,8 +17,18 @@ export class ProjectService implements IProjectService {
   }
 
   async getCurrent(): Promise<IProjectResult> {
-    const projectFolderPath = recordStorage.get() || '';
+    const projectFolderPath = storage.get('currentProject');
     const project = new Project(projectFolderPath);
+    await project.load();
+    return {
+      project
+    };
+  }
+
+  async setCurrent(folderPath: string): Promise<IProjectResult> {
+    console.log('folderPath:::', folderPath);
+    storage.set('currentProject', folderPath);
+    const project = new Project(folderPath);
     await project.load();
     return {
       project

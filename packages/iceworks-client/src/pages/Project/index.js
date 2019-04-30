@@ -19,24 +19,24 @@ const Project = () => {
           my pages:
           <ul>
             {project.dataSource.pages.map(({ name }) => {
-              return name;
+              return <li>{name}</li>;
             })}
           </ul>
         </div>
       </div>
       <div>
-        <div>my projects</div>
+        <div>my projects:</div>
         <ul>
           {projects.dataSource.map((projectData, index) => {
-            const { name, id } = projectData;
+            const { name, folderPath } = projectData;
             return (
               <li key={index}>
-                <a onClick={async () => { await project.setData(projectData); }}>
+                <a onClick={async () => { await project.reset(folderPath); }}>
                   {name}
                 </a>
                 <Button
                   onClick={async () => {
-                    await projects.remove(id);
+                    await projects.remove(folderPath);
                     await project.refresh();
                   }}
                 >

@@ -26,57 +26,62 @@ class DataStore extends Conf {
   }
 }
 
-const NAMESPACE_SUFFIX = '-srouce';
-
 class Store extends EventEmitter {
-  private key = '';
   private store: Conf;
 
-  constructor(namespace: string) {
+  constructor(options?) {
     super();
-
-    this.key = namespace + NAMESPACE_SUFFIX;
-    this.store = new DataStore();
+    this.store = new DataStore(options);
   }
 
-  set(values: any): void {
-    this.store.set(`${this.key}`, values);
+  set(key: string, values: any): void {
+    this.store.set(key, values);
   }
 
-  get(): any {
-    return this.store.get(this.key);
+  get(key: string): any {
+    return this.store.get(key);
   }
 
-  add(value: string): void {
-    const values = this.store.get(this.key);
+  add(key: string, value: string): void {
+    const values = this.store.get(key);
     if (Array.isArray(values)) {
-      this.store.set(this.key, values.filter((v) => v !== value).unshift(value));
+      this.store.set(key, values.filter((v) => v !== value).unshift(value));
     }
   }
 
-  remove(value: string): void {
-    const values = this.store.get(this.key) || [];
+  remove(key: string, value: string): void {
+    const values = this.store.get(key) || [];
     if (Array.isArray(values)) {
-      this.store.set(this.key, values.filter((v) => v !== value));
+      this.store.set(key, values.filter((v) => v !== value));
     }
   }
 
-  has(value: string): boolean {
-    const values = this.store.get(this.key);
+  has(key: string, value: string): boolean {
+    const values = this.store.get(key);
     return Array.isArray(values) ? values.some((v) => v === value) : false;
   }
 
-  delete(): void {
-    this.store.delete(this.key);
-  }
-
-  get dataSource() {
-    return this.store.get(this.key);
+  delete(key: string): void {
+    this.store.delete(key);
   }
 }
 
-export const statStorage = new Store('stat'); // 统计记录
-export const recordStorage = new Store('record'); // 项目使用记录
-export const projectsStorage = new Store('projects'); // 所有项目列表
-export const workspaceStorage = new Store('workspace'); // 工作空间
-export const icelandStatStorage = new Store('iceland-stat'); // Iceland 统计记录
+const schema = {
+  "stat": {
+    "type": "string",
+  },
+  "iceland-stat": {
+    "type": "string",
+  },
+  "currentProject": {
+    "type": "string",
+  },
+  "projects": {
+    "type": "array",
+    "items": {
+      "type": "string",
+    }
+  }
+}
+
+export default new Store({schema});

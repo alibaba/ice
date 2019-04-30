@@ -11,4 +11,5 @@ export interface IProjectResult {
 export interface IProjectService {
   getProjects(): Promise<IProjectsResult>;
   getCurrent(): Promise<IProjectResult>;
+  setCurrent(folderPath: string): Promise<IProjectResult>;
 }

@@ -29,5 +29,11 @@ export = (appInfo: any) => {
     },
   };
 
+  config.security = {
+    csrf: {
+      headerName: 'x-csrf-token',
+    },
+  };
+
   return config;
 };

@@ -1,4 +1,4 @@
-import { controller, get, provide, inject } from 'midway';
+import { controller, get, post, provide, inject } from 'midway';
 import { IProjectService } from '../../interface';
 
 @provide()
@@ -13,7 +13,13 @@ export class ProjectController {
   }
 
   @get('/current')
-  async current(ctx) {
+  async getCurrent(ctx) {
     ctx.body = await this.service.getCurrent();
+  }
+
+  @post('/current')
+  async setCurrent(ctx) {
+    console.log('ctx.request.body', ctx.request.body);
+    ctx.body = await this.service.setCurrent(ctx.request.body.folderPath);
   }
 }
