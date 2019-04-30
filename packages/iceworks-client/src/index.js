@@ -13,8 +13,6 @@ import appConfig from './appConfig';
 import './global.scss';
 import './variables.scss';
 
-const URL = appConfig.socketUrl;
-
 const App = () => {
   const [projects, project] = stores.userStores(['projects', 'project']);
 
@@ -26,7 +24,7 @@ const App = () => {
   }, []);
 
   return (
-    <SocketProvider url={URL}>
+    <SocketProvider url={appConfig.socketUrl}>
       <LocaleProvider>
         <ThemeProvider>
           <Router>

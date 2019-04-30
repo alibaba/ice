@@ -4,21 +4,21 @@ import io from 'socket.io-client';
 import logger from '@utils/logger';
 import Context from './Context';
 
-let didConnect = false;
+let socket;
 
 const SocketProvider = ({ children, url, options }) => {
   const [connect, setConect] = useState(false);
-  const socket = io(url, options);
 
-  if (!didConnect) {
+  if (!socket) {
+    logger.debug('new socket');
+    socket = io(url, options);
+
     socket.on('connect', () => {
-      logger.debug('socket connect!!!');
-      didConnect = true;
+      logger.debug('socket connected!!!');
       setConect(true);
     });
     socket.on('disconnect', () => {
-      logger.debug('socket disconnect!!!');
-      didConnect = false;
+      logger.debug('socket disconnected!!!');
       setConect(true);
     });
   }
