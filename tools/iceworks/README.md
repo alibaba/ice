@@ -1,14 +1,14 @@
 # Iceworks
 
-目录规范
+目录规范：
 
 ```bash
-|- app
-  |- main/ # 所有主进程文件
-|- renderer/ # 渲染进程 ICE 的单页面应用, ICE 单页面应用
-|- build/ # 资源文件 icon 等，
+|- app/ # 主进程文件
+|- renderer/ # 渲染进程：ICE 的单页面应用
+|- build/ # 资源文件：icon 等
 |- binary/ # 二进制包
-|- gulp etc. # 开发辅助工具等，publish 阶段构建完成后可以 remove 掉
+|- out/ # 构建后的代码包
+|- dist/ # 构建最终产物
 ```
 
 ## 环境准备
@@ -21,8 +21,8 @@
 ## 开发调试
 
 ```bash
-yarn dev
-yarn start
+yarn dev # 启动渲染进程调试
+yarn start # 启动主进程调试
 ```
 
 ## 打包发布
