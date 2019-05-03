@@ -32,6 +32,7 @@ export = (appInfo: any) => {
   config.security = {
     csrf: {
       headerName: 'x-csrf-token',
+      ignore: ctx => ctx.ip === '127.0.0.1',
     },
   };
 
