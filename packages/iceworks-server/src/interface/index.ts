@@ -8,7 +8,7 @@ export interface IProjectResult {
   project: any;
 }
 
-export interface IProjectService {
+export interface IProjectsService {
   getProjects(): Promise<IProjectsResult>;
   getCurrent(): Promise<IProjectResult>;
   setCurrent(folderPath: string): Promise<IProjectResult>;

@@ -1,25 +1,25 @@
 import { controller, get, post, provide, inject } from 'midway';
-import { IProjectService } from '../../interface';
+import { IProjectsService } from '../../interface';
 
 @provide()
 @controller('/api/project')
 export class ProjectController {
-  @inject('projectService')
-  service: IProjectService;
+  @inject('projectsService')
+  projectsService: IProjectsService;
 
   @get('/')
   async index(ctx) {
-    ctx.body = await this.service.getProjects();
+    ctx.body = await this.projectsService.getProjects();
   }
 
   @get('/current')
   async getCurrent(ctx) {
-    ctx.body = await this.service.getCurrent();
+    ctx.body = await this.projectsService.getCurrent();
   }
 
   @post('/current')
   async setCurrent(ctx) {
     console.log('ctx.request.body', ctx.request.body);
-    ctx.body = await this.service.setCurrent(ctx.request.body.folderPath);
+    ctx.body = await this.projectsService.setCurrent(ctx.request.body.folderPath);
   }
 }

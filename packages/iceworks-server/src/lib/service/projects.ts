@@ -1,10 +1,10 @@
 import { provide } from 'midway';
-import { IProjectService, IProjectsResult, IProjectResult } from '../../interface';
+import { IProjectsService, IProjectsResult, IProjectResult } from '../../interface';
 import storage from '../storage';
 import Project from '../adapter/project';
 
-@provide('projectService')
-export class ProjectService implements IProjectService {
+@provide('projectsService')
+export class ProjectsService implements IProjectsService {
   async getProjects(): Promise<IProjectsResult> {
     const projectFolderPaths = storage.get('projects');
     return {
