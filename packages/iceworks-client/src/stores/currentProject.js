@@ -8,7 +8,13 @@ export default {
     pages: [
     ],
   },
+  inited: false,
   async refresh() {
+    if (this.inited) {
+      return;
+    }
+
+    this.inited = true;
     const response = await fetch(`${appConfig.apiUrl}project/current`);
     const data = await response.json();
     this.dataSource = data.project;

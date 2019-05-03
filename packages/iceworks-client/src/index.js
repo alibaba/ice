@@ -8,19 +8,13 @@ import MainLayout from '@layouts/MainLayout/index';
 import LocaleProvider from '@components/Locale';
 import { ThemeProvider } from '@components/ThemeProvider';
 import { SocketProvider } from '@hooks/useSocket';
-import stores from '@stores';
 import appConfig from './appConfig';
 import './global.scss';
 import './variables.scss';
 
 const App = () => {
-  const [projects, project] = stores.userStores(['projects', 'project']);
-
   useEffect(() => {
     logger.info('App loaded.');
-
-    project.refresh();
-    projects.refresh();
   }, []);
 
   return (

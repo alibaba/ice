@@ -1,25 +1,48 @@
 import { controller, get, post, provide, inject } from 'midway';
-import { IProjectsService } from '../../interface';
+import { IProjectService, IPluginService } from '../../interface';
 
 @provide()
 @controller('/api/project')
 export class ProjectController {
-  @inject('projectsService')
-  projectsService: IProjectsService;
+  @inject('projectService')
+  projectService: IProjectService;
 
   @get('/')
-  async index(ctx) {
-    ctx.body = await this.projectsService.getProjects();
+  async getAll(ctx) {
+    ctx.body = await this.projectService.getProjects();
   }
 
   @get('/current')
   async getCurrent(ctx) {
-    ctx.body = await this.projectsService.getCurrent();
+    ctx.body = await this.projectService.getCurrent();
   }
 
   @post('/current')
   async setCurrent(ctx) {
-    console.log('ctx.request.body', ctx.request.body);
-    ctx.body = await this.projectsService.setCurrent(ctx.request.body.folderPath);
+    ctx.body = await this.projectService.setCurrent(ctx.request.body.folderPath);
+  }
+}
+
+@provide()
+@controller('/api/page')
+export class PageController {
+  @inject('pageService')
+  pageService: IPluginService;
+
+  @get('/')
+  async getAll(ctx) {
+    ctx.body = await this.pageService.getAll(ctx.query.projectFolderPath);
+  }
+}
+
+@provide()
+@controller('/api/dependency')
+export class DependencyController {
+  @inject('dependencyService')
+  dependencyService: IPluginService;
+
+  @get('/')
+  async getAll(ctx) {
+    ctx.body = await this.dependencyService.getAll(ctx.query.projectFolderPath);
   }
 }

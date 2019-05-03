@@ -3,7 +3,7 @@ import * as pathExists from 'path-exists';
 import * as fs from 'fs';
 import junk from 'junk';
 import * as util from 'util';
-import { IProjectPage } from '../../interface';
+import { IProjectPage, IProjectDependency } from '../../interface';
 const originalReaddir = util.promisify(fs.readdir);
 
 const readdir = async (targetPath) => {
@@ -40,18 +40,22 @@ export default class Project {
 
   public readonly folderPath: string;
 
-  public pages: IProjectPage[] = [];
-
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
     this.folderPath = folderPath;
   }
 
-  async load() {
-    this.pages = await this.getPages();
-  }
-
   async getPages(): Promise<IProjectPage[]> {
     return recursive(path.join(this.folderPath, 'src', 'pages'));
+  }
+
+  async getDependencies(): Promise<IProjectDependency[]> {
+    return [
+      {
+        package: 'icestore',
+        dev: false,
+        specifyingVersion: '^0.1.0'
+      }
+    ];
   }
 }

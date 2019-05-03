@@ -324,7 +324,7 @@ export interface IProject {
    *
    * @param pages 页面配置信息
    */
-  addPages(pages: IAddPageParam[]): Promise<IProjectPage[]>;
+  createPages(pages: IAddPageParam[]): Promise<IProjectPage[]>;
 
   /**
    * 添加单个页面到项目
@@ -335,14 +335,14 @@ export interface IProject {
    *
    * @param page 页面配置
    */
-  addPage(page: IAddPageParam): Promise<IProjectPage>;
+  createPage(page: IAddPageParam): Promise<IProjectPage>;
 
   /**
    * 删除项目内的页面
    *
    * @param pageName 页面名
    */
-  removePage(pageName: string): Promise<void>;
+  deletePage(pageName: string): Promise<void>;
 
   /**
    * 更新页面
@@ -364,7 +364,7 @@ export interface IProject {
    * @param blocks 区块列表
    * @param pageName 页面名称，如果无则添加区块列表到项目
    */
-  addBlocks(blocks: IMaterialBlock[], pageName?: string): Promise<IProjectBlock[]>;
+  createBlocks(blocks: IMaterialBlock[], pageName?: string): Promise<IProjectBlock[]>;
 
   /**
    * 添加区块
@@ -372,7 +372,7 @@ export interface IProject {
    * @param block 区块信息
    * @param pageName 页面名称，如果无则添加区块的项目
    */
-  addBlock(block: IMaterialBlock, pageName?: string): Promise<IProjectBlock>;
+  createBlock(block: IMaterialBlock, pageName?: string): Promise<IProjectBlock>;
 
   /**
    * 获取项目内的组件
@@ -384,14 +384,14 @@ export interface IProject {
    *
    * @param components 组件信息
    */
-  addComponents(components: IMaterialComponent[]): Promise<IProjectComponent[]>;
+  createComponents(components: IMaterialComponent[]): Promise<IProjectComponent[]>;
 
   /**
    * 添加组件到项目
    *
    * @param component 组件信息
    */
-  addComponent(component: IMaterialComponent): Promise<IProjectComponent>;
+  createComponent(component: IMaterialComponent): Promise<IProjectComponent>;
 
   /**
    * 升级某个组件
@@ -410,14 +410,14 @@ export interface IProject {
    *
    * @param dependencies 依赖列表
    */
-  addDependencies(dependencies: IProjectDependency[]): Promise<IProjectDependency[]>;
+  createDependencies(dependencies: IProjectDependency[]): Promise<IProjectDependency[]>;
 
   /**
    * 添加依赖到项目
    *
    * @param dependency 依赖信息
    */
-  addDependency(dependency: IProjectDependency): Promise<IProjectDependency>;
+  createDependency(dependency: IProjectDependency): Promise<IProjectDependency>;
 
   /**
    * 升级项目中的某个依赖
@@ -441,21 +441,21 @@ export interface IProject {
    *
    * @param menus 多个菜单配置
    */
-  addMenus(menus: IProjectMenu[]): Promise<IProjectMenu[]>;
+  createMenus(menus: IProjectMenu[]): Promise<IProjectMenu[]>;
 
   /**
    * 添加菜单
    *
    * @param menu 菜单配置
    */
-  addMenu(menu: IProjectMenu): Promise<IProjectMenu>;
+  createMenu(menu: IProjectMenu): Promise<IProjectMenu>;
 
   /**
    * 删除菜单
    *
    * @param menu 菜单配置
    */
-  removeMenu(menu: IProjectMenu): Promise<void>;
+  deleteMenu(menu: IProjectMenu): Promise<void>;
 
   /**
    * 更新菜单
@@ -474,21 +474,21 @@ export interface IProject {
    *
    * @param routers 多个路由配置
    */
-  addRouters(routers: IProjectRouter[]): Promise<IProjectRouter[]>;
+  createRouters(routers: IProjectRouter[]): Promise<IProjectRouter[]>;
 
   /**
    * 添加路由
    *
    * @param router 路由配置
    */
-  addRouter(router: IProjectRouter): Promise<IProjectRouter>;
+  createRouter(router: IProjectRouter): Promise<IProjectRouter>;
 
   /**
    * 删除路由
    *
    * @param path 路由路径
    */
-  removeRouter(path: string): Promise<void>;
+  deleteRouter(path: string): Promise<void>;
 
   /**
    * 更新路由
@@ -507,21 +507,21 @@ export interface IProject {
    *
    * @param mocks 数据模拟配置
    */
-  addMocks(mocks: IProjectMock[]): Promise<IProjectMock[]>;
+  createMocks(mocks: IProjectMock[]): Promise<IProjectMock[]>;
 
   /**
    * 添加数据模拟
    *
    * @param mock 数据模拟配置
    */
-  addMock(mock: IProjectMock): Promise<IProjectMock>;
+  createMock(mock: IProjectMock): Promise<IProjectMock>;
 
   /**
    * 删除数据模拟
    *
    * @param mock 数据模拟配置
    */
-  removeMock(mock: IProjectMock): Promise<void>;
+  deleteMock(mock: IProjectMock): Promise<void>;
 
   /**
    * 更新数据模拟

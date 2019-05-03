@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input, Button } from '@alifd/next';
 import stores from '@stores';
+import logger from '@utils/logger';
+import Page from './components/Page';
+import Dependency from './components/Dependency';
+import projectStores from './stores';
 
 const Project = () => {
   const [projects, project] = stores.userStores(['projects', 'project']);
+  const [pages, dependencies] = projectStores.userStores(['pages', 'dependencies']);
+
+  useEffect(() => {
+    logger.info('Project page loaded.');
+
+    projects.refresh();
+    project.refresh();
+
+    // TODO 根据当前项目的变化进行更新
+    pages.refresh();
+    dependencies.refresh();
+  }, []);
+
   return (
     <div>
       <h2>Project</h2>
       <div>
         now project: {project.dataSource.name}
         <div>
-          my pages:
-          <ul>
-            {project.dataSource.pages.map(({ name }) => {
-              return <li>{name}</li>;
-            })}
-          </ul>
+          <Page />
+          <Dependency />
         </div>
       </div>
       <div>
