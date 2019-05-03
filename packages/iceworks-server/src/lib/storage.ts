@@ -67,21 +67,21 @@ class Store extends EventEmitter {
 }
 
 const schema = {
-  "stat": {
-    "type": "string",
+  'stat': {
+    type: 'string',
   },
-  "iceland-stat": {
-    "type": "string",
+  'iceland-stat': {
+    type: 'string',
   },
-  "currentProject": {
-    "type": "string",
+  'currentProject': {
+    type: 'string',
   },
-  "projects": {
-    "type": "array",
-    "items": {
-      "type": "string",
+  'projects': {
+    type: 'array',
+    items: {
+      type: 'string',
     }
   }
-}
+};
 
 export default new Store({schema});
