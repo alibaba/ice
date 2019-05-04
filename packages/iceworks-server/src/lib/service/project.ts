@@ -33,9 +33,13 @@ export class ProjectService implements IProjectService {
     };
   }
 
-  async dev(folderPath: string): Promise<EventEmitter> {
+  async devStart(folderPath: string): Promise<EventEmitter> {
     const project = new Project(folderPath);
     return await project.startDev(getEnv());
+  }
+
+  async devStop() {
+    
   }
 
   async build() {}

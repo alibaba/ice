@@ -12,7 +12,7 @@ export default (app) => {
 
       let error;
       try {
-        const devEvent = await projectService.dev(projectFolderPath);
+        const devEvent = await projectService.devStart(projectFolderPath);
 
         devEvent.on('data', function(data) {
           const decoder = new StringDecoder('utf8');
