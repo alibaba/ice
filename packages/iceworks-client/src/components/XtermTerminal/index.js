@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import { Terminal } from 'xterm';
-import { ICEWORKS_TASK_DEV_DATA } from 'iceworks-events';
+import { ICEWORKS_PROJECT_DEV_DATA } from 'iceworks-events';
 import { useSocket } from '@hooks/useSocket';
 import * as fit from 'xterm/dist/addons/fit/fit';
 import * as webLinks from 'xterm/dist/addons/webLinks/webLinks';
@@ -35,7 +35,7 @@ const XtermTerminal = () => {
     });
   }, []);
 
-  useSocket(ICEWORKS_TASK_DEV_DATA, (data) => {
+  useSocket(ICEWORKS_PROJECT_DEV_DATA, (data) => {
     term.write(data);
   });
 

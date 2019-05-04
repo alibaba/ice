@@ -1,4 +1,5 @@
 import { IMaterialBlock, IMaterialComponent } from './material';
+import * as EventEmitter from 'events';
 
 /**
  * 项目的路由
@@ -273,29 +274,19 @@ export interface IProject {
   folderPath: string;
 
   /**
-   * 项目内的布局
-   */
-  layouts: IProjectLayout[];
-
-  /**
-   * 项目内的页面
-   */
-  pages: IProjectPage[];
-
-  /**
    * TODO 启动调试服务
    */
-  startDev(): Promise<Event>;
+  startDev(): Promise<EventEmitter>;
 
   /**
    * TODO 停止调试服务
    */
-  stopDev(): Promise<Event>;
+  stopDev(): Promise<EventEmitter>;
 
   /**
    * TODO 执行构建
    */
-  build(): Promise<Event>;
+  build(): Promise<EventEmitter>;
 
   /**
    * 获取项目内的布局

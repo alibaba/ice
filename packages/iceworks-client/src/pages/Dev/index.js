@@ -1,26 +1,34 @@
 import React from 'react';
 import { Button } from '@alifd/next';
-import {
-  ICEWORKS_TASK_DEV_OPEN,
-  ICEWORKS_TASK_DEV_DATA,
-} from 'iceworks-events';
+import IceNotification from '@icedesign/notification';
+import { ICEWORKS_PROJECT_DEV_START } from 'iceworks-events';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import XtermTerminal from '@components/XtermTerminal';
 import useModal from '@hooks/useModal';
 import { useSocket } from '@hooks/useSocket';
-import logger from '@utils/logger';
+import stores from '@stores';
 import styles from './index.module.scss';
 
 const Dev = () => {
+  const project = stores.useStore('project');
   const { on, toggleModal } = useModal();
-  const socket = useSocket(ICEWORKS_TASK_DEV_DATA, (data) => {
-    logger.debug(ICEWORKS_TASK_DEV_DATA, data);
-  });
+  const socket = useSocket();
 
-  const dev = () => {
-    socket.emit(ICEWORKS_TASK_DEV_OPEN, 'dev');
+  const startDev = () => {
+    socket.emit(
+      ICEWORKS_PROJECT_DEV_START,
+      { projectFolderPath: project.dataSource.folderPath },
+      ({ error }) => {
+        if (error) {
+          IceNotification.error({
+            message: '启动调试服务失败',
+            description: '当前项目依赖未安装或依赖缺失，请重装依赖后重试。',
+          });
+        }
+      },
+    );
   };
 
   return (
@@ -33,7 +41,7 @@ const Dev = () => {
       <div className={styles.actionBar}>
         {/* Left Button Group */}
         <div className={styles.leftActionBar}>
-          <Button type="primary" className={styles.btn} onClick={dev}>
+          <Button type="primary" className={styles.btn} onClick={startDev}>
             <Icon type="start" className={styles.icon} />
             运行
           </Button>

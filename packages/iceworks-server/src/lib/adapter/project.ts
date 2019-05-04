@@ -3,6 +3,9 @@ import * as pathExists from 'path-exists';
 import * as fs from 'fs';
 import junk from 'junk';
 import * as util from 'util';
+import * as child_process from 'child_process';
+import * as detectPort from 'detect-port';
+import * as EventEmitter from 'events';
 import { IProjectPage, IProjectDependency } from '../../interface';
 const originalReaddir = util.promisify(fs.readdir);
 
@@ -35,6 +38,8 @@ const recursive = async function(dirPath) {
   return list;
 };
 
+const DEFAULT_PORT = '4444';
+
 export default class Project {
   public readonly name: string;
 
@@ -57,5 +62,31 @@ export default class Project {
         specifyingVersion: '^0.1.0'
       }
     ];
+  }
+
+  async startDev(setEnv: any): Promise<EventEmitter> {
+    const event = new EventEmitter();
+    const port = await detectPort(DEFAULT_PORT);
+    const { folderPath } = this;
+    const env = { PORT: port };
+
+    const childProcess = child_process.spawn('npm', ['start'], { 
+      cwd: folderPath,
+      env: Object.assign({}, setEnv, env)
+    });
+
+    childProcess.stdout.on('data', (data) => {
+      event.emit('data', data);
+    });
+
+    childProcess.on('error', (data) => {
+      event.emit('error', data);
+    });
+
+    childProcess.on('exit', (code, signal) => {
+      event.emit('exit', code, signal);
+    });
+
+    return event;
   }
 }

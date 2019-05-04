@@ -1,7 +1,9 @@
 import { provide } from 'midway';
+import * as EventEmitter from 'events';
 import { IProjectService, IProjectsResult, IProjectResult } from '../../interface';
 import storage from '../storage';
 import Project from '../adapter/project';
+import getEnv from '../getEnv';
 
 @provide('projectService')
 export class ProjectService implements IProjectService {
@@ -30,4 +32,13 @@ export class ProjectService implements IProjectService {
       project
     };
   }
+
+  async dev(folderPath: string): Promise<EventEmitter> {
+    const project = new Project(folderPath);
+    return await project.startDev(getEnv());
+  }
+
+  async build() {}
+
+  async lint() {}
 }
