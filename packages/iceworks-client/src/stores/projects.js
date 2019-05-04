@@ -4,8 +4,8 @@ export default {
   dataSource: [],
   async refresh() {
     const response = await fetch(`${appConfig.apiUrl}project`);
-    const data = await response.json();
-    this.dataSource = data.projects;
+    const json = await response.json();
+    this.dataSource = json.data;
   },
   add(project) {
     const { dataSource } = this;

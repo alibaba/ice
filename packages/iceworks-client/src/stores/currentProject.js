@@ -16,8 +16,8 @@ export default {
 
     this.inited = true;
     const response = await fetch(`${appConfig.apiUrl}project/current`);
-    const data = await response.json();
-    this.dataSource = data.project;
+    const json = await response.json();
+    this.dataSource = json.data;
   },
   async addPage(page) {
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -34,7 +34,7 @@ export default {
         'x-csrf-token': Cookies.get('csrfToken'),
       },
     });
-    const data = await response.json();
-    this.dataSource = data.project;
+    const json = await response.json();
+    this.dataSource = json.data;
   },
 };

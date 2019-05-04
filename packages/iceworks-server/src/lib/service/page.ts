@@ -1,13 +1,16 @@
-import { provide } from 'midway';
-import Project from '../adapter/project';
+import { provide, plugin } from 'midway';
 import { IPluginService, IPluginGetAllResult } from '../../interface';
 
 @provide('pageService')
 export class PageService implements IPluginService {
+    @plugin('projectClient')
+    private projectClient;
+
     async getAll(projectFolderPath: string): Promise<IPluginGetAllResult> {
-        const project = new Project(projectFolderPath);
+        const project = this.projectClient.getProject(projectFolderPath);
+
         return {
-            data: await project.getPages()
+            data: project ? await project.getPages() : []
         };
     }
 

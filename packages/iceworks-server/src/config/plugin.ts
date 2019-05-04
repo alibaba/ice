@@ -1,4 +1,5 @@
-// had enabled by midway
+import * as path from 'path';
+
 export = {
   nunjucks: {
     enable: true,
@@ -13,5 +14,10 @@ export = {
   cors: {
     enable: true,
     package: 'egg-cors',
+  },
+
+  projectClient: {
+    enable: true,
+    path: path.join(__dirname, '../lib/plugin/project-client'),
   }
 };

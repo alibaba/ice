@@ -1,25 +1,31 @@
-import { controller, get, post, provide, inject } from 'midway';
-import { IProjectService, IPluginService } from '../../interface';
+import { controller, get, post, provide, inject, plugin } from 'midway';
+import { IPluginService } from '../../interface';
 
 @provide()
 @controller('/api/project')
 export class ProjectController {
-  @inject('projectService')
-  projectService: IProjectService;
+  @plugin('projectClient')
+  projectClient;
 
   @get('/')
   async getAll(ctx) {
-    ctx.body = await this.projectService.getProjects();
+    ctx.body = {
+      data: await this.projectClient.getProjects()
+    };
   }
 
   @get('/current')
   async getCurrent(ctx) {
-    ctx.body = await this.projectService.getCurrent();
+    ctx.body = {
+      data: await this.projectClient.getCurrent()
+    };
   }
 
   @post('/current')
   async setCurrent(ctx) {
-    ctx.body = await this.projectService.setCurrent(ctx.request.body.folderPath);
+    ctx.body = {
+      data: await this.projectClient.setCurrent(ctx.request.body.folderPath)
+    };
   }
 }
 
