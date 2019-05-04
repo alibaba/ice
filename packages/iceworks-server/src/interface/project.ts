@@ -261,8 +261,12 @@ export interface IAddPageParam {
 
 /**
  * 项目
+ * 
+ *  - 'dev:data' 事件
+ *  - 'dev:error' 事件
+ *  - 'dev:exit' 事件
  */
-export interface IProject {
+export interface IProject extends EventEmitter {
   /**
    * 项目名称
    */
@@ -276,17 +280,17 @@ export interface IProject {
   /**
    * TODO 启动调试服务
    */
-  startDev(): Promise<EventEmitter>;
+  devStart(setEnv: object): Promise<IProject>;
 
   /**
    * TODO 停止调试服务
    */
-  stopDev(): Promise<EventEmitter>;
+  devStop(): Promise<IProject>;
 
   /**
    * TODO 执行构建
    */
-  build(): Promise<EventEmitter>;
+  build(setEnv: object): Promise<IProject>;
 
   /**
    * 获取项目内的布局

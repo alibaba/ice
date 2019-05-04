@@ -52,7 +52,7 @@ export default class Project extends EventEmitter {
 
   private devProcess: child_process.ChildProcess;
 
-  public devStatus = DEV_STATUS_NORMAL;
+  public devStatus: string = DEV_STATUS_NORMAL;
 
   constructor(folderPath: string) {
     super();
@@ -96,13 +96,13 @@ export default class Project extends EventEmitter {
     });
 
     childProcess.on('error', (data) => {
-      this.emit('dev:error', data);
       this.devStatus = DEV_STATUS_STOP;
+      this.emit('dev:error', data);
     });
 
     childProcess.on('exit', (code, signal) => {
-      this.emit('dev:exit', code, signal);
       this.devStatus = DEV_STATUS_STOP;
+      this.emit('dev:exit', code, signal);
     });
 
     return this;
@@ -110,12 +110,12 @@ export default class Project extends EventEmitter {
 
   async devStop(): Promise<Project> {
     if (!this.devProcess) {
-      throw new Error('没有启动调试服务，无法停止');
+      throw new Error('没有启动调试服务，无法停止。');
     }
 
     this.devProcess.kill();
-    this.devStatus = DEV_STATUS_STOP;
     this.devProcess = null;
+    this.devStatus = DEV_STATUS_STOP;
 
     return this;
   }
