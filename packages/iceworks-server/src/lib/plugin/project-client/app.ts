@@ -34,11 +34,12 @@ class ProjectsClient {
 
   async devStart(projectFolderPath: string): Promise<EventEmitter> {
     const project = this.getProject(projectFolderPath);
-    return await project.startDev(getEnv());
+    return await project.devStart(getEnv());
   }
 
-  async devStop() {
-
+  async devStop(projectFolderPath: string) {
+    const project = this.getProject(projectFolderPath);
+    return await project.devStop();
   }
 
   async build() {}

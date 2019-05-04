@@ -37,4 +37,7 @@ export default {
     const json = await response.json();
     this.dataSource = json.data;
   },
+  setData(dataSource) {
+    this.dataSource = dataSource;
+  },
 };

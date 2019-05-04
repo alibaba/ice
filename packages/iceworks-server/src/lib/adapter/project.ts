@@ -40,12 +40,22 @@ const recursive = async function(dirPath) {
 
 const DEFAULT_PORT = '4444';
 
-export default class Project {
+export const DEV_STATUS_NORMAL = 'normal';
+export const DEV_STATUS_STARING = 'staring';
+export const DEV_STATUS_WORKING = 'working';
+export const DEV_STATUS_STOP = 'stop';
+
+export default class Project extends EventEmitter {
   public readonly name: string;
 
   public readonly folderPath: string;
 
+  private devProcess: child_process.ChildProcess;
+
+  public devStatus = DEV_STATUS_NORMAL;
+
   constructor(folderPath: string) {
+    super();
     this.name = path.basename(folderPath);
     this.folderPath = folderPath;
   }
@@ -64,29 +74,49 @@ export default class Project {
     ];
   }
 
-  async startDev(setEnv: any): Promise<EventEmitter> {
-    const event = new EventEmitter();
+  async devStart(setEnv: any): Promise<Project> {
     const port = await detectPort(DEFAULT_PORT);
     const { folderPath } = this;
     const env = { PORT: port };
+
+    if (this.devProcess) {
+      throw new Error('调试服务已启动，不能多次启动，请先停止已启动的调试服务后再次启动');
+    }
 
     const childProcess = child_process.spawn('npm', ['start'], { 
       cwd: folderPath,
       env: Object.assign({}, setEnv, env)
     });
 
+    this.devStatus = DEV_STATUS_WORKING;
+    this.devProcess = childProcess;
+
     childProcess.stdout.on('data', (data) => {
-      event.emit('data', data);
+      this.emit('dev:data', data);
     });
 
     childProcess.on('error', (data) => {
-      event.emit('error', data);
+      this.emit('dev:error', data);
+      this.devStatus = DEV_STATUS_STOP;
     });
 
     childProcess.on('exit', (code, signal) => {
-      event.emit('exit', code, signal);
+      this.emit('dev:exit', code, signal);
+      this.devStatus = DEV_STATUS_STOP;
     });
 
-    return event;
+    return this;
+  }
+
+  async devStop(): Promise<Project> {
+    if (!this.devProcess) {
+      throw new Error('没有启动调试服务，无法停止');
+    }
+
+    this.devProcess.kill();
+    this.devStatus = DEV_STATUS_STOP;
+    this.devProcess = null;
+
+    return this;
   }
 }

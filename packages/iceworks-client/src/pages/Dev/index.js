@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@alifd/next';
 import IceNotification from '@icedesign/notification';
-import { ICEWORKS_PROJECT_DEV_START } from 'iceworks-events';
+import { ICEWORKS_PROJECT_DEV_START, ICEWORKS_PROJECT_DEV_STOP } from 'iceworks-events';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
@@ -16,16 +16,35 @@ const Dev = () => {
   const { on, toggleModal } = useModal();
   const socket = useSocket();
 
-  const startDev = () => {
+  const devStart = () => {
     socket.emit(
       ICEWORKS_PROJECT_DEV_START,
       { projectFolderPath: project.dataSource.folderPath },
-      ({ error }) => {
+      ({ error, data }) => {
         if (error) {
           IceNotification.error({
             message: '启动调试服务失败',
-            description: '当前项目依赖未安装或依赖缺失，请重装依赖后重试。',
+            description: error.message || '当前项目依赖未安装或依赖缺失，请重装依赖后重试。',
           });
+        } else {
+          project.setData(data);
+        }
+      },
+    );
+  };
+
+  const devStop = () => {
+    socket.emit(
+      ICEWORKS_PROJECT_DEV_STOP,
+      { projectFolderPath: project.dataSource.folderPath },
+      ({ error, data }) => {
+        if (error) {
+          IceNotification.error({
+            message: '终止调试服务失败',
+            description: error.message || '请重试。',
+          });
+        } else {
+          project.setData(data);
         }
       },
     );
@@ -41,10 +60,17 @@ const Dev = () => {
       <div className={styles.actionBar}>
         {/* Left Button Group */}
         <div className={styles.leftActionBar}>
-          <Button type="primary" className={styles.btn} onClick={startDev}>
-            <Icon type="start" className={styles.icon} />
-            运行
-          </Button>
+          {
+            project.dataSource.devStatus !== 'working' ?
+              <Button type="primary" className={styles.btn} onClick={devStart}>
+                <Icon type="start" className={styles.icon} />
+                运行
+              </Button> :
+              <Button type="primary" className={styles.btn} onClick={devStop}>
+                <Icon type="stop" className={styles.icon} />
+                停止
+              </Button>
+          }
           <Button type="secondary" className={styles.btn} onClick={toggleModal}>
             <Icon type="settings" className={styles.icon} />
             设置
