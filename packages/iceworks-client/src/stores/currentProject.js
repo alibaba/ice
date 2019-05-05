@@ -16,8 +16,11 @@ export default {
 
     this.inited = true;
     const response = await fetch(`${appConfig.apiUrl}project/current`);
-    const json = await response.json();
-    this.dataSource = json.data;
+
+    if (response.status === 200) {
+      const json = await response.json();
+      this.dataSource = json.data;
+    }
   },
   async addPage(page) {
     await new Promise(resolve => setTimeout(resolve, 1000));

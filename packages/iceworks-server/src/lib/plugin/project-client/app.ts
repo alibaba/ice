@@ -19,7 +19,12 @@ class ProjectsClient {
   }
 
   getProject(projectFolderPath: string): Project {
-    return this.projects.find(({ folderPath }) => folderPath === projectFolderPath);
+    const project = this.projects.find(({ folderPath }) => folderPath === projectFolderPath);
+    if (!project) {
+      throw new Error('没有找到对应的项目');
+    }
+
+    return project;
   }
 
   getCurrent(): Project {
