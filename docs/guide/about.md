@@ -66,7 +66,7 @@ ice-devtools 不仅支持业务自定义自身的物料模板，同时也支持 
 
 #### 常用的组件有哪些推荐？
 
-参考资源 [社区组件推荐](/docs/guide/resource/recommend-npm.md)
+参考资源 [社区组件推荐](/docs/guide/resource/npms.md)
 
 #### 飞冰（ICE）的浏览器兼容策略是怎样的？
 
