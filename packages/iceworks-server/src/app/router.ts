@@ -1,3 +1,5 @@
+const { ICEWORKS_TASK_DEV_OPEN } = require('iceworks-events');
+
 export default (app) => {
-  app.io.of('/').route('work', app.io.controller.work.index);
+  app.io.of('/').route(ICEWORKS_TASK_DEV_OPEN, app.io.controller.tasks.dev);
 };

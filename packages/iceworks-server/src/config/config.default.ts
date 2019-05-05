@@ -7,7 +7,7 @@ export = (appInfo: any) => {
   config.keys = appInfo.name + '_1555062042825_9790';
 
   // middleware config
-  config.middleware = [];
+  config.middleware = ['client'];
 
   config.static = {
     dir: path.join(appInfo.baseDir, 'app/view'),
@@ -28,6 +28,13 @@ export = (appInfo: any) => {
         connectionMiddleware: [],
         packetMiddleware: [],
       },
+    },
+  };
+
+  config.view = {
+    defaultViewEngine: 'nunjucks',
+    mapping: {
+      '.html': 'nunjucks',
     },
   };
 
