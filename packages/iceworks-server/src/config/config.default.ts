@@ -1,5 +1,3 @@
-const path = require('path');
-
 export = (appInfo: any) => {
   const config: any = (exports = {});
 
@@ -8,11 +6,6 @@ export = (appInfo: any) => {
 
   // middleware config
   config.middleware = ['client'];
-
-  config.static = {
-    dir: path.join(appInfo.baseDir, 'app/view'),
-    prefix: '/',
-  };
 
   config.view = {
     defaultViewEngine: 'nunjucks',
