@@ -71,7 +71,7 @@ const schema = {
   'iceland-stat': {
     type: 'string',
   },
-  'currentProject': {
+  'project': {
     type: 'string',
   },
   'projects': {

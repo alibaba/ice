@@ -28,12 +28,12 @@ class ProjectsClient {
   }
 
   getCurrent(): Project {
-    const projectFolderPath = storage.get('currentProject');
+    const projectFolderPath = storage.get('project');
     return this.getProject(projectFolderPath);
   }
 
   setCurrent(projectFolderPath: string): Project {
-    storage.set('currentProject', projectFolderPath);
+    storage.set('project', projectFolderPath);
     return this.getProject(projectFolderPath);
   }
 
