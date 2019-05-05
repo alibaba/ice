@@ -74,7 +74,7 @@ export default class Project extends EventEmitter {
     ];
   }
 
-  async devStart(setEnv: any): Promise<Project> {
+  async devStart(settingsEnv: object): Promise<Project> {
     const port = await detectPort(DEFAULT_PORT);
     const { folderPath } = this;
     const env = { PORT: port };
@@ -85,7 +85,7 @@ export default class Project extends EventEmitter {
 
     const childProcess = child_process.spawn('npm', ['start'], {
       cwd: folderPath,
-      env: Object.assign({}, setEnv, env)
+      env: Object.assign({}, settingsEnv, env)
     });
 
     this.devStatus = DEV_STATUS_WORKING;

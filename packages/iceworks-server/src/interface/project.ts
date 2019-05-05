@@ -278,19 +278,23 @@ export interface IProject extends EventEmitter {
   folderPath: string;
 
   /**
-   * TODO 启动调试服务
+   * 启动调试服务
+   * 
+   * @param settingsEnv 环境变量
    */
-  devStart(setEnv: object): Promise<IProject>;
+  devStart(settingsEnv: object): Promise<IProject>;
 
   /**
-   * TODO 停止调试服务
+   * 停止调试服务
    */
   devStop(): Promise<IProject>;
 
   /**
-   * TODO 执行构建
+   * 执行构建
+   * 
+   * @param settingsEnv 环境变量
    */
-  build(setEnv: object): Promise<IProject>;
+  build(settingsEnv: object): Promise<IProject>;
 
   /**
    * 获取项目内的布局
@@ -299,6 +303,8 @@ export interface IProject extends EventEmitter {
 
   /**
    * 获取单个布局的信息
+   * 
+   * @param layoutName 布局名
    */
   getLayout(layoutName: string): Promise<IProjectLayout>;
 
