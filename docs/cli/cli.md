@@ -3,9 +3,7 @@ title: 命令行使用指南
 order: 2
 ---
 
-链接测试 [test](/docs/design/tools)
-
-ice-scripts 提供了 `init/dev/build` 的开发命令，如果使用 Iceworks 开发，那么大多数时候你不需要关心这些命令。
+链接测试 [test](/docs/design/tools)，ice-scripts 提供了 `init/dev/build` 的开发命令，如果使用 Iceworks 开发，那么大多数时候你不需要关心这些命令。
 
 ### ice init
 
