@@ -307,8 +307,8 @@ import 'moment/locale/zh-cn.js';
 
 ## 主题配置 - themeConfig
 
-参考 [切换项目主题](/docs/cli/theme.md)
+参考 [切换项目主题](/docs/cli/advanced/theme.md)
 
 ## 代理配置 - proxyConfig
 
-参考 [代理配置](/docs/cli/proxy.md)
+参考 [代理配置](/docs/cli/advanced/proxy.md)
