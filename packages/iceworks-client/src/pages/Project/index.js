@@ -7,8 +7,8 @@ import Dependency from './components/Dependency';
 import projectStores from './stores';
 
 const Project = () => {
-  const [projects, project] = stores.userStores(['projects', 'project']);
-  const [pages, dependencies] = projectStores.userStores(['pages', 'dependencies']);
+  const [projects, project] = stores.useStores(['projects', 'project']);
+  const [pages, dependencies] = projectStores.useStores(['pages', 'dependencies']);
 
   useEffect(() => {
     logger.info('Project page loaded.');
