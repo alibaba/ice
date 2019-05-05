@@ -9,6 +9,7 @@
     "@alifd/next": "^1.13.13",
     "@alifd/theme-2": "^0.0.22",
     "@alifd/theme-3": "^0.1.0",
+    "@icedesign/dynamic-icon": "^0.1.8",
     "alife-logger": "^1.5.1",
     "classnames": "^2.2.6",
     "deepmerge": "^3.2.0",
