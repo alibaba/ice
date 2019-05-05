@@ -5,7 +5,7 @@ const program = require('commander');
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 
-const dev = require('../lib/dev');
+const dev = require('../lib/commands/dev');
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 const checkUpdater = require('../lib/utils/checkUpdater');
 const cliInstance = require('../lib/utils/cliInstance');

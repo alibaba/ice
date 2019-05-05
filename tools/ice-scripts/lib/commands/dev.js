@@ -12,19 +12,19 @@ const WebpackDevServer = require('webpack-dev-server');
 const deepmerge = require('deepmerge');
 const openBrowser = require('react-dev-utils/openBrowser');
 
-const paths = require('./config/paths');
-const getBuildConfig = require('./config/getBuildConfig');
-const getWebpackConfigDev = require('./config/webpack.config.dev');
-const devMiddleware = require('./devMiddleware');
-const iceworksClient = require('./iceworksClient');
-const getCertificate = require('./config/getCertificate');
-const prepareUrLs = require('./utils/prepareURLs');
-const getProxyConfig = require('./config/getProxyConfig');
-const goldlog = require('./utils/goldlog');
-const pkgData = require('../package.json');
-const projectPkgData = require('./config/packageJson');
-const log = require('./utils/log');
-const checkDepsInstalled = require('./utils/checkDepsInstalled');
+const paths = require('../config/paths');
+const getBuildConfig = require('../config/getBuildConfig');
+const getWebpackConfigDev = require('../config/webpack.config.dev');
+const devMiddleware = require('../utils/devMiddleware');
+const iceworksClient = require('../utils/iceworksClient');
+const getCertificate = require('../config/getCertificate');
+const prepareUrLs = require('../utils/prepareURLs');
+const getProxyConfig = require('../config/getProxyConfig');
+const goldlog = require('../utils/goldlog');
+const pkgData = require('../../package.json');
+const projectPkgData = require('../config/packageJson');
+const log = require('../utils/log');
+const checkDepsInstalled = require('../utils/checkDepsInstalled');
 
 module.exports = async function (cliOptions, subprocess) {
   goldlog('version', {
@@ -98,7 +98,7 @@ module.exports = async function (cliOptions, subprocess) {
   let isFirstCompile = true;
   const compiler = webpack(webpackConfig);
   // eslint-disable-next-line global-require
-  let devServerConfig = require('./config/webpack.server.config')();
+  let devServerConfig = require('../config/webpack.server.config')();
   if ('devServer' in webpackConfig) {
     // merge user config
     devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);

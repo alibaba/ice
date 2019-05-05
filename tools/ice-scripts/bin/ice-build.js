@@ -3,7 +3,7 @@
 
 const program = require('commander');
 const cliInstance = require('../lib/utils/cliInstance');
-const build = require('../lib/build');
+const build = require('../lib/commands/build');
 const checkUpdater = require('../lib/utils/checkUpdater');
 
 /**
