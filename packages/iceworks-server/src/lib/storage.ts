@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events';
 import * as path from 'path';
 import * as Conf from 'conf';
 import * as mkdirp from 'mkdirp';
@@ -26,11 +25,10 @@ class DataStore extends Conf {
   }
 }
 
-class Store extends EventEmitter {
+class Store {
   private store: Conf;
 
   constructor(options?) {
-    super();
     this.store = new DataStore(options);
   }
 
@@ -80,7 +78,8 @@ const schema = {
     type: 'array',
     items: {
       type: 'string',
-    }
+    },
+    default: []
   }
 };
 
