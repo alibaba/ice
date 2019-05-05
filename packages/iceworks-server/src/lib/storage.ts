@@ -65,12 +65,6 @@ class Store {
 }
 
 const schema = {
-  'stat': {
-    type: 'string',
-  },
-  'iceland-stat': {
-    type: 'string',
-  },
   'project': {
     type: 'string',
   },
