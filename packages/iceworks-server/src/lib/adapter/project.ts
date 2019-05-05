@@ -7,11 +7,11 @@ import * as child_process from 'child_process';
 import * as detectPort from 'detect-port';
 import * as EventEmitter from 'events';
 import { IProjectPage, IProjectDependency } from '../../interface';
-const originalReaddir = util.promisify(fs.readdir);
+const readdirAsync = util.promisify(fs.readdir);
 
 const readdir = async (targetPath) => {
   if (pathExists.sync(targetPath)) {
-    return (await originalReaddir(targetPath)).filter(junk.not);
+    return (await readdirAsync(targetPath)).filter(junk.not);
   }
   return [];
 };
