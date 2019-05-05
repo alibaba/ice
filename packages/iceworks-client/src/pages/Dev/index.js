@@ -1,53 +1,42 @@
 import React from 'react';
 import { Button } from '@alifd/next';
-import IceNotification from '@icedesign/notification';
-import { ICEWORKS_PROJECT_DEV_START, ICEWORKS_PROJECT_DEV_STOP } from 'iceworks-events';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
 import Modal from '@components/Modal';
 import XtermTerminal from '@components/XtermTerminal';
 import useModal from '@hooks/useModal';
-import { useSocket } from '@hooks/useSocket';
 import stores from '@stores';
+import IceNotification from '@icedesign/notification';
 import styles from './index.module.scss';
 
 const Dev = () => {
   const project = stores.useStore('project');
   const { on, toggleModal } = useModal();
-  const socket = useSocket();
 
   const devStart = () => {
-    socket.emit(
-      ICEWORKS_PROJECT_DEV_START,
-      { projectFolderPath: project.dataSource.folderPath },
-      ({ error, data }) => {
-        if (error) {
-          IceNotification.error({
-            message: '启动调试服务失败',
-            description: error.message || '当前项目依赖未安装或依赖缺失，请重装依赖后重试。',
-          });
-        } else {
-          project.setData(data);
-        }
-      },
-    );
+    project.devStart(({ error, data }) => {
+      if (error) {
+        IceNotification.error({
+          message: '启动调试服务失败',
+          description: error.message || '当前项目依赖未安装或依赖缺失，请重装依赖后重试。',
+        });
+      } else {
+        project.setData(data);
+      }
+    });
   };
 
   const devStop = () => {
-    socket.emit(
-      ICEWORKS_PROJECT_DEV_STOP,
-      { projectFolderPath: project.dataSource.folderPath },
-      ({ error, data }) => {
-        if (error) {
-          IceNotification.error({
-            message: '终止调试服务失败',
-            description: error.message || '请重试。',
-          });
-        } else {
-          project.setData(data);
-        }
-      },
-    );
+    project.devStop(({ error, data }) => {
+      if (error) {
+        IceNotification.error({
+          message: '终止调试服务失败',
+          description: error.message || '请重试。',
+        });
+      } else {
+        this.setData(data);
+      }
+    });
   };
 
   return (

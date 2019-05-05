@@ -7,8 +7,6 @@ import logger from '@utils/logger';
 import MainLayout from '@layouts/MainLayout/index';
 import LocaleProvider from '@components/Locale';
 import { ThemeProvider } from '@components/ThemeProvider';
-import { SocketProvider } from '@hooks/useSocket';
-import appConfig from './appConfig';
 import './global.scss';
 import './variables.scss';
 
@@ -18,15 +16,13 @@ const App = () => {
   }, []);
 
   return (
-    <SocketProvider url={appConfig.socketUrl}>
-      <LocaleProvider>
-        <ThemeProvider>
-          <Router>
-            <Route path="/" component={MainLayout} />
-          </Router>
-        </ThemeProvider>
-      </LocaleProvider>
-    </SocketProvider>
+    <LocaleProvider>
+      <ThemeProvider>
+        <Router>
+          <Route path="/" component={MainLayout} />
+        </Router>
+      </ThemeProvider>
+    </LocaleProvider>
   );
 };
 
