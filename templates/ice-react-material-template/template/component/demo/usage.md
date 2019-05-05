@@ -8,16 +8,13 @@ order: 1
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {{className}} from '{{npmName}}';
-
+import <%= className %> from '<%= npmName %>';
 
 class App extends Component {
-
   render() {
-
     return (
       <div>
-        <{{className}} />
+        <<%= className %> />
       </div>
     );
   }

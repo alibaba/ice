@@ -1,6 +1,5 @@
 const ipc = require('node-ipc');
 const { dialog } = require('electron');
-
 const sendToWebContents = require('./helper/sendToWebContents');
 const logger = require('./logger');
 

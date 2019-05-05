@@ -1,14 +1,14 @@
-import { ipcRenderer, shell } from 'electron';
-import { observable, action, autorun, computed } from 'mobx';
 import EventEmitter from 'events';
+import { observable, action, autorun, computed } from 'mobx';
+import { ipcRenderer, shell } from 'electron';
 import Notification from '@icedesign/notification';
 
 // store
-import Project from './project';
 // utils
 import { isProject } from '../lib/project-utils';
 import logger from '../lib/logger';
 import services from '../services';
+import Project from './project';
 
 const { folder, storage, interaction } = services;
 const { projectsStorage, recordStorage } = storage;

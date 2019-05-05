@@ -1,9 +1,9 @@
 const fs = require('fs');
-const mkdirp = require('mkdirp');
 const path = require('path');
+const zlib = require('zlib');
+const mkdirp = require('mkdirp');
 const request = require('request');
 const requestProgress = require('request-progress');
-const zlib = require('zlib');
 const tar = require('tar');
 const logger = require('../../logger');
 const { DetailError } = require('../../error-handler');

@@ -4,7 +4,6 @@
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
-const hbs = require('handlebars');
 const webpack = require('webpack');
 const formatMessages = require('webpack-format-messages');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -22,25 +21,10 @@ module.exports = (buildConfig, callback) => {
   rimraf.sync(buildDir);
 
   const demos = getDemos(appDirectory);
-  const entryJS = generateEntryJS(demos);
   const readme = getReadme(appDirectory);
 
   const webpackConfig = getWebpackConfig({
-    buildConfig: {
-      output: {
-        path: path.resolve(appDirectory, 'build'),
-        publicPath: './',
-        filename: '[name].js',
-      },
-      outputAssetsPath: {
-        css: '',
-        js: '',
-      },
-      entry: {
-        index: entryJS,
-      },
-      ...buildConfig,
-    },
+    buildConfig,
   });
 
   webpackConfig.plugins.push(
@@ -87,28 +71,6 @@ module.exports = (buildConfig, callback) => {
   });
 };
 
-function generateEntryJS(demos) {
-  // TODO: 这个临时文件路径优化下
-  const hbsTemplatePath = path.join(__dirname, '../template/component/index.js.hbs');
-  const hbsTemplateContent = fs.readFileSync(hbsTemplatePath, 'utf-8');
-  const compileTemplateContent = hbs.compile(hbsTemplateContent);
-
-  const tempPath = getTempPath();
-  const jsPath = path.join(tempPath, 'component-index.js');
-
-  const jsTemplateContent = compileTemplateContent({
-    demos: demos.map((demo) => {
-      return {
-        path: formatPathForWin(demo.filePath),
-      };
-    }),
-  });
-
-  fs.writeFileSync(jsPath, jsTemplateContent);
-
-  return jsPath;
-}
-
 function getReadme(cwd) {
   const filePath = path.join(cwd, 'README.md');
   const markdown = fs.readFileSync(filePath, 'utf-8');
@@ -118,17 +80,4 @@ function getReadme(cwd) {
     meta,
     readme,
   };
-}
-
-function getTempPath() {
-  const TEMP_PATH = path.join(__dirname, '../.tmp');
-  if (!fs.existsSync(TEMP_PATH)) {
-    fs.mkdirSync(TEMP_PATH);
-  }
-  return TEMP_PATH;
-}
-
-function formatPathForWin(filepath) {
-  const isWin = process.platform === 'win32';
-  return isWin ? filepath.replace(/\\/g, '\\\\') : filepath;
 }

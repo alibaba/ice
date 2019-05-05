@@ -122,7 +122,7 @@ class ScaffoldForm extends Component {
             isAlibaba ? (
               // TODO 解决tnpm的问题
               // <label>
-              //   添加 Midway 
+              //   添加 Midway
               //   <Checkbox
               //     disabled={this.props.scaffold.isCreating}
               //     onChange={this.handleMidwaySelect}
@@ -154,7 +154,7 @@ class ScaffoldForm extends Component {
             )
           }
           {
-            ( 
+            (
               this.props.scaffold.nodeFramework === 'midway'
               // TODO 解决tnpm的问题
               // || this.props.scaffold.nodeFramework === 'midwayAli'

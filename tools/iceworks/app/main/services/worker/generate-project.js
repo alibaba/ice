@@ -1,5 +1,5 @@
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const pathExists = require('path-exists');
 const templateBuilderUtils = require('@icedesign/template-builder/utils/');
 const template = require('../../template');
@@ -22,31 +22,25 @@ module.exports = (_options, afterCreateRequest) => {
 
   let fn;
   let createClient;
-  let needCreateDefflow;
+  const needCreateDefflow = isAlibaba;
   if (isCustomScaffold) {
-    needCreateDefflow = isAlibaba;
     layoutConfig.directory = targetPath;
     layoutConfig.name = projectName;
     fn = templateBuilderUtils.generateTemplate(layoutConfig);
+  } else if (nodeFramework) {
+    // @TODO afterCreateRequest
+    // 解压node模板的promise
+    fn = template.createProject(
+      getOptions(_options, nodeFramework, true),
+      afterCreateRequest
+    );
+    // node模板中解压前端模板的promise
+    createClient = template.createProject(
+      getOptions(_options, nodeFramework),
+      afterCreateRequest
+    );
   } else {
-    const scaffoldDevDeps = (scaffold && scaffold.devDependencies) || {};
-    // needCreateDefflow = nodeFramework ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
-    needCreateDefflow = isAlibaba && scaffoldDevDeps['ice-scripts'];
-    if (nodeFramework) {
-      // @TODO afterCreateRequest
-      // 解压node模板的promise
-      fn = template.createProject(
-        getOptions(_options, nodeFramework, true),
-        afterCreateRequest
-      );
-      // node模板中解压前端模板的promise
-      createClient = template.createProject(
-        getOptions(_options, nodeFramework),
-        afterCreateRequest
-      );
-    } else {
-      fn = template.createProject(getOptions(_options), afterCreateRequest);
-    }
+    fn = template.createProject(getOptions(_options), afterCreateRequest);
   }
 
   return fn

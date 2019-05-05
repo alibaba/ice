@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 import uppercamelcase from 'uppercamelcase';
 import PropTypes from 'prop-types';
-
 import { dependenciesFormat } from '../../../../lib/project-utils';
 import projectScripts from '../../../../lib/project-scripts';
 import logger from '../../../../lib/logger';
