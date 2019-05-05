@@ -1,12 +1,13 @@
 import * as path from 'path';
 import * as pathExists from 'path-exists';
 import * as fs from 'fs';
-import junk from 'junk';
 import * as util from 'util';
 import * as child_process from 'child_process';
-import * as detectPort from 'detect-port';
 import * as EventEmitter from 'events';
+import detectPort from 'detect-port';
+import junk from 'junk';
 import { IProjectPage, IProjectDependency } from '../../interface';
+
 const readdirAsync = util.promisify(fs.readdir);
 
 const readdir = async (targetPath) => {
@@ -68,7 +69,7 @@ export default class Project extends EventEmitter {
     return [
       {
         package: 'icestore',
-        dev. false,
+        dev: false,
         specifyVersion: '^0.1.0'
       }
     ];

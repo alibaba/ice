@@ -13,3 +13,4 @@ run/
 .nodejs-cache
 src/tms/
 data/
+dist/
