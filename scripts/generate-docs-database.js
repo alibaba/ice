@@ -39,7 +39,10 @@ const allCategories = {
     }],
   },
   iceworks: {
-    title: 'iceworks',
+    title: 'Iceworks',
+  },
+  materials: {
+    title: '自定义物料',
   },
   cli: {
     title: 'ice-scripts',
