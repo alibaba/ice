@@ -13,30 +13,26 @@ const Dev = () => {
   const project = stores.useStore('project');
   const { on, toggleModal } = useModal();
 
-  const devStart = () => {
-    project.devStart(({ error, data }) => {
-      if (error) {
-        IceNotification.error({
-          message: '启动调试服务失败',
-          description: error.message || '当前项目依赖未安装或依赖缺失，请重装依赖后重试。',
-        });
-      } else {
-        project.setData(data);
-      }
-    });
+  const devStart = async () => {
+    try {
+      await project.devStart();
+    } catch (error) {
+      IceNotification.error({
+        message: '启动调试服务失败',
+        description: error.message || '当前项目依赖未安装或依赖缺失，请重装依赖后重试。',
+      });
+    }
   };
 
-  const devStop = () => {
-    project.devStop(({ error, data }) => {
-      if (error) {
-        IceNotification.error({
-          message: '终止调试服务失败',
-          description: error.message || '请重试。',
-        });
-      } else {
-        project.setData(data);
-      }
-    });
+  const devStop = async () => {
+    try {
+      await project.devStop();
+    } catch (error) {
+      IceNotification.error({
+        message: '终止调试服务失败',
+        description: error.message || '请重试。',
+      });
+    }
   };
 
   return (

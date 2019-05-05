@@ -12,4 +12,19 @@ socket.on('disconnect', () => {
   logger.debug('socket disconnected!!!');
 });
 
+const originalEmit = socket.emit.bind(socket);
+socket.emit = function emit(...args) {
+  return new Promise((resolve, reject) => {
+    args.push(({ error, data }) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+
+    originalEmit(...args);
+  });
+};
+
 export default socket;

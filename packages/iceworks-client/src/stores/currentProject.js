@@ -1,7 +1,6 @@
 import Cookies from 'cookies-js';
 import appConfig from '@src/appConfig';
 import socket from '@src/socket';
-import { ICEWORKS_PROJECT_DEV_START, ICEWORKS_PROJECT_DEV_STOP } from 'iceworks-events';
 
 export default {
   dataSource: {
@@ -45,18 +44,18 @@ export default {
   setData(dataSource) {
     this.dataSource = dataSource;
   },
-  devStart(callback) {
-    socket.emit(
+  async devStart() {
+    const dataSource = await socket.emit(
       'project.dev.start',
       { projectFolderPath: this.dataSource.folderPath },
-      callback,
     );
+    this.dataSource = dataSource;
   },
-  devStop(callback) {
-    socket.emit(
+  async devStop() {
+    const dataSource = await socket.emit(
       'project.dev.stop',
       { projectFolderPath: this.dataSource.folderPath },
-      callback,
     );
+    this.dataSource = dataSource;
   },
 };
