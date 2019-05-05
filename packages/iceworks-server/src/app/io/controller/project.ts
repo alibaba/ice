@@ -19,7 +19,7 @@ export default (app) => {
       }
 
       if (project) {
-        project.on('dev:data', function(data) {
+        project.on('dev.data', function(data) {
           const decoder = new StringDecoder('utf8');
           socket.emit('project.dev.data', decoder.write(data));
         });

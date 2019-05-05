@@ -68,7 +68,7 @@ export default class Project extends EventEmitter {
     return [
       {
         package: 'icestore',
-        dev: false,
+        dev. false,
         specifyingVersion: '^0.1.0'
       }
     ];
@@ -92,18 +92,18 @@ export default class Project extends EventEmitter {
     this.devProcess = childProcess;
 
     childProcess.stdout.on('data', (data) => {
-      this.emit('dev:data', data);
+      this.emit('dev.data', data);
     });
 
     childProcess.on('error', (data) => {
       this.devStatus = DEV_STATUS_STOP;
       this.devProcess = null;
-      this.emit('dev:error', data);
+      this.emit('dev.error', data);
     });
 
     childProcess.on('exit', (code, signal) => {
       this.devStatus = DEV_STATUS_STOP;
-      this.emit('dev:exit', code, signal);
+      this.emit('dev.exit', code, signal);
     });
 
     return this;
