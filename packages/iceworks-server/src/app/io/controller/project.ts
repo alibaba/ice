@@ -2,10 +2,11 @@ import { ICEWORKS_PROJECT_DEV_DATA } from 'iceworks-events';
 import { StringDecoder } from 'string_decoder';
 
 export default (app) => {
-  const { projectClient, Controller } = app;
+  const { Controller } = app;
 
   return class ProjectController extends Controller {
     async devStart(ctx) {
+      const { projectClient } = app;
       const { args, socket } = ctx;
       const { projectFolderPath } = args[0];
       const callback = args[args.length - 1];
@@ -32,6 +33,7 @@ export default (app) => {
     }
 
     async devStop(ctx) {
+      const { projectClient } = app;
       const { args, socket } = ctx;
       const { projectFolderPath } = args[0];
       const callback = args[args.length - 1];

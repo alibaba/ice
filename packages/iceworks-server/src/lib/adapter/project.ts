@@ -97,6 +97,7 @@ export default class Project extends EventEmitter {
 
     childProcess.on('error', (data) => {
       this.devStatus = DEV_STATUS_STOP;
+      this.devProcess = null;
       this.emit('dev:error', data);
     });
 
