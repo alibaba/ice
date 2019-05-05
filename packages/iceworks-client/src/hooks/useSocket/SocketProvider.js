@@ -19,7 +19,7 @@ const SocketProvider = ({ children, url, options }) => {
     });
     socket.on('disconnect', () => {
       logger.debug('socket disconnected!!!');
-      setConect(true);
+      setConect(false);
     });
   }
 

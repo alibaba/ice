@@ -2,13 +2,13 @@ import { ICEWORKS_PROJECT_DEV_DATA } from 'iceworks-events';
 import { StringDecoder } from 'string_decoder';
 
 export default (app) => {
-  return class ProjectController extends app.Controller {
+  const { projectClient, Controller } = app;
+
+  return class ProjectController extends Controller {
     async devStart(ctx) {
       const { args, socket } = ctx;
       const { projectFolderPath } = args[0];
       const callback = args[args.length - 1];
-
-      const projectClient = app.projectClient;
 
       let error;
       let project
@@ -35,8 +35,6 @@ export default (app) => {
       const { args, socket } = ctx;
       const { projectFolderPath } = args[0];
       const callback = args[args.length - 1];
-
-      const projectClient = app.projectClient;
 
       let error;
       let project
