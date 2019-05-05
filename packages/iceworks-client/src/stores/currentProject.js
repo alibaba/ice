@@ -47,14 +47,14 @@ export default {
   },
   devStart(callback) {
     socket.emit(
-      ICEWORKS_PROJECT_DEV_START,
+      'project.dev.start',
       { projectFolderPath: this.dataSource.folderPath },
       callback,
     );
   },
   devStop(callback) {
     socket.emit(
-      ICEWORKS_PROJECT_DEV_STOP,
+      'project.dev.stop',
       { projectFolderPath: this.dataSource.folderPath },
       callback,
     );

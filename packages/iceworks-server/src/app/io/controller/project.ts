@@ -1,4 +1,3 @@
-import { ICEWORKS_PROJECT_DEV_DATA } from 'iceworks-events';
 import { StringDecoder } from 'string_decoder';
 
 export default (app) => {
@@ -22,7 +21,7 @@ export default (app) => {
       if (project) {
         project.on('dev:data', function(data) {
           const decoder = new StringDecoder('utf8');
-          socket.emit(ICEWORKS_PROJECT_DEV_DATA, decoder.write(data));
+          socket.emit('project.dev.data', decoder.write(data));
         });
       }
 
@@ -46,7 +45,7 @@ export default (app) => {
         error = err;
       }
 
-      socket.emit(ICEWORKS_PROJECT_DEV_DATA, '\n\r已中止调试服务\n\r');
+      socket.emit('project.dev.data', '\n\r已中止调试服务\n\r');
 
       callback({
         error,
