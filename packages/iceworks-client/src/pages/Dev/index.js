@@ -34,7 +34,7 @@ const Dev = () => {
           description: error.message || '请重试。',
         });
       } else {
-        this.setData(data);
+        project.setData(data);
       }
     });
   };
