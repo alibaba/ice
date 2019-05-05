@@ -26,13 +26,12 @@ const XtermTerminal = () => {
 
   useEffect(() => {
     logger.debug('xterm loaded.');
-    project.refresh().then((newProject) => {
-      logger.debug('project fetch done.');
 
-      term.open(xtermRef.current);
-      term.fit();
-      term.write(`\x1B[1;3;31m${newProject.dataSource.name}\x1B[0m $ `);
-    });
+    project.refresh();
+
+    term.open(xtermRef.current);
+    term.fit();
+    term.write(`\x1B[1;3;31m${project.dataSource.name}\x1B[0m $ `);
   }, []);
 
   useSocket(ICEWORKS_PROJECT_DEV_DATA, (data) => {
