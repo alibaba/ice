@@ -39,13 +39,16 @@ const allCategories = {
     }],
   },
   iceworks: {
-    title: 'Iceworks',
+    // Iceworks
+    title: '',
   },
   materials: {
-    title: '自定义物料',
+    // 自定义物料
+    title: '',
   },
   cli: {
-    title: 'ice-scripts',
+    // ice-scripts
+    title: '',
     children: [{
       title: '进阶指南',
       dir: 'advanced',
@@ -55,7 +58,8 @@ const allCategories = {
     }],
   },
   design: {
-    title: '中后台设计理念',
+    // 中后台设计理念
+    title: '',
     children: [
       {
         dir: 'vision',
@@ -110,7 +114,6 @@ function collectCategoryData(categories, parentDirPath) {
 function getDirFiles(dirPath) {
   const files = glob.sync('*.md', {
     nodir: true,
-    ignore: 'README.md',
     cwd: dirPath,
   });
 

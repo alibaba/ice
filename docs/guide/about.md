@@ -4,7 +4,7 @@ order: 1
 cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 ---
 
-飞冰（ICE）诞生于阿里巴巴内部大量的中后台业务，我们在中后台场景沉淀了大量的物料、工具及经验，同时也抽象出一套从物料到项目的完整开发流程。如果你符合以下两种场景之一，那么欢迎了解下飞冰（ICE）体系
+飞冰（ICE）诞生于阿里巴巴内部大量的中后台业务，我们在中后台场景沉淀了大量的物料、工具及经验，同时也抽象出一套从物料到项目的完整开发流程。如果你符合以下两种场景之一，那么欢迎了解下飞冰（ICE）体系：
 
 - 如果你所在的团队使用 React 开发前端项目，那么你可以最大限度的发挥飞冰（ICE）的能力：丰富的物料体系、完善的工程构建工具、GUI 开发能力，甚至你也可以定制私有的物料体系
 - 如果你所在的团队使用 Vue 或者其他框架开发前端项目，那么你可以基于飞冰（ICE）的工具体系开发私有的物料体系，然后通过可视化开发工具串联使用
@@ -57,6 +57,25 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 物料开发&管理工具，ice-devtools 提供了物料从初始化到发布的完整链路，在此基础上我们约定了一套物料协议，保证基于 ice-devtools 开发的物料可以直接在 Iceworks 中使用。
 
 ice-devtools 不仅支持业务自定义自身的物料模板，同时也支持 React/Vue 等不同框架的物料模板，如有除此之外的需求，欢迎联系我们。
+
+## 常见问题
+
+#### 使用飞冰是否需要具备一定的前端基础？
+
+毫无疑问是需要的，我们在努力降低前端开发的门槛，但一些基础的前端知识还是需要具备的，比如 JavaScript 的基础预发、前后端如何通信等。为了便于快速入门前端知识，我们整理了一份 [前端基础知识](/docs/guide/dev/front-basic.md)，希望能帮助到开发者。
+
+#### 常用的组件有哪些推荐？
+
+参考资源 [社区组件推荐](/docs/guide/resource/recommend-npm.md)
+
+#### 飞冰（ICE）的浏览器兼容策略是怎样的？
+
+由于 ICE 默认使用 React 16+，其需要的最低 IE 版本为 11，如果您需要在以下的版本使用，您可能需要引入一些 polyfill 来支持 `Map`, `Set` 等特性。参考[React 官网说明](https://reactjs.org/blog/2017/09/26/react-v16.0.html#javascript-environment-requirements)。
+
+#### WebStorm/IDEA 编辑器卡顿现象
+
+由于项目在安装依赖后，产生文件夹 `node_modules` 含有较多的碎小文件，编辑器在索引文件引起的卡顿。
+WebStorm 中尤为明显，可通过 exclude `node_modules` 目录，不需要检索该文件夹下的内容。
 
 ## 谁在使用
 
