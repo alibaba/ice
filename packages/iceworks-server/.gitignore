@@ -13,3 +13,5 @@ run/
 .nodejs-cache
 src/tms/
 src/app/public
+data/
+dist/

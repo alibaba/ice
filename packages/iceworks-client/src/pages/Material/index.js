@@ -4,15 +4,12 @@ import stores from '@stores';
 const Material = () => {
   const materials = stores.useStore('materials');
 
-  const handleClick = () => {
-  };
-
   useEffect(() => {
     materials.refresh();
   }, []);
 
   return (
-    <div onClick={handleClick}>
+    <div>
       <h2>Material</h2>
       <p>
         {materials.dataSource.map(({ name }) => {

@@ -1,14 +1,24 @@
 import React, { useEffect } from 'react';
 import { Input, Button } from '@alifd/next';
 import stores from '@stores';
+import logger from '@utils/logger';
+import Page from './components/Pages';
+import Dependency from './components/Dependencies';
+import projectStores from './stores';
 
 const Project = () => {
-  const [projects, project, materials] = stores.userStores(['projects', 'project', 'materials']);
+  const [projects, project] = stores.useStores(['projects', 'project']);
+  const [pages, dependencies] = projectStores.useStores(['pages', 'dependencies']);
 
   useEffect(() => {
-    project.refresh();
+    logger.info('Project page loaded.');
+
     projects.refresh();
-    materials.refresh();
+    project.refresh();
+
+    // TODO 根据当前项目的变化进行更新
+    pages.refresh();
+    dependencies.refresh();
   }, []);
 
   return (
@@ -17,27 +27,23 @@ const Project = () => {
       <div>
         now project: {project.dataSource.name}
         <div>
-          my pages:
-          <ul>
-            {project.dataSource.pages.map(({ name }) => {
-              return name;
-            })}
-          </ul>
+          <Page />
+          <Dependency />
         </div>
       </div>
       <div>
-        <div>my projects</div>
+        <div>my projects:</div>
         <ul>
           {projects.dataSource.map((projectData, index) => {
-            const { name, id } = projectData;
+            const { name, folderPath } = projectData;
             return (
               <li key={index}>
-                <a onClick={async () => { await project.setData(projectData); }}>
+                <a onClick={async () => { await project.reset(folderPath); }}>
                   {name}
                 </a>
                 <Button
                   onClick={async () => {
-                    await projects.remove(id);
+                    await projects.remove(folderPath);
                     await project.refresh();
                   }}
                 >
@@ -55,14 +61,6 @@ const Project = () => {
             projects.add({ name: event.target.value });
           }}
         />
-      </div>
-      <div>
-        <div>my materials</div>
-        <ul>
-          {materials.dataSource.map(({ name }, index) => {
-            return <li key={index}>{name}</li>;
-          })}
-        </ul>
       </div>
     </div>
   );
