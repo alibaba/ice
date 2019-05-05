@@ -10,5 +10,4 @@ deploy:
   skip_cleanup: true # 避免清空已安装的依赖
   script: npm run generate:docs && npm run upload-oss
   on:
-    all_branches: true # 仅在 master | pre-depoly 分支进行 deploy
-    condition: $TRAVIS_BRANCH =~ ^master|production$
+    all_branches: true
