@@ -230,9 +230,9 @@ export interface IProjectPage {
 }
 
 /**
- * 添加页面的参数
+ * 创建页面的参数
  */
-export interface IAddPageParam {
+export interface ICreatePageParam {
   /**
    * 名称
    */
@@ -325,7 +325,7 @@ export interface IProject extends EventEmitter {
    *
    * @param pages 页面配置信息
    */
-  createPages(pages: IAddPageParam[]): Promise<IProjectPage[]>;
+  createPages(pages: ICreatePageParam[]): Promise<IProjectPage[]>;
 
   /**
    * 添加单个页面到项目
@@ -336,7 +336,7 @@ export interface IProject extends EventEmitter {
    *
    * @param page 页面配置
    */
-  createPage(page: IAddPageParam): Promise<IProjectPage>;
+  createPage(page: ICreatePageParam): Promise<IProjectPage>;
 
   /**
    * 删除项目内的页面
