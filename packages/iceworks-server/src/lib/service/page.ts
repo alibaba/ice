@@ -3,11 +3,11 @@ import { IPluginService, IPluginGetAllResult } from '../../interface';
 
 @provide('pageService')
 export class PageService implements IPluginService {
-    @plugin('projectClient')
-    private projectClient;
+    @plugin('projectManager')
+    private projectManager;
 
     async getAll(projectFolderPath: string): Promise<IPluginGetAllResult> {
-        const project = this.projectClient.getProject(projectFolderPath);
+        const project = this.projectManager.getProject(projectFolderPath);
 
         return {
             data: project ? await project.getPages() : []

@@ -3,7 +3,7 @@ import storage from '../../storage';
 import Project from '../../adapter/project';
 import getEnv from '../../getEnv';
 
-class ProjectClient {
+class ProjectManager {
   private projects: Project[];
 
   async ready() {
@@ -53,8 +53,8 @@ class ProjectClient {
 }
 
 export default app => {
-  app.projectClient = new ProjectClient();
+  app.projectManager = new ProjectManager();
   app.beforeStart(async () => {
-    await app.projectClient.ready();
+    await app.projectManager.ready();
   });
 };

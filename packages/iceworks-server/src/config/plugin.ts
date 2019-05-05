@@ -16,8 +16,8 @@ export = {
     package: 'egg-cors',
   },
 
-  projectClient: {
+  projectManager: {
     enable: true,
-    path: path.join(__dirname, '../lib/plugin/project-client'),
+    path: path.join(__dirname, '../lib/plugin/project-manager'),
   }
 };

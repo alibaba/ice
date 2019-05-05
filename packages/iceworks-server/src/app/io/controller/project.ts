@@ -5,7 +5,7 @@ export default (app) => {
 
   return class ProjectController extends Controller {
     async devStart(ctx) {
-      const { projectClient } = app;
+      const { projectManager } = app;
       const { args, socket } = ctx;
       const { projectFolderPath } = args[0];
       const callback = args[args.length - 1];
@@ -13,7 +13,7 @@ export default (app) => {
       let error;
       let project;
       try {
-        project = await projectClient.devStart(projectFolderPath);
+        project = await projectManager.devStart(projectFolderPath);
       } catch (err) {
         error = err;
       }
@@ -32,7 +32,7 @@ export default (app) => {
     }
 
     async devStop(ctx) {
-      const { projectClient } = app;
+      const { projectManager } = app;
       const { args, socket } = ctx;
       const { projectFolderPath } = args[0];
       const callback = args[args.length - 1];
@@ -40,7 +40,7 @@ export default (app) => {
       let error;
       let project;
       try {
-        project = await projectClient.devStop(projectFolderPath);
+        project = await projectManager.devStop(projectFolderPath);
       } catch (err) {
         error = err;
       }
@@ -54,14 +54,14 @@ export default (app) => {
     }
 
     async list(ctx) {
-      const { projectClient } = app;
+      const { projectManager } = app;
       const { args } = ctx;
       const callback = args[args.length - 1];
 
       let projects = [];
       let error;
       try {
-        projects = await projectClient.getProjects();
+        projects = await projectManager.getProjects();
       } catch (err) {
         error = err;
       }
@@ -73,14 +73,14 @@ export default (app) => {
     }
 
     async getCurrent(ctx) {
-      const { projectClient } = app;
+      const { projectManager } = app;
       const { args } = ctx;
       const callback = args[args.length - 1];
 
       let project = [];
       let error;
       try {
-        project = await projectClient.getCurrent();
+        project = await projectManager.getCurrent();
       } catch (err) {
         error = err;
       }
@@ -92,7 +92,7 @@ export default (app) => {
     }
 
     async setCurrent(ctx) {
-      const { projectClient } = app;
+      const { projectManager } = app;
       const { args } = ctx;
       const { folderPath } = args[0];
       const callback = args[args.length - 1];
@@ -100,7 +100,7 @@ export default (app) => {
       let project = [];
       let error;
       try {
-        project = await projectClient.setCurrent(folderPath);
+        project = await projectManager.setCurrent(folderPath);
       } catch (err) {
         error = err;
       }
