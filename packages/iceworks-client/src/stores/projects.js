@@ -1,11 +1,20 @@
-import appConfig from '@src/appConfig';
+import socket from '@src/socket';
 
 export default {
+  inited: false,
   dataSource: [],
   async refresh() {
-    const response = await fetch(`${appConfig.apiUrl}project`);
-    const json = await response.json();
-    this.dataSource = json.data;
+    if (this.inited) {
+      return;
+    }
+
+    try {
+      const dataSource = await socket.emit('project.list');
+      this.dataSource = dataSource;
+      this.inited = true;
+    } catch (error) {
+      // do something...
+    }
   },
   add(project) {
     const { dataSource } = this;

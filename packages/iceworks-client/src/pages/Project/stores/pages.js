@@ -1,12 +1,19 @@
-import appConfig from '@src/appConfig';
+import socket from '@src/socket';
 
 export default {
   dataSource: [],
+  inited: false,
   async refresh(projectFolderPath) {
-    const response = await fetch(`${appConfig.apiUrl}page?projectFolderPath=${projectFolderPath}`);
-    if (response.status === 200) {
-      const data = await response.json();
-      this.dataSource = data.data;
+    if (this.inited) {
+      return;
+    }
+
+    try {
+      const dataSource = await socket.emit('page.list', { projectFolderPath });
+      this.dataSource = dataSource;
+      this.inited = true;
+    } catch (error) {
+      // do something...
     }
   },
 };

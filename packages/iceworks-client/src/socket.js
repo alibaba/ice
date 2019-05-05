@@ -15,6 +15,10 @@ socket.on('disconnect', () => {
 const originalEmit = socket.emit.bind(socket);
 socket.emit = function emit(...args) {
   return new Promise((resolve, reject) => {
+    if (!args[1]) {
+      args.push({});
+    }
+
     args.push(({ error, data }) => {
       if (error) {
         reject(error);

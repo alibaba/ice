@@ -53,6 +53,65 @@ export default (app) => {
       });
     }
 
+    async list(ctx) {
+      const { projectClient } = app;
+      const { args } = ctx;
+      const callback = args[args.length - 1];
+
+      let projects = [];
+      let error;
+      try {
+        projects = await projectClient.getProjects();
+      } catch(err) {
+        error = err;
+      }
+
+      callback({
+        error,
+        data: projects
+      });
+    }
+
+    async getCurrent(ctx) {
+      const { projectClient } = app;
+      const { args } = ctx;
+      const callback = args[args.length - 1];
+
+      let project = [];
+      let error;
+      try {
+        project = await projectClient.getCurrent();
+      } catch(err) {
+        error = err;
+      }
+
+      callback({
+        error,
+        data: project
+      });
+    }
+
+    async setCurrent(ctx) {
+      const { projectClient } = app;
+      const { args } = ctx;
+      const { folderPath } = args[0];
+      const callback = args[args.length - 1];
+
+      let project = [];
+      let error;
+      try {
+        project = await projectClient.setCurrent(folderPath);
+      } catch(err) {
+        error = err;
+      }
+
+      callback({
+        error,
+        data: project
+      });
+    }
+
+
     async build() {
 
     }

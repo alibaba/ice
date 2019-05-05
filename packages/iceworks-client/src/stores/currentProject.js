@@ -1,5 +1,3 @@
-import Cookies from 'cookies-js';
-import appConfig from '@src/appConfig';
 import socket from '@src/socket';
 
 export default {
@@ -15,12 +13,12 @@ export default {
       return;
     }
 
-    this.inited = true;
-    const response = await fetch(`${appConfig.apiUrl}project/current`);
-
-    if (response.status === 200) {
-      const json = await response.json();
-      this.dataSource = json.data;
+    try {
+      const dataSource = await socket.emit('project.current');
+      this.dataSource = dataSource;
+      this.inited = true;
+    } catch (error) {
+      // do something...
     }
   },
   async addPage(page) {
@@ -30,30 +28,23 @@ export default {
     this.pages = [].concat(pages).concat([{ ...page, id: pages.length }]);
   },
   async reset(folderPath) {
-    const response = await fetch(`${appConfig.apiUrl}project/current`, {
-      method: 'POST',
-      body: JSON.stringify({ folderPath }),
-      headers: {
-        'content-type': 'application/json',
-        'x-csrf-token': Cookies.get('csrfToken'),
-      },
-    });
-    const json = await response.json();
-    this.dataSource = json.data;
-  },
-  setData(dataSource) {
-    this.dataSource = dataSource;
+    try {
+      const dataSource = await socket.emit('project.setCurrent', { folderPath });
+      this.dataSource = dataSource;
+    } catch (error) {
+      // do something...
+    }
   },
   async devStart() {
     const dataSource = await socket.emit(
-      'project.dev.start',
+      'project.devStart',
       { projectFolderPath: this.dataSource.folderPath },
     );
     this.dataSource = dataSource;
   },
   async devStop() {
     const dataSource = await socket.emit(
-      'project.dev.stop',
+      'project.devStop',
       { projectFolderPath: this.dataSource.folderPath },
     );
     this.dataSource = dataSource;
