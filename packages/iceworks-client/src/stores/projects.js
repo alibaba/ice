@@ -9,7 +9,7 @@ export default {
     }
 
     try {
-      const dataSource = await socket.emit('project.list');
+      const dataSource = await socket.emit('project.index.list');
       this.dataSource = dataSource;
       this.inited = true;
     } catch (error) {

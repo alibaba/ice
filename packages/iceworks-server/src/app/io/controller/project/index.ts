@@ -18,10 +18,12 @@ export default (app) => {
         error = err;
       }
 
+      console.log(error);
+
       if (project) {
         project.on('dev.data', function(data) {
           const decoder = new StringDecoder('utf8');
-          socket.emit('project.dev.data', decoder.write(data));
+          socket.emit('project.index.dev.data', decoder.write(data));
         });
       }
 

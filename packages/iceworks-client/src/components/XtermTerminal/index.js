@@ -33,7 +33,7 @@ const XtermTerminal = () => {
     term.write(`\x1B[1;3;31m${project.dataSource.name}\x1B[0m $ `);
   }, []);
 
-  useSocket('project.dev.data', (data) => {
+  useSocket('project.index.dev.data', (data) => {
     term.write(data);
   });
 

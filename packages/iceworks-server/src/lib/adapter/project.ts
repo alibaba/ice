@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as util from 'util';
 import * as child_process from 'child_process';
 import * as EventEmitter from 'events';
-import detectPort from 'detect-port';
+import * as detectPort from 'detect-port';
 import junk from 'junk';
 import { IProjectPage, IProjectDependency } from '../../interface';
 

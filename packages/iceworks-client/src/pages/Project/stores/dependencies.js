@@ -9,7 +9,7 @@ export default {
     }
 
     try {
-      const dataSource = await socket.emit('dependency.list', { projectFolderPath });
+      const dataSource = await socket.emit('project.dependency.list', { projectFolderPath });
       this.dataSource = dataSource;
       this.inited = true;
     } catch (error) {

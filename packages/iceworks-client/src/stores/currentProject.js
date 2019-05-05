@@ -14,7 +14,7 @@ export default {
     }
 
     try {
-      const dataSource = await socket.emit('project.current');
+      const dataSource = await socket.emit('project.index.current');
       this.dataSource = dataSource;
       this.inited = true;
     } catch (error) {
@@ -29,7 +29,7 @@ export default {
   },
   async reset(folderPath) {
     try {
-      const dataSource = await socket.emit('project.setCurrent', { folderPath });
+      const dataSource = await socket.emit('project.index.setCurrent', { folderPath });
       this.dataSource = dataSource;
     } catch (error) {
       // do something...
@@ -37,14 +37,14 @@ export default {
   },
   async devStart() {
     const dataSource = await socket.emit(
-      'project.devStart',
+      'project.index.devStart',
       { projectFolderPath: this.dataSource.folderPath },
     );
     this.dataSource = dataSource;
   },
   async devStop() {
     const dataSource = await socket.emit(
-      'project.devStop',
+      'project.index.devStop',
       { projectFolderPath: this.dataSource.folderPath },
     );
     this.dataSource = dataSource;
