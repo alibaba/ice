@@ -109,7 +109,7 @@ export interface IProjectDependency {
   /**
    * 指定版本：^1.0.1 / ~1.0.1 / 0.0.x
    */
-  specifyingVersion: string;
+  specifyVersion: string;
 
   /**
    * 当前本地版本：1.0.3

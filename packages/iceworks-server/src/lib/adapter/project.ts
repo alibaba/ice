@@ -69,7 +69,7 @@ export default class Project extends EventEmitter {
       {
         package: 'icestore',
         dev. false,
-        specifyingVersion: '^0.1.0'
+        specifyVersion: '^0.1.0'
       }
     ];
   }
