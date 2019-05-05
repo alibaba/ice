@@ -4,13 +4,17 @@
   "description": "iceworks server",
   "private": true,
   "dependencies": {
+    "conf": "^4.0.1",
+    "detect-port": "^1.3.0",
+    "egg-cors": "^2.2.0",
     "egg-scripts": "^2.10.0",
     "egg-socket.io": "^4.1.5",
-    "execa": "^1.0.0",
     "egg-view": "^2.1.2",
     "egg-view-nunjucks": "^2.2.0",
-    "iceworks-events": "^0.1.0",
-    "midway": "^1.0.0"
+    "junk": "^3.1.0",
+    "midway": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "npm-run-path": "^3.1.0"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",
@@ -35,7 +39,8 @@
     "debug": "NODE_ENV=local midway-bin debug --ts",
     "test": "npm run lint && midway-bin test --ts",
     "cov": "midway-bin cov --ts",
-    "lint": "tslint -c tslint.json --project .",
+    "lint": "tslint --fix -c tslint.json --project .",
+    "lint-nofix": "tslint -c tslint.json --project .",
     "ci": "npm run cov",
     "build": "midway-bin build -c"
   },

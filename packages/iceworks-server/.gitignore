@@ -12,3 +12,5 @@ run/
 *.un~
 .nodejs-cache
 src/tms/
+data/
+dist/
