@@ -11,10 +11,10 @@ export default (app) => {
       const callback = args[args.length - 1];
 
       let error;
-      let project
+      let project;
       try {
         project = await projectClient.devStart(projectFolderPath);
-      } catch(err) {
+      } catch (err) {
         error = err;
       }
 
@@ -38,10 +38,10 @@ export default (app) => {
       const callback = args[args.length - 1];
 
       let error;
-      let project
+      let project;
       try {
         project = await projectClient.devStop(projectFolderPath);
-      } catch(err) {
+      } catch (err) {
         error = err;
       }
 
@@ -62,7 +62,7 @@ export default (app) => {
       let error;
       try {
         projects = await projectClient.getProjects();
-      } catch(err) {
+      } catch (err) {
         error = err;
       }
 
@@ -81,7 +81,7 @@ export default (app) => {
       let error;
       try {
         project = await projectClient.getCurrent();
-      } catch(err) {
+      } catch (err) {
         error = err;
       }
 
@@ -101,7 +101,7 @@ export default (app) => {
       let error;
       try {
         project = await projectClient.setCurrent(folderPath);
-      } catch(err) {
+      } catch (err) {
         error = err;
       }
 
@@ -110,7 +110,6 @@ export default (app) => {
         data: project
       });
     }
-
 
     async build() {
 

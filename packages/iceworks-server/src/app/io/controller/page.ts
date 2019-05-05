@@ -13,7 +13,7 @@ export default (app) => {
 
       try {
         pages = await pageService.getAll(projectFolderPath);
-      } catch(err) {
+      } catch (err) {
         error = err;
       }
 

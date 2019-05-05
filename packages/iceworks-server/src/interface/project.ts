@@ -124,7 +124,7 @@ export interface IProjectDependency {
   /**
    * 是否本地依赖 devDependencies ？
    */
-  dev. boolean;
+  dev: boolean;
 }
 
 /**
@@ -261,7 +261,7 @@ export interface IAddPageParam {
 
 /**
  * 项目
- * 
+ *
  *  - 'dev.data' 事件
  *  - 'dev.error' 事件
  *  - 'dev.exit' 事件

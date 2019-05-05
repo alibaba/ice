@@ -31,11 +31,11 @@ export default function() {
   );
 
   if (isWin) {
-
+    // do something
   } else {
     pathEnv.push('/usr/local/bin');
     env.PATH = pathEnv.join(path.delimiter);
   }
 
   return env;
-};
+}

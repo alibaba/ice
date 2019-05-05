@@ -83,7 +83,7 @@ export default class Project extends EventEmitter {
       throw new Error('调试服务已启动，不能多次启动，请先停止已启动的调试服务后再次启动');
     }
 
-    const childProcess = child_process.spawn('npm', ['start'], { 
+    const childProcess = child_process.spawn('npm', ['start'], {
       cwd: folderPath,
       env: Object.assign({}, setEnv, env)
     });
