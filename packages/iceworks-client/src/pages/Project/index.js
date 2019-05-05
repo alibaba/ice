@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Input, Button } from '@alifd/next';
 import stores from '@stores';
 import logger from '@utils/logger';
-import Page from './components/Page';
-import Dependency from './components/Dependency';
+import Page from './components/Pages';
+import Dependency from './components/Dependencies';
 import projectStores from './stores';
 
 const Project = () => {
