@@ -1,16 +1,14 @@
-import { inject, observer } from 'mobx-react';
-import filesize from 'filesize';
 import fs from 'fs';
-import junk from 'junk';
 import path from 'path';
-import pathExists from 'path-exists';
-import React, { Component } from 'react';
+import filesize from 'filesize';
+import junk from 'junk';
 import fecha from 'fecha';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import { Feedback } from '@icedesign/base';
-
-import DashboardCard from '../../../components/DashboardCard';
-import EmptyTips from '../../../components/EmptyTips';
-import ExtraButton from '../../../components/ExtraButton';
+import DashboardCard from '../../../components/DashboardCard/';
+import EmptyTips from '../../../components/EmptyTips/';
+import ExtraButton from '../../../components/ExtraButton/';
 import Icon from '../../../components/Icon';
 import services from '../../../services';
 import projectScripts from '../../../lib/project-scripts';
@@ -53,24 +51,26 @@ class Assets extends Component {
     const { projects } = this.props;
     const { currentProject } = projects;
     const cwd = currentProject.clientPath;
-    let distPath = '';
-    if (fs.existsSync(path.join(cwd, 'dist'))) {
-      distPath = path.join(cwd, 'dist');
-    } else {
-      distPath = path.join(cwd, 'build');
+
+    const distPath = path.join(cwd, 'dist');
+    const buildPath = path.join(cwd, 'build');
+
+    let realAssetPath = '';
+    if (fs.existsSync(distPath)) {
+      realAssetPath = distPath;
+    } else if (fs.existsSync(buildPath)) {
+      realAssetPath = buildPath;
     }
-    if (pathExists.sync(distPath)) {
-      const assets = this.recursiveReaddirSync(distPath, distPath);
-      this.setState({
-        assets,
-        refreshing: false,
-      });
-    } else {
-      this.setState({
-        assets: [],
-        refreshing: false,
-      });
+
+    let assets = [];
+    if (realAssetPath && fs.statSync(realAssetPath).isDirectory()) {
+      assets = this.recursiveReaddirSync(realAssetPath, realAssetPath);
     }
+
+    this.setState({
+      assets,
+      refreshing: false,
+    });
   };
 
   handleReload = () => {
