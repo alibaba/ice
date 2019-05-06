@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 const PreviewTitle = ({ title, count, style }) => {
   return (
     <div style={{ ...styles.previewTitle, ...style }}>
-      {title} {count ? `( ${count} )` : null}
+      {title}
+      {' '}
+      {count ? `( ${count} )` : null}
     </div>
   );
 };

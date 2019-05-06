@@ -17,8 +17,8 @@
     "upload-log": "gulp oss-log",
     "sync-db": "gulp sync-db",
     "lint": "npm run lint:render && npm run lint:main",
-    "lint:render": "eslint -c ./.eslintrc ./renderer/src --fix",
-    "lint:main": "eslint -c ./.eslintrc ./app/main --fix",
+    "lint:render": "eslint -c ./.eslintrc ./renderer/src/** --ext .jsx,.js --fix",
+    "lint:main": "eslint -c ./.eslintrc ./app/main/** --ext .js --fix",
     "icons": "electron-icon-maker --input=./build/1024x1024.png --output=./build/",
     "iconutil": "iconutil -c icns -o ./build/icons/mac/icon.icns ./build/png.iconset"
   },

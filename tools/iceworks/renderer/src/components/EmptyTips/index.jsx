@@ -20,7 +20,8 @@ export default class extends Component {
         }}
       >
         <div style={{ color: '#aaa', fontSize: 14 }}>
-          <Icon type="tip" style={{ color: 'rgb(48, 128, 254)' }} />{' '}
+          <Icon type="tip" style={{ color: 'rgb(48, 128, 254)' }} />
+          {' '}
           {this.props.children}
         </div>
       </div>

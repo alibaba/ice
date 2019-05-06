@@ -6,9 +6,8 @@ import history from '../history';
 const prettyUrl = (to) => {
   if (to.startsWith('/')) {
     return to;
-  } else {
-    return '/' + to;
   }
+  return `/${to}`;
 };
 
 class Link extends Component {

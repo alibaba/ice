@@ -106,10 +106,10 @@ class Assets extends Component {
   recursiveReaddirSync = (dirPath, rootDir) => {
     let stats;
     let list = [];
-    let files = fs.readdirSync(dirPath).filter(junk.not);
+    const files = fs.readdirSync(dirPath).filter(junk.not);
 
     files.forEach((file) => {
-      let fullPath = path.join(dirPath, file);
+      const fullPath = path.join(dirPath, file);
       stats = fs.lstatSync(fullPath);
       if (stats.isDirectory()) {
         list = list.concat(this.recursiveReaddirSync(fullPath, rootDir));
@@ -240,7 +240,8 @@ class Assets extends Component {
                   paddingLeft: 10,
                 }}
               >
-                ({info.count}
+                (
+                {info.count}
                 )&nbsp;&nbsp;
                 {info.time}
               </span>
@@ -249,24 +250,24 @@ class Assets extends Component {
           <div>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'构建项目'}
+              placement="top"
+              tipText="构建项目"
               onClick={this.handleBuildProject}
             >
               <Icon type="build" style={{ fontSize: 18 }} />
             </ExtraButton>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'打开文件夹'}
+              placement="top"
+              tipText="打开文件夹"
               onClick={this.handleFolderOpen}
             >
               <Icon type="folderopen" style={{ fontSize: 18 }} />
             </ExtraButton>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'刷新'}
+              placement="top"
+              tipText="刷新"
               onClick={this.handleReload}
             >
               <Icon type="reload" style={{ fontSize: 18 }} />

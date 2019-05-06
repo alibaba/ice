@@ -1,4 +1,4 @@
-/* eslint react/no-string-refs:0 */
+/* eslint react/no-string-refs:0, react/no-unused-state:0 */
 import {
   Form,
   Switch,
@@ -6,20 +6,18 @@ import {
   Select,
   Field,
   Input,
-  Balloon,
 } from '@icedesign/base';
 import { remote } from 'electron';
 import Notification from '@icedesign/notification';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-
+import BrowserLink from '../../components/BrowserLink';
+import filterRegistry from '../../lib/filter-registry';
+import logger from '../../lib/logger';
+import services from '../../services';
 import RecommendMaterials from './RecommendMaterials';
 import CustomMaterials from './CustomMaterials';
 import Separator from './Separator';
-import services from '../../services';
-import filterRegistry from '../../lib/filter-registry';
-import logger from '../../lib/logger';
-import BrowserLink from '../../components/BrowserLink';
 
 const { registries: originRegistries } = remote.require('./shared');
 const { settings, nrm } = services;
@@ -71,6 +69,7 @@ class Setting extends Component {
   };
 
   notificationTimer = null;
+
   udpateSettings = (key, value) => {
     settings.set(key, value);
     clearTimeout(this.notificationTimer);
@@ -85,6 +84,7 @@ class Setting extends Component {
   };
 
   throttleTimer = null;
+
   handleFormChange = (key, value) => {
     if (key === 'registryCustom') {
       // 输入自定义 NPM 源地址
@@ -268,8 +268,8 @@ class Setting extends Component {
                 {...init('registry', {
                   initValue: this.state.registryCustomVisible
                     ? '__custom_registry__'
-                    : this.state.userconfig.registry ||
-                      'http://registry.npmjs.org',
+                    : this.state.userconfig.registry
+                      || 'http://registry.npmjs.org',
                 })}
               />
             </FormItem>
