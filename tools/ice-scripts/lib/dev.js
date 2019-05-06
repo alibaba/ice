@@ -78,7 +78,7 @@ module.exports = async function (api, subprocess) {
   const webpackConfig = getWebpackConfigDev({
     buildConfig,
   }); */
-
+  // TODO iceworksClient相关逻辑插件化
   /* if (iceworksClient.available) {
     webpackConfig.plugins.push(
       new webpack.ProgressPlugin((percentage, msg) => {

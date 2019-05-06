@@ -10,4 +10,4 @@ module.exports = class PluginAPI {
   getWebpackConfig() {
     return this.service.getWebpackConfig();
   }
-}
+};

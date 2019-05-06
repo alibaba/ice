@@ -25,8 +25,9 @@ module.exports = class Service {
     const iceConfigPath = path.resolve(this.context, 'ice.config.js');
     if (fse.existsSync(iceConfigPath)) {
       try {
+        // eslint-disable-next-line import/no-dynamic-require
         return require(iceConfigPath);
-      } catch(e) {
+      } catch (e) {
         log.error('Fail to load ice.config.js');
         throw e;
       }
@@ -40,12 +41,12 @@ module.exports = class Service {
     this.plugins = this.userConfig.icePlugins || [];
     // TODO 使用内置插件来实现userConfig配置字段
     // run plugins
-    this.plugins.forEach(plugin => {
+    this.plugins.forEach((plugin) => {
       try {
         plugin.package(new PluginAPI(this), plugin.options);
       } catch (e) {
         // TODO get plugin name for debug
-        log.error(`Error to load Plugin`);
+        log.error('Error to load Plugin');
         throw e;
       }
     });
@@ -53,7 +54,7 @@ module.exports = class Service {
 
   getWebpackConfig() {
     const config = new Config();
-    this.chainWebpackFns.forEach(fn => fn(config));
+    this.chainWebpackFns.forEach((fn) => fn(config));
     if (this.userConfig.chainWebpack) {
       this.userConfig.chainWebpack(config);
     }
@@ -67,9 +68,10 @@ module.exports = class Service {
     this.config = this.getWebpackConfig();
     try {
       // load command and run
+      // eslint-disable-next-line import/no-dynamic-require
       require(`../${this.command}`)(this);
     } catch (e) {
       throw e;
     }
   }
-}
+};
