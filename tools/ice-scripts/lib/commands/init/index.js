@@ -1,10 +1,10 @@
 const inquirer = require('inquirer');
-const goldlog = require('../utils/goldlog');
-const pkgData = require('../../package.json');
-const log = require('../utils/log');
-const initProject = require('../utils/initProject');
-const initMaterial = require('../utils/initMaterial');
-const checkEmpty = require('../utils/checkEmpty');
+const goldlog = require('../../utils/goldlog');
+const pkgData = require('../../../package.json');
+const log = require('../../utils/log');
+const initProject = require('./initProject');
+const initMaterial = require('./initMaterial');
+const checkEmpty = require('../../utils/checkEmpty');
 
 /**
  * 初始化项目：cli 调用；方法调用
