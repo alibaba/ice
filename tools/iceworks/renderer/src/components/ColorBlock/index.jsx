@@ -10,7 +10,7 @@ class ColorBlock extends Component {
           borderRadius: 2,
           height: 20,
           width: 50,
-          backgroundColor: backgroundColor,
+          backgroundColor,
           boxShadow: '0 0 1px rgba(0,0,0,0.5)',
         }}
       />

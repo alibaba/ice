@@ -17,9 +17,9 @@ import services from '../../../../services';
 import logger from '../../../../lib/logger';
 import PluginHoc from '../PluginHoc';
 
-const { templateBuilderUtils } = services;
-
 import './Layouts.scss';
+
+const { templateBuilderUtils } = services;
 
 @inject('projects')
 @observer
@@ -76,7 +76,7 @@ class LayoutBuilder extends Component {
       directory: '',
       enableName: true,
       enableTheme: false,
-      themeConfig: themeConfig,
+      themeConfig,
       layout: 'fluid-layout',
       header: {
         position: 'static',
@@ -107,7 +107,7 @@ class LayoutBuilder extends Component {
     if (currentProject && currentProject.fullPath) {
       const targetPath = currentProject.clientSrcPath;
       scanLayout({
-        targetPath
+        targetPath,
       }).then((layouts) => {
         this.setState({
           localLayouts: layouts,
@@ -141,14 +141,13 @@ class LayoutBuilder extends Component {
           </div>
         );
       });
-    } else {
-      return <EmptyTips>暂无布局</EmptyTips>;
     }
+    return <EmptyTips>暂无布局</EmptyTips>;
   };
 
   showDialog = () => {
     const layoutConfig = this.getLayoutConfig();
-    this.setState({ layoutConfig: layoutConfig, dialogVisible: true });
+    this.setState({ layoutConfig, dialogVisible: true });
   };
 
   hideDialog = () => {
@@ -258,7 +257,9 @@ class LayoutBuilder extends Component {
           <div>
             布局列表
             <span style={{ paddingLeft: 10, fontSize: 12, color: '#666' }}>
-              ({this.state.localLayouts.length})
+              (
+              {this.state.localLayouts.length}
+)
             </span>
           </div>
           {/* 隐藏新建自定义布局功能
@@ -282,4 +283,4 @@ class LayoutBuilder extends Component {
   }
 }
 
-export default PluginHoc(LayoutBuilder)
+export default PluginHoc(LayoutBuilder);

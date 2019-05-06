@@ -44,7 +44,7 @@ class CustomDialog extends Component {
         title={customScaffold.title}
         visible={customScaffold.visible}
         onClose={this.handleToggle}
-        footer={
+        footer={(
           <div
             style={{
               background: '#f3f3f3',
@@ -64,7 +64,7 @@ class CustomDialog extends Component {
               取消
             </Button>
           </div>
-        }
+)}
       >
         <div className="custom-scaffold">
           <div className="custom-scaffold-form">

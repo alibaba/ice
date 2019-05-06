@@ -6,7 +6,8 @@
     "ecmaVersion": 6,
     "ecmaFeatures": {
       "jsx": true,
-      "experimentalObjectRestSpread": true
+      "experimentalObjectRestSpread": true,
+      "legacyDecorators": true
     }
   },
   "env": {
@@ -73,6 +74,31 @@
     "no-await-in-loop": 0,
     "no-useless-escape": 0,
     "no-continue": 0,
-    "prefer-const": 0
+    "prefer-const": 1,
+    "react/destructuring-assignment": 0,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "import/no-cycle": 0,
+    "no-unused-vars": 1,
+    "no-useless-constructor": 1,
+    "jsx-a11y/alt-text": 1,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "no-shadow": 1,
+    "camelcase": 1,
+    "react/jsx-no-target-blank": 1,
+    "react/no-access-state-in-setstate": 1,
+    "react/no-typos": 1,
+    "react/no-multi-comp": 1,
+    "react/button-has-type": 1,
+    "react/no-unused-prop-types": 1,
+    "react/no-unescaped-entities": 1,
+    "react/require-default-props": 1,
+    "react/no-string-refs": 1,
+    "no-empty": 1,
+    "no-script-url": 1,
+    "no-template-curly-in-string": 1,
+    "no-nested-ternary": 1,
+    "no-lonely-if": 1
   }
 }
