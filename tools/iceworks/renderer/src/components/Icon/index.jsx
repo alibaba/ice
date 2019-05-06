@@ -6,10 +6,10 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
+import './iconfont/iconfont.css';
+
 const fontFamily = 'iceworks';
 const prefix = 'iceworks';
-
-import './iconfont/iconfont.css';
 
 class Icon extends Component {
   static propTypes = {
@@ -31,6 +31,7 @@ class Icon extends Component {
       'xxxl',
     ]),
   };
+
   static defaultProps = {
     size: 'medium',
   };

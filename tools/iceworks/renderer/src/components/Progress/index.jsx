@@ -6,6 +6,7 @@ import { inject, observer } from 'mobx-react';
 import ExtraButton from '../ExtraButton';
 import ProjectTerminal from '../ProjectTerminal';
 import Icon from '../Icon';
+
 const Popup = Overlay.Popup;
 
 /**
@@ -14,7 +15,6 @@ const Popup = Overlay.Popup;
 @inject('progress', 'projects')
 @observer
 class ProgressWrap extends Component {
-
   render() {
     const { projects, styleOffset } = this.props;
     const { currentProject } = projects;
@@ -25,7 +25,7 @@ class ProgressWrap extends Component {
       statusText,
       progress,
       progressSpeed,
-      progressRemaining
+      progressRemaining,
     } = this.props.progress;
 
     if (!visible) {
@@ -35,35 +35,40 @@ class ProgressWrap extends Component {
     return (
       <div style={{
         height: '24px',
-        margin: '10px 0'
-      }}>
+        margin: '10px 0',
+      }}
+      >
         <div>
-          <span style={{ 
-            fontSize: '12px', 
+          <span style={{
+            fontSize: '12px',
             color: '#2eca9c',
-            lineHeight: '24px'
-          }}>
-            {statusText}...
+            lineHeight: '24px',
+          }}
+          >
+            {statusText}
+...
           </span>
           {
             showTerminal && (
               <Popup
-                trigger={
+                trigger={(
                   <ExtraButton
-                    placement={'bottom'}
-                    tipText={'查看依赖安装日志，点击切换'}
+                    placement="bottom"
+                    tipText="查看依赖安装日志，点击切换"
                     style={{
                       float: 'right',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
-                    <Icon size="small" type="history" /> 运行日志
+                    <Icon size="small" type="history" />
+                    {' '}
+运行日志
                   </ExtraButton>
-                }
+)}
                 triggerType="click"
                 animation={false}
                 align="bl tl"
-                offset={styleOffset || [-370,0]}
+                offset={styleOffset || [-370, 0]}
               >
                 <div style={{
                   border: '1px solid #999',
@@ -71,18 +76,19 @@ class ProgressWrap extends Component {
                   width: '600px',
                   height: '300px',
                   background: '#fff',
-                }}>
+                }}
+                >
                   <ProjectTerminal
                     project={currentProject}
-                    visible={true}
+                    visible
                     shwoClose={false}
-                    id='terminal2'
+                    id="terminal2"
                     style={{
                       left: 0,
                       top: 0,
                       right: 0,
                       bottom: 0,
-                      padding: 0
+                      padding: 0,
                     }}
                   />
                 </div>
@@ -100,14 +106,19 @@ class ProgressWrap extends Component {
                 animation={false}
               />
               <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-                {progress}%
+                {progress}
+%
               </span>
               <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
                 {progressSpeed}
                 /kbs
               </span>
               <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-                剩余 {progressRemaining} s
+                剩余
+                {' '}
+                {progressRemaining}
+                {' '}
+s
               </span>
             </div>
           )

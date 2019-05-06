@@ -14,3 +14,4 @@ coverage/
 # 忽略文件
 **/*-min.js
 **/*.min.js
+**/*.scss

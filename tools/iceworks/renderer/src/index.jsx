@@ -1,5 +1,3 @@
-window.js_ready = Date.now();
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -11,6 +9,8 @@ import App from './App';
 import ErrorCom from './pages/Error';
 import logger from './lib/logger';
 import './global.scss';
+
+window.js_ready = Date.now();
 
 logger.info('dom ready', window.js_ready - window.dom_start);
 

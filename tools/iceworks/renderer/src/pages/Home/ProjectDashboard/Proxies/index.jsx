@@ -10,10 +10,10 @@ import path from 'path';
 import React, { Component } from 'react';
 import Tooltip from 'rc-tooltip';
 
-import DashboardCard from '../../../../components/DashboardCard/';
-import ExtraButton from '../../../../components/ExtraButton/';
+import DashboardCard from '../../../../components/DashboardCard';
+import ExtraButton from '../../../../components/ExtraButton';
 import Icon from '../../../../components/Icon';
-import EmptyTips from '../../../../components/EmptyTips/';
+import EmptyTips from '../../../../components/EmptyTips';
 import PluginHoc from '../PluginHoc';
 import logger from '../../../../lib/logger';
 
@@ -59,7 +59,7 @@ class Proxies extends Component {
         let pkgData = fs.readFileSync(pkgFilePath);
         pkgData = JSON.parse(pkgData.toString());
         const proxyConfig = pkgData.proxyConfig || {};
-        let proxyConfigRules = Object.entries(proxyConfig).map(
+        const proxyConfigRules = Object.entries(proxyConfig).map(
           ([rule, options]) => {
             if (typeof options === 'string') {
               return [rule, { target: options, enable: true }];
@@ -69,7 +69,7 @@ class Proxies extends Component {
         );
         this.setState({
           proxyConfig,
-          proxyConfigRules: proxyConfigRules,
+          proxyConfigRules,
         });
       } catch (e) {}
     }
@@ -86,7 +86,7 @@ class Proxies extends Component {
 
         fs.writeFile(pkgFilePath, JSON.stringify(pkgData, null, 2), cb);
       } catch (e) {
-        logger.error(pkgFilePath + ' 不存在');
+        logger.error(`${pkgFilePath} 不存在`);
       }
     }
   };
@@ -112,6 +112,7 @@ class Proxies extends Component {
       };
     });
   };
+
   handleChangeEnable = (index, value) => {
     this.setState((state) => {
       state.proxyConfigRules[index][1].enable = value;
@@ -199,13 +200,12 @@ class Proxies extends Component {
           </tbody>
         </table>
       );
-    } else {
-      return <EmptyTips>暂无代理配置</EmptyTips>;
     }
+    return <EmptyTips>暂无代理配置</EmptyTips>;
   };
 
   renderProxyForm = () => {
-    let { proxyConfigRules } = this.state;
+    const { proxyConfigRules } = this.state;
 
     if (Array.isArray(proxyConfigRules) && proxyConfigRules.length === 0) {
       proxyConfigRules.push(deepcopy(newRuleItem));
@@ -219,7 +219,7 @@ class Proxies extends Component {
             匹配规则
             <Tooltip
               placement="top"
-              overlay={
+              overlay={(
                 <div style={{ maxWidth: 300 }}>
                   <dl style={{ margin: 0, padding: 0 }}>
                     <dt style={{ fontSize: 14, padding: '5px 0' }}>规则说明</dt>
@@ -250,7 +250,7 @@ class Proxies extends Component {
                     </dd>
                   </dl>
                 </div>
-              }
+)}
             >
               <Icon type="help" />
             </Tooltip>
@@ -311,16 +311,16 @@ class Proxies extends Component {
           <div>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'刷新'}
+              placement="top"
+              tipText="刷新"
               onClick={this.readProxyConfig}
             >
               <Icon type="reload" style={{ fontSize: 18 }} />
             </ExtraButton>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'修改代理规则'}
+              placement="top"
+              tipText="修改代理规则"
               onClick={this.handleModifyRules}
             >
               <Icon type="edit" style={{ fontSize: 18 }} />
@@ -335,7 +335,7 @@ class Proxies extends Component {
             visible={this.state.visible}
             onClose={this.handleClose}
             onCancel={this.handleClose}
-            footer={
+            footer={(
               <div
                 style={{
                   display: 'flex',
@@ -349,7 +349,7 @@ class Proxies extends Component {
                 </Button>
                 <Button onClick={this.handleClose}>取消</Button>
               </div>
-            }
+)}
           >
             {this.renderProxyForm()}
           </Dialog>

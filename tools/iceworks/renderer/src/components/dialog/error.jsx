@@ -83,7 +83,7 @@ const notify = (title = '错误提示', error, done) => {
         )}
       </div>
     ),
-    title: title,
+    title,
   });
 };
 
