@@ -1,7 +1,7 @@
 const path = require('path');
 
 const paths = require('./paths');
-const pkgData = require('./packageJson');
+const pkgData = require('./packageJson')();
 const log = require('../utils/log');
 
 module.exports = function getResolveAlias(buildConfig) {

@@ -2,7 +2,7 @@ const { realpathSync } = require('fs');
 const { resolve } = require('path');
 const url = require('url');
 
-const pkgData = require('../config/packageJson');
+const pkgData = require('../config/packageJson')();
 const cliInstance = require('../utils/cliInstance');
 const getBuildConfig = require('./getBuildConfig');
 

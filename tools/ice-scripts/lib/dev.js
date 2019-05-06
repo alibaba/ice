@@ -12,9 +12,9 @@ const WebpackDevServer = require('webpack-dev-server');
 const deepmerge = require('deepmerge');
 const openBrowser = require('react-dev-utils/openBrowser');
 
-const paths = require('./config/paths');
-const getBuildConfig = require('./config/getBuildConfig');
-const getWebpackConfigDev = require('./config/webpack.config.dev');
+// const paths = require('./config/paths');
+// const getBuildConfig = require('./config/getBuildConfig');
+// const getWebpackConfigDev = require('./config/webpack.config.dev');
 const devMiddleware = require('./devMiddleware');
 const iceworksClient = require('./iceworksClient');
 const getCertificate = require('./config/getCertificate');
@@ -22,16 +22,16 @@ const prepareUrLs = require('./utils/prepareURLs');
 const getProxyConfig = require('./config/getProxyConfig');
 const goldlog = require('./utils/goldlog');
 const pkgData = require('../package.json');
-const projectPkgData = require('./config/packageJson');
+// const projectPkgData = require('./config/packageJson');
 const log = require('./utils/log');
 const checkDepsInstalled = require('./utils/checkDepsInstalled');
 
-module.exports = async function (cliOptions, subprocess) {
+module.exports = async function (api, subprocess) {
   goldlog('version', {
     version: pkgData.version,
   });
-  goldlog('dev', cliOptions);
-  log.verbose('dev cliOptions', cliOptions);
+  goldlog('dev', api.commandArgs);
+  log.verbose('dev cliOptions', api.commandArgs);
 
   // 与 iceworks 客户端通信
   const send = function (data) {
@@ -41,17 +41,17 @@ module.exports = async function (cliOptions, subprocess) {
     }
   };
 
-  const installedDeps = checkDepsInstalled(paths.appDirectory);
+  const installedDeps = checkDepsInstalled(api.paths.appDirectory);
   if (!installedDeps) {
     log.error('项目依赖未安装，请先安装依赖。');
     process.exit(1);
     return;
   }
 
-  const HOST = cliOptions.host || '0.0.0.0';
-  const PORT = cliOptions.port || 4444;
+  const HOST = api.commandArgs.host || '0.0.0.0';
+  const PORT = api.commandArgs.port || 4444;
   let httpsConfig;
-  let protocol = cliOptions.https ? 'https' : 'http';
+  let protocol = api.commandArgs.https ? 'https' : 'http';
 
   if (protocol === 'https') {
     try {
@@ -70,16 +70,16 @@ module.exports = async function (cliOptions, subprocess) {
   const urls = prepareUrLs(protocol, HOST, PORT);
   const proxyConfig = getProxyConfig();
 
-  if (cliOptions.disabledReload) {
+  if (api.commandArgs.disabledReload) {
     log.warn('关闭了热更新（hot-reload）功能');
   }
-  const buildConfig = getBuildConfig(projectPkgData, 'dev');
+  /* const buildConfig = getBuildConfig(projectPkgData, 'dev');
 
   const webpackConfig = getWebpackConfigDev({
     buildConfig,
-  });
+  }); */
 
-  if (iceworksClient.available) {
+  /* if (iceworksClient.available) {
     webpackConfig.plugins.push(
       new webpack.ProgressPlugin((percentage, msg) => {
         send({
@@ -93,15 +93,15 @@ module.exports = async function (cliOptions, subprocess) {
         });
       })
     );
-  }
+  } */
 
   let isFirstCompile = true;
-  const compiler = webpack(webpackConfig);
+  const compiler = webpack(api.config);
   // eslint-disable-next-line global-require
   let devServerConfig = require('./config/webpack.server.config')();
-  if ('devServer' in webpackConfig) {
+  if ('devServer' in api.config) {
     // merge user config
-    devServerConfig = deepmerge(devServerConfig, webpackConfig.devServer);
+    devServerConfig = deepmerge(devServerConfig, api.config.devServer);
   }
 
   // buffer 与 deepmerge有冲突，会被解析成乱码
