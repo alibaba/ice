@@ -25,11 +25,11 @@ const allCategories = {
       title: '测试',
       dir: 'test',
     }, {
-      title: '后端集成',
-      dir: 'backend',
-    }, {
       title: '发布资源',
       dir: 'publish',
+    }, {
+      title: '后端集成',
+      dir: 'backend',
     }, {
       title: '产品监控',
       dir: 'monitor',
