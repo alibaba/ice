@@ -4,7 +4,7 @@ const portfinder = require('portfinder');
 const chalk = require('chalk');
 const ora = require('ora');
 
-async function web(options = {}) {
+async function start(options = {}) {
   const host = options.host || 'http://127.0.0.1';
 
   let port = options.port;
@@ -48,7 +48,7 @@ async function web(options = {}) {
 }
 
 module.exports = (...args) => {
-  return web(...args).catch((err) => {
+  return start(...args).catch((err) => {
     console.log(err);
     process.exit(1);
   });
