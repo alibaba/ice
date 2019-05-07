@@ -3,14 +3,19 @@ title: 快速创建开发一个 React 项目
 order: 2
 ---
 
-[Iceworks](/iceworks) 是基于 Electron 开发的 GUI 开发工具，我们希望通过 Iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目。另外对于 Iceworks 我们也有一些规划正在执行之中：
+飞冰（ICE）本身不限定使用 React/Vue 或其他前端框架，只要选择对应的物料源即可。但是相比其他框架，我们在 React 领域有更多的沉淀，因此整个创建及后续的开发流程都会以 React 为例，其他框架相关知识可自行查看对应文档。
 
-- 升级前端开发模式，提供云+端的开发链路，不再依赖本地的开发环境
-- 更加完整的对接不同的工程体系，任何项目都可以通过简单的配置即可在 Iceworks 中开发
+## 使用 Iceworks 创建项目（GUI）
 
-## 创建项目
+[Iceworks](/iceworks) 是基于 Electron 开发的 GUI 开发工具，我们希望通过 Iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目。
 
-软件启动后，项目列表为空，可通过的【创建项目】新建一个项目。
+### 1. 安装 Iceworks
+
+Iceworks 是基于 Electron 开发的桌面端应用，因此首先需要在 [这里](/iceworks) 下载并安装该应用。
+
+### 2. 创建项目
+
+应用启动后，项目列表为空，可通过的【创建项目】新建一个项目。
 
 ![undefined | center](https://img.alicdn.com/tfs/TB1SKFucbGYBuNjy0FoXXciBFXa-1964-1424.png)
 
@@ -25,27 +30,23 @@ order: 2
 
 > 默认会在创建的时候同时安装项目依赖，时间上会相对久一些，也可取消勾选，后续自行安装
 
-## 管理项目
+### 3. 启动调试服务
 
-项目创建完成后，会自动添加到项目列表中，并打开当前项目管理面板。
-
-通过项目管理面板，可执行 **启动调试服务** **新建页面** **构建项目** 等操作。
+项目创建完成后，会自动添加到项目列表中，并打开当前项目管理面板。通过项目管理面板，可执行 **启动调试服务** **新建页面** **构建项目** 等操作。
 
 ![undefined | center](https://img.alicdn.com/tfs/TB1VlrAcntYBeNjy1XdXXXXyVXa-1964-1424.png)
-
-## 启动调试服务
 
 点击 `启动调试服务` 等待完成后出现服务地址，点击可以预览当前项目。
 
 ![undefined | center](https://img.alicdn.com/tfs/TB1p6lCceSSBuNjy0FlXXbBpVXa-2562-1590.png)
 
-> 上图是一个 ICE Design CMS 模板启动后的预览效果。
+> 上图是一个模板启动后的预览效果。
 
-## 新建页面
+### 4. 新建页面
 
-启动调试服务后，可使用新建页面来搭建页面，通过 [block](/block) 的组合完成页面的创建。
+启动调试服务后，可使用新建页面来搭建页面，通过区块的组合完成页面的创建。
 
-进入 block 搭建界面
+点击「新建页面」按钮，接着会进入选择区块页面：
 
 ![undefined | center](https://img.alicdn.com/tfs/TB14dBQch9YBuNjy0FfXXXIsVXa-1908-1368.png)
 
@@ -64,76 +65,38 @@ order: 2
 
 ![undefined | center](https://img.alicdn.com/tfs/TB1jfVncbSYBuNjSspiXXXNzpXa-1964-1424.png)
 
-## 进入开发调试
+### 5. 编辑代码
 
-点击项目版面上的 `编辑中打开` 会立即使用设置中选择的编辑器打开项目，目前支持 [Visual Studio Code](https://code.visualstudio.com/)，[Sublime Text 3](https://www.sublimetext.com/)，`WebStorm` 和 `Atom` 等编辑器，推荐使用 [Visual Studio Code](https://code.visualstudio.com/)，如果你的电脑中未安装请先安装。
+点击项目面板上「编辑器」按钮即可使用编辑器修改补充代码（也可单独用编辑器打开），修改代码并保存上述的调试页面即会生效。
 
-项目目录结构说明：
+## 使用 ice-scripts 创建项目（CLI）
 
-```
-project-name
-├── build                                    // 打包资源
-├── mock                                    // 模拟数据
-├── public                                  // 静态资源
-├── src
-│   ├── components                          // 公共组件
-│   ├── config                              // 公共配置
-│   ├── layouts                             // 通用布局
-│   ├── pages                               // 页面
-│   ├── utils                               // 通用方法
-│   ├── global.scss                         // 全局样式
-│   ├── index.html                          // 入口模板
-│   ├── index.js                            // 应用入口
-│   └── routes.jsx                          // 路由入口
-├── tests                                   // 测试
-├── .editorconfig                           // 代码风格配置
-├── .eslintignore                           // eslint 忽略目录配置
-├── .eslintrc                               // eslint 配置
-├── generator.json                          // generator.json
-├── package.json                            // package.json
-├── README.md                               // 项目说明
-└── yarn.lock                               // 模板版本管理
+### 1. 安装 ice-scripts
+
+```bash
+$ npm i -g ice-scripts
+$ ice -V
 ```
 
-例如上一步已创建的 `Page16` 页面：
+### 2. 初始化项目
 
-![undefined | center](https://img.alicdn.com/tfs/TB1q6FtcbGYBuNjy0FoXXciBFXa-1968-1250.png)
-
-通过二次开发增加业务逻辑，完成业务需求。
-
-## 打包发布
-
-点击项目面板上的构建项目按钮，将开发的构建出最终的 js css 等资源。
-
-构建完成后，会在项目目录下生成 `build` 文件夹，里面存在了 `index.html` `index.js` `index.css` 文件。使用你熟悉的方式，上传到对应的 cdn 服务器。
-
-![undefined | center](https://img.alicdn.com/tfs/TB1TYpHckyWBuNjy0FpXXassXXa-1402-944.png)
-
-## 部署上线
-
-上线过程即发布 HTML 文件的过程，`index.html` 文件存在在 `build` 目录中，将 `index.html` 文件复制到对应的服务服务器，并修改 html 源码中的 `/build/index.css` 和 `/build/index.js` 地址，是上一步中得到的 cdn 地址以及站点标题。
-
-一个标准的 HTML 文件如下所示：
-
-```html
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
-  <link rel="icon" type="image/png" href="https://img.alicdn.com/tps/TB1kBU7NpXXXXXLXXXXXXXXXXXX-160-160.png">
-  <meta name="viewport" content="width=device-width">
-  <title>ICE Design CMS</title>
-<link href="./index.css" rel="stylesheet"></head>
-
-<body>
-  <div id="ice-container"></div>
-  <script type="text/javascript" src="./index.js"></script>
-</body>
-</html>
+```bash
+$ mkdir ice-project
+$ cd ice-project
+$ ice init
+# 或者基于指定模板创建项目
+$ ice init -t {npmName}
 ```
 
-> 在线上环境我们强烈推荐使用 production 版本的 React，而不是 development 版本。它们之间的区别除了体积之外，还包括一些针对线上环境的性能优化。
+执行命令后根据需求选择对应模板即可完成项目的创建
 
-到这里你已经学会使用 Iceworks 创建一个项目并发布：）
+### 3. 项目调试
+
+```bash
+# 安装依赖，也可使用 yarn
+$ npm install
+# 启动调试服务
+$ npm run start
+```
+
+接着通过代码编辑器编写代码就可以在浏览器中看到效果。

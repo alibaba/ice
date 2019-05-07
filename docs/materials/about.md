@@ -3,6 +3,17 @@ title: 关于物料
 order: 1
 ---
 
+
+
+飞冰（ICE）在社区的参与下目前主要建立起如下物料体系：
+
+|  物料名称  |  维护者  |  框架 |  工程体系  |  基础组件 | 代码仓库 |
+|-----------|---------|------|-----------|----------|---------|
+|React 物料 | 官方     | React |ice-scripts| Fusion | [github](https://github.com/ice-lab/react-materials) |
+|Vue 物料   | 社区+官方 | Vue   | Vue CLI  | Element | [github](https://github.com/ice-lab/vue-materials) |
+
+如果有兴趣共建社区物料体系，比如小程序、Angular 等，欢迎联系飞冰（ICE）团队，我们会给予社区参与者最大的帮助。
+
 前面提到的物料大多是官方物料，但是在实际的开发中，很多业务都需要自己的物料体系，比如定制的模板、附带业务属性的组件等，因此我们基于 ice-devtools 这个工具提供了自定义物料的开发链路。大体流程如下：
 
 - 使用 ice-devtools 在本地开发物料
