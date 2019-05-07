@@ -6,6 +6,7 @@ export default function() {
     }
 
     ctx.clientConfig = {
+      // TODO: 区分环境和端口检测
       // 默认使用 iceworks-client@latest 最新的版本
       clientPath: '//unpkg.com/iceworks-client@latest/build/',
       socketUrl: '//127.0.0.1:7001/',

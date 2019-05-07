@@ -1,7 +1,11 @@
 {
   "name": "iceworks-server",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "iceworks server",
+  "files": [
+    "dist/",
+    "data/"
+  ],
   "dependencies": {
     "conf": "^4.0.1",
     "detect-port": "^1.3.0",
