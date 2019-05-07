@@ -1,5 +1,7 @@
 # Changelog
 
+## 2.3.1
+
 ## 2.3.0
 
 - [refactor] 移除原先构建开发业务组件&区块的功能及代码（break change）
