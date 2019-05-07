@@ -3,96 +3,84 @@ title: 官方 React 物料
 order: 1
 ---
 
-基于海量高质量可复用区块，通过 GUI 工具快速搭建的一套中后台模板。
+为了提高项目的开发效率，飞冰提供了一批高质量的 React 物料，这些物料包括组件、模板、区块。
 
-![](https://img.alicdn.com/tfs/TB1mHIID29TBuNjy0FcXXbeiFXa-1920-1080.png)
+## 组件
 
-## 特性
+### 基础组件
 
-- 专业的设计支持: ICE Design
-- 成熟的基础组件: ICE Component
-- 丰富的业务模块: ICE Block
-- 完善的开发工具: Iceworks
+使用由阿里巴巴 [Fusion 团队](https://fusion.design) 开源的 [Next 组件](/component/affix)，包括按钮、弹窗、下拉等组件。Next 组件足够丰富且稳定，同时在国际化、无障碍方面做了较多沉淀，另外 Next 组件最大的特性是具有非常强大灵活的主题定制能力，使其可以满足更多的业务场景，具体可参考文档 [配置主题](/docs/cli/theme.md)。
 
-## 技术点
+安装组件依赖：
 
-- icedesign
-- react
-- redux
-- redux-thunk
-- react-router-dom v4
-- axios
-- webpack v4
-- etc...
-
-## 功能
-
-按照 Dashboard 综合页和 Block 分类进行展示
-
-```
-- 登录/注册
-- Dashboard
-- 图表页
-  - 图表列表
-- 表格页
-  - 基础表格
-  - 展示型表格
-  - 表格列表
-- 列表页
-  - 文章列表
-  - 卡片列表
-  - 图文列表
-- 内容页
-  - 基础详情页
-  - 条款协议页
-  - 进度展示页
-- 结果页
-  - 成功
-  - 失败
-- 异常
-  - 403 无权限
-  - 404 找不到
-  - 500 服务器出错
-  - 内容为空
+```bash
+# 所有的基础组件都在 @alifd/next 这一个 npm 包中
+$ npm i --save @alifd/next
 ```
 
-## 目录结构
+在代码中引入并使用组件：
 
-```
-ice-design-pro
-├── build       // 打包资源
-├── mock        // 模拟数据
-├── public      // 静态资源
-├── src
-│   ├── api                // 接口定义
-│   ├── components         // 公共组件
-│   ├── layouts            // 通用布局
-│   ├── pages              // 页面
-│   ├── store              // 全局 store
-│   ├── utils              // 工具函数
-│   ├── configureStore.js  // redux 入口配置
-│   ├── reducers.js        // reducers 入口配置
-│   ├── index.js           // 应用入口
-│   ├── menuConfig         // 导航配置
-│   ├── routerConfig       // 路由配置
-│   └── router.jsx         // 路由配置
-├── tests                  // 测试
-├── .gitignore             // git 忽略目录配置
-├── .editorconfig          // 代码风格配置
-├── .eslintignore          // eslint 忽略目录配置
-├── .eslintrc              // eslint 配置
-├── package.json           // package.json
-└── README.md              // 项目说明
+```jsx
+import React from 'react';
+import ReactDOM from 'react';
+import { Button, Dialog, Select } from '@alifd/next';
+
+ReactDOM.render((
+  <div>
+    <Button>主要按钮<Button>
+  </div>
+), mountNode);
 ```
 
-## 使用
+### 业务组件
 
-1.  (推荐) GUI 工具使用: 下载 Iceworks
-    ![](https://img.alicdn.com/tfs/TB1v7FtEh9YBuNjy0FfXXXIsVXa-954-684.png)
+除了基础组件，我们针对不同业务场景封装了很多 [业务组件](/component/balloonconfirm)，每个业务组件对应一个 npm 包。
 
-2.  CLI 命令使用:
+安装组件依赖：
 
+```bash
+# 安装两个业务组件
+$ npm i --save @icedesign/balloon-confirm @icedesign/img
 ```
-$ npm start      // 启动预览服务器
-$ npm run build  // 构建
+
+在代码中引入并使用组件：
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react';
+import BalloonConfirm from '@icedesign/balloon-confirm';
+import Img from '@icedesign/img';
+
+ReactDOM.render((
+  <div>
+    <Img src="" />
+  </div>
+), mountNode);
 ```
+
+## 模板
+
+![模板列表](https://img.alicdn.com/tfs/TB1N8X4UOrpK1RjSZFhXXXSdXXa-2404-1630.png)
+
+针对不同的业务场景我们沉淀了 40+ 官方模板，这些模板能帮助开发者降低很多开发成本，所有的模板都可以在 [这里](/scaffold) 浏览与使用。
+
+模板一般用于初始化项目，初始化项目一般有两种方式：
+
+- 使用 Iceworks 创建项目
+- 使用 ice-scripts 通过 init 命令创建项目：`ice init -t ${npmName}`
+
+## 区块
+
+![区块列表](https://img.alicdn.com/tfs/TB1EDTobLc3T1VjSZPfXXcWHXXa-2398-1426.png)
+
+区块是一些可复用的代码片段，开发者可以快速把某个区块的代码添加到自身项目里，然后再做改动或二次加工，我们针对展现形态的差异抽象了大量的 [区块](/block)，包括但不限于富文本、图表展示、代码编辑器等等。
+
+将区块添加到项目里同样也有两种方式：
+
+- 在 Iceworks 中点击添加区块
+- 使用 ice-scripts 通过 `add block` 命令添加：
+
+  ```bash
+  $ cd src/pages/home/components
+  $ ice add block -t @icedesign/document-list-block
+  ```
