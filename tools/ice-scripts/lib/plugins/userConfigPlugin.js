@@ -1,3 +1,3 @@
-modules.exports = (api, opts) => {
+module.exports = (api, opts) => {
 
 };

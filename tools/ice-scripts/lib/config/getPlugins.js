@@ -16,7 +16,7 @@ const paths = require('./paths');
 const getEntryHtmlPlugins = require('./getEntryHtmlPlugins');
 const cliInstance = require('../utils/cliInstance');
 const log = require('../utils/log');
-const pkgData = require('./packageJson');
+const pkgData = require('./packageJson')();
 
 module.exports = ({ buildConfig = {}, themeConfig = {}, entry, pkg = {} }) => {
   const defineVriables = {

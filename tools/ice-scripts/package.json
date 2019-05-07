@@ -105,6 +105,7 @@
     "uuid": "^3.3.2",
     "webpack": "~4.28.0",
     "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-chain": "^6.0.0",
     "webpack-dev-mock": "^0.1.2",
     "webpack-dev-server": "^3.1.9",
     "webpack-filter-warnings-plugin": "^1.2.0",
