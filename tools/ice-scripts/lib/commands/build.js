@@ -16,7 +16,6 @@ const log = require('../utils/log');
 const cliInstance = require('../utils/cliInstance');
 const validationSassAvailable = require('../utils/validationSassAvailable');
 const pkgData = require('../config/packageJson');
-const componentBuild = require('../component/build');
 const checkDepsInstalled = require('../utils/checkDepsInstalled');
 
 /**
@@ -53,11 +52,6 @@ module.exports = async function (options) {
   if (!installedDeps) {
     log.error('项目依赖未安装，请先安装依赖。');
     process.exit(1);
-  }
-
-  if (pkgData.type === 'component') {
-    // 组件构建
-    return componentBuild(pkgData);
   }
 
   const buildConfig = getBuildConfig(pkgData, 'build');
