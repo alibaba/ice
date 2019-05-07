@@ -17,6 +17,7 @@
     "cross-spawn": "^6.0.5",
     "execa": "^1.0.0",
     "mkdirp": "^0.5.1",
+    "ora": "^3.4.0",
     "portfinder": "^1.0.20",
     "request": "^2.88.0",
     "request-progress": "^3.0.0",
