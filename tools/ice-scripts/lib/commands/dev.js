@@ -12,19 +12,15 @@ const WebpackDevServer = require('webpack-dev-server');
 const deepmerge = require('deepmerge');
 const openBrowser = require('react-dev-utils/openBrowser');
 
-// const paths = require('./config/paths');
-// const getBuildConfig = require('./config/getBuildConfig');
-// const getWebpackConfigDev = require('./config/webpack.config.dev');
-const devMiddleware = require('./devMiddleware');
-const iceworksClient = require('./iceworksClient');
-const getCertificate = require('./config/getCertificate');
-const prepareUrLs = require('./utils/prepareURLs');
-const getProxyConfig = require('./config/getProxyConfig');
-const goldlog = require('./utils/goldlog');
-const pkgData = require('../package.json');
-// const projectPkgData = require('./config/packageJson');
-const log = require('./utils/log');
-const checkDepsInstalled = require('./utils/checkDepsInstalled');
+const devMiddleware = require('../utils/devMiddleware');
+const iceworksClient = require('../utils/iceworksClient');
+const getCertificate = require('../config/getCertificate');
+const prepareUrLs = require('../utils/prepareURLs');
+const getProxyConfig = require('../config/getProxyConfig');
+const goldlog = require('../utils/goldlog');
+const pkgData = require('../../package.json');
+const log = require('../utils/log');
+const checkDepsInstalled = require('../utils/checkDepsInstalled');
 
 module.exports = async function (api, subprocess) {
   goldlog('version', {
@@ -73,27 +69,6 @@ module.exports = async function (api, subprocess) {
   if (api.commandArgs.disabledReload) {
     log.warn('关闭了热更新（hot-reload）功能');
   }
-  /* const buildConfig = getBuildConfig(projectPkgData, 'dev');
-
-  const webpackConfig = getWebpackConfigDev({
-    buildConfig,
-  }); */
-  // TODO iceworksClient相关逻辑插件化
-  /* if (iceworksClient.available) {
-    webpackConfig.plugins.push(
-      new webpack.ProgressPlugin((percentage, msg) => {
-        send({
-          action: 'update_project',
-          message: 'compiler_progress',
-          data: {
-            statusCompile: 'progress',
-            statusCompileProgress: percentage,
-            statusCompileProgressText: msg,
-          },
-        });
-      })
-    );
-  } */
 
   let isFirstCompile = true;
   const compiler = webpack(api.config);

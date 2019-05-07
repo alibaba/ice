@@ -2,7 +2,7 @@ const path = require('path');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 
-const initProject = require('../../lib/scaffold/initProject');
+const initProject = require('../../lib/utils/initProject');
 
 const projectDir = path.join(__dirname, '../tempDir/test');
 

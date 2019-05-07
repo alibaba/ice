@@ -7,17 +7,16 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const { collectDetail } = require('@alifd/fusion-collector');
 
-const paths = require('./config/paths');
-const getBuildConfig = require('./config/getBuildConfig');
-const iceScriptsPkgData = require('../package.json');
-const getWebpackConfigProd = require('./config/webpack.config.prod');
-const goldlog = require('./utils/goldlog');
-const log = require('./utils/log');
-const cliInstance = require('./utils/cliInstance');
-const validationSassAvailable = require('./utils/validationSassAvailable');
-const pkgData = require('./config/packageJson');
-const componentBuild = require('./component/build');
-const checkDepsInstalled = require('./utils/checkDepsInstalled');
+const paths = require('../config/paths');
+const getBuildConfig = require('../config/getBuildConfig');
+const iceScriptsPkgData = require('../../package.json');
+const getWebpackConfigProd = require('../config/webpack.config.prod');
+const goldlog = require('../utils/goldlog');
+const log = require('../utils/log');
+const cliInstance = require('../utils/cliInstance');
+const validationSassAvailable = require('../utils/validationSassAvailable');
+const pkgData = require('../config/packageJson');
+const checkDepsInstalled = require('../utils/checkDepsInstalled');
 
 /**
  * 构建项目：cli 调用；云构建方法调用
@@ -53,11 +52,6 @@ module.exports = async function (options) {
   if (!installedDeps) {
     log.error('项目依赖未安装，请先安装依赖。');
     process.exit(1);
-  }
-
-  if (pkgData.type === 'component') {
-    // 组件构建
-    return componentBuild(pkgData);
   }
 
   const buildConfig = getBuildConfig(pkgData, 'build');

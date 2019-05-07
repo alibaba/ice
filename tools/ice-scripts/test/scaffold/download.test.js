@@ -2,7 +2,7 @@ const path = require('path');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 
-const download = require('../../lib/scaffold/download');
+const download = require('../../lib/utils/download');
 
 const projectDir = path.join(__dirname, '../tempDir/download');
 

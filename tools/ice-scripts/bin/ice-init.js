@@ -2,7 +2,7 @@
 
 
 const program = require('commander');
-const init = require('../lib/init');
+const init = require('../lib/commands/init');
 const checkUpdater = require('../lib/utils/checkUpdater');
 const cliInstance = require('../lib/utils/cliInstance');
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const add = require('../lib/add');
+const add = require('../lib/commands/add');
 const checkUpdater = require('../lib/utils/checkUpdater');
 const cliInstance = require('../lib/utils/cliInstance');
 

@@ -1,7 +1,7 @@
-const goldlog = require('./utils/goldlog');
-const pkgData = require('../package.json');
-const log = require('./utils/log');
-const addBlock = require('./scaffold/addBlock');
+const goldlog = require('../utils/goldlog');
+const pkgData = require('../../package.json');
+const log = require('../utils/log');
+const addBlock = require('../utils/addBlock');
 
 /**
  * 添加区块
