@@ -2,12 +2,12 @@ import socket from '@src/socket';
 
 export default {
   dataSource: {
-    id: '0',
-    name: '',
-    pages: [
-    ],
+    pages: [],
+    devSettings: [],
   },
+
   inited: false,
+
   async refresh() {
     if (this.inited) {
       return;
@@ -21,32 +21,33 @@ export default {
       // do something...
     }
   },
-  async addPage(page) {
-    await new Promise(resolve => setTimeout(resolve, 1000));
 
+  async addPage(page) {
     const { pages } = this.dataSource;
-    this.pages = [].concat(pages).concat([{ ...page, id: pages.length }]);
+    this.dataSource.pages = []
+      .concat(pages)
+      .concat([{ ...page, id: pages.length }]);
   },
+
   async reset(folderPath) {
-    try {
-      const dataSource = await socket.emit('project.index.setCurrent', { folderPath });
-      this.dataSource = dataSource;
-    } catch (error) {
-      // do something...
-    }
+    this.dataSource = await socket.emit('project.index.setCurrent', {
+      folderPath,
+    });
   },
+
   async devStart() {
-    const dataSource = await socket.emit(
-      'project.index.devStart',
-      { projectFolderPath: this.dataSource.folderPath },
-    );
-    this.dataSource = dataSource;
+    this.dataSource = await socket.emit('project.index.devStart', {
+      projectFolderPath: this.dataSource.folderPath,
+    });
   },
+
   async devStop() {
-    const dataSource = await socket.emit(
-      'project.index.devStop',
-      { projectFolderPath: this.dataSource.folderPath },
-    );
-    this.dataSource = dataSource;
+    this.dataSource = await socket.emit('project.index.devStop', {
+      projectFolderPath: this.dataSource.folderPath,
+    });
+  },
+
+  async devSettings() {
+    this.dataSource.devSettings = await socket.emit('project.dev.settings');
   },
 };

@@ -260,6 +260,36 @@ export interface ICreatePageParam {
 }
 
 /**
+ * 调试服务设置项
+ */
+export interface IProjectDevSettings {
+  /**
+   * 名称
+   */
+  name: string;
+
+  /**
+   * 描述
+   */
+  description: string;
+
+  /**
+   * 链接
+   */
+  link: string;
+
+  /**
+   * 展示组件名称
+   */
+  componentName: string
+
+  /**
+   * 展示组件的 props
+   */
+  componentProps: object
+}
+
+/**
  * 项目
  *
  *  - 'dev.data' 事件
@@ -279,7 +309,7 @@ export interface IProject extends EventEmitter {
 
   /**
    * 启动调试服务
-   * 
+   *
    * @param settingsEnv 环境变量
    */
   devStart(settingsEnv: object): Promise<IProject>;
@@ -290,8 +320,13 @@ export interface IProject extends EventEmitter {
   devStop(): Promise<IProject>;
 
   /**
+   * 启动调试服务设置项
+   */
+  getDevSettings(): Promise<IProjectDevSettings[]>;
+
+  /**
    * 执行构建
-   * 
+   *
    * @param settingsEnv 环境变量
    */
   build(settingsEnv: object): Promise<IProject>;
@@ -303,7 +338,7 @@ export interface IProject extends EventEmitter {
 
   /**
    * 获取单个布局的信息
-   * 
+   *
    * @param layoutName 布局名
    */
   getLayout(layoutName: string): Promise<IProjectLayout>;
