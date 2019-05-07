@@ -6,10 +6,11 @@ export default function() {
     }
 
     ctx.clientConfig = {
-      // TODO //unpkg.com/iceworks-client@1.0.0-beta.0/build/
-      clientPath: '//127.0.0.1:4444/',
+      // TODO: 区分环境和端口检测
+      // 默认使用 iceworks-client@latest 最新的版本
+      clientPath: '//unpkg.com/iceworks-client@latest/build/',
       socketUrl: '//127.0.0.1:7001/',
-      apiUrl: '//127.0.0.1:7001/api/'
+      apiUrl: '//127.0.0.1:7001/api/',
     };
 
     await next();
