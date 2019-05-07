@@ -14,7 +14,7 @@ async function start(options = {}) {
 
   const opts = { host, port };
   const url = `${opts.host}:${opts.port}`;
-  const spinner = ora('Starting Icewokrs');
+  const spinner = ora('Starting iceworks');
 
   const env = Object.create(process.env);
   env.PORT = opts.port;
@@ -30,7 +30,7 @@ async function start(options = {}) {
 
   child.stderr.on('data', (data) => {
     spinner.stop();
-    console.log('😞  Start Iceworks failure');
+    console.log('😞  Start iceworks failed');
     console.log();
     console.log(data);
     console.log();
@@ -39,7 +39,7 @@ async function start(options = {}) {
   child.on('close', (code) => {
     spinner.stop();
     if (code === 0) {
-      console.log('🚀  Start Iceworks Successful');
+      console.log('🚀  Start iceworks successful');
       console.log();
       console.log(`👉  Ready on ${chalk.yellow(url)}`);
       console.log();

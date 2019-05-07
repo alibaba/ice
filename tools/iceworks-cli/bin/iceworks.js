@@ -10,14 +10,21 @@ checkVersion();
 program.version(require('../package').version).usage('<command> [options]');
 
 program
-  .command('web')
-  .description('start and open the iceworks web')
+  .command('start')
+  .description('start the iceworks server')
   .option(
     '-p, --port <port>',
-    'Port used for the iceworks web server (by default search for available port)'
+    'Port used for the iceworks server (by default search for available port)'
   )
   .action((cmd) => {
-    require('../lib/web')(cleanArgs(cmd));
+    require('../lib/start')(cleanArgs(cmd));
+  });
+
+program
+  .command('stop')
+  .description('stop the iceworks server')
+  .action(() => {
+    require('../lib/stop')();
   });
 
 // output help information on unknown commands
@@ -43,7 +50,7 @@ program.commands.forEach((c) => c.on('--help', () => console.log()));
 program.parse(process.argv);
 
 if (!process.argv.slice(2).length) {
-  require('../lib/web')(cleanArgs());
+  require('../lib/start')(cleanArgs());
 }
 
 function camelize(str) {
