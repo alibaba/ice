@@ -18,30 +18,60 @@ async function start(options = {}) {
 
   const env = Object.create(process.env);
   env.PORT = opts.port;
-  const child = spawn('npm', ['start'], {
+
+  const hasStart = options.command === 'start';
+  const args = hasStart ? ['run', 'start_daemon'] : ['start'];
+  const child = spawn('npm', args, {
     stdio: ['pipe'],
     cwd: path.join(process.cwd(), 'server'),
     env,
   });
 
-  child.stdout.on('data', () => {
-    spinner.start();
-  });
+  if (hasStart) {
+    child.stdout.on('data', () => {
+      spinner.start();
+    });
 
-  child.on('close', (code) => {
-    spinner.stop();
-    if (code === 0) {
-      console.log();
-      console.log('🚀  Start iceworks successful');
-      console.log();
-      console.log(`👉  Ready on ${chalk.yellow(url)}`);
-      console.log();
-    } else {
-      console.log();
-      console.log('😞  Start iceworks failed');
-      console.log();
+    child.on('close', (code) => {
+      spinner.stop();
+      if (code === 0) {
+        successMsg(url);
+      } else {
+        failedMsg();
+      }
+    });
+
+    return;
+  }
+
+  child.stdout.on('data', (data) => {
+    spinner.start();
+    if (data.toString().indexOf('started on http://127.0.0.1') !== -1) {
+      spinner.stop();
+      successMsg(url);
     }
   });
+}
+
+/**
+ * Log a success `message` to the console and exit.
+ * @param {url}
+ */
+function successMsg(url) {
+  console.log();
+  console.log('🚀  Start iceworks successful');
+  console.log();
+  console.log(`👉  Ready on ${chalk.yellow(url)}`);
+  console.log();
+}
+
+/**
+ * Log an error `message` to the console and exit.
+ */
+function failedMsg() {
+  console.log();
+  console.log('😞  Start iceworks failed');
+  console.log();
 }
 
 module.exports = (...args) => {

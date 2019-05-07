@@ -11,7 +11,9 @@ program.version(require('../package').version).usage('<command> [options]');
 
 program
   .command('start')
-  .description('start the iceworks server')
+  .description(
+    "Start the iceworks server, whether run at background, so you don't need nohup"
+  )
   .option(
     '-p, --port <port>',
     'Port used for the iceworks server (by default search for available port)'
@@ -22,7 +24,9 @@ program
 
 program
   .command('stop')
-  .description('stop the iceworks server')
+  .description(
+    'Stop the iceworks server, will kill master process which will handler and notice worker and agent to gracefull exit.'
+  )
   .action(() => {
     require('../lib/stop')();
   });
@@ -70,6 +74,9 @@ function cleanArgs(cmd) {
         args[key] = cmd[key];
       }
     });
+    if (cmd.parent && cmd.parent.rawArgs) {
+      args.command = cmd.parent.rawArgs[2];
+    }
   }
   return args;
 }
