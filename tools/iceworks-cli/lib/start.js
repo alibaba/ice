@@ -28,20 +28,17 @@ async function start(options = {}) {
     spinner.start();
   });
 
-  child.stderr.on('data', (data) => {
-    spinner.stop();
-    console.log('😞  Start iceworks failed');
-    console.log();
-    console.log(data);
-    console.log();
-  });
-
   child.on('close', (code) => {
     spinner.stop();
     if (code === 0) {
+      console.log();
       console.log('🚀  Start iceworks successful');
       console.log();
       console.log(`👉  Ready on ${chalk.yellow(url)}`);
+      console.log();
+    } else {
+      console.log();
+      console.log('😞  Start iceworks failed');
       console.log();
     }
   });

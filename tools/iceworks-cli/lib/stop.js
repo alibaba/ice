@@ -16,6 +16,7 @@ module.exports = function stop() {
 
   child.on('close', () => {
     spinner.stop();
+    console.log();
     console.log(`✋  ${chalk.yellow('Stop iceworks successful')}`);
     console.log();
   });
