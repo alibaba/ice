@@ -1,6 +1,6 @@
 {
   "name": "iceworks",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "start and open the iceworks web",
   "main": "bin/iceworks.js",
   "bin": {
