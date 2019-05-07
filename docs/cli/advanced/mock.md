@@ -11,7 +11,7 @@ order: 4
 
 在项目根目录下创建  `projectName/mock/index.js` 文件
 
-```
+```js
 // mock/index.js
 const foo = require('./foo.json');
 const bar = require('./bar');
@@ -42,7 +42,6 @@ module.exports = {
 
 ![](https://cdn.yuque.com/lark/0/2018/png/71071/1531298503243-62862b39-3a29-4ab5-b7f4-b2ef7f30ed08.png#align=left&display=inline&height=260&originHeight=494&originWidth=1416&status=done&width=746)
 
-<a name="0a3168ec"></a>
 ## 实际应用
 
 在模板中我们将服务接口统一维护在  `src/api/index.js`  中作为入口文件，有利于统一管理和可维护性，然后在需要引用的地方 `import { xxx } from '@api'` 即可；当然，也可以按照功能模块对接口进行归类：
@@ -58,7 +57,7 @@ module.exports = {
   - index.js
 ```
 
-```
+```js
 // User.js
 
 export async function login(params) {
@@ -88,4 +87,3 @@ export async function getUserProfile() {
   return axios('/api/profile');
 }
 ```
-
