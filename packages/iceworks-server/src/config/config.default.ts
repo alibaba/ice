@@ -29,13 +29,6 @@ export = (appInfo: any) => {
     allowMethods: 'GET,PUT,POST,DELETE',
   };
 
-  config.view = {
-    defaultViewEngine: 'nunjucks',
-    mapping: {
-      '.html': 'nunjucks',
-    },
-  };
-
   config.security = {
     csrf: {
       headerName: 'x-csrf-token',
