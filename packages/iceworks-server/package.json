@@ -50,6 +50,11 @@
     "type": "git",
     "url": ""
   },
+  "midway-bin-build": {
+    "include": [
+      "app/view"
+    ]
+  },
   "author": "chenbin92",
   "license": "MIT"
 }
