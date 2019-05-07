@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 import fs from 'fs';
-import isBinaryFile from 'isbinaryfile';
+import { isBinaryFileSync } from 'isbinaryfile';
 import LineByLine from 'line-by-line';
 import path from 'path';
 import React, { Component } from 'react';
@@ -25,7 +25,7 @@ function recursiveReaddirSync(dirPath, rootDir) {
     stats = fs.lstatSync(fullPath);
     if (stats.isDirectory()) {
       list = list.concat(recursiveReaddirSync(fullPath, rootDir));
-    } else if (!isBinaryFile.sync(fullPath)) {
+    } else if (!isBinaryFileSync(fullPath)) {
       list.push([path.relative(rootDir, fullPath), fullPath]);
     }
   });
