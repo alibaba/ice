@@ -1,6 +1,5 @@
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
-const fs = require('fs');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
