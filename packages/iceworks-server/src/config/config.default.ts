@@ -4,8 +4,15 @@ export = (appInfo: any) => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1555062042825_9790';
 
-  // add your config here
-  config.middleware = [ 'client' ];
+  // middleware config
+  config.middleware = ['client'];
+
+  config.view = {
+    defaultViewEngine: 'nunjucks',
+    mapping: {
+      '.html': 'nunjucks',
+    },
+  };
 
   // socket.io
   config.io = {
@@ -19,20 +26,13 @@ export = (appInfo: any) => {
 
   config.cors = {
     origin: '*',
-    allowMethods: 'GET,PUT,POST,DELETE'
-  };
-
-  config.view = {
-    defaultViewEngine: 'nunjucks',
-    mapping: {
-      '.html': 'nunjucks',
-    },
+    allowMethods: 'GET,PUT,POST,DELETE',
   };
 
   config.security = {
     csrf: {
       headerName: 'x-csrf-token',
-      ignore: ctx => ctx.ip === '127.0.0.1',
+      ignore: (ctx) => ctx.ip === '127.0.0.1',
     },
   };
 

@@ -1,8 +1,11 @@
 {
   "name": "iceworks-server",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.2",
   "description": "iceworks server",
-  "private": true,
+  "files": [
+    "dist/",
+    "data/"
+  ],
   "dependencies": {
     "conf": "^4.0.1",
     "detect-port": "^1.3.0",
@@ -50,6 +53,11 @@
   "repository": {
     "type": "git",
     "url": ""
+  },
+  "midway-bin-build": {
+    "include": [
+      "app/view"
+    ]
   },
   "author": "chenbin92",
   "license": "MIT"
