@@ -1,21 +1,14 @@
-# iceworks CLI
+# Iceworks CLI
 
-CLI tool for iceworks，start and stop the iceworks server.
+A simple CLI for scaffolding Web projects.
 
 ## Usage
 
 ```bash
 $ npm i iceworks -g
-
-# start the iceworks server
-# or iceworks start
-# 👉 Ready on http://127.0.0.1:8001
-$ iceworks
-
-# stop the iceworks server
-$ iceworks stop
+$ iceworks # start the iceworks server
 ```
 
-## License
+## TODO
 
-MIT
+- Limit the number of Iceworks instance, only one instance can be run.

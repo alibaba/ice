@@ -5,27 +5,11 @@ const chalk = require('chalk');
 const program = require('commander');
 const checkVersion = require('../lib/checkVersion');
 
-checkVersion();
+(async () => {
+  await checkVersion();
+})();
 
 program.version(require('../package').version).usage('<command> [options]');
-
-program
-  .command('start')
-  .description('start the iceworks server')
-  .option(
-    '-p, --port <port>',
-    'Port used for the iceworks server (by default search for available port)'
-  )
-  .action((cmd) => {
-    require('../lib/start')(cleanArgs(cmd));
-  });
-
-program
-  .command('stop')
-  .description('stop the iceworks server')
-  .action(() => {
-    require('../lib/stop')();
-  });
 
 // output help information on unknown commands
 program.arguments('<command>').action((cmd) => {
@@ -49,10 +33,6 @@ program.commands.forEach((c) => c.on('--help', () => console.log()));
 
 program.parse(process.argv);
 
-if (!process.argv.slice(2).length) {
-  require('../lib/start')(cleanArgs());
-}
-
 function camelize(str) {
   return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''));
 }
@@ -70,6 +50,13 @@ function cleanArgs(cmd) {
         args[key] = cmd[key];
       }
     });
+    if (cmd.parent && cmd.parent.rawArgs) {
+      args.command = cmd.parent.rawArgs[2];
+    }
   }
   return args;
+}
+
+if (!process.argv.slice(2).length) {
+  require('../lib/start')(cleanArgs());
 }
