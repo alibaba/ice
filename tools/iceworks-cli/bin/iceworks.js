@@ -11,28 +11,6 @@ const checkVersion = require('../lib/checkVersion');
 
 program.version(require('../package').version).usage('<command> [options]');
 
-program
-  .command('start')
-  .description(
-    "Start the iceworks server, whether run at background, so you don't need nohup"
-  )
-  .option(
-    '-p, --port <port>',
-    'Port used for the iceworks server (by default search for available port)'
-  )
-  .action((cmd) => {
-    require('../lib/start')(cleanArgs(cmd));
-  });
-
-program
-  .command('stop')
-  .description(
-    'Stop the iceworks server, will kill master process which will handler and notice worker and agent to gracefull exit.'
-  )
-  .action(() => {
-    require('../lib/stop')();
-  });
-
 // output help information on unknown commands
 program.arguments('<command>').action((cmd) => {
   program.outputHelp();

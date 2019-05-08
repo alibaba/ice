@@ -19,30 +19,11 @@ async function start(options = {}) {
   const env = Object.create(process.env);
   env.PORT = opts.port;
 
-  const hasStart = options.command === 'start';
-  const args = hasStart ? ['run', 'start_daemon'] : ['start'];
-  const child = spawn('npm', args, {
+  const child = spawn('npm', ['start'], {
     stdio: ['pipe'],
     cwd: path.join(process.cwd(), 'server'),
     env,
   });
-
-  if (hasStart) {
-    child.stdout.on('data', () => {
-      spinner.start();
-    });
-
-    child.on('close', (code) => {
-      spinner.stop();
-      if (code === 0) {
-        successMsg(url);
-      } else {
-        failedMsg();
-      }
-    });
-
-    return;
-  }
 
   child.stdout.on('data', (data) => {
     spinner.start();
@@ -50,6 +31,10 @@ async function start(options = {}) {
       spinner.stop();
       successMsg(url);
     }
+  });
+
+  child.on('error', () => {
+    failedMsg();
   });
 }
 

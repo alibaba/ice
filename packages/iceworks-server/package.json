@@ -36,7 +36,6 @@
   },
   "scripts": {
     "start": "egg-scripts start --title=egg-server-iceworks-server --framework=midway",
-    "start_daemon": "egg-scripts start --daemon --title=egg-server-iceworks-server --framework=midway",
     "stop": "egg-scripts stop --title=egg-server-iceworks-server",
     "start_build": "npm run build && NODE_ENV=development midway-bin dev",
     "dev": "NODE_ENV=local midway-bin dev --ts",
