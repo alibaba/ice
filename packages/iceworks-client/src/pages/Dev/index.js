@@ -2,16 +2,18 @@ import React, { useEffect } from 'react';
 import { Button } from '@alifd/next';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
-import Modal from '@components/Modal';
 import XtermTerminal from '@components/XtermTerminal';
-import useModal from '@hooks/useModal';
 import stores from '@stores';
+import useModal from '@hooks/useModal';
 import IceNotification from '@icedesign/notification';
+import SettingsModal from './components/SettingsModal';
+import devStores from './stores';
 import styles from './index.module.scss';
 
 const Dev = () => {
-  const project = stores.useStore('project');
   const { on, toggleModal } = useModal();
+  const project = stores.useStore('project');
+  const dev = devStores.useStore('dev');
 
   const devStart = async () => {
     try {
@@ -36,9 +38,9 @@ const Dev = () => {
     }
   };
 
-  const devSettings = async () => {
+  const getSettings = async () => {
     try {
-      await project.devSettings();
+      await dev.getSettings();
     } catch (error) {
       IceNotification.error({
         message: '获取配置项失败',
@@ -48,10 +50,8 @@ const Dev = () => {
   };
 
   useEffect(() => {
-    devSettings();
+    getSettings();
   }, []);
-
-  console.log(project.dataSource);
 
   return (
     <Card
@@ -64,17 +64,29 @@ const Dev = () => {
         {/* Left Button Group */}
         <div className={styles.leftActionBar}>
           {project.dataSource.devStatus !== 'working' ? (
-            <Button type="primary" className={styles.btn} onClick={devStart}>
+            <Button
+              type="primary"
+              className={styles.leftButton}
+              onClick={devStart}
+            >
               <Icon type="start" className={styles.icon} />
               运行
             </Button>
           ) : (
-            <Button type="primary" className={styles.btn} onClick={devStop}>
+            <Button
+              type="primary"
+              className={styles.leftButton}
+              onClick={devStop}
+            >
               <Icon type="stop" className={styles.icon} />
               停止
             </Button>
           )}
-          <Button type="secondary" className={styles.btn} onClick={toggleModal}>
+          <Button
+            type="secondary"
+            className={styles.leftButton}
+            onClick={toggleModal}
+          >
             <Icon type="settings" className={styles.icon} />
             设置
           </Button>
@@ -83,13 +95,13 @@ const Dev = () => {
         {/* Right Button Group */}
         <div className={styles.rightActionBar}>
           <Button.Group>
-            <Button type="primary">
+            <Button type="primary" className={styles.rightButton}>
               <Icon type="pc" /> 日志
             </Button>
-            <Button type="secondary">
+            <Button type="secondary" className={styles.rightButton}>
               <Icon type="projects" /> 仪表盘
             </Button>
-            <Button type="secondary">
+            <Button type="secondary" className={styles.rightButton}>
               <Icon type="wrencha" /> 构建分析
             </Button>
           </Button.Group>
@@ -101,10 +113,12 @@ const Dev = () => {
         <XtermTerminal />
       </div>
 
-      {/* Modal */}
-      <Modal visible={on} onCancel={toggleModal}>
-        Modal Content
-      </Modal>
+      {/*  Settings Modal */}
+      <SettingsModal
+        on={on}
+        data={dev.dataSource.settings}
+        toggleModal={toggleModal}
+      />
     </Card>
   );
 };
