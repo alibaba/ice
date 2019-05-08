@@ -3,6 +3,9 @@ import socket from '@src/socket';
 export default {
   dataSource: {
     name: '',
+    folderPath: '',
+    domain: '',
+    devStatus: 'normal',
   },
 
   inited: false,

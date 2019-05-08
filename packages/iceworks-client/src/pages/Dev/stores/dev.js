@@ -5,7 +5,9 @@ export default {
     settings: [],
   },
 
-  async getSettings() {
-    this.dataSource.settings = await socket.emit('project.dev.settings');
+  async getDevSettings(projectFolderPath) {
+    this.dataSource.settings = await socket.emit('project.dev.settings', {
+      projectFolderPath,
+    });
   },
 };

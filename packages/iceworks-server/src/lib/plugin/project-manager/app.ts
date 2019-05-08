@@ -8,10 +8,12 @@ class ProjectManager {
 
   async ready() {
     const projectFolderPaths = storage.get('projects');
-    this.projects = await Promise.all(projectFolderPaths.map(async (projectFolderPath) => {
-      const project = new Project(projectFolderPath);
-      return project;
-    }));
+    this.projects = await Promise.all(
+      projectFolderPaths.map(async (projectFolderPath) => {
+        const project = new Project(projectFolderPath);
+        return project;
+      })
+    );
   }
 
   getProjects(): Project[] {
@@ -19,7 +21,9 @@ class ProjectManager {
   }
 
   getProject(projectFolderPath: string): Project {
-    const project = this.projects.find(({ folderPath }) => folderPath === projectFolderPath);
+    const project = this.projects.find(
+      ({ folderPath }) => folderPath === projectFolderPath
+    );
     if (!project) {
       throw new Error('没有找到对应的项目');
     }
@@ -52,7 +56,7 @@ class ProjectManager {
   async lint() {}
 }
 
-export default app => {
+export default (app) => {
   app.projectManager = new ProjectManager();
   app.beforeStart(async () => {
     await app.projectManager.ready();

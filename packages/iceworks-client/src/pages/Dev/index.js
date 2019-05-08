@@ -38,19 +38,13 @@ const Dev = () => {
     }
   };
 
-  const getSettings = async () => {
-    try {
-      await dev.getSettings();
-    } catch (error) {
-      IceNotification.error({
-        message: '获取配置项失败',
-        description: error.message || '请重试。',
-      });
-    }
+  const handleDevSettings = () => {
+    dev.getDevSettings(project.dataSource.folderPath);
+    toggleModal();
   };
 
   useEffect(() => {
-    getSettings();
+    project.refresh();
   }, []);
 
   return (
@@ -85,7 +79,7 @@ const Dev = () => {
           <Button
             type="secondary"
             className={styles.leftButton}
-            onClick={toggleModal}
+            onClick={handleDevSettings}
           >
             <Icon type="settings" className={styles.icon} />
             设置

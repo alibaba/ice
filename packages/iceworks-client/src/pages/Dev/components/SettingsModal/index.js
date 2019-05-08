@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
-import styles from './index.module.scss';
-import DynamicForm from '../../../../components/DynamicForm';
+import DynamicForm from '@components/DynamicForm';
 
 const formItemLayout = {
   labelCol: {
