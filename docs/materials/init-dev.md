@@ -69,6 +69,6 @@ $ ls build/
 materials.json
 ```
 
-这份物料数据时一份标准协议，可以在 Iceworks, fusion.design 以及其他各种端使用，具体协议规范请参考 [物料数据协议](https://www.yuque.com/ice-team/wiki/ay2251)。
+这份物料数据时一份标准协议，可以在 iceworks, fusion.design 以及其他各种端使用，具体协议规范请参考 [物料数据协议](https://www.yuque.com/ice-team/wiki/ay2251)。
 
-目前这只是一份静态数据，想要在 Iceworks 里使用这份物料的话需要参考下文将其托管到某些服务上生成一个 url。
+目前这只是一份静态数据，想要在 iceworks 里使用这份物料的话需要参考下文将其托管到某些服务上生成一个 url。

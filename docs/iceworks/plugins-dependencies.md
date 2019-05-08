@@ -1,10 +1,10 @@
 ---
 title: 插件-依赖管理
-category: Iceworks
+category: iceworks
 order: 9
 ---
 
-项目中的依赖需要严格管理，Iceworks 提供了依赖管理插件，你可以：
+项目中的依赖需要严格管理，iceworks 提供了依赖管理插件，你可以：
 
 - 查看项目的依赖；
 - 升级项目的依赖；

@@ -1,6 +1,6 @@
 ---
 title: 插件-布局列表和页面列表
-category: Iceworks
+category: iceworks
 order: 11
 ---
 

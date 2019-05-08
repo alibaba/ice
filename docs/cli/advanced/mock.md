@@ -38,7 +38,7 @@ module.exports = {
 };
 ```
 
-通过 Iceworks 启动项目服务，假设启动的端口是 [http://localhost:4444](http://localhost:4444/)，打开浏览器如下：
+通过 iceworks 启动项目服务，假设启动的端口是 [http://localhost:4444](http://localhost:4444/)，打开浏览器如下：
 
 ![](https://cdn.yuque.com/lark/0/2018/png/71071/1531298503243-62862b39-3a29-4ab5-b7f4-b2ef7f30ed08.png#align=left&display=inline&height=260&originHeight=494&originWidth=1416&status=done&width=746)
 

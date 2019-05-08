@@ -22,7 +22,7 @@ order: 5
 
 以下两种方式都可以使用：
 
-1. 在 Iceworks 上点击代理配置的编辑按钮，进行代理配置
+1. 在 iceworks 上点击代理配置的编辑按钮，进行代理配置
 2. 在 `package.json` 中配置 `proxyConfig` 字段：
 
   ```js

@@ -66,7 +66,7 @@ ReactDOM.render((
 
 模板一般用于初始化项目，初始化项目一般有两种方式：
 
-- 使用 Iceworks 创建项目
+- 使用 iceworks 创建项目
 - 使用 ice-scripts 通过 init 命令创建项目：`ice init -t ${npmName}`
 
 ## 区块
@@ -77,7 +77,7 @@ ReactDOM.render((
 
 将区块添加到项目里同样也有两种方式：
 
-- 在 Iceworks 中点击添加区块
+- 在 iceworks 中点击添加区块
 - 使用 ice-scripts 通过 `add block` 命令添加：
 
   ```bash

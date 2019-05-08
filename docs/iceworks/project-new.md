@@ -1,18 +1,18 @@
 ---
 title: 项目管理-新建项目
-category: Iceworks
+category: iceworks
 order: 0
 ---
 
-Iceworks 提供了两种方式开始你的项目管理。
+iceworks 提供了两种方式开始你的项目管理。
 
 ## 从已有的项目中导入
 
 ![从已有的项目中打开](https://img.alicdn.com/tfs/TB1TPiuMVzqK1RjSZFCXXbbxVXa-875-580.gif)
 
-将已有项目接入到 Icewokrs 中，需要增加对应信息的项目描述。
+将已有项目接入到 icewokrs 中，需要增加对应信息的项目描述。
 
-## 1. 描述项目可被 Iceworks 识别
+## 1. 描述项目可被 iceworks 识别
 
 `package.json` 文件 `keywords` 字段增加 `ice-scaffold` 表示这是一个适配 ice 规范的模板项目。
 

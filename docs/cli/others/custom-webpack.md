@@ -7,7 +7,7 @@ order: 9
 
 注意，如果是想使用社区的 [create-react-app](https://github.com/facebook/create-react-app) 开发项目：
 
-- Iceworks 里提供了基于 create-react-app 的模板，支持 ice-scripts 核心的工程能力，直接使用即可（虽然也不是非常推荐）
+- iceworks 里提供了基于 create-react-app 的模板，支持 ice-scripts 核心的工程能力，直接使用即可（虽然也不是非常推荐）
 - 如果自己想基于 create-react-app 配置，可以参考模板代码，也可以参考本文档，除了 create-react-app 自身特殊的重写配置机制外其余都是 webpack 通用的能力
 
 ## 基础组件引入

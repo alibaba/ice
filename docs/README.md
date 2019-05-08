@@ -30,7 +30,7 @@ markdown 格式的文档内容
 请注意大小写和复数形式
 
 * `ICE`: 品牌名, 中文称之为 `飞冰`
-* `Iceworks`: 配套 GUI 软件
+* `iceworks`: 配套 GUI 软件
 * `物料 - marterial`: 包含区块, 布局, 模板和组件
 * `区块 - block`: 复用的最小代码片段
 * `布局 - layout`: 为 ICE 提供整体布局方案的代码

@@ -1,10 +1,10 @@
 ---
 title: 项目管理-新建页面
-category: Iceworks
+category: iceworks
 order: 1
 ---
 
-Iceworks 提供了项目管理中新建页面能力，点击项目面板，点击「新建页面」开始新建一个页面。
+iceworks 提供了项目管理中新建页面能力，点击项目面板，点击「新建页面」开始新建一个页面。
 
 选择布局：当项目中有多个布局时，你需要先选择布局。
 
@@ -32,7 +32,7 @@ Iceworks 提供了项目管理中新建页面能力，点击项目面板，点�
 点击「生成页面」完成新建流程：
 
 - 填写必要信息；
-- Iceworks 将新建页面并执行「热更新」；
+- iceworks 将新建页面并执行「热更新」；
 - 「热更新」完成，调试页面将自动刷新：可以看到左侧导航中已新增了“Nav4”。
 
-![生成页面](https://img.alicdn.com/tfs/TB1UG1fM3DqK1RjSZSyXXaxEVXa-1425-818.gif) 
+![生成页面](https://img.alicdn.com/tfs/TB1UG1fM3DqK1RjSZSyXXaxEVXa-1425-818.gif)

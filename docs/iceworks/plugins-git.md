@@ -1,10 +1,10 @@
 ---
 title: 插件-Git 面板
-category: Iceworks
+category: iceworks
 order: 10
 ---
 
-Iceworks 提供了 Git 仓库管理的能力。
+iceworks 提供了 Git 仓库管理的能力。
 
 1. 关联仓库：
 

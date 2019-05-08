@@ -21,7 +21,7 @@ ICE 提供了基于 TypeScript 的基础模板，该模板将飞冰（ICE）本�
 
 ![ts-scaffold](https://img.alicdn.com/tfs/TB1JfdIH9zqK1RjSZPxXXc4tVXa-2861-1568.png)
 
-你只需要在 Iceworks 模板界面选择对应模板进行初始化：
+你只需要在 iceworks 模板界面选择对应模板进行初始化：
 
 ![](https://img.alicdn.com/tfs/TB1.YxLHY2pK1RjSZFsXXaNlXXa-954-684.png)
 

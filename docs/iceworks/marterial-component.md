@@ -1,10 +1,10 @@
 ---
 title: 物料-组件面板
-category: Iceworks
+category: iceworks
 order: 5
 ---
 
-Iceworks 提供了丰富的组件供用户进行选择用以开发页面。
+iceworks 提供了丰富的组件供用户进行选择用以开发页面。
 
 ## 组件市场
 

@@ -3,7 +3,7 @@ title: 快速上手
 order: 2
 ---
 
-ice-scripts 提供了 `init/dev/build` 的开发命令，如果使用 Iceworks 开发，那么大多数时候你不需要关心这些命令。
+ice-scripts 提供了 `init/dev/build` 的开发命令，如果使用 iceworks 开发，那么大多数时候你不需要关心这些命令。
 
 ### ice init
 

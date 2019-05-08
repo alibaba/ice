@@ -20,7 +20,7 @@ order: 1
 - 使用 ice-devtools 生成物料数据，然后同步数据生成一个 url，同步方式二选一：
   - 同步到 Fusion 站点（仅支持 React 物料）
   - 通过 npm 包形式同步到 unpkg（支持任何物料）
-- 在 Iceworks 里通过自定义物料功能添加上述的 url，然后开发者就可以在开发项目时使用这些物料了
+- 在 iceworks 里通过自定义物料功能添加上述的 url，然后开发者就可以在开发项目时使用这些物料了
 
 ## ice-devtools 介绍
 

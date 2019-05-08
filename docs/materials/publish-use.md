@@ -11,7 +11,7 @@ order: 3
 |-----------------|-------------------|---------------|
 |  官方推荐        |   是              |    一般        |
 |  门户网站     |   能                 |    不能        |
-|在 Iceworks 中使用 |   能             |    能         |
+|在 iceworks 中使用 |   能             |    能         |
 |  需要登录注册帐号  |   需要            |    不需要       |
 |  线上管理物料      |  能               |    不能        |
 |  支持的物料体系     | 仅支持 React 物料 |   不限制       |
@@ -41,8 +41,8 @@ $ npm run sync-unpkg
 
 > 物料同步完成
 > 物料源地址: https://fusion.design/api/v1/sites/xxxx/materials
-> 请在 Iceworks 设置面板中添加自定义物料源
+> 请在 iceworks 设置面板中添加自定义物料源
 
-此时只需要将物料源地址 `https://fusion.design/api/v1/sites/xxxx/materials` 添加到 Iceworks 自定义物料源里，就可以在初始化项目或者添加页面时使用这份物料了。
+此时只需要将物料源地址 `https://fusion.design/api/v1/sites/xxxx/materials` 添加到 iceworks 自定义物料源里，就可以在初始化项目或者添加页面时使用这份物料了。
 
 ![](https://img.alicdn.com/tfs/TB1o4AyxXzqK1RjSZFCXXbbxVXa-1740-1200.png)

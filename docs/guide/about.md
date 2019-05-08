@@ -12,9 +12,9 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 ## 特性
 
 - **由官方维护的高质量 React 物料**：包含 [Fusion](https://fusion.design) 基础组件，30+ 业务组件，40+ 模板，200+ 区块，赋能业务
-- **基于 Iceworks 的 GUI 开发链路**：基于 Electron 开发的桌面端工具，让开发链路更加简单易用
+- **基于 iceworks 的 GUI 开发链路**：基于 Electron 开发的桌面端工具，让开发链路更加简单易用
 - **基于 ice-scripts 的工程构建能力**：屏蔽 webpack/babel 等的复杂配置，同时提供丰富的自定义能力，让 React 项目的开发构建更加简单
-- **基于 ice-devtools 快速构建物料体系**：支持构建 React/Vue/Angular/…… 等不同的前端框架的物料体系；支持业务根据自身需求开发私有物料，同时在 Iceworks 端灵活使用
+- **基于 ice-devtools 快速构建物料体系**：支持构建 React/Vue/Angular/…… 等不同的前端框架的物料体系；支持业务根据自身需求开发私有物料，同时在 iceworks 端灵活使用
 
 ## 概念
 
@@ -30,9 +30,9 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 基于这套理念，我们建设了一些社区通用物料，同时业务也可以建设自己的私有物料体系，具体请参考 [自定义物料](/docs/materials/about.md)。
 
-### Iceworks
+### iceworks
 
-基于 Electron 开发的 GUI 开发工具，Iceworks 核心解决如下两个问题：
+基于 Electron 开发的 GUI 开发工具，iceworks 核心解决如下两个问题：
 
 1. 通过 GUI 屏蔽前端工程及环境配置的复杂度
 2. 借助 GUI 提供更加丰富的能力：比如基于丰富的模板创建项目、根据区块组装新页面、Git 面板、依赖管理等
@@ -50,7 +50,7 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 ### ice-devtools
 
-物料开发&管理工具，ice-devtools 提供了物料从初始化到发布的完整链路，在此基础上我们约定了一套物料协议，保证基于 ice-devtools 开发的物料可以直接在 Iceworks 中使用。
+物料开发&管理工具，ice-devtools 提供了物料从初始化到发布的完整链路，在此基础上我们约定了一套物料协议，保证基于 ice-devtools 开发的物料可以直接在 iceworks 中使用。
 
 ice-devtools 不仅支持业务自定义自身的物料模板，同时也支持 React/Vue 等不同框架的物料模板，具体请参考 [自定义物料](/docs/materials/about.md)。
 

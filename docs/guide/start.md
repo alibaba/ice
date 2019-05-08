@@ -5,13 +5,13 @@ order: 2
 
 飞冰（ICE）本身不限定使用 React/Vue 或其他前端框架，只要选择对应的物料源即可。但是相比其他框架，我们在 React 领域有更多的沉淀，因此整个创建及后续的开发流程都会以 React 为例，其他框架相关知识可自行查看对应文档。
 
-## 使用 Iceworks 创建项目（GUI）
+## 使用 iceworks 创建项目（GUI）
 
-[Iceworks](/iceworks) 是基于 Electron 开发的 GUI 开发工具，我们希望通过 Iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目。
+[iceworks](/iceworks) 是基于 Electron 开发的 GUI 开发工具，我们希望通过 iceworks 屏蔽前端工程环境的复杂度，让开发者可以零配置的开始一个项目。
 
-### 1. 安装 Iceworks
+### 1. 安装 iceworks
 
-Iceworks 是基于 Electron 开发的桌面端应用，因此首先需要在 [这里](/iceworks) 下载并安装该应用。
+iceworks 是基于 Electron 开发的桌面端应用，因此首先需要在 [这里](/iceworks) 下载并安装该应用。
 
 ### 2. 创建项目
 

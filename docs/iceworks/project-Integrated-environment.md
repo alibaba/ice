@@ -1,14 +1,14 @@
 ---
 title: 项目管理-集成环境
-category: Iceworks
+category: iceworks
 order: 2
 ---
 
-Iceworks 提供了项目管理中的集成环境，点击项目面板，进入到项目的集成环境。
+iceworks 提供了项目管理中的集成环境，点击项目面板，进入到项目的集成环境。
 
 ## 工程管理
 
-调试服务：点击「启动调试服务」，Iceworks 将启动调试服务并使用浏览器打开调试页面。同时你可以在 Iceworks 项目面板上点击 URL 打开调试页面。点击「停止调试服务」将停止服务。
+调试服务：点击「启动调试服务」，iceworks 将启动调试服务并使用浏览器打开调试页面。同时你可以在 iceworks 项目面板上点击 URL 打开调试页面。点击「停止调试服务」将停止服务。
 
 ![启动调试服务](https://img.alicdn.com/tfs/TB1MaamM9zqK1RjSZFjXXblCFXa-1425-818.gif)
 

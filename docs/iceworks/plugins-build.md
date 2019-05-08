@@ -1,6 +1,6 @@
 ---
 title: 插件-构建结果
-category: Iceworks
+category: iceworks
 order: 8
 ---
 
