@@ -1,0 +1,11 @@
+{
+  "name": "iceworks",
+  "version": "3.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^5.0.1"
+  }
+}
