@@ -50,6 +50,9 @@ const allCategories = {
     // ice-scripts
     title: '',
     children: [{
+      title: '基础指南',
+      dir: 'basic',
+    }, {
       title: '进阶指南',
       dir: 'advanced',
     }, {

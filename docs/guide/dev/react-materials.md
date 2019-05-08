@@ -9,7 +9,7 @@ order: 1
 
 ### 基础组件
 
-使用由阿里巴巴 [Fusion 团队](https://fusion.design) 开源的 [Next 组件](/component/affix)，包括按钮、弹窗、下拉等组件。Next 组件足够丰富且稳定，同时在国际化、无障碍方面做了较多沉淀，另外 Next 组件最大的特性是具有非常强大灵活的主题定制能力，使其可以满足更多的业务场景，具体可参考文档 [配置主题](/docs/cli/theme.md)。
+使用由阿里巴巴 [Fusion 团队](https://fusion.design) 开源的 [Next 组件](/component/affix)，包括按钮、弹窗、下拉等组件。Next 组件足够丰富且稳定，同时在国际化、无障碍方面做了较多沉淀，另外 Next 组件最大的特性是具有非常强大灵活的主题定制能力，使其可以满足更多的业务场景，具体可参考文档 [配置主题](/docs/cli/basic/theme.md)。
 
 安装组件依赖：
 
