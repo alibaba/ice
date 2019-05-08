@@ -10,8 +10,9 @@ import {
   IProjectPage,
   IProjectDependency,
   IProjectDevSettings,
+  IProjectConfigurationSettings,
 } from '../../interface';
-import { DEV_SETTINGS } from './config';
+import { DEV_SETTINGS, CONFIGURATION_SETTINGS } from './config';
 
 const readdirAsync = util.promisify(fs.readdir);
 
@@ -131,5 +132,9 @@ export default class Project extends EventEmitter {
 
   async getDevSettings(): Promise<IProjectDevSettings[]> {
     return DEV_SETTINGS;
+  }
+
+  async getConfigurationSettings(): Promise<IProjectConfigurationSettings[]> {
+    return CONFIGURATION_SETTINGS;
   }
 }

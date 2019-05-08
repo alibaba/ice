@@ -18,6 +18,10 @@ const menuConfig = [
         name: 'build',
         path: '/work/build',
       },
+      {
+        name: 'Configuration',
+        path: '/work/configuration',
+      },
     ],
   },
   {
