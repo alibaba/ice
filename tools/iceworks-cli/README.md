@@ -1,6 +1,6 @@
-# iceworks CLI
+# Iceworks CLI
 
-CLI tool for iceworks，start and stop the iceworks server.
+A simple CLI for scaffolding Web projects.
 
 ## Basic Usage
 

@@ -1,7 +1,7 @@
 {
   "name": "iceworks",
   "version": "0.1.0-beta.0",
-  "description": "start and open the iceworks web",
+  "description": "A simple CLI for scaffolding Web projects",
   "main": "bin/iceworks.js",
   "bin": {
     "iceworks": "bin/iceworks.js"
