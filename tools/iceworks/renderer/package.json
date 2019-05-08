@@ -17,6 +17,7 @@
     "deepcopy": "0.x",
     "default-shell": "^1.0.1",
     "dynamic-icon": "^0.1.4",
+    "electron-is": "3.0.0",
     "electron-log": "^3.0.4",
     "fecha": "^2.3.3",
     "filesize": "^3.6.1",
