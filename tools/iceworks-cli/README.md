@@ -6,13 +6,7 @@ CLI tool for iceworks，start and stop the iceworks server.
 
 ```bash
 $ npm i iceworks -g
-
-# start the iceworks server
-# 👉 Ready on http://127.0.0.1:8001
-$ iceworks
-
-# stop the iceworks server
-$ iceworks stop
+$ iceworks # start the iceworks server
 ```
 
 ## Advanced Usage
@@ -42,7 +36,3 @@ Commands:
 
   Run iceworks <command> --help for detailed usage of given command.
 ```
-
-## License
-
-MIT

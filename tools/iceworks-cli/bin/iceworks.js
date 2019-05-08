@@ -5,7 +5,9 @@ const chalk = require('chalk');
 const program = require('commander');
 const checkVersion = require('../lib/checkVersion');
 
-checkVersion();
+(async () => {
+  await checkVersion();
+})();
 
 program.version(require('../package').version).usage('<command> [options]');
 
@@ -53,10 +55,6 @@ program.commands.forEach((c) => c.on('--help', () => console.log()));
 
 program.parse(process.argv);
 
-if (!process.argv.slice(2).length) {
-  require('../lib/start')(cleanArgs());
-}
-
 function camelize(str) {
   return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''));
 }
@@ -79,4 +77,8 @@ function cleanArgs(cmd) {
     }
   }
   return args;
+}
+
+if (!process.argv.slice(2).length) {
+  require('../lib/start')(cleanArgs());
 }

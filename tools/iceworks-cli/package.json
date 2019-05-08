@@ -1,6 +1,6 @@
 {
   "name": "iceworks",
-  "version": "1.0.0-beta.4",
+  "version": "0.1.0-beta.0",
   "description": "start and open the iceworks web",
   "main": "bin/iceworks.js",
   "bin": {
@@ -9,7 +9,6 @@
   "scripts": {
     "postinstall": "node ./lib/downloadAndInstall.js"
   },
-  "author": "chenbin92",
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.2",
@@ -21,6 +20,7 @@
     "portfinder": "^1.0.20",
     "request": "^2.88.0",
     "request-progress": "^3.0.0",
+    "request-promise-native": "^1.0.7",
     "tar": "^2.0.0",
     "tarball-extract": "^0.0.6",
     "zlib": "^1.0.5"
