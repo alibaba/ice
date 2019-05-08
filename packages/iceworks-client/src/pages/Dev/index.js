@@ -38,8 +38,8 @@ const Dev = () => {
     }
   };
 
-  const handleDevSettings = () => {
-    dev.getDevSettings(project.dataSource.folderPath);
+  const handleDevSettings = async () => {
+    await dev.getDevSettings(project.dataSource.folderPath);
     toggleModal();
   };
 
