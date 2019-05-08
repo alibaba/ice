@@ -1,17 +1,16 @@
 const { app, BrowserWindow } = require('electron');
+const is = require('electron-is');
+const address = require('address');
+
+const ip = address.ip();
+const url = is.production() ? '' : `http://${ip}:4444/`;
 
 let mainWindow;
 
 function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-    },
-  });
+  mainWindow = new BrowserWindow();
 
-  mainWindow.loadFile('index.html');
+  mainWindow.loadURL(url);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
