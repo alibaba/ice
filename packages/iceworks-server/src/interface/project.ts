@@ -84,7 +84,6 @@ export interface IProjectTodo {
    * 文件内的 todo
    */
   messages: Array<{
-
     /**
      * 在第几行
      */
@@ -185,9 +184,7 @@ export interface IProjectScaffold {
 /**
  * TODO 项目的布局
  */
-export interface IProjectLayout {
-
-}
+export interface IProjectLayout {}
 
 /**
  * 项目的页面
@@ -260,6 +257,41 @@ export interface ICreatePageParam {
 }
 
 /**
+ * 调试服务设置项
+ */
+export interface IProjectDevSettings {
+  /**
+   * 标签名
+   */
+  label: string;
+
+  /**
+   * 字段名
+   */
+  name: string;
+
+  /**
+   * 描述
+   */
+  description: string;
+
+  /**
+   * 链接
+   */
+  link: string;
+
+  /**
+   * 展示组件名称
+   */
+  componentName: string;
+
+  /**
+   * 展示组件的 props
+   */
+  componentProps: object;
+}
+
+/**
  * 项目
  *
  *  - 'dev.data' 事件
@@ -279,7 +311,7 @@ export interface IProject extends EventEmitter {
 
   /**
    * 启动调试服务
-   * 
+   *
    * @param settingsEnv 环境变量
    */
   devStart(settingsEnv: object): Promise<IProject>;
@@ -290,8 +322,13 @@ export interface IProject extends EventEmitter {
   devStop(): Promise<IProject>;
 
   /**
+   * 启动调试服务设置项
+   */
+  getDevSettings(): Promise<IProjectDevSettings[]>;
+
+  /**
    * 执行构建
-   * 
+   *
    * @param settingsEnv 环境变量
    */
   build(settingsEnv: object): Promise<IProject>;
@@ -303,7 +340,7 @@ export interface IProject extends EventEmitter {
 
   /**
    * 获取单个布局的信息
-   * 
+   *
    * @param layoutName 布局名
    */
   getLayout(layoutName: string): Promise<IProjectLayout>;
@@ -365,7 +402,10 @@ export interface IProject extends EventEmitter {
    * @param blocks 区块列表
    * @param pageName 页面名称，如果无则添加区块列表到项目
    */
-  createBlocks(blocks: IMaterialBlock[], pageName?: string): Promise<IProjectBlock[]>;
+  createBlocks(
+    blocks: IMaterialBlock[],
+    pageName?: string
+  ): Promise<IProjectBlock[]>;
 
   /**
    * 添加区块
@@ -385,7 +425,9 @@ export interface IProject extends EventEmitter {
    *
    * @param components 组件信息
    */
-  createComponents(components: IMaterialComponent[]): Promise<IProjectComponent[]>;
+  createComponents(
+    components: IMaterialComponent[]
+  ): Promise<IProjectComponent[]>;
 
   /**
    * 添加组件到项目
@@ -411,7 +453,9 @@ export interface IProject extends EventEmitter {
    *
    * @param dependencies 依赖列表
    */
-  createDependencies(dependencies: IProjectDependency[]): Promise<IProjectDependency[]>;
+  createDependencies(
+    dependencies: IProjectDependency[]
+  ): Promise<IProjectDependency[]>;
 
   /**
    * 添加依赖到项目
@@ -425,7 +469,10 @@ export interface IProject extends EventEmitter {
    *
    * @param denpendency 指定依赖
    */
-  upgradeDependency(denpendency: {name: string, isDev: boolean}): Promise<IProjectDependency>;
+  upgradeDependency(denpendency: {
+    name: string;
+    isDev: boolean;
+  }): Promise<IProjectDependency>;
 
   /**
    * 获取项目内的 todo

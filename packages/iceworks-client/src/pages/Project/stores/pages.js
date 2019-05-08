@@ -9,7 +9,9 @@ export default {
     }
 
     try {
-      const dataSource = await socket.emit('project.page.list', { projectFolderPath });
+      const dataSource = await socket.emit('project.page.list', {
+        projectFolderPath,
+      });
       this.dataSource = dataSource;
       this.inited = true;
     } catch (error) {

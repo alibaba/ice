@@ -8,7 +8,10 @@ import projectStores from './stores';
 
 const Project = () => {
   const [projects, project] = stores.useStores(['projects', 'project']);
-  const [pages, dependencies] = projectStores.useStores(['pages', 'dependencies']);
+  const [pages, dependencies] = projectStores.useStores([
+    'pages',
+    'dependencies',
+  ]);
 
   useEffect(() => {
     logger.info('Project page loaded.');
@@ -38,7 +41,11 @@ const Project = () => {
             const { name, folderPath } = projectData;
             return (
               <li key={index}>
-                <a onClick={async () => { await project.reset(folderPath); }}>
+                <a
+                  onClick={async () => {
+                    await project.reset(folderPath);
+                  }}
+                >
                   {name}
                 </a>
                 <Button

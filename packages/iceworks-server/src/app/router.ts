@@ -9,4 +9,5 @@ export default (app) => {
   app.io.route('project.index.setCurrent', project.index.setCurrent);
   app.io.route('project.page.list', project.page.list);
   app.io.route('project.dependency.list', project.dependency.list);
+  app.io.route('project.dev.settings', project.dev.settings);
 };
