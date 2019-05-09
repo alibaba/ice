@@ -1,7 +1,7 @@
 ---
-title: 项目管理-新建项目
+title: 新建项目
 category: iceworks
-order: 0
+order: 1
 ---
 
 iceworks 提供了两种方式开始你的项目管理。

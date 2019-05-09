@@ -1,7 +1,7 @@
 ---
 title: 设置
 category: iceworks
-order: 15
+order: 6
 ---
 
 通过设置面板开启、关闭或配置 iceworks 相关功能。
