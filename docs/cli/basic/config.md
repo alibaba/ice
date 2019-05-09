@@ -244,52 +244,6 @@ module.exports = () => {
 +import CustomTips from '@components/CustomTips';
 ```
 
-### Mock
-
-ice-scripts 支持 mock 功能，在项目根目录的 `mock/index.js` 中进行配置，支持基于 require 动态分析的实时刷新，支持 ES6 语法，以及友好的出错提示：
-
-```js
-export default {
-  // 支持值为 Object 和 Array
-  'GET /api/users': { users: [1, 2] },
-
-  // GET POST 可省略
-  '/api/users/1': { id: 1 },
-
-  // 支持自定义函数，API 参考 express@4
-  'POST /api/users/create': (req, res) => {
-    res.end('OK');
-  },
-};
-```
-
-## 使用 public 目录
-
-我们约定 public 目录下的文件会在 dev 和 build 时被自动 copy 到输出目录（默认是 ./build）下。所以可以在这里存放
-favicon, index.html 等静态文件。
-
-## CSS Modules
-
-[CSS Modules](https://github.com/css-modules/css-modules) 可以有效解决样式的冲突等问题，ice-scripts 支持 CSS Modules 能力。只需要将样式文件的后缀名改为 `.module.[css/scss/less]`，即可使用 CSS Modules 的能力：
-
-```css
-/* index.module.scss */
-.btn {
-  color: green;
-}
-
-.tips {
-  font-size: 12px;
-}
-```
-
-```js
-// index.js
-import styles from './index.module.scss';
-
-<Button className={styles.btn}>OK</Button>;
-```
-
 ## Moment.js 按需加载
 
 基础组件 `@alifd/next` 里的时间相关组件依赖了 moment，但是为了业务可以优化 moment 的包大小，所以 `@alifd/next` 里将 moment 作为自己的 peerDependencies 而非 dependencies，因此项目使用到时间组件时需要自行引入 moment 依赖：
@@ -304,11 +258,3 @@ moment 里有针对国际化语言的大量代码，如果不做任何处理的�
 // index.js
 import 'moment/locale/zh-cn.js';
 ```
-
-## 主题配置 - themeConfig
-
-参考 [切换项目主题](/docs/cli/basic/theme.md)
-
-## 代理配置 - proxyConfig
-
-参考 [代理配置](/docs/cli/advanced/proxy.md)
