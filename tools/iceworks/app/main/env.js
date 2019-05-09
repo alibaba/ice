@@ -9,6 +9,7 @@ const logger = require('./logger');
 const { APP_BIN_PATH } = require('./paths');
 
 exports.getEnv = () => {
+  const PATH = pathKey();
   const env = Object.assign({}, npmRunPath.env(), {
     // eslint-disable-next-line
     npm_config_registry: settings.get('registry'),
@@ -23,7 +24,7 @@ exports.getEnv = () => {
   });
 
   const pathEnv = [
-    env.PATH,
+    env[PATH],
     APP_BIN_PATH,
   ];
 
@@ -31,9 +32,9 @@ exports.getEnv = () => {
     pathEnv.push('/usr/local/bin'); // 最终兜底
   }
 
-  env[pathKey()] = pathEnv.join(path.delimiter);
+  env[PATH] = pathEnv.join(path.delimiter);
 
-  logger.info('getEnv[PATH]:', env.PATH);
+  logger.info('getEnv[PATH]:', env[PATH]);
 
   return env;
 };
