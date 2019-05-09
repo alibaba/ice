@@ -1,10 +1,10 @@
 ---
-title: 项目管理-集成环境
+title: 工程管理
 category: iceworks
-order: 2
+order: 3
 ---
 
-iceworks 提供了项目管理中的集成环境，点击项目面板，进入到项目的集成环境。
+iceworks 提供了工程管理的功能，点击项目面板，进入到项目的集成环境。
 
 ## 工程管理
 
@@ -17,16 +17,6 @@ iceworks 提供了项目管理中的集成环境，点击项目面板，进入�
 执行构建：点击「构建项目」即可执行本地构建。
 
 ![执行构建](https://img.alicdn.com/tfs/TB1VOSyM4jaK1RjSZFAXXbdLFXa-871-580.gif)
-
-## 依赖管理
-
-重装依赖：点击「重装依赖」即可是重新安装项目依赖。
-
-![重装依赖](https://img.alicdn.com/tfs/TB118iwM3HqK1RjSZFkXXX.WFXa-871-580.gif)
-
-添加依赖：点击「添加依赖」，输入 npm 包名和包的版本号，即可安装依赖。
-
-![添加依赖](https://img.alicdn.com/tfs/TB1l8isM3HqK1RjSZJnXXbNLpXa-871-580.gif)
 
 ## 调用外部工具
 
@@ -47,3 +37,13 @@ iceworks 提供了项目管理中的集成环境，点击项目面板，进入�
 在执行工程管理相关操作时，可点击「运行日志」查看执行日志。例如，构建项目时：
 
 ![终端日志](https://img.alicdn.com/tfs/TB1ZvinMY2pK1RjSZFsXXaNlXXa-875-580.gif)
+
+## 依赖管理
+
+重装依赖：点击「重装依赖」即可是重新安装项目依赖。
+
+![重装依赖](https://img.alicdn.com/tfs/TB118iwM3HqK1RjSZFkXXX.WFXa-871-580.gif)
+
+添加依赖：点击「添加依赖」，输入 npm 包名和包的版本号，即可安装依赖。
+
+![添加依赖](https://img.alicdn.com/tfs/TB1l8isM3HqK1RjSZJnXXbNLpXa-871-580.gif)

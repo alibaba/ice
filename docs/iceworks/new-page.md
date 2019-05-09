@@ -1,7 +1,7 @@
 ---
-title: 项目管理-新建页面
+title: 新建页面
 category: iceworks
-order: 1
+order: 2
 ---
 
 iceworks 提供了项目管理中新建页面能力，点击项目面板，点击「新建页面」开始新建一个页面。
