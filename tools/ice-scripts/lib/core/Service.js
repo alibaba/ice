@@ -10,10 +10,10 @@ const getDefaultWebpackConfig = require('../config/getDefaultWebpackConfig');
 const PluginAPI = require('./Plugin');
 
 module.exports = class Service {
-  constructor({ command, context, args }) {
+  constructor({ command = '', context = process.cwd(), args = {} }) {
     this.command = command;
     this.commandArgs = args;
-    this.context = context || process.cwd();
+    this.context = context;
     this.pkg = getPkgData(this.context);
     this.paths = paths;
     // get user config form ice.config.js

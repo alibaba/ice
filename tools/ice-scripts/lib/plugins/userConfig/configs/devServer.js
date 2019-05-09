@@ -3,7 +3,7 @@ const log = require('../../../utils/log');
 
 module.exports = async (api, value) => {
   // check cli command args of https
-  const { commandArgs } = api;
+  const { commandArgs } = api.service;
   let httpsConfig;
   if (!value.https && commandArgs.https) {
     try {

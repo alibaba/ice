@@ -2,7 +2,7 @@ const processEntry = require('../../../config/processEntry');
 
 const DEFAULT_ENTRY = 'src/index.js';
 module.exports = (api, injectBabel) => {
-  const { userConfig, command, commandArgs } = api;
+  const { command, commandArgs, userConfig } = api.service;
 
   api.chainWebpack((config) => {
     if (!userConfig.entry) {

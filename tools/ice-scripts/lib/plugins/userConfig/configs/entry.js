@@ -1,7 +1,7 @@
 const processEntry = require('../../../config/processEntry');
 
 module.exports = (api, value) => {
-  const { command, commandArgs, userConfig } = api;
+  const { command, commandArgs, userConfig } = api.service;
   const entry = processEntry(value,
     {
       polyfill: userConfig.injectBabel !== 'runtime',

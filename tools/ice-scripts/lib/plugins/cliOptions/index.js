@@ -1,8 +1,7 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = (api) => {
-  const { commandArgs } = api;
-
+  const { commandArgs } = api.service;
   api.chainWebpack((config) => {
     if (commandArgs.disabledReload) {
       config.plugins.delete('hot-module-replacement');

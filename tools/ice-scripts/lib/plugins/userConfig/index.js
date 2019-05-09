@@ -2,7 +2,7 @@ const log = require('../../utils/log');
 const chalk = require('chalk');
 
 module.exports = (api) => {
-  const { userConfig = {} } = api;
+  const { userConfig = {} } = api.service;
   const configKeys = Object.keys(userConfig);
   configKeys.forEach((configKey) => {
     if (['plugins', 'chainWebpack'].indexOf(configKey) > -1) {
