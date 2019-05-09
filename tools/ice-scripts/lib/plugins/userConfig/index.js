@@ -5,7 +5,7 @@ module.exports = (api) => {
   const { userConfig = {} } = api;
   const configKeys = Object.keys(userConfig);
   configKeys.forEach((configKey) => {
-    if (['icePlugins', 'chainWebpack'].indexOf(configKey) > -1) {
+    if (['plugins', 'chainWebpack'].indexOf(configKey) > -1) {
       try {
         // load config plugin
         // eslint-disable-next-line import/no-dynamic-require
