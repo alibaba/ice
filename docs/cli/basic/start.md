@@ -3,6 +3,15 @@ title: 快速上手
 order: 2
 ---
 
+## 安装
+
+```bash
+$ npm i -g ice-scripts
+$ ice --help
+```
+
+当然你也可以将其作为项目级依赖：`npm i --save-dev ice-scripts`
+
 ice-scripts 提供了 `init/dev/build` 的开发命令，如果使用 iceworks 开发，那么大多数时候你不需要关心这些命令。
 
 ### ice init
@@ -20,15 +29,11 @@ Options:
   -h, --help             output usage information
 ```
 
-根据模板初始化组件/区块：
+比如初始化指定项目模版
 
 ```bash
-# 初始化项目
-$ ice init
-# 初始化组件
-$ ice init component
-# 初始化区块
-$ ice init block
+# 初始化执行项目项目
+$ ice init -t @icedesign/lite-scaffold
 ```
 
 ### ice dev
@@ -54,9 +59,9 @@ Options:
 比如使用 3000 端口启动 dev server
 
 ```bash
-$ ice dev -p=3000
+$ ice dev -p 3000
 # 或者
-$ npm run start -- -p=3000
+$ npm run start -- -p 3000
 ```
 
 比如开启 https
@@ -83,14 +88,4 @@ Options:
   --skip-demo            跳过构建 build/index.html 的环节
   --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime
   -h, --help             output usage information
-```
-
-### ice add block
-
-添加区块
-
-```bash
-$ cd src/pages/home/components
-$ ice add block -t @icedesign/document-list-block
-=> src/pages/home/components/DocumentListBlock
 ```

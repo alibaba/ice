@@ -12,12 +12,3 @@ order: 1
 - ……
 
 本文会讲述 ice-scripts 完整的使用指南。
-
-## 安装
-
-```bash
-$ npm i -g ice-scripts
-$ ice --help
-```
-
-当然你也可以将其作为项目级依赖：`npm i --save-dev ice-scripts`
