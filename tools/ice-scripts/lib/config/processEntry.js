@@ -36,7 +36,7 @@ function enhanceEntries(entries, chunk) {
   return hotEntries;
 }
 
-module.exports = (entry, { hotDev, polyfill }) => {
+module.exports = (entry, options = {}) => {
   // 需要区分项目类型，新版的项目直接返回 src/index.js
   let entries = {};
   if (Array.isArray(entry) || typeof entry === 'string') {
@@ -49,12 +49,12 @@ module.exports = (entry, { hotDev, polyfill }) => {
     });
   }
 
-  if (hotDev) {
+  if (options.hotDev) {
     entries = enhanceEntries(entries, hotDevClientPath);
   }
 
   // Note：https://github.com/alibaba/ice/pull/834
-  if (polyfill) {
+  if (options.polyfill) {
     entries = enhanceEntries(entries, require.resolve('@babel/polyfill'));
   }
 

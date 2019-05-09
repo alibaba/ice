@@ -1,5 +1,6 @@
 const path = require('path');
 const fse = require('fs-extra');
+const assert = require('assert');
 const Config = require('webpack-chain');
 const webpackMerge = require('webpack-merge');
 const log = require('../utils/log');
@@ -18,6 +19,7 @@ module.exports = class Service {
     // get user config form ice.config.js
     this.userConfig = this.getUserConfig(this.context);
     this.chainWebpackFns = [];
+    this.plugins = this.getPlugins();
     this.defaultWebpackConfig = getDefaultWebpackConfig();
   }
 
@@ -37,23 +39,32 @@ module.exports = class Service {
     return {};
   }
 
+  getPlugins() {
+    const builtInPlugins = [
+      '../plugins/userConfig',
+      '../plugins/cliOptions',
+    ];
+    // eslint-disable-next-line import/no-dynamic-require
+    return builtInPlugins.map((pluginPath) => require(pluginPath))
+      .concat(this.userConfig.plugins || []);
+  }
+
   runPlugins() {
-    this.plugins = this.userConfig.plugins || [];
-    // TODO 使用内置插件来实现userConfig配置字段
-    // resolve user plugins
-    this.plugins.forEach((userPlugin) => {
-      if (!Array.isArray(userPlugin)) {
-        userPlugin = [userPlugin];
+    // run plugins
+    this.plugins.forEach((pluginInfo) => {
+      if (!Array.isArray(pluginInfo)) {
+        pluginInfo = [pluginInfo];
       }
       try {
-        const [plugin, options] = userPlugin;
+        const [plugin, options] = pluginInfo;
         const pluginFunc = typeof plugin === 'string'
           // eslint-disable-next-line import/no-dynamic-require
           ? require(require.resolve(plugin, { paths: [this.context] }))
           : plugin;
+        assert(typeof pluginFunc === 'function', 'plugin must export a function');
         pluginFunc(new PluginAPI(this), options);
       } catch (e) {
-        const errorPlugin = userPlugin[0];
+        const errorPlugin = pluginInfo[0];
         log.error(`Fail to load Plugin ${typeof errorPlugin === 'string' ? errorPlugin : ''}`);
         process.exit(1);
       }
