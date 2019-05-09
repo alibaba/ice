@@ -32,12 +32,15 @@ my-materials/
       └── ExampleScaffold
 ```
 
+初始化完成后，用户即可开始开发自己的物料，当需要添加新的物料时，只需要在物料源码根目录下执行 `idev add` 即可。此时，ice-devtools 将从 `.template/` 目录读取物料模版，生成物料源码。这意味着，当用户需要自定义物料模版时，只需要编辑 `.template/` 目录下的模版文件即可。
+
 ### 开发物料
 
 不同物料体系可能使用不同的框架或工具，实际开发方式也会有所差异，此处根据选择的前端方案参考不同文档即可：
 
-- [基于 React+ice-scripts+Fusion 的物料开发文档](https://www.yuque.com/ice-team/wiki/ywg4hf)
-- [基于 Vue+Vue CLI 的物料开发文档](https://www.yuque.com/ice-team/wiki/xqg0g6)
+- [开发 React 物料](./react.md)
+- [开发 Vue 物料](./vue.md)
+- [开发 Angular 物料](./angular.md)
 
 如有其他框架/工具的需求，欢迎反馈给飞冰（ICE）团队。
 
@@ -69,6 +72,6 @@ $ ls build/
 materials.json
 ```
 
-这份物料数据时一份标准协议，可以在 iceworks, fusion.design 以及其他各种端使用，具体协议规范请参考 [物料数据协议](https://www.yuque.com/ice-team/wiki/ay2251)。
+这份物料数据时一份标准协议，可以在 iceworks, fusion.design 以及其他各种端使用，具体协议规范请参考 [物料数据协议](./schema.md)。
 
 目前这只是一份静态数据，想要在 iceworks 里使用这份物料的话需要参考下文将其托管到某些服务上生成一个 url。
