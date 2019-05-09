@@ -14,11 +14,6 @@ const { isWin, isMac } = require('./shared');
 const dau = require('./dau');
 const sessions = require('./services/sessions');
 
-if (isMac) {
-  // 执行环境附带 /usr/local/bin
-  process.env.PATH = ['/usr/local/bin', process.env.PATH].join(':');
-}
-
 /**
  * 注册 app 交互事件，ipcMain 等事件
  * @param {*} app electron.app

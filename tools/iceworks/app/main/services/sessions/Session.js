@@ -4,6 +4,7 @@ const defaultShell = require('default-shell');
 const is = require('electron-is');
 const { getEnv } = require('../../env');
 const { WIN_NPM_CMD } = require('../../paths');
+const logger = require('../../logger');
 
 const isWin = is.windows();
 
@@ -38,12 +39,16 @@ module.exports = class Manager extends EventEmitter {
     }
 
     try {
-      this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, {
+      this.pty = spawn(defaultShell, defaultShellArgs, {
         cols: columns,
         rows,
         cwd,
         env: spawnEnv,
       });
+      const command = `${shell} ${shellArgs.join(' ')}\r`;
+
+      logger.info('command:', command);
+      this.pty.write(command);
     } catch (err) {
       if (/is not a function/.test(err.message)) {
         throw createNodePtyError();
