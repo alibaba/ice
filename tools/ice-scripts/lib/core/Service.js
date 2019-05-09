@@ -47,11 +47,11 @@ module.exports = class Service {
       }
       try {
         const [plugin, options] = userPlugin;
-        const apply = typeof plugin === 'string'
+        const pluginFunc = typeof plugin === 'string'
           // eslint-disable-next-line import/no-dynamic-require
           ? require(require.resolve(plugin, { paths: [this.context] }))
           : plugin;
-        apply(new PluginAPI(this), options);
+        pluginFunc(new PluginAPI(this), options);
       } catch (e) {
         const errorPlugin = userPlugin[0];
         log.error(`Fail to load Plugin ${typeof errorPlugin === 'string' ? errorPlugin : ''}`);
