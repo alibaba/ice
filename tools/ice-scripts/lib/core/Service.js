@@ -38,16 +38,24 @@ module.exports = class Service {
   }
 
   runPlugins() {
-    this.plugins = this.userConfig.icePlugins || [];
+    this.plugins = this.userConfig.plugins || [];
     // TODO 使用内置插件来实现userConfig配置字段
-    // run plugins
-    this.plugins.forEach((plugin) => {
+    // resolve user plugins
+    this.plugins.forEach((userPlugin) => {
+      if (!Array.isArray(userPlugin)) {
+        userPlugin = [userPlugin];
+      }
       try {
-        plugin.package(new PluginAPI(this), plugin.options);
+        const [plugin, options] = userPlugin;
+        const pluginFunc = typeof plugin === 'string'
+          // eslint-disable-next-line import/no-dynamic-require
+          ? require(require.resolve(plugin, { paths: [this.context] }))
+          : plugin;
+        pluginFunc(new PluginAPI(this), options);
       } catch (e) {
-        // TODO get plugin name for debug
-        log.error('Error to load Plugin');
-        throw e;
+        const errorPlugin = userPlugin[0];
+        log.error(`Fail to load Plugin ${typeof errorPlugin === 'string' ? errorPlugin : ''}`);
+        process.exit(1);
       }
     });
   }
@@ -69,7 +77,7 @@ module.exports = class Service {
     try {
       // load command and run
       // eslint-disable-next-line import/no-dynamic-require
-      require(`../${this.command}`)(this);
+      require(`../commands/${this.command}`)(this);
     } catch (e) {
       throw e;
     }

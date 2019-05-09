@@ -4,7 +4,7 @@ const url = require('url');
 
 const pkgData = require('../config/packageJson')();
 const cliInstance = require('../utils/cliInstance');
-const getBuildConfig = require('./getBuildConfig');
+// const getBuildConfig = require('./getBuildConfig');
 
 function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
@@ -24,7 +24,7 @@ function ensureSlash(path, needsSlash) {
 // It requires a trailing slash, or the file assets will get an incorrect path.
 function getPublicPath() {
   let publicPath;
-  const buildConfig = getBuildConfig(pkgData);
+  const buildConfig = {};
 
   // 定制逻辑
   if (buildConfig.localization) {
