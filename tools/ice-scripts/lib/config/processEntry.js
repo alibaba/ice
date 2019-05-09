@@ -4,8 +4,6 @@ const path = require('path');
 const appDirectory = fs.realpathSync(process.cwd());
 const hotDevClientPath = require.resolve('react-dev-utils/webpackHotDevClient');
 
-const cliInstance = require('../utils/cliInstance');
-
 function entryWithApp(entry) {
   if (typeof entry === 'string') {
     // 绝对路径直接返回
