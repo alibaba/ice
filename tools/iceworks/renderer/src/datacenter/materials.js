@@ -109,8 +109,7 @@ const getCategoriesByBlocks = (blocks) => {
   blocks.forEach((block) => {
     if (block.categories) {
       block.categories.forEach((originalCategoryName) => {
-        const categoryName =
-          categoryMap[originalCategoryName] || originalCategoryName;
+        const categoryName = categoryMap[originalCategoryName] || originalCategoryName;
 
         uniqueCategories[categoryName] = {
           name: originalCategoryName,

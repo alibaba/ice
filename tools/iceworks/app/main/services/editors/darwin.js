@@ -1,8 +1,8 @@
-const { ExternalEditor } = require('./shared');
-const appPath = require('app-path');
 const Path = require('path');
+const appPath = require('app-path');
 const pathExists = require('path-exists');
-const log = require('../../logger');
+const { ExternalEditor } = require('./shared');
+const logger = require('../../logger');
 
 exports.parse = function parse(label) {
   if (label === ExternalEditor.VisualStudioCode) {
@@ -75,9 +75,10 @@ const findApplication = async function findApplication(editor) {
         return path;
       }
 
-      log.info(`Command line interface for ${editor} not found at '${path}'`);
+      logger.info(`Command line interface for ${editor} not found at '${path}'`);
     } catch (error) {
-      log.error(`Unable to locate ${editor} installation`, error);
+      error.name = `Unable-to-locate-${editor}-installation`;
+      logger.error(error);
     }
   }
 

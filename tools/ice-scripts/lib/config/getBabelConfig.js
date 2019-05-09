@@ -78,6 +78,7 @@ module.exports = (buildConfig = {}, buildComponentSrc) => {
         {
           modules: buildComponentSrc ? 'commonjs' : false,
           useBuiltIns: 'entry',
+          corejs: 3,
           targets: {
             browsers: [
               'last 2 versions',
@@ -90,6 +91,7 @@ module.exports = (buildConfig = {}, buildComponentSrc) => {
           },
         },
       ],
+      '@babel/preset-typescript',
       '@babel/preset-react',
     ]),
     plugins: resolvePlugin(plugins),

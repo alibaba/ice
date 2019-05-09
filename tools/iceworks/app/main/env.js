@@ -1,9 +1,8 @@
 const { app } = require('electron');
 const npmRunPath = require('npm-run-path');
 const path = require('path');
-
-const settings = require('./services/settings');
 const is = require('electron-is');
+const settings = require('./services/settings');
 
 const isWin = is.windows();
 

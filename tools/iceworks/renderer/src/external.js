@@ -1,27 +1,28 @@
-import { shell, remote } from 'electron';
-
-const services = remote.getGlobal('services');
-const log = services.log;
+import { shell } from 'electron';
+import { glodlog, editors, shells, folder } from './services';
 
 export const openInEditor = (path) => {
-  services.editors.open(path);
-  log.report('external', {
+  editors.open(path);
+  glodlog.record({
+    type: 'external',
     action: 'open-external-editor',
     path,
   });
 };
 
 export const openInShell = (path) => {
-  services.shells.open(path);
-  log.report('external', {
+  shells.open(path);
+  glodlog.record({
+    type: 'external',
     action: 'open-in-shell',
     path,
   });
 };
 
 export const openInFinder = (path) => {
-  services.folder.open(path);
-  log.report('external', {
+  folder.open(path);
+  glodlog.record({
+    type: 'external',
     action: 'open-in-finder',
     path,
   });
@@ -29,7 +30,8 @@ export const openInFinder = (path) => {
 
 export const openInBrowser = (url) => {
   shell.openExternal(url);
-  log.report('external', {
+  glodlog.record({
+    type: 'external',
     action: 'open-in-browser',
     url,
   });

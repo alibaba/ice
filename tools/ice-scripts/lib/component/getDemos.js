@@ -18,7 +18,12 @@ module.exports = function getDemos(projectDir) {
       const filePath = join(demoPath, filename);
       const content = readFileSync(filePath, 'utf-8');
 
-      const { meta, highlightedCode, content: markdownContent } = parseMarkdownParts(content, {
+      const {
+        meta,
+        highlightedCode,
+        content: markdownContent,
+        highlightedStyle,
+      } = parseMarkdownParts(content, {
         sliceCode: true,
       });
 
@@ -32,8 +37,10 @@ module.exports = function getDemos(projectDir) {
         ...meta,
         highlightedCode,
         markdownContent,
+        highlightedStyle,
       };
-    }).sort((a, b) => {
+    })
+    .sort((a, b) => {
       return a.order - b.order;
     });
 };

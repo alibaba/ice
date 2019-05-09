@@ -1,6 +1,7 @@
 const MaterialEngine = require('@iceland/material-engine').default;
 const { icelandStatStorage } = require('../storage');
 const logger = require('../../logger');
+const glodlog = require('../../glodlog');
 const settings = require('../settings');
 
 module.exports = (materialData) => {
@@ -19,12 +20,14 @@ module.exports = (materialData) => {
   if (prevDate !== currentDate) {
     logger.debug('dav record');
     icelandStatStorage.set(currentDate);
-    logger.report('app', {
+    glodlog.record({
+      type: 'app',
       action: 'iceland-dau',
       group: isAlibaba ? 'alibaba' : 'outer',
     });
   }
-  logger.report('app', {
+  glodlog.record({
+    type: 'app',
     action: 'iceland-open-workbench',
     group: isAlibaba ? 'alibaba' : 'outer',
   });

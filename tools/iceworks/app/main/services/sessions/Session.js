@@ -2,16 +2,14 @@ const { EventEmitter } = require('events');
 const { StringDecoder } = require('string_decoder');
 const defaultShell = require('default-shell');
 const is = require('electron-is');
-
 const { getEnv } = require('../../env');
 const { WIN_NPM_CMD } = require('../../paths');
 
 const isWin = is.windows();
 
-const createNodePtyError = () =>
-  new Error(
-    '`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `readme.md` to more info.'
-  );
+const createNodePtyError = () => new Error(
+  '`node-pty` failed to load. Typically this means that it was built incorrectly. Please check the `readme.md` to more info.'
+);
 
 let spawn;
 try {

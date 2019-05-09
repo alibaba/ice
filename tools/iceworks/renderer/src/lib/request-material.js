@@ -1,7 +1,5 @@
 import request from 'request';
-import services from '../services';
-
-const { alilog, log } = services;
+import logger from './logger';
 
 /**
  * 获取物料请求
@@ -31,20 +29,14 @@ function requestMaterial(uri, options = {}, ignoreReject) {
       (err, res, body) => {
         const error = err || body.error;
         if (error) {
-          log.error(`物料请求失败，地址: ${uri}，错误：${error}`);
-          console.error(`物料请求失败，地址: ${uri}，错误：${error}`);
+          error.message = `物料请求失败，地址: ${uri}，错误：${error.message}`;
+          logger.error(error);
           if (ignoreReject) {
             resolve(null);
           } else {
             const type = getMaterialType(options);
-            alilog.report({
-              type: `request-${type}-material-error`,
-              msg: error.message,
-              stack: error.stack,
-              data: {
-                url: uri,
-              },
-            }, 'error');
+            error.message = `request-${type}-material-error: ${JSON.stringify({ uri })}`;
+            logger.error(error);
             reject(error);
           }
         } else {

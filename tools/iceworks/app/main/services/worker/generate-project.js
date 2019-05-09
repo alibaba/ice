@@ -1,11 +1,11 @@
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const pathExists = require('path-exists');
 const templateBuilderUtils = require('@icedesign/template-builder/utils/');
 const template = require('../../template');
-const log = require('../../logger');
-const settings = require('../settings');
 const logger = require('../../logger');
+const glodlog = require('../../glodlog');
+const settings = require('../settings');
 const nodeScaffoldInfo = require('../../config/nodeScaffold');
 const { getClientPath, getServerPath } = require('../../paths');
 
@@ -22,31 +22,25 @@ module.exports = (_options, afterCreateRequest) => {
 
   let fn;
   let createClient;
-  let needCreateDefflow;
+  const needCreateDefflow = isAlibaba;
   if (isCustomScaffold) {
-    needCreateDefflow = isAlibaba;
     layoutConfig.directory = targetPath;
     layoutConfig.name = projectName;
     fn = templateBuilderUtils.generateTemplate(layoutConfig);
+  } else if (nodeFramework) {
+    // @TODO afterCreateRequest
+    // 解压node模板的promise
+    fn = template.createProject(
+      getOptions(_options, nodeFramework, true),
+      afterCreateRequest
+    );
+    // node模板中解压前端模板的promise
+    createClient = template.createProject(
+      getOptions(_options, nodeFramework),
+      afterCreateRequest
+    );
   } else {
-    const scaffoldDevDeps = (scaffold && scaffold.devDependencies) || {};
-    // needCreateDefflow = nodeFramework ? false : (isAlibaba && scaffoldDevDeps['ice-scripts']);
-    needCreateDefflow = isAlibaba && scaffoldDevDeps['ice-scripts'];
-    if (nodeFramework) {
-      // @TODO afterCreateRequest
-      // 解压node模板的promise
-      fn = template.createProject(
-        getOptions(_options, nodeFramework, true),
-        afterCreateRequest
-      );
-      // node模板中解压前端模板的promise
-      createClient = template.createProject(
-        getOptions(_options, nodeFramework),
-        afterCreateRequest
-      );
-    } else {
-      fn = template.createProject(getOptions(_options), afterCreateRequest);
-    }
+    fn = template.createProject(getOptions(_options), afterCreateRequest);
   }
 
   return fn
@@ -69,7 +63,8 @@ module.exports = (_options, afterCreateRequest) => {
       }
     })
     .then(() => {
-      log.report('app', {
+      glodlog.record({
+        type: 'app',
         action: isCustomScaffold
           ? 'custom-generator-project'
           : (nodeFramework || 'generator-project'),
@@ -102,7 +97,7 @@ function getOptions(_options, nodeFramework = '', isNode = false) {
     progressFunc: _options.progressFunc,
     projectName: _options.projectName,
     interpreter: ({ type, message }, next) => {
-      log.info('generate project', type, message);
+      logger.info('generate project', type, message);
       switch (type) {
         case 'FILE_CREATED':
           next(true);

@@ -232,9 +232,14 @@ class Aliyun extends Component {
 
   handleUploadOss = () => {
     const { currentProject } = this.props.projects;
-    const buildDir = path.join(currentProject.clientPath, 'build');
+    let buildDir = '';
+    if (fs.existsSync(path.join(currentProject.clientPath, 'dist'))) {
+      buildDir = path.join(currentProject.clientPath, 'dist');
+    } else {
+      buildDir = path.join(currentProject.clientPath, 'build');
+    }
     if (pathExists.sync(buildDir)) {
-      const assets = this.recursiveAssets();
+      const assets = this.recursiveReaddirSync(buildDir, buildDir);
       if (assets.length === 0) {
         Feedback.toast.error('当前构建结果为空');
       } else {
@@ -292,15 +297,6 @@ class Aliyun extends Component {
     } else {
       Feedback.toast.error('暂无构建结果');
     }
-  };
-
-  recursiveAssets = () => {
-    const { projects } = this.props;
-    const { currentProject } = projects;
-    const cwd = currentProject.clientPath;
-    const distPath = path.join(cwd, 'build');
-    const assets = this.recursiveReaddirSync(distPath, distPath);
-    return assets;
   };
 
   recursiveReaddirSync = (dirPath, rootDir) => {

@@ -1,9 +1,10 @@
+/* eslint indent:0 */
+const path = require('path');
 const autoprefixer = require('autoprefixer');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const path = require('path');
 const webpack = require('webpack');
 const WebpackPluginImport = require('webpack-plugin-import');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -11,7 +12,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const outputDir = 'out/renderer';
 
 // npm scripts target
-const isDev = process.env.NODE_ENV == 'development';
+const isDev = process.env.NODE_ENV === 'development';
 let cssLoaderBasic = [];
 
 if (isDev) {
@@ -208,35 +209,35 @@ const homeConfig = merge({}, commonConfig, {
     }),
     new HtmlWebpackPlugin({
       title: '',
-      excludeChunks: Object.keys(etnry).filter((n) => n != 'index'),
+      excludeChunks: Object.keys(etnry).filter((n) => n !== 'index'),
       NODE_ENV: process.env.NODE_ENV,
       filename: 'index.html',
       template: 'renderer/public/index.html',
     }),
     new HtmlWebpackPlugin({
       title: '',
-      excludeChunks: Object.keys(etnry).filter((n) => n != 'status'),
+      excludeChunks: Object.keys(etnry).filter((n) => n !== 'status'),
       NODE_ENV: process.env.NODE_ENV,
       filename: 'status.html',
       template: 'renderer/public/view.html',
     }),
     new HtmlWebpackPlugin({
       title: '',
-      excludeChunks: Object.keys(etnry).filter((n) => n != 'updater'),
+      excludeChunks: Object.keys(etnry).filter((n) => n !== 'updater'),
       NODE_ENV: process.env.NODE_ENV,
       filename: 'updater.html',
       template: 'renderer/public/view.html',
     }),
     new HtmlWebpackPlugin({
       title: '',
-      excludeChunks: Object.keys(etnry).filter((n) => n != 'about'),
+      excludeChunks: Object.keys(etnry).filter((n) => n !== 'about'),
       NODE_ENV: process.env.NODE_ENV,
       filename: 'about.html',
       template: 'renderer/public/view.html',
     }),
     new HtmlWebpackPlugin({
       title: '',
-      excludeChunks: Object.keys(etnry).filter((n) => n != 'preview'),
+      excludeChunks: Object.keys(etnry).filter((n) => n !== 'preview'),
       NODE_ENV: process.env.NODE_ENV,
       filename: 'preview.html',
       template: 'renderer/public/view.html',

@@ -1,14 +1,13 @@
 const fs = require('fs');
-const mkdirp = require('mkdirp');
 const path = require('path');
+const zlib = require('zlib');
+const mkdirp = require('mkdirp');
 const request = require('request');
 const requestProgress = require('request-progress');
-const zlib = require('zlib');
 const tar = require('tar');
 const logger = require('../../logger');
 const { DetailError } = require('../../error-handler');
 const autoRetry = require('../../utils/autoRetry');
-const alilog = require('../../alilog');
 
 /**
  * 将 tarbar 下的内容下载到指定目录，同时做路径转换
@@ -45,17 +44,11 @@ function extractTarball(
         progressFunc(state);
       })
       .on('error', (error = {}) => {
-        alilog.report(
-          {
-            type: 'download-tarball-error',
-            msg: error.message,
-            stack: error.stack,
-            data: {
-              url: tarballURL,
-            },
-          },
-          'error'
-        );
+        error.name = 'download-tarball-error';
+        error.data = {
+          url: tarballURL,
+        };
+        logger.error(error);
         reject(new DetailError(`链接 ${tarballURL} 请求失败`, {
           message: error.message,
           stack: error.stack,

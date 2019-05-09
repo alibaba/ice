@@ -26,6 +26,7 @@ class SpcServer extends EventEmitter {
       this.wc.send(ch, ...args);
     }
   }
+
   get wc() {
     if (this.win && !this.win.isDestroyed()) {
       return this.win.webContents;

@@ -2,22 +2,20 @@
  * 用于创建项目的状态与进度
  */
 
+import os from 'os';
+import path from 'path';
 import { Dialog } from '@icedesign/base';
 import { observable, action, computed, toJS } from 'mobx';
 import { shell } from 'electron';
-
 import mkdirp from 'mkdirp';
 import Notification from '@icedesign/notification';
-import os from 'os';
-import path from 'path';
 import pathExists from 'path-exists';
 import React from 'react';
-
 import { checkProject } from '../lib/project-utils';
-import customScaffold from './custom-scaffold';
 import dialog from '../components/dialog';
 import history from '../history';
 import services from '../services';
+import customScaffold from './custom-scaffold';
 
 // store
 import progress from './progress';
@@ -33,26 +31,38 @@ const WORKSPACE_KEY = 'iceworks-workspace';
 class Scaffold {
   @observable
   scaffoldValue = null;
+
   @observable
   layoutConfigValue = null;
+
   @observable
-  isLegalProjectName = false; // 没有被使用过的变量
+  isLegalProjectName = false;
+
+  // 没有被使用过的变量
   @observable
   projectName = '';
+
   @observable
   projectFolderName = '';
+
   @observable
   projectFolderNameValidation = '';
+
   @observable
   scaffolds = [];
+
   @observable
   visible = false;
+
   @observable
   tabScaffoldActiveKey = '';
+
   @observable
   workspacePath = localStorage.getItem(WORKSPACE_KEY) || defaultWorkspacePath;
+
   @observable
   nodeFramework = '';
+
   @observable
   isNode = false;
 
@@ -250,11 +260,11 @@ class Scaffold {
   get isDisabled() {
     // 以下情况禁用创建按钮
     return (
-      !this.scaffoldValue ||
-      this.projectFolderName.trim() === '' || // 项目名为空
-      this.projectFolderNameValidation !== '' || // 含错误信息
+      !this.scaffoldValue
+      || this.projectFolderName.trim() === '' // 项目名为空
+      || this.projectFolderNameValidation !== '' // 含错误信息
       // !this.isLegalProjectName || // 合法项目名
-      (progress && progress.visible)// 非初始状态
+      || (progress && progress.visible)// 非初始状态
     );
   }
 

@@ -56,10 +56,9 @@ class ScaffoldForm extends Component {
   }
 
   render() {
+    const { builder } = this.props.scaffold.scaffold;
     const isAlibaba = services.settings.get('isAlibaba');
-    const hasIce =
-      this.props.scaffold.scaffold.devDependencies
-      && this.props.scaffold.scaffold.devDependencies.hasOwnProperty('ice-scripts');
+    const hasIce = builder && builder === 'ice-scripts';
 
     const showNodeOutside = !isAlibaba && hasIce;
 
@@ -123,7 +122,7 @@ class ScaffoldForm extends Component {
             isAlibaba ? (
               // TODO 解决tnpm的问题
               // <label>
-              //   添加 Midway 
+              //   添加 Midway
               //   <Checkbox
               //     disabled={this.props.scaffold.isCreating}
               //     onChange={this.handleMidwaySelect}
@@ -155,7 +154,7 @@ class ScaffoldForm extends Component {
             )
           }
           {
-            ( 
+            (
               this.props.scaffold.nodeFramework === 'midway'
               // TODO 解决tnpm的问题
               // || this.props.scaffold.nodeFramework === 'midwayAli'

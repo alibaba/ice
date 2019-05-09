@@ -5,7 +5,6 @@
 
 import { observable, action, autorun, computed, toJS } from 'mobx';
 import services from '../services';
-
 import projects from './projects';
 
 const { settings } = services;
@@ -13,6 +12,7 @@ const { settings } = services;
 class Extensions {
   @observable
   orderByNameValue = [];
+
   @observable
   isSorting = false;
 

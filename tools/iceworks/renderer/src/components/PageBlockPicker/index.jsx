@@ -18,9 +18,10 @@ import {
 import Progress from '../Progress';
 import dialog from '../dialog';
 import services from '../../services';
+import logger from '../../lib/logger';
 import './index.scss';
 
-const { scaffolder, log } = services;
+const { scaffolder } = services;
 
 // 向页面新增 block 的功能
 // 包括展示现有 page 下的 blocks 以及选择新 block 的管理
@@ -107,13 +108,14 @@ class PageBlockPicker extends Component {
           currentProject,
           blocksDependencies.join(' '),
           false,
-          (error) => {
-            if (error) {
+          (err) => {
+            if (err) {
               this.writeDependencies(blocksDependencies, clientPath);
-              log.error('安装区块依赖失败');
-              reject(new Error('安装区块依赖失败'));
+              const error = new Error('安装区块依赖失败');
+              logger.error(error);
+              reject(error);
             } else {
-              log.info('安装区块依赖成功');
+              logger.info('安装区块依赖成功');
               resolve();
             }
           }

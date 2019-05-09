@@ -3,8 +3,10 @@ import { observable, action, computed } from 'mobx';
 class Component {
   @observable
   visible = false;
+
   @observable
   downloading = false;
+
   @observable
   currentComponent = {};
 
