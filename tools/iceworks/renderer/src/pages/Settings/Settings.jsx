@@ -20,7 +20,7 @@ import CustomMaterials from './CustomMaterials';
 import Separator from './Separator';
 
 const { registries: originRegistries } = remote.require('./shared');
-const { settings, nrm } = services;
+const { settings } = services;
 const { Shell } = services.shells.shared;
 const { ExternalEditor, CUSTOM_EDITOR } = services.editors.shared;
 
@@ -115,32 +115,6 @@ class Setting extends Component {
     } else {
       this.udpateSettings(key, value);
     }
-  };
-
-  handleTestSpeed = (value) => {
-    this.setState(
-      {
-        testing: true,
-      },
-      () => {
-        this.getDownloadSpeed(value);
-      }
-    );
-  };
-
-  getDownloadSpeed = (registry) => {
-    const nrmArgs = ['test', registry];
-    return nrm
-      .run(nrmArgs, { cwd: '' })
-      .then((data) => {
-        this.setState({
-          speedData: data,
-          testing: false,
-        });
-      })
-      .catch((err) => {
-        logger.info(err);
-      });
   };
 
   render() {
@@ -273,49 +247,6 @@ class Setting extends Component {
                 })}
               />
             </FormItem>
-
-            {/* TODO:
-            <FormItem label="测试下载速度" {...formItemLayout}>
-              {registriesSource.map((registry, idx) => {
-                return (
-                  <Balloon
-                    triggerType="click"
-                    align="t"
-                    key={idx}
-                    trigger={
-                      <span
-                        onClick={() => this.handleTestSpeed(registry)}
-                        style={{
-                          margin: '0 5px',
-                          padding: '4px 8px',
-                          borderRadius: '20px',
-                          border: '1px solid #dcdee3',
-                          background: '#fff',
-                          display: 'inline-block',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {registry}
-                      </span>
-                    }
-                    closable={false}
-                  >
-                    <div>
-                      {testing ? (
-                        '正在测速中，请稍等...'
-                      ) : (
-                        <div>
-                          {speedData.indexOf('ms') === -1
-                            ? '请求超时，请点击重新测试'
-                            : speedData}
-                        </div>
-                      )}
-                    </div>
-                  </Balloon>
-                );
-              })}
-            </FormItem>
-             */}
 
             <FormItem label="消息提示音" {...formItemLayout}>
               <Switch
