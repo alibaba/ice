@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from '@alifd/next';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
@@ -11,25 +11,25 @@ import devStores from './stores';
 import styles from './index.module.scss';
 
 const Dev = () => {
-  const { on, toggleModal } = useModal();
   const project = stores.useStore('project');
   const dev = devStores.useStore('dev');
+  const { on, toggleModal } = useModal();
+  const { folderPath: projectPath } = project.dataSource;
 
   const devStart = async () => {
     try {
-      await project.devStart();
+      await dev.start(projectPath);
     } catch (error) {
       IceNotification.error({
         message: '启动调试服务失败',
-        description:
-          error.message || '当前项目依赖未安装或依赖缺失，请重装依赖后重试。',
+        description: error.message || '请重试。',
       });
     }
   };
 
   const devStop = async () => {
     try {
-      await project.devStop();
+      await dev.stop();
     } catch (error) {
       IceNotification.error({
         message: '终止调试服务失败',
@@ -39,13 +39,9 @@ const Dev = () => {
   };
 
   const handleDevSettings = async () => {
-    await dev.getDevSettings(project.dataSource.folderPath);
+    await dev.getSettings(projectPath);
     toggleModal();
   };
-
-  useEffect(() => {
-    project.refresh();
-  }, []);
 
   return (
     <Card

@@ -4,8 +4,6 @@ export default {
   dataSource: {
     name: '',
     folderPath: '',
-    domain: '',
-    devStatus: 'normal',
   },
 
   inited: false,
@@ -27,18 +25,6 @@ export default {
   async reset(folderPath) {
     this.dataSource = await socket.emit('project.index.setCurrent', {
       folderPath,
-    });
-  },
-
-  async devStart() {
-    this.dataSource = await socket.emit('project.index.devStart', {
-      projectFolderPath: this.dataSource.folderPath,
-    });
-  },
-
-  async devStop() {
-    this.dataSource = await socket.emit('project.index.devStop', {
-      projectFolderPath: this.dataSource.folderPath,
     });
   },
 };

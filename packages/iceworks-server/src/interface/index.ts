@@ -6,5 +6,5 @@ export interface IPluginGetAllResult {
 }
 
 export interface IPluginService {
-  getAll(projectFolderPath: string): Promise<IPluginGetAllResult>;
+  getAll(projectPath: string): Promise<IPluginGetAllResult>;
 }

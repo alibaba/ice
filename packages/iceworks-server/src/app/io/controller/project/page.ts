@@ -4,7 +4,7 @@ export default (app) => {
   return class PageController extends Controller {
     async list(ctx) {
       const { args } = ctx;
-      const { projectFolderPath } = args[0];
+      const { projectPath } = args[0];
       const callback = args[args.length - 1];
 
       let pages = [];
@@ -12,14 +12,14 @@ export default (app) => {
       const pageService = await ctx.requestContext.getAsync('pageService');
 
       try {
-        pages = await pageService.getAll(projectFolderPath);
+        pages = await pageService.getAll(projectPath);
       } catch (err) {
         error = err;
       }
 
       callback({
         error,
-        data: pages
+        data: pages,
       });
     }
   };

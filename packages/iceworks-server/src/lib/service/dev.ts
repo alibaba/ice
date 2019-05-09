@@ -6,10 +6,8 @@ export class DevService {
   @plugin('projectManager')
   private projectManager;
 
-  async getDevSettings(
-    projectFolderPath: string
-  ): Promise<IProjectDevSettings> {
-    const project = this.projectManager.getProject(projectFolderPath);
+  async getDevSettings(projectPath: string): Promise<IProjectDevSettings> {
+    const project = this.projectManager.getProject(projectPath);
 
     const data = project ? await project.getDevSettings() : [];
 

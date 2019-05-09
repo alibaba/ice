@@ -1,60 +1,7 @@
-import { StringDecoder } from 'string_decoder';
-
 export default (app) => {
   const { Controller } = app;
 
   return class ProjectController extends Controller {
-    async devStart(ctx) {
-      const { projectManager } = app;
-      const { args, socket } = ctx;
-      const { projectFolderPath } = args[0];
-      const callback = args[args.length - 1];
-
-      let error;
-      let project;
-      try {
-        project = await projectManager.devStart(projectFolderPath);
-      } catch (err) {
-        error = err;
-      }
-
-      console.log(error);
-
-      if (project) {
-        project.on('dev.data', function(data) {
-          const decoder = new StringDecoder('utf8');
-          socket.emit('project.index.dev.data', decoder.write(data));
-        });
-      }
-
-      callback({
-        error,
-        data: project
-      });
-    }
-
-    async devStop(ctx) {
-      const { projectManager } = app;
-      const { args, socket } = ctx;
-      const { projectFolderPath } = args[0];
-      const callback = args[args.length - 1];
-
-      let error;
-      let project;
-      try {
-        project = await projectManager.devStop(projectFolderPath);
-      } catch (err) {
-        error = err;
-      }
-
-      socket.emit('project.dev.data', '\n\r已中止调试服务\n\r');
-
-      callback({
-        error,
-        data: project
-      });
-    }
-
     async list(ctx) {
       const { projectManager } = app;
       const { args } = ctx;
@@ -111,14 +58,6 @@ export default (app) => {
         error,
         data: project
       });
-    }
-
-    async build() {
-
-    }
-
-    async lint() {
-
     }
   };
 };
