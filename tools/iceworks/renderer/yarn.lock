@@ -609,19 +609,6 @@ ejs@^2.6.1:
   resolved "https://registry.npm.taobao.org/ejs/download/ejs-2.6.1.tgz#498ec0d495655abc6f23cd61868d926464071aa0"
   integrity sha1-SY7A1JVlWrxvI81hho2SZGQHGqA=
 
-electron-is-dev@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.npm.taobao.org/electron-is-dev/download/electron-is-dev-0.3.0.tgz#14e6fda5c68e9e4ecbeff9ccf037cbd7c05c5afe"
-  integrity sha1-FOb9pcaOnk7L7/nM8DfL18BcWv4=
-
-electron-is@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npm.taobao.org/electron-is/download/electron-is-3.0.0.tgz#bd4c27651fbe03f243f3607c2a098be884f9ed50"
-  integrity sha1-vUwnZR++A/JD82B8KgmL6IT57VA=
-  dependencies:
-    electron-is-dev "^0.3.0"
-    semver "^5.5.0"
-
 electron-log@^3.0.4:
   version "3.0.5"
   resolved "https://registry.npm.taobao.org/electron-log/download/electron-log-3.0.5.tgz#9bdd307f1f1aec85c0873babd6bdfffb1a661436"

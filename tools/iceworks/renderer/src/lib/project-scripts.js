@@ -1,7 +1,6 @@
 import path from 'path';
 import { Dialog } from '@icedesign/base';
 import { remote } from 'electron';
-import is from 'electron-is';
 import React from 'react';
 import rimraf from 'rimraf';
 import dialog from '../components/dialog';
@@ -445,22 +444,15 @@ export default {
       })
       .then(() => {
         const env = getEnvByAli(isAlibaba);
-        sessions.manager.new({
-          cwd: project.fullPath,
-          env,
-          shell: is.osx() ? 'which' : 'where',
-          shellArgs: ['npm'],
-        }, () => {
-          doProjectInstall(
-            {
-              cwd: project.fullPath,
-              env,
-              shell: 'npm',
-              callback,
-            },
-            true
-          );
-        });
+        doProjectInstall(
+          {
+            cwd: project.fullPath,
+            env,
+            shell: 'npm',
+            callback,
+          },
+          true
+        );
       });
   },
 };
