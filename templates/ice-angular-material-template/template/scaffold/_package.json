@@ -15,16 +15,18 @@
     "screenshot": "ice-devtools screenshot",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
-  "keywords": ["ice", "angular", "scaffold"],
-  "publishConfig": {
-    "access": "public",
-    "registry": "<%= registry %>"
-  },
+  "keywords": [
+    "ice",
+    "angular",
+    "scaffold"
+  ],
   "scaffoldConfig": {
     "builder": "angular-cli",
     "name": "<%= npmName %>",
     "title": "<%= title %>",
-    "categories": ["基础模板"]
+    "categories": [
+      "基础模板"
+    ]
   },
   "dependencies": {
     "@angular/animations": "~7.2.0",

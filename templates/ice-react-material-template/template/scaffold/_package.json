@@ -38,10 +38,6 @@
     "prepublishOnly": "npm run build && npm run screenshot",
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "<%= registry %>"
-  },
   "buildConfig": {
     "entry": "src/index.js",
     "localization": false,
@@ -53,8 +49,6 @@
     "builder": "ice-scripts",
     "name": "<%= npmName %>",
     "title": "<%= title %>",
-    "categories": [
-      "基础模板"
-    ]
+    "categories": ["基础模板"]
   }
 }

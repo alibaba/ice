@@ -9,10 +9,11 @@
     "screenshot": "ice-devtools screenshot",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
-  "keywords": ["ice", "angular", "block"],
-  "publishConfig": {
-    "registry": "<%= registry %>"
-  },
+  "keywords": [
+    "ice",
+    "angular",
+    "block"
+  ],
   "blockConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",
