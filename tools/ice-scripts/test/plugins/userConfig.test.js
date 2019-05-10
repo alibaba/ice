@@ -54,4 +54,34 @@ describe('user config', () => {
       });
     });
   });
+
+  describe('hash', () => {
+    test('config hash is true', () => {
+      const api = new MockApi();
+      api.service = {
+        userConfig: { hash: true },
+      };
+      api.config.output.filename('js/[name].js');
+      expect(api.config.output.get('filename')).toBe('js/[name].js');
+      userConfigPlugin(api);
+      expect(api.config.output.get('filename')).toBe('js/[name].[hash:6].js');
+    });
+  });
+
+  describe('outputAssetsPath', () => {
+    test('set up outputAssetsPath', () => {
+      const api = new MockApi();
+      api.service = {
+        userConfig: {
+          outputAssetsPath: {
+            js: 'test/js',
+            css: 'test/css',
+          },
+        },
+      };
+      api.config.output.filename('js/[name].[hash:6].js');
+      userConfigPlugin(api);
+      expect(api.config.output.get('filename')).toBe('test/js/[name].[hash:6].js');
+    });
+  });
 });
