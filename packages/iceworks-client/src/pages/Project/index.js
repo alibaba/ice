@@ -17,11 +17,14 @@ const Project = () => {
     logger.info('Project page loaded.');
 
     projects.refresh();
-    project.refresh();
 
-    // TODO 根据当前项目的变化进行更新
-    pages.refresh();
-    dependencies.refresh();
+    async function fetchProject() {
+      const newProject = await project.refresh();
+      pages.refresh(newProject.dataSource.folderPath);
+      dependencies.refresh(newProject.dataSource.folderPath);
+    }
+
+    fetchProject();
   }, []);
 
   return (
@@ -43,7 +46,9 @@ const Project = () => {
               <li key={index}>
                 <a
                   onClick={async () => {
-                    await project.reset(folderPath);
+                    const newProject = await project.reset(folderPath);
+                    pages.refresh(newProject.dataSource.folderPath);
+                    dependencies.refresh(newProject.dataSource.folderPath);
                   }}
                 >
                   {name}
@@ -51,7 +56,9 @@ const Project = () => {
                 <Button
                   onClick={async () => {
                     await projects.remove(folderPath);
-                    await project.refresh();
+                    const newProject = await project.refresh();
+                    pages.refresh(newProject.dataSource.folderPath);
+                    dependencies.refresh(newProject.dataSource.folderPath);
                   }}
                 >
                   删除
