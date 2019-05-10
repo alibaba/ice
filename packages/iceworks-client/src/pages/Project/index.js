@@ -18,13 +18,11 @@ const Project = () => {
 
     projects.refresh();
 
-    async function fetchProject() {
+    (async () => {
       const newProject = await project.refresh();
       pages.refresh(newProject.dataSource.folderPath);
       dependencies.refresh(newProject.dataSource.folderPath);
-    }
-
-    fetchProject();
+    })();
   }, []);
 
   return (
