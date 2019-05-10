@@ -39,8 +39,8 @@ yarn start # 启动主进程调试
     - 编写 /changelog 文件夹下的 版本号.json 和 changelog.json 。
 - 执行构建，生成安装包：
     - 同步物料：`yarn sync-db`；
-    - 打包前端资源：`yarn build`；
-    - 打包 electron 应用：`yarn dist`。
+    - 生成资源：`yarn build`，将会把主进程和渲染进程的构建结果生成到 `/out` 目录；
+    - 打包 electron 应用：`yarn dist`，将会把安装包生成到 `/dist` 目录。
 - 将安装包上传到 oss：`yarn upload`；
 - 确认所有平台的安装包都上传到 oss 后，在任意一平台下进行发布：
   - `yarn updates`：将生成的 updates.js 和 updates.json ；
