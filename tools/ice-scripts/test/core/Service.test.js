@@ -3,7 +3,7 @@ const Service = require('../../lib/core/Service');
 
 describe('init service', () => {
   const service = new Service({
-    context: path.join(__dirname, '../fixtures/getConfig'),
+    context: path.join(__dirname, '../fixtures/service'),
     args: {
       disabledReload: true,
     },
