@@ -2,7 +2,7 @@ const Config = require('webpack-chain');
 const path = require('path');
 const userConfigPlugin = require('../../lib/plugins/userConfig');
 
-const mockApi = function() {
+const MockApi = function () {
   this.config = new Config();
   this.chainWebpack = (fn) => {
     fn(this.config);
@@ -10,11 +10,10 @@ const mockApi = function() {
 };
 
 describe('user config', () => {
-
   describe('entry', () => {
     test('string entry', () => {
-      const api = new mockApi();
-      api.service = { userConfig: { entry: 'src/index.js' }, commandArgs: {}, };
+      const api = new MockApi();
+      api.service = { userConfig: { entry: 'src/index.js' }, commandArgs: {} };
       userConfigPlugin(api);
       expect(api.config.toConfig().entry.index).toEqual([
         require.resolve('@babel/polyfill'),
@@ -23,7 +22,7 @@ describe('user config', () => {
     });
 
     test('entry add hotDev', () => {
-      const api = new mockApi();
+      const api = new MockApi();
       api.service = {
         userConfig: { entry: 'src/index.js', injectBabel: 'runtime' },
         command: 'dev',
@@ -37,23 +36,22 @@ describe('user config', () => {
     });
 
     test('multi entris', () => {
-      const api = new mockApi();
+      const api = new MockApi();
       api.service = {
         userConfig: {
           entry: {
             index: 'src/index.js',
-            dashboard: 'src/dashboard.js'
+            dashboard: 'src/dashboard.js',
           },
           injectBabel: 'runtime',
         },
         commandArgs: {},
-      }
+      };
       userConfigPlugin(api);
       expect(api.config.toConfig().entry).toEqual({
         index: [path.resolve(process.cwd(), 'src/index.js')],
         dashboard: [path.resolve(process.cwd(), 'src/dashboard.js')],
       });
-    })
+    });
   });
-
 });
