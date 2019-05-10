@@ -12,6 +12,7 @@ module.exports = (api) => {
           config.module.rule(rule).uses.delete('css-hot');
         }
       });
+      config.devServer.hot(false);
     }
 
     if (commandArgs.analyzer) {
