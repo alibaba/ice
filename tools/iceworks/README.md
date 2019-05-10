@@ -27,10 +27,13 @@ yarn start # 启动主进程调试
 
 ## 打包发布
 
-根据当前操作系统打包对应平台的软件，目前支持 `darwin` `win32 x64`。
+目前支持 `darwin` 和 `win32 x64`，是在开发机器上进行的。
 
 - 前置准备：
-    - macOS：安装开发者证书
+    - 代码数字签名：
+        - 下载开发者证书（不同平台有不同的证书）；
+        - 配置环境变量（参考：[《electron-builder: Code Signing》](https://www.electron.build/code-signing)）。
+    - 设置 DEF 环境变量。
 - 本地验证：
     - 参考开发调试章节，进行启动调试服务，观察是否启动成功，控制台有无报错；
     - 如遇 `node-pty failed to load` 则执行 `yarn rebuild-node-pty` 后重启调试。
@@ -39,8 +42,8 @@ yarn start # 启动主进程调试
     - 编写 /changelog 文件夹下的 版本号.json 和 changelog.json 。
 - 执行构建，生成安装包：
     - 同步物料：`yarn sync-db`；
-    - 打包前端资源：`yarn build`；
-    - 打包 electron 应用：`yarn dist`。
+    - 生成资源：`yarn build`，将会把主进程和渲染进程的构建结果生成到 `/out` 目录；
+    - 打包 electron 应用：`yarn dist`，将会把安装包生成到 `/dist` 目录。
 - 将安装包上传到 oss：`yarn upload`；
 - 确认所有平台的安装包都上传到 oss 后，在任意一平台下进行发布：
   - `yarn updates`：将生成的 updates.js 和 updates.json ；

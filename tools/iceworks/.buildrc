@@ -2,7 +2,7 @@
   "publish": [
     {
       "provider": "generic",
-      "url": "http://iceworks.oss-cn-hangzhou.aliyuncs.com/${os}"
+      "url": "https://iceworks.oss-cn-hangzhou.aliyuncs.com/${os}"
     }
   ],
   "appId": "com.alibaba-inc.ice",
