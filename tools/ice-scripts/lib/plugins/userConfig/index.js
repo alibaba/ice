@@ -5,7 +5,8 @@ module.exports = (api) => {
   const { userConfig = {} } = api.service;
   const configKeys = Object.keys(userConfig);
   configKeys.forEach((configKey) => {
-    if (['plugins', 'chainWebpack'].indexOf(configKey) > -1) {
+    // filter plugins and chainWebpack config
+    if (['plugins', 'chainWebpack'].indexOf(configKey) === -1) {
       try {
         // load config plugin
         // eslint-disable-next-line import/no-dynamic-require
