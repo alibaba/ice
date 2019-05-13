@@ -91,7 +91,9 @@ exports.registerShortcut = (app, windows) => {
     glodlog.record({
       type: 'app',
       action: 'shortcut-key',
-      shortcutKey,
+      data: {
+        shortcutKey,
+      },
     });
   }
 
