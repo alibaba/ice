@@ -17,7 +17,8 @@ module.exports = () => {
 
   // set production mode entries
   // ice-scripts will add polyfill entry
-  baseConfig.delete('entry').merge({ entry });
+  baseConfig.entryPoints.clear();
+  baseConfig.merge({ entry });
 
   // uglify js file
   baseConfig.optimization

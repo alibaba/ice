@@ -19,7 +19,8 @@ module.exports = () => {
 
   // set development mode entries
   // ice-scripts will add hot-reload entry and polyfill entry
-  baseConfig.delete('entry').merge({ entry });
+  baseConfig.entryPoints.clear();
+  baseConfig.merge({ entry });
 
   baseConfig.devServer
     .disableHostCheck(false)
