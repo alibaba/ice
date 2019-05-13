@@ -10,6 +10,7 @@ module.exports = (api, value) => {
   );
   api.chainWebpack((config) => {
     // remove default entry then add new enrty to webpack config
-    config.delete('entry').merge({ entry });
+    config.entryPoints.clear();
+    config.merge({ entry });
   });
 };

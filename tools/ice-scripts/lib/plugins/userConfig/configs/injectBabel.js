@@ -6,7 +6,8 @@ module.exports = (api, injectBabel) => {
 
   api.chainWebpack((config) => {
     if (!userConfig.entry) {
-      config.delete('entry').merge({
+      config.entryPoints.clear();
+      config.merge({
         entry: processEntry(DEFAULT_ENTRY, {
           polyfill: injectBabel !== 'runtime',
           hotDev: command === 'dev' && !commandArgs.disabledReload,
