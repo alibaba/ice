@@ -8,7 +8,9 @@ export const openInEditor = (path) => {
   glodlog.record({
     type: 'external',
     action: 'open-external-editor',
-    path,
+    data: {
+      path,
+    },
   });
 };
 
@@ -17,7 +19,9 @@ export const openInShell = (path) => {
   glodlog.record({
     type: 'external',
     action: 'open-in-shell',
-    path,
+    data: {
+      path,
+    },
   });
 };
 
@@ -26,7 +30,9 @@ export const openInFinder = (path) => {
   glodlog.record({
     type: 'external',
     action: 'open-in-finder',
-    path,
+    data: {
+      path,
+    },
   });
 };
 
@@ -35,6 +41,8 @@ export const openInBrowser = (url) => {
   glodlog.record({
     type: 'external',
     action: 'open-in-browser',
-    url,
+    data: {
+      url,
+    },
   });
 };
