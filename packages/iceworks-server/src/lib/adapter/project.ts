@@ -6,7 +6,13 @@ import * as child_process from 'child_process';
 import * as EventEmitter from 'events';
 import * as detectPort from 'detect-port';
 import junk from 'junk';
-import { IProjectPage, IProjectDependency } from '../../interface';
+import {
+  IProjectPage,
+  IProjectDependency,
+  IProjectDevSettings,
+  IProjectConfigurationSettings,
+} from '../../interface';
+import { DEV_SETTINGS, CONFIGURATION_SETTINGS } from './config';
 
 const readdirAsync = util.promisify(fs.readdir);
 
@@ -70,8 +76,8 @@ export default class Project extends EventEmitter {
       {
         package: 'icestore',
         dev: false,
-        specifyVersion: '^0.1.0'
-      }
+        specifyVersion: '^0.1.0',
+      },
     ];
   }
 
@@ -81,12 +87,14 @@ export default class Project extends EventEmitter {
     const env = { PORT: port };
 
     if (this.devProcess) {
-      throw new Error('调试服务已启动，不能多次启动，请先停止已启动的调试服务后再次启动');
+      throw new Error(
+        '调试服务已启动，不能多次启动，请先停止已启动的调试服务后再次启动'
+      );
     }
 
     const childProcess = child_process.spawn('npm', ['start'], {
       cwd: folderPath,
-      env: Object.assign({}, settingsEnv, env)
+      env: Object.assign({}, settingsEnv, env),
     });
 
     this.devStatus = DEV_STATUS_WORKING;
@@ -120,5 +128,13 @@ export default class Project extends EventEmitter {
     this.devStatus = DEV_STATUS_STOP;
 
     return this;
+  }
+
+  async getDevSettings(): Promise<IProjectDevSettings[]> {
+    return DEV_SETTINGS;
+  }
+
+  async getConfigurationSettings(): Promise<IProjectConfigurationSettings[]> {
+    return CONFIGURATION_SETTINGS;
   }
 }

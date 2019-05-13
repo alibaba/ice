@@ -8,17 +8,21 @@ import projectStores from './stores';
 
 const Project = () => {
   const [projects, project] = stores.useStores(['projects', 'project']);
-  const [pages, dependencies] = projectStores.useStores(['pages', 'dependencies']);
+  const [pages, dependencies] = projectStores.useStores([
+    'pages',
+    'dependencies',
+  ]);
 
   useEffect(() => {
     logger.info('Project page loaded.');
 
     projects.refresh();
-    project.refresh();
 
-    // TODO 根据当前项目的变化进行更新
-    pages.refresh();
-    dependencies.refresh();
+    (async () => {
+      const newProject = await project.refresh();
+      pages.refresh(newProject.dataSource.folderPath);
+      dependencies.refresh(newProject.dataSource.folderPath);
+    })();
   }, []);
 
   return (
@@ -38,13 +42,21 @@ const Project = () => {
             const { name, folderPath } = projectData;
             return (
               <li key={index}>
-                <a onClick={async () => { await project.reset(folderPath); }}>
+                <a
+                  onClick={async () => {
+                    const newProject = await project.reset(folderPath);
+                    pages.refresh(newProject.dataSource.folderPath);
+                    dependencies.refresh(newProject.dataSource.folderPath);
+                  }}
+                >
                   {name}
                 </a>
                 <Button
                   onClick={async () => {
                     await projects.remove(folderPath);
-                    await project.refresh();
+                    const newProject = await project.refresh();
+                    pages.refresh(newProject.dataSource.folderPath);
+                    dependencies.refresh(newProject.dataSource.folderPath);
                   }}
                 >
                   删除
