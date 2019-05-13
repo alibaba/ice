@@ -15,21 +15,23 @@ describe('init service', () => {
     // builtInPlugins length is 2
     expect(service.plugins.length).toBe(5);
   });
-  describe('run plugins', () => {
-    service.runPlugins();
+
+  it('plugin with option', async () => {
+    await service.runPlugins();
     const webpackConfig = service.getWebpackConfig();
+    expect(webpackConfig.resolve.alias).toEqual({ react: 'b' });
+  });
 
-    test('plugin with option', () => {
-      expect(webpackConfig.resolve.alias).toEqual({ react: 'b' });
-    });
+  it('require plugin', async () => {
+    await service.runPlugins();
+    const webpackConfig = service.getWebpackConfig();
+    expect(webpackConfig.output.filename).toBe('[name].bundle.js');
+  });
 
-    test('require plugin', () => {
-      expect(webpackConfig.output.filename).toBe('[name].bundle.js');
-    });
-
-    test('plugin defined by string', () => {
-      expect(webpackConfig.output.path).toBe('custom');
-    });
+  it('plugin defined by string', async () => {
+    await service.runPlugins();
+    const webpackConfig = service.getWebpackConfig();
+    expect(webpackConfig.output.path).toBe('custom');
   });
 });
 

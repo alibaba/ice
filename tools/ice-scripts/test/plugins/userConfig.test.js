@@ -14,6 +14,7 @@ describe('user config', () => {
     test('string entry', () => {
       const api = new MockApi();
       api.service = { userConfig: { entry: 'src/index.js' }, commandArgs: {} };
+      api.config.entry('index').add('src/test.js');
       userConfigPlugin(api);
       expect(api.config.toConfig().entry.index).toEqual([
         require.resolve('@babel/polyfill'),
