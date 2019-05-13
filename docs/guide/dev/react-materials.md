@@ -90,5 +90,5 @@ ReactDOM.render((
 - [模板列表](/scaffold)
 - [区块列表](/block)
 - [组件列表](/component)
-- [物料代码](https://github.com/ice-lab/react-materials)
-- [Next 组件代码](https://github.com/alibaba-fusion/next)
+- [物料 GitHub 仓库](https://github.com/ice-lab/react-materials)
+- [Next 组件 GitHub 仓库](https://github.com/alibaba-fusion/next)

@@ -3,164 +3,136 @@ title: 前后端通信
 order: 2
 ---
 
-## 使用 AJAX 进行通信
-以前端工程中使用最普遍的 [axios](https://github.com/axios/axios) 为例，在进行数据的处理时，一般如下：
+前后端通信通常使用 AJAX 方案，对于 AJAX 社区有非常多的封装，目前主流推荐 [axios](https://github.com/axios/axios)。
+
+## 使用 axios 进行通信
+
+安装依赖：
+
+```bash
+$ npm install axios --save
+```
+
+通常情况下，AJAX 请求都是异步的，因此 axios 默认返回一个 Promise，因此你可以通过 Promise 或者 async/await 的方式调用：
 
 ```js
-class Demo extends Component {
+import axios from 'axios';
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      page: 1,
-      pageSize: 10,
-      total: 0,
-      lists: [],
+// async/await 方式使用
+async function getUser() {
+  try {
+    const response = await axios.get('/user', {
+      params: {
+        ID: 12345
+      }
+    });
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Promise 方式调用
+axios.get('/user', {
+    params: {
+      ID: 12345
     }
+  })
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle network error
+    console.log(error);
+  })
+
+// 发送 POST 请求
+axios({
+  method: 'post',
+  url: '/user/12345',
+  // request query
+  params: {
+    foo: 'bar'
+  },
+  // request body
+  data: {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  }
+});
+
+// 在 React 组件中使用
+import React from 'react';
+
+class Demo extends React.Component {
+  state = {
+    page: 1,
+    pageSize: 10,
+    total: 0,
+    dataSource: [],
   }
 
   componentDidMount() {
-    getData({page: 1, pageSize: 10})
+    this.getData({page: 1, pageSize: 10})
   }
 
   getData(params) {
     axios({
       method: 'get',
       url: '/api/getData',
-      data: params
-    }).then(res => {
-      this.setState({
-        // page: xxx,
-        // pageSize: xxx,
-        // total: xxx,
-        // lists: [...],
-      })
+      params,
+    }).then(response => {
+      const { page, pageSize, total, dataSource } = res.data.data;
+      this.setState({ page, pageSize, total, dataSource });
     });
   }
 
-  updateData() {
-    axios({
-      // ...
-    })
-  }
-
-  deleteData() {
-    axios({
-      // ...
-    })
-  }
-
   render() {
-    const { lists, page, pageSize, total } = this.state;
+    const { dataSource, page, pageSize, total } = this.state;
     return <div>...</div>
   }
 }
-``` 
-从以上代码可以看出，每一个 Action 背后，用户都要关注 AJAX 的逻辑以及管理 state 的变化，这无疑给开发者带来多余的开发成本。试想，如果能通过一份配置，结合更新数据的 API，让用户不再关注 AJAX 层的实现、不再维护 state 的状态，仅专注于 render 层的 UI 逻辑实现，这是多么理想的一种状态。ice 提供的 [DataBinder](https://ice.work/component/databinder) 组件便是为优化这种问题而开发的。
+```
 
-## 使用 DataBinder 简化
-DataBinder 的灵感来源于 Webx，基于一定的**约定**在组件上绑定数据，同时暴露一些更新数据的 API。帮助用户屏蔽掉 AJAX 层的实现逻辑、减少维护数据状态的成本，使用户专注在 UI 层的实现。
+在这些基础功能基础上，axios 支持丰富的请求参数、异常状态码判断、全局处理异常、全局配置请求参数等，具体参见 [axios 文档](https://github.com/axios/axios#axios)。
 
-使用方法：  
-1. 在 Class 上面配置当前需要的 DataSource  
+## 使用 DataBinder 简化状态管理
 
-    ```js
-    @DataBinder({
-      demo: {
-        url: '/api/getData',
-        method: 'get',
-        // 请求附带的 request 参数，method post 下是 data 参数
-        data: {
-          page: 1,
-          pageSize: 10
-        },
-        // AJAX 部分的参数完全继承自 axios ，参数请详见：https://github.com/axios/axios
-        // 下面是请求会返回的默认数据
-        defaultBindingData: {
-          // ...字段需要与 xxxx.json 接口返回的字段一一对应
-          dataList: [],
-          page: 1,
-          pageSize: 10, 
-          total: 0
-        }
-      }
-    })
-    class Demo extends Component {
-      ...
+在 React 中使用 axios 时，因为数据是异步的，因此开发者往往需要定义一堆 state 来映射这些数据，这样做一方面管理起来比较麻烦，另一方面也会产生很多重复代码，因此飞冰提供了 [DataBinder](https://ice.work/component/databinder) 组件来解决这个问题，开发者只需要按照约定进行配置，然后在组件中直接使用这些数据即可：
+
+```jsx
+import React, { Component } from 'react';
+import DataBinder from '@icedesign/data-binder';
+
+@DataBinder({
+  fooData: {
+    url: 'https://www.easy-mock.com/mock/5cc669767a9a541c744c9be7/databinder/success',
+    defaultBindingData: {
+      foo: 'bar'
     }
-    ```
-
-2. 通过 `this.props.bindingData.demo` 来获取绑定的数据 
-
-    ```js
-    @DataBinder({...})
-    class Demo extends Component {
-
-      render() {
-        const { demo } = this.props.bindingData;
-
-        return (
-          <div>
-            {demo.lists}
-          </div>
-        );
+  }
+})
+class App extends Component {
+  componentDidMount() {
+    this.props.updateBindingData('fooData', {
+      params: {
+        key: 'init'
       }
-    }
-    ```
+    });
+  }
 
-3. 通过 `this.props.updateBindingData` 来更新模块数据
+  render() {
+    const { fooData } = this.props.bindingData;
+    const { foo, __loading, __error } = fooData;
 
-    ```js
-    @DataBinder({...})
-    class Demo extends Component {
-      // e.g. 翻页
-      changePage(pageNo) {
-        this.props.updateBindingData('demo', {
-          data: {
-            page: pageNo,
-          },
-        });
-      }
-      // ...
-    }
-    ```
-    DataBinder 不会在组件初始化的时候自动发起请求，所以在对应的生命周期中需要主动调用一次该方法：
-
-    ```js
-    @DataBinder({...})
-    class Demo extends Component {
-      componentDidMount() {
-        // 拉取第一页的数据
-        this.props.updateBindingData('demo', {
-          data: {
-            page: 1
-          }
-        });
-      }
-    }
-    ```
-4. 处理 Loading 逻辑和效果   
-  AJAX 是异步的，为了更好的用户体验，推荐添加一个 Loading 组件来实时反馈异步调用的进度。  
-  每一个 DataSource 模块的数据附带了一个私有属性 `__loading` 来标记当前模块是否正在请求过程中，这样你可以在组件 render 中读取这个数据来判断是否正在加载数据。比如 Table 组件内部封装了一个 Loading 的效果，需要使用 `isLoading` props 进行配置，那么就可以写：
-
-    ```js
-    const { demo } = this.props.bindingData;
-
-    <Table dataSource={demo.lists} isLoading={demo.__loading}>
-      ...
-    </Table>;
-    ```
-
-更详细的使用教程参考 [DataBinder](https://ice.work/component/databinder) 文档。
-
+    return <div>...</div>;
+  }
+}
+```
 
 ## 跨域问题
-前后端通信，不可避免的一个话题就是跨域问题。
-常见的解决方式有：
-1. jsonp  
-  其原理是：Web 页面上调用 js 文件时不受是否跨域的影响（不仅如此，凡是拥有”src”这个属性的标签都拥有跨域的能力，比如 `<script>`、`<img>`、`<iframe>`）。
-2. 代理转发  
-  server 到 server 不存在跨域问题，当前后端资源不是部署在同一个域名下的时候，可以使用前端的 server 进行 api 接口的代理转发，从而解决跨域问题。
-3. CORS  
-  跨域资源共享（Cross-Origin Resource Sharing）是一种机制，它使用额外的 HTTP 头部告诉浏览器可以让一个 web 应用进行跨域资源请求。
-  这也是最常用的一种跨域解决方式，不便之处就是需要服务端配合修改。
+
+因为浏览器的同源策略，前端经常要面临跨域问题，同源策略/SOP（Same origin policy）是一种约定，由 Netscape 公司 1995 年引入浏览器，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到 XSS、CSFR 等攻击。所谓同源是指协议、域名、端口三者相同，**因此如果当前页面与发起 AJAX 请求的地址中协议、域名、端口有一个不一致，则会出现跨域问题，跨域问题最明显的现象是 AJAX 接口无法请求成功**。
+
+应对跨域问题有非常多的方案，当下主流以及推荐的方案是 CORS(Cross-origin resource sharing)，CORS 是一个 W3C 标准，全称是跨域资源共享。它允许浏览器向跨源服务器发起 MLHttpRequest 请求，从而克服了同源策略的限制。CORS 需要服务端配置一些头信息，这方面谷歌上有非常多的内容可以参考，这里不再详细描述，具体可参考 [跨域资源共享 CORS 详解](http://www.ruanyifeng.com/blog/2016/04/cors.html)。

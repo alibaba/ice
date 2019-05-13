@@ -37,6 +37,8 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 1. 通过 GUI 屏蔽前端工程及环境配置的复杂度
 2. 借助 GUI 提供更加丰富的能力：比如基于丰富的模板创建项目、根据区块组装新页面、Git 面板、依赖管理等
 
+关于 iceworks 更完善的使用介绍，请参考文档 [关于 iceworks](/docs/iceworks/about.md)
+
 ### ice-scripts
 
 基于 Webpack 的工程工具，支持命令行方式使用，主要用于开发构建 React 项目，与 Create React App 相比主要有以下差异化：
@@ -52,7 +54,7 @@ cover: https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg
 
 物料开发&管理工具，ice-devtools 提供了物料从初始化到发布的完整链路，在此基础上我们约定了一套物料协议，保证基于 ice-devtools 开发的物料可以直接在 iceworks 中使用。
 
-ice-devtools 不仅支持业务自定义自身的物料模板，同时也支持 React/Vue 等不同框架的物料模板，具体请参考 [自定义物料](/docs/materials/about.md)。
+ice-devtools 不仅支持 React/Vue 等不同框架的物料模板，同时也支持业务自定义自身的物料模板，具体请参考 [自定义物料](/docs/materials/about.md)。
 
 ## 常见问题
 
@@ -68,10 +70,11 @@ ice-devtools 不仅支持业务自定义自身的物料模板，同时也支持 
 
 由于 ICE 默认使用 React 16+，其需要的最低 IE 版本为 11，如果您需要在以下的版本使用，您可能需要引入一些 polyfill 来支持 `Map`, `Set` 等特性。参考[React 官网说明](https://reactjs.org/blog/2017/09/26/react-v16.0.html#javascript-environment-requirements)。
 
-#### WebStorm/IDEA 编辑器卡顿现象
+#### 飞冰官方的 React 组件为什么使用 Fusion，而不是 Antd？
 
-由于项目在安装依赖后，产生文件夹 `node_modules` 含有较多的碎小文件，编辑器在索引文件引起的卡顿。
-WebStorm 中尤为明显，可通过 exclude `node_modules` 目录，不需要检索该文件夹下的内容。
+Fusion 组件和 Antd 组件本身是解决类似问题的，飞冰始于淘宝内部的业务场景，在最开始的阶段 Fusion 对这些业务做了非常多的支持，因此飞冰默认使用的是 Fusion 组件，在此基础上，Fusion 组件的可定制性（主题配置）高于 Antd，这在面向多样性的业务场景时显得非常重要。
+
+当然在飞冰的体系里你依然可以选择使用 Antd 的组件，甚至你可以发起建设基于 Antd 的物料。
 
 ## 谁在使用
 
@@ -87,6 +90,6 @@ WebStorm 中尤为明显，可通过 exclude `node_modules` 目录，不需要�
 
 * 邮件：<mailto:ice-admin@alibaba-inc.com>
 * 反馈/建议：<https://github.com/alibaba/ice/issues/new>
-* 答疑钉钉群，内部同学请搜索「飞冰（ICE）万能群」：
+* 答疑钉钉群，**内部同学请搜索「飞冰（ICE）万能群」**：
 
   <img src="https://img.alicdn.com/tfs/TB1pzg_QhjaK1RjSZKzXXXVwXXa-970-1280.jpg" width="300" />
