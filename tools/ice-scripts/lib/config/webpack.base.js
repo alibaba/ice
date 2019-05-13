@@ -2,15 +2,13 @@
 const path = require('path');
 const Chain = require('webpack-chain');
 const getPkgData = require('./getPackageJson');
-const { appBuild, appDirectory, appNodeModules, appHtml, resolveApp } = require('./paths');
-const checkTemplateHasReact = require('../utils/checkTemplateHasReact');
+const { defaultBuildPath, defaultPublicPath, appDirectory, appNodeModules, resolveApp } = require('./paths');
 const setLoaders = require('./setWebpackLoaders');
 const setPlugins = require('./setWebpackPlugins');
 
 module.exports = (mode = 'development') => {
   const chainConfig = new Chain();
   const packageJson = getPkgData(appDirectory);
-  const hasExternalReact = checkTemplateHasReact(appHtml);
 
   chainConfig
     .mode(mode)
@@ -22,9 +20,9 @@ module.exports = (mode = 'development') => {
 
   // set default output
   chainConfig.output
-    .path(appBuild)
+    .path(defaultBuildPath)
     .filename('[name].js')
-    .publicPath('/');
+    .publicPath(defaultPublicPath);
 
   // set default resolve config
   chainConfig.resolve
@@ -39,9 +37,7 @@ module.exports = (mode = 'development') => {
       .set(packageJson.name, path.resolve(appDirectory, 'src/index'));
 
   // set default externals config
-  chainConfig.externals(
-    hasExternalReact ? { react: 'window.React', 'react-dom': 'window.ReactDOM' } : {}
-  );
+  chainConfig.externals({});
 
   // -------------- webpack loader config --------------
   setLoaders(chainConfig, mode);

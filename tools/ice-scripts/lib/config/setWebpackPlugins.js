@@ -10,7 +10,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const CheckIceComponentsDepsPlugin = require('../utils/check-ice-components-dep');
 const getFaviconPath = require('../utils/getFaviconPath');
 const getPkgData = require('./getPackageJson');
-const { appDirectory, appHtml, appFaviconIco, appFavicon, appPublic, appBuild } = require('./paths');
+const { appDirectory, appFaviconIco, appFavicon, appPublic, defaultAppHtml, defaultBuildPath } = require('./paths');
 
 module.exports = (chainConfig, mode = 'development') => {
   const packageJson = getPkgData(appDirectory);
@@ -79,7 +79,7 @@ module.exports = (chainConfig, mode = 'development') => {
           NODE_ENV: process.env.NODE_ENV,
         },
         favicon: getFaviconPath([appFaviconIco, appFavicon]),
-        template: appHtml,
+        template: defaultAppHtml,
         minify: false,
       }])
       .end();
@@ -91,7 +91,7 @@ module.exports = (chainConfig, mode = 'development') => {
         .use(CopyWebpackPlugin, [[
           {
             from: appPublic,
-            to: appBuild,
+            to: defaultBuildPath,
             ignore: ['index.html'],
           },
         ]]);
