@@ -2,6 +2,7 @@ import Project from './pages/Project';
 import Work from './pages/Work';
 import Dev from './pages/Dev';
 import Build from './pages/Build';
+import Configuration from './pages/Configuration';
 import Material from './pages/Material';
 import Setting from './pages/Setting';
 import SettingGeneral from './pages/SettingGeneral';
@@ -28,6 +29,11 @@ const routerConfig = [
       {
         path: '/work/build',
         component: Build,
+        exact: true,
+      },
+      {
+        path: '/work/configuration',
+        component: Configuration,
         exact: true,
       },
     ],
