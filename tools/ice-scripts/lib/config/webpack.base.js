@@ -50,9 +50,15 @@ module.exports = (mode = 'development') => {
   setPlugins(chainConfig, mode);
 
   // -------------- webpack optimization config --------------
-  // by default, disable splitChunks
   chainConfig.optimization.splitChunks({
-    cacheGroups: {},
+    cacheGroups: {
+      vendor: {
+        test: /[\\/]node_modules[\\/]/,
+        name: 'vendor',
+        chunks: 'initial',
+        minChunks: 2,
+      },
+    },
   });
 
   return chainConfig;
