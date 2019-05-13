@@ -37,7 +37,7 @@ module.exports = (api, injectBabel) => {
             });
             return Object.assign(options, { plugins });
           });
-      })
+      });
     }
   });
 };
