@@ -3,7 +3,7 @@ const fse = require('fs-extra');
 const Config = require('webpack-chain');
 const webpackMerge = require('webpack-merge');
 const log = require('../utils/log');
-const getPkgData = require('../config/packageJson');
+const getPkgData = require('../config/getPackageJson');
 const paths = require('../config/paths');
 const getDefaultWebpackConfig = require('../config/getDefaultWebpackConfig');
 const PluginAPI = require('./Plugin');
@@ -67,7 +67,7 @@ module.exports = class Service {
       this.userConfig.chainWebpack(config);
     }
     // TODO this.commandArgs对wepackConfig的影响
-    return webpackMerge(this.defaultWebpackConfig, config.toConfig());
+    return webpackMerge(this.defaultWebpackConfig.toConfig(), config.toConfig());
   }
 
   run() {

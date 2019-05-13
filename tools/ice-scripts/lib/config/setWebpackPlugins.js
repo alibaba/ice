@@ -9,7 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const CheckIceComponentsDepsPlugin = require('../utils/check-ice-components-dep');
 const getFaviconPath = require('../utils/getFaviconPath');
-const getPkgData = require('./packageJson');
+const getPkgData = require('./getPackageJson');
 const { appDirectory, appHtml, appFaviconIco, appFavicon, appPublic, appBuild } = require('./paths');
 
 module.exports = (chainConfig, mode = 'development') => {

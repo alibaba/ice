@@ -25,7 +25,7 @@ const cssModuleLoaderOpts = {
 module.exports = (chainConfig, mode = 'development') => {
   const babelConfig = getBabelConfig();
 
-  function setExtralCSSLoader(lang, loader, options) {
+  function setExtralCSSLoader(lang, loaders) {
     const moduleTestReg = new RegExp(`\\.module\\.${lang}$`);
     const cssTestReg = new RegExp(`\\.${lang}$`);
 
@@ -38,7 +38,7 @@ module.exports = (chainConfig, mode = 'development') => {
       if (isModule === true) {
         rule = rule.test(moduleTestReg);
       } else {
-        rule = rule.test(cssTestReg).exclude(moduleTestReg);
+        rule = rule.test(cssTestReg);
       }
 
       if (mode !== 'production') {
@@ -48,23 +48,28 @@ module.exports = (chainConfig, mode = 'development') => {
 
       rule.use('MiniCssExtractPlugin.loader')
         .loader(MiniCssExtractPlugin.loader)
-        .option({
+        .options({
           // TODO: hard code
           publicPath: './',
         });
 
       rule.use('css-loader')
         .loader('css-loader')
-        .option(isModule ? cssModuleLoaderOpts : cssLoaderOpts);
+        .options(isModule ? cssModuleLoaderOpts : cssLoaderOpts);
 
       rule.use('postcss-loader')
         .loader('postcss-loader')
-        .option(Object.assign({ sourceMap: true }, postcssConfig));
+        .options(Object.assign({ sourceMap: true }, postcssConfig));
 
-      if (loader) {
-        rule.use(loader)
-          .loader(loader)
-          .option(Object.assign({ sourceMap: true }, options));
+      if (loaders && loaders.length > 0) {
+        loaders.forEach((loader) => {
+          const loaderName = loader[0];
+          const loaderOptions = loader[1];
+
+          rule.use(loaderName)
+            .loader(loaderName)
+            .options(Object.assign({ sourceMap: true }, loaderOptions));
+        });
       }
     }
   }
@@ -74,21 +79,37 @@ module.exports = (chainConfig, mode = 'development') => {
 
     rule.use(type)
       .loader('url-loader')
-      .option(Object.assign(defaultAssetsLoaderOpts, loaderOpts));
+      .options(Object.assign(defaultAssetsLoaderOpts, loaderOpts));
   }
 
+  // css loader
+  setExtralCSSLoader('css');
+  setExtralCSSLoader('scss', [['sass-loader', {}], ['ice-skin-loader', { themeConfig: {} }]]);
+  setExtralCSSLoader('less', [['less-loader', { sourceMap: true, javascriptEnabled: true }]]);
+
+  // assets loader
+  setAssetsLoader('woff2', /\.woff2?$/, { minetype: 'application/font-woff' });
+  setAssetsLoader('ttf', /\.ttf$/, { minetype: 'application/octet-stream' });
+  setAssetsLoader('eot', /\.eot$/, { minetype: 'application/vnd.ms-fontobject' });
+  setAssetsLoader('svg', /\.svg$/, { minetype: 'image/svg+xml' });
+  setAssetsLoader('img', /\.(png|jpg|jpeg|gif)$/i);
 
   // jsx loader
   chainConfig.module.rule('jsx')
     .test(/\.jsx?$/)
-    .exclude(EXCLUDE_REGX)
+    .exclude
+      .add(EXCLUDE_REGX)
+      .end()
     .use('babel-loader')
-    .options(deepAssign({}, babelConfig, { cacheDirectory: true }));
+      .loader('babel-loader')
+      .options(deepAssign({}, babelConfig, { cacheDirectory: true }));
 
   // tsx loader
   chainConfig.module.rule('tsx')
     .test(/\.tsx?$/)
-    .exclude(EXCLUDE_REGX)
+    .exclude
+      .add(EXCLUDE_REGX)
+      .end()
     .use('babel-loader')
       .loader('babel-loader')
       .options(deepAssign({}, babelConfig, { cacheDirectory: true }))
@@ -102,17 +123,5 @@ module.exports = (chainConfig, mode = 'development') => {
     .test(/\.hbs$/i)
     .use('handlebars-loader')
       .loader('handlebars-loader')
-      .option({});
-
-  // css loader
-  setExtralCSSLoader('css');
-  setExtralCSSLoader('scss', 'sass-loader', { sourceMap: true });
-  setExtralCSSLoader('less', 'less-loader', { sourceMap: true, javascriptEnabled: true });
-
-  // assets loader
-  setAssetsLoader('woff2', /\.woff2?$/, { minetype: 'application/font-woff' });
-  setAssetsLoader('ttf', /\.ttf$/, { minetype: 'application/octet-stream' });
-  setAssetsLoader('eot', /\.eot$/, { minetype: 'application/vnd.ms-fontobject' });
-  setAssetsLoader('svg', /\.svg$/, { minetype: 'image/svg+xml' });
-  setAssetsLoader('img', /\.(png|jpg|jpeg|gif)$/i);
+      .options({});
 };

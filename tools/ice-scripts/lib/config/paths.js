@@ -1,7 +1,7 @@
 const { realpathSync } = require('fs');
 const { resolve } = require('path');
 
-const pkgData = require('../config/packageJson')();
+const pkgData = require('../config/getPackageJson')();
 
 function resolveSDK(relativePath) {
   return resolve(__dirname, relativePath);
