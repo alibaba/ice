@@ -11,4 +11,4 @@ order: 1
 - 完善的自定义 webpack 配置
 - ……
 
-本文会讲述 ice-scripts 完整的使用指南。
+我们致力于将 ice-scripts 打造为 React 生态下高可配置性、高可用的工程工具。

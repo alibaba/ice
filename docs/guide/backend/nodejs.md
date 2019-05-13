@@ -1,22 +1,24 @@
 ---
-title: 在 Node.js web 应用中集成
+title: 在 Node.js 应用中集成
 order: 1
 ---
 
-本文讲解如何在 Node.js web 应用中集成前端资源，我们以 Koa 框架为例，首先根据 Koa 官方文档初始化一个标准的 MVC 应用。
+本文讲解如何在 Node.js 应用中集成前端资源，我们以 Koa 框架为例，首先根据 Koa 官方文档初始化一个标准的 MVC 应用。
 
 ## 初始化 Koa 应用
 
 新建项目名 `ice-node-koa`，可自由指定
+
 ```bash
-mkdir ice-node-koa && cd ice-node-koa
-npm init
-npm i ejs koa koa-logger koa-views --save
+$ mkdir ice-node-koa && cd ice-node-koa
+$ npm init
+$ npm i ejs koa koa-logger koa-views --save
 ```
 
 ## 定义视图
 
-新建 `views/index.ejs`
+新建 `views/index.ejs`：
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -38,7 +40,8 @@ npm i ejs koa koa-logger koa-views --save
 
 ## 渲染视图
 
-新建 `app.js`
+新建 `app.js`：
+
 ```javascript
 const views = require('koa-views');
 const path = require('path');
@@ -54,31 +57,18 @@ app.use(async function(ctx) {
 
 app.listen(3000);
 ```
+
 > 示例兼容单页应用的 `HashRouter` 和 `BrowserRouter`，如多页应用可参考 [https://github.com/koajs/examples](https://github.com/koajs/examples) 中 blog 示例配置路由
 
 ## 运行示例
 
 ```bash
-node app.js
+$ node app.js
 ```
-> 浏览器中打开 [http://localhost:3000](http://localhost:3000)
+
+浏览器中打开 http://localhost:3000
 
 ## 注意事项
 
 - 示例应用只部署了 html，兼容 `BrowserRouter` 做了 `fallback` 处理 (默认所有请求路径返回同一份html)
-- node 前后端一体应用，需要进行路由配置
-
-## 请求跨域问题
-
-- node + java 应用，node 层配置 nginx，建议使用 nginx 反向代理，简单示例
-  ```bash
-  server {
-    listen 80 default_server;
-    server_name _;
-
-    location /api {
-        proxy_pass   http://domain.java/api;
-    }
-  }
-  ```
-- node + java 应用，没有nginx，建议使用 node proxy 中间件(http-proxy-middleware)实现代理，或者 java 端接口兼容 CORS，前端通过绝对路径访问 ajax 请求
+- Node.js 前后端一体应用，需要进行路由配置

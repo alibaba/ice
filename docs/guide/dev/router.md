@@ -3,6 +3,8 @@ title: 路由设计
 order: 4
 ---
 
+在浏览器支持了 [History API](https://developer.mozilla.org/zh-CN/docs/Web/API/History) 之后，很多网站为了提升用户体验都采用基于 History 的单页面应用（SPA）方式，这种方式在页面切换时几乎不需要等待，页面也不会出现白屏，在用户体验上有非常大的提高。采用 SPA 的方式，所有页面路由都需要在前端代码中定义，在 React 领域我们通常使用 [react-router](https://reacttraining.com/react-router/) 的方案，本文就来介绍如何在 SPA 应用中设计路由。
+
 ## 路由配置
 
 在模板中，路由与菜单一样也是按照一定的约定进行配置，用来描述路由的结构关系。路由主要分为 路由配置 和 路由生成 两部分：
@@ -240,16 +242,9 @@ const routerConfig = [
 - 考虑到每个路由都能配置任意不同的布局，在渲染的时候实际上是每个路由都会渲染对应的布局，但即使是同一个布局也会导致重新渲染。
 - 如果您的实际项目没有多布局的需求，建议通过自定义修改路由的方式进行处理，避免重复的渲染操作。
 
+## 路由跳转
 
-
----
-title: 如何实现页面间的跳转
-order: 5
----
-
-本文档介绍使用 react-router 的单页面应用如何实现页面跳转。
-
-## 组件跳转
+### 通过 Link 组件跳转
 
 通过 `<Link />` 标签组件跳转，定义 `to` 属性完成路径跳转，等同于点击一个 `<a />` 标签。
 
@@ -279,11 +274,7 @@ class Demo extends React.Component {
 }
 ```
 
-## 方法调用
-
-一般在某些操作后跳转路由使用，例如权限验证，表单提交后等。
-
-### 1. withRouter
+### 方法调用：withRouter
 
 如果调用方法的地方在 React 组件内部，可以直接在组件上添加 `withRouter` 的装饰器，然后组件内可以通过 `props` 获取到相关 API：
 
@@ -316,7 +307,7 @@ class ShowTheLocation extends React.Component {
 }
 ```
 
-### 2. history API
+### 方法调用：History API
 
 如果不满足第一种方法的使用条件，比如单独抽离的某个方法中，则需要单独使用 history 的三方包，一般情况下不推荐这种情况，实际业务里应该很少需要：
 
@@ -330,16 +321,13 @@ $ npm install --save history
 
 ```js
 import { createBrowserHistory } from 'history';
-
 const history = createBrowserHistory();
 
 export default function checkAuth() {
-
   ajax('/api/checkAuth').then((res) => {
     if (res.data.noAuth) {
       history.push('/page/noAuth');
     }
   });
-
-};
+}
 ```

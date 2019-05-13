@@ -7,7 +7,8 @@ order: 2
 
 ## resources
 
-新建 `/velocity/layout/index.vm`
+新建 `/velocity/layout/index.vm`：
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -38,4 +39,5 @@ public String index(Model model) {
     return "index";
 }
 ```
+
 > 示例展示的是 `HashRouter` 路由，如果为 `BrowserRouter`，建议改为 `@GetMapping(value = { "/**" })` 实现前端 fallback

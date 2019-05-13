@@ -100,3 +100,12 @@ $ npm run start
 ```
 
 接着通过代码编辑器编写代码就可以在浏览器中看到效果。
+
+### 4. 项目构建
+
+```bash
+# 启动调试服务
+$ npm run build
+```
+
+执行完成后会在 `build` 目录下生成 `js/index.js` 和 `css/index.css` 文件，只需要在对应 HTML 中引入这两个文件即可渲染出页面。
