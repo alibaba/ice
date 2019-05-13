@@ -1,11 +1,23 @@
 /* eslint-disable indent */
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const processEntry = require('./processEntry');
 const getBaseCofing = require('./webpack.base.js');
 
 module.exports = () => {
   const baseConfig = getBaseCofing('production');
+  const defaultEntry = baseConfig.entry('entry').values()[0];
+  const entry = processEntry(defaultEntry,
+    {
+      polyfill: true,
+      hotDev: false,
+    }
+  );
   baseConfig.devtool(false);
+
+  // set production mode entries
+  // ice-scripts will add polyfill entry
+  baseConfig.delete('entry').merge({ entry });
 
   // uglify js file
   baseConfig.optimization

@@ -15,7 +15,7 @@ module.exports = (mode = 'development') => {
     .context(appDirectory);
 
   // set default entrypoints
-  chainConfig.entry('entry')
+  chainConfig.entry('index')
     .add(resolveApp('src/index.js'));
 
   // set default output
