@@ -49,9 +49,10 @@ module.exports = class Service {
       .concat(this.userConfig.plugins || []);
   }
 
-  runPlugins() {
+  async runPlugins() {
     // run plugins
-    this.plugins.forEach((pluginInfo) => {
+    for (let i = 0; i < this.plugins.length; i++) {
+      let pluginInfo = this.plugins[i];
       if (!Array.isArray(pluginInfo)) {
         pluginInfo = [pluginInfo];
       }
@@ -62,13 +63,17 @@ module.exports = class Service {
           ? require(require.resolve(plugin, { paths: [this.context] }))
           : plugin;
         assert(typeof pluginFunc === 'function', 'plugin must export a function');
-        pluginFunc(new PluginAPI(this), options);
+        // support async function
+        // make sure to run async funtion in order
+        // eslint-disable-next-line no-await-in-loop
+        await pluginFunc(new PluginAPI(this), options);
       } catch (e) {
         const errorPlugin = pluginInfo[0];
         log.error(`Fail to load Plugin ${typeof errorPlugin === 'string' ? errorPlugin : ''}`);
         process.exit(1);
       }
-    });
+    }
+    //  await Promise.all(pluginFuncs);
   }
 
   getWebpackConfig() {
@@ -81,8 +86,8 @@ module.exports = class Service {
     return webpackMerge(this.defaultWebpackConfig, config.toConfig());
   }
 
-  run() {
-    this.runPlugins();
+  async run() {
+    await this.runPlugins();
     // get final config before run command
     this.config = this.getWebpackConfig();
     try {

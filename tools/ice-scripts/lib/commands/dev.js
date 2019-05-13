@@ -14,7 +14,6 @@ const openBrowser = require('react-dev-utils/openBrowser');
 
 const devMiddleware = require('../utils/devMiddleware');
 const iceworksClient = require('../utils/iceworksClient');
-const getCertificate = require('../config/getCertificate');
 const prepareUrLs = require('../utils/prepareURLs');
 const getProxyConfig = require('../config/getProxyConfig');
 const goldlog = require('../utils/goldlog');
@@ -47,20 +46,7 @@ module.exports = async function (api, subprocess) {
   const HOST = api.commandArgs.host || '0.0.0.0';
   const PORT = api.commandArgs.port || 4444;
   let httpsConfig;
-  let protocol = api.commandArgs.https ? 'https' : 'http';
-
-  if (protocol === 'https') {
-    try {
-      const cert = await getCertificate();
-      httpsConfig = {
-        key: cert.key,
-        cert: cert.cert,
-      };
-    } catch (err) {
-      protocol = 'http';
-      log.info('HTTPS 证书生成失败，已转换为HTTP');
-    }
-  }
+  const protocol = api.config.devServer.https ? 'https' : 'http';
 
   const isInteractive = false; // process.stdout.isTTY;
   const urls = prepareUrLs(protocol, HOST, PORT);
