@@ -364,7 +364,7 @@ export interface IProject extends EventEmitter {
   /**
    * 获取构建配置项
    */
-  getConfigurationSettings(): Promise<IProjectConfigurationSettings>;
+  getConfigurationSettings(): Promise<IProjectConfigurationSettings[]>;
 
   /**
    * 获取项目内的布局

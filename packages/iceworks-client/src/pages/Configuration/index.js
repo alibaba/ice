@@ -26,9 +26,8 @@ const Configuration = () => {
 
   useEffect(() => {
     (async () => {
-      // TODO: 如何保证执行顺序
-      await project.refresh();
-      await configuration.getConfigurationSettings(project.dataSource.folderPath);
+      const newProject = await project.refresh();
+      await configuration.getConfigurationSettings(newProject.dataSource.folderPath);
     })();
   }, []);
 
