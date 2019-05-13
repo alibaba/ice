@@ -2,13 +2,13 @@ const webpack = require('webpack');
 
 module.exports = (api, value) => {
   api.chainWebpack((config) => {
-    if (config.plugins.get('define-plugin')) {
+    if (config.plugins.get('DefinePlugin')) {
       config
-        .plugin('define-plugin')
+        .plugin('DefinePlugin')
         .tap((args) => [Object.assign(...args, value)]);
     } else {
       config
-        .plugin('define-plugin')
+        .plugin('DefinePlugin')
         .use(webpack.DefinePlugin, [value]);
     }
   });

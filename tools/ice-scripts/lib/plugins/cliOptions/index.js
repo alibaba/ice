@@ -20,12 +20,12 @@ module.exports = async (api) => {
   }
   api.chainWebpack((config) => {
     if (commandArgs.disabledReload) {
-      config.plugins.delete('hot-module-replacement');
+      config.plugins.delete('HotModuleReplacementPlugin');
 
       // remove css hot loader of scss/module-scss/css/module-css/less/module-less
-      ['scss', 'module-scss', 'css', 'module-css', 'less', 'module-less'].forEach((rule) => {
+      ['scss', 'scss-module', 'css', 'css-module', 'less', 'less-module'].forEach((rule) => {
         if (config.module.rules.get(rule)) {
-          config.module.rule(rule).uses.delete('css-hot');
+          config.module.rule(rule).uses.delete('css-hot-loader');
         }
       });
       config.devServer.hot(false);

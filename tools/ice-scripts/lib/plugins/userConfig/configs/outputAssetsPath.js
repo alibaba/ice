@@ -9,8 +9,8 @@ module.exports = (api, outputAssetsPath) => {
     const filename = getFilename(config.output.get('filename'));
     config.output.filename(path.join(outputAssetsPath.js || '', filename));
 
-    const options = config.plugin('mini-css-extract-plugin').get('args')[0];
-    config.plugin('mini-css-extract-plugin').tap((args) => [Object.assign(...args, {
+    const options = config.plugin('MiniCssExtractPlugin').get('args')[0];
+    config.plugin('MiniCssExtractPlugin').tap((args) => [Object.assign(...args, {
       filename: path.join(outputAssetsPath.css || '', getFilename(options.filename)),
     })]);
   });
