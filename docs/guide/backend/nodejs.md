@@ -81,4 +81,4 @@ node app.js
     }
   }
   ```
-- node + java 应用，没有nginx，建议后端接口兼容 CORS，前端通过绝对路径访问 ajax 请求
+- node + java 应用，没有nginx，建议使用 node proxy 中间件(http-proxy-middleware)实现代理，或者 java 端接口兼容 CORS，前端通过绝对路径访问 ajax 请求
