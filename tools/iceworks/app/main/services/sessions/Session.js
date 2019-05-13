@@ -39,16 +39,15 @@ module.exports = class Manager extends EventEmitter {
     }
 
     try {
-      this.pty = spawn(defaultShell, defaultShellArgs, {
+      this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, {
         cols: columns,
         rows,
         cwd,
         env: spawnEnv,
       });
-      const command = `${shell} ${shellArgs.join(' ')}\r`;
-
-      logger.info('command:', command);
-      this.pty.write(command);
+      // const command = `${shell} ${shellArgs.join(' ')}\r`;
+      // logger.info('command:', command);
+      // this.pty.write(command);
     } catch (err) {
       if (/is not a function/.test(err.message)) {
         throw createNodePtyError();
