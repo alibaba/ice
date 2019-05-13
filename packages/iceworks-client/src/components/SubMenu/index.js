@@ -7,7 +7,13 @@ import styles from './index.module.scss';
 const SubMenu = ({ data, title }) => {
   return (
     <div className={styles.subMenu}>
-      {title ? <h2 className={styles.subMenuTitle}>{title}</h2> : null}
+      {
+        title ?
+          <h2 className={styles.subMenuTitle}>
+            <FormattedMessage id={title} />
+          </h2> :
+        null
+      }
       {data.map((item) => {
         return (
           <NavLink

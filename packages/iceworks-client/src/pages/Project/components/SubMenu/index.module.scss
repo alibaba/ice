@@ -1,0 +1,12 @@
+@import '../../../../variables.scss';
+
+.subMenu {
+  width: 240px;
+  min-width: 240px;
+  background: $white;
+  box-shadow: $shadow-right;
+
+  .subMenuTitle {
+    margin: 15px;
+  }
+}

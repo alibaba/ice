@@ -13,7 +13,7 @@ const Work = ({ routes }) => {
   return (
     <div className={styles.workPage}>
       {/* render work submenu */}
-      <SubMenu data={subMenuData} title="工程管理" />
+      <SubMenu data={subMenuData} title="iceworks.work.title" />
 
       {/* render work subroute */}
       <div className={styles.main}>
