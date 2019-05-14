@@ -4,6 +4,17 @@ const deepAssign = require('deep-assign');
 const postcssConfig = require('./postcssConfig');
 const getBabelConfig = require('./getBabelConfig');
 
+const TYPESCRIPT_LOADER = require.resolve('ts-loader');
+const BABEL_LOADER = require.resolve('babel-loader');
+const CSS_LOADER = require.resolve('css-loader');
+const LESS_LOADER = require.resolve('less-loader');
+const POSTCSS_LOADER = require.resolve('postcss-loader');
+const SASS_LOADER = require.resolve('sass-loader');
+const CSS_HOT_LOADER = require.resolve('css-hot-loader');
+const URL_LOADER = require.resolve('url-loader');
+const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
+const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
+
 const EXCLUDE_REGX = /node_modules/;
 const URL_LOADER_LIMIT = 8192;
 
@@ -43,18 +54,18 @@ module.exports = (chainConfig, mode = 'development') => {
 
       if (mode !== 'production') {
         rule.use('css-hot-loader')
-          .loader('css-hot-loader');
+          .loader(CSS_HOT_LOADER);
       }
 
       rule.use('MiniCssExtractPlugin.loader')
         .loader(MiniCssExtractPlugin.loader);
 
       rule.use('css-loader')
-        .loader('css-loader')
+        .loader(CSS_LOADER)
         .options(isModule ? cssModuleLoaderOpts : cssLoaderOpts);
 
       rule.use('postcss-loader')
-        .loader('postcss-loader')
+        .loader(POSTCSS_LOADER)
         .options(Object.assign({ sourceMap: true }, postcssConfig));
 
       if (loaders && loaders.length > 0) {
@@ -73,14 +84,14 @@ module.exports = (chainConfig, mode = 'development') => {
     const rule = chainConfig.module.rule(type).test(test);
 
     rule.use(type)
-      .loader('url-loader')
+      .loader(URL_LOADER)
       .options(Object.assign(defaultAssetsLoaderOpts, loaderOpts));
   }
 
   // css loader
   setExtralCSSLoader('css');
-  setExtralCSSLoader('scss', [['sass-loader', {}], ['ice-skin-loader', { themeConfig: {} }]]);
-  setExtralCSSLoader('less', [['less-loader', { sourceMap: true, javascriptEnabled: true }]]);
+  setExtralCSSLoader('scss', [[SASS_LOADER, {}], [ICE_SKIN_LOADER, { themeConfig: {} }]]);
+  setExtralCSSLoader('less', [[LESS_LOADER, { sourceMap: true, javascriptEnabled: true }]]);
 
   // assets loader
   setAssetsLoader('woff2', /\.woff2?$/, { minetype: 'application/font-woff' });
@@ -96,7 +107,7 @@ module.exports = (chainConfig, mode = 'development') => {
       .add(EXCLUDE_REGX)
       .end()
     .use('babel-loader')
-      .loader('babel-loader')
+      .loader(BABEL_LOADER)
       .options(deepAssign({}, babelConfig, { cacheDirectory: true }));
 
   // tsx loader
@@ -106,17 +117,17 @@ module.exports = (chainConfig, mode = 'development') => {
       .add(EXCLUDE_REGX)
       .end()
     .use('babel-loader')
-      .loader('babel-loader')
+      .loader(BABEL_LOADER)
       .options(deepAssign({}, babelConfig, { cacheDirectory: true }))
       .end()
     .use('ts-loader')
-      .loader('ts-loader')
+      .loader(TYPESCRIPT_LOADER)
       .options({ transpileOnly: true });
 
   // handlebars loader
   chainConfig.module.rule('handlebars')
     .test(/\.hbs$/i)
     .use('handlebars-loader')
-      .loader('handlebars-loader')
+      .loader(HANDLEBARS_LOADER)
       .options({});
 };
