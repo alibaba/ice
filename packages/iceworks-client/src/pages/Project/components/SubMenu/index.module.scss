@@ -30,6 +30,13 @@
           font-size: $font-size-md;
           font-weight: 400;
         }
+
+        .badge {
+          margin-left: 4px;
+          sup {
+            background-color: $success-color!important;
+          }
+        }
       }
 
       .icon {

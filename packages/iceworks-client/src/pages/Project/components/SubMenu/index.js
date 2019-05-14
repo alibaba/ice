@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
-import { Icon, Button } from '@alifd/next';
+import { Icon, Button, Badge } from '@alifd/next';
 import styles from './index.module.scss';
 
 const SubMenu = ({
@@ -15,7 +15,7 @@ const SubMenu = ({
       </h2>
       <div className={styles.list}>
         {
-          projects.map(({ name, folderPath }, index) => {
+          projects.map(({ name, folderPath, devStatus }, index) => {
             return (
               <div
                 key={index}
@@ -31,6 +31,7 @@ const SubMenu = ({
                   <strong>
                     {name}
                   </strong>
+                  {devStatus === 'working' ? <Badge className={styles.badge} dot /> : null}
                 </div>
                 <Icon
                   className={styles.icon}

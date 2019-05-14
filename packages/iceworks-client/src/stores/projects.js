@@ -1,17 +1,11 @@
 import socket from '@src/socket';
 
 export default {
-  inited: false,
   dataSource: [],
   async refresh() {
-    if (this.inited) {
-      return;
-    }
-
     try {
       const dataSource = await socket.emit('project.index.list');
       this.dataSource = dataSource;
-      this.inited = true;
     } catch (error) {
       // do something...
     }

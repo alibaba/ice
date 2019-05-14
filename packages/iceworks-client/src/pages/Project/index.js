@@ -21,9 +21,8 @@ const Project = () => {
   useEffect(() => {
     logger.info('Project page loaded.');
 
-    projects.refresh();
-
     (async () => {
+      await projects.refresh();
       const newProject = await project.refresh();
       pages.refresh(newProject.dataSource.folderPath);
       dependencies.refresh(newProject.dataSource.folderPath);
