@@ -31,10 +31,7 @@ module.exports = (mode = 'development') => {
       .add(appNodeModules)
       .end()
     .extensions
-      .merge(['.js', '.jsx', '.json', '.html', '.ts', '.tsx'])
-      .end()
-    .alias
-      .set(packageJson.name, path.resolve(appDirectory, 'src/index'));
+      .merge(['.js', '.jsx', '.json', '.html', '.ts', '.tsx']);
 
   // set default externals config
   chainConfig.externals({});
