@@ -1,12 +1,74 @@
 @import '../../../../variables.scss';
 
-.subMenu {
+.wrapper {
   width: 240px;
   min-width: 240px;
   background: $white;
   box-shadow: $shadow-right;
+  display: flex;
+  flex-direction: column;
 
-  .subMenuTitle {
+  .title {
     margin: 15px;
+  }
+
+  .list {
+    flex: 1;
+    .itemCurrent {
+      background-color: $background-color-base;
+    }
+    .item {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      cursor: pointer;
+
+      .name {
+        flex: 1;
+        strong {
+          font-size: $font-size-md;
+          font-weight: 400;
+        }
+      }
+
+      .icon {
+        visibility: hidden;
+        float: right;
+        color: $error-color;
+        cursor: pointer;
+      }
+
+      &:hover {
+        background-color: $background-color-light;
+        .icon {
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  .opts {
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    margin-bottom: 24px;
+    align-items: center;
+
+    .btn {
+      margin-bottom: 14px;
+      width: 180px;
+      height: 40px;
+      border-radius: 28px;
+
+      span {
+        font-size: $font-size-md;
+        margin-left: 4px;
+      }
+
+      :last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 }

@@ -27,9 +27,27 @@ const Project = () => {
     })();
   }, []);
 
+  async function onSwitchProject(folderPath) {
+    const newProject = await project.reset(folderPath);
+    pages.refresh(newProject.dataSource.folderPath);
+    dependencies.refresh(newProject.dataSource.folderPath);
+  }
+
+  async function onDeleteProject(folderPath) {
+    await projects.remove(folderPath);
+    const newProject = await project.refresh();
+    pages.refresh(newProject.dataSource.folderPath);
+    dependencies.refresh(newProject.dataSource.folderPath);
+  }
+
   return (
     <div className={styles.page}>
-      <SubMenu />
+      <SubMenu
+        projects={projects.dataSource}
+        project={project.dataSource}
+        onSwitchProject={onSwitchProject}
+        onDeleteProject={onDeleteProject}
+      />
       <div className={styles.main}>
         testing...
       </div>
