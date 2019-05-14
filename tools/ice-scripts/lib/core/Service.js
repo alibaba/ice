@@ -1,5 +1,6 @@
 const path = require('path');
 const fse = require('fs-extra');
+const assert = require('assert');
 const log = require('../utils/log');
 const getPkgData = require('../config/getPackageJson');
 const paths = require('../config/paths');
@@ -7,15 +8,16 @@ const getDefaultWebpackConfig = require('../config/getDefaultWebpackConfig');
 const PluginAPI = require('./Plugin');
 
 module.exports = class Service {
-  constructor({ command, context, args }) {
+  constructor({ command = '', context = process.cwd(), args = {} }) {
     this.command = command;
     this.commandArgs = args;
-    this.context = context || process.cwd();
+    this.context = context;
     this.pkg = getPkgData(this.context);
     this.paths = paths;
     // get user config form ice.config.js
     this.userConfig = this.getUserConfig(this.context);
     this.chainWebpackFns = [];
+    this.plugins = this.getPlugins();
     this.defaultWebpackConfig = getDefaultWebpackConfig();
   }
 
@@ -35,27 +37,41 @@ module.exports = class Service {
     return {};
   }
 
-  runPlugins() {
-    this.plugins = this.userConfig.plugins || [];
-    // TODO 使用内置插件来实现userConfig配置字段
-    // resolve user plugins
-    this.plugins.forEach((userPlugin) => {
-      if (!Array.isArray(userPlugin)) {
-        userPlugin = [userPlugin];
+  getPlugins() {
+    const builtInPlugins = [
+      '../plugins/userConfig',
+      '../plugins/cliOptions',
+    ];
+    // eslint-disable-next-line import/no-dynamic-require
+    return builtInPlugins.map((pluginPath) => require(pluginPath))
+      .concat(this.userConfig.plugins || []);
+  }
+
+  async runPlugins() {
+    // run plugins
+    for (let i = 0; i < this.plugins.length; i++) {
+      let pluginInfo = this.plugins[i];
+      if (!Array.isArray(pluginInfo)) {
+        pluginInfo = [pluginInfo];
       }
       try {
-        const [plugin, options] = userPlugin;
+        const [plugin, options] = pluginInfo;
         const pluginFunc = typeof plugin === 'string'
           // eslint-disable-next-line import/no-dynamic-require
           ? require(require.resolve(plugin, { paths: [this.context] }))
           : plugin;
-        pluginFunc(new PluginAPI(this), options);
+        assert(typeof pluginFunc === 'function', 'plugin must export a function');
+        // support async function
+        // make sure to run async funtion in order
+        // eslint-disable-next-line no-await-in-loop
+        await pluginFunc(new PluginAPI(this), options);
       } catch (e) {
-        const errorPlugin = userPlugin[0];
+        const errorPlugin = pluginInfo[0];
         log.error(`Fail to load Plugin ${typeof errorPlugin === 'string' ? errorPlugin : ''}`);
         process.exit(1);
       }
-    });
+    }
+    //  await Promise.all(pluginFuncs);
   }
 
   getWebpackConfig() {
@@ -69,8 +85,8 @@ module.exports = class Service {
     return config.toConfig();
   }
 
-  run() {
-    this.runPlugins();
+  async run() {
+    await this.runPlugins();
     // get final config before run command
     this.config = this.getWebpackConfig();
     try {

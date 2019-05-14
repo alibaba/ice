@@ -11,7 +11,7 @@ test('initProject', () => {
   mkdirp.sync(projectDir);
 
   return initProject({
-    scaffold: '@icedesign/lite-scaffold',
+    template: '@icedesign/lite-scaffold',
     projectDir,
   }).then(() => {
     // rimraf.sync(projectDir);

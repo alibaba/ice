@@ -7,8 +7,8 @@ const uuid = require('uuid/v1');
 const rimraf = require('rimraf');
 const { checkAliInternal } = require('ice-npm-utils');
 
-const log = require('../../utils/log');
-const download = require('../../utils/download');
+const log = require('./log');
+const download = require('./download');
 
 module.exports = ({ template, projectDir }) => {
   return download({

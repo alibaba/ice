@@ -1,7 +1,7 @@
 const path = require('path');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
-const init = require('../lib/init');
+const init = require('../lib/commands/init');
 
 const projectDir = path.join(__dirname, './tempDir/init-cli');
 
@@ -10,8 +10,9 @@ test('init', () => {
   mkdirp.sync(projectDir);
 
   return init({
-    scaffold: '@icedesign/lite-scaffold',
+    template: '@icedesign/lite-scaffold',
     projectDir,
+    type: 'project',
   }).then(() => {
     expect(1).toBe(1);
   });

@@ -9,8 +9,8 @@ const ejs = require('ejs');
 const camelCase = require('camelcase');
 const inquirer = require('inquirer');
 const { getNpmRegistry } = require('ice-npm-utils');
-const log = require('../../utils/log');
-const download = require('../../utils/download');
+const log = require('./log');
+const download = require('./download');
 
 module.exports = ({ template, projectDir, type }) => {
   const tempDir = path.resolve(projectDir, '.ice_scripts_temp');

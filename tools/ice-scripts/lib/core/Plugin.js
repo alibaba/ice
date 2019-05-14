@@ -3,7 +3,7 @@ module.exports = class PluginAPI {
     this.service = service;
   }
 
-  chainWebpackConfig(fn) {
+  chainWebpack(fn) {
     this.service.chainWebpackFns.push(fn);
   }
 
