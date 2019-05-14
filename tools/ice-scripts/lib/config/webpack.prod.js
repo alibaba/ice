@@ -6,7 +6,7 @@ const getBaseCofing = require('./webpack.base.js');
 
 module.exports = () => {
   const baseConfig = getBaseCofing('production');
-  const defaultEntry = baseConfig.entry('entry').values()[0];
+  const defaultEntry = baseConfig.entry('index').values()[0];
   const entry = processEntry(defaultEntry,
     {
       polyfill: true,
