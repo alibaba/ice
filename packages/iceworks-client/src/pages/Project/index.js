@@ -52,6 +52,11 @@ const Project = () => {
     window.location.href = '/material';
   }
 
+  async function addProject(path) {
+    logger.info('path', path);
+    toggleModal();
+  }
+
   return (
     <div className={styles.page}>
       <SubMenu
@@ -64,7 +69,8 @@ const Project = () => {
       />
       <OpenProject
         on={on}
-        toggleModal={toggleModal}
+        onCancel={toggleModal}
+        onOk={addProject}
       />
       <div className={styles.main}>
         testing...
