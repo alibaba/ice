@@ -49,7 +49,6 @@ module.exports = (chainConfig, mode = 'development') => {
       rule.use('MiniCssExtractPlugin.loader')
         .loader(MiniCssExtractPlugin.loader)
         .options({
-          // TODO: hard code
           publicPath: './',
         });
 
@@ -63,8 +62,7 @@ module.exports = (chainConfig, mode = 'development') => {
 
       if (loaders && loaders.length > 0) {
         loaders.forEach((loader) => {
-          const loaderName = loader[0];
-          const loaderOptions = loader[1];
+          const [loaderName, loaderOptions] = loader;
 
           rule.use(loaderName)
             .loader(loaderName)

@@ -82,18 +82,13 @@ module.exports = (chainConfig, mode = 'development') => {
         template: defaultAppHtml,
         minify: false,
       }])
-      .end();
-
-  // 构建项目时将 public 目录下的静态文件夹复制到构建目录下
-  if (packageJson.type === 'project') {
-    chainConfig
-      .plugin('CopyWebpackPlugin')
-        .use(CopyWebpackPlugin, [[
-          {
-            from: appPublic,
-            to: defaultBuildPath,
-            ignore: ['index.html'],
-          },
-        ]]);
-  }
+      .end()
+    .plugin('CopyWebpackPlugin') // 默认将 public/ 目录下的文件复制到 build/ 目录下
+      .use(CopyWebpackPlugin, [[
+        {
+          from: appPublic,
+          to: defaultBuildPath,
+          ignore: ['index.html'],
+        },
+      ]]);
 };
