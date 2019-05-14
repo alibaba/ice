@@ -47,10 +47,7 @@ module.exports = (chainConfig, mode = 'development') => {
       }
 
       rule.use('MiniCssExtractPlugin.loader')
-        .loader(MiniCssExtractPlugin.loader)
-        .options({
-          publicPath: './',
-        });
+        .loader(MiniCssExtractPlugin.loader);
 
       rule.use('css-loader')
         .loader('css-loader')
