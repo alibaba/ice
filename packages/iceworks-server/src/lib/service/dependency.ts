@@ -6,7 +6,7 @@ export class DependencyService implements IPluginService {
   @plugin('projectManager')
   private projectManager;
 
-  async getAll(projectPath: string): Promise<IPluginGetAllResult> {
+  async getAll(): Promise<IPluginGetAllResult> {
     const project = this.projectManager.getCurrent();
     return project ? await project.dependency.getDependencies() : [];
   }

@@ -10,4 +10,5 @@ export default (app) => {
   app.io.route('project.dev.start', project.dev.start);
   app.io.route('project.dev.stop', project.dev.stop);
   app.io.route('project.dev.settings', project.dev.settings);
+  app.io.route('project.configuration.settings', project.configuration.settings);
 };

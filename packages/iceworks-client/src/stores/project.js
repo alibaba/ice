@@ -18,7 +18,6 @@ export default {
     try {
       const projectInfo = await socket.emit('project.index.current');
       this.dataSource.projectInfo = projectInfo || {};
-      console.log(projectInfo);
       this.inited = true;
     } catch (error) {
       // do something...

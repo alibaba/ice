@@ -13,7 +13,6 @@ export default {
         projectPath,
       });
       this.dataSource = dataSource;
-      this.inited = true;
     } catch (error) {
       // do something...
     }

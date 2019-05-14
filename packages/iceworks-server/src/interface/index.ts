@@ -7,6 +7,7 @@ export * from './mock';
 export * from './router';
 export * from './todo';
 export * from './menu';
+export * from './configuration';
 
 export interface IPluginGetAllResult {
   data: any[];
