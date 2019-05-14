@@ -3,7 +3,7 @@ import * as EventEmitter from 'events';
 /**
  * 项目的依赖信息
  */
-export interface IProjectDependency extends EventEmitter {
+export interface IProjectDependencySchema {
   /**
    * 包名
    */
@@ -34,7 +34,7 @@ export interface IProjectDependency extends EventEmitter {
   /**
    * 获取项目内的依赖
    */
-  getDependencies(): Promise<IProjectDependency[]>;
+  getDependencies(): Promise<IProjectDependencySchema[]>;
 
   /**
    * 添加多个依赖到项目
@@ -42,15 +42,17 @@ export interface IProjectDependency extends EventEmitter {
    * @param dependencies 依赖列表
    */
   createDependencies(
-    dependencies: IProjectDependency[]
-  ): Promise<IProjectDependency[]>;
+    dependencies: IProjectDependencySchema[]
+  ): Promise<IProjectDependencySchema[]>;
 
   /**
    * 添加依赖到项目
    *
    * @param dependency 依赖信息
    */
-  createDependency(dependency: IProjectDependency): Promise<IProjectDependency>;
+  createDependency(
+    dependency: IProjectDependencySchema
+  ): Promise<IProjectDependencySchema>;
 
   /**
    * 升级项目中的某个依赖
@@ -60,5 +62,5 @@ export interface IProjectDependency extends EventEmitter {
   upgradeDependency(denpendency: {
     name: string;
     isDev: boolean;
-  }): Promise<IProjectDependency>;
+  }): Promise<IProjectDependencySchema>;
 }

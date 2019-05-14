@@ -7,10 +7,8 @@ export class DependencyService implements IPluginService {
   private projectManager;
 
   async getAll(projectPath: string): Promise<IPluginGetAllResult> {
-    const project = this.projectManager.getProject(projectPath);
-    return {
-      data: project ? await project.getDependencies() : [],
-    };
+    const project = this.projectManager.getCurrent();
+    return project ? await project.dependency.getDependencies() : [];
   }
 
   async getOne() {}

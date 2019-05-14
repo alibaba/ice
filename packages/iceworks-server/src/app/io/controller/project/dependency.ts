@@ -2,7 +2,6 @@ export default (app) => {
   return class DependencyController extends app.Controller {
     async list(ctx) {
       const { args } = ctx;
-      const { projectPath } = args[0];
       const callback = args[args.length - 1];
 
       let dependencies = [];
@@ -12,7 +11,7 @@ export default (app) => {
       );
 
       try {
-        dependencies = await dependencyService.getAll(projectPath);
+        dependencies = await dependencyService.getAll();
       } catch (err) {
         error = err;
       }

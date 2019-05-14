@@ -16,9 +16,7 @@ export default class Page extends EventEmitter {
 
   async getPages(): Promise<IProjectPage[]> {
     console.log('getPages/projectPath:', this.projectPath);
-    const pages = readPages(path.join(this.projectPath, 'src', 'pages'));
-    console.log('call getPages fn:', pages);
-    return pages;
+    return readPages(path.join(this.projectPath, 'src', 'pages'));
   }
 }
 
