@@ -18,7 +18,7 @@ module.exports = class Service {
     this.userConfig = this.getUserConfig(this.context);
     this.chainWebpackFns = [];
     this.plugins = this.getPlugins();
-    this.defaultWebpackConfig = getDefaultWebpackConfig();
+    this.defaultWebpackConfig = getDefaultWebpackConfig(command);
   }
 
   getUserConfig() {
