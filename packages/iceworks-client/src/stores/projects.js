@@ -10,12 +10,20 @@ export default {
       // do something...
     }
   },
-  add(project) {
-    const { dataSource } = this;
-    this.dataSource = [].concat(dataSource).concat([{ ...project, id: dataSource.length }]);
+  async add(projectFolderPath) {
+    try {
+      const dataSource = await socket.emit('project.index.add', { projectFolderPath });
+      this.dataSource = dataSource;
+    } catch (error) {
+      // do something...
+    }
   },
-  async remove(selectedId) {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    this.dataSource = [].concat(this.dataSource.filter(({ id }) => id !== selectedId));
+  async delete(projectFolderPath) {
+    try {
+      const dataSource = await socket.emit('project.index.delete', { projectFolderPath });
+      this.dataSource = dataSource;
+    } catch (error) {
+      // do something...
+    }
   },
 };

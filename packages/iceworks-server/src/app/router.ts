@@ -5,6 +5,8 @@ export default (app) => {
   app.io.route('project.index.devStart', project.index.devStart);
   app.io.route('project.index.devStop', project.index.devStop);
   app.io.route('project.index.list', project.index.list);
+  app.io.route('project.index.delete', project.index.delete);
+  app.io.route('project.index.add', project.index.add);
   app.io.route('project.index.current', project.index.getCurrent);
   app.io.route('project.index.setCurrent', project.index.setCurrent);
   app.io.route('project.page.list', project.page.list);

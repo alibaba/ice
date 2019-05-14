@@ -6,14 +6,17 @@ import getEnv from '../../getEnv';
 class ProjectManager {
   private projects: Project[];
 
-  async ready() {
-    const projectFolderPaths = storage.get('projects');
-    this.projects = await Promise.all(
-      projectFolderPaths.map(async (projectFolderPath) => {
+  private async refresh (): Promise<Project[]> {
+    return await Promise.all(
+      storage.get('projects').map(async (projectFolderPath) => {
         const project = new Project(projectFolderPath);
         return project;
       })
     );
+  }
+
+  async ready() {
+    this.projects = await this.refresh();
   }
 
   getProjects(): Project[] {
@@ -39,6 +42,31 @@ class ProjectManager {
   setCurrent(projectFolderPath: string): Project {
     storage.set('project', projectFolderPath);
     return this.getProject(projectFolderPath);
+  }
+
+  async addProject(projectFolderPath: string): Promise<Project[]> {
+    const projects = storage.get('projects');
+
+    if (projects.indexOf(projectFolderPath) === -1) {
+      projects.push(projectFolderPath);
+      storage.set('projects', projects);
+    }
+    
+    storage.set('project', projectFolderPath);
+    
+    return await this.refresh();
+  }
+
+  async deleteProject(projectFolderPath: string): Promise<Project[]> {
+    const newProjects = storage.get('projects').filter((path) => path !== projectFolderPath);
+    storage.set('projects', newProjects);
+
+    const currentProjectFolderPath = storage.get('project');
+    if (currentProjectFolderPath === projectFolderPath) {
+      storage.set('project', newProjects[0] || '');
+    }
+
+    return await this.refresh();
   }
 
   async devStart(projectFolderPath: string): Promise<EventEmitter> {

@@ -36,7 +36,7 @@ const Project = () => {
   }
 
   async function onDeleteProject(folderPath) {
-    await projects.remove(folderPath);
+    await projects.delete(folderPath);
     const newProject = await project.refresh();
     pages.refresh(newProject.dataSource.folderPath);
     dependencies.refresh(newProject.dataSource.folderPath);
@@ -52,7 +52,7 @@ const Project = () => {
   }
 
   async function addProject(path) {
-    logger.info('path', path);
+    await projects.add(path);
     toggleModal();
   }
 
