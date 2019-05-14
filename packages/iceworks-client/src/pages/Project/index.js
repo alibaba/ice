@@ -2,13 +2,16 @@ import React, { useEffect } from 'react';
 // import { Input, Button } from '@alifd/next';
 import stores from '@stores';
 import logger from '@utils/logger';
+import useModal from '@hooks/useModal';
 // import Page from './components/Pages';
 // import Dependency from './components/Dependencies';
 import SubMenu from './components/SubMenu';
+import OpenProject from './components/OpenProject';
 import projectStores from './stores';
 import styles from './index.module.scss';
 
 const Project = () => {
+  const { on, toggleModal } = useModal();
   const [projects, project] = stores.useStores(['projects', 'project']);
   const [pages, dependencies] = projectStores.useStores([
     'pages',
@@ -40,6 +43,15 @@ const Project = () => {
     dependencies.refresh(newProject.dataSource.folderPath);
   }
 
+  async function onOpenProject() {
+    toggleModal();
+  }
+
+  async function onCreateProject() {
+    // TODO
+    window.location.href = '/material';
+  }
+
   return (
     <div className={styles.page}>
       <SubMenu
@@ -47,6 +59,12 @@ const Project = () => {
         project={project.dataSource}
         onSwitchProject={onSwitchProject}
         onDeleteProject={onDeleteProject}
+        onOpenProject={onOpenProject}
+        onCreateProject={onCreateProject}
+      />
+      <OpenProject
+        on={on}
+        toggleModal={toggleModal}
       />
       <div className={styles.main}>
         testing...

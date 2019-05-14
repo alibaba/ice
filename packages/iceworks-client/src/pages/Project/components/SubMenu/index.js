@@ -6,7 +6,7 @@ import { Icon, Button } from '@alifd/next';
 import styles from './index.module.scss';
 
 const SubMenu = ({
-  projects, project, onSwitchProject, onDeleteProject,
+  projects, project, onSwitchProject, onDeleteProject, onCreateProject, onOpenProject,
 }) => {
   return (
     <div className={styles.wrapper}>
@@ -48,11 +48,11 @@ const SubMenu = ({
         }
       </div>
       <div className={styles.opts}>
-        <Button className={styles.btn} type="secondary" size="medium">
+        <Button className={styles.btn} type="secondary" size="medium" onClick={onOpenProject}>
           <Icon type="download" size="xl" />
           <span>打开项目</span>
         </Button>
-        <Button className={styles.btn} type="primary" size="medium">
+        <Button className={styles.btn} type="primary" size="medium" onClick={onCreateProject}>
           <Icon type="add" size="xl" />
           <span>创建项目</span>
         </Button>
@@ -69,6 +69,8 @@ SubMenu.propTypes = {
   project: PropTypes.object.isRequired,
   onSwitchProject: PropTypes.func.isRequired,
   onDeleteProject: PropTypes.func.isRequired,
+  onCreateProject: PropTypes.func.isRequired,
+  onOpenProject: PropTypes.func.isRequired,
 };
 
 export default SubMenu;
