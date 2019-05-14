@@ -108,8 +108,6 @@ export default (app) => {
         error = err;
       }
 
-      console.log('error', error);
-
       callback({
         error,
         data: projects

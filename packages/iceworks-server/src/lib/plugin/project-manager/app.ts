@@ -53,8 +53,9 @@ class ProjectManager {
     }
     
     storage.set('project', projectFolderPath);
-    
-    return await this.refresh();
+    this.projects = await this.refresh();
+
+    return this.projects;
   }
 
   async deleteProject(projectFolderPath: string): Promise<Project[]> {
@@ -66,7 +67,9 @@ class ProjectManager {
       storage.set('project', newProjects[0] || '');
     }
 
-    return await this.refresh();
+    this.projects = await this.refresh();
+
+    return this.projects;
   }
 
   async devStart(projectFolderPath: string): Promise<EventEmitter> {

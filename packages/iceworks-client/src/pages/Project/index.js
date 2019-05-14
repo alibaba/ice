@@ -53,6 +53,9 @@ const Project = () => {
 
   async function addProject(path) {
     await projects.add(path);
+    const newProject = await project.refresh();
+    pages.refresh(newProject.dataSource.folderPath);
+    dependencies.refresh(newProject.dataSource.folderPath);
     toggleModal();
   }
 
