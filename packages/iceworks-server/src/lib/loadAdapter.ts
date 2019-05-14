@@ -1,4 +1,4 @@
-import adapterConfig from './adapter/config';
+import adapterConfig from './adapter';
 
 /**
  * load adpater
