@@ -11,11 +11,8 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const deepmerge = require('deepmerge');
 const openBrowser = require('react-dev-utils/openBrowser');
-
-const devMiddleware = require('../utils/devMiddleware');
 const iceworksClient = require('../utils/iceworksClient');
 const prepareUrLs = require('../utils/prepareURLs');
-const getProxyConfig = require('../config/getProxyConfig');
 const goldlog = require('../utils/goldlog');
 const pkgData = require('../../package.json');
 const log = require('../utils/log');
@@ -50,7 +47,6 @@ module.exports = async function (api, subprocess) {
 
   const isInteractive = false; // process.stdout.isTTY;
   const urls = prepareUrLs(protocol, HOST, PORT);
-  const proxyConfig = getProxyConfig();
 
   if (api.commandArgs.disabledReload) {
     log.warn('关闭了热更新（hot-reload）功能');
@@ -58,12 +54,8 @@ module.exports = async function (api, subprocess) {
 
   let isFirstCompile = true;
   const compiler = webpack(api.config);
-  // eslint-disable-next-line global-require
-  let devServerConfig = require('../config/webpack.server.config')();
-  if ('devServer' in api.config) {
-    // merge user config
-    devServerConfig = deepmerge(devServerConfig, api.config.devServer);
-  }
+
+  const devServerConfig = deepmerge({}, api.config.devServer);
 
   // buffer 与 deepmerge有冲突，会被解析成乱码
   if (httpsConfig) {
@@ -74,8 +66,7 @@ module.exports = async function (api, subprocess) {
 
   const devServer = new WebpackDevServer(compiler, devServerConfig);
 
-  devMiddleware(devServer.app, proxyConfig);
-
+  // devMiddleware(devServer.app, proxyConfig);
   compiler.hooks.done.tap('done', (stats) => {
     if (isInteractive) {
       clearConsole();
