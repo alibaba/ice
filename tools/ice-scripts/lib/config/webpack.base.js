@@ -1,14 +1,11 @@
 /* eslint-disable indent */
-const path = require('path');
 const Chain = require('webpack-chain');
-const getPkgData = require('./getPackageJson');
 const { defaultBuildPath, defaultPublicPath, appDirectory, appNodeModules, resolveApp } = require('./paths');
 const setLoaders = require('./setWebpackLoaders');
 const setPlugins = require('./setWebpackPlugins');
 
 module.exports = (mode = 'development') => {
   const chainConfig = new Chain();
-  const packageJson = getPkgData(appDirectory);
 
   chainConfig
     .mode(mode)
