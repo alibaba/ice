@@ -1,29 +1,32 @@
-import * as EventEmitter from 'events';
 import storage from '../../storage';
-import Project from '../../adapter/project';
-import getEnv from '../../getEnv';
+import loadAdapter from '../../loadAdapter';
 
 class ProjectManager {
-  private projects: Project[];
+  private projects;
 
   async ready() {
     const projectPaths = storage.get('projects');
+    console.log('projectPaths:', projectPaths);
     this.projects = await Promise.all(
       projectPaths.map(async (projectPath) => {
-        const project = new Project(projectPath);
+        const project = loadAdapter({ path: projectPath });
         return project;
       })
     );
   }
 
-  getProjects(): Project[] {
+  getProjects() {
     return this.projects;
   }
 
-  getProject(projectPath: string): Project {
+  getProject(projectPath: string) {
     const project = this.projects.find(
-      ({ folderPath }) => folderPath === projectPath
+      ({ project }) => project.folderPath === projectPath
     );
+
+    console.log();
+    console.log('projectInfo:', project);
+    console.log();
 
     if (!project) {
       throw new Error('没有找到对应的项目');
@@ -32,29 +35,15 @@ class ProjectManager {
     return project;
   }
 
-  getCurrent(): Project {
+  getCurrent() {
     const projectPath = storage.get('project');
     return this.getProject(projectPath);
   }
 
-  setCurrent(projectPath: string): Project {
+  setCurrent(projectPath: string) {
     storage.set('project', projectPath);
     return this.getProject(projectPath);
   }
-
-  async devStart(projectPath: string): Promise<EventEmitter> {
-    const project = this.getProject(projectPath);
-    return project.devStart(getEnv());
-  }
-
-  async devStop(projectPath: string) {
-    const project = this.getProject(projectPath);
-    return project.devStop();
-  }
-
-  async build() {}
-
-  async lint() {}
 }
 
 export default (app) => {
