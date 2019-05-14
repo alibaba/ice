@@ -1,9 +1,10 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const getCertificate = require('../../config/getCertificate');
+const processEntry = require('../../config/processEntry');
 const log = require('../../utils/log');
 
 module.exports = async (api) => {
-  const { commandArgs } = api.service;
+  const { commandArgs, userConfig } = api.service;
   // plugin cliOptions will run after plugin userConfig.
   // if commandArgs.https is true, it will overwrite devServer config
   let httpsConfig;
@@ -29,6 +30,13 @@ module.exports = async (api) => {
         }
       });
       config.devServer.hot(false);
+      // remove entry hotDevClient
+      if (!userConfig.entry && !userConfig.injectBabel) {
+        // if injectBabel is not set, polyfill default is true
+        const entry = processEntry('src/index.js', { polyfill: true, hotDev: false });
+        config.entryPoints.clear();
+        config.merge({ entry });
+      }
     }
 
     if (commandArgs.analyzer) {
