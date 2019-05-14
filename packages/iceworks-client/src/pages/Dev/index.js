@@ -14,7 +14,6 @@ const Dev = () => {
   const project = stores.useStore('project');
   const dev = devStores.useStore('dev');
   const { on, toggleModal } = useModal();
-  debugger;
   const { projectInfo = {} } = project.dataSource;
   const { projectPath } = projectInfo;
 
