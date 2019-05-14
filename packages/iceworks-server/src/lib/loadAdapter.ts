@@ -4,7 +4,7 @@ import adapterConfig from './adapter/config';
  * load adpater
  * @param projectInfo Object
  */
-const loadAdapter = (projectInfo = { projectPath: '' }) => {
+const loadAdapter = (projectInfo) => {
   const adapters = {};
   for (const [key, value] of Object.entries(adapterConfig)) {
     // whether to enable
@@ -13,7 +13,7 @@ const loadAdapter = (projectInfo = { projectPath: '' }) => {
     // adapter must be an class
     const adapterPath = require.resolve(value.path);
     const AdapterName = require(adapterPath);
-    adapters[key] = new AdapterName.default(projectInfo.projectPath);
+    adapters[key] = new AdapterName.default(projectInfo);
   }
 
   return adapters;

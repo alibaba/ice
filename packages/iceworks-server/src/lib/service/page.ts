@@ -7,11 +7,9 @@ export class PageService implements IPluginService {
   private projectManager;
 
   async getAll(projectPath: string): Promise<IPluginGetAllResult> {
-    const project = this.projectManager.getProject(projectPath);
+    const project = this.projectManager.getCurrent();
 
-    return {
-      data: project ? await project.getPages() : [],
-    };
+    return project ? await project.page.getPages() : [];
   }
 
   async getOne() {}

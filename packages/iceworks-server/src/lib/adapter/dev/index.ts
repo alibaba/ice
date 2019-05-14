@@ -17,8 +17,9 @@ export default class Dev extends EventEmitter {
 
   private devProcess;
 
-  constructor() {
+  constructor(options) {
     super();
+    this.projectPath = options.projectPath;
   }
 
   async devStart(settingsEnv) {

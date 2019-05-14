@@ -28,7 +28,7 @@ const Project = () => {
     <div>
       <h2>Project</h2>
       <div>
-        now project: {project.dataSource.project.projectName}
+        now project: {project.dataSource.projectInfo.projectName}
         <div>
           <Page />
           <Dependency />
