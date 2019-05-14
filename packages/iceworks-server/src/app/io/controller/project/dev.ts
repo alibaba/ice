@@ -69,14 +69,13 @@ export default (app) => {
     async settings(ctx) {
       const { args, requestContext } = ctx;
       const callback = args[args.length - 1];
-      const { projectPath } = args[0];
       const devService = await requestContext.getAsync('devService');
 
       let data = [];
       let error;
 
       try {
-        data = await devService.getDevSettings(projectPath);
+        data = await devService.getDevSettings();
       } catch (error) {
         error = error;
       }

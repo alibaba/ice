@@ -28,9 +28,11 @@ const XtermTerminal = () => {
 
     project.refresh();
 
+    const { projectInfo = {} } = project.dataSource;
+
     term.open(xtermRef.current);
     term.fit();
-    term.write(`\x1B[1;3;31m${project.dataSource.name}\x1B[0m $ `);
+    term.write(`\x1B[1;3;31m${projectInfo.projectName}\x1B[0m $ `);
   }, []);
 
   useSocket('project.index.dev.data', (data) => {

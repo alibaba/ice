@@ -11,7 +11,7 @@ const GlobalBar = () => {
 
   return (
     <div className={styles.globalBar}>
-      {project.dataSource.name}
+      {project.dataSource.projectInfo.projectName}
     </div>
   );
 };

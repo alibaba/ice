@@ -14,7 +14,9 @@ const Dev = () => {
   const project = stores.useStore('project');
   const dev = devStores.useStore('dev');
   const { on, toggleModal } = useModal();
-  const { folderPath: projectPath } = project.dataSource;
+  debugger;
+  const { projectInfo = {} } = project.dataSource;
+  const { projectPath } = projectInfo;
 
   const devStart = async () => {
     try {
@@ -53,7 +55,7 @@ const Dev = () => {
       <div className={styles.actionBar}>
         {/* Left Button Group */}
         <div className={styles.leftActionBar}>
-          {project.dataSource.devStatus !== 'working' ? (
+          {project.devStatus !== 'working' ? (
             <Button
               type="primary"
               className={styles.leftButton}

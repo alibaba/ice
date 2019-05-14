@@ -14,7 +14,7 @@ export default {
   },
 
   async stop(projectPath) {
-    this.dataSource = await socket.emit('project.dev.stop', {
+    this.dataSource.stop = await socket.emit('project.dev.stop', {
       projectPath,
     });
   },

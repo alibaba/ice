@@ -1,3 +1,4 @@
+// import * as path from 'path';
 import storage from '../../storage';
 import loadAdapter from '../../loadAdapter';
 
@@ -5,41 +6,52 @@ class ProjectManager {
   private projects;
 
   async ready() {
-    const projectPaths = storage.get('projects');
-    console.log('projectPaths:', projectPaths);
+    const projects = storage.get('projects');
     this.projects = await Promise.all(
-      projectPaths.map(async (projectPath) => {
-        const project = loadAdapter({ path: projectPath });
-        return project;
+      projects.map(async (project) => {
+        const { projectName, projectPath } = project;
+        return {
+          projectName,
+          projectPath,
+          ...loadAdapter(project),
+        };
       })
     );
   }
 
+  /**
+   * Get all project
+   */
   getProjects() {
     return this.projects;
   }
 
+  /**
+   * Get the project in the project list
+   */
   getProject(projectPath: string) {
     const project = this.projects.find(
-      ({ project }) => project.folderPath === projectPath
+      (currentItem) => currentItem.projectPath === projectPath
     );
 
-    console.log();
-    console.log('projectInfo:', project);
-    console.log();
-
     if (!project) {
-      throw new Error('没有找到对应的项目');
+      throw new Error('notfound project');
     }
 
     return project;
   }
 
+  /**
+   * Get current project
+   */
   getCurrent() {
-    const projectPath = storage.get('project');
-    return this.getProject(projectPath);
+    const projectInfo = storage.get('project');
+    return this.getProject(projectInfo.projectPath);
   }
 
+  /**
+   * Set current project
+   */
   setCurrent(projectPath: string) {
     storage.set('project', projectPath);
     return this.getProject(projectPath);

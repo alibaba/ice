@@ -2,8 +2,10 @@ import socket from '@src/socket';
 
 export default {
   dataSource: {
-    name: '',
-    folderPath: '',
+    projectInfo: {
+      projectName: '',
+      projectPath: '',
+    },
   },
 
   inited: false,
@@ -14,17 +16,18 @@ export default {
     }
 
     try {
-      const dataSource = await socket.emit('project.index.current');
-      this.dataSource = dataSource;
+      const projectInfo = await socket.emit('project.index.current');
+      this.dataSource.projectInfo = projectInfo || {};
+      console.log(projectInfo);
       this.inited = true;
     } catch (error) {
       // do something...
     }
   },
 
-  async reset(folderPath) {
+  async reset(projectPath) {
     this.dataSource = await socket.emit('project.index.setCurrent', {
-      folderPath,
+      projectPath,
     });
   },
 };

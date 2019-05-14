@@ -28,7 +28,7 @@ const Project = () => {
     <div>
       <h2>Project</h2>
       <div>
-        now project: {project.dataSource.name}
+        now project: {project.dataSource.project.projectName}
         <div>
           <Page />
           <Dependency />
@@ -38,19 +38,19 @@ const Project = () => {
         <div>my projects:</div>
         <ul>
           {projects.dataSource.map((projectData, index) => {
-            const { name, folderPath } = projectData;
+            const { name, projectPath } = projectData;
             return (
               <li key={index}>
                 <a
                   onClick={async () => {
-                    await project.reset(folderPath);
+                    await project.reset(projectPath);
                   }}
                 >
                   {name}
                 </a>
                 <Button
                   onClick={async () => {
-                    await projects.remove(folderPath);
+                    await projects.remove(projectPath);
                     await project.refresh();
                   }}
                 >

@@ -7,10 +7,10 @@ export interface IProject extends EventEmitter {
   /**
    * 项目名称
    */
-  name: string;
+  projectName: string;
 
   /**
    * 项目文件夹路径
    */
-  folderPath: string;
+  projectPath: string;
 }

@@ -11,7 +11,7 @@ export const DEV_STATUS_WORKING = 'working';
 export const DEV_STATUS_STOP = 'stop';
 
 export default class Dev extends EventEmitter {
-  public readonly folderPath: string;
+  public readonly projectPath: string;
 
   public devStatus: string = DEV_STATUS_NORMAL;
 
@@ -23,7 +23,7 @@ export default class Dev extends EventEmitter {
 
   async devStart(settingsEnv) {
     const port = await detectPort(DEFAULT_PORT);
-    const { folderPath } = this;
+    const { projectPath } = this;
     const env = { PORT: port };
 
     if (this.devProcess) {
@@ -33,7 +33,7 @@ export default class Dev extends EventEmitter {
     }
 
     const childProcess = child_process.spawn('npm', ['start'], {
-      cwd: folderPath,
+      cwd: projectPath,
       env: Object.assign({}, settingsEnv, env),
     });
 
