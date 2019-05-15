@@ -164,7 +164,7 @@ class CustomMaterials extends Component {
                 自定义物料源为空，你可以
                 <a href="javascript:void(0)" onClick={this.handleAddMaterial}>新增物料源</a>
 或者了解
-                <a href="https://alibaba.github.io/ice/docs/materials/devtools" target="__blank">自定义物料源使用文档</a>
+                <a href="https://ice.work/docs/materials/about" target="__blank">自定义物料源使用文档</a>
               </div>
             ) : (
               <div className="cm-list">
