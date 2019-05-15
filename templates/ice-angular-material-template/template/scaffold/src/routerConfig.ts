@@ -7,19 +7,19 @@ import { AboutComponent } from './pages/about/index';
 
 export declare type RoutesModule = RouteModule[];
 export interface RouteModule extends Route {
+  path: string;
   children?: RoutesModule;
   module?: any;
+  component?: any;
 }
 
-const routerConfig: RoutesModule = [
+export const routerConfig: RoutesModule = [
   {
-    path: '/',
+    path: '',
     component: HomeComponent,
   },
   {
-    path: '/about',
+    path: 'about',
     component: AboutComponent,
-  },
+  }
 ];
-
-export default routerConfig;

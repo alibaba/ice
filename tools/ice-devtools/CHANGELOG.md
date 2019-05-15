@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.3.1
+
+- [fix] 删除物料 publish 默认源配置，由用户自定义 #1866
+- [fix] 修复 angular 物料模版生产环境构建结果未压缩的问题
+- [refactor] 升级依赖 tar@4.x
+- [feat] vue 物料模版支持 routeConfig 及 menuConfig
+
 ## 2.3.0
 
 - [refactor] 移除原先构建开发业务组件&区块的功能及代码（break change）
