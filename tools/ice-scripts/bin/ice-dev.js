@@ -17,7 +17,6 @@ program
   .option('--analyzer', '开启构建分析')
   .option('--analyzer-port', '设置分析端口号')
   .option('--disabled-reload', '关闭 hot reload')
-  .option('--project-type <type>', '项目类型, node|nodejs|web', /^(node|nodejs|web)$/i, 'web')
   .option(
     '--inject-babel <type>',
     '注入 babel 运行环境, Enum: polyfill|runtime',

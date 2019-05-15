@@ -29,13 +29,6 @@ module.exports = async (api) => {
         }
       });
       config.devServer.hot(false);
-      // remove entry hotDevClient
-      if (!userConfig.entry && !userConfig.injectBabel) {
-        // if injectBabel is not set, polyfill default is true
-        const entry = api.processEntry('src/index.js');
-        config.entryPoints.clear();
-        config.merge({ entry });
-      }
     }
 
     if (commandArgs.analyzer) {

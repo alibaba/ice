@@ -26,7 +26,6 @@ module.exports = (api, proxyConfig) => {
     }
     return false;
   }).filter((v) => v);
-
   api.chainWebpack((config) => {
     config.devServer.proxy(proxy);
   });

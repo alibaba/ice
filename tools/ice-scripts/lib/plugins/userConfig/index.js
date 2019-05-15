@@ -13,6 +13,7 @@ module.exports = (api) => {
         const configPlugin = require(`./configs/${configKey}`);
         configPlugin(api, userConfig[configKey]);
       } catch (e) {
+        log.error(e);
         log.error(`Config ${chalk.bold(configKey)} is not defined`);
       }
     }

@@ -1,13 +1,5 @@
-const DEFAULT_ENTRY = 'src/index.js';
 module.exports = (api, injectBabel) => {
-  const { userConfig } = api.service;
-
   api.chainWebpack((config) => {
-    if (!userConfig.entry) {
-      const entry = api.processEntry(DEFAULT_ENTRY);
-      config.entryPoints.clear();
-      config.merge({ entry });
-    }
     if (injectBabel === 'runtime') {
       ['jsx', 'tsx'].forEach((rule) => {
         config.module

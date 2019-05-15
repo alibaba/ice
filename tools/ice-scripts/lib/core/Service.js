@@ -6,6 +6,7 @@ const getPkgData = require('../config/getPackageJson');
 const paths = require('../config/paths');
 const getDefaultWebpackConfig = require('../config/getDefaultWebpackConfig');
 const PluginAPI = require('./Plugin');
+const defaultConfig = require('../config/default.config');
 
 module.exports = class Service {
   constructor({ command = '', context = process.cwd(), args = {} }) {
@@ -23,18 +24,18 @@ module.exports = class Service {
 
   getUserConfig() {
     const iceConfigPath = path.resolve(this.context, 'ice.config.js');
+    let userConfig = {};
     if (fse.existsSync(iceConfigPath)) {
       try {
         // eslint-disable-next-line import/no-dynamic-require
-        return require(iceConfigPath);
+        userConfig = require(iceConfigPath);
       } catch (e) {
-        log.error('Fail to load ice.config.js');
-        throw e;
+        log.error('Fail to load ice.config.js, use default config instead');
       }
     } else if (this.pkg.buildConfig) {
       log.warn('You should migrate config init ice.config.js');
     }
-    return {};
+    return { ...defaultConfig, ...userConfig };
   }
 
   getPlugins() {
@@ -67,6 +68,7 @@ module.exports = class Service {
         await pluginFunc(new PluginAPI(this), options);
       } catch (e) {
         const errorPlugin = pluginInfo[0];
+        log.error(e);
         log.error(`Fail to load Plugin ${typeof errorPlugin === 'string' ? errorPlugin : ''}`);
         process.exit(1);
       }
