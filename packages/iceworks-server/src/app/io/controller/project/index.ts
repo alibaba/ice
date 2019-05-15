@@ -91,7 +91,7 @@ export default (app) => {
       callback({
         error,
         data: projects
-      }); 
+      });
     }
 
     async add(ctx) {
@@ -111,7 +111,7 @@ export default (app) => {
       callback({
         error,
         data: projects
-      }); 
+      });
     }
 
     async getCurrent(ctx) {

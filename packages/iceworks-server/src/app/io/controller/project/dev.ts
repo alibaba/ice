@@ -11,8 +11,8 @@ export default (app) => {
 
       try {
         data = await devService.getDevSettings(projectFolderPath);
-      } catch (error) {
-        error = error;
+      } catch (err) {
+        error = err;
       }
 
       callback({ error, data });

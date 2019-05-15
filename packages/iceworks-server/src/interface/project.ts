@@ -340,7 +340,7 @@ export interface IProject extends EventEmitter {
   /**
    * 调试服务的状态
    */
-  devStatus: 'normal'|'staring'|'working'|'stop';
+  devStatus: 'normal' | 'staring' | 'working' | 'stop';
 
   /**
    * 启动调试服务

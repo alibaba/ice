@@ -14,7 +14,7 @@ const OpenProject = ({ on, onCancel, onOk }) => {
       onCancel={onCancel}
       onOk={() => onOk(path)}
     >
-      <label>
+      <span>
         项目路径：
         <Input
           value={path}
@@ -23,7 +23,7 @@ const OpenProject = ({ on, onCancel, onOk }) => {
           }}
           placeholder="/"
         />
-      </label>
+      </span>
     </Modal>
   );
 };

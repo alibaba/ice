@@ -65,10 +65,10 @@ class Store {
 }
 
 const schema = {
-  'project': {
+  project: {
     type: 'string',
   },
-  'projects': {
+  projects: {
     type: 'array',
     items: {
       type: 'string',

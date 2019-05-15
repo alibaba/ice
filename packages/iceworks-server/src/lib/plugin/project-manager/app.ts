@@ -7,7 +7,7 @@ class ProjectManager {
   private projects: Project[];
 
   private async refresh (): Promise<Project[]> {
-    return await Promise.all(
+    return Promise.all(
       storage.get('projects').map(async (projectFolderPath) => {
         const project = new Project(projectFolderPath);
         return project;
@@ -51,7 +51,7 @@ class ProjectManager {
       projects.push(projectFolderPath);
       storage.set('projects', projects);
     }
-    
+
     storage.set('project', projectFolderPath);
     this.projects = await this.refresh();
 
