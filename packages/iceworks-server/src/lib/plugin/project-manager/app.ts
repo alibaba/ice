@@ -1,18 +1,25 @@
+import * as EventEmitter from 'events';
 import storage from '../../storage';
 import loadAdapter from '../../loadAdapter';
 
-class ProjectManager {
+class ProjectManager extends EventEmitter {
   private projects;
+
+  public projectName: string;
+
+  public projectPath: string;
 
   async ready() {
     const projects = storage.get('projects');
     this.projects = await Promise.all(
       projects.map(async (project) => {
         const { projectName, projectPath } = project;
+        this.projectName = projectName;
+        this.projectPath = projectPath;
         return {
           projectName,
           projectPath,
-          ...loadAdapter(project),
+          ...loadAdapter(this),
         };
       })
     );
