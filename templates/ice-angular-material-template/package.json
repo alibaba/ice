@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-angular-material-template",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "基于 Angular 自定义物料源的初始模板",
   "files": [
     "template"
