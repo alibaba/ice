@@ -18,6 +18,7 @@ const CSS_HOT_LOADER = require.resolve('css-hot-loader');
 const URL_LOADER = require.resolve('url-loader');
 const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
+const SASS_RESOURCE_LOADER = require.resolve('sass-resources-loader');
 const DEMO_LOADER = require.resolve('../loaders/componentDemoLoader');
 
 const URL_LOADER_LIMIT = 8192;
@@ -68,6 +69,12 @@ module.exports = (buildConfig = {}, themeConfig) => {
       loader: SASS_LOADER,
       options: {
         sourceMap: true,
+      },
+    },
+    {
+      loader: SASS_RESOURCE_LOADER,
+      options: {
+        resources: buildConfig.sassResources || [],
       },
     },
     {
