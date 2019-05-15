@@ -3,7 +3,7 @@ import * as EventEmitter from 'events';
 /**
  * 调试服务设置项
  */
-export interface IProjectDevSettings {
+export interface IProjectDevSettingsSchema {
   /**
    * 标签名
    */
@@ -51,5 +51,5 @@ export interface IProjectDev extends EventEmitter {
   /**
    * 启动调试服务设置项
    */
-  getDevSettings(): Promise<IProjectDevSettings[]>;
+  getDevSettings(): Promise<IProjectDevSettingsSchema[]>;
 }

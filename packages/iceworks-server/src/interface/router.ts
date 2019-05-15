@@ -3,7 +3,7 @@ import * as EventEmitter from 'events';
 /**
  * 项目的路由
  */
-export interface IProjectRouter {
+export interface IProjectRouterSchema {
   /**
    * URL 路径
    */
@@ -19,21 +19,23 @@ export interface IProjectRouter extends EventEmitter {
   /**
    * 获取项目路由
    */
-  getRouters(): Promise<IProjectRouter[]>;
+  getRouters(): Promise<IProjectRouterSchema[]>;
 
   /**
    * 添加多个路由到项目
    *
    * @param routers 多个路由配置
    */
-  createRouters(routers: IProjectRouter[]): Promise<IProjectRouter[]>;
+  createRouters(
+    routers: IProjectRouterSchema[]
+  ): Promise<IProjectRouterSchema[]>;
 
   /**
    * 添加路由
    *
    * @param router 路由配置
    */
-  createRouter(router: IProjectRouter): Promise<IProjectRouter>;
+  createRouter(router: IProjectRouterSchema): Promise<IProjectRouterSchema>;
 
   /**
    * 删除路由
@@ -47,5 +49,5 @@ export interface IProjectRouter extends EventEmitter {
    *
    * @param router 路由配置
    */
-  updateRouter(router: IProjectRouter): Promise<IProjectRouter>;
+  updateRouter(router: IProjectRouterSchema): Promise<IProjectRouterSchema>;
 }
