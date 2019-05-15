@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>飞冰组件开发 Server</title>
+</head>
+
+<body>
+  <h1>飞冰组件开发服务 {{pkg.name}}</h1>
+  {{#if demos.length}}
+  <h3>DEMO 列表</h3>
+  <ul>
+    {{#each demos}}
+    <li><a href="/preview?demo={{this.filename}}">{{this.title}}</a></li>
+    {{/each}}
+  </ul>
+  {{/if}}
+  <div id="container"></div>
+  <script></script>
+</body>
+
+</html>
