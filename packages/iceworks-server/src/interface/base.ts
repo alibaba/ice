@@ -1,9 +1,7 @@
-import * as EventEmitter from 'events';
-
 /**
  * 功能模块的基类
  */
-export interface IBaseModule extends EventEmitter {
+export interface IBaseModule {
   readonly projectName: string;
   readonly projectPath: string;
 }
