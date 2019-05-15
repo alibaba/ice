@@ -10,9 +10,6 @@
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "keywords": ["ice", "angular", "block"],
-  "publishConfig": {
-    "registry": "<%= registry %>"
-  },
   "blockConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",

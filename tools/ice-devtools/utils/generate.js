@@ -6,6 +6,7 @@ const async = require('async');
 const render = require('consolidate').ejs.render;
 const multimatch = require('multimatch');
 const kebabCase = require('kebab-case');
+const { getNpmRegistry } = require('ice-npm-utils');
 const ask = require('./ask');
 const filter = require('./filter');
 const transform = require('./transform');
@@ -57,7 +58,7 @@ function generate(options, done) {
     className: uppercamelcase(name),
     inPlace: dest === process.cwd(),
     noEscape: true,
-    registry: process.env.REGISTRY || '',
+    registry: getNpmRegistry(npmName || name),
     ...opts,
   });
   debug('%j', data);

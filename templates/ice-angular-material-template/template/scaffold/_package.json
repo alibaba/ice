@@ -16,10 +16,6 @@
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "keywords": ["ice", "angular", "scaffold"],
-  "publishConfig": {
-    "access": "public",
-    "registry": "<%= registry %>"
-  },
   "scaffoldConfig": {
     "builder": "angular-cli",
     "name": "<%= npmName %>",
