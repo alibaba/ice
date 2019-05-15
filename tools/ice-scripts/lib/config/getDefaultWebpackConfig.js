@@ -1,8 +1,14 @@
 const getWebpackConfigDev = require('./webpack.dev');
-const getWebpackConfigProd = require('./webpack.prod');
+const getWebpackConfigBuild = require('./webpack.build');
 
-module.exports = function getDefaultWebpackConfig() {
-  return process.env.NODE_ENV === 'production'
-    ? getWebpackConfigProd()
-    : getWebpackConfigDev();
+module.exports = function getDefaultWebpackConfig(command) {
+  // 根据 command 返回对应的 webpack config
+  switch (command) {
+    case 'build':
+      return getWebpackConfigBuild();
+    case 'dev':
+      return getWebpackConfigDev();
+    default:
+      return getWebpackConfigDev();
+  }
 };
