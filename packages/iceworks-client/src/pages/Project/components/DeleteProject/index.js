@@ -9,11 +9,15 @@ const DeleteProject = ({
 }) => {
   const [removeFiles, setState] = useState(false);
 
+  function onClose() {
+    onCancel();
+    setState(false);
+  }
   return (
     <Modal
       title="删除项目"
       visible={on}
-      onCancel={onCancel}
+      onCancel={onClose}
       onOk={() => onOk({ removeFiles })}
     >
       <div className={styles.wrapper}>
