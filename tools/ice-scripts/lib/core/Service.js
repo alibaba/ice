@@ -33,7 +33,7 @@ module.exports = class Service {
         log.error('Fail to load ice.config.js, use default config instead');
       }
     } else if (this.pkg.buildConfig) {
-      log.warn('You should migrate config init ice.config.js');
+      log.warn('You should migrate config into ice.config.js');
     }
     return { ...defaultConfig, ...userConfig };
   }
@@ -73,7 +73,6 @@ module.exports = class Service {
         process.exit(1);
       }
     }
-    //  await Promise.all(pluginFuncs);
   }
 
   getWebpackConfig() {
@@ -83,7 +82,6 @@ module.exports = class Service {
     if (this.userConfig.chainWebpack) {
       this.userConfig.chainWebpack(config);
     }
-    // TODO this.commandArgs对wepackConfig的影响
     return config.toConfig();
   }
 
