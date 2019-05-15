@@ -1,4 +1,4 @@
-import * as EventEmitter from 'events';
+import { IBaseModule } from './base';
 
 /**
  * 项目的 mock
@@ -25,7 +25,7 @@ export interface IMock {
   body: string;
 }
 
-export interface IMockModule extends EventEmitter {
+export interface IMockModule extends IBaseModule {
   /**
    * 获取项目的数据模拟配置
    */

@@ -1,4 +1,4 @@
-import * as EventEmitter from 'events';
+import { IBaseModule } from './base';
 
 /**
  * 项目的 Todo
@@ -25,7 +25,7 @@ export interface ITodo {
   }>;
 }
 
-export interface ITodoModule extends EventEmitter {
+export interface ITodoModule extends IBaseModule {
   /**
    * 获取项目内的 todo
    */
