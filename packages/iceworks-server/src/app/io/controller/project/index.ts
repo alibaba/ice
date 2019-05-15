@@ -18,8 +18,6 @@ export default (app) => {
         error = err;
       }
 
-      console.log(error);
-
       if (project) {
         project.on('dev.data', function(data) {
           const decoder = new StringDecoder('utf8');
@@ -77,13 +75,12 @@ export default (app) => {
     async delete(ctx) {
       const { projectManager } = app;
       const { args } = ctx;
-      const { projectFolderPath } = args[0];
       const callback = args[args.length - 1];
 
       let projects = [];
       let error;
       try {
-        projects = await projectManager.deleteProject(projectFolderPath);
+        projects = await projectManager.deleteProject(args[0]);
       } catch (err) {
         error = err;
       }

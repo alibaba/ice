@@ -1,4 +1,5 @@
 import * as EventEmitter from 'events';
+import * as trash from 'trash';
 import storage from '../../storage';
 import Project from '../../adapter/project';
 import getEnv from '../../getEnv';
@@ -58,10 +59,16 @@ class ProjectManager {
     return this.projects;
   }
 
-  async deleteProject(projectFolderPath: string): Promise<Project[]> {
+  async deleteProject(params: {projectFolderPath: string, removeFiles?: boolean}): Promise<Project[]> {
+    const { projectFolderPath, removeFiles } = params;
     const newProjects = storage.get('projects').filter((path) => path !== projectFolderPath);
     storage.set('projects', newProjects);
 
+    if (removeFiles) {
+      await trash(projectFolderPath);
+    }
+
+    // reset project if deleted current project
     const currentProjectFolderPath = storage.get('project');
     if (currentProjectFolderPath === projectFolderPath) {
       storage.set('project', newProjects[0] || '');

@@ -18,9 +18,9 @@ export default {
       // do something...
     }
   },
-  async delete(projectFolderPath) {
+  async delete(params) {
     try {
-      const dataSource = await socket.emit('project.index.delete', { projectFolderPath });
+      const dataSource = await socket.emit('project.index.delete', params);
       this.dataSource = dataSource;
     } catch (error) {
       // do something...

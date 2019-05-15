@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import stores from '@stores';
 import logger from '@utils/logger';
 import useModal from '@hooks/useModal';
@@ -6,12 +6,15 @@ import useModal from '@hooks/useModal';
 // import Dependency from './components/Dependencies';
 import SubMenu from './components/SubMenu';
 import OpenProject from './components/OpenProject';
+import DeleteProject from './components/DeleteProject';
 import Guide from './components/Guide';
 import projectStores from './stores';
 import styles from './index.module.scss';
 
 const Project = () => {
-  const { on, toggleModal } = useModal();
+  const { on: onOpenProjectModel, toggleModal: toggleOpenProjectModal } = useModal();
+  const { on: onDeleteProjectModel, toggleModal: toggleDeleteProjectModal } = useModal();
+  const [deleteProjectPath, setDeleteProjectPath] = useState('');
   const [projects, project] = stores.useStores(['projects', 'project']);
   const [pages, dependencies] = projectStores.useStores([
     'pages',
@@ -36,14 +39,12 @@ const Project = () => {
   }
 
   async function onDeleteProject(folderPath) {
-    await projects.delete(folderPath);
-    const newProject = await project.refresh();
-    pages.refresh(newProject.dataSource.folderPath);
-    dependencies.refresh(newProject.dataSource.folderPath);
+    setDeleteProjectPath(folderPath);
+    toggleDeleteProjectModal();
   }
 
   async function onOpenProject() {
-    toggleModal();
+    toggleOpenProjectModal();
   }
 
   async function onCreateProject() {
@@ -51,13 +52,27 @@ const Project = () => {
     window.location.href = '/material';
   }
 
-  async function addProject(path) {
-    await projects.add(path);
+  async function addProject(folderPath) {
+    await projects.add(folderPath);
     const newProject = await project.refresh();
     pages.refresh(newProject.dataSource.folderPath);
     dependencies.refresh(newProject.dataSource.folderPath);
-    toggleModal();
+    toggleOpenProjectModal();
   }
+
+  async function deleteProject(params) {
+    await projects.delete({ ...params, projectFolderPath: deleteProjectPath });
+    const newProject = await project.refresh();
+    pages.refresh(newProject.dataSource.folderPath);
+    dependencies.refresh(newProject.dataSource.folderPath);
+    toggleDeleteProjectModal();
+  }
+
+  const projectPreDelete = projects
+    .dataSource
+    .find(({ folderPath }) => {
+      return folderPath === deleteProjectPath;
+    }) || {};
 
   return (
     <div className={styles.page}>
@@ -70,9 +85,15 @@ const Project = () => {
         onCreateProject={onCreateProject}
       /> : null}
       <OpenProject
-        on={on}
-        onCancel={toggleModal}
+        on={onOpenProjectModel}
+        onCancel={toggleOpenProjectModal}
         onOk={addProject}
+      />
+      <DeleteProject
+        on={onDeleteProjectModel}
+        onCancel={toggleDeleteProjectModal}
+        onOk={deleteProject}
+        project={projectPreDelete}
       />
       {
         projects.dataSource.length ?
