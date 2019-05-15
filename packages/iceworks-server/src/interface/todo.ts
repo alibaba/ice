@@ -3,7 +3,7 @@ import * as EventEmitter from 'events';
 /**
  * 项目的 Todo
  */
-export interface IProjectTodoSchema {
+export interface ITodo {
   /**
    * 文件路径
    */
@@ -25,9 +25,9 @@ export interface IProjectTodoSchema {
   }>;
 }
 
-export interface IProjectTodo extends EventEmitter {
+export interface ITodoModule extends EventEmitter {
   /**
    * 获取项目内的 todo
    */
-  getTodos(): Promise<IProjectTodoSchema[]>;
+  getAll(): Promise<ITodo[]>;
 }

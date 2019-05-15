@@ -1,9 +1,9 @@
-import * as EventEmitter from 'events';
+import { IBaseModule } from './base';
 
 /**
  * 项目的依赖信息
  */
-export interface IProjectDependencySchema {
+export interface IDependency {
   /**
    * 包名
    */
@@ -30,37 +30,30 @@ export interface IProjectDependencySchema {
   dev: boolean;
 }
 
-export interface IProjectDependency extends EventEmitter {
+export interface IDependencyModule extends IBaseModule {
   /**
    * 获取项目内的依赖
    */
-  getDependencies(): Promise<IProjectDependencySchema[]>;
-
-  /**
-   * 添加多个依赖到项目
-   *
-   * @param dependencies 依赖列表
-   */
-  createDependencies(
-    dependencies: IProjectDependencySchema[]
-  ): Promise<IProjectDependencySchema[]>;
+  getAll(): Promise<IDependency[]>;
 
   /**
    * 添加依赖到项目
    *
    * @param dependency 依赖信息
    */
-  createDependency(
-    dependency: IProjectDependencySchema
-  ): Promise<IProjectDependencySchema>;
+  create(dependency: IDependency): Promise<IDependency>;
+
+  /**
+   * 添加多个依赖到项目
+   *
+   * @param dependencies 依赖列表
+   */
+  creates(dependencies: IDependency[]): Promise<IDependency[]>;
 
   /**
    * 升级项目中的某个依赖
    *
    * @param denpendency 指定依赖
    */
-  upgradeDependency(denpendency: {
-    name: string;
-    isDev: boolean;
-  }): Promise<IProjectDependencySchema>;
+  upgrade(denpendency: { name: string; isDev: boolean }): Promise<IDependency>;
 }

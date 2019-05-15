@@ -3,7 +3,7 @@ import * as EventEmitter from 'events';
 /**
  * 项目的 mock
  */
-export interface IProjectMockSchema {
+export interface IMock {
   /**
    * 路径
    */
@@ -25,37 +25,37 @@ export interface IProjectMockSchema {
   body: string;
 }
 
-export interface IProjectMock extends EventEmitter {
+export interface IMockModule extends EventEmitter {
   /**
    * 获取项目的数据模拟配置
    */
-  getMocks(): Promise<IProjectMockSchema[]>;
-
-  /**
-   * 添加多个数据模拟到项目
-   *
-   * @param mocks 数据模拟配置
-   */
-  createMocks(mocks: IProjectMockSchema[]): Promise<IProjectMockSchema[]>;
+  getAll(): Promise<IMock[]>;
 
   /**
    * 添加数据模拟
    *
    * @param mock 数据模拟配置
    */
-  createMock(mock: IProjectMockSchema): Promise<IProjectMockSchema>;
+  create(mock: IMock): Promise<IMock>;
+
+  /**
+   * 添加多个数据模拟到项目
+   *
+   * @param mocks 数据模拟配置
+   */
+  creates(mocks: IMock[]): Promise<IMock[]>;
 
   /**
    * 删除数据模拟
    *
    * @param mock 数据模拟配置
    */
-  deleteMock(mock: IProjectMockSchema): Promise<void>;
+  delete(mock: IMock): Promise<void>;
 
   /**
    * 更新数据模拟
    *
    * @param mock 数据模拟配置
    */
-  updateMock(mock: IProjectMockSchema): Promise<IProjectMockSchema>;
+  update(mock: IMock): Promise<IMock>;
 }

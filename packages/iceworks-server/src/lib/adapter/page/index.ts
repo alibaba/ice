@@ -4,7 +4,6 @@ import * as EventEmitter from 'events';
 import * as pathExists from 'path-exists';
 import * as util from 'util';
 import junk from 'junk';
-import { IProjectPage } from '../../../interface';
 
 export default class Page extends EventEmitter {
   public readonly projectPath: string;
@@ -14,7 +13,7 @@ export default class Page extends EventEmitter {
     this.projectPath = options.projectPath;
   }
 
-  async getPages(): Promise<IProjectPage[]> {
+  async getPages() {
     console.log('getPages/projectPath:', this.projectPath);
     return readPages(path.join(this.projectPath, 'src', 'pages'));
   }

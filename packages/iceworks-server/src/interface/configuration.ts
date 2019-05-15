@@ -1,6 +1,6 @@
-import * as EventEmitter from 'events';
+import { IBaseModule } from './base';
 
-export interface IProjectConfigurationSettings {
+export interface IConfigurationSettings {
   /**
    * 标签名
    */
@@ -32,9 +32,9 @@ export interface IProjectConfigurationSettings {
   componentProps: object;
 }
 
-export interface IProjectConfiguration extends EventEmitter {
+export interface IConfigurationModule extends IBaseModule {
   /**
    * 获取构建配置项
    */
-  getConfigurationSettings(): Promise<IProjectConfigurationSettings[]>;
+  getAll(): Promise<IConfigurationSettings[]>;
 }

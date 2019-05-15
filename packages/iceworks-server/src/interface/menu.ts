@@ -1,9 +1,9 @@
-import * as EventEmitter from 'events';
+import { IBaseModule } from './base';
 
 /**
  * 项目的菜单
  */
-export interface IProjectMenuSchema {
+export interface IMenu {
   /**
    * 位置
    */
@@ -30,37 +30,37 @@ export interface IProjectMenuSchema {
   newWindow?: boolean;
 }
 
-export interface IProjectMenu extends EventEmitter {
+export interface IMenuModule extends IBaseModule {
   /**
    * 获取项目菜单
    */
-  getMenus(): Promise<IProjectMenuSchema[]>;
-
-  /**
-   * 添加多个菜单到项目
-   *
-   * @param menus 多个菜单配置
-   */
-  createMenus(menus: IProjectMenuSchema[]): Promise<IProjectMenuSchema[]>;
+  getAll(): Promise<IMenu[]>;
 
   /**
    * 添加菜单
    *
    * @param menu 菜单配置
    */
-  createMenu(menu: IProjectMenuSchema): Promise<IProjectMenuSchema>;
+  create(menu: IMenu): Promise<IMenu>;
+
+  /**
+   * 添加多个菜单到项目
+   *
+   * @param menus 多个菜单配置
+   */
+  creates(menus: IMenu[]): Promise<IMenu[]>;
 
   /**
    * 删除菜单
    *
    * @param menu 菜单配置
    */
-  deleteMenu(menu: IProjectMenuSchema): Promise<void>;
+  delete(menu: IMenu): Promise<void>;
 
   /**
    * 更新菜单
    *
    * @param menu 菜单配置
    */
-  updateMenu(menu: IProjectMenuSchema): Promise<IProjectMenuSchema>;
+  update(menu: IMenu): Promise<IMenu>;
 }

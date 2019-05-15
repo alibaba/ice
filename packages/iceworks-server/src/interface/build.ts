@@ -1,10 +1,10 @@
-import * as EventEmitter from 'events';
+import { IBaseModule } from './base';
 
-export interface IProjectBuild extends EventEmitter {
+export interface IBuildModule extends IBaseModule {
   /**
    * 执行构建
    *
    * @param settingsEnv 环境变量
    */
-  build(settingsEnv: object): Promise<IProjectBuild>;
+  build(settingsEnv: object): Promise<IBuildModule>;
 }

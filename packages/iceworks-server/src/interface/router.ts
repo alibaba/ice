@@ -1,9 +1,9 @@
-import * as EventEmitter from 'events';
+import { IBaseModule } from './base';
 
 /**
  * 项目的路由
  */
-export interface IProjectRouterSchema {
+export interface IRouter {
   /**
    * URL 路径
    */
@@ -15,39 +15,37 @@ export interface IProjectRouterSchema {
   pageName: string;
 }
 
-export interface IProjectRouter extends EventEmitter {
+export interface IRouterModule extends IBaseModule {
   /**
    * 获取项目路由
    */
-  getRouters(): Promise<IProjectRouterSchema[]>;
-
-  /**
-   * 添加多个路由到项目
-   *
-   * @param routers 多个路由配置
-   */
-  createRouters(
-    routers: IProjectRouterSchema[]
-  ): Promise<IProjectRouterSchema[]>;
+  getAll(): Promise<IRouter[]>;
 
   /**
    * 添加路由
    *
    * @param router 路由配置
    */
-  createRouter(router: IProjectRouterSchema): Promise<IProjectRouterSchema>;
+  create(router: IRouter): Promise<IRouter>;
+
+  /**
+   * 添加多个路由到项目
+   *
+   * @param routers 多个路由配置
+   */
+  creates(routers: IRouter[]): Promise<IRouter[]>;
 
   /**
    * 删除路由
    *
    * @param path 路由路径
    */
-  deleteRouter(path: string): Promise<void>;
+  delete(path: string): Promise<void>;
 
   /**
    * 更新路由
    *
    * @param router 路由配置
    */
-  updateRouter(router: IProjectRouterSchema): Promise<IProjectRouterSchema>;
+  update(router: IRouter): Promise<IRouter>;
 }

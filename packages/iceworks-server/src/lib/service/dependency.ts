@@ -1,12 +1,11 @@
 import { provide, plugin } from 'midway';
-import { IPluginService, IPluginGetAllResult } from '../../interface';
 
 @provide('dependencyService')
-export class DependencyService implements IPluginService {
+export class DependencyService {
   @plugin('projectManager')
   private projectManager;
 
-  async getAll(): Promise<IPluginGetAllResult> {
+  async getAll() {
     const project = this.projectManager.getCurrent();
     return project ? await project.dependency.getDependencies() : [];
   }

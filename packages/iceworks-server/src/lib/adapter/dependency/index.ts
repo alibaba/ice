@@ -1,5 +1,5 @@
 import * as EventEmitter from 'events';
-import { IProjectDependencySchema } from '../../../interface';
+import { IDependency } from '../../../interface';
 
 export default class Dependency extends EventEmitter {
   public readonly projectPath: string;
@@ -9,7 +9,7 @@ export default class Dependency extends EventEmitter {
     this.projectPath = options.projectPath;
   }
 
-  async getDependencies(): Promise<IProjectDependencySchema[]> {
+  async getDependencies(): Promise<IDependency[]> {
     return [
       {
         package: 'icestore',

@@ -1,9 +1,9 @@
-import * as EventEmitter from 'events';
+import { IBaseModule } from './base';
 
 /**
  * 调试服务设置项
  */
-export interface IProjectDevSettingsSchema {
+export interface IDevSettings {
   /**
    * 标签名
    */
@@ -35,21 +35,21 @@ export interface IProjectDevSettingsSchema {
   componentProps: object;
 }
 
-export interface IProjectDev extends EventEmitter {
+export interface IDevModule extends IBaseModule {
   /**
    * 启动调试服务
    *
    * @param settingsEnv 环境变量
    */
-  devStart(settingsEnv: object): Promise<IProjectDev>;
+  start(settingsEnv: object): Promise<IDevModule>;
 
   /**
    * 停止调试服务
    */
-  devStop(): Promise<IProjectDev>;
+  stop(): Promise<IDevModule>;
 
   /**
-   * 启动调试服务设置项
+   * 获取启动调试服务设置项
    */
-  getDevSettings(): Promise<IProjectDevSettingsSchema[]>;
+  getAll(): Promise<IDevSettings[]>;
 }
