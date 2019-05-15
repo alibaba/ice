@@ -1,22 +1,17 @@
-import adapterConfig from './adapter';
+import * as adapter from './adapter';
+import camelCase from 'camelCase';
 
 /**
  * load adpater
- * @param projectInfo Object
+ * @param context the current project information
  */
-const loadAdapter = (projectInfo) => {
-  const adapters = {};
-  for (const [key, value] of Object.entries(adapterConfig)) {
-    // whether to enable
-    if (!value.enable) return;
-
-    // adapter must be an class
-    const adapterPath = require.resolve(value.path);
-    const AdapterName = require(adapterPath);
-    adapters[key] = new AdapterName.default(projectInfo);
+const loadAdapter = (context) => {
+  const mods = {};
+  for (const [key, Mod] of Object.entries(adapter)) {
+    mods[camelCase(key)] = new Mod(context);
   }
 
-  return adapters;
+  return mods;
 };
 
 export default loadAdapter;

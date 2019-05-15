@@ -1,4 +1,3 @@
-// import * as path from 'path';
 import storage from '../../storage';
 import loadAdapter from '../../loadAdapter';
 

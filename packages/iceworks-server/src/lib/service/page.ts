@@ -8,7 +8,7 @@ export class PageService {
   async getAll(projectPath: string) {
     const project = this.projectManager.getCurrent();
 
-    return project ? await project.page.getPages() : [];
+    return project ? await project.page.getAll() : [];
   }
 
   async getOne() {}

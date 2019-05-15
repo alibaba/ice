@@ -1,9 +1,0 @@
-{
-  "name": "dependency",
-  "events": [
-    {
-      "name": "project.dependency.list",
-      "handler": "project.dependency.list"
-    }
-  ]
-}

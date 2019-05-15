@@ -1,22 +1,42 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as EventEmitter from 'events';
 import * as pathExists from 'path-exists';
 import * as util from 'util';
 import junk from 'junk';
+import { IPageModule } from '../../../interface';
 
-export default class Page extends EventEmitter {
+export default class Page implements IPageModule {
   public readonly projectPath: string;
 
+  public readonly projectName: string;
+
   constructor(options) {
-    super();
     this.projectPath = options.projectPath;
+    this.projectName = options.projectName;
   }
 
-  async getPages() {
+  async getAll() {
     console.log('getPages/projectPath:', this.projectPath);
-    return readPages(path.join(this.projectPath, 'src', 'pages'));
+    const data = readPages(path.join(this.projectPath, 'src', 'pages'));
+    console.log({ data });
+    return data;
   }
+
+  async getOne(): Promise<any> {}
+
+  async create(): Promise<any> {}
+
+  async creates(): Promise<any> {}
+
+  async delete(): Promise<any> {}
+
+  async update(): Promise<any> {}
+
+  async getBlocks(): Promise<any> {}
+
+  async createBlock(): Promise<any> {}
+
+  async createBlocks(): Promise<any> {}
 }
 
 /**

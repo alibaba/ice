@@ -1,20 +1,6 @@
-import * as path from 'path';
+import Page from './page';
+import Dependency from './dependency';
+import Configuration from './configuration';
+import Dev from './dev';
 
-const config = {
-  page: {
-    enable: true,
-    path: path.join(__dirname, './page'),
-  },
-
-  dependency: {
-    enable: true,
-    path: path.join(__dirname, './dependency'),
-  },
-
-  dev: {
-    enable: true,
-    path: path.join(__dirname, './dev'),
-  },
-};
-
-export default config;
+export { Page, Dependency, Configuration, Dev };
