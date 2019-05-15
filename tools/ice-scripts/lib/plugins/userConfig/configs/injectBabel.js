@@ -1,18 +1,12 @@
-const processEntry = require('../../../config/processEntry');
-
 const DEFAULT_ENTRY = 'src/index.js';
 module.exports = (api, injectBabel) => {
-  const { command, commandArgs, userConfig } = api.service;
+  const { userConfig } = api.service;
 
   api.chainWebpack((config) => {
     if (!userConfig.entry) {
+      const entry = api.processEntry(DEFAULT_ENTRY);
       config.entryPoints.clear();
-      config.merge({
-        entry: processEntry(DEFAULT_ENTRY, {
-          polyfill: injectBabel !== 'runtime',
-          hotDev: command === 'dev' && !commandArgs.disabledReload,
-        }),
-      });
+      config.merge({ entry });
     }
     if (injectBabel === 'runtime') {
       ['jsx', 'tsx'].forEach((rule) => {

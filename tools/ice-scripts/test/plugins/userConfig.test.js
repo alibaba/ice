@@ -1,11 +1,19 @@
 const Config = require('webpack-chain');
 const path = require('path');
 const userConfigPlugin = require('../../lib/plugins/userConfig');
+const processEntry = require('../../lib/config/processEntry');
 
 const MockApi = function () {
   this.config = new Config();
   this.chainWebpack = (fn) => {
     fn(this.config);
+  };
+  this.processEntry = (entry) => {
+    const { commandArgs, command, userConfig } = this.service;
+    return processEntry(entry, {
+      polyfill: userConfig.injectBabel !== 'runtime',
+      hotDev: command === 'dev' && !commandArgs.disabledReload,
+    });
   };
 };
 

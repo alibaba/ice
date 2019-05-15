@@ -1,6 +1,5 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const getCertificate = require('../../config/getCertificate');
-const processEntry = require('../../config/processEntry');
 const log = require('../../utils/log');
 
 module.exports = async (api) => {
@@ -33,7 +32,7 @@ module.exports = async (api) => {
       // remove entry hotDevClient
       if (!userConfig.entry && !userConfig.injectBabel) {
         // if injectBabel is not set, polyfill default is true
-        const entry = processEntry('src/index.js', { polyfill: true, hotDev: false });
+        const entry = api.processEntry('src/index.js');
         config.entryPoints.clear();
         config.merge({ entry });
       }
