@@ -47,7 +47,7 @@ module.exports = class CheckDepsPlugin {
       Object.keys(depModules).forEach((moduleName) => {
         const versions = depModules[moduleName];
         if (versions.length > 1) {
-          log.warn(`项目依赖了 ${moduleName} 的两个版本，`, versions);
+          log.warn(`项目依赖了 ${moduleName} 的多个版本，`, versions);
         }
       });
 
