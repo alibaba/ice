@@ -1,5 +1,3 @@
-import { StringDecoder } from 'string_decoder';
-
 export default (app) => {
   return class DevController extends app.Controller {
     /**
@@ -7,15 +5,20 @@ export default (app) => {
      * @param ctx
      */
     async start(ctx) {
-      const { projectManager } = app;
       const { args, socket } = ctx;
-      const { projectPath } = args[0];
       const callback = args[args.length - 1];
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
 
       let error;
-      let project;
+      let result;
+
       try {
-        project = await projectManager.devStart(projectPath);
+        result = await project.dev.start();
+
+        project.dev.on('dev.data', (data) => {
+          socket.emit('project.index.dev.data', data);
+        });
       } catch (err) {
         error = {
           message: err.message,
@@ -23,16 +26,9 @@ export default (app) => {
         };
       }
 
-      if (project) {
-        project.on('dev.data', function(data) {
-          const decoder = new StringDecoder('utf8');
-          socket.emit('project.index.dev.data', decoder.write(data));
-        });
-      }
-
       callback({
         error,
-        data: project,
+        data: result,
       });
     }
 
@@ -49,7 +45,7 @@ export default (app) => {
       let error;
       let project;
       try {
-        project = await projectManager.devStop(projectPath);
+        project = await projectManager.dev.devStop(projectPath);
       } catch (err) {
         error = err;
       }

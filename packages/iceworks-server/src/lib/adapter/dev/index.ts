@@ -1,9 +1,9 @@
 import * as EventEmitter from 'events';
 import * as detectPort from 'detect-port';
-import * as child_process from 'child_process';
+import * as execa from 'execa';
 import DEV_SETTINGS from './const';
 
-const DEFAULT_PORT = '4444';
+const DEFAULT_PORT = '4445';
 
 export const DEV_STATUS_NORMAL = 'normal';
 export const DEV_STATUS_STARING = 'staring';
@@ -22,9 +22,8 @@ export default class Dev extends EventEmitter {
     this.projectPath = options.projectPath;
   }
 
-  async devStart(settingsEnv) {
+  async start(settingsEnv) {
     const port = await detectPort(DEFAULT_PORT);
-    const { projectPath } = this;
     const env = { PORT: port };
 
     if (this.devProcess) {
@@ -33,27 +32,27 @@ export default class Dev extends EventEmitter {
       );
     }
 
-    const childProcess = child_process.spawn('npm', ['start'], {
-      cwd: projectPath,
-      env: Object.assign({}, settingsEnv, env),
+    const childProcess = execa('npm', ['start'], {
+      cwd: this.projectPath || process.cwd(),
+      stdio: ['inherit', 'pipe', 'pipe'],
+      shell: true,
+      env: Object.assign({}, env, settingsEnv),
     });
 
     this.devStatus = DEV_STATUS_WORKING;
     this.devProcess = childProcess;
 
-    childProcess.stdout.on('data', (data) => {
-      this.emit('dev.data', data);
+    childProcess.stdout.on('data', (buffer) => {
+      console.log(buffer.toString());
+      this.emit('dev.data', buffer.toString());
     });
 
-    childProcess.on('error', (data) => {
-      this.devStatus = DEV_STATUS_STOP;
-      this.devProcess = null;
-      this.emit('dev.error', data);
+    childProcess.on('error', (buffer) => {
+      console.log(buffer.toString());
     });
 
-    childProcess.on('exit', (code, signal) => {
-      this.devStatus = DEV_STATUS_STOP;
-      this.emit('dev.exit', code, signal);
+    childProcess.on('exit', (code) => {
+      console.log('process exit:', code);
     });
 
     return this;
