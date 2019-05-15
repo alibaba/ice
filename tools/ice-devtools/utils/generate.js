@@ -57,7 +57,7 @@ function generate(options, done) {
     className: uppercamelcase(name),
     inPlace: dest === process.cwd(),
     noEscape: true,
-    registry: '',
+    registry: process.env.REGISTRY || '',
     ...opts,
   });
   debug('%j', data);
