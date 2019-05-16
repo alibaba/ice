@@ -7,21 +7,15 @@ export default {
     settings: [],
   },
 
-  async start(path) {
-    this.dataSource.start = await socket.emit('project.dev.start', {
-      path,
-    });
+  async start() {
+    this.dataSource.start = await socket.emit('project.dev.start');
   },
 
-  async stop(path) {
-    this.dataSource.stop = await socket.emit('project.dev.stop', {
-      path,
-    });
+  async stop() {
+    this.dataSource.stop = await socket.emit('project.dev.stop');
   },
 
-  async getSettings(path) {
-    this.dataSource.settings = await socket.emit('project.dev.settings', {
-      path,
-    });
+  async getSettings() {
+    this.dataSource.settings = await socket.emit('project.dev.settings');
   },
 };

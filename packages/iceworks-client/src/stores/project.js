@@ -21,9 +21,7 @@ export default {
     }
   },
 
-  async reset(path) {
-    this.dataSource = await socket.emit('project.index.setCurrent', {
-      path,
-    });
+  async reset() {
+    this.dataSource = await socket.emit('project.index.setCurrent');
   },
 };
