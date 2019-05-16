@@ -10,11 +10,8 @@ export default (app) => {
       let data = [];
       let error;
 
-      console.log(project.configuration);
-
       try {
         data = await project.configuration.getAll();
-        console.log('=======>:', data);
       } catch (error) {
         error = error;
       }

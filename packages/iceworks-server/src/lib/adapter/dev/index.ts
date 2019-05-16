@@ -11,7 +11,7 @@ export const DEV_STATUS_WORKING = 'working';
 export const DEV_STATUS_STOP = 'stop';
 
 export default class Dev extends EventEmitter {
-  public readonly projectPath: string;
+  public readonly path: string;
 
   public devStatus: string = DEV_STATUS_NORMAL;
 
@@ -19,7 +19,7 @@ export default class Dev extends EventEmitter {
 
   constructor(options) {
     super();
-    this.projectPath = options.projectPath;
+    this.path = options.path;
   }
 
   async start(settingsEnv) {
@@ -33,7 +33,7 @@ export default class Dev extends EventEmitter {
     }
 
     const childProcess = execa('npm', ['start'], {
-      cwd: this.projectPath || process.cwd(),
+      cwd: this.path || process.cwd(),
       stdio: ['inherit', 'pipe', 'pipe'],
       shell: true,
       env: Object.assign({}, env, settingsEnv),
@@ -43,7 +43,6 @@ export default class Dev extends EventEmitter {
     this.devProcess = childProcess;
 
     childProcess.stdout.on('data', (buffer) => {
-      console.log(buffer.toString());
       this.emit('dev.data', buffer.toString());
     });
 

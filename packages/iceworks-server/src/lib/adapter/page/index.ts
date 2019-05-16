@@ -6,20 +6,17 @@ import junk from 'junk';
 import { IPageModule } from '../../../interface';
 
 export default class Page implements IPageModule {
-  public readonly projectPath: string;
+  public readonly path: string;
 
-  public readonly projectName: string;
+  public readonly name: string;
 
   constructor(options) {
-    this.projectPath = options.projectPath;
-    this.projectName = options.projectName;
+    this.path = options.path;
+    this.name = options.name;
   }
 
   async getAll() {
-    console.log('getPages/projectPath:', this.projectPath);
-    const data = readPages(path.join(this.projectPath, 'src', 'pages'));
-    console.log({ data });
-    return data;
+    return readPages(path.join(this.path, 'src', 'pages'));
   }
 
   async getOne(): Promise<any> {}

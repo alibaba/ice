@@ -5,20 +5,20 @@ import loadAdapter from '../../loadAdapter';
 class ProjectManager extends EventEmitter {
   private projects;
 
-  public projectName: string;
+  public name: string;
 
-  public projectPath: string;
+  public path: string;
 
   async ready() {
     const projects = storage.get('projects');
     this.projects = await Promise.all(
       projects.map(async (project) => {
-        const { projectName, projectPath } = project;
-        this.projectName = projectName;
-        this.projectPath = projectPath;
+        const { name, path } = project;
+        this.name = name;
+        this.path = path;
         return {
-          projectName,
-          projectPath,
+          name,
+          path,
           ...loadAdapter(this),
         };
       })
@@ -35,9 +35,9 @@ class ProjectManager extends EventEmitter {
   /**
    * Get the project in the project list
    */
-  getProject(projectPath: string) {
+  getProject(path: string) {
     const project = this.projects.find(
-      (currentItem) => currentItem.projectPath === projectPath
+      (currentItem) => currentItem.path === path
     );
 
     if (!project) {
@@ -52,15 +52,15 @@ class ProjectManager extends EventEmitter {
    */
   getCurrent() {
     const projectInfo = storage.get('project');
-    return this.getProject(projectInfo.projectPath);
+    return this.getProject(projectInfo.path);
   }
 
   /**
    * Set current project
    */
-  setCurrent(projectPath: string) {
-    storage.set('project', projectPath);
-    return this.getProject(projectPath);
+  setCurrent(path: string) {
+    storage.set('project', path);
+    return this.getProject(path);
   }
 }
 

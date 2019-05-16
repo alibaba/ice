@@ -3,11 +3,11 @@ import { IConfigurationSettings } from '../../../interface';
 import { CONFIGURATION_SETTINGS } from './const';
 
 export default class Configuration extends EventEmitter {
-  public readonly projectPath: string;
+  public readonly path: string;
 
   constructor(options) {
     super();
-    this.projectPath = options.projectPath;
+    this.path = options.path;
   }
 
   async getAll(): Promise<IConfigurationSettings[]> {

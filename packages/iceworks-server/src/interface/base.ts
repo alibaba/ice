@@ -2,8 +2,8 @@
  * 功能模块的基类
  */
 export interface IBaseModule {
-  readonly projectName: string;
-  readonly projectPath: string;
+  readonly name: string;
+  readonly path: string;
 }
 
 /**

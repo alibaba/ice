@@ -26,7 +26,7 @@ export default (app) => {
       const { args } = ctx;
       const callback = args[args.length - 1];
 
-      let project: { projectName: string; projectPath: string };
+      let project: { name: string; path: string };
       let error: any;
 
       try {
@@ -38,8 +38,8 @@ export default (app) => {
       callback({
         error,
         data: {
-          projectName: project.projectName,
-          projectPath: project.projectPath,
+          name: project.name,
+          path: project.path,
         },
       });
     }
@@ -47,13 +47,13 @@ export default (app) => {
     async setCurrent(ctx) {
       const { projectManager } = app;
       const { args } = ctx;
-      const { projectPath } = args[0];
+      const { path } = args[0];
       const callback = args[args.length - 1];
 
       let project = [];
       let error;
       try {
-        project = await projectManager.setCurrent(projectPath);
+        project = await projectManager.setCurrent(path);
       } catch (err) {
         error = err;
       }

@@ -14,12 +14,10 @@ const Dev = () => {
   const project = stores.useStore('project');
   const dev = devStores.useStore('dev');
   const { on, toggleModal } = useModal();
-  const { projectInfo = {} } = project.dataSource;
-  const { projectPath } = projectInfo;
 
   const devStart = async () => {
     try {
-      await dev.start(projectPath);
+      await dev.start();
     } catch (error) {
       IceNotification.error({
         message: '启动调试服务失败',
@@ -40,7 +38,7 @@ const Dev = () => {
   };
 
   const handleDevSettings = async () => {
-    await dev.getSettings(projectPath);
+    await dev.getSettings();
     toggleModal();
   };
 

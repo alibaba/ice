@@ -11,7 +11,7 @@ export interface IPage {
   /**
    * 文件路径
    */
-  projectPath: string;
+  path: string;
 
   /**
    * 此文件的创建时间的时间戳
@@ -51,7 +51,7 @@ export interface IProjectBlock {
   /**
    * 本地文件夹路径
    */
-  projectPath?: string;
+  path?: string;
 
   /**
    * 背景图
