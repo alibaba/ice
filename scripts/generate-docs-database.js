@@ -46,6 +46,10 @@ const allCategories = {
     // 自定义物料
     title: '',
   },
+  icestark: {
+    // 工作台模式
+    title: '',
+  },
   cli: {
     // ice-scripts
     title: '',
