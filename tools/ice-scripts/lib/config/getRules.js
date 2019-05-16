@@ -153,6 +153,7 @@ module.exports = (buildConfig = {}, themeConfig) => {
             sourceMap: true,
             // https://github.com/ant-design/ant-motion/issues/44
             javascriptEnabled: true,
+            ...buildConfig.lessLoaderOptions,
           },
         },
       ]),
@@ -170,6 +171,8 @@ module.exports = (buildConfig = {}, themeConfig) => {
           loader: LESS_LOADER,
           options: {
             sourceMap: true,
+            javascriptEnabled: true,
+            ...buildConfig.lessLoaderOptions,
           },
         },
       ]),
