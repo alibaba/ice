@@ -43,13 +43,13 @@ export default (app) => {
     async add(ctx) {
       const { projectManager } = app;
       const { args } = ctx;
-      const { projectFolderPath } = args[0];
+      const { projectPath } = args[0];
       const callback = args[args.length - 1];
 
       let projects = [];
       let error;
       try {
-        projects = await projectManager.addProject(projectFolderPath);
+        projects = await projectManager.addProject(projectPath);
       } catch (err) {
         error = err;
       }

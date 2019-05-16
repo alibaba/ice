@@ -70,32 +70,32 @@ class ProjectManager extends EventEmitter {
     return this.getProject(projectPath);
   }
 
-  async addProject(projectFolderPath: string): Promise<Project[]> {
+  async addProject(projectPath: string): Promise<Project[]> {
     const projects = storage.get('projects');
 
-    if (projects.indexOf(projectFolderPath) === -1) {
-      projects.push(projectFolderPath);
+    if (projects.indexOf(projectPath) === -1) {
+      projects.push(projectPath);
       storage.set('projects', projects);
     }
 
-    storage.set('project', projectFolderPath);
+    storage.set('project', projectPath);
     this.projects = await this.refresh();
 
     return this.projects;
   }
 
-  async deleteProject(params: { projectFolderPath: string, removeFiles?: boolean }): Promise<Project[]> {
-    const { projectFolderPath, removeFiles } = params;
-    const newProjects = storage.get('projects').filter((path) => path !== projectFolderPath);
+  async deleteProject(params: { projectPath: string, removeFiles?: boolean }): Promise<Project[]> {
+    const { projectPath, removeFiles } = params;
+    const newProjects = storage.get('projects').filter((path) => path !== projectPath);
     storage.set('projects', newProjects);
 
     if (removeFiles) {
-      await trash(projectFolderPath);
+      await trash(projectPath);
     }
 
     // reset project if deleted current project
     const currentProjectFolderPath = storage.get('project');
-    if (currentProjectFolderPath === projectFolderPath) {
+    if (currentProjectFolderPath === projectPath) {
       storage.set('project', newProjects[0] || '');
     }
 

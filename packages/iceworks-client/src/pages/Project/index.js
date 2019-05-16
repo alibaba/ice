@@ -30,14 +30,14 @@ const Project = () => {
     dependencies.refresh();
   }, []);
 
-  async function onSwitchProject(folderPath) {
-    await project.reset(folderPath);
+  async function onSwitchProject(path) {
+    await project.reset(path);
     pages.refresh();
     dependencies.refresh();
   }
 
-  async function onDeleteProject(folderPath) {
-    setDeleteProjectPath(folderPath);
+  async function onDeleteProject(path) {
+    setDeleteProjectPath(path);
     toggleDeleteProjectModal();
   }
 
@@ -50,26 +50,26 @@ const Project = () => {
     window.location.href = '/material';
   }
 
-  async function addProject(folderPath) {
-    await projects.add(folderPath);
+  async function addProject(path) {
+    await projects.add(path);
     const newProject = await project.refresh();
-    pages.refresh(newProject.dataSource.folderPath);
-    dependencies.refresh(newProject.dataSource.folderPath);
+    pages.refresh(newProject.dataSource.path);
+    dependencies.refresh(newProject.dataSource.path);
     toggleOpenProjectModal();
   }
 
   async function deleteProject(params) {
-    await projects.delete({ ...params, projectFolderPath: deleteProjectPath });
+    await projects.delete({ ...params, projectPath: deleteProjectPath });
     const newProject = await project.refresh();
-    pages.refresh(newProject.dataSource.folderPath);
-    dependencies.refresh(newProject.dataSource.folderPath);
+    pages.refresh(newProject.dataSource.path);
+    dependencies.refresh(newProject.dataSource.path);
     toggleDeleteProjectModal();
   }
 
   const projectPreDelete = projects
     .dataSource
-    .find(({ folderPath }) => {
-      return folderPath === deleteProjectPath;
+    .find(({ path }) => {
+      return path === deleteProjectPath;
     }) || {};
 
   return (

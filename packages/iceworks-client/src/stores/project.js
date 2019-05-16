@@ -8,14 +8,13 @@ export default {
 
   async refresh() {
     try {
-      const dataSource = await socket.emit('project.index.current');
-      this.dataSource = dataSource;
+      this.dataSource = await socket.emit('project.index.current');
     } catch (error) {
       // do something...
     }
   },
 
-  async reset() {
-    this.dataSource = await socket.emit('project.index.setCurrent');
+  async reset(path) {
+    this.dataSource = await socket.emit('project.index.setCurrent', { path });
   },
 };

@@ -10,9 +10,9 @@ export default {
       // do something...
     }
   },
-  async add(projectFolderPath) {
+  async add(projectPath) {
     try {
-      const dataSource = await socket.emit('project.index.add', { projectFolderPath });
+      const dataSource = await socket.emit('project.index.add', { projectPath });
       this.dataSource = dataSource;
     } catch (error) {
       // do something...

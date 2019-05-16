@@ -15,17 +15,17 @@ const SubMenu = ({
       </h2>
       <div className={styles.list}>
         {
-          projects.map(({ name, folderPath, devStatus }, index) => {
+          projects.map(({ name, path, devStatus }, index) => {
             return (
               <div
                 key={index}
                 className={
                   classNames({
                     [styles.item]: true,
-                    [styles.itemCurrent]: folderPath === project.folderPath,
+                    [styles.itemCurrent]: path === project.path,
                   })
                 }
-                onClick={() => onSwitchProject(folderPath)}
+                onClick={() => onSwitchProject(path)}
               >
                 <div className={styles.name}>
                   <strong>
@@ -40,7 +40,7 @@ const SubMenu = ({
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    onDeleteProject(folderPath);
+                    onDeleteProject(path);
                   }}
                 />
               </div>
