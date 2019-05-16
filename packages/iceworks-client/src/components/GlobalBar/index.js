@@ -9,11 +9,7 @@ const GlobalBar = () => {
     project.refresh();
   }, []);
 
-  return (
-    <div className={styles.globalBar}>
-      {project.dataSource.name}
-    </div>
-  );
+  return <div className={styles.globalBar}>{project.dataSource.name}</div>;
 };
 
 export default GlobalBar;

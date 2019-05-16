@@ -1,59 +1,78 @@
 import * as EventEmitter from 'events';
+import * as path from 'path';
+import camelCase from 'camelCase';
 import storage from '../../storage';
-import Project from '../../adapter/project';
-import getEnv from '../../getEnv';
+import * as adapter from '../../adapter';
+import { IProject } from '../../../interface';
 
-class ProjectManager {
-  private projects: Project[];
+class Project implements IProject {
+  public readonly name: string;
+
+  public readonly path: string;
+
+  constructor(folderPath: string) {
+    this.name = path.basename(folderPath);
+    this.path = folderPath;
+
+    this.loadAdapter();
+  }
+
+  private loadAdapter() {
+    for (const [key, Module] of Object.entries(adapter)) {
+      this[camelCase(key)] = new Module(this);
+    }
+  }
+}
+
+class ProjectManager extends EventEmitter {
+  private projects;
 
   async ready() {
-    const projectFolderPaths = storage.get('projects');
+    const projects = storage.get('projects');
     this.projects = await Promise.all(
-      projectFolderPaths.map(async (projectFolderPath) => {
-        const project = new Project(projectFolderPath);
-        return project;
+      projects.map(async (projectPath) => {
+        return new Project(projectPath);
       })
     );
   }
 
-  getProjects(): Project[] {
+  /**
+   * Get all project
+   */
+  public getProjects() {
     return this.projects;
   }
 
-  getProject(projectFolderPath: string): Project {
+  /**
+   * Get the project in the project list
+   */
+  public getProject(path: string) {
     const project = this.projects.find(
-      ({ folderPath }) => folderPath === projectFolderPath
+      (currentItem) => currentItem.path === path
     );
+
     if (!project) {
-      throw new Error('没有找到对应的项目');
+      throw new Error('notfound project');
     }
 
     return project;
   }
 
-  getCurrent(): Project {
-    const projectFolderPath = storage.get('project');
-    return this.getProject(projectFolderPath);
+  /**
+   * Get current project
+   */
+  public getCurrent() {
+    const projectPath = storage.get('project');
+    return this.getProject(projectPath);
   }
 
-  setCurrent(projectFolderPath: string): Project {
-    storage.set('project', projectFolderPath);
-    return this.getProject(projectFolderPath);
+  /**
+   * Set current project
+   */
+  public setCurrent(path: string) {
+    storage.set('project', path);
+    return this.getProject(path);
   }
-
-  async devStart(projectFolderPath: string): Promise<EventEmitter> {
-    const project = this.getProject(projectFolderPath);
-    return project.devStart(getEnv());
-  }
-
-  async devStop(projectFolderPath: string) {
-    const project = this.getProject(projectFolderPath);
-    return project.devStop();
-  }
-
-  async build() {}
-
-  async lint() {}
 }
 
 export default (app) => {
