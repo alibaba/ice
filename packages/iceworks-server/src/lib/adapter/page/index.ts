@@ -3,9 +3,8 @@ import * as fs from 'fs';
 import * as pathExists from 'path-exists';
 import * as util from 'util';
 import junk from 'junk';
-import { IPageModule } from '../../../interface';
 
-export default class Page implements IPageModule {
+export default class Page {
   public readonly path: string;
 
   public readonly name: string;

@@ -20,10 +20,7 @@ export default (app) => {
           socket.emit('project.index.dev.data', data);
         });
       } catch (err) {
-        error = {
-          message: err.message,
-          success: false,
-        };
+        error = err;
       }
 
       callback({
@@ -48,8 +45,8 @@ export default (app) => {
 
       try {
         data = await project.dev.getSettings();
-      } catch (error) {
-        error = error;
+      } catch (err) {
+        error = err;
       }
 
       callback({ error, data });

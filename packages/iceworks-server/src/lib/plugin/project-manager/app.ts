@@ -1,41 +1,56 @@
 import * as EventEmitter from 'events';
+import * as path from 'path';
+import camelCase from 'camelCase';
 import storage from '../../storage';
-import loadAdapter from '../../loadAdapter';
+import * as adapter from '../../adapter';
+import { IProject } from '../../../interface';
+
+class Project implements IProject {
+  public readonly name: string;
+
+  public readonly path: string;
+
+  constructor(folderPath: string) {
+    this.name = path.basename(folderPath);
+    this.path = folderPath;
+  }
+}
 
 class ProjectManager extends EventEmitter {
   private projects;
 
-  public name: string;
-
-  public path: string;
-
   async ready() {
     const projects = storage.get('projects');
     this.projects = await Promise.all(
-      projects.map(async (project) => {
-        const { name, path } = project;
-        this.name = name;
-        this.path = path;
-        return {
-          name,
-          path,
-          ...loadAdapter(this),
-        };
+      projects.map(async (projectFolderPath) => {
+        const project = new Project(projectFolderPath);
+        return this.connectAdapter(project);
       })
     );
   }
 
   /**
+   * @param project the current project information
+   */
+  private connectAdapter(project: Project) {
+    for (const [key, Module] of Object.entries(adapter)) {
+      project[camelCase(key)] = new Module(project);
+    }
+
+    return project;
+  }
+
+  /**
    * Get all project
    */
-  getProjects() {
+  public getProjects() {
     return this.projects;
   }
 
   /**
    * Get the project in the project list
    */
-  getProject(path: string) {
+  public getProject(path: string) {
     const project = this.projects.find(
       (currentItem) => currentItem.path === path
     );
@@ -50,7 +65,7 @@ class ProjectManager extends EventEmitter {
   /**
    * Get current project
    */
-  getCurrent() {
+  public getCurrent() {
     const projectInfo = storage.get('project');
     return this.getProject(projectInfo.path);
   }
@@ -58,7 +73,7 @@ class ProjectManager extends EventEmitter {
   /**
    * Set current project
    */
-  setCurrent(path: string) {
+  public setCurrent(path: string) {
     storage.set('project', path);
     return this.getProject(path);
   }

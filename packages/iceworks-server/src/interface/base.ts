@@ -1,9 +1,17 @@
 /**
+ * 项目信息
+ */
+export interface IProject {
+  readonly name: string;
+  readonly path: string;
+}
+
+/**
  * 功能模块的基类
  */
 export interface IBaseModule {
-  readonly name: string;
-  readonly path: string;
+  readonly projectName: string;
+  readonly projectPath: string;
 }
 
 /**

@@ -12,8 +12,8 @@ export default (app) => {
 
       try {
         data = await project.configuration.getAll();
-      } catch (error) {
-        error = error;
+      } catch (err) {
+        error = err;
       }
 
       callback({ error, data });

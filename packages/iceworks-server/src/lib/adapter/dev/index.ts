@@ -58,13 +58,13 @@ export default class Dev extends EventEmitter {
   }
 
   async stop() {
-    if (!this.process) {	
-      throw new Error('没有启动调试服务，无法停止。');	
-    }	
+    if (!this.process) {
+      throw new Error('没有启动调试服务，无法停止。');
+    }
 
-    this.process.kill();	
-    this.process = null;	
-    this.status = DEV_STATUS_STOP;	
+    this.process.kill();
+    this.process = null;
+    this.status = DEV_STATUS_STOP;
 
     return this;
   }
