@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as Conf from 'conf';
 import * as mkdirp from 'mkdirp';
 
- // @TODO
+// @TODO
 const defaultCwd = path.join(__dirname, '../../data');
 mkdirp.sync(defaultCwd);
 
@@ -10,11 +10,13 @@ class DataStore extends Conf {
   constructor(options?) {
     options = {
       name: 'config',
-      ...options
+      ...options,
     };
 
     if (options.cwd) {
-      options.cwd = path.isAbsolute(options.cwd) ? options.cwd : path.join(defaultCwd, options.cwd);
+      options.cwd = path.isAbsolute(options.cwd)
+        ? options.cwd
+        : path.join(defaultCwd, options.cwd);
     } else {
       options.cwd = defaultCwd;
     }
@@ -67,14 +69,12 @@ class Store {
 const schema = {
   project: {
     type: 'string',
+    default: {},
   },
   projects: {
     type: 'array',
-    items: {
-      type: 'string',
-    },
-    default: []
-  }
+    default: [],
+  },
 };
 
-export default new Store({schema});
+export default new Store({ schema });

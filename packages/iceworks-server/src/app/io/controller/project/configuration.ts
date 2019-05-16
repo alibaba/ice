@@ -1,18 +1,17 @@
 export default (app) => {
   return class ConfigurationController extends app.Controller {
     async settings(ctx) {
-      const { args, requestContext } = ctx;
+      const { args } = ctx;
       const callback = args[args.length - 1];
-      const { projectFolderPath } = args[0];
-      const configurationService = await requestContext.getAsync(
-        'configurationService'
-      );
+
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
 
       let data = [];
       let error;
 
       try {
-        data = await configurationService.settings(projectFolderPath);
+        data = await project.configuration.getAll();
       } catch (err) {
         error = err;
       }

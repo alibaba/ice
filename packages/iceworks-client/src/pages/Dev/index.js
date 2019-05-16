@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from '@alifd/next';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
-import stores from '@stores';
 import useModal from '@hooks/useModal';
 import IceNotification from '@icedesign/notification';
 import SettingsModal from './components/SettingsModal';
@@ -11,25 +10,23 @@ import devStores from './stores';
 import styles from './index.module.scss';
 
 const Dev = () => {
-  const { on, toggleModal } = useModal();
-  const project = stores.useStore('project');
   const dev = devStores.useStore('dev');
+  const { on, toggleModal } = useModal();
 
   const devStart = async () => {
     try {
-      await project.devStart();
+      await dev.start();
     } catch (error) {
       IceNotification.error({
         message: '启动调试服务失败',
-        description:
-          error.message || '当前项目依赖未安装或依赖缺失，请重装依赖后重试。',
+        description: error.message || '请重试。',
       });
     }
   };
 
   const devStop = async () => {
     try {
-      await project.devStop();
+      await dev.stop();
     } catch (error) {
       IceNotification.error({
         message: '终止调试服务失败',
@@ -39,13 +36,9 @@ const Dev = () => {
   };
 
   const handleDevSettings = async () => {
-    await dev.getDevSettings(project.dataSource.folderPath);
+    await dev.getSettings();
     toggleModal();
   };
-
-  useEffect(() => {
-    project.refresh();
-  }, []);
 
   return (
     <Card
@@ -57,7 +50,7 @@ const Dev = () => {
       <div className={styles.actionBar}>
         {/* Left Button Group */}
         <div className={styles.leftActionBar}>
-          {project.dataSource.devStatus !== 'working' ? (
+          {dev.status !== 'working' ? (
             <Button
               type="primary"
               className={styles.leftButton}

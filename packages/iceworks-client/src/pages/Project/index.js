@@ -24,18 +24,16 @@ const Project = () => {
   useEffect(() => {
     logger.info('Project page loaded.');
 
-    (async () => {
-      await projects.refresh();
-      const newProject = await project.refresh();
-      pages.refresh(newProject.dataSource.folderPath);
-      dependencies.refresh(newProject.dataSource.folderPath);
-    })();
+    projects.refresh();
+    project.refresh();
+    pages.refresh();
+    dependencies.refresh();
   }, []);
 
   async function onSwitchProject(folderPath) {
-    const newProject = await project.reset(folderPath);
-    pages.refresh(newProject.dataSource.folderPath);
-    dependencies.refresh(newProject.dataSource.folderPath);
+    await project.reset(folderPath);
+    pages.refresh();
+    dependencies.refresh();
   }
 
   async function onDeleteProject(folderPath) {
