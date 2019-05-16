@@ -15,7 +15,7 @@ const SubMenu = ({
       </h2>
       <div className={styles.list}>
         {
-          projects.map(({ name, path, devStatus }, index) => {
+          projects.map(({ name, path, dev }, index) => {
             return (
               <div
                 key={index}
@@ -31,7 +31,7 @@ const SubMenu = ({
                   <strong>
                     {name}
                   </strong>
-                  {devStatus === 'working' ? <Badge className={styles.badge} dot /> : null}
+                  {dev.status === 'working' ? <Badge className={styles.badge} dot /> : null}
                 </div>
                 <Icon
                   className={styles.icon}

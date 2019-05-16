@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@alifd/next';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
@@ -40,6 +40,10 @@ const Dev = () => {
     toggleModal();
   };
 
+  useEffect(() => {
+    dev.refresh();
+  }, []);
+
   return (
     <Card
       title="启动服务"
@@ -50,7 +54,7 @@ const Dev = () => {
       <div className={styles.actionBar}>
         {/* Left Button Group */}
         <div className={styles.leftActionBar}>
-          {dev.status !== 'working' ? (
+          {dev.dataSource.status !== 'working' ? (
             <Button
               type="primary"
               className={styles.leftButton}
@@ -60,15 +64,15 @@ const Dev = () => {
               运行
             </Button>
           ) : (
-            <Button
-              type="primary"
-              className={styles.leftButton}
-              onClick={devStop}
-            >
-              <Icon type="stop" className={styles.icon} />
-              停止
+              <Button
+                type="primary"
+                className={styles.leftButton}
+                onClick={devStop}
+              >
+                <Icon type="stop" className={styles.icon} />
+                停止
             </Button>
-          )}
+            )}
           <Button
             type="secondary"
             className={styles.leftButton}
