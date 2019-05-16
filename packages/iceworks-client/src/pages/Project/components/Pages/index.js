@@ -11,7 +11,7 @@ const Page = () => {
       <div>
         <ul>
           {dataSource.map(({ name }) => {
-            return <li>{name}</li>;
+            return <li key={name}>{name}</li>;
           })}
         </ul>
       </div>

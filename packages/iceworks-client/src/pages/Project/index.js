@@ -17,12 +17,11 @@ const Project = () => {
     logger.info('Project page loaded.');
 
     projects.refresh();
+    project.refresh();
 
-    (async () => {
-      const newProject = await project.refresh();
-      pages.refresh(newProject.dataSource.folderPath);
-      dependencies.refresh(newProject.dataSource.folderPath);
-    })();
+    // TODO 根据当前项目的变化进行更新
+    pages.refresh();
+    dependencies.refresh();
   }, []);
 
   return (
@@ -39,24 +38,20 @@ const Project = () => {
         <div>my projects:</div>
         <ul>
           {projects.dataSource.map((projectData, index) => {
-            const { name, folderPath } = projectData;
+            const { name } = projectData;
             return (
               <li key={index}>
                 <a
                   onClick={async () => {
-                    const newProject = await project.reset(folderPath);
-                    pages.refresh(newProject.dataSource.folderPath);
-                    dependencies.refresh(newProject.dataSource.folderPath);
+                    await project.reset();
                   }}
                 >
                   {name}
                 </a>
                 <Button
                   onClick={async () => {
-                    await projects.remove(folderPath);
-                    const newProject = await project.refresh();
-                    pages.refresh(newProject.dataSource.folderPath);
-                    dependencies.refresh(newProject.dataSource.folderPath);
+                    await projects.remove();
+                    await project.refresh();
                   }}
                 >
                   删除
