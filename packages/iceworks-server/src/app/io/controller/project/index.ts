@@ -76,10 +76,7 @@ export default (app) => {
 
       callback({
         error,
-        data: {
-          name: project.name,
-          path: project.path,
-        },
+        data: project,
       });
     }
 
@@ -89,7 +86,7 @@ export default (app) => {
       const { path } = args[0];
       const callback = args[args.length - 1];
 
-      let project = [];
+      let project;
       let error;
       try {
         project = await projectManager.setCurrent(path);

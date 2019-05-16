@@ -64,12 +64,12 @@ const Dev = () => {
               运行
             </Button>
           ) : (
-              <Button
-                type="primary"
-                className={styles.leftButton}
-                onClick={devStop}
-              >
-                <Icon type="stop" className={styles.icon} />
+            <Button
+              type="primary"
+              className={styles.leftButton}
+              onClick={devStop}
+            >
+              <Icon type="stop" className={styles.icon} />
                 停止
             </Button>
             )}

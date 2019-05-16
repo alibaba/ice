@@ -52,17 +52,17 @@ const Project = () => {
 
   async function addProject(path) {
     await projects.add(path);
-    const newProject = await project.refresh();
-    pages.refresh(newProject.dataSource.path);
-    dependencies.refresh(newProject.dataSource.path);
+    await project.refresh();
+    pages.refresh();
+    dependencies.refresh();
     toggleOpenProjectModal();
   }
 
   async function deleteProject(params) {
     await projects.delete({ ...params, projectPath: deleteProjectPath });
-    const newProject = await project.refresh();
-    pages.refresh(newProject.dataSource.path);
-    dependencies.refresh(newProject.dataSource.path);
+    await project.refresh();
+    pages.refresh();
+    dependencies.refresh();
     toggleDeleteProjectModal();
   }
 
