@@ -7,7 +7,6 @@ import Notification from '@icedesign/notification';
 @inject('git')
 @observer
 export default class DialogChangeRemote extends Component {
-
   constructor(props) {
     super(props);
     this.field = new Field(this);
@@ -33,7 +32,7 @@ export default class DialogChangeRemote extends Component {
       }
       git.removeAndAddRemoting = true;
       const originRemote = await git.getOriginRemote();
-      if (originRemote.length > 0 ) {
+      if (originRemote.length > 0) {
         await git.removeRemote();
       }
       const addDone = await git.addRemote(remoteUrlInput);
@@ -48,7 +47,7 @@ export default class DialogChangeRemote extends Component {
       git.visibleDialogChangeRemote = false;
     });
   }
-  
+
   closeDialogChangeRemote = () => {
     const { git } = this.props;
     git.visibleDialogChangeRemote = false;
@@ -59,9 +58,9 @@ export default class DialogChangeRemote extends Component {
     if (/^git@.+.git$/.test(value)) {
       callback();
     } else if (/^http.+.git$/.test(value)) {
-      callback("请使用 SSH 协议地址，即以 git@ 开头的地址");
+      callback('请使用 SSH 协议地址，即以 git@ 开头的地址');
     } else {
-      callback("请输入正确的 git 仓库地址");
+      callback('请输入正确的 git 仓库地址');
     }
   }
 
@@ -74,7 +73,7 @@ export default class DialogChangeRemote extends Component {
         visible={git.visibleDialogChangeRemote}
         title="修改仓库地址"
         onClose={this.closeDialogChangeRemote}
-        footer={
+        footer={(
           <div>
             <Button
               type="primary"
@@ -84,8 +83,8 @@ export default class DialogChangeRemote extends Component {
               确定
             </Button>
             <Button onClick={this.closeDialogChangeRemote}>取消</Button>
-          </div> 
-        }
+          </div>
+)}
       >
         <div style={styles.item}>
           <div style={styles.itemTitle}>仓库地址:</div>
@@ -93,28 +92,30 @@ export default class DialogChangeRemote extends Component {
             height: 48,
             position: 'relative',
             top: 11,
-          }}>
+          }}
+          >
             <Input
               placeholder="如：git@github.com:alibaba/ice.git"
               style={{ width: 350, marginLeft: 10 }}
               {...init('remoteUrlInput', {
                 rules: {
                   validator: this.checkGitRepo,
-                }
+                },
               })}
             />
             <br />
             {this.field.getError('remoteUrlInput') ? (
-              <span style={{ 
+              <span style={{
                 color: '#fa7070',
                 fontSize: 12,
                 display: 'inline-block',
-                margin: '5px 0 0 10px'
-              }}>
-                {this.field.getError('remoteUrlInput').join(",")}
+                margin: '5px 0 0 10px',
+              }}
+              >
+                {this.field.getError('remoteUrlInput').join(',')}
               </span>
             ) : (
-              ""
+              ''
             )}
           </div>
         </div>

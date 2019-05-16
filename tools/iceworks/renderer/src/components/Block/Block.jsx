@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import Tooltip from 'rc-tooltip';
 import { inject, observer } from 'mobx-react';
 
+import handleViewport from 'react-in-viewport';
 import { openInBrowser } from '../../external';
 import Icon from '../Icon';
-import handleViewport from 'react-in-viewport';
 
 import './index.scss';
 
 function withAlicdnImage(url) {
   if (url && url.indexOf('img.alicdn.com') !== -1) {
-    return url + '_250x250.jpg';
+    return `${url}_250x250.jpg`;
   }
   return url;
 }
@@ -118,22 +118,22 @@ class Block extends Component {
               <span className="preview" onClick={this.openBlockImgPreview}>
                 <Tooltip
                   afterVisibleChange={this.afterVisibleChange}
-                  placement={'bottom'}
-                  overlay={'预览效果图'}
+                  placement="bottom"
+                  overlay="预览效果图"
                 >
                   <Icon type="02magnifyingglasspluszoom" />
                 </Tooltip>
               </span>
               {block.homepage && (
                 <span className="preview" onClick={this.openBlockOnlinePreview}>
-                  <Tooltip placement={'bottom'} overlay={'在线预览'}>
+                  <Tooltip placement="bottom" overlay="在线预览">
                     <Icon type="eye" />
                   </Tooltip>
                 </span>
               )}
               {block.repository && (
                 <span className="repo" onClick={this.openBlockGithub}>
-                  <Tooltip placement={'bottom'} overlay={'查看源码'}>
+                  <Tooltip placement="bottom" overlay="查看源码">
                     <Icon type="github" />
                   </Tooltip>
                 </span>

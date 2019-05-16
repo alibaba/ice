@@ -27,7 +27,10 @@ class About extends Component {
           <div className="appname">
             <b>{appName}</b>
           </div>
-          <div className="version">版本 {version}</div>
+          <div className="version">
+版本
+            {version}
+          </div>
           <div className="copyright">
             版权所有 &copy; 2018 阿里巴巴集团 保留所有权利
           </div>

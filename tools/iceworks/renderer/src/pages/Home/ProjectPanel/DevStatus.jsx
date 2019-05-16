@@ -5,7 +5,7 @@ function progress(percentage) {
   if (percentage === 0 || percentage === 1) {
     return null;
   }
-  return Math.floor(percentage * 100) + '%';
+  return `${Math.floor(percentage * 100)}%`;
 }
 
 const DevStatus = (props) => {
@@ -22,7 +22,9 @@ const DevStatus = (props) => {
   };
   return (
     <span className={classes}>
-      {statusMap[props.status]} {progress(props.progress)}
+      {statusMap[props.status]}
+      {' '}
+      {progress(props.progress)}
     </span>
   );
 };
