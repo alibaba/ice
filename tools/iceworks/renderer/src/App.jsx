@@ -23,7 +23,6 @@ import blockGroups from './stores/block-groups';
 import git from './stores/git';
 
 import services from './services';
-const { settings } = services;
 
 // pages
 import history from './history';
@@ -31,6 +30,8 @@ import Layout from './Layout';
 
 // components
 import RegistryNotice from './components/RegistryNotice';
+
+const { settings } = services;
 
 const {
   PageHome,
@@ -128,8 +129,8 @@ class App extends Component {
           <RegistryNotice />
           <VisibleWrapper
             visible={
-              this.state.activePathname === '/' ||
-              this.state.activePathname === '/index.html'
+              this.state.activePathname === '/'
+              || this.state.activePathname === '/index.html'
             }
           >
             <PageHome />
@@ -144,7 +145,7 @@ class App extends Component {
             <PageComponents />
           </VisibleWrapper>
           <VisibleWrapper
-            rerender={true}
+            rerender
             visible={this.state.activePathname === '/settings'}
           >
             <PageSettings />

@@ -22,14 +22,14 @@ class LayoutPicker extends Component {
     const { layouts, currentLayout, loading } = this.props.newpage;
     if (loading) {
       return <div className="layout-options-wrapper" />;
-    } else if (layouts.length === 0) {
+    } if (layouts.length === 0) {
       return (
         <div className="layout-options-wrapper">
           <div className="layout-title">{LAYOUT_TITLE}</div>
           <div className="layout-loading">暂无可用布局</div>
         </div>
       );
-    } else if (layouts.length === 1) {
+    } if (layouts.length === 1) {
       return null;
     }
 
@@ -50,7 +50,7 @@ class LayoutPicker extends Component {
                 >
                   <Tooltip
                     placement="top"
-                    overlay={
+                    overlay={(
                       <div style={{ width: 240 }}>
                         <div style={{ fontSize: 14, color: '#eee' }}>
                           {layout.title}
@@ -71,7 +71,7 @@ class LayoutPicker extends Component {
                           </pre>
                         </div>
                       </div>
-                    }
+)}
                   >
                     <div className="layout-option-screenshots">
                       <div

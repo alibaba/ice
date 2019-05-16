@@ -386,6 +386,22 @@ export default {
     }
     // const nodeModulesPath = path.join(cwd, 'node_modules');
     new Promise(async (resolve, reject) => {
+      const env = getEnv();
+      const registry = isAlibaba
+        ? 'https://registry.npm.alibaba-inc.com/'
+        : env.npm_config_registry;
+      terms.writeln(cwd, '清理 node_modules 目录完成');
+      terms.writeln(cwd, `\n当前下载源：${registry}\n`);
+      if (
+        !isAlibaba
+        && registry.indexOf('registry.npm.taobao.org') === -1
+      ) {
+        terms.writeln(
+          cwd,
+          '推荐使用淘宝 NPM 镜像源 https://registry.npm.taobao.org 进行下载，可在设置面板进行设置\n'
+        );
+      }
+
       if (reinstall) {
         terms.writeln(cwd, '正在清理 node_modules 目录请稍等...');
         rimraf(nodeModulesPaths[0], (error) => {
@@ -394,21 +410,6 @@ export default {
             terms.writeln(cwd, '清理 node_modules 失败');
             reject(error);
           } else {
-            const env = getEnv();
-            const registry = isAlibaba
-              ? 'https://registry.npm.alibaba-inc.com/'
-              : env.npm_config_registry;
-            terms.writeln(cwd, '清理 node_modules 目录完成');
-            terms.writeln(cwd, `\n当前下载源：${registry}\n`);
-            if (
-              !isAlibaba
-              && registry.indexOf('registry.npm.taobao.org') === -1
-            ) {
-              terms.writeln(
-                cwd,
-                '推荐使用淘宝 NPM 镜像源 https://registry.npm.taobao.org 进行下载，可在设置面板进行设置\n'
-              );
-            }
             resolve();
           }
         });

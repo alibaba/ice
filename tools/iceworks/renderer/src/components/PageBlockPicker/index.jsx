@@ -42,8 +42,7 @@ class PageBlockPicker extends Component {
     if (!Array.isArray(blockObj)) {
       blockObj = [blockObj];
     }
-    blockObj.forEach((block) =>
-      blocks.addBlock(block, pageBlockPicker.existBlocks)
+    blockObj.forEach((block) => blocks.addBlock(block, pageBlockPicker.existBlocks)
     );
   };
 
@@ -196,7 +195,9 @@ class PageBlockPicker extends Component {
       >
         <div className="page-block-picker">
           <div className="page-block-picker-header">
-            下载区块到 {this.props.pageBlockPicker.componentsPath}
+            下载区块到
+            {' '}
+            {this.props.pageBlockPicker.componentsPath}
           </div>
           <div className="page-block-picker-body">
             <div className="page-block-picker-panel">
@@ -209,8 +210,8 @@ class PageBlockPicker extends Component {
                   count={this.props.pageBlockPicker.existBlocks.length}
                 />
               ) : null}
-              {this.props.pageBlockPicker.existBlocks &&
-                this.props.pageBlockPicker.existBlocks.map((blockName) => {
+              {this.props.pageBlockPicker.existBlocks
+                && this.props.pageBlockPicker.existBlocks.map((blockName) => {
                   return (
                     <div className="block-item" key={blockName}>
                       {blockName}
@@ -224,7 +225,7 @@ class PageBlockPicker extends Component {
           </div>
           <div className="page-block-picker-footer">
             <Balloon
-              trigger={
+              trigger={(
                 <Button
                   disabled={this.props.blocks.selected.length === 0}
                   loading={this.props.pageBlockPicker.isDownloading}
@@ -235,7 +236,7 @@ class PageBlockPicker extends Component {
                     ? '正在下载区块...'
                     : '开始下载'}
                 </Button>
-              }
+)}
               align="t"
               alignment="normal"
               triggerType="hover"

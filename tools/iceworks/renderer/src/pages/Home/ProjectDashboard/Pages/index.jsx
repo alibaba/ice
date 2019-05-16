@@ -14,18 +14,20 @@ import { Dialog } from '@icedesign/base';
 import Uri from 'vscode-uri';
 
 import { readdirSync } from '../../../../lib/file-system';
-import DashboardCard from '../../../../components/DashboardCard/';
-import ExtraButton from '../../../../components/ExtraButton/';
+import DashboardCard from '../../../../components/DashboardCard';
+import ExtraButton from '../../../../components/ExtraButton';
 import Icon from '../../../../components/Icon';
 import EmptyTips from '../../../../components/EmptyTips';
 
 import dialog from '../../../../components/dialog';
+import logger from '../../../../lib/logger';
 
 import services from '../../../../services';
-const { scaffolder, editors, settings } = services;
 
 import './index.scss';
 import PluginHoc from '../PluginHoc';
+
+const { scaffolder, editors, settings } = services;
 
 function formatDate(date) {
   return dayjs(date).format('YYYY-MM-DD hh:mm');
@@ -35,8 +37,8 @@ function recursivePagesSync(dirPath, rootDir) {
   const list = [];
   let stats;
   const files = readdirSync(dirPath);
-  files.forEach(function(file) {
-    let fullPath = path.join(dirPath, file);
+  files.forEach((file) => {
+    const fullPath = path.join(dirPath, file);
     stats = fs.lstatSync(fullPath);
     if (stats.isDirectory()) {
       const { atime, birthtime, ctime, mtime } = stats;
@@ -88,9 +90,9 @@ class PagesCard extends Component {
     const { currentProject } = projects;
 
     if (currentProject && currentProject.fullPath) {
-      const pagesDirectory = path.join( currentProject.clientSrcPath, 'pages' );
+      const pagesDirectory = path.join(currentProject.clientSrcPath, 'pages');
       const pages = recursivePagesSync(pagesDirectory, pagesDirectory);
-      this.setState({ pages: pages });
+      this.setState({ pages });
     } else {
       this.setState({ pages: [] });
     }
@@ -108,7 +110,7 @@ class PagesCard extends Component {
     const { projects } = this.props;
     let uriFolder = `${projects.currentProject.fullPath}`;
     let uriFile = `${projects.currentProject.fullPath}/src/pages/${fileName}/${fileName}.jsx`;
-    if(!fs.existsSync(uriFile)) {
+    if (!fs.existsSync(uriFile)) {
       uriFile = `${projects.currentProject.fullPath}/src/pages/${fileName}/index.js`;
     }
     if (editor === 'VisualStudioCode') {
@@ -122,9 +124,9 @@ class PagesCard extends Component {
 
   editorOpenFile = (folder, file, folderOpt = [], fileOpt = []) => {
     editors.open(folder, folderOpt, false);
-    setTimeout(()=> {
+    setTimeout(() => {
       editors.open(file, fileOpt, false);
-    }, 1000)
+    }, 1000);
   }
 
   handlePageDelete = (name) => {
@@ -135,20 +137,20 @@ class PagesCard extends Component {
       title: '删除页面',
       content: `确定删除页面 ${name} 吗？`,
       onOk: () => {
-          scaffolder.removePage({
+        scaffolder.removePage({
           clientSrcPath: currentProject.clientSrcPath,
-          pageFolderName: name
+          pageFolderName: name,
         })
-        .then(() => {
-          logger.debug('删除页面成功');
-          Notification.success({ message: `删除页面 ${name} 成功` });
-          this.serachPages();
-        })
-        .catch((error) => {
-          logger.debug('删除页面失败', error);
-          dialog.notice({ title: '删除页面失败', error: error });
-        });
-      }
+          .then(() => {
+            logger.debug('删除页面成功');
+            Notification.success({ message: `删除页面 ${name} 成功` });
+            this.serachPages();
+          })
+          .catch((error) => {
+            logger.debug('删除页面失败', error);
+            dialog.notice({ title: '删除页面失败', error });
+          });
+      },
     });
   };
 
@@ -178,9 +180,13 @@ class PagesCard extends Component {
         <div className="page-item" key={page.name} data-path={page.fullPath}>
           {
             editor === 'VisualStudioCode' || editor === 'SublimeText' ? (
-              <a className="page-item-name" onClick={() => {
-                this.handleOpenEditor(page.name);
-              }}>{page.name}</a>
+              <a className="page-item-name"
+                onClick={() => {
+                  this.handleOpenEditor(page.name);
+                }}
+              >
+                {page.name}
+              </a>
             ) : (
               <div>{page.name}</div>
             )
@@ -189,7 +195,7 @@ class PagesCard extends Component {
             <span className="page-creat-time">{page.birthtime}</span>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
+              placement="top"
               tipText="添加区块"
               onClick={this.handlePageAddBlock.bind(
                 this,
@@ -201,7 +207,7 @@ class PagesCard extends Component {
             </ExtraButton>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
+              placement="top"
               tipText="删除页面"
               onClick={this.handlePageDelete.bind(
                 this,
@@ -224,22 +230,24 @@ class PagesCard extends Component {
           <div>
             页面列表
             <span style={{ paddingLeft: 10, fontSize: 12, color: '#666' }}>
-              ({pages.length})
+              (
+              {pages.length}
+)
             </span>
           </div>
           <div>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'刷新'}
+              placement="top"
+              tipText="刷新"
               onClick={this.serachPages}
             >
               <Icon type="reload" style={{ fontSize: 18 }} />
             </ExtraButton>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'新建页面'}
+              placement="top"
+              tipText="新建页面"
               onClick={this.handleCreatePage}
             >
               <Icon type="plus-o" style={{ fontSize: 18 }} />

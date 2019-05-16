@@ -23,13 +23,17 @@ module.exports = (materialData) => {
     glodlog.record({
       type: 'app',
       action: 'iceland-dau',
-      group: isAlibaba ? 'alibaba' : 'outer',
+      data: {
+        group: isAlibaba ? 'alibaba' : 'outer',
+      },
     });
   }
   glodlog.record({
     type: 'app',
     action: 'iceland-open-workbench',
-    group: isAlibaba ? 'alibaba' : 'outer',
+    data: {
+      group: isAlibaba ? 'alibaba' : 'outer',
+    },
   });
 
   return new MaterialEngine(
