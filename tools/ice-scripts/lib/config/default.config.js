@@ -1,7 +1,14 @@
+const { appNodeModules } = require('./paths');
+
 module.exports = {
   alias: {},
   define: {},
   devPublicPath: '/',
+  filename: '[name].js',
+  // resolve.extensions
+  extensions: ['.js', '.jsx', '.json', '.html', '.ts', '.tsx'],
+  // resolve.modules
+  modules: ['node_modules', appNodeModules],
   devServer: {
     disableHostCheck: true,
     compress: true,
@@ -35,15 +42,6 @@ module.exports = {
   outputDir: 'build',
   proxy: {},
   publicPath: '/',
-  targets: {
-    browsers: [
-      'last 2 versions',
-      'Firefox ESR',
-      '> 1%',
-      'ie >= 9',
-      'iOS >= 8',
-      'Android >= 4',
-    ],
-  },
+  targets: 'last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4',
   vendor: true,
 };

@@ -7,6 +7,7 @@ const paths = require('../config/paths');
 const getDefaultWebpackConfig = require('../config/getDefaultWebpackConfig');
 const PluginAPI = require('./Plugin');
 const defaultConfig = require('../config/default.config');
+const deepmerge = require('deepmerge');
 
 module.exports = class Service {
   constructor({ command = '', context = process.cwd(), args = {} }) {
@@ -35,7 +36,7 @@ module.exports = class Service {
     } else if (this.pkg.buildConfig) {
       log.warn('You should migrate config into ice.config.js');
     }
-    return { ...defaultConfig, ...userConfig };
+    return deepmerge(defaultConfig, userConfig);
   }
 
   getPlugins() {
