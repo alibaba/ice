@@ -9,7 +9,7 @@ export default class Dependency extends EventEmitter {
     this.projectPath = options.projectPath;
   }
 
-  async getDependencies(): Promise<IDependency[]> {
+  async getAll(): Promise<IDependency[]> {
     return [
       {
         package: 'icestore',

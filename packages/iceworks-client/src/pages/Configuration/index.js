@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import Card from '@components/Card';
 import DynamicForm from '@components/DynamicForm';
-import stores from '@stores';
 import configurationStores from './stores';
 
 const formItemLayout = {
@@ -16,7 +15,6 @@ const formItemLayout = {
 };
 
 const Configuration = () => {
-  const project = stores.useStore('project');
   const configuration = configurationStores.useStore('configuration');
 
   const onChange = (values) => {
@@ -26,8 +24,7 @@ const Configuration = () => {
 
   useEffect(() => {
     (async () => {
-      const newProject = await project.refresh();
-      await configuration.getConfigurationSettings(newProject.dataSource.folderPath);
+      await configuration.getConfigurationSettings();
     })();
   }, []);
 

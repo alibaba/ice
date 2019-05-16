@@ -33,45 +33,21 @@ export default (app) => {
     }
 
     /**
-     * 停止调试服务
-     * @param ctx
-     */
-    async stop(ctx) {
-      const { projectManager } = app;
-      const { args, socket } = ctx;
-      const { projectPath } = args[0];
-      const callback = args[args.length - 1];
-
-      let error;
-      let project;
-      try {
-        project = await projectManager.dev.devStop(projectPath);
-      } catch (err) {
-        error = err;
-      }
-
-      socket.emit('project.dev.data', '\n\r已中止调试服务\n\r');
-
-      callback({
-        error,
-        data: project,
-      });
-    }
-
-    /**
      * 调试服务配置项
      * @param ctx
      */
     async settings(ctx) {
-      const { args, requestContext } = ctx;
+      const { args } = ctx;
       const callback = args[args.length - 1];
-      const devService = await requestContext.getAsync('devService');
+
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
 
       let data = [];
       let error;
 
       try {
-        data = await devService.getDevSettings();
+        data = await project.dev.getSettings();
       } catch (error) {
         error = error;
       }

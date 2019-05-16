@@ -51,5 +51,5 @@ export interface IDevModule extends IBaseModule {
   /**
    * 获取启动调试服务设置项
    */
-  getAll(): Promise<IDevSettings[]>;
+  getSettings(): Promise<IDevSettings[]>;
 }

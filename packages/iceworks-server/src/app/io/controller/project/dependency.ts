@@ -3,15 +3,14 @@ export default (app) => {
     async list(ctx) {
       const { args } = ctx;
       const callback = args[args.length - 1];
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
 
       let dependencies = [];
       let error;
-      const dependencyService = await ctx.requestContext.getAsync(
-        'dependencyService'
-      );
 
       try {
-        dependencies = await dependencyService.getAll();
+        dependencies = await project.dependency.getAll();
       } catch (err) {
         error = err;
       }

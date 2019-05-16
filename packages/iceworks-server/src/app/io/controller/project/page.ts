@@ -5,13 +5,14 @@ export default (app) => {
     async list(ctx) {
       const { args } = ctx;
       const callback = args[args.length - 1];
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
 
       let pages = [];
       let error;
-      const pageService = await ctx.requestContext.getAsync('pageService');
 
       try {
-        pages = await pageService.getAll();
+        pages = await project.page.getAll();
       } catch (err) {
         error = err;
       }

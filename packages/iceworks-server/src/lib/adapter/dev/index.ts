@@ -58,7 +58,7 @@ export default class Dev extends EventEmitter {
     return this;
   }
 
-  async getDevSettings() {
+  async getSettings() {
     return DEV_SETTINGS;
   }
 }
