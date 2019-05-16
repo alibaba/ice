@@ -23,9 +23,7 @@ const Configuration = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      await configuration.getConfigurationSettings();
-    })();
+    configuration.getSettings();
   }, []);
 
   return (
