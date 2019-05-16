@@ -13,9 +13,9 @@ export const DEV_STATUS_STOP = 'stop';
 export default class Dev extends EventEmitter {
   public readonly path: string;
 
-  public devStatus: string = DEV_STATUS_NORMAL;
+  public status: string = DEV_STATUS_NORMAL;
 
-  private devProcess;
+  private process;
 
   constructor(options) {
     super();
@@ -26,7 +26,7 @@ export default class Dev extends EventEmitter {
     const port = await detectPort(DEFAULT_PORT);
     const env = { PORT: port };
 
-    if (this.devProcess) {
+    if (this.process) {
       throw new Error(
         '调试服务已启动，不能多次启动，请先停止已启动的调试服务后再次启动'
       );
@@ -39,11 +39,11 @@ export default class Dev extends EventEmitter {
       env: Object.assign({}, env, settingsEnv),
     });
 
-    this.devStatus = DEV_STATUS_WORKING;
-    this.devProcess = childProcess;
+    this.status = DEV_STATUS_WORKING;
+    this.process = childProcess;
 
     childProcess.stdout.on('data', (buffer) => {
-      this.emit('dev.data', buffer.toString());
+      this.emit('data', buffer.toString());
     });
 
     childProcess.on('error', (buffer) => {
@@ -53,6 +53,18 @@ export default class Dev extends EventEmitter {
     childProcess.on('exit', (code) => {
       console.log('process exit:', code);
     });
+
+    return this;
+  }
+
+  async stop() {
+    if (!this.process) {	
+      throw new Error('没有启动调试服务，无法停止。');	
+    }	
+
+    this.process.kill();	
+    this.process = null;	
+    this.status = DEV_STATUS_STOP;	
 
     return this;
   }

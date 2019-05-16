@@ -16,7 +16,7 @@ export default (app) => {
       try {
         result = await project.dev.start();
 
-        project.dev.on('dev.data', (data) => {
+        project.dev.on('data', (data) => {
           socket.emit('project.index.dev.data', data);
         });
       } catch (err) {

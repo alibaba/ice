@@ -3,7 +3,6 @@ import { Button } from '@alifd/next';
 import Card from '@components/Card';
 import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
-import stores from '@stores';
 import useModal from '@hooks/useModal';
 import IceNotification from '@icedesign/notification';
 import SettingsModal from './components/SettingsModal';
@@ -11,7 +10,6 @@ import devStores from './stores';
 import styles from './index.module.scss';
 
 const Dev = () => {
-  const project = stores.useStore('project');
   const dev = devStores.useStore('dev');
   const { on, toggleModal } = useModal();
 
@@ -52,7 +50,7 @@ const Dev = () => {
       <div className={styles.actionBar}>
         {/* Left Button Group */}
         <div className={styles.leftActionBar}>
-          {project.devStatus !== 'working' ? (
+          {dev.status !== 'working' ? (
             <Button
               type="primary"
               className={styles.leftButton}
