@@ -21,15 +21,6 @@ const Project = () => {
     'dependencies',
   ]);
 
-  useEffect(() => {
-    logger.info('Project page loaded.');
-
-    projects.refresh();
-    project.refresh();
-    pages.refresh();
-    dependencies.refresh();
-  }, []);
-
   async function onSwitchProject(path) {
     await project.reset(path);
     pages.refresh();
@@ -50,21 +41,39 @@ const Project = () => {
     window.location.href = '/material';
   }
 
+  async function refreshProject() {
+    let error;
+    try {
+      await project.refresh();
+    } catch (err) {
+      error = err;
+    }
+
+    if (!error) {
+      pages.refresh();
+      dependencies.refresh();
+    }
+  }
+
   async function addProject(path) {
     await projects.add(path);
-    await project.refresh();
-    pages.refresh();
-    dependencies.refresh();
+    await refreshProject();
     toggleOpenProjectModal();
   }
 
   async function deleteProject(params) {
     await projects.delete({ ...params, projectPath: deleteProjectPath });
-    await project.refresh();
-    pages.refresh();
-    dependencies.refresh();
+    await refreshProject();
     toggleDeleteProjectModal();
   }
+
+
+  useEffect(() => {
+    logger.info('Project page loaded.');
+
+    projects.refresh();
+    refreshProject();
+  }, []);
 
   const projectPreDelete = projects
     .dataSource

@@ -7,11 +7,7 @@ export default {
   },
 
   async refresh() {
-    try {
-      this.dataSource = await socket.emit('project.index.current');
-    } catch (error) {
-      // do something...
-    }
+    this.dataSource = await socket.emit('project.index.current');
   },
 
   async reset(path) {
