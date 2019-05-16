@@ -13,6 +13,14 @@ class Project implements IProject {
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
+
+    this.loadAdapter();
+  }
+
+  private loadAdapter() {
+    for (const [key, Module] of Object.entries(adapter)) {
+      this[camelCase(key)] = new Module(this);
+    }
   }
 }
 
@@ -22,22 +30,10 @@ class ProjectManager extends EventEmitter {
   async ready() {
     const projects = storage.get('projects');
     this.projects = await Promise.all(
-      projects.map(async (projectFolderPath) => {
-        const project = new Project(projectFolderPath);
-        return this.connectAdapter(project);
+      projects.map(async (projectPath) => {
+        return new Project(projectPath);
       })
     );
-  }
-
-  /**
-   * @param project the current project information
-   */
-  private connectAdapter(project: Project) {
-    for (const [key, Module] of Object.entries(adapter)) {
-      project[camelCase(key)] = new Module(project);
-    }
-
-    return project;
   }
 
   /**
@@ -66,8 +62,8 @@ class ProjectManager extends EventEmitter {
    * Get current project
    */
   public getCurrent() {
-    const projectInfo = storage.get('project');
-    return this.getProject(projectInfo.path);
+    const projectPath = storage.get('project');
+    return this.getProject(projectPath);
   }
 
   /**

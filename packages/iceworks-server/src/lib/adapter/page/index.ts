@@ -3,19 +3,20 @@ import * as fs from 'fs';
 import * as pathExists from 'path-exists';
 import * as util from 'util';
 import junk from 'junk';
+import { IPageModule, IProject } from '../../../interface';
 
-export default class Page {
-  public readonly path: string;
+export default class Page implements IPageModule {
+  public readonly projectPath: string;
 
-  public readonly name: string;
+  public readonly projectName: string;
 
-  constructor(options) {
-    this.path = options.path;
-    this.name = options.name;
+  constructor(project: IProject) {
+    this.projectPath = project.path;
+    this.projectName = project.name;
   }
 
   async getAll() {
-    return readPages(path.join(this.path, 'src', 'pages'));
+    return readPages(path.join(this.projectPath, 'src', 'pages'));
   }
 
   async getOne(): Promise<any> {}

@@ -68,7 +68,7 @@ class Store {
 
 const schema = {
   project: {
-    type: 'object',
+    type: 'string',
     default: {},
   },
   projects: {
