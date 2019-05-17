@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
 
 const DeletePageModal = ({
   on, onCancel, onOk, page,
 }) => {
-  const [deleteFiles, setState] = useState(false);
-
-  function onClose() {
-    onCancel();
-    setState(false);
-  }
   return (
     <Modal
       title="删除页面"
       visible={on}
-      onCancel={onClose}
-      onOk={() => onOk({ deleteFiles })}
+      onCancel={onCancel}
+      onOk={() => onOk()}
     >
       <div>
         确定移除页面 &quot;{page.name}&quot; ？

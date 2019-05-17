@@ -7,6 +7,7 @@ import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
 import DeletePageModal from './DeletePageModal';
+import CreatePageModal from './CreatePageModal';
 
 const Page = () => {
   const [deleteName, setDeleteName] = useState('');
@@ -14,11 +15,19 @@ const Page = () => {
     on: onDeleteModel,
     toggleModal: toggleDeleteModal,
   } = useModal();
+  const {
+    on: onCreateModel,
+    toggleModal: toggleCreateModal,
+  } = useModal();
   const pages = stores.useStore('pages');
   const { dataSource } = pages;
 
   function onRefresh() {
     pages.refresh();
+  }
+
+  function onCreate() {
+    toggleCreateModal();
   }
 
   function onDelete(name) {
@@ -36,6 +45,10 @@ const Page = () => {
     });
   }
 
+  async function createPage() {
+    toggleCreateModal();
+  }
+
   const pagePreDelete =
     pages.dataSource.find(({ name }) => {
       return name === deleteName;
@@ -48,7 +61,7 @@ const Page = () => {
           <h3>页面列表</h3>
           <div className={styles.icons}>
             <Icon className={styles.icon} type="refresh" size="small" onClick={onRefresh} />
-            <Icon className={styles.icon} type="add" size="small" />
+            <Icon className={styles.icon} type="add" size="small" onClick={onCreate} />
           </div>
         </div>
       }
@@ -59,6 +72,11 @@ const Page = () => {
           onCancel={toggleDeleteModal}
           onOk={deletePage}
           page={pagePreDelete}
+        />
+        <CreatePageModal
+          on={onCreateModel}
+          onCancel={toggleCreateModal}
+          onOk={createPage}
         />
         {
           dataSource.length ?
