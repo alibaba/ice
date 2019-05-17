@@ -7,7 +7,7 @@ const Guide = ({ onOpenProject, onCreateProject }) => {
   return (
     <div className={styles.guide}>
       <div className={styles.text}>
-          从热门模板开始初始化你的项目
+        从热门模板开始初始化你的项目
       </div>
       <div className={styles.opts}>
         <Button className={styles.btn} type="secondary" size="large" onClick={onOpenProject}>
@@ -21,9 +21,6 @@ const Guide = ({ onOpenProject, onCreateProject }) => {
       </div>
     </div>
   );
-};
-
-Guide.defaultProps = {
 };
 
 Guide.propTypes = {

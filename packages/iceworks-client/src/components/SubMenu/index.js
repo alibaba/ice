@@ -1,31 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
-const SubMenu = ({ data, title }) => {
+const SubMenu = ({ children, title }) => {
   return (
-    <div className={styles.subMenu}>
+    <div className={styles.wrapper}>
       {
         title ?
-          <h2 className={styles.subMenuTitle}>
+          <h2 className={styles.title}>
             <FormattedMessage id={title} />
           </h2> :
-        null
+          null
       }
-      {data.map((item) => {
-        return (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            className={styles.subMenuItem}
-            activeStyle={{ background: '#eee' }}
-          >
-            <FormattedMessage id={item.name} />
-          </NavLink>
-        );
-      })}
+      {children}
     </div>
   );
 };
@@ -35,7 +23,7 @@ SubMenu.defaultProps = {
 };
 
 SubMenu.propTypes = {
-  data: PropTypes.array.isRequired,
+  children: PropTypes.element.isRequired,
   title: PropTypes.string,
 };
 

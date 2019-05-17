@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RouteRender from '@components/RouteRender';
-import SubMenu from '@components/SubMenu';
+import WorkSubMenu from '@components/WorkSubMenu';
 import { getMenuData } from '@utils/getMenuData';
 
 import styles from './index.module.scss';
@@ -13,7 +13,7 @@ const Work = ({ routes }) => {
   return (
     <div className={styles.workPage}>
       {/* render work submenu */}
-      <SubMenu data={subMenuData} title="iceworks.work.title" />
+      <WorkSubMenu data={subMenuData} title="iceworks.work.title" />
 
       {/* render work subroute */}
       <div className={styles.main}>

@@ -4,7 +4,7 @@ import Modal from '@components/Modal';
 import { Input } from '@alifd/next';
 
 // TODO
-const OpenProject = ({ on, onCancel, onOk }) => {
+const OpenProjectModal = ({ on, onCancel, onOk }) => {
   const [path, setPath] = useState('');
 
   return (
@@ -28,10 +28,10 @@ const OpenProject = ({ on, onCancel, onOk }) => {
   );
 };
 
-OpenProject.propTypes = {
+OpenProjectModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
 };
 
-export default OpenProject;
+export default OpenProjectModal;

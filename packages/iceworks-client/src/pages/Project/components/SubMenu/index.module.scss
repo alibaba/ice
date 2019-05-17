@@ -1,16 +1,9 @@
 @import '../../../../variables.scss';
 
 .wrapper {
-  width: 240px;
-  min-width: 240px;
-  background: $white;
-  box-shadow: $shadow-right;
   display: flex;
   flex-direction: column;
-
-  .title {
-    margin: 15px;
-  }
+  flex: 1;
 
   .list {
     flex: 1;

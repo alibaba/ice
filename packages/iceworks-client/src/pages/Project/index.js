@@ -5,8 +5,8 @@ import useModal from '@hooks/useModal';
 // import Page from './components/Pages';
 // import Dependency from './components/Dependencies';
 import SubMenu from './components/SubMenu';
-import OpenProject from './components/OpenProject';
-import DeleteProject from './components/DeleteProject';
+import OpenProjectModal from './components/OpenProjectModal';
+import DeleteProjectModal from './components/DeleteProjectModal';
 import Guide from './components/Guide';
 import projectStores from './stores';
 import styles from './index.module.scss';
@@ -91,12 +91,12 @@ const Project = () => {
         onOpenProject={onOpenProject}
         onCreateProject={onCreateProject}
       /> : null}
-      <OpenProject
+      <OpenProjectModal
         on={onOpenProjectModel}
         onCancel={toggleOpenProjectModal}
         onOk={addProject}
       />
-      <DeleteProject
+      <DeleteProjectModal
         on={onDeleteProjectModel}
         onCancel={toggleDeleteProjectModal}
         onOk={deleteProject}
