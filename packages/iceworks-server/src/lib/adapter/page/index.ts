@@ -1,28 +1,42 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as pathExists from 'path-exists';
 import * as util from 'util';
-import * as rimrafSync from 'rimraf';
-import junk from 'junk';
-import { IPageModule, IProject } from '../../../interface';
+import * as rimraf from 'rimraf';
+import scanDirectory from '../scanDirectory';
+import { IPageModule, IProject, IPage } from '../../../interface';
 
-const rimraf = util.promisify(rimrafSync);
+const rimrafAsync = util.promisify(rimraf);
 
 export default class Page implements IPageModule {
   public readonly projectPath: string;
 
   public readonly projectName: string;
 
-  public readonly pagePath: string;
+  public readonly path: string;
 
   constructor(project: IProject) {
     this.projectPath = project.path;
     this.projectName = project.name;
-    this.pagePath = path.join(this.projectPath, 'src', 'pages');
+    this.path = path.join(this.projectPath, 'src', 'pages');
   }
 
-  async getAll() {
-    return readPages(this.pagePath);
+  private async scanPages(dirPath: string) {
+    return (await scanDirectory(dirPath)).map(dir => {
+      const fullPath = path.join(dirPath, dir);
+      const { atime, birthtime, ctime, mtime } = fs.lstatSync(fullPath);
+      return {
+        name: path.basename(fullPath),
+        path: fullPath,
+        atime,
+        birthtime,
+        ctime,
+        mtime,
+      }
+    });
+  }
+
+  async getAll(): Promise<IPage[]> {
+    return await this.scanPages(this.path);
   }
 
   async getOne(): Promise<any> { }
@@ -31,8 +45,9 @@ export default class Page implements IPageModule {
 
   async creates(): Promise<any> { }
 
+  // TODO
   async delete(pageName: string): Promise<any> {
-    await rimraf(path.join(this.pagePath, pageName));
+    await rimrafAsync(path.join(this.path, pageName));
   }
 
   async update(): Promise<any> { }
@@ -43,38 +58,3 @@ export default class Page implements IPageModule {
 
   async createBlocks(): Promise<any> { }
 }
-
-/**
- * Get the list of pages for the current project
- * @param dirPath project directory path
- */
-const readPages = async (dirPath: string) => {
-  const readdirAsync = util.promisify(fs.readdir);
-
-  const readdir = async (targetPath) => {
-    if (pathExists.sync(targetPath)) {
-      return (await readdirAsync(targetPath)).filter(junk.not);
-    }
-    return [];
-  };
-
-  const pages = [];
-  const files = await readdir(dirPath);
-  files.forEach((file) => {
-    const fullPath = path.join(dirPath, file);
-    const stats = fs.lstatSync(fullPath);
-    if (stats.isDirectory()) {
-      const { atime, birthtime, ctime, mtime } = stats;
-      pages.push({
-        name: path.basename(fullPath),
-        fullPath,
-        atime,
-        birthtime,
-        ctime,
-        mtime,
-      });
-    }
-  });
-
-  return pages;
-};

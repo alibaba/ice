@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { Icon } from '@alifd/next';
+import IceNotification from '@icedesign/notification';
 import useModal from '@hooks/useModal';
 import Panel from '../Panel';
 import stores from '../../stores';
@@ -29,6 +30,10 @@ const Page = () => {
     await pages.delete(deleteName);
     pages.refresh();
     toggleDeleteModal();
+    IceNotification.success({
+      message: '删除页面成功',
+      description: '操作不可逆！',
+    });
   }
 
   const pagePreDelete =
@@ -56,9 +61,9 @@ const Page = () => {
           page={pagePreDelete}
         />
         <ul>
-          {dataSource.map(({ name, birthtime }, index) => {
+          {dataSource.map(({ name, birthtime }) => {
             return (
-              <li className={styles.item} key={index}>
+              <li className={styles.item} key={name}>
                 <strong>{name}</strong>
                 <time>{moment(birthtime).format('YYYY-MM-DD hh:mm')}</time>
                 <Icon className={styles.icon} type="ashbin" size="xs" onClick={() => onDelete(name)} />
