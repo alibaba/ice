@@ -7,7 +7,7 @@ const Page = () => {
   const { dataSource } = pages;
 
   return (
-    <Panel header={<h3>Pages</h3>}>
+    <Panel header={<h3>页面列表</h3>}>
       <div>
         <ul>
           {dataSource.map(({ name }) => {

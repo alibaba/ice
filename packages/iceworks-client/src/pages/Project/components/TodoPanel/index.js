@@ -3,7 +3,7 @@ import Panel from '../Panel';
 
 const Todo = () => {
   return (
-    <Panel header={<h3>Todo</h3>}>
+    <Panel header={<h3>TODO</h3>}>
       <div>
         testing...
       </div>

@@ -7,7 +7,7 @@ const Dependencies = () => {
   const { dataSource } = dependencies;
 
   return (
-    <Panel header={<h3>Dependencies</h3>}>
+    <Panel header={<h3>依赖管理</h3>}>
       <div>
         <ul>
           {dataSource.map(({ package: _package }) => {

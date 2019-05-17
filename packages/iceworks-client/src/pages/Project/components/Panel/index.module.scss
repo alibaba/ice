@@ -6,29 +6,29 @@
   display: flex;
   flex-direction: column;
   width: 48%;
-  height: 380px;
+  height: 320px;
   margin-bottom: 34px;
-  @media (min-width: 1200px) {
+  @media (min-width: 1400px) {
     & {
       width: 32%;
     }
   }
 
-
   .header {
-    background-color: $background-color-base;
+    background-color: $brand-color-normal;
     height: 48px;
     display: flex;
     align-items: center;
-    padding: 0 6px;
+    padding: 0 12px;
 
     h3 {
       margin: 0;
-      font-size: 18px;
+      font-size: 16px;
+      font-weight: bold;
     }
   }
   .main {
-    padding: 6px;
+    padding: 12px;
     background-color: $white;
     flex: 1;
   }
