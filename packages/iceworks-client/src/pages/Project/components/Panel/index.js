@@ -9,7 +9,9 @@ const Panel = ({ header, children }) => {
         {header}
       </div>
       <div className={styles.main}>
-        {children}
+        <div className={styles.box}>
+          {children}
+        </div>
       </div>
     </div>
   );

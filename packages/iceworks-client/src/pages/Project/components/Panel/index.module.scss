@@ -31,6 +31,13 @@
   .main {
     padding: 12px;
     background-color: $white;
+    display: flex;
     flex: 1;
+    overflow: hidden;
+
+    .box {
+      flex: 1;
+      overflow-y: auto;
+    }
   }
 }

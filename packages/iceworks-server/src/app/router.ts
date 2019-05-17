@@ -8,6 +8,7 @@ export default (app) => {
   app.io.route('project.index.current', project.index.getCurrent);
   app.io.route('project.index.setCurrent', project.index.setCurrent);
   app.io.route('project.page.list', project.page.list);
+  app.io.route('project.page.delete', project.page.delete);
   app.io.route('project.layout.list', project.layout.list);
   app.io.route('project.dependency.list', project.dependency.list);
   app.io.route('project.dev.start', project.dev.start);

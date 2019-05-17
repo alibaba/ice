@@ -22,5 +22,24 @@ export default (app) => {
         data: pages,
       });
     }
+
+    async delete(ctx) {
+      const { projectManager } = app;
+      const { args } = ctx;
+      const pageName = args[0];
+      const callback = args[args.length - 1];
+      const project = projectManager.getCurrent();
+
+      let error;
+      try {
+        await project.page.delete(pageName);
+      } catch (err) {
+        error = err;
+      }
+
+      callback({
+        error,
+      });
+    }
   };
 };

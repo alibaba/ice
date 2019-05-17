@@ -20,6 +20,7 @@
     "lodash.map": "^4.6.0",
     "loglevel": "^1.6.1",
     "loglevel-plugin-prefix": "^0.8.4",
+    "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-document-title": "^2.0.3",
