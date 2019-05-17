@@ -16,9 +16,7 @@ module.exports = class Service {
     this.paths = paths;
     // get user config form ice.config.js
     this.userConfig = this.getUserConfig(this.context);
-    this.chainWebpackFns = [];
     this.plugins = this.getPlugins();
-    this.defaultWebpackConfig = getDefaultWebpackConfig(command);
   }
 
   getUserConfig() {
@@ -48,6 +46,9 @@ module.exports = class Service {
   }
 
   async runPlugins() {
+    // init chainWebpackFns and hooks before run plugins
+    this.chainWebpackFns = [];
+    this.eventHooks = {};
     // run plugins
     for (let i = 0; i < this.plugins.length; i++) {
       let pluginInfo = this.plugins[i];
@@ -74,8 +75,20 @@ module.exports = class Service {
     //  await Promise.all(pluginFuncs);
   }
 
+  applyHooks(key, opts = {}) {
+    const hooks = this.eventHooks[key] || [];
+    hooks.forEach((fn) => {
+      try {
+        fn(opts);
+      } catch (e) {
+        log.error(e);
+        log.error(`Fail to excute hook ${key}`);
+      }
+    });
+  }
+
   getWebpackConfig() {
-    const config = this.defaultWebpackConfig;
+    const config = getDefaultWebpackConfig(this.command);
 
     this.chainWebpackFns.forEach((fn) => fn(config));
     if (this.userConfig.chainWebpack) {
