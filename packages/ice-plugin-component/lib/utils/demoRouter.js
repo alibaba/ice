@@ -10,6 +10,7 @@ const { getPkgJSON } = require('./pkgJson');
 
 const DEMO_TEMPLATE = path.join(__dirname, '../template/demo.hbs');
 const HOME_TEMPLATE = path.join(__dirname, '../template/home.hbs');
+const ADAPTOR_TEMPLATE = path.join(__dirname, '../template/adaptor.html.hbs');
 
 function compile(hbsPath) {
   const hbsTemplateContent = fs.readFileSync(hbsPath, 'utf-8');
@@ -54,6 +55,14 @@ module.exports = (context, markdownParser) => {
         demos,
         highlightedStyle,
       });
+
+      res.send(jsTemplateContent);
+    });
+
+    app.get('/adaptor', async (req, res) => {
+      const compileTemplateContent = compile(ADAPTOR_TEMPLATE);
+
+      const jsTemplateContent = compileTemplateContent({});
 
       res.send(jsTemplateContent);
     });
