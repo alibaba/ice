@@ -9,7 +9,6 @@ const clearConsole = require('react-dev-utils/clearConsole');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const deepmerge = require('deepmerge');
 const openBrowser = require('react-dev-utils/openBrowser');
 const iceworksClient = require('../utils/iceworksClient');
 const prepareUrLs = require('../utils/prepareURLs');
@@ -42,7 +41,6 @@ module.exports = async function (api, subprocess) {
 
   const HOST = api.commandArgs.host || '0.0.0.0';
   const PORT = api.commandArgs.port || 4444;
-  let httpsConfig;
   const protocol = api.config.devServer.https ? 'https' : 'http';
 
   const isInteractive = false; // process.stdout.isTTY;
@@ -54,17 +52,7 @@ module.exports = async function (api, subprocess) {
 
   let isFirstCompile = true;
   const compiler = webpack(api.config);
-
-  const devServerConfig = deepmerge({}, api.config.devServer);
-
-  // buffer 与 deepmerge有冲突，会被解析成乱码
-  if (httpsConfig) {
-    devServerConfig.https = httpsConfig;
-  } else {
-    delete devServerConfig.https;
-  }
-
-  const devServer = new WebpackDevServer(compiler, devServerConfig);
+  const devServer = new WebpackDevServer(compiler, api.config.devServer);
 
   // devMiddleware(devServer.app, proxyConfig);
   compiler.hooks.done.tap('done', (stats) => {

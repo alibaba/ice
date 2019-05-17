@@ -3,7 +3,7 @@ const getCertificate = require('../../config/getCertificate');
 const log = require('../../utils/log');
 
 module.exports = async (api) => {
-  const { commandArgs, userConfig } = api.service;
+  const { commandArgs } = api.service;
   // plugin cliOptions will run after plugin userConfig.
   // if commandArgs.https is true, it will overwrite devServer config
   let httpsConfig;
@@ -29,13 +29,6 @@ module.exports = async (api) => {
         }
       });
       config.devServer.hot(false);
-      // remove entry hotDevClient
-      if (!userConfig.entry && !userConfig.injectBabel) {
-        // if injectBabel is not set, polyfill default is true
-        const entry = api.processEntry('src/index.js');
-        config.entryPoints.clear();
-        config.merge({ entry });
-      }
     }
 
     if (commandArgs.analyzer) {

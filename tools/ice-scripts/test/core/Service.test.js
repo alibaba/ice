@@ -33,5 +33,12 @@ describe('init service', () => {
     const webpackConfig = service.getWebpackConfig();
     expect(webpackConfig.output.path).toBe('custom');
   });
+
+  it('default values', async () => {
+    await service.runPlugins();
+    const webpackConfig = service.getWebpackConfig();
+    expect(webpackConfig.resolve.modules[0]).toBe('node_modules');
+    expect(webpackConfig.resolve.extensions).toEqual(['.js', '.jsx', '.json', '.html', '.ts', '.tsx']);
+  });
 });
 
