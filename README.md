@@ -1,3 +1,7 @@
+
+
+
+
 <p align="center">
   <a href="https://alibaba.github.io/ice">
     <img alt="飞冰" src="https://user-images.githubusercontent.com/677114/40338709-3c75fe4a-5da9-11e8-9874-c17445ed673b.png" width="140">
@@ -9,7 +13,11 @@
   <a href="https://github.com/alibaba/ice/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
   <a href="https://github.com/alibaba/ice"><img src="https://img.shields.io/badge/developing%20with-ICE-2077ff.svg"></a>
   <a href="https://travis-ci.org/alibaba/ice"><img src="https://api.travis-ci.org/alibaba/ice.svg?branch=master"></a>
+  [![Gitter][gitter-image]][gitter-url]
 </p>
+
+[gitter-image]: https://badges.gitter.im/alibaba/ice.svg
+[gitter-url]: https://gitter.im/alibaba/ice?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
 ---
 
