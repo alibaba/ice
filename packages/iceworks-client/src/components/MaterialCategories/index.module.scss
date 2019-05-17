@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 20px 10px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 4px;
+  .cateName {
+    float: left;
+    background: #fff;
+    border-radius: 24px;
+    margin: 10px;
+    transition: all 0.3s ease;
+    font-size: 13px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 18px;
+    color: #666;
+    display: block;
+    &.active {
+      background: #1b73ff;
+      a,
+      a:hover {
+        color: #fff;
+        transition: all 0.3s ease;
+      }
+    }
+    &:last-child {
+      margin-right: 10px;
+    }
+    &:hover {
+      color: #fff;
+      background: #1b73ff;
+      transition: all 0.3s ease;
+    }
+  }
+}

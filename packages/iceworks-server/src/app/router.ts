@@ -1,6 +1,6 @@
 export default (app) => {
   const { controller } = app.io;
-  const { project } = controller;
+  const { project, material } = controller;
 
   app.io.route('project.index.list', project.index.list);
   app.io.route('project.index.current', project.index.getCurrent);
@@ -11,4 +11,7 @@ export default (app) => {
   app.io.route('project.dev.stop', project.dev.stop);
   app.io.route('project.dev.settings', project.dev.settings);
   app.io.route('project.configuration.settings', project.configuration.settings);
+
+  app.io.route('material.index.resource', material.index.resource);
+  app.io.route('material.index.current', material.index.current);
 };

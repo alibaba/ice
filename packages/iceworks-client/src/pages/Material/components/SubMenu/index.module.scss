@@ -1,0 +1,21 @@
+@import '../../../../variables.scss';
+
+.subMenu {
+  width: 240px;
+  min-width: 240px;
+  background: $white;
+  box-shadow: $shadow-right;
+
+  .subMenuTitle {
+    margin: 15px;
+  }
+
+  .subMenuItem {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 15px;
+    color: $text-color-secondary;
+    text-decoration: none;
+  }
+}
