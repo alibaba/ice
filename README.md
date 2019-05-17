@@ -9,6 +9,7 @@
   <a href="https://github.com/alibaba/ice/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
   <a href="https://github.com/alibaba/ice"><img src="https://img.shields.io/badge/developing%20with-ICE-2077ff.svg"></a>
   <a href="https://travis-ci.org/alibaba/ice"><img src="https://api.travis-ci.org/alibaba/ice.svg?branch=master"></a>
+  <a href="https://gitter.im/alibaba/ice?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/alibaba/ice.svg"></a>
 </p>
 
 ---
