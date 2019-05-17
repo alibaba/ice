@@ -3,15 +3,20 @@ import PropTypes from 'prop-types';
 import stores from '@stores';
 import logger from '@utils/logger';
 import useModal from '@hooks/useModal';
-import Page from './components/Page';
-import Dependency from './components/Dependency';
-import Layout from './components/Layout';
-import Todo from './components/Todo';
 import SubMenu from './components/SubMenu';
 import OpenProjectModal from './components/OpenProjectModal';
 import DeleteProjectModal from './components/DeleteProjectModal';
 import Guide from './components/Guide';
 import projectStores from './stores';
+
+import Page from './components/PagePanel';
+import Dependency from './components/DependencyPanel';
+import Layout from './components/LayoutPanel';
+import Todo from './components/TodoPanel';
+import GitPanel from './components/GitPanel';
+import OSSPanel from './components/OSSPanel';
+import DEFPanel from './components/DEFPanel';
+
 import styles from './index.module.scss';
 
 const Project = ({ history }) => {
@@ -118,6 +123,9 @@ const Project = ({ history }) => {
               <Dependency />
               <Layout />
               <Todo />
+              <GitPanel />
+              <DEFPanel />
+              <OSSPanel />
             </div>
           ) :
           (
