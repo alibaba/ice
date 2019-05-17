@@ -7,6 +7,7 @@ import logger from '@utils/logger';
 import MainLayout from '@layouts/MainLayout/index';
 import LocaleProvider from '@components/Locale';
 import { ThemeProvider } from '@components/ThemeProvider';
+import customHistory from './history';
 import './global.scss';
 import './variables.scss';
 
@@ -18,7 +19,7 @@ const App = () => {
   return (
     <LocaleProvider>
       <ThemeProvider>
-        <Router>
+        <Router history={customHistory}>
           <Route path="/" component={MainLayout} />
         </Router>
       </ThemeProvider>

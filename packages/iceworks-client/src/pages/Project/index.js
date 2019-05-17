@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import stores from '@stores';
 import logger from '@utils/logger';
 import useModal from '@hooks/useModal';
+import customHistory from '@src/history';
 // import Page from './components/Pages';
 // import Dependency from './components/Dependencies';
 import SubMenu from './components/SubMenu';
@@ -37,8 +38,7 @@ const Project = () => {
   }
 
   async function onCreateProject() {
-    // TODO
-    window.location.href = '/material';
+    customHistory.push('/material');
   }
 
   async function refreshProject() {
