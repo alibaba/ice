@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { Icon } from '@alifd/next';
+import { Icon, Message } from '@alifd/next';
 import IceNotification from '@icedesign/notification';
 import useModal from '@hooks/useModal';
 import Panel from '../Panel';
@@ -60,17 +60,27 @@ const Page = () => {
           onOk={deletePage}
           page={pagePreDelete}
         />
-        <ul>
-          {dataSource.map(({ name, birthtime }) => {
-            return (
-              <li className={styles.item} key={name}>
-                <strong>{name}</strong>
-                <time>{moment(birthtime).format('YYYY-MM-DD hh:mm')}</time>
-                <Icon className={styles.icon} type="ashbin" size="xs" onClick={() => onDelete(name)} />
-              </li>
-            );
-          })}
-        </ul>
+        {
+          dataSource.length ?
+            <div>
+              <ul>
+                {dataSource.map(({ name, birthtime }) => {
+                  return (
+                    <li className={styles.item} key={name}>
+                      <strong>{name}</strong>
+                      <time>{moment(birthtime).format('YYYY-MM-DD hh:mm')}</time>
+                      <Icon className={styles.icon} type="ashbin" size="xs" onClick={() => onDelete(name)} />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div> :
+            <div>
+              <Message title="暂无页面" type="help">
+                点击右上方新建页面
+              </Message>
+            </div>
+        }
       </div>
     </Panel>
   );

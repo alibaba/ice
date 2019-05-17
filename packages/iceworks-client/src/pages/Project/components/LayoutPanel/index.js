@@ -1,4 +1,5 @@
 import React from 'react';
+import { Message } from '@alifd/next';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
@@ -9,20 +10,26 @@ const Layout = () => {
 
   return (
     <Panel header={<h3>布局列表</h3>}>
-      <div className={styles.main}>
-        {dataSource.map(({ name, title }) => {
-          return (
-            <div key={name} className={styles.item}>
-              <strong>
-                {name}
-              </strong>
-              <span>
-                {title}
-              </span>
-            </div>
-          );
-        })}
-      </div>
+      {
+        dataSource.length ?
+          <div className={styles.main}>
+            {dataSource.map(({ name, title }) => {
+              return (
+                <div key={name} className={styles.item}>
+                  <strong>
+                    {name}
+                  </strong>
+                  <span>
+                    {title}
+                  </span>
+                </div>
+              );
+            })}
+          </div> :
+          <div>
+            <Message title="暂无布局" type="help" />
+          </div>
+      }
     </Panel>
   );
 };
