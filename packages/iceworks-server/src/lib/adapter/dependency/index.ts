@@ -1,12 +1,12 @@
 import * as EventEmitter from 'events';
-import { IDependency } from '../../../interface';
+import { IDependency, IProject } from '../../../interface';
 
 export default class Dependency extends EventEmitter {
-  public readonly path: string;
+  public readonly projectPath: string;
 
-  constructor(options) {
+  constructor(project: IProject) {
     super();
-    this.path = options.path;
+    this.projectPath = project.path;
   }
 
   async getAll(): Promise<IDependency[]> {

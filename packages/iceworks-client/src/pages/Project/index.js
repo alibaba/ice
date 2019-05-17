@@ -30,9 +30,10 @@ const Project = ({ history }) => {
   } = useModal();
   const [deleteProjectPath, setDeleteProjectPath] = useState('');
   const [projects, project] = stores.useStores(['projects', 'project']);
-  const [pages, dependencies] = projectStores.useStores([
+  const [pages, dependencies, layouts] = projectStores.useStores([
     'pages',
     'dependencies',
+    'layouts',
   ]);
 
   async function onSwitchProject(path) {
@@ -65,6 +66,7 @@ const Project = ({ history }) => {
     if (!error) {
       pages.refresh();
       dependencies.refresh();
+      layouts.refresh();
     }
   }
 

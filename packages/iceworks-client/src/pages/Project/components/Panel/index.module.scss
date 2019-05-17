@@ -3,6 +3,7 @@
 .wrapper {
   border: 1px solid $border-color-base;
   border-radius: $border-radius-base;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   width: 48%;
