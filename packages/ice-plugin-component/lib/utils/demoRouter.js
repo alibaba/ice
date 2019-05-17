@@ -5,9 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const hbs = require('handlebars');
 
-const getDemos = require('./getDemos');
-const { getPkgJSON } = require('./pkgJson');
-
 const DEMO_TEMPLATE = path.join(__dirname, '../template/demo.hbs');
 const HOME_TEMPLATE = path.join(__dirname, '../template/home.hbs');
 const ADAPTOR_TEMPLATE = path.join(__dirname, '../template/adaptor.html.hbs');
@@ -19,10 +16,14 @@ function compile(hbsPath) {
   return compileTemplateContent;
 }
 
-module.exports = (context, markdownParser) => {
+module.exports = ({
+  context,
+  markdownParser,
+  demos,
+  pkg,
+  hasAdaptor,
+}) => {
   return function router(app) {
-    const demos = getDemos(context, markdownParser);
-    const pkg = getPkgJSON(context);
     const pkgName = pkg.name;
 
     app.get('/preview', async (req, res) => {
@@ -59,13 +60,13 @@ module.exports = (context, markdownParser) => {
       res.send(jsTemplateContent);
     });
 
-    app.get('/adaptor', async (req, res) => {
-      const compileTemplateContent = compile(ADAPTOR_TEMPLATE);
-
-      const jsTemplateContent = compileTemplateContent({});
-
-      res.send(jsTemplateContent);
-    });
+    if (hasAdaptor) {
+      app.get('/adaptor', async (req, res) => {
+        const compileTemplateContent = compile(ADAPTOR_TEMPLATE);
+        const jsTemplateContent = compileTemplateContent({});
+        res.send(jsTemplateContent);
+      });
+    }
 
     app.get('/', async (req, res) => {
       const compileTemplateContent = compile(HOME_TEMPLATE);
@@ -73,6 +74,7 @@ module.exports = (context, markdownParser) => {
       const jsTemplateContent = compileTemplateContent({
         demos,
         pkg: pkgName,
+        hasAdaptor,
       });
 
       res.send(jsTemplateContent);

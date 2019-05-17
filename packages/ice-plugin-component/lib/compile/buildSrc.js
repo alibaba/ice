@@ -12,7 +12,7 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const rimraf = require('rimraf');
 
-const log = require('./log');
+const log = require('../utils/log');
 const ComponentStyleGenerator = require('./component-style-generator');
 
 module.exports = function componentBuild(babelConfig, context) {
