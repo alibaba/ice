@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import '@alifd/next/reset.scss';
 
 import logger from '@utils/logger';
@@ -10,6 +11,8 @@ import { ThemeProvider } from '@components/ThemeProvider';
 import './global.scss';
 import './variables.scss';
 
+const history = createBrowserHistory();
+
 const App = () => {
   useEffect(() => {
     logger.info('App loaded.');
@@ -18,7 +21,7 @@ const App = () => {
   return (
     <LocaleProvider>
       <ThemeProvider>
-        <Router>
+        <Router history={history}>
           <Route path="/" component={MainLayout} />
         </Router>
       </ThemeProvider>

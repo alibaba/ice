@@ -1,0 +1,25 @@
+@import '../../../../variables.scss';
+
+.guide {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .text {
+    color: $text-color-secondary;
+    font-size: $font-size-md;
+    margin-bottom: 24px;
+  }
+
+  .opts {
+    .btn {
+      margin-right: 24px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

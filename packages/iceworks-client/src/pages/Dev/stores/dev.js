@@ -5,6 +5,10 @@ export default {
     settings: [],
   },
 
+  async refresh() {
+    this.dataSource = await socket.emit('project.dev.detail');
+  },
+
   async start() {
     this.dataSource = { ...this.dataSource, ...await socket.emit('project.dev.start') };
   },

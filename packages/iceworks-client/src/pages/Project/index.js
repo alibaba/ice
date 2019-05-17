@@ -1,76 +1,127 @@
-import React, { useEffect } from 'react';
-import { Input, Button } from '@alifd/next';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import stores from '@stores';
 import logger from '@utils/logger';
-import Page from './components/Pages';
-import Dependency from './components/Dependencies';
+import useModal from '@hooks/useModal';
+// import Page from './components/Pages';
+// import Dependency from './components/Dependencies';
+import SubMenu from './components/SubMenu';
+import OpenProjectModal from './components/OpenProjectModal';
+import DeleteProjectModal from './components/DeleteProjectModal';
+import Guide from './components/Guide';
 import projectStores from './stores';
+import styles from './index.module.scss';
 
-const Project = () => {
+const Project = ({ history }) => {
+  const {
+    on: onOpenProjectModel,
+    toggleModal: toggleOpenProjectModal,
+  } = useModal();
+  const {
+    on: onDeleteProjectModel,
+    toggleModal: toggleDeleteProjectModal,
+  } = useModal();
+  const [deleteProjectPath, setDeleteProjectPath] = useState('');
   const [projects, project] = stores.useStores(['projects', 'project']);
   const [pages, dependencies] = projectStores.useStores([
     'pages',
     'dependencies',
   ]);
 
+  async function onSwitchProject(path) {
+    await project.reset(path);
+    pages.refresh();
+    dependencies.refresh();
+  }
+
+  async function onDeleteProject(path) {
+    setDeleteProjectPath(path);
+    toggleDeleteProjectModal();
+  }
+
+  async function onOpenProject() {
+    toggleOpenProjectModal();
+  }
+
+  async function onCreateProject() {
+    history.push('/material');
+  }
+
+  async function refreshProject() {
+    let error;
+    try {
+      await project.refresh();
+    } catch (err) {
+      error = err;
+    }
+
+    if (!error) {
+      pages.refresh();
+      dependencies.refresh();
+    }
+  }
+
+  async function addProject(path) {
+    await projects.add(path);
+    await refreshProject();
+    toggleOpenProjectModal();
+  }
+
+  async function deleteProject(params) {
+    await projects.delete({ ...params, projectPath: deleteProjectPath });
+    await refreshProject();
+    toggleDeleteProjectModal();
+  }
+
   useEffect(() => {
     logger.info('Project page loaded.');
 
     projects.refresh();
-    project.refresh();
-
-    // TODO 根据当前项目的变化进行更新
-    pages.refresh();
-    dependencies.refresh();
+    refreshProject();
   }, []);
 
+  const projectPreDelete =
+    projects.dataSource.find(({ path }) => {
+      return path === deleteProjectPath;
+    }) || {};
+
   return (
-    <div>
-      <h2>Project</h2>
-      <div>
-        now project: {project.dataSource.name}
-        <div>
-          <Page />
-          <Dependency />
-        </div>
-      </div>
-      <div>
-        <div>my projects:</div>
-        <ul>
-          {projects.dataSource.map((projectData, index) => {
-            const { name } = projectData;
-            return (
-              <li key={index}>
-                <a
-                  onClick={async () => {
-                    await project.reset();
-                  }}
-                >
-                  {name}
-                </a>
-                <Button
-                  onClick={async () => {
-                    await projects.remove();
-                    await project.refresh();
-                  }}
-                >
-                  删除
-                </Button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div>
-        <Input
-          type="text"
-          onPressEnter={(event) => {
-            projects.add({ name: event.target.value });
-          }}
+    <div className={styles.page}>
+      {projects.dataSource.length ? (
+        <SubMenu
+          projects={projects.dataSource}
+          project={project.dataSource}
+          onSwitchProject={onSwitchProject}
+          onDeleteProject={onDeleteProject}
+          onOpenProject={onOpenProject}
+          onCreateProject={onCreateProject}
         />
-      </div>
+      ) : null}
+      <OpenProjectModal
+        on={onOpenProjectModel}
+        onCancel={toggleOpenProjectModal}
+        onOk={addProject}
+      />
+      <DeleteProjectModal
+        on={onDeleteProjectModel}
+        onCancel={toggleDeleteProjectModal}
+        onOk={deleteProject}
+        project={projectPreDelete}
+      />
+      {projects.dataSource.length ? (
+        <div className={styles.main}>testing...</div>
+      ) : (
+        <Guide
+          onOpenProject={onOpenProject}
+          onCreateProject={onCreateProject}
+        />
+      )}
     </div>
   );
+};
+
+Project.propTypes = {
+  history: PropTypes.object.isRequired,
 };
 
 export default Project;
