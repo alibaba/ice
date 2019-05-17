@@ -46,7 +46,7 @@
 如果你的项目正在使用飞冰，可以将飞冰徽章 [![ice](https://img.shields.io/badge/developing%20with-ICE-2077ff.svg)](https://github.com/alibaba/ice) 添加到你的 README 中：
 
 ```
-[![ice](https://img.shields.io/badge/developing%20with-ICE-2077ff.svg)](https://github.com/alibaba/ice)
+[![ice](https://img.shields.io/badge/developing%20with-ICE-2077ff.svg)](https://github.com/alibaba/ice) [![Join the chat at https://gitter.im/alibaba/ice](https://badges.gitter.im/alibaba/ice.svg)](https://gitter.im/alibaba/ice?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ```
 
 ## 加入社区
