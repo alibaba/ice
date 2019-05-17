@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import stores from '@stores';
 import logger from '@utils/logger';
 import useModal from '@hooks/useModal';
-import customHistory from '@src/history';
 // import Page from './components/Pages';
 // import Dependency from './components/Dependencies';
 import SubMenu from './components/SubMenu';
@@ -12,9 +12,15 @@ import Guide from './components/Guide';
 import projectStores from './stores';
 import styles from './index.module.scss';
 
-const Project = () => {
-  const { on: onOpenProjectModel, toggleModal: toggleOpenProjectModal } = useModal();
-  const { on: onDeleteProjectModel, toggleModal: toggleDeleteProjectModal } = useModal();
+const Project = ({ history }) => {
+  const {
+    on: onOpenProjectModel,
+    toggleModal: toggleOpenProjectModal,
+  } = useModal();
+  const {
+    on: onDeleteProjectModel,
+    toggleModal: toggleDeleteProjectModal,
+  } = useModal();
   const [deleteProjectPath, setDeleteProjectPath] = useState('');
   const [projects, project] = stores.useStores(['projects', 'project']);
   const [pages, dependencies] = projectStores.useStores([
@@ -38,7 +44,7 @@ const Project = () => {
   }
 
   async function onCreateProject() {
-    customHistory.push('/material');
+    history.push('/material');
   }
 
   async function refreshProject() {
@@ -67,7 +73,6 @@ const Project = () => {
     toggleDeleteProjectModal();
   }
 
-
   useEffect(() => {
     logger.info('Project page loaded.');
 
@@ -75,22 +80,23 @@ const Project = () => {
     refreshProject();
   }, []);
 
-  const projectPreDelete = projects
-    .dataSource
-    .find(({ path }) => {
+  const projectPreDelete =
+    projects.dataSource.find(({ path }) => {
       return path === deleteProjectPath;
     }) || {};
 
   return (
     <div className={styles.page}>
-      {projects.dataSource.length ? <SubMenu
-        projects={projects.dataSource}
-        project={project.dataSource}
-        onSwitchProject={onSwitchProject}
-        onDeleteProject={onDeleteProject}
-        onOpenProject={onOpenProject}
-        onCreateProject={onCreateProject}
-      /> : null}
+      {projects.dataSource.length ? (
+        <SubMenu
+          projects={projects.dataSource}
+          project={project.dataSource}
+          onSwitchProject={onSwitchProject}
+          onDeleteProject={onDeleteProject}
+          onOpenProject={onOpenProject}
+          onCreateProject={onCreateProject}
+        />
+      ) : null}
       <OpenProjectModal
         on={onOpenProjectModel}
         onCancel={toggleOpenProjectModal}
@@ -102,18 +108,20 @@ const Project = () => {
         onOk={deleteProject}
         project={projectPreDelete}
       />
-      {
-        projects.dataSource.length ?
-          <div className={styles.main}>
-            testing...
-          </div> :
-          <Guide
-            onOpenProject={onOpenProject}
-            onCreateProject={onCreateProject}
-          />
-      }
+      {projects.dataSource.length ? (
+        <div className={styles.main}>testing...</div>
+      ) : (
+        <Guide
+          onOpenProject={onOpenProject}
+          onCreateProject={onCreateProject}
+        />
+      )}
     </div>
   );
+};
+
+Project.propTypes = {
+  history: PropTypes.object.isRequired,
 };
 
 export default Project;
