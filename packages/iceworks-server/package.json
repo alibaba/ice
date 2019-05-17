@@ -41,7 +41,7 @@
     "start": "egg-scripts start --title=egg-server-iceworks-server --framework=midway",
     "stop": "egg-scripts stop --title=egg-server-iceworks-server",
     "start_build": "npm run build && NODE_ENV=development midway-bin dev",
-    "dev": "NODE_ENV=local midway-bin dev --ts",
+    "dev": "DEBUG=* NODE_ENV=local midway-bin dev --ts",
     "debug": "NODE_ENV=local midway-bin debug --ts",
     "test": "npm run lint && midway-bin test --ts",
     "cov": "midway-bin cov --ts",
