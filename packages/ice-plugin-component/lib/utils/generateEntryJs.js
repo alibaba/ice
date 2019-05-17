@@ -5,28 +5,21 @@ const hbs = require('handlebars');
 /**
  * 构建 build/index.html 时构造 entry
  */
-module.exports = function generateEntryJS(demos, context) {
-  const hbsTemplatePath = path.join(__dirname, '../template/index.js.hbs');
+module.exports = function generateEntryJS({
+  template,
+  filename = 'index.js',
+  context = process.cwd(),
+  params,
+}) {
+  const hbsTemplatePath = path.join(__dirname, `../template/${template}`);
   const hbsTemplateContent = fs.readFileSync(hbsTemplatePath, 'utf-8');
   const compileTemplateContent = hbs.compile(hbsTemplateContent);
 
   const tempDir = path.join(context, './node_modules');
-  const jsPath = path.join(tempDir, 'component-index.js');
+  const jsPath = path.join(tempDir, filename);
 
-  const jsTemplateContent = compileTemplateContent({
-    demos: demos.map((demo) => {
-      return {
-        path: formatPathForWin(demo.filePath),
-      };
-    }),
-  });
-
+  const jsTemplateContent = compileTemplateContent(params);
   fs.writeFileSync(jsPath, jsTemplateContent);
 
   return jsPath;
 };
-
-function formatPathForWin(filepath) {
-  const isWin = process.platform === 'win32';
-  return isWin ? filepath.replace(/\\/g, '\\\\') : filepath;
-}

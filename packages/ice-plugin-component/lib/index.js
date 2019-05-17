@@ -5,12 +5,14 @@ const { getPkgJSON } = require('./utils/pkgJson');
 const { parseMarkdownParts } = require('./utils/markdownHelper');
 const getDemos = require('./utils/getDemos');
 const generateEntryJs = require('./utils/generateEntryJs');
+const formatPathForWin = require('./utils/formatPathForWin');
 const getReadme = require('./utils/getReadme');
 const buildSrc = require('./utils/buildSrc');
 
 function getFilename(filePath) {
   return last((filePath || '').split('/'));
 }
+
 module.exports = (api) => {
   const { command, context } = api.service;
   const pkg = getPkgJSON(context);
@@ -24,8 +26,21 @@ module.exports = (api) => {
     })]);
   }
 
+  // check adaptor folder
+  // generate adaptor entry
+  const adaptorEntry = generateEntryJs({
+    template: 'adaptor.js.hbs',
+    context,
+    params: {
+      adaptor: path.resolve(context, 'adaptor/index.js'),
+      adaptorGenerate: path.resolve(context, 'node_modules/@alifd/adaptor-generate'),
+    },
+  });
+
+  let babelConfig;
+
   api.chainWebpack((config) => {
-    const babelConfig = config.module.rule('jsx').use('babel-loader').get('options');
+    babelConfig = config.module.rule('jsx').use('babel-loader').get('options');
     delete babelConfig.cacheDirectory;
     const markdownParser = parseMarkdownParts(babelConfig);
     // disable vendor
@@ -34,25 +49,34 @@ module.exports = (api) => {
     const demos = getDemos(context, markdownParser);
     let entry;
     if (command === 'dev') {
+      // remove HtmlWebpackPlugin when run dev
+      config.plugins.delete('HtmlWebpackPlugin');
       const componentEntry = {};
       demos.forEach((demo) => {
         const demoName = demo.filename;
         const demoFile = path.join('demo', `${demoName}.md`);
         componentEntry[`__Component_Dev__.${demoName}`] = demoFile;
       });
+      if (adaptorEntry) {
+        componentEntry.adaptor = adaptorEntry;
+      }
       entry = api.processEntry(componentEntry);
-      // remove HtmlWebpackPlugin when run dev
-      config.plugins.delete('HtmlWebpackPlugin');
       setAssetsPath(config, { js: 'js', css: 'css' });
     } else if (command === 'build') {
-      entry = api.processEntry(generateEntryJs(demos, context));
+      entry = api.processEntry(generateEntryJs({
+        template: 'index.js.hbs',
+        filename: 'component-index.js',
+        context,
+        params: {
+          demos: demos.map((demo) => ({ path: formatPathForWin(demo.filePath) })),
+        },
+      }));
       config.output.publicPath('./');
       ['scss', 'scss-module', 'css', 'css-module', 'less', 'less-module'].forEach((rule) => {
         if (config.module.rules.get(rule)) {
           config.module.rule(rule).use('MiniCssExtractPlugin.loader').tap(() => ({ publicPath: '../' }));
         }
       });
-
       // modify outputAssetsPath
       // set outputAssetsPath { js: '', css: '' }
       setAssetsPath(config);
@@ -105,8 +129,53 @@ module.exports = (api) => {
     });
     // modify pkg home page
 
-    // component build
-    buildSrc(babelConfig, context);
-    // adaptor build
+    // modify webpack chain for adaptor build
+    if (process.env.BUILD_ADAPTOR === JSON.stringify(true) && command === 'build') {
+      config.plugins.delete('HtmlWebpackPlugin');
+      config.output
+        .library('Adaptor')
+        .libraryExport('default')
+        .libraryTarget('umd');
+      config.output.path(path.resolve(context, 'build/adaptor'));
+      config.entryPoints.clear();
+      config.merge({
+        entry: api.processEntry({ adaptor: path.resolve(context, 'adaptor/index.js') }),
+      });
+      config.externals({
+        react: {
+          root: 'React',
+          commonjs: 'react',
+          commonjs2: 'react',
+          amd: 'react',
+        },
+        'react-dom': {
+          root: 'ReactDom',
+          commonjs: 'react-dom',
+          commonjs2: 'react-dom',
+          amd: 'react-dom',
+        },
+        '@alifd/next': {
+          root: 'Next',
+          commonjs: '@alifd/next',
+          commonjs2: '@alifd/next',
+          amd: '@alifd/next',
+        },
+        moment: {
+          root: 'moment',
+          commonjs: 'moment',
+          commonjs2: 'moment',
+          amd: 'moment',
+        },
+      });
+    }
+  });
+  api.onHooks('afterBuild', () => {
+    if (!process.env.BUILD_ADAPTOR) {
+      // component build
+      buildSrc(babelConfig, context);
+      // adaptor build
+      process.env.BUILD_ADAPTOR = true;
+      api.service.run();
+    }
   });
 };
