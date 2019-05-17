@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import stores from '@stores';
 import logger from '@utils/logger';
 import useModal from '@hooks/useModal';
-// import Page from './components/Pages';
-// import Dependency from './components/Dependencies';
+import Page from './components/Page';
+import Dependency from './components/Dependency';
+import Layout from './components/Layout';
+import Todo from './components/Todo';
 import SubMenu from './components/SubMenu';
 import OpenProjectModal from './components/OpenProjectModal';
 import DeleteProjectModal from './components/DeleteProjectModal';
@@ -108,14 +110,23 @@ const Project = ({ history }) => {
         onOk={deleteProject}
         project={projectPreDelete}
       />
-      {projects.dataSource.length ? (
-        <div className={styles.main}>testing...</div>
-      ) : (
-        <Guide
-          onOpenProject={onOpenProject}
-          onCreateProject={onCreateProject}
-        />
-      )}
+      {
+        projects.dataSource.length ?
+          (
+            <div className={styles.main}>
+              <Page />
+              <Dependency />
+              <Layout />
+              <Todo />
+            </div>
+          ) :
+          (
+            <Guide
+              onOpenProject={onOpenProject}
+              onCreateProject={onCreateProject}
+            />
+          )
+      }
     </div>
   );
 };

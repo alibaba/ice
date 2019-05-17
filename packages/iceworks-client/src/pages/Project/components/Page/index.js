@@ -1,4 +1,5 @@
 import React from 'react';
+import Panel from '../Panel';
 import stores from '../../stores';
 
 const Page = () => {
@@ -6,8 +7,7 @@ const Page = () => {
   const { dataSource } = pages;
 
   return (
-    <div>
-      <h3>Pages</h3>
+    <Panel header={<h3>Pages</h3>}>
       <div>
         <ul>
           {dataSource.map(({ name }) => {
@@ -15,7 +15,7 @@ const Page = () => {
           })}
         </ul>
       </div>
-    </div>
+    </Panel>
   );
 };
 

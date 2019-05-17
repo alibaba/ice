@@ -1,0 +1,35 @@
+@import '../../../../variables.scss';
+
+.wrapper {
+  border: 1px solid $border-color-base;
+  border-radius: $border-radius-base;
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+  height: 380px;
+  margin-bottom: 34px;
+  @media (min-width: 1200px) {
+    & {
+      width: 32%;
+    }
+  }
+
+
+  .header {
+    background-color: $background-color-base;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+
+    h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+  }
+  .main {
+    padding: 6px;
+    background-color: $white;
+    flex: 1;
+  }
+}

@@ -1,13 +1,13 @@
 import React from 'react';
+import Panel from '../Panel';
 import stores from '../../stores';
 
-const Page = () => {
+const Dependencies = () => {
   const dependencies = stores.useStore('dependencies');
   const { dataSource } = dependencies;
 
   return (
-    <div>
-      <h3>Dependencies</h3>
+    <Panel header={<h3>Dependencies</h3>}>
       <div>
         <ul>
           {dataSource.map(({ package: _package }) => {
@@ -15,8 +15,8 @@ const Page = () => {
           })}
         </ul>
       </div>
-    </div>
+    </Panel>
   );
 };
 
-export default Page;
+export default Dependencies;
