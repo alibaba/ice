@@ -1,7 +1,3 @@
-
-
-
-
 <p align="center">
   <a href="https://alibaba.github.io/ice">
     <img alt="飞冰" src="https://user-images.githubusercontent.com/677114/40338709-3c75fe4a-5da9-11e8-9874-c17445ed673b.png" width="140">
