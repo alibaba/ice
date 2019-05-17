@@ -94,8 +94,8 @@ class ProjectManager extends EventEmitter {
     }
 
     // reset project if deleted current project
-    const currentProjectFolderPath = storage.get('project');
-    if (currentProjectFolderPath === projectPath) {
+    const currentProjectPath = storage.get('project');
+    if (currentProjectPath === projectPath) {
       storage.set('project', newProjects[0] || '');
     }
 
