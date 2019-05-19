@@ -50,6 +50,7 @@ module.exports = (chainConfig, mode = 'development') => {
         rule = rule.test(moduleTestReg);
       } else {
         rule = rule.test(cssTestReg);
+        rule.exclude.add(moduleTestReg);
       }
 
       if (mode !== 'production') {
