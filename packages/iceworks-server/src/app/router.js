@@ -15,7 +15,7 @@ module.exports = (app) => {
     ['project.dev.stop', project.dev.stop],
     ['project.dev.settings', project.dev.settings],
     ['project.dev.detail', project.dev.detail],
-    ['project.configuration.settings', project.configuration.settings]
+    ['project.configuration.settings', project.configuration.settings],
   ];
 
   for (const [event, handle] of routers) {
