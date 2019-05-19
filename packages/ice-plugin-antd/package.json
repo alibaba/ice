@@ -1,0 +1,11 @@
+{
+  "name": "ice-plugin-antd",
+  "version": "1.0.0",
+  "description": "ice-scripts plugin for antd",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  }
+}

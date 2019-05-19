@@ -8,7 +8,7 @@ module.exports = async (api, { themePackage, themeConfig = {}, uniteBaseComponen
       api.log.info('使用 Fusion 组件主题包：', themePackage);
     }
     if (themeConfig) {
-      api.log.info('自定义主题变量：', themeConfig);
+      api.log.info('自定义 Fusion 组件主题变量：', themeConfig);
     }
     config.module
       .rule('scss')
