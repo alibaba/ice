@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SubMenu from '@components/SubMenu';
 import SubMenuItem from '@components/SubMenuItem';
-import RouteRender from '@components/RouteRender';
+import SubRoutes from '@components/SubRoutes';
 import { getMenuData } from '@utils/getMenuData';
 import styles from './index.module.scss';
 
@@ -19,10 +19,10 @@ const Setting = ({ routes }) => {
         ))}
       </SubMenu>
 
-      {/* render setting subroute */}
-      {routes.map((route, key) => (
-        <RouteRender key={key} {...route} />
-      ))}
+      {/* render setting sub-routes */}
+      <main className={styles.main}>
+        <SubRoutes routes={routes} />
+      </main>
     </div>
   );
 };

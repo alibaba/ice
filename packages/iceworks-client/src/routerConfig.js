@@ -13,28 +13,26 @@ import SettingAdvanced from './pages/SettingAdvanced';
 // Then our route config
 const routerConfig = [
   {
+    from: '/',
     path: '/project',
     component: Project,
   },
   {
     path: '/work',
     component: Work,
-    exact: true,
     routes: [
       {
+        from: '/work',
         path: '/work/dev',
         component: Dev,
-        exact: true,
       },
       {
         path: '/work/build',
         component: Build,
-        exact: true,
       },
       {
         path: '/work/configuration',
         component: Configuration,
-        exact: true,
       },
     ],
   },
@@ -47,24 +45,21 @@ const routerConfig = [
     component: Setting,
     routes: [
       {
+        from: '/setting',
         path: '/setting/general',
         component: SettingGeneral,
-        exact: true,
       },
       {
         path: '/setting/material',
         component: SettingMaterial,
-        exact: true,
       },
       {
         path: '/setting/panel',
         component: SettingPanel,
-        exact: true,
       },
       {
         path: '/setting/advanced',
         component: SettingAdvanced,
-        exact: true,
       },
     ],
   },

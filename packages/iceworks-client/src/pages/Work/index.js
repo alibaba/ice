@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RouteRender from '@components/RouteRender';
+import SubRoutes from '@components/SubRoutes';
 import SubMenu from '@components/SubMenu';
 import SubMenuItem from '@components/SubMenuItem';
 import { getMenuData } from '@utils/getMenuData';
@@ -20,12 +20,10 @@ const Work = ({ routes }) => {
         ))}
       </SubMenu>
 
-      {/* render work subroute */}
-      <div className={styles.main}>
-        {routes.map((route, i) => (
-          <RouteRender key={i} {...route} />
-        ))}
-      </div>
+      {/* render work sub-routes */}
+      <main className={styles.main}>
+        <SubRoutes routes={routes} />
+      </main>
     </div>
   );
 };

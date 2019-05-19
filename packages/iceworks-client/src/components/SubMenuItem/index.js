@@ -11,7 +11,6 @@ const SubMenuItem = ({ dataSource }) => {
   return (
     <div className={styles.item}>
       <NavLink
-        exact
         key={path}
         to={path}
         className={styles.link}
