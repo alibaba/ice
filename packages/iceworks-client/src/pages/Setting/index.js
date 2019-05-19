@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SubMenu from '@components/SubMenu';
+import SubMenuItem from '@components/SubMenuItem';
 import RouteRender from '@components/RouteRender';
 import { getMenuData } from '@utils/getMenuData';
 import styles from './index.module.scss';
@@ -12,11 +13,15 @@ const Setting = ({ routes }) => {
   return (
     <div className={styles.settingPage}>
       {/* render setting submenu */}
-      <SubMenu data={subMenuData} title="iceworks.setting.title" />
+      <SubMenu title="iceworks.setting.title">
+        {subMenuData.map((dataSource, key) => (
+          <SubMenuItem dataSource={dataSource} key={key} />
+        ))}
+      </SubMenu>
 
       {/* render setting subroute */}
-      {routes.map((route, i) => (
-        <RouteRender key={i} {...route} />
+      {routes.map((route, key) => (
+        <RouteRender key={key} {...route} />
       ))}
     </div>
   );

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RouteRender from '@components/RouteRender';
-import WorkSubMenu from '@components/WorkSubMenu';
+import SubMenu from '@components/SubMenu';
+import SubMenuItem from '@components/SubMenuItem';
 import { getMenuData } from '@utils/getMenuData';
 
 import styles from './index.module.scss';
@@ -13,7 +14,11 @@ const Work = ({ routes }) => {
   return (
     <div className={styles.workPage}>
       {/* render work submenu */}
-      <WorkSubMenu data={subMenuData} title="iceworks.work.title" />
+      <SubMenu title="iceworks.work.title">
+        {subMenuData.map((dataSource, key) => (
+          <SubMenuItem dataSource={dataSource} key={key} />
+        ))}
+      </SubMenu>
 
       {/* render work subroute */}
       <div className={styles.main}>
