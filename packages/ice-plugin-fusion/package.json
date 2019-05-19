@@ -1,0 +1,13 @@
+{
+  "name": "ice-plugin-fusion",
+  "version": "1.0.0",
+  "description": "ice-scripts plugin for fusion",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ice-skin-loader": "^0.2.2",
+    "webpack-plugin-import": "^0.2.5"
+  }
+}
