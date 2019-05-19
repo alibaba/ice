@@ -1,8 +1,7 @@
 const path = require('path');
-const ICE_SKIN_LOADER = require('ice-skin-loader');
 const WebpackPluginImport = require('webpack-plugin-import');
 
-module.exports = async (api, { themePackage, themeConfig, uniteBaseComponent }) => {
+module.exports = async (api, { themePackage, themeConfig = {}, uniteBaseComponent }) => {
   api.chainWebpack((config) => {
     // 1. 支持主题能力
     if (themePackage) {
@@ -14,10 +13,9 @@ module.exports = async (api, { themePackage, themeConfig, uniteBaseComponent }) 
     config.module
       .rule('scss')
       .use('ice-skin-loader')
-      .loader(ICE_SKIN_LOADER)
+      .loader('ice-skin-loader')
       .options({
-        // TODO: api 需要暴露 paths??
-        themeFile: themePackage && path.join(api.paths.appNodeModules, `${themePackage}/variables.scss`),
+        themeFile: themePackage && path.join(api.service.paths.appNodeModules, `${themePackage}/variables.scss`),
         themeConfig,
       });
 
@@ -25,10 +23,13 @@ module.exports = async (api, { themePackage, themeConfig, uniteBaseComponent }) 
     // babel-plugin-import: 基础组件
     const importConfigs = [{
       libraryName: '@icedesign/base',
+      style: true,
     }, {
       libraryName: '@alife/next',
+      style: true,
     }, {
       libraryName: '@alifd/next',
+      style: true,
     }];
     ['jsx', 'tsx'].forEach((rule) => {
       config.module

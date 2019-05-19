@@ -7,7 +7,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ice-skin-loader": "^0.2.2",
+    "ice-skin-loader": "^0.3.0-0",
     "webpack-plugin-import": "^0.2.5"
   }
 }
