@@ -70,7 +70,7 @@ class ProjectManager extends EventEmitter {
     return this.getProject(projectPath);
   }
 
-  async addProject(projectPath: string): Promise<Project[]> {
+  async addProject(projectPath: string): Promise<void> {
     const projects = storage.get('projects');
 
     if (projects.indexOf(projectPath) === -1) {
@@ -80,11 +80,9 @@ class ProjectManager extends EventEmitter {
 
     storage.set('project', projectPath);
     this.projects = await this.refresh();
-
-    return this.projects;
   }
 
-  async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<Project[]> {
+  async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
     const newProjects = storage.get('projects').filter((path) => path !== projectPath);
     storage.set('projects', newProjects);
@@ -100,8 +98,6 @@ class ProjectManager extends EventEmitter {
     }
 
     this.projects = await this.refresh();
-
-    return this.projects;
   }
 
   /**

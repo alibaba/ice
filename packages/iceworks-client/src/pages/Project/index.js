@@ -58,6 +58,7 @@ const Project = ({ history }) => {
   async function refreshProject() {
     let error;
     try {
+      await projects.refresh();
       await project.refresh();
     } catch (err) {
       error = err;
@@ -85,7 +86,6 @@ const Project = ({ history }) => {
   useEffect(() => {
     logger.info('Project page loaded.');
 
-    projects.refresh();
     refreshProject();
   }, []);
 
