@@ -29,6 +29,27 @@ export default (app) => {
       });
     }
 
+    async stop(ctx) {
+      const { args } = ctx;
+      const callback = args[args.length - 1];
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+
+      let error;
+      let result;
+
+      try {
+        result = await project.dev.stop();
+      } catch (err) {
+        error = err;
+      }
+
+      callback({
+        error,
+        data: result,
+      });
+    }
+
     /**
      * 调试服务配置项
      * @param ctx
@@ -50,6 +71,19 @@ export default (app) => {
       }
 
       callback({ error, data });
+    }
+
+    async detail(ctx) {
+      const { args } = ctx;
+      const callback = args[args.length - 1];
+
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+
+      callback({
+        error: null,
+        data: project.dev
+      });
     }
   };
 };

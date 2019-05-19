@@ -20,7 +20,8 @@
     "midway": "^1.0.0",
     "mkdirp": "^0.5.1",
     "npm-run-path": "^3.1.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "trash": "^5.2.0"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",

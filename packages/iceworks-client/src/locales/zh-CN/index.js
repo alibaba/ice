@@ -9,4 +9,7 @@ export default {
   'iceworks.menu.setting.material': '物料设置',
   'iceworks.menu.setting.panel': '面板设置',
   'iceworks.menu.setting.advanced': '高级设置',
+  'iceworks.project.title': '项目管理',
+  'iceworks.setting.title': '设置',
+  'iceworks.work.title': '工程管理',
 };

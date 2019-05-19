@@ -9,4 +9,7 @@ export default {
   'iceworks.menu.setting.material': 'Material',
   'iceworks.menu.setting.panel': 'Panel',
   'iceworks.menu.setting.advanced': 'Advanced',
+  'iceworks.project.title': 'Project',
+  'iceworks.setting.title': 'Setting',
+  'iceworks.work.title': 'Work',
 };

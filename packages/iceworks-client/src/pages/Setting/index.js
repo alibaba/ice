@@ -12,7 +12,7 @@ const Setting = ({ routes }) => {
   return (
     <div className={styles.settingPage}>
       {/* render setting submenu */}
-      <SubMenu data={subMenuData} title="工程管理" />
+      <SubMenu data={subMenuData} title="iceworks.setting.title" />
 
       {/* render setting subroute */}
       {routes.map((route, i) => (
