@@ -13,13 +13,13 @@ const { appDirectory, appFaviconIco, appFavicon, appPublic, defaultAppHtml, defa
 
 module.exports = (chainConfig, mode = 'development') => {
   const packageJson = getPkgData(appDirectory);
-  const defineVriables = {
+  const defineVariables = {
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
   };
 
   chainConfig
     .plugin('DefinePlugin')
-      .use(webpack.DefinePlugin, [defineVriables])
+      .use(webpack.DefinePlugin, [defineVariables])
       .end()
     .plugin('MiniCssExtractPlugin')
       .use(MiniCssExtractPlugin, [{
