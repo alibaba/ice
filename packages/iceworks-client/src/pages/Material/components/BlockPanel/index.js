@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// eslint-disable-next-line
 const BlockPanel = ({ dataSource }) => {
   return <div>BlockPanel</div>;
 };
