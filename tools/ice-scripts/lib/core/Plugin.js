@@ -1,8 +1,10 @@
 const processEntry = require('../config/processEntry');
+const log = require('../utils/log');
 
 module.exports = class PluginAPI {
   constructor(service) {
     this.service = service;
+    this.log = log;
   }
 
   chainWebpack(fn) {
