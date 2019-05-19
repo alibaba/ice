@@ -11,6 +11,7 @@ const getReadme = require('./utils/getReadme');
 const setAssetsPath = require('./utils/setAssetsPath');
 const configBabel = require('./utils/configBabel');
 const buildSrc = require('./compile/buildSrc');
+const resolveSassImport = require('./compile/resolveSassImport');
 
 module.exports = (api) => {
   const { command, context } = api.service;
@@ -180,7 +181,8 @@ module.exports = (api) => {
 
       if (hasAdaptor) {
         // generate adaptor index.scss
-
+        const sassContent = resolveSassImport('main.scss', path.resolve(context, 'src'));
+        fse.writeFileSync(path.resolve(context, 'build/index.scss'), sassContent, 'utf-8');
         // adaptor build
         process.env.BUILD_ADAPTOR = true;
         api.service.run();
