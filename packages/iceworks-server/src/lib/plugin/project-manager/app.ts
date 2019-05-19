@@ -76,19 +76,24 @@ class ProjectManager extends EventEmitter {
     if (projects.indexOf(projectPath) === -1) {
       projects.push(projectPath);
       storage.set('projects', projects);
+      this.projects.push(new Project(projectPath));
     }
 
     storage.set('project', projectPath);
-    this.projects = await this.refresh();
   }
 
   async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
     const newProjects = storage.get('projects').filter((path) => path !== projectPath);
     storage.set('projects', newProjects);
+    this.projects = this.projects.filter(({ path }) => path !== projectPath);
 
     if (deleteFiles) {
-      await trash(projectPath);
+      try {
+        await trash(projectPath);
+      } catch (error) {
+        // TODO
+      }
     }
 
     // reset project if deleted current project
@@ -96,8 +101,6 @@ class ProjectManager extends EventEmitter {
     if (currentProjectPath === projectPath) {
       storage.set('project', newProjects[0] || '');
     }
-
-    this.projects = await this.refresh();
   }
 
   /**
