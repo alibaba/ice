@@ -18,7 +18,7 @@ module.exports = (app) => {
     ['project.configuration.settings', project.configuration.settings],
   ];
 
-  for (const [event, handle] of routers) {
+  routers.forEach(([event, handle]) => {
     app.io.route(event, async function () {
       const { args } = this;
       const params = args[0];
@@ -32,5 +32,5 @@ module.exports = (app) => {
         callback(error);
       }
     });
-  }
+  });
 };
