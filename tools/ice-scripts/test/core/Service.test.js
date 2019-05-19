@@ -3,9 +3,10 @@ const Service = require('../../lib/core/Service');
 
 describe('init service', () => {
   const service = new Service({
+    command: 'dev',
     context: path.join(__dirname, '../fixtures/service'),
     args: {
-      disabledReload: true,
+      disabledReload: false,
     },
   });
   test('get ice.config.js', () => {
@@ -39,6 +40,11 @@ describe('init service', () => {
     const webpackConfig = service.getWebpackConfig();
     expect(webpackConfig.resolve.modules[0]).toBe('node_modules');
     expect(webpackConfig.resolve.extensions).toEqual(['.js', '.jsx', '.json', '.html', '.ts', '.tsx']);
+    expect(webpackConfig.entry.index).toEqual([
+      require.resolve('@babel/polyfill'),
+      require.resolve('react-dev-utils/webpackHotDevClient'),
+      path.resolve(process.cwd(), 'src/index.js'),
+    ]);
   });
 });
 

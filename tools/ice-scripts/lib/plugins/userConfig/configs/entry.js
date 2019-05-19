@@ -1,6 +1,20 @@
+// entry: string | array
+// entry : { [name]: string | array }
 module.exports = (api, value) => {
-  const entry = api.processEntry(value);
   api.chainWebpack((config) => {
+    let entry;
+    if (Array.isArray(value) || typeof value === 'string') {
+      entry = {
+        index: value,
+      };
+    } else if (typeof value === 'object') {
+      entry = value;
+    }
+    // webpack-chain entry must be [name]: [...values]
+    Object.keys(entry).forEach((key) => {
+      const entryValue = entry[key];
+      entry[key] = typeof entryValue === 'string' ? [entryValue] : entryValue;
+    });
     // remove default entry then add new enrty to webpack config
     config.entryPoints.clear();
     config.merge({ entry });
