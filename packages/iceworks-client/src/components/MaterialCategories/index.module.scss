@@ -1,6 +1,7 @@
 .container {
   display: flex;
   justify-content: center;
+  flex-flow: wrap;
   padding: 20px 10px;
   overflow: hidden;
   background: #fff;

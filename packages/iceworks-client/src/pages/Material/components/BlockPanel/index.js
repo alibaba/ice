@@ -1,9 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Grid } from '@alifd/next';
+import MaterialCategories from '@components/MaterialCategories';
+import BlockCard from '@components/BlockCard';
 
-// eslint-disable-next-line
+const { Row, Col } = Grid;
+
 const BlockPanel = ({ dataSource }) => {
-  return <div>BlockPanel</div>;
+  const { categories = [], blocks = [] } = dataSource;
+  return (
+    <div className="block-panel">
+      <MaterialCategories dataSource={categories} />
+      <Row wrap gutter="40">
+        {blocks.map((data, index) => {
+          return (
+            <Col l="8" xs="8" xxs="24" key={index}>
+              <BlockCard dataSource={data} />
+            </Col>
+          );
+        })}
+      </Row>
+    </div>
+  );
 };
 
 BlockPanel.defaultProps = {

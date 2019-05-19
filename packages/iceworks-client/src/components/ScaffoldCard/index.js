@@ -10,14 +10,15 @@ const ScaffoldCard = ({ dataSource, bgColor }) => {
         {dataSource.isNewlyCreated ? (
           <div className={styles.newly}>NEW</div>
         ) : null}
-        {dataSource.screenshots.map((url, i) => {
-          const screenshotStyle = generateStyle(dataSource.screenshots, i);
+        {dataSource.screenshots.map((url, key) => {
+          const screenshotStyle = generateStyle(dataSource.screenshots, key);
           return (
             <img
               alt=""
               src={url}
               style={{ transform: 'scale(0.6)', ...screenshotStyle }}
               className={styles.screenshotImg}
+              key={key}
             />
           );
         })}

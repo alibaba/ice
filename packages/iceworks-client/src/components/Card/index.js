@@ -8,7 +8,7 @@ const Card = ({ children, style, ...props }) => {
       style={{
         border: 'none',
         height: '100%',
-        overflow: 'hidden',
+        overflow: 'auto',
         ...style,
       }}
       {...props}

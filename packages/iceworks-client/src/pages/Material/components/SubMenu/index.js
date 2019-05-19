@@ -13,7 +13,11 @@ const SubMenu = ({ data, title }) => {
       {title ? <h2 className={styles.subMenuTitle}>{title}</h2> : null}
       {data.map((item, index) => {
         return (
-          <div key={index} onClick={() => handleClick(item)}>
+          <div
+            className={styles.subMenuItem}
+            key={index}
+            onClick={() => handleClick(item)}
+          >
             {item.name}
           </div>
         );
