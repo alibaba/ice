@@ -51,6 +51,14 @@ module.exports = ({ template, projectDir, type }) => {
       return fse.copy(materialDir, projectDir);
     })
     .then(() => {
+      if (answerOptions.adaptor) {
+        log.info('start copy adaptor folder');
+        const adaptorDir = path.join(__dirname, '../template/component');
+        return fse.copy(adaptorDir, projectDir);
+      }
+      return Promise.resolve();
+    })
+    .then(() => {
       log.info('start remove temp dir');
       return fse.remove(tempDir);
     });
@@ -64,28 +72,37 @@ module.exports = ({ template, projectDir, type }) => {
  *  - author, title, version, description, categories(scaffold 没有)
  */
 function getAnswerOptions(type) {
-  return inquirer.prompt({
-    type: 'input',
-    name: 'npmName',
-    dafault: 'test-npm-package',
-    transformer: (value) => {
-      return value.trim();
+  return inquirer.prompt([
+    {
+      type: 'input',
+      name: 'npmName',
+      dafault: 'test-npm-package',
+      transformer: (value) => {
+        return value.trim();
+      },
+      validate: (value) => {
+        if (!(value.trim())) {
+          return '必填字段';
+        }
+        return true;
+      },
+      message: '请输入 npm 包名，如（@icedesign/test）',
     },
-    validate: (value) => {
-      if (!(value.trim())) {
-        return '必填字段';
-      }
-      return true;
-    },
-    message: '请输入 npm 包名，如（@icedesign/test）',
-  }).then((answer) => {
-    const { npmName } = answer;
+    type === 'component' ? {
+      type: 'confirm',
+      name: 'adaptor',
+      message: '组件是否需要接入 Fusion Cool & 设计板块？',
+      default: false,
+    } : false,
+  ].filter((v) => v)).then((answer) => {
+    const { npmName, adaptor } = answer;
     // @icedesign/example-block | example-block
     const name = npmName.split('/')[1] || npmName.split('/')[0];
     const className = camelCase(name, { pascalCase: true });
 
     return {
       npmName,
+      adaptor,
       name,
       className,
       author: '',
