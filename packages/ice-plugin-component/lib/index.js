@@ -31,6 +31,7 @@ module.exports = (api) => {
       params: {
         adaptor: path.resolve(context, 'adaptor/index.js'),
         adaptorGenerate: path.resolve(context, 'node_modules/@alifd/adaptor-generate'),
+        style: path.resolve(context, 'src/main.scss'),
       },
     });
   }
@@ -143,7 +144,7 @@ module.exports = (api) => {
       config.output.path(path.resolve(context, 'build/adaptor'));
       config.entryPoints.clear();
       config.merge({
-        entry: { adaptor: path.resolve(context, 'adaptor/index.js') },
+        entry: { adaptor: [path.resolve(context, 'src/main.scss'), path.resolve(context, 'adaptor/index.js')] },
       });
       config.externals({
         react: {
