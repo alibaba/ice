@@ -6,6 +6,6 @@ export default {
     this.dataSource = await socket.emit('project.page.list');
   },
   async delete(name) {
-    await socket.emit('project.page.delete', name);
+    await socket.emit('project.page.delete', { name });
   },
 };
