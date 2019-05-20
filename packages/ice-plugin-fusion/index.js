@@ -13,7 +13,7 @@ module.exports = async (api, { themePackage, themeConfig = {}, uniteBaseComponen
     config.module
       .rule('scss')
       .use('ice-skin-loader')
-      .loader('ice-skin-loader')
+      .loader(require.resolve('ice-skin-loader'))
       .options({
         themeFile: themePackage && path.join(api.service.paths.appNodeModules, `${themePackage}/variables.scss`),
         themeConfig,
