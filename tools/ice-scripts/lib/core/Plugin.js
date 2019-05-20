@@ -4,7 +4,11 @@ const log = require('../utils/log');
 module.exports = class PluginAPI {
   constructor(service) {
     this.service = service;
+
     this.log = log;
+    this.chainWebpack = this.chainWebpack.bind(this);
+    this.processEntry = this.processEntry.bind(this);
+    this.getWebpackConfig = this.getWebpackConfig.bind(this);
   }
 
   chainWebpack(fn) {
