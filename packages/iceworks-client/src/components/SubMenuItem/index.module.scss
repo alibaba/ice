@@ -1,0 +1,31 @@
+@import '../../variables.scss';
+
+.item {
+  .link {
+    display: flex;
+    align-items: center;
+    height: 72px;
+    padding: 0 15px;
+    color: $text-color-secondary;
+    text-decoration: none;
+  }
+
+  .icon {
+    color: $text-color-primary;
+  }
+
+  .image {
+  }
+
+  .info {
+    margin-left: 10px;
+    .name {
+      margin: 0;
+    }
+
+    .desc {
+      margin: 0;
+      color: $text-color-primary;
+    }
+  }
+}
