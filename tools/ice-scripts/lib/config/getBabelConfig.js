@@ -13,7 +13,7 @@ function resolvePlugin(plugins) {
 }
 
 module.exports = () => {
-  let plugins = [
+  const plugins = [
     // Stage 0
     '@babel/plugin-proposal-function-bind',
     // Stage 1
@@ -35,20 +35,6 @@ module.exports = () => {
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     '@babel/plugin-proposal-json-strings',
   ];
-
-  const importConfig = [{
-    libraryName: '@icedesign/base',
-  }, {
-    libraryName: '@alife/next',
-  }, {
-    libraryName: '@alifd/next',
-  }];
-
-  plugins = plugins.concat(
-    importConfig.map((itemConfig) => {
-      return ['babel-plugin-import', itemConfig, itemConfig.libraryName];
-    })
-  );
 
   return {
     // babelrc: buildConfig.babelrc || false,

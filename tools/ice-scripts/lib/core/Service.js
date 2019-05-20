@@ -57,8 +57,10 @@ module.exports = class Service {
       if (!Array.isArray(pluginInfo)) {
         pluginInfo = [pluginInfo];
       }
+      const [plugin, options] = pluginInfo;
+      const pluginName = typeof plugin === 'string' ? plugin : '';
+
       try {
-        const [plugin, options] = pluginInfo;
         const pluginFunc = typeof plugin === 'string'
           // eslint-disable-next-line import/no-dynamic-require
           ? require(require.resolve(plugin, { paths: [this.context] }))
@@ -67,11 +69,10 @@ module.exports = class Service {
         // support async function
         // make sure to run async funtion in order
         // eslint-disable-next-line no-await-in-loop
-        await pluginFunc(new PluginAPI(this), options);
-      } catch (e) {
-        const errorPlugin = pluginInfo[0];
-        log.error(e);
-        log.error(`Fail to load Plugin ${typeof errorPlugin === 'string' ? errorPlugin : ''}`);
+        await pluginFunc(new PluginAPI(this, pluginName), options);
+      } catch (err) {
+        log.error(`Fail to load plugin ${pluginName}`);
+        console.error(err);
         process.exit(1);
       }
     }
@@ -94,7 +95,16 @@ module.exports = class Service {
   getWebpackConfig() {
     const config = this.defaultWebpackConfig;
 
-    this.chainWebpackFns.forEach((fn) => fn(config));
+    this.chainWebpackFns.forEach(({ fn, pluginName }) => {
+      try {
+        fn(config);
+      } catch (err) {
+        log.error(`Fail to exec plugin chainWebpack ${pluginName}`);
+        console.error(err);
+        process.exit(1);
+      }
+    });
+
     if (this.userConfig.chainWebpack) {
       this.userConfig.chainWebpack(config);
     }
