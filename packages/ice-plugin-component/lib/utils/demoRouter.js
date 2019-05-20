@@ -19,6 +19,7 @@ function compile(hbsPath) {
 module.exports = ({
   context,
   markdownParser,
+  demoDir,
   demos,
   pkg,
   hasAdaptor,
@@ -34,7 +35,7 @@ module.exports = ({
         return;
       }
 
-      const demoFile = path.join(context, 'demo', `${demo}.md`);
+      const demoFile = path.join(context, demoDir, `${demo}.md`);
       if (!fs.existsSync(demoFile)) {
         res.redirect('/');
         return;
