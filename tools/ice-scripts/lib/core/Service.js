@@ -30,8 +30,10 @@ module.exports = class Service {
       try {
         // eslint-disable-next-line import/no-dynamic-require
         userConfig = require(iceConfigPath);
-      } catch (e) {
+      } catch (err) {
         log.error('Fail to load ice.config.js, use default config instead');
+        console.error(err);
+        process.exit(1);
       }
     } else if (this.pkg.buildConfig) {
       log.warn('You should migrate config into ice.config.js');
