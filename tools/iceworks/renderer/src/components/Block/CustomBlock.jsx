@@ -7,7 +7,7 @@ import './index.scss';
 
 import { inject, observer } from 'mobx-react';
 
-@inject('customBlocks')
+@inject('localBlocks')
 @observer
 export default class CustomBlock extends Component {
   handleClick = () => {
@@ -18,23 +18,22 @@ export default class CustomBlock extends Component {
 
   openBlockImgPreview = (event) => {
     event.stopPropagation();
-    const { customBlocks, blockName } = this.props;
-    customBlocks.openModal(blockName);
+    const { localBlocks, blockName } = this.props;
+    localBlocks.openModal(blockName);
   };
 
   render() {
-    const { block, blockName } = this.props;
+    const { block, blockName, localBlocks } = this.props;
 
     return (
       <div className="block" onClick={this.handleClick}>
         <div className="screenshot">
           <img
             className="custom-screenshot-img"
-            src={'data:image/png;base64,' + this.props.customBlocks.getBlockImg(blockName)}
+            src={'data:image/png;base64,' + localBlocks.getBlockImg(blockName)}
           />
         </div>
         <div className="title-wrapper">
-          <div className="title">{block.alias}</div>
           <div className="class-name">{blockName}</div>
         </div>
         <div className="panel">

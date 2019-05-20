@@ -3,34 +3,34 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import CustomBlock from '../Block/CustomBlock';
-import CustomBlockPreviewModal from '../Block/PreviewModal/custom'
+import CustomBlockPreviewModal from '../Block/PreviewModal/custom';
 
 import './index.scss';
 
-@inject('customBlocks', 'blocks', 'pageBlockPicker')
+@inject('localBlocks', 'blocks', 'pageBlockPicker')
 @observer
 class CustomBlockCategory extends Component {
-
   handleSelected = (block, blockName) => {
     this.props.blocks.addCustomBlock(block, blockName, this.props.pageBlockPicker.existBlocks);
   };
 
   render() {
-    const customBlocks = this.props.customBlocks.blocksStorage;
+    const { localBlocks } = this.props;
+    const { blocksStorage } = localBlocks;
     return (
-      <div className="blcoks-wrapper">
+      <div className="blocks-wrapper">
         <div className="block-category">
           <div className="block-category-body">
-            {Object.keys(customBlocks).map((blockName) => {
+            {Object.keys(blocksStorage).map((blockName) => {
               return (
                 <CustomBlock
                   key={blockName}
                   blockName={blockName}
-                  block={customBlocks[blockName]}
+                  block={blocksStorage[blockName]}
                   onClick={this.handleSelected}
                 />
-                )})
-              }
+              );
+            })}
           </div>
         </div>
         <CustomBlockPreviewModal />

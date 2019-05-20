@@ -6,16 +6,16 @@ import React, { Component } from 'react';
  * 模板生成表单项目
  */
 
-@inject('customBlocks')
+@inject('localBlocks')
 @observer
 export default class BlockRenameForm extends Component {
   /** 修改项目名称 */
   changeBlockName = (value) => {
-    this.props.customBlocks.resetBlockName(value);
+    this.props.localBlocks.resetBlockName(value);
   };
 
   changeBlockAlias = (value) => {
-    this.props.customBlocks.resetBlockAlias(value);
+    this.props.localBlocks.resetBlockAlias(value);
   };
 
   render() {
@@ -28,18 +28,18 @@ export default class BlockRenameForm extends Component {
           <Input
             ref="name"
             placeholder={'字母数字中下划线组合 (必填)'}
-            value={this.props.customBlocks.renameBlockName}
+            value={this.props.localBlocks.renameBlockName}
             onChange={this.changeBlockName}
           />
           <div className="project-config-form-item-error-message">
-            {this.props.customBlocks.blockNameValidation}
+            {this.props.localBlocks.blockNameValidation}
           </div>
         </div>
         <div className="project-config-form-item">
           <h3 style={{ margin: 0 }}>区块别名：</h3>
           <Input
             placeholder={'可输入中文 (选填)'}
-            value={this.props.customBlocks.renameBlockAlias}
+            value={this.props.localBlocks.renameBlockAlias}
             onChange={this.changeBlockAlias}
           />
         </div>

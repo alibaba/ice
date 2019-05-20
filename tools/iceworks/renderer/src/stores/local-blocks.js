@@ -5,21 +5,26 @@ import { remote } from 'electron';
 import fs from 'fs-extra';
 import mkdirp from 'mkdirp';
 import fecha from 'fecha';
-import request from 'request';
-import requestProgress from 'request-progress';
 import services from '../services';
 import logger from '../lib/logger';
 
 const defaultWorkspacePath = path.join(os.homedir(), '.iceworks');
-// const devWorkbenchPath = 'http://127.0.0.1:3333/src/pages/Design';
-const onlineWorkbenchPath = 'http://ice.alicdn.com/iceland-assets/workbench/v21300/pages/workbench/index.html';
-const presentWorkbenchPath = onlineWorkbenchPath;
+// const designPath = 'http://127.0.0.1:3333/src/pages/Design';
+const designPath = 'https://g.alicdn.com/iceland/iceland-page/0.1.0/design.html';
+const presentWorkbenchPath = designPath;
+
+const LOCAL_BLOCK_DIR_NAME = 'localBlocks';
+const TEMPORARY_BLOCK_DIR_NAME = 'temporaryBlocks';
+const BLOCK_DIR = path.join(defaultWorkspacePath, LOCAL_BLOCK_DIR_NAME);
+const TEMPORARY_BLOCK_DIR = path.join(defaultWorkspacePath, TEMPORARY_BLOCK_DIR_NAME);
+// 跟 webview 通信约定的字段
+const MESSAGE_FLAG = 'saveSceneData: ';
 
 /**
- * 自定义区块状态管理
+ * 本地区块状态管理
  */
 
-class CustomBlocks {
+class LocalBlocks {
   blockSaving = false;
 
   materialData = '';
@@ -36,11 +41,11 @@ class CustomBlocks {
 
   iconData = '';
 
-  dataLoading = false;
-
   capture = false;
 
   requestCount = 0;
+
+  @observable isHasInitBlocks = false;
 
   @observable blockEditing = false;
 
@@ -54,8 +59,6 @@ class CustomBlocks {
 
   @observable blockName = '';
 
-  @observable blockAlias = '';
-
   @observable currentBlock = {};
 
   @observable blockJSON = '';
@@ -67,8 +70,6 @@ class CustomBlocks {
   @observable renameVisible = false;
 
   @observable renameBlockName = '';
-
-  @observable renameBlockAlias = '';
 
   @observable renameBlock = '';
 
@@ -97,85 +98,27 @@ class CustomBlocks {
   }
 
   initCustomBlocks() {
+    // if has init, skip
+    if (this.isHasInitBlocks) {
+      return;
+    }
     // 确保目录存在
-    mkdirp.sync(path.join(defaultWorkspacePath, 'blocks'));
+    mkdirp.sync(BLOCK_DIR);
+    mkdirp.sync(TEMPORARY_BLOCK_DIR);
     mkdirp.sync(path.join(defaultWorkspacePath, 'images'));
     // 读取区块文件数据到状态池
     this.initBlocksData();
   }
 
   initBlocksData() {
-    fs.readdirSync(path.join(defaultWorkspacePath, 'blocks')).forEach((element) => {
+    fs.readdirSync(BLOCK_DIR).forEach((element) => {
       this.blocksStorage[element] = JSON.parse(
         fs.readFileSync(
-          path.join(defaultWorkspacePath, 'blocks', element),
+          path.join(defaultWorkspacePath, LOCAL_BLOCK_DIR_NAME, element),
           'utf8'
         )
       );
     });
-  }
-
-  loadMaterialData() {
-    if (this.dataLoading) {
-      this.progressVisible = true;
-    }
-    if (!this.materialData) {
-      this.dataLoading = true;
-      this.progressTitle = '下载物料数据';
-      requestProgress(
-        request(
-          'http://ice.alicdn.com/iceland-assets/material-engine-production.json',
-          (error, response, body) => {
-            if (!error) {
-              this.materialData = body;
-              this.getEngine('react');
-              this.loadIconData();
-            } else if (this.requestCount < 3) {
-              this.requestCount++;
-              this.loadMaterialData();
-            } else {
-              this.requestCount = 0;
-              this.errorVisible = true;
-              this.dataLoading = false;
-              this.progressVisible = false;
-            }
-          }),
-        {})
-        .on('progress', (state) => {
-          this.materialProgress = Math.ceil(state.percentage * 50);
-          this.progressSpeed = Math.floor(state.speed / 1024);
-        });
-    }
-  }
-
-  loadIconData() {
-    if (!this.iconData) {
-      this.progressTitle = '下载 Iconfont 数据';
-      requestProgress(
-        request('http://ice.alicdn.com/iceland-assets/iconData.json',
-          (error, response, body) => {
-            if (!error) {
-              this.materialProgress = 100;
-              this.iconData = body;
-              this.dataLoading = false;
-              this.progressVisible = false;
-              this.dataTest();
-            } else if (this.requestCount < 3) {
-              this.requestCount++;
-              this.loadIconData();
-            } else {
-              this.requestCount = 0;
-              this.errorVisible = true;
-              this.dataLoading = false;
-              this.progressVisible = false;
-            }
-          }),
-        {})
-        .on('progress', (state) => {
-          this.materialProgress = Math.ceil(state.percentage * 50) + 50;
-          this.progressSpeed = Math.floor(state.speed / 1024);
-        });
-    }
   }
 
   getEngine() {
@@ -214,11 +157,9 @@ class CustomBlocks {
   // 重置新建区块和重命名表单
   formReset() {
     this.blockName = '';
-    this.blockAlias = '';
     this.blockNameValidation = '';
     this.renameBlock = '';
     this.renameBlockName = '';
-    this.renameBlockAlias = '';
   }
 
   @action
@@ -254,7 +195,6 @@ class CustomBlocks {
     this.renameVisible = true;
     this.renameBlockName = name;
     this.renameBlock = name;
-    this.resetBlockAlias(this.blocksStorage[name].alias);
   }
 
   getDefaultBlockName(blockCounter) {
@@ -270,22 +210,9 @@ class CustomBlocks {
   // 表单onChange + 验证
   @action
   setBlockName(value = '') {
-    if (value.trim() === '' || !/^[a-z][0-9a-z]*$/i.test(value.trim())) {
-      this.blockNameValidation = '区块名须由字母、数字组成, 字母开头';
-      this.isDisabled = true;
-    } else if (Object.prototype.hasOwnProperty.call(this.blocksStorage, value)) {
-      this.isDisabled = true;
-      this.blockNameValidation = '区块名重复';
-    } else {
-      this.blockNameValidation = '';
-      this.isDisabled = false;
-    }
+    this.blockNameValidation = '';
+    this.isDisabled = false;
     this.blockName = value;
-  }
-
-  @action
-  setBlockAlias(value = '') {
-    this.blockAlias = value;
   }
 
   // 表单onChange时表单验证
@@ -305,17 +232,11 @@ class CustomBlocks {
   }
 
   @action
-  resetBlockAlias(value = '') {
-    this.renameBlockAlias = value;
-  }
-
-  @action
   refactorBlock() {
-    if (this.renameBlock !== this.renameBlockName || this.renameBlockAlias !== this.blocksStorage[this.renameBlockName].alias) {
+    if (this.renameBlock !== this.renameBlockName) {
       this.blockEditing = true;
       this.refactorBlockFiles(this.renameBlock);
       this.blocksStorage[this.renameBlockName] = this.deepClone(this.blocksStorage[this.renameBlock]);
-      this.blocksStorage[this.renameBlockName].alias = this.renameBlockAlias;
       if (this.renameBlock !== this.renameBlockName) {
         this.deleteBlock(this.renameBlock);
       }
@@ -325,39 +246,35 @@ class CustomBlocks {
   }
 
   refactorBlockFiles(blockName) {
-    const blockData = fs.readFileSync(path.join(defaultWorkspacePath, 'blocks', blockName), 'utf8');
+    const blockData = fs.readFileSync(path.join(defaultWorkspacePath, LOCAL_BLOCK_DIR_NAME, blockName), 'utf8');
     const newBlockData = JSON.parse(blockData);
-    newBlockData.alias = this.renameBlockAlias;
-    fs.writeFileSync(path.join(defaultWorkspacePath, 'blocks', this.renameBlockName), JSON.stringify(newBlockData));
+    fs.writeFileSync(path.join(defaultWorkspacePath, LOCAL_BLOCK_DIR_NAME, this.renameBlockName), JSON.stringify(newBlockData));
     const imageData = fs.readFileSync(path.join(defaultWorkspacePath, 'images', blockName));
     fs.writeFileSync(path.join(defaultWorkspacePath, 'images', this.renameBlockName), imageData);
   }
 
   @action
   dataTest() {
-    if (!this.materialData || !this.iconData) {
-      this.progressVisible = true;
-      this.loadMaterialData();
-    } else {
-      this.openWorkBench();
-    }
+    this.openWorkBench();
   }
 
   @action
-  openWorkBench() {
-    if (!this.materialData || !this.iconData) {
-      return this.dataTest();
-    }
+  openWorkBench(needSave = true, callback) {
     if (!this.workBenchWindow) {
-      this.workBenchEventsBinding();
+      if (!needSave) {
+        this.blockName = `LocalForm-${Date.now()}`;
+      }
+      this.workBenchEventsBinding(needSave, callback);
       if (this.blockJSON) {
         this.workBenchWindow.webContents.setUserAgent(JSON.stringify({
           name: this.blockName,
           json: this.blockJSON,
+          needSave,
         }));
       } else {
         this.workBenchWindow.webContents.setUserAgent(JSON.stringify({
           name: this.blockName,
+          needSave,
         }));
       }
     }
@@ -367,15 +284,14 @@ class CustomBlocks {
   editBlock(name) {
     this.blockName = name;
     this.blockCode = this.blocksStorage[name].code;
-    this.blockAlias = this.blocksStorage[name].alias;
     this.blockJSON = this.blocksStorage[name].json;
     this.dataTest();
   }
 
-  workBenchEventsBinding() {
+  workBenchEventsBinding(needSave, callback) {
     this.blockEditing = true;
     this.workBenchWindow = new remote.BrowserWindow({
-      title: 'ICELAND - 区块搭建',
+      title: this.blockName ? `搭建 ${this.blockName}` : '表单搭建',
       width: 1280,
       minWidth: 1186,
       height: 720,
@@ -386,29 +302,21 @@ class CustomBlocks {
       this.workBenchWindow.show();
     });
     this.workBenchWindow.loadURL(presentWorkbenchPath);
-    this.workBenchWindow.webContents.executeJavaScript(`window.IceLand.materialData = ${this.materialData}`, true);
     // 回调参数和官方文档描述不符
     this.workBenchWindow.webContents.on('console-message', (level, sourceId, message, line) => {
       logger.info(message, line);
-      if (line === 133 || line === 125) {
-        const passBackData = JSON.parse(message);
+      if (message.indexOf(MESSAGE_FLAG) === 0) {
+        const validMessage = message.substring(15);
+        const passBackData = JSON.parse(validMessage);
         if (passBackData) {
-          if (passBackData.type === 'icon') {
-            this.workBenchWindow.webContents.executeJavaScript(`window.IceLand.iconData = ${this.iconData}`, true);
-          } else if (passBackData.type === 'offset') {
-            this.paintOffset = passBackData.value;
-          } else if (passBackData.type === 'height') {
-            this.paintHeight = passBackData.value + 72;
-          } else if (passBackData.type === 'width') {
-            this.paintWidth = passBackData.value + 72;
-            this.capture = true;
-          } else if (passBackData.type === 'Group') {
-            this.blockSaving = true;
-            const JSONObj = passBackData;
-            JSONObj.props.style.position = 'relative';
-            this.blockJSON = JSON.stringify(JSONObj);
-            this.jsonTransfer();
-          }
+          this.capture = true;
+          const { json } = passBackData;
+          this.blockJSON = JSON.stringify(json);
+          this.saveCustomBlock({
+            ...passBackData,
+            needSave,
+            callback,
+          });
         }
       }
     });
@@ -427,36 +335,39 @@ class CustomBlocks {
     });
   }
 
-  // json转代码 + 抽取依赖 + 代码美化
-  jsonTransfer() {
-    const json = JSON.parse(this.blockJSON);
-    services.customBlocks.dsl2code(json, this.materialEngine, this.saveCustomBlock);
-  }
-
-  saveCustomBlock = (deps, code) => {
+  saveCustomBlock = ({ deps, code, paintRect, needSave, callback }) => {
     this.blockDeps = deps;
-    this.blockCode = JSON.parse(code);
+    this.blockCode = code;
     this.currentBlock = {
       json: this.blockJSON,
-      alias: this.blockAlias,
       code: this.blockCode,
       type: 'custom',
       time: fecha.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
-      dep: this.blockDeps,
+      dep: deps,
     };
-    fs.writeFileSync(path.join(defaultWorkspacePath, 'blocks', this.blockName), JSON.stringify(this.currentBlock));
+    // no need save form block will be put temporary dir
+    fs.writeFileSync(
+      path.join(defaultWorkspacePath, needSave ? LOCAL_BLOCK_DIR_NAME : TEMPORARY_BLOCK_DIR_NAME, this.blockName),
+      JSON.stringify(this.currentBlock)
+    );
     if (this.capture) {
       this.workBenchWindow.capturePage({
-        x: Math.floor(this.paintOffset.left),
-        y: Math.floor(this.paintOffset.top),
-        width: Math.floor(this.paintWidth),
-        height: Math.floor(this.paintHeight),
+        x: paintRect.x,
+        y: paintRect.y,
+        width: paintRect.width,
+        height: paintRect.height,
       }, (img) => {
         fs.writeFile(path.join(defaultWorkspacePath, 'images', this.blockName), img.toPNG(), () => {
           this.refreshBlocks();
           this.blockSaving = false;
           this.blockJSON = '';
           this.capture = false;
+          if (callback) {
+            const isCloseWindow = callback(this.currentBlock, this.blockName);
+            if (isCloseWindow) {
+              this.workBenchWindow.close();
+            }
+          }
         });
       });
     }
@@ -469,7 +380,7 @@ class CustomBlocks {
   @action
   deleteBlock(name) {
     delete this.blocksStorage[name];
-    fs.remove(path.join(defaultWorkspacePath, 'blocks', name), (error) => {
+    fs.remove(path.join(defaultWorkspacePath, LOCAL_BLOCK_DIR_NAME, name), (error) => {
       if (error) {
         logger.error(error);
       } else {
@@ -486,4 +397,4 @@ class CustomBlocks {
   }
 }
 
-export default new CustomBlocks();
+export default new LocalBlocks();

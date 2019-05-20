@@ -10,17 +10,18 @@ import {
 } from '../../../components/BlockPicker/';
 import Icon from '../../../components/Icon';
 import PageConfig from './PageConfig';
+import LocalBuildForm from './LocalBuildForm';
 import './index.scss';
 
-@inject('projects', 'newpage', 'blocks', 'customBlocks', 'progress')
+@inject('projects', 'newpage', 'blocks', 'localBlocks', 'progress')
 @observer
 class CreatePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedBlocks: []
+      selectedBlocks: [],
     };
-    this.props.customBlocks.initCustomBlocks();
+    this.props.localBlocks.initCustomBlocks();
   }
 
   handleCancelCreate = () => {
@@ -92,7 +93,7 @@ class CreatePage extends Component {
   handleBlocksAdd = (blockObj) => {
     if (!Array.isArray(blockObj)) {
       blockObj = [blockObj];
-    } 
+    }
     blockObj.forEach( block => 
       this.props.blocks.addBlock(block)
     );
@@ -149,6 +150,9 @@ class CreatePage extends Component {
             />
           )
         }
+        {newpage.localBuildFormVisible && (
+          <LocalBuildForm />
+        )}
       </Dialog>
     );
   }

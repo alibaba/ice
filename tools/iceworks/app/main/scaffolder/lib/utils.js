@@ -409,7 +409,7 @@ function extractCustomBlock(block, BlockDir, progressFunc) {
 
 function getDependenciesFromCustom(block) {
   return new Promise((resolve) => {
-    const customDependencies = JSON.parse(block.dep);
+    const customDependencies = typeof block.dep === 'object' ? block.dep : JSON.parse(block.dep);
     const dependencies = {};
     customDependencies.forEach((dep) => {
       dependencies[dep.npmName] = dep.version;

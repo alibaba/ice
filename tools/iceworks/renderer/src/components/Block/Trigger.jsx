@@ -26,7 +26,7 @@ export default class ScaffoldTrigger extends Component {
         >
           <Icon type="add" style={{ fontSize: 60, color: '#297CFF' }} />
         </div>
-        <div className="scaffold-title">新建自定义区块</div>
+        <div className="scaffold-title">新建本地区块</div>
       </div>
     );
   }

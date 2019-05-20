@@ -16,6 +16,7 @@ import component from './stores/component';
 import materials from './stores/materials';
 import switcher from './stores/switcher';
 import customBlocks from './stores/custom-blocks';
+import localBlocks from './stores/local-blocks';
 import settingsMaterials from './stores/settings-materials';
 import user from './stores/user';
 import progress from './stores/progress';
@@ -118,6 +119,7 @@ class App extends Component {
         materials={materials}
         switcher={switcher}
         customBlocks={customBlocks}
+        localBlocks={localBlocks}
         settingsMaterials={settingsMaterials}
         user={user}
         progress={progress}

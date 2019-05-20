@@ -6,38 +6,35 @@ import './CustomBlockPanel.scss';
 
 const Toast = Feedback.toast;
 
-@inject('customBlocks')
+@inject('localBlocks')
 @observer
 export default class CustomBlockPanel extends Component {
 
   editBlock = (name) => {
     if (this.operationValidation()) {
-      this.props.customBlocks.editBlock(name);
+      this.props.localBlocks.editBlock(name);
     }
   };
 
   renameBlock = (name) => {
     if (this.operationValidation()) {
-      this.props.customBlocks.renameOpen(name);
+      this.props.localBlocks.renameOpen(name);
     }
   };
 
   deleteBlock = (name) => {
     if (this.operationValidation()) {
-      this.props.customBlocks.deleteBlock(name);
+      this.props.localBlocks.deleteBlock(name);
     }
   };
 
   operationValidation = () => {
-    if(this.props.customBlocks.blockEditing){
+    if(this.props.localBlocks.blockEditing){
       Toast.show({
         type: 'prompt',
         content: '请先关闭正在搭建的区块',
         duration: 1000
       });
-      return false;
-    } else if (this.props.customBlocks.dataLoading) {
-      this.props.customBlocks.openProgress();
       return false;
     } else {
       return true;
@@ -55,7 +52,7 @@ export default class CustomBlockPanel extends Component {
               key={index}
             >
               <div className="scaffold-image">
-                <img src={'data:image/png;base64,' + this.props.customBlocks.getBlockImg(blockName)} alt="" />
+                <img src={'data:image/png;base64,' + this.props.localBlocks.getBlockImg(blockName)} alt="" />
               </div>
               <div className="scaffold-title">{blockName}</div>
               <div className="scaffold-flipcard">

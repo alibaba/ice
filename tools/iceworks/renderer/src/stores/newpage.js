@@ -37,6 +37,10 @@ class NewPage extends EventEmitter {
   @observable
   savePageVisible = false;
 
+  // 控制搭建表单
+  @observable
+  localBuildFormVisible = false;
+
   // 控制 page 保存 dialog 的显示
   @observable
   isCreatingValue = false;
@@ -80,6 +84,16 @@ class NewPage extends EventEmitter {
   @action
   closeSave() {
     this.savePageVisible = false;
+  }
+
+  @action
+  openLocalBuildForm() {
+    this.localBuildFormVisible = true;
+  }
+
+  @action
+  closeLocalBuildForm() {
+    this.localBuildFormVisible = false;
   }
 
   @action

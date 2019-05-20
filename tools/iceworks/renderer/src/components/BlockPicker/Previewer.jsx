@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import { SortableContainer } from 'react-sortable-hoc';
+import { Button, Icon } from '@icedesign/base';
 
 import BlockPreview from '../BlockPreview';
 import PreviewTitle from './PreviewTitle';
@@ -31,7 +32,7 @@ const SortableBlockPreview = SortableContainer(
   }
 );
 
-@inject('blocks')
+@inject('blocks', 'localBlocks', 'pageBlockPicker')
 @observer
 class Previewer extends Component {
   static propTypes = {
@@ -51,10 +52,27 @@ class Previewer extends Component {
     this.props.blocks.blockModifyAlias(orderIndex, newAlias);
   };
 
+  /**
+   * 打开搭建本地区块 dialog
+   */
+  handleOpenBuildBlock = () => {
+    const { localBlocks, pageBlockPicker, blocks } = this.props;
+    localBlocks.openWorkBench(false, (block, blockName) => {
+      blocks.addCustomBlock(block, blockName, pageBlockPicker.existBlocks);
+      return true;
+    });
+  };
+
   render() {
     const { blocks = {}, title, text, src } = this.props;
     return (
       <div className="preview-wrapper">
+        <div className="preview-button-group">
+          <Button onClick={this.handleOpenBuildBlock} type="primary">
+            <Icon size="small" type="edit" />
+            <span>快速生成表单区块</span>
+          </Button>
+        </div>
         {blocks.selected.length ? (
           <PreviewTitle title={title} count={blocks.selected.length} />
         ) : (
