@@ -7,7 +7,7 @@ module.exports = (api, value) => {
       entry = {
         index: value,
       };
-    } else if (typeof value === 'object') {
+    } else if (Object.prototype.toString.call(value) === '[object Object]') {
       entry = value;
     }
     // webpack-chain entry must be [name]: [...values]
