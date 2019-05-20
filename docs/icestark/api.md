@@ -1,7 +1,7 @@
 ---
 title: 配置说明
 category: icestark
-order: 2
+order: 6
 ---
 
 icestark 配置说明
