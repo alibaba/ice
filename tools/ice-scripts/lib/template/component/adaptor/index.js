@@ -1,4 +1,4 @@
-import Component from '../src';
+import MainComponent from '../src';
 
 export default {
   name: '', // 组件名称
@@ -10,7 +10,7 @@ export default {
   adaptor: (props) => {
     return (
       // eslint-disable-next-line react/react-in-jsx-scope
-      <Component {...props} />
+      <MainComponent {...props} />
     );
   },
 };

@@ -91,7 +91,7 @@ function getAnswerOptions(type) {
     type === 'component' ? {
       type: 'confirm',
       name: 'adaptor',
-      message: '组件是否需要接入Fusion Cool & 设计板块 ？',
+      message: '组件是否需要接入 Fusion Cool & 设计板块？',
       default: false,
     } : false,
   ].filter((v) => v)).then((answer) => {
