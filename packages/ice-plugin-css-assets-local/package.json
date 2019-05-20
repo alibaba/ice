@@ -1,0 +1,12 @@
+{
+  "name": "ice-plugin-css-assets-local",
+  "version": "1.0.0",
+  "description": "ice-scripts plugin for localize CSS assets",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "extract-css-assets-webpack-plugin": "^0.2.5"
+  }
+}
