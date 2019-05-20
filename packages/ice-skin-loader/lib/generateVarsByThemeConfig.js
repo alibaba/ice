@@ -33,6 +33,6 @@ function getVariableMappingString(key, value) {
       return secondaryColor(value);
     default:
       // 自定义变量
-      return `$${key}: ${JSON.stringify(value)};`;
+      return `$${key}: ${value};`;
   }
 }
