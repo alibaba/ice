@@ -1,6 +1,6 @@
 const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin');
 
-module.exports = (api) => {
+module.exports = (api, options) => {
   const { service: { command }, log } = api;
 
   // it is increase dev build time
@@ -11,8 +11,8 @@ module.exports = (api) => {
       // TODO: set publicPath
       config.plugin('ExtractCssAssetsWebpackPlugin')
         .use(ExtractCssAssetsWebpackPlugin, [{
-          outputPath: 'assets',
-          relativeCssPath: '../',
+          outputPath: options.outputPath || 'assets',
+          relativeCssPath: options.relativeCssPath || '../',
         }]);
     });
   }
