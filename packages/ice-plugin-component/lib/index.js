@@ -74,22 +74,24 @@ module.exports = (api) => {
       demos.forEach((demo) => {
         const demoName = demo.filename;
         const demoFile = path.join('demo', `${demoName}.md`);
-        componentEntry[`__Component_Dev__.${demoName}`] = demoFile;
+        componentEntry[`__Component_Dev__.${demoName}`] = [demoFile];
       });
       if (adaptorEntry) {
-        componentEntry.adaptor = adaptorEntry;
+        componentEntry.adaptor = [adaptorEntry];
       }
-      entry = api.processEntry(componentEntry);
+      entry = componentEntry;
       setAssetsPath(config, { js: 'js', css: 'css' });
     } else if (command === 'build') {
-      entry = api.processEntry(generateEntryJs({
-        template: 'index.js.hbs',
-        filename: 'component-index.js',
-        context,
-        params: {
-          demos: demos.map((demo) => ({ path: formatPathForWin(demo.filePath) })),
-        },
-      }));
+      entry = {
+        index: generateEntryJs({
+          template: 'index.js.hbs',
+          filename: 'component-index.js',
+          context,
+          params: {
+            demos: demos.map((demo) => ({ path: formatPathForWin(demo.filePath) })),
+          },
+        }),
+      };
       config.output.publicPath('./');
       ['scss', 'scss-module', 'css', 'css-module', 'less', 'less-module'].forEach((rule) => {
         if (config.module.rules.get(rule)) {
@@ -135,7 +137,7 @@ module.exports = (api) => {
       config.output.path(path.resolve(context, 'build/adaptor'));
       config.entryPoints.clear();
       config.merge({
-        entry: api.processEntry({ adaptor: path.resolve(context, 'adaptor/index.js') }),
+        entry: { adaptor: path.resolve(context, 'adaptor/index.js') },
       });
       config.externals({
         react: {
@@ -165,6 +167,7 @@ module.exports = (api) => {
       });
     }
   });
+
   api.onHooks('afterBuild', () => {
     if (!process.env.BUILD_ADAPTOR) {
       // modify pkg home page
@@ -177,7 +180,7 @@ module.exports = (api) => {
       });
 
       // component build
-      buildSrc(babelConfig, context);
+      buildSrc({ babelConfig, context, log: api.log });
 
       if (hasAdaptor) {
         // generate adaptor index.scss
@@ -185,7 +188,7 @@ module.exports = (api) => {
         fse.writeFileSync(path.resolve(context, 'build/index.scss'), sassContent, 'utf-8');
         // adaptor build
         process.env.BUILD_ADAPTOR = true;
-        api.service.run();
+        api.service.reRun();
       }
     }
   });
