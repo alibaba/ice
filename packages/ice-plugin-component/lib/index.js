@@ -131,7 +131,10 @@ module.exports = (api) => {
 
     // modify webpack chain for adaptor build
     if (process.env.BUILD_ADAPTOR === JSON.stringify(true) && command === 'build' && hasAdaptor) {
-      config.plugins.delete('HtmlWebpackPlugin');
+      config.plugin('HtmlWebpackPlugin').tap(() => [{
+        template: require.resolve('./template/build.html.hbs'),
+        filename: 'index.html',
+      }]);
       // output umd
       config.output
         .library('Adaptor')
