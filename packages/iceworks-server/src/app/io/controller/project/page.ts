@@ -8,7 +8,8 @@ export default (app) => {
       return await project.page.getAll();
     }
 
-    async delete({ name }) {
+    async delete({ args }) {
+      const { name } = args;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
       await project.page.delete(name);
