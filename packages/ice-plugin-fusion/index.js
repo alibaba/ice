@@ -29,6 +29,7 @@ module.exports = async (api, { themePackage, themeConfig = {}, uniteBaseComponen
       style: true,
     }, {
       libraryName: '@alifd/next',
+      libraryDirectory: 'es',
       style: true,
     }];
     ['jsx', 'tsx'].forEach((rule) => {
