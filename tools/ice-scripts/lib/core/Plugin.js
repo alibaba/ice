@@ -17,6 +17,13 @@ module.exports = class PluginAPI {
     });
   }
 
+  onHooks(key, fn) {
+    if (!Array.isArray(this.service.eventHooks[key])) {
+      this.service.eventHooks[key] = [];
+    }
+    this.service.eventHooks[key].push(fn);
+  }
+
   getWebpackConfig() {
     return this.service.getWebpackConfig();
   }

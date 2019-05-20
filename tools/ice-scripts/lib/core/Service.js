@@ -19,9 +19,10 @@ module.exports = class Service {
     this.paths = paths;
     // get user config form ice.config.js
     this.userConfig = this.getUserConfig(this.context);
-    this.chainWebpackFns = [];
     this.plugins = this.getPlugins();
-    this.defaultWebpackConfig = getDefaultWebpackConfig(command);
+    // init chainWebpackFns and hooks
+    this.chainWebpackFns = [];
+    this.eventHooks = {};
   }
 
   getUserConfig() {
@@ -92,8 +93,22 @@ module.exports = class Service {
     }
   }
 
+  async applyHooks(key, opts = {}) {
+    const hooks = this.eventHooks[key] || [];
+    const results = [];
+    hooks.forEach((fn) => {
+      try {
+        results.push(fn(opts));
+      } catch (e) {
+        log.error(e);
+        log.error(`Fail to excute hook ${key}`);
+      }
+    });
+    await Promise.all(results);
+  }
+
   getWebpackConfig() {
-    const config = this.defaultWebpackConfig;
+    const config = getDefaultWebpackConfig(this.command);
 
     this.chainWebpackFns.forEach(({ fn, pluginName }) => {
       try {
@@ -111,6 +126,13 @@ module.exports = class Service {
     // add polyfill/hotdev before origin entry
     this.processWepackEntry(config);
     return config.toConfig();
+  }
+
+  async reRun() {
+    // reset chainWebpackFns and eventHooks before run command again
+    this.chainWebpackFns = [];
+    this.eventHooks = {};
+    this.run();
   }
 
   async run() {

@@ -23,6 +23,7 @@ module.exports = async function (api, subprocess) {
   });
   goldlog('dev', api.commandArgs);
   log.verbose('dev cliOptions', api.commandArgs);
+  await api.applyHooks('beforeDev');
 
   // 与 iceworks 客户端通信
   const send = function (data) {
@@ -103,6 +104,7 @@ module.exports = async function (api, subprocess) {
         );
       }
     }
+    api.applyHooks('afterDev', stats);
 
     if (messages.errors.length) {
       if (messages.errors.length > 1) {

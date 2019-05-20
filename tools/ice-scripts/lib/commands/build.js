@@ -24,6 +24,7 @@ module.exports = async function (api) {
   });
   goldlog('build', api.commandArgs);
   log.verbose('build cliOptions', api.commandArgs);
+  await api.applyHooks('beforeBuild');
 
   const installedDeps = checkDepsInstalled(api.paths.appDirectory);
   if (!installedDeps) {
@@ -76,6 +77,7 @@ module.exports = async function (api) {
         }
       }
 
+      api.applyHooks('afterBuild', stats);
       done();
     });
   });
