@@ -12,10 +12,9 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const rimraf = require('rimraf');
 
-const log = require('../utils/log');
 const ComponentStyleGenerator = require('./component-style-generator');
 
-module.exports = function componentBuild(babelConfig, context) {
+module.exports = function componentBuild({ babelConfig, context, log }) {
   const srcDir = path.join(context, 'src');
   const libDir = path.join(context, 'lib');
 

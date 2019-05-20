@@ -58,7 +58,6 @@ module.exports = function resolveSassFile(sassFile, context) {
         }
 
         if (resolvePath) {
-          console.log('resovepath', resolvePath);
           return resolveSassFile(resolvePath);
         }
       }
