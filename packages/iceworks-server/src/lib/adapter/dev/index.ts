@@ -6,7 +6,6 @@ import DEV_SETTINGS from './const';
 const DEFAULT_PORT = '4445';
 
 export const DEV_STATUS_NORMAL = 'normal';
-export const DEV_STATUS_STARING = 'staring';
 export const DEV_STATUS_WORKING = 'working';
 export const DEV_STATUS_STOP = 'stop';
 
@@ -54,7 +53,7 @@ export default class Dev extends EventEmitter {
       console.log('process exit:', code);
     });
 
-    return this;
+    return { status: this.status };
   }
 
   async stop() {
@@ -66,7 +65,7 @@ export default class Dev extends EventEmitter {
     this.process = null;
     this.status = DEV_STATUS_STOP;
 
-    return this;
+    return { status: this.status };
   }
 
   async getSettings() {

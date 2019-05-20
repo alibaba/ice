@@ -10,7 +10,7 @@ export default function useSocket(eventName, callback) {
       socket.on(eventName, callback);
 
       return () => {
-        logger.debug(`socket removeListener ${eventName}.`);
+        logger.debug(`socket off ${eventName}.`);
         socket.removeListener(eventName, callback);
       };
     }

@@ -26,8 +26,6 @@ const XtermTerminal = () => {
   useEffect(() => {
     logger.debug('xterm loaded.');
 
-    project.refresh();
-
     term.open(xtermRef.current);
     term.fit();
     term.write(`\x1B[1;3;31m${project.dataSource.name}\x1B[0m $ `);

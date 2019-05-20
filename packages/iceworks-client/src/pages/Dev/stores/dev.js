@@ -5,16 +5,18 @@ export default {
     settings: [],
   },
 
-  async refresh() {
-    this.dataSource = await socket.emit('project.dev.detail');
-  },
-
   async start() {
-    this.dataSource = { ...this.dataSource, ...await socket.emit('project.dev.start') };
+    this.dataSource = {
+      ...this.dataSource,
+      ...(await socket.emit('project.dev.start')),
+    };
   },
 
   async stop() {
-    this.dataSource = { ...this.dataSource, ...await socket.emit('project.dev.stop') };
+    this.dataSource = {
+      ...this.dataSource,
+      ...(await socket.emit('project.dev.stop')),
+    };
   },
 
   async getSettings() {
