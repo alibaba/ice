@@ -1,7 +1,7 @@
 const path = require('path');
 const WebpackPluginImport = require('webpack-plugin-import');
 
-module.exports = async (api, { themePackage, themeConfig = {}, uniteBaseComponent }) => {
+module.exports = async (api, { themePackage, themeConfig, uniteBaseComponent }) => {
   api.chainWebpack((config) => {
     // 1. 支持主题能力
     if (themePackage) {
@@ -10,14 +10,17 @@ module.exports = async (api, { themePackage, themeConfig = {}, uniteBaseComponen
     if (themeConfig) {
       api.log.info('自定义 Fusion 组件主题变量：', themeConfig);
     }
-    config.module
-      .rule('scss')
-      .use('ice-skin-loader')
-      .loader(require.resolve('ice-skin-loader'))
-      .options({
-        themeFile: themePackage && path.join(api.service.context, 'node_modules', `${themePackage}/variables.scss`),
-        themeConfig,
-      });
+
+    ['scss', 'scss-module'].forEach((rule) => {
+      config.module
+        .rule(rule)
+        .use('ice-skin-loader')
+        .loader(require.resolve('ice-skin-loader'))
+        .options({
+          themeFile: themePackage && path.join(api.service.context, 'node_modules', `${themePackage}/variables.scss`),
+          themeConfig: themeConfig || {},
+        });
+    });
 
     // 2. 组件（包含业务组件）按需加载&样式自动引入
     // babel-plugin-import: 基础组件
