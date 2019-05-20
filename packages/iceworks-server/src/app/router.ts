@@ -3,6 +3,7 @@ import { Application } from 'midway';
 export default (app: Application) => {
   const { controller } = app.io;
   const { project } = controller;
+  const logger = app.getLogger();
 
   const routers: [string, () => {}][] = [
     ['project.index.list', project.index.list],
@@ -32,8 +33,13 @@ export default (app: Application) => {
         const data = await handle.call(this);
         callback(null, data);
       } catch (error) {
-        callback(error);
+        logger.error(error);
+        callback({
+          code: error.code,
+          message: error.message
+        });
       }
     });
   });
 };
+
