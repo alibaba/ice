@@ -5,7 +5,7 @@ order: 6
 
 icestark API 说明
 
-## AppLoader
+## AppRouter
 
 确定子应用渲染节点的组件，包含如下 props 属性
 

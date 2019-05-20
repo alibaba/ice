@@ -40,7 +40,7 @@ class App extends React.Component {
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppLoader } from 'icestark';
+import { AppRouter, AppRoute } from 'icestark';
 
 class App extends React.Component {
   state = {
@@ -71,10 +71,10 @@ class App extends React.Component {
     return (
       <div>
         <div className="header">you are using {language === 'zh' ? 'Chinese' : 'English'}!</div>
-        <AppLoader onRouteChange={this.onRouteChange} >
+        <AppRouter onRouteChange={this.onRouteChange} >
           <AppRoute path={/^\/(home/about)/} title="this is A" url="xxx">
           <AppRoute path="/B"  title="this is B" url="xxx" />
-        </AppLoader>
+        </AppRouter>
         {showFooter ? <div className="footer">this is footer</div> : null}
       </div>
     );
@@ -89,6 +89,7 @@ class App extends React.Component {
 ## postMessage
 
 假设一个场景，我们在子应用中触发事件，通知框架应用：重新发起后端请求，更新通知信息条数
+
 这里我们通过 `postMessage` 实现：
 
 ```js
@@ -96,7 +97,6 @@ class App extends React.Component {
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppLoader } from 'icestark';
 import { Button } from '@alifd/next';
 
 class App extends React.Component {
@@ -121,6 +121,7 @@ class App extends React.Component {
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import { AppRouter, AppRoute } from 'icestark';
 
 class App extends React.Component {
   state = {
@@ -160,10 +161,10 @@ class App extends React.Component {
     return (
       <div>
         <div className="header">you have {messageCount} message!</div>
-        <AppLoader>
+        <AppRouter>
           <AppRoute path={/^\/(home/about)/} title="this is A" url="xxx">
           <AppRoute path="/B"  title="this is B" url="xxx" />
-        </AppLoader>
+        </AppRouter>
       </div>
     );
   }

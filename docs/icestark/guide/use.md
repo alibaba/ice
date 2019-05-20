@@ -20,7 +20,7 @@ $ npm i icestark --save
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppLoader, AppRoute } from 'icestark';
+import { AppRouter, AppRoute } from 'icestark';
 
 class App extends React.Component {
   // ...
@@ -28,10 +28,10 @@ class App extends React.Component {
     return (
       <div>
         <div className="header">this is common header</div>
-        <AppLoader onRouteChange={this.onRouteChange}>
+        <AppRouter onRouteChange={this.onRouteChange}>
           <AppRoute path={/^\/(home/about)/} title="A应用" url="xxx">
           <AppRoute path="/user" title="B应用" url="xxx" />
-        </AppLoader>
+        </AppRouter>
         <div className="footer">this is common footer</div>
       </div>
     );
@@ -39,7 +39,7 @@ class App extends React.Component {
 }
 ```
 
-- `AppLoader` 节点即为子应用最终渲染位置
+- `AppRouter` 节点即为子应用最终渲染位置
 - `AppRoute` 负责注册子应用的基本信息，`title`、`path`、`url` 为必填项，分别对应子应用渲染时的 `documentTitle`、子应用的`basename`、子应用资源发布的 cdn 地址
 
 ## 在子应用中使用
