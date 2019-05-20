@@ -3,6 +3,10 @@ const processEntry = require('../config/processEntry');
 module.exports = class PluginAPI {
   constructor(service) {
     this.service = service;
+
+    this.chainWebpack = this.chainWebpack.bind(this);
+    this.processEntry = this.processEntry.bind(this);
+    this.getWebpackConfig = this.getWebpackConfig.bind(this);
   }
 
   chainWebpack(fn) {
