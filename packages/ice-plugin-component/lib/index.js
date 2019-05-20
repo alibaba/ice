@@ -4,6 +4,7 @@ const npmUtils = require('ice-npm-utils');
 const demoRouter = require('./utils/demoRouter');
 const { getPkgJSON } = require('./utils/pkgJson');
 const { parseMarkdownParts } = require('./compile/markdownHelper');
+const getDemoDir = require('./utils/getDemoDir');
 const getDemos = require('./utils/getDemos');
 const generateEntryJs = require('./utils/generateEntryJs');
 const formatPathForWin = require('./utils/formatPathForWin');
@@ -25,6 +26,7 @@ module.exports = (api) => {
   if (hasAdaptor) {
     adaptorEntry = generateEntryJs({
       template: 'adaptor.js.hbs',
+      filename: 'adaptor-index.js',
       context,
       params: {
         adaptor: path.resolve(context, 'adaptor/index.js'),
@@ -65,7 +67,8 @@ module.exports = (api) => {
     const markdownParser = parseMarkdownParts(babelConfig);
     // disable vendor
     config.optimization.splitChunks({ cacheGroups: {} });
-    const demos = getDemos(context, markdownParser);
+    const demoDir = getDemoDir(context);
+    const demos = getDemos(path.join(context, demoDir), markdownParser);
     let entry;
     if (command === 'dev') {
       // remove HtmlWebpackPlugin when run dev
@@ -73,7 +76,7 @@ module.exports = (api) => {
       const componentEntry = {};
       demos.forEach((demo) => {
         const demoName = demo.filename;
-        const demoFile = path.join('demo', `${demoName}.md`);
+        const demoFile = path.join(demoDir, `${demoName}.md`);
         componentEntry[`__Component_Dev__.${demoName}`] = [demoFile];
       });
       if (adaptorEntry) {
@@ -120,7 +123,7 @@ module.exports = (api) => {
       .options({ parser: markdownParser });
     // modify webpack devServer
     config.devServer
-      .after(demoRouter({ context, markdownParser, demos, pkg, hasAdaptor }))
+      .after(demoRouter({ context, markdownParser, demos, pkg, hasAdaptor, demoDir }))
       .contentBase(false);
     // add packagename to webpack alias
     config.resolve.alias

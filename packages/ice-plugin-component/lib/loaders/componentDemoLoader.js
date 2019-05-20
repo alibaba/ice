@@ -15,7 +15,8 @@ module.exports = function demoLoader(markdown) {
 
   if (existsSync(stylePath)) {
     const styleReq = JSON.stringify(stylePath);
-    return `${mountNode}require(${styleReq});${compiledCode}`;
+    // inject code for demos which do not import React or ReactDOM
+    return `${mountNode}require(${styleReq});window.React = require('react');window.ReactDOM = require('react-dom');${compiledCode}`;
   }
   return mountNode + compiledCode;
 };

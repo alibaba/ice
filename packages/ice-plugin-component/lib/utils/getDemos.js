@@ -4,8 +4,7 @@
 const { readdirSync, readFileSync, existsSync } = require('fs');
 const { join } = require('path');
 
-module.exports = function getDemos(projectDir, markdownParser) {
-  const demoPath = join(projectDir, 'demo');
+module.exports = function getDemos(demoPath, markdownParser) {
   if (!existsSync(demoPath)) {
     return [];
   }
