@@ -11,25 +11,25 @@ const menuConfig = [
     icon: 'zujian',
     children: [
       {
-        name: 'dev',
+        name: 'iceworks.menu.work.dev',
         path: '/work/dev',
         icon: 'server',
         desc: '启动开发环境的调试服务',
       },
       {
-        name: 'build',
+        name: 'iceworks.menu.work.build',
         path: '/work/build',
         icon: 'builder',
         desc: '构建生产环境的静态资源',
       },
       {
-        name: 'lint',
+        name: 'iceworks.menu.work.lint',
         path: '/work/lint',
         icon: 'lint',
         desc: '检查代码规范并进行修复',
       },
       {
-        name: 'configuration',
+        name: 'iceworks.menu.work.configuration',
         path: '/work/configuration',
         icon: 'webpack1',
         desc: '自定义开发构建配置',
