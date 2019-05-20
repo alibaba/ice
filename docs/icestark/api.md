@@ -61,3 +61,30 @@ icestark 配置说明
 - 子应用渲染时展示的 documentTitle ，选填
 - 类型：`string`
 - 默认值：`-`
+
+## AppLink
+
+子应用内部跳转使用，替代 React Router 的 `Link` 组件，表示本次跳转可能需要重新加载静态资源，包含如下 props
+
+### to
+
+- 标识目标路径，同 `Link` 中的 `to` 保持一致 ，必填
+- 类型：`string`
+- 默认值：`-`
+
+### message
+
+- 表示当前跳转需要弹窗确认，message内容为提示文案内容，选填
+- 类型：`string`
+- 默认值：`-`
+
+## getMountNode
+
+- 获取子应用加载的真实 DOM 节点，传参表示自定义默认渲染节点
+- 类型：`function`
+- 默认返回节点：`<div id="ice-container"></div>`
+
+## renderNotFound
+
+- 子应用内部通知框架应用渲染全局 404 的方法
+- 类型：`function`

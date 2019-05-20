@@ -52,7 +52,7 @@ class App extends React.Component {
 
 ## window
 
-挂载在 window 中的变量，应用之间是共享的。通常，在框架应用（layout）创建的函数/变量，子应用最好先进行校验，防止子应用单独启动时出错
+挂载在 window 中的变量，应用之间是共享的。通常，在框架应用（layout）创建的函数/变量，子应用最好先进行判空校验，防止子应用单独启动时报错
 
 ```js
 // layout/src/*.js
@@ -76,7 +76,7 @@ if (window.__ICESTARK__COUNT) {
 // ...
 
 if (window.__ICESTARK__logout) {
-  window.__ICESTARK__logout;
+  window.__ICESTARK__logout();
 }
 ```
 
