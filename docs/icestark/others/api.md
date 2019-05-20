@@ -1,10 +1,9 @@
 ---
-title: 配置说明
-category: icestark
+title: API
 order: 6
 ---
 
-icestark 配置说明
+icestark API 说明
 
 ## AppLoader
 
@@ -22,19 +21,19 @@ icestark 配置说明
 - 类型：`string|ReactNode`
 - 默认值：`-`
 
-### BundleErrorComponent
+### ErrorComponent
 
-- 自定义渲染全局 Bundle 加载出错时的展示内容，选填
+- 子应用静态资源加载出错时的展示内容，选填
 - 类型：`string|ReactNode`
 - 默认值：`-`
 
-### BundleLoadingComponent
+### LoadingComponent
 
-- 自定义渲染全局 Bundle 加载时的展示内容，选填
+- 子应用静态资源加载时的展示内容，选填
 - 类型：`string|ReactNode`
 - 默认值：`-`
 
-### shadowRoot
+### useShadow
 
 - 是否开启 shadowRoot 隔离 css，选填
 - 类型：`boolean`
@@ -74,7 +73,7 @@ icestark 配置说明
 
 ### message
 
-- 表示当前跳转需要弹窗确认，message内容为提示文案内容，选填
+- 表示当前跳转需要弹窗确认，message为提示文案内容，选填
 - 类型：`string`
 - 默认值：`-`
 

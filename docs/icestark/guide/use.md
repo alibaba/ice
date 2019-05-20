@@ -1,10 +1,9 @@
 ---
 title: 已有应用改造
-category: icestark
 order: 2
 ---
 
-icestark 的设计完全面向 react 应用，因此已有 react 应用的改造成本极低。
+icestark 完全面向 react 设计，因此已有 react 应用的改造成本极低。
 
 ## 安装 icestark
 
@@ -14,7 +13,8 @@ $ npm i icestark --save
 
 ## 在框架应用中使用
 
-框架应用主要是对各个子应用的资源url、渲染位置的管理
+框架应用主要是对各个子应用的资源 url、渲染位置、`path` 的管理
+注意各个子应用的 `path` 配置不能重复，规则类似 `Route` 的 `path` 配置
 
 ```js
 // src/index.js
@@ -30,7 +30,7 @@ class App extends React.Component {
         <div className="header">this is common header</div>
         <AppLoader onRouteChange={this.onRouteChange}>
           <AppRoute path={/^\/(home/about)/} title="A应用" url="xxx">
-          <AppRoute path="user" title="B应用" url="xxx" />
+          <AppRoute path="/user" title="B应用" url="xxx" />
         </AppLoader>
         <div className="footer">this is common footer</div>
       </div>

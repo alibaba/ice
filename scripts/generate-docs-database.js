@@ -49,6 +49,13 @@ const allCategories = {
   icestark: {
     // 工作台模式
     title: '',
+    children: [{
+      title: '指南',
+      dir: 'guide',
+    }, {
+      title: '参考',
+      dir: 'others',
+    }],
   },
   cli: {
     // ice-scripts

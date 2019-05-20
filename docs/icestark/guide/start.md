@@ -1,10 +1,9 @@
 ---
 title: 快速上手
-category: icestark
 order: 1
 ---
 
-icestark 使用前需要根据 UI 结构将系统拆分为框架应用、多个子应用。默认所有应用均采用`BrowserRouter`。
+icestark 使用前需要根据 UI 结构将系统拆分为框架应用、多个子应用。默认所有应用均采用 `BrowserRouter`。
 
 ![UI说明A](https://img.alicdn.com/tfs/TB1xfk7XlWD3KVjSZKPXXap7FXa-2876-1376.jpg)
 
