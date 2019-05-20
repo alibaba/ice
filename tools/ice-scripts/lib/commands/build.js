@@ -1,6 +1,3 @@
-// TODO: 感觉不太合适
-process.env.NODE_ENV = 'production';
-
 const gulp = require('gulp');
 const rimraf = require('rimraf');
 const webpack = require('webpack');
@@ -18,26 +15,26 @@ const checkDepsInstalled = require('../utils/checkDepsInstalled');
  *
  * @param {Object} options 命令行参数
  */
-module.exports = async function (api) {
+module.exports = async function (service) {
   goldlog('version', {
     version: iceScriptsPkgData.version,
   });
-  goldlog('build', api.commandArgs);
-  log.verbose('build cliOptions', api.commandArgs);
-  await api.applyHooks('beforeBuild');
+  goldlog('build', service.commandArgs);
+  log.verbose('build cliOptions', service.commandArgs);
+  await service.applyHooks('beforeBuild');
 
-  const installedDeps = checkDepsInstalled(api.paths.appDirectory);
+  const installedDeps = checkDepsInstalled(service.context);
   if (!installedDeps) {
     log.error('项目依赖未安装，请先安装依赖。');
     process.exit(1);
   }
 
-  if (api.userConfig.type === 'project') {
+  if (service.userConfig.type === 'project') {
     validationSassAvailable();
 
     try {
       collectDetail({
-        rootDir: api.context, // 项目根地址
+        rootDir: service.context, // 项目根地址
         basicPackage: ['@alifd/next', '@icedesign/base', '@alife/next'], // 主体包名称
         kit: 'ice-scripts', // 统计的来源
       });
@@ -46,7 +43,7 @@ module.exports = async function (api) {
     }
   }
 
-  const webpackConfig = api.config;
+  const webpackConfig = service.config;
 
   // build task
   gulp.task('build', ['clean'], () => {
@@ -77,7 +74,7 @@ module.exports = async function (api) {
         }
       }
 
-      api.applyHooks('afterBuild', stats);
+      service.applyHooks('afterBuild', stats);
       done();
     });
   });

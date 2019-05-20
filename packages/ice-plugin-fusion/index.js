@@ -15,7 +15,7 @@ module.exports = async (api, { themePackage, themeConfig = {}, uniteBaseComponen
       .use('ice-skin-loader')
       .loader(require.resolve('ice-skin-loader'))
       .options({
-        themeFile: themePackage && path.join(api.service.paths.appNodeModules, `${themePackage}/variables.scss`),
+        themeFile: themePackage && path.join(api.service.context, 'node_modules', `${themePackage}/variables.scss`),
         themeConfig,
       });
 
