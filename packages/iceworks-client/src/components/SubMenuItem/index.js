@@ -1,4 +1,4 @@
-/* eslint no-nested-ternary:0 */
+/* eslint no-nested-ternary:0, object-curly-newline:0 */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
