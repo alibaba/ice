@@ -1,6 +1,6 @@
 {
   "name": "ice-skin-loader",
-  "version": "0.2.2",
+  "version": "0.3.0-0",
   "description": "ice skin loader",
   "main": "lib/index.js",
   "keywords": [
@@ -11,7 +11,6 @@
   "dependencies": {
     "@icedesign/skin": "^0.1.13",
     "chalk": "^2.4.1",
-    "kebab-case": "^1.0.0",
     "loader-utils": "^1.1.0",
     "tinycolor2": "^1.4.1"
   },

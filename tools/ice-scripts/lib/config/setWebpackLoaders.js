@@ -12,7 +12,6 @@ const POSTCSS_LOADER = require.resolve('postcss-loader');
 const SASS_LOADER = require.resolve('sass-loader');
 const CSS_HOT_LOADER = require.resolve('css-hot-loader');
 const URL_LOADER = require.resolve('url-loader');
-const ICE_SKIN_LOADER = require.resolve('ice-skin-loader');
 const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
 
 const EXCLUDE_REGX = /node_modules/;
@@ -71,10 +70,10 @@ module.exports = (chainConfig, mode = 'development') => {
 
       if (loaders && loaders.length > 0) {
         loaders.forEach((loader) => {
-          const [loaderName, loaderOptions] = loader;
+          const [loaderName, loaderPath, loaderOptions] = loader;
 
           rule.use(loaderName)
-            .loader(loaderName)
+            .loader(loaderPath)
             .options(Object.assign({ sourceMap: true }, loaderOptions));
         });
       }
@@ -91,8 +90,8 @@ module.exports = (chainConfig, mode = 'development') => {
 
   // css loader
   setExtralCSSLoader('css');
-  setExtralCSSLoader('scss', [[SASS_LOADER, {}], [ICE_SKIN_LOADER, { themeConfig: {} }]]);
-  setExtralCSSLoader('less', [[LESS_LOADER, { sourceMap: true, javascriptEnabled: true }]]);
+  setExtralCSSLoader('scss', [['sass-loader', SASS_LOADER, {}]]);
+  setExtralCSSLoader('less', [['less-loader', LESS_LOADER, { sourceMap: true, javascriptEnabled: true }]]);
 
   // assets loader
   setAssetsLoader('woff2', /\.woff2?$/, { minetype: 'application/font-woff' });

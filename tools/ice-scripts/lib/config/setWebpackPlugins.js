@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
-const WebpackPluginImport = require('webpack-plugin-import');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -14,13 +13,13 @@ const { appDirectory, appFaviconIco, appFavicon, appPublic, defaultAppHtml, defa
 
 module.exports = (chainConfig, mode = 'development') => {
   const packageJson = getPkgData(appDirectory);
-  const defineVriables = {
+  const defineVariables = {
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
   };
 
   chainConfig
     .plugin('DefinePlugin')
-      .use(webpack.DefinePlugin, [defineVriables])
+      .use(webpack.DefinePlugin, [defineVariables])
       .end()
     .plugin('MiniCssExtractPlugin')
       .use(MiniCssExtractPlugin, [{
@@ -40,34 +39,6 @@ module.exports = (chainConfig, mode = 'development') => {
       .end()
     .plugin('CaseSensitivePathsPlugin')
       .use(CaseSensitivePathsPlugin)
-      .end()
-    .plugin('WebpackPluginImport')
-      .use(WebpackPluginImport, [[
-        {
-          libraryName: /^@icedesign\/base\/lib\/([^/]+)/,
-          stylePath: 'style.js',
-        },
-        {
-          libraryName: /@icedesign\/.*/,
-          stylePath: 'style.js',
-        },
-        {
-          libraryName: /@ali\/ice-.*/,
-          stylePath: 'style.js',
-        },
-        {
-          libraryName: /^@alife\/next\/lib\/([^/]+)/,
-          stylePath: 'style.js',
-        },
-        {
-          libraryName: /^@alifd\/next\/lib\/([^/]+)/,
-          stylePath: 'style.js',
-        },
-        {
-          libraryName: /@alifd\/.*/,
-          stylePath: 'style.js',
-        },
-      ]])
       .end()
     .plugin('IgnorePlugin')
       .use(webpack.IgnorePlugin, [/^\.\/locale$/, /moment$/])

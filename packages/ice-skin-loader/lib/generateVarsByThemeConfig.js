@@ -1,4 +1,3 @@
-const kebab = require('kebab-case');
 const primaryColor = require('./primaryColor');
 const secondaryColor = require('./secondaryColor');
 
@@ -25,25 +24,15 @@ module.exports = function generateVarsByThemeConfig(themeConfig) {
  * @return {String} scss stynax string
  */
 function getVariableMappingString(key, value) {
-  // 输入是小驼峰, scss 变量需要的是 kebab-case
-  key = kebab(key).replace(/^\-/, '');
-
   switch (key) {
-    case 'primary-color':
+    case 'primaryColor':
       // 根据用户配置动态计算主品牌色相关的多个变量
       return primaryColor(value);
-    case 'secondary-color':
+    case 'secondaryColor':
       // 根据用户配置动态计算次品牌色相关的多个变量
       return secondaryColor(value);
-    case 'icon-font-path':
-    case 'icon-font-name':
-    case 'font-custom-path':
-      // 根据用户配置覆盖变量
-      return `$${key}: ${JSON.stringify(value)};`;
     default:
-      if (/icon\-content\-/.test(key)) {
-        return `$${key}: ${JSON.stringify(value)};`;
-      }
-      return `$${key}: ${value};`;
+      // 自定义变量
+      return `$${key}: ${JSON.stringify(value)};`;
   }
 }
