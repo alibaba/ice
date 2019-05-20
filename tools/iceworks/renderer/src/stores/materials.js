@@ -110,7 +110,7 @@ class Materials {
 
   fetchSettingsMaterials() {
     return new Promise((resolve) => {
-      let materials = settings.get('materials');
+      let materials = settings.get('materials') || [];
 
       // 过滤掉隐藏的物料源
       materials = materials.filter((item) => item.checked !== false);
@@ -142,7 +142,7 @@ class Materials {
       startRecommendMaterials.error = null;
     };
 
-    if (!this.useBuiltinData) {
+    if (!this.useBuiltinData && recommendMaterialSource) {
       this.fetchByMaterial(recommendMaterialSource.source)
         .then((body = {}) => {
           fn(body);

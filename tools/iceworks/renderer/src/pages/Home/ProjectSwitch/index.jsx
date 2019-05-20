@@ -89,10 +89,14 @@ class ProjectSwitch extends Component {
           <div className="project-list-body">{this.renderProjectList()}</div>
           <div className="project-operation-wrapper">
             <Button type="primary" onClick={this.openExistProjectAndFocus}>
-              <Icon type="folderplus" /> 打开项目
+              <Icon type="folderplus" />
+              {' '}
+打开项目
             </Button>
             <Button type="primary" onClick={this.gotoCreateProject}>
-              <Icon type="plus" /> 创建项目
+              <Icon type="plus" />
+              {' '}
+创建项目
             </Button>
           </div>
         </div>

@@ -16,6 +16,9 @@
  */
 const to = require('await-to-js').default;
 const npmRequest = require('../../utils/npmRequest');
+const { getEnv } = require('../../env');
+
+const env = getEnv();
 
 module.exports = function getTarballURLBySource(source = {}, projectVersion) {
   return new Promise(async (resolve, reject) => {
@@ -28,10 +31,9 @@ module.exports = function getTarballURLBySource(source = {}, projectVersion) {
 
     const registry = typeof source.npm === 'string' && source.npm.startsWith('@icedesign')
       ? 'https://registry.npm.taobao.org'
-      : source.registry;
+      : env.npm_config_registry || source.registry;
 
-    let err, pkgData;
-    [err, pkgData] = await to(
+    const [err, pkgData] = await to(
       npmRequest({
         name: source.npm,
         version,

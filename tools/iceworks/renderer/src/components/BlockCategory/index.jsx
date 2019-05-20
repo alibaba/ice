@@ -18,13 +18,13 @@ class BlockCategory extends Component {
   };
 
   render() {
-    let { blocksWithCategory, originKeywords, idPrefix, handleBlocksAdd } = this.props;
+    const { blocksWithCategory, originKeywords, idPrefix, handleBlocksAdd } = this.props;
     if (blocksWithCategory === undefined) {
       return <div className="blocks-empty-tip">loading...</div>;
-    } else if (
-      Array.isArray(blocksWithCategory) &&
-      blocksWithCategory.length ===  0 &&
-      originKeywords
+    } if (
+      Array.isArray(blocksWithCategory)
+      && blocksWithCategory.length === 0
+      && originKeywords
     ) {
       return (
         <div className="blocks-empty-tip">
@@ -35,46 +35,49 @@ class BlockCategory extends Component {
           相关的区块
         </div>
       );
-    } else if (
-      Array.isArray(blocksWithCategory) &&
-      blocksWithCategory.length ===  0
+    } if (
+      Array.isArray(blocksWithCategory)
+      && blocksWithCategory.length === 0
     ) {
       return <div className="blocks-empty-tip">暂无可用区块...</div>;
-    } else {
-      return (
-        <div className="blocks-wrapper">
-          {blocksWithCategory.map(({ category, blocks }, index) => {
-            if (blocks.length ===  0) {
-              return null;
-            }
-            const blockPanelId = `${idPrefix}${index}`;
-            return (
-              <div className="block-category" key={category}>
-                <div id={blockPanelId}>
-                  <div className="block-category-title">
-                    {category}
-                    <span>({blocks.length})</span>
-                  </div>
-                  <div className="block-category-body">
-                    {blocks.map((block) => {
-                      return (
-                        <Block
-                          key={`${category}-${block.name}`}
-                          block={block}
-                          originKeywords={originKeywords}
-                          handleBlocksAdd={handleBlocksAdd}
-                        />
-                      );
-                    })}
-                  </div>
+    }
+    return (
+      <div className="blocks-wrapper">
+        {blocksWithCategory.map(({ category, blocks }, index) => {
+          if (blocks.length === 0) {
+            return null;
+          }
+          const blockPanelId = `${idPrefix}${index}`;
+          return (
+            <div className="block-category" key={category}>
+              <div id={blockPanelId}>
+                <div className="block-category-title">
+                  {category}
+                  <span>
+(
+                    {blocks.length}
+)
+                  </span>
+                </div>
+                <div className="block-category-body">
+                  {blocks.map((block) => {
+                    return (
+                      <Block
+                        key={`${category}-${block.name}`}
+                        block={block}
+                        originKeywords={originKeywords}
+                        handleBlocksAdd={handleBlocksAdd}
+                      />
+                    );
+                  })}
                 </div>
               </div>
-            );
-          })}
-          <BlockPreviewModal />
-        </div>
-      );
-    }
+            </div>
+          );
+        })}
+        <BlockPreviewModal />
+      </div>
+    );
   }
 }
 

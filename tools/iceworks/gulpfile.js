@@ -306,7 +306,7 @@ gulp.task('publish', (done) => {
     'darwin-x64-prod': {
       name: 'iceworks',
       description: 'ICE Desktop Application.',
-      install: `http://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/${productName}-${version}.dmg`,
+      install: `https://iceworks.oss-cn-hangzhou.aliyuncs.com/mac/${productName}-${version}.dmg`,
       version: appPkg.version,
       releaseDate: now,
     },
@@ -314,7 +314,7 @@ gulp.task('publish', (done) => {
       name: 'iceworks',
       description: 'ICE Desktop Application.',
       install: encodeURI(
-        `http://iceworks.oss-cn-hangzhou.aliyuncs.com/win/${productName}-setup-${version}.exe`
+        `https://iceworks.oss-cn-hangzhou.aliyuncs.com/win/${productName}-setup-${version}.exe`
       ),
       version: appPkg.version,
       releaseDate: now,
