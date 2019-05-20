@@ -3,6 +3,7 @@ import moment from 'moment';
 import { Icon, Message } from '@alifd/next';
 import IceNotification from '@icedesign/notification';
 import useModal from '@hooks/useModal';
+import logger from '@utils/logger';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
@@ -45,8 +46,9 @@ const Page = () => {
     });
   }
 
-  async function createPage() {
+  async function createPage(data) {
     toggleCreateModal();
+    logger.info(data);
   }
 
   const pagePreDelete =
