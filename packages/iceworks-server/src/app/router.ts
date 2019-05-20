@@ -19,7 +19,7 @@ module.exports = (app) => {
   ];
 
   routers.forEach(([event, handle]) => {
-    app.io.route(event, async function () {
+    app.io.route(event, async function (this: any) {
       const { args } = this;
       const params = args[0];
       const callback = args[args.length - 1];
