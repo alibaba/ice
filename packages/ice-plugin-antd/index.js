@@ -1,19 +1,21 @@
-module.exports = async (api, { themeConfig = {} }) => {
+module.exports = async (api, { themeConfig }) => {
   api.chainWebpack((config) => {
     // 1. 支持主题能力
     if (themeConfig) {
       api.log.info('自定义 Antd 组件主题变量：', themeConfig);
     }
-    config.module
-      .rule('less')
-      .use('less-loader')
-      .tap((options) => {
-        options.modifyVars = {
-          ...options.modifyVars,
-          ...themeConfig,
-        };
-        return options;
-      });
+    ['less', 'less-module'].forEach((rule) => {
+      config.module
+        .rule(rule)
+        .use('less-loader')
+        .tap((options) => {
+          options.modifyVars = {
+            ...options.modifyVars,
+            ...themeConfig,
+          };
+          return options;
+        });
+    });
 
     // 2. 组件（包含业务组件）按需加载&样式自动引入
     // babel-plugin-import: 基础组件

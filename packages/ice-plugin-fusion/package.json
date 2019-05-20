@@ -1,6 +1,6 @@
 {
   "name": "ice-plugin-fusion",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "ice-scripts plugin for fusion",
   "main": "index.js",
   "scripts": {},
