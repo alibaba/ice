@@ -1,5 +1,4 @@
 const Config = require('webpack-chain');
-const path = require('path');
 const userConfigPlugin = require('../../lib/plugins/userConfig');
 const processEntry = require('../../lib/config/processEntry');
 
@@ -25,22 +24,7 @@ describe('user config', () => {
       api.config.entry('index').add('src/test.js');
       userConfigPlugin(api);
       expect(api.config.toConfig().entry.index).toEqual([
-        require.resolve('@babel/polyfill'),
-        path.resolve(process.cwd(), 'src/index.js'),
-      ]);
-    });
-
-    test('entry add hotDev', () => {
-      const api = new MockApi();
-      api.service = {
-        userConfig: { entry: 'src/index.js', injectBabel: 'runtime' },
-        command: 'dev',
-        commandArgs: {},
-      };
-      userConfigPlugin(api);
-      expect(api.config.toConfig().entry.index).toEqual([
-        require.resolve('react-dev-utils/webpackHotDevClient'),
-        path.resolve(process.cwd(), 'src/index.js'),
+        'src/index.js',
       ]);
     });
 
@@ -52,14 +36,13 @@ describe('user config', () => {
             index: 'src/index.js',
             dashboard: 'src/dashboard.js',
           },
-          injectBabel: 'runtime',
         },
         commandArgs: {},
       };
       userConfigPlugin(api);
       expect(api.config.toConfig().entry).toEqual({
-        index: [path.resolve(process.cwd(), 'src/index.js')],
-        dashboard: [path.resolve(process.cwd(), 'src/dashboard.js')],
+        index: ['src/index.js'],
+        dashboard: ['src/dashboard.js'],
       });
     });
   });

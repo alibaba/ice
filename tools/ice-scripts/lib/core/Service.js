@@ -5,6 +5,7 @@ const log = require('../utils/log');
 const getPkgData = require('../config/getPackageJson');
 const paths = require('../config/paths');
 const getDefaultWebpackConfig = require('../config/getDefaultWebpackConfig');
+const processEntry = require('../config/processEntry');
 const PluginAPI = require('./Plugin');
 const defaultConfig = require('../config/default.config');
 const deepmerge = require('deepmerge');
@@ -77,6 +78,20 @@ module.exports = class Service {
     }
   }
 
+  // process entry
+  processWepackEntry(config) {
+    const entry = config.toConfig().entry;
+    if (entry) {
+      // delete origin entry
+      config.entryPoints.clear();
+      // merge new entry
+      config.merge({ entry: processEntry(entry, {
+        polyfill: this.userConfig.injectBabel !== 'runtime',
+        hotDev: this.command === 'dev' && !this.commandArgs.disabledReload,
+      }) });
+    }
+  }
+
   getWebpackConfig() {
     const config = this.defaultWebpackConfig;
 
@@ -93,6 +108,8 @@ module.exports = class Service {
     if (this.userConfig.chainWebpack) {
       this.userConfig.chainWebpack(config);
     }
+    // add polyfill/hotdev before origin entry
+    this.processWepackEntry(config);
     return config.toConfig();
   }
 

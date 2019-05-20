@@ -1,4 +1,3 @@
-const processEntry = require('../config/processEntry');
 const log = require('../utils/log');
 
 module.exports = class PluginAPI {
@@ -8,7 +7,6 @@ module.exports = class PluginAPI {
     this.pluginName = pluginName;
     this.log = log;
     this.chainWebpack = this.chainWebpack.bind(this);
-    this.processEntry = this.processEntry.bind(this);
     this.getWebpackConfig = this.getWebpackConfig.bind(this);
   }
 
@@ -16,14 +14,6 @@ module.exports = class PluginAPI {
     this.service.chainWebpackFns.push({
       pluginName: this.pluginName,
       fn,
-    });
-  }
-
-  processEntry(entry) {
-    const { commandArgs, command, userConfig } = this.service;
-    return processEntry(entry, {
-      polyfill: userConfig.injectBabel !== 'runtime',
-      hotDev: command === 'dev' && !commandArgs.disabledReload,
     });
   }
 
