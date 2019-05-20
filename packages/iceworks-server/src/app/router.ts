@@ -1,9 +1,10 @@
+import { Application } from 'midway';
 
-module.exports = (app) => {
+export default (app: Application) => {
   const { controller } = app.io;
   const { project } = controller;
 
-  const routers = [
+  const routers: [string, () => {}][] = [
     ['project.index.list', project.index.list],
     ['project.index.delete', project.index.delete],
     ['project.index.add', project.index.add],
@@ -18,8 +19,8 @@ module.exports = (app) => {
     ['project.configuration.settings', project.configuration.settings],
   ];
 
-  routers.forEach(([event, handle]) => {
-    app.io.route(event, async function (this: any) {
+  routers.forEach(([eventName, handle]) => {
+    app.io.route(eventName, async function (this: any) {
       const { args } = this;
       const params = args[0];
       const callback = args[args.length - 1];
