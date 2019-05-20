@@ -24,7 +24,7 @@ module.exports = async function (api) {
   });
   goldlog('build', api.commandArgs);
   log.verbose('build cliOptions', api.commandArgs);
-  api.applyHooks('beforeBuild');
+  await api.applyHooks('beforeBuild');
 
   const installedDeps = checkDepsInstalled(api.paths.appDirectory);
   if (!installedDeps) {

@@ -17,6 +17,9 @@ module.exports = class Service {
     // get user config form ice.config.js
     this.userConfig = this.getUserConfig(this.context);
     this.plugins = this.getPlugins();
+    // init chainWebpackFns and hooks
+    this.chainWebpackFns = [];
+    this.eventHooks = {};
   }
 
   getUserConfig() {
@@ -46,9 +49,6 @@ module.exports = class Service {
   }
 
   async runPlugins() {
-    // init chainWebpackFns and hooks before run plugins
-    this.chainWebpackFns = [];
-    this.eventHooks = {};
     // run plugins
     for (let i = 0; i < this.plugins.length; i++) {
       let pluginInfo = this.plugins[i];
@@ -75,16 +75,18 @@ module.exports = class Service {
     //  await Promise.all(pluginFuncs);
   }
 
-  applyHooks(key, opts = {}) {
+  async applyHooks(key, opts = {}) {
     const hooks = this.eventHooks[key] || [];
+    const results = [];
     hooks.forEach((fn) => {
       try {
-        fn(opts);
+        results.push(fn(opts));
       } catch (e) {
         log.error(e);
         log.error(`Fail to excute hook ${key}`);
       }
     });
+    await Promise.all(results);
   }
 
   getWebpackConfig() {
@@ -96,6 +98,13 @@ module.exports = class Service {
     }
     // TODO this.commandArgs对wepackConfig的影响
     return config.toConfig();
+  }
+
+  async reRun() {
+    // reset chainWebpackFns and eventHooks before run command again
+    this.chainWebpackFns = [];
+    this.eventHooks = {};
+    this.run();
   }
 
   async run() {
