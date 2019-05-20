@@ -84,7 +84,6 @@ module.exports = class Service {
       // delete origin entry
       config.entryPoints.clear();
       // merge new entry
-      console.log('add hot dev', this.command === 'dev', !this.commandArgs.disabledReload)
       config.merge({ entry: processEntry(entry, {
         polyfill: this.userConfig.injectBabel !== 'runtime',
         hotDev: this.command === 'dev' && !this.commandArgs.disabledReload,
