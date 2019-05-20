@@ -6,22 +6,11 @@ export default {
     path: '',
   },
 
-  inited: false,
-
   async refresh() {
-    if (this.inited) {
-      return;
-    }
-
-    try {
-      this.dataSource = (await socket.emit('project.index.current')) || {};
-      this.inited = true;
-    } catch (error) {
-      // do something...
-    }
+    this.dataSource = await socket.emit('project.index.current');
   },
 
-  async reset() {
-    this.dataSource = await socket.emit('project.index.setCurrent');
+  async reset(path) {
+    this.dataSource = await socket.emit('project.index.setCurrent', { path });
   },
 };

@@ -21,6 +21,45 @@ export default (app) => {
       });
     }
 
+    async delete(ctx) {
+      const { projectManager } = app;
+      const { args } = ctx;
+      const callback = args[args.length - 1];
+
+      let projects = [];
+      let error;
+      try {
+        projects = await projectManager.deleteProject(args[0]);
+      } catch (err) {
+        error = err;
+      }
+
+      callback({
+        error,
+        data: projects
+      });
+    }
+
+    async add(ctx) {
+      const { projectManager } = app;
+      const { args } = ctx;
+      const { projectPath } = args[0];
+      const callback = args[args.length - 1];
+
+      let projects = [];
+      let error;
+      try {
+        projects = await projectManager.addProject(projectPath);
+      } catch (err) {
+        error = err;
+      }
+
+      callback({
+        error,
+        data: projects
+      });
+    }
+
     async getCurrent(ctx) {
       const { projectManager } = app;
       const { args } = ctx;
@@ -37,10 +76,7 @@ export default (app) => {
 
       callback({
         error,
-        data: {
-          name: project.name,
-          path: project.path,
-        },
+        data: project,
       });
     }
 
@@ -50,7 +86,7 @@ export default (app) => {
       const { path } = args[0];
       const callback = args[args.length - 1];
 
-      let project = [];
+      let project;
       let error;
       try {
         project = await projectManager.setCurrent(path);

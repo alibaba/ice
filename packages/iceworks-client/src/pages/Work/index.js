@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RouteRender from '@components/RouteRender';
+import SubRoutes from '@components/SubRoutes';
 import SubMenu from '@components/SubMenu';
+import SubMenuItem from '@components/SubMenuItem';
 import { getMenuData } from '@utils/getMenuData';
 
 import styles from './index.module.scss';
@@ -13,14 +14,16 @@ const Work = ({ routes }) => {
   return (
     <div className={styles.workPage}>
       {/* render work submenu */}
-      <SubMenu data={subMenuData} title="工程管理" />
-
-      {/* render work subroute */}
-      <div className={styles.main}>
-        {routes.map((route, i) => (
-          <RouteRender key={i} {...route} />
+      <SubMenu title="iceworks.work.title">
+        {subMenuData.map((dataSource, key) => (
+          <SubMenuItem dataSource={dataSource} key={key} />
         ))}
-      </div>
+      </SubMenu>
+
+      {/* render work sub-routes */}
+      <main className={styles.main}>
+        <SubRoutes routes={routes} />
+      </main>
     </div>
   );
 };

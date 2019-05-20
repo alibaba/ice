@@ -1,4 +1,5 @@
 import * as EventEmitter from 'events';
+import * as trash from 'trash';
 import * as path from 'path';
 import camelCase from 'camelCase';
 import storage from '../../storage';
@@ -27,19 +28,22 @@ class Project implements IProject {
 class ProjectManager extends EventEmitter {
   private projects;
 
-  async ready() {
-    const projects = storage.get('projects');
-    this.projects = await Promise.all(
-      projects.map(async (projectPath) => {
+  private async refresh(): Promise<Project[]> {
+    return Promise.all(
+      storage.get('projects').map(async (projectPath) => {
         return new Project(projectPath);
       })
     );
   }
 
+  async ready() {
+    this.projects = await this.refresh();
+  }
+
   /**
    * Get all project
    */
-  public getProjects() {
+  public getProjects(): Project[] {
     return this.projects;
   }
 
@@ -64,6 +68,40 @@ class ProjectManager extends EventEmitter {
   public getCurrent() {
     const projectPath = storage.get('project');
     return this.getProject(projectPath);
+  }
+
+  async addProject(projectPath: string): Promise<Project[]> {
+    const projects = storage.get('projects');
+
+    if (projects.indexOf(projectPath) === -1) {
+      projects.push(projectPath);
+      storage.set('projects', projects);
+    }
+
+    storage.set('project', projectPath);
+    this.projects = await this.refresh();
+
+    return this.projects;
+  }
+
+  async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<Project[]> {
+    const { projectPath, deleteFiles } = params;
+    const newProjects = storage.get('projects').filter((path) => path !== projectPath);
+    storage.set('projects', newProjects);
+
+    if (deleteFiles) {
+      await trash(projectPath);
+    }
+
+    // reset project if deleted current project
+    const currentProjectPath = storage.get('project');
+    if (currentProjectPath === projectPath) {
+      storage.set('project', newProjects[0] || '');
+    }
+
+    this.projects = await this.refresh();
+
+    return this.projects;
   }
 
   /**

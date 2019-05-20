@@ -16,7 +16,14 @@ const Modal = ({ children, ...props }) => {
     };
   });
 
-  return createPortal(<Dialog {...props}>{children}</Dialog>, modalRef.current);
+  const { onCancel } = props;
+
+  return createPortal(
+    <Dialog {...props} onCancel={onCancel} onClose={onCancel}>
+      {children}
+    </Dialog>,
+    modalRef.current,
+  );
 };
 
 export default Modal;
