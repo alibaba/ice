@@ -3,7 +3,6 @@ const fse = require('fs-extra');
 const assert = require('assert');
 const log = require('../utils/log');
 const getPkgData = require('../config/getPackageJson');
-const paths = require('../config/paths');
 const getDefaultWebpackConfig = require('../config/getDefaultWebpackConfig');
 const processEntry = require('../config/processEntry');
 const PluginAPI = require('./Plugin');
@@ -16,7 +15,6 @@ module.exports = class Service {
     this.commandArgs = args;
     this.context = context;
     this.pkg = getPkgData(this.context);
-    this.paths = paths;
     // get user config form ice.config.js
     this.userConfig = this.getUserConfig(this.context);
     this.plugins = this.getPlugins();
@@ -32,8 +30,10 @@ module.exports = class Service {
       try {
         // eslint-disable-next-line import/no-dynamic-require
         userConfig = require(iceConfigPath);
-      } catch (e) {
+      } catch (err) {
         log.error('Fail to load ice.config.js, use default config instead');
+        console.error(err);
+        process.exit(1);
       }
     } else if (this.pkg.buildConfig) {
       log.warn('You should migrate config into ice.config.js');

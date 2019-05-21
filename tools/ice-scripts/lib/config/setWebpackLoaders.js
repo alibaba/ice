@@ -12,7 +12,6 @@ const POSTCSS_LOADER = require.resolve('postcss-loader');
 const SASS_LOADER = require.resolve('sass-loader');
 const CSS_HOT_LOADER = require.resolve('css-hot-loader');
 const URL_LOADER = require.resolve('url-loader');
-const HANDLEBARS_LOADER = require.resolve('handlebars-loader');
 
 const EXCLUDE_REGX = /node_modules/;
 const URL_LOADER_LIMIT = 8192;
@@ -123,11 +122,4 @@ module.exports = (chainConfig, mode = 'development') => {
     .use('ts-loader')
       .loader(TYPESCRIPT_LOADER)
       .options({ transpileOnly: true });
-
-  // handlebars loader
-  chainConfig.module.rule('handlebars')
-    .test(/\.hbs$/i)
-    .use('handlebars-loader')
-      .loader(HANDLEBARS_LOADER)
-      .options({});
 };
