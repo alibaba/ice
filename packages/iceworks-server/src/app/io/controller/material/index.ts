@@ -5,27 +5,13 @@ const url = 'http://ice.alicdn.com/assets/react-materials.json';
 
 export default (app) => {
   return class MaterialController extends app.Controller {
-    async resource(ctx) {
-      const { args } = ctx;
-      const callback = args[args.length - 1];
-      const data = storage.get('material');
-
-      callback({ data });
+    async resource() {
+      return storage.get('material');
     }
 
-    async current(ctx) {
-      const { args } = ctx;
-      const callback = args[args.length - 1];
-
-      let data;
-      let error;
-      try {
-        data = await request(url);
-      } catch (err) {
-        error;
-      }
-
-      callback({ data: formatData(data), error });
+    async current() {
+      const data = await request(url);
+      return formatData(data);
     }
   };
 };

@@ -2,7 +2,7 @@ import { Application } from 'midway';
 
 export default (app: Application) => {
   const { controller } = app.io;
-  const { project } = controller;
+  const { project, material } = controller;
   const logger = app.getLogger();
 
   const routers: [string, () => {}][] = [
@@ -18,6 +18,8 @@ export default (app: Application) => {
     ['project.dev.settings', project.dev.settings],
     ['project.dev.detail', project.dev.detail],
     ['project.configuration.settings', project.configuration.settings],
+    ['material.index.resource', material.index.resource],
+    ['material.index.current', material.index.current],
   ];
 
   routers.forEach(([eventName, handle]) => {

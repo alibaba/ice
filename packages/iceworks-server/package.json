@@ -17,7 +17,7 @@
     "egg-view-nunjucks": "^2.2.0",
     "execa": "^1.0.0",
     "junk": "^3.1.0",
-    "midway": "^1.0.0",
+    "midway": "^1.5.6",
     "mkdirp": "^0.5.1",
     "npm-run-path": "^3.1.0",
     "request": "^2.88.0",
