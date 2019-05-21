@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Field } from '@alifd/next';
+import { Form, Input, Button } from '@alifd/next';
 import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
 import stores from '../../stores';
+import styles from './CreatePageModal.module.scss';
 
 const FormItem = Form.Item;
+const FormSubmit = Form.Submit;
 
 const formItemLayout = {
   labelCol: {
@@ -13,100 +15,80 @@ const formItemLayout = {
   },
 };
 
-class SavePageModel extends Component {
-  constructor(props) {
-    super(props);
-    this.field = new Field(this);
-  }
+const SavePageModel = ({ on, onCancel, onOk }) => {
+  const onSave = (values, errors) => {
+    if (!errors) {
+      onOk(values);
+    }
+  };
 
-  onOk = () => {
-    const { onOk } = this.props;
-    this.field.validate((errors, values) => {
-      if (!errors) {
-        onOk(values);
-      }
-    });
-  }
-
-  render() {
-    const { init } = this.field;
-    const { on, onCancel } = this.props;
-    return (
-      <Modal
-        title="填写页面信息"
-        visible={on}
-        onCancel={onCancel}
-        onOk={this.onOk}
+  return (
+    <Modal
+      title="填写页面信息"
+      visible={on}
+      onCancel={onCancel}
+      onOk={onSave}
+      footer={false}
+    >
+      <Form
+        size="small"
+        direction="ver"
+        style={{ width: 320 }}
+        className={styles.saveForm}
       >
-        <Form
-          size="small"
-          direction="ver"
-          style={{ width: 320, paddingTop: '30px' }}
-          field={this.field}
+        <FormItem
+          {...formItemLayout}
+          required
+          size="medium"
+          label="页面目录名"
+          pattern={/^[a-z]([-_a-z0-9]*)$/i}
+          patternMessage="请输入字母与数字组合，字母开头"
+          patternTrigger="onChange"
         >
-          <FormItem {...formItemLayout} required label="页面目录名">
-            <Input
-              style={{ width: 200 }}
-              {...init('name', {
-                initValue: 'name',
-                rules: [
-                  {
-                    required: true,
-                    message: '不能为空',
-                    trigger: ['onChange'],
-                  },
-                  {
-                    pattern: /^[a-z]([-_a-z0-9]*)$/i,
-                    message: '请输入字母与数字组合，字母开头',
-                    trigger: ['onChange'],
-                  },
-                  {
-                    pattern: /^(?!index$)/i,
-                    message: '`index` 为关键字，请更换',
-                    trigger: ['onChange'],
-                  },
-                ],
-              })}
-              placeholder="请输入页面目录名，字母与数字组合，字母开头"
-            />
-          </FormItem>
-          <FormItem {...formItemLayout} required label="路由路径">
-            <Input
-              style={{ width: 200 }}
-              {...init('routePath', {
-                initValue: 'routePath',
-                rules: [
-                  {
-                    required: true,
-                    message: '不能为空',
-                    trigger: ['onBlur', 'onChange'],
-                  },
-                  {
-                    pattern: /^(\/?)([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/,
-                    message:
-                      '请输入小写字母数字组合，支持二级路由以 `/` 分隔',
-                    trigger: ['onBlur', 'onChange'],
-                  },
-                ],
-              })}
-              placeholder="请输入小写字母数字组合，支持二级路由以 `/` 分隔"
-            />
-          </FormItem>
-          <FormItem {...formItemLayout} label="页面导航名">
-            <Input
-              style={{ width: 200 }}
-              {...init('menuName', {
-                initValue: 'menuName',
-                rules: [{ trigger: ['onBlur', 'onChange'] }],
-              })}
-              placeholder="为空则不生成导航项"
-            />
-          </FormItem>
-        </Form>
-      </Modal>
-    );
-  }
-}
+          <Input
+            className={styles.input}
+            name="name"
+            placeholder="请输入页面目录名，字母与数字组合，字母开头"
+          />
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          required
+          size="medium"
+          label="路由路径"
+          pattern={/^(\/?)([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/}
+          patternMessage="请输入小写字母数字组合，支持二级路由以 `/` 分隔"
+          patternTrigger={['onBlur', 'onChange']}
+        >
+          <Input
+            className={styles.input}
+            name="routePath"
+            placeholder="请输入小写字母数字组合，支持二级路由以 `/` 分隔"
+          />
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          size="medium"
+          label="页面导航名"
+        >
+          <Input
+            className={styles.input}
+            name="menuName"
+            placeholder="为空则不生成导航项"
+          />
+        </FormItem>
+        <div className={styles.opts}>
+          <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
+            确定
+          </FormSubmit>
+          <Button onClick={onCancel} className={styles.button}>
+            取消
+          </Button>
+        </div>
+      </Form>
+    </Modal>
+  );
+};
 
 SavePageModel.propTypes = {
   on: PropTypes.bool.isRequired,
@@ -229,11 +211,11 @@ const CreatePageModal = ({
   }
 
   function onSaveOk(data) {
-    toggleSaveModal();
     onOk({
       ...page.dataSource,
       ...data,
     });
+    toggleSaveModal();
   }
 
   return (

@@ -47,8 +47,8 @@ const Page = () => {
   }
 
   async function createPage(data) {
+    logger.info('create page data:', data);
     toggleCreateModal();
-    logger.info(data);
   }
 
   const pagePreDelete =

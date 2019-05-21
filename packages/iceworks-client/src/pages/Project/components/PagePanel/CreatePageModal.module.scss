@@ -1,0 +1,28 @@
+.saveForm {
+  .input {
+    width: 200px;
+    height: 24px;
+    line-height: 24px;
+  }
+
+  .item {
+    margin-bottom: 24px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .opts {
+    text-align: center;
+    margin-top: 32px;
+
+    .button {
+      margin-right: 12px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
