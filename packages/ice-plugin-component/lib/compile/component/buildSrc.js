@@ -12,8 +12,6 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const rimraf = require('rimraf');
 
-const ComponentStyleGenerator = require('./component-style-generator');
-
 module.exports = function componentBuild({ babelConfig, context, log }) {
   const srcDir = path.join(context, 'src');
   const libDir = path.join(context, 'lib');
@@ -40,19 +38,6 @@ module.exports = function componentBuild({ babelConfig, context, log }) {
         break;
     }
   }
-
-  /* style generate */
-  const styleGenerator = new ComponentStyleGenerator({
-    cwd: context,
-    destPath: libDir,
-    absoulte: false,
-  });
-
-  styleGenerator.writeStyleJS();
-  log.info('Generated style.js');
-
-  styleGenerator.writeIndexScss();
-  log.info('Generated index.scss');
 
   function compileSource(file) {
     const source = path.join(srcDir, file);

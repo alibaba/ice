@@ -7,7 +7,7 @@ require('prismjs/components/prism-json');
 
 const yaml = require('js-yaml');
 
-const compileES5 = require('./compile-es5');
+const bableCompile = require('./bableCompile');
 
 const renderer = new marked.Renderer();
 
@@ -109,7 +109,7 @@ exports.parseMarkdownParts = function parseMarkdownParts(babelConfig) {
       }
 
       result.highlightedCode = prismjs.highlight(result.code.trim(), prismjs.languages.jsx);
-      result.compiledCode = compileES5(result.code, babelConfig);
+      result.compiledCode = bableCompile(result.code, babelConfig);
     }
     result.content = marked(result.content);
 

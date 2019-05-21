@@ -6,9 +6,9 @@ const fs = require('fs');
  * @param   {String} cwd 当前目录
  * @returns {Object} pkgJSON content
  */
-function getPkgJSON(cwd) {
+function getPkgJSONSync(cwd) {
   const pkgJSONPath = path.join(cwd, './package.json');
-  return getJSON(pkgJSONPath);
+  return getJSONSync(pkgJSONPath);
 }
 
 /**
@@ -16,7 +16,7 @@ function getPkgJSON(cwd) {
  * @param   {String} jsonPath 当前目录
  * @returns {Object} json content
  */
-function getJSON(jsonPath) {
+function getJSONSync(jsonPath) {
   const jsonString = fs.readFileSync(jsonPath, 'utf-8');
   return JSON.parse(jsonString);
 }
@@ -42,8 +42,8 @@ function writeJSON(obj, jsonPath) {
 }
 
 module.exports = {
-  getPkgJSON,
+  getPkgJSONSync,
   writePkgJSON,
-  getJSON,
+  getJSONSync,
   writeJSON,
 };

@@ -83,7 +83,7 @@ module.exports = class ComponentStyleGenerator {
     return path.join(this.cwd, 'src/main.scss').replace(/\\/g, '/');
   }
 
-  writeStyleJS(dest) {
+  writeStyleJSSync(dest) {
     dest = dest || path.join(this.destPath, 'style.js');
     this.mkdirpSync(path.dirname(dest));
     const deps = this.compileDeps();
@@ -113,7 +113,7 @@ require('${this.absoulte ? mainScssAbsPath : './main.scss'}');
     return dest;
   }
 
-  writeIndexScss(dest) {
+  writeIndexScssSync(dest) {
     dest = dest || path.join(this.destPath, 'index.scss');
     this.mkdirpSync(path.dirname(dest));
     const deps = this.compileDeps();
