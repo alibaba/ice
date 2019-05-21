@@ -1,4 +1,4 @@
-# ice-plugin-component
+# ice-scripts-plugin-component
 
 ice-scripts plugin for component development
 
@@ -18,9 +18,19 @@ Add plugin to `ice.config.js`:
 
 ```js
 // ice.config.js
+// default is support fusion component, will compile index.scss and style.js
 module.exports = {
   plugins: [
     'ice-plugin-component'
+  ]
+}
+```
+
+```js
+// ice.config.js
+module.exports = {
+  plugins: [
+    'ice-plugin-component', { type: 'component' }
   ]
 }
 ```
