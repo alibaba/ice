@@ -9,7 +9,7 @@ const semver = require('semver');
 const bizComponentsVersion = require('./bizComponentsVersion');
 const deprecatedComponents = require('./deprecatedComponents');
 
-const log = require('../utils/log');
+const log = require('../log');
 
 const depModules = {};
 
