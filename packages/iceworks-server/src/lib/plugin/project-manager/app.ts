@@ -14,7 +14,7 @@ class Project implements IProject {
 
   public readonly packageJSON: any;
 
-  private readonly packageJSONFileName = 'package.json';
+  private readonly packageJSONFilename = 'package.json';
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
@@ -25,7 +25,7 @@ class Project implements IProject {
   }
 
   private loadPackage() {
-    const pakcagePath = path.join(this.path, this.packageJSONFileName);
+    const pakcagePath = path.join(this.path, this.packageJSONFilename);
     return JSON.parse(fs.readFileSync(pakcagePath).toString());
   }
 
