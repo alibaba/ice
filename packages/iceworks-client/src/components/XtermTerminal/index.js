@@ -29,9 +29,9 @@ function initTerminal() {
   });
 }
 
-function setContent(value, terminal, ln = true) {
+function setTextContent(value, terminal, ln = true) {
   if (value && value.indexOf('\n') !== -1) {
-    value.split('\n').forEach((v) => setContent(v, terminal));
+    value.split('\n').forEach((v) => setTextContent(v, terminal));
     return;
   }
   if (typeof value === 'string') {
@@ -59,7 +59,7 @@ const XtermTerminal = () => {
   }, []);
 
   useSocket('project.index.dev.data', (data) => {
-    setContent(data, terminal);
+    setTextContent(data, terminal);
   });
 
   return <div ref={xtermRef} className={styles.xtermContainer} />;
