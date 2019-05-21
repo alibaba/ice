@@ -48,6 +48,8 @@ const Page = () => {
 
   async function createPage(data) {
     logger.info('create page data:', data);
+    await pages.create(data);
+
     toggleCreateModal();
   }
 

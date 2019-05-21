@@ -8,4 +8,7 @@ export default {
   async delete(name) {
     await socket.emit('project.page.delete', { name });
   },
+  async create(data) {
+    await socket.emit('project.page.create', data);
+  },
 };

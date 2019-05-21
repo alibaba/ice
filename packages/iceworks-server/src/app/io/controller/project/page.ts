@@ -14,5 +14,11 @@ export default (app) => {
       const project = projectManager.getCurrent();
       await project.page.delete(name);
     }
+
+    async create({ args }) {
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      await project.page.create(args);
+    }
   };
 };

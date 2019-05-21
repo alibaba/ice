@@ -70,6 +70,9 @@ class ProjectManager extends EventEmitter {
     return this.getProject(projectPath);
   }
 
+  /**
+   * Add a project to project list
+   */
   async addProject(projectPath: string): Promise<void> {
     const projects = storage.get('projects');
 
@@ -82,6 +85,16 @@ class ProjectManager extends EventEmitter {
     storage.set('project', projectPath);
   }
 
+
+  /**
+   * Create a project by scaffold
+   */
+  async createProject(): Promise<void> {
+  }
+
+  /**
+   * Delete a project in project list
+   */
   async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
     this.projects = this.projects.filter(({ path }) => path !== projectPath);

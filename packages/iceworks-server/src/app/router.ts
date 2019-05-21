@@ -13,6 +13,7 @@ export default (app: Application) => {
     ['project.index.setCurrent', project.index.setCurrent],
     ['project.page.list', project.page.list],
     ['project.page.delete', project.page.delete],
+    ['project.page.create', project.page.create],
     ['project.layout.list', project.layout.list],
     ['project.dependency.list', project.dependency.list],
     ['project.dev.start', project.dev.start],
