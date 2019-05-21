@@ -6,7 +6,11 @@ import * as mkdirp from 'mkdirp';
 import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
 import scanDirectory from '../scanDirectory';
-import { IPageModule, IProject, IPage, ICreatePageParam } from '../../../interface';
+import getIceVersion from '../getIceVersion';
+import getTarballURLBySource from '../getTarballURLBySource';
+import { install: installDependency } from '../dependency';
+import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock } from '../../../interface';
+import { create } from 'istanbul-reports';
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
@@ -42,6 +46,67 @@ export default class Page implements IPageModule {
     });
   }
 
+  private async downloadAndExtractBlock(destDir: string, tarballURL: string): Promise<string[]> {
+    return [''];
+  }
+
+  private async downloadBlocksToPage(blocks: IMaterialBlock[], pageName: string) {
+    await Promise.all(
+      blocks.map(async (block) => await this.downloadBlockToPage(block, pageName))
+    );
+  }
+
+  private async installBlocksDependencies(blocks: IMaterialBlock[]) {
+    // get all dependencies
+    const dependenciesAll = {};
+    blocks.forEach(({ dependencies }) => Object.assign(dependenciesAll, dependencies));
+
+    // filter dependencies if already in project
+    const filterDependencies = [];
+    Object.keys(dependenciesAll).forEach((dep) => {
+      if (!this.projectPackageJSON.dependencies.hasOwnProperty(dep)) {
+        filterDependencies.push({
+          [dep]: dependenciesAll[dep]
+        });
+      }
+    });
+
+    return await Promise.all(filterDependencies.map(async (dependency) => await installDependency(dependency)));
+  }
+
+  private async downloadBlockToPage(block: IMaterialBlock, pageName: string): Promise<string[]> {
+    const componentsDir = path.join(
+      this.path,
+      pageName,
+      'components'
+    );
+    mkdirp.sync(componentsDir);
+
+    const iceVersion: string = getIceVersion(this.projectPackageJSON);
+    const blockName: string = block.alias || upperCamelCase(block.name);
+
+    let tarballURL: string;
+    try {
+      tarballURL = await getTarballURLBySource(block.source, iceVersion);
+    } catch (error) {
+      error.message = '请求区块 tarball 包失败';
+      throw error;
+    }
+
+    try {
+      return await this.downloadAndExtractBlock(
+        path.join(componentsDir, blockName),
+        tarballURL
+      );
+    } catch (error) {
+      error.message = `解压区块${blockName}出错, 请重试`;
+      if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
+        error.message = `解压区块${blockName}超时，请重试`;
+      }
+      throw error;
+    }
+  }
+
   async getAll(): Promise<IPage[]> {
     return await this.scanPages(this.path);
   }
@@ -65,13 +130,8 @@ export default class Page implements IPageModule {
     }
 
     // download blocks
-    // blocks.forEach((block) => {
-    //   const blockFolderName = block.alias || upperCamelCase(block.name) || block.className;
-    //   block.className = upperCamelCase(
-    //     block.alias || block.className || block.name
-    //   );
-    //   block.relativePath = `./components/${blockFolderName}`;
-    // });
+    await this.downloadBlocksToPage(blocks, pageName);
+    await this.installBlocksDependencies(blocks);
 
     // create page file
 
