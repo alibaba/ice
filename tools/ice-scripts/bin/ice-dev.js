@@ -5,10 +5,10 @@ const program = require('commander');
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 
-const dev = require('../lib/dev');
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 const checkUpdater = require('../lib/utils/checkUpdater');
 const cliInstance = require('../lib/utils/cliInstance');
+const Service = require('../lib/core/Service');
 
 program
   .option('-p, --port <port>', '服务端口号')
@@ -17,7 +17,6 @@ program
   .option('--analyzer', '开启构建分析')
   .option('--analyzer-port', '设置分析端口号')
   .option('--disabled-reload', '关闭 hot reload')
-  .option('--project-type <type>', '项目类型, node|nodejs|web', /^(node|nodejs|web)$/i, 'web')
   .option(
     '--inject-babel <type>',
     '注入 babel 运行环境, Enum: polyfill|runtime',
@@ -73,5 +72,11 @@ checkUpdater()
 
     cliInstance.set('port', parseInt(port, 10));
     const cliOptions = cliInstance.get();
-    dev(cliOptions);
+    process.env.NODE_ENV = 'development';
+    const service = new Service({
+      command: 'dev',
+      args: cliOptions,
+    });
+    service.run();
+    // dev(cliOptions);
   });
