@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" media="all" href="https://unpkg.com/@alifd/next@{{htmlWebpackPlugin.options.pkgVersion.alifd-next}}/dist/next.min.css" />
   <title>Fusion Adaptor</title>
 </head>
 <body>
   <div id="root"></div>
   <!-- React & React Dom 依赖 16.6  -->
-  <script src="https://unpkg.com/react@16.7.0/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/moment@2.24.0/moment.js"></script>
-  <script src="https://unpkg.com/@alifd/next@1.8.6/dist/next.min.js"></script>
+  <script src="https://unpkg.com/react@{{htmlWebpackPlugin.options.pkgVersion.react}}/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@{{htmlWebpackPlugin.options.pkgVersion.react-dom}}/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/moment@{{htmlWebpackPlugin.options.pkgVersion.moment}}/moment.js"></script>
+  <script src="https://unpkg.com/@alifd/next@{{htmlWebpackPlugin.options.pkgVersion.alifd-next}}/dist/next.min.js"></script>
   <script src="https://unpkg.com/@alifd/adaptor-generate/umd/adaptor-generate.production.min.js"></script>
 </body>
 <script>
