@@ -82,6 +82,34 @@ export interface IMaterialScaffold { }
 export interface IMaterialComponent { }
 
 /**
- * TODO 物料的区块信息
+ * 物料的源信息
  */
-export interface IMaterialBlock { }
+export interface IMaterialSource {
+  type: string;
+  npm: string;
+  version: string;
+  registry: string;
+  sourceCodeDirectory: string;
+}
+
+/**
+ * 物料的区块信息
+ */
+export interface IMaterialBlock {
+  name: string;
+  title: string;
+  description: string;
+  homepage: string;
+  categories: string[],
+  repository: string;
+  source: IMaterialSource,
+  dependencies: {
+    [pacakge: string]: string;
+  },
+  screenshot: string;
+  screenshots: string[],
+  publishTime: string;
+  updateTime: string[];
+  uid: string[];
+  alias: string[];
+}
