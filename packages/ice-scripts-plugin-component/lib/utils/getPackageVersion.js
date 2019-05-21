@@ -12,7 +12,7 @@ module.exports = (packages, context) => {
   packages.forEach((packageName) => {
     let version;
     try {
-      const pkg = getPkgJSONSync(path.join(context, 'node_modules', packageName)); 
+      const pkg = getPkgJSONSync(path.join(context, 'node_modules', packageName));
       version = pkg.version;
     } catch (err) {
       version = defaultPackageVersion[packageName];
