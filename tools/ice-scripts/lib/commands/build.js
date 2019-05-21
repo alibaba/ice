@@ -1,5 +1,4 @@
-const gulp = require('gulp');
-const rimraf = require('rimraf');
+const fse = require('fs-extra');
 const webpack = require('webpack');
 const { collectDetail } = require('@alifd/fusion-collector');
 const iceScriptsPkgData = require('../../package.json');
@@ -45,45 +44,28 @@ module.exports = async function (service) {
 
   const webpackConfig = service.config;
 
-  // build task
-  gulp.task('build', ['clean'], () => {
-    gulp.start(['webpack']);
-  });
-
-  gulp.task('clean', (done) => {
-    rimraf(webpackConfig.output.path, done);
-  });
-
-  // webpack 打包工作流
-  gulp.task('webpack', (done) => {
-    webpack(webpackConfig, (error, stats) => {
-      if (error) {
-        throw error;
-      } else {
-        console.log(
-          stats.toString({
-            colors: true,
-            chunks: false,
-            children: false,
-            modules: false,
-            chunkModules: false,
-          })
-        );
-        if (stats.hasErrors()) {
-          throw new Error('webpack compiled failed.');
-        }
-      }
-
-      service.applyHooks('afterBuild', stats);
-      done();
-    });
-  });
-
-  gulp.start('build', (err) => {
-    if (err) {
-      log.error('ICE BUILD ERROR', err);
+  // empty output path
+  fse.emptyDirSync(webpackConfig.output.path);
+  webpack(webpackConfig, (error, stats) => {
+    if (error) {
+      throw error;
     } else {
-      log.info('ICE build finished');
+      console.log(
+        stats.toString({
+          colors: true,
+          chunks: false,
+          children: false,
+          modules: false,
+          chunkModules: false,
+        })
+      );
+      if (stats.hasErrors()) {
+        throw new Error('webpack compiled failed.');
+      } else {
+        log.info('ICE build finished');
+      }
     }
+
+    service.applyHooks('afterBuild', stats);
   });
 };
