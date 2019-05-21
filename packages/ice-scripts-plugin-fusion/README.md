@@ -1,4 +1,4 @@
-# ice-plugin-fusion
+# ice-scripts-plugin-fusion
 
 ice-scripts plugin for project use fusion components
 
@@ -14,7 +14,7 @@ ice-scripts plugin for project use fusion components
 Install npm:
 
 ```bash
-$ npm i --save-dev ice-plugin-fusion
+$ npm i --save-dev ice-scripts-plugin-fusion
 ```
 
 Add config to `ice.config.js`:
@@ -23,7 +23,7 @@ Add config to `ice.config.js`:
 // ice.config.js
 module.exports = {
   plugins: [
-    ['ice-plugin-fusion', {
+    ['ice-scripts-plugin-fusion', {
       // 主题包
       themePackage: '@icedesign/theme',
       themeConfig: {

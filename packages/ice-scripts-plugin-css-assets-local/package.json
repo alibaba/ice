@@ -1,6 +1,6 @@
 {
-  "name": "ice-plugin-css-assets-local",
-  "version": "1.0.0",
+  "name": "ice-scripts-plugin-css-assets-local",
+  "version": "0.1.0",
   "description": "ice-scripts plugin for localize CSS assets",
   "main": "index.js",
   "scripts": {},

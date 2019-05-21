@@ -12,7 +12,7 @@ ice-scripts plugin for project use antd components
 Install npm:
 
 ```bash
-$ npm i --save-dev ice-plugin-antd
+$ npm i --save-dev ice-scripts-plugin-antd
 ```
 
 Add config to `ice.config.js`:
@@ -21,7 +21,7 @@ Add config to `ice.config.js`:
 // ice.config.js
 module.exports = {
   plugins: [
-    ['ice-plugin-antd', {
+    ['ice-scripts-plugin-antd', {
       themeConfig: {
         'primary-color': '#1DA57A',
         'link-color': '#1DA57A',
