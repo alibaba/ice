@@ -4,6 +4,7 @@
 export interface IProject {
   readonly name: string;
   readonly path: string;
+  readonly packageJSON: any;
 }
 
 /**
@@ -12,6 +13,7 @@ export interface IProject {
 export interface IBaseModule {
   readonly projectName: string;
   readonly projectPath: string;
+  readonly projectPackageJSON: any;
 }
 
 /**
@@ -37,19 +39,19 @@ export interface IProjectScaffold {
 /**
  * TODO 项目的布局
  */
-export interface IProjectLayout {}
+export interface IProjectLayout { }
 
 /**
  * TODO 物料的模板信息
  */
-export interface IMaterialScaffold {}
+export interface IMaterialScaffold { }
 
 /**
  * TODO 物料的组件信息
  */
-export interface IMaterialComponent {}
+export interface IMaterialComponent { }
 
 /**
  * TODO 物料的区块信息
  */
-export interface IMaterialBlock {}
+export interface IMaterialBlock { }
