@@ -4,7 +4,7 @@ ice-scripts plugin for multiple entries
 
 ## Features
 
-构建传统的多页应用，默认会将 `src/pages/*/index.js` 作为 entry，每个 page 都会作为一个 entry。
+构建传统的多页应用，默认会将 `src/pages/*/index.js` 作为 entry，每个 page 都会作为一个 entry，以 pageName 构建多个同名 HTML 文件。
 
 例如项目文件结构如下所示：
 
@@ -51,8 +51,7 @@ entry name 将作为 html 的文件名，访问路径为：
 
 ## Options
 
-- `entries`: 自定义多页应用的入口文件，未配置该选项的情况下，会将 `src/pages/*/index.js` 作为 entry，每个 page 都会作为一个 entry。
-- `getEntryName{function}`: 为设置 `entries` 时自定义 entry name，默认取小写的 `src/pages/*/index.js` 文件夹名称。配置 `entries` 时无效。
+- `getEntryName{function}`: 自定义 entry name，默认取小写的 `src/pages/*/index.js` 文件夹名称。
 
 ## Usage
 
@@ -69,23 +68,9 @@ Add config to `ice.config.js`:
 module.exports = {
   plugins: [
     ['ice-plugin-multi-entries', {
-      // customize entries
-      entries: {
-        home: 'src/home.js',
-        about: 'src/about.js',
-      }
-    }]
-  ]
-}
-```
-
-```js
-// ice.config.js
-module.exports = {
-  plugins: [
-    ['ice-plugin-multi-entries', {
       // customize entry name
-      getEntryName: (folder) => _.snakeCase(folder);
+      // BasicCharts => basic_charts
+      getEntryName: (pageName) => _.snakeCase(pageName);
     }]
   ]
 }

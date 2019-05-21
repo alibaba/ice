@@ -2,28 +2,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const getEntryByPages = require('./getEntryByPages.js');
 
-const isObject = (val) => Object.prototype.toString.call(val) === '[object Object]';
-const isArray = Array.isArray;
-
 module.exports = (api, options = {}) => {
   const { chainWebpack, service: { context }, log } = api;
   let entries = {};
 
   try {
-    if (isObject(options.entries)) {
-      Object.keys(options.entries).forEach((key) => {
-        const src = options.entries[key];
-        if (typeof src === 'string') {
-          entries[key] = [src];
-        } else if (isArray(src)) {
-          entries[key] = src;
-        } else {
-          // do not handle
-        }
-      });
-    } else {
-      entries = getEntryByPages(context, options.getEntryName);
-    }
+    entries = getEntryByPages(context, options.getEntryName);
     log.info('使用多页面模式', entries);
   } catch (err) {
     err.message = `get entries error, ${err.message}`;

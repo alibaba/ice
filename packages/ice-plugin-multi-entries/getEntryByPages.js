@@ -1,7 +1,7 @@
 const glob = require('glob');
 const path = require('path');
 
-const getPageName = (folder) => folder.toLocaleLowerCase();
+const getDefaultEntryName = (pageName) => pageName.toLocaleLowerCase();
 
 /**
  * 根据 src/pages 推导 entry
@@ -19,12 +19,12 @@ module.exports = function getEntryByPages(context, getEntryName) {
     return ['.jsx', '.js', '.tsx', '.ts'].indexOf(path.extname(indexFile)) !== -1;
   }).forEach((indexFile) => {
     // src/pages/home/index.js => home
-    const folder = indexFile.split('/')[2];
-    const pageName = typeof getEntryName === 'function'
-      ? getEntryName(folder)
-      : getPageName(folder);
+    const pageName = indexFile.split('/')[2];
+    const entryName = typeof getEntryName === 'function'
+      ? getEntryName(pageName)
+      : getDefaultEntryName(pageName);
 
-    entry[pageName] = indexFile;
+    entry[entryName] = indexFile;
   });
 
   return entry;
