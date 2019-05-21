@@ -76,7 +76,7 @@ export interface ICreatePageParam {
   /**
    * 页面内的区块
    */
-  blocks?: IProjectBlock[];
+  blocks?: IMaterialBlock[];
 
   /**
    * 路由路径
