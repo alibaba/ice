@@ -1,6 +1,7 @@
 import * as EventEmitter from 'events';
 import * as trash from 'trash';
 import * as path from 'path';
+import * as fs from 'fs';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
@@ -11,11 +12,21 @@ class Project implements IProject {
 
   public readonly path: string;
 
+  public readonly packageJSON: any;
+
+  private readonly packageJSONFileName = 'package.json';
+
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
+    this.packageJSON = this.loadPackage();
 
     this.loadAdapter();
+  }
+
+  private loadPackage() {
+    const pakcagePath = path.join(this.path, this.packageJSONFileName);
+    return JSON.parse(fs.readFileSync(pakcagePath).toString());
   }
 
   private loadAdapter() {
