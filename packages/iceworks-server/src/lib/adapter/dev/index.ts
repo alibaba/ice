@@ -1,6 +1,7 @@
 import * as EventEmitter from 'events';
 import * as detectPort from 'detect-port';
 import * as execa from 'execa';
+import * as ipc from './ipc';
 import DEV_SETTINGS from './const';
 
 const DEFAULT_PORT = '4445';
@@ -22,6 +23,8 @@ export default class Dev extends EventEmitter {
   }
 
   async start(settingsEnv) {
+    // create an ipc channel
+    ipc.init();
     const port = await detectPort(DEFAULT_PORT);
     const env = { PORT: port };
 
