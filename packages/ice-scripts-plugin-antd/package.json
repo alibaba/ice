@@ -1,5 +1,5 @@
 {
-  "name": "ice-plugin-antd",
+  "name": "ice-scripts-plugin-antd",
   "version": "0.1.1",
   "description": "ice-scripts plugin for antd",
   "main": "index.js",

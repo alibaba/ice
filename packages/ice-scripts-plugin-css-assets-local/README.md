@@ -16,7 +16,7 @@
 Install npm:
 
 ```bash
-$ npm i --save-dev ice-plugin-css-assets-local
+$ npm i --save-dev ice-scripts-plugin-css-assets-local
 ```
 
 Add config to `ice.config.js`:
@@ -25,7 +25,7 @@ Add config to `ice.config.js`:
 // ice.config.js
 module.exports = {
   plugins: [
-    ['ice-plugin-css-assets-local', {
+    ['ice-scripts-plugin-css-assets-local', {
       outputPath: 'assets',
       relativeCssPath: '../'
     }]
