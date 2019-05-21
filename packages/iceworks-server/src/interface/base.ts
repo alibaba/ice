@@ -4,6 +4,7 @@
 export interface IProject {
   readonly name: string;
   readonly path: string;
+  readonly packageJSON: any;
 }
 
 /**
@@ -12,6 +13,7 @@ export interface IProject {
 export interface IBaseModule {
   readonly projectName: string;
   readonly projectPath: string;
+  readonly projectPackageJSON: any;
 }
 
 /**
