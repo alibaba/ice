@@ -8,6 +8,7 @@ const chalk = require('chalk');
 const clearConsole = require('react-dev-utils/clearConsole');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const webpack = require('webpack');
+const webpackDevMock = require('webpack-dev-mock');
 const WebpackDevServer = require('webpack-dev-server');
 const openBrowser = require('react-dev-utils/openBrowser');
 const iceworksClient = require('../utils/iceworksClient');
@@ -55,7 +56,9 @@ module.exports = async function (service, subprocess) {
   const compiler = webpack(service.config);
   const devServer = new WebpackDevServer(compiler, service.config.devServer);
 
-  // devMiddleware(devServer.app, proxyConfig);
+  // dev mock
+  webpackDevMock(devServer.app);
+
   compiler.hooks.done.tap('done', (stats) => {
     if (isInteractive) {
       clearConsole();
