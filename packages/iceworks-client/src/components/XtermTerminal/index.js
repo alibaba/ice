@@ -11,28 +11,55 @@ import styles from './index.module.scss';
 
 const logger = log.getLogger('xterm');
 
+// default theme
+const defaultTheme = {
+  foreground: '#f0f0f0',
+  background: 'transparent',
+  selection: 'rgba(248,28,229,0.3)',
+};
+
 Terminal.applyAddon(fit);
 Terminal.applyAddon(webLinks);
+
+function initTerminal() {
+  return new Terminal({
+    cols: 100,
+    rows: 30,
+    theme: defaultTheme,
+  });
+}
+
+function setContent(value, terminal, ln = true) {
+  if (value && value.indexOf('\n') !== -1) {
+    value.split('\n').forEach((v) => setContent(v, terminal));
+    return;
+  }
+  if (typeof value === 'string') {
+    if (ln) {
+      terminal.writeln(value);
+    } else {
+      terminal.write(value);
+    }
+  } else {
+    terminal.writeln('');
+  }
+}
 
 const XtermTerminal = () => {
   const xtermRef = useRef(null);
   const project = stores.useStore('project');
-
-  const term = new Terminal({
-    cols: 100,
-    rows: 30,
-  });
+  const terminal = initTerminal();
 
   useEffect(() => {
     logger.debug('xterm loaded.');
 
-    term.open(xtermRef.current);
-    term.fit();
-    term.write(`\x1B[1;3;31m${project.dataSource.name}\x1B[0m $ `);
+    terminal.open(xtermRef.current);
+    terminal.fit();
+    terminal.write(`\x1B[1;3;31m${project.dataSource.name}\x1B[0m $ `);
   }, []);
 
   useSocket('project.index.dev.data', (data) => {
-    term.write(data);
+    setContent(data, terminal);
   });
 
   return <div ref={xtermRef} className={styles.xtermContainer} />;
