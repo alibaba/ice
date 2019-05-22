@@ -16,6 +16,7 @@ export default {
   async getCurrent() {
     const data = await socket.emit('material.index.current');
     logger.info('Material Data:', data);
+
     this.dataSource.current = data;
   },
 };

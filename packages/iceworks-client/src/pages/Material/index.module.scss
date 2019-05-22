@@ -6,4 +6,13 @@
     flex: 1;
     margin: 20px;
   }
+  :global {
+    .next-card {
+      padding: 0;
+    }
+
+    .next-card-head {
+      padding: 0 16px;
+    }
+  }
 }

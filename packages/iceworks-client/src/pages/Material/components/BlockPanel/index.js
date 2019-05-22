@@ -4,15 +4,19 @@ import { Grid } from '@alifd/next';
 import MaterialCategories from '@components/MaterialCategories';
 import BlockCard from '@components/BlockCard';
 
+import styles from '../ScaffoldPanel/index.module.scss';
+
 const { Row, Col } = Grid;
 
-const BlockPanel = ({ dataSource }) => {
-  const { categories = [], blocks = [] } = dataSource;
+const BlockPanel = ({ dataSource, current }) => {
+  const { categories = [], materials = {} } = dataSource;
+  const cueeMaterials = materials[current] || [];
+
   return (
-    <div className="block-panel">
-      <MaterialCategories dataSource={categories} />
-      <Row wrap gutter="40">
-        {blocks.map((data, index) => {
+    <div className={styles.materialsPanel}>
+      <MaterialCategories dataSource={categories} current={current} />
+      <Row wrap gutter="20">
+        {cueeMaterials.map((data, index) => {
           return (
             <Col l="8" xs="8" xxs="24" key={index}>
               <BlockCard dataSource={data} />
@@ -27,15 +31,17 @@ const BlockPanel = ({ dataSource }) => {
 BlockPanel.defaultProps = {
   dataSource: {
     categories: [],
-    blocks: [],
+    materials: {},
   },
+  current: 'all',
 };
 
 BlockPanel.propTypes = {
   dataSource: PropTypes.shape({
     categories: PropTypes.array.isRequired,
-    blocks: PropTypes.array.isRequired,
+    materials: PropTypes.object.isRequired,
   }),
+  current: PropTypes.string,
 };
 
 export default BlockPanel;

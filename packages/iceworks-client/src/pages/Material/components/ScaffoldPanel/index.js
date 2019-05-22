@@ -7,15 +7,17 @@ import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
-const ScaffoldPanel = ({ dataSource }) => {
-  const { categories, scaffolds } = dataSource;
+const ScaffoldPanel = ({ dataSource, current }) => {
+  const { categories, materials } = dataSource;
+  const currMaterials = materials[current] || [];
+
   return (
-    <div className={styles.scaffoldPanel}>
-      <MaterialCategories dataSource={categories} />
+    <div className={styles.materialsPanel}>
+      <MaterialCategories dataSource={categories} current={current} />
       <Row wrap gutter="40">
-        {scaffolds.map((scaffod, index) => {
+        {currMaterials.map((scaffod, index) => {
           return (
-            <Col l="12" xs="12" xxs="24" key={index}>
+            <Col l="12" s="12" xs="24" xxs="24" key={index}>
               <ScaffoldCard dataSource={scaffod} />
             </Col>
           );
@@ -28,15 +30,17 @@ const ScaffoldPanel = ({ dataSource }) => {
 ScaffoldPanel.defaultProps = {
   dataSource: {
     categories: [],
-    scaffolds: [],
+    materials: {},
   },
+  current: 'all',
 };
 
 ScaffoldPanel.propTypes = {
   dataSource: PropTypes.shape({
     categories: PropTypes.array.isRequired,
-    scaffolds: PropTypes.array.isRequired,
+    materials: PropTypes.object.isRequired,
   }),
+  current: PropTypes.string,
 };
 
 export default ScaffoldPanel;

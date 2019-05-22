@@ -2,6 +2,7 @@ import request from '../../../../lib/request';
 import storage from '../../../../lib/storage';
 
 const url = 'http://ice.alicdn.com/assets/react-materials.json';
+const isArray = Array.isArray;
 
 export default (app) => {
   return class MaterialController extends app.Controller {
@@ -11,6 +12,7 @@ export default (app) => {
 
     async current() {
       const data = await request(url);
+
       return formatData(data);
     }
   };
@@ -19,9 +21,9 @@ export default (app) => {
 function formatData(data) {
   const { blocks = [], scaffolds = [], components = [] } = data;
   return {
-    blocks: { categories: generateCates(blocks), blocks },
-    scaffolds: { categories: generateCates(scaffolds), scaffolds },
-    components: { categories: generateCates(components), components },
+    blocks: { categories: generateCates(blocks), materials: formatMaterialsByCatrgory(blocks) },
+    scaffolds: { categories: generateCates(scaffolds), materials: formatMaterialsByCatrgory(scaffolds) },
+    components: { categories: generateCates(components), materials: formatMaterialsByCatrgory(components) },
   };
 }
 
@@ -45,3 +47,28 @@ function generateCates(data: any[]) {
 
   return result;
 }
+
+function formatMaterialsByCatrgory(data: any[]) {
+  const materials = { "all": [] };
+
+  if (isArray(data)) {
+    data.forEach((item) => {
+      const { categories } = item;
+      if (!item.screenshots) {
+        console.log(item)
+      }
+      materials["all"].push(item);
+      if (isArray(categories) && categories.length) {
+        categories.forEach((category) => {
+          if (isArray(materials[category])) {
+            materials[category].push(item);
+          } else {
+            materials[category] = [item];
+          }
+        });
+      }
+    });
+  }
+
+  return materials;
+};

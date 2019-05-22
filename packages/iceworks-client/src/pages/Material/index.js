@@ -1,36 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Tab } from '@alifd/next';
 import stores from '@stores';
 import Card from '@components/Card';
+import qs from 'querystringify';
 import SubMenu from './components/SubMenu';
 import ScaffoldPanel from './components/ScaffoldPanel';
 import BlockPanel from './components/BlockPanel';
 import ComponentPanel from './components/ComponentPanel';
 import styles from './index.module.scss';
 
-const Material = () => {
+const Material = ({ history, location }) => {
   const material = stores.useStore('material');
   const { dataSource } = material;
+  const currCategory = (qs.parse(location.search) || {}).category;
 
   useEffect(() => {
     material.getResource();
     material.getCurrent();
   }, []);
 
+  const [state, setState] = useState({
+    type: 'scaffolds',
+  });
+
   const tabs = [
     {
       tab: '模板',
-      content: <ScaffoldPanel dataSource={dataSource.current.scaffolds} />,
+      key: 'scaffolds',
+      content: <ScaffoldPanel dataSource={dataSource.current.scaffolds} current={currCategory} />,
     },
     {
       tab: '区块',
-      content: <BlockPanel dataSource={dataSource.current.blocks} />,
+      key: 'blocks',
+      content: <BlockPanel dataSource={dataSource.current.blocks} current={currCategory} />,
     },
     {
       tab: '组件',
-      content: <ComponentPanel dataSource={dataSource.current.components} />,
+      key: 'components',
+      content: <ComponentPanel dataSource={dataSource.current.components} current={currCategory} />,
     },
   ];
+
+  function handleChange(key) {
+    history.push('/material');
+    setState({
+      type: key,
+    });
+  }
 
   return (
     <div className={styles.materialPage}>
@@ -39,9 +56,9 @@ const Material = () => {
 
       <div className={styles.main}>
         <Card title="物料管理" contentHeight="100%">
-          <Tab shape="capsule" size="small" style={{ textAlign: 'center' }}>
-            {tabs.map((tab, index) => (
-              <Tab.Item title={tab.tab} key={index}>
+          <Tab shape="capsule" size="small" style={{ textAlign: 'center' }} activeKey={state.type} onChange={handleChange}>
+            {tabs.map((tab) => (
+              <Tab.Item title={tab.tab} key={tab.key}>
                 {tab.content}
               </Tab.Item>
             ))}
@@ -50,6 +67,11 @@ const Material = () => {
       </div>
     </div>
   );
+};
+
+Material.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default Material;
