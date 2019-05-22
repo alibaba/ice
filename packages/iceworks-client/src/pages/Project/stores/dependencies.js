@@ -15,4 +15,7 @@ export default {
   async reset() {
     await socket.emit('project.dependency.reset');
   },
+  async create(value) {
+
+  },
 };

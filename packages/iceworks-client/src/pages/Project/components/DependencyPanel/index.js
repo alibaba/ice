@@ -3,7 +3,9 @@ import { Icon, Tab, Dialog } from '@alifd/next';
 import classNames from 'classnames';
 import useSocket from '@hooks/useSocket';
 import IceNotification from '@icedesign/notification';
+import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
+import CreateDependencyModel from './CreateDependencyModel';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
@@ -13,6 +15,10 @@ const { Item: TabPane } = Tab;
 const STATUS_RESETING = 'reseting';
 
 const DependencyPanel = () => {
+  const {
+    on: onCreateModel,
+    toggleModal: toggleCreateModal,
+  } = useModal();
   const dependenciesStore = stores.useStore('dependencies');
   const { dataSource } = dependenciesStore;
   const { dependencies, devDependencies } = dataSource;
@@ -22,7 +28,7 @@ const DependencyPanel = () => {
       return;
     }
 
-    console.log('onCreate');
+    toggleCreateModal();
   }
 
   async function onRefresh() {
@@ -46,6 +52,10 @@ const DependencyPanel = () => {
         dependenciesStore.reset();
       },
     });
+  }
+
+  async function create(value) {
+    await dependenciesStore.create(value);
   }
 
   useSocket('project.dependency.data', (data) => {
@@ -109,6 +119,12 @@ const DependencyPanel = () => {
       }
     >
       <div className={styles.main}>
+        <CreateDependencyModel
+          title="添加依赖"
+          on={onCreateModel}
+          onCancel={toggleCreateModal}
+          onOk={create}
+        />
         <Tab size="small" contentStyle={{ padding: '10px 0 0' }}>
           {
             [['dependencies', dependencies], ['devDependencies', devDependencies]].map(([key, deps]) => {
