@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "yargs": "^13.2.4"
+    "commander": "^2.20.0",
+    "lodash": "^4.17.11"
   }
 }
