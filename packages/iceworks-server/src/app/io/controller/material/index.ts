@@ -1,7 +1,6 @@
 import request from '../../../../lib/request';
 import storage from '../../../../lib/storage';
 
-const url = 'http://ice.alicdn.com/assets/react-materials.json';
 const isArray = Array.isArray;
 
 export default (app) => {
@@ -10,8 +9,9 @@ export default (app) => {
       return storage.get('material');
     }
 
-    async current() {
-      const data = await request(url);
+    async current(ctx) {
+      const { args } = ctx;
+      const data = await request(args.url);
 
       return formatData(data);
     }
@@ -54,9 +54,7 @@ function formatMaterialsByCatrgory(data: any[]) {
   if (isArray(data)) {
     data.forEach((item) => {
       const { categories } = item;
-      if (!item.screenshots) {
-        console.log(item)
-      }
+
       materials["all"].push(item);
       if (isArray(categories) && categories.length) {
         categories.forEach((category) => {

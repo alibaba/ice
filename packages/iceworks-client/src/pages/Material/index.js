@@ -16,8 +16,11 @@ const Material = ({ history, location }) => {
   const currCategory = (qs.parse(location.search) || {}).category;
 
   useEffect(() => {
-    material.getResource();
-    material.getCurrent();
+    async function fetchData() {
+      await material.getResource();
+      await material.getCurrent();
+    }
+    fetchData();
   }, []);
 
   const [state, setState] = useState({
@@ -42,21 +45,27 @@ const Material = ({ history, location }) => {
     },
   ];
 
-  function handleChange(key) {
+  async function handleTabChange(key) {
     history.push('/material');
     setState({
       type: key,
     });
   }
 
+  async function handleMenuChange(url) {
+    await handleTabChange('scaffolds');
+    await material.resetCurrent();
+    await material.getCurrent(url);
+  }
+
   return (
     <div className={styles.materialPage}>
       {/* render material submenu */}
-      <SubMenu data={dataSource.resource} title="物料管理" />
+      <SubMenu data={dataSource.resource} title="物料管理" onChange={handleMenuChange}/>
 
       <div className={styles.main}>
         <Card title="物料管理" contentHeight="100%">
-          <Tab shape="capsule" size="small" style={{ textAlign: 'center' }} activeKey={state.type} onChange={handleChange}>
+          <Tab shape="capsule" size="small" style={{ textAlign: 'center' }} activeKey={state.type} onChange={handleTabChange}>
             {tabs.map((tab) => (
               <Tab.Item title={tab.tab} key={tab.key}>
                 {tab.content}

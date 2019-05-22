@@ -1,6 +1,8 @@
 import socket from '@src/socket';
 import logger from '@utils/logger';
 
+// const DEFAULT_URL = 'http://ice.alicdn.com/assets/react-materials.json';
+
 export default {
   dataSource: {
     resource: [],
@@ -13,10 +15,19 @@ export default {
     this.dataSource.resource = data;
   },
 
-  async getCurrent() {
-    const data = await socket.emit('material.index.current');
-    logger.info('Material Data:', data);
+  async getCurrent(url) {
+    const firstResource = this.dataSource.resource[0] || {};
+    const sourceUrl = url || firstResource.source;
 
-    this.dataSource.current = data;
+    if (sourceUrl) {
+      const data = await socket.emit('material.index.current', { url: sourceUrl });
+      logger.info('Material Data:', data);
+
+      this.dataSource.current = data;
+    }
+  },
+
+  async resetCurrent() {
+    this.dataSource.current = {};
   },
 };

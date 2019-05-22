@@ -17,5 +17,10 @@
     padding: 0 15px;
     color: $text-color-secondary;
     text-decoration: none;
+    cursor: pointer;
+  }
+
+  .active {
+    background-color: #eee;
   }
 }
