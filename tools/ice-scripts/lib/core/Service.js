@@ -109,14 +109,10 @@ module.exports = class Service {
 
   getWebpackConfig() {
     const config = getDefaultWebpackConfig(this.command);
-    const chainWebpackOptions = {
-      command: this.command,
-      commandArgs: this.commandArgs,
-    };
 
     this.chainWebpackFns.forEach(({ fn, pluginName }) => {
       try {
-        fn(config, chainWebpackOptions);
+        fn(config);
       } catch (err) {
         log.error(`Fail to exec plugin chainWebpack ${pluginName}`);
         console.error(err);
@@ -125,7 +121,16 @@ module.exports = class Service {
     });
 
     if (this.userConfig.chainWebpack) {
-      this.userConfig.chainWebpack(config);
+      try {
+        this.userConfig.chainWebpack(config, {
+          command: this.command,
+          commandArgs: this.commandArgs,
+        });
+      } catch (err) {
+        log.error('Fail to exec userConfig.chainWebpack');
+        console.error(err);
+        process.exit(1);
+      }
     }
     // add polyfill/hotdev before origin entry
     this.processWepackEntry(config);
