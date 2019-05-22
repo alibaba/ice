@@ -19,13 +19,13 @@ function MaterialCategories(props) {
       <li key={-1} className={cx({ [styles.active]: !current || current === 'all' })}>
         <Link to={linkToAll}>全部</Link>
       </li>
-      {dataSource.map(({ name }, index) => {
+      {dataSource.map(({ name }) => {
         const item = {
           name,
         };
 
         return (
-          <li key={index} className={cx({ [styles.active]: current === item.name })}>
+          <li key={name} className={cx({ [styles.active]: current === item.name })}>
             <Link
               to={
                 type

@@ -15,10 +15,12 @@ const ScaffoldPanel = ({ dataSource, current }) => {
     <div className={styles.materialsPanel}>
       <MaterialCategories dataSource={categories} current={current} />
       <Row wrap gutter="40">
-        {currMaterials.map((scaffod, index) => {
+        {currMaterials.map((data) => {
+          const key = data.source && data.source.npm ? data.source.npm : data.title;
+
           return (
-            <Col l="12" s="12" xs="24" xxs="24" key={index}>
-              <ScaffoldCard dataSource={scaffod} />
+            <Col l="12" s="12" xs="24" xxs="24" key={key}>
+              <ScaffoldCard dataSource={data} />
             </Col>
           );
         })}

@@ -16,9 +16,10 @@ const ComponentPanel = ({ dataSource, current }) => {
     <div className={styles.materialsPanel}>
       <MaterialCategories dataSource={categories} current={current} />
       <Row wrap gutter="20">
-        {cueeMaterials.map((data, index) => {
+        {cueeMaterials.map((data) => {
+          const key = data.source && data.source.npm ? data.source.npm : data.title;
           return (
-            <Col l="8" m="8" s="12" xs="24" xxs="24" key={index}>
+            <Col l="8" m="8" s="12" xs="24" xxs="24" key={key}>
               <ComponentCard dataSource={data} />
             </Col>
           );
