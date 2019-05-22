@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon, Tab, Dialog } from '@alifd/next';
+import classNames from 'classnames';
 import useSocket from '@hooks/useSocket';
 import IceNotification from '@icedesign/notification';
 import logger from '@utils/logger';
@@ -9,12 +10,18 @@ import styles from './index.module.scss';
 
 const { Item: TabPane } = Tab;
 
+const STATUS_RESETING = 'reseting';
+
 const DependencyPanel = () => {
   const dependenciesStore = stores.useStore('dependencies');
   const { dataSource } = dependenciesStore;
   const { dependencies, devDependencies } = dataSource;
 
   async function onCreate() {
+    if (dataSource.status === STATUS_RESETING) {
+      return;
+    }
+
     console.log('onCreate');
   }
 
@@ -23,6 +30,10 @@ const DependencyPanel = () => {
   }
 
   async function onReset() {
+    if (dataSource.status === STATUS_RESETING) {
+      return;
+    }
+
     Dialog.confirm({
       title: '安装项目依赖',
       content: (
@@ -31,6 +42,7 @@ const DependencyPanel = () => {
         </div>
       ),
       onOk: () => {
+        dependenciesStore.setStatus(STATUS_RESETING);
         dependenciesStore.reset();
       },
     });
@@ -61,9 +73,37 @@ const DependencyPanel = () => {
         <div className={styles.header}>
           <h3>依赖管理</h3>
           <div className={styles.icons}>
-            <Icon className={styles.icon} type="refresh" size="small" onClick={onRefresh} title="刷新依赖" />
-            <Icon className={styles.icon} type="download" size="small" onClick={onReset} title="重装依赖" />
-            <Icon className={styles.icon} type="add" size="small" onClick={onCreate} title="添加依赖" />
+            <Icon
+              className={styles.icon}
+              type="refresh"
+              size="small"
+              onClick={onRefresh}
+              title="刷新依赖"
+            />
+            <Icon
+              className={
+                classNames({
+                  [styles.icon]: true,
+                  [styles.reseting]: dataSource.status === STATUS_RESETING,
+                })
+              }
+              type="download"
+              size="small"
+              onClick={onReset}
+              title="重装依赖"
+            />
+            <Icon
+              className={
+                classNames({
+                  [styles.icon]: true,
+                  [styles.reseting]: dataSource.status === STATUS_RESETING,
+                })
+              }
+              type="add"
+              size="small"
+              onClick={onCreate}
+              title="添加依赖"
+            />
           </div>
         </div>
       }

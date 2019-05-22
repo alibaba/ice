@@ -22,6 +22,10 @@
       &:last-child {
         margin-right: 0;
       }
+
+      &.reseting {
+        color: $text-color-normal;
+      }
     }
   }
 }
