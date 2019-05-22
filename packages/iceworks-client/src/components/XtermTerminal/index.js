@@ -1,10 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import { Terminal } from 'xterm';
-import useSocket from '@hooks/useSocket';
 import * as fit from 'xterm/dist/addons/fit/fit';
 import * as webLinks from 'xterm/dist/addons/webLinks/webLinks';
 import stores from '@stores';
+import useSocket from '@hooks/useSocket';
+import Icon from '@components/Icon';
 import 'xterm/dist/xterm.css';
 import log from '@utils/logger';
 import styles from './index.module.scss';
@@ -12,6 +13,7 @@ import styles from './index.module.scss';
 const logger = log.getLogger('xterm');
 
 // default theme
+// api: https://xtermjs.org/docs/api/terminal/interfaces/itheme/
 const defaultTheme = {
   foreground: '#666',
   background: '#EEF3F9',
@@ -39,7 +41,7 @@ function initTerminal() {
 /**
  * format the text content of the terminal
  * @param {*} value current data stream
- * @param {*} terminal terminal instance
+ * @param {*} terminal current Terminal instance
  * @param {*} ln
  */
 function setTextContent(value, terminal, ln = true) {
@@ -59,8 +61,17 @@ function setTextContent(value, terminal, ln = true) {
 }
 
 /**
+ * initialize text of the terminal
+ * @param {*} terminal
+ * @param {*} name
+ */
+function setInitText(terminal, name) {
+  terminal.write(`\x1B[1;3;31m${name}\x1B[0m $ `);
+}
+
+/**
  * open web links
- * https://github.com/xtermjs/xterm.js/blob/master/src/addons/webLinks/webLinks.ts
+ * api: https://github.com/xtermjs/xterm.js/blob/master/src/addons/webLinks/webLinks.ts
  * @param {*} event
  * @param {*} uri
  */
@@ -68,9 +79,18 @@ function handleLink(event, uri) {
   window.open(uri, '_blank');
 }
 
+/**
+ * clear the entire buffer, making the prompt line the new first line.
+ * @param {*} terminal current Terminal instance
+ */
+function handleClear(terminal) {
+  terminal.clear();
+}
+
 const XtermTerminal = () => {
   const xtermRef = useRef(null);
   const project = stores.useStore('project');
+  const { name } = project.dataSource || {};
   const terminal = initTerminal();
 
   useEffect(() => {
@@ -80,7 +100,7 @@ const XtermTerminal = () => {
     webLinks.webLinksInit(terminal, handleLink);
     terminal.open(xtermRef.current);
     terminal.fit();
-    terminal.write(`\x1B[1;3;31m${project.dataSource.name}\x1B[0m $ `);
+    setInitText(terminal, name);
   }, []);
 
   // receive start data
@@ -92,10 +112,19 @@ const XtermTerminal = () => {
   useSocket('project.index.stop.data', (data) => {
     setTextContent(data, terminal);
     terminal.write('\n');
-    terminal.write(`\x1B[1;3;31m${project.dataSource.name}\x1B[0m $ `);
+    setInitText(terminal, name);
   });
 
-  return <div ref={xtermRef} className={styles.xtermContainer} />;
+  return (
+    <div className={styles.xtermContainer}>
+      <Icon
+        type="clear"
+        className={styles.clearIcon}
+        onClick={() => handleClear(terminal)}
+      />
+      <div ref={xtermRef} />
+    </div>
+  );
 };
 
 XtermTerminal.defaultProps = {};

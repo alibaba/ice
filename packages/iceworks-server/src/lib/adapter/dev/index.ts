@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import * as ipc from './ipc';
 import DEV_SETTINGS from './const';
 
-const DEFAULT_PORT = '4445';
+const DEFAULT_PORT = '4444';
 
 export const DEV_STATUS_NORMAL = 'normal';
 export const DEV_STATUS_WORKING = 'working';
@@ -26,6 +26,7 @@ export default class Dev extends EventEmitter {
   async start(settingsEnv) {
     // create an ipc channel
     ipc.init();
+
     const port = await detectPort(DEFAULT_PORT);
     const env = { PORT: port };
 
