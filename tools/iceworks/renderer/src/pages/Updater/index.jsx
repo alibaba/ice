@@ -1,9 +1,9 @@
-'use strict';
+
 
 // 当前 page 的主入口
-import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './App';
 
 const renderEntry = React.createElement(App);
 

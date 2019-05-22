@@ -15,6 +15,7 @@ class ProjectInit extends Component {
   handleCancel = () => {
     this.props.project.setNeedInstallDeps(false);
   };
+
   handleOk = () => {
     const { project } = this.props;
     const nodeFramework = project.nodeFramework;
@@ -38,6 +39,7 @@ class ProjectInit extends Component {
       }
     );
   };
+
   render() {
     const { project } = this.props;
     if (project && !project.isUnavailable) {

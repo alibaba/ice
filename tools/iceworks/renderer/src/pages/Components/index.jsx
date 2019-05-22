@@ -11,7 +11,6 @@ const TabPane = Tab.TabPane;
 @inject('materials', 'scaffold', 'customScaffold')
 @observer
 class IceComponent extends Component {
-
   static propTypes = {
     materials: PropTypes.object.isRequired,
   };
@@ -25,7 +24,7 @@ class IceComponent extends Component {
   };
 
   handleTabChange = (key) => {
-    if(key){
+    if (key) {
       this.props.materials.setComponentTabActiveKey(key);
     } else {
       this.props.materials.setComponentTabActiveKey(-1);
@@ -65,7 +64,7 @@ class IceComponent extends Component {
             activeKey={this.props.materials.tabComponentActiveKey}
             onChange={this.handleTabChange}
             contentStyle={{ padding: 0 }}
-            tabBarExtraContent={
+            tabBarExtraContent={(
               <div
                 style={{
                   height: 48,
@@ -83,7 +82,7 @@ class IceComponent extends Component {
                   刷新列表
                 </Button>
               </div>
-            }
+)}
           >
             {this.renderComponentsTabPanel()}
           </Tab>

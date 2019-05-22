@@ -62,7 +62,7 @@ const ScaffoldHoc = (WrappedComponent) => {
         projectName,
         layoutConfig,
         isCustomScaffold: !!layoutConfig, // 存在 layoutConfig 表示自定义模板
-        nodeFramework
+        nodeFramework,
       };
 
       const currentPath = this.props.scaffold.getProjectPathWithWorkspace();
@@ -73,9 +73,8 @@ const ScaffoldHoc = (WrappedComponent) => {
             const SectionCount = nodeFramework ? 2 : 1;
             this.props.scaffold.startProgress(SectionCount);
             return this.props.scaffold.create(currentPath, options);
-          } else {
-            return Promise.resolve(gotoCreate);
           }
+          return Promise.resolve(gotoCreate);
         })
         .then((cpmpleteConfig) => {
           // eslint-disable-next-line no-console

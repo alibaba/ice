@@ -44,10 +44,12 @@ class index extends Component {
           <div style={{ paddingLeft: 30 }}>
             <h1 style={{ margin: 0 }}>Sorry! </h1>
             <div>
-              发生了未知的错误! 可以点击{' '}
+              发生了未知的错误! 可以点击
+              {' '}
               <a href="javascript:void(0);" onClick={this.report}>
                 提交问题
-              </a>{' '}
+              </a>
+              {' '}
               反馈给我们，谢谢。
             </div>
           </div>

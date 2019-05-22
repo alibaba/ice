@@ -58,13 +58,13 @@ client.on('start', () => {
   clientEmiter.emit('start');
 });
 client.on('message', (msg) => {
-  clientEmiter.send(msg + '\n\r');
+  clientEmiter.send(`${msg}\n\r`);
 });
 client.on('build_message', (msg) => {
   clientEmiter.send(msg);
 });
 client.on('error', (error) => {
-  clientEmiter.send('\r\n' + error.message);
+  clientEmiter.send(`\r\n${error.message}`);
   clientEmiter.emit('error', error);
 });
 client.on('success', () => {
@@ -87,7 +87,6 @@ class Def extends Component {
   }
 
   componentDidMount() {
-
     const { projects } = this.props;
     clientEmiter.on('start', () => {
       const { currentProject } = projects;
@@ -146,12 +145,16 @@ class Def extends Component {
 
   confirmFilesIsCommit = () => {
     const { currentProject } = this.props.projects;
-    const trigger = <Icon type="help" style={{
-      marginLeft: '3px',
-      fontSize: '14px'
-    }} />
+    const trigger = (
+      <Icon type="help"
+        style={{
+          marginLeft: '3px',
+          fontSize: '14px',
+        }}
+      />
+    );
 
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const dialog = Dialog.confirm({
         needWrapper: false,
         title: '提示',
@@ -160,14 +163,15 @@ class Def extends Component {
             textAlign: 'center',
             margin: '20px 10px',
             fontSize: '16px',
-          }}>
+          }}
+          >
             当前 Git 仓库本地有未提交的代码，请确认操作
           </div>
         ),
         footer: (
           <div>
             <Button
-              onClick={() => { resolve('git'); dialog.hide();}}
+              onClick={() => { resolve('git'); dialog.hide(); }}
               type="primary"
             >
               提交并发布
@@ -180,20 +184,29 @@ class Def extends Component {
                 <div style={{
                   margin: '0 0 10px 0',
                   fontSize: '14px',
-                }}>Git 提交将执行以下操作：</div>
+                }}
+                >
+Git 提交将执行以下操作：
+                </div>
                 <ul>
                   <li><i>git add .</i></li>
-                  <li><i>git commit -m 'chore: update {currentProject.projectName}'</i></li>
+                  <li>
+                    <i>
+git commit -m 'chore: update
+                      {currentProject.projectName}
+'
+                    </i>
+                  </li>
                   <li><i>git push</i></li>
                 </ul>
               </Balloon>
             </Button>
-            <Button onClick={() => { resolve(true); dialog.hide();}}>直接发布</Button>
-            <Button onClick={() => { resolve(false); dialog.hide();}}>取消</Button>
-          </div> 
-        )
+            <Button onClick={() => { resolve(true); dialog.hide(); }}>直接发布</Button>
+            <Button onClick={() => { resolve(false); dialog.hide(); }}>取消</Button>
+          </div>
+        ),
       });
-    })
+    });
   }
 
   cloudPublish = async (target) => {
@@ -246,7 +259,7 @@ class Def extends Component {
           this.setState({ defPublishing: false });
           return;
         }
-      } 
+      }
       // 2. push
       const pushDone = await git.push();
       if (pushDone) {
@@ -258,7 +271,7 @@ class Def extends Component {
         this.setState({ defPublishing: false });
         return;
       }
-    } 
+    }
 
     // eslint-disable-next-line
     logger.info(currentBranch, '提交完成，开始进入前端发布');
@@ -268,18 +281,17 @@ class Def extends Component {
       client_token: shared.defToken, // 可找 @上坡(shangpo.zw)  @星弛(xingchi.mxc)
       // eslint-disable-next-line
       client_emp_id: user.workid,
-      target: target, // daily: 资源发布日常环境，prod: 资源发布线上环境
+      target, // daily: 资源发布日常环境，prod: 资源发布线上环境
       repo: originRemote.refs.push, // 仓库地址
       branch: currentBranch, // 仓库分支
       // eslint-disable-next-line
       commit_id: lastCommit.latest.hash, // 当前发布的 commit id 值
       env: shared.defEnv, // (可选)DEF 发布系统的环境, daily: 日常，prepub: 预发，prod: 线上；联调时可使用
     });
-    this.setState({ defPublishing: false 
+    this.setState({ defPublishing: false,
     }, () => {
       git.checkIsRepo();
     });
-   
   };
 
   renderBody = () => {
@@ -300,7 +312,7 @@ class Def extends Component {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
             }}
           >
             <div
@@ -311,21 +323,24 @@ class Def extends Component {
                 minHeight: 140,
               }}
             >
-              <Icon type="tip" style={{ 
-                color: 'rgb(48, 128, 254)', 
-                paddingRight: 10,
-                position: 'relative',
-                top: '14px'
-              }} />
-              <div style={{ 
-                color: '#aaa', 
-                fontSize: 14 , 
-                display: 'flex', 
-                flexDirection: 'column', 
+              <Icon type="tip"
+                style={{
+                  color: 'rgb(48, 128, 254)',
+                  paddingRight: 10,
+                  position: 'relative',
+                  top: '14px',
+                }}
+              />
+              <div style={{
+                color: '#aaa',
+                fontSize: 14,
+                display: 'flex',
+                flexDirection: 'column',
                 maxWidth: '400px',
-              }}>
+              }}
+              >
                 <p>1. git 操作请在 Git 插件中处理</p>
-                <p style={{whiteSpace: 'initial'}}>2. def 发布要求分支名为： prefix/x.y.z，例如：daily/1.0.0</p>
+                <p style={{ whiteSpace: 'initial' }}>2. def 发布要求分支名为： prefix/x.y.z，例如：daily/1.0.0</p>
               </div>
             </div>
             <Button.Group>
@@ -359,7 +374,7 @@ class Def extends Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <EmptyTips>该项目不是一个 Git 仓库，请在 Git 插件配置后使用，或者手动初始化项目</EmptyTips>
@@ -419,8 +434,8 @@ const styles = {
   },
   formError: {
     display: 'block',
-    marginTop: '5px'
-  }
+    marginTop: '5px',
+  },
 };
 
 export default PluginHoc(Def);

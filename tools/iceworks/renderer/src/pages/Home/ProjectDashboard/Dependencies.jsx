@@ -8,13 +8,14 @@ import pathExists from 'path-exists';
 import React, { Component } from 'react';
 import Tooltip from 'rc-tooltip';
 
-import DashboardCard from '../../../components/DashboardCard/';
-import EmptyTips from '../../../components/EmptyTips/';
-import ExtraButton from '../../../components/ExtraButton/';
+import DashboardCard from '../../../components/DashboardCard';
+import EmptyTips from '../../../components/EmptyTips';
+import ExtraButton from '../../../components/ExtraButton';
 import Icon from '../../../components/Icon';
 import logger from '../../../lib/logger';
 import services from '../../../services';
 import PluginHoc from './PluginHoc';
+
 const { npm } = services;
 
 @inject('projects', 'installer')
@@ -96,7 +97,7 @@ class Dependencies extends Component {
   // 更新已经安装的包
   updateInstalled = () => {
     const { projects } = this.props;
-    let { dependencies, devDependencies } = this.state;
+    const { dependencies, devDependencies } = this.state;
     const currentProject = projects.currentProject;
 
     // 更新所有已经依赖的版本
@@ -180,7 +181,7 @@ class Dependencies extends Component {
   };
 
   handleReload = () => {
-    let { dependencies, devDependencies } = this.state;
+    const { dependencies, devDependencies } = this.state;
     Object.keys(dependencies).forEach((name) => {
       dependencies[name].current = '-';
       dependencies[name].wanted = false;
@@ -232,7 +233,7 @@ class Dependencies extends Component {
         {depsArr.map((name) => {
           return (
             <div style={styles.depsItem} key={name}>
-              <Tooltip placement={'top'} overlay={name}>
+              <Tooltip placement="top" overlay={name}>
                 <div
                   style={{
                     whiteSpace: 'nowrap',
@@ -259,13 +260,16 @@ class Dependencies extends Component {
                 <span>{deps[name].current}</span>
                 {deps[name].wanted && (
                   <Tooltip
-                    placement={'top'}
-                    overlay={
+                    placement="top"
+                    overlay={(
                       <span>
-                        升级到 {deps[name].wanted}{' '}
+                        升级到
+                        {' '}
+                        {deps[name].wanted}
+                        {' '}
                         {deps[name].installing ? ' 正在更新中' : ''}
                       </span>
-                    }
+)}
                   >
                     <div
                       style={{
@@ -316,7 +320,7 @@ class Dependencies extends Component {
       }
     });
     const { currentProject } = this.props.projects;
-    const title = currentProject.nodeFramework ? '依赖管理(前端)' : '依赖管理'
+    const title = currentProject.nodeFramework ? '依赖管理(前端)' : '依赖管理';
     return (
       <DashboardCard>
         <DashboardCard.Header>
@@ -324,16 +328,16 @@ class Dependencies extends Component {
           <div>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'刷新'}
+              placement="top"
+              tipText="刷新"
               onClick={this.handleReload}
             >
               <Icon type="reload" style={{ fontSize: 18 }} />
             </ExtraButton>
             <ExtraButton
               style={{ color: '#3080FE' }}
-              placement={'top'}
-              tipText={'添加依赖'}
+              placement="top"
+              tipText="添加依赖"
               onClick={this.handleNpminstallOpen}
             >
               <Icon type="plus-o" style={{ fontSize: 18 }} />
@@ -343,7 +347,7 @@ class Dependencies extends Component {
         <DashboardCard.Body>
           <Tab size="small" contentStyle={{ padding: '10px 0 0' }}>
             <Tab.TabPane
-              tab={
+              tab={(
                 <div>
                   dependencies
                   {dependenciesOutdatedCount > 0 ? (
@@ -354,7 +358,9 @@ class Dependencies extends Component {
                         color: '#2eca9c',
                       }}
                     >
-                      ({dependenciesOutdatedCount})
+                      (
+                      {dependenciesOutdatedCount}
+)
                     </span>
                   ) : (
                     <span
@@ -364,17 +370,19 @@ class Dependencies extends Component {
                         color: '#666',
                       }}
                     >
-                      ({Object.keys(dependencies).length})
+                      (
+                      {Object.keys(dependencies).length}
+)
                     </span>
                   )}
                 </div>
-              }
+)}
               key="dependencies"
             >
               {this.renderDependencies(dependencies)}
             </Tab.TabPane>
             <Tab.TabPane
-              tab={
+              tab={(
                 <div>
                   devDependencies
                   {devDependenciesOutdatedCount > 0 ? (
@@ -385,7 +393,9 @@ class Dependencies extends Component {
                         color: '#2eca9c',
                       }}
                     >
-                      ({devDependenciesOutdatedCount})
+                      (
+                      {devDependenciesOutdatedCount}
+)
                     </span>
                   ) : (
                     <span
@@ -395,11 +405,13 @@ class Dependencies extends Component {
                         color: '#666',
                       }}
                     >
-                      ({Object.keys(devDependencies).length})
+                      (
+                      {Object.keys(devDependencies).length}
+)
                     </span>
                   )}
                 </div>
-              }
+)}
               key="devDependencies"
             >
               {this.renderDependencies(devDependencies, 'devDependencies')}

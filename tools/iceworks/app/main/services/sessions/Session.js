@@ -4,6 +4,7 @@ const defaultShell = require('default-shell');
 const is = require('electron-is');
 const { getEnv } = require('../../env');
 const { WIN_NPM_CMD } = require('../../paths');
+const logger = require('../../logger');
 
 const isWin = is.windows();
 
@@ -18,7 +19,7 @@ try {
   throw createNodePtyError();
 }
 
-module.exports = class Manager extends EventEmitter {
+module.exports = class Sesstion extends EventEmitter {
   constructor({
     rows = 40,
     cols: columns = 80,
@@ -30,7 +31,6 @@ module.exports = class Manager extends EventEmitter {
     super();
     const decoder = new StringDecoder('utf8');
 
-    const defaultShellArgs = ['--login'];
     const spawnEnv = Object.assign({}, getEnv(), env);
 
     if (isWin && shell === 'npm') {
@@ -38,12 +38,14 @@ module.exports = class Manager extends EventEmitter {
     }
 
     try {
-      this.pty = spawn(shell || defaultShell, shellArgs || defaultShellArgs, {
+      this.pty = spawn(shell, shellArgs, {
         cols: columns,
         rows,
         cwd,
         env: spawnEnv,
       });
+      const command = `${shell} ${shellArgs.join(' ')}\r`;
+      logger.info('command:', command);
     } catch (err) {
       if (/is not a function/.test(err.message)) {
         throw createNodePtyError();
@@ -66,24 +68,11 @@ module.exports = class Manager extends EventEmitter {
       }
     });
 
-    this.shell = shell || defaultShell;
+    this.shell = shell;
   }
 
   exit() {
     this.destroy();
-  }
-
-  write(data) {
-    this.pty.write(data);
-  }
-
-  resize({ cols, rows }) {
-    try {
-      this.pty.resize(cols, rows);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.stack);
-    }
   }
 
   destroy() {

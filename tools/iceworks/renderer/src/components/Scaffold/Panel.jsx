@@ -27,7 +27,7 @@ class Panel extends Component {
     const scaffolds = material.scaffolds || null;
 
     if (material.error) {
-      return <EmptyTips size={120} style={{margin: '0 10px'}}>{material.error}</EmptyTips>;
+      return <EmptyTips size={120} style={{ margin: '0 10px' }}>{material.error}</EmptyTips>;
     }
 
     if (!scaffolds) {
