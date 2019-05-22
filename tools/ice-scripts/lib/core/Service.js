@@ -109,10 +109,14 @@ module.exports = class Service {
 
   getWebpackConfig() {
     const config = getDefaultWebpackConfig(this.command);
+    const chainWebpackOptions = {
+      command: this.command,
+      commandArgs: this.commandArgs,
+    };
 
     this.chainWebpackFns.forEach(({ fn, pluginName }) => {
       try {
-        fn(config);
+        fn(config, chainWebpackOptions);
       } catch (err) {
         log.error(`Fail to exec plugin chainWebpack ${pluginName}`);
         console.error(err);
