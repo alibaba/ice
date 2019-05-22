@@ -8,26 +8,28 @@ export default (app) => {
       const { projectManager } = app;
       const project = projectManager.getCurrent();
 
-      logger.info('启动调试服务');
+      logger.info('start dev server');
 
-      project.dev.on('data', (data) => {
-        logger.info('调试服务日志', data);
-        socket.emit('project.index.dev.data', data);
+      project.dev.on('start.data', (data) => {
+        socket.emit('project.index.start.data', data);
       });
 
-      const result = await project.dev.start();
-
-      logger.info('调试服务启动成功:', result);
-
-      return result;
+      return await project.dev.start();
     }
 
     /**
      * run stop task
      */
-    async stop() {
+    async stop(ctx) {
+      const { socket, logger } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
+
+      logger.info('stop dev server');
+
+      project.dev.on('stop.data', (data) => {
+        socket.emit('project.index.stop.data', data);
+      });
 
       return await project.dev.stop();
     }

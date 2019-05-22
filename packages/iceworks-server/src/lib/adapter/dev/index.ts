@@ -1,6 +1,7 @@
 import * as EventEmitter from 'events';
 import * as detectPort from 'detect-port';
 import * as execa from 'execa';
+import chalk from 'chalk';
 import * as ipc from './ipc';
 import DEV_SETTINGS from './const';
 
@@ -34,7 +35,7 @@ export default class Dev extends EventEmitter {
       );
     }
 
-    const childProcess = execa('npm', ['start'], {
+    this.process = execa('npm', ['start'], {
       cwd: this.path || process.cwd(),
       stdio: ['inherit', 'pipe', 'pipe'],
       shell: true,
@@ -42,29 +43,23 @@ export default class Dev extends EventEmitter {
     });
 
     this.status = DEV_STATUS_WORKING;
-    this.process = childProcess;
 
-    childProcess.stdout.on('data', (buffer) => {
-      this.emit('data', buffer.toString());
+    this.process.stdout.on('data', (buffer) => {
+      this.emit('start.data', buffer.toString());
     });
 
-    childProcess.on('error', (buffer) => {
+    this.process.on('error', (buffer) => {
       console.log(buffer.toString());
-    });
-
-    childProcess.on('exit', (code) => {
-      console.log('process exit:', code);
     });
 
     return { status: this.status };
   }
 
   async stop() {
-    if (!this.process) {
-      throw new Error('没有启动调试服务，无法停止。');
-    }
-
     this.process.kill();
+    this.process.on('exit', () => {
+      this.emit('stop.data', chalk.grey(' Dev server stopped working'));
+    });
     this.process = null;
     this.status = DEV_STATUS_STOP;
 
