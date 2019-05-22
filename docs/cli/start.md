@@ -3,18 +3,18 @@ title: 快速上手
 order: 2
 ---
 
-## 安装
+### 创建项目
+
+如果你已经有一个项目，可以将其作为项目级依赖：`npm i --save-dev ice-scripts`
+
+#### 通过 ice-cli 初始化项目
+
+如果使用 iceworks 开发，那么大多数时候你不需要关心这些命令。
 
 ```bash
-$ npm i -g ice-scripts
+$ npm i -g ice-cli
 $ ice --help
 ```
-
-当然你也可以将其作为项目级依赖：`npm i --save-dev ice-scripts`
-
-ice-scripts 提供了 `init/dev/build` 的开发命令，如果使用 iceworks 开发，那么大多数时候你不需要关心这些命令。
-
-### ice init
 
 根据模板初始化项目：
 
@@ -36,14 +36,14 @@ Options:
 $ ice init -t @icedesign/lite-scaffold
 ```
 
-### ice dev
+### ice-scripts dev
 
 启动调试服务：
 
 ```bash
-$ ice dev --help
+$ ice-scripts dev --help
 
-Usage: ice-dev [options]
+Usage: ice-scripts dev [options]
 
 Options:
   -p, --port <port>      服务端口号
@@ -52,14 +52,12 @@ Options:
   --analyzer             开启构建分析
   --analyzer-port        设置分析端口号
   --disabled-reload      关闭 hot reload
-  --project-type <type>  项目类型, node|web (default: "web")
-  --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime (default: "polyfill")
 ```
 
 比如使用 3000 端口启动 dev server
 
 ```bash
-$ ice dev -p 3000
+$ ice-scripts dev -p 3000
 # 或者
 $ npm run start -- -p 3000
 ```
@@ -67,25 +65,20 @@ $ npm run start -- -p 3000
 比如开启 https
 
 ```bash
-$ ice dev --https
+$ ice-scripts dev --https
 ```
 
-### ice build
+### ice-scripts build
 
 构建项目代码
 
 ```plain
-$ ice build --help
+$ ice-scripts build --help
 
-Usage: ice-build [options]
+Usage: ice-scripts build [options]
 
 Options:
-  --debug                debug 模式下不压缩
-  --hash                 构建后的资源带 hash 版本
-  --sourcemap <type>     构建后的资源带 sourcemap 文件
-  --project-type <type>  项目类型, node|nodejs|web
   -s, --skip-install     跳过安装依赖
   --skip-demo            跳过构建 build/index.html 的环节
-  --inject-babel <type>  注入 babel 运行环境, Enum: polyfill|runtime
   -h, --help             output usage information
 ```

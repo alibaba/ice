@@ -38,6 +38,7 @@ component
   │   └── main.scss             // 【必选】，仅包含组件自身样式的源码文件
   ├── theme                     // 【可选】用于业务组件可配置
   │   └── index.jsx
+  ├── adaptor                   // 【可选】组件接入 Fusion Cool & 设计模块
   ├── README.md                 // 【必选】，组件说明及API            
   └── package.json              // 【必选】
 ```

@@ -20,21 +20,18 @@ order: 5
 
 ## 操作方式
 
-以下两种方式都可以使用：
-
-1. 在 iceworks 上点击代理配置的编辑按钮，进行代理配置
-2. 在 `package.json` 中配置 `proxyConfig` 字段：
+在 `ice.config.js` 中配置 `proxy` 字段：
 
   ```js
-  {
-    ...
-    "proxyConfig": {
-      "/**": {
-        "enable": true,
-        "target": "http://127.0.0.1:6001"
-      }
+  // ice.config.js
+module.exports = {
+  proxy: {
+    '/**': {
+      enable: true,
+      target: 'http://127.0.0.1:6001'
     }
   }
+}
   ```
 
 完整的配置项请参考 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware)。

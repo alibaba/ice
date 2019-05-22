@@ -1,6 +1,7 @@
 ---
 title: 使用区块
-order: 7
+order: 8
+hide: true
 ---
 
 ### 添加区块

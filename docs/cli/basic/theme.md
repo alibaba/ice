@@ -1,6 +1,6 @@
 ---
 title: 配置项目主题
-order: 4
+order: 5
 ---
 
 > 该能力需要满足项目依赖的基础组件为 `@alifd/next`，如果依赖的是 `@icedesign/base` 请参考 [这篇文档](https://www.yuque.com/ice-team/wiki/cur1z3)
@@ -40,14 +40,17 @@ npm install @icedesign/theme --save-dev
 
 ### 配置主题包
 
-在 `package.json` 里配置对应主题包：
+在 `ice.config.js` 添加 `ice-scripts-plugin-fusion` 并配置对应主题包：
 
-```json
-// package.json
-{
-  "buildConfig": {
-    "theme": "@icedesign/theme"
-  }
+```js
+// ice.config.js
+module.exports = {
+  plugins: [
+    ['ice-scripts-plugin-fusion', {
+      // 主题包
+      themePackage: '@icedesign/theme',
+    }]
+  ]
 }
 ```
 
@@ -67,14 +70,20 @@ import { Icon } from 'react';
 
 ## 方式二：配置 scss 变量
 
-在 `package.json` 里配置主品牌色：
+在 `ice.config.js` 添加 `ice-scripts-plugin-fusion` 并配置主品牌色：
 
-```json
-// package.json
-{
-  "themeConfig": {
-    "primary-color": "#f60"
-  }
+```js
+// ice.config.js
+module.exports = {
+  plugins: [
+    ['ice-scripts-plugin-fusion', {
+      // 主题包
+      themePackage: '@icedesign/theme',
+      themeConfig: {
+        primaryColor: '#f60',
+      },
+    }]
+  ]
 }
 ```
 

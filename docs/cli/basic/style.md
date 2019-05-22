@@ -1,6 +1,6 @@
 ---
 title: 使用样式
-order: 6
+order: 7
 ---
 
 支持 less/sass/css-modules

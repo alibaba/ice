@@ -1,6 +1,6 @@
 ---
 title: 使用 TypeScript
-order: 5
+order: 6
 ---
 
 TypeScript 是微软开发一款开源的编程语言，本质上是向 JavaScript 增加静态类型系统。它是 JavaScript 的超集，所有现有的 JavaScript 都可以不加改变就在其中使用。它是为大型软件开发而设计的，它最终编译产生 JavaScript，所以可以运行在浏览器、Node.js 等等的运行时环境。

@@ -57,7 +57,7 @@ const allCategories = {
       dir: 'advanced',
     }, {
       title: '常见需求',
-      dir: 'others',
+      dir: 'needs',
     }],
   },
   design: {
