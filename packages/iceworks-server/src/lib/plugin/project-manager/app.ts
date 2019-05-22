@@ -6,6 +6,7 @@ import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
 import { IProject } from '../../../interface';
+import getEnv from './getEnv';
 
 class Project implements IProject {
   public readonly name: string;
@@ -14,12 +15,15 @@ class Project implements IProject {
 
   public readonly packageJSON: any;
 
+  public readonly processEnv: any;
+
   private readonly packageJSONFilename = 'package.json';
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
     this.packageJSON = this.loadPackage();
+    this.processEnv = getEnv();
 
     this.loadAdapter();
   }
