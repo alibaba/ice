@@ -7,10 +7,9 @@ import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
 import scanDirectory from '../scanDirectory';
 import getIceVersion from '../getIceVersion';
-import getTarballURLBySource from '../getTarballURLBySource';
-import { install: installDependency } from '../dependency';
+import getTarballURLByMaterielSource from '../getTarballURLByMaterielSource';
+import { install as installDependency } from '../dependency';
 import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock } from '../../../interface';
-import { create } from 'istanbul-reports';
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
@@ -87,7 +86,7 @@ export default class Page implements IPageModule {
 
     let tarballURL: string;
     try {
-      tarballURL = await getTarballURLBySource(block.source, iceVersion);
+      tarballURL = await getTarballURLByMaterielSource(block.source, iceVersion);
     } catch (error) {
       error.message = '请求区块 tarball 包失败';
       throw error;
@@ -114,7 +113,7 @@ export default class Page implements IPageModule {
   async getOne(): Promise<any> { }
 
   async create(page: ICreatePageParam): Promise<any> {
-    const { name, routePath, menuName, layout, blocks, } = page;
+    const { name, blocks, } = page;
 
     // create page dir
     const pageFolderName = upperCamelCase(name);

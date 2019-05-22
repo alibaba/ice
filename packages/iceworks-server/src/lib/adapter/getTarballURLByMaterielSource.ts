@@ -1,4 +1,4 @@
-import npmRequest from './npmRequest';
+import { getNpmPackageVersionData } from './getNpmPacakge';
 import { IMaterialSource } from '../../interface';
 
 export default async (source: IMaterialSource, iceVersion: string): Promise<string> => {
@@ -12,7 +12,7 @@ export default async (source: IMaterialSource, iceVersion: string): Promise<stri
   // TODO use registry by user settings
   const registry = 'https://registry.npm.taobao.org';
 
-  const packageData = await npmRequest({
+  const packageData = await getNpmPackageVersionData({
     name: source.npm,
     version,
     registry,

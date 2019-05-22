@@ -20,9 +20,9 @@ export interface IDependency {
   localVersion?: string;
 
   /**
-   * 是否可更新：当远程有 1.0.4 时，该值为 true
+   * 是否可更新：当远程有 1.0.4 时，该值为 1.0.4
    */
-  canUpdate?: boolean;
+  wantedVestion?: string;
 
   /**
    * 是否本地依赖 devDependencies ？
@@ -34,7 +34,7 @@ export interface IDependencyModule extends IBaseModule {
   /**
    * 获取项目内的依赖
    */
-  getAll(): Promise<IDependency[]>;
+  getAll(): Promise<{ denpendencies: IDependency[], devDenpendencies: IDependency[] }>;
 
   /**
    * 添加依赖到项目
