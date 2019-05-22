@@ -27,7 +27,7 @@ export default class Dependency extends EventEmitter {
 
   private async getLocalVersion(name: string): Promise<string> {
     const pkgPath = path.join(this.projectPath, 'node_modules', name, 'package.json');
-    let verstion: string = '-';
+    let verstion: string = '';
     const packageIsExist = await pathExists(pkgPath);
     if (packageIsExist) {
       try {
@@ -85,12 +85,15 @@ export default class Dependency extends EventEmitter {
     }
 
     const npmOutdated: INpmOutdatedData[] = await this.getNpmOutdated();
-    npmOutdated.forEach(({ package: _package, wanted }: INpmOutdatedData) => {
-      if (_package in dependencies) {
-        dependencies[_package].wantedVestion = wanted;
+    npmOutdated.forEach(({ package: _outPackage, wanted }: INpmOutdatedData) => {
+      const dependency = dependencies.find(({ package: _package }) => _package === _outPackage);
+      if (dependency && dependency.localVersion) {
+        dependency.wantedVestion = wanted;
       }
-      if (_package in devDependencies) {
-        devDependencies[_package].wantedVestion = wanted;
+
+      const devDependency = devDependencies.find(({ package: _package }) => _package === _outPackage);
+      if (devDependency && devDependency.localVersion) {
+        devDependency.wantedVestion = wanted;
       }
     });
 

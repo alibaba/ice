@@ -25,3 +25,43 @@
     }
   }
 }
+
+.main {
+  .list {
+    display: flex;
+    flex-flow: row wrap;
+
+    .item {
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 33.33%;
+      width: 33.33%;
+      padding: 0px 5px 8px;
+
+      .package {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 20px;
+        color: $text-color-normal;
+        font-size: $font-size-base;
+      }
+
+      .info {
+        display: flex;
+        margin-top: 6px;
+
+        .version {
+          line-height: 16px;
+          font-size: $font-size-base;
+          margin-right: 6px;
+        }
+
+        .download {
+          color: $brand-color-secondary;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

@@ -21,16 +21,19 @@ export default class Page implements IPageModule {
 
   public readonly projectPackageJSON: any;
 
+  public readonly processEnv: any;
+
   public readonly path: string;
 
   constructor(project: IProject) {
     this.projectPath = project.path;
     this.projectName = project.name;
     this.projectPackageJSON = project.packageJSON;
+    this.processEnv = project.processEnv;
     this.path = path.join(this.projectPath, 'src', 'pages');
   }
 
-  private async scanPages(dirPath: string) {
+  private async scanPages(dirPath: string): Promise<IPage[]> {
     return (await scanDirectory(dirPath)).map(dir => {
       const fullPath = path.join(dirPath, dir);
       const { atime, birthtime, ctime, mtime } = fs.lstatSync(fullPath);
