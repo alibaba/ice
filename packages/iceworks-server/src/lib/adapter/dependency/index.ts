@@ -4,7 +4,6 @@ import * as pathExists from 'path-exists';
 import * as fsExtra from 'fs-extra';
 import { exec } from 'child_process';
 import { IDependency, IProject } from '../../../interface';
-import getEnv from '../../getEnv';
 
 export const install = async (dependency: IDependency): Promise<IDependency> => {
   return dependency;
@@ -17,10 +16,13 @@ export default class Dependency extends EventEmitter {
 
   public readonly projectPackageJSON: any;
 
+  public readonly processEnv: any;
+
   constructor(project: IProject) {
     super();
     this.projectPath = project.path;
     this.projectPackageJSON = project.packageJSON;
+    this.processEnv = project.processEnv;
   }
 
   private async getLocalVersion(name: string): Promise<string> {
@@ -44,7 +46,7 @@ export default class Dependency extends EventEmitter {
   // TODO any other way?
   private async getNpmOutdated(): Promise<INpmOutdatedData[]> {
     return new Promise((resolve) => {
-      exec('npm outdated --json --silent', { cwd: this.projectPath, env: getEnv() }, (error, stdout) => {
+      exec('npm outdated --json --silent', { cwd: this.projectPath, env: this.processEnv }, (error, stdout) => {
         let npmOutdated = [];
         try {
           npmOutdated = JSON.parse(stdout);
