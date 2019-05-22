@@ -1,5 +1,6 @@
 const request = require('request');
 const macaddress = require('macaddress');
+const logger = require('./logger');
 
 let userId = 0;
 macaddress.one((err, macAddr) => {
@@ -27,6 +28,8 @@ module.exports = {
       }`;
     }, '');
 
+    logger.info('glodlog request - gokey:', gokey);
+
     request({
       method: 'POST',
       url: 'http://gm.mmstat.com/iceteam.iceworks.log',
@@ -36,6 +39,18 @@ module.exports = {
         gokey: encodeURIComponent(gokey),
         logtype: '2',
       },
+    }, (error, response) => {
+      const errorName = 'glodlog-error';
+      if (error) {
+        error.name = errorName;
+        logger.error(error);
+      } else if (response.statusCode !== 200) {
+        const statusError = new Error('glodlog got error: ', response.statusCode);
+        statusError.name = errorName;
+        logger.error(statusError);
+      } else {
+        logger.info('glodlog request - successed');
+      }
     });
   },
 };

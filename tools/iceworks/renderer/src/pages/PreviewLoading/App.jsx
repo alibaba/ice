@@ -62,7 +62,7 @@ class PreviewLoading extends Component {
       deviceScaleFactor: 0,
       screenSize: size,
       viewSize: size,
-      scale: scale,
+      scale,
       fitToView: true,
     });
 
@@ -127,7 +127,7 @@ class PreviewLoading extends Component {
               <div className="previewer-switcher">
                 <Tooltip
                   placement="bottomLeft"
-                  overlay={
+                  overlay={(
                     <div style={{ width: 200 }}>
                       <QRCode size={200} value={iframeUrl} />
                       <div style={{ wordBreak: 'break-all' }}>
@@ -136,7 +136,7 @@ class PreviewLoading extends Component {
                         </BrowserLink>
                       </div>
                     </div>
-                  }
+)}
                 >
                   <div className="previewer-tools-item">
                     <Icon size="large" type="qr-code" />

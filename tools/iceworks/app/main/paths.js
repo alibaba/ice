@@ -19,8 +19,6 @@ const NODE_PATH = isDev
 
 const NPM_CLI = path.join(APP_PATH, 'node_modules', 'npm', 'bin', 'npm-cli.js');
 
-const NRM_CLI = path.join(APP_PATH, 'node_modules', 'nrm', 'cli.js');
-
 const NODE_FRAMEWORKS = ['koa2', 'midway', 'midwayAli'];
 
 const getClientPath = (destDir, framework) => {
@@ -54,7 +52,6 @@ module.exports = {
   APP_BIN_PATH,
   APP_PATH,
   NPM_CLI,
-  NRM_CLI,
   NODE_PATH,
   WIN_NPM_CMD,
   NODE_FRAMEWORKS,
