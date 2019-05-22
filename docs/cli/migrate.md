@@ -44,7 +44,6 @@ module.exports = {
 配置 `ice.config.js` 中的 `minify`
 
 ```js
-
 module.exports = {
   minify: false
 }
@@ -55,7 +54,6 @@ module.exports = {
 配置 `ice.config.js` 中的 `hash`
 
 ```js
-
 module.exports = {
   hash: true
 }
@@ -193,6 +191,7 @@ module.exports = {
     "externals": {
       "react": "react"
     }
+  }
 }
 ```
 
