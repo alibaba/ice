@@ -16,6 +16,7 @@ export default (app: Application) => {
     ['project.page.create', project.page.create],
     ['project.layout.list', project.layout.list],
     ['project.dependency.list', project.dependency.list],
+    ['project.dependency.reset', project.dependency.reset],
     ['project.dev.start', project.dev.start],
     ['project.dev.stop', project.dev.stop],
     ['project.dev.settings', project.dev.settings],
