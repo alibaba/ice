@@ -36,7 +36,7 @@ export interface IDependency {
 }
 
 export interface ICreateDependencyParam {
-  pacakge: string;
+  package: string;
 
   version: string;
 }
@@ -45,21 +45,21 @@ export interface IDependencyModule extends IBaseModule {
   /**
    * 获取项目内的依赖
    */
-  getAll(): Promise<{ denpendencies: IDependency[], devDenpendencies: IDependency[] }>;
+  getAll(): Promise<{ dependencies: IDependency[], devDependencies: IDependency[] }>;
 
   /**
    * 添加依赖到项目
    *
    * @param dependency 依赖信息
    */
-  create(dependency: ICreateDependencyParam): Promise<IDependency>;
+  create(dependency: ICreateDependencyParam): Promise<void>;
 
   /**
    * 添加多个依赖到项目
    *
    * @param dependencies 依赖列表
    */
-  creates(dependencies: ICreateDependencyParam[]): Promise<IDependency[]>;
+  creates(dependencies: ICreateDependencyParam[]): Promise<void>;
 
   /**
    * 升级项目中的某个依赖

@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as util from 'util';
 import * as rimraf from 'rimraf';
 import * as mkdirp from 'mkdirp';
+import * as EventEmitter from 'events';
 import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
 import scanDirectory from '../scanDirectory';
@@ -14,7 +15,7 @@ import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock } from '
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
 
-export default class Page implements IPageModule {
+export default class Page extends EventEmitter implements IPageModule {
   public readonly projectPath: string;
 
   public readonly projectName: string;
@@ -26,6 +27,7 @@ export default class Page implements IPageModule {
   public readonly path: string;
 
   constructor(project: IProject) {
+    super();
     this.projectPath = project.path;
     this.projectName = project.name;
     this.projectPackageJSON = project.packageJSON;
@@ -73,7 +75,7 @@ export default class Page implements IPageModule {
       }
     });
 
-    return await Promise.all(filterDependencies.map(async (dependency) => await installDependency(dependency)));
+    return await Promise.all(filterDependencies.map(async (dependency) => await installDependency(dependency, this)));
   }
 
   private async downloadBlockToPage(block: IMaterialBlock, pageName: string): Promise<string[]> {

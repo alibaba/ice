@@ -6,20 +6,53 @@ import * as rimraf from 'rimraf';
 import * as latestVersion from 'latest-version';
 
 import { exec, spawn } from 'child_process';
-import { IDependency, IProject, ICreateDependencyParam } from '../../../interface';
+import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, IBaseModule } from '../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
 
-export const install = async (dependency: ICreateDependencyParam): Promise<IDependency> => {
-  return null;
+export const install = async (dependencies: ICreateDependencyParam[], adapterModule: IBaseModule, isDev?: boolean): Promise<void> => {
+  adapterModule.emit('install.data', '开始安装依赖');
+
+  const args = ['install', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
+    dependencies.map(({ package: _package, version }) => `${_package}@${version}`)
+  );
+
+  console.log('install args', args);
+  const childProcess = spawn(
+    'npm',
+    args,
+    {
+      cwd: adapterModule.projectPath,
+      env: adapterModule.processEnv,
+    }
+  );
+
+  childProcess.stdout.on('data', (buffer) => {
+    const text = buffer.toString();
+    console.log('install.data:', text);
+
+    adapterModule.emit('install.data', text);
+  });
+
+  childProcess.on('error', (buffer) => {
+    console.log('install.error:', buffer.toString());
+  });
+
+  childProcess.on('exit', (code, signal) => {
+    console.log('install.exit:', code, signal);
+
+    adapterModule.emit('install.exit', code);
+  });
 };
 
 export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; };
 
-export default class Dependency extends EventEmitter {
+export default class Dependency extends EventEmitter implements IDependencyModule {
   public readonly projectPath: string;
 
   public readonly projectPackageJSON: any;
+
+  public readonly projectName: string;
 
   public readonly processEnv: any;
 
@@ -55,12 +88,12 @@ export default class Dependency extends EventEmitter {
     });
   }
 
-  public async create(dependency: ICreateDependencyParam): Promise<IDependency> {
-    return await install(dependency);
+  public async create(dependency: ICreateDependencyParam, idDev?: boolean): Promise<void> {
+    return (await install([dependency], this, idDev))[0];
   }
 
-  public async creates(dependencies: ICreateDependencyParam[]): Promise<IDependency[]> {
-    return [];
+  public async creates(dependencies: ICreateDependencyParam[], idDev?: boolean): Promise<void> {
+    return await install(dependencies, this, idDev);
   }
 
   public async getAll(): Promise<{ dependencies: IDependency[], devDependencies: IDependency[] }> {
@@ -129,19 +162,23 @@ export default class Dependency extends EventEmitter {
 
     childProcess.stdout.on('data', (buffer) => {
       const text = buffer.toString();
-      console.log('data:', text);
+      console.log('reset.data:', text);
 
-      this.emit('data', text);
+      this.emit('reset.data', text);
     });
 
     childProcess.on('error', (buffer) => {
-      console.log('error:', buffer.toString());
+      console.log('reset.error:', buffer.toString());
     });
 
     childProcess.on('exit', (code, signal) => {
-      console.log('exit:', code, signal);
+      console.log('reset.exit:', code, signal);
 
-      this.emit('exit', code);
+      this.emit('reset.exit', code);
     });
   }
+
+  public upgrade(denpendency: { name: string; isDev: boolean }): Promise<IDependency> {
+    return null;
+  };
 }

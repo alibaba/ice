@@ -13,7 +13,7 @@ const CreateDependencyModel = ({
       const [_package, version] = dep.split('@');
       return {
         package: _package,
-        version,
+        version: version || 'latest',
       };
     }));
   }

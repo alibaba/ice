@@ -11,20 +11,30 @@ export default (app) => {
       const { projectManager } = app;
       const project = projectManager.getCurrent();
 
-      project.dependency.on('data', (data) => {
-        socket.emit('project.dependency.data', data);
+      project.dependency.on('reset.data', (data) => {
+        socket.emit('project.dependency.reset.data', data);
       });
 
-      project.dependency.on('exit', (code) => {
-        socket.emit('project.dependency.exit', code);
+      project.dependency.on('reset.exit', (code) => {
+        socket.emit('project.dependency.reset.exit', code);
       });
 
       return await project.dependency.reset();
     }
 
-    async creates({ args }) {
+    async creates(ctx) {
+      const { socket, args } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
+
+      project.dependency.on('install.data', (data) => {
+        socket.emit('project.dependency.install.data', data);
+      });
+
+      project.dependency.on('install.exit', (code) => {
+        socket.emit('project.dependency.install.exit', code);
+      });
+
       return await project.dependency.creates(args);
     }
   };

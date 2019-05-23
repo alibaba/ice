@@ -57,6 +57,7 @@ const DependencyPanel = () => {
   async function create(value) {
     try {
       await dependenciesStore.creates(value);
+      toggleCreateModal();
     } catch (error) {
       if (error.code === 'INCOMPATIBLE') {
         Dialog.confirm({
@@ -86,15 +87,34 @@ const DependencyPanel = () => {
     }
   }
 
-  useSocket('project.dependency.data', (data) => {
-    logger.info('project.dependency.data', data);
+  useSocket('project.dependency.reset.data', (data) => {
+    logger.info('project.dependency.reset.data', data);
   });
 
-  useSocket('project.dependency.exit', (code) => {
+  useSocket('project.dependency.reset.exit', (code) => {
     if (code === 0) {
       IceNotification.success({
         message: '项目依赖安装成功',
         description: '后续可添加自定义依赖',
+      });
+      dependenciesStore.refresh();
+    } else {
+      IceNotification.error({
+        message: '项目依赖安装失败',
+        description: '请查看控制台日志输出',
+      });
+    }
+  });
+
+  useSocket('project.dependency.install.data', (data) => {
+    logger.info('project.dependency.install.data', data);
+  });
+
+  useSocket('project.dependency.install.exit', (code) => {
+    if (code === 0) {
+      IceNotification.success({
+        message: '项目依赖安装成功',
+        description: '依赖列表已经刷新',
       });
       dependenciesStore.refresh();
     } else {

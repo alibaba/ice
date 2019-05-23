@@ -19,7 +19,7 @@ export default {
   async creates(deps, focus) {
     const { dependencies } = this.dataSource;
     if (!focus) {
-      const depsWithoutVersion = deps.filter((dep) => !dep.version);
+      const depsWithoutVersion = deps.filter(({ version }) => !version || version === 'latest');
       const existDeps = depsWithoutVersion.filter(({ package: _package }) =>
         dependencies.find(({ package: projectPackage }) => projectPackage === _package));
 
