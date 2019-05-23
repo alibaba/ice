@@ -66,5 +66,5 @@ export interface IDependencyModule extends IBaseModule {
    *
    * @param denpendency 指定依赖
    */
-  upgrade(denpendency: { name: string; isDev: boolean }): Promise<IDependency>;
+  upgrade(denpendency: { package: string; isDev?: boolean }): Promise<void>;
 }

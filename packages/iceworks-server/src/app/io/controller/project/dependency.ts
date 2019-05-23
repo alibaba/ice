@@ -37,5 +37,21 @@ export default (app) => {
 
       return await project.dependency.creates(args);
     }
+
+    async upgrade(ctx) {
+      const { socket, args } = ctx;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+
+      project.dependency.on('upgrade.data', (data) => {
+        socket.emit('project.dependency.upgrade.data', data);
+      });
+
+      project.dependency.on('upgrade.exit', (code) => {
+        socket.emit('project.dependency.upgrade.exit', code);
+      });
+
+      return await project.dependency.upgrade(args);
+    }
   };
 };

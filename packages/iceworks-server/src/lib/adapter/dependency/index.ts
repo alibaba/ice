@@ -122,12 +122,12 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     const npmOutdated: INpmOutdatedData[] = await this.getNpmOutdated();
     npmOutdated.forEach(({ package: _outPackage, wanted }: INpmOutdatedData) => {
       const dependency = dependencies.find(({ package: _package }) => _package === _outPackage);
-      if (dependency && dependency.localVersion) {
+      if (dependency && dependency.localVersion && dependency.localVersion !== wanted) {
         dependency.wantedVestion = wanted;
       }
 
       const devDependency = devDependencies.find(({ package: _package }) => _package === _outPackage);
-      if (devDependency && devDependency.localVersion) {
+      if (devDependency && devDependency.localVersion && devDependency.localVersion !== wanted) {
         devDependency.wantedVestion = wanted;
       }
     });
@@ -170,7 +170,31 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     });
   }
 
-  public upgrade(denpendency: { name: string; isDev: boolean }): Promise<IDependency> {
-    return null;
+  public async upgrade(denpendency: { package: string; isDev?: boolean }): Promise<void> {
+    const { package: _package } = denpendency;
+
+    this.emit('data', `开始更新依赖：${_package}...`);
+
+    const childProcess = spawn('npm', ['update', _package, '--silent'], {
+      cwd: this.project.path,
+      env: this.project.getEnv(),
+    });
+
+    childProcess.stdout.on('data', (buffer) => {
+      const text = buffer.toString();
+      console.log('upgrade.data:', text);
+
+      this.emit('upgrade.data', text);
+    });
+
+    childProcess.on('error', (buffer) => {
+      console.log('upgrade.error:', buffer.toString());
+    });
+
+    childProcess.on('exit', (code, signal) => {
+      console.log('upgrade.exit:', code, signal);
+
+      this.emit('upgrade.exit', code);
+    });
   };
 }

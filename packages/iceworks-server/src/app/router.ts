@@ -18,6 +18,7 @@ export default (app: Application) => {
     ['project.dependency.list', project.dependency.list],
     ['project.dependency.reset', project.dependency.reset],
     ['project.dependency.creates', project.dependency.creates],
+    ['project.dependency.upgrade', project.dependency.upgrade],
     ['project.dev.start', project.dev.start],
     ['project.dev.stop', project.dev.stop],
     ['project.dev.settings', project.dev.settings],

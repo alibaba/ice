@@ -10,6 +10,9 @@ export default {
   async refresh() {
     this.dataSource = await socket.emit('project.dependency.list');
   },
+  async upgrade(args) {
+    await socket.emit('project.dependency.upgrade', args);
+  },
   async setStatus(status) {
     this.dataSource.status = status;
   },

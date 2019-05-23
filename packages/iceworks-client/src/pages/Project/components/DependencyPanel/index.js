@@ -54,6 +54,10 @@ const DependencyPanel = () => {
     });
   }
 
+  async function onUpgrade(_package, isDev) {
+    dependenciesStore.upgrade({ package: _package, isDev });
+  }
+
   async function create(value) {
     try {
       await dependenciesStore.creates(value);
@@ -101,6 +105,25 @@ const DependencyPanel = () => {
     } else {
       IceNotification.error({
         message: '项目依赖安装失败',
+        description: '请查看控制台日志输出',
+      });
+    }
+  });
+
+  useSocket('project.dependency.upgrade.data', (data) => {
+    logger.info('project.dependency.upgrade.data', data);
+  });
+
+  useSocket('project.dependency.upgrade.exit', (code) => {
+    if (code === 0) {
+      IceNotification.success({
+        message: '项目依赖更新成功',
+        description: '依赖列表已经刷新',
+      });
+      dependenciesStore.refresh();
+    } else {
+      IceNotification.error({
+        message: '项目依赖更新失败',
         description: '请查看控制台日志输出',
       });
     }
@@ -175,7 +198,7 @@ const DependencyPanel = () => {
         />
         <Tab size="small" contentStyle={{ padding: '10px 0 0' }}>
           {
-            [['dependencies', dependencies], ['devDependencies', devDependencies]].map(([key, deps]) => {
+            [['dependencies', dependencies], ['devDependencies', devDependencies, true]].map(([key, deps, isDev]) => {
               return (
                 <TabPane
                   title={
@@ -198,8 +221,8 @@ const DependencyPanel = () => {
                               <div className={styles.version}>{localVersion || '-'}</div>
                               {
                                 wantedVestion ?
-                                  <div>
-                                    <Icon type="download" size="xs" className={styles.download} />
+                                  <div title={`可升级到 ${wantedVestion}`}>
+                                    <Icon type="download" size="xs" className={styles.download} onClick={() => onUpgrade(_package, isDev)} />
                                   </div> :
                                   null
                               }
