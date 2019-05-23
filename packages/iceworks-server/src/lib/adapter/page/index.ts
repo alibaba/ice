@@ -16,23 +16,14 @@ const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
 
 export default class Page extends EventEmitter implements IPageModule {
-  public readonly projectPath: string;
-
-  public readonly projectName: string;
-
-  public readonly projectPackageJSON: any;
-
-  public readonly processEnv: any;
+  public readonly project: IProject;
 
   public readonly path: string;
 
   constructor(project: IProject) {
     super();
-    this.projectPath = project.path;
-    this.projectName = project.name;
-    this.projectPackageJSON = project.packageJSON;
-    this.processEnv = project.processEnv;
-    this.path = path.join(this.projectPath, 'src', 'pages');
+    this.project = project;
+    this.path = path.join(this.project.path, 'src', 'pages');
   }
 
   private async scanPages(dirPath: string): Promise<IPage[]> {
@@ -61,6 +52,7 @@ export default class Page extends EventEmitter implements IPageModule {
   }
 
   private async installBlocksDependencies(blocks: IMaterialBlock[]) {
+    const projectPackageJSON = this.project.getPackageJSON();
     // get all dependencies
     const dependenciesAll = {};
     blocks.forEach(({ dependencies }) => Object.assign(dependenciesAll, dependencies));
@@ -68,7 +60,7 @@ export default class Page extends EventEmitter implements IPageModule {
     // filter dependencies if already in project
     const filterDependencies = [];
     Object.keys(dependenciesAll).forEach((dep) => {
-      if (!this.projectPackageJSON.dependencies.hasOwnProperty(dep)) {
+      if (!projectPackageJSON.dependencies.hasOwnProperty(dep)) {
         filterDependencies.push({
           [dep]: dependenciesAll[dep]
         });
@@ -79,6 +71,7 @@ export default class Page extends EventEmitter implements IPageModule {
   }
 
   private async downloadBlockToPage(block: IMaterialBlock, pageName: string): Promise<string[]> {
+    const projectPackageJSON = this.project.getPackageJSON();
     const componentsDir = path.join(
       this.path,
       pageName,
@@ -86,7 +79,7 @@ export default class Page extends EventEmitter implements IPageModule {
     );
     mkdirp.sync(componentsDir);
 
-    const iceVersion: string = getIceVersion(this.projectPackageJSON);
+    const iceVersion: string = getIceVersion(projectPackageJSON);
     const blockName: string = block.alias || upperCamelCase(block.name);
 
     let tarballURL: string;

@@ -6,18 +6,15 @@ import * as EventEmitter from 'events';
 export interface IProject {
   readonly name: string;
   readonly path: string;
-  readonly packageJSON: any;
-  readonly processEnv: any;
+  getPackageJSON(): any;
+  getEnv(): any;
 }
 
 /**
  * 功能模块的基类
  */
 export interface IBaseModule extends EventEmitter {
-  readonly projectName: string;
-  readonly projectPath: string;
-  readonly projectPackageJSON: any;
-  readonly processEnv: any;
+  project: IProject;
 }
 
 /**

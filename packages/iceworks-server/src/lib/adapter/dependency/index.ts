@@ -22,8 +22,8 @@ export const install = async (dependencies: ICreateDependencyParam[], adapterMod
     'npm',
     args,
     {
-      cwd: adapterModule.projectPath,
-      env: adapterModule.processEnv,
+      cwd: adapterModule.project.path,
+      env: adapterModule.project.getEnv(),
     }
   );
 
@@ -48,22 +48,14 @@ export const install = async (dependencies: ICreateDependencyParam[], adapterMod
 export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; };
 
 export default class Dependency extends EventEmitter implements IDependencyModule {
-  public readonly projectPath: string;
-
-  public readonly projectPackageJSON: any;
-
-  public readonly projectName: string;
-
-  public readonly processEnv: any;
+  public project: IProject;
 
   public readonly path: string;
 
   constructor(project: IProject) {
     super();
-    this.projectPath = project.path;
-    this.projectPackageJSON = project.packageJSON;
-    this.processEnv = project.processEnv;
-    this.path = path.join(this.projectPath, 'node_modules');
+    this.project = project;
+    this.path = path.join(this.project.path, 'node_modules');
   }
 
   private async getLocalVersion(name: string): Promise<string> {
@@ -75,7 +67,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
   // TODO any other way?
   private async getNpmOutdated(): Promise<INpmOutdatedData[]> {
     return new Promise((resolve) => {
-      exec('npm outdated --json --silent', { cwd: this.projectPath, env: this.processEnv }, (error, stdout) => {
+      exec('npm outdated --json --silent', { cwd: this.project.path, env: this.project.getEnv() }, (error, stdout) => {
         let npmOutdated = [];
         try {
           npmOutdated = JSON.parse(stdout);
@@ -97,7 +89,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
   }
 
   public async getAll(): Promise<{ dependencies: IDependency[], devDependencies: IDependency[] }> {
-    const { dependencies: packageDependencies, devDependencies: packageDevDependencies } = this.projectPackageJSON;
+    const { dependencies: packageDependencies, devDependencies: packageDevDependencies } = this.project.getPackageJSON();
 
     const getAll = async (list, dev) => {
       return await Promise.all(Object.entries(list).map(async ([_package, specifyVersion]: [string, string]) => {
@@ -156,8 +148,8 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     this.emit('data', '开始安装依赖...');
 
     const childProcess = spawn('npm', ['install'], {
-      cwd: this.projectPath,
-      env: this.processEnv,
+      cwd: this.project.path,
+      env: this.project.getEnv(),
     });
 
     childProcess.stdout.on('data', (buffer) => {
