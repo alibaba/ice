@@ -40,6 +40,8 @@ const Dev = () => {
     toggleModal();
   };
 
+  const isWorking = dev.dataSource.status === 'working';
+
   return (
     <Card
       title="启动服务"
@@ -50,7 +52,7 @@ const Dev = () => {
       <div className={styles.actionBar}>
         {/* Left Button Group */}
         <div className={styles.leftActionBar}>
-          {dev.dataSource.status !== 'working' ? (
+          {!isWorking ? (
             <Button
               type="primary"
               className={styles.leftButton}
@@ -73,6 +75,7 @@ const Dev = () => {
             type="secondary"
             className={styles.leftButton}
             onClick={handleDevSettings}
+            disabled={isWorking}
           >
             <Icon type="settings" className={styles.icon} />
             设置
