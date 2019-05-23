@@ -268,6 +268,6 @@ module.exports = {
 }
 ```
 
-## `webpackrc.js` 迁移
+## .webpackrc.js 迁移
 
 ice-scripts@2.0 版本将通过 `webpack-chain` 形式管理自定义 webpack 配置，参考[自定义 webpack 配置](/docs/cli/basic/custom-webpack)。
