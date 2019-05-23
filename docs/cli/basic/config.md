@@ -164,6 +164,7 @@ index.html中添加：
 
 ```html
 <script src="https://unpkg.com/react@16.7.0/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
 ```
 
 ice.config.js中添加：
@@ -172,7 +173,8 @@ ice.config.js中添加：
 // ice.config.js
 module.exports = {
   externals: {
-    react: 'react'
+    react: 'window.React',
+    'react-dom': 'window.ReactDOM',
   }
 }
 ```
