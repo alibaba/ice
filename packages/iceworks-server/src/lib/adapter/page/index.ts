@@ -1,6 +1,8 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
+import * as ejs from 'ejs';
+import * as prettier from 'prettier';
 import * as rimraf from 'rimraf';
 import * as mkdirp from 'mkdirp';
 import * as EventEmitter from 'events';
@@ -15,6 +17,25 @@ import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock } from '
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
+const readdirAsync = util.promisify(fs.readdir);
+const writeFileAsync = util.promisify(fs.writeFile);
+
+const templatesPath = path.join(__dirname, './templates');
+const loadTemplates = async (libary) => {
+  return (await readdirAsync(templatesPath))
+    .filter((fileName) => {
+      return fileName.indexOf(libary) === 0;
+    })
+    .map((file) => {
+      const filePath = path.join(templatesPath, file);
+      const fileStr = fs.readFileSync(filePath, 'utf-8');
+      return {
+        compile: ejs.compile(fileStr),
+        filePath,
+        fileName: file.replace(`${libary}.`, ''),
+      };
+    });
+};;
 
 export default class Page extends EventEmitter implements IPageModule {
   public readonly project: IProject;
@@ -51,20 +72,23 @@ export default class Page extends EventEmitter implements IPageModule {
   private async installBlocksDependencies(blocks: IMaterialBlock[]) {
     const projectPackageJSON = this.project.getPackageJSON();
     // get all dependencies
-    const blocksDependencies = {};
+    const blocksDependencies: { [_package: string]: string } = {};
     blocks.forEach(({ dependencies }) => Object.assign(blocksDependencies, dependencies));
 
     // filter dependencies if already in project
-    const filterDependencies = [];
-    Object.keys(blocksDependencies).forEach((dep) => {
-      if (!projectPackageJSON.dependencies.hasOwnProperty(dep)) {
+    const filterDependencies: { [_package: string]: string }[] = [];
+    Object.keys(blocksDependencies).forEach((_package) => {
+      if (!projectPackageJSON.dependencies.hasOwnProperty(_package)) {
         filterDependencies.push({
-          [dep]: blocksDependencies[dep]
+          [_package]: blocksDependencies[_package]
         });
       }
     });
 
-    return await Promise.all(filterDependencies.map(async (dependency) => await installDependency(dependency, this)));
+    return await Promise.all(filterDependencies.map(async (dependency) => {
+      const [_package, version]: [string, string] = Object.entries(dependency)[0];
+      return await installDependency([{ package: _package, version }], this);
+    }));
   }
 
   private async downloadBlockToPage(block: IMaterialBlock, pageName: string): Promise<string[]> {
@@ -108,7 +132,7 @@ export default class Page extends EventEmitter implements IPageModule {
   async getOne(): Promise<any> { }
 
   async create(page: ICreatePageParam): Promise<any> {
-    const { name, blocks, } = page;
+    const { name, blocks, libary = 'react' } = page;
 
     // create page dir
     const pageFolderName = upperCamelCase(name);
@@ -130,12 +154,45 @@ export default class Page extends EventEmitter implements IPageModule {
     await this.installBlocksDependencies(blocks);
 
     // create page file
+    const renderData = {
+      blocks: blocks.map((block) => {
+        const blockFolderName = block.alias || upperCamelCase(block.name);
+        const blockClassName = upperCamelCase(block.alias || block.name);
 
-    // create layout
+        return {
+          ...block,
+          className: blockClassName,
+          relativePath: `./components/${blockFolderName}`,
+        };
+      }),
+      className: pageFolderName,
+      pageName,
+    };
 
-    // update routes.jsx
+    await Promise.all((await loadTemplates(libary))
+      .map(async (template) => {
+        const fileContent = template.compile(renderData);
+        const fileName = template.fileName
+          .replace(/PAGE/g, pageFolderName)
+          .replace(/\.ejs$/g, '');
+        const dist = path.join(pageDir, fileName);
+        const fileExt = path.extname(dist);
 
-    // update menuConfig, routerConfig
+        let parser = libary === 'vue' ? 'vue' : 'babel';
+        if (fileExt === '.scss') {
+          parser = 'scss';
+        }
+        const rendered = prettier.format(
+          fileContent,
+          { singleQuote: true, trailingComma: 'es5', parser }
+        );
+
+        await writeFileAsync(dist, rendered, 'utf-8');
+      }));
+
+    // TODO update routes.jsx
+
+    // TODO update menuConfig, routerConfig
   }
 
   async creates(): Promise<any> { }

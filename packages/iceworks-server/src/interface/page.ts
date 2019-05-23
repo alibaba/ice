@@ -87,6 +87,11 @@ export interface ICreatePageParam {
    * 菜单名
    */
   menuName?: string;
+
+  /**
+   * DSL 类型
+   */
+  libary?: 'vue' | 'react' | 'angular';
 }
 
 export interface IPageModule extends IBaseModule {
