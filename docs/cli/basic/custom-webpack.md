@@ -5,9 +5,9 @@ order: 4
 
 ### 链式修改webpack配置
 
-`ice-scripts` 内部的基础webpack配置都是通过 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 生成的，它通过webpack配置链式操作的API，并可以定义具体loader规则和webpack插件的名称，可以让开发者更加细粒度修改webpack配置。
+`ice-scripts` 内部的基础webpack配置都是通过 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 生成的，它通过webpack配置链式操作的API，并可以定义具体 loader 规则和 webpack 插件的名称，可以让开发者更加细粒度修改webpack配置。
 
-- [Loader规则命名](https://github.com/alibaba/ice/tree/master/tools/ice-scripts/lib/config/setWebpackLoaders.js)
+- [loader规则命名](https://github.com/alibaba/ice/tree/master/tools/ice-scripts/lib/config/setWebpackLoaders.js)
 - [webpack插件命名](https://github.com/alibaba/ice/tree/master/tools/ice-scripts/lib/config/setWebpackPlugins.js)
 
 `ice.config.js` 中提供的 `chainWebpack` 提供自定义webpack修改的接口。`chainWebpack` 接收两个参数：
