@@ -4,12 +4,14 @@ import XtermTerminal from '@components/XtermTerminal';
 import TerminalBar from '@components/TerminalBar';
 import useModal from '@hooks/useModal';
 import IceNotification from '@icedesign/notification';
+import stores from '@stores';
 import SettingsModal from './components/SettingsModal';
 import devStores from './stores';
 import styles from './index.module.scss';
 
 const Dev = () => {
   const dev = devStores.useStore('dev');
+  const project = stores.useStore('project');
   const { on, toggleModal } = useModal();
 
   const onStart = async () => {
@@ -56,7 +58,7 @@ const Dev = () => {
       {/* Content */}
       <div className={styles.content}>
         <XtermTerminal
-          name="liteApp"
+          name={project.dataSource.name}
           startEventName="project.dev.start.data"
           stopEventName="project.dev.stop.data"
         />
