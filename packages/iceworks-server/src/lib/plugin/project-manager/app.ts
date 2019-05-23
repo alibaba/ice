@@ -73,7 +73,9 @@ class Project implements IProject {
 
       let project: IProject = clone(this);
       for (const moduleKey of adapterModuleKeys) {
-        delete project[moduleKey];
+        if (project[moduleKey]) {
+          delete project[moduleKey];
+        }
       }
 
       this[camelCase(key)] = new Module(project);
