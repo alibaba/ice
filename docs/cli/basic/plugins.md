@@ -3,11 +3,9 @@ title: 插件配置
 order: 3
 ---
 
-### 配置插件
+插件配置由配置文件 `ice.config.js` 中提供的 `plugins` 字段来配置插件列表。
 
-配置文件中 `ice.config.js` 提供 `plugins` 来配置插件列表。
-
-#### plugins
+## plugins
 
 * 类型：`Array`
 * 默认值：`[]`
@@ -44,16 +42,16 @@ module.exports = {
 
 ```
 
-### 官方插件
+## 官方插件
 
-#### ice-scripts-plugin-antd
+### ice-scripts-plugin-antd
 
-##### 功能
+#### 功能
 
 - antd组件按需加载
 - 主题定制能力
 
-##### 如何使用
+#### 如何使用
 
 ```bash
 $ npm i --save-dev ice-scripts-plugin-antd
@@ -77,14 +75,14 @@ module.exports = {
 }
 ```
 
-#### ice-scripts-plugin-component
+### ice-scripts-plugin-component
 
-##### 功能
+#### 功能
 
 - 支持组件模块开发 dev & build
 - 支持接入 Fusion Cool & 设计板块的组件构建
 
-##### 如何使用
+#### 如何使用
 
 ```bash
 $ npm i --save-dev ice-scripts-plugin-component
@@ -104,13 +102,13 @@ module.exports = {
 
 更多组件开发相关内容，详见[业务组件开发规范](/docs/cli/advanced/biz-component)
 
-#### ice-scripts-plugin-css-assets-local
+### ice-scripts-plugin-css-assets-local
 
-##### 功能
+#### 功能
 
 - 将 CSS 中依赖的资源本地化，例如字体文件等。
 
-##### 如何使用
+#### 如何使用
 
 ```bash
 $ npm i --save-dev ice-scripts-plugin-css-assets-local
@@ -133,16 +131,16 @@ module.exports = {
 }
 ```
 
-#### ice-scripts-plugin-fusion
+### ice-scripts-plugin-fusion
 
-##### 功能
+#### 功能
 
 - 组件按需加载
 - 组件（包含业务组件）样式自动引入
 - 主题定制能力
 - 多个不同包名的基础组件统一
 
-##### 如何使用
+#### 如何使用
 
 ```bash
 $ npm i --save-dev ice-scripts-plugin-fusion
@@ -181,13 +179,13 @@ module.exports = {
 
 更多主题配置，详见[配置项目主题](/docs/cli/basic/theme)
 
-#### ice-scripts-plugin-multi-pages
+### ice-scripts-plugin-multi-pages
 
-##### 功能
+#### 功能
 
 - 构建传统的多页应用，默认会将 `src/pages/*/index.js` 作为 entry，每个 page 都会作为一个 entry，以 pageName 构建多个同名 HTML 文件。
 
-##### 如何使用
+#### 如何使用
 
 ```bash
 $ npm i --save-dev ice-scripts-plugin-multi-pages

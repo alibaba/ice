@@ -3,8 +3,6 @@ title: 自定义webpack配置
 order: 4
 ---
 
-### 链式修改webpack配置
-
 `ice-scripts` 内部的基础webpack配置都是通过 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 生成的，它通过webpack配置链式操作的API，并可以定义具体 loader 规则和 webpack 插件的名称，可以让开发者更加细粒度修改webpack配置。
 
 - [loader规则命名](https://github.com/alibaba/ice/tree/master/tools/ice-scripts/lib/config/setWebpackLoaders.js)
@@ -15,7 +13,7 @@ order: 4
 - `config`: 链式的webpack配置，基于 `webpack-chain` 的API进行修改
 - `opts`: `{ command, commandArgs }` 命令执行参数，`command` 为当前执行命令`dev | build` ， `commandArgs` 为cli命令参数
 
-#### 修改常见webpack配置
+## 修改常见webpack配置
 
 ```js
 // ice.config.js
@@ -34,7 +32,7 @@ module.exports = {
 
 ```
 
-#### 添加一个Loader
+## 添加一个Loader
 
 ```js
 // ice.config.js
@@ -50,7 +48,7 @@ module.exports = {
 }
 ```
 
-#### 修改Loader配置
+## 修改Loader配置
 
 ```js
 // ice.config.js
@@ -69,7 +67,7 @@ module.exports = {
 }
 ```
 
-#### 添加webpack插件
+## 添加webpack插件
 
 ```js
 // ice.config.js
@@ -92,7 +90,7 @@ module.exports = {
 }
 ```
 
-#### 修改webpack插件
+## 修改webpack插件
 
 ```js
 // ice.config.js

@@ -3,8 +3,6 @@ title: 插件开发
 order: 1
 ---
 
-### 插件开发指南
-
 `ice-scripts` 通过插件机制，扩展其项目编译和命令运行时的能力。便于常见构建需求和复用解决方案的共享。
 
 插件本质上时一个 JS 模块，约定插件初始化模版如下：
@@ -16,11 +14,11 @@ module.exports = (api, opts) => {
 };
 
 ```
-#### 插件API
+## 插件API
 
 通过插件提供的API，可以方便拓展和自定义能力。
 
-##### service
+### service
 
 通过 `api.service` 访问命令运行时的相关参数：
 
@@ -42,7 +40,7 @@ module.exports = (api) => {
 };
 ```
 
-##### chainWebpack
+### chainWebpack
 
 通过 `api.chainWepack` 对webpack配置进行自定义
 
@@ -58,7 +56,7 @@ module.exports = (api) => {
 
 更多 webpack-chain 用法，参考 [自定义webpack配置](/docs/cli/basic/custom-webpack)
 
-##### log
+### log
 
 通过 `api.log` 向插件提供统一的日志输出方法
 
@@ -71,7 +69,7 @@ module.exports = (api) => {
 }
 ```
 
-##### onHooks
+### onHooks
 
 通过 `api.onHooks` 监听命令运行事件。
 
@@ -94,7 +92,7 @@ module.exports = (api) => {
 }
 ```
 
-#### 插件开发示例
+## 插件开发示例
 
 下面是 ice-scrpts-plugin-css-assets-local 插件的代码示例
 
