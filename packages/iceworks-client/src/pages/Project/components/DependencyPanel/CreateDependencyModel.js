@@ -9,7 +9,13 @@ const CreateDependencyModel = ({
   const [value, setState] = useState('');
 
   async function onChange(text) {
-    setState(text);
+    setState(text.split(/\s+/).filter((dep) => !!dep.trim()).map((dep) => {
+      const [_package, version] = dep.split('@');
+      return {
+        package: _package,
+        version,
+      };
+    }));
   }
 
   return (

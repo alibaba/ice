@@ -1,16 +1,17 @@
 import * as EventEmitter from 'events';
 import * as path from 'path';
-import * as pathExists from 'path-exists';
 import * as fsExtra from 'fs-extra';
 import * as util from 'util';
 import * as rimraf from 'rimraf';
+import * as latestVersion from 'latest-version';
+
 import { exec, spawn } from 'child_process';
-import { IDependency, IProject } from '../../../interface';
+import { IDependency, IProject, ICreateDependencyParam } from '../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
 
-export const install = async (dependency: IDependency): Promise<IDependency> => {
-  return dependency;
+export const install = async (dependency: ICreateDependencyParam): Promise<IDependency> => {
+  return null;
 };
 
 export interface INpmOutdatedData { package: string; current: string; wanted: string; latest: string; location: string; };
@@ -34,15 +35,7 @@ export default class Dependency extends EventEmitter {
 
   private async getLocalVersion(name: string): Promise<string> {
     const pkgPath = path.join(this.path, name, 'package.json');
-    let verstion: string = '';
-    const packageIsExist = await pathExists(pkgPath);
-    if (packageIsExist) {
-      try {
-        verstion = (await fsExtra.readJson(pkgPath)).version;
-      } catch (e) {
-        // ....
-      }
-    }
+    const verstion: string = (await fsExtra.readJson(pkgPath)).version;
     return verstion;
   };
 
@@ -62,8 +55,12 @@ export default class Dependency extends EventEmitter {
     });
   }
 
-  public async create(dependency: IDependency): Promise<IDependency> {
+  public async create(dependency: ICreateDependencyParam): Promise<IDependency> {
     return await install(dependency);
+  }
+
+  public async creates(dependencies: ICreateDependencyParam[]): Promise<IDependency[]> {
+    return [];
   }
 
   public async getAll(): Promise<{ dependencies: IDependency[], devDependencies: IDependency[] }> {
@@ -71,12 +68,18 @@ export default class Dependency extends EventEmitter {
 
     const getAll = async (list, dev) => {
       return await Promise.all(Object.entries(list).map(async ([_package, specifyVersion]: [string, string]) => {
-        const localVersion = await this.getLocalVersion(_package);
+        let localVersion = '';
+        try {
+          localVersion = await this.getLocalVersion(_package);
+        } catch (error) {
+          // ignore error
+        }
         return {
           package: _package,
           specifyVersion,
           dev,
-          localVersion
+          localVersion,
+          latestVersion: await latestVersion(_package)
         }
       }));
     }

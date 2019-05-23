@@ -55,7 +55,35 @@ const DependencyPanel = () => {
   }
 
   async function create(value) {
-    await dependenciesStore.create(value);
+    try {
+      await dependenciesStore.creates(value);
+    } catch (error) {
+      if (error.code === 'INCOMPATIBLE') {
+        Dialog.confirm({
+          title: '不兼容性提示',
+          content: (
+            <div style={{ lineHeight: '24px', width: 300 }}>
+              新添加的依赖
+              {' '}
+              {error.info.map(({ pacakge: _package, version }) => `${_package}@${version}`).join(',')}
+              {' '}
+              主版本号与项目依赖
+              {error.info.map(({ pacakge: _package }) => {
+                const { specifyVersion } = dependencies.find(({ package: projectPackage }) =>
+                  projectPackage === _package);
+                return `${_package}@${specifyVersion}`;
+              }).join(',')}
+              {' '}
+              主版本号发生改变可能存在不兼容的 API 修改，确定要继续吗？
+            </div>
+          ),
+          onOk: async () => {
+            await dependenciesStore.creates(value, true);
+            toggleCreateModal();
+          },
+        });
+      }
+    }
   }
 
   useSocket('project.dependency.data', (data) => {

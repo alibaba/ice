@@ -20,14 +20,25 @@ export interface IDependency {
   localVersion?: string;
 
   /**
-   * 是否可更新：当远程有 1.0.4 时，该值为 1.0.4
+   * 可更新版本：当远程有 1.0.4 时，该值为 1.0.4
    */
   wantedVestion?: string;
+
+  /**
+   * 最新版本
+   */
+  latestVestion?: string;
 
   /**
    * 是否本地依赖 devDependencies ？
    */
   dev: boolean;
+}
+
+export interface ICreateDependencyParam {
+  pacakge: string;
+
+  version: string;
 }
 
 export interface IDependencyModule extends IBaseModule {
@@ -41,14 +52,14 @@ export interface IDependencyModule extends IBaseModule {
    *
    * @param dependency 依赖信息
    */
-  create(dependency: IDependency): Promise<IDependency>;
+  create(dependency: ICreateDependencyParam): Promise<IDependency>;
 
   /**
    * 添加多个依赖到项目
    *
    * @param dependencies 依赖列表
    */
-  creates(dependencies: IDependency[]): Promise<IDependency[]>;
+  creates(dependencies: ICreateDependencyParam[]): Promise<IDependency[]>;
 
   /**
    * 升级项目中的某个依赖

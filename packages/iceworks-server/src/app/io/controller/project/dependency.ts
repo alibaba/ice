@@ -21,5 +21,11 @@ export default (app) => {
 
       return await project.dependency.reset();
     }
+
+    async creates({ args }) {
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      return await project.dependency.creates(args);
+    }
   };
 };

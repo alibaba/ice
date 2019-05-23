@@ -1,4 +1,5 @@
 import socket from '@src/socket';
+import semver from 'semver';
 
 export default {
   dataSource: {
@@ -15,7 +16,38 @@ export default {
   async reset() {
     await socket.emit('project.dependency.reset');
   },
-  async create(value) {
+  async creates(deps, focus) {
+    const { dependencies } = this.dataSource;
+    if (!focus) {
+      const depsWithoutVersion = deps.filter((dep) => !dep.version);
+      const existDeps = depsWithoutVersion.filter(({ package: _package }) =>
+        dependencies.find(({ package: projectPackage }) => projectPackage === _package));
 
+      const incompatibleDeps = [];
+      existDeps.forEach(({ package: _package }) => {
+        const { specifyVersion, latestVersion } = dependencies.find(({ package: projectPackage }) =>
+          projectPackage === _package);
+        const {
+          major: latestMajor,
+        } = semver.minVersion(latestVersion);
+
+        const { major: specifyMajor } = semver.minVersion(specifyVersion);
+        if (latestMajor > specifyMajor) {
+          incompatibleDeps.push({
+            pacakge: _package,
+            version: latestVersion,
+          });
+        }
+      });
+
+      if (incompatibleDeps.length) {
+        const error = new Error('存在不兼容的升级');
+        error.code = 'INCOMPATIBLE';
+        error.info = incompatibleDeps;
+        throw error;
+      }
+    }
+
+    await socket.emit('project.dependency.creates', deps);
   },
 };
