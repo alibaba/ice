@@ -3,7 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './index.module.scss';
 
-const ScaffoldCard = ({ dataSource, bgColor }) => {
+const ScaffoldCard = ({ dataSource, bgColor, onInstall }) => {
+  function handleInstall() {
+    if (typeof onInstall === 'function') {
+      onInstall(dataSource);
+    }
+  }
+
   return (
     <div className={styles.scaffold}>
       <div className={styles.body} style={{ background: bgColor }}>
@@ -48,7 +54,7 @@ const ScaffoldCard = ({ dataSource, bgColor }) => {
         >
           查看源码
         </a>
-        <a className={styles.button}>一键下载</a>
+        <a className={styles.button} onClick={handleInstall}>使用该模版</a>
       </div>
     </div>
   );
@@ -56,11 +62,13 @@ const ScaffoldCard = ({ dataSource, bgColor }) => {
 
 ScaffoldCard.defaultProps = {
   bgColor: '#fafafa',
+  onInstall: f => f,
 };
 
 ScaffoldCard.propTypes = {
   dataSource: PropTypes.object.isRequired,
   bgColor: PropTypes.string,
+  onInstall: PropTypes.func,
 };
 
 export default ScaffoldCard;

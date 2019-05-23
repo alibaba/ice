@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@alifd/next';
+import LazyLoad from 'react-lazyload';
 import MaterialCategories from '@components/MaterialCategories';
 import BlockCard from '@components/BlockCard';
 
@@ -21,7 +22,9 @@ const BlockPanel = ({ dataSource, current }) => {
 
           return (
             <Col l="8" m="8" s="12" xs="24" xxs="24" key={key}>
-              <BlockCard dataSource={data} />
+              <LazyLoad height={265} resize scrollContainer=".scollContainer">
+                <BlockCard dataSource={data} />
+              </LazyLoad>
             </Col>
           );
         })}

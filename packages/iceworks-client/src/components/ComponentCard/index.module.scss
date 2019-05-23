@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   margin-bottom: 20px;
   box-shadow: 0 8px 24px rgba(163, 177, 191, 0.35);
   background: #fff;
@@ -7,9 +8,13 @@
   cursor: pointer;
   padding: 16px;
   text-align: left;
+  overflow: hidden;
   &:hover {
     text-decoration: none;
     transform: translateY(-6px);
+    .actions {
+      transform: translateY(0);
+    }
   }
 }
 
@@ -26,4 +31,39 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 0 0 4px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  transition: transform 0.3s ease;
+  transform: translateY(100%);
+  z-index: 10;
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 48px;
+    line-height: 48px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #2077ff;
+    color: #fff;
+    cursor: pointer;
+
+    .githubImg,
+    .eyeImg,
+    .downloadImg {
+      width: 20px;
+      margin-right: 6px;
+    }
+  }
 }
