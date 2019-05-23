@@ -73,14 +73,4 @@ $ ice-scripts dev --https
 $ npm run build
 ```
 
-构建服务支持的命令参数：
-
-```bash
-$ ice-scripts build --help
-
-Usage: ice-scripts build [options]
-
-Options:
-  --skip-demo            组件构建跳过构建 build/index.html 的环节
-  -h, --help             output usage information
-```
+构建产物默认生成到 `./build` 目录下。
