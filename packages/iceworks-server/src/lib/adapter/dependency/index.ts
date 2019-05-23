@@ -17,7 +17,6 @@ export const install = async (dependencies: ICreateDependencyParam[], adapterMod
     dependencies.map(({ package: _package, version }) => `${_package}@${version}`)
   );
 
-  console.log('install args', args);
   const childProcess = spawn(
     'npm',
     args,

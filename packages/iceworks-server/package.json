@@ -26,9 +26,11 @@
     "npm-run-path": "^3.1.0",
     "path-exists": "^4.0.0",
     "request": "^2.88.0",
+    "request-progress": "^3.0.0",
     "request-promise-native": "^1.0.7",
     "rimraf": "^2.6.3",
     "semver": "^6.0.0",
+    "tar": "^4.4.8",
     "trash": "^5.2.0",
     "uppercamelcase": "^3.0.0"
   },

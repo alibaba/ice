@@ -9,6 +9,7 @@ import * as kebabCase from 'kebab-case';
 import scanDirectory from '../scanDirectory';
 import getIceVersion from '../getIceVersion';
 import getTarballURLByMaterielSource from '../getTarballURLByMaterielSource';
+import downloadAndExtractPackage from '../downloadAndExtractPackage';
 import { install as installDependency } from '../dependency';
 import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock } from '../../../interface';
 
@@ -41,12 +42,8 @@ export default class Page extends EventEmitter implements IPageModule {
     });
   }
 
-  private async downloadAndExtractBlock(destDir: string, tarballURL: string): Promise<string[]> {
-    return [''];
-  }
-
   private async downloadBlocksToPage(blocks: IMaterialBlock[], pageName: string) {
-    await Promise.all(
+    return await Promise.all(
       blocks.map(async (block) => await this.downloadBlockToPage(block, pageName))
     );
   }
@@ -54,15 +51,15 @@ export default class Page extends EventEmitter implements IPageModule {
   private async installBlocksDependencies(blocks: IMaterialBlock[]) {
     const projectPackageJSON = this.project.getPackageJSON();
     // get all dependencies
-    const dependenciesAll = {};
-    blocks.forEach(({ dependencies }) => Object.assign(dependenciesAll, dependencies));
+    const blocksDependencies = {};
+    blocks.forEach(({ dependencies }) => Object.assign(blocksDependencies, dependencies));
 
     // filter dependencies if already in project
     const filterDependencies = [];
-    Object.keys(dependenciesAll).forEach((dep) => {
+    Object.keys(blocksDependencies).forEach((dep) => {
       if (!projectPackageJSON.dependencies.hasOwnProperty(dep)) {
         filterDependencies.push({
-          [dep]: dependenciesAll[dep]
+          [dep]: blocksDependencies[dep]
         });
       }
     });
@@ -91,7 +88,7 @@ export default class Page extends EventEmitter implements IPageModule {
     }
 
     try {
-      return await this.downloadAndExtractBlock(
+      return await downloadAndExtractPackage(
         path.join(componentsDir, blockName),
         tarballURL
       );
@@ -128,6 +125,8 @@ export default class Page extends EventEmitter implements IPageModule {
 
     // download blocks
     await this.downloadBlocksToPage(blocks, pageName);
+
+    // install block dependencies
     await this.installBlocksDependencies(blocks);
 
     // create page file

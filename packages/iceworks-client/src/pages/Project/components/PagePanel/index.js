@@ -51,6 +51,8 @@ const Page = () => {
     await pages.create(data);
 
     toggleCreateModal();
+
+    pages.refresh();
   }
 
   const pagePreDelete =
