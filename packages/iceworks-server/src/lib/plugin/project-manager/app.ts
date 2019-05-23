@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as npmRunPath from 'npm-run-path';
 import * as os from 'os';
-import * as clone from 'clone';
+import * as clone from 'lodash.clone';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
