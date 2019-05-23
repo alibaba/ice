@@ -1,3 +1,4 @@
+/* eslint no-undef:0 */
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import { ipcRenderer, remote } from 'electron';
@@ -96,8 +97,8 @@ class Updater extends Component {
     const CHECK_VERSION = '2.19.0';
 
     if (
-      semver.lt(APP_VERSION, CHECK_VERSION) &&
-      semver.gte(meta.version, CHECK_VERSION)
+      semver.lt(APP_VERSION, CHECK_VERSION)
+      && semver.gte(meta.version, CHECK_VERSION)
     ) {
       if (materials && materials.length) {
         settings.set(
@@ -140,7 +141,8 @@ class Updater extends Component {
       return (
         <div className="updater-content">
           <div className="event-wrapper">
-            检查到可用版本 ({meta.version}
+            检查到可用版本 (
+            {meta.version}
             )，是否更新？
           </div>
           <div className="btn-wrapper">
@@ -158,7 +160,7 @@ class Updater extends Component {
           </div>
         </div>
       );
-    } else if (event === 'update-not-available') {
+    } if (event === 'update-not-available') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">当前已经是最新的版本。</div>
@@ -173,7 +175,7 @@ class Updater extends Component {
           </div>
         </div>
       );
-    } else if (event === 'download-progress') {
+    } if (event === 'download-progress') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">正在下载更新...</div>
@@ -184,14 +186,14 @@ class Updater extends Component {
           />
         </div>
       );
-    } else if (event === 'unpack-updater') {
+    } if (event === 'unpack-updater') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">正在解压更新...</div>
           <Progress showInfo={false} percent={100} size="medium" />
         </div>
       );
-    } else if (event === 'update-downloaded') {
+    } if (event === 'update-downloaded') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">更新已完成。</div>
@@ -206,7 +208,7 @@ class Updater extends Component {
           </div>
         </div>
       );
-    } else if (event === 'error') {
+    } if (event === 'error') {
       return (
         <div className="updater-content">
           <div className="event-wrapper">更新失败!</div>
@@ -221,13 +223,12 @@ class Updater extends Component {
           </div>
         </div>
       );
-    } else {
-      return (
-        <div className="updater-content">
-          <div className="event-wrapper">正在检查更新...</div>
-        </div>
-      );
     }
+    return (
+      <div className="updater-content">
+        <div className="event-wrapper">正在检查更新...</div>
+      </div>
+    );
   };
 
   renderChangelog = () => {
@@ -235,7 +236,11 @@ class Updater extends Component {
     if (log.length) {
       return (
         <div className="changelog">
-          <strong>{meta.version} 更新日志</strong>
+          <strong>
+            {meta.version}
+            {' '}
+更新日志
+          </strong>
           <ul>
             {log.map((text, index) => {
               return (

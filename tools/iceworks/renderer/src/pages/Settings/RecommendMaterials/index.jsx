@@ -29,13 +29,13 @@ class RecommendMaterials extends Component {
       <div>
         <Separator
           title="官方推荐物料源"
-          additional={
+          additional={(
             <span>
               <Button size="small" onClick={this.handleResetMaterials}>
                 重置
               </Button>
             </span>
-          }
+)}
         />
         <div className="materials">
           {this.props.settingsMaterials.builtInMaterials.map(
@@ -46,7 +46,7 @@ class RecommendMaterials extends Component {
                     {material.homepage ? (
                       <a
                         href={material.homepage}
-                        title={'官网:' + material.homepage}
+                        title={`官网:${material.homepage}`}
                         target="_blank"
                       >
                         <img src={material.logo} alt={material.name} />
@@ -76,8 +76,7 @@ class RecommendMaterials extends Component {
                     <div className="material-switch">
                       <Switch
                         checked={material.checked}
-                        onChange={(checked) =>
-                          this.handleCheckChange(checked, material)
+                        onChange={(checked) => this.handleCheckChange(checked, material)
                         }
                         size="small"
                       />

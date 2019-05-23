@@ -9,8 +9,8 @@ import services from '../services';
 import logger from '../lib/logger';
 
 const defaultWorkspacePath = path.join(os.homedir(), '.iceworks');
-// const designPath = 'http://127.0.0.1:3333/src/pages/Design';
-const designPath = 'https://g.alicdn.com/iceland/iceland-page/0.1.0/design.html';
+// const designPath = 'http://127.0.0.1:4445/src/pages/Design';
+const designPath = 'https://g.alicdn.com/iceland/iceland-page/design.html';
 const presentWorkbenchPath = designPath;
 
 const LOCAL_BLOCK_DIR_NAME = 'localBlocks';

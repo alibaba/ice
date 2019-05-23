@@ -18,7 +18,7 @@ const SortableBlockPreview = SortableContainer(
               index={index}
               key={`${block.uid}`}
               block={block}
-              useDragHandle={true}
+              useDragHandle
               orderIndex={index}
               orderCount={blocks.length}
               onSortEnd={onSortEnd}
@@ -81,8 +81,8 @@ class Previewer extends Component {
 
         <SortableBlockPreview
           lockAxis="y"
-          helperClass={'preview-block-draging'}
-          useDragHandle={true}
+          helperClass="preview-block-draging"
+          useDragHandle
           blocks={blocks.selected}
           onSortStart={blocks.onSortStart}
           onSortEnd={blocks.onSortEnd}

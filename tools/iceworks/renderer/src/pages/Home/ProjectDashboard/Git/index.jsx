@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {
   Step, Button, Input, Field,
   Checkbox, Dialog, CascaderSelect, Dropdown,
-  Menu, Loading, Feedback
+  Menu, Loading, Feedback,
 } from '@icedesign/base';
 import { ipcRenderer } from 'electron';
 import Notification from '@icedesign/notification';
@@ -21,12 +21,13 @@ import PluginHoc from '../PluginHoc';
 const { Group: ButtonGroup } = Button;
 const { Group: CheckboxGroup } = Checkbox;
 
-const steps = ["Git init", "关联仓库"];
+const steps = ['Git init', '关联仓库'];
 
 @inject('projects', 'git')
 @observer
 class GitPanel extends Component {
   static extensionName = 'git';
+
   static displayName = 'Git';
 
   constructor(props) {
@@ -58,7 +59,7 @@ class GitPanel extends Component {
           <div style={{ width: 400 }}>
             {errMsg}
           </div>
-        )
+        ),
       });
     }
   }
@@ -105,10 +106,10 @@ class GitPanel extends Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
-        <EmptyTips style={{minHeight: 90}}>该项目不是一个 Git 仓库，请点击 Git init 开始配置</EmptyTips>
+        <EmptyTips style={{ minHeight: 90 }}>该项目不是一个 Git 仓库，请点击 Git init 开始配置</EmptyTips>
         <Button
           type="secondary"
           onClick={this.handleGitInit}
@@ -117,16 +118,16 @@ class GitPanel extends Component {
           Git init
         </Button>
       </div>
-    )
+    );
   }
 
   checkGitRepo(rule, value, callback) {
     if (/^git@.+.git$/.test(value)) {
       callback();
     } else if (/^http.+.git$/.test(value)) {
-      callback("请使用 SSH 协议地址，即以 git@ 开头的地址");
+      callback('请使用 SSH 协议地址，即以 git@ 开头的地址');
     } else {
-      callback("请输入正确的 git 仓库地址");
+      callback('请输入正确的 git 仓库地址');
     }
   }
 
@@ -139,7 +140,7 @@ class GitPanel extends Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <div style={styles.item}>
@@ -148,14 +149,15 @@ class GitPanel extends Component {
             height: 48,
             position: 'relative',
             top: 11,
-          }}>
+          }}
+          >
             <Input
               placeholder="如：git@github.com:alibaba/ice.git"
               style={{ marginLeft: 10, width: 240 }}
               {...init('remoteUrl', {
                 rules: {
                   validator: this.checkGitRepo,
-                }
+                },
               })}
             />
             <br />
@@ -164,12 +166,13 @@ class GitPanel extends Component {
                 color: '#fa7070',
                 fontSize: 12,
                 display: 'inline-block',
-                margin: '5px 0 0 10px'
-              }}>
-                {this.field.getError('remoteUrl').join(",")}
+                margin: '5px 0 0 10px',
+              }}
+              >
+                {this.field.getError('remoteUrl').join(',')}
               </span>
             ) : (
-              ""
+              ''
             )}
           </div>
         </div>
@@ -181,7 +184,7 @@ class GitPanel extends Component {
           关联仓库
         </Button>
       </div>
-    )
+    );
   }
 
   handleAddRemote = () => {
@@ -261,8 +264,8 @@ class GitPanel extends Component {
             >
               {cn}
             </span>
-          )
-          dataSource = dataSource.concat(files.map( (file, index) => {
+          );
+          dataSource = dataSource.concat(files.map((file, index) => {
             return (
               <div key={index} style={styles.fileItem}>
                 <Checkbox value={file}>
@@ -270,8 +273,8 @@ class GitPanel extends Component {
                   <span>{file}</span>
                 </Checkbox>
               </div>
-            )
-          }))
+            );
+          }));
         }
       });
     }
@@ -293,7 +296,9 @@ class GitPanel extends Component {
             <span>
               变更文件
               <span style={{ paddingLeft: 10, fontSize: 12, color: '#666' }}>
-                ({git.unstagedFiles.length})
+                (
+                {git.unstagedFiles.length}
+)
               </span>
             </span>
             <ExtraButton
@@ -306,7 +311,7 @@ class GitPanel extends Component {
           <div style={styles.filesContent}>
             <CheckboxGroup value={git.selectedFiles} onChange={this.onFilesChange}>
               {
-                dataSource.map( item => {
+                dataSource.map((item) => {
                   return item;
                 })
               }
@@ -393,24 +398,30 @@ class GitPanel extends Component {
       <Menu>
         <Menu.Item
           onClick={this.handleGitNewBranchOpen}
-        >新建分支</Menu.Item>
+        >
+新建分支
+        </Menu.Item>
         <Menu.Item
           onClick={this.handleGitBranchesOpen}
-        >切换分支</Menu.Item>
+        >
+切换分支
+        </Menu.Item>
       </Menu>
     );
 
     return (
 
-      <DashboardCard >
-        <Loading visible={git.reloading} style={{width: '100%', height: '100%'}} shape="fusion-reactor">
+      <DashboardCard>
+        <Loading visible={git.reloading} style={{ width: '100%', height: '100%' }} shape="fusion-reactor">
           <DashboardCard.Header>
             <div>
               Git
               {
                 git.showMainPanel && (
                   <span style={{ paddingLeft: 10, fontSize: 12, color: '#666' }}>
-                    （{git.currentBranch}）
+                    （
+                    {git.currentBranch}
+）
                   </span>
                 )
               }
@@ -420,16 +431,16 @@ class GitPanel extends Component {
                 <div>
                   <ExtraButton
                     style={{ color: '#3080FE' }}
-                    placement={'top'}
-                    tipText={'变更分支'}
+                    placement="top"
+                    tipText="变更分支"
                     onClick={this.handlePull}
                   >
                     <Dropdown
-                      trigger={
-                        <a style={{zIndex: 2}}>
-                          <Icon type="git" style={{fontSize: 16}} />
+                      trigger={(
+                        <a style={{ zIndex: 2 }}>
+                          <Icon type="git" style={{ fontSize: 16 }} />
                         </a>
-                      }
+)}
                       align="tr br"
                       triggerType="click"
                     >
@@ -438,32 +449,32 @@ class GitPanel extends Component {
                   </ExtraButton>
                   <ExtraButton
                     style={{ color: '#3080FE' }}
-                    placement={'top'}
-                    tipText={'Pull'}
+                    placement="top"
+                    tipText="Pull"
                     onClick={this.handlePull}
                   >
                     <Icon type="down-arrow" style={{ fontSize: 18 }} />
                   </ExtraButton>
                   <ExtraButton
                     style={{ color: '#3080FE' }}
-                    placement={'top'}
-                    tipText={'Push'}
+                    placement="top"
+                    tipText="Push"
                     onClick={this.handlePush}
                   >
                     <Icon type="up-arrow" style={{ fontSize: 18 }} />
                   </ExtraButton>
                   <ExtraButton
                     style={{ color: '#3080FE' }}
-                    placement={'top'}
-                    tipText={'修改仓库地址'}
+                    placement="top"
+                    tipText="修改仓库地址"
                     onClick={this.handleChangeRemote}
                   >
                     <Icon type="edit" style={{ fontSize: 18 }} />
                   </ExtraButton>
                   <ExtraButton
                     style={{ color: '#3080FE' }}
-                    placement={'top'}
-                    tipText={'刷新'}
+                    placement="top"
+                    tipText="刷新"
                     onClick={() => {
                       this.handleReload(true);
                     }}
@@ -490,16 +501,16 @@ class GitPanel extends Component {
                 //     <EmptyTips>暂无变更文件</EmptyTips>
                 //   </div>
                 // ) : (
-                  // 主面板
-                  this.renderMainPanel()
+              // 主面板
+                this.renderMainPanel()
                 // )
               ) : (
                 // 初始化引导
                 <div>
                   <Step current={currentStep} shape="circle">
                     {
-                      steps.map( (item, index) => {
-                        return <Step.Item key={index} title={item} />
+                      steps.map((item, index) => {
+                        return <Step.Item key={index} title={item} />;
                       })
                     }
                   </Step>
@@ -534,7 +545,7 @@ const styles = {
     marginRight: 5,
     display: 'inline-block',
     position: 'relative',
-    top: '-1px'
+    top: '-1px',
   },
   item: {
     flex: 'auto',
@@ -570,7 +581,7 @@ const styles = {
   filesTitle: {
     display: 'flex',
     justifyContent: 'space-between',
-    height: 22
+    height: 22,
   },
   filesContent: {
     flexGrow: 2,
@@ -578,19 +589,19 @@ const styles = {
     overflow: 'auto',
     marginBottom: 10,
     height: 155,
-    padding: '5px'
+    padding: '5px',
   },
   files: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '4px 5px 0'
+    padding: '4px 5px 0',
   },
   fileItem: {
-    paddingBottom: 4
+    paddingBottom: 4,
   },
   bottomTips: {
     fontSize: 12,
     color: '#ccc',
-    marginTop: 8
-  }
+    marginTop: 8,
+  },
 };

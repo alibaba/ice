@@ -8,7 +8,6 @@ const editors = require('./editors');
 const folder = require('./folder');
 const interaction = require('./interaction');
 const npm = require('./npm');
-const nrm = require('./nrm');
 const sessions = require('./sessions');
 const settings = require('./settings');
 const shells = require('./shells');
@@ -25,7 +24,6 @@ module.exports = {
   interaction,
   templateBuilderUtils,
   npm,
-  nrm,
   scaffolder,
   sessions,
   settings,

@@ -3,10 +3,10 @@ import { Tab, Input } from '@icedesign/base';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import BlockCategory from '../BlockCategory/';
+import BlockCategory from '../BlockCategory';
 import CustomBlockCategory from '../BlockCategory/Custom';
-import BlockGroupCategory from '../BlockGroupCategory/';
-import BlockSlider from '../BlockSlider/';
+import BlockGroupCategory from '../BlockGroupCategory';
+import BlockSlider from '../BlockSlider';
 
 @inject('newpage', 'blocks', 'customBlocks', 'blockGroups')
 @observer
@@ -26,7 +26,7 @@ class BlockPicker extends Component {
   constructor(props) {
     super(props);
 
-    this.idPrefix = 'Block-' + Date.now().toString(32) + '-';
+    this.idPrefix = `Block-${Date.now().toString(32)}-`;
   }
 
   UNSAFE_componentWillMount() {
@@ -39,7 +39,7 @@ class BlockPicker extends Component {
   };
 
   handleCategorySlideChange = (tabIndex, index) => {
-    const id = `#${this.idPrefix}` + index;
+    const id = `#${this.idPrefix}${index}`;
     const title = document.querySelector(id);
 
     title.scrollIntoView({
@@ -56,7 +56,7 @@ class BlockPicker extends Component {
   render() {
     const { materials, isLoading, type, currentTabKey } = this.props.blocks;
     const { blockGroups } = this.props.blockGroups;
-    const { style = {}, handleBlocksAdd,  generatePage } = this.props;
+    const { style = {}, handleBlocksAdd, generatePage } = this.props;
     if (!isLoading && materials.length === 0) {
       return (
         <div
@@ -66,11 +66,13 @@ class BlockPicker extends Component {
             width: '100%',
           }}
         >
-          当前项目类型为 type： {type}
+          当前项目类型为 type：
+          {' '}
+          {type}
           暂无符合项目使用的区块，请确定物料源设置正确并存在可用类型区块。
         </div>
       );
-    } else if (isLoading) {
+    } if (isLoading) {
       return (
         <div
           style={{
@@ -132,23 +134,23 @@ class BlockPicker extends Component {
                 >
                   {/* 区块组合，目前只在有飞冰物料源时展示 */}
                   {material.key === 'iceBlockGroups' ? (
-                    <BlockGroupCategory 
+                    <BlockGroupCategory
                       generatePage={generatePage}
                       handleBlocksAdd={handleBlocksAdd}
                     />
                   ) : (
-                    [<BlockSlider  
+                    [<BlockSlider
                       onClick={this.handleCategorySlideChange.bind(this, index)}
                       key={0}
                       blocksWithCategory={blocksWithCategory}
                     />,
-                    <BlockCategory
-                      idPrefix={this.idPrefix}
-                      key={1}
-                      handleBlocksAdd={handleBlocksAdd}
-                      blocksWithCategory={blocksWithCategory}
-                      originKeywords={this.props.blocks.originKeywords}
-                    />]
+                      <BlockCategory
+                        idPrefix={this.idPrefix}
+                        key={1}
+                        handleBlocksAdd={handleBlocksAdd}
+                        blocksWithCategory={blocksWithCategory}
+                        originKeywords={this.props.blocks.originKeywords}
+                      />]
                   )}
                 </Tab.TabPane>
               );

@@ -1,20 +1,19 @@
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
-
-import BlockCategory from '../BlockCategory/';
-import BlockSlider from '../BlockSlider/';
-import EmptyTips from '../EmptyTips/';
+import BlockCategory from '../BlockCategory';
+import BlockSlider from '../BlockSlider';
+import EmptyTips from '../EmptyTips';
 
 @observer
 class Panel extends Component {
   constructor(props) {
     super(props);
 
-    this.idPrefix = 'Block-' + Date.now().toString(32) + '-';
+    this.idPrefix = `Block-${Date.now().toString(32)}-`;
   }
 
   handleCategorySlideChange = (index) => {
-    const id = '#' + this.idPrefix + index;
+    const id = `#${this.idPrefix}${index}`;
     const title = document.querySelector(id);
 
     title.scrollIntoView({
@@ -29,7 +28,7 @@ class Panel extends Component {
     const blocks = (material && material.blocks) || null;
 
     if (material.error) {
-      return <EmptyTips size={120} style={{margin: '0 10px'}}>{material.error}</EmptyTips>;
+      return <EmptyTips size={120} style={{ margin: '0 10px' }}>{material.error}</EmptyTips>;
     }
 
     if (!blocks) {

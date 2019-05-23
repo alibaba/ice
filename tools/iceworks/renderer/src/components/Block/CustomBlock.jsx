@@ -30,7 +30,7 @@ export default class CustomBlock extends Component {
         <div className="screenshot">
           <img
             className="custom-screenshot-img"
-            src={'data:image/png;base64,' + localBlocks.getBlockImg(blockName)}
+            src={`data:image/png;base64,${this.props.localBlocks.getBlockImg(blockName)}`}
           />
         </div>
         <div className="title-wrapper">
@@ -39,8 +39,8 @@ export default class CustomBlock extends Component {
         <div className="panel">
           <span className="preview" onClick={this.openBlockImgPreview}>
             <Tooltip
-              placement={'bottom'}
-              overlay={'预览效果图'}
+              placement="bottom"
+              overlay="预览效果图"
             >
               <Icon type="02magnifyingglasspluszoom" />
             </Tooltip>

@@ -23,7 +23,9 @@ export default class CustomBlockForm extends Component {
       <div className="project-config-form">
         <div className="project-config-form-item">
           <h3 style={{ margin: 0 }}>
-            <span style={{ color: 'red' }}>*</span> 区块名：
+            <span style={{ color: 'red' }}>*</span>
+            {' '}
+区块名：
           </h3>
           <Input
             ref="name"

@@ -7,7 +7,7 @@ import {
   Panel as BlockPickerPanel,
   Previewer as BlockPickerPreviewer,
   LayoutPicker as BlockPickerLayouts,
-} from '../../../components/BlockPicker/';
+} from '../../../components/BlockPicker';
 import Icon from '../../../components/Icon';
 import PageConfig from './PageConfig';
 import LocalBuildForm from './LocalBuildForm';
@@ -33,7 +33,7 @@ class CreatePage extends Component {
    * 区块别名检测，是否重名或者为空
    */
   aliasNameValidated = (blocks) => {
-    let aliasNameCollector = [];
+    const aliasNameCollector = [];
     let conflictName = '';
 
     const hasEmptyAliasName = blocks.some((block) => {
@@ -45,10 +45,9 @@ class CreatePage extends Component {
       if (aliasNameCollector.indexOf(block.alias.toLowerCase()) === -1) {
         aliasNameCollector.push(block.alias.toLowerCase());
         return false;
-      } else {
-        conflictName = block.alias;
-        return true;
       }
+      conflictName = block.alias;
+      return true;
     });
 
     if (hasEmptyAliasName) {
@@ -58,7 +57,7 @@ class CreatePage extends Component {
         hasMask: true,
       });
       return false;
-    } 
+    }
     if (hasConflictAliasName) {
       Feedback.toast.show({
         type: 'error',
@@ -80,10 +79,10 @@ class CreatePage extends Component {
       // 检测别名是否为空或者重名
       if (!this.aliasNameValidated(selectedBlocks)) return;
     }
-   
+
     this.props.newpage.openSave();
     this.setState({
-      selectedBlocks
+      selectedBlocks,
     });
   };
 
@@ -94,9 +93,7 @@ class CreatePage extends Component {
     if (!Array.isArray(blockObj)) {
       blockObj = [blockObj];
     }
-    blockObj.forEach( block => 
-      this.props.blocks.addBlock(block)
-    );
+    blockObj.forEach((block) => this.props.blocks.addBlock(block));
   };
 
   render() {
@@ -135,10 +132,14 @@ class CreatePage extends Component {
           </div>
           <div className="create-page-footer">
             <Button onClick={this.handleCancelCreate}>
-              <Icon size="small" type="close" /> 取消
+              <Icon size="small" type="close" />
+              {' '}
+取消
             </Button>
             <Button type="primary" onClick={this.generatePage}>
-              <Icon size="small" type="paper-plane" /> 生成页面
+              <Icon size="small" type="paper-plane" />
+              {' '}
+生成页面
             </Button>
           </div>
         </div>

@@ -47,9 +47,6 @@
       "parser": "babel-eslint"
     }
   },
-  "publishConfig": {
-    "registry": "<%= registry %>"
-  },
   "blockConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",

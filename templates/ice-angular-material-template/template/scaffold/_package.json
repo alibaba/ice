@@ -8,7 +8,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -16,10 +16,6 @@
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "keywords": ["ice", "angular", "scaffold"],
-  "publishConfig": {
-    "access": "public",
-    "registry": "<%= registry %>"
-  },
   "scaffoldConfig": {
     "builder": "angular-cli",
     "name": "<%= npmName %>",

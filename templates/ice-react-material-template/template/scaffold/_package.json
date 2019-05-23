@@ -38,10 +38,6 @@
     "prepublishOnly": "npm run build && npm run screenshot",
     "lint": "eslint . --ext '.js,.jsx' --fix"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "<%= registry %>"
-  },
   "buildConfig": {
     "entry": "src/index.js",
     "localization": false,

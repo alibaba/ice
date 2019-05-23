@@ -57,6 +57,7 @@ class PageBlocks extends Component {
 
   handleOpen = () => {
     const { localBlocks } = this.props;
+
     if (localBlocks.blockEditing) {
       Toast.show({
         type: 'prompt',
@@ -129,7 +130,11 @@ class PageBlocks extends Component {
       return (
         <div style={{ padding: 10, textAlign: 'center' }}>
           <EmptyTips size={120}>
-            暂无物料源，可前往 <Link to="/settings">物料源配置</Link> 配置
+            暂无物料源，可前往
+            {' '}
+            <Link to="/settings">物料源配置</Link>
+            {' '}
+配置
           </EmptyTips>
           <Button
             type="primary"
@@ -152,7 +157,7 @@ class PageBlocks extends Component {
           padding: 0,
           height: 0,
         }}
-        tabBarExtraContent={
+        tabBarExtraContent={(
           <div
             style={{
               height: 48,
@@ -171,7 +176,8 @@ class PageBlocks extends Component {
                 onClick={this.handleFeedBack}
               >
                 反馈意见
-              </Button>}
+              </Button>
+            }
             <Button
               loading={this.props.materials.refreshing}
               size="small"
@@ -180,7 +186,7 @@ class PageBlocks extends Component {
               刷新列表
             </Button>
           </div>
-        }
+)}
       >
         {this.renderMaterialsTabPanel()}
         {this.renderCustomBlocksTabPanel()}
@@ -240,11 +246,11 @@ class PageBlocks extends Component {
         </Dialog>
         <Dialog
           title="区块重命名"
-          autoFocus={true}
+          autoFocus
           className="poject-config-dialog"
           footerAlign="center"
           onClose={this.handleRenameClose}
-          footer={
+          footer={(
             <div className="project-config-footer">
               <Button
                 onClick={this.handleRenameBlock}
@@ -259,7 +265,7 @@ class PageBlocks extends Component {
                 取消
               </Button>
             </div>
-          }
+          )}
           visible={this.props.localBlocks.renameVisible}
         >
           <BlockRenameForm />

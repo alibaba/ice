@@ -2,19 +2,15 @@ const { app } = require('electron');
 const npmRunPath = require('npm-run-path');
 const path = require('path');
 const is = require('electron-is');
+const pathKey = require('path-key');
 const settings = require('./services/settings');
-
-const isWin = is.windows();
+const logger = require('./logger');
 
 const { APP_BIN_PATH } = require('./paths');
 
 exports.getEnv = () => {
-  // https://github.com/sindresorhus/npm-run-path
-  // Returns the augmented process.env object.
-  const npmEnv = npmRunPath.env();
-
-  // Merge process.env、npmEnv and custom environment variables
-  const env = Object.assign({}, process.env, npmEnv, {
+  const PATH = pathKey();
+  const env = Object.assign({}, npmRunPath.env(), {
     // eslint-disable-next-line
     npm_config_registry: settings.get('registry'),
     // eslint-disable-next-line
@@ -27,26 +23,18 @@ exports.getEnv = () => {
     LANG: `${app.getLocale().replace('-', '_')}.UTF-8`,
   });
 
-  const pathEnv = [process.env.PATH, npmEnv.PATH, APP_BIN_PATH].filter(
-    (p) => !!p
-  );
+  const pathEnv = [
+    env[PATH],
+    APP_BIN_PATH,
+  ];
 
-  if (isWin) {
-    const envKeys = Object.keys(process.env);
-    const hasEnvPath = envKeys.indexOf('Path') !== -1;
-    const hasEnvPATH = envKeys.indexOf('PATH') !== -1;
-    const envStr = pathEnv.join(path.delimiter);
-    if (hasEnvPATH) {
-      env.PATH = envStr;
-    } else if (hasEnvPath) {
-      env.Path = envStr;
-    } else {
-      env.path = envStr;
-    }
-  } else {
-    pathEnv.push('/usr/local/bin');
-    env.PATH = pathEnv.join(path.delimiter);
+  if (is.osx()) {
+    pathEnv.push('/usr/local/bin'); // 最终兜底
   }
+
+  env[PATH] = pathEnv.join(path.delimiter);
+
+  logger.info('getEnv[PATH]:', env[PATH]);
 
   return env;
 };
