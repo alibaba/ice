@@ -10,16 +10,15 @@ const { Row, Col } = Grid;
 
 const ComponentPanel = ({ dataSource, current, onInstall }) => {
   const { categories = [], materials = {} } = dataSource;
-  const cueeMaterials = materials[current] || [];
+  const currentMaterials = materials[current] || [];
 
   return (
     <div className={styles.materialsPanel}>
       <MaterialCategories dataSource={categories} current={current} />
       <Row wrap gutter="20">
-        {cueeMaterials.map((data) => {
-          const key = data.source && data.source.npm ? data.source.npm : data.title;
+        {currentMaterials.map((data, index) => {
           return (
-            <Col l="8" m="8" s="12" xs="24" xxs="24" key={key}>
+            <Col l="8" m="8" s="12" xs="24" xxs="24" key={index}>
               <ComponentCard dataSource={data} onInstall={onInstall} />
             </Col>
           );

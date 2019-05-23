@@ -11,13 +11,13 @@ const { Row, Col } = Grid;
 
 const BlockPanel = ({ dataSource, current }) => {
   const { categories = [], materials = {} } = dataSource;
-  const cueeMaterials = materials[current] || [];
+  const currentMaterials = materials[current] || [];
 
   return (
     <div className={styles.materialsPanel}>
       <MaterialCategories dataSource={categories} current={current} />
       <Row wrap gutter="20">
-        {cueeMaterials.map((data) => {
+        {currentMaterials.map((data) => {
           const key = data.source && data.source.npm ? data.source.npm : data.title;
 
           return (

@@ -9,7 +9,7 @@ import SubMenu from './components/SubMenu';
 import ScaffoldPanel from './components/ScaffoldPanel';
 import BlockPanel from './components/BlockPanel';
 import ComponentPanel from './components/ComponentPanel';
-import InstallDailog from './components/InstallDailog';
+import InstallModal from './components/InstallModal';
 import styles from './index.module.scss';
 
 const Material = ({ history, location }) => {
@@ -32,8 +32,8 @@ const Material = ({ history, location }) => {
     history.push('/material');
     setType(key);
 
-    // 当重新切换回区块 tab 时，必须强制检测 lazyload 组件
-    // 否则 lazyload 不会重新渲染
+    // it is necessary to trigger lazyLoad checking
+    // when block tabPanel enter the viewport
     if (key === 'blocks') {
       setTimeout(() => {
         forceCheck();
@@ -56,11 +56,11 @@ const Material = ({ history, location }) => {
     console.log(index, data);
   }
 
-  async function openDailog() {
+  async function openModal() {
     setVisible(true);
   }
 
-  async function closeDailog() {
+  async function closeModal() {
     setVisible(false);
   }
 
@@ -72,7 +72,7 @@ const Material = ({ history, location }) => {
         <ScaffoldPanel
           dataSource={dataSource.current.scaffolds}
           current={currCategory}
-          onInstall={openDailog}
+          onInstall={openModal}
         />
       ),
     },
@@ -83,7 +83,7 @@ const Material = ({ history, location }) => {
         <BlockPanel
           dataSource={dataSource.current.blocks}
           current={currCategory}
-          onInstall={openDailog}
+          onInstall={openModal}
         />
       ),
     },
@@ -94,7 +94,7 @@ const Material = ({ history, location }) => {
         <ComponentPanel
           dataSource={dataSource.current.components}
           current={currCategory}
-          onInstall={openDailog}
+          onInstall={openModal}
         />
       ),
     },
@@ -105,7 +105,6 @@ const Material = ({ history, location }) => {
       {/* render material submenu */}
       <SubMenu
         data={dataSource.resource}
-        title="物料管理"
         onChange={handleMenuChange}
         onAddMaterial={addMaterial}
         onDeleteMaterial={delMaterial}
@@ -121,12 +120,12 @@ const Material = ({ history, location }) => {
             ))}
           </Tab>
         </Card>
-        <InstallDailog
+        <InstallModal
           closeable
           visible={visible}
           type={type}
-          onCancel={closeDailog}
-          onClose={closeDailog}
+          onCancel={closeModal}
+          onClose={closeModal}
         />
       </div>
     </div>

@@ -45,7 +45,7 @@ export interface IProjectLayout {}
 export interface IMaterialScaffold {
   builder: string;
   categories: string[];
-  customConfig: IMaterialCustomCfg;
+  customConfig: IMaterialCustomConfig;
   dependencies: INpmDependencies;
   description: string;
   homepage: string;
@@ -64,7 +64,7 @@ export interface IMaterialScaffold {
  */
 export interface IMaterialComponent {
   categories: string[];
-  customConfig: IMaterialCustomCfg;
+  customConfig: IMaterialCustomConfig;
   dependencies: INpmDependencies;
   description: string;
   homepage: string;
@@ -84,7 +84,7 @@ export interface IMaterialComponent {
  */
 export interface IMaterialBlock {
   name: string;
-  customConfig: IMaterialCustomCfg;
+  customConfig: IMaterialCustomConfig;
   title: string;
   description: string;
   homepage: string;
@@ -112,6 +112,6 @@ export interface INpmDependencies {
   [pacakge: string]: string;
 }
 
-export interface IMaterialCustomCfg {
+export interface IMaterialCustomConfig {
   [config: string]: any;
 }

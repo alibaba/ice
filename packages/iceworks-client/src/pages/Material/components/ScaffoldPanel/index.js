@@ -9,13 +9,13 @@ const { Row, Col } = Grid;
 
 const ScaffoldPanel = ({ dataSource, current, onInstall }) => {
   const { categories, materials } = dataSource;
-  const currMaterials = materials[current] || [];
+  const currentMaterials = materials[current] || [];
 
   return (
     <div className={styles.materialsPanel}>
       <MaterialCategories dataSource={categories} current={current} />
       <Row wrap gutter="40">
-        {currMaterials.map((data) => {
+        {currentMaterials.map((data) => {
           const key = data.source && data.source.npm ? data.source.npm : data.title;
 
           return (
