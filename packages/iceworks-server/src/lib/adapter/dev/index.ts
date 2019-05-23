@@ -24,6 +24,8 @@ export default class Dev extends EventEmitter {
   }
 
   async start(settingsEnv) {
+    this.status = DEV_STATUS_WORKING;
+
     // create an ipc channel
     ipc.init();
 
@@ -43,8 +45,6 @@ export default class Dev extends EventEmitter {
       env: Object.assign({}, env, settingsEnv),
     });
 
-    this.status = DEV_STATUS_WORKING;
-
     this.process.stdout.on('data', (buffer) => {
       this.emit('start.data', buffer.toString());
     });
@@ -53,18 +53,18 @@ export default class Dev extends EventEmitter {
       console.log(buffer.toString());
     });
 
-    return { status: this.status };
+    return this;
   }
 
   async stop() {
     this.process.kill();
+    this.status = DEV_STATUS_STOP;
     this.process.on('exit', () => {
-      this.emit('stop.data', chalk.grey(' Dev server stopped working'));
+      this.emit('stop.data', chalk.grey('Dev server stopped working'));
     });
     this.process = null;
-    this.status = DEV_STATUS_STOP;
 
-    return { status: this.status };
+    return this;
   }
 
   async getSettings() {

@@ -9,12 +9,14 @@ export default (app) => {
       const project = projectManager.getCurrent();
 
       logger.info('start dev server');
+      const response = await project.dev.start();
 
       project.dev.on('start.data', (data) => {
+        console.log(data);
         socket.emit('project.index.start.data', data);
       });
 
-      return await project.dev.start();
+      return { status: response.status };
     }
 
     /**
@@ -26,12 +28,13 @@ export default (app) => {
       const project = projectManager.getCurrent();
 
       logger.info('stop dev server');
+      const response = await project.dev.stop();
 
       project.dev.on('stop.data', (data) => {
         socket.emit('project.index.stop.data', data);
       });
 
-      return await project.dev.stop();
+      return { status: response.status };
     }
 
     /**

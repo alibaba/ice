@@ -97,7 +97,7 @@ const Dev = () => {
 
       {/* Content */}
       <div className={styles.content}>
-        <XtermTerminal />
+        <XtermTerminal name="liteApp" />
       </div>
 
       {/*  Settings Modal */}
