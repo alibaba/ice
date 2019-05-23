@@ -3,5 +3,6 @@ import Dependency from './dependency';
 import Configuration from './configuration';
 import Dev from './dev';
 import Build from './build';
+import Task from './task';
 
-export { Page, Dependency, Configuration, Dev, Build };
+export { Page, Dependency, Configuration, Dev, Build, Task };

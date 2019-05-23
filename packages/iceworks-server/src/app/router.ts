@@ -18,6 +18,9 @@ export default (app: Application) => {
     ['project.dev.settings', project.dev.settings],
     ['project.build.start', project.build.start],
     ['project.build.stop', project.build.stop],
+    ['project.task.start', project.task.start],
+    ['project.task.stop', project.task.stop],
+    ['project.task.setting', project.task.setting],
     ['project.configuration.settings', project.configuration.settings],
   ];
 
