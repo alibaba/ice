@@ -13,7 +13,7 @@ export default (app) => {
 
       project.dev.on('start.data', (data) => {
         console.log(data);
-        socket.emit('project.index.start.data', data);
+        socket.emit('project.dev.start.data', data);
       });
 
       return { status: response.status };
@@ -31,7 +31,7 @@ export default (app) => {
       const response = await project.dev.stop();
 
       project.dev.on('stop.data', (data) => {
-        socket.emit('project.index.stop.data', data);
+        socket.emit('project.dev.stop.data', data);
       });
 
       return { status: response.status };

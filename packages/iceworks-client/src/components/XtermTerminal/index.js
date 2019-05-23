@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 
 let inited = false;
 
-const XtermTerminal = ({ name }) => {
+const XtermTerminal = ({ name, startEventName, stopEventName }) => {
   const xtermRef = useRef(null);
 
   useEffect(() => {
@@ -37,12 +37,12 @@ const XtermTerminal = ({ name }) => {
   };
 
   // receive start data
-  useSocket('project.index.start.data', (data) => {
+  useSocket(startEventName, (data) => {
     writeContent(data);
   });
 
   // receive stop data
-  useSocket('project.index.stop.data', (data) => {
+  useSocket(stopEventName, (data) => {
     writeContent(data);
     term.write(name, `\n\x1B[1;3;31m${name}\x1B[0m $ `);
   });
@@ -63,6 +63,8 @@ XtermTerminal.defaultProps = {};
 
 XtermTerminal.propTypes = {
   name: PropTypes.string.isRequired,
+  startEventName: PropTypes.string.isRequired,
+  stopEventName: PropTypes.string.isRequired,
 };
 
 export default XtermTerminal;

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button } from '@alifd/next';
 import Card from '@components/Card';
-import Icon from '@components/Icon';
 import XtermTerminal from '@components/XtermTerminal';
+import TerminalBar from '@components/TerminalBar';
 import useModal from '@hooks/useModal';
 import IceNotification from '@icedesign/notification';
 import SettingsModal from './components/SettingsModal';
@@ -13,7 +12,7 @@ const Dev = () => {
   const dev = devStores.useStore('dev');
   const { on, toggleModal } = useModal();
 
-  const devStart = async () => {
+  const onStart = async () => {
     try {
       await dev.start();
     } catch (error) {
@@ -24,7 +23,7 @@ const Dev = () => {
     }
   };
 
-  const devStop = async () => {
+  const onStop = async () => {
     try {
       await dev.stop();
     } catch (error) {
@@ -35,12 +34,10 @@ const Dev = () => {
     }
   };
 
-  const handleDevSettings = async () => {
+  const onSetting = async () => {
     await dev.getSettings();
     toggleModal();
   };
-
-  const isWorking = dev.dataSource.status === 'working';
 
   return (
     <Card
@@ -49,58 +46,20 @@ const Dev = () => {
       contentHeight="100%"
       className={styles.devCard}
     >
-      <div className={styles.actionBar}>
-        {/* Left Button Group */}
-        <div className={styles.leftActionBar}>
-          {!isWorking ? (
-            <Button
-              type="primary"
-              className={styles.leftButton}
-              onClick={devStart}
-            >
-              <Icon type="start" className={styles.icon} />
-              运行
-            </Button>
-          ) : (
-            <Button
-              type="primary"
-              className={styles.leftButton}
-              onClick={devStop}
-            >
-              <Icon type="stop" className={styles.icon} />
-              停止
-            </Button>
-          )}
-          <Button
-            type="secondary"
-            className={styles.leftButton}
-            onClick={handleDevSettings}
-            disabled={isWorking}
-          >
-            <Icon type="settings" className={styles.icon} />
-            设置
-          </Button>
-        </div>
-
-        {/* Right Button Group */}
-        <div className={styles.rightActionBar}>
-          <Button.Group>
-            <Button type="primary" className={styles.rightButton}>
-              <Icon type="pc" /> 日志
-            </Button>
-            <Button type="secondary" className={styles.rightButton}>
-              <Icon type="projects" /> 仪表盘
-            </Button>
-            <Button type="secondary" className={styles.rightButton}>
-              <Icon type="wrencha" /> 构建分析
-            </Button>
-          </Button.Group>
-        </div>
-      </div>
+      <TerminalBar
+        isWorking={dev.dataSource.status === 'working'}
+        onStart={onStart}
+        onStop={onStop}
+        onSetting={onSetting}
+      />
 
       {/* Content */}
       <div className={styles.content}>
-        <XtermTerminal name="liteApp" />
+        <XtermTerminal
+          name="liteApp"
+          startEventName="project.dev.start.data"
+          stopEventName="project.dev.stop.data"
+        />
       </div>
 
       {/*  Settings Modal */}

@@ -2,27 +2,6 @@
   display: flex;
   flex-direction: column;
 
-  .actionBar {
-    display: flex;
-    justify-content: space-between;
-    flex: auto 0 0;
-
-    .leftButton {
-      display: inline-flex;
-      align-items: center;
-      margin: 0 10px;
-    }
-
-    .rightButton {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .icon {
-      margin-right: 5px;
-    }
-  }
-
   .content {
     margin: 20px 0;
     flex: auto 1 1;
