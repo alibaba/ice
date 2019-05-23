@@ -8,6 +8,7 @@
   ],
   "dependencies": {
     "camelcase": "^5.3.1",
+    "clone": "^2.1.2",
     "conf": "^4.0.1",
     "detect-port": "^1.3.0",
     "egg-cors": "^2.2.0",
