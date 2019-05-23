@@ -3,15 +3,13 @@ title: 应用间通信
 order: 3
 ---
 
-icestark 将应用进行了拆分，而拆分后的框架应用、子应用之间共享 `window`、`pathname`、`query` 等信息，因此框架之间需要通信时，可通过如下方式进行：
+icestark 将应用进行了拆分（框架应用和子应用），拆分之后，不同之间就会有数据交换的场景。在 icestark 体系下，通信可以分为两类：子应用和框架应用之间的通信；不同子应用之间的通信。icestark 拆分后的应用在运行时，共享 `location`、`Cookie`、`LocalStorage`、`window` 等资源。因此应用间的通信，都可以基于这些实现。
 
-## pathname、query
+## 子应用和框架应用之间的通信
 
-假设如下两个场景：
-1. 当 A -> B/home 时，需要隐藏框架应用中的 `footer`
-2. A 应用需要触发事件，通知框架应用更新国际化语言方案
+这类数据交换的场景很多，这里简单通过一些场景的实现方案进行说明。
 
-这里我们通过 `pathname`、`query` 实现：
+1. 通过共享的 `location` 实现当子应用 A/home -> A/info 时，框架应用隐藏公共的 `footer`
 
 ```js
 // 子应用 A 中的代码
@@ -26,9 +24,9 @@ class App extends React.Component {
     const { showFooter, messageNumber } = this.state;
     return (
       <div>
-        <Link to="/?__icestark__lang=en">此处不发生跳转，改变 query 通知框架应用更新国际化语言方案为 英文</Link>
-        <Link to="/?__icestark__lang=zh">此处不发生跳转，改变 query 通知框架应用更新国际化语言方案为 中文</Link>
-        <AppLink to="/B/home" >此处跳往 B 应用的 home页面，通知框架应用隐藏 Common Footer</AppLink>
+        <Link to="/A/home">
+          此处跳往 B 应用的 home页面，通知框架应用隐藏 Common Footer
+        </Link>
       </div>
     );
   }
@@ -45,24 +43,16 @@ import { AppRouter, AppRoute } from 'icestark';
 class App extends React.Component {
   state = {
     showFooter: true,
-    language: 'zh', // 国际化 zh（中文）/ en（英文）
   };
 
-  onRouteChange = (pathname, query) => {
+  onRouteChange = (pathname) => {
     const { showFooter } = this.state;
-    const { __icestark__lang } = query;
 
     // 通过监听 pathname，判断是否为 /B/home，控制 footer 的显示隐藏
-    if (showFooter && pathname === '/B/home') {
+    if (showFooter && pathname === '/A/home') {
       this.setState({ showFooter: false });
-    } else if (!showFooter && pathname !== '/B/home') {
+    } else if (!showFooter && pathname !== '/A/home') {
       this.setState({ showFooter: true });
-    }
-
-    // 通过监听 query，判断事先约定的变量 __icestark__lang 的变化，实现国际化语言方案的更新
-    if (__icestark__lang === 'zh' || __icestark__lang === 'en') {
-      this.setState({ language: __icestark__lang });
-      // or localStorage.setItem() ...
     }
   }
 
@@ -70,27 +60,19 @@ class App extends React.Component {
     const { showFooter, language } = this.state;
     return (
       <div>
-        <div className="header">you are using {language === 'zh' ? 'Chinese' : 'English'}!</div>
+        <div className="header">this is common header</div>
         <AppRouter onRouteChange={this.onRouteChange} >
-          <AppRoute path={/^\/(home/about)/} title="this is A" url="xxx">
-          <AppRoute path="/B"  title="this is B" url="xxx" />
+          <AppRoute path={/^\/(home|info)/} title="this is A" url="xxx">
         </AppRouter>
-        {showFooter ? <div className="footer">this is footer</div> : null}
+        {showFooter ? <div className="footer">this is common footer</div> : null}
       </div>
     );
   }
 }
 ```
+> AppRouter 提供的 `onRouteChange` 支持从框架应用中监听子应用切换 `pathname`、`query` 的能力。
 
-- 以上示例代码展示了通过 `pathname`、`query` 实现跨应用通信的能力
-- 框架页可通过监听 `pathname` 的变化实现针对不同页面展示不同的信息
-- 框架页可通过监听 `query` 中提前约定的参数名（示例中为 `__icestark__lang`）的变化，判断信息是否需要更新
-
-## postMessage
-
-假设一个场景，我们在子应用中触发事件，通知框架应用：重新发起后端请求，更新通知信息条数
-
-这里我们通过 `postMessage` 实现：
+2. 在子应用中触发 `postMessage` 事件，通知框架应用：重新发起后端请求，更新通知信息条数
 
 ```js
 // 子应用 A 中的代码
@@ -102,7 +84,7 @@ import { Button } from '@alifd/next';
 class App extends React.Component {
   handleClick = () => {
     window.postMessage({ refreshMessage: true }, '*');
-  }
+  };
 
   render() {
     const { showFooter, messageNumber } = this.state;
@@ -162,7 +144,7 @@ class App extends React.Component {
       <div>
         <div className="header">you have {messageCount} message!</div>
         <AppRouter>
-          <AppRoute path={/^\/(home/about)/} title="this is A" url="xxx">
+          <AppRoute path={/^\/(home|about)/} title="this is A" url="xxx">
           <AppRoute path="/B"  title="this is B" url="xxx" />
         </AppRouter>
       </div>
@@ -170,3 +152,9 @@ class App extends React.Component {
   }
 }
 ```
+
+## 不同子应用之间的通信
+
+子应用之间需要数据交换的场景也很多。大部分情况下，各个子应用同时渲染在线的情况很少（除非多个 icestark 嵌套的情况）。因此针对大部分场景，不同子应用之间的通信有两种方式，一种是通过公共数据存放途径比如 `location`、`Cookie`、`LocalStorage`、`window` 等。另一种是通过框架应用作为媒介，将共享数据存放在框架应用中。数据流转如下图所示。
+
+![数据流转](https://img.alicdn.com/tfs/TB1EjaRX.CF3KVjSZJnXXbnHFXa-890-344.png)

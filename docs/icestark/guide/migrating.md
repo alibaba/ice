@@ -1,9 +1,9 @@
 ---
-title: 已有应用改造
+title: 已有应用迁移
 order: 2
 ---
 
-icestark 完全面向 react 设计，因此已有 react 应用的改造成本极低。
+icestark 完全面向 react 设计，因此已有 react 应用的迁移成本很低。
 
 ## 安装 icestark
 
@@ -29,7 +29,7 @@ class App extends React.Component {
       <div>
         <div className="header">this is common header</div>
         <AppRouter onRouteChange={this.onRouteChange}>
-          <AppRoute path={/^\/(home/about)/} title="A应用" url="xxx">
+          <AppRoute path={/^\/(home|about)/} title="A应用" url="xxx">
           <AppRoute path="/user" title="B应用" url="xxx" />
         </AppRouter>
         <div className="footer">this is common footer</div>

@@ -53,8 +53,11 @@ const allCategories = {
       title: '指南',
       dir: 'guide',
     }, {
+      title: 'API',
+      dir: 'api',
+    }, {
       title: '参考',
-      dir: 'others',
+      dir: 'reference',
     }],
   },
   cli: {
