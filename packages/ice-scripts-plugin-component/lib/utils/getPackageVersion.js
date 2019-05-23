@@ -17,8 +17,7 @@ module.exports = (packages, context) => {
     } catch (err) {
       version = defaultPackageVersion[packageName];
     }
-    // hack for handlebar
-    res[packageName === '@alifd/next' ? 'alifd-next' : packageName] = version;
+    res[packageName] = version;
   });
   return res;
 };

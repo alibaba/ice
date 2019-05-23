@@ -4,9 +4,11 @@ const getPackageVersion = require('../utils/getPackageVersion');
 module.exports = (config, { context }) => {
   const pkgVersion = getPackageVersion(['react', 'react-dom', '@alifd/next', 'moment'], context);
   config.plugin('HtmlWebpackPlugin').tap(() => [{
-    template: require.resolve('../template/build.html.hbs'),
+    template: require.resolve('../template/build.html'),
     filename: 'index.html',
-    pkgVersion,
+    templateParameters: {
+      pkgVersion,
+    },
   }]);
   // output umd
   config.output
