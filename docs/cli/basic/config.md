@@ -3,9 +3,7 @@ title: 基础配置
 order: 2
 ---
 
-### 基础配置
-
-#### alias
+## alias
 
 * 类型：`object`
 * 默认值：`{}`
@@ -31,7 +29,7 @@ module.exports = {
 +import CustomTips from '@components/CustomTips';
 ```
 
-#### define
+## define
 
 * 类型：`object`
 * 默认值：`{}`
@@ -55,7 +53,7 @@ module.exports = {
 console.log(ASSETS_VERSION);
 ```
 
-#### publicPath
+## publicPath
 
 * 类型：`string`
 * 默认值：`/`
@@ -70,7 +68,7 @@ module.exports = {
 }
 ```
 
-#### devPublicPath
+## devPublicPath
 
 * 类型：`string`
 * 默认值：`/`
@@ -84,7 +82,7 @@ module.exports = {
 }
 ```
 
-#### devServer
+## devServer
 
 * 类型：`object`
 
@@ -100,7 +98,7 @@ module.exports = {
 }
 ```
 
-#### proxy
+## proxy
 
 * 类型：`object`
 * 默认值：`{}`
@@ -124,7 +122,7 @@ module.exports = {
 
 更多接口代理，详见[接口代理](/docs/cli/advanced/proxy)
 
-#### entry
+## entry
 
 * 类型：`string`
 * 默认值：`src/index.js`
@@ -152,7 +150,7 @@ module.exports = {
 
 多 entry 的情况构建时会额外生成 vendor.js/css，需要自行在 html 里引入（public 目录会自动引入），也可以通过设置下面的 `vendor` 禁止生成 vendor 文件。
 
-#### externals
+## externals
 
 * 类型：`object`
 * 默认值：`{}`
@@ -181,7 +179,7 @@ module.exports = {
 
 详细配置同webpack的[externals](https://webpack.js.org/configuration/externals/#externals)
 
-#### hash
+## hash
 
 * 类型：`boolean`
 * 默认值：`false`
@@ -195,7 +193,7 @@ module.exports = {
 }
 ```
 
-#### injectBabel
+## injectBabel
 
 * 类型：`string`
 * 默认值：`polyfill`
@@ -210,7 +208,7 @@ module.exports = {
 }
 ```
 
-#### minify
+## minify
 
 * 类型：`boolean`
 * 默认值：`true`
@@ -224,7 +222,7 @@ module.exports = {
 }
 ```
 
-#### outputAssetsPath
+## outputAssetsPath
 
 * 类型：`object`
 * 默认值：`{ js: 'js', css: 'css' }`
@@ -242,7 +240,7 @@ module.exports = {
 }
 ```
 
-#### outputDir
+## outputDir
 
 * 类型：`string`
 * 默认值：`build`
@@ -257,7 +255,7 @@ module.exports = {
 }
 ```
 
-#### targets
+## targets
 
 * 类型：`object`
 * 默认值：`last 2 versions, Firefox ESR, > 1%, ie >= 9, iOS >= 8, Android >= 4`
@@ -274,7 +272,7 @@ module.exports = {
 }
 ```
 
-#### vendor
+## vendor
 
 * 类型：`boolean`
 * 默认值：`true`

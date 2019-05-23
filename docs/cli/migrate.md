@@ -1,13 +1,25 @@
 ---
-title: 从1.x版本迁移
+title: 从 1.x 版本迁移
 order: 3
 ---
 
-### 升级ice-scripts
+本文介绍使用 ice-scripts@1.0 的项目如何迁移到 2.0 版本。
 
-升级ice-scripts到 `^2.0.0`
+## 升级 ice-scripts
 
-### cli 命令变更
+将 package.json 中的 ice-scripts 依赖升级到 `^2.0.0`：
+
+```bash
+$ npm i --save ice-scripts@2
+```
+
+同时 ice-scripts@2.0 推荐将其作为项目依赖，而非全局依赖，如果有全局依赖的 ice-scripts，建议将其删除：
+
+```bash
+$ npm rm -g ice-scripts
+```
+
+## cli 命令变更
 
 ```diff
 -"start": "ice dev",
@@ -17,52 +29,9 @@ order: 3
 +"build": "ice-scripts build",
 ```
 
-### cli options 迁移
+## 构建配置迁移
 
-#### --project-type
-
-已废弃，不再支持
-
-#### --sourcemap
-
-已废弃，不再支持
-
-#### --inject-babel
-
-配置 `ice.config.js` 中的 `injectBabel`
-
-```js
-
-module.exports = {
-  // default: polyfill
-  injectBabel: 'runtime'
-}
-```
-
-#### --debug
-
-配置 `ice.config.js` 中的 `minify`
-
-```js
-module.exports = {
-  minify: false
-}
-```
-
-#### --hash
-
-配置 `ice.config.js` 中的 `hash`
-
-```js
-module.exports = {
-  hash: true
-}
-```
-
-
-### 基础配置迁移
-
-`ice-scripts` 常用构建配置项，将均在 `ice.config.js` 中进行配置。`package.json` 中的 `bulidConfig` 将废弃。
+2.0 版本的常用构建配置项统一收敛到 `ice.config.js` 文件中，原有 `package.json` 中的 `bulidConfig` 和 `themeConfig` 字段废弃。
 
 #### entry
 
@@ -103,7 +72,7 @@ module.exports = {
 // ice.config.js
 module.exports = {
   plugins: [
-    // 如有过个组件库需求，可参考ice-scripts-plugin-antd进行实现
+    // 如有其他组件库需求，可参考 ice-scripts-plugin-antd 进行实现
     'ice-scripts-plugin-antd'
   ]
 }
@@ -111,12 +80,18 @@ module.exports = {
 
 更多细节，参考[插件配置](/docs/cli/basic/plugins)
 
-#### uniteBaseComponent
+#### Fusion 组件配置
+
+包括：`buildConfig.uniteBaseComponent`, `buildConfig.theme`, `themeConfig`：
 
 ```json
 {
   "buildConfig": {
-    "uniteBaseComponent": "@alife/next"
+    "theme": "@icedesign/theme",
+    "uniteBaseComponent": "@alife/next",
+    "themeConfig": {
+      "nextPrefix": "nextfd-"
+    }
   }
 }
 ```
@@ -128,8 +103,11 @@ module.exports = {
 module.exports = {
   plugins: [
     ['ice-scripts-plugin-fusion', {
-      // @icedesign/base | @alife/next | @ali/ice -> @alife/next
-      uniteBaseComponent: '@alife/next'
+      themePackage: '@icedesign/theme',
+      uniteBaseComponent: '@alife/next',
+      themeConfig: {
+        nextPrefix: 'nextfd-'
+      }
     }]
   ]
 }
@@ -248,6 +226,48 @@ module.exports = {
 }
 ```
 
-### 自定义webpack配置迁移
+## 命令行参数迁移
 
-`ice-scripts 2.x` 版本将通过 `webpack-chain` 形式管理 自定webpack配置，参考[自定义webpack配置](/docs/cli/basic/custom-webpack)
+### --project-type
+
+已废弃，不再支持
+
+### --sourcemap
+
+已废弃，不再支持
+
+### --inject-babel
+
+配置 `ice.config.js` 中的 `injectBabel`
+
+```js
+
+module.exports = {
+  // default: polyfill
+  injectBabel: 'runtime'
+}
+```
+
+### --debug
+
+配置 `ice.config.js` 中的 `minify`
+
+```js
+module.exports = {
+  minify: false
+}
+```
+
+### --hash
+
+配置 `ice.config.js` 中的 `hash`
+
+```js
+module.exports = {
+  hash: true
+}
+```
+
+## `webpackrc.js` 迁移
+
+ice-scripts@2.0 版本将通过 `webpack-chain` 形式管理自定义 webpack 配置，参考[自定义 webpack 配置](/docs/cli/basic/custom-webpack)。

@@ -3,40 +3,11 @@ title: 快速上手
 order: 2
 ---
 
-### 创建项目
+## 创建项目
 
-如果你已经有一个项目，可以将其作为项目级依赖：`npm i --save-dev ice-scripts`
+基于 iceworks 创建项目 @TODO
 
-#### 通过 ice-cli 初始化项目
-
-如果使用 iceworks 开发，那么大多数时候你不需要关心这些命令。
-
-```bash
-$ npm i -g ice-cli
-$ ice --help
-```
-
-根据模板初始化项目：
-
-```bash
-$ ice init --help
-
-Usage: ice-init [options]
-
-Options:
-
-  -t, --template         模板 npm 包名，可不传
-  -h, --help             output usage information
-```
-
-比如初始化指定项目模版
-
-```bash
-# 初始化执行项目项目
-$ ice init -t @icedesign/lite-scaffold
-```
-
-### ice-scripts dev
+## 调试开发
 
 确认项目 `package.json` 中添加启动调试命令
 
@@ -51,7 +22,7 @@ $ ice init -t @icedesign/lite-scaffold
 项目目录下启动调试服务：
 
 ```bash
-npm start
+$ npm start
 ```
 
 调试服务支持的命令参数：
@@ -84,7 +55,7 @@ $ npm run start -- -p 3000
 $ ice-scripts dev --https
 ```
 
-### ice-scripts build
+## 构建代码
 
 确认项目 `package.json` 中添加启动调试命令
 
@@ -99,18 +70,17 @@ $ ice-scripts dev --https
 构建项目代码：
 
 ```bash
-npm run build
+$ npm run build
 ```
 
 构建服务支持的命令参数：
 
-```plain
+```bash
 $ ice-scripts build --help
 
 Usage: ice-scripts build [options]
 
 Options:
-  -s, --skip-install     跳过安装依赖
-  --skip-demo            跳过构建 build/index.html 的环节
+  --skip-demo            组件构建跳过构建 build/index.html 的环节
   -h, --help             output usage information
 ```
