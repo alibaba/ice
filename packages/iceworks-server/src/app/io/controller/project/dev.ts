@@ -12,7 +12,6 @@ export default (app) => {
       const response = await project.dev.start();
 
       project.dev.on('start.data', (data) => {
-        console.log(data);
         socket.emit('project.dev.start.data', data);
       });
 
