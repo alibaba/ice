@@ -25,4 +25,7 @@ export default {
 
   // setting
   'iceworks.setting.title': '设置',
+
+  // material
+  'iceworks.material.title': '物料管理',
 };

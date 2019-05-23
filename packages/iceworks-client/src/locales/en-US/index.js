@@ -25,4 +25,7 @@ export default {
 
   // setting
   'iceworks.setting.title': 'Setting',
+
+  // material
+  'iceworks.material.title': 'Material',
 };

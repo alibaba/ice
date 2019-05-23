@@ -47,6 +47,15 @@ const Material = ({ history, location }) => {
     await material.getCurrent(url);
   }
 
+  async function addMaterial() {
+    // TODO: coding...
+  }
+
+  async function delMaterial(index, data) {
+    // TODO: coding...
+    console.log(index, data);
+  }
+
   async function openDailog() {
     setVisible(true);
   }
@@ -94,7 +103,13 @@ const Material = ({ history, location }) => {
   return (
     <div className={styles.materialPage}>
       {/* render material submenu */}
-      <SubMenu data={dataSource.resource} title="物料管理" onChange={handleMenuChange} />
+      <SubMenu
+        data={dataSource.resource}
+        title="物料管理"
+        onChange={handleMenuChange}
+        onAddMaterial={addMaterial}
+        onDeleteMaterial={delMaterial}
+      />
 
       <div className={styles.main}>
         <Card title="物料管理" contentHeight="100%" className="scollContainer">
