@@ -38,7 +38,23 @@ $ ice init -t @icedesign/lite-scaffold
 
 ### ice-scripts dev
 
-启动调试服务：
+确认项目 `package.json` 中添加启动调试命令
+
+```json
+{
+  "scripts": {
+    "start": "ice-scripts dev"
+  }
+}
+```
+
+项目目录下启动调试服务：
+
+```bash
+npm start
+```
+
+调试服务支持的命令参数：
 
 ```bash
 $ ice-scripts dev --help
@@ -70,7 +86,23 @@ $ ice-scripts dev --https
 
 ### ice-scripts build
 
-构建项目代码
+确认项目 `package.json` 中添加启动调试命令
+
+```json
+{
+  "scripts": {
+    "build": "ice-scripts build"
+  }
+}
+```
+
+构建项目代码：
+
+```bash
+npm run build
+```
+
+构建服务支持的命令参数：
 
 ```plain
 $ ice-scripts build --help
