@@ -7,20 +7,20 @@ import { getMenuData } from '@utils/getMenuData';
 
 import styles from './index.module.scss';
 
-const Work = ({ routes }) => {
+const Tasks = ({ routes }) => {
   const menuData = getMenuData() || {};
   const subMenuData = menuData.children || [];
 
   return (
-    <div className={styles.workPage}>
-      {/* render work submenu */}
-      <SubMenu title="iceworks.work.title">
+    <div className={styles.tasksPage}>
+      {/* render task submenu */}
+      <SubMenu title="iceworks.task.title">
         {subMenuData.map((dataSource, key) => (
           <SubMenuItem dataSource={dataSource} key={key} />
         ))}
       </SubMenu>
 
-      {/* render work sub-routes */}
+      {/* render task sub-routes */}
       <main className={styles.main}>
         <SubRoutes routes={routes} />
       </main>
@@ -28,12 +28,12 @@ const Work = ({ routes }) => {
   );
 };
 
-Work.defaultProps = {
+Tasks.defaultProps = {
   routes: [],
 };
 
-Work.propTypes = {
+Tasks.propTypes = {
   routes: PropTypes.array,
 };
 
-export default Work;
+export default Tasks;
