@@ -1,4 +1,4 @@
-// TODO delete it when use material to create page and project
+// TODO delete it after use material to create page and project
 
 export default {
   layout: {

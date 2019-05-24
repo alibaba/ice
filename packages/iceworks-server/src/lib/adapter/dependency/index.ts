@@ -138,13 +138,13 @@ export default class Dependency extends EventEmitter implements IDependencyModul
   }
 
   public async reset() {
-    this.emit('data', '正在清理 node_modules 目录，请稍等');
+    this.emit('reset.data', '正在清理 node_modules 目录，请稍等');
 
     await rimrafAsync(this.path);
 
-    this.emit('data', '清理 node_modules 目录完成');
+    this.emit('reset.data', '清理 node_modules 目录完成');
 
-    this.emit('data', '开始安装依赖...');
+    this.emit('reset.data', '开始安装依赖...');
 
     const childProcess = spawn('npm', ['install'], {
       cwd: this.project.path,
@@ -172,7 +172,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
   public async upgrade(denpendency: { package: string; isDev?: boolean }): Promise<void> {
     const { package: _package } = denpendency;
 
-    this.emit('data', `开始更新依赖：${_package}...`);
+    this.emit('upgrade.data', `开始更新依赖：${_package}...`);
 
     const childProcess = spawn('npm', ['update', _package, '--silent'], {
       cwd: this.project.path,
