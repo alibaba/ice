@@ -93,6 +93,7 @@ const Project = () => {
 
   async function createProject(data) {
     await projects.create(data);
+    await refreshProject();
     toggleCreateProjectModal();
   }
 

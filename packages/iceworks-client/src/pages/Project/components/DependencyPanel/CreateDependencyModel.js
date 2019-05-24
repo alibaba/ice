@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
 import { Input } from '@alifd/next';
+import styles from './CreateDependencyModel.module.scss';
 
 const CreateDependencyModel = ({
   on, onCancel, onOk,
@@ -29,7 +30,7 @@ const CreateDependencyModel = ({
         <Input.TextArea
           onChange={onChange}
           placeholder="请输入 npm 包名以及版本号，例如：lodash@latest。按回车输入多个依赖。"
-          style={{ width: 300 }}
+          className={styles.textarea}
         />
       </div>
     </Modal>

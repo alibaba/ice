@@ -43,7 +43,7 @@ const DependencyPanel = () => {
     Dialog.confirm({
       title: '安装项目依赖',
       content: (
-        <div style={{ lineHeight: '24px', width: 300 }}>
+        <div className={styles.confirmContent}>
           将重置安装项目所有依赖，安装期间无法进启动调试服务、新建页面、构建项目操作，请耐心等待。
         </div>
       ),
@@ -67,7 +67,7 @@ const DependencyPanel = () => {
         Dialog.confirm({
           title: '不兼容性提示',
           content: (
-            <div style={{ lineHeight: '24px', width: 300 }}>
+            <div className={styles.confirmContent}>
               新添加的依赖
               {' '}
               {error.info.map(({ pacakge: _package, version }) => `${_package}@${version}`).join(',')}

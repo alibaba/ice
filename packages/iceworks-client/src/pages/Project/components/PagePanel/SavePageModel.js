@@ -31,7 +31,6 @@ const SavePageModel = ({ on, onCancel, onOk }) => {
       <Form
         size="small"
         direction="ver"
-        style={{ width: 320 }}
         className={styles.form}
       >
         <FormItem

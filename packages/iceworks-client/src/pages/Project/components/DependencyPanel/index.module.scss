@@ -1,5 +1,10 @@
 @import '../../../../variables.scss';
 
+.confirmContent {
+  line-height: 24px;
+  width: 300px;
+}
+
 .header {
   display: flex;
   flex-direction: row;

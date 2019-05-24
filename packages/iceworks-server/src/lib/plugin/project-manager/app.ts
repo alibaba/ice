@@ -242,6 +242,7 @@ class ProjectManager extends EventEmitter {
   async createProject(params: ICreateParams): Promise<void> {
     await this.createProjectFolder(params);
     await this.generateProject(params);
+    await this.addProject(params.path);
   }
 
   /**
