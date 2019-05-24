@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as npmRunPath from 'npm-run-path';
 import * as os from 'os';
+import * as clone from 'lodash.clone';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
@@ -67,8 +68,17 @@ class Project implements IProject {
   }
 
   private loadAdapter() {
+    const adapterModuleKeys = Object.keys(adapter);
     for (const [key, Module] of Object.entries(adapter)) {
-      this[camelCase(key)] = new Module({ ...this });
+
+      let project: IProject = clone(this);
+      for (const moduleKey of adapterModuleKeys) {
+        if (project[moduleKey]) {
+          delete project[moduleKey];
+        }
+      }
+
+      this[camelCase(key)] = new Module(project);
     }
   }
 }
