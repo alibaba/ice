@@ -33,14 +33,28 @@ $ npm rm -g ice-scripts
 
 2.0 版本的常用构建配置项统一收敛到 `ice.config.js` 文件中，原有 `package.json` 中的 `bulidConfig` 和 `themeConfig` 字段废弃。
 
-#### entry
+### 基础配置迁移
+
+`ice.config.js` 完整支持 `buildConfig` 基础配置字段：
 
 ```json
 {
   "buildConfig": {
-    "entry": "src/index.js"
+    "entry": "src/index.js",
+    "output": {
+      "path": "dist"
+    },
+    "outputAssetsPath": {
+      "css": "css-dist",
+      "js": "js-dist"
+    },
+    "externals": {
+      "react": "React"
+    },
+    "disableVendor": true
   }
 }
+
 ```
 
 变更为：
@@ -48,11 +62,22 @@ $ npm rm -g ice-scripts
 ```js
 // ice.config.js
 module.exports = {
-  entry: 'src/index.js'
+  entry: 'src/index.js',
+  // output.path -> outputDir
+  outputDir: 'dist',
+  outputAssetsPath: {
+    js: 'js-dist',
+    css: 'css-dist',
+  },
+  externals: {
+    react: 'React'
+  },
+  // disableVendor 设置为 true 对应 vendor 设置为false
+  vendor: false,
 }
 ```
 
-#### babelPluginImportConfig
+### babelPluginImportConfig
 
 ```json
 {
@@ -80,7 +105,7 @@ module.exports = {
 
 更多细节，参考[插件配置](/docs/cli/basic/plugins)
 
-#### Fusion 组件配置
+### Fusion 组件配置
 
 包括：`buildConfig.uniteBaseComponent`, `buildConfig.theme`, `themeConfig`：
 
@@ -115,76 +140,7 @@ module.exports = {
 
 更多细节，参考[插件配置](/docs/cli/basic/plugins)
 
-#### 修改构建后的文件目录
-
-```json
-{
-  "buildConfig": {
-    "output": {
-      "path": "dist"
-    }
-  }
-}
-```
-
-变更为：
-
-```js
-// ice.config.js
-module.exports = {
-  outputDir: 'dist'
-}
-```
-
-#### 修改构建后的 css/js 文件目录
-
-```json
-{
-  "buildConfig": {
-    "outputAssetsPath": {
-      "css": "css-dist",
-      "js": "js-dist"
-    }
-  }
-}
-```
-
-变更为：
-
-```js
-// ice.config.js
-module.exports = {
-  outputAssetsPath: {
-    js: 'js-dist',
-    css: 'css-dist',
-  }
-}
-```
-
-#### 修改 externals
-
-```json
-{
-  "buildConfig": {
-    "externals": {
-      "react": "react"
-    }
-  }
-}
-```
-
-变更为：
-
-```js
-// ice.config.js
-module.exports = {
-  externals: {
-    react: 'react'
-  }
-}
-```
-
-#### css 中的网络资源本地化
+### css 中的网络资源本地化
 
 ```json
 {
@@ -206,25 +162,6 @@ module.exports = {
 ```
 
 更多细节，参考[插件配置](/docs/cli/basic/plugins)
-
-#### 禁用生成 vendor
-
-```json
-{
-  "buildConfig": {
-    "disableVendor": true
-  }
-}
-```
-
-变更为：
-
-```js
-// ice.config.js
-module.exports = {
-  vendor: false,
-}
-```
 
 ## 命令行参数迁移
 

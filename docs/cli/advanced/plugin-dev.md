@@ -8,27 +8,27 @@ order: 1
 插件本质上时一个 JS 模块，约定插件初始化模版如下：
 
 ```js
-module.exports = (api, opts) => {
+module.exports = (api, options) => {
   // api：插件API
-  // opts：插件自定义参数
+  // options：插件自定义参数
 };
 
 ```
 
-插件方法会收到两个参数，第一个是 `api` 插件提供的API接口和能力通过它来暴露，第二个参数 `opts` 是插件自定义的参数，由插件开发者决定其值。
+插件方法会收到两个参数，第一个是 `api` 插件提供的API接口和能力通过它来暴露，第二个参数 `options` 是插件自定义的参数，由插件开发者决定其值。
 
-## 插件API
+## 插件 API
 
-通过插件提供的API，可以方便拓展和自定义能力。
+通过插件提供的 API，可以方便拓展和自定义能力。
 
 ### service
 
 通过 `api.service` 访问命令运行时的相关参数：
 
 - `api.service.command`：当前运行命令，值为 `dev | build`
-- `api.service.commandArgs`：cli命令的optios参数，如执行 `ice-scripts dev --https` 则其内容为 `{ https: true }`
+- `api.service.commandArgs`：cli 命令的 optios 参数，如执行 `ice-scripts dev --https` 则其内容为 `{ https: true }`
 - `api.service.context`：当前命令运行目录
-- `api.service.userConfig`：用户配置 `ice.config.js` 中的配置（与默认配置会进行deepMerge）
+- `api.service.userConfig`：用户配置 `ice.config.js` 中的配置（与默认配置会进行 deepMerge）
 - `api.service.pkg`：命令运行项目的 `package.json` 信息
 
 ```js
@@ -44,7 +44,7 @@ module.exports = (api) => {
 ```
 ### chainWebpack
 
-通过 `api.chainWepack` 对webpack配置进行自定义
+通过 `api.chainWepack` 对 webpack 配置进行自定义
 
 ```js
 module.exports = (api) => {
@@ -56,7 +56,7 @@ module.exports = (api) => {
 }
 ```
 
-更多 webpack-chain 用法，参考 [自定义webpack配置](/docs/cli/basic/custom-webpack)
+更多 webpack-chain 用法，参考 [自定义 webpack 配置](/docs/cli/basic/custom-webpack)
 
 ### log
 

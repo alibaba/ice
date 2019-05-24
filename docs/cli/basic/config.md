@@ -3,13 +3,15 @@ title: 基础配置
 order: 2
 ---
 
+基础配置涵盖了常用 webpack 配置的定制场景，方便开发者快速设置项目工程配置。
+
 ## alias
 
 * 类型：`object`
 * 默认值：`{}`
 
 创建 `import` 或 `require` 的别名，使模块应用变得更加简单。
-配置webpack的[resolve.alias](https://webpack.js.org/configuration/resolve/#resolve-alias)属性。
+配置 webpack 的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolve-alias) 属性。
 
 ```js
 // ice.config.js
@@ -58,7 +60,7 @@ console.log(ASSETS_VERSION);
 * 类型：`string`
 * 默认值：`/`
 
-配置webpack的[output.publicPath](https://webpack.js.org/configuration/output/#output-publicpath)属性。
+配置 webpack 的 [output.publicPath](https://webpack.js.org/configuration/output/#output-publicpath) 属性。
 仅在运行 `ice-scripts build` 时生效。
 
 ```js
@@ -86,7 +88,7 @@ module.exports = {
 
 * 类型：`object`
 
-配置webpack的[devServer](https://webpack.js.org/configuration/dev-server/#devserver)属性。
+配置 webpack 的 [devServer](https://webpack.js.org/configuration/dev-server/#devserver) 属性。
 
 ```js
 // ice.config.js
@@ -103,9 +105,9 @@ module.exports = {
 * 类型：`object`
 * 默认值：`{}`
 
-配置webpack的[devServer.proxy](https://webpack.js.org/configuration/dev-server/#devserverproxy)属性。
+配置 webpack 的 [devServer.proxy](https://webpack.js.org/configuration/dev-server/#devserverproxy) 属性。
 
-> 建议使用 `proxy` 来设置代理而不要修改webpack的 `devServer.proxy`
+> 建议使用 `proxy` 来设置代理而不要修改 webpack 的 `devServer.proxy`
 
 ```js
 // ice.config.js
@@ -155,17 +157,17 @@ module.exports = {
 * 类型：`object`
 * 默认值：`{}`
 
-将某些 `import` 的包排除在bundle之外，在运行时再去外部获取这些依赖。
-比如，从CDN引入React资源，而不是将它打包
+将某些 `import` 的包排除在 bundle 之外，在运行时再去外部获取这些依赖。
+比如，从 CDN 引入 React 资源，而不是将它打包
 
-index.html中添加：
+index.html 中添加：
 
 ```html
 <script src="https://unpkg.com/react@16.7.0/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
 ```
 
-ice.config.js中添加：
+`ice.config.js` 中添加：
 
 ```js
 // ice.config.js
@@ -177,7 +179,7 @@ module.exports = {
 }
 ```
 
-详细配置同webpack的[externals](https://webpack.js.org/configuration/externals/#externals)
+详细配置同 webpack 的 [externals](https://webpack.js.org/configuration/externals/#externals)
 
 ## hash
 
