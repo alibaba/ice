@@ -14,6 +14,9 @@ module.exports = (api, opts) => {
 };
 
 ```
+
+插件方法会收到两个参数，第一个是 `api` 插件提供的API接口和能力通过它来暴露，第二个参数 `opts` 是插件自定义的参数，由插件开发者决定其值。
+
 ## 插件API
 
 通过插件提供的API，可以方便拓展和自定义能力。
@@ -39,7 +42,6 @@ module.exports = (api) => {
   }
 };
 ```
-
 ### chainWebpack
 
 通过 `api.chainWepack` 对webpack配置进行自定义
