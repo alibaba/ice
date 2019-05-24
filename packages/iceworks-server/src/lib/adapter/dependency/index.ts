@@ -6,7 +6,6 @@ import * as rimraf from 'rimraf';
 import * as execa from 'execa';
 import * as latestVersion from 'latest-version';
 
-import { exec } from 'child_process';
 import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, IBaseModule } from '../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
@@ -66,18 +65,16 @@ export default class Dependency extends EventEmitter implements IDependencyModul
 
   // TODO any other way?
   private async getNpmOutdated(): Promise<INpmOutdatedData[]> {
-    return new Promise((resolve) => {
-      exec('npm outdated --json --silent', { cwd: this.project.path, env: this.project.getEnv() }, (error, stdout) => {
-        let npmOutdated = [];
-        try {
-          npmOutdated = JSON.parse(stdout);
-        } catch (error) {
-          // log it
-        }
+    let npmOutdated = [];
 
-        resolve(Object.entries(npmOutdated).map(([key, value]: [string, { current: string; wanted: string; latest: string; location: string; }]) => ({ package: key, ...value })));
-      });
-    });
+    try {
+      await execa('npm', ['outdated', '--json', '--silent'], { cwd: this.project.path, env: this.project.getEnv() });
+    } catch (error) {
+      // the process exit with 1 if got outdated
+      npmOutdated = JSON.parse(error.stdout);
+    }
+
+    return Object.entries(npmOutdated).map(([key, value]: [string, { current: string; wanted: string; latest: string; location: string; }]) => ({ package: key, ...value }));
   }
 
   public async create(dependency: ICreateDependencyParam, idDev?: boolean): Promise<void> {
