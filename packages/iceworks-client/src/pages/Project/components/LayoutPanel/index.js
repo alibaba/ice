@@ -1,5 +1,6 @@
 import React from 'react';
 import { Message } from '@alifd/next';
+import { FormattedMessage } from 'react-intl';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
@@ -9,7 +10,7 @@ const Layout = () => {
   const { dataSource } = layouts;
 
   return (
-    <Panel header={<h3>布局列表</h3>}>
+    <Panel header={<h3><FormattedMessage id="iceworks.project.panel.layout.title" /></h3>}>
       {
         dataSource.length ?
           <div className={styles.main}>

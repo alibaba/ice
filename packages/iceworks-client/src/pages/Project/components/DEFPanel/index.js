@@ -1,9 +1,10 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import Panel from '../Panel';
 
 const DEF = () => {
   return (
-    <Panel header={<h3>DEF 发布</h3>}>
+    <Panel header={<h3><FormattedMessage id="iceworks.project.panel.def.title" /></h3>}>
       <div>
         testing...
       </div>

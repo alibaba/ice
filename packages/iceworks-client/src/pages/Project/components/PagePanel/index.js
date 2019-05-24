@@ -4,6 +4,7 @@ import { Icon, Message } from '@alifd/next';
 import IceNotification from '@icedesign/notification';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
+import { FormattedMessage } from 'react-intl';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
@@ -64,7 +65,7 @@ const Page = () => {
     <Panel
       header={
         <div className={styles.header}>
-          <h3>页面列表</h3>
+          <h3><FormattedMessage id="iceworks.project.panel.page.title" /></h3>
           <div className={styles.icons}>
             <Icon className={styles.icon} type="refresh" size="small" onClick={onRefresh} />
             <Icon className={styles.icon} type="add" size="small" onClick={onCreate} />

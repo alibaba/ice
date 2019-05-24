@@ -3,6 +3,7 @@ import { Icon, Tab, Dialog } from '@alifd/next';
 import classNames from 'classnames';
 import useSocket from '@hooks/useSocket';
 import IceNotification from '@icedesign/notification';
+import { FormattedMessage } from 'react-intl';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
 import CreateDependencyModel from './CreateDependencyModel';
@@ -152,7 +153,7 @@ const DependencyPanel = () => {
     <Panel
       header={
         <div className={styles.header}>
-          <h3>依赖管理</h3>
+          <h3><FormattedMessage id="iceworks.project.panel.dependency.title" /></h3>
           <div className={styles.icons}>
             <Icon
               className={styles.icon}
