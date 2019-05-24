@@ -237,7 +237,7 @@ class ProjectManager extends EventEmitter {
   /**
    * Create a project by scaffold
    * 
-   * TODO custom
+   * TODO create a project by custom scaffold
    */
   async createProject(params: ICreateParams): Promise<void> {
     await this.createProjectFolder(params);
