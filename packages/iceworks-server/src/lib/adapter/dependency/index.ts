@@ -3,9 +3,10 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as util from 'util';
 import * as rimraf from 'rimraf';
+import * as execa from 'execa';
 import * as latestVersion from 'latest-version';
 
-import { exec, spawn } from 'child_process';
+import { exec } from 'child_process';
 import { IDependency, IProject, ICreateDependencyParam, IDependencyModule, IBaseModule } from '../../../interface';
 
 const rimrafAsync = util.promisify(rimraf);
@@ -17,7 +18,7 @@ export const install = async (dependencies: ICreateDependencyParam[], adapterMod
     dependencies.map(({ package: _package, version }) => `${_package}@${version}`)
   );
 
-  const childProcess = spawn(
+  const childProcess = execa(
     'npm',
     args,
     {
@@ -146,7 +147,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
 
     this.emit('reset.data', '开始安装依赖...');
 
-    const childProcess = spawn('npm', ['install'], {
+    const childProcess = execa('npm', ['install'], {
       cwd: this.project.path,
       env: this.project.getEnv(),
     });
@@ -174,7 +175,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
 
     this.emit('upgrade.data', `开始更新依赖：${_package}...`);
 
-    const childProcess = spawn('npm', ['update', _package, '--silent'], {
+    const childProcess = execa('npm', ['update', _package, '--silent'], {
       cwd: this.project.path,
       env: this.project.getEnv(),
     });
