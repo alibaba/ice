@@ -2,6 +2,8 @@ export default {
   // global
   'iceworks.global.connect': 'Connect',
   'iceworks.global.disconnect': 'Disconnect',
+  'iceworks.global.button.yes': 'Yes',
+  'iceworks.global.button.no': 'No',
 
   // menu
   'iceworks.menu.project': 'Project',

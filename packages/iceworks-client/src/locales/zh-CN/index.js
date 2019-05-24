@@ -2,6 +2,8 @@ export default {
   // global
   'iceworks.global.connect': '已连接',
   'iceworks.global.disconnect': '断开连接',
+  'iceworks.global.button.yes': '确定',
+  'iceworks.global.button.no': '取消',
 
   // menu
   'iceworks.menu.project': '项目',

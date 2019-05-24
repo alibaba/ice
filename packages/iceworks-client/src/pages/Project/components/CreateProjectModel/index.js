@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { Form, Input, Button } from '@alifd/next';
 import Modal from '@components/Modal';
 import styles from './index.module.scss';
@@ -62,10 +63,10 @@ const CreateProjectModel = ({ on, onCancel, onOk }) => {
         </FormItem>
         <div className={styles.opts}>
           <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
-            确定
+            <FormattedMessage id="iceworks.global.button.yes" />
           </FormSubmit>
           <Button onClick={onCancel} className={styles.button}>
-            取消
+            <FormattedMessage id="iceworks.global.button.no" />
           </Button>
         </div>
       </Form>
