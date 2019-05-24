@@ -1,7 +1,7 @@
 import packageJSON from 'package-json';
-import { IMaterialSource } from '../../interface';
+import { IMaterialSource } from '../interface';
 
-export default async (source: IMaterialSource, iceVersion: string): Promise<string> => {
+export default async (source: IMaterialSource, iceVersion?: string): Promise<string> => {
   let version: string = source.version;
 
   // TODO special material logic

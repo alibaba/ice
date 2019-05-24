@@ -10,8 +10,8 @@ import * as upperCamelCase from 'uppercamelcase';
 import * as kebabCase from 'kebab-case';
 import scanDirectory from '../scanDirectory';
 import getIceVersion from '../getIceVersion';
-import getTarballURLByMaterielSource from '../getTarballURLByMaterielSource';
-import downloadAndExtractPackage from '../downloadAndExtractPackage';
+import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
+import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 import { install as installDependency } from '../dependency';
 import { IPageModule, IProject, IPage, ICreatePageParam, IMaterialBlock } from '../../../interface';
 

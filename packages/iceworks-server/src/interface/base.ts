@@ -75,7 +75,9 @@ export interface IProjectLayout {
 /**
  * TODO 物料的模板信息
  */
-export interface IMaterialScaffold { }
+export interface IMaterialScaffold {
+  source: IMaterialSource;
+}
 
 /**
  * TODO 物料的组件信息

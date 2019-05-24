@@ -5,17 +5,24 @@ import * as fs from 'fs';
 import * as util from 'util';
 import * as npmRunPath from 'npm-run-path';
 import * as os from 'os';
-import camelCase from 'camelCase';
+import * as mv from 'mv';
 import * as clone from 'lodash.clone';
 import * as mkdirp from 'mkdirp';
 import * as pathExists from 'path-exists';
+import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
 import { IProject, IMaterialScaffold } from '../../../interface';
+import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
+import downloadAndExtractPackage from '../../downloadAndExtractPackage';
 
+const mkdirpAsync = util.promisify(mkdirp);
 const accessAsync = util.promisify(fs.access);
 const readdirAsync = util.promisify(fs.readdir);
 const existsAsync = util.promisify(fs.exists);
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
+const mvAsync = util.promisify(mv);
 
 const isWin = os.type() === 'Windows_NT';
 
@@ -24,6 +31,8 @@ const isWin = os.type() === 'Windows_NT';
 const registry = 'https://registry.npm.taobao.org';
 
 const packageJSONFilename = 'package.json';
+const abcJSONFilename = 'abc.json';
+
 
 class Project implements IProject {
   public readonly name: string;
@@ -158,16 +167,16 @@ class ProjectManager extends EventEmitter {
   }
 
   /**
-   * Create a project by scaffold
+   * Create folder for project
    */
-  async createProject(params: ICreateParams): Promise<void> {
+  async createProjectFolder(params: { path: string; forceCover?: boolean; }) {
     const { path: targetPath, forceCover } = params;
 
     if (!await pathExists(targetPath)) {
-      await mkdirp(targetPath);
+      await mkdirpAsync(targetPath);
     }
 
-    // 检测读写权限
+    // check read and write
     try {
       await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK);
     } catch (error) {
@@ -175,7 +184,7 @@ class ProjectManager extends EventEmitter {
       throw error;
     }
 
-    // 检测文件夹是否为空
+    // check folder files
     const files = await readdirAsync(targetPath);
     if (files.length) {
       const exited = await existsAsync(path.join(targetPath, packageJSONFilename));
@@ -191,8 +200,48 @@ class ProjectManager extends EventEmitter {
         throw error;
       }
     }
+  }
 
+  /**
+   * generate project
+   */
+  async generateProject(params: ICreateParams) {
+    const { path: targetPath, scaffold, name } = params;
+    const tarballURL = await getTarballURLByMaterielSource(scaffold.source);
+    await downloadAndExtractPackage(targetPath, tarballURL);
 
+    // rewrite pakcage.json
+    const packageJSONPath = path.join(targetPath, packageJSONFilename);
+    const packageJSON: any = JSON.parse((await readFileAsync(packageJSONPath)).toString());
+    packageJSON.title = name;
+    packageJSON.version = '1.0.0';
+    delete packageJSON.homepage;
+    await writeFileAsync(packageJSONPath, `${JSON.stringify(packageJSON, null, 2)}\n`, 'utf-8');
+
+    // generate abc.json for alibaba user
+    // TODO get information from App
+    const isAlibaba = false;
+    const abcJsonPath = path.join(targetPath, abcJSONFilename);
+    if (isAlibaba && !await pathExists(abcJsonPath)) {
+      await writeFileAsync(
+        abcJsonPath,
+        JSON.stringify({ name, type: 'iceworks', builder: '@ali/builder-iceworks' }, null, 2)
+      );
+    }
+
+    //replace _gitignore to .gitignore
+    const gitignoreFilename = 'gitignore';
+    await mvAsync(path.join(targetPath, `_${gitignoreFilename}`), path.join(targetPath, `.${gitignoreFilename}`));
+  }
+
+  /**
+   * Create a project by scaffold
+   * 
+   * TODO custom
+   */
+  async createProject(params: ICreateParams): Promise<void> {
+    await this.createProjectFolder(params);
+    await this.generateProject(params);
   }
 
   /**
