@@ -65,7 +65,7 @@ const Task = ({ history, intl }) => {
     <Card
       title={intl.formatMessage({ id: `iceworks.task.${type}.title` })}
       subTitle={intl.formatMessage({
-        id: `iceworks.task.${type}.description`,
+        id: `iceworks.task.${type}.desc`,
       })}
       contentHeight="100%"
       className={styles.taskCard}

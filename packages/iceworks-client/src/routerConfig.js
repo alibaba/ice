@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 
 const Project = lazy(() => import('./pages/Project'));
-const Work = lazy(() => import('./pages/Work'));
+const Tasks = lazy(() => import('./pages/Tasks'));
 const Task = lazy(() => import('./pages/Task'));
 const Configuration = lazy(() => import('./pages/Configuration'));
 const Material = lazy(() => import('./pages/Material'));
@@ -19,24 +19,24 @@ const routerConfig = [
     component: Project,
   },
   {
-    path: '/work',
-    component: Work,
+    path: '/task',
+    component: Tasks,
     routes: [
       {
-        from: '/work',
-        path: '/work/dev',
+        from: '/task',
+        path: '/task/dev',
         component: Task,
       },
       {
-        path: '/work/build',
+        path: '/task/build',
         component: Task,
       },
       {
-        path: '/work/lint',
+        path: '/task/lint',
         component: Task,
       },
       {
-        path: '/work/configuration',
+        path: '/task/configuration',
         component: Configuration,
       },
     ],

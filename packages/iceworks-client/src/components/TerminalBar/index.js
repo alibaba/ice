@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@alifd/next';
+import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import styles from './index.module.scss';
 
@@ -17,12 +18,12 @@ const TerminalBar = ({ isWorking, onStart, onStop, onSetting }) => {
             onClick={onStart}
           >
             <Icon type="start" className={styles.icon} />
-            运行
+            <FormattedMessage id="iceworks.task.dev.start" />
           </Button>
         ) : (
           <Button type="primary" className={styles.leftButton} onClick={onStop}>
             <Icon type="stop" className={styles.icon} />
-            停止
+            <FormattedMessage id="iceworks.task.dev.stop" />
           </Button>
         )}
         <Button
@@ -32,7 +33,7 @@ const TerminalBar = ({ isWorking, onStart, onStop, onSetting }) => {
           disabled={isWorking}
         >
           <Icon type="settings" className={styles.icon} />
-          设置
+          <FormattedMessage id="iceworks.task.dev.setting" />
         </Button>
       </div>
 
