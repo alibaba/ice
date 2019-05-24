@@ -1,3 +1,4 @@
+/* eslint object-curly-newline:0 */
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useSocket from '@hooks/useSocket';
