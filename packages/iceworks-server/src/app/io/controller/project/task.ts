@@ -4,15 +4,18 @@ export default (app) => {
      * run start task
      */
     async start(ctx) {
-      const { socket, logger } = ctx;
+      const { socket, args, logger } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
 
       logger.info('start task');
-      const response = await project.task.start();
+      const response = await project.task.start(args);
 
-      project.task.on('start.data', (data) => {
-        socket.emit('project.task.start.data', data);
+      const { command } = args;
+      const onEventName = `${command}.start.data`;
+      const emitEventName = `project.task.${command}.start.data`;
+      project.task.on(onEventName, (data) => {
+        socket.emit(emitEventName, data);
       });
 
       return { status: response.status };
@@ -22,15 +25,18 @@ export default (app) => {
      * run stop task
      */
     async stop(ctx) {
-      const { socket, logger } = ctx;
+      const { socket, args, logger } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
 
       logger.info('stop task');
-      const response = await project.task.stop();
+      const response = await project.task.stop(args);
 
-      project.task.on('stop.data', (data) => {
-        socket.emit('project.task.stop.data', data);
+      const { command } = args;
+      const onEventName = `${command}.stop.data`;
+      const emitEventName = `project.task.${command}.stop.data`;
+      project.task.on(onEventName, (data) => {
+        socket.emit(emitEventName, data);
       });
 
       return { status: response.status };
@@ -39,10 +45,12 @@ export default (app) => {
     /**
      * task setting
      */
-    async setting() {
+    async setting(ctx) {
+      const { args } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      return await project.task.setting();
+      const response = await project.task.setting(args);
+      return { setting: response };
     }
   };
 };

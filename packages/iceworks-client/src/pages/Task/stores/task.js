@@ -1,26 +1,23 @@
 import socket from '@src/socket';
 
 export default {
-  dataSource: {
-    status: '',
-    setting: [],
+  dataSource: {},
+
+  async start(type) {
+    this.dataSource[type] = await socket.emit('project.task.start', {
+      command: type,
+    });
   },
 
-  async start() {
-    this.dataSource = {
-      ...this.dataSource,
-      ...(await socket.emit('project.task.start')),
-    };
+  async stop(type) {
+    this.dataSource[type] = await socket.emit('project.task.stop', {
+      command: type,
+    });
   },
 
-  async stop() {
-    this.dataSource = {
-      ...this.dataSource,
-      ...(await socket.emit('project.task.stop')),
-    };
-  },
-
-  async setting() {
-    this.dataSource.setting = await socket.emit('project.task.setting');
+  async setting(type) {
+    this.dataSource[type] = await socket.emit('project.task.setting', {
+      command: type,
+    });
   },
 };

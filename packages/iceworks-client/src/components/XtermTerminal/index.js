@@ -5,18 +5,12 @@ import Icon from '@components/Icon';
 import term from './term';
 import styles from './index.module.scss';
 
-let inited = false;
-
-const XtermTerminal = ({ name, startEventName, stopEventName }) => {
-  const xtermRef = useRef(null);
+const XtermTerminal = ({ id, name, startEventName, stopEventName }) => {
+  const xtermRef = useRef(id);
 
   useEffect(() => {
     // new terminal
     term.new(name, xtermRef.current);
-    if (!inited) {
-      term.write(name, `\x1B[1;3;31m${name}\x1B[0m $ `);
-      inited = true;
-    }
   }, []);
 
   // format and write the text content of the terminal
@@ -62,6 +56,7 @@ const XtermTerminal = ({ name, startEventName, stopEventName }) => {
 XtermTerminal.defaultProps = {};
 
 XtermTerminal.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   startEventName: PropTypes.string.isRequired,
   stopEventName: PropTypes.string.isRequired,

@@ -36,6 +36,7 @@ const term = {
   new: (cwd, container) => {
     if (!terms[cwd]) {
       terms[cwd] = new Terminal(defaultOptions);
+      terms[cwd].write(`\x1B[1;3;31m${cwd}\x1B[0m $ `);
     } else {
       terms[cwd]._core.options.theme = defaultTheme;
     }
