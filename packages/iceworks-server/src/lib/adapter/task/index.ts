@@ -4,29 +4,33 @@ import * as detectPort from 'detect-port';
 import chalk from 'chalk';
 import * as ipc from './ipc';
 import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
+import { ITaskModule, IProject } from '../../../interface';
 
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_NORMAL = 'normal';
 const TASK_STATUS_WORKING = 'working';
 const TASK_STATUS_STOP = 'stop';
 
-export default class Task extends EventEmitter {
-  public readonly path: string;
+export default class Task extends EventEmitter implements ITaskModule {
+  public readonly projectPath: string;
+
+  public readonly projectName: string;
 
   public status: string = TASK_STATUS_NORMAL;
 
   private process: object = {};
 
-  constructor(options) {
+  constructor(project: IProject) {
     super();
-    this.path = options.path;
+    this.projectPath = project.path;
+    this.projectName = project.name;
   }
 
   /**
    * run start task
    * @param args
    */
-  async start(args) {
+  async start(args: any) {
     let { command } = args;
 
     if (this.process[command]) {
@@ -50,7 +54,7 @@ export default class Task extends EventEmitter {
       'npm',
       ['run', command === 'dev' ? 'start' : command],
       {
-        cwd: this.path || process.cwd(),
+        cwd: this.projectPath || process.cwd(),
         stdio: ['inherit', 'pipe', 'pipe'],
         shell: true,
         env: Object.assign({}, process.env, env),
@@ -58,7 +62,6 @@ export default class Task extends EventEmitter {
     );
 
     this.process[command].stdout.on('data', (buffer) => {
-      console.log(buffer.toString());
       this.emit(eventName, buffer.toString());
     });
 

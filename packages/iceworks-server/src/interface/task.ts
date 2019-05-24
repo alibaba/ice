@@ -3,7 +3,7 @@ import { IBaseModule } from './base';
 /**
  * 调试服务设置项
  */
-export interface IDevSettings {
+export interface ITaskSetting {
   /**
    * 标签名
    */
@@ -35,21 +35,25 @@ export interface IDevSettings {
   componentProps: object;
 }
 
-export interface IDevModule extends IBaseModule {
+export interface ITaskModule extends IBaseModule {
   /**
    * 启动调试服务
    *
-   * @param settingsEnv 环境变量
+   * @param args 参数对象
    */
-  start(settingsEnv: object): Promise<IDevModule>;
+  start(args: any): Promise<ITaskModule>;
 
   /**
    * 停止调试服务
+   *
+   * @param args 参数对象
    */
-  stop(): Promise<IDevModule>;
+  stop(args): Promise<ITaskModule>;
 
   /**
    * 获取启动调试服务设置项
+   *
+   * @param args 参数对象
    */
-  getSettings(): Promise<IDevSettings[]>;
+  setting(args): Promise<ITaskSetting[]>;
 }
