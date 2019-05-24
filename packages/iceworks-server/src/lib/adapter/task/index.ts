@@ -1,11 +1,14 @@
 import * as EventEmitter from 'events';
 import * as execa from 'execa';
+import * as detectPort from 'detect-port';
 import chalk from 'chalk';
-import { LINT_CONF, BUILD_CONF } from './const';
+import * as ipc from './ipc';
+import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
 
-export const TASK_STATUS_NORMAL = 'normal';
-export const TASK_STATUS_WORKING = 'working';
-export const TASK_STATUS_STOP = 'stop';
+const DEFAULT_PORT = '4444';
+const TASK_STATUS_NORMAL = 'normal';
+const TASK_STATUS_WORKING = 'working';
+const TASK_STATUS_STOP = 'stop';
 
 export default class Task extends EventEmitter {
   public readonly path: string;
@@ -24,10 +27,7 @@ export default class Task extends EventEmitter {
    * @param args
    */
   async start(args) {
-    const { command } = args;
-    const eventName = `${command}.start.data`;
-
-    this.status = TASK_STATUS_WORKING;
+    let { command } = args;
 
     if (this.process[command]) {
       throw new Error(
@@ -35,13 +35,30 @@ export default class Task extends EventEmitter {
       );
     }
 
-    this.process[command] = execa('npm', ['run', command], {
-      cwd: this.path || process.cwd(),
-      stdio: ['inherit', 'pipe', 'pipe'],
-      shell: true,
-    });
+    let env: object = {};
+    if (command === 'dev') {
+      // set port
+      env = { PORT: await detectPort(DEFAULT_PORT) };
+
+      // create an ipc channel
+      ipc.init();
+    }
+
+    const eventName = `${command}.start.data`;
+    this.status = TASK_STATUS_WORKING;
+    this.process[command] = execa(
+      'npm',
+      ['run', command === 'dev' ? 'start' : command],
+      {
+        cwd: this.path || process.cwd(),
+        stdio: ['inherit', 'pipe', 'pipe'],
+        shell: true,
+        env: Object.assign({}, process.env, env),
+      }
+    );
 
     this.process[command].stdout.on('data', (buffer) => {
+      console.log(buffer.toString());
       this.emit(eventName, buffer.toString());
     });
 
@@ -77,12 +94,16 @@ export default class Task extends EventEmitter {
   async setting(args) {
     const { command } = args;
 
-    if (command === 'lint') {
-      return LINT_CONF;
+    if (command === 'dev') {
+      return DEV_CONF;
     }
 
     if (command === 'build') {
       return BUILD_CONF;
+    }
+
+    if (command === 'lint') {
+      return LINT_CONF;
     }
   }
 }
