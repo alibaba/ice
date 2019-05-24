@@ -98,6 +98,7 @@ const DependencyPanel = () => {
   useSocket('project.dependency.reset.exit', (code) => {
     if (code === 0) {
       Message.show({
+        align: 'tr tr',
         type: 'success',
         content: '项目依赖安装成功',
       });
@@ -118,6 +119,7 @@ const DependencyPanel = () => {
   useSocket('project.dependency.upgrade.exit', (code) => {
     if (code === 0) {
       Message.show({
+        align: 'tr tr',
         type: 'success',
         title: '项目依赖更新成功',
         content: '依赖列表已经刷新',
@@ -139,6 +141,7 @@ const DependencyPanel = () => {
   useSocket('project.dependency.install.exit', (code) => {
     if (code === 0) {
       Message.show({
+        align: 'tr tr',
         type: 'success',
         title: '项目依赖安装成功',
         content: '依赖列表已经刷新',
@@ -146,6 +149,7 @@ const DependencyPanel = () => {
       dependenciesStore.refresh();
     } else {
       Message.show({
+        align: 'tr tr',
         type: 'error',
         title: '项目依赖安装失败',
         content: '请查看控制台日志输出',

@@ -106,6 +106,7 @@ const Project = () => {
         addProject(values.path);
       } else {
         Message.show({
+          align: 'tr tr',
           type: 'error',
           title: '创建项目失败',
           content: error.message,

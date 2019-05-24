@@ -41,6 +41,7 @@ const Page = () => {
     pages.refresh();
     toggleDeleteModal();
     Message.show({
+      align: 'tr tr',
       type: 'success',
       content: '删除页面成功',
     });
