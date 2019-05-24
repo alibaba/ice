@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import IceNotification from '@icedesign/notification';
 import stores from '@stores';
 import logger from '@utils/logger';
 import useModal from '@hooks/useModal';
+import mockData from '@src/mock';
 import SubMenu from './components/SubMenu';
 import OpenProjectModal from './components/OpenProjectModal';
 import DeleteProjectModal from './components/DeleteProjectModal';
+import CreateProjectModel from './components/CreateProjectModel';
 import Guide from './components/Guide';
 import projectStores from './stores';
 
+// panels
 import Page from './components/PagePanel';
 import Dependency from './components/DependencyPanel';
 import Layout from './components/LayoutPanel';
@@ -19,14 +22,18 @@ import DEFPanel from './components/DEFPanel';
 
 import styles from './index.module.scss';
 
-const Project = ({ history }) => {
+const Project = () => {
   const {
     on: onOpenProjectModel,
-    toggleModal: toggleOpenProjectModal,
+    setModal: setOpenProjectModal,
   } = useModal();
   const {
     on: onDeleteProjectModel,
     toggleModal: toggleDeleteProjectModal,
+  } = useModal();
+  const {
+    on: onCreateProjectModel,
+    toggleModal: toggleCreateProjectModal,
   } = useModal();
   const [deleteProjectPath, setDeleteProjectPath] = useState('');
   const [projects, project] = stores.useStores(['projects', 'project']);
@@ -48,11 +55,11 @@ const Project = ({ history }) => {
   }
 
   async function onOpenProject() {
-    toggleOpenProjectModal();
+    setOpenProjectModal(true);
   }
 
-  async function onCreateProject() {
-    history.push('/material');
+  async function onOpenCreateProject() {
+    toggleCreateProjectModal();
   }
 
   async function refreshProject() {
@@ -74,13 +81,35 @@ const Project = ({ history }) => {
   async function addProject(path) {
     await projects.add(path);
     await refreshProject();
-    toggleOpenProjectModal();
+    setOpenProjectModal(false);
   }
 
   async function deleteProject(params) {
     await projects.delete({ ...params, projectPath: deleteProjectPath });
     await refreshProject();
     toggleDeleteProjectModal();
+  }
+
+
+  async function createProject(data) {
+    await projects.create(data);
+    toggleCreateProjectModal();
+  }
+
+  async function onCreateProject(values) {
+    const data = { scaffold: mockData.scaffold, ...values };
+    try {
+      await createProject(data);
+    } catch (error) {
+      if (error.code === 'LEGAL_PROJECT') {
+        addProject(values.path);
+      } else {
+        IceNotification.error({
+          message: '创建项目失败',
+          description: error.message,
+        });
+      }
+    }
   }
 
   useEffect(() => {
@@ -103,12 +132,12 @@ const Project = ({ history }) => {
           onSwitchProject={onSwitchProject}
           onDeleteProject={onDeleteProject}
           onOpenProject={onOpenProject}
-          onCreateProject={onCreateProject}
+          onCreateProject={onOpenCreateProject}
         />
       ) : null}
       <OpenProjectModal
         on={onOpenProjectModel}
-        onCancel={toggleOpenProjectModal}
+        onCancel={() => setOpenProjectModal(false)}
         onOk={addProject}
       />
       <DeleteProjectModal
@@ -116,6 +145,11 @@ const Project = ({ history }) => {
         onCancel={toggleDeleteProjectModal}
         onOk={deleteProject}
         project={projectPreDelete}
+      />
+      <CreateProjectModel
+        on={onCreateProjectModel}
+        onCancel={toggleCreateProjectModal}
+        onOk={onCreateProject}
       />
       {
         projects.dataSource.length ?
@@ -142,7 +176,6 @@ const Project = ({ history }) => {
 };
 
 Project.propTypes = {
-  history: PropTypes.object.isRequired,
 };
 
 export default Project;

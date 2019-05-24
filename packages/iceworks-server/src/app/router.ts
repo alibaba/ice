@@ -7,6 +7,7 @@ export default (app: Application) => {
 
   const routers: [string, () => {}][] = [
     ['project.index.list', project.index.list],
+    ['project.index.create', project.index.create],
     ['project.index.delete', project.index.delete],
     ['project.index.add', project.index.add],
     ['project.index.current', project.index.getCurrent],

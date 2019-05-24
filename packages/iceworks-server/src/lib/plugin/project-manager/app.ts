@@ -2,13 +2,20 @@ import * as EventEmitter from 'events';
 import * as trash from 'trash';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as util from 'util';
 import * as npmRunPath from 'npm-run-path';
 import * as os from 'os';
 import camelCase from 'camelCase';
 import * as clone from 'lodash.clone';
+import * as mkdirp from 'mkdirp';
+import * as pathExists from 'path-exists';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
-import { IProject } from '../../../interface';
+import { IProject, IMaterialScaffold } from '../../../interface';
+
+const accessAsync = util.promisify(fs.access);
+const readdirAsync = util.promisify(fs.readdir);
+const existsAsync = util.promisify(fs.exists);
 
 const isWin = os.type() === 'Windows_NT';
 
@@ -16,12 +23,12 @@ const isWin = os.type() === 'Windows_NT';
 // settings.get('registry')
 const registry = 'https://registry.npm.taobao.org';
 
+const packageJSONFilename = 'package.json';
+
 class Project implements IProject {
   public readonly name: string;
 
   public readonly path: string;
-
-  private readonly packageJSONFilename = 'package.json';
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
@@ -31,7 +38,7 @@ class Project implements IProject {
   }
 
   public getPackageJSON() {
-    const pakcagePath = path.join(this.path, this.packageJSONFilename);
+    const pakcagePath = path.join(this.path, packageJSONFilename);
     return JSON.parse(fs.readFileSync(pakcagePath).toString());
   }
 
@@ -81,6 +88,13 @@ class Project implements IProject {
       this[camelCase(key)] = new Module(project);
     }
   }
+}
+
+interface ICreateParams {
+  name: string;
+  path: string;
+  scaffold: IMaterialScaffold;
+  forceCover?: boolean;
 }
 
 class ProjectManager extends EventEmitter {
@@ -143,11 +157,42 @@ class ProjectManager extends EventEmitter {
     storage.set('project', projectPath);
   }
 
-
   /**
    * Create a project by scaffold
    */
-  async createProject(): Promise<void> {
+  async createProject(params: ICreateParams): Promise<void> {
+    const { path: targetPath, forceCover } = params;
+
+    if (!await pathExists(targetPath)) {
+      await mkdirp(targetPath);
+    }
+
+    // 检测读写权限
+    try {
+      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK);
+    } catch (error) {
+      error.message = '当前路径没有读写权限，请更换项目路径';
+      throw error;
+    }
+
+    // 检测文件夹是否为空
+    const files = await readdirAsync(targetPath);
+    if (files.length) {
+      const exited = await existsAsync(path.join(targetPath, packageJSONFilename));
+      if (!exited) {
+        if (!forceCover) {
+          const error: any = new Error('当前文件夹不为空，不允许创建项目');
+          error.code = 'HAS_FILES';
+          throw error;
+        }
+      } else {
+        const error: any = new Error('请导入该项目');
+        error.code = 'LEGAL_PROJECT';
+        throw error;
+      }
+    }
+
+
   }
 
   /**

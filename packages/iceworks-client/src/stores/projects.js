@@ -11,4 +11,7 @@ export default {
   async delete(params) {
     await socket.emit('project.index.delete', params);
   },
+  async create(params) {
+    await socket.emit('project.index.create', params);
+  },
 };
