@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import IceNotification from '@icedesign/notification';
+import { Message } from '@alifd/next';
 import stores from '@stores';
 import logger from '@utils/logger';
 import useModal from '@hooks/useModal';
@@ -105,9 +105,10 @@ const Project = () => {
       if (error.code === 'LEGAL_PROJECT') {
         addProject(values.path);
       } else {
-        IceNotification.error({
-          message: '创建项目失败',
-          description: error.message,
+        Message.show({
+          type: 'error',
+          title: '创建项目失败',
+          content: error.message,
         });
       }
     }

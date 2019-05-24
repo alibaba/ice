@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { Icon, Message } from '@alifd/next';
-import IceNotification from '@icedesign/notification';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
 import { FormattedMessage } from 'react-intl';
@@ -41,9 +40,9 @@ const Page = () => {
     await pages.delete(deleteName);
     pages.refresh();
     toggleDeleteModal();
-    IceNotification.success({
-      message: '删除页面成功',
-      description: '操作不可逆！',
+    Message.show({
+      type: 'success',
+      content: '删除页面成功',
     });
   }
 

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Icon, Tab, Dialog } from '@alifd/next';
+import { Icon, Tab, Dialog, Message } from '@alifd/next';
 import classNames from 'classnames';
 import useSocket from '@hooks/useSocket';
-import IceNotification from '@icedesign/notification';
 import { FormattedMessage } from 'react-intl';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
@@ -98,15 +97,16 @@ const DependencyPanel = () => {
 
   useSocket('project.dependency.reset.exit', (code) => {
     if (code === 0) {
-      IceNotification.success({
-        message: '项目依赖安装成功',
-        description: '后续可添加自定义依赖',
+      Message.show({
+        type: 'success',
+        content: '项目依赖安装成功',
       });
       dependenciesStore.refresh();
     } else {
-      IceNotification.error({
-        message: '项目依赖安装失败',
-        description: '请查看控制台日志输出',
+      Message.error({
+        type: 'error',
+        title: '项目依赖安装失败',
+        content: '请查看控制台日志输出',
       });
     }
   });
@@ -117,15 +117,17 @@ const DependencyPanel = () => {
 
   useSocket('project.dependency.upgrade.exit', (code) => {
     if (code === 0) {
-      IceNotification.success({
-        message: '项目依赖更新成功',
-        description: '依赖列表已经刷新',
+      Message.show({
+        type: 'success',
+        title: '项目依赖更新成功',
+        content: '依赖列表已经刷新',
       });
       dependenciesStore.refresh();
     } else {
-      IceNotification.error({
-        message: '项目依赖更新失败',
-        description: '请查看控制台日志输出',
+      Message.error({
+        type: 'error',
+        title: '项目依赖更新失败',
+        content: '请查看控制台日志输出',
       });
     }
   });
@@ -136,15 +138,17 @@ const DependencyPanel = () => {
 
   useSocket('project.dependency.install.exit', (code) => {
     if (code === 0) {
-      IceNotification.success({
-        message: '项目依赖安装成功',
-        description: '依赖列表已经刷新',
+      Message.show({
+        type: 'success',
+        title: '项目依赖安装成功',
+        content: '依赖列表已经刷新',
       });
       dependenciesStore.refresh();
     } else {
-      IceNotification.error({
-        message: '项目依赖安装失败',
-        description: '请查看控制台日志输出',
+      Message.show({
+        type: 'error',
+        title: '项目依赖安装失败',
+        content: '请查看控制台日志输出',
       });
     }
   });
