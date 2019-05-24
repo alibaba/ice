@@ -3,6 +3,7 @@
  */
 const oss = require('ali-oss');
 const path = require('path');
+const glob = require('glob');
 
 const bucket = 'iceworks';
 const accessKeyId = process.env.ACCESS_KEY_ID;
@@ -19,13 +20,22 @@ if (['master', 'production'].indexOf(branch) !== -1 || /docs/.test(branch)) {
     time: '120s',
   });
 
-  const fromPath = path.resolve(__dirname, '../build/docs.json');
-  const toPath = path.join(assetsPath, 'docs.json');
+  const baseDir = path.resolve(__dirname, '../build');
+  const files = glob.sync('*.json', {
+    nodir: true,
+    cwd: baseDir,
+  });
 
-  console.log('start upload oss', fromPath, toPath);
+  const promiseQueue = files.map((file) => {
+    const fromPath = path.resolve(baseDir, file);
+    const toPath = path.join(assetsPath, 'docs', file);
 
-  ossClient.put(toPath, fromPath).then((result) => {
-    console.log('upload success', result);
+    console.log('ossput', fromPath, toPath);
+    return ossClient.put(toPath, fromPath);
+  });
+
+  Promise.all(promiseQueue).then(() => {
+    console.log('upload success');
   });
 } else {
   console.log('当前分支非 master/production/docs*, 不执行文档同步脚本');

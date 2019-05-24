@@ -6,112 +6,145 @@ const path = require('path');
 const glob = require('glob');
 const markTwain = require('mark-twain');
 const fse = require('fs-extra');
+const rimraf = require('rimraf');
 const { cut } = require('./participle');
 
+const projectDir = path.resolve(__dirname, '..');
 const docsDir = path.resolve(__dirname, '../docs');
 const destDir = path.join(__dirname, '../build');
-const dest = path.join(destDir, 'docs.json');
 
-fse.ensureFileSync(dest);
+rimraf.sync(destDir);
+fse.ensureDirSync(destDir);
 
 // 与目录对应，补全目录的顺序以及展示 title
 const allCategories = {
   guide: {
-    title: '',
+    title: {},
     children: [{
-      title: '开发',
+      title: {
+        'zh-cn': '开发',
+        'en-us': 'development',
+      },
       dir: 'dev',
     }, {
-      title: '测试',
+      title: {
+        'zh-cn': '测试',
+        'en-us': 'test',
+      },
       dir: 'test',
     }, {
-      title: '发布资源',
+      title: {
+        'zh-cn': '发布资源',
+        'en-us': 'publish assets',
+      },
       dir: 'publish',
     }, {
-      title: '后端集成',
+      title: {
+        'zh-cn': '后端集成',
+        'en-us': 'backend',
+      },
       dir: 'backend',
     }, {
-      title: '产品监控',
+      title: {
+        'zh-cn': '产品监控',
+        'en-us': 'monitor',
+      },
       dir: 'monitor',
     }, {
-      title: '资源',
+      title: {
+        'zh-cn': '资源',
+        'en-us': 'resource',
+      },
       dir: 'resource',
     }],
   },
   iceworks: {
     // Iceworks
-    title: '',
+    title: {},
   },
   materials: {
     // 自定义物料
-    title: '',
+    title: {},
   },
   cli: {
     // ice-scripts
-    title: '',
+    title: {},
     children: [{
-      title: '基础指南',
+      title: {
+        'zh-cn': '基础指南',
+        'en-us': 'basic',
+      },
       dir: 'basic',
     }, {
-      title: '进阶指南',
+      title: {
+        'zh-cn': '进阶指南',
+        'en-us': 'advanced',
+      },
       dir: 'advanced',
     }, {
-      title: '常见需求',
+      title: {
+        'zh-cn': '常见需求',
+        'en-us': 'others',
+      },
       dir: 'others',
     }],
   },
   design: {
     // 中后台设计理念
-    title: '',
+    title: {},
     children: [
       {
+        title: {
+          'zh-cn': '视觉',
+          'en-us': 'vision',
+        },
         dir: 'vision',
-        title: '视觉',
       },
       {
+        title: {
+          'zh-cn': '设计模式',
+          'en-us': 'mode',
+        },
         dir: 'mode',
-        title: '设计模式',
       },
     ],
   },
 };
 
-const result = {};
-Object.keys(allCategories).forEach((dirName) => {
-  const dirData = allCategories[dirName];
-  dirData.dir = dirName;
-  result[dirName] = collectCategoryData([dirData], '')[0];
+Object.keys(allCategories).forEach((key) => {
+  const category = allCategories[key];
+  generateFile(category, key);
 });
 
-fs.writeFileSync(dest, JSON.stringify(result, null, 2), 'utf-8');
-console.log('文档数据生成完毕. Docs DB Generated.');
-console.log(dest);
+function generateFile(category, name) {
+  ['zh-cn', 'en-us'].forEach((locale) => {
+    const filename = `${name}-${locale}.json`;
+    const destfile = path.join(destDir, filename);
+    const baseDir = path.join(docsDir, name, locale === 'zh-cn' ? '' : locale);
 
-function collectCategoryData(categories, parentDirPath) {
-  const categoryResult = [];
+    const docsData = collectCategoryData(category, baseDir, locale);
+    fs.writeFileSync(destfile, JSON.stringify(docsData, null, 2), 'utf-8');
+    console.log('generateFile', destfile);
+  });
+}
 
-  for (let i = 0; i < categories.length; i++) {
-    const category = categories[i];
-    const currentDirRelativePath = path.join(parentDirPath, category.dir);
-    const currentDirAbsolutePath = path.resolve(
-      process.cwd(),
-      'docs',
-      currentDirRelativePath
-    );
+function collectCategoryData(category, baseDir, locale) {
+  const result = {};
 
+  result.title = category.title[locale];
+  result.dir = category.dir;
+  result.files = getDirFiles(baseDir);
+  result.children = [];
+
+  (category.children || []).forEach((child) => {
     const data = {};
-    data.title = category.title;
-    data.dir = category.dir;
-    data.files = getDirFiles(currentDirAbsolutePath);
+    data.title = child.title[locale];
+    data.dir = child.dir;
+    data.files = getDirFiles(path.join(baseDir, child.dir));
+    result.children.push(data);
+  });
 
-    if (category.children && category.children.length > 0) {
-      data.children = collectCategoryData(category.children, currentDirRelativePath);
-    }
-
-    categoryResult[i] = data;
-  }
-
-  return categoryResult;
+  return result;
 }
 
 function getDirFiles(dirPath) {
@@ -120,12 +153,13 @@ function getDirFiles(dirPath) {
     cwd: dirPath,
   });
 
-  console.log('getDirFiles', dirPath, files);
-
   let dirFilesData = [];
   files.forEach((file) => {
     const filePath = path.join(dirPath, file);
-    const content = fs.readFileSync(filePath, 'utf-8');
+    let content = fs.readFileSync(filePath, 'utf-8');
+
+    // /docs/cli/en-us/basic/start.md -> /docs/cli/basic/start.md
+    content = content.replace('/en-us', '');
     const jsonML = markTwain(content);
 
     // 隐藏文档过滤
@@ -145,7 +179,7 @@ function getDirFiles(dirPath) {
 
     dirFilesData.push({
       filename: file,
-      path: filePath.replace(docsDir, '').replace(/\.md$/, ''),
+      path: filePath.replace(projectDir, '').replace(/\.md$/, '').replace('/en-us', ''),
       ...jsonML.meta,
       participle,
       jsonml: jsonML.content,
