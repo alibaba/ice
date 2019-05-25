@@ -54,7 +54,7 @@ const allCategories = {
       dir: 'basic',
     }, {
       title: '工程能力',
-      dir: 'advanced',
+      dir: 'feature',
     }, {
       title: '插件列表',
       dir: 'plugin-list',
