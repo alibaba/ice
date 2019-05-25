@@ -10,6 +10,8 @@ ice-scripts 提供了丰富的功能帮助我们开发 React 项目。完善的�
 
 我们致力于将 ice-scripts 打造为 React 生态下高可配置性、高可用的工程工具。
 
+![架构图](https://img.alicdn.com/tfs/TB1qV1QagKG3KVjSZFLXXaMvXXa-758-592.png)
+
 ## 特性
 
 - 提供完善基础配置，通过设置 `ice.config.js` 配置文件快捷支持大多数项目的工程配置需求
@@ -18,8 +20,12 @@ ice-scripts 提供了丰富的功能帮助我们开发 React 项目。完善的�
 - 支持不同类型 React 项目的开发&构建，包括项目开发、业务组件开发和区块开发
 - 灵活的自定义 webpack 配置，满足定制需求场景
 
-## 为什么不是
+## 为什么不是？
 
 ### 自定义 webpack 配置
 
-### create react app
+自定义 webpack 配置可以让你掌握项目工程的每一个细节，开发者需要熟悉 `webpack` + `babel` 这些主流工程工具的配置和概念，比如 webpack loader、webpack plugins、babel plugins 和 babel presets 等等。对于不熟悉工程配置的开发者而言，将是一个不低的门槛。`ice-scripts` 致力于收敛一系列工程工具概念，提供一系列开箱即用的能力，让开发者专注于项目开发。
+
+### create-react-app
+
+create-react-app 提供了基于 React 项目的一套最佳工程配置实践，它的细节体验做的很好。可惜它支持的自定义配置能力太弱。如果要定制化工程方案，就需要执行 `npm run eject`，官方并不推荐这种做法，eject 出来的 webpack 配置对开发者而言太过于复杂。`ice-scripts` 则选择在提供一套完善基础配置的基础上，提供快捷定制 webpack 工程配置的能力，并且提供插件机制和自定义 webpack 的接口，满足不同项目工程的定制和复用需求。
