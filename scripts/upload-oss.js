@@ -9,9 +9,9 @@ const bucket = 'iceworks';
 const accessKeyId = process.env.ACCESS_KEY_ID;
 const accessKeySecret = process.env.ACCESS_KEY_SECRET;
 const branch = process.env.TRAVIS_BRANCH;
-const assetsPath = branch === 'production' ? 'assets' : 'pre-assets';
+const assetsPath = branch === 'master' ? 'assets' : 'pre-assets';
 
-if (['master', 'production'].indexOf(branch) !== -1 || /docs/.test(branch)) {
+if (branch === 'master' || /docs/.test(branch)) {
   const ossClient = oss({
     bucket,
     endpoint: 'oss-cn-hangzhou.aliyuncs.com',
@@ -38,7 +38,7 @@ if (['master', 'production'].indexOf(branch) !== -1 || /docs/.test(branch)) {
     console.log('upload success');
   });
 } else {
-  console.log('当前分支非 master/production/docs*, 不执行文档同步脚本');
+  console.log('当前分支非 master/docs*, 不执行文档同步脚本');
   console.log(`TRAVIS_BRANCH=${branch}`);
   process.exit(0);
 }
