@@ -50,14 +50,17 @@ const allCategories = {
     // ice-scripts
     title: '',
     children: [{
-      title: '基础指南',
+      title: '配置指南',
       dir: 'basic',
     }, {
-      title: '进阶指南',
+      title: '工程能力',
       dir: 'advanced',
     }, {
-      title: '常见需求',
-      dir: 'needs',
+      title: '插件列表',
+      dir: 'plugin-list',
+    }, {
+      title: '插件开发',
+      dir: 'plugin-dev',
     }],
   },
   design: {

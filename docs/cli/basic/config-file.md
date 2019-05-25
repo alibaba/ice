@@ -1,5 +1,5 @@
 ---
-title: 工程配置文件
+title: ice.config.js
 order: 1
 ---
 

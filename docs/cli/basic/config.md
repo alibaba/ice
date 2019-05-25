@@ -90,15 +90,26 @@ module.exports = {
 
 配置 webpack 的 [devServer](https://webpack.js.org/configuration/dev-server/#devserver) 属性。
 
+### 本地开发使用 BrowserRouter
+
 ```js
 // ice.config.js
 module.exports = {
+  // 修改 devServer 配置
   devServer: {
     historyApiFallback: true,
-    hot: false,
   }
 }
 ```
+
+将 `HashRouter` 修改为 `BrowserRouter`
+
+```diff
+-import { HashRouter as Router } from 'react-router-dom';
++import { BrowserRouter as Router } from 'react-router-dom';
+```
+
+完成上述修改后，本地开发就可以使用 BrowserRouter 了。
 
 ## proxy
 
@@ -160,26 +171,46 @@ module.exports = {
 将某些 `import` 的包排除在 bundle 之外，在运行时再去外部获取这些依赖。
 比如，从 CDN 引入 React 资源，而不是将它打包
 
-index.html 中添加：
+详细配置同 webpack 的 [externals](https://webpack.js.org/configuration/externals/#externals)
 
-```html
-<script src="https://unpkg.com/react@16.7.0/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
-```
+### 减少图表资源大小
 
-`ice.config.js` 中添加：
+在使用到图表（Bizcharts）的时候，会发现打包后的文件特别大。是由于图表库本身比较大，这样会影响页面的加载效率。可以通过 CDN 的方式加载图表库，在打包时排除掉对应的图标库。
+
+配置 `ice.config.js` 的 `externals`
 
 ```js
-// ice.config.js
 module.exports = {
   externals: {
-    react: 'window.React',
-    'react-dom': 'window.ReactDOM',
+    'bizcharts': 'BizCharts',
   }
 }
 ```
 
-详细配置同 webpack 的 [externals](https://webpack.js.org/configuration/externals/#externals)
+说明：key 表示依赖包名，如： `bizcharts`。 value 表示引用 CDN 后的全局变量名，如: `BizCharts`
+
+> 参考：[https://github.com/alibaba/BizCharts](https://github.com/alibaba/BizCharts)
+
+将 CDN 文件添加到
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+  <meta name="viewport" content="width=device-width">
+  <title>ICE Design Lite</title>
+</head>
+
+<body>
+  <div id="ice-container"></div>
++  <script src="https://cdn.jsdelivr.net/npm/bizcharts/umd/BizCharts.min.js"></script>
+</body>
+
+</html>
+```
 
 ## hash
 

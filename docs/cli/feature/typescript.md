@@ -1,6 +1,6 @@
 ---
 title: 使用 TypeScript
-order: 6
+order: 1
 ---
 
 `ice-scripts` 内置了对使用 TypeScript 开发的支持。

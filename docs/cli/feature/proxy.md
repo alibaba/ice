@@ -1,6 +1,6 @@
 ---
-title: 接口代理
-order: 5
+title: 使用 Proxy 能力
+order: 3
 ---
 
 在使用代理功能时，请先明确一下问题：
