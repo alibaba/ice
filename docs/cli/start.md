@@ -5,7 +5,6 @@ order: 2
 
 ## 创建项目
 
-基于 iceworks 创建项目 @TODO
 安装 `iceworks` 依赖：
 
 ```bash
