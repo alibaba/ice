@@ -98,7 +98,7 @@ export default class Page extends EventEmitter implements IPageModule {
       pageName,
       'components'
     );
-    mkdirp.sync(componentsDir);
+    await mkdirpAsync(componentsDir);
 
     const iceVersion: string = getIceVersion(projectPackageJSON);
     const blockName: string = block.alias || upperCamelCase(block.name);
@@ -154,24 +154,22 @@ export default class Page extends EventEmitter implements IPageModule {
     await this.installBlocksDependencies(blocks);
 
     // create page file
-    const renderData = {
-      blocks: blocks.map((block) => {
-        const blockFolderName = block.alias || upperCamelCase(block.name);
-        const blockClassName = upperCamelCase(block.alias || block.name);
-
-        return {
-          ...block,
-          className: blockClassName,
-          relativePath: `./components/${blockFolderName}`,
-        };
-      }),
-      className: pageFolderName,
-      pageName,
-    };
-
     await Promise.all((await loadTemplates(libary))
       .map(async (template) => {
-        const fileContent = template.compile(renderData);
+        const fileContent = template.compile({
+          blocks: blocks.map((block) => {
+            const blockFolderName = block.alias || upperCamelCase(block.name);
+            const blockClassName = upperCamelCase(block.alias || block.name);
+
+            return {
+              ...block,
+              className: blockClassName,
+              relativePath: `./components/${blockFolderName}`,
+            };
+          }),
+          className: pageFolderName,
+          pageName,
+        });
         const fileName = template.fileName
           .replace(/PAGE/g, pageFolderName)
           .replace(/\.ejs$/g, '');

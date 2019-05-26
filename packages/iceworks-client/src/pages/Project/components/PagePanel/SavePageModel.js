@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form, Input, Button } from '@alifd/next';
 import Modal from '@components/Modal';
+import Progress from '@components/Progress';
 import styles from './SavePageModel.module.scss';
 
 const FormItem = Form.Item;
@@ -15,11 +16,11 @@ const formItemLayout = {
 };
 
 const SavePageModel = ({ on, onCancel, onOk }) => {
-  const onSave = (values, errors) => {
+  async function onSave(values, errors) {
     if (!errors) {
-      onOk(values);
+      await onOk(values);
     }
-  };
+  }
 
   return (
     <Modal
@@ -75,6 +76,9 @@ const SavePageModel = ({ on, onCancel, onOk }) => {
             placeholder="为空则不生成导航项"
           />
         </FormItem>
+        <div>
+          <Progress />
+        </div>
         <div className={styles.opts}>
           <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
             <FormattedMessage id="iceworks.global.button.yes" />

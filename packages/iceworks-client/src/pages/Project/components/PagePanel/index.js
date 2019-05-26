@@ -20,7 +20,7 @@ const Page = () => {
     on: onCreateModel,
     toggleModal: toggleCreateModal,
   } = useModal();
-  const pages = stores.useStore('pages');
+  const [pages] = stores.useStores(['pages']);
   const { dataSource } = pages;
 
   function onRefresh() {
@@ -38,20 +38,30 @@ const Page = () => {
 
   async function deletePage() {
     await pages.delete(deleteName);
-    pages.refresh();
+
     toggleDeleteModal();
+
     Message.show({
       align: 'tr tr',
       type: 'success',
       content: '删除页面成功',
     });
+
+    pages.refresh();
   }
 
   async function createPage(data) {
     logger.info('create page data:', data);
+
     await pages.create(data);
 
     toggleCreateModal();
+
+    Message.show({
+      align: 'tr tr',
+      type: 'success',
+      content: '创建页面成功',
+    });
 
     pages.refresh();
   }

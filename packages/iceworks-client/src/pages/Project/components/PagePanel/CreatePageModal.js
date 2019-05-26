@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import mockData from '@src/mock';
+import stores from '@stores';
 import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
-import stores from '../../stores';
+import pageStores from '../../stores';
 import SavePageModel from './SavePageModel';
 import styles from './CreatePageModal.module.scss';
 
@@ -20,7 +21,8 @@ const CreatePageModal = ({
     on: onSaveModel,
     toggleModal: toggleSaveModal,
   } = useModal();
-  const page = stores.useStore('page');
+  const [page] = pageStores.useStores(['page']);
+  const [progress] = stores.useStores(['progress']);
   function onClose() {
     onCancel();
   }
@@ -30,10 +32,12 @@ const CreatePageModal = ({
   }
 
   async function onSaveOk(data) {
+    await progress.show({ statusText: '开始创建页面..' });
     await onOk({
       ...page.dataSource,
       ...data,
     });
+    await progress.hide();
     toggleSaveModal();
   }
 
