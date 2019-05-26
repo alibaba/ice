@@ -4,6 +4,7 @@ import mockData from '@src/mock';
 import stores from '@stores';
 import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
+import useSocket from '@hooks/useSocket';
 import pageStores from '../../stores';
 import SavePageModel from './SavePageModel';
 import styles from './CreatePageModal.module.scss';
@@ -26,6 +27,12 @@ const CreatePageModal = ({
   function onClose() {
     onCancel();
   }
+
+  async function onCloseSaveModel() {
+    await progress.hide();
+    toggleSaveModal();
+  }
+
   function onCreateOk() {
     page.setData(pageData);
     toggleSaveModal();
@@ -41,6 +48,10 @@ const CreatePageModal = ({
     toggleSaveModal();
   }
 
+  useSocket('project.page.create.status', (data) => {
+    progress.show(data);
+  });
+
   return (
     <div>
       <Modal
@@ -55,7 +66,7 @@ const CreatePageModal = ({
       </Modal>
       <SavePageModel
         on={onSaveModel}
-        onCancel={toggleSaveModal}
+        onCancel={onCloseSaveModel}
         onOk={onSaveOk}
       />
     </div>

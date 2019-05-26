@@ -6,7 +6,7 @@ export default {
     statusText: '',
   },
   async show({ percent, statusText }) {
-    this.dataSource.percent = percent || 5;
+    this.dataSource.percent = percent || 0;
     this.dataSource.statusText = statusText;
     this.dataSource.show = true;
   },

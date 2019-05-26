@@ -15,9 +15,14 @@ export default (app) => {
       await project.page.delete(name);
     }
 
-    async create({ args }) {
+    async create(ctx) {
+      const { args, socket } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
+
+      project.page.on('create.status', (data) => {
+        socket.emit('project.page.create.status', data);
+      });
       await project.page.create(args);
     }
   };

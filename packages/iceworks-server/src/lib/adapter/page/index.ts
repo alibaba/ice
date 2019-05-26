@@ -135,6 +135,7 @@ export default class Page extends EventEmitter implements IPageModule {
     const { name, blocks, libary = 'react' } = page;
 
     // create page dir
+    this.emit('create.status', { statusText: '创建页面目录...', percent: 10 });
     const pageFolderName = upperCamelCase(name);
     const pageDir = path.join(this.path, pageFolderName);
     await mkdirpAsync(pageDir);
@@ -148,12 +149,15 @@ export default class Page extends EventEmitter implements IPageModule {
     }
 
     // download blocks
+    this.emit('create.status', { statusText: '正在下载区块...', percent: 40 });
     await this.downloadBlocksToPage(blocks, pageName);
 
     // install block dependencies
+    this.emit('create.status', { statusText: '正在安装区块依赖...', percent: 80 });
     await this.installBlocksDependencies(blocks);
 
     // create page file
+    this.emit('create.status', { statusText: '正在创建页面文件...', percent: 90 });
     await Promise.all((await loadTemplates(libary))
       .map(async (template) => {
         const fileContent = template.compile({
