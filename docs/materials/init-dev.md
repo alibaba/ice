@@ -38,9 +38,9 @@ my-materials/
 
 不同物料体系可能使用不同的框架或工具，实际开发方式也会有所差异，此处根据选择的前端方案参考不同文档即可：
 
-- [开发 React 物料](./react.md)
-- [开发 Vue 物料](./vue.md)
-- [开发 Angular 物料](./angular.md)
+- [开发 React 物料](https://ice.work/docs/materials/react)
+- [开发 Vue 物料](https://ice.work/docs/materials/vue)
+- [开发 Angular 物料](https://ice.work/docs/materials/angular)
 
 如有其他框架/工具的需求，欢迎反馈给飞冰（ICE）团队。
 
