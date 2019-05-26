@@ -6,6 +6,7 @@ import * as EventEmitter from 'events';
 export interface IProject {
   readonly name: string;
   readonly path: string;
+  readonly panels: string[];
   getPackageJSON(): any;
   getEnv(): any;
 }

@@ -10,17 +10,26 @@ import DeleteProjectModal from './components/DeleteProjectModal';
 import CreateProjectModel from './components/CreateProjectModel';
 import Guide from './components/Guide';
 import projectStores from './stores';
+import styles from './index.module.scss';
 
 // panels
 import Page from './components/PagePanel';
 import Dependency from './components/DependencyPanel';
 import Layout from './components/LayoutPanel';
 import Todo from './components/TodoPanel';
-import GitPanel from './components/GitPanel';
-import OSSPanel from './components/OSSPanel';
-import DEFPanel from './components/DEFPanel';
+import Git from './components/GitPanel';
+import OSS from './components/OSSPanel';
+import DEF from './components/DEFPanel';
 
-import styles from './index.module.scss';
+const panels = {
+  Page,
+  Dependency,
+  Layout,
+  Todo,
+  Git,
+  OSS,
+  DEF,
+};
 
 const Project = () => {
   const {
@@ -42,11 +51,65 @@ const Project = () => {
     'dependencies',
     'layouts',
   ]);
+  const panelStores = {
+    Page: pages,
+    Dependency: dependencies,
+    Layout: layouts,
+  };
+
+  async function refreshProject() {
+    let newProject;
+    try {
+      newProject = await project.refresh();
+    } catch (err) {
+      // error handle
+    }
+
+    if (newProject) {
+      newProject.dataSource.panels.map((name) => {
+        const panelStore = panelStores[name];
+        if (panelStore) {
+          panelStore.refresh();
+        }
+      });
+    }
+  }
+
+  async function refreshProjects() {
+    let error;
+    try {
+      await projects.refresh();
+    } catch (err) {
+      error = err;
+    }
+
+    if (!error) {
+      await refreshProject();
+    }
+  }
+
+  async function addProject(path) {
+    await projects.add(path);
+    await refreshProjects();
+    setOpenProjectModal(false);
+  }
+
+  async function deleteProject(params) {
+    await projects.delete({ ...params, projectPath: deleteProjectPath });
+    await refreshProjects();
+    toggleDeleteProjectModal();
+  }
+
+
+  async function createProject(data) {
+    await projects.create(data);
+    await refreshProjects();
+    toggleCreateProjectModal();
+  }
 
   async function onSwitchProject(path) {
     await project.reset(path);
-    pages.refresh();
-    dependencies.refresh();
+    await refreshProject();
   }
 
   async function onDeleteProject(path) {
@@ -59,41 +122,6 @@ const Project = () => {
   }
 
   async function onOpenCreateProject() {
-    toggleCreateProjectModal();
-  }
-
-  async function refreshProject() {
-    let error;
-    try {
-      await projects.refresh();
-      await project.refresh();
-    } catch (err) {
-      error = err;
-    }
-
-    if (!error) {
-      pages.refresh();
-      dependencies.refresh();
-      layouts.refresh();
-    }
-  }
-
-  async function addProject(path) {
-    await projects.add(path);
-    await refreshProject();
-    setOpenProjectModal(false);
-  }
-
-  async function deleteProject(params) {
-    await projects.delete({ ...params, projectPath: deleteProjectPath });
-    await refreshProject();
-    toggleDeleteProjectModal();
-  }
-
-
-  async function createProject(data) {
-    await projects.create(data);
-    await refreshProject();
     toggleCreateProjectModal();
   }
 
@@ -118,7 +146,7 @@ const Project = () => {
   useEffect(() => {
     logger.info('Project page loaded.');
 
-    refreshProject();
+    refreshProjects();
   }, []);
 
   const projectPreDelete =
@@ -155,16 +183,15 @@ const Project = () => {
         onOk={onCreateProject}
       />
       {
-        projects.dataSource.length ?
+        projects.dataSource.length && project.dataSource.panels.length ?
           (
             <div className={styles.main}>
-              <Page />
-              <Dependency />
-              <Layout />
-              <Todo />
-              <GitPanel />
-              <DEFPanel />
-              <OSSPanel />
+              {
+                project.dataSource.panels.map(name => {
+                  const Panel = panels[name];
+                  return Panel ? <Panel /> : null;
+                })
+              }
             </div>
           ) :
           (

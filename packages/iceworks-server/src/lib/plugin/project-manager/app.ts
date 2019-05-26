@@ -39,6 +39,8 @@ class Project implements IProject {
 
   public readonly path: string;
 
+  public panels: string[] = [];
+
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
     this.path = folderPath;
@@ -86,6 +88,7 @@ class Project implements IProject {
   private loadAdapter() {
     const adapterModuleKeys = Object.keys(adapter);
     for (const [key, Module] of Object.entries(adapter)) {
+      this.panels.push(key);
 
       let project: IProject = clone(this);
       for (const moduleKey of adapterModuleKeys) {
