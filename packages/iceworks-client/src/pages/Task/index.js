@@ -79,8 +79,8 @@ const Task = ({ history, intl }) => {
 
       <div className={styles.content}>
         <XtermTerminal
-          name={`${project.dataSource.name}.${type}`}
-          id="type"
+          name={project.dataSource.name}
+          id={type}
           startEventName={`project.task.${type}.start.data`}
           stopEventName={`project.task.${type}.stop.data`}
         />
