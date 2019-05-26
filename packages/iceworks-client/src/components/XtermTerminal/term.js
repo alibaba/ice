@@ -33,56 +33,56 @@ const term = {
   /**
    * create new terminal
    */
-  new: (cwd, container) => {
-    if (!terms[cwd]) {
-      terms[cwd] = new Terminal(defaultOptions);
-      terms[cwd].write(`\x1B[1;3;31m${cwd}\x1B[0m $ `);
+  new: (id, name, container) => {
+    if (!terms[id]) {
+      terms[id] = new Terminal(defaultOptions);
+      terms[id].write(`\x1B[1;3;31m${name}\x1B[0m $ `);
     } else {
-      terms[cwd]._core.options.theme = defaultTheme;
+      terms[id]._core.options.theme = defaultTheme;
     }
 
     // initialize the web links addon, registering the link matcher
-    webLinks.webLinksInit(terms[cwd], term.openLink);
+    webLinks.webLinksInit(terms[id], term.openLink);
 
     // opens the terminal within an element.
-    terms[cwd].open(container);
+    terms[id].open(container);
 
     // make the terminal's size and geometry fit the size of #terminal-container
-    terms[cwd].fit();
+    terms[id].fit();
   },
 
   /**
    * writes text to the terminal.
    */
-  write: (cwd, data) => {
-    if (terms[cwd]) {
-      terms[cwd].write(data);
+  write: (id, data) => {
+    if (terms[id]) {
+      terms[id].write(data);
     }
   },
 
   /**
    * writes text to the terminal, followed by a break line character (\n).
    */
-  writeln: (cwd, data) => {
-    if (terms[cwd]) {
-      terms[cwd].writeln(data);
+  writeln: (id, data) => {
+    if (terms[id]) {
+      terms[id].writeln(data);
     }
   },
 
   /**
    * clear the entire buffer, making the prompt line the new first line.
    */
-  clear: (cwd) => {
-    if (terms[cwd]) {
-      terms[cwd].clear();
+  clear: (id) => {
+    if (terms[id]) {
+      terms[id].clear();
     }
   },
 
   /**
    * get current terminal instance
    */
-  get: (cwd) => {
-    return terms[cwd];
+  get: (id) => {
+    return terms[id];
   },
 
   /**

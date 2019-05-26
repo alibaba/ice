@@ -6,12 +6,12 @@ import Icon from '@components/Icon';
 import term from './term';
 import styles from './index.module.scss';
 
-const XtermTerminal = ({ id, name, startEventName, stopEventName }) => {
+const XtermTerminal = ({ id, projectName, startEventName, stopEventName }) => {
   const xtermRef = useRef(id);
 
   useEffect(() => {
     // new terminal
-    term.new(name, xtermRef.current);
+    term.new(id, projectName, xtermRef.current);
   }, []);
 
   // format and write the text content of the terminal
@@ -22,12 +22,12 @@ const XtermTerminal = ({ id, name, startEventName, stopEventName }) => {
     }
     if (typeof data === 'string') {
       if (ln) {
-        term.writeln(name, ` ${data}`);
+        term.writeln(id, ` ${data}`);
       } else {
-        term.write(name, ` ${data}`);
+        term.write(id, ` ${data}`);
       }
     } else {
-      term.writeln(name, '');
+      term.writeln(id, '');
     }
   };
 
@@ -39,7 +39,7 @@ const XtermTerminal = ({ id, name, startEventName, stopEventName }) => {
   // receive stop data
   useSocket(stopEventName, (data) => {
     writeContent(data);
-    term.write(name, `\n\x1B[1;3;31m${name}\x1B[0m $ `);
+    term.write(id, `\n\x1B[1;3;31m${projectName}\x1B[0m $ `);
   });
 
   return (
@@ -47,7 +47,7 @@ const XtermTerminal = ({ id, name, startEventName, stopEventName }) => {
       <Icon
         type="clear"
         className={styles.clearIcon}
-        onClick={() => term.clear(name)}
+        onClick={() => term.clear(id)}
       />
       <div ref={xtermRef} />
     </div>
@@ -58,7 +58,7 @@ XtermTerminal.defaultProps = {};
 
 XtermTerminal.propTypes = {
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  projectName: PropTypes.string.isRequired,
   startEventName: PropTypes.string.isRequired,
   stopEventName: PropTypes.string.isRequired,
 };
