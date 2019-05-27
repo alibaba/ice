@@ -8,6 +8,7 @@ module.exports = class PluginAPI {
     this.log = log;
     this.chainWebpack = this.chainWebpack.bind(this);
     this.getWebpackConfig = this.getWebpackConfig.bind(this);
+    this.onHook = this.onHook.bind(this);
   }
 
   chainWebpack(fn) {

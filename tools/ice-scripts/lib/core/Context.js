@@ -21,6 +21,9 @@ module.exports = class Context {
     // init chainWebpackFns and hooks
     this.chainWebpackFns = [];
     this.eventHooks = {};
+
+    this.reRun = this.reRun.bind(this);
+    this.applyHook = this.applyHook.bind(this);
   }
 
   getUserConfig() {
@@ -92,7 +95,7 @@ module.exports = class Context {
     }
   }
 
-  async applyHooks(key, opts = {}) {
+  async applyHook(key, opts = {}) {
     const hooks = this.eventHooks[key] || [];
     const results = [];
     hooks.forEach((fn) => {
