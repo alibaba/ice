@@ -107,6 +107,7 @@ function getDirFiles(dirPath) {
 /**
  * JSON.minify() https://github.com/getify/JSON.minify
  */
+/* eslint-disable */
 function minifyJson(json) {
   const tokenizer = /"|(\/\*)|(\*\/)|(\/\/)|\n|\r/g;
   let in_string = false;
@@ -181,3 +182,4 @@ function minifyJson(json) {
   new_str[ns++] = rc;
   return new_str.join('');
 }
+/* eslint-enable */
