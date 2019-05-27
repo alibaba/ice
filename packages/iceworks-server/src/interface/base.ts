@@ -4,10 +4,30 @@ import * as EventEmitter from 'events';
  * 项目信息
  */
 export interface IProject {
+  /**
+   * 项目显示名称
+   */
   readonly name: string;
+
+  /**
+   * 项目的路径
+   */
   readonly path: string;
+
+  /**
+   * 项目的支持的面板
+   */
   readonly panels: string[];
+
+  /**
+   * 获取项目的 package.json 信息
+   */
   getPackageJSON(): any;
+
+
+  /**
+   * 获取项目的环境变量信息
+   */
   getEnv(): any;
 }
 

@@ -9,11 +9,6 @@
   width: 48%;
   height: 320px;
   margin-bottom: 34px;
-  @media (min-width: 1400px) {
-    & {
-      width: 32%;
-    }
-  }
 
   .header {
     background-color: $brand-color-normal;

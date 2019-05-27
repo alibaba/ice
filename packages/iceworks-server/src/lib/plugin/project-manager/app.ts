@@ -157,7 +157,7 @@ class ProjectManager extends EventEmitter {
   /**
    * Add a project to project list
    */
-  async addProject(projectPath: string): Promise<void> {
+  public async addProject(projectPath: string): Promise<void> {
     const projects = storage.get('projects');
 
     if (projects.indexOf(projectPath) === -1) {
@@ -172,7 +172,7 @@ class ProjectManager extends EventEmitter {
   /**
    * Create folder for project
    */
-  async createProjectFolder(params: { path: string; forceCover?: boolean; }) {
+  private async createProjectFolder(params: { path: string; forceCover?: boolean; }) {
     const { path: targetPath, forceCover } = params;
 
     if (!await pathExists(targetPath)) {
@@ -208,7 +208,7 @@ class ProjectManager extends EventEmitter {
   /**
    * generate project
    */
-  async generateProject(params: ICreateParams) {
+  private async generateProject(params: ICreateParams) {
     const { path: targetPath, scaffold, name } = params;
     const tarballURL = await getTarballURLByMaterielSource(scaffold.source);
     await downloadAndExtractPackage(targetPath, tarballURL);
@@ -242,7 +242,7 @@ class ProjectManager extends EventEmitter {
    * 
    * TODO create a project by custom scaffold
    */
-  async createProject(params: ICreateParams): Promise<void> {
+  public async createProject(params: ICreateParams): Promise<void> {
     await this.createProjectFolder(params);
     await this.generateProject(params);
     await this.addProject(params.path);
@@ -251,7 +251,7 @@ class ProjectManager extends EventEmitter {
   /**
    * Delete a project in project list
    */
-  async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<void> {
+  public async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
     this.projects = this.projects.filter(({ path }) => path !== projectPath);
     const newProjects = storage.get('projects').filter((path) => path !== projectPath);
