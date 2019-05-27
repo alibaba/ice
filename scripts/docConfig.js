@@ -47,26 +47,26 @@ const docCategories = {
   materials: {
     // 自定义物料
     title: {},
-    currentVersion: '1.x',
-    versions: [{
-      value: '0.x',
-      path: '/docs/cli/about',
-    }, {
-      value: '1.x',
-      path: '/docs/materials/about',
-    }],
+    // currentVersion: '1.x',
+    // versions: [{
+    //   value: '0.x',
+    //   path: '/docs/cli/about',
+    // }, {
+    //   value: '1.x',
+    //   path: '/docs/materials/about',
+    // }],
   },
   cli: {
     // ice-scripts
     title: {},
-    currentVersion: '0.x',
-    versions: [{
-      value: '0.x',
-      path: '/docs/cli/about',
-    }, {
-      value: '1.x',
-      path: '/docs/materials/about',
-    }],
+    // currentVersion: '0.x',
+    // versions: [{
+    //   value: '0.x',
+    //   path: '/docs/cli/about',
+    // }, {
+    //   value: '1.x',
+    //   path: '/docs/materials/about',
+    // }],
     children: [{
       title: {
         'zh-cn': '基础指南',
