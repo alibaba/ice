@@ -14,7 +14,7 @@ export const install = async (dependencies: ICreateDependencyParam[], adapterMod
   adapterModule.emit('install.data', '开始安装依赖');
 
   const args = ['install', '--no-package-lock', isDev ? '---save-dev' : '--save'].concat(
-    dependencies.map(({ package: _package, version }) => `${_package}@${version}`)
+    dependencies.map(({ package: packageName, version }) => `${packageName}@${version}`)
   );
 
   const childProcess = execa(
@@ -89,19 +89,19 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     const { dependencies: packageDependencies, devDependencies: packageDevDependencies } = this.project.getPackageJSON();
 
     const getAll = async (list, dev) => {
-      return await Promise.all(Object.entries(list).map(async ([_package, specifyVersion]: [string, string]) => {
+      return await Promise.all(Object.entries(list).map(async ([packageName, specifyVersion]: [string, string]) => {
         let localVersion = '';
         try {
-          localVersion = await this.getLocalVersion(_package);
+          localVersion = await this.getLocalVersion(packageName);
         } catch (error) {
           // ignore error
         }
         return {
-          package: _package,
+          package: packageName,
           specifyVersion,
           dev,
           localVersion,
-          latestVersion: await latestVersion(_package)
+          latestVersion: await latestVersion(packageName)
         }
       }));
     }
@@ -118,12 +118,12 @@ export default class Dependency extends EventEmitter implements IDependencyModul
 
     const npmOutdated: INpmOutdatedData[] = await this.getNpmOutdated();
     npmOutdated.forEach(({ package: _outPackage, wanted }: INpmOutdatedData) => {
-      const dependency = dependencies.find(({ package: _package }) => _package === _outPackage);
+      const dependency = dependencies.find(({ package: packageName }) => packageName === _outPackage);
       if (dependency && dependency.localVersion && dependency.localVersion !== wanted) {
         dependency.wantedVestion = wanted;
       }
 
-      const devDependency = devDependencies.find(({ package: _package }) => _package === _outPackage);
+      const devDependency = devDependencies.find(({ package: packageName }) => packageName === _outPackage);
       if (devDependency && devDependency.localVersion && devDependency.localVersion !== wanted) {
         devDependency.wantedVestion = wanted;
       }
@@ -168,11 +168,11 @@ export default class Dependency extends EventEmitter implements IDependencyModul
   }
 
   public async upgrade(denpendency: { package: string; isDev?: boolean }): Promise<void> {
-    const { package: _package } = denpendency;
+    const { package: packageName } = denpendency;
 
-    this.emit('upgrade.data', `开始更新依赖：${_package}...`);
+    this.emit('upgrade.data', `开始更新依赖：${packageName}...`);
 
-    const childProcess = execa('npm', ['update', _package, '--silent'], {
+    const childProcess = execa('npm', ['update', packageName, '--silent'], {
       cwd: this.project.path,
       env: this.project.getEnv(),
     });

@@ -72,22 +72,22 @@ export default class Page extends EventEmitter implements IPageModule {
   private async installBlocksDependencies(blocks: IMaterialBlock[]) {
     const projectPackageJSON = this.project.getPackageJSON();
     // get all dependencies
-    const blocksDependencies: { [_package: string]: string } = {};
+    const blocksDependencies: { [packageName: string]: string } = {};
     blocks.forEach(({ dependencies }) => Object.assign(blocksDependencies, dependencies));
 
     // filter dependencies if already in project
-    const filterDependencies: { [_package: string]: string }[] = [];
-    Object.keys(blocksDependencies).forEach((_package) => {
-      if (!projectPackageJSON.dependencies.hasOwnProperty(_package)) {
+    const filterDependencies: { [packageName: string]: string }[] = [];
+    Object.keys(blocksDependencies).forEach((packageName) => {
+      if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
         filterDependencies.push({
-          [_package]: blocksDependencies[_package]
+          [packageName]: blocksDependencies[packageName]
         });
       }
     });
 
     return await Promise.all(filterDependencies.map(async (dependency) => {
-      const [_package, version]: [string, string] = Object.entries(dependency)[0];
-      return await installDependency([{ package: _package, version }], this);
+      const [packageName, version]: [string, string] = Object.entries(dependency)[0];
+      return await installDependency([{ package: packageName, version }], this);
     }));
   }
 

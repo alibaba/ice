@@ -11,9 +11,9 @@ const CreateDependencyModel = ({
 
   async function onChange(text) {
     setState(text.split(/\s+/).filter((dep) => !!dep.trim()).map((dep) => {
-      const [_package, version] = dep.split('@');
+      const [packageName, version] = dep.split('@');
       return {
-        package: _package,
+        package: packageName,
         version: version || 'latest',
       };
     }));

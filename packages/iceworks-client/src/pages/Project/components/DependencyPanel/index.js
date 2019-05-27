@@ -54,8 +54,8 @@ const DependencyPanel = () => {
     });
   }
 
-  async function onUpgrade(_package, isDev) {
-    dependenciesStore.upgrade({ package: _package, isDev });
+  async function onUpgrade(packageName, isDev) {
+    dependenciesStore.upgrade({ package: packageName, isDev });
   }
 
   async function create(value) {
@@ -70,13 +70,13 @@ const DependencyPanel = () => {
             <div className={styles.confirmContent}>
               新添加的依赖
               {' '}
-              {error.info.map(({ pacakge: _package, version }) => `${_package}@${version}`).join(',')}
+              {error.info.map(({ pacakge: packageName, version }) => `${packageName}@${version}`).join(',')}
               {' '}
               主版本号与项目依赖
-              {error.info.map(({ pacakge: _package }) => {
+              {error.info.map(({ pacakge: packageName }) => {
                 const { specifyVersion } = dependencies.find(({ package: projectPackage }) =>
-                  projectPackage === _package);
-                return `${_package}@${specifyVersion}`;
+                  projectPackage === packageName);
+                return `${packageName}@${specifyVersion}`;
               }).join(',')}
               {' '}
               主版本号发生改变可能存在不兼容的 API 修改，确定要继续吗？
@@ -220,18 +220,18 @@ const DependencyPanel = () => {
                 >
                   <div className={styles.list}>
                     {
-                      deps.map(({ package: _package, localVersion, wantedVestion }) => {
+                      deps.map(({ package: packageName, localVersion, wantedVestion }) => {
                         return (
-                          <div key={_package} className={styles.item}>
+                          <div key={packageName} className={styles.item}>
                             <div className={styles.package}>
-                              {_package}
+                              {packageName}
                             </div>
                             <div className={styles.info}>
                               <div className={styles.version}>{localVersion || '-'}</div>
                               {
                                 wantedVestion ?
                                   <div title={`可升级到 ${wantedVestion}`}>
-                                    <Icon type="download" size="xs" className={styles.download} onClick={() => onUpgrade(_package, isDev)} />
+                                    <Icon type="download" size="xs" className={styles.download} onClick={() => onUpgrade(packageName, isDev)} />
                                   </div> :
                                   null
                               }

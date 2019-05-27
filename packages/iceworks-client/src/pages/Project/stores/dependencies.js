@@ -23,13 +23,13 @@ export default {
     const { dependencies } = this.dataSource;
     if (!focus) {
       const depsWithoutVersion = deps.filter(({ version }) => !version || version === 'latest');
-      const existDeps = depsWithoutVersion.filter(({ package: _package }) =>
-        dependencies.find(({ package: projectPackage }) => projectPackage === _package));
+      const existDeps = depsWithoutVersion.filter(({ package: packageName }) =>
+        dependencies.find(({ package: projectPackage }) => projectPackage === packageName));
 
       const incompatibleDeps = [];
-      existDeps.forEach(({ package: _package }) => {
+      existDeps.forEach(({ package: packageName }) => {
         const { specifyVersion, latestVersion } = dependencies.find(({ package: projectPackage }) =>
-          projectPackage === _package);
+          projectPackage === packageName);
         const {
           major: latestMajor,
         } = semver.minVersion(latestVersion);
@@ -37,7 +37,7 @@ export default {
         const { major: specifyMajor } = semver.minVersion(specifyVersion);
         if (latestMajor > specifyMajor) {
           incompatibleDeps.push({
-            pacakge: _package,
+            pacakge: packageName,
             version: latestVersion,
           });
         }
