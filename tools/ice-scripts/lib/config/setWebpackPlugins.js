@@ -6,13 +6,10 @@ const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const CheckIceComponentsDepsPlugin = require('../utils/checkIceComponentsDepPlugin');
 const getFaviconPath = require('../utils/getFaviconPath');
-const getPkgData = require('./getPackageJson');
-const { appDirectory, appFaviconIco, appFavicon, appPublic, defaultAppHtml, defaultBuildPath } = require('./paths');
+const { appFaviconIco, appFavicon, appPublic, defaultAppHtml, defaultBuildPath } = require('./paths');
 
 module.exports = (chainConfig, mode = 'development') => {
-  const packageJson = getPkgData(appDirectory);
   const defineVariables = {
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
   };
@@ -30,9 +27,6 @@ module.exports = (chainConfig, mode = 'development') => {
       .use(FilterWarningsPlugin, [{
         exclude: /Conflicting order between:/,
       }])
-      .end()
-    .plugin('CheckIceComponentsDepsPlugin')
-      .use(CheckIceComponentsDepsPlugin, [{ packageJson }])
       .end()
     .plugin('SimpleProgressPlugin')
       .use(SimpleProgressPlugin)

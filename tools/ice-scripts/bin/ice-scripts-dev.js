@@ -1,13 +1,11 @@
 #!/usr/bin/env node
-
-
 const program = require('commander');
 const detect = require('detect-port');
 const inquirer = require('inquirer');
 
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 const checkUpdater = require('../lib/utils/checkUpdater');
-const cliInstance = require('../lib/utils/cliInstance');
+const getCliOptions = require('../lib/utils/getCliOptions');
 const Context = require('../lib/core/Context');
 
 program
@@ -18,8 +16,6 @@ program
   .option('--analyzer-port', '设置分析端口号')
   .option('--disabled-reload', '关闭 hot reload')
   .parse(process.argv);
-
-cliInstance.initByProgram(program);
 
 validationSassAvailable();
 
@@ -64,9 +60,11 @@ checkUpdater()
       process.exit(500);
     }
 
-    cliInstance.set('port', parseInt(port, 10));
-    const cliOptions = cliInstance.get();
     process.env.NODE_ENV = 'development';
+
+    const cliOptions = getCliOptions(program);
+    cliOptions.port = parseInt(port, 10);
+
     new Context({
       command: 'dev',
       args: cliOptions,

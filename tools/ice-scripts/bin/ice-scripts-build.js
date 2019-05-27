@@ -1,25 +1,21 @@
 #!/usr/bin/env node
-
-
 const program = require('commander');
-const cliInstance = require('../lib/utils/cliInstance');
+const validationSassAvailable = require('../lib/utils/validationSassAvailable');
+const getCliOptions = require('../lib/utils/getCliOptions');
 const checkUpdater = require('../lib/utils/checkUpdater');
 const Context = require('../lib/core/Context');
 
-/**
- * --project-type 参数说明
- *  - web: 纯前端项目
- *  - nodejs: koa/midway 项目，前端代码放在 client 下
- *  - node: 老的 koa 项目
- */
 program
   .parse(process.argv);
 
+validationSassAvailable();
+
 checkUpdater().then(() => {
-  cliInstance.initByProgram(program);
   process.env.NODE_ENV = 'production';
+  const cliOptions = getCliOptions(program);
+
   new Context({
     command: 'build',
-    args: cliInstance.get(),
+    args: cliOptions,
   }).run();
 });

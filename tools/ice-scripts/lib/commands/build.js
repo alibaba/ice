@@ -1,10 +1,8 @@
 const fse = require('fs-extra');
 const webpack = require('webpack');
-const { collectDetail } = require('@alifd/fusion-collector');
 const iceScriptsPkgData = require('../../package.json');
 const goldlog = require('../utils/goldlog');
 const log = require('../utils/log');
-const validationSassAvailable = require('../utils/validationSassAvailable');
 const checkDepsInstalled = require('../utils/checkDepsInstalled');
 
 /**
@@ -15,7 +13,7 @@ const checkDepsInstalled = require('../utils/checkDepsInstalled');
  * @param {Object} options 命令行参数
  */
 module.exports = async function (context) {
-  const { applyHook, commandArgs, rootDir, userConfig, webpackConfig } = context;
+  const { applyHook, commandArgs, rootDir, webpackConfig } = context;
   goldlog('version', {
     version: iceScriptsPkgData.version,
   });
@@ -27,20 +25,6 @@ module.exports = async function (context) {
   if (!installedDeps) {
     log.error('项目依赖未安装，请先安装依赖。');
     process.exit(1);
-  }
-
-  if (userConfig.type === 'project') {
-    validationSassAvailable();
-
-    try {
-      collectDetail({
-        rootDir, // 项目根地址
-        basicPackage: ['@alifd/next', '@icedesign/base', '@alife/next'], // 主体包名称
-        kit: 'ice-scripts', // 统计的来源
-      });
-    } catch (err) {
-      log.warn('collectDetail error', err);
-    }
   }
 
   // empty output path

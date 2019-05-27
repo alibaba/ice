@@ -1,12 +1,10 @@
 /**
- * manage cli options
+ * get cli options by program
  */
 const camelcase = require('camelcase');
 
-let cliOptions = {};
-
-exports.initByProgram = (program) => {
-  cliOptions = {};
+module.exports = (program) => {
+  const cliOptions = {};
   program.options.forEach((option) => {
     const key = camelcase(option.long, {
       pascalCase: false,
@@ -18,19 +16,5 @@ exports.initByProgram = (program) => {
     }
   });
 
-  return cliOptions;
-};
-
-exports.reset = (options) => {
-  cliOptions = options;
-  return cliOptions;
-};
-
-exports.get = (key) => {
-  return key ? cliOptions[key] : cliOptions;
-};
-
-exports.set = (key, value) => {
-  cliOptions[key] = value;
   return cliOptions;
 };
