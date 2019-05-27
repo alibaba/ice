@@ -7,7 +7,6 @@ import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
 import { ITaskModule, IProject } from '../../../interface';
 
 const DEFAULT_PORT = '4444';
-const TASK_STATUS_NORMAL = 'normal';
 const TASK_STATUS_WORKING = 'working';
 const TASK_STATUS_STOP = 'stop';
 
@@ -16,7 +15,7 @@ export default class Task extends EventEmitter implements ITaskModule {
 
   public readonly projectName: string;
 
-  public status: string = TASK_STATUS_NORMAL;
+  public status: string = '';
 
   private process: object = {};
 
@@ -41,7 +40,6 @@ export default class Task extends EventEmitter implements ITaskModule {
 
     let env: object = {};
     if (command === 'dev') {
-      // set port
       env = { PORT: await detectPort(DEFAULT_PORT) };
 
       // create an ipc channel
@@ -67,8 +65,9 @@ export default class Task extends EventEmitter implements ITaskModule {
       });
     });
 
-    this.process[command].on('close', (code) => {
-      if (code === 0 || command === 'lint') {
+    this.process[command].on('close', () => {
+      if (command === "build" || command === 'lint') {
+        this.process[command] = null;
         this.emit(eventName, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
