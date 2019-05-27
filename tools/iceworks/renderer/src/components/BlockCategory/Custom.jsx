@@ -7,7 +7,7 @@ import CustomBlockPreviewModal from '../Block/PreviewModal/custom';
 
 import './index.scss';
 
-@inject('localBlocks', 'blocks', 'pageBlockPicker')
+@inject('customBlocks', 'blocks', 'pageBlockPicker')
 @observer
 class CustomBlockCategory extends Component {
   handleSelected = (block, blockName) => {
@@ -15,22 +15,22 @@ class CustomBlockCategory extends Component {
   };
 
   render() {
-    const { localBlocks } = this.props;
-    const { blocksStorage } = localBlocks;
+    const customBlocks = this.props.customBlocks.blocksStorage;
     return (
-      <div className="blocks-wrapper">
+      <div className="blcoks-wrapper">
         <div className="block-category">
           <div className="block-category-body">
-            {Object.keys(blocksStorage).map((blockName) => {
+            {Object.keys(customBlocks).map((blockName) => {
               return (
                 <CustomBlock
                   key={blockName}
                   blockName={blockName}
-                  block={blocksStorage[blockName]}
+                  block={customBlocks[blockName]}
                   onClick={this.handleSelected}
                 />
               );
-            })}
+            })
+              }
           </div>
         </div>
         <CustomBlockPreviewModal />

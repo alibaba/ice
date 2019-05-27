@@ -157,9 +157,10 @@ class BlockPicker extends Component {
             })}
             {type === 'react' && (
               <Tab.TabPane
-                tab="本地区块"
+                tab="自定义区块"
                 key="-1"
                 contentStyle={{ position: 'relative' }}
+                tabClassName="custom-material-tab"
               >
                 <CustomBlockCategory />
               </Tab.TabPane>

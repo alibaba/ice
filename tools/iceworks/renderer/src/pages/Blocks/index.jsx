@@ -16,18 +16,17 @@ import './index.scss';
 const TabPane = Tab.TabPane;
 const Toast = Feedback.toast;
 
-@inject('materials', 'localBlocks')
+@inject('materials', 'customBlocks')
 @observer
 class PageBlocks extends Component {
   static displayName = 'PageBlocks';
 
   componentDidMount() {
-    this.props.localBlocks.initCustomBlocks();
     this.props.materials.refresh();
   }
 
   handleRefresh = () => {
-    this.props.localBlocks.showCustomBlocks = false;
+    this.props.customBlocks.showCustomBlocks = false;
     this.props.materials.refresh();
   };
 
@@ -52,43 +51,48 @@ class PageBlocks extends Component {
   };
 
   handleShowCustomBlocks = (show) => {
-    this.props.localBlocks.showCustomBlocks = show;
+    this.props.customBlocks.showCustomBlocks = show;
+  };
+
+  handleProgressClose = () => {
+    this.props.customBlocks.closeProgress();
+  };
+
+  handleErrorClose = () => {
+    this.props.customBlocks.closeError();
   };
 
   handleOpen = () => {
-    const { localBlocks } = this.props;
-
-    if (localBlocks.blockEditing) {
+    if (this.props.customBlocks.blockEditing) {
       Toast.show({
         type: 'prompt',
         content: '请先关闭正在搭建的区块',
         duration: 1000,
       });
       return null;
+    } if (this.props.customBlocks.dataLoading) {
+      this.props.customBlocks.openProgress();
+      return null;
     }
-    localBlocks.open();
+    this.props.customBlocks.open();
   };
 
   handleClose = () => {
-    this.props.localBlocks.close();
+    this.props.customBlocks.close();
   };
 
   handleRenameClose = () => {
-    this.props.localBlocks.renameClose();
+    this.props.customBlocks.renameClose();
   };
 
   handleRenameBlock = () => {
-    const { localBlocks } = this.props;
-    localBlocks.renameClose();
-    localBlocks.refactorBlock();
+    this.props.customBlocks.renameClose();
+    this.props.customBlocks.refactorBlock();
   };
 
   handleOpenWorkbench = () => {
-    const { localBlocks } = this.props;
-    localBlocks.openWorkBench(true, () => {
-      return true;
-    });
-    localBlocks.close();
+    this.props.customBlocks.openWorkBench();
+    this.props.customBlocks.close();
   };
 
   handleFeedBack = () => {
@@ -111,17 +115,20 @@ class PageBlocks extends Component {
   };
 
   renderCustomBlocksTabPanel = () => {
-    const { localBlocks } = this.props;
-    const { blocksStorage } = localBlocks;
-    return (
-      <TabPane tab="本地区块" key={-1} onClick={this.handleShowCustomBlocks.bind(this, true)}>
-        <div className="scaffold-items-wrapper" style={{ marginTop: '20px' }}>
-          <div className="custom-block-notice">目前只有表单区块，iceworks 3.0 版本会开放更多的能力，敬请期待！</div>
-          <CustomBlockTrigger onClick={this.handleOpen} />
-          <CustomBlockPanel blocks={blocksStorage} />
-        </div>
-      </TabPane>
-    );
+    const { blocksStorage } = this.props.customBlocks;
+    const hasCustomBlock = Object.keys(blocksStorage).length > 0;
+    if (hasCustomBlock) {
+      return (
+        <TabPane tab="自定义区块" key={-1} onClick={this.handleShowCustomBlocks.bind(this, true)}>
+          <div className="scaffold-items-wrapper" style={{ marginTop: '20px' }}>
+            <div className="custom-block-notice">由于自定义区块功能目前存在使用体验问题已下线，以下是您自定义的区块列表记录</div>
+            <CustomBlockTrigger onClick={this.handleOpen} />
+            <CustomBlockPanel blocks={blocksStorage} />
+          </div>
+        </TabPane>
+      );
+    }
+    return null;
   };
 
   renderBlockTabs = () => {
@@ -167,7 +174,8 @@ class PageBlocks extends Component {
               paddingRight: 20,
             }}
           >
-            {this.props.localBlocks.showCustomBlocks &&
+            {this.props.customBlocks.showCustomBlocks
+              && (
               <Button
                 type="primary"
                 style={{ marginRight: 4 }}
@@ -177,7 +185,7 @@ class PageBlocks extends Component {
               >
                 反馈意见
               </Button>
-            }
+              )}
             <Button
               loading={this.props.materials.refreshing}
               size="small"
@@ -189,7 +197,10 @@ class PageBlocks extends Component {
 )}
       >
         {this.renderMaterialsTabPanel()}
-        {this.renderCustomBlocksTabPanel()}
+        {/* 隐藏自定义区块功能
+          this.renderCustomBlocksTabPanel()
+          */
+        }
       </Tab>
     );
   };
@@ -219,7 +230,7 @@ class PageBlocks extends Component {
           {this.renderBlockTabs()}
         </div>
         <Dialog
-          title="新建本地区块"
+          title="新建自定义区块"
           autoFocus
           className="poject-config-dialog"
           footerAlign="center"
@@ -228,7 +239,7 @@ class PageBlocks extends Component {
             <div className="project-config-footer">
               <Button
                 onClick={this.handleOpenWorkbench}
-                disabled={this.props.localBlocks.isDisabled}
+                disabled={this.props.customBlocks.isDisabled}
                 type="primary"
               >
                 创建区块
@@ -239,8 +250,8 @@ class PageBlocks extends Component {
                 取消
               </Button>
             </div>
-          )}
-          visible={this.props.localBlocks.visible}
+)}
+          visible={this.props.customBlocks.visible}
         >
           <CustomBlockForm />
         </Dialog>
@@ -254,7 +265,7 @@ class PageBlocks extends Component {
             <div className="project-config-footer">
               <Button
                 onClick={this.handleRenameBlock}
-                disabled={this.props.localBlocks.isDisabled}
+                disabled={this.props.customBlocks.isDisabled}
                 type="primary"
               >
                 重命名
@@ -265,10 +276,53 @@ class PageBlocks extends Component {
                 取消
               </Button>
             </div>
-          )}
-          visible={this.props.localBlocks.renameVisible}
+)}
+          visible={this.props.customBlocks.renameVisible}
         >
           <BlockRenameForm />
+        </Dialog>
+        <Dialog
+          title="请求物料数据"
+          autoFocus
+          className="poject-config-dialog progress-dialog"
+          onOk={this.handleProgressClose}
+          onClose={this.handleProgressClose}
+          onCancel={this.handleProgressClose}
+          footerAlign="center"
+          visible={this.props.customBlocks.progressVisible}
+        >
+          <div className="project-config-form-item">
+            <Progress
+              style={{ width: '40%' }}
+              showInfo={false}
+              percent={this.props.customBlocks.materialProgress}
+            />
+            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
+              {this.props.customBlocks.materialProgress}
+%
+            </span>
+            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
+              {this.props.customBlocks.progressSpeed}
+              /kbs
+            </span>
+            <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
+              {this.props.customBlocks.progressTitle}
+            </span>
+          </div>
+        </Dialog>
+        <Dialog
+          title="请求物料数据失败"
+          autoFocus
+          className="poject-config-dialog progress-dialog"
+          onOk={this.handleErrorClose}
+          onClose={this.handleErrorClose}
+          onCancel={this.handleErrorClose}
+          footerAlign="center"
+          visible={this.props.customBlocks.errorVisible}
+        >
+          <div className="project-config-form-item">
+            <h4>请检查网络连接是否正常</h4>
+          </div>
         </Dialog>
       </div>
     );
