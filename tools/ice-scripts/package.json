@@ -1,6 +1,6 @@
 {
   "name": "ice-scripts",
-  "version": "2.0.0-5",
+  "version": "2.0.0-6",
   "description": "ICE SDK",
   "main": "index.js",
   "bin": {
