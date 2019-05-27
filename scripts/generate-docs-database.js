@@ -28,6 +28,7 @@ function generateDocFile(categories, locale) {
 
   Object.keys(categories).forEach((key) => {
     const category = docCategories[key];
+    category.dir = key;
     const baseDir = path.join(docsDir, key, locale === 'zh-cn' ? '' : locale);
     result[key] = getCategoryData(category, baseDir, locale);
   });
@@ -41,7 +42,8 @@ function getCategoryData(category, baseDir, locale) {
 
   result.title = category.title[locale];
   result.dir = category.dir;
-  result.version = category.versions;
+  result.versions = category.versions;
+  result.currentVersion = category.currentVersion;
   result.files = getDirFiles(baseDir);
   result.children = [];
 

@@ -47,25 +47,25 @@ const docCategories = {
   materials: {
     // 自定义物料
     title: {},
+    currentVersion: '1.x',
     versions: [{
-      version: '0.x',
-      dir: 'cli',
+      value: '0.x',
+      path: '/docs/cli/about',
     }, {
-      version: '1.x',
-      dir: 'materials',
-      current: true,
+      value: '1.x',
+      path: '/docs/materials/about',
     }],
   },
   cli: {
     // ice-scripts
     title: {},
+    currentVersion: '0.x',
     versions: [{
-      version: '0.x',
-      dir: 'cli',
-      current: true,
+      value: '0.x',
+      path: '/docs/cli/about',
     }, {
-      version: '1.x',
-      dir: 'materials',
+      value: '1.x',
+      path: '/docs/materials/about',
     }],
     children: [{
       title: {
