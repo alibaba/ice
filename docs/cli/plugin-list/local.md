@@ -12,7 +12,7 @@ order: 4
 ## 如何使用
 
 ```bash
-$ npm i --save-dev ice-scripts-plugin-css-assets-local
+$ npm i --save-dev ice-plugin-css-assets-local
 ```
 
 Options：
@@ -24,7 +24,7 @@ Options：
 // ice.config.js
 module.exports = {
   plugins: [
-    ['ice-scripts-plugin-css-assets-local', {
+    ['ice-plugin-css-assets-local', {
       outputPath: 'assets',
       relativeCssPath: '../'
     }]

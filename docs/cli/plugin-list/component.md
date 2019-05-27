@@ -13,7 +13,7 @@ order: 3
 ## 如何使用
 
 ```bash
-$ npm i --save-dev ice-scripts-plugin-component
+$ npm i --save-dev ice-plugin-component
 ```
 
 Options：
@@ -23,7 +23,7 @@ Options：
 ```js
 module.exports = {
   plugins: [
-    ['ice-scripts-plugin-component', { type: 'fusion' }]
+    ['ice-plugin-component', { type: 'fusion' }]
   ]
 }
 ```

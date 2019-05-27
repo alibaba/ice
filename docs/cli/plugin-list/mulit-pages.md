@@ -1,9 +1,9 @@
 ---
-title: ice-plugin-componmulti-pagesent
+title: ice-plugin-multi-pages
 order: 5
 ---
 
-`ice-plugin-componmulti-pagesent` 支持解析 `src/pages/*/index.js` 生成多 entry 的配置。
+`ice-plugin-multi-pages` 支持解析 `src/pages/*/index.js` 生成多 entry 的配置。
 
 ## 功能
 
@@ -12,7 +12,7 @@ order: 5
 ## 如何使用
 
 ```bash
-$ npm i --save-dev ice-scripts-plugin-multi-pages
+$ npm i --save-dev ice-plugin-multi-pages
 ```
 
 Options：
@@ -23,7 +23,7 @@ Options：
 // ice.config.js
 module.exports = {
   plugins: [
-    ['ice-scripts-plugin-multi-pages', {
+    ['ice-plugin-multi-pages', {
       // customize entry name
       // BasicCharts => basic_charts
       getEntryName: (pageName) => _.snakeCase(pageName);
