@@ -49,7 +49,6 @@ export default class Task extends EventEmitter implements ITaskModule {
     }
 
     const eventName = `${command}.start.data`;
-    this.status = TASK_STATUS_WORKING;
     this.process[command] = execa(
       'npm',
       ['run', command === 'dev' ? 'start' : command],
@@ -62,7 +61,19 @@ export default class Task extends EventEmitter implements ITaskModule {
     );
 
     this.process[command].stdout.on('data', (buffer) => {
-      this.emit(eventName, buffer.toString());
+      this.emit(eventName, {
+        status: TASK_STATUS_WORKING,
+        chunk: buffer.toString(),
+      });
+    });
+
+    this.process[command].on('close', (code) => {
+      if (code === 0) {
+        this.emit(eventName, {
+          status: TASK_STATUS_STOP,
+          chunk: chalk.grey('Task has stopped'),
+        });
+      }
     });
 
     this.process[command].on('error', (buffer) => {
@@ -81,10 +92,15 @@ export default class Task extends EventEmitter implements ITaskModule {
     const eventName = `${command}.stop.data`;
 
     this.process[command].kill();
-    this.status = TASK_STATUS_STOP;
-    this.process[command].on('exit', () => {
-      this.emit(eventName, chalk.grey('Task has stopped'));
+    this.process[command].on('exit', (code) => {
+      if (code === 0) {
+        this.emit(eventName, {
+          status: TASK_STATUS_STOP,
+          chunk: chalk.grey('Task has stopped'),
+        });
+      }
     });
+
     this.process[command] = null;
 
     return this;

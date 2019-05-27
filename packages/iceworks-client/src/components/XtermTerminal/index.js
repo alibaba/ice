@@ -1,17 +1,16 @@
 /* eslint object-curly-newline:0 */
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useSocket from '@hooks/useSocket';
 import Icon from '@components/Icon';
 import term from './term';
 import styles from './index.module.scss';
 
-const XtermTerminal = ({ id, projectName, startEventName, stopEventName }) => {
+const XtermTerminal = ({ id, name, eventHandle }) => {
   const xtermRef = useRef(id);
 
   useEffect(() => {
     // new terminal
-    term.new(id, projectName, xtermRef.current);
+    term.new(id, name, xtermRef.current);
   }, []);
 
   // format and write the text content of the terminal
@@ -31,16 +30,8 @@ const XtermTerminal = ({ id, projectName, startEventName, stopEventName }) => {
     }
   };
 
-  // receive start data
-  useSocket(startEventName, (data) => {
-    writeContent(data);
-  });
-
-  // receive stop data
-  useSocket(stopEventName, (data) => {
-    writeContent(data);
-    term.write(id, `\n\x1B[1;3;31m${projectName}\x1B[0m $ `);
-  });
+  // Listen start event function
+  eventHandle(writeContent);
 
   return (
     <div className={styles.xtermContainer}>
@@ -58,9 +49,8 @@ XtermTerminal.defaultProps = {};
 
 XtermTerminal.propTypes = {
   id: PropTypes.string.isRequired,
-  projectName: PropTypes.string.isRequired,
-  startEventName: PropTypes.string.isRequired,
-  stopEventName: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  eventHandle: PropTypes.func.isRequired,
 };
 
 export default XtermTerminal;

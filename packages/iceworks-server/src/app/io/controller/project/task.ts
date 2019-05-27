@@ -9,7 +9,7 @@ export default (app) => {
       const project = projectManager.getCurrent();
 
       logger.info('start task');
-      const response = await project.task.start(args);
+      await project.task.start(args);
 
       const { command } = args;
       const onEventName = `${command}.start.data`;
@@ -17,8 +17,6 @@ export default (app) => {
       project.task.on(onEventName, (data) => {
         socket.emit(emitEventName, data);
       });
-
-      return { status: response.status };
     }
 
     /**
@@ -30,7 +28,7 @@ export default (app) => {
       const project = projectManager.getCurrent();
 
       logger.info('stop task');
-      const response = await project.task.stop(args);
+      await project.task.stop(args);
 
       const { command } = args;
       const onEventName = `${command}.stop.data`;
@@ -38,8 +36,6 @@ export default (app) => {
       project.task.on(onEventName, (data) => {
         socket.emit(emitEventName, data);
       });
-
-      return { status: response.status };
     }
 
     /**

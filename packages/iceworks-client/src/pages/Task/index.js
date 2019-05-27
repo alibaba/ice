@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Message } from '@alifd/next';
+import useSocket from '@hooks/useSocket';
+import useModal from '@hooks/useModal';
 import Card from '@components/Card';
 import TerminalBar from '@components/TerminalBar';
 import XtermTerminal from '@components/XtermTerminal';
-import useModal from '@hooks/useModal';
 import stores from '@stores';
 import taskStores from './stores';
 import TaskModal from './components/TaskModal';
@@ -33,6 +34,7 @@ const Task = ({ history, intl }) => {
   const task = taskStores.useStore('task');
   const { on, toggleModal } = useModal();
   const type = getType(history.location.pathname);
+  const [status, setStatus] = useState('');
 
   async function onStart() {
     try {
@@ -59,19 +61,31 @@ const Task = ({ history, intl }) => {
     }
   }
 
+  function listenEventHandle(callback) {
+    const startEventName = `project.task.${type}.start.data`;
+    useSocket(startEventName, (data) => {
+      setStatus(data.status);
+      callback(data.chunk);
+    }, [status]);
+
+    const stopEventName = `project.task.${type}.stop.data`;
+    useSocket(stopEventName, (data) => {
+      setStatus(data.status);
+      callback(data.chunk);
+    }, [status]);
+  }
+
   const data = task.dataSource[type] ? task.dataSource[type] : {};
 
   return (
     <Card
       title={intl.formatMessage({ id: `iceworks.task.${type}.title` })}
-      subTitle={intl.formatMessage({
-        id: `iceworks.task.${type}.desc`,
-      })}
+      subTitle={intl.formatMessage({ id: `iceworks.task.${type}.desc` })}
       contentHeight="100%"
       className={styles.taskCard}
     >
       <TerminalBar
-        isWorking={data.status === 'working'}
+        loading={status === 'working'}
         onStart={onStart}
         onStop={onStop}
         onSetting={onSetting}
@@ -80,9 +94,8 @@ const Task = ({ history, intl }) => {
       <div className={styles.content}>
         <XtermTerminal
           id={`${project.dataSource.name}.${type}`}
-          projectName={project.dataSource.name}
-          startEventName={`project.task.${type}.start.data`}
-          stopEventName={`project.task.${type}.stop.data`}
+          name={project.dataSource.name}
+          eventHandle={listenEventHandle}
         />
       </div>
 

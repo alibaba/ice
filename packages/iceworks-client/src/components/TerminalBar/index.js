@@ -6,12 +6,12 @@ import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import styles from './index.module.scss';
 
-const TerminalBar = ({ isWorking, onStart, onStop, onSetting }) => {
+const TerminalBar = ({ loading, onStart, onStop, onSetting }) => {
   return (
     <div className={styles.actionBar}>
       {/* Left Button Group */}
       <div className={styles.leftActionBar}>
-        {!isWorking ? (
+        {!loading ? (
           <Button
             type="primary"
             className={styles.leftButton}
@@ -30,7 +30,7 @@ const TerminalBar = ({ isWorking, onStart, onStop, onSetting }) => {
           type="secondary"
           className={styles.leftButton}
           onClick={onSetting}
-          disabled={isWorking}
+          disabled={loading}
         >
           <Icon type="settings" className={styles.icon} />
           <FormattedMessage id="iceworks.task.dev.setting" />
@@ -56,14 +56,14 @@ const TerminalBar = ({ isWorking, onStart, onStop, onSetting }) => {
 };
 
 TerminalBar.defaultProps = {
-  isWorking: false,
+  loading: false,
   onStart: () => {},
   onStop: () => {},
   onSetting: () => {},
 };
 
 TerminalBar.propTypes = {
-  isWorking: PropTypes.bool,
+  loading: PropTypes.bool,
   onStart: PropTypes.func,
   onStop: PropTypes.func,
   onSetting: PropTypes.func,
