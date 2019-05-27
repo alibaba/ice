@@ -1,5 +1,5 @@
-module.exports = (api, value) => {
-  api.chainWebpack((config) => {
+module.exports = ({ chainWebpack }, value) => {
+  chainWebpack((config) => {
     config.merge({ externals: value });
   });
 };

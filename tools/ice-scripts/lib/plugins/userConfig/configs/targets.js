@@ -1,5 +1,5 @@
-module.exports = (api, targets) => {
-  api.chainWebpack((config) => {
+module.exports = ({ chainWebpack }, targets) => {
+  chainWebpack((config) => {
     ['jsx', 'tsx'].forEach((rule) => {
       config.module
         .rule(rule)

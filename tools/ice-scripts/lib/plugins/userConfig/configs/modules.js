@@ -1,6 +1,6 @@
-module.exports = (api, modules) => {
+module.exports = ({ chainWebpack }, modules) => {
   if (Array.isArray(modules)) {
-    api.chainWebpack((config) => {
+    chainWebpack((config) => {
       modules.forEach((module) => {
         config.resolve.modules
           .add(module);

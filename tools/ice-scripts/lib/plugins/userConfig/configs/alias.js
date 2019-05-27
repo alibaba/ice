@@ -1,5 +1,5 @@
-module.exports = (api, alias) => {
-  api.chainWebpack((config) => {
+module.exports = ({ chainWebpack }, alias) => {
+  chainWebpack((config) => {
     config.merge({
       resolve: {
         alias,

@@ -1,0 +1,13 @@
+{
+  "name": "ice-plugin-multi-pages",
+  "version": "1.0.0",
+  "description": "ice-scripts plugin for multiple pages",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^7.0.6",
+    "html-webpack-plugin": "^3.2.0"
+  }
+}

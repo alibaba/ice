@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
-module.exports = (api, value) => {
-  api.chainWebpack((config) => {
+module.exports = ({ chainWebpack }, value) => {
+  chainWebpack((config) => {
     if (config.plugins.get('DefinePlugin')) {
       config
         .plugin('DefinePlugin')

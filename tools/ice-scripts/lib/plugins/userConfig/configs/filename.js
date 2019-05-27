@@ -1,6 +1,6 @@
-module.exports = (api, filename) => {
+module.exports = ({ chainWebpack }, filename) => {
   if (filename) {
-    api.chainWebpack((config) => {
+    chainWebpack((config) => {
       config.output.filename(filename);
     });
   }

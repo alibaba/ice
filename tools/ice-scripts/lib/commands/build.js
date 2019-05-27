@@ -14,26 +14,27 @@ const checkDepsInstalled = require('../utils/checkDepsInstalled');
  *
  * @param {Object} options 命令行参数
  */
-module.exports = async function (service) {
+module.exports = async function (context) {
+  const { applyHook, commandArgs, rootDir, userConfig, webpackConfig } = context;
   goldlog('version', {
     version: iceScriptsPkgData.version,
   });
-  goldlog('build', service.commandArgs);
-  log.verbose('build cliOptions', service.commandArgs);
-  await service.applyHooks('beforeBuild');
+  goldlog('build', commandArgs);
+  log.verbose('build cliOptions', commandArgs);
+  await applyHook('beforeBuild');
 
-  const installedDeps = checkDepsInstalled(service.context);
+  const installedDeps = checkDepsInstalled(rootDir);
   if (!installedDeps) {
     log.error('项目依赖未安装，请先安装依赖。');
     process.exit(1);
   }
 
-  if (service.userConfig.type === 'project') {
+  if (userConfig.type === 'project') {
     validationSassAvailable();
 
     try {
       collectDetail({
-        rootDir: service.context, // 项目根地址
+        rootDir, // 项目根地址
         basicPackage: ['@alifd/next', '@icedesign/base', '@alife/next'], // 主体包名称
         kit: 'ice-scripts', // 统计的来源
       });
@@ -41,8 +42,6 @@ module.exports = async function (service) {
       log.warn('collectDetail error', err);
     }
   }
-
-  const webpackConfig = service.config;
 
   // empty output path
   fse.emptyDirSync(webpackConfig.output.path);
@@ -66,6 +65,6 @@ module.exports = async function (service) {
       }
     }
 
-    service.applyHooks('afterBuild', stats);
+    applyHook('afterBuild', stats);
   });
 };
