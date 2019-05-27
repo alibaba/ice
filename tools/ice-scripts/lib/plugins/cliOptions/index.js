@@ -2,8 +2,8 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const getCertificate = require('../../config/getCertificate');
 const log = require('../../utils/log');
 
-module.exports = async (api) => {
-  const { commandArgs } = api.service;
+module.exports = async ({ context, chainWebpack }) => {
+  const { commandArgs } = context;
   // plugin cliOptions will run after plugin userConfig.
   // if commandArgs.https is true, it will overwrite devServer config
   let httpsConfig;
@@ -18,7 +18,7 @@ module.exports = async (api) => {
       log.info('HTTPS 证书生成失败，已转换为HTTP');
     }
   }
-  api.chainWebpack((config) => {
+  chainWebpack((config) => {
     if (commandArgs.disabledReload) {
       config.plugins.delete('HotModuleReplacementPlugin');
 

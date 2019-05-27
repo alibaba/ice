@@ -1,5 +1,5 @@
-module.exports = (api, vendor) => {
-  api.chainWebpack((config) => {
+module.exports = ({ chainWebpack }, vendor) => {
+  chainWebpack((config) => {
     if (!vendor) {
       config.optimization.splitChunks({ cacheGroups: {} });
     } else {

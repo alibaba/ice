@@ -1,9 +1,9 @@
 const path = require('path');
 
-module.exports = (api, hash) => {
+module.exports = ({ chainWebpack }, hash) => {
   // default is false
   if (hash) {
-    api.chainWebpack((config) => {
+    chainWebpack((config) => {
       const fileName = config.output.get('filename');
       let pathArray = fileName.split('/');
       pathArray.pop(); // pop filename

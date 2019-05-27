@@ -1,8 +1,8 @@
-module.exports = (api, value) => {
-  const { command } = api.service;
+module.exports = ({ context, chainWebpack }, value) => {
+  const { command } = context;
   // minify always be false in dev mode
   const minify = command === 'dev' ? false : value;
-  api.chainWebpack((config) => {
+  chainWebpack((config) => {
     config.optimization.minimize(minify);
   });
 };

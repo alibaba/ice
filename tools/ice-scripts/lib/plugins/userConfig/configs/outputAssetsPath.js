@@ -4,8 +4,8 @@ const { last } = require('lodash');
 function getFilename(filePath) {
   return last((filePath || '').split('/'));
 }
-module.exports = (api, outputAssetsPath) => {
-  api.chainWebpack((config) => {
+module.exports = ({ chainWebpack }, outputAssetsPath) => {
+  chainWebpack((config) => {
     const filename = getFilename(config.output.get('filename'));
     config.output.filename(path.join(outputAssetsPath.js || '', filename));
 

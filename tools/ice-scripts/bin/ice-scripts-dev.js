@@ -8,7 +8,7 @@ const inquirer = require('inquirer');
 const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 const checkUpdater = require('../lib/utils/checkUpdater');
 const cliInstance = require('../lib/utils/cliInstance');
-const Service = require('../lib/core/Service');
+const Context = require('../lib/core/Context');
 
 program
   .option('-p, --port <port>', '服务端口号')
@@ -17,12 +17,6 @@ program
   .option('--analyzer', '开启构建分析')
   .option('--analyzer-port', '设置分析端口号')
   .option('--disabled-reload', '关闭 hot reload')
-  .option(
-    '--inject-babel <type>',
-    '注入 babel 运行环境, Enum: polyfill|runtime',
-    /^(polyfill|runtime)$/,
-    'polyfill'
-  )
   .parse(process.argv);
 
 cliInstance.initByProgram(program);
@@ -73,10 +67,8 @@ checkUpdater()
     cliInstance.set('port', parseInt(port, 10));
     const cliOptions = cliInstance.get();
     process.env.NODE_ENV = 'development';
-    const service = new Service({
+    new Context({
       command: 'dev',
       args: cliOptions,
-    });
-    service.run();
-    // dev(cliOptions);
+    }).run();
   });

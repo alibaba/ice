@@ -1,7 +1,7 @@
 // entry: string | array
 // entry : { [name]: string | array }
-module.exports = (api, value) => {
-  api.chainWebpack((config) => {
+module.exports = ({ chainWebpack }, value) => {
+  chainWebpack((config) => {
     let entry;
     if (Array.isArray(value) || typeof value === 'string') {
       entry = {

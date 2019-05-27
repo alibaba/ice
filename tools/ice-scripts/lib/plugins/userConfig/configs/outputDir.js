@@ -1,8 +1,8 @@
 const path = require('path');
 
-module.exports = (api, outputDir) => {
-  const { context } = api.service;
-  api.chainWebpack((config) => {
-    config.output.path(path.resolve(context, outputDir));
+module.exports = ({ context, chainWebpack }, outputDir) => {
+  const { rootDir } = context;
+  chainWebpack((config) => {
+    config.output.path(path.resolve(rootDir, outputDir));
   });
 };

@@ -104,6 +104,6 @@ order: 4
 }
 ```
 
-如果模版需要接入 iceworks 体系，还需要关注 iceworks 代码生成规则。iceworks 默认会在 `/src/routerConfig.js` 和 `/src/menuConfig.js` 两个文件中注入代码，用于添加路由及添加菜单项。因此，在模版的路由配置及菜单配置中，需引入这两个文件，ice-devtools 初始化的模版中已包含这两个文件，切勿删除或修改它们。更多细节，可查看 [iceworks 文档](../iceworks/marterial-scaffold.md)。
+如果模版需要接入 iceworks 体系，还需要关注 iceworks 代码生成规则。iceworks 默认会在 `/src/routerConfig.js` 和 `/src/menuConfig.js` 两个文件中注入代码，用于添加路由及添加菜单项。因此，在模版的路由配置及菜单配置中，需引入这两个文件，ice-devtools 初始化的模版中已包含这两个文件，切勿删除或修改它们。更多细节，可查看 [iceworks 文档](https://ice.work/docs/guide/about)。
 
 至此，我们对飞冰的设计思想和物料数据规范有了大概的了解。如果你看完还是不知道如何开始动手，可以通过飞冰钉钉群联系我们。
