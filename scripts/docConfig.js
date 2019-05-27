@@ -48,15 +48,15 @@ const docCategories = {
     // 自定义物料
     title: {},
   },
-  'cli-0.x': {
-    // ice-scripts 0.x
+  'cli-1.x': {
+    // ice-scripts 1.x
     title: {},
-    currentVersion: '0.x',
+    currentVersion: '1.x',
     versions: [{
-      value: '0.x',
-      path: '/docs/cli-0.x/about',
-    }, {
       value: '1.x',
+      path: '/docs/cli-1.x/about',
+    }, {
+      value: '2.x',
       path: '/docs/cli/about',
     }],
     children: [{
@@ -80,14 +80,14 @@ const docCategories = {
     }],
   },
   cli: {
-    // ice-scripts 1.x
+    // ice-scripts 2.x
     title: {},
-    currentVersion: '1.x',
+    currentVersion: '2.x',
     versions: [{
-      value: '0.x',
-      path: '/docs/cli-0.x/about',
-    }, {
       value: '1.x',
+      path: '/docs/cli-1.x/about',
+    }, {
+      value: '2.x',
       path: '/docs/cli/about',
     }],
     children: [{
