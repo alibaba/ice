@@ -109,6 +109,7 @@ module.exports = async ({ chainWebpack, log, context }, { themePackage, themeCon
     config.plugin('CheckIceComponentsDepsPlugin')
       .use(CheckIceComponentsDepsPlugin, [{
         pkg: context.pkg,
+        log,
       }]);
   });
 };
