@@ -3,10 +3,7 @@ title: 自定义 webpack 配置
 order: 4
 ---
 
-`ice-scripts` 内部的基础 webpack 配置都是通过 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 生成的，它通过 webpack 配置链式操作的 API，并可以定义具体 loader 规则和 webpack 插件的名称，可以让开发者更加细粒度修改 webpack 配置。
-
-- [loader 规则命名](https://github.com/alibaba/ice/tree/master/tools/ice-scripts/lib/config/setWebpackLoaders.js)
-- [webpack 插件命名](https://github.com/alibaba/ice/tree/master/tools/ice-scripts/lib/config/setWebpackPlugins.js)
+ice-scripts 内部的基础 webpack 配置都是通过 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 生成的，它通过 webpack 配置链式操作的 API，并可以定义具体 loader 规则和 webpack 插件的名称，可以让开发者更加细粒度修改 webpack 配置。
 
 `ice.config.js` 中提供的 `chainWebpack` 提供自定义 webpack 修改的接口。`chainWebpack` 接收两个参数：
 
@@ -44,6 +41,8 @@ module.exports = {
 ```
 
 ## 修改已有 webpack loader
+
+内置 webpack loader 请参考 [loader 规则命名](https://github.com/alibaba/ice/tree/master/tools/ice-scripts/lib/config/setWebpackLoaders.js)。
 
 ```js
 // ice.config.js
@@ -85,6 +84,8 @@ module.exports = {
 
 ## 修改已有 webpack 插件
 
+内置 webpack plugin 请参考 [webpack 插件命名](https://github.com/alibaba/ice/tree/master/tools/ice-scripts/lib/config/setWebpackPlugins.js)。
+
 ```js
 // ice.config.js
 module.exports = {
@@ -99,7 +100,7 @@ module.exports = {
 }
 ```
 
-## 修改不同命令的 webpack 配置
+## 修改指定命令的 webpack 配置
 
 ```js
 // ice.config.js

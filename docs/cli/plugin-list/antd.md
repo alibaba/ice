@@ -12,13 +12,17 @@ order: 2
 
 ## 如何使用
 
+Install:
+
 ```bash
 $ npm i --save-dev ice-plugin-antd
 ```
 
-Options：
+Options:
+
 - `themeConfig`: 设置替换主题颜色
 
+Usage:
 
 ```js
 module.exports = {

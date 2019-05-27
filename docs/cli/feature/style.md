@@ -3,11 +3,11 @@ title: 使用样式
 order: 5
 ---
 
-`ice-scripts` 提供 Less/Sass/CSS Modules 的样式能力。
+ice-scripts 默认支持 CSS/Less/Sass/CSS Modules 的样式能力。
 
-## 使用CSS
+## 使用 CSS
 
-样式文件后缀名为 `.css`，在对应的JS文件中引入：
+样式文件后缀名为 `.css`，在对应的 JS 文件中引入：
 
 ```css
 /* index.css */
@@ -22,9 +22,9 @@ import './index.css';
 <Button className="btn">OK</Button>
 ```
 
-## 使用Less
+## 使用 Less
 
-[Less](http://lesscss.org/) Less可以扩展CSS语言，允许使用变量（variables）、混合（mixins），函数（functions）和许多其它技术，让CSS更具维护性和扩展性。后缀为 `.less` 样式文件，即会自动启用Less编译能力：
+[Less](http://lesscss.org/) 是对 CSS 语言的增强，允许使用变量（variables）、混合（mixins），函数（functions）和许多能力，让 CSS 更具维护性和扩展性。后缀为 `.less` 样式文件，即会自动启用 Less 编译能力：
 
 ```css
 /* index.less */
@@ -39,12 +39,11 @@ import './index.css';
 import './index.less';
 
 <Button className="btn">OK</Button>
-
 ```
 
-## 使用Sass
+## 使用 Sass
 
-[Sass](https://sass-lang.com/) Sass是对CSS的扩展，允许使用变量、嵌套规则、mixins、导入等功能，并兼容CSS语法。文件后缀名为 `.scss`，即会启用Sass编译能力：
+[Sass](https://sass-lang.com/) 与 Less 类似，同样也是对 CSS 语言的增强，允许使用变量、嵌套规则、mixins、导入等功能，并兼容 CSS 语法。文件后缀名为 `.scss`，即会启用 Sass 编译能力：
 
 ```css
 /* index.scss */
@@ -59,12 +58,11 @@ $color: red;
 import './index.scss';
 
 <Button className="btn">OK</Button>
-
 ```
 
 ## CSS Modules
 
-[CSS Modules](https://github.com/css-modules/css-modules) 可以有效解决样式的冲突等问题，ice-scripts 支持 CSS Modules 能力。只需要将样式文件的后缀名改为 `.module.[css/scss/less]`，即可使用 CSS Modules 的能力：
+[CSS Modules](https://github.com/css-modules/css-modules) 可以有效解决样式的冲突等问题。只需要将样式文件的后缀名改为 `.module.[css/scss/less]`，即可使用 CSS Modules 的能力：
 
 ```css
 /* index.module.scss */
@@ -83,4 +81,5 @@ import styles from './index.module.scss';
 
 <Button className={styles.btn}>OK</Button>;
 ```
-ice-scripts支持多种样式能力，推荐参考 [样式方案](/docs/guide/dev/style)
+
+在这些众多方案里，我们推荐使用 CSS Modules 方案，具体参见 [样式方案](/docs/guide/dev/style)。

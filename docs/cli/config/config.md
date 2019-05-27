@@ -33,6 +33,56 @@ module.exports = {
 
 多 entry 的情况构建时会额外生成 vendor.js/css，需要自行在 html 里引入（public 目录会自动引入），也可以通过设置下面的 `vendor` 禁止生成 vendor 文件。
 
+## alias
+
+* 类型：`object`
+* 默认值：`{}`
+
+创建 `import` 或 `require` 的别名，使模块应用变得更加简单。
+配置 webpack 的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolve-alias) 属性。
+
+```js
+// ice.config.js
+const path = require('path');
+
+module.exports = {
+  alias: {
+    '@components': path.resolve(__dirname, 'src/components/')
+  }
+}
+```
+
+现在，替换「在导入时使用相对路径」这种方式，就像这样：
+
+```diff
+-import CustomTips from '../../../components/CustomTips';
++import CustomTips from '@components/CustomTips';
+```
+
+## define
+
+* 类型：`object`
+* 默认值：`{}`
+
+创建一个在编译是可以配置的全局变量，针对开发环境和发布环境的构建配置不同的行为非常有用。
+
+用法：
+
+```js
+module.exports = {
+  define: {
+    // 此处不能省略 JSON.stringify，否则构建过程会出现语法问题
+    ASSETS_VERSION: JSON.stringify('0.0.1'),
+  }
+}
+```
+
+在代码里使用该变量（当做全局变量使用）：
+
+```javascript
+console.log(ASSETS_VERSION);
+```
+
 ## publicPath
 
 * 类型：`string`
@@ -154,56 +204,6 @@ module.exports = {
 </html>
 ```
 
-## alias
-
-* 类型：`object`
-* 默认值：`{}`
-
-创建 `import` 或 `require` 的别名，使模块应用变得更加简单。
-配置 webpack 的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolve-alias) 属性。
-
-```js
-// ice.config.js
-const path = require('path');
-
-module.exports = {
-  alias: {
-    '@components': path.resolve(__dirname, 'src/components/')
-  }
-}
-```
-
-现在，替换「在导入时使用相对路径」这种方式，就像这样：
-
-```diff
--import CustomTips from '../../../components/CustomTips';
-+import CustomTips from '@components/CustomTips';
-```
-
-## define
-
-* 类型：`object`
-* 默认值：`{}`
-
-创建一个在编译是可以配置的全局变量，针对开发环境和发布环境的构建配置不同的行为非常有用。
-
-用法：
-
-```js
-module.exports = {
-  define: {
-    // 此处不能省略 JSON.stringify，否则构建过程会出现语法问题
-    ASSETS_VERSION: JSON.stringify('0.0.1'),
-  }
-}
-```
-
-在代码里使用该变量（当做全局变量使用）：
-
-```javascript
-console.log(ASSETS_VERSION);
-```
-
 ## devServer
 
 * 类型：`object`
@@ -253,7 +253,7 @@ module.exports = {
 }
 ```
 
-更多接口代理，详见[接口代理](/docs/cli/feature/proxy)
+更多接口代理，详见[接口代理](/docs/cli/feature/proxy.md)
 
 ## injectBabel
 

@@ -14,16 +14,19 @@ order: 1
 
 ## 如何使用
 
+Install:
+
 ```bash
 $ npm i --save-dev ice-plugin-fusion
 ```
 
-Options：
+Options:
 
 - `themePackage`: 主题包
 - `themeConfig`: 主题配置
 - `uniteBaseComponent`: 如果项目里依赖了多个不同名称的基础包，可以通过 uniteBaseComponent 来统一基础包，减少重复的代码（社区用户无需关心该问题）
 
+Usage:
 
 ```js
 // ice.config.js

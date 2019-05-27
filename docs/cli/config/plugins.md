@@ -8,11 +8,11 @@ order: 3
 * 类型：`Array`
 * 默认值：`[]`
 
-插件数组项每一项代表一个插件，`ice-scripts` 将按顺序执行插件列表，插件配置形式如下：
+插件数组项每一项代表一个插件，ice-scripts 将按顺序执行插件列表，插件配置形式如下：
 
 ```js
 // ice.config.js
-const icePluginMonaco = require('ice-plugin-monaco');
+const icePluginFusion = require('ice-plugin-fusion');
 
 module.exports = {
   plugins: [
@@ -21,7 +21,7 @@ module.exports = {
     // 相对路径
     './plugins/custom-plugin',
     // 插件方法
-    icePluginMonaco,
+    icePluginFusion,
   ]
 }
 ```

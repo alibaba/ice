@@ -11,14 +11,18 @@ order: 4
 
 ## 如何使用
 
+Install:
+
 ```bash
 $ npm i --save-dev ice-plugin-css-assets-local
 ```
 
-Options：
+Options:
 
 - `outputPath`: 默认值： `assets` 提取后的文件目录前缀
 - `relativeCssPath`: 默认值： `../` 提取的文件后相对于 CSS 的路径
+
+Usage:
 
 ```js
 // ice.config.js

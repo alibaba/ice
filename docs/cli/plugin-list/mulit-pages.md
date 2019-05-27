@@ -11,13 +11,17 @@ order: 5
 
 ## 如何使用
 
+Install:
+
 ```bash
 $ npm i --save-dev ice-plugin-multi-pages
 ```
 
-Options：
+Options:
 
 - `getEntryName{function}`: 自定义 entry name，默认取小写的 `src/pages/*/index.js` 文件夹名称。
+
+Usage:
 
 ```js
 // ice.config.js

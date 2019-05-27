@@ -3,9 +3,11 @@ title: 快速上手
 order: 2
 ---
 
-本文将介绍如何快速通过 `ice-script` 开发和构建一个项目。
+本文将介绍如何快速通过 `ice-scripts` 开发和构建一个项目。
 
 ## 创建项目
+
+> 推荐通过 iceworks GUI 工具进行初始化
 
 安装 `iceworks` 依赖：
 

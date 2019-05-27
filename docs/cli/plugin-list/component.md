@@ -16,9 +16,11 @@ order: 3
 $ npm i --save-dev ice-plugin-component
 ```
 
-Options：
+Options:
 
 - `type`: 默认值 `fusion` ，如无需生成接入 Fusion 相关样式文件，可设置为 `component`
+
+Usage:
 
 ```js
 module.exports = {

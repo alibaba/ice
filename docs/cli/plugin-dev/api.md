@@ -3,7 +3,7 @@ title: 插件 API
 order: 1
 ---
 
-`ice-scripts` 通过插件机制，扩展其项目编译和命令运行时的能力。便于常见构建需求和复用解决方案的共享。
+ice-scripts 通过插件机制，扩展其项目编译和命令运行时的能力。便于常见构建需求和复用解决方案的共享。
 
 插件本质上时一个 JS 模块，约定插件初始化模版如下：
 
@@ -12,7 +12,6 @@ module.exports = ({ context, chainWebpack, log, onHook }, options) => {
   // 第一项参数为插件 API 提供的能力
   // options：插件自定义参数
 };
-
 ```
 
 插件方法会收到两个参数，第一个参数是插件提供的 API 接口和能力，推荐结构方式按需使用 API，第二个参数 `options` 是插件自定义的参数，由插件开发者决定其值。
@@ -117,7 +116,6 @@ module.exports = ({ context, log, chainWebpack }, options) => {
     });
   }
 };
-
 ```
 
 更多官方插件源码：
