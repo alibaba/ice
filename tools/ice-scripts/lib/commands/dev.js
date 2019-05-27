@@ -18,13 +18,15 @@ const pkgData = require('../../package.json');
 const log = require('../utils/log');
 const checkDepsInstalled = require('../utils/checkDepsInstalled');
 
-module.exports = async function (service, subprocess) {
+module.exports = async function (context, subprocess) {
+  const { applyHook, commandArgs, rootDir, webpackConfig } = context;
+
   goldlog('version', {
     version: pkgData.version,
   });
-  goldlog('dev', service.commandArgs);
-  log.verbose('dev cliOptions', service.commandArgs);
-  await service.applyHooks('beforeDev');
+  goldlog('dev', commandArgs);
+  log.verbose('dev cliOptions', commandArgs);
+  await applyHook('beforeDev');
 
   // 与 iceworks 客户端通信
   const send = function (data) {
@@ -34,27 +36,27 @@ module.exports = async function (service, subprocess) {
     }
   };
 
-  const installedDeps = checkDepsInstalled(service.context);
+  const installedDeps = checkDepsInstalled(rootDir);
   if (!installedDeps) {
     log.error('项目依赖未安装，请先安装依赖。');
     process.exit(1);
     return;
   }
 
-  const HOST = service.commandArgs.host || '0.0.0.0';
-  const PORT = service.commandArgs.port || 4444;
-  const protocol = service.config.devServer.https ? 'https' : 'http';
+  const HOST = commandArgs.host || '0.0.0.0';
+  const PORT = commandArgs.port || 4444;
+  const protocol = webpackConfig.devServer.https ? 'https' : 'http';
 
   const isInteractive = false; // process.stdout.isTTY;
   const urls = prepareUrLs(protocol, HOST, PORT);
 
-  if (service.commandArgs.disabledReload) {
+  if (commandArgs.disabledReload) {
     log.warn('关闭了热更新（hot-reload）功能');
   }
 
   let isFirstCompile = true;
-  const compiler = webpack(service.config);
-  const devServer = new WebpackDevServer(compiler, service.config.devServer);
+  const compiler = webpack(webpackConfig);
+  const devServer = new WebpackDevServer(compiler, webpackConfig.devServer);
 
   // dev mock
   webpackDevMock(devServer.app);
@@ -107,7 +109,7 @@ module.exports = async function (service, subprocess) {
         );
       }
     }
-    service.applyHooks('afterDev', stats);
+    applyHook('afterDev', stats);
 
     if (messages.errors.length) {
       if (messages.errors.length > 1) {

@@ -1,6 +1,6 @@
 const merge = require('lodash/merge');
 
-module.exports = (api, proxyConfig) => {
+module.exports = ({ chainWebpack }, proxyConfig) => {
   const proxyRules = Object.entries(proxyConfig);
 
   const proxy = proxyRules.map(([match, opts]) => {
@@ -26,7 +26,7 @@ module.exports = (api, proxyConfig) => {
     }
     return false;
   }).filter((v) => v);
-  api.chainWebpack((config) => {
+  chainWebpack((config) => {
     config.devServer.proxy(proxy);
   });
 };

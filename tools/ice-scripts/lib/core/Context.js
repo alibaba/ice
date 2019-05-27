@@ -9,14 +9,14 @@ const PluginAPI = require('./Plugin');
 const defaultConfig = require('../config/default.config');
 const deepmerge = require('deepmerge');
 
-module.exports = class Service {
-  constructor({ command = '', context = process.cwd(), args = {} }) {
+module.exports = class Context {
+  constructor({ command = '', rootDir = process.cwd(), args = {} }) {
     this.command = command;
     this.commandArgs = args;
-    this.context = context;
-    this.pkg = getPkgData(this.context);
+    this.rootDir = rootDir;
+    this.pkg = getPkgData(this.rootDir);
     // get user config form ice.config.js
-    this.userConfig = this.getUserConfig(this.context);
+    this.userConfig = this.getUserConfig(this.rootDir);
     this.plugins = this.getPlugins();
     // init chainWebpackFns and hooks
     this.chainWebpackFns = [];
@@ -24,7 +24,7 @@ module.exports = class Service {
   }
 
   getUserConfig() {
-    const iceConfigPath = path.resolve(this.context, 'ice.config.js');
+    const iceConfigPath = path.resolve(this.rootDir, 'ice.config.js');
     let userConfig = {};
     if (fse.existsSync(iceConfigPath)) {
       try {
@@ -60,11 +60,10 @@ module.exports = class Service {
       }
       const [plugin, options] = pluginInfo;
       const pluginName = typeof plugin === 'string' ? plugin : '';
-
       try {
         const pluginFunc = typeof plugin === 'string'
           // eslint-disable-next-line import/no-dynamic-require
-          ? require(require.resolve(plugin, { paths: [this.context] }))
+          ? require(require.resolve(plugin, { paths: [this.rootDir] }))
           : plugin;
         assert(typeof pluginFunc === 'function', 'plugin must export a function');
         // support async function
@@ -147,7 +146,7 @@ module.exports = class Service {
   async run() {
     await this.runPlugins();
     // get final config before run command
-    this.config = this.getWebpackConfig();
+    this.webpackConfig = this.getWebpackConfig();
     try {
       // load command and run
       // eslint-disable-next-line import/no-dynamic-require

@@ -8,7 +8,7 @@ const MockApi = function () {
     fn(this.config);
   };
   this.processEntry = (entry) => {
-    const { commandArgs, command, userConfig } = this.service;
+    const { commandArgs, command, userConfig } = this.context;
     return processEntry(entry, {
       polyfill: userConfig.injectBabel !== 'runtime',
       hotDev: command === 'dev' && !commandArgs.disabledReload,
@@ -20,7 +20,7 @@ describe('user config', () => {
   describe('entry', () => {
     test('string entry', () => {
       const api = new MockApi();
-      api.service = { userConfig: { entry: 'src/index.js' }, commandArgs: {} };
+      api.context = { userConfig: { entry: 'src/index.js' }, commandArgs: {} };
       api.config.entry('index').add('src/test.js');
       userConfigPlugin(api);
       expect(api.config.toConfig().entry.index).toEqual([
@@ -30,7 +30,7 @@ describe('user config', () => {
 
     test('multi entris', () => {
       const api = new MockApi();
-      api.service = {
+      api.context = {
         userConfig: {
           entry: {
             index: 'src/index.js',
@@ -50,7 +50,7 @@ describe('user config', () => {
   describe('hash', () => {
     test('config hash is true', () => {
       const api = new MockApi();
-      api.service = {
+      api.context = {
         userConfig: { hash: true },
       };
       api.config.output.filename('js/[name].js');
@@ -63,7 +63,7 @@ describe('user config', () => {
   describe('outputAssetsPath', () => {
     test('set up outputAssetsPath', () => {
       const api = new MockApi();
-      api.service = {
+      api.context = {
         userConfig: {
           outputAssetsPath: {
             js: 'test/js',

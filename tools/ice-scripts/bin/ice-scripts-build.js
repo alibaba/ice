@@ -4,7 +4,7 @@
 const program = require('commander');
 const cliInstance = require('../lib/utils/cliInstance');
 const checkUpdater = require('../lib/utils/checkUpdater');
-const Service = require('../lib/core/Service');
+const Context = require('../lib/core/Context');
 
 /**
  * --project-type 参数说明
@@ -28,9 +28,8 @@ program
 checkUpdater().then(() => {
   cliInstance.initByProgram(program);
   process.env.NODE_ENV = 'production';
-  const service = new Service({
+  new Context({
     command: 'build',
     args: cliInstance.get(),
-  });
-  service.run();
+  }).run();
 });

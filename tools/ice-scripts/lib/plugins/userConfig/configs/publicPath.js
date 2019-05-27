@@ -1,6 +1,7 @@
-module.exports = (api, value) => {
-  if (api.service.command === 'build') {
-    api.chainWebpack((config) => {
+module.exports = ({ context, chainWebpack }, value) => {
+  const { command } = context;
+  if (command === 'build') {
+    chainWebpack((config) => {
       config.output.publicPath(value);
       const shouldUseRelativeAssetPaths = value === './';
       if (shouldUseRelativeAssetPaths) {

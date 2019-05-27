@@ -1,5 +1,5 @@
-module.exports = (api, injectBabel) => {
-  api.chainWebpack((config) => {
+module.exports = ({ chainWebpack }, injectBabel) => {
+  chainWebpack((config) => {
     if (injectBabel === 'runtime') {
       ['jsx', 'tsx'].forEach((rule) => {
         config.module

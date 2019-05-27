@@ -1,7 +1,7 @@
-module.exports = (api, value) => {
-  const { command } = api.service;
+module.exports = ({ context, chainWebpack }, value) => {
+  const { command } = context;
   if (command === 'dev') {
-    api.chainWebpack((config) => {
+    chainWebpack((config) => {
       config.output.publicPath(value);
     });
   }

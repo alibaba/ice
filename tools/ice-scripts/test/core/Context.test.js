@@ -1,44 +1,43 @@
 const path = require('path');
-const Service = require('../../lib/core/Service');
+const Context = require('../../lib/core/Context');
 
-describe('init service', () => {
-  const service = new Service({
+describe('init context', () => {
+  const context = new Context({
     command: 'dev',
-    context: path.join(__dirname, '../fixtures/service'),
+    rootDir: path.join(__dirname, '../fixtures/service'),
     args: {
       disabledReload: false,
     },
   });
   test('get ice.config.js', () => {
-    expect(service.userConfig.publicPath).toBe('/');
+    expect(context.userConfig.publicPath).toBe('/');
   });
   test('load plugins', () => {
     // builtInPlugins length is 2
-    expect(service.plugins.length).toBe(5);
+    expect(context.plugins.length).toBe(5);
   });
 
   it('plugin with option', async () => {
-    await service.runPlugins();
-    const webpackConfig = service.getWebpackConfig();
+    await context.runPlugins();
+    const webpackConfig = context.getWebpackConfig();
     expect(webpackConfig.resolve.alias).toEqual({ react: 'b' });
   });
 
   it('require plugin', async () => {
-    await service.runPlugins();
-    const webpackConfig = service.getWebpackConfig();
+    await context.runPlugins();
+    const webpackConfig = context.getWebpackConfig();
     expect(webpackConfig.output.filename).toBe('[name].bundle.js');
   });
 
   it('plugin defined by string', async () => {
-    await service.runPlugins();
-    const webpackConfig = service.getWebpackConfig();
+    await context.runPlugins();
+    const webpackConfig = context.getWebpackConfig();
     expect(webpackConfig.output.path).toBe('custom');
   });
 
   it('default values', async () => {
-    await service.runPlugins();
-    const webpackConfig = service.getWebpackConfig();
-    expect(webpackConfig.resolve.modules[0]).toBe('node_modules');
+    await context.runPlugins();
+    const webpackConfig = context.getWebpackConfig();
     expect(webpackConfig.resolve.extensions).toEqual(['.js', '.jsx', '.json', '.html', '.ts', '.tsx']);
     expect(webpackConfig.entry.index).toEqual([
       require.resolve('@babel/polyfill'),
