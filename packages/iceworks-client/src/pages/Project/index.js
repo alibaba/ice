@@ -205,7 +205,4 @@ const Project = () => {
   );
 };
 
-Project.propTypes = {
-};
-
 export default Project;

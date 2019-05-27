@@ -19,9 +19,9 @@ export default {
   async reset() {
     await socket.emit('project.dependency.reset');
   },
-  async creates(deps, focus) {
+  async creates(deps, force) {
     const { dependencies } = this.dataSource;
-    if (!focus) {
+    if (!force) {
       const depsWithoutVersion = deps.filter(({ version }) => !version || version === 'latest');
       const existDeps = depsWithoutVersion.filter(({ package: packageName }) =>
         dependencies.find(({ package: projectPackage }) => projectPackage === packageName));

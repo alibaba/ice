@@ -59,8 +59,8 @@ export default class Dependency extends EventEmitter implements IDependencyModul
 
   private async getLocalVersion(name: string): Promise<string> {
     const pkgPath = path.join(this.path, name, 'package.json');
-    const verstion: string = (await fsExtra.readJson(pkgPath)).version;
-    return verstion;
+    const version: string = (await fsExtra.readJson(pkgPath)).version;
+    return version;
   };
 
   // TODO any other way?

@@ -27,9 +27,7 @@ const Layout = () => {
               );
             })}
           </div> :
-          <div>
-            <Message title="暂无布局" type="help" />
-          </div>
+          <Message title="暂无布局" type="help" />
       }
     </Panel>
   );

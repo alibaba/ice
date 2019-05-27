@@ -24,9 +24,6 @@ const CreatePageModal = ({
   } = useModal();
   const [page] = pageStores.useStores(['page']);
   const [progress] = stores.useStores(['progress']);
-  function onClose() {
-    onCancel();
-  }
 
   async function onCloseSaveModel() {
     await progress.hide();
@@ -53,23 +50,25 @@ const CreatePageModal = ({
   });
 
   return (
-    <div>
+    [
       <Modal
         title="创建页面"
         visible={on}
-        onCancel={onClose}
+        onCancel={onCancel}
         onOk={onCreateOk}
+        key="createModal"
       >
         <div className={styles.wrap}>
           测试的搭建页面
         </div>
-      </Modal>
+      </Modal>,
       <SavePageModal
         on={onSaveModel}
         onCancel={onCloseSaveModel}
         onOk={onSaveOk}
-      />
-    </div>
+        key="saveModal"
+      />,
+    ]
   );
 };
 
