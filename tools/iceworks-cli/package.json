@@ -9,6 +9,7 @@
   "scripts": {},
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "cross-spawn": "^6.0.5",

@@ -1,8 +1,10 @@
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const log = require('../lib/log');
+const goldlog = require('../lib/glodlog');
 const checkEmpty = require('../lib/checkEmpty');
 const downloadTemplate = require('../lib/downloadTemplate');
+const packageConfig = require('../package.json');
 
 async function init(options = {}) {
   const cwd = process.cwd();
@@ -17,6 +19,9 @@ async function init(options = {}) {
       log.error('Select template failed:', err);
     }
   }
+
+  goldlog('version', { version: packageConfig.version });
+  goldlog('init', { template });
 
   try {
     await downloadTemplate({ template, cwd });
