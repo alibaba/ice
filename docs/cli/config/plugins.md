@@ -1,7 +1,6 @@
 ---
 title: 插件配置
 order: 3
-hide: true
 ---
 
 插件配置由配置文件 `ice.config.js` 中提供的 `plugins` 字段来配置插件列表。
