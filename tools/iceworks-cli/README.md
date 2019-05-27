@@ -1,14 +1,10 @@
 # Iceworks CLI
 
-A simple CLI for scaffolding Web projects.
+A simple CLI for iceworks.
 
 ## Usage
 
 ```bash
 $ npm i iceworks -g
-$ iceworks # start the iceworks server
+$ iceworks init  # init project by scaffold
 ```
-
-## TODO
-
-- Limit the number of Iceworks instance, only one instance can be run.
