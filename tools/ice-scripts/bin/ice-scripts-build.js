@@ -13,16 +13,6 @@ const Service = require('../lib/core/Service');
  *  - node: 老的 koa 项目
  */
 program
-  .option('--debug', 'debug 模式下不压缩')
-  .option('--hash', '构建后的资源带 hash 版本')
-  .option('--sourcemap <type>', '构建后的资源带 sourcemap 文件', /^([a-z-]*source-map|eval|none)$/i)
-  .option('-s, --skip-install', '跳过安装依赖')
-  .option('--skip-demo', '跳过构建 build/index.html 的环节')
-  .option(
-    '--inject-babel <type>',
-    '注入 babel 运行环境, Enum: polyfill|runtime',
-    /^(polyfill|runtime)$/
-  )
   .parse(process.argv);
 
 checkUpdater().then(() => {
