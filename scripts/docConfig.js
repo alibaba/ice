@@ -91,16 +91,28 @@ const docCategories = {
       path: '/docs/cli/about',
     }],
     children: [{
-      title: '配置指南',
+      title: {
+        'zh-cn': '配置指南',
+        'en-us': 'config',
+      },
       dir: 'config',
     }, {
-      title: '工程能力',
+      title: {
+        'zh-cn': '工程能力',
+        'en-us': 'feature',
+      },
       dir: 'feature',
     }, {
-      title: '插件列表',
+      title: {
+        'zh-cn': '插件列表',
+        'en-us': 'Plugins',
+      },
       dir: 'plugin-list',
     }, {
-      title: '插件开发',
+      title: {
+        'zh-cn': '插件开发',
+        'en-us': 'Plguin dev',
+      },
       dir: 'plugin-dev',
     }],
   },
