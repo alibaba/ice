@@ -66,7 +66,7 @@ const Project = () => {
     }
 
     if (newProject) {
-      newProject.dataSource.panels.map((name) => {
+      newProject.dataSource.panels.forEach((name) => {
         const panelStore = panelStores[name];
         if (panelStore) {
           panelStore.refresh();
