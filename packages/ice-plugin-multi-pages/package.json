@@ -1,6 +1,6 @@
 {
   "name": "ice-plugin-multi-pages",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "ice-scripts plugin for multiple pages",
   "main": "index.js",
   "scripts": {},
