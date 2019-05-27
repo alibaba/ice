@@ -105,6 +105,7 @@ const DependencyPanel = () => {
       dependenciesStore.refresh();
     } else {
       Message.error({
+        align: 'tr tr',
         type: 'error',
         title: '项目依赖安装失败',
         content: '请查看控制台日志输出',
@@ -127,6 +128,7 @@ const DependencyPanel = () => {
       dependenciesStore.refresh();
     } else {
       Message.error({
+        align: 'tr tr',
         type: 'error',
         title: '项目依赖更新失败',
         content: '请查看控制台日志输出',
