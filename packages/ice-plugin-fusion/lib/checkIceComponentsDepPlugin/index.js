@@ -9,13 +9,12 @@ const semver = require('semver');
 const bizComponentsVersion = require('./bizComponentsVersion');
 const deprecatedComponents = require('./deprecatedComponents');
 
-const log = require('../log');
-
 const depModules = {};
 
 module.exports = class CheckDepsPlugin {
   constructor(options) {
     this.pkg = options.pkg || {};
+    this.log = options.log;
   }
 
   apply(compiler) {
@@ -47,14 +46,14 @@ module.exports = class CheckDepsPlugin {
       Object.keys(depModules).forEach((moduleName) => {
         const versions = depModules[moduleName];
         if (versions.length > 1) {
-          log.warn(`项目依赖了 ${moduleName} 的两个版本，`, versions);
+          this.log.warn(`项目依赖了 ${moduleName} 的两个版本，`, versions);
         }
       });
 
       // 2. 多份基础组件
       const baseComponentDeps = ['@icedesign/base', '@alife/next', '@ali/ice'].filter((name) => depModules[name]);
       if (baseComponentDeps.length > 1) {
-        log.warn(`项目依赖了多份基础组件 ${baseComponentDeps}，建议通过配置 buildConfig.uniteBaseComponent 优化`);
+        this.log.warn(`项目依赖了多份基础组件 ${baseComponentDeps}，建议通过配置 buildConfig.uniteBaseComponent 优化`);
       }
 
       // 3. 业务组件与基础组件的版本对应关系
@@ -80,7 +79,7 @@ module.exports = class CheckDepsPlugin {
       Object.keys(depModules).forEach((moduleName) => {
         const deprecatedMsg = deprecatedComponents[moduleName];
         if (deprecatedMsg) {
-          log.warn(deprecatedMsg);
+          this.log.warn(deprecatedMsg);
         }
       });
 
@@ -126,12 +125,12 @@ function checkBizComponentVersion(npmName, npmVersion, baseVersion) {
 
   if (!semverVersion) {
     // 没有对应的（未升级）
-    log.warn(`${npmName} 暂时没有符合基础组件 ${baseVersion} 的版本，建议联系 ICE 团队协助升级`);
+    this.log.warn(`${npmName} 暂时没有符合基础组件 ${baseVersion} 的版本，建议联系 ICE 团队协助升级`);
   }
 
   if (!semver.satisfies(npmVersion, semverVersion)) {
     // 不符合版本
-    log.warn(`项目使用的基础组件版本是 ${baseVersion}，业务组件 ${npmName}@${npmVersion} 不符合版本要求 ${semverVersion}，建议选择正确的组件版本`);
+    this.log.warn(`项目使用的基础组件版本是 ${baseVersion}，业务组件 ${npmName}@${npmVersion} 不符合版本要求 ${semverVersion}，建议选择正确的组件版本`);
   }
 }
 
