@@ -3,7 +3,7 @@ title: ice.config.js
 order: 1
 ---
 
-`ice-scripts` 将提供 `ice.config.js` 作为项目的配置文件，文件需要存放在项目根目录（和 `package.json` 同级），如果不存在这个文件项目将使用默认配置。
+`ice-scripts` 将 `ice.config.js` 作为项目的配置文件，文件需要存放在项目根目录（和 `package.json` 同级），如果不存在这个文件项目将使用默认配置。
 
 配置文件内容如下：
 
