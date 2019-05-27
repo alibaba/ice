@@ -1,5 +1,6 @@
 const path = require('path');
 const WebpackPluginImport = require('webpack-plugin-import');
+const CheckIceComponentsDepsPlugin = require('./checkIceComponentsDepPlugin');
 
 module.exports = async ({ chainWebpack, log, context }, { themePackage, themeConfig, uniteBaseComponent }) => {
   const { rootDir } = context;
@@ -103,5 +104,11 @@ module.exports = async ({ chainWebpack, log, context }, { themePackage, themeCon
         },
       });
     }
+
+    // 4. 检测组件版本
+    config.plugin('CheckIceComponentsDepsPlugin')
+      .use(CheckIceComponentsDepsPlugin, [{
+        pkg: context.pkg,
+      }]);
   });
 };
