@@ -3,12 +3,20 @@ title: 快速上手
 order: 2
 ---
 
+本文将介绍如何快速通过 `ice-script` 开发和构建一个项目。
+
 ## 创建项目
 
 安装 `iceworks` 依赖：
 
 ```bash
 $ npm install iceworks -g
+```
+
+创建一个空目录：
+
+```bash
+$ mkdir iceapp && cd iceapp
 ```
 
 初始化项目：

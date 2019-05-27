@@ -28,7 +28,7 @@ module.exports = {
 }
 ```
 
-## 新增一个 Loader 配置
+## 新增 webpack loader
 
 ```js
 // ice.config.js
@@ -43,7 +43,7 @@ module.exports = {
 }
 ```
 
-## 修改已有 Loader 配置
+## 修改已有 webpack loader
 
 ```js
 // ice.config.js
@@ -99,7 +99,7 @@ module.exports = {
 }
 ```
 
-## 自定义不同命令下的 webpack 配置
+## 修改不同命令的 webpack 配置
 
 ```js
 // ice.config.js

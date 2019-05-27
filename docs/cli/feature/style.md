@@ -3,7 +3,8 @@ title: 使用样式
 order: 5
 ---
 
-支持 less/sass/css-modules
+`ice-scripts` 提供 Less/Sass/CSS Modules 的样式能力。
+
 ## 使用CSS
 
 样式文件后缀名为 `.css`，在对应的JS文件中引入：
