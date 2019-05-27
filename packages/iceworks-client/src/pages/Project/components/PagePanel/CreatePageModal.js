@@ -48,8 +48,8 @@ const CreatePageModal = ({
     toggleSaveModal();
   }
 
-  useSocket('project.page.create.status', (data) => {
-    progress.show(data);
+  useSocket('project.page.create.status', ({ text, percent }) => {
+    progress.show({ statusText: text, percent });
   });
 
   return (
