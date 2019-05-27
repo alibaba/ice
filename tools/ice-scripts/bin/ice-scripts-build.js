@@ -2,6 +2,7 @@
 
 
 const program = require('commander');
+const validationSassAvailable = require('../lib/utils/validationSassAvailable');
 const cliInstance = require('../lib/utils/cliInstance');
 const checkUpdater = require('../lib/utils/checkUpdater');
 const Context = require('../lib/core/Context');
@@ -14,6 +15,8 @@ const Context = require('../lib/core/Context');
  */
 program
   .parse(process.argv);
+
+validationSassAvailable();
 
 checkUpdater().then(() => {
   cliInstance.initByProgram(program);
