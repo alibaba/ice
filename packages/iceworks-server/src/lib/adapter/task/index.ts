@@ -68,7 +68,7 @@ export default class Task extends EventEmitter implements ITaskModule {
     });
 
     this.process[command].on('close', (code) => {
-      if (code === 0) {
+      if (code === 0 || command === 'lint') {
         this.emit(eventName, {
           status: TASK_STATUS_STOP,
           chunk: chalk.grey('Task has stopped'),
