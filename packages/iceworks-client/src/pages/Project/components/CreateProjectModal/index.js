@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form, Input, Button } from '@alifd/next';
 import Modal from '@components/Modal';
-import Progress from '@components/Progress';
-import styles from './SavePageModel.module.scss';
+import styles from './index.module.scss';
 
 const FormItem = Form.Item;
 const FormSubmit = Form.Submit;
@@ -15,16 +14,16 @@ const formItemLayout = {
   },
 };
 
-const SavePageModel = ({ on, onCancel, onOk }) => {
-  async function onSave(values, errors) {
+const CreateProjectModal = ({ on, onCancel, onOk }) => {
+  const onSave = (values, errors) => {
     if (!errors) {
-      await onOk(values);
+      onOk(values);
     }
-  }
+  };
 
   return (
     <Modal
-      title="填写页面信息"
+      title="填写项目信息"
       visible={on}
       onCancel={onCancel}
       onOk={onSave}
@@ -39,7 +38,19 @@ const SavePageModel = ({ on, onCancel, onOk }) => {
           {...formItemLayout}
           required
           size="medium"
-          label="页面目录名"
+          label="路径"
+        >
+          <Input
+            className={styles.input}
+            name="path"
+            placeholder=""
+          />
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          required
+          size="medium"
+          label="目录名"
           pattern={/^[a-z]([-_a-z0-9]*)$/i}
           patternMessage="请输入字母与数字组合，字母开头"
           patternTrigger="onChange"
@@ -47,38 +58,9 @@ const SavePageModel = ({ on, onCancel, onOk }) => {
           <Input
             className={styles.input}
             name="name"
-            placeholder="请输入页面目录名，字母与数字组合，字母开头"
+            placeholder="请输入目录名，字母与数字组合，字母开头"
           />
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          required
-          size="medium"
-          label="路由路径"
-          pattern={/^(\/?)([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/}
-          patternMessage="请输入小写字母数字组合，支持二级路由以 `/` 分隔"
-          patternTrigger={['onBlur', 'onChange']}
-        >
-          <Input
-            className={styles.input}
-            name="routePath"
-            placeholder="请输入小写字母数字组合，支持二级路由以 `/` 分隔"
-          />
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          size="medium"
-          label="页面导航名"
-        >
-          <Input
-            className={styles.input}
-            name="menuName"
-            placeholder="为空则不生成导航项"
-          />
-        </FormItem>
-        <div>
-          <Progress />
-        </div>
         <div className={styles.opts}>
           <FormSubmit onClick={onSave} validate type="primary" className={styles.button}>
             <FormattedMessage id="iceworks.global.button.yes" />
@@ -92,10 +74,10 @@ const SavePageModel = ({ on, onCancel, onOk }) => {
   );
 };
 
-SavePageModel.propTypes = {
+CreateProjectModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
 };
 
-export default SavePageModel;
+export default CreateProjectModal;

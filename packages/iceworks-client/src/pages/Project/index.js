@@ -7,7 +7,7 @@ import mockData from '@src/mock';
 import SubMenu from './components/SubMenu';
 import OpenProjectModal from './components/OpenProjectModal';
 import DeleteProjectModal from './components/DeleteProjectModal';
-import CreateProjectModel from './components/CreateProjectModel';
+import CreateProjectModal from './components/CreateProjectModal';
 import Guide from './components/Guide';
 import projectStores from './stores';
 import styles from './index.module.scss';
@@ -177,7 +177,7 @@ const Project = () => {
         onOk={deleteProject}
         project={projectPreDelete}
       />
-      <CreateProjectModel
+      <CreateProjectModal
         on={onCreateProjectModel}
         onCancel={toggleCreateProjectModal}
         onOk={onCreateProject}

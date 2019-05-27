@@ -6,7 +6,7 @@ import Modal from '@components/Modal';
 import useModal from '@hooks/useModal';
 import useSocket from '@hooks/useSocket';
 import pageStores from '../../stores';
-import SavePageModel from './SavePageModel';
+import SavePageModal from './SavePageModal';
 import styles from './CreatePageModal.module.scss';
 
 // TODO
@@ -64,7 +64,7 @@ const CreatePageModal = ({
           测试的搭建页面
         </div>
       </Modal>
-      <SavePageModel
+      <SavePageModal
         on={onSaveModel}
         onCancel={onCloseSaveModel}
         onOk={onSaveOk}
