@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Panel from '../Panel';
 
-const Todo = () => {
+const TodoPanel = () => {
   return (
     <Panel header={<h3><FormattedMessage id="iceworks.project.panel.todo.title" /></h3>}>
       <div>
@@ -12,4 +12,4 @@ const Todo = () => {
   );
 };
 
-export default Todo;
+export default TodoPanel;

@@ -5,7 +5,7 @@ import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
 
-const Layout = () => {
+const LayoutPanel = () => {
   const layouts = stores.useStore('layouts');
   const { dataSource } = layouts;
 
@@ -33,4 +33,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default LayoutPanel;

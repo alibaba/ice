@@ -10,7 +10,7 @@ import styles from './index.module.scss';
 import DeletePageModal from './DeletePageModal';
 import CreatePageModal from './CreatePageModal';
 
-const Page = () => {
+const PagePanel = () => {
   const [deleteName, setDeleteName] = useState('');
   const {
     on: onDeleteModel,
@@ -121,4 +121,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default PagePanel;

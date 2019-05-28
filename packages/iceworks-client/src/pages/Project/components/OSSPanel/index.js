@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Panel from '../Panel';
 
-const OSS = () => {
+const OSSPanel = () => {
   return (
     <Panel header={<h3><FormattedMessage id="iceworks.project.panel.oss.title" /></h3>}>
       <div>
@@ -12,4 +12,4 @@ const OSS = () => {
   );
 };
 
-export default OSS;
+export default OSSPanel;
