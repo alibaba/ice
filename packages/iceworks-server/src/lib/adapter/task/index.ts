@@ -43,7 +43,7 @@ export default class Task extends EventEmitter implements ITaskModule {
       env = { PORT: await detectPort(DEFAULT_PORT) };
 
       // create an ipc channel
-      ipc.init();
+      ipc.start();
     }
 
     const eventName = `start.data.${command}`;
@@ -89,6 +89,11 @@ export default class Task extends EventEmitter implements ITaskModule {
   async stop(args) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
+
+    if (command === 'dev') {
+      // close the server and stop ipc serving
+      ipc.stop();
+    }
 
     this.process[command].kill();
     this.process[command].on('exit', (code) => {

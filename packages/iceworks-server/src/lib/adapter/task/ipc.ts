@@ -18,9 +18,14 @@ ipc.server.on('error', (err) => {
   ipc.log('Got an error:', err);
 });
 
-function init() {
+function start() {
   ipc.server.start();
   console.log('Start IPC Server');
 }
 
-export { init };
+function stop() {
+  ipc.server.stop();
+  console.log('Stop IPC Server');
+}
+
+export { start, stop };
