@@ -82,4 +82,4 @@ import styles from './index.module.scss';
 <Button className={styles.btn}>OK</Button>;
 ```
 
-在这些众多方案里，我们推荐使用 CSS Modules 方案，具体参见 [样式方案](/docs/guide/dev/style)。
+在这些众多方案里，我们推荐使用 CSS Modules 方案，具体参见 [样式方案](/docs/guide/dev/style.md)。
