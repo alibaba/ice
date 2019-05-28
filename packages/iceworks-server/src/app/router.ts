@@ -15,7 +15,7 @@ export default (app: Application) => {
     ['project.dependency.list', project.dependency.list],
     ['project.task.start', project.task.start],
     ['project.task.stop', project.task.stop],
-    ['project.task.setting', project.task.setting],
+    ['project.task.getSetting', project.task.getSetting],
     ['project.configuration.settings', project.configuration.settings],
   ];
 

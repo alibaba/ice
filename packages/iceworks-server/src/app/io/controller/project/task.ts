@@ -41,11 +41,11 @@ export default (app) => {
     /**
      * task setting
      */
-    async setting(ctx) {
+    async getSetting(ctx) {
       const { args } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      const response = await project.task.setting(args);
+      const response = await project.task.getSetting(args);
       return { setting: response };
     }
   };

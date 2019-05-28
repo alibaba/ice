@@ -55,5 +55,5 @@ export interface ITaskModule extends IBaseModule {
    *
    * @param args 参数对象
    */
-  setting(args): Promise<ITaskSetting[]>;
+  getSetting(args): Promise<ITaskSetting[]>;
 }

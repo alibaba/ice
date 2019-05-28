@@ -55,7 +55,7 @@ const Task = ({ history, intl }) => {
 
   async function onSetting() {
     try {
-      await task.setting(type);
+      await task.getSetting(type);
       toggleModal();
     } catch (error) {
       showMessage(error.message);
