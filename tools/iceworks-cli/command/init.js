@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const chalk = require('chalk');
+const { checkAliInternal } = require('ice-npm-utils');
 const log = require('../lib/log');
 const goldlog = require('../lib/glodlog');
 const checkEmpty = require('../lib/checkEmpty');
@@ -33,6 +34,7 @@ async function init(options = {}) {
     console.log(chalk.cyan('    npm install'));
     console.log(chalk.cyan('    npm start'));
     console.log();
+    logMsgForInnerNet();
   } catch (err) {
     log.error('Initialize project failed:', err);
   }
@@ -63,6 +65,18 @@ async function selectTemplate() {
       ],
     })
     .then((answer) => answer.template);
+}
+
+async function logMsgForInnerNet() {
+  const isInnerNet = await checkAliInternal();
+  if (isInnerNet) {
+    console.log(
+      `${chalk.yellow(
+        'If you need to deploy with def, please refer to the docs: http://ice.taobao.net/docs/cli/about'
+      )}`
+    );
+    console.log();
+  }
 }
 
 module.exports = (...args) => {
