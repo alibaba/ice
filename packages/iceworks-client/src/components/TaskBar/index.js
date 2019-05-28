@@ -6,11 +6,11 @@ import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import styles from './index.module.scss';
 
-const TerminalBar = ({ loading, onStart, onStop, onSetting }) => {
+const TaskBar = ({ loading, onStart, onStop, onSetting, extra }) => {
   return (
-    <div className={styles.actionBar}>
+    <div className={styles.taskBar}>
       {/* Left Button Group */}
-      <div className={styles.leftActionBar}>
+      <div className={styles.leftTaskBar}>
         {!loading ? (
           <Button
             type="primary"
@@ -38,35 +38,25 @@ const TerminalBar = ({ loading, onStart, onStop, onSetting }) => {
       </div>
 
       {/* Right Button Group */}
-      <div className={styles.rightActionBar}>
-        <Button.Group>
-          <Button type="primary" className={styles.rightButton}>
-            <Icon type="pc" /> 日志
-          </Button>
-          <Button type="secondary" className={styles.rightButton}>
-            <Icon type="projects" /> 仪表盘
-          </Button>
-          <Button type="secondary" className={styles.rightButton}>
-            <Icon type="wrencha" /> 构建分析
-          </Button>
-        </Button.Group>
-      </div>
+      {extra}
     </div>
   );
 };
 
-TerminalBar.defaultProps = {
+TaskBar.defaultProps = {
   loading: false,
   onStart: () => {},
   onStop: () => {},
   onSetting: () => {},
+  extra: null,
 };
 
-TerminalBar.propTypes = {
+TaskBar.propTypes = {
   loading: PropTypes.bool,
   onStart: PropTypes.func,
   onStop: PropTypes.func,
   onSetting: PropTypes.func,
+  extra: PropTypes.node,
 };
 
-export default TerminalBar;
+export default TaskBar;

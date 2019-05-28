@@ -5,7 +5,7 @@ import { Message } from '@alifd/next';
 import useSocket from '@hooks/useSocket';
 import useModal from '@hooks/useModal';
 import Card from '@components/Card';
-import TerminalBar from '@components/TerminalBar';
+import TaskBar from '@components/TaskBar';
 import XtermTerminal from '@components/XtermTerminal';
 import stores from '@stores';
 import taskStores from './stores';
@@ -84,7 +84,7 @@ const Task = ({ history, intl }) => {
       contentHeight="100%"
       className={styles.taskCard}
     >
-      <TerminalBar
+      <TaskBar
         loading={status === 'working'}
         onStart={onStart}
         onStop={onStop}
