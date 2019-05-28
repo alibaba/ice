@@ -8,6 +8,7 @@ import Card from '@components/Card';
 import TaskBar from '@components/TaskBar';
 import XtermTerminal from '@components/XtermTerminal';
 import stores from '@stores';
+import termManager from '@utils/termManager';
 import taskStores from './stores';
 import TaskModal from './components/TaskModal';
 import styles from './index.module.scss';
@@ -61,19 +62,29 @@ const Task = ({ history, intl }) => {
     }
   }
 
-  function listenEventHandle(callback) {
-    const startEventName = `project.task.${type}.start.data`;
-    useSocket(startEventName, (data) => {
-      setStatus(data.status);
-      callback(data.chunk);
-    }, [status]);
+  const id = `${project.dataSource.name}.${type}`;
+  const startEventName = `project.task.${type}.start.data`;
+  const stopEventName = `project.task.${type}.stop.data`;
 
-    const stopEventName = `project.task.${type}.stop.data`;
-    useSocket(stopEventName, (data) => {
+  // listen start envent handle
+  useSocket(
+    startEventName,
+    (data) => {
       setStatus(data.status);
-      callback(data.chunk);
-    }, [status]);
-  }
+      termManager.formatWrite(id, data.chunk);
+    },
+    [status]
+  );
+
+  // listen stop envent handle
+  useSocket(
+    stopEventName,
+    (data) => {
+      setStatus(data.status);
+      termManager.formatWrite(id, data.chunk);
+    },
+    [status]
+  );
 
   const data = task.dataSource[type] ? task.dataSource[type] : {};
 
@@ -92,11 +103,7 @@ const Task = ({ history, intl }) => {
       />
 
       <div className={styles.content}>
-        <XtermTerminal
-          id={`${project.dataSource.name}.${type}`}
-          name={project.dataSource.name}
-          eventHandle={listenEventHandle}
-        />
+        <XtermTerminal id={id} name={project.dataSource.name} />
       </div>
 
       <TaskModal on={on} data={data.setting || []} toggleModal={toggleModal} />
