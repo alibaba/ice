@@ -19,13 +19,13 @@ const CreatePageModal = ({
   on, onCancel, onOk,
 }) => {
   const {
-    on: onSaveModel,
+    on: onSaveModal,
     toggleModal: toggleSaveModal,
   } = useModal();
   const [page] = pageStores.useStores(['page']);
   const [progress] = stores.useStores(['progress']);
 
-  async function onCloseSaveModel() {
+  async function onCloseSaveModal() {
     await progress.hide();
     toggleSaveModal();
   }
@@ -63,8 +63,8 @@ const CreatePageModal = ({
         </div>
       </Modal>,
       <SavePageModal
-        on={onSaveModel}
-        onCancel={onCloseSaveModel}
+        on={onSaveModal}
+        onCancel={onCloseSaveModal}
         onOk={onSaveOk}
         key="saveModal"
       />,

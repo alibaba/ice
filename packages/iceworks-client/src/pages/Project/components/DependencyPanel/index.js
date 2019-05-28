@@ -16,7 +16,7 @@ const STATUS_RESETING = 'reseting';
 
 const DependencyPanel = () => {
   const {
-    on: onCreateModel,
+    on: onCreateModal,
     toggleModal: toggleCreateModal,
   } = useModal();
   const dependenciesStore = stores.useStore('dependencies');
@@ -203,7 +203,7 @@ const DependencyPanel = () => {
       <div className={styles.main}>
         <CreateDependencyModal
           title="添加依赖"
-          on={onCreateModel}
+          on={onCreateModal}
           onCancel={toggleCreateModal}
           onOk={create}
         />

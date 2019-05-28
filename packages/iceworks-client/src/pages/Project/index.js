@@ -33,15 +33,15 @@ const panels = {
 
 const Project = () => {
   const {
-    on: onOpenProjectModel,
+    on: onOpenProjectModal,
     setModal: setOpenProjectModal,
   } = useModal();
   const {
-    on: onDeleteProjectModel,
+    on: onDeleteProjectModal,
     toggleModal: toggleDeleteProjectModal,
   } = useModal();
   const {
-    on: onCreateProjectModel,
+    on: onCreateProjectModal,
     toggleModal: toggleCreateProjectModal,
   } = useModal();
   const [deleteProjectPath, setDeleteProjectPath] = useState('');
@@ -167,18 +167,18 @@ const Project = () => {
         />
       ) : null}
       <OpenProjectModal
-        on={onOpenProjectModel}
+        on={onOpenProjectModal}
         onCancel={() => setOpenProjectModal(false)}
         onOk={addProject}
       />
       <DeleteProjectModal
-        on={onDeleteProjectModel}
+        on={onDeleteProjectModal}
         onCancel={toggleDeleteProjectModal}
         onOk={deleteProject}
         project={projectPreDelete}
       />
       <CreateProjectModal
-        on={onCreateProjectModel}
+        on={onCreateProjectModal}
         onCancel={toggleCreateProjectModal}
         onOk={onCreateProject}
       />
