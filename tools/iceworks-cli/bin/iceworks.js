@@ -3,6 +3,7 @@
 /* eslint quotes:0, prefer-template:0 */
 const chalk = require('chalk');
 const program = require('commander');
+const pkgData = require('../package');
 const checkVersion = require('../lib/checkVersion');
 
 async function check() {
@@ -12,7 +13,9 @@ async function check() {
 // check node version and iceworks version
 check();
 
-program.version(require('../package').version).usage('<command> [options]');
+console.log('iceworks cli', pkgData.version);
+
+program.version(pkgData.version).usage('<command> [options]');
 
 // output help information on unknown commands
 program.arguments('<command>').action((cmd) => {
