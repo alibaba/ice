@@ -63,8 +63,8 @@ const Task = ({ history, intl }) => {
   }
 
   const id = `${project.dataSource.name}.${type}`;
-  const startEventName = `project.task.${type}.start.data`;
-  const stopEventName = `project.task.${type}.stop.data`;
+  const startEventName = `project.task.start.data.${type}`;
+  const stopEventName = `project.task.stop.data.${type}`;
 
   // listen start envent handle
   useSocket(

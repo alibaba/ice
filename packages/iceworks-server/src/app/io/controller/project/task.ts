@@ -12,8 +12,8 @@ export default (app) => {
       await project.task.start(args);
 
       const { command } = args;
-      const onEventName = `${command}.start.data`;
-      const emitEventName = `project.task.${command}.start.data`;
+      const onEventName = `start.data.${command}`;
+      const emitEventName = `project.task.start.data.${command}`;
       project.task.on(onEventName, (data) => {
         socket.emit(emitEventName, data);
       });
@@ -31,8 +31,8 @@ export default (app) => {
       await project.task.stop(args);
 
       const { command } = args;
-      const onEventName = `${command}.stop.data`;
-      const emitEventName = `project.task.${command}.stop.data`;
+      const onEventName = `stop.data.${command}`;
+      const emitEventName = `project.task.stop.data.${command}`;
       project.task.on(onEventName, (data) => {
         socket.emit(emitEventName, data);
       });

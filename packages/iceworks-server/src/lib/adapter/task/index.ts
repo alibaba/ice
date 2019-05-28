@@ -46,7 +46,7 @@ export default class Task extends EventEmitter implements ITaskModule {
       ipc.init();
     }
 
-    const eventName = `${command}.start.data`;
+    const eventName = `start.data.${command}`;
     this.process[command] = execa(
       'npm',
       ['run', command === 'dev' ? 'start' : command],
@@ -66,7 +66,7 @@ export default class Task extends EventEmitter implements ITaskModule {
     });
 
     this.process[command].on('close', () => {
-      if (command === "build" || command === 'lint') {
+      if (command === 'build' || command === 'lint') {
         this.process[command] = null;
         this.emit(eventName, {
           status: TASK_STATUS_STOP,
@@ -88,7 +88,7 @@ export default class Task extends EventEmitter implements ITaskModule {
    */
   async stop(args) {
     const { command } = args;
-    const eventName = `${command}.stop.data`;
+    const eventName = `stop.data.${command}`;
 
     this.process[command].kill();
     this.process[command].on('exit', (code) => {
