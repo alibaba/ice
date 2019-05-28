@@ -72,7 +72,7 @@ async function logMsgForInnerNet() {
   if (isInnerNet) {
     console.log(
       `${chalk.yellow(
-        'If you need to deploy with def, please refer to the docs: http://ice.taobao.net/docs/cli/about'
+        'If you need to deploy with def, please refer to the docs: https://yuque.alibaba-inc.com/ice/rdy99p/angwyx'
       )}`
     );
     console.log();
