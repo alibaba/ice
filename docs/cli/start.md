@@ -3,7 +3,7 @@ title: 快速上手
 order: 2
 ---
 
-本文将介绍如何快速通过 `ice-scripts` 开发和构建一个项目。
+本文介绍如何快速通过 `ice-scripts` 开发和构建一个项目。
 
 ## 创建项目
 
@@ -58,15 +58,15 @@ Options:
 比如使用 3000 端口启动 dev server
 
 ```bash
-$ ice-scripts dev -p 3000
-# 或者
 $ npm run start -- -p 3000
+# 或者
+$ ice-scripts dev -p 3000
 ```
 
 比如开启 https
 
 ```bash
-$ ice-scripts dev --https
+$ npm run start -- --https
 ```
 
 ## 构建代码

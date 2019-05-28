@@ -30,4 +30,4 @@ module.exports = {
 }
 ```
 
-更多组件开发相关内容，详见[业务组件开发规范](/docs/cli/advanced/biz-component)
+更多组件开发相关内容，详见[业务组件开发规范](/docs/materials/react.md)。

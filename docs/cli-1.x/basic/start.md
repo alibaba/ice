@@ -3,42 +3,45 @@ title: 快速上手
 order: 2
 ---
 
-## 安装
+> ice-scripts@2.0.0 版本已发布，在可配置与定制性上做了很多提升，[迁移文档](/docs/cli/migrate.md)。
+
+本文介绍如何快速通过 `ice-scripts` 开发和构建一个项目。
+
+## 创建项目
+
+> 支持 CLI 和 GUI 两种方式创建，此处演示 CLI 用法
+
+安装 CLI 工具：
 
 ```bash
-$ npm i -g ice-scripts
-$ ice --help
+$ npm install iceworks -g
 ```
 
-当然你也可以将其作为项目级依赖：`npm i --save-dev ice-scripts`
-
-ice-scripts 提供了 `init/dev/build` 的开发命令，如果使用 iceworks 开发，那么大多数时候你不需要关心这些命令。
-
-### ice init
-
-根据模板初始化项目：
+创建一个空目录：
 
 ```bash
-$ ice init --help
-
-Usage: ice-init [options]
-
-Options:
-
-  -t, --template         模板 npm 包名，可不传
-  -h, --help             output usage information
+$ mkdir iceapp && cd iceapp
 ```
 
-比如初始化指定项目模版
+初始化项目：
 
 ```bash
-# 初始化执行项目项目
-$ ice init -t @icedesign/lite-scaffold
+$ iceworks init
 ```
 
-### ice dev
+完成项目初始化后既可以开始开始项目调试开发和项目构建。
 
-启动调试服务：
+## 调试开发
+
+项目目录下启动调试服务：
+
+```bash
+$ npm start
+```
+
+开始调试服务后，可以访问 `http://localhost:4444` 进行页面预览。修改源码内容后将自动刷新页面。
+
+调试服务支持的命令参数：
 
 ```bash
 $ ice dev --help
@@ -59,20 +62,24 @@ Options:
 比如使用 3000 端口启动 dev server
 
 ```bash
-$ ice dev -p 3000
-# 或者
 $ npm run start -- -p 3000
 ```
 
 比如开启 https
 
 ```bash
-$ ice dev --https
+$ npm run start -- --https
 ```
 
 ### ice build
 
-构建项目代码
+构建项目代码：
+
+```bash
+$ npm run build
+```
+
+构建产物默认生成到 `./build` 目录下。
 
 ```plain
 $ ice build --help

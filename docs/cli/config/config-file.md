@@ -30,6 +30,6 @@ module.exports = {
 
 配置文件可以配置的内容，分为以下三类：
 
-* [基本配置项](/docs/cli/basic/config.md)
-* [插件配置](/docs/cli/basic/plugins.md)
-* [自定义 webpack 配置](/docs/cli/basic/custom-webpack.md)
+* [基本配置项](/docs/cli/config/config.md)
+* [插件配置](/docs/cli/config/plugins.md)
+* [自定义 webpack 配置](/docs/cli/config/custom-webpack.md)

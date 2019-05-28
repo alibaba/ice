@@ -22,7 +22,7 @@ $ npm i --save-dev ice-plugin-fusion
 
 Options:
 
-- `themePackage`: 主题包
+- `themePackage`: 主题包，如何新建主题包请参考文档 [主题配置](/docs/guide/dev/theme.md)。
 - `themeConfig`: 主题配置
 - `uniteBaseComponent`: 如果项目里依赖了多个不同名称的基础包，可以通过 uniteBaseComponent 来统一基础包，减少重复的代码（社区用户无需关心该问题）
 

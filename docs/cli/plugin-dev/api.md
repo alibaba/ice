@@ -55,7 +55,7 @@ module.exports = ({ chainWepack }) => {
 }
 ```
 
-更多 webpack-chain 用法，参考 [自定义 webpack 配置](/docs/cli/basic/custom-webpack)
+更多 webpack-chain 用法，参考 [自定义 webpack 配置](/docs/cli/config/custom-webpack.md)
 
 ### log
 
