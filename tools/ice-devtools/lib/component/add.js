@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const path = require('path');
+const fse = require('fs-extra');
 const chalk = require('chalk');
 const validateName = require('validate-npm-package-name');
 
@@ -20,9 +21,15 @@ module.exports = async function addComponent(cwd, opt = {}) {
   } = opt;
 
   const questions = defaultQuestion(npmPrefix);
-  const { name } = await inquirer.prompt(questions);
+  const { name, adaptor } = await inquirer.prompt(questions);
   const npmName = generateNpmNameByPrefix(name, npmPrefix);
   const dest = standalone ? cwd : path.join(cwd, 'components', name);
+
+  if (adaptor) {
+    // copy template adaptor to src
+    const adaptorDir = path.join(__dirname, '../../template/component');
+    fse.copySync(adaptorDir, src);
+  }
 
   try {
     await generate({
@@ -30,6 +37,7 @@ module.exports = async function addComponent(cwd, opt = {}) {
       dest,
       name,
       npmName,
+      adaptor,
       meta,
       skipGitIgnore: !standalone, // 物料仓库中，不处理 _gitignore 文件
     });
@@ -41,6 +49,12 @@ module.exports = async function addComponent(cwd, opt = {}) {
 
 function defaultQuestion(prefix) {
   return [
+    {
+      type: 'confirm',
+      name: 'adaptor',
+      message: '组件是否需要接入 Fusion Cool & 设计板块？',
+      default: false,
+    },
     {
       type: 'input',
       name: 'name',

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.2
+
+- [feat] init component support fusion component adaptor
+
 ## 2.3.1
 
 - [fix] 删除物料 publish 默认源配置，由用户自定义 #1866
