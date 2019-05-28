@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
 const ComponentCard = ({ dataSource, onInstall }) => {
@@ -20,9 +21,9 @@ const ComponentCard = ({ dataSource, onInstall }) => {
           target="_blank"
           className={styles.button}
         >
-          文档
+          <FormattedMessage id="iceworks.material.doc" />
         </a>
-        <a className={styles.button} onClick={handleInstall}>安装</a>
+        <a className={styles.button} onClick={handleInstall}><FormattedMessage id="iceworks.material.install" /></a>
       </div>
     </div>
   );

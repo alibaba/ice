@@ -4,6 +4,7 @@ import { Tab } from '@alifd/next';
 import stores from '@stores';
 import Card from '@components/Card';
 import qs from 'querystringify';
+import { FormattedMessage } from 'react-intl';
 import { forceCheck } from 'react-lazyload';
 import SubMenu from './components/SubMenu';
 import ScaffoldPanel from './components/ScaffoldPanel';
@@ -66,18 +67,18 @@ const Material = ({ history, location }) => {
 
   const tabs = [
     {
-      tab: '模板',
+      tab: 'iceworks.material.scaffold',
       key: 'scaffolds',
       content: (
         <ScaffoldPanel
           dataSource={dataSource.current.scaffolds}
           current={currCategory}
-          onInstall={openModal}
+          onDownload={openModal}
         />
       ),
     },
     {
-      tab: '区块',
+      tab: 'iceworks.material.block',
       key: 'blocks',
       content: (
         <BlockPanel
@@ -88,7 +89,7 @@ const Material = ({ history, location }) => {
       ),
     },
     {
-      tab: '组件',
+      tab: 'iceworks.material.component',
       key: 'components',
       content: (
         <ComponentPanel
@@ -111,10 +112,10 @@ const Material = ({ history, location }) => {
       />
 
       <div className={styles.main}>
-        <Card title="物料管理" contentHeight="100%" className="scollContainer">
+        <Card title={<FormattedMessage id="iceworks.material.title" />} contentHeight="100%" className="scollContainer">
           <Tab shape="capsule" size="small" style={{ textAlign: 'center' }} activeKey={type} onChange={handleTabChange}>
             {tabs.map((tab) => (
-              <Tab.Item title={tab.tab} key={tab.key}>
+              <Tab.Item title={<FormattedMessage id={tab.tab} />} key={tab.key}>
                 {tab.content}
               </Tab.Item>
             ))}

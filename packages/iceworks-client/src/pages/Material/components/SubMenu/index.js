@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import SubMenu from '@components/SubMenu';
+import { FormattedMessage } from 'react-intl';
 import Icon from '@components/Icon';
 import { Button } from '@alifd/next';
 import logger from '@utils/logger';
@@ -58,7 +59,7 @@ const MaterialSubMenu = ({
       <div className={styles.opts}>
         <Button className={styles.btn} type="primary" size="medium" onClick={onAddMaterial}>
           <Icon type="plus" size="l" />
-          <span>添加物料</span>
+          <span><FormattedMessage id="iceworks.material.add" /></span>
         </Button>
       </div>
     </SubMenu>

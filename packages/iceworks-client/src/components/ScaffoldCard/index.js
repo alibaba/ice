@@ -1,12 +1,13 @@
 /* eslint no-use-before-define:0 */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
-const ScaffoldCard = ({ dataSource, bgColor, onInstall }) => {
-  function handleInstall() {
-    if (typeof onInstall === 'function') {
-      onInstall(dataSource);
+const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
+  function handleDownload() {
+    if (typeof onDownload === 'function') {
+      onDownload(dataSource);
     }
   }
 
@@ -33,7 +34,7 @@ const ScaffoldCard = ({ dataSource, bgColor, onInstall }) => {
       <div className={styles.info}>
         <div className={styles.title}>{dataSource.title}</div>
         <div className={styles.desc}>
-          {dataSource.description || '暂无描述'}
+          {dataSource.description || <FormattedMessage id="iceworks.material.noDesc" />}
         </div>
       </div>
 
@@ -44,7 +45,7 @@ const ScaffoldCard = ({ dataSource, bgColor, onInstall }) => {
           target="_blank"
           className={styles.button}
         >
-          效果预览
+          <FormattedMessage id="iceworks.material.preview" />
         </a>
         <a
           href={dataSource.repository}
@@ -52,9 +53,11 @@ const ScaffoldCard = ({ dataSource, bgColor, onInstall }) => {
           target="_blank"
           className={styles.button}
         >
-          查看源码
+          <FormattedMessage id="iceworks.material.source" />
         </a>
-        <a className={styles.button} onClick={handleInstall}>使用该模版</a>
+        <a className={styles.button} onClick={handleDownload}>
+          <FormattedMessage id="iceworks.material.download" />
+        </a>
       </div>
     </div>
   );
@@ -62,13 +65,13 @@ const ScaffoldCard = ({ dataSource, bgColor, onInstall }) => {
 
 ScaffoldCard.defaultProps = {
   bgColor: '#fafafa',
-  onInstall: f => f,
+  onDownload: f => f,
 };
 
 ScaffoldCard.propTypes = {
   dataSource: PropTypes.object.isRequired,
   bgColor: PropTypes.string,
-  onInstall: PropTypes.func,
+  onDownload: PropTypes.func,
 };
 
 export default ScaffoldCard;

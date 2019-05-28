@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
-const ScaffoldPanel = ({ dataSource, current, onInstall }) => {
+const ScaffoldPanel = ({ dataSource, current, onDownload }) => {
   const { categories, materials } = dataSource;
   const currentMaterials = materials[current] || [];
 
@@ -20,7 +20,7 @@ const ScaffoldPanel = ({ dataSource, current, onInstall }) => {
 
           return (
             <Col l="12" s="12" xs="24" xxs="24" key={key}>
-              <ScaffoldCard dataSource={data} onInstall={onInstall} />
+              <ScaffoldCard dataSource={data} onDownload={onDownload} />
             </Col>
           );
         })}
@@ -35,7 +35,7 @@ ScaffoldPanel.defaultProps = {
     materials: {},
   },
   current: 'all',
-  onInstall: f => f,
+  onDownload: f => f,
 };
 
 ScaffoldPanel.propTypes = {
@@ -44,7 +44,7 @@ ScaffoldPanel.propTypes = {
     materials: PropTypes.object.isRequired,
   }),
   current: PropTypes.string,
-  onInstall: PropTypes.func,
+  onDownload: PropTypes.func,
 };
 
 export default ScaffoldPanel;

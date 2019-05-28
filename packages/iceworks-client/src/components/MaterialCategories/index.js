@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
 function MaterialCategories(props) {
@@ -17,7 +18,7 @@ function MaterialCategories(props) {
   return (
     <ul className={styles.materialCategories}>
       <li key={-1} className={cx({ [styles.active]: !current || current === 'all' })}>
-        <Link to={linkToAll}>全部</Link>
+        <Link to={linkToAll}><FormattedMessage id="iceworks.material.all" /></Link>
       </li>
       {dataSource.map(({ name }) => {
         const item = {
