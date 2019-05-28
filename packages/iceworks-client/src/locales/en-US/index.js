@@ -28,8 +28,17 @@ export default {
 
   // project panel
   'iceworks.project.panel.page.title': 'Page',
+
+  // project dependency
   'iceworks.project.panel.dependency.title': 'Dependency',
+  'iceworks.project.panel.dependency.main.upgrade': 'Upgrade to {wantedVestion}',
+  'iceworks.project.panel.dependency.main.reset.title': 'Reinstall',
+  'iceworks.project.panel.dependency.main.reset.content': 'All dependencies of the installation project will be reset. During installation, debugging services, new pages, and project operation can not be started. Please wait patiently.',
+
+  // project layout
   'iceworks.project.panel.layout.title': 'Layout',
+  'iceworks.project.panel.layout.none': 'No layout',
+
   'iceworks.project.panel.todo.title': 'TODO',
   'iceworks.project.panel.def.title': 'DEF',
   'iceworks.project.panel.git.title': 'Git',

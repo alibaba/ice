@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
+import { FormattedMessage } from 'react-intl';
 import { Input } from '@alifd/next';
 import styles from './CreateDependencyModal.module.scss';
 
@@ -22,18 +23,20 @@ const CreateDependencyModal = ({
 
   return (
     <Modal
-      title="添加依赖"
+      title={<FormattedMessage id="iceworks.project.panel.dependency.create.title" />}
       visible={on}
       onCancel={onCancel}
       onOk={() => onOk(value)}
     >
-      <div>
-        <Input.TextArea
-          onChange={onChange}
-          placeholder="请输入 npm 包名以及版本号，例如：lodash@latest。按回车输入多个依赖。"
-          className={styles.textarea}
-        />
-      </div>
+      <FormattedMessage id="iceworks.project.panel.dependency.create.placeholder">
+        {(placeholder) => (
+          <Input.TextArea
+            onChange={onChange}
+            placeholder={placeholder}
+            className={styles.textarea}
+          />
+        )}
+      </FormattedMessage>
     </Modal>
   );
 };

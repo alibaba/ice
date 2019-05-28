@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import mockData from '@src/mock';
 import stores from '@stores';
 import Modal from '@components/Modal';
@@ -36,7 +37,7 @@ const CreatePageModal = ({
   }
 
   async function onSaveOk(data) {
-    await progress.show({ statusText: '开始创建页面..' });
+    await progress.show({ statusText: <FormattedMessage id="iceworks.project.panel.page.create.progress.start" /> });
     await onOk({
       ...page.dataSource,
       ...data,
@@ -52,7 +53,7 @@ const CreatePageModal = ({
   return (
     [
       <Modal
-        title="创建页面"
+        title={<FormattedMessage id="iceworks.project.panel.page.create.title" />}
         visible={on}
         onCancel={onCancel}
         onOk={onCreateOk}

@@ -27,7 +27,7 @@ const LayoutPanel = () => {
               );
             })}
           </div> :
-          <Message title="暂无布局" type="help" />
+          <Message title={<FormattedMessage id="iceworks.project.panel.layout.none" />} type="help" />
       }
     </Panel>
   );
