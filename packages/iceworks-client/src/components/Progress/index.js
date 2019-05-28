@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Progress as OriginalProgress } from '@alifd/next';
+import { Progress as NextProgress } from '@alifd/next';
 import styles from './index.module.scss';
 
 const Progress = ({ statusText, show, percent }) => {
@@ -9,7 +9,7 @@ const Progress = ({ statusText, show, percent }) => {
       <div className={styles.wrap}>
         {statusText ? <span className={styles.status}>{statusText}</span> : null}
         <div className={styles.progress}>
-          <OriginalProgress
+          <NextProgress
             percent={percent}
           />
         </div>
