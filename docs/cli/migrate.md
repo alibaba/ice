@@ -97,13 +97,12 @@ module.exports = {
 // ice.config.js
 module.exports = {
   plugins: [
-    // 如有其他组件库需求，可参考 ice-scripts-plugin-antd 进行实现
-    'ice-scripts-plugin-antd'
+    'ice-plugin-antd'
   ]
 }
 ```
 
-更多细节，参考[插件配置](/docs/cli/config/plugins.md)
+更多细节，参考[插件配置](/docs/cli/plugin-list/antd.md)
 
 ### Fusion 组件配置
 
@@ -127,7 +126,7 @@ module.exports = {
 // ice.config.js
 module.exports = {
   plugins: [
-    ['ice-scripts-plugin-fusion', {
+    ['ice-plugin-fusion', {
       themePackage: '@icedesign/theme',
       uniteBaseComponent: '@alife/next',
       themeConfig: {
@@ -138,7 +137,7 @@ module.exports = {
 }
 ```
 
-更多细节，参考[插件配置](/docs/cli/config/plugins.md)
+更多细节，参考[插件配置](/docs/cli/plugin-list/fusion.md)
 
 ### css 中的网络资源本地化
 
@@ -156,12 +155,12 @@ module.exports = {
 // ice.config.js
 module.exports = {
   plugins: [
-    'ice-scripts-plugin-css-assets-local',
+    'ice-plugin-css-assets-local',
   ]
 }
 ```
 
-更多细节，参考[插件配置](/docs/cli/config/plugins.md)
+更多细节，参考[插件配置](/docs/cli/plugin-list/local.md)
 
 ## 命令行参数迁移
 
