@@ -12,7 +12,7 @@ const DEST_DIR = path.join(process.cwd(), 'server');
  * @param {string} npmName npm package name
  * @param {string} destDir target directory
  */
-function downloadAndInstall(npmName, destDir) {
+function downloadServer(npmName, destDir) {
   return getTarball(npmName)
     .then((url) => {
       return extractTarball(url, destDir);
@@ -37,7 +37,7 @@ function install(cwd) {
   });
 }
 
-downloadAndInstall(NPM_NAME, DEST_DIR).catch((err) => {
+downloadServer(NPM_NAME, DEST_DIR).catch((err) => {
   console.log(err);
   process.exit(1);
 });

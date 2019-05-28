@@ -46,7 +46,17 @@ module.exports = function extractTarball(
       .on('entry', (entry) => {
         const realPath = entry.path.replace(/^package\//, '');
 
-        const destPath = path.join(destDir, realPath);
+        let filename = path.basename(realPath);
+
+        // _gitignore -> .gitignore
+        // Special logic：_package.json -> package.json
+        if (filename === '_package.json') {
+          filename = filename.replace(/^_/, '');
+        } else {
+          filename = filename.replace(/^_/, '.');
+        }
+
+        const destPath = path.join(destDir, path.dirname(realPath), filename);
 
         const needCreateDir = path.dirname(destPath);
         if (!directoryCollector.includes(needCreateDir)) {

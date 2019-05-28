@@ -1,28 +1,33 @@
 {
   "name": "iceworks",
-  "version": "0.1.0-beta.0",
+  "version": "0.1.0-beta.3",
   "description": "A simple CLI for scaffolding Web projects",
   "main": "bin/iceworks.js",
   "bin": {
     "iceworks": "bin/iceworks.js"
   },
-  "scripts": {
-    "postinstall": "node ./lib/downloadAndInstall.js"
-  },
+  "scripts": {},
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "cross-spawn": "^6.0.5",
     "execa": "^1.0.0",
+    "fs-extra": "^8.0.1",
+    "ice-npm-utils": "^1.0.3",
+    "inquirer": "^6.3.1",
     "mkdirp": "^0.5.1",
+    "npmlog": "^4.1.2",
     "ora": "^3.4.0",
     "portfinder": "^1.0.20",
     "request": "^2.88.0",
     "request-progress": "^3.0.0",
     "request-promise-native": "^1.0.7",
+    "rimraf": "^2.6.3",
     "tar": "^2.0.0",
     "tarball-extract": "^0.0.6",
+    "uuid": "^3.3.2",
     "zlib": "^1.0.5"
   },
   "engines": {
