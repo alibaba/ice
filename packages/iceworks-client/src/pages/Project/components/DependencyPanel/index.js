@@ -5,7 +5,7 @@ import useSocket from '@hooks/useSocket';
 import { FormattedMessage } from 'react-intl';
 import useModal from '@hooks/useModal';
 import logger from '@utils/logger';
-import CreateDependencyModel from './CreateDependencyModel';
+import CreateDependencyModal from './CreateDependencyModal';
 import Panel from '../Panel';
 import stores from '../../stores';
 import styles from './index.module.scss';
@@ -201,7 +201,7 @@ const DependencyPanel = () => {
       }
     >
       <div className={styles.main}>
-        <CreateDependencyModel
+        <CreateDependencyModal
           title="添加依赖"
           on={onCreateModel}
           onCancel={toggleCreateModal}

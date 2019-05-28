@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@components/Modal';
 import { Input } from '@alifd/next';
-import styles from './CreateDependencyModel.module.scss';
+import styles from './CreateDependencyModal.module.scss';
 
-const CreateDependencyModel = ({
+const CreateDependencyModal = ({
   on, onCancel, onOk,
 }) => {
   const [value, setState] = useState('');
@@ -38,10 +38,10 @@ const CreateDependencyModel = ({
   );
 };
 
-CreateDependencyModel.propTypes = {
+CreateDependencyModal.propTypes = {
   on: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onOk: PropTypes.func.isRequired,
 };
 
-export default CreateDependencyModel;
+export default CreateDependencyModal;
