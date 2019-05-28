@@ -53,8 +53,8 @@ function modifyPkg(pkgPath) {
 
 function generateAbcFile(projectDir) {
   const abcData = {
-    type: 'iceworks',
-    builder: '@ali/builder-iceworks',
+    type: 'ice-scripts',
+    builder: '@ali/builder-ice-scripts',
   };
 
   fse.writeJSONSync(path.resolve(projectDir, 'abc.json'), abcData, {
