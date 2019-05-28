@@ -11,9 +11,7 @@ const TASK_STATUS_WORKING = 'working';
 const TASK_STATUS_STOP = 'stop';
 
 export default class Task extends EventEmitter implements ITaskModule {
-  public readonly projectPath: string;
-
-  public readonly projectName: string;
+  public project: IProject;
 
   public status: string = '';
 
@@ -21,8 +19,7 @@ export default class Task extends EventEmitter implements ITaskModule {
 
   constructor(project: IProject) {
     super();
-    this.projectPath = project.path;
-    this.projectName = project.name;
+    this.project = project;
   }
 
   /**
@@ -51,7 +48,7 @@ export default class Task extends EventEmitter implements ITaskModule {
       'npm',
       ['run', command === 'dev' ? 'start' : command],
       {
-        cwd: this.projectPath || process.cwd(),
+        cwd: this.project.path || process.cwd(),
         stdio: ['inherit', 'pipe', 'pipe'],
         shell: true,
         env: Object.assign({}, process.env, env),
