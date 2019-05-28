@@ -47,26 +47,18 @@ const docCategories = {
   materials: {
     // 自定义物料
     title: {},
-    // currentVersion: '1.x',
-    // versions: [{
-    //   value: '0.x',
-    //   path: '/docs/cli/about',
-    // }, {
-    //   value: '1.x',
-    //   path: '/docs/materials/about',
-    // }],
   },
-  cli: {
-    // ice-scripts
+  'cli-1.x': {
+    // ice-scripts 1.x
     title: {},
-    // currentVersion: '0.x',
-    // versions: [{
-    //   value: '0.x',
-    //   path: '/docs/cli/about',
-    // }, {
-    //   value: '1.x',
-    //   path: '/docs/materials/about',
-    // }],
+    currentVersion: '1.x',
+    versions: [{
+      value: '1.x',
+      path: '/docs/cli-1.x/about',
+    }, {
+      value: '2.x',
+      path: '/docs/cli/about',
+    }],
     children: [{
       title: {
         'zh-cn': '基础指南',
@@ -85,6 +77,43 @@ const docCategories = {
         'en-us': 'others',
       },
       dir: 'others',
+    }],
+  },
+  cli: {
+    // ice-scripts 2.x
+    title: {},
+    currentVersion: '2.x',
+    versions: [{
+      value: '1.x',
+      path: '/docs/cli-1.x/about',
+    }, {
+      value: '2.x',
+      path: '/docs/cli/about',
+    }],
+    children: [{
+      title: {
+        'zh-cn': '配置指南',
+        'en-us': 'config',
+      },
+      dir: 'config',
+    }, {
+      title: {
+        'zh-cn': '工程能力',
+        'en-us': 'feature',
+      },
+      dir: 'feature',
+    }, {
+      title: {
+        'zh-cn': '插件列表',
+        'en-us': 'Plugins',
+      },
+      dir: 'plugin-list',
+    }, {
+      title: {
+        'zh-cn': '插件开发',
+        'en-us': 'Plguin dev',
+      },
+      dir: 'plugin-dev',
     }],
   },
   design: {

@@ -1,8 +1,6 @@
 /**
- * 编译设置
- * @param {Object} buildConfig 定义在 package.json 的字段
+ * babel 配置
  */
-const cliInstance = require('../utils/cliInstance');
 
 function resolvePlugin(plugins) {
   return plugins.filter(Boolean).map((plugin) => {
@@ -14,25 +12,8 @@ function resolvePlugin(plugins) {
   });
 }
 
-module.exports = (buildConfig = {}, buildComponentSrc) => {
-  let importConfig = [{
-    libraryName: '@icedesign/base',
-  }, {
-    libraryName: '@alife/next',
-  }, {
-    libraryName: '@alifd/next',
-  }];
-  const customImportConfig = buildConfig.babelPluginImportConfig;
-
-  if (customImportConfig) {
-    if (Array.isArray(customImportConfig)) {
-      importConfig = importConfig.concat(customImportConfig);
-    } else {
-      importConfig.push(customImportConfig);
-    }
-  }
-
-  let plugins = [
+module.exports = () => {
+  const plugins = [
     // Stage 0
     '@babel/plugin-proposal-function-bind',
     // Stage 1
@@ -53,42 +34,17 @@ module.exports = (buildConfig = {}, buildComponentSrc) => {
     '@babel/plugin-syntax-import-meta',
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     '@babel/plugin-proposal-json-strings',
-    (cliInstance.get('injectBabel') === 'runtime' || buildComponentSrc) ? [
-      '@babel/plugin-transform-runtime',
-      {
-        corejs: false,
-        helpers: true,
-        regenerator: true,
-        useESModules: false,
-      },
-    ] : null,
   ];
 
-  plugins = plugins.concat(
-    importConfig.map((itemConfig) => {
-      return ['babel-plugin-import', itemConfig, itemConfig.libraryName];
-    })
-  );
-
   return {
-    babelrc: buildConfig.babelrc || false,
+    // babelrc: buildConfig.babelrc || false,
     presets: resolvePlugin([
       [
         '@babel/preset-env',
         {
-          modules: buildComponentSrc ? 'commonjs' : false,
+          modules: false,
           useBuiltIns: 'entry',
           corejs: 3,
-          targets: {
-            browsers: [
-              'last 2 versions',
-              'Firefox ESR',
-              '> 1%',
-              'ie >= 9',
-              'iOS >= 8',
-              'Android >= 4',
-            ],
-          },
         },
       ],
       '@babel/preset-typescript',

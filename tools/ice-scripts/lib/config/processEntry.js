@@ -4,8 +4,6 @@ const path = require('path');
 const appDirectory = fs.realpathSync(process.cwd());
 const hotDevClientPath = require.resolve('react-dev-utils/webpackHotDevClient');
 
-const cliInstance = require('../utils/cliInstance');
-
 function entryWithApp(entry) {
   if (typeof entry === 'string') {
     // 绝对路径直接返回
@@ -36,7 +34,7 @@ function enhanceEntries(entries, chunk) {
   return hotEntries;
 }
 
-module.exports = (entry) => {
+module.exports = (entry, options = {}) => {
   // 需要区分项目类型，新版的项目直接返回 src/index.js
   let entries = {};
   if (Array.isArray(entry) || typeof entry === 'string') {
@@ -49,12 +47,12 @@ module.exports = (entry) => {
     });
   }
 
-  if (process.env.NODE_ENV !== 'production' && !cliInstance.get('disableReload')) {
+  if (options.hotDev) {
     entries = enhanceEntries(entries, hotDevClientPath);
   }
 
   // Note：https://github.com/alibaba/ice/pull/834
-  if (cliInstance.get('injectBabel') !== 'runtime') {
+  if (options.polyfill) {
     entries = enhanceEntries(entries, require.resolve('@babel/polyfill'));
   }
 
