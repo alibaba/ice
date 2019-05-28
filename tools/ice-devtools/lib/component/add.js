@@ -37,6 +37,7 @@ module.exports = async function addComponent(cwd, opt = {}) {
       dest,
       name,
       npmName,
+      adaptor,
       meta,
       skipGitIgnore: !standalone, // 物料仓库中，不处理 _gitignore 文件
     });
