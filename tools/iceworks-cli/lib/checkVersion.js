@@ -24,9 +24,7 @@ module.exports = async () => {
     const latestVersion = JSON.parse(body)['dist-tags'].latest;
     const localVersion = packageConfig.version;
     if (semver.lt(localVersion, latestVersion)) {
-      console.log(
-        chalk.yellow('  A newer version of iceworks is available.')
-      );
+      console.log(chalk.yellow('  A newer version of iceworks is available.'));
       console.log();
       console.log('  latest:    ' + chalk.green(latestVersion));
       console.log('  installed: ' + chalk.red(localVersion));

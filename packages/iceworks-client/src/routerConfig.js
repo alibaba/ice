@@ -1,40 +1,40 @@
-import Project from './pages/Project';
-import Work from './pages/Work';
-import Dev from './pages/Dev';
-import Build from './pages/Build';
-import Configuration from './pages/Configuration';
-import Material from './pages/Material';
-import Setting from './pages/Setting';
-import SettingGeneral from './pages/SettingGeneral';
-import SettingMaterial from './pages/SettingMaterial';
-import SettingPanel from './pages/SettingPanel';
-import SettingAdvanced from './pages/SettingAdvanced';
+import { lazy } from 'react';
+
+const Project = lazy(() => import('./pages/Project'));
+const Work = lazy(() => import('./pages/Work'));
+const Dev = lazy(() => import('./pages/Dev'));
+const Build = lazy(() => import('./pages/Build'));
+const Configuration = lazy(() => import('./pages/Configuration'));
+const Material = lazy(() => import('./pages/Material'));
+const Setting = lazy(() => import('./pages/Setting'));
+const SettingGeneral = lazy(() => import('./pages/SettingGeneral'));
+const SettingMaterial = lazy(() => import('./pages/SettingMaterial'));
+const SettingPanel = lazy(() => import('./pages/SettingPanel'));
+const SettingAdvanced = lazy(() => import('./pages/SettingAdvanced'));
 
 // Then our route config
 const routerConfig = [
   {
+    from: '/',
     path: '/project',
     component: Project,
   },
   {
     path: '/work',
     component: Work,
-    exact: true,
     routes: [
       {
+        from: '/work',
         path: '/work/dev',
         component: Dev,
-        exact: true,
       },
       {
         path: '/work/build',
         component: Build,
-        exact: true,
       },
       {
         path: '/work/configuration',
         component: Configuration,
-        exact: true,
       },
     ],
   },
@@ -47,24 +47,21 @@ const routerConfig = [
     component: Setting,
     routes: [
       {
+        from: '/setting',
         path: '/setting/general',
         component: SettingGeneral,
-        exact: true,
       },
       {
         path: '/setting/material',
         component: SettingMaterial,
-        exact: true,
       },
       {
         path: '/setting/panel',
         component: SettingPanel,
-        exact: true,
       },
       {
         path: '/setting/advanced',
         component: SettingAdvanced,
-        exact: true,
       },
     ],
   },

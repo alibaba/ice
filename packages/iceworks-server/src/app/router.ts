@@ -1,20 +1,45 @@
-export default (app) => {
+import { Application } from 'midway';
+
+export default (app: Application) => {
   const { controller } = app.io;
+
   const { project, material } = controller;
+  const logger = app.getLogger();
 
-  app.io.route('project.index.list', project.index.list);
-  app.io.route('project.index.delete', project.index.delete);
-  app.io.route('project.index.add', project.index.add);
-  app.io.route('project.index.current', project.index.getCurrent);
-  app.io.route('project.index.setCurrent', project.index.setCurrent);
-  app.io.route('project.page.list', project.page.list);
-  app.io.route('project.dependency.list', project.dependency.list);
-  app.io.route('project.dev.start', project.dev.start);
-  app.io.route('project.dev.stop', project.dev.stop);
-  app.io.route('project.dev.settings', project.dev.settings);
-  app.io.route('project.dev.detail', project.dev.detail);
-  app.io.route('project.configuration.settings', project.configuration.settings);
+  const routers: [string, () => {}][] = [
+    ['project.index.list', project.index.list],
+    ['project.index.delete', project.index.delete],
+    ['project.index.add', project.index.add],
+    ['project.index.current', project.index.getCurrent],
+    ['project.index.setCurrent', project.index.setCurrent],
+    ['project.page.list', project.page.list],
+    ['project.dependency.list', project.dependency.list],
+    ['project.dev.start', project.dev.start],
+    ['project.dev.stop', project.dev.stop],
+    ['project.dev.settings', project.dev.settings],
+    ['project.dev.detail', project.dev.detail],
+    ['project.configuration.settings', project.configuration.settings],
+    ['material.index.resource', material.index.resource],
+    ['material.index.current', material.index.current],
+  ];
 
-  app.io.route('material.index.resource', material.index.resource);
-  app.io.route('material.index.current', material.index.current);
+  routers.forEach(([eventName, handle]) => {
+    app.io.route(eventName, async function(this: any) {
+      const { args } = this;
+      const params = args[0];
+      const callback = args[args.length - 1];
+
+      try {
+        this.args = params;
+        const data = await handle.call(this);
+        callback(null, data);
+      } catch (error) {
+        logger.error(error);
+        callback({
+          code: error.code,
+          message: error.message,
+        });
+      }
+    });
+  });
 };

@@ -6,34 +6,31 @@ import junk from 'junk';
 import { IPageModule, IProject } from '../../../interface';
 
 export default class Page implements IPageModule {
-  public readonly projectPath: string;
-
-  public readonly projectName: string;
+  public readonly project: IProject;
 
   constructor(project: IProject) {
-    this.projectPath = project.path;
-    this.projectName = project.name;
+    this.project = project;
   }
 
   async getAll() {
-    return readPages(path.join(this.projectPath, 'src', 'pages'));
+    return readPages(path.join(this.project.path, 'src', 'pages'));
   }
 
-  async getOne(): Promise<any> {}
+  async getOne(): Promise<any> { }
 
-  async create(): Promise<any> {}
+  async create(): Promise<any> { }
 
-  async creates(): Promise<any> {}
+  async creates(): Promise<any> { }
 
-  async delete(): Promise<any> {}
+  async delete(): Promise<any> { }
 
-  async update(): Promise<any> {}
+  async update(): Promise<any> { }
 
-  async getBlocks(): Promise<any> {}
+  async getBlocks(): Promise<any> { }
 
-  async createBlock(): Promise<any> {}
+  async createBlock(): Promise<any> { }
 
-  async createBlocks(): Promise<any> {}
+  async createBlocks(): Promise<any> { }
 }
 
 /**

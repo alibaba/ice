@@ -17,6 +17,7 @@
     "egg-view-nunjucks": "^2.2.0",
     "execa": "^1.0.0",
     "junk": "^3.1.0",
+    "lodash.clone": "^4.5.0",
     "midway": "^1.0.0",
     "mkdirp": "^0.5.1",
     "npm-run-path": "^3.1.0",
