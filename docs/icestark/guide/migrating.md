@@ -29,7 +29,7 @@ class App extends React.Component {
       <div>
         <div className="header">this is common header</div>
         <AppRouter onRouteChange={this.onRouteChange}>
-          <AppRoute path={/^\/(home|about)/} title="A应用" url="xxx">
+          <AppRoute path={['/', '/home', '/about']} title="A应用" url="xxx">
           <AppRoute path="/user" title="B应用" url="xxx" />
         </AppRouter>
         <div className="footer">this is common footer</div>

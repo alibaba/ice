@@ -9,7 +9,7 @@ icestark 将应用进行了拆分（框架应用和子应用），拆分之后�
 
 这类数据交换的场景很多，这里简单通过一些场景的实现方案进行说明。
 
-1. 通过共享的 `location` 实现当子应用 A/home -> A/info 时，框架应用隐藏公共的 `footer`
+- 通过共享的 `location` 实现当子应用 A/home -> A/info 时，框架应用隐藏公共的 `footer`
 
 ```js
 // 子应用 A 中的代码
@@ -62,7 +62,7 @@ class App extends React.Component {
       <div>
         <div className="header">this is common header</div>
         <AppRouter onRouteChange={this.onRouteChange} >
-          <AppRoute path={/^\/(home|info)/} title="this is A" url="xxx">
+          <AppRoute path={['/', '/home', '/info']} title="this is A" url="xxx">
         </AppRouter>
         {showFooter ? <div className="footer">this is common footer</div> : null}
       </div>
@@ -72,7 +72,7 @@ class App extends React.Component {
 ```
 > AppRouter 提供的 `onRouteChange` 支持从框架应用中监听子应用切换 `pathname`、`query` 的能力。
 
-2. 在子应用中触发 `postMessage` 事件，通知框架应用：重新发起后端请求，更新通知信息条数
+- 在子应用中触发 `postMessage` 事件，通知框架应用：重新发起后端请求，更新通知信息条数
 
 ```js
 // 子应用 A 中的代码
@@ -144,7 +144,7 @@ class App extends React.Component {
       <div>
         <div className="header">you have {messageCount} message!</div>
         <AppRouter>
-          <AppRoute path={/^\/(home|about)/} title="this is A" url="xxx">
+          <AppRoute path={['/', '/home', '/about']} title="this is A" url="xxx">
           <AppRoute path="/B"  title="this is B" url="xxx" />
         </AppRouter>
       </div>

@@ -7,9 +7,15 @@ order: 6
 
 ## path
 
-- 子应用对应的 base 路由，比如默认域名为`www.icestark.com`，`path` 设置为 `/user`，表示当访问 `www.icestark.com/user` 时，渲染此应用，必填
-- 类型：`string | RegExp`
+- 子应用对应的 base 路由，比如默认域名为`www.icestark.com`，`path` 设置为 `/user`，表示当访问 `www.icestark.com/user` 时，渲染此应用，必填，参数设置对比 `React Router`
+- 类型：`string | string[]`
 - 默认值：`-`
+
+## extra
+
+- 是否完全匹配，参数设置对比 `React Router`
+- 类型 `boolean`
+- 默认值：`false`
 
 ## url
 
