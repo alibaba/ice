@@ -52,6 +52,7 @@ class TermManager {
     // opens the terminal within an element.
     this.terms[id].open(container);
 
+    // Note: need to initialize the fit plugin when the component is re-rendered
     // make the terminal's size and geometry fit the size of #terminal-container
     this.terms[id].fit();
   }
