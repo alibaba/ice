@@ -7,11 +7,12 @@ import styles from './index.module.scss';
 const DeleteProjectModal = ({
   on, onCancel, onOk, project,
 }) => {
-  const [deleteFiles, setState] = useState(false);
+  const initDeleteFiles = false;
+  const [deleteFiles, setState] = useState(initDeleteFiles);
 
   function onClose() {
     onCancel();
-    setState(false);
+    setState(initDeleteFiles);
   }
   return (
     <Modal

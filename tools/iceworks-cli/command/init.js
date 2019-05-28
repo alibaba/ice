@@ -1,8 +1,20 @@
 const inquirer = require('inquirer');
 const chalk = require('chalk');
+const formatProject = require('../lib/formatProject');
 const log = require('../lib/log');
+const goldlog = require('../lib/glodlog');
 const checkEmpty = require('../lib/checkEmpty');
 const downloadTemplate = require('../lib/downloadTemplate');
+const packageConfig = require('../package.json');
+
+module.exports = (...args) => {
+  return init(...args).catch((err) => {
+    log.error('init error');
+    console.error(err);
+    process.exit(1);
+  });
+};
+
 
 async function init(options = {}) {
   const cwd = process.cwd();
@@ -11,26 +23,29 @@ async function init(options = {}) {
 
   let { template } = options;
   if (!options.template) {
-    try {
-      template = await selectTemplate();
-    } catch (err) {
-      log.error('Select template failed:', err);
-    }
+    template = await selectTemplate();
   }
 
+  goldlog('version', { version: packageConfig.version });
+  goldlog('init', { template });
+
+  await downloadTemplate({ template, cwd });
+
   try {
-    await downloadTemplate({ template, cwd });
-    console.log();
-    console.log('Initialize project successfully.');
-    console.log();
-    console.log('Starts the development server.');
-    console.log();
-    console.log(chalk.cyan('    npm install'));
-    console.log(chalk.cyan('    npm start'));
-    console.log();
+    await formatProject(cwd);
   } catch (err) {
-    log.error('Initialize project failed:', err);
+    log.warn('formatProject error');
+    console.error(err);
   }
+
+  console.log();
+  console.log('Initialize project successfully.');
+  console.log();
+  console.log('Starts the development server.');
+  console.log();
+  console.log(chalk.cyan('    npm install'));
+  console.log(chalk.cyan('    npm start'));
+  console.log();
 }
 
 async function selectTemplate() {
@@ -59,10 +74,3 @@ async function selectTemplate() {
     })
     .then((answer) => answer.template);
 }
-
-module.exports = (...args) => {
-  return init(...args).catch((err) => {
-    log.error(err);
-    process.exit(1);
-  });
-};

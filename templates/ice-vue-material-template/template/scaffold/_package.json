@@ -55,9 +55,6 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "publishConfig": {
-    "registry": "<%= registry %>"
-  },
   "scaffoldConfig": {
     "builder": "vue-cli-service",
     "name": "<%= name %>",

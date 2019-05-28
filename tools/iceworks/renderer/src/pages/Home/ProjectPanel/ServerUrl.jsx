@@ -12,7 +12,8 @@ const DevServerUrl = (props) => {
   }
   return (
     <span>
-      本地服务器:{' '}
+      本地服务器:
+      {' '}
       <a
         href={props.url}
         onClick={(event) => {

@@ -21,7 +21,7 @@ class ExtraButton extends Component {
         {...other}
         className={classnames({
           'extra-button': true,
-          active: active,
+          active,
         })}
         onClick={disabled ? () => {} : onClick}
         style={disabled ? styles.disabled : style}

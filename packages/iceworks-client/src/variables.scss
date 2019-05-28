@@ -36,10 +36,12 @@ $font-size-xxl: $font-size-headline; // 24px;
 $font-size-xxxl: $font-size-display-1; // 36px;
 
 // border color
-$border-color-base: $color-line1-1;
+$border-color-base: $color-line1-1; 
 
 // border radius
 $border-radius-base: $corner-2; // 6px
+$border-radius-large: $corner-3; // 16px
+$border-radius-small: $corner-1; // 16px
 $border-radius-circle: $corner-circle; // 50%
 
 // link color

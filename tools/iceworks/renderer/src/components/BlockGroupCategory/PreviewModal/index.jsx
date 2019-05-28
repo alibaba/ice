@@ -29,8 +29,8 @@ class BlockGroupPreviewModal extends Component {
         style={{ overlay: { background: '#fff', zIndex: '10000' } }}
       >
         <div style={{ width: '100%', height: '100%' }}>
-        {
-          blockGroups.previewBlocks.map( (block, index) => {
+          {
+          blockGroups.previewBlocks.map((block, index) => {
             return (
               <img
                 key={index}
@@ -38,7 +38,7 @@ class BlockGroupPreviewModal extends Component {
                 src={block.screenshot}
                 alt={block.name}
               />
-            )
+            );
           })
         }
         </div>
