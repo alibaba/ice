@@ -1,12 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Progress as OriginalProgress } from '@alifd/next';
-import stores from '@stores';
 import styles from './index.module.scss';
 
-const Progress = () => {
-  const progress = stores.useStore('progress');
-  const { statusText, show, percent } = progress.dataSource;
-
+const Progress = ({ statusText, show, percent }) => {
   return (
     show ?
       <div className={styles.wrap}>
@@ -19,6 +16,18 @@ const Progress = () => {
       </div> :
       null
   );
+};
+
+Progress.defaultProps = {
+  statusText: '',
+  show: false,
+  percent: 0,
+};
+
+Progress.propTypes = {
+  statusText: PropTypes.string,
+  show: PropTypes.bool,
+  percent: PropTypes.number,
 };
 
 export default Progress;
