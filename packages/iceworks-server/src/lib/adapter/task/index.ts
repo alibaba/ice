@@ -4,7 +4,7 @@ import * as detectPort from 'detect-port';
 import chalk from 'chalk';
 import * as ipc from './ipc';
 import { DEV_CONF, BUILD_CONF, LINT_CONF } from './const';
-import { ITaskModule, IProject } from '../../../interface';
+import { ITaskModule, ITaskParam, IProject } from '../../../interface';
 
 const DEFAULT_PORT = '4444';
 const TASK_STATUS_WORKING = 'working';
@@ -26,7 +26,7 @@ export default class Task extends EventEmitter implements ITaskModule {
    * run start task
    * @param args
    */
-  async start(args: any) {
+  async start(args: ITaskParam) {
     let { command } = args;
 
     if (this.process[command]) {
@@ -83,7 +83,7 @@ export default class Task extends EventEmitter implements ITaskModule {
    * run stop task
    * @param args
    */
-  async stop(args) {
+  async stop(args: ITaskParam) {
     const { command } = args;
     const eventName = `stop.data.${command}`;
 

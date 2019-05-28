@@ -35,25 +35,35 @@ export interface ITaskSetting {
   componentProps: object;
 }
 
+/**
+ * 任务命令的参数
+ */
+export interface ITaskParam {
+  /**
+   * 命令名称
+   */
+  command: string
+}
+
 export interface ITaskModule extends IBaseModule {
   /**
    * 启动调试服务
    *
-   * @param args 参数对象
+   * @param task 任务信息
    */
-  start(args: any): Promise<ITaskModule>;
+  start(taskParam: ITaskParam): Promise<ITaskModule>;
 
   /**
    * 停止调试服务
    *
-   * @param args 参数对象
+   * @param task 任务信息
    */
-  stop(args): Promise<ITaskModule>;
+  stop(task: ITaskParam): Promise<ITaskModule>;
 
   /**
    * 获取启动调试服务设置项
    *
-   * @param args 参数对象
+   * @param task 任务信息
    */
-  getSetting(args): Promise<ITaskSetting[]>;
+  getSetting(task: ITaskParam): Promise<ITaskSetting[]>;
 }
