@@ -14,8 +14,8 @@
     "block"
   ],
   "scripts": {
-    "start": "ice dev",
-    "build": "ice build",
+    "start": "ice-scripts dev",
+    "build": "ice-scripts build",
     "screenshot": "ice-devtools screenshot",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
@@ -23,6 +23,8 @@
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
+    "ice-plugin-fusion": "^0.1.4",
+    "ice-scripts": "^2.0.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
   },
