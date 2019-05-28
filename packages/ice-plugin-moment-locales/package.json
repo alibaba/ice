@@ -1,5 +1,5 @@
 {
-  "name": "ice-plugin-moment-locale",
+  "name": "ice-plugin-moment-locales",
   "version": "0.1.0",
   "description": "ice-scripts plugins for moment locale",
   "main": "index.js",
@@ -13,7 +13,7 @@
   ],
   "author": "ICE Team",
   "license": "MIT",
-  "dependencies": {
-    "loader-utils": "^1.2.3"
+  "devDependencies": {
+    "webpack": "^4.32.2"
   }
 }

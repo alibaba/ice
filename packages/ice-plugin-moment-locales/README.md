@@ -1,4 +1,4 @@
-# ice-plugin-moment-locale
+# ice-plugin-moment-locales
 
 ## 功能
 
@@ -14,7 +14,7 @@
 ```js
 module.exports = {
   plugins: [
-    ['ice-plugin-moment-locale', { locale: ['zh-cn', 'en-au'] }],
+    ['ice-plugin-moment-locales', { locales: ['zh-cn', 'en-au'] }],
   ],
 }
 ```
