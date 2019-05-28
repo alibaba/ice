@@ -25,13 +25,33 @@ const defaultOptions = {
 Terminal.applyAddon(fit);
 Terminal.applyAddon(webLinks);
 
+// format and write the text content of the terminal
+const fn = (term) => {
+  const formatWrite = (data, ln = true) => {
+    if (data && data.indexOf('\n') !== -1) {
+      data.split('\n').forEach((value) => formatWrite(value));
+      return;
+    }
+    if (typeof data === 'string') {
+      if (ln) {
+        term.writeln(` ${data}`);
+      } else {
+        term.write(` ${data}`);
+      }
+    } else {
+      term.writeln('');
+    }
+  };
+  return formatWrite;
+};
+
 class TermManager {
   constructor() {
     this.terms = {};
   }
 
   /**
-   * new terminal
+   * create new terminal
    * @param {string} id
    * @param {string} container
    * @param {object} container
@@ -40,6 +60,7 @@ class TermManager {
     const opts = Object.assign({}, defaultOptions, options);
     if (!this.terms[id]) {
       this.terms[id] = new Terminal(opts);
+      this.terms[id].formatWrite = fn(this.terms[id]);
     } else {
       this.terms[id]._core.options.theme = opts.theme;
     }
@@ -55,6 +76,8 @@ class TermManager {
     // Note: need to initialize the fit plugin when the component is re-rendered
     // make the terminal's size and geometry fit the size of #terminal-container
     this.terms[id].fit();
+
+    return this.terms[id];
   }
 
   /**
@@ -63,28 +86,6 @@ class TermManager {
    */
   find(id) {
     return this.terms[id];
-  }
-
-  /**
-   * format and write the text content of the terminal
-   * @param {string} id
-   * @param {string} data
-   * @param {boolean} ln
-   */
-  formatWrite(id, data, ln = true) {
-    if (data && data.indexOf('\n') !== -1) {
-      data.split('\n').forEach((value) => this.formatWrite(id, value));
-      return;
-    }
-    if (typeof data === 'string') {
-      if (ln) {
-        this.terms[id].writeln(` ${data}`);
-      } else {
-        this.terms[id].write(` ${data}`);
-      }
-    } else {
-      this.terms[id].writeln('');
-    }
   }
 }
 

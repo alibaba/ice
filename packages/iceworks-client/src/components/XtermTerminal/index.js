@@ -12,9 +12,11 @@ const XtermTerminal = ({ id, name, options }) => {
   let currentTerm;
 
   useEffect(() => {
-    termManager.create(id, xtermRef.current, options);
-    currentTerm = termManager.find(id);
-    currentTerm.write(`\x1B[1;3;31m${name}\x1B[0m $ `);
+    currentTerm = termManager.create(id, xtermRef.current, options);
+    if (!currentTerm.inited) {
+      currentTerm.inited = true;
+      currentTerm.formatWrite(`\x1B[1;3;31m${name}\x1B[0m $ `);
+    }
   }, []);
 
   return (

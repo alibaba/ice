@@ -69,13 +69,15 @@ const Task = ({ history, intl }) => {
   // listen start envent handle
   useSocket(startEventName, (data) => {
     setStatus(data.status);
-    termManager.formatWrite(id, data.chunk);
+    const term = termManager.find(id);
+    term.formatWrite(data.chunk);
   }, [status]);
 
   // listen stop envent handle
   useSocket(stopEventName, (data) => {
     setStatus(data.status);
-    termManager.formatWrite(id, data.chunk);
+    const term = termManager.find(id);
+    term.formatWrite(data.chunk);
   }, [status]);
 
   const data = task.dataSource[type] ? task.dataSource[type] : {};
