@@ -5,9 +5,12 @@ const chalk = require('chalk');
 const program = require('commander');
 const checkVersion = require('../lib/checkVersion');
 
-(async () => {
+async function check() {
   await checkVersion();
-})();
+}
+
+// check node version and iceworks version
+check();
 
 program.version(require('../package').version).usage('<command> [options]');
 
@@ -17,6 +20,17 @@ program.arguments('<command>').action((cmd) => {
   console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}.`));
   console.log();
 });
+
+program
+  .command('init')
+  .description('init project by template')
+  .option(
+    '-t, --template <template>',
+    'Specify the npm package name for the template'
+  )
+  .action((cmd) => {
+    require('../command/init')(cleanArgs(cmd));
+  });
 
 // add some useful info on help
 program.on('--help', () => {
@@ -58,5 +72,7 @@ function cleanArgs(cmd) {
 }
 
 if (!process.argv.slice(2).length) {
-  require('../lib/start')(cleanArgs());
+  // TODO: start web server for iceworks 3.0
+  // require('../command/start')(cleanArgs());
+  program.outputHelp();
 }

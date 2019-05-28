@@ -1,15 +1,27 @@
 import * as EventEmitter from 'events';
 import * as trash from 'trash';
 import * as path from 'path';
+import * as fs from 'fs';
+import * as npmRunPath from 'npm-run-path';
+import * as os from 'os';
+import * as clone from 'lodash.clone';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
 import { IProject } from '../../../interface';
 
+const isWin = os.type() === 'Windows_NT';
+
+// const settings = require('./services/settings');
+// settings.get('registry')
+const registry = 'https://registry.npm.taobao.org';
+
 class Project implements IProject {
   public readonly name: string;
 
   public readonly path: string;
+
+  private readonly packageJSONFilename = 'package.json';
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
@@ -18,9 +30,55 @@ class Project implements IProject {
     this.loadAdapter();
   }
 
+  public getPackageJSON() {
+    const pakcagePath = path.join(this.path, this.packageJSONFilename);
+    return JSON.parse(fs.readFileSync(pakcagePath).toString());
+  }
+
+  public getEnv() {
+    // https://github.com/sindresorhus/npm-run-path
+    // Returns the augmented process.env object.
+    const npmEnv = npmRunPath.env();
+
+    // Merge process.env、npmEnv and custom environment variables
+    const env = Object.assign({}, process.env, npmEnv, {
+      // eslint-disable-next-line
+      npm_config_registry: registry,
+      // eslint-disable-next-line
+      yarn_registry: registry,
+      CLICOLOR: 1,
+      FORCE_COLOR: 1,
+      COLORTERM: 'truecolor',
+      TERM: 'xterm-256color',
+      ICEWORKS_IPC: 'yes',
+    });
+
+    const pathEnv = [process.env.PATH, npmEnv.PATH].filter(
+      (p) => !!p
+    );
+
+    if (isWin) {
+      // do something
+    } else {
+      pathEnv.push('/usr/local/bin');
+      env.PATH = pathEnv.join(path.delimiter);
+    }
+
+    return env;
+  }
+
   private loadAdapter() {
+    const adapterModuleKeys = Object.keys(adapter);
     for (const [key, Module] of Object.entries(adapter)) {
-      this[camelCase(key)] = new Module(this);
+
+      let project: IProject = clone(this);
+      for (const moduleKey of adapterModuleKeys) {
+        if (project[moduleKey]) {
+          delete project[moduleKey];
+        }
+      }
+
+      this[camelCase(key)] = new Module(project);
     }
   }
 }
