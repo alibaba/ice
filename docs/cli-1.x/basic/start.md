@@ -3,6 +3,8 @@ title: 快速上手
 order: 2
 ---
 
+> ice-scripts@2.0.0 版本已发布，在可配置与定制性上做了很多提升，[迁移文档](/docs/cli/migrate.md)。
+
 本文介绍如何快速通过 `ice-scripts` 开发和构建一个项目。
 
 ## 创建项目

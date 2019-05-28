@@ -3,6 +3,8 @@ title: 工程配置指南
 order: 3
 ---
 
+> ice-scripts@2.0.0 版本已发布，在可配置与定制性上做了很多提升，[迁移文档](/docs/cli/migrate.md)。
+
 ## 构建配置 - buildConfig
 
 除了提供主题配置和代理配置之外， ice-scripts 还提供了一些常用的构建配置项，方便开发者快速自定义配置，在 package.json 中新增 bulidConfig 字段，包含以下配置项：
