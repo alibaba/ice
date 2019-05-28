@@ -11,6 +11,8 @@ React 推荐基于 ice-scripts + Fusion 进行物料开发。通过 ice-devtools
 
 ### 初始化组件
 
+> 仅在独立开发业务组件时需要单独初始化业务组件
+
 ```bash
 // 新建组件文件夹
 $ mkdir my-component & cd my-component
@@ -20,7 +22,9 @@ $ idev init --type component
 
 根据提示输入对应的组件信息，添加完成后会在当前目录下新增一个组件，进入到该目录下，运行以下命令进行开发 :
 
-```
+```bash
+// 安装依赖
+$ npm install
 // 启动组件服务
 $ npm run start
 ```
