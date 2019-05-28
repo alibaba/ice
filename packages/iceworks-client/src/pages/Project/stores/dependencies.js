@@ -19,7 +19,7 @@ export default {
   async reset() {
     await socket.emit('project.dependency.reset');
   },
-  async creates(deps, force) {
+  async bulkCreate(deps, force) {
     const { dependencies } = this.dataSource;
     if (!force) {
       const depsWithoutVersion = deps.filter(({ version }) => !version || version === 'latest');
@@ -51,6 +51,6 @@ export default {
       }
     }
 
-    await socket.emit('project.dependency.creates', deps);
+    await socket.emit('project.dependency.bulkCreate', deps);
   },
 };

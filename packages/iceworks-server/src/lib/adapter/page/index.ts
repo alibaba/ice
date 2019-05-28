@@ -197,7 +197,7 @@ export default class Page extends EventEmitter implements IPageModule {
     // TODO update menuConfig, routerConfig
   }
 
-  async creates(): Promise<any> { }
+  async bulkCreate(): Promise<any> { }
 
   // TODO
   async delete(pageName: string): Promise<any> {

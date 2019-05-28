@@ -98,7 +98,7 @@ const DependencyPanel = () => {
 
   async function create(value) {
     try {
-      await dependenciesStore.creates(value);
+      await dependenciesStore.bulkCreate(value);
       toggleCreateModal();
     } catch (error) {
       if (error.code === 'INCOMPATIBLE') {
@@ -259,7 +259,7 @@ const DependencyPanel = () => {
           visible={onIncompatibleModal}
           onCancel={() => toggleIncompatibleModal()}
           onOk={async () => {
-            await dependenciesStore.creates(setDependencies, true);
+            await dependenciesStore.bulkCreate(setDependencies, true);
             toggleCreateModal();
           }}
         >

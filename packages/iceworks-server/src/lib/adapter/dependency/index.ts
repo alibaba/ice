@@ -81,7 +81,7 @@ export default class Dependency extends EventEmitter implements IDependencyModul
     return (await install([dependency], this, idDev))[0];
   }
 
-  public async creates(dependencies: ICreateDependencyParam[], idDev?: boolean): Promise<void> {
+  public async bulkCreate(dependencies: ICreateDependencyParam[], idDev?: boolean): Promise<void> {
     return await install(dependencies, this, idDev);
   }
 

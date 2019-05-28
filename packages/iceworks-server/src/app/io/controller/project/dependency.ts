@@ -22,7 +22,7 @@ export default (app) => {
       return await project.dependency.reset();
     }
 
-    async creates(ctx) {
+    async bulkCreate(ctx) {
       const { socket, args } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
@@ -35,7 +35,7 @@ export default (app) => {
         socket.emit('project.dependency.install.exit', code);
       });
 
-      return await project.dependency.creates(args);
+      return await project.dependency.bulkCreate(args);
     }
 
     async upgrade(ctx) {
