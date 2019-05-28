@@ -67,24 +67,16 @@ const Task = ({ history, intl }) => {
   const stopEventName = `project.task.stop.data.${type}`;
 
   // listen start envent handle
-  useSocket(
-    startEventName,
-    (data) => {
-      setStatus(data.status);
-      termManager.formatWrite(id, data.chunk);
-    },
-    [status]
-  );
+  useSocket(startEventName, (data) => {
+    setStatus(data.status);
+    termManager.formatWrite(id, data.chunk);
+  }, [status]);
 
   // listen stop envent handle
-  useSocket(
-    stopEventName,
-    (data) => {
-      setStatus(data.status);
-      termManager.formatWrite(id, data.chunk);
-    },
-    [status]
-  );
+  useSocket(stopEventName, (data) => {
+    setStatus(data.status);
+    termManager.formatWrite(id, data.chunk);
+  }, [status]);
 
   const data = task.dataSource[type] ? task.dataSource[type] : {};
 
