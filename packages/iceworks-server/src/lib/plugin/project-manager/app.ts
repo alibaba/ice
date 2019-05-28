@@ -2,13 +2,27 @@ import * as EventEmitter from 'events';
 import * as trash from 'trash';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as util from 'util';
 import * as npmRunPath from 'npm-run-path';
 import * as os from 'os';
+import * as mv from 'mv';
 import * as clone from 'lodash.clone';
+import * as mkdirp from 'mkdirp';
+import * as pathExists from 'path-exists';
 import camelCase from 'camelCase';
 import storage from '../../storage';
 import * as adapter from '../../adapter';
-import { IProject } from '../../../interface';
+import { IProject, IMaterialScaffold } from '../../../interface';
+import getTarballURLByMaterielSource from '../../getTarballURLByMaterielSource';
+import downloadAndExtractPackage from '../../downloadAndExtractPackage';
+
+const mkdirpAsync = util.promisify(mkdirp);
+const accessAsync = util.promisify(fs.access);
+const readdirAsync = util.promisify(fs.readdir);
+const existsAsync = util.promisify(fs.exists);
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
+const mvAsync = util.promisify(mv);
 
 const isWin = os.type() === 'Windows_NT';
 
@@ -16,12 +30,16 @@ const isWin = os.type() === 'Windows_NT';
 // settings.get('registry')
 const registry = 'https://registry.npm.taobao.org';
 
+const packageJSONFilename = 'package.json';
+const abcJSONFilename = 'abc.json';
+
+
 class Project implements IProject {
   public readonly name: string;
 
   public readonly path: string;
 
-  private readonly packageJSONFilename = 'package.json';
+  public panels: string[] = [];
 
   constructor(folderPath: string) {
     this.name = path.basename(folderPath);
@@ -31,7 +49,7 @@ class Project implements IProject {
   }
 
   public getPackageJSON() {
-    const pakcagePath = path.join(this.path, this.packageJSONFilename);
+    const pakcagePath = path.join(this.path, packageJSONFilename);
     return JSON.parse(fs.readFileSync(pakcagePath).toString());
   }
 
@@ -70,6 +88,7 @@ class Project implements IProject {
   private loadAdapter() {
     const adapterModuleKeys = Object.keys(adapter);
     for (const [key, Module] of Object.entries(adapter)) {
+      this.panels.push(key);
 
       let project: IProject = clone(this);
       for (const moduleKey of adapterModuleKeys) {
@@ -81,6 +100,13 @@ class Project implements IProject {
       this[camelCase(key)] = new Module(project);
     }
   }
+}
+
+interface ICreateParams {
+  name: string;
+  path: string;
+  scaffold: IMaterialScaffold;
+  forceCover?: boolean;
 }
 
 class ProjectManager extends EventEmitter {
@@ -128,27 +154,115 @@ class ProjectManager extends EventEmitter {
     return this.getProject(projectPath);
   }
 
-  async addProject(projectPath: string): Promise<Project[]> {
+  /**
+   * Add a project to project list
+   */
+  public async addProject(projectPath: string): Promise<void> {
     const projects = storage.get('projects');
 
     if (projects.indexOf(projectPath) === -1) {
+      this.projects.push(new Project(projectPath));
       projects.push(projectPath);
       storage.set('projects', projects);
     }
 
     storage.set('project', projectPath);
-    this.projects = await this.refresh();
-
-    return this.projects;
   }
 
-  async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<Project[]> {
+  /**
+   * Create folder for project
+   */
+  private async createProjectFolder(params: { path: string; forceCover?: boolean; }) {
+    const { path: targetPath, forceCover } = params;
+
+    if (!await pathExists(targetPath)) {
+      await mkdirpAsync(targetPath);
+    }
+
+    // check read and write
+    try {
+      await accessAsync(targetPath, fs.constants.R_OK | fs.constants.W_OK);
+    } catch (error) {
+      error.message = '当前路径没有读写权限，请更换项目路径';
+      throw error;
+    }
+
+    // check folder files
+    const files = await readdirAsync(targetPath);
+    if (files.length) {
+      const exited = await existsAsync(path.join(targetPath, packageJSONFilename));
+      if (!exited) {
+        if (!forceCover) {
+          const error: any = new Error('当前文件夹不为空，不允许创建项目');
+          error.code = 'HAS_FILES';
+          throw error;
+        }
+      } else {
+        const error: any = new Error('请导入该项目');
+        error.code = 'LEGAL_PROJECT';
+        throw error;
+      }
+    }
+  }
+
+  /**
+   * generate project
+   */
+  private async generateProject(params: ICreateParams) {
+    const { path: targetPath, scaffold, name } = params;
+    const tarballURL = await getTarballURLByMaterielSource(scaffold.source);
+    await downloadAndExtractPackage(targetPath, tarballURL);
+
+    // rewrite pakcage.json
+    const packageJSONPath = path.join(targetPath, packageJSONFilename);
+    const packageJSON: any = JSON.parse((await readFileAsync(packageJSONPath)).toString());
+    packageJSON.title = name;
+    packageJSON.version = '1.0.0';
+    delete packageJSON.homepage;
+    await writeFileAsync(packageJSONPath, `${JSON.stringify(packageJSON, null, 2)}\n`, 'utf-8');
+
+    // generate abc.json for alibaba user
+    // TODO get information from App
+    const isAlibaba = false;
+    const abcJsonPath = path.join(targetPath, abcJSONFilename);
+    if (isAlibaba && !await pathExists(abcJsonPath)) {
+      await writeFileAsync(
+        abcJsonPath,
+        JSON.stringify({ name, type: 'iceworks', builder: '@ali/builder-iceworks' }, null, 2)
+      );
+    }
+
+    //replace _gitignore to .gitignore
+    const gitignoreFilename = 'gitignore';
+    await mvAsync(path.join(targetPath, `_${gitignoreFilename}`), path.join(targetPath, `.${gitignoreFilename}`));
+  }
+
+  /**
+   * Create a project by scaffold
+   * 
+   * TODO create a project by custom scaffold
+   */
+  public async createProject(params: ICreateParams): Promise<void> {
+    await this.createProjectFolder(params);
+    await this.generateProject(params);
+    await this.addProject(params.path);
+  }
+
+  /**
+   * Delete a project in project list
+   */
+  public async deleteProject(params: { projectPath: string, deleteFiles?: boolean }): Promise<void> {
     const { projectPath, deleteFiles } = params;
+    this.projects = this.projects.filter(({ path }) => path !== projectPath);
     const newProjects = storage.get('projects').filter((path) => path !== projectPath);
     storage.set('projects', newProjects);
 
     if (deleteFiles) {
-      await trash(projectPath);
+      try {
+        await trash(projectPath);
+      } catch (error) {
+        // TODO
+      }
     }
 
     // reset project if deleted current project
@@ -156,10 +270,6 @@ class ProjectManager extends EventEmitter {
     if (currentProjectPath === projectPath) {
       storage.set('project', newProjects[0] || '');
     }
-
-    this.projects = await this.refresh();
-
-    return this.projects;
   }
 
   /**

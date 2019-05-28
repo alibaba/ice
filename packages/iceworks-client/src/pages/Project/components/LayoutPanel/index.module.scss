@@ -1,0 +1,26 @@
+@import '../../../../variables.scss';
+
+.main {
+  .item {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid $border-color-base;
+    height: 32px;
+    align-items: center;
+
+    strong {
+      flex: 1;
+      font-size: $font-size-base;
+      height: $font-size-base;
+      line-height: $font-size-base;
+      font-weight: 400;
+    }
+
+    span {
+      font-size: $font-size-sm;
+      height: $font-size-base;
+      line-height: $font-size-base;
+      margin-right: 6px;
+    }
+  }
+}

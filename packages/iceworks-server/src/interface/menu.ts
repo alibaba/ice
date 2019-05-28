@@ -48,7 +48,7 @@ export interface IMenuModule extends IBaseModule {
    *
    * @param menus 多个菜单配置
    */
-  creates(menus: IMenu[]): Promise<IMenu[]>;
+  bulkCreate(menus: IMenu[]): Promise<IMenu[]>;
 
   /**
    * 删除菜单

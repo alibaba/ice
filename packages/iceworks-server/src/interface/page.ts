@@ -14,24 +14,24 @@ export interface IPage {
   path: string;
 
   /**
-   * 此文件的创建时间的时间戳
+   * 此文件的创建时间的时间
    */
-  birthtime: string;
+  birthtime: Date;
 
   /**
-   * 上次访问此文件的时间戳
+   * 上次访问此文件的时间
    */
-  atime?: string;
+  atime?: Date;
 
   /**
-   * 上次更改文件状态的时间戳
+   * 上次更改文件状态的时间
    */
-  ctime?: string;
+  ctime?: Date;
 
   /**
-   * 上次修改此文件的时间戳
+   * 上次修改此文件的时间
    */
-  mtime?: string;
+  mtime?: Date;
 
   /**
    * 页面内的区块
@@ -76,7 +76,7 @@ export interface ICreatePageParam {
   /**
    * 页面内的区块
    */
-  blocks?: IProjectBlock[];
+  blocks?: IMaterialBlock[];
 
   /**
    * 路由路径
@@ -118,7 +118,7 @@ export interface IPageModule extends IBaseModule {
    *
    * @param pages 页面配置信息
    */
-  creates(pages: ICreatePageParam[]): Promise<IPage[]>;
+  bulkCreate(pages: ICreatePageParam[]): Promise<IPage[]>;
 
   /**
    * 删除项目内的页面

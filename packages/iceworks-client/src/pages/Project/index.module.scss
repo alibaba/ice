@@ -6,7 +6,12 @@
 
   .main {
     flex: 1;
-    margin: 20px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: hidden;
+    overflow-y: auto;
   }
 }
   
