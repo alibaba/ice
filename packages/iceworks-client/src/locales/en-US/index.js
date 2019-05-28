@@ -7,13 +7,17 @@ export default {
 
   // menu
   'iceworks.menu.project': 'Project',
-  'iceworks.menu.setting': 'Setting',
-  'iceworks.menu.work': 'Work',
-  'iceworks.menu.work.dev': 'dev',
-  'iceworks.menu.work.build': 'build',
-  'iceworks.menu.work.lint': 'lint',
-  'iceworks.menu.work.configuration': 'configuration',
+  'iceworks.menu.task': 'Task',
+  'iceworks.menu.task.dev': 'dev',
+  'iceworks.menu.task.dev.desc': 'start server for development',
+  'iceworks.menu.task.build': 'build',
+  'iceworks.menu.task.build.desc': 'build project for production',
+  'iceworks.menu.task.lint': 'lint',
+  'iceworks.menu.task.lint.desc': 'lint check for development',
+  'iceworks.menu.task.configuration': 'configuration',
+  'iceworks.menu.task.configuration.desc': 'custom project configuration',
   'iceworks.menu.material': 'Material',
+  'iceworks.menu.setting': 'Setting',
 
   // setting
   'iceworks.menu.setting.general': 'General',
@@ -44,8 +48,17 @@ export default {
   'iceworks.project.panel.git.title': 'Git',
   'iceworks.project.panel.oss.title': 'OSS',
 
-  // work
-  'iceworks.work.title': 'Work',
+  // task
+  'iceworks.task.title': 'Task',
+  'iceworks.task.dev.title': 'dev',
+  'iceworks.task.dev.desc': 'Compiles and hot-reloads for development',
+  'iceworks.task.dev.start': 'Run Task',
+  'iceworks.task.dev.stop': 'Stop Task',
+  'iceworks.task.dev.setting': 'Setting',
+  'iceworks.task.build.title': 'build',
+  'iceworks.task.build.desc': 'Compiles and minifies for production',
+  'iceworks.task.lint.title': 'lint',
+  'iceworks.task.lint.desc': 'Lints and fixes files',
 
   // setting
   'iceworks.setting.title': 'Setting',

@@ -1,9 +1,8 @@
 import { lazy } from 'react';
 
 const Project = lazy(() => import('./pages/Project'));
-const Work = lazy(() => import('./pages/Work'));
-const Dev = lazy(() => import('./pages/Dev'));
-const Build = lazy(() => import('./pages/Build'));
+const Tasks = lazy(() => import('./pages/Tasks'));
+const Task = lazy(() => import('./pages/Task'));
 const Configuration = lazy(() => import('./pages/Configuration'));
 const Material = lazy(() => import('./pages/Material'));
 const Setting = lazy(() => import('./pages/Setting'));
@@ -20,20 +19,24 @@ const routerConfig = [
     component: Project,
   },
   {
-    path: '/work',
-    component: Work,
+    path: '/task',
+    component: Tasks,
     routes: [
       {
-        from: '/work',
-        path: '/work/dev',
-        component: Dev,
+        from: '/task',
+        path: '/task/dev',
+        component: Task,
       },
       {
-        path: '/work/build',
-        component: Build,
+        path: '/task/build',
+        component: Task,
       },
       {
-        path: '/work/configuration',
+        path: '/task/lint',
+        component: Task,
+      },
+      {
+        path: '/task/configuration',
         component: Configuration,
       },
     ],

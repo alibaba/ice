@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import CustomBlock from '../Block/CustomBlock';
-import CustomBlockPreviewModal from '../Block/PreviewModal/custom'
+import CustomBlockPreviewModal from '../Block/PreviewModal/custom';
 
 import './index.scss';
 
 @inject('customBlocks', 'blocks', 'pageBlockPicker')
 @observer
 class CustomBlockCategory extends Component {
-
   handleSelected = (block, blockName) => {
     this.props.blocks.addCustomBlock(block, blockName, this.props.pageBlockPicker.existBlocks);
   };
@@ -29,7 +28,8 @@ class CustomBlockCategory extends Component {
                   block={customBlocks[blockName]}
                   onClick={this.handleSelected}
                 />
-                )})
+              );
+            })
               }
           </div>
         </div>

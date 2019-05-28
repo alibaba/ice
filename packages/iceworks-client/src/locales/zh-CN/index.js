@@ -7,11 +7,15 @@ export default {
 
   // menu
   'iceworks.menu.project': '项目',
-  'iceworks.menu.work': '工程',
-  'iceworks.menu.work.dev': 'dev',
-  'iceworks.menu.work.build': 'build',
-  'iceworks.menu.work.lint': 'lint',
-  'iceworks.menu.work.configuration': 'configuration',
+  'iceworks.menu.task': '工程',
+  'iceworks.menu.task.dev': 'dev',
+  'iceworks.menu.task.dev.desc': '启动服务(用于开发环境)',
+  'iceworks.menu.task.build': 'build',
+  'iceworks.menu.task.build.desc': '构建项目(用于生产环境)',
+  'iceworks.menu.task.lint': 'lint',
+  'iceworks.menu.task.lint.desc': '语法检查(用于开发环境)',
+  'iceworks.menu.task.configuration': 'configuration',
+  'iceworks.menu.task.configuration.desc': '自定义项目配置',
   'iceworks.menu.material': '物料',
 
   // setting
@@ -65,8 +69,17 @@ export default {
   'iceworks.project.panel.git.title': 'Git',
   'iceworks.project.panel.oss.title': 'OSS',
 
-  // work
-  'iceworks.work.title': '工程管理',
+  // task
+  'iceworks.task.title': '工程管理',
+  'iceworks.task.dev.title': '启动服务',
+  'iceworks.task.dev.desc': '编译和热更新(用于开发环境)',
+  'iceworks.task.dev.start': '运行',
+  'iceworks.task.dev.stop': '停止',
+  'iceworks.task.dev.setting': '设置',
+  'iceworks.task.build.title': '构建项目',
+  'iceworks.task.build.desc': '编译并压缩(用于生产环境)',
+  'iceworks.task.lint.title': '检查语法',
+  'iceworks.task.lint.desc': '检查代码规范并进行修复',
 
   // setting
   'iceworks.setting.title': '设置',

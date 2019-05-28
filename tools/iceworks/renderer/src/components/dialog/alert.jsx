@@ -43,7 +43,7 @@ const notify = (
         {content}
       </div>
     ),
-    title: title,
+    title,
   });
 };
 

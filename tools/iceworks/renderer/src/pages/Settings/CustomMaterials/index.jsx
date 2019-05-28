@@ -9,7 +9,6 @@ import './index.scss';
 @inject('settingsMaterials')
 @observer
 class CustomMaterials extends Component {
-
   handleEditMaterial = (index) => {
     this.props.settingsMaterials.editCustomMaterial(index);
   };
@@ -129,8 +128,7 @@ class CustomMaterials extends Component {
             !this.props.settingsMaterials.edittingCustomMaterialValue && (
               <Switch
                 checked={item.checked !== false}
-                onChange={(checked) =>
-                  this.handleCheckChange(checked, item)
+                onChange={(checked) => this.handleCheckChange(checked, item)
                 }
                 checkedChildren="展示"
                 unCheckedChildren="隐藏"
@@ -150,21 +148,23 @@ class CustomMaterials extends Component {
       <div className="custom-materials">
         <Separator
           title="自定义物料源"
-          additional={
+          additional={(
             <span>
               <Button size="small" onClick={this.handleAddMaterial}>
                 新增
-              </Button>{' '}
+              </Button>
+              {' '}
             </span>
-          }
+)}
         />
         <div style={{ padding: '0 20px' }}>
           {
             customMaterials.length === 0 ? (
               <div className="cm-list-empty">
                 自定义物料源为空，你可以
-                <a href="javascript:void(0)" onClick={this.handleAddMaterial}>新增物料源</a>或者了解
-                <a href="https://alibaba.github.io/ice/docs/materials/devtools" target="__blank">自定义物料源使用文档</a>
+                <a href="javascript:void(0)" onClick={this.handleAddMaterial}>新增物料源</a>
+或者了解
+                <a href="https://ice.work/docs/materials/about" target="__blank">自定义物料源使用文档</a>
               </div>
             ) : (
               <div className="cm-list">

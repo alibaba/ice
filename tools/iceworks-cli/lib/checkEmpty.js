@@ -8,7 +8,6 @@ module.exports = function checkEmpty(dir) {
       files = files.filter((filename) => {
         return ['node_modules', '.git', '.DS_Store'].indexOf(filename) === -1;
       });
-
       if (files && files.length) {
         return inquirer
           .prompt({

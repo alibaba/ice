@@ -13,7 +13,7 @@ import Item from './Item';
 
 import services from '../../services';
 
-const { interaction, } = services;
+const { interaction } = services;
 
 @inject('projects', 'component', 'materials', 'progress')
 @observer
@@ -36,7 +36,6 @@ class ComponentPanel extends Component {
   download = (data) => {
     const { component, material } = this.props;
     component.open();
-
   }
 
   handleDownloadComponent = () => {

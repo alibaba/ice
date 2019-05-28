@@ -14,7 +14,9 @@ module.exports = {
       glodlog.record({
         type: 'app',
         action: 'dau',
-        group: isAlibaba ? 'alibaba' : 'outer',
+        data: {
+          group: isAlibaba ? 'alibaba' : 'outer',
+        },
       });
     }
   },
