@@ -45,7 +45,7 @@ const MaterialSubMenu = ({
               key={index}
               onClick={() => handleChange(index, item)}
             >
-              <Icon type={defaultIcons[randomIcon]} className={styles.icon} />
+              <div className={styles.logo}><img src={item.logo} alt="material logo" /></div>
               <div className={styles.info}>
                 <h5 className={styles.name}>
                   {item.name}

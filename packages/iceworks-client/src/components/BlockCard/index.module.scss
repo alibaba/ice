@@ -5,9 +5,14 @@
   transition: transform 0.3s ease;
   display: block;
   cursor: pointer;
+  overflow: hidden;
+  position: relative;
   &:hover {
     text-decoration: none;
     transform: translateY(-6px);
+    .actions {
+      transform: translateY(0);
+    }
   }
 }
 
@@ -32,4 +37,39 @@
   color: #333;
   border-top: 1px solid #eee;
   text-align: center;
+}
+
+.actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 0 0 4px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  transition: transform 0.3s ease;
+  transform: translateY(100%);
+  z-index: 10;
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 45px;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #2077ff;
+    color: #fff;
+    cursor: pointer;
+
+    .githubImg,
+    .eyeImg,
+    .downloadImg {
+      width: 20px;
+      margin-right: 6px;
+    }
+  }
 }
