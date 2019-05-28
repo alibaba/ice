@@ -1,9 +1,9 @@
 import React from 'react';
-import { Progress } from '@alifd/next';
+import { Progress as OriginalProgress } from '@alifd/next';
 import stores from '@stores';
 import styles from './index.module.scss';
 
-const CustomProgress = () => {
+const Progress = () => {
   const progress = stores.useStore('progress');
   const { statusText, show, percent } = progress.dataSource;
 
@@ -12,7 +12,7 @@ const CustomProgress = () => {
       <div className={styles.wrap}>
         {statusText ? <span className={styles.status}>{statusText}</span> : null}
         <div className={styles.progress}>
-          <Progress
+          <OriginalProgress
             percent={percent}
           />
         </div>
@@ -21,4 +21,4 @@ const CustomProgress = () => {
   );
 };
 
-export default CustomProgress;
+export default Progress;
