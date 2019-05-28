@@ -34,9 +34,6 @@ module.exports = (chainConfig, mode = 'development') => {
     .plugin('CaseSensitivePathsPlugin')
       .use(CaseSensitivePathsPlugin)
       .end()
-    .plugin('IgnorePlugin')
-      .use(webpack.IgnorePlugin, [/^\.\/locale$/, /moment$/])
-      .end()
     .plugin('HtmlWebpackPlugin')
       .use(HtmlWebpackPlugin, [{
         inject: true,
