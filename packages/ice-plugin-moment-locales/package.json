@@ -13,7 +13,7 @@
   ],
   "author": "ICE Team",
   "license": "MIT",
-  "peerDependencies": {
+  "devDependencies": {
     "webpack": "^4.32.2"
   }
 }
