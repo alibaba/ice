@@ -31,14 +31,14 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
     >
       <Form
         size="small"
-        direction="ver"
+        labelAlign="top"
         className={styles.form}
       >
         <FormItem
           {...formItemLayout}
           required
           size="medium"
-          label="路径"
+          label="路径："
         >
           <Input
             className={styles.input}
@@ -50,7 +50,7 @@ const CreateProjectModal = ({ on, onCancel, onOk }) => {
           {...formItemLayout}
           required
           size="medium"
-          label="目录名"
+          label="目录名："
           pattern={/^[a-z]([-_a-z0-9]*)$/i}
           patternMessage="请输入字母与数字组合，字母开头"
           patternTrigger="onChange"

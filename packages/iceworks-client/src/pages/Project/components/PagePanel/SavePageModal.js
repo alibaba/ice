@@ -32,14 +32,14 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
     >
       <Form
         size="small"
-        direction="ver"
+        labelAlign="top"
         className={styles.form}
       >
         <FormItem
           {...formItemLayout}
           required
           size="medium"
-          label="页面目录名"
+          label="页面目录名："
           pattern={/^[a-z]([-_a-z0-9]*)$/i}
           patternMessage="请输入字母与数字组合，字母开头"
           patternTrigger="onChange"
@@ -54,7 +54,7 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
           {...formItemLayout}
           required
           size="medium"
-          label="路由路径"
+          label="路由路径："
           pattern={/^(\/?)([a-zA-Z0-9:])([a-zA-Z0-9:]*)((\/)?[a-zA-Z0-9:]+)$/}
           patternMessage="请输入小写字母数字组合，支持二级路由以 `/` 分隔"
           patternTrigger={['onBlur', 'onChange']}
@@ -68,7 +68,7 @@ const SavePageModal = ({ on, onCancel, onOk }) => {
         <FormItem
           {...formItemLayout}
           size="medium"
-          label="页面导航名"
+          label="页面导航名："
         >
           <Input
             className={styles.input}
