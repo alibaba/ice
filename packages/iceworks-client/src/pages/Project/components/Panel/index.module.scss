@@ -1,0 +1,38 @@
+@import '../../../../variables.scss';
+
+.wrapper {
+  border: 1px solid $border-color-base;
+  border-radius: $border-radius-base;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+  height: 320px;
+  margin-bottom: 34px;
+
+  .header {
+    background-color: $brand-color-normal;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+  .main {
+    padding: 12px;
+    background-color: $white;
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+
+    .box {
+      flex: 1;
+      overflow-y: auto;
+    }
+  }
+}

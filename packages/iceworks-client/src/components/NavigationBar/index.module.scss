@@ -1,0 +1,25 @@
+@import '../../variables.scss';
+
+.navBar {
+  background: $brand-color-secondary;
+  box-shadow: $shadow-right;
+
+  .navItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 78px;
+    height: 78px;
+    border-left: 3px solid $brand-color-secondary;
+
+    .navItemIcon {
+      color: $white;
+      margin-bottom: 4px;
+    }
+
+    .navItemText {
+      color: $white;
+    }
+  }
+}

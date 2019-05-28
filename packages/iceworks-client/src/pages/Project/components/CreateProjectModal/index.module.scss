@@ -1,0 +1,21 @@
+.form {
+  width: 320px;
+  
+  .input {
+    height: 24px;
+    line-height: 24px;
+  }
+
+  .opts {
+    text-align: center;
+    margin-top: 32px;
+
+    .button {
+      margin-right: 12px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "name": "iceworks-server",
+  "version": "1.0.0-beta.3",
+  "description": "iceworks server",
+  "files": [
+    "dist/",
+    "data/"
+  ],
+  "dependencies": {
+    "camelcase": "^5.3.1",
+    "conf": "^4.0.1",
+    "detect-port": "^1.3.0",
+    "egg-cors": "^2.2.0",
+    "egg-scripts": "^2.10.0",
+    "egg-socket.io": "^4.1.5",
+    "egg-view": "^2.1.2",
+    "egg-view-nunjucks": "^2.2.0",
+    "ejs": "^2.6.1",
+    "execa": "^1.0.0",
+    "fs-extra": "^8.0.1",
+    "junk": "^3.1.0",
+    "kebab-case": "^1.0.0",
+    "latest-version": "^5.1.0",
+    "lodash.clone": "^4.5.0",
+    "midway": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "mv": "^2.1.1",
+    "npm-run-path": "^3.1.0",
+    "path-exists": "^4.0.0",
+    "prettier": "^1.17.1",
+    "request": "^2.88.0",
+    "request-progress": "^3.0.0",
+    "request-promise-native": "^1.0.7",
+    "rimraf": "^2.6.3",
+    "semver": "^6.0.0",
+    "tar": "^4.4.8",
+    "trash": "^5.2.0",
+    "uppercamelcase": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.5.5",
+    "egg-ci": "^1.8.0",
+    "midway-bin": "1",
+    "midway-mock": "1",
+    "tslib": "^1.8.1",
+    "tslint-midway-contrib": "1",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --title=egg-server-iceworks-server --framework=midway",
+    "stop": "egg-scripts stop --title=egg-server-iceworks-server",
+    "start_build": "npm run build && NODE_ENV=development midway-bin dev",
+    "dev": "NODE_ENV=local midway-bin dev --ts",
+    "debug": "NODE_ENV=local midway-bin debug --ts",
+    "test": "npm run lint && midway-bin test --ts",
+    "cov": "midway-bin cov --ts",
+    "lint": "tslint --fix -c tslint.json --project .",
+    "lint-nofix": "tslint -c tslint.json --project .",
+    "ci": "npm run cov",
+    "build": "midway-bin build -c"
+  },
+  "ci": {
+    "version": "8, 10"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "midway-bin-build": {
+    "include": [
+      "app/view"
+    ]
+  },
+  "author": "chenbin92",
+  "license": "MIT"
+}

@@ -1,0 +1,12 @@
+@import '../../variables.scss';
+
+.globalBar {
+  display: flex;
+  align-items: center;
+  flex: auto 0 0;
+  height: 40px;
+  padding: 0 20px;
+  background: $black;
+  color: #fff;
+  box-shadow: $shadow-up;
+}
