@@ -97,8 +97,8 @@ module.exports = {
 // ice.config.js
 module.exports = {
   plugins: [
-    // 如有其他组件库需求，可参考 ice-scripts-plugin-antd 进行实现
-    'ice-scripts-plugin-antd'
+    // 如有其他组件库需求，可参考 ice-plugin-antd 进行实现
+    'ice-plugin-antd'
   ]
 }
 ```
@@ -127,7 +127,7 @@ module.exports = {
 // ice.config.js
 module.exports = {
   plugins: [
-    ['ice-scripts-plugin-fusion', {
+    ['ice-plugin-fusion', {
       themePackage: '@icedesign/theme',
       uniteBaseComponent: '@alife/next',
       themeConfig: {
@@ -156,7 +156,7 @@ module.exports = {
 // ice.config.js
 module.exports = {
   plugins: [
-    'ice-scripts-plugin-css-assets-local',
+    'ice-plugin-css-assets-local',
   ]
 }
 ```

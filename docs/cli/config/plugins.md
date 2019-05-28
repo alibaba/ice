@@ -17,7 +17,7 @@ const icePluginFusion = require('ice-plugin-fusion');
 module.exports = {
   plugins: [
     // npm依赖包
-    'ice-scripts-plugin-antd',
+    'ice-plugin-antd',
     // 相对路径
     './plugins/custom-plugin',
     // 插件方法
