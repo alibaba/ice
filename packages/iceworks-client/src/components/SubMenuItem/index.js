@@ -25,7 +25,11 @@ const SubMenuItem = ({ dataSource }) => {
           <h5 className={styles.name}>
             <FormattedMessage id={name} />
           </h5>
-          {desc ? <p className={styles.desc}>{desc}</p> : null}
+          {desc ? (
+            <p className={styles.desc}>
+              <FormattedMessage id={desc} />
+            </p>
+          ) : null}
         </div>
       </NavLink>
     </div>

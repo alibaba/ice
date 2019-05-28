@@ -8,7 +8,9 @@ module.exports = (json, materialEngine, callback) => {
   glodlog.record({
     type: 'app',
     action: 'iceland-save-block',
-    group: isAlibaba ? 'alibaba' : 'outer',
+    data: {
+      group: isAlibaba ? 'alibaba' : 'outer',
+    },
   });
   dsl2code(
     json,

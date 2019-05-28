@@ -20,10 +20,6 @@
     "react",
     "component"
   ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "<%= registry %>"
-  },
   "dependencies": {
     "prop-types": "^15.5.8"
   },

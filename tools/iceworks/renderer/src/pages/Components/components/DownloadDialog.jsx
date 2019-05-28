@@ -28,7 +28,7 @@ class DownloadDialog extends Component {
     const { currentComponent } = component;
     return (
       <Dialog
-        title='组件下载'
+        title="组件下载"
         visible={component.visible}
         onClose={this.dialogClose}
         style={{
@@ -36,18 +36,18 @@ class DownloadDialog extends Component {
           height: '306px',
         }}
         footerAlign="center"
-        footer={
-          <div >
+        footer={(
+          <div>
             <Balloon
-              trigger={
-                <Button 
-                  onClick={handleDownloadComponent} 
+              trigger={(
+                <Button
+                  onClick={handleDownloadComponent}
                   loading={component.isDownloading}
                   type="primary"
                 >
                   下载
                 </Button>
-              }
+)}
               align="t"
               alignment="normal"
               triggerType="hover"
@@ -67,17 +67,26 @@ class DownloadDialog extends Component {
               取消
             </Button>
           </div>
-        }
+)}
       >
-        <p>组件包名: {currentComponent.source && currentComponent.source.npm}</p>
+        <p>
+组件包名:
+          {currentComponent.source && currentComponent.source.npm}
+        </p>
         {
           currentComponent.source && currentComponent.source.version && (
-            <p>组件版本: {currentComponent.source && currentComponent.source.version}</p> 
+            <p>
+组件版本:
+              {currentComponent.source && currentComponent.source.version}
+            </p>
           )
         }
-        <p>引用方法: {currentComponent.importStatement}</p>
+        <p>
+引用方法:
+          {currentComponent.importStatement}
+        </p>
       </Dialog>
-    )
+    );
   }
 }
 

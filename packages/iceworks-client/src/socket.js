@@ -12,6 +12,10 @@ socket.on('disconnect', () => {
   logger.debug('socket disconnected!!!');
 });
 
+socket.on('error', (error) => {
+  logger.error(error);
+});
+
 const originalEmit = socket.emit.bind(socket);
 socket.emit = function emit(...args) {
   return new Promise((resolve, reject) => {
@@ -19,7 +23,7 @@ socket.emit = function emit(...args) {
       args.push({});
     }
 
-    args.push(({ error, data }) => {
+    args.push((error, data) => {
       if (error) {
         reject(error);
       } else {

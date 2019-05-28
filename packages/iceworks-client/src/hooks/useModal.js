@@ -5,11 +5,13 @@ function useModal(bool = false) {
   const showModal = () => setOn(true);
   const hideModal = () => setOn(false);
   const toggleModal = () => setOn(!on);
+  const setModal = (value) => setOn(value);
   return {
     on,
     showModal,
     hideModal,
     toggleModal,
+    setModal,
   };
 }
 

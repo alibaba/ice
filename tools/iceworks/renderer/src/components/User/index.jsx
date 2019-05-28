@@ -13,10 +13,11 @@ class User extends Component {
   static propTypes = {
     user: propTypes.object,
   };
+
   constructor(props) {
     super(props);
 
-    let userValue = localStorage.getItem('login:user');
+    const userValue = localStorage.getItem('login:user');
     let user = {};
     if (userValue) {
       try {
@@ -59,8 +60,8 @@ class User extends Component {
 
   handleDidFinishLoad = () => {
     logger.info('login-page 加载完成');
-    if (this.webview.src.indexOf('/iceworks-login') != -1) {
-      let sessionCookies = this.webview.getWebContents().session.cookies;
+    if (this.webview.src.indexOf('/iceworks-login') !== -1) {
+      const sessionCookies = this.webview.getWebContents().session.cookies;
       sessionCookies.get({}, (error, cookies) => {
         for (let i = 0, len = cookies.length; i < len; i++) {
           if (cookies[i].name === 'login_user') {

@@ -11,9 +11,9 @@ import Link from '../components/Link';
 import User from '../components/User';
 import services from '../services';
 
-const { settings } = services;
-
 import './Layout.scss';
+
+const { settings } = services;
 
 const ASIDE_WIDTH = 68;
 
@@ -48,7 +48,7 @@ class SidebarLayout extends Component {
     return (
       <DocumentTitle title={title}>
         <Layout
-          fixable={true}
+          fixable
           style={{ minHeight: '100vh' }}
           className={cx(
             {

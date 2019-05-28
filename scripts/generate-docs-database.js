@@ -15,48 +15,74 @@ const dest = path.join(destDir, 'docs.json');
 fse.ensureFileSync(dest);
 
 // 与目录对应，补全目录的顺序以及展示 title
-const allCategories = [
-  {
-    dir: 'docs',
+const allCategories = {
+  guide: {
+    title: '',
+    children: [{
+      title: '开发',
+      dir: 'dev',
+    }, {
+      title: '测试',
+      dir: 'test',
+    }, {
+      title: '发布资源',
+      dir: 'publish',
+    }, {
+      title: '后端集成',
+      dir: 'backend',
+    }, {
+      title: '产品监控',
+      dir: 'monitor',
+    }, {
+      title: '资源',
+      dir: 'resource',
+    }],
+  },
+  iceworks: {
+    // Iceworks
+    title: '',
+  },
+  materials: {
+    // 自定义物料
+    title: '',
+  },
+  cli: {
+    // ice-scripts
+    title: '',
+    children: [{
+      title: '基础指南',
+      dir: 'basic',
+    }, {
+      title: '进阶指南',
+      dir: 'advanced',
+    }, {
+      title: '常见需求',
+      dir: 'others',
+    }],
+  },
+  design: {
+    // 中后台设计理念
     title: '',
     children: [
       {
-        dir: 'basis',
-        title: '入门指引',
+        dir: 'vision',
+        title: '视觉',
       },
       {
-        dir: 'advanced',
-        title: '进阶指南',
-      },
-      {
-        dir: 'iceworks',
-        title: 'Iceworks',
-      },
-      {
-        dir: 'pro',
-        title: 'ICE Design Pro',
-      },
-
-      // 单独页面展示设计文档
-      {
-        dir: 'design',
-        title: '',
-        children: [
-          {
-            dir: 'vision',
-            title: '视觉',
-          },
-          {
-            dir: 'mode',
-            title: '设计模式',
-          },
-        ],
+        dir: 'mode',
+        title: '设计模式',
       },
     ],
   },
-];
+};
 
-const result = collectCategoryData(allCategories, '')[0];
+const result = {};
+Object.keys(allCategories).forEach((dirName) => {
+  const dirData = allCategories[dirName];
+  dirData.dir = dirName;
+  result[dirName] = collectCategoryData([dirData], '')[0];
+});
+
 fs.writeFileSync(dest, JSON.stringify(result, null, 2), 'utf-8');
 console.log('文档数据生成完毕. Docs DB Generated.');
 console.log(dest);
@@ -69,6 +95,7 @@ function collectCategoryData(categories, parentDirPath) {
     const currentDirRelativePath = path.join(parentDirPath, category.dir);
     const currentDirAbsolutePath = path.resolve(
       process.cwd(),
+      'docs',
       currentDirRelativePath
     );
 
@@ -90,7 +117,6 @@ function collectCategoryData(categories, parentDirPath) {
 function getDirFiles(dirPath) {
   const files = glob.sync('*.md', {
     nodir: true,
-    ignore: 'README.md',
     cwd: dirPath,
   });
 

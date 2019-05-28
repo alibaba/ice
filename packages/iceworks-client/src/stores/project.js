@@ -4,6 +4,7 @@ export default {
   dataSource: {
     name: '',
     path: '',
+    panels: [],
   },
 
   async refresh() {

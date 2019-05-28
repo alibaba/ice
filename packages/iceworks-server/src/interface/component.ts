@@ -33,7 +33,7 @@ export interface IComponentModule extends IBaseModule {
    *
    * @param components 组件信息
    */
-  creates(components: IMaterialComponent[]): Promise<IComponent[]>;
+  bulkCreate(components: IMaterialComponent[]): Promise<IComponent[]>;
 
   /**
    * 升级某个组件

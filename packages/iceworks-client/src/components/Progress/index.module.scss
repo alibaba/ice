@@ -1,0 +1,9 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+
+  .progress {
+    flex: 1;
+    margin-top: 6px;
+  }
+}

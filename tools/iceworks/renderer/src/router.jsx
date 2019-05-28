@@ -22,32 +22,30 @@ const Loading3 = () => {
 };
 
 export const PageHome = loadable({
-  loader: () => import(/* webpackChunkName: "home" */ './pages/Home/'),
+  loader: () => import(/* webpackChunkName: "home" */ './pages/Home'),
   loading: Loading,
 });
 export const PageScaffolds = loadable({
-  loader: () =>
-    import(/* webpackChunkName: "scaffolds" */ './pages/Scaffolds/'),
+  loader: () => import(/* webpackChunkName: "scaffolds" */ './pages/Scaffolds'),
   loading: Loading2,
 });
 
 export const PageBlocks = loadable({
-  loader: () => import(/* webpackChunkName: "blocks" */ './pages/Blocks/'),
+  loader: () => import(/* webpackChunkName: "blocks" */ './pages/Blocks'),
   loading: Loading2,
 });
 
 export const PageComponents = loadable({
-  loader: () => import(/* webpackChunkName: "blocks" */ './pages/Components/'),
+  loader: () => import(/* webpackChunkName: "blocks" */ './pages/Components'),
   loading: Loading2,
 });
 
 export const PageExtensions = loadable({
-  loader: () =>
-    import(/* webpackChunkName: "extenstions" */ './pages/Extenstions/'),
+  loader: () => import(/* webpackChunkName: "extenstions" */ './pages/Extenstions'),
   loading: Loading2,
 });
 
 export const PageSettings = loadable({
-  loader: () => import(/* webpackChunkName: "settings" */ './pages/Settings/'),
+  loader: () => import(/* webpackChunkName: "settings" */ './pages/Settings'),
   loading: Loading3,
 });
