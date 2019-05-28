@@ -78,11 +78,6 @@ export interface IProjectLayout {
   description: string;
 
   /**
-   * 是否自定义
-   */
-  isCustom: boolean;
-
-  /**
    * 截图 URL
    */
   screenshot: string;
