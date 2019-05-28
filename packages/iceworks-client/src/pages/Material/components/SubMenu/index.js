@@ -8,8 +8,6 @@ import { Button } from '@alifd/next';
 import logger from '@utils/logger';
 import styles from './index.module.scss';
 
-const defaultIcons = ['puzzle', 'blocks', 'book', 'template'];
-
 const MaterialSubMenu = ({
   data, onChange, onAddMaterial, onDeleteMaterial,
 }) => {
@@ -36,9 +34,6 @@ const MaterialSubMenu = ({
     <SubMenu title="iceworks.material.title">
       <div className={styles.itemWrapper}>
         {data.map((item, index) => {
-          /* eslint-disable-next-line */
-          const randomIcon = index & 3;
-
           return (
             <div
               className={cx(styles.subMenuItem, { [styles.active]: state.current === index })}
