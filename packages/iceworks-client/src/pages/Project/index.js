@@ -185,7 +185,7 @@ const Project = () => {
           {project.dataSource.panels.map((name, index) => {
             const Panel = panels[name];
             return Panel ? (
-              <ErrorBoundary key={index} FallbackComponent={<FallbackPanel />}>
+              <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
                 <Panel />
               </ErrorBoundary>
             ) : null;

@@ -22,6 +22,11 @@ class ErrorBoundary extends Component {
     error: null,
   };
 
+  static getDerivedStateFromError() {
+    // Update state so the next render will show the fallback UI.
+    return { error: true };
+  }
+
   componentDidCatch(error, info) {
     const { onError } = this.props;
 
@@ -33,8 +38,6 @@ class ErrorBoundary extends Component {
         console.log(err);
       }
     }
-
-    this.setState({ error });
   }
 
   render() {
