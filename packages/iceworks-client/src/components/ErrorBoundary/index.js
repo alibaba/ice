@@ -52,7 +52,7 @@ class ErrorBoundary extends Component {
 export const withErrorBoundary = (
   WrappedComponent,
   FallbackComponent,
-  onError
+  onError,
 ) => {
   const Wrapped = (props) => {
     return (
