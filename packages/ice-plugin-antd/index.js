@@ -1,4 +1,5 @@
-module.exports = async ({ chainWebpack, log }, { themeConfig }) => {
+module.exports = async ({ chainWebpack, log }, pluginOptions) => {
+  const { themeConfig } = pluginOptions || {};
   chainWebpack((config) => {
     // 1. 支持主题能力
     if (themeConfig) {

@@ -1,6 +1,6 @@
 {
   "name": "ice-plugin-antd",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "ice-scripts plugin for antd",
   "main": "index.js",
   "scripts": {},
