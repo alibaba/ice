@@ -1,15 +1,43 @@
-const LINT_CONF = [
+const DEV_CONF = [
   {
-    label: '定义执行脚本',
-    name: 'script',
+    label: '服务端口号',
+    name: 'port',
     description: '',
     link: '',
     componentName: 'Input',
+    componentProps: {
+      placeholder: '4444',
+    },
+  },
+  {
+    label: '服务主机名',
+    name: 'host',
+    description: '',
+    link: '',
+    componentName: 'Input',
+    componentProps: {
+      placeholder: '127.0.0.1',
+    },
+  },
+  {
+    label: '开启 https',
+    name: 'https',
+    description: '',
+    link: '',
+    componentName: 'Switch',
     componentProps: {},
   },
   {
-    label: '启动自动修复',
-    name: 'fix',
+    label: '开启构建分析',
+    name: 'analyzer',
+    description: '',
+    link: '',
+    componentName: 'Switch',
+    componentProps: {},
+  },
+  {
+    label: '关闭热更新',
+    name: 'disabledReload',
     description: '',
     link: '',
     componentName: 'Switch',
@@ -35,8 +63,8 @@ const BUILD_CONF = [
     componentProps: {},
   },
   {
-    label: '启用 sourcemap',
-    name: 'sourcemap',
+    label: '资源压缩',
+    name: 'minify',
     description: '',
     link: '',
     componentName: 'Switch',
@@ -44,38 +72,18 @@ const BUILD_CONF = [
   },
 ];
 
-const DEV_CONF = [
+const LINT_CONF = [
   {
-    label: '服务器端口',
-    name: 'port',
+    label: '定义执行脚本',
+    name: 'script',
     description: '',
     link: '',
     componentName: 'Input',
-    componentProps: {
-      placeholder: '4444',
-    },
-  },
-  {
-    label: '服务器主机名',
-    name: 'host',
-    description: '',
-    link: '',
-    componentName: 'Input',
-    componentProps: {
-      placeholder: '127.0.0.1',
-    },
-  },
-  {
-    label: '自动打开浏览器',
-    name: 'browser',
-    description: '',
-    link: '',
-    componentName: 'Switch',
     componentProps: {},
   },
   {
-    label: '启动 HTTPS',
-    name: 'https',
+    label: '启动自动修复',
+    name: 'fix',
     description: '',
     link: '',
     componentName: 'Switch',
@@ -83,4 +91,4 @@ const DEV_CONF = [
   },
 ];
 
-export { LINT_CONF, BUILD_CONF, DEV_CONF };
+export { DEV_CONF, BUILD_CONF, LINT_CONF };
