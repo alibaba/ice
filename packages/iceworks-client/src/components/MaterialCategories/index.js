@@ -21,20 +21,16 @@ function MaterialCategories(props) {
         <Link to={linkToAll}><FormattedMessage id="iceworks.material.all" /></Link>
       </li>
       {dataSource.map(({ name }) => {
-        const item = {
-          name,
-        };
-
         return (
-          <li key={name} className={cx({ [styles.active]: current === item.name })}>
+          <li key={name} className={cx({ [styles.active]: current === name })}>
             <Link
               to={
                 type
-                  ? `${linkPrefix}/?category=${item.name}&type=${type}`
-                  : `${linkPrefix}/?category=${item.name}`
+                  ? `${linkPrefix}/?category=${name}&type=${type}`
+                  : `${linkPrefix}/?category=${name}`
               }
             >
-              {item.name}
+              {name}
             </Link>
           </li>
         );

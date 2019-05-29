@@ -6,9 +6,7 @@ import styles from './index.module.scss';
 
 const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
   function handleDownload() {
-    if (typeof onDownload === 'function') {
-      onDownload(dataSource);
-    }
+    onDownload(dataSource);
   }
 
   return (
@@ -21,7 +19,7 @@ const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
           const screenshotStyle = generateStyle(dataSource.screenshots, key);
           return (
             <img
-              alt=""
+              alt={dataSource.title}
               src={url}
               style={{ transform: 'scale(0.6)', ...screenshotStyle }}
               className={styles.screenshotImg}

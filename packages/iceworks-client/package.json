@@ -12,7 +12,6 @@
     "@icedesign/dynamic-icon": "^0.1.8",
     "@icedesign/notification": "^1.0.5",
     "alife-logger": "^1.5.1",
-    "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "cookies-js": "^1.2.3",
     "deepmerge": "^3.2.0",

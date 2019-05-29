@@ -26,7 +26,7 @@ export default (app: Application) => {
     ['project.dependency.upgrade', project.dependency.upgrade],
     ['project.configuration.settings', project.configuration.settings],
     ['material.index.resource', material.index.resource],
-    ['material.index.current', material.index.current],
+    ['material.index.getOne', material.index.getOne],
   ];
 
   routers.forEach(([eventName, handle]) => {

@@ -44,7 +44,6 @@ const Material = ({ history, location }) => {
 
   async function handleMenuChange(url) {
     await handleTabChange();
-    await material.resetCurrent();
     await material.getCurrent(url);
   }
 

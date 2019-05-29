@@ -1,4 +1,4 @@
-import * as rp from 'request-promise';
+import * as rp from 'request-promise-native';
 
 const request = async (uri, options = {}) => {
   options = Object.assign(

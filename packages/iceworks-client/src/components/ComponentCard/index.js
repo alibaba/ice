@@ -5,9 +5,7 @@ import styles from './index.module.scss';
 
 const ComponentCard = ({ dataSource, onInstall }) => {
   function handleInstall() {
-    if (typeof onInstall === 'function') {
-      onInstall(dataSource);
-    }
+    onInstall(dataSource);
   }
 
   return (

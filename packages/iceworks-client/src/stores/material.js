@@ -18,14 +18,10 @@ export default {
     const sourceUrl = url || firstResource.source;
 
     if (sourceUrl) {
-      const data = await socket.emit('material.index.current', { url: sourceUrl });
+      const data = await socket.emit('material.index.getOne', { url: sourceUrl });
       logger.info('Material Data:', data);
 
       this.dataSource.current = data;
     }
-  },
-
-  async resetCurrent() {
-    this.dataSource.current = {};
   },
 };

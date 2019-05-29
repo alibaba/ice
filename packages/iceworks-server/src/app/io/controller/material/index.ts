@@ -9,7 +9,7 @@ export default (app) => {
       return storage.get('material');
     }
 
-    async current(ctx) {
+    async getOne(ctx) {
       const { args } = ctx;
       const data = await request(args.url);
 

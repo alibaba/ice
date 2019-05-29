@@ -19,9 +19,7 @@ const MaterialSubMenu = ({
     logger.debug(item);
     setState({ current: index });
 
-    if (typeof onChange === 'function') {
-      onChange(item.source);
-    }
+    onChange(item.source);
   }
 
   return (
@@ -34,7 +32,7 @@ const MaterialSubMenu = ({
               key={index}
               onClick={() => handleChange(index, item)}
             >
-              <div className={styles.logo}><img src={item.logo} alt="material logo" /></div>
+              <div className={styles.logo}><img src={item.logo} alt={item.name} /></div>
               <div className={styles.info}>
                 <h5 className={styles.name}>
                   {item.name}
