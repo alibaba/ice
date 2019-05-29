@@ -1,8 +1,6 @@
 import socket from '@src/socket';
 import logger from '@utils/logger';
 
-// const DEFAULT_URL = 'http://ice.alicdn.com/assets/react-materials.json';
-
 export default {
   dataSource: {
     resource: [],
