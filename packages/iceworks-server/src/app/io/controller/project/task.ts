@@ -39,14 +39,14 @@ export default (app) => {
     }
 
     /**
-     * task setting
+     * task config
      */
-    async getSetting(ctx) {
+    async getConf(ctx) {
       const { args } = ctx;
       const { projectManager } = app;
       const project = projectManager.getCurrent();
-      const response = await project.task.getSetting(args);
-      return { setting: response };
+      const response = await project.task.getConf(args);
+      return { conf: response };
     }
   };
 };

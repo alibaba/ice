@@ -23,13 +23,13 @@ const Configuration = () => {
   };
 
   useEffect(() => {
-    configuration.getSettings();
+    configuration.getCLIConf();
   }, []);
 
   return (
     <Card title="自定义配置" contentHeight="100%">
       <DynamicForm
-        config={configuration.dataSource.settings}
+        config={configuration.dataSource.cli}
         formItemLayout={formItemLayout}
         onChange={onChange}
       />

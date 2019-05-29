@@ -111,7 +111,7 @@ export default class Task extends EventEmitter implements ITaskModule {
    * get the conf of the current task
    * @param args
    */
-  async getSetting(args) {
+  async getConf(args) {
     const { command } = args;
 
     if (command === 'dev') {

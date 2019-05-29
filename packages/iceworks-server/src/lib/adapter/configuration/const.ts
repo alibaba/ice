@@ -1,4 +1,4 @@
-const ICE_SCRIPTS_CONF = [
+const CLI_CONF = [
   {
     label: '入口文件',
     name: 'entry',
@@ -73,4 +73,4 @@ const ICE_SCRIPTS_CONF = [
   },
 ];
 
-export { ICE_SCRIPTS_CONF };
+export { CLI_CONF };

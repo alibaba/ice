@@ -2,10 +2,10 @@ import socket from '@src/socket';
 
 export default {
   dataSource: {
-    settings: [],
+    cli: [],
   },
 
-  async getSettings() {
-    this.dataSource.settings = await socket.emit('project.configuration.settings');
+  async getCLIConf() {
+    this.dataSource.cli = await socket.emit('project.configuration.getCLIConf');
   },
 };

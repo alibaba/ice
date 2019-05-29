@@ -1,6 +1,6 @@
 import { IBaseModule } from './base';
 
-export interface IConfigurationSettings {
+export interface ICLIConf {
   /**
    * 标签名
    */
@@ -36,5 +36,5 @@ export interface IConfigurationModule extends IBaseModule {
   /**
    * 获取构建配置项
    */
-  getAll(): Promise<IConfigurationSettings[]>;
+  getAll(): Promise<ICLIConf[]>;
 }

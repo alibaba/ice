@@ -1,6 +1,6 @@
 import * as EventEmitter from 'events';
-import { IConfigurationSettings } from '../../../interface';
-import { CONFIGURATION_SETTINGS } from './const';
+import { ICLIConf } from '../../../interface';
+import { CLI_CONF } from './const';
 
 export default class Configuration extends EventEmitter {
   public readonly path: string;
@@ -10,7 +10,7 @@ export default class Configuration extends EventEmitter {
     this.path = options.path;
   }
 
-  async getAll(): Promise<IConfigurationSettings[]> {
-    return CONFIGURATION_SETTINGS;
+  async getCLIConf(): Promise<ICLIConf[]> {
+    return CLI_CONF;
   }
 }

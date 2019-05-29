@@ -56,7 +56,7 @@ const Task = ({ history, intl }) => {
 
   async function onSetting() {
     try {
-      await task.getSetting(type);
+      await task.getConf(type);
       toggleModal();
     } catch (error) {
       showMessage(error.message);
@@ -101,7 +101,7 @@ const Task = ({ history, intl }) => {
         <XtermTerminal id={id} name={project.dataSource.name} />
       </div>
 
-      <TaskModal on={on} data={data.setting || []} toggleModal={toggleModal} />
+      <TaskModal on={on} data={data.conf || []} toggleModal={toggleModal} />
     </Card>
   );
 };

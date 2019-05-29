@@ -3,7 +3,7 @@ import { IBaseModule } from './base';
 /**
  * 调试服务设置项
  */
-export interface ITaskSetting {
+export interface ITaskConf {
   /**
    * 标签名
    */
@@ -65,5 +65,5 @@ export interface ITaskModule extends IBaseModule {
    *
    * @param task 任务信息
    */
-  getSetting(task: ITaskParam): Promise<ITaskSetting[]>;
+  getConf(task: ITaskParam): Promise<ITaskConf[]>;
 }

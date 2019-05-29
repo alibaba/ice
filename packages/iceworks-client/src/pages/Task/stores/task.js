@@ -11,8 +11,8 @@ export default {
     await socket.emit('project.task.stop', { command: type });
   },
 
-  async getSetting(type) {
-    this.dataSource[type] = await socket.emit('project.task.getSetting', {
+  async getConf(type) {
+    this.dataSource[type] = await socket.emit('project.task.getConf', {
       command: type,
     });
   },
