@@ -19,12 +19,14 @@ module.exports = (projectDir) => {
       log.info('clean package.json...');
       delete pkgData.files;
       delete pkgData.publishConfig;
-      delete pkgData.buildConfig.output;
+      if (pkgData.buildConfig) {
+        delete pkgData.buildConfig.output;
+        delete pkgData.buildConfig.localization;
+      }
       delete pkgData.scaffoldConfig;
       delete pkgData.homepage;
       delete pkgData.scripts.screenshot;
       delete pkgData.scripts.prepublishOnly;
-      delete pkgData.buildConfig.localization;
 
       fse.writeJSONSync(pkgPath, pkgData, {
         spaces: 2,
@@ -40,7 +42,8 @@ module.exports = (projectDir) => {
 };
 
 function generateAbcFileSync(projectDir, iceScriptsVersion) {
-  const latestVersion = /^2\./.test(iceScriptsVersion);
+  // '^2.0.0' -> true
+  const latestVersion = /^\^2\./.test(iceScriptsVersion);
 
   const abcData = {
     type: latestVersion ? 'ice-scripts' : 'iceworks',
