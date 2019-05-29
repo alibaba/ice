@@ -118,13 +118,13 @@ export default Button;
 }
 ```
 
-### 编写 DEMO
+### 编写 Demo
 
-组件的 DEMO 演示文件，位于 `demo` 目录下，使用 `yaml-markdown` 语法。
+组件的 Demo 演示文件，位于 `demo` 目录下，使用 `yaml-markdown` 语法。
 
 可以修改默认的 `usage.md`，来调整组件 DEMO，或通过增加 *.md 文件，来创建多个 DEMO。
 
-每个 DEMO 的形式如下：
+每个 Demo 的形式如下：
 
 ```
 ---
@@ -143,6 +143,7 @@ ReactDOM.render(<div className="test">
     <Button type="normal">普通</Button> &nbsp;&nbsp;
 </div>, mountNode);
 ​````
+```
 
 ### 编写 README
 
@@ -165,7 +166,6 @@ README.md应该包含业务组件的源信息、使用说明以及API，示例�
 发布组件的流程实际上也就是发布一个 npm 包的过程。
 
 > 注：如果你还没有发过 npm 包或者对 npm 包的发布流程不了解，需要先简单了解下 npm 的相关知识，这里推荐 [npm 官网](https://www.npmjs.com/)  和阮一峰写的 [npm 模块管理器](http://javascript.ruanyifeng.com/nodejs/npm.html)。
-
 
 ```bash
 # 在组件根目录下
