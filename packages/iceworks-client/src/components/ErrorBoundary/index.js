@@ -21,6 +21,7 @@ class ErrorBoundary extends Component {
 
   state = {
     error: null,
+    info: null,
   };
 
   static getDerivedStateFromError() {
@@ -37,14 +38,16 @@ class ErrorBoundary extends Component {
     } catch (err) {
       logger.error(error);
     }
+
+    this.setState({ info });
   }
 
   render() {
     const { children, FallbackComponent } = this.props;
-    const { error } = this.state;
+    const { error, info } = this.state;
 
     if (error !== null) {
-      return <FallbackComponent />;
+      return <FallbackComponent error={error} info={info} />;
     }
 
     return children;

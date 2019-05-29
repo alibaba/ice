@@ -4,6 +4,7 @@ export default {
   'iceworks.global.disconnect': 'Disconnect',
   'iceworks.global.button.yes': 'Yes',
   'iceworks.global.button.no': 'No',
+  'iceworks.global.fallback.title': 'Loading',
 
   // menu
   'iceworks.menu.project': 'Project',
@@ -32,6 +33,8 @@ export default {
 
   // project panel
   'iceworks.project.panel.page.title': 'Page',
+  'iceworks.project.panel.fallback.title': 'Panel',
+  'iceworks.project.panel.fallback.desc': 'Panel loading error',
 
   // project dependency
   'iceworks.project.panel.dependency.title': 'Dependency',

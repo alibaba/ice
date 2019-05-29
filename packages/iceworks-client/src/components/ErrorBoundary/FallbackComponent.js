@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import { Loading } from '@alifd/next';
 
-const FallbackComponent = () => {
+const FallbackComponent = ({ intl }) => {
   return (
     <div
       style={{
@@ -11,8 +13,15 @@ const FallbackComponent = () => {
         justifyContent: 'center',
       }}
     >
-      <Loading tip="Loading..." />
+      <Loading
+        tip={intl.formatMessage({ id: 'iceworks.global.fallback.title' })}
+      />
     </div>
   );
 };
-export default FallbackComponent;
+
+FallbackComponent.propTypes = {
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(FallbackComponent);

@@ -4,6 +4,7 @@ export default {
   'iceworks.global.disconnect': '断开连接',
   'iceworks.global.button.yes': '确定',
   'iceworks.global.button.no': '取消',
+  'iceworks.global.fallback.title': '加载错误',
 
   // menu
   'iceworks.menu.project': '项目',
@@ -31,9 +32,11 @@ export default {
   'iceworks.project.submenu.opts.createProject': '创建项目',
 
   // project panel
+  'iceworks.project.panel.page.title': '页面管理',
+  'iceworks.project.panel.fallback.title': '面板',
+  'iceworks.project.panel.fallback.desc': '面板加载出错',
 
   // project page
-  'iceworks.project.panel.page.title': '页面管理',
   'iceworks.project.panel.page.create.title': '创建页面',
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',
   'iceworks.project.panel.page.delete.title': '删除页面',
