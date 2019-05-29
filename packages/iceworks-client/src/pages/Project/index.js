@@ -182,10 +182,10 @@ const Project = () => {
       />
       {projects.dataSource.length && project.dataSource.panels.length ? (
         <div className={styles.main}>
-          {project.dataSource.panels.map((name) => {
+          {project.dataSource.panels.map((name, index) => {
             const Panel = panels[name];
             return Panel ? (
-              <ErrorBoundary FallbackComponent={<FallbackPanel />}>
+              <ErrorBoundary key={index} FallbackComponent={<FallbackPanel />}>
                 <Panel />
               </ErrorBoundary>
             ) : null;
