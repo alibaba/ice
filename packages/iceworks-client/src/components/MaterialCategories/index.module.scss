@@ -1,0 +1,43 @@
+.materialCategories {
+  margin: 20px 0 20px;
+  padding: 20px 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 18px 0 rgba(82, 94, 102, 0.15);
+  border-radius: 4px;
+  li {
+    float: left;
+    background: #fff;
+    border-radius: 24px;
+    margin: 10px;
+    transition: all 0.3s ease;
+    &.active {
+      background: #1b73ff;
+      a,
+      a:hover {
+        color: #fff;
+        transition: all 0.3s ease;
+      }
+    }
+    &:last-child {
+      margin-right: 10px;
+    }
+    &:hover {
+      color: #fff;
+      background: #1b73ff;
+    }
+    a {
+      font-size: 13px;
+      height: 24px;
+      line-height: 24px;
+      padding: 0 18px;
+      color: #666;
+      display: block;
+      &:hover {
+        color: #fff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+}
