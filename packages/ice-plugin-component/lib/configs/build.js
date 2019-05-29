@@ -20,6 +20,9 @@ module.exports = (config, { demos, markdownParser, rootDir }) => {
       config.module.rule(rule).use('MiniCssExtractPlugin.loader').tap(() => ({ publicPath: '../' }));
     }
   });
+  // add hbs loader
+  config.module.rule('hbs-rule').test(/\.hbs$/i).use('hbs').loader(require.resolve('handlebars-loader')).options({});
+
   // set outputAssetsPath { js: '', css: '' }
   setAssetsPath(config);
   // modify HtmlWebpackPlugin when build demo
