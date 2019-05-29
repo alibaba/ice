@@ -10,8 +10,7 @@ const { settings } = services;
 
 // 请求所有物料源数据
 function fetchMaterialsData() {
-  let materials = settings.get('materials'); // 获取物料接口
-  materials = filterMaterial(materials);
+  const materials = filterMaterial(settings.get('materials') || []);
   return new Promise((resolve, reject) => {
     const requestPromise = materials.map((material) => {
       return requestMaterial(material.source, true);

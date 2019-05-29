@@ -7,8 +7,12 @@ const home = require('user-home');
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
 const {
-  getNpmRegistry, getNpmLatestSemverVersion, getLatestVersion,
+  getNpmRegistry,
+  getNpmLatestSemverVersion,
+  getLatestVersion,
 } = require('ice-npm-utils');
+
+const Parser = tar.Parse;
 
 module.exports = (options = {}) => {
   const template = options.template;
@@ -63,7 +67,7 @@ function downloadAndFilterNpmFiles(npm, version, destDir) {
         reject(err);
       })
       .pipe(zlib.Unzip())
-      .pipe(tar.Parse())
+      .pipe(new Parser())
       .on('entry', (entry) => {
         /* eslint-disable-next-line no-useless-escape */
         const templatePathReg = new RegExp('(package\/template\/)');

@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { shell } from 'electron';
 
 import BlockPanel from '../../components/Block/Panel';
-import EmptyTips from '../../components/EmptyTips/';
+import EmptyTips from '../../components/EmptyTips';
 import Link from '../../components/Link';
 import CustomBlockForm from '../../components/Block/CustomBlockForm';
 import CustomBlockPanel from '../../components/Block/CustomBlockPanel';
@@ -31,7 +31,7 @@ class PageBlocks extends Component {
   };
 
   handleTabChange = (key) => {
-    if(key){
+    if (key) {
       this.props.materials.setBlockTabActiveKey(key);
     } else {
       this.props.materials.setBlockTabActiveKey(-1);
@@ -63,14 +63,14 @@ class PageBlocks extends Component {
   };
 
   handleOpen = () => {
-    if(this.props.customBlocks.blockEditing){
+    if (this.props.customBlocks.blockEditing) {
       Toast.show({
         type: 'prompt',
         content: '请先关闭正在搭建的区块',
-        duration: 1000
+        duration: 1000,
       });
       return null;
-    } else if (this.props.customBlocks.dataLoading) {
+    } if (this.props.customBlocks.dataLoading) {
       this.props.customBlocks.openProgress();
       return null;
     }
@@ -137,7 +137,11 @@ class PageBlocks extends Component {
       return (
         <div style={{ padding: 10, textAlign: 'center' }}>
           <EmptyTips size={120}>
-            暂无物料源，可前往 <Link to="/settings">物料源配置</Link> 配置
+            暂无物料源，可前往
+            {' '}
+            <Link to="/settings">物料源配置</Link>
+            {' '}
+配置
           </EmptyTips>
           <Button
             type="primary"
@@ -160,7 +164,7 @@ class PageBlocks extends Component {
           padding: 0,
           height: 0,
         }}
-        tabBarExtraContent={
+        tabBarExtraContent={(
           <div
             style={{
               height: 48,
@@ -170,7 +174,8 @@ class PageBlocks extends Component {
               paddingRight: 20,
             }}
           >
-            {this.props.customBlocks.showCustomBlocks &&
+            {this.props.customBlocks.showCustomBlocks
+              && (
               <Button
                 type="primary"
                 style={{ marginRight: 4 }}
@@ -179,7 +184,8 @@ class PageBlocks extends Component {
                 onClick={this.handleFeedBack}
               >
                 反馈意见
-              </Button>}
+              </Button>
+              )}
             <Button
               loading={this.props.materials.refreshing}
               size="small"
@@ -188,7 +194,7 @@ class PageBlocks extends Component {
               刷新列表
             </Button>
           </div>
-        }
+)}
       >
         {this.renderMaterialsTabPanel()}
         {/* 隐藏自定义区块功能
@@ -225,11 +231,11 @@ class PageBlocks extends Component {
         </div>
         <Dialog
           title="新建自定义区块"
-          autoFocus={true}
+          autoFocus
           className="poject-config-dialog"
           footerAlign="center"
           onClose={this.handleClose}
-          footer={
+          footer={(
             <div className="project-config-footer">
               <Button
                 onClick={this.handleOpenWorkbench}
@@ -244,18 +250,18 @@ class PageBlocks extends Component {
                 取消
               </Button>
             </div>
-          }
+)}
           visible={this.props.customBlocks.visible}
         >
           <CustomBlockForm />
         </Dialog>
         <Dialog
           title="区块重命名"
-          autoFocus={true}
+          autoFocus
           className="poject-config-dialog"
           footerAlign="center"
           onClose={this.handleRenameClose}
-          footer={
+          footer={(
             <div className="project-config-footer">
               <Button
                 onClick={this.handleRenameBlock}
@@ -270,14 +276,14 @@ class PageBlocks extends Component {
                 取消
               </Button>
             </div>
-          }
+)}
           visible={this.props.customBlocks.renameVisible}
         >
           <BlockRenameForm />
         </Dialog>
         <Dialog
           title="请求物料数据"
-          autoFocus={true}
+          autoFocus
           className="poject-config-dialog progress-dialog"
           onOk={this.handleProgressClose}
           onClose={this.handleProgressClose}
@@ -292,7 +298,8 @@ class PageBlocks extends Component {
               percent={this.props.customBlocks.materialProgress}
             />
             <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
-              {this.props.customBlocks.materialProgress}%
+              {this.props.customBlocks.materialProgress}
+%
             </span>
             <span style={{ fontSize: 12, color: '#999', paddingLeft: 10 }}>
               {this.props.customBlocks.progressSpeed}
@@ -305,7 +312,7 @@ class PageBlocks extends Component {
         </Dialog>
         <Dialog
           title="请求物料数据失败"
-          autoFocus={true}
+          autoFocus
           className="poject-config-dialog progress-dialog"
           onOk={this.handleErrorClose}
           onClose={this.handleErrorClose}

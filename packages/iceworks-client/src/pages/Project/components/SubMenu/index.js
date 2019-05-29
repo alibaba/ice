@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import SubMenu from '@components/SubMenu';
@@ -13,7 +14,7 @@ const ProjectSubMenu = ({
       <div className={styles.wrapper}>
         <div className={styles.list}>
           {
-            projects.map(({ name, path, dev }, index) => {
+            projects.map(({ name, path, task }, index) => {
               return (
                 <div
                   key={index}
@@ -29,7 +30,7 @@ const ProjectSubMenu = ({
                     <strong>
                       {name}
                     </strong>
-                    {dev.status === 'working' ? <Badge className={styles.badge} dot /> : null}
+                    {task.status === 'working' ? <Badge className={styles.badge} dot /> : null}
                   </div>
                   <Icon
                     className={styles.icon}
@@ -49,11 +50,11 @@ const ProjectSubMenu = ({
         <div className={styles.opts}>
           <Button className={styles.btn} type="secondary" size="medium" onClick={onOpenProject}>
             <Icon type="download" size="xl" />
-            <span>打开项目</span>
+            <FormattedMessage id="iceworks.project.submenu.opts.openProject" />
           </Button>
           <Button className={styles.btn} type="primary" size="medium" onClick={onCreateProject}>
             <Icon type="add" size="xl" />
-            <span>创建项目</span>
+            <FormattedMessage id="iceworks.project.submenu.opts.createProject" />
           </Button>
         </div>
       </div>

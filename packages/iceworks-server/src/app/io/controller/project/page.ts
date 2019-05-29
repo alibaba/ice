@@ -7,5 +7,23 @@ export default (app) => {
       const project = projectManager.getCurrent();
       return await project.page.getAll();
     }
+
+    async delete({ args }) {
+      const { name } = args;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      await project.page.delete(name);
+    }
+
+    async create(ctx) {
+      const { args, socket } = ctx;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+
+      project.page.on('create.status', (data) => {
+        socket.emit('project.page.create.status', data);
+      });
+      await project.page.create(args);
+    }
   };
 };

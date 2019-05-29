@@ -1,17 +1,41 @@
+import * as EventEmitter from 'events';
+
 /**
  * 项目信息
  */
 export interface IProject {
+  /**
+   * 项目显示名称
+   */
   readonly name: string;
+
+  /**
+   * 项目的路径
+   */
   readonly path: string;
+
+  /**
+   * 项目的支持的面板
+   */
+  readonly panels: string[];
+
+  /**
+   * 获取项目的 package.json 信息
+   */
+  getPackageJSON(): any;
+
+
+  /**
+   * 获取项目的环境变量信息
+   */
+  getEnv(): any;
 }
 
 /**
  * 功能模块的基类
  */
-export interface IBaseModule {
-  readonly projectName: string;
-  readonly projectPath: string;
+export interface IBaseModule extends EventEmitter {
+  project: IProject;
 }
 
 /**
@@ -35,9 +59,34 @@ export interface IProjectScaffold {
 }
 
 /**
- * TODO 项目的布局
+ * 项目的布局
  */
-export interface IProjectLayout {}
+export interface IProjectLayout {
+  /**
+   * 名称
+   */
+  name: string;
+
+  /**
+   * 标题
+   */
+  title: string;
+
+  /**
+   * 描述
+   */
+  description: string;
+
+  /**
+   * 截图 URL
+   */
+  screenshot: string;
+
+  /**
+   * 封面图 URL
+   */
+  thumbnail: string;
+}
 
 /**
  * 物料的模板信息

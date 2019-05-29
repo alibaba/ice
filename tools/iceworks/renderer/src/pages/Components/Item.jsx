@@ -9,9 +9,9 @@ import services from '../../services';
 import Icon from '../../components/Icon';
 import dialog from '../../components/dialog';
 
-const { interaction } = services;
-
 import './item.scss';
+
+const { interaction } = services;
 
 @inject('projects', 'component')
 @observer
@@ -32,7 +32,7 @@ class Item extends Component {
         title: '提示',
         content: (
           <div> 请先新建项目 </div>
-        )
+        ),
       });
       return;
     }
@@ -62,12 +62,12 @@ class Item extends Component {
     let preUrl;
     if (data.homepage) {
       url = data.homepage;
-    } else  {
+    } else {
       // 没有homepage字段但是属于飞冰物料源，则判断是 飞冰基础组件
-      if(isIceMaterial(material.source)) {
-        preUrl = iceVersion === '0.x' ?
-          "https://alibaba.github.io/ice/0.x/component/" :
-          "https://alibaba.github.io/ice/component/";
+      if (isIceMaterial(material.source)) {
+        preUrl = iceVersion === '0.x'
+          ? 'https://alibaba.github.io/ice/0.x/component/'
+          : 'https://alibaba.github.io/ice/component/';
         url = preUrl + data.name.toLocaleLowerCase();
       }
     }
@@ -76,7 +76,6 @@ class Item extends Component {
   };
 
   render() {
-
     const { data } = this.props;
 
     return (
@@ -87,29 +86,31 @@ class Item extends Component {
           data.isDownloaded && (
             <div className="component-downloaded">
               <Tooltip
-                placement={'top'}
-                overlay={'当前项目已依赖'}
+                placement="top"
+                overlay="当前项目已依赖"
               >
-                <Icon type="yixiazai" style={{color: 'rgb(48, 128, 254)'}} />
+                <Icon type="yixiazai" style={{ color: 'rgb(48, 128, 254)' }} />
               </Tooltip>
             </div>
           )
         }
-        <div  className="component-card-opts">
-          <div  className="component-card-opt">
-          {
+        <div className="component-card-opts">
+          <div className="component-card-opt">
+            {
             data.isDownloaded ? (
               <Button
                 size="small"
                 onClick={this.import}
-                type="primary">
+                type="primary"
+              >
                 复制引入代码
               </Button>
             ) : (
               <Button
                 size="small"
                 onClick={this.download}
-                type="primary">
+                type="primary"
+              >
                 安装
               </Button>
             )
@@ -122,7 +123,7 @@ class Item extends Component {
         </div>
 
       </div>
-    )
+    );
   }
 }
 

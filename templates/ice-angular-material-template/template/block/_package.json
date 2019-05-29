@@ -5,14 +5,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "screenshot": "ice-devtools screenshot",
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "keywords": ["ice", "angular", "block"],
-  "publishConfig": {
-    "registry": "<%= registry %>"
-  },
   "blockConfig": {
     "name": "<%= name %>",
     "title": "<%= title %>",

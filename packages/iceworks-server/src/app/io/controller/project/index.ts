@@ -7,6 +7,13 @@ export default (app) => {
       return await projectManager.getProjects();
     }
 
+    async create(ctx) {
+      const { projectManager } = app;
+      const { args } = ctx;
+
+      return await projectManager.createProject(args);
+    }
+
     async delete(ctx) {
       const { projectManager } = app;
       const { args } = ctx;
