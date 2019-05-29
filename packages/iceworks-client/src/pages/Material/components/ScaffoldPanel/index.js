@@ -7,16 +7,20 @@ import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
-const ScaffoldPanel = ({ dataSource }) => {
-  const { categories, scaffolds } = dataSource;
+const ScaffoldPanel = ({ dataSource, current, onDownload }) => {
+  const { categories, materials } = dataSource;
+  const currentMaterials = materials[current] || [];
+
   return (
-    <div className={styles.scaffoldPanel}>
-      <MaterialCategories dataSource={categories} />
+    <div className={styles.materialsPanel}>
+      <MaterialCategories dataSource={categories} current={current} />
       <Row wrap gutter="40">
-        {scaffolds.map((scaffod, index) => {
+        {currentMaterials.map((data) => {
+          const key = data.source && data.source.npm ? data.source.npm : data.title;
+
           return (
-            <Col l="12" xs="12" xxs="24" key={index}>
-              <ScaffoldCard dataSource={scaffod} />
+            <Col l="12" s="12" xs="24" xxs="24" key={key}>
+              <ScaffoldCard dataSource={data} onDownload={onDownload} />
             </Col>
           );
         })}
@@ -28,15 +32,19 @@ const ScaffoldPanel = ({ dataSource }) => {
 ScaffoldPanel.defaultProps = {
   dataSource: {
     categories: [],
-    scaffolds: [],
+    materials: {},
   },
+  current: 'all',
+  onDownload: f => f,
 };
 
 ScaffoldPanel.propTypes = {
   dataSource: PropTypes.shape({
     categories: PropTypes.array.isRequired,
-    scaffolds: PropTypes.array.isRequired,
+    materials: PropTypes.object.isRequired,
   }),
+  current: PropTypes.string,
+  onDownload: PropTypes.func,
 };
 
 export default ScaffoldPanel;

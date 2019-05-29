@@ -13,9 +13,19 @@ export default {
     this.dataSource.resource = data;
   },
 
-  async getCurrent() {
-    const data = await socket.emit('material.index.current');
-    logger.info('Material Data:', data);
-    this.dataSource.current = data;
+  async getCurrent(url) {
+    const firstResource = this.dataSource.resource[0] || {};
+    const sourceUrl = url || firstResource.source;
+
+    if (sourceUrl) {
+      const data = await socket.emit('material.index.current', { url: sourceUrl });
+      logger.info('Material Data:', data);
+
+      this.dataSource.current = data;
+    }
+  },
+
+  async resetCurrent() {
+    this.dataSource.current = {};
   },
 };

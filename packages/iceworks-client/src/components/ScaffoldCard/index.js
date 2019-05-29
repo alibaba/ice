@@ -1,9 +1,16 @@
 /* eslint no-use-before-define:0 */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
-const ScaffoldCard = ({ dataSource, bgColor }) => {
+const ScaffoldCard = ({ dataSource, bgColor, onDownload }) => {
+  function handleDownload() {
+    if (typeof onDownload === 'function') {
+      onDownload(dataSource);
+    }
+  }
+
   return (
     <div className={styles.scaffold}>
       <div className={styles.body} style={{ background: bgColor }}>
@@ -27,7 +34,7 @@ const ScaffoldCard = ({ dataSource, bgColor }) => {
       <div className={styles.info}>
         <div className={styles.title}>{dataSource.title}</div>
         <div className={styles.desc}>
-          {dataSource.description || '暂无描述'}
+          {dataSource.description || <FormattedMessage id="iceworks.material.noDesc" />}
         </div>
       </div>
 
@@ -38,7 +45,7 @@ const ScaffoldCard = ({ dataSource, bgColor }) => {
           target="_blank"
           className={styles.button}
         >
-          效果预览
+          <FormattedMessage id="iceworks.material.preview" />
         </a>
         <a
           href={dataSource.repository}
@@ -46,9 +53,11 @@ const ScaffoldCard = ({ dataSource, bgColor }) => {
           target="_blank"
           className={styles.button}
         >
-          查看源码
+          <FormattedMessage id="iceworks.material.source" />
         </a>
-        <a className={styles.button}>一键下载</a>
+        <a className={styles.button} onClick={handleDownload}>
+          <FormattedMessage id="iceworks.material.download" />
+        </a>
       </div>
     </div>
   );
@@ -56,11 +65,13 @@ const ScaffoldCard = ({ dataSource, bgColor }) => {
 
 ScaffoldCard.defaultProps = {
   bgColor: '#fafafa',
+  onDownload: f => f,
 };
 
 ScaffoldCard.propTypes = {
   dataSource: PropTypes.object.isRequired,
   bgColor: PropTypes.string,
+  onDownload: PropTypes.func,
 };
 
 export default ScaffoldCard;

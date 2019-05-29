@@ -83,4 +83,18 @@ export default {
 
   // setting
   'iceworks.setting.title': '设置',
+
+  // material
+  'iceworks.material.title': '物料管理',
+  'iceworks.material.scaffold': '模版',
+  'iceworks.material.block': '区块',
+  'iceworks.material.component': '组件',
+  'iceworks.material.add': '添加物料',
+  'iceworks.material.all': '全部',
+  'iceworks.material.preview': '效果预览',
+  'iceworks.material.source': '查看源码',
+  'iceworks.material.download': '使用该模版',
+  'iceworks.material.doc': '文档',
+  'iceworks.material.install': '安装',
+  'iceworks.material.noDesc': '暂无描述',
 };

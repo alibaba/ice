@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
 const BlockCard = ({ dataSource }) => {
@@ -10,6 +11,24 @@ const BlockCard = ({ dataSource }) => {
         <img alt="" src={dataSource.screenshot} />
       </div>
       <h5 className={styles.title}>{dataSource.title}</h5>
+      <div className={styles.actions}>
+        <a
+          href={dataSource.homepage}
+          rel="noopener noreferrer"
+          target="_blank"
+          className={styles.button}
+        >
+          <FormattedMessage id="iceworks.material.preview" />
+        </a>
+        <a
+          href={dataSource.repository}
+          rel="noopener noreferrer"
+          target="_blank"
+          className={styles.button}
+        >
+          <FormattedMessage id="iceworks.material.source" />
+        </a>
+      </div>
     </div>
   );
 };

@@ -1,31 +1,19 @@
 import request from '../../../../lib/request';
 import storage from '../../../../lib/storage';
 
-const url = 'http://ice.alicdn.com/assets/react-materials.json';
+const isArray = Array.isArray;
 
 export default (app) => {
   return class MaterialController extends app.Controller {
-    async resource(ctx) {
-      const { args } = ctx;
-      const callback = args[args.length - 1];
-      const data = storage.get('material');
-
-      callback({ data });
+    async resource() {
+      return storage.get('material');
     }
 
     async current(ctx) {
       const { args } = ctx;
-      const callback = args[args.length - 1];
+      const data = await request(args.url);
 
-      let data;
-      let error;
-      try {
-        data = await request(url);
-      } catch (err) {
-        error;
-      }
-
-      callback({ data: formatData(data), error });
+      return formatData(data);
     }
   };
 };
@@ -33,9 +21,9 @@ export default (app) => {
 function formatData(data) {
   const { blocks = [], scaffolds = [], components = [] } = data;
   return {
-    blocks: { categories: generateCates(blocks), blocks },
-    scaffolds: { categories: generateCates(scaffolds), scaffolds },
-    components: { categories: generateCates(components), components },
+    blocks: { categories: generateCates(blocks), materials: formatMaterialsByCatrgory(blocks) },
+    scaffolds: { categories: generateCates(scaffolds), materials: formatMaterialsByCatrgory(scaffolds) },
+    components: { categories: generateCates(components), materials: formatMaterialsByCatrgory(components) },
   };
 }
 
@@ -59,3 +47,26 @@ function generateCates(data: any[]) {
 
   return result;
 }
+
+function formatMaterialsByCatrgory(data: any[]) {
+  const materials = { "all": [] };
+
+  if (isArray(data)) {
+    data.forEach((item) => {
+      const { categories } = item;
+
+      materials["all"].push(item);
+      if (isArray(categories) && categories.length) {
+        categories.forEach((category) => {
+          if (isArray(materials[category])) {
+            materials[category].push(item);
+          } else {
+            materials[category] = [item];
+          }
+        });
+      }
+    });
+  }
+
+  return materials;
+};

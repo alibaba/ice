@@ -89,26 +89,43 @@ export interface IProjectLayout {
 }
 
 /**
- * TODO 物料的模板信息
+ * 物料的模板信息
  */
 export interface IMaterialScaffold {
-  source: IMaterialSource;
+  builder: string;
+  categories: string[];
+  customConfig: IMaterialCustomConfig;
+  dependencies: INpmDependencies;
+  description: string;
+  homepage: string;
+  name: string;
+  publishTime:  string;
+  repository:  string;
+  screenshot:  string;
+  screenshots:  string[];
+  source: IMaterialNpmSource;
+  title: string;
+  updateTime: string;
 }
 
 /**
- * TODO 物料的组件信息
+ * 物料的组件信息
  */
-export interface IMaterialComponent { }
+export interface IMaterialComponent {
+  categories: string[];
+  customConfig: IMaterialCustomConfig;
+  dependencies: INpmDependencies;
+  description: string;
+  homepage: string;
+  name: string;
+  publishTime:  string;
+  repository:  string;
+  screenshot:  string;
+  screenshots:  string[];
+  source: IMaterialNpmSource;
+  title: string;
+  updateTime: string;
 
-/**
- * 物料的源信息
- */
-export interface IMaterialSource {
-  type: string;
-  npm: string;
-  version: string;
-  registry: string;
-  sourceCodeDirectory: string;
 }
 
 /**
@@ -116,19 +133,34 @@ export interface IMaterialSource {
  */
 export interface IMaterialBlock {
   name: string;
+  customConfig: IMaterialCustomConfig;
   title: string;
   description: string;
   homepage: string;
   categories: string[],
   repository: string;
-  source: IMaterialSource,
-  dependencies: {
-    [pacakge: string]: string;
-  },
+  source: IMaterialNpmSource,
+  dependencies: INpmDependencies,
   screenshot: string;
   screenshots: string[],
   publishTime: string;
   updateTime: string[];
   uid: string[];
   alias: string[];
+}
+
+export interface IMaterialNpmSource {
+  type: string;
+  npm: string;
+  version: string;
+  registry: string;
+  sourceCodeDirectory: string;
+}
+
+export interface INpmDependencies {
+  [pacakge: string]: string;
+}
+
+export interface IMaterialCustomConfig {
+  [config: string]: any;
 }
