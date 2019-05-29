@@ -8,16 +8,22 @@ export default (app: Application) => {
 
   const routers: [string, () => {}][] = [
     ['project.index.list', project.index.list],
+    ['project.index.create', project.index.create],
     ['project.index.delete', project.index.delete],
     ['project.index.add', project.index.add],
     ['project.index.current', project.index.getCurrent],
     ['project.index.setCurrent', project.index.setCurrent],
     ['project.page.list', project.page.list],
+    ['project.page.delete', project.page.delete],
+    ['project.page.create', project.page.create],
+    ['project.layout.list', project.layout.list],
     ['project.dependency.list', project.dependency.list],
-    ['project.dev.start', project.dev.start],
-    ['project.dev.stop', project.dev.stop],
-    ['project.dev.settings', project.dev.settings],
-    ['project.dev.detail', project.dev.detail],
+    ['project.task.start', project.task.start],
+    ['project.task.stop', project.task.stop],
+    ['project.task.getSetting', project.task.getSetting],
+    ['project.dependency.reset', project.dependency.reset],
+    ['project.dependency.bulkCreate', project.dependency.bulkCreate],
+    ['project.dependency.upgrade', project.dependency.upgrade],
     ['project.configuration.settings', project.configuration.settings],
     ['material.index.resource', material.index.resource],
     ['material.index.current', material.index.current],
@@ -32,6 +38,7 @@ export default (app: Application) => {
       try {
         this.args = params;
         const data = await handle.call(this);
+        logger.info(eventName, data);
         callback(null, data);
       } catch (error) {
         logger.error(error);

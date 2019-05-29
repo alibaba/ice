@@ -19,6 +19,10 @@ import Proxies from './Proxies';
 import Def from './Def';
 import Git from './Git';
 
+import Link from '../../../components/Link';
+
+import './index.scss';
+
 const ExtensionMap = {
   [Assets.extensionName]: Assets,
   [Aliyun.extensionName]: Aliyun,
@@ -30,10 +34,6 @@ const ExtensionMap = {
   [Proxies.extensionName]: Proxies,
   [Todo.extensionName]: Todo,
 };
-
-import Link from '../../../components/Link';
-
-import './index.scss';
 
 // eslint-disable-next-line babel/new-cap
 const DragHandle = SortableHandle(() => (
@@ -58,11 +58,11 @@ const SortableExtensionItem = SortableElement(
 // eslint-disable-next-line babel/new-cap
 const SortableExtensions = SortableContainer(({ items, isSorting }) => {
   return (
-    <div className={'sortable-extensions'}>
+    <div className="sortable-extensions">
       {items.map(({ Component, props }, index) => {
         return (
           <SortableExtensionItem
-            key={'sortable-extension-item' + index}
+            key={`sortable-extension-item${index}`}
             index={index}
             Component={Component}
             isSorting={isSorting}
@@ -100,8 +100,8 @@ class ProjectDashboard extends Component {
     const { orderByName, isSorting } = extensions;
 
     if (
-      !(currentProject && currentProject.exists) ||
-      currentProject.isUnavailable
+      !(currentProject && currentProject.exists)
+      || currentProject.isUnavailable
     ) {
       return null;
     }
@@ -116,10 +116,10 @@ class ProjectDashboard extends Component {
         <div className={this.props.className}>
           <SortableExtensions
             axis="xy"
-            helperClass={'sortable-extension-item-draging'}
+            helperClass="sortable-extension-item-draging"
             onSortStart={this.onSortStart}
             onSortEnd={this.onSortEnd}
-            useDragHandle={true}
+            useDragHandle
             items={extensionComponents}
             isSorting={isSorting}
           />
@@ -129,7 +129,11 @@ class ProjectDashboard extends Component {
 
     return (
       <div className="project-dashboard-empty">
-        未开启任何插件，可前往 <Link to="/extensions">插件</Link> 选择开启
+        未开启任何插件，可前往
+        {' '}
+        <Link to="/extensions">插件</Link>
+        {' '}
+选择开启
       </div>
     );
   }

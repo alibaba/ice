@@ -36,7 +36,11 @@ class Option extends Component {
       needWrapper: false,
       content: (
         <div>
-          <div style={{ paddingBottom: 16 }}>移除项目 "{projectName}" ?</div>
+          <div style={{ paddingBottom: 16 }}>
+移除项目 "
+            {projectName}
+" ?
+          </div>
           <div className="remove-project-check">
             <Checkbox
               className="iceworks-next-checkbox"

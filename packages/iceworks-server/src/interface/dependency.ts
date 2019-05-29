@@ -20,9 +20,14 @@ export interface IDependency {
   localVersion?: string;
 
   /**
-   * 是否可更新：当远程有 1.0.4 时，该值为 true
+   * 可更新版本：当远程有 1.0.4 时，该值为 1.0.4
    */
-  canUpdate?: boolean;
+  wantedVestion?: string;
+
+  /**
+   * 最新版本
+   */
+  latestVestion?: string;
 
   /**
    * 是否本地依赖 devDependencies ？
@@ -30,30 +35,36 @@ export interface IDependency {
   dev: boolean;
 }
 
+export interface ICreateDependencyParam {
+  package: string;
+
+  version: string;
+}
+
 export interface IDependencyModule extends IBaseModule {
   /**
    * 获取项目内的依赖
    */
-  getAll(): Promise<IDependency[]>;
+  getAll(): Promise<{ dependencies: IDependency[], devDependencies: IDependency[] }>;
 
   /**
    * 添加依赖到项目
    *
    * @param dependency 依赖信息
    */
-  create(dependency: IDependency): Promise<IDependency>;
+  create(dependency: ICreateDependencyParam): Promise<void>;
 
   /**
    * 添加多个依赖到项目
    *
    * @param dependencies 依赖列表
    */
-  creates(dependencies: IDependency[]): Promise<IDependency[]>;
+  bulkCreate(dependencies: ICreateDependencyParam[]): Promise<void>;
 
   /**
    * 升级项目中的某个依赖
    *
    * @param denpendency 指定依赖
    */
-  upgrade(denpendency: { name: string; isDev: boolean }): Promise<IDependency>;
+  upgrade(denpendency: { package: string; isDev?: boolean }): Promise<void>;
 }

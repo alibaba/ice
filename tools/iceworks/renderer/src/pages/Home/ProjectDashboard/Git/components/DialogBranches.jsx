@@ -6,7 +6,6 @@ import { inject, observer } from 'mobx-react';
 @inject('git')
 @observer
 export default class DialogBranches extends Component {
-
   closeDilogGitBranches = () => {
     const { git } = this.props;
     git.visibleDialogBranches = false;
@@ -50,7 +49,7 @@ export default class DialogBranches extends Component {
 
   handleGitLocalBranch = (value) => {
     const { git } = this.props;
-    git.checkoutBranch = value
+    git.checkoutBranch = value;
   };
 
   render() {
@@ -61,7 +60,7 @@ export default class DialogBranches extends Component {
         visible={git.visibleDialogBranches}
         title="切换分支"
         onClose={this.closeDilogGitBranches}
-        footer={
+        footer={(
           <div>
             <Button
               disabled={git.checkoutBranch.length === 0}
@@ -72,10 +71,10 @@ export default class DialogBranches extends Component {
             </Button>
             <Button onClick={this.closeDilogGitBranches}>取消</Button>
           </div>
-        }
+)}
       >
         <div style={{ lineHeight: '28px', height: 20 }}>
-          <span style={{ margin: '0 8px'}}>Checkout</span>
+          <span style={{ margin: '0 8px' }}>Checkout</span>
           <CascaderSelect
             placeholder="选择分支"
             onChange={this.handleSelectBranch}
@@ -83,7 +82,7 @@ export default class DialogBranches extends Component {
             style={{ verticalAlign: 'middle' }}
             displayRender={this.displayBranch}
           />
-          <span style={{ margin: '0 8px'}}>as</span>
+          <span style={{ margin: '0 8px' }}>as</span>
           <Input
             onChange={this.handleGitLocalBranch}
             placeholder="请输入本地分支名称"

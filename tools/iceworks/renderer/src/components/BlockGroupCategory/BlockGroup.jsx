@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
+import { Button } from '@icedesign/base';
 import Icon from '../Icon';
 import { glodlog } from '../../services';
-import { Button } from '@icedesign/base';
 
 import './BlockGroup.scss';
 
 @inject('blocks', 'blockGroups', 'pageBlockPicker', 'newpage')
 @observer
 class BlockGroup extends Component {
-
   static propTypes = {
     generatePage: PropTypes.func,
     handleBlocksAdd: PropTypes.func,
-    blockGroup: PropTypes.object  
+    blockGroup: PropTypes.object,
   };
 
   static defaultProps = {
     generatePage: () => {},
     handleBlocksAdd: () => {},
-    blockGroup: {}
+    blockGroup: {},
   };
 
   openBlockImgPreview = (event, blocks) => {
@@ -36,33 +35,33 @@ class BlockGroup extends Component {
     const { blocks = [] } = this.props.blockGroup;
     const { materials, getIceMaterial } = this.props.blocks;
     // 目前支持飞冰物料源
-    const { iceMaterial }  = getIceMaterial() || {};
+    const { iceMaterial } = getIceMaterial() || {};
     const iceBlocks = iceMaterial.originBlocks || [];
-    return blocks.map( block => {
-      return iceBlocks.find( iceBlock => {
+    return blocks.map((block) => {
+      return iceBlocks.find((iceBlock) => {
         const npm = iceBlock.source && iceBlock.source.npm;
         return block.includes(npm);
-      })
-    } )
+      });
+    });
   }
 
   onBlockGroupClick = () => {
     const { handleBlocksAdd, blockGroup } = this.props;
     const blocks = this.getBlocks();
     glodlog.record({
-      type: 'app', 
+      type: 'app',
       action: 'add-block-group',
       data: {
-        name: blockGroup.name
-      }
-    })
+        name: blockGroup.name,
+      },
+    });
     handleBlocksAdd(blocks);
   }
 
   render() {
-    const { 
-      blockGroup, generatePage, 
-      newpage, pageBlockPicker
+    const {
+      blockGroup, generatePage,
+      newpage, pageBlockPicker,
     } = this.props;
     const blocks = this.getBlocks();
 
@@ -71,24 +70,28 @@ class BlockGroup extends Component {
         <div className="screenshot">
           <div className="screenshot-wrapper">
             {
-              blocks.map( (block, index) => {
+              blocks.map((block, index) => {
                 return (
                   <img
                     key={index}
                     className="screenshot-img"
                     src={block.screenshot}
                   />
-                )
+                );
               })
-            } 
+            }
           </div>
         </div>
         <p>{blockGroup.name}</p>
         <div className="ibg-handle">
-          <Button className="ibg-handle-btn" onClick={(event) => {
+          <Button className="ibg-handle-btn"
+            onClick={(event) => {
               this.openBlockImgPreview(event, blocks);
-            }}>
-            <Icon size="small" type="02magnifyingglasspluszoom" /> 预览效果
+            }}
+          >
+            <Icon size="small" type="02magnifyingglasspluszoom" />
+            {' '}
+预览效果
           </Button>
         </div>
       </div>
@@ -96,4 +99,4 @@ class BlockGroup extends Component {
   }
 }
 
-export default BlockGroup
+export default BlockGroup;

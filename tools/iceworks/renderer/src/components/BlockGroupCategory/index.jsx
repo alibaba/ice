@@ -1,8 +1,8 @@
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import BlockGroupPreviewModal from './PreviewModal'
-import BlockGroup from './BlockGroup'
+import BlockGroupPreviewModal from './PreviewModal';
+import BlockGroup from './BlockGroup';
 
 import './index.scss';
 
@@ -10,13 +10,13 @@ import './index.scss';
 @observer
 class BlockGroupCategory extends Component {
   static propTypes = {
-    generatePage:  PropTypes.func,
-    handleBlocksAdd: PropTypes.func
+    generatePage: PropTypes.func,
+    handleBlocksAdd: PropTypes.func,
   };
 
   static defaultProps = {
     generatePage: () => {},
-    handleBlocksAdd: () => {}
+    handleBlocksAdd: () => {},
   };
 
   render() {
@@ -35,7 +35,7 @@ class BlockGroupCategory extends Component {
           当前暂无区块组合推荐。
         </div>
       );
-    } else if (isLoading) {
+    } if (isLoading) {
       return (
         <div
           style={{
@@ -52,7 +52,7 @@ class BlockGroupCategory extends Component {
     return (
       <div className="ibg-block-groups-wrapper">
         <div className="ibg-block-groups">
-          {blockGroups.map( (blockGroup, index) => {
+          {blockGroups.map((blockGroup, index) => {
             return (
               <BlockGroup
                 key={index}
@@ -60,7 +60,7 @@ class BlockGroupCategory extends Component {
                 generatePage={generatePage}
                 handleBlocksAdd={handleBlocksAdd}
               />
-            )
+            );
           })}
         </div>
         <BlockGroupPreviewModal />

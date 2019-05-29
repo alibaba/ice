@@ -31,7 +31,7 @@ class ActionButton extends Component {
   };
 
   render() {
-    let disabledStyle = this.props.disabled ? styles.actionIconDisabled : {};
+    const disabledStyle = this.props.disabled ? styles.actionIconDisabled : {};
     const disabledLabel = this.props.disabledLabel || '';
     const label = this.props.disabled ? disabledLabel : this.props.label;
     return (

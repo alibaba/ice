@@ -6,9 +6,12 @@ export default {
     this.dataSource = await socket.emit('project.index.list');
   },
   async add(projectPath) {
-    this.dataSource = await socket.emit('project.index.add', { projectPath });
+    await socket.emit('project.index.add', { projectPath });
   },
   async delete(params) {
-    this.dataSource = await socket.emit('project.index.delete', params);
+    await socket.emit('project.index.delete', params);
+  },
+  async create(params) {
+    await socket.emit('project.index.create', params);
   },
 };
