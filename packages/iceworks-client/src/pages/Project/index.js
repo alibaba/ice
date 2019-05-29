@@ -187,9 +187,9 @@ const Project = () => {
           (
             <div className={styles.main}>
               {
-                project.dataSource.panels.map(name => {
+                project.dataSource.panels.map((name, index) => {
                   const Panel = panels[name];
-                  return Panel ? <Panel /> : null;
+                  return Panel ? <Panel key={index} /> : null;
                 })
               }
             </div>
