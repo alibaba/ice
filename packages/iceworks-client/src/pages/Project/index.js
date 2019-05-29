@@ -4,6 +4,8 @@ import stores from '@stores';
 import logger from '@utils/logger';
 import useModal from '@hooks/useModal';
 import mockData from '@src/mock';
+import ErrorBoundary from '@components/ErrorBoundary';
+import FallbackPanel from './components/FallbackPanel';
 import SubMenu from './components/SubMenu';
 import OpenProjectModal from './components/OpenProjectModal';
 import DeleteProjectModal from './components/DeleteProjectModal';
@@ -32,10 +34,7 @@ const panels = {
 };
 
 const Project = () => {
-  const {
-    on: onOpenProjectModal,
-    setModal: setOpenProjectModal,
-  } = useModal();
+  const { on: onOpenProjectModal, setModal: setOpenProjectModal } = useModal();
   const {
     on: onDeleteProjectModal,
     toggleModal: toggleDeleteProjectModal,
@@ -99,7 +98,6 @@ const Project = () => {
     await refreshProjects();
     toggleDeleteProjectModal();
   }
-
 
   async function createProject(data) {
     await projects.create(data);
@@ -182,25 +180,23 @@ const Project = () => {
         onCancel={toggleCreateProjectModal}
         onOk={onCreateProject}
       />
-      {
-        projects.dataSource.length && project.dataSource.panels.length ?
-          (
-            <div className={styles.main}>
-              {
-                project.dataSource.panels.map((name, index) => {
-                  const Panel = panels[name];
-                  return Panel ? <Panel key={index} /> : null;
-                })
-              }
-            </div>
-          ) :
-          (
-            <Guide
-              onOpenProject={onOpenProject}
-              onCreateProject={onCreateProject}
-            />
-          )
-      }
+      {projects.dataSource.length && project.dataSource.panels.length ? (
+        <div className={styles.main}>
+          {project.dataSource.panels.map((name, index) => {
+            const Panel = panels[name];
+            return Panel ? (
+              <ErrorBoundary key={index} FallbackComponent={FallbackPanel}>
+                <Panel />
+              </ErrorBoundary>
+            ) : null;
+          })}
+        </div>
+      ) : (
+        <Guide
+          onOpenProject={onOpenProject}
+          onCreateProject={onCreateProject}
+        />
+      )}
     </div>
   );
 };
