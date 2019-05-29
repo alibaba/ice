@@ -4,7 +4,7 @@ import { Grid } from '@alifd/next';
 import MaterialCategories from '@components/MaterialCategories';
 import ComponentCard from '@components/ComponentCard';
 
-import styles from '../ScaffoldPanel/index.module.scss';
+import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
@@ -14,7 +14,11 @@ const ComponentPanel = ({ dataSource, current, onInstall }) => {
 
   return (
     <div className={styles.materialsPanel}>
-      <MaterialCategories dataSource={categories} current={current} />
+      {
+        categories.length < 1
+          ? null
+          : <MaterialCategories dataSource={categories} current={current} />
+      }
       <Row wrap gutter="20">
         {currentMaterials.map((data, index) => {
           return (

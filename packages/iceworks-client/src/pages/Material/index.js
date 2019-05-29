@@ -52,11 +52,6 @@ const Material = ({ history, location }) => {
     // TODO: coding...
   }
 
-  async function delMaterial(index, data) {
-    // TODO: coding...
-    console.log(index, data);
-  }
-
   async function openModal() {
     setVisible(true);
   }
@@ -108,7 +103,6 @@ const Material = ({ history, location }) => {
         data={dataSource.resource}
         onChange={handleMenuChange}
         onAddMaterial={addMaterial}
-        onDeleteMaterial={delMaterial}
       />
 
       <div className={styles.main}>

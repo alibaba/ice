@@ -5,7 +5,7 @@ import LazyLoad from 'react-lazyload';
 import MaterialCategories from '@components/MaterialCategories';
 import BlockCard from '@components/BlockCard';
 
-import styles from '../ScaffoldPanel/index.module.scss';
+import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
@@ -15,7 +15,11 @@ const BlockPanel = ({ dataSource, current }) => {
 
   return (
     <div className={styles.materialsPanel}>
-      <MaterialCategories dataSource={categories} current={current} />
+      {
+        categories.length < 1
+          ? null
+          : <MaterialCategories dataSource={categories} current={current} />
+      }
       <Row wrap gutter="20">
         {currentMaterials.map((data) => {
           const key = data.source && data.source.npm ? data.source.npm : data.title;

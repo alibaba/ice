@@ -9,7 +9,7 @@ import logger from '@utils/logger';
 import styles from './index.module.scss';
 
 const MaterialSubMenu = ({
-  data, onChange, onAddMaterial, onDeleteMaterial,
+  data, onChange, onAddMaterial,
 }) => {
   const [state, setState] = useState({
     current: 0,
@@ -21,12 +21,6 @@ const MaterialSubMenu = ({
 
     if (typeof onChange === 'function') {
       onChange(item.source);
-    }
-  }
-
-  function handleDelete(index, item) {
-    if (typeof onChange === 'function') {
-      onDeleteMaterial(index, item);
     }
   }
 
@@ -46,7 +40,6 @@ const MaterialSubMenu = ({
                   {item.name}
                 </h5>
               </div>
-              <Icon type="trash" className={styles.del} onCLick={() => handleDelete(index, item)} />
             </div>
           );
         })}
@@ -64,14 +57,12 @@ const MaterialSubMenu = ({
 MaterialSubMenu.defaultProps = {
   onChange: f => f,
   onAddMaterial: f => f,
-  onDeleteMaterial: f => f,
 };
 
 MaterialSubMenu.propTypes = {
   data: PropTypes.array.isRequired,
   onChange: PropTypes.func,
   onAddMaterial: PropTypes.func,
-  onDeleteMaterial: PropTypes.func,
 };
 
 export default MaterialSubMenu;

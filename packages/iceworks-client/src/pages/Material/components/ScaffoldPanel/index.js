@@ -13,7 +13,11 @@ const ScaffoldPanel = ({ dataSource, current, onDownload }) => {
 
   return (
     <div className={styles.materialsPanel}>
-      <MaterialCategories dataSource={categories} current={current} />
+      {
+        categories.length < 1
+          ? null
+          : <MaterialCategories dataSource={categories} current={current} />
+      }
       <Row wrap gutter="40">
         {currentMaterials.map((data) => {
           const key = data.source && data.source.npm ? data.source.npm : data.title;
