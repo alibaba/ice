@@ -59,7 +59,7 @@ export const withErrorBoundary = (
   const Wrapped = (props) => {
     return (
       <ErrorBoundary
-        FallbackComponent={FallbackComponent || DefaultFallbackComponent}
+        FallbackComponent={FallbackComponent}
         onError={onError}
       >
         <WrappedComponent {...props} />
