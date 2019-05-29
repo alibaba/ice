@@ -17,7 +17,6 @@ const LayoutPanel = () => {
         </h3>
       }
     >
-      {AST_Await.ccc}
       {dataSource.length ? (
         <div className={styles.main}>
           {dataSource.map(({ name, title }) => {
