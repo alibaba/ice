@@ -1,6 +1,7 @@
 /* eslint no-console:0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import logger from '@utils/logger';
 import DefaultFallbackComponent from './FallbackComponent';
 
 // Why not use hooks：
@@ -14,7 +15,7 @@ class ErrorBoundary extends Component {
   };
 
   static defaultProps = {
-    onError: () => {},
+    onError: (error) => logger.error(error),
     FallbackComponent: <DefaultFallbackComponent />,
   };
 
@@ -30,13 +31,11 @@ class ErrorBoundary extends Component {
   componentDidCatch(error, info) {
     const { onError } = this.props;
 
-    if (typeof onError === 'function') {
-      try {
-        // can also log the error to an error reporting service
-        onError.call(this, error, info ? info.componentStack : '');
-      } catch (err) {
-        console.log(err);
-      }
+    try {
+      // can also log the error to an error reporting service
+      onError.call(this, error, info ? info.componentStack : '');
+    } catch (err) {
+      logger.error(error);
     }
   }
 
