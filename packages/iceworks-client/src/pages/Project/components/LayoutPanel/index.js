@@ -10,25 +10,31 @@ const LayoutPanel = () => {
   const { dataSource } = layouts;
 
   return (
-    <Panel header={<h3><FormattedMessage id="iceworks.project.panel.layout.title" /></h3>}>
-      {
-        dataSource.length ?
-          <div className={styles.main}>
-            {dataSource.map(({ name, title }) => {
-              return (
-                <div key={name} className={styles.item}>
-                  <strong>
-                    {name}
-                  </strong>
-                  <span>
-                    {title}
-                  </span>
-                </div>
-              );
-            })}
-          </div> :
-          <Message title={<FormattedMessage id="iceworks.project.panel.layout.none" />} type="help" />
+    <Panel
+      header={
+        <h3>
+          <FormattedMessage id="iceworks.project.panel.layout.title" />
+        </h3>
       }
+    >
+      {AST_Await.ccc}
+      {dataSource.length ? (
+        <div className={styles.main}>
+          {dataSource.map(({ name, title }) => {
+            return (
+              <div key={name} className={styles.item}>
+                <strong>{name}</strong>
+                <span>{title}</span>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <Message
+          title={<FormattedMessage id="iceworks.project.panel.layout.none" />}
+          type="help"
+        />
+      )}
     </Panel>
   );
 };
