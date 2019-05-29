@@ -7,6 +7,7 @@ import useModal from '@hooks/useModal';
 import Card from '@components/Card';
 import TaskBar from '@components/TaskBar';
 import XtermTerminal from '@components/XtermTerminal';
+import { withErrorBoundary } from '@components/ErrorBoundary';
 import stores from '@stores';
 import termManager from '@utils/termManager';
 import taskStores from './stores';
@@ -110,4 +111,4 @@ Task.propTypes = {
   intl: PropTypes.object.isRequired,
 };
 
-export default injectIntl(Task);
+export default injectIntl(withErrorBoundary(Task));
