@@ -7,7 +7,9 @@ const {
   getNpmClient,
   checkAliInternal,
   getNpmTarball,
+  getAndExtractTarball,
 } = require('../lib/index');
+const path = require('path');
 
 jest.setTimeout(10 * 1000);
 
@@ -117,3 +119,16 @@ test('getNpmTarball', () => {
     expect(tarball).toBe('https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz');
   });
 });
+
+test('getNpmTarball should get latest version', () => {
+  return getNpmTarball('http').then((tarball) => {
+    expect(tarball).toBe('https://registry.npm.taobao.org/http/download/http-0.0.0.tgz');
+  });
+});
+
+test('getNpmTarball should get latest version', () => {
+  return getAndExtractTarball(path.join(__dirname, '../tarball'), 'https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz').then((files) => {
+    expect(files.length > 0).toBe(true);
+  });
+});
+
