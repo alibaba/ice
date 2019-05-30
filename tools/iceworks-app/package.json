@@ -3,13 +3,31 @@
   "version": "3.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "devDependencies": {
     "address": "^1.1.0",
-    "electron": "^5.0.1"
+    "electron": "^5.0.1",
+    "electron-builder": "^20.41.0"
   },
   "dependencies": {
     "electron-is": "^3.0.0"
+  },
+  "author": {
+    "name": "Alibaba Group Holding Limited",
+    "url": "http://alibaba.github.io/ice"
+  },
+  "build": {
+    "appId": "com.alibaba-inc.ice",
+    "mac": {
+      "category": "iceworks.app.category.type",
+      "icon": "build/icons/mac/icon.icns"
+    },
+    "win": {
+      "icon": "build/icons/win/icon.ico",
+      "artifactName": "${productName}-setup-${version}.${ext}"
+    }
   }
 }
