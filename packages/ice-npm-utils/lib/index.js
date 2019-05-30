@@ -39,7 +39,7 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
   return new Promise((resolve, reject) => {
     const allFiles = [];
     const allWriteStream = [];
-    const directoryCollector = [];
+    const dirCollector = [];
 
     progress(
       request({
@@ -55,9 +55,9 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
         const realPath = entry.path.replace(/^package\//, '');
         const destPath = path.join(destDir, realPath);
 
-        const needCreateDir = path.dirname(destPath);
-        if (!directoryCollector.includes(needCreateDir)) {
-          directoryCollector.push(needCreateDir);
+        const dirToBeCreate = path.dirname(destPath);
+        if (!dirCollector.includes(dirToBeCreate)) {
+          dirCollector.push(dirToBeCreate);
           mkdirp.sync(path.dirname(destPath));
         }
 
