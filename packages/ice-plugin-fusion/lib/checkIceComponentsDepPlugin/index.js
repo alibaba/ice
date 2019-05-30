@@ -64,14 +64,24 @@ module.exports = class CheckDepsPlugin {
       if (depFeNext && !depFdNext) {
         // 只依赖了 0.x 的项目应该使用 0.x 的业务组件
         Object.keys(depModules).forEach((moduleName) => {
-          checkBizComponentVersion(moduleName, depModules[moduleName][0], '0.x');
+          checkBizComponentVersion({
+            npmName: moduleName,
+            npmVersion: depModules[moduleName][0],
+            baseVersion: '0.x',
+            log: this.log,
+          });
         });
       }
 
       if (depFdNext && !depFeNext) {
         // 只依赖了 1.x 的项目应该使用 1.x 的业务组件
         Object.keys(depModules).forEach((moduleName) => {
-          checkBizComponentVersion(moduleName, depModules[moduleName][0], '1.x');
+          checkBizComponentVersion({
+            npmName: moduleName,
+            npmVersion: depModules[moduleName][0],
+            baseVersion: '1.x',
+            log: this.log,
+          });
         });
       }
 
@@ -115,7 +125,7 @@ function getClosestPackage(modulePath) {
   };
 }
 
-function checkBizComponentVersion(npmName, npmVersion, baseVersion) {
+function checkBizComponentVersion({ npmName, npmVersion, baseVersion, log }) {
   if (!bizComponentsVersion[npmName]) {
     // 未统计到或者 0.x&1.x 兼容的业务组件
     return;
@@ -125,12 +135,12 @@ function checkBizComponentVersion(npmName, npmVersion, baseVersion) {
 
   if (!semverVersion) {
     // 没有对应的（未升级）
-    this.log.warn(`${npmName} 暂时没有符合基础组件 ${baseVersion} 的版本，建议联系 ICE 团队协助升级`);
+    log.warn(`${npmName} 暂时没有符合基础组件 ${baseVersion} 的版本，建议联系 ICE 团队协助升级`);
   }
 
   if (!semver.satisfies(npmVersion, semverVersion)) {
     // 不符合版本
-    this.log.warn(`项目使用的基础组件版本是 ${baseVersion}，业务组件 ${npmName}@${npmVersion} 不符合版本要求 ${semverVersion}，建议选择正确的组件版本`);
+    log.warn(`项目使用的基础组件版本是 ${baseVersion}，业务组件 ${npmName}@${npmVersion} 不符合版本要求 ${semverVersion}，建议选择正确的组件版本`);
   }
 }
 
