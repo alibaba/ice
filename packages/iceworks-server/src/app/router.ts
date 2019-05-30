@@ -20,6 +20,7 @@ export default (app: Application) => {
     ['project.task.start', project.task.start],
     ['project.task.stop', project.task.stop],
     ['project.task.getConf', project.task.getConf],
+    ['project.task.setConf', project.task.setConf],
     ['project.dependency.reset', project.dependency.reset],
     ['project.dependency.bulkCreate', project.dependency.bulkCreate],
     ['project.dependency.upgrade', project.dependency.upgrade],

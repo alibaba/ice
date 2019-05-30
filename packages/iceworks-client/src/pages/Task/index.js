@@ -10,13 +10,14 @@ import XtermTerminal from '@components/XtermTerminal';
 import { withErrorBoundary } from '@components/ErrorBoundary';
 import stores from '@stores';
 import termManager from '@utils/termManager';
+import logger from '@utils/logger';
 import taskStores from './stores';
 import TaskModal from './components/TaskModal';
 import styles from './index.module.scss';
 
-function showMessage(message) {
+function showMessage(message, type) {
   Message.show({
-    type: 'error',
+    type: type || 'error',
     title: 'Message',
     content: message || 'Plase try again',
     align: 'tr tr',
@@ -63,6 +64,23 @@ const Task = ({ history, intl }) => {
     }
   }
 
+  async function onConfirm(values) {
+    if (Object.entries(values).length === 0) {
+      return;
+    }
+
+    const params = {};
+    Object.keys(values).forEach(key => {
+      if (values[key]) {
+        params[key] = values[key];
+      }
+    });
+
+    logger.info(params);
+
+    await task.setConf(type, params);
+  }
+
   const id = `${project.dataSource.name}.${type}`;
   const startEventName = `project.task.start.data.${type}`;
   const stopEventName = `project.task.stop.data.${type}`;
@@ -101,14 +119,19 @@ const Task = ({ history, intl }) => {
         <XtermTerminal id={id} name={project.dataSource.name} />
       </div>
 
-      <TaskModal on={on} data={data.conf || []} toggleModal={toggleModal} />
+      <TaskModal
+        on={on}
+        data={data.conf || []}
+        toggleModal={toggleModal}
+        onConfirm={onConfirm}
+      />
     </Card>
   );
 };
 
 Task.propTypes = {
   history: PropTypes.object.isRequired,
-  intl: PropTypes.object.isRequired,
+  intl: PropTypes.object.isRequired
 };
 
 export default injectIntl(withErrorBoundary(Task));

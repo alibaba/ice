@@ -48,5 +48,13 @@ export default (app) => {
       const response = await project.task.getConf(args);
       return { conf: response };
     }
+
+    async setConf(ctx) {
+      const { args } = ctx;
+      const { projectManager } = app;
+      const project = projectManager.getCurrent();
+      const response = await project.task.setConf(args);
+      return { success: response };
+    }
   };
 };

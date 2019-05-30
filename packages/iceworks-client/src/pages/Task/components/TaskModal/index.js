@@ -13,9 +13,16 @@ const formItemLayout = {
   },
 };
 
-const TaskModal = ({ data, on, toggleModal }) => {
+const TaskModal = ({ data, on, toggleModal, onConfirm }) => {
+  let newValues = {};
+
   const onChange = (values) => {
-    console.log(values);
+    newValues = values;
+  };
+
+  const onOk = () => {
+    onConfirm(newValues);
+    toggleModal();
   };
 
   return (
@@ -23,6 +30,7 @@ const TaskModal = ({ data, on, toggleModal }) => {
       title="设置"
       visible={on}
       onCancel={toggleModal}
+      onOk={onOk}
       style={{ width: '520px' }}
     >
       <DynamicForm
@@ -34,10 +42,15 @@ const TaskModal = ({ data, on, toggleModal }) => {
   );
 };
 
+TaskModal.defaultProps = {
+  onConfirm: () => {},
+};
+
 TaskModal.propTypes = {
   data: PropTypes.array.isRequired,
   on: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func,
 };
 
 export default TaskModal;

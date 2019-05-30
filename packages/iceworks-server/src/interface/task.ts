@@ -42,7 +42,12 @@ export interface ITaskParam {
   /**
    * 命令名称
    */
-  command: string
+  command: string,
+
+  /**
+   * 参数对象
+   */
+  options?: object
 }
 
 export interface ITaskModule extends IBaseModule {
@@ -61,9 +66,14 @@ export interface ITaskModule extends IBaseModule {
   stop(task: ITaskParam): Promise<ITaskModule>;
 
   /**
-   * 获取启动调试服务设置项
+   * 获取任务配置项
    *
    * @param task 任务信息
    */
   getConf(task: ITaskParam): Promise<ITaskConf[]>;
+
+  /**
+   * 设置任务配置项
+   */
+  setConf(task: ITaskParam): any;
 }

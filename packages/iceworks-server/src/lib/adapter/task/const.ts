@@ -25,7 +25,9 @@ const DEV_CONF = [
     description: '',
     link: '',
     componentName: 'Switch',
-    componentProps: {},
+    componentProps: {
+      defaultChecked: false,
+    },
   },
   {
     label: '开启构建分析',
@@ -33,15 +35,19 @@ const DEV_CONF = [
     description: '',
     link: '',
     componentName: 'Switch',
-    componentProps: {},
+    componentProps: {
+      defaultChecked: false
+    },
   },
   {
-    label: '关闭热更新',
+    label: '开启热更新',
     name: 'disabledReload',
     description: '',
     link: '',
     componentName: 'Switch',
-    componentProps: {},
+    componentProps: {
+      defaultChecked: true
+    },
   },
 ];
 
