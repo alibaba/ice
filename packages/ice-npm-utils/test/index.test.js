@@ -6,6 +6,7 @@ const {
   getNpmInfo,
   getNpmClient,
   checkAliInternal,
+  getNpmTarball,
 } = require('../lib/index');
 
 jest.setTimeout(10 * 1000);
@@ -78,7 +79,7 @@ test('getNpmLatestSemverVersion', () => {
 
 test('getNpmInfo 404 error case', () => {
   return getNpmInfo('not-exis-npm-error').catch((err) => {
-    expect(err.message).toMatch('Request failed');
+    expect(err.statusCode).toBe(404);
   });
 });
 
@@ -108,5 +109,11 @@ test('checkAliInternal', () => {
   return checkAliInternal().then((internal) => {
     console.log('checkAliInternal', internal);
     expect(internal).toBeBoolean();
+  });
+});
+
+test('getNpmTarball', () => {
+  return getNpmTarball('ice-npm-utils', '1.0.0').then((tarball) => {
+    expect(tarball).toBe('https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz');
   });
 });
