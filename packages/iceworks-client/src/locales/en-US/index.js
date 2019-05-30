@@ -4,6 +4,7 @@ export default {
   'iceworks.global.disconnect': 'Disconnect',
   'iceworks.global.button.yes': 'Yes',
   'iceworks.global.button.no': 'No',
+  'iceworks.global.fallback.title': 'Loading',
 
   // menu
   'iceworks.menu.project': 'Project',
@@ -32,6 +33,8 @@ export default {
 
   // project panel
   'iceworks.project.panel.page.title': 'Page',
+  'iceworks.project.panel.fallback.title': 'Panel',
+  'iceworks.project.panel.fallback.desc': 'Panel loading error',
 
   // project dependency
   'iceworks.project.panel.dependency.title': 'Dependency',
@@ -62,4 +65,18 @@ export default {
 
   // setting
   'iceworks.setting.title': 'Setting',
+
+  // material
+  'iceworks.material.title': 'Material',
+  'iceworks.material.scaffold': 'Scaffold',
+  'iceworks.material.block': 'Block',
+  'iceworks.material.component': 'Component',
+  'iceworks.material.add': 'Add',
+  'iceworks.material.all': 'All',
+  'iceworks.material.preview': 'Preview',
+  'iceworks.material.source': 'Source code',
+  'iceworks.material.download': 'Download',
+  'iceworks.material.doc': 'Docs',
+  'iceworks.material.install': 'Install',
+  'iceworks.material.noDesc': 'No Description',
 };
