@@ -2,8 +2,12 @@ const path = require('path');
 const WebpackPluginImport = require('webpack-plugin-import');
 const CheckIceComponentsDepsPlugin = require('./checkIceComponentsDepPlugin');
 
-module.exports = async ({ chainWebpack, log, context }, { themePackage, themeConfig, uniteBaseComponent }) => {
+module.exports = async ({ chainWebpack, log, context }, plugionOptions) => {
+  plugionOptions = plugionOptions || {};
+  const { themePackage, themeConfig } = plugionOptions;
+  let { uniteBaseComponent } = plugionOptions;
   const { rootDir } = context;
+
   chainWebpack((config) => {
     // 1. 支持主题能力
     if (themePackage) {

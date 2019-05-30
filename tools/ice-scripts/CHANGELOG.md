@@ -1,6 +1,15 @@
 # Changelog
 
+## 2.0.1
+
+- [fix] 修复多entry下html入口问题
+
 ## 2.0.0
+
+- [feat] 工程命令由 `ice` 变更为 `ice-scripts`，废弃 `--project-type`、`--sourcemap`、`--inject-babel`、`--debug` 和 `--hash` 参数
+- [feat] 将 `ice.config.js` 作为项目的配置文件，废弃 `package.json` 中的 `buildConfig`、`themeConfig`
+- [feat] 支持通过插件机制扩展工程能力
+
 
 ## 1.10.1
 
