@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.6
+
+- [fix] 修复 log 函数 undefined 的问题
+
 ## 0.1.5
 
 - [fix] 兼容 options 为空的情况
