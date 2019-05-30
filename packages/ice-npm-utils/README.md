@@ -44,6 +44,14 @@ Default return `npm`
 
 Return `Promise.resolve(isInternal)`
 
+### getNpmTarball(name, version)
+
+Return `Promise.resolve(tarball)`
+
+### getAndExtractTarball(destDir, tarball, progressFunc: () => {})
+
+Return `Promise.resolve(allFiles: string[])`
+
 ## Custom
 
 ### Custom Npm Registry

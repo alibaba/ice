@@ -1,8 +1,87 @@
-const axios = require('axios');
+const request = require('request');
 const semver = require('semver');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const path = require('path');
+const progress = require('request-progress');
+const zlib = require('zlib');
+const tar = require('tar');
 const log = require('./log');
 
 const cacheData = {};
+
+/**
+ * 获取指定 npm 包版本的 tarball
+ */
+function getNpmTarball(npm, version) {
+  return new Promise((resolve, reject) => {
+    getNpmInfo(npm).then((json) => {
+      if (!semver.valid(version)) {
+        version = json['dist-tags'].latest;
+      }
+      if (
+        semver.valid(version) &&
+        json.versions &&
+        json.versions[version] &&
+        json.versions[version].dist
+      ) {
+        resolve(json.versions[version].dist.tarball);
+      } else {
+        reject(new Error(`${name}@${version} 尚未发布`));
+      }
+    }).catch(reject);
+  });
+}
+
+/**
+ * 获取 tar 并将其解压到指定的文件夹
+ */
+function getAndExtractTarball(destDir, tarball, progressFunc: () => {}) {
+  return new Promise((resolve, reject) => {
+    const allFiles = [];
+    const allWriteStream = [];
+    const directoryCollector = [];
+
+    progress(
+      request({
+        url: tarball,
+        timeout: 10000,
+      })
+    )
+      .on('progress', progressFunc)
+      .on('error', reject)
+      .pipe(zlib.Unzip())
+      .pipe(new tar.Parse())
+      .on('entry', (entry) => {
+        const realPath = entry.path.replace(/^package\//, '');
+        const destPath = path.join(destDir, realPath);
+
+        const needCreateDir = path.dirname(destPath);
+        if (!directoryCollector.includes(needCreateDir)) {
+          directoryCollector.push(needCreateDir);
+          mkdirp.sync(path.dirname(destPath));
+        }
+
+        allFiles.push(destPath);
+        allWriteStream.push(new Promise((streamResolve) => {
+          entry
+            .pipe(fs.createWriteStream(destPath))
+            .on('finish', () => streamResolve());
+        }));
+      })
+      .on('end', () => {
+        if (progressFunc) {
+          progressFunc({
+            percent: 1,
+          });
+        }
+
+        Promise.all(allWriteStream)
+          .then(() => resolve(allFiles))
+          .catch(reject);
+      });
+  });
+}
 
 /**
  * 从 register 获取 npm 的信息
@@ -16,7 +95,7 @@ function getNpmInfo(npm) {
   const url = `${register}/${npm}`;
   log.verbose('getNpmInfo start', url);
 
-  return axios.get(url).then((response) => {
+  return request.get(url).then((response) => {
     const body = response.data;
 
     if (body.error) {
@@ -127,7 +206,7 @@ function getNpmClient(npmName = '') {
 }
 
 function checkAliInternal() {
-  return axios({
+  return request({
     url: 'https://ice.alibaba-inc.com/check.node',
     timeout: 3 * 1000,
   }).catch((err) => {
@@ -147,4 +226,6 @@ module.exports = {
   isAliNpm,
   getNpmInfo,
   checkAliInternal,
+  getNpmTarball,
+  getAndExtractTarball,
 };
