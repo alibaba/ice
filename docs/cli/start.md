@@ -7,12 +7,13 @@ order: 2
 
 ## 创建项目
 
-> 推荐通过 iceworks GUI 工具进行初始化
+> 也可通过 iceworks GUI 工具进行初始化
 
 安装 `iceworks` 依赖：
 
 ```bash
 $ npm install iceworks -g
+$ iceworks --help
 ```
 
 创建一个空目录：
@@ -25,6 +26,12 @@ $ mkdir iceapp && cd iceapp
 
 ```bash
 $ iceworks init
+# 或者根据指定模板创建项目
+$ iceworks init @icedesign/pro-scaffold
+
+# 向项目里添加区块
+$ cd src/components/
+$ iceworks add @icedesign/user-landing-block
 ```
 
 完成项目初始化后既可以开始开始项目调试开发和项目构建。

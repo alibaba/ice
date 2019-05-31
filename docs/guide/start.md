@@ -75,7 +75,7 @@ iceworks 是基于 Electron 开发的桌面端应用，因此首先需要在 [�
 
 ```bash
 $ npm i -g iceworks
-$ iceworks -V
+$ iceworks --help
 ```
 
 ### 2. 初始化项目
@@ -85,7 +85,7 @@ $ mkdir ice-project
 $ cd ice-project
 $ iceworks init
 # 或者基于指定模板创建项目
-$ ice init -t {{npmName}}
+$ iceworks init <npmName>
 ```
 
 执行命令后根据需求选择对应模板即可完成项目的创建
