@@ -5,7 +5,26 @@ order: 3
 
 本文介绍使用 ice-scripts@1.0 的项目如何迁移到 2.0 版本。
 
-## 升级 ice-scripts
+## 工具迁移
+
+安装 `ice-migrate`：
+
+```bash
+$ npm i ice-migrate -g
+```
+
+进入项目目录，并执行迁移命令：
+
+```bash
+$ cd ice-project
+$ ice-migrate
+```
+
+完成迁移后，执行 `npm install` 重新安装依赖。
+
+## 手动迁移
+
+### 升级 ice-scripts
 
 将 package.json 中的 ice-scripts 依赖升级到 `^2.0.0`：
 
@@ -19,7 +38,7 @@ $ npm i --save ice-scripts@2
 $ npm rm -g ice-scripts
 ```
 
-## cli 命令变更
+### cli 命令变更
 
 ```diff
 -"start": "ice dev",
@@ -29,11 +48,11 @@ $ npm rm -g ice-scripts
 +"build": "ice-scripts build",
 ```
 
-## 构建配置迁移
+### 构建配置迁移
 
 2.0 版本的常用构建配置项统一收敛到 `ice.config.js` 文件中，原有 `package.json` 中的 `bulidConfig` 和 `themeConfig` 字段废弃。
 
-### 基础配置迁移
+#### 基础配置迁移
 
 `ice.config.js` 完整支持 `buildConfig` 基础配置字段：
 
@@ -77,7 +96,7 @@ module.exports = {
 }
 ```
 
-### babelPluginImportConfig
+#### babelPluginImportConfig
 
 ```json
 {
@@ -104,7 +123,7 @@ module.exports = {
 
 更多细节，参考[插件配置](/docs/cli/plugin-list/antd.md)
 
-### Fusion 组件配置
+#### Fusion 组件配置
 
 包括：`buildConfig.uniteBaseComponent`, `buildConfig.theme`, `themeConfig`：
 
@@ -139,7 +158,7 @@ module.exports = {
 
 更多细节，参考[插件配置](/docs/cli/plugin-list/fusion.md)
 
-### css 中的网络资源本地化
+#### css 中的网络资源本地化
 
 ```json
 {
@@ -162,17 +181,17 @@ module.exports = {
 
 更多细节，参考[插件配置](/docs/cli/plugin-list/local.md)
 
-## 命令行参数迁移
+### 命令行参数迁移
 
-### --project-type
-
-已废弃，不再支持
-
-### --sourcemap
+#### --project-type
 
 已废弃，不再支持
 
-### --inject-babel
+#### --sourcemap
+
+已废弃，不再支持
+
+#### --inject-babel
 
 配置 `ice.config.js` 中的 `injectBabel`
 
@@ -184,7 +203,7 @@ module.exports = {
 }
 ```
 
-### --debug
+#### --debug
 
 配置 `ice.config.js` 中的 `minify`
 
@@ -194,7 +213,7 @@ module.exports = {
 }
 ```
 
-### --hash
+#### --hash
 
 配置 `ice.config.js` 中的 `hash`
 
@@ -204,6 +223,6 @@ module.exports = {
 }
 ```
 
-## .webpackrc.js 迁移
+### .webpackrc.js 迁移
 
 ice-scripts@2.0 版本通过 `webpack-chain` 形式管理自定义 webpack 配置，因此原先在 `.webpackrc.js` 里有新增 webpack loader/plugin 的情况则需要切换到 webpack-chain 的写法，具体请参考[自定义 webpack 配置](/docs/cli/config/custom-webpack.md)。
