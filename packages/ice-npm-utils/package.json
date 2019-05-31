@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "jest": "^24.5.0",
-    "jest-extended": "^0.11.1"
+    "jest-extended": "^0.11.1",
+    "rimraf": "^2.6.3"
   }
 }
