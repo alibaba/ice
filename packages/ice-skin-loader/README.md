@@ -18,9 +18,10 @@
     themeFile: path.join(appName, `variables.scss`),
     themeConfig: {
       nextPrefix: 'nextfd-',
-      'primary-color': 'green',
-      'secondary-color': 'green',
-      'icon-font-path': '@xxxx'
+      primaryColor: 'green',
+      secondaryColor: 'green',
+      // 原始 scss 变量
+      'font-size-body-1': '14px'
     }
   }
 };

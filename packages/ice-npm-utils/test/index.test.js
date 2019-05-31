@@ -6,7 +6,10 @@ const {
   getNpmInfo,
   getNpmClient,
   checkAliInternal,
+  getNpmTarball,
+  getAndExtractTarball,
 } = require('../lib/index');
+const path = require('path');
 
 jest.setTimeout(10 * 1000);
 
@@ -78,7 +81,7 @@ test('getNpmLatestSemverVersion', () => {
 
 test('getNpmInfo 404 error case', () => {
   return getNpmInfo('not-exis-npm-error').catch((err) => {
-    expect(err.message).toMatch('Request failed');
+    expect(err.statusCode).toBe(404);
   });
 });
 
@@ -110,3 +113,22 @@ test('checkAliInternal', () => {
     expect(internal).toBeBoolean();
   });
 });
+
+test('getNpmTarball', () => {
+  return getNpmTarball('ice-npm-utils', '1.0.0').then((tarball) => {
+    expect(tarball).toBe('https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz');
+  });
+});
+
+test('getNpmTarball should get latest version', () => {
+  return getNpmTarball('http').then((tarball) => {
+    expect(tarball).toBe('https://registry.npm.taobao.org/http/download/http-0.0.0.tgz');
+  });
+});
+
+test('getNpmTarball should get latest version', () => {
+  return getAndExtractTarball(path.join(__dirname, '../tarball'), 'https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz').then((files) => {
+    expect(files.length > 0).toBe(true);
+  });
+});
+

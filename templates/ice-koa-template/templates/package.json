@@ -1,6 +1,6 @@
 {
   "name": "@icedesign/ice-koa-template",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "server/index.js",
   "scripts": {
@@ -25,7 +25,6 @@
   },
   "license": "MIT",
   "publishConfig": {
-    "registry": "http://registry.npmjs.com",
     "access": "public"
   },
   "repository": {

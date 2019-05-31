@@ -1,4 +1,4 @@
-const request = require('request');
+const request = require('request-promise');
 const semver = require('semver');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
@@ -14,33 +14,32 @@ const cacheData = {};
  * 获取指定 npm 包版本的 tarball
  */
 function getNpmTarball(npm, version) {
-  return new Promise((resolve, reject) => {
-    getNpmInfo(npm).then((json) => {
-      if (!semver.valid(version)) {
-        version = json['dist-tags'].latest;
-      }
-      if (
-        semver.valid(version) &&
-        json.versions &&
-        json.versions[version] &&
-        json.versions[version].dist
-      ) {
-        resolve(json.versions[version].dist.tarball);
-      } else {
-        reject(new Error(`${name}@${version} 尚未发布`));
-      }
-    }).catch(reject);
+  return getNpmInfo(npm).then((json) => {
+    if (!semver.valid(version)) {
+      version = json['dist-tags'].latest;
+    }
+
+    if (
+      semver.valid(version) &&
+      json.versions &&
+      json.versions[version] &&
+      json.versions[version].dist
+    ) {
+      return json.versions[version].dist.tarball;
+    }
+
+    return Promise.reject(new Error(`${name}@${version} 尚未发布`));
   });
 }
 
 /**
  * 获取 tar 并将其解压到指定的文件夹
  */
-function getAndExtractTarball(destDir, tarball, progressFunc: () => {}) {
+function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
   return new Promise((resolve, reject) => {
     const allFiles = [];
     const allWriteStream = [];
-    const directoryCollector = [];
+    const dirCollector = [];
 
     progress(
       request({
@@ -56,9 +55,9 @@ function getAndExtractTarball(destDir, tarball, progressFunc: () => {}) {
         const realPath = entry.path.replace(/^package\//, '');
         const destPath = path.join(destDir, realPath);
 
-        const needCreateDir = path.dirname(destPath);
-        if (!directoryCollector.includes(needCreateDir)) {
-          directoryCollector.push(needCreateDir);
+        const dirToBeCreate = path.dirname(destPath);
+        if (!dirCollector.includes(dirToBeCreate)) {
+          dirCollector.push(dirToBeCreate);
           mkdirp.sync(path.dirname(destPath));
         }
 
@@ -96,14 +95,15 @@ function getNpmInfo(npm) {
   log.verbose('getNpmInfo start', url);
 
   return request.get(url).then((response) => {
-    const body = response.data;
+    log.verbose('getNpmInfo success', url);
 
-    if (body.error) {
-      log.verbose('getNpmInfo error', body.error);
-      return Promise.reject(new Error(body.error));
+    let body;
+    try {
+      body = JSON.parse(response);
+    } catch (error) {
+      return Promise.reject(error);
     }
 
-    log.verbose('getNpmInfo success', url);
     cacheData[npm] = body;
     return body;
   });
