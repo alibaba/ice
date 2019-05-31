@@ -1,4 +1,4 @@
-import request from '../../../../lib/request';
+import * as rp from 'request-promise-native';
 import storage from '../../../../lib/storage';
 
 const isArray = Array.isArray;
@@ -10,10 +10,17 @@ export default (app) => {
     }
 
     async getOne(ctx) {
-      const { args } = ctx;
-      const data = await request(args.url);
+      const { args, logger } = ctx;
 
-      return formatData(data);
+      logger.info(`get material by url, url: ${args.url}`);
+
+      try {
+        const data = await request(args.url);
+        return formatData(data);
+      } catch (error) {
+        logger.error('request error', error);
+        return {}
+      }
     }
   };
 };
@@ -69,4 +76,23 @@ function formatMaterialsByCatrgory(data: any[]) {
   }
 
   return materials;
+};
+
+// http request function
+const request = async (uri: string, options = {}) => {
+  options = Object.assign(
+    {},
+    {
+      uri,
+      json: true,
+      rejectUnauthorized: false,
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
+      timeout: 5000,
+    },
+    options
+  );
+
+  return await rp(options);
 };
