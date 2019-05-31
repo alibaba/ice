@@ -1,3 +1,6 @@
+const path = require('path');
+const { tmpdir } = require('os');
+const rimraf = require('rimraf');
 const {
   getNpmRegistry,
   getUnpkgHost,
@@ -9,7 +12,6 @@ const {
   getNpmTarball,
   getAndExtractTarball,
 } = require('../lib/index');
-const path = require('path');
 
 jest.setTimeout(10 * 1000);
 
@@ -109,7 +111,6 @@ test('getNpmClient', () => {
 
 test('checkAliInternal', () => {
   return checkAliInternal().then((internal) => {
-    console.log('checkAliInternal', internal);
     expect(internal).toBeBoolean();
   });
 });
@@ -126,9 +127,15 @@ test('getNpmTarball should get latest version', () => {
   });
 });
 
-test('getNpmTarball should get latest version', () => {
-  return getAndExtractTarball(path.join(__dirname, '../tarball'), 'https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz').then((files) => {
-    expect(files.length > 0).toBe(true);
-  });
+test('getAndExtractTarball', () => {
+  const tempDir = path.resolve(tmpdir(), 'ice_npm_utils_tarball');
+  return getAndExtractTarball(tempDir, 'https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz')
+    .then((files) => {
+      rimraf.sync(tempDir);
+      expect(files.length > 0).toBe(true);
+    })
+    .catch(() => {
+      rimraf.sync(tempDir);
+    });
 });
 
