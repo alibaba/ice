@@ -47,7 +47,7 @@ module.exports = async function addComponent(cwd, opt = {}) {
   }
 };
 
-function defaultQuestion(prefix) {
+function defaultQuestion(npmPrefix) {
   return [
     {
       type: 'confirm',
@@ -63,7 +63,7 @@ function defaultQuestion(prefix) {
         if (!/^[A-Z][a-zA-Z0-9]*$/.test(value)) {
           return 'Name must be a Upper Camel Case word, e.g. ExampleComponent.';
         }
-        const npmName = generateNpmNameByPrefix(value, prefix);
+        const npmName = generateNpmNameByPrefix(value, npmPrefix);
         if (!validateName(npmName).validForNewPackages) {
           return `this component name(${npmName}) has already exist. please retry`;
         }

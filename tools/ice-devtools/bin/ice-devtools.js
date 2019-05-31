@@ -59,31 +59,22 @@ function exec() {
    */
   program.version(packageJson.version).usage('[command] [options]');
 
-  Object.entries(COMMANDS).forEach((entry) => {
+  Object.entries(COMMANDS).forEach(([cmdType, { desc, options }]) => {
     let command = program
-      .command(entry[0])
-      .description(chalk.green(entry[1].desc));
+      .command(cmdType)
+      .description(chalk.green(desc));
 
-    if (entry[1].options) {
-      entry[1].options.forEach((opt) => {
-        command = command.option(opt.name, opt.desc);
+    if (options) {
+      options.forEach(({ name, desc: _desc }) => {
+        command = command.option(name, _desc);
       });
     }
 
-    command.action(function () {
-      const cmdType = entry[0];
-
+    command.action((...args) => {
       optionsAttachToEnv(command);
-
-      /* eslint-disable-next-line import/no-dynamic-require */
-      const fn = require(`../lib/${cmdType}`);
-
-      /* eslint-disable-next-line prefer-rest-params */
-      const args = [cwd].concat(Array.prototype.slice.call(arguments));
-
       goldlog(cmdType, {});
-
-      fn.apply(global, args);
+      /* eslint-disable-next-line import/no-dynamic-require */
+      require(`../lib/${cmdType}`).apply(global, [cwd, ...args]);
     });
   });
 

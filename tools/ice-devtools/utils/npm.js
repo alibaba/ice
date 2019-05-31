@@ -5,6 +5,7 @@ const { getNpmInfo } = require('ice-npm-utils');
 /**
  * 获取 npm 包名
  * @param {string} name
+ * @param {string} npmPrefix
  */
 function generateNpmNameByPrefix(name, npmPrefix) {
   return npmPrefix + kebabCase(name).replace(/^-/, '');

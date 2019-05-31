@@ -14,14 +14,14 @@ const meta = require('./meta');
  */
 module.exports = async function addScaffold(cwd, opt = {}) {
   const {
-    npmPrefix,
+    scope,
     templatePath: src,
     standalone,
   } = opt;
 
-  const questions = defaultQuestion(npmPrefix);
+  const questions = defaultQuestion(scope);
   const { name } = await inquirer.prompt(questions);
-  const npmName = generateNpmNameByPrefix(name, npmPrefix);
+  const npmName = generateNpmNameByPrefix(name, scope);
   const dest = standalone ? cwd : path.join(cwd, 'scaffolds', name);
 
   try {
@@ -39,7 +39,7 @@ module.exports = async function addScaffold(cwd, opt = {}) {
   }
 };
 
-function defaultQuestion(npmPrefix) {
+function defaultQuestion(scope) {
   return [
     {
       type: 'input',
@@ -50,7 +50,7 @@ function defaultQuestion(npmPrefix) {
         if (!value) {
           return 'scaffold name cannot be empty';
         }
-        const name = generateNpmNameByPrefix(value, npmPrefix);
+        const name = generateNpmNameByPrefix(value, scope);
         if (!validateName(name).validForNewPackages) {
           return `this scaffold name(${name}) has already exist. please retry`;
         }

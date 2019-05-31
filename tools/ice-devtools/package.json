@@ -27,7 +27,6 @@
     "cross-spawn": "^6.0.5",
     "debug": "^2.6.3",
     "decamelize": "^3.2.0",
-    "easyfile": "^0.2.0",
     "ejs": "^2.6.1",
     "fs-extra": "^8.0.1",
     "handlebars": "^4.0.12",
