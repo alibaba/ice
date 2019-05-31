@@ -131,7 +131,7 @@ const Task = ({ history, intl }) => {
 
 Task.propTypes = {
   history: PropTypes.object.isRequired,
-  intl: PropTypes.object.isRequired
+  intl: PropTypes.object.isRequired,
 };
 
 export default injectIntl(withErrorBoundary(Task));
