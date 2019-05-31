@@ -1,0 +1,21 @@
+.taskCard {
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    margin: 20px 0;
+    flex: auto 1 1;
+  }
+}
+
+// TODO: should use :local，but ice-scripts not support
+:global {
+  .next-card-body {
+    flex: 1;
+  }
+  .next-card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}

@@ -1,3 +1,4 @@
+
 const getTarball = require('./getTarball');
 const extractTarball = require('./extractTarball');
 
@@ -7,3 +8,4 @@ module.exports = ({ template, cwd }) => {
       return extractTarball(url, cwd);
     });
 };
+

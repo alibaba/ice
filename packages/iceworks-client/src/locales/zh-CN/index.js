@@ -4,14 +4,19 @@ export default {
   'iceworks.global.disconnect': '断开连接',
   'iceworks.global.button.yes': '确定',
   'iceworks.global.button.no': '取消',
+  'iceworks.global.fallback.title': '加载错误',
 
   // menu
   'iceworks.menu.project': '项目',
-  'iceworks.menu.work': '工程',
-  'iceworks.menu.work.dev': 'dev',
-  'iceworks.menu.work.build': 'build',
-  'iceworks.menu.work.lint': 'lint',
-  'iceworks.menu.work.configuration': 'configuration',
+  'iceworks.menu.task': '工程',
+  'iceworks.menu.task.dev': 'dev',
+  'iceworks.menu.task.dev.desc': '启动服务(用于开发环境)',
+  'iceworks.menu.task.build': 'build',
+  'iceworks.menu.task.build.desc': '构建项目(用于生产环境)',
+  'iceworks.menu.task.lint': 'lint',
+  'iceworks.menu.task.lint.desc': '语法检查(用于开发环境)',
+  'iceworks.menu.task.configuration': 'configuration',
+  'iceworks.menu.task.configuration.desc': '自定义项目配置',
   'iceworks.menu.material': '物料',
 
   // setting
@@ -27,9 +32,11 @@ export default {
   'iceworks.project.submenu.opts.createProject': '创建项目',
 
   // project panel
+  'iceworks.project.panel.page.title': '页面管理',
+  'iceworks.project.panel.fallback.title': '面板',
+  'iceworks.project.panel.fallback.desc': '面板加载出错',
 
   // project page
-  'iceworks.project.panel.page.title': '页面管理',
   'iceworks.project.panel.page.create.title': '创建页面',
   'iceworks.project.panel.page.create.progress.start': '开始创建页面...',
   'iceworks.project.panel.page.delete.title': '删除页面',
@@ -65,9 +72,32 @@ export default {
   'iceworks.project.panel.git.title': 'Git',
   'iceworks.project.panel.oss.title': 'OSS',
 
-  // work
-  'iceworks.work.title': '工程管理',
+  // task
+  'iceworks.task.title': '工程管理',
+  'iceworks.task.dev.title': '启动服务',
+  'iceworks.task.dev.desc': '编译和热更新(用于开发环境)',
+  'iceworks.task.dev.start': '运行',
+  'iceworks.task.dev.stop': '停止',
+  'iceworks.task.dev.setting': '设置',
+  'iceworks.task.build.title': '构建项目',
+  'iceworks.task.build.desc': '编译并压缩(用于生产环境)',
+  'iceworks.task.lint.title': '检查语法',
+  'iceworks.task.lint.desc': '检查代码规范并进行修复',
 
   // setting
   'iceworks.setting.title': '设置',
+
+  // material
+  'iceworks.material.title': '物料管理',
+  'iceworks.material.scaffold': '模版',
+  'iceworks.material.block': '区块',
+  'iceworks.material.component': '组件',
+  'iceworks.material.add': '添加物料',
+  'iceworks.material.all': '全部',
+  'iceworks.material.preview': '效果预览',
+  'iceworks.material.source': '查看源码',
+  'iceworks.material.download': '使用该模版',
+  'iceworks.material.doc': '文档',
+  'iceworks.material.install': '安装',
+  'iceworks.material.noDesc': '暂无描述',
 };

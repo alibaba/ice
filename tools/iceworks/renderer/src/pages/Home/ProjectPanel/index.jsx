@@ -19,6 +19,8 @@ import ServerUrl from './ServerUrl';
 import services from '../../../services';
 import StartPanel from '../../../components/StartPanel';
 
+import './index.scss';
+
 const ProjectDashboard = loadable({
   loader: () => import('../ProjectDashboard'),
   loading: () => (
@@ -40,8 +42,6 @@ const ProjectDashboard = loadable({
 });
 
 const { editors, shells, folder, interaction, createTouchBar } = services;
-
-import './index.scss';
 
 @inject('projects', 'newpage', 'switcher', 'installer')
 @observer
@@ -271,32 +271,38 @@ class Project extends Component {
           </div>
           <div className="external">
             <ExtraButton
-              placement={'bottom'}
-              tipText={'在编辑器中打开'}
+              placement="bottom"
+              tipText="在编辑器中打开"
               onClick={this.handleOpenEditor}
             >
-              <Icon size="small" type="code" /> 编辑器
+              <Icon size="small" type="code" />
+              {' '}
+编辑器
             </ExtraButton>
             <ExtraButton
-              placement={'bottom'}
-              tipText={'在终端中打开'}
+              placement="bottom"
+              tipText="在终端中打开"
               onClick={this.handleOpenTerminal}
             >
-              <Icon size="small" type="terminal" /> 终端
+              <Icon size="small" type="terminal" />
+              {' '}
+终端
             </ExtraButton>
             <ExtraButton
-              tipText={'在文件夹中打开'}
+              tipText="在文件夹中打开"
               onClick={this.handleOpenFolder}
             >
-              <Icon size="small" type="folderopen" /> 文件夹
+              <Icon size="small" type="folderopen" />
+              {' '}
+文件夹
             </ExtraButton>
           </div>
         </div>
         <div className="project-overview">
           <div className="version">
             项目版本号：
-            {(currentProject.pkgData && currentProject.pkgData.version) ||
-              '-.-.-'}
+            {(currentProject.pkgData && currentProject.pkgData.version)
+              || '-.-.-'}
           </div>
           <div className="server">
             <ServerUrl url={currentProject.serverUrl} />
@@ -308,7 +314,7 @@ class Project extends Component {
             />
             <BuildStatus status={currentProject.statusBuild} />
             {currentProject.isDependenciesInstalling && (
-              <span className={'project-status project-status-working'}>
+              <span className="project-status project-status-working">
                 依赖安装中
               </span>
             )}
@@ -316,47 +322,55 @@ class Project extends Component {
           <div className="extra-action">
             {currentProject.isUnavailable && (
               <ExtraButton
-                placement={'bottom'}
-                tipText={
-                  '适配 Iceworks 需要遵循一定的目录规范，以及信息描述，点击查看详细适配说明，适配完成后可刷新项目'
-                }
+                placement="bottom"
+                tipText="适配 Iceworks 需要遵循一定的目录规范，以及信息描述，点击查看详细适配说明，适配完成后可刷新项目"
                 onClick={this.handleRepairProject}
               >
-                <Icon size="small" type="wrencha" /> 查看适配教程
+                <Icon size="small" type="wrencha" />
+                {' '}
+查看适配教程
               </ExtraButton>
             )}
             {currentProject.isUnavailable && (
               <ExtraButton
-                placement={'bottom'}
-                tipText={'更新项目状态'}
+                placement="bottom"
+                tipText="更新项目状态"
                 onClick={this.handleReloadProject}
               >
-                <Icon size="small" type="reload" /> 刷新项目
+                <Icon size="small" type="reload" />
+                {' '}
+刷新项目
               </ExtraButton>
             )}
             <ExtraButton
               disabled={!currentProject.exists}
               active={currentProject.terminalVisible}
-              placement={'bottom'}
-              tipText={'切换终端日志面板，查看项目运行，构建等日志'}
+              placement="bottom"
+              tipText="切换终端日志面板，查看项目运行，构建等日志"
               onClick={this.handleToggleTerminal}
             >
-              <Icon size="small" type="history" /> 运行日志
+              <Icon size="small" type="history" />
+              {' '}
+运行日志
             </ExtraButton>
             <ExtraButton
-              placement={'bottom'}
+              placement="bottom"
               disabled={currentProject.actionDisabled}
-              tipText={'初始化项目依赖，或重新安装所有依赖'}
+              tipText="初始化项目依赖，或重新安装所有依赖"
               onClick={this.handleInstallProject}
             >
-              <Icon size="small" type="package_org" /> 重装依赖
+              <Icon size="small" type="package_org" />
+              {' '}
+重装依赖
             </ExtraButton>
             <ExtraButton
               disabled={currentProject.actionDisabled}
-              tipText={'根据项目需要，自定义安装依赖'}
+              tipText="根据项目需要，自定义安装依赖"
               onClick={this.handleNpminstallOpen}
             >
-              <Icon size="small" type="package" /> 添加依赖
+              <Icon size="small" type="package" />
+              {' '}
+添加依赖
             </ExtraButton>
           </div>
         </div>

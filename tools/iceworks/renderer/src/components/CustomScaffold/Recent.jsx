@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Button } from '@icedesign/base';
 
 import Preview from '../Scaffold/Preview';
-import ColorBlock from '../ColorBlock/';
+import ColorBlock from '../ColorBlock';
 
 @inject('customScaffold', 'scaffold')
 @observer
@@ -24,8 +24,8 @@ class Recent extends Component {
     const { customScaffold } = this.props;
     const scaffoldConfigStores = customScaffold.scaffoldConfigStores;
     if (
-      Array.isArray(scaffoldConfigStores) &&
-      scaffoldConfigStores.length > 0
+      Array.isArray(scaffoldConfigStores)
+      && scaffoldConfigStores.length > 0
     ) {
       return scaffoldConfigStores.map((scaffoldConfig, index) => {
         const { layoutConfig, scaffold } = scaffoldConfig;

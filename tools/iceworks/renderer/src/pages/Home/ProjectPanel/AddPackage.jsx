@@ -19,8 +19,8 @@ class AddPackage extends Component {
    */
   addDepsConfirmNotice = (newDeps = [], projectDeps = {}) => {
     const { installer } = this.props;
-    let newDepsArr = [];
-    let projectDepsArr = [];
+    const newDepsArr = [];
+    const projectDepsArr = [];
     newDeps.forEach((newDep) => {
       Object.keys(projectDeps).forEach((projectDep) => {
         if (newDep.name === projectDep) {
@@ -45,8 +45,14 @@ class AddPackage extends Component {
           title: '提示',
           content: (
             <div>
-              新添加的依赖 {newDepsArr.join(',')} 主版本号与项目依赖
-              {projectDepsArr.join(',')} 主版本号发生改变可能存在不兼容的 API
+              新添加的依赖
+              {' '}
+              {newDepsArr.join(',')}
+              {' '}
+主版本号与项目依赖
+              {projectDepsArr.join(',')}
+              {' '}
+主版本号发生改变可能存在不兼容的 API
               修改，确定要继续吗
             </div>
           ),
@@ -86,8 +92,7 @@ class AddPackage extends Component {
     }
 
     // 新增的依赖是否在项目中
-    const existDeps = newDeps.filter((dep) =>
-      Object.keys(projectDeps).includes(dep)
+    const existDeps = newDeps.filter((dep) => Object.keys(projectDeps).includes(dep)
     );
     if (!existDeps.length) {
       return this.startNpmInstall();
@@ -95,10 +100,8 @@ class AddPackage extends Component {
 
     // 获取当前项目存在依赖的最新版本，根据最新版本进行提示
     const registryUrl = settings.get('registry') || 'http://registry.npmjs.org';
-    const getLatestVersion = existDeps.map((dep) =>
-      latestVersion(dep, { registryUrl }).then((v) =>
-        Promise.resolve({ name: dep, version: v })
-      )
+    const getLatestVersion = existDeps.map((dep) => latestVersion(dep, { registryUrl }).then((v) => Promise.resolve({ name: dep, version: v })
+    )
     );
     Promise.all(getLatestVersion)
       .then((result) => {
@@ -126,7 +129,11 @@ class AddPackage extends Component {
             title: '安装依赖失败',
             content: (
               <div>
-                请确认 {dependencies.join(' ')} 依赖存在，或网络连接正常，
+                请确认
+                {' '}
+                {dependencies.join(' ')}
+                {' '}
+依赖存在，或网络连接正常，
                 <br />
                 可展开【运行日志】查看详细反馈信息。
               </div>
@@ -180,7 +187,7 @@ class AddPackage extends Component {
         title="添加依赖"
         visible={this.props.installer.visible}
         onClose={this.handleNpminstallClose}
-        footer={
+        footer={(
           <div
             style={{
               display: 'flex',
@@ -221,8 +228,8 @@ class AddPackage extends Component {
               size="small"
               type="primary"
               disabled={
-                this.props.installer.deps.trim() === '' ||
-                this.props.installer.installing
+                this.props.installer.deps.trim() === ''
+                || this.props.installer.installing
               }
               onClick={this.handleNpminstallOk}
               loading={this.props.installer.installing}
@@ -230,11 +237,11 @@ class AddPackage extends Component {
               {this.props.installer.installing ? '正在安装...' : '确定'}
             </Button>
           </div>
-        }
+)}
       >
         <Input
           onChange={this.handleDepsChange}
-          placeholder={'请输入 npm 包名以及版本号，例如：lodash@latest'}
+          placeholder="请输入 npm 包名以及版本号，例如：lodash@latest"
           style={{ width: 300 }}
           multiple
         />

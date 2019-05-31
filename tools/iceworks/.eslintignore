@@ -14,3 +14,12 @@ coverage/
 # 忽略文件
 **/*-min.js
 **/*.min.js
+**/*.scss
+**/*.json
+**/*.svg
+**/*.md
+**/*.ejs
+app/static/
+renderer/src/static/
+renderer/src/datacenter/
+renderer/src/components/Icon/
