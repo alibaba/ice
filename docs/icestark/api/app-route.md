@@ -24,20 +24,26 @@ order: 6
 - 类型：`string`
 - 默认值：`-`
 
+## basename
+
+- 子应用运行时，透传给 `React Router` 的 `basename`，选填，如果不填，默认会从 `path` 中获取
+- 类型：`string`
+- 默认值：`-`
+
 ## exact
 
-- 是否完全匹配，参考 `React Router`
+- 是否完全匹配，参考 `React Router`，选填
 - 类型 `boolean`
 - 默认值：`false`
 
 ## strict
 
-- 参考 `React Router`
+- 参考 `React Router`，选填
 - 类型 `boolean`
 - 默认值：`false`
 
 ## sensitive
 
-- 参考 `React Router`
+- 参考 `React Router`，选填
 - 类型 `boolean`
 - 默认值：`false`
