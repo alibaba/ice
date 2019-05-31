@@ -57,7 +57,7 @@ program
     console.log('Examples:');
     console.log('  $ iceworks add block');
     console.log('  $ iceworks add block -t @icedesign/user-landing-block');
-    console.log('  $ iceworks add block -t @icedesign/user-landing-block -d CustomBlock');
+    console.log('  $ iceworks add block -t @icedesign/user-landing-block -n CustomBlock');
   })
   .action((type, cmd) => {
     require('../command/addBlock')(cleanArgs(cmd));
