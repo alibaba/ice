@@ -2,10 +2,10 @@
 const getTarball = require('./getTarball');
 const extractTarball = require('./extractTarball');
 
-module.exports = ({ template, cwd }) => {
-  return getTarball(template)
+module.exports = ({ npmName, destDir }) => {
+  return getTarball(npmName)
     .then((url) => {
-      return extractTarball(url, cwd);
+      return extractTarball(url, destDir);
     });
 };
 

@@ -31,8 +31,36 @@ program
     '-t, --template <template>',
     'Specify the npm package name for the template'
   )
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  $ iceworks init');
+    console.log('  $ iceworks init -t @icedesign/lite-scaffold');
+  })
   .action((cmd) => {
     require('../command/init')(cleanArgs(cmd));
+  });
+
+program
+  .command('add [type]')
+  .description('add block to current directory')
+  .option(
+    '-t, --template <template>',
+    'Specify the npm package name of the block'
+  )
+  .option(
+    '-n, --name <name>',
+    'Specify the block directory name like CustomBlock'
+  )
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  $ iceworks add block');
+    console.log('  $ iceworks add block -t @icedesign/user-landing-block');
+    console.log('  $ iceworks add block -t @icedesign/user-landing-block -d CustomBlock');
+  })
+  .action((type, cmd) => {
+    require('../command/addBlock')(cleanArgs(cmd));
   });
 
 // add some useful info on help

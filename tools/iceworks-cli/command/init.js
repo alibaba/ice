@@ -4,7 +4,7 @@ const formatProject = require('../lib/formatProject');
 const log = require('../lib/log');
 const goldlog = require('../lib/glodlog');
 const checkEmpty = require('../lib/checkEmpty');
-const downloadTemplate = require('../lib/downloadTemplate');
+const downloadNpm = require('../lib/downloadNpm');
 const packageConfig = require('../package.json');
 
 module.exports = (...args) => {
@@ -29,7 +29,7 @@ async function init(options = {}) {
   goldlog('version', { version: packageConfig.version });
   goldlog('init', { template });
 
-  await downloadTemplate({ template, cwd });
+  await downloadNpm({ npmName: template, destDir: cwd });
 
   try {
     await formatProject(cwd);
