@@ -8,13 +8,14 @@ export default class CustomComponent extends Component {
   };
 
   static defaultProps = {
-    value: 'string data',
+    value: 'Hello ICE!',
   };
 
   render() {
+    const { value } = this.props;
     return (
       <div className={styles.block}>
-        {this.props.value}
+        {value}
       </div>
     );
   }
