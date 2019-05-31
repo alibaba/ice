@@ -129,9 +129,13 @@ test('getNpmTarball should get latest version', () => {
 
 test('getAndExtractTarball', () => {
   const tempDir = path.resolve(tmpdir(), 'ice_npm_utils_tarball');
-  return getAndExtractTarball(tempDir, 'https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz').then((files) => {
-    rimraf.sync(tempDir);
-    expect(files.length > 0).toBe(true);
-  });
+  return getAndExtractTarball(tempDir, 'https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-1.0.0.tgz')
+    .then((files) => {
+      rimraf.sync(tempDir);
+      expect(files.length > 0).toBe(true);
+    })
+    .catch(() => {
+      rimraf.sync(tempDir);
+    });
 });
 

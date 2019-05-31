@@ -6,6 +6,9 @@
   "scripts": {
     "test": "jest"
   },
+  "files": [
+    "lib"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {

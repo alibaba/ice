@@ -58,7 +58,7 @@ function getAndExtractTarball(destDir, tarball, progressFunc = () => {}) {
         const dirToBeCreate = path.dirname(destPath);
         if (!dirCollector.includes(dirToBeCreate)) {
           dirCollector.push(dirToBeCreate);
-          mkdirp.sync(path.dirname(destPath));
+          mkdirp.sync(dirToBeCreate);
         }
 
         allFiles.push(destPath);
