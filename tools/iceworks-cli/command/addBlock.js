@@ -1,7 +1,5 @@
-/**
- * 添加区块
- */
 const path = require('path');
+const { tmpdir } = require('os');
 const fse = require('fs-extra');
 const camelCase = require('camelcase');
 const downloadNpm = require('../lib/downloadNpm');
@@ -9,7 +7,7 @@ const log = require('../lib/log');
 
 module.exports = (options) => {
   const destDir = process.cwd();
-  const tempDir = path.resolve(destDir, '.iceworks_temp');
+  const tempDir = path.resolve(tmpdir(), 'iceworks_temp');
   options.destDir = destDir;
   options.tempDir = tempDir;
 
@@ -31,7 +29,7 @@ async function addBlock(options = {}) {
   let { name: blockDirName } = options;
 
   if (!template) {
-    // 添加空白区块
+    // add EmptyBlock
     const blockDirPath = path.resolve(destDir, blockDirName || 'EmptyBlock');
     const blockTemplatePath = path.resolve(__dirname, '../template/EmptyBlock');
 
@@ -50,7 +48,7 @@ async function addBlock(options = {}) {
       });
   }
 
-  // 下载 npm 区块
+  // download npm block
   let blockDirPath;
   return downloadNpm({
     npmName: template,
