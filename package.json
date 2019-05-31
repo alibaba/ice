@@ -1,6 +1,6 @@
 {
   "name": "ice-workspace",
-  "version": "1.0.0",
+  "version": "1.0.1-0",
   "scripts": {
     "upload-oss": "node scripts/upload-oss.js",
     "generate:docs": "node ./scripts/generate-docs-database",

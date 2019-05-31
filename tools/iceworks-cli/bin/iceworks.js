@@ -25,14 +25,37 @@ program.arguments('<command>').action((cmd) => {
 });
 
 program
-  .command('init')
+  .command('init [npmName]')
   .description('init project by template')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  $ iceworks init');
+    console.log('  $ iceworks init @icedesign/lite-scaffold');
+  })
+  .action((npmName, cmd) => {
+    const options = cleanArgs(cmd);
+    options.npmName = npmName;
+    require('../command/init')(options);
+  });
+
+program
+  .command('add <npmName>')
+  .description('add block to current directory')
   .option(
-    '-t, --template <template>',
-    'Specify the npm package name for the template'
+    '-n, --name <name>',
+    'Specify the block directory name like CustomBlock'
   )
-  .action((cmd) => {
-    require('../command/init')(cleanArgs(cmd));
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  $ iceworks add @icedesign/user-landing-block');
+    console.log('  $ iceworks add @icedesign/user-landing-block -n CustomBlock');
+  })
+  .action((npmName, cmd) => {
+    const options = cleanArgs(cmd);
+    options.npmName = npmName;
+    require('../command/addBlock')(options);
   });
 
 // add some useful info on help
