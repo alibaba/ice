@@ -54,19 +54,13 @@ const DEV_CONF = [
 const BUILD_CONF = [
   {
     label: '构建目录',
-    name: 'publicPath',
+    name: 'outputDir',
     description: '',
     link: '',
     componentName: 'Input',
-    componentProps: {},
-  },
-  {
-    label: '启用 hash',
-    name: 'hash',
-    description: '',
-    link: '',
-    componentName: 'Switch',
-    componentProps: {},
+    componentProps: {
+      placeholder: '/dist'
+    },
   },
   {
     label: '资源压缩',
@@ -74,7 +68,19 @@ const BUILD_CONF = [
     description: '',
     link: '',
     componentName: 'Switch',
-    componentProps: {},
+    componentProps: {
+      defaultChecked: true
+    },
+  },
+  {
+    label: '启用 hash',
+    name: 'hash',
+    description: '',
+    link: '',
+    componentName: 'Switch',
+    componentProps: {
+      defaultChecked: false,
+    },
   },
 ];
 

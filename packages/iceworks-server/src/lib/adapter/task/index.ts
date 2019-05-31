@@ -119,17 +119,15 @@ export default class Task extends EventEmitter implements ITaskModule {
   async getConf(args: ITaskParam) {
     const { command } = args;
     const projectPath = this.project.path;
-
-    if (command === 'dev') {
-      return getDevConf(projectPath);
-    }
-
-    if (command === 'build') {
-      return BUILD_CONF;
-    }
-
-    if (command === 'lint') {
-      return LINT_CONF;
+    switch (command) {
+      case 'dev':
+        return getDevConf(projectPath)
+      case 'build':
+       return getBuildConf(projectPath)
+      case 'lint':
+        return LINT_CONF
+      default:
+        return [];
     }
   }
 
@@ -140,42 +138,38 @@ export default class Task extends EventEmitter implements ITaskModule {
   async setConf(args: ITaskParam) {
     const { command } = args;
     const projectPath = this.project.path;
-
-    if (command === 'dev') {
-      return setDevConf(projectPath, args);
+    switch (command) {
+      case 'dev':
+        return setDevConf(projectPath, args);
+      case 'build':
+        return setBuildConf(projectPath, args);
+      default:
+        return false;
     }
   }
 }
 
 /**
  * get dev configuration
+ * merge the user configuration to return to the new configuration
  * @param projectPath
  */
 function getDevConf(projectPath: string) {
   const pkgContent = getPkg(projectPath).content;
   const devScriptContent = pkgContent.scripts.start;
   const devScriptArray = devScriptContent.split(' ');
+
   // read the start command parameter from package.json
-  const userDevConf = {};
+  const userConf = {};
   devScriptArray.forEach(item => {
     if (item.indexOf('--') !== -1) {
      const key = item.match(/--(\S*)=/)[1];
      const value = item.match(/=(\S*)$/)[1];
-     userDevConf[key] = value
+     userConf[key] = value
    }
  })
 
-  // merge the default configuration to return to the new configuration
-  return DEV_CONF.map((item) => {
-    if (Object.keys(userDevConf).includes(item.name)) {
-      if (item.componentName === "Switch") {
-        item.componentProps.defaultChecked = JSON.parse(userDevConf[item.name])
-      } else {
-        item.componentProps.placeholder = userDevConf[item.name].toString()
-      }
-    }
-    return item;
-  })
+  return mergeConf(DEV_CONF, userConf)
 }
 
 /**
@@ -206,6 +200,29 @@ async function setDevConf(projectPath: string, args: ITaskParam) {
 }
 
 /**
+ * set build configuration
+ * merge the user configuration to return to the new configuration
+ * @param projectPath
+ * @param args
+ */
+async function getBuildConf(projectPath: string) {
+  const confPath = path.join(projectPath, 'ice.config.js');
+  const userConfig = require(confPath);
+
+  return mergeConf(BUILD_CONF, userConfig)
+}
+
+
+/**
+ * set build configuration
+ * @param projectPath
+ * @param args
+ */
+async function setBuildConf(projectPath: string, args: ITaskParam) {
+  return false;
+}
+
+/**
  * get the package information of the current project
  * @param projectPath Current project path
  */
@@ -216,4 +233,22 @@ function getPkg(projectPath: string) {
     path: pkgPath,
     content: pkgContent
   };
+}
+
+/**
+ * merge user conf and default conf
+ * @param defaultConfread default config in ice.config.js
+ * @param userConf user config in ice.config.js
+ */
+function mergeConf(defaultConf: any, userConf: any) {
+ return defaultConf.map((item) => {
+    if (Object.keys(userConf).includes(item.name)) {
+      if (item.componentName === "Switch") {
+        item.componentProps.defaultChecked = JSON.parse(userConf[item.name]);
+      } else {
+        item.componentProps.placeholder = userConf[item.name].toString();
+      }
+    }
+    return item;
+  })
 }
