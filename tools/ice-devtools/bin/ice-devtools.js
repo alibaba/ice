@@ -2,7 +2,7 @@
 const program = require('commander');
 const chalk = require('chalk');
 const semver = require('semver');
-const updater = require('npm-updater');
+const updateNotifier = require('update-notifier');
 const packageJson = require('../package.json');
 const COMMANDS = require('../config/commands');
 const optionsAttachToEnv = require('../utils/options-attach-to-env');
@@ -15,18 +15,13 @@ goldlog('version', {
   version: packageJson.version,
 });
 
-const tag = 'latest';
-const updateMessage = `你可以执行 npm install -g ice-devtools@${tag} 来安装此版本\n`;
+// 提醒用户安装最新版本 https://github.com/yeoman/update-notifier
+updateNotifier({
+  pkg: packageJson,
+  updateCheckInterval: 1000 * 60 * 60, // 1 h
+}).notify({ isGlobal: true, defer: true });
 
-// 提醒用户安装最新版本
-updater({
-  package: packageJson,
-  abort: false,
-  tag,
-  updateMessage,
-  interval: '1d',
-}).catch(() => {
-}).then(exec);
+exec();
 
 /**
  * check node version
