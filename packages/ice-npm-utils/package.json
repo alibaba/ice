@@ -15,7 +15,7 @@
     "request-progress": "^3.0.0",
     "request-promise": "^4.2.4",
     "semver": "^6.0.0",
-    "tar": "^2.0.0"
+    "tar": "^4.4.8"
   },
   "devDependencies": {
     "jest": "^24.5.0",
